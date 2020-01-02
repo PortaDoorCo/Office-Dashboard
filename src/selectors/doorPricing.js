@@ -42,11 +42,11 @@ export const itemPriceSelector = createSelector(
   [partListSelector],
   (parts) =>
     parts.map((part, index) => {
-      const wood = part.woodtype.PRICE;
-      const design = part.design.DESIGNCOST;
-      const edge = part.edges.ADDCOST;
-      const finish = part.finish.price;
-      const hinge = part.hinges.Price;
+      const wood = part.woodtype ? part.woodtype.PRICE : 0;
+      const design = part.design ? part.design.DESIGNCOST : 0;
+      const edge = part.edges ? part.edges.ADDCOST : 0;
+      const finish = part.finish ? part.finish.price : 0;
+      const hinge = part.hinges ? part.hinges.Price : 0;
 
       // console.log(part.dimensions);
 
@@ -78,11 +78,11 @@ export const linePriceSelector = createSelector(
   [partListSelector],
   (parts) =>
     parts.map((part, index) => {
-      const wood = part.woodtype.PRICE;
-      const design = part.design.DESIGNCOST;
-      const edge = part.edges.ADDCOST;
-      const finish = part.finish.price;
-      const hinge = part.hinges.Price;
+      const wood = part.woodtype ? part.woodtype.PRICE : 0;
+      const design = part.design ? part.design.DESIGNCOST : 0;
+      const edge = part.edges ? part.edges.ADDCOST : 0;
+      const finish = part.finish ? part.finish.price : 0;
+      const hinge = part.hinges ? part.hinges.Price : 0;
 
       // console.log(part.dimensions);
 
