@@ -76,7 +76,7 @@ export function loadOrders() {
   return async function (dispatch) {
     const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders?_limit=500&_sort=orderNum:DESC`);
     const data = await res.json();
-    return dispatch({
+    return await dispatch({
       type: LOAD_ORDERS,
       data: data
     });
@@ -113,7 +113,7 @@ export function loadCustomers() {
   return async function (dispatch) {
     const res = await fetch(`https://portadoor-server-production.herokuapp.com/companyprofiles?_limit=2000&_sort=CUSTNO:ASC`);
     const data = await res.json();
-    return dispatch({
+    return await dispatch({
       type: LOAD_CUSTOMERS,
       data: data
     });
