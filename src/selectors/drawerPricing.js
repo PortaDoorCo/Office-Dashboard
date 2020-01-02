@@ -26,10 +26,10 @@ const taxRate = state => {
 
   if (state.part_list.loadedDrawerFinishes) {
     if (orders) {
-      if (!orders.values.jobInfo) {
+      if (!orders.values.job_info) {
         return [];
       } else {
-        return state.form.DrawerOrder.values.jobInfo.customer.TaxRate;
+        return state.form.DrawerOrder.values.job_info.customer.TaxRate;
       }
     } else {
       return [];
