@@ -235,29 +235,19 @@ class DoorOrders extends Component {
               if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
                 if (part.dimensions) {
                   part.dimensions.forEach((info, index) => {
-
-
                     this.props.dispatch(
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].leftStile`,
-                        fraction(part.design.L_STILE_W)
+                        fraction(part.design ? part.design.L_STILE_W : 0)
                       )
                     );
-                    this.props.dispatch(
-                      change(
-                        'DoorOrder',
-                        `part_list[${i}].dimensions[${index}].leftStile`,
-                        fraction(part.design.L_STILE_W)
-                      )
-                    );
-
 
                     this.props.dispatch(
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].rightStile`,
-                        fraction(part.design.R_STILE_W)
+                        fraction(part.design ? part.design.R_STILE_W : 0)
                       )
                     );
 
@@ -265,7 +255,7 @@ class DoorOrders extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].topRail`,
-                        fraction(part.design.TOP_RAIL_W)
+                        fraction(part.design ? part.design.R_STILE_W : 0)
                       )
                     );
 
@@ -273,7 +263,7 @@ class DoorOrders extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].bottomRail`,
-                        fraction(part.design.BOT_RAIL_W)
+                        fraction(part.design ? part.design.BOT_RAIL_W : 0)
                       )
                     );
 
@@ -284,7 +274,7 @@ class DoorOrders extends Component {
                         change(
                           'DoorOrder',
                           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                          fraction(part.design.H_MULL_WTH)
+                          fraction(part.design ? part.design.H_MULL_WTH : 0)
                         )
                       );
                     }
@@ -294,7 +284,7 @@ class DoorOrders extends Component {
                         change(
                           'DoorOrder',
                           `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                          fraction(part.design.V_MULL_WTH)
+                          fraction(part.design ? part.design.V_MULL_WTH : 0)
                         )
                       );
                     }
@@ -478,7 +468,7 @@ const mapStateToProps = state => ({
     open: true,
     part_list: [
       {
-        woodtype: state.part_list.woodtypes[0],
+
         construction: {
           name: 'Cope And Stick',
           value: 'Cope'
@@ -491,28 +481,8 @@ const mapStateToProps = state => ({
           name: '4/4',
           value: 0.75
         },
-        design: state.part_list.designs[0],
-        edges: state.part_list.edges[0],
-        moulds: state.part_list.moulds[0],
-        panels: state.part_list.panels[0],
-        finish: state.part_list.finish[0],
-        hinges: state.part_list.hinges[0],
-        dimensions: [{
-          panelsH: 1,
-          panelsW: 1,
-          leftStile: fraction(
-            state.part_list.designs[0].L_STILE_W
-          ),
-          rightStile: fraction(
-            state.part_list.designs[0].R_STILE_W
-          ),
-          topRail: fraction(
-            state.part_list.designs[0].TOP_RAIL_W
-          ),
-          bottomRail: fraction(
-            state.part_list.designs[0].BOT_RAIL_W
-          ),
-        }],
+
+        dimensions: [],
         addPrice: 0
       }
     ],

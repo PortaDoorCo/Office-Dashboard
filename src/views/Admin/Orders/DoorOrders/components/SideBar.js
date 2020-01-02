@@ -34,7 +34,7 @@ class SideBar extends Component {
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                  {part.woodtype.photo ? (
+                  {(part.woodtype && part.woodtype.photo) ? (
                     <img src={part.woodtype.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
@@ -46,7 +46,7 @@ class SideBar extends Component {
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                  {part.design.photo ? (
+                  {(part.design && part.design.photo)? (
                     <img src={part.design.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
@@ -58,7 +58,7 @@ class SideBar extends Component {
                 <div
                   style={{ width: '120px', height: '120px', margin: 'auto' }}
                 >
-                  {part.moulds.photo ? (
+                  {(part.moulds && part.moulds.photo) ? (
                     <img src={part.moulds.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
@@ -72,7 +72,7 @@ class SideBar extends Component {
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                  {part.edges.photo ? (
+                  {(part.edges && part.edges.photo) ? (
                     <img src={part.edges.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
@@ -84,7 +84,7 @@ class SideBar extends Component {
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                  {part.panels.photo ? (
+                  {(part.panels && part.panels.photo) ? (
                     <img src={part.panels.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
@@ -96,7 +96,7 @@ class SideBar extends Component {
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                  {part.finish.photo ? (
+                  {(part.finish && part.finish.photo)? (
                     <img src={part.finish.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
