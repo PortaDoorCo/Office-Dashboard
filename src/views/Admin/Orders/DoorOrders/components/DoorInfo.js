@@ -412,13 +412,6 @@ class DoorInfo extends Component {
               orderType: orderType[0],
               construction: construction[0],
               thickness: thickness[0],
-              woodtype: woodtypes[0],
-              design: designs[0],
-              edges: edges[0],
-              moulds: moulds[0],
-              panels: panels[0],
-              hinges: hinges[0],
-              finish: finish[0],
               dimensions: [{
                 panelsH: 1,
                 panelsW: 1,

@@ -415,7 +415,7 @@ class DoorOrders extends Component {
             </Card>
           </Col>
           <Col lg="4">
-            {this.props.formState ? (
+            {(this.props.formState && this.props.formState.part_list && this.props.formState.part_list[0].dimensions.length > 0) ? (
               this.props.formState.part_list.map((part, i) => {
                 return (
                   <div>
@@ -482,7 +482,10 @@ const mapStateToProps = state => ({
           value: 0.75
         },
 
-        dimensions: [],
+        dimensions: [{
+          panelsH: 1,
+          panelsW: 1,
+        }],
         addPrice: 0
       }
     ],
