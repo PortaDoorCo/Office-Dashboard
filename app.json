@@ -1,0 +1,27 @@
+{
+    "addons": [
+    ],
+    "buildpacks": [
+        {
+            "url": "https://buildpack-registry.s3.amazonaws.com/buildpacks/mars/create-react-app.tgz"
+        }
+    ],
+    "env": {},
+    "formation": {
+        "web": {
+            "quantity": 1
+        }
+    },
+    "name": "portadoor",
+    "scripts": {
+        "scripts": {
+            "start": "react-scripts --max_old_space_size=4096 start",
+            "build": "CI=false react-scripts --max_old_space_size=4096 build",
+            "test": "react-scripts test",
+            "test:cov": "npm test -- --coverage --watchAll=false",
+            "test:debug": "react-scripts --inspect-brk test --runInBand",
+            "eject": "react-scripts eject"
+        }
+    },
+    "stack": "heroku-18"
+}

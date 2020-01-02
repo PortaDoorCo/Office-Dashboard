@@ -11,7 +11,7 @@ const url = 'https://portadoor-server-production.herokuapp.com/'
 
 export function registerUser(user) {
   return async function (dispatch) {
-    const res = await axios.post(`${url}/auth/local/register`, user);
+    const res = await axios.post(`https://portadoor-server-production.herokuapp.com/auth/local/register`, user);
     console.log(res);
     return dispatch({
       type: REGISTER_USER,
@@ -21,7 +21,7 @@ export function registerUser(user) {
 
 export function login(token) {
   return async function (dispatch) {
-    const res = await axios.get(`${url}/users/me`, {
+    const res = await axios.get(`https://portadoor-server-production.herokuapp.com/users/me`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -36,7 +36,7 @@ export function login(token) {
 
 export function createTask(task) {
   return async function (dispatch) {
-    const res = await axios.post(`${url}/tasks`, task);
+    const res = await axios.post(`https://portadoor-server-production.herokuapp.com/tasks`, task);
     const data = await res;
     console.log(data);
     return dispatch({
@@ -49,7 +49,7 @@ export function createTask(task) {
 
 export function markDone(id, done) {
   return async function (dispatch) {
-    const res = await axios.put(`${url}/tasks/${id}`, done);
+    const res = await axios.put(`https://portadoor-server-production.herokuapp.com/tasks/${id}`, done);
     const data = await res;
     console.log(data);
     return dispatch({
