@@ -18,6 +18,7 @@ const comingSoon =
 
 class SideBar extends Component {
   render() {
+    console.log('yoooooo', part)
     const { part } = this.props;
 
     return (
