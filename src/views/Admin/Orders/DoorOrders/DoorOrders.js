@@ -438,8 +438,6 @@ class DoorOrders extends Component {
                           key={i}
                         >
                           <SideBar key={i} i={i} part={part} />
-
-
                         </Sticky>
                       </Col>
                     </Row>
