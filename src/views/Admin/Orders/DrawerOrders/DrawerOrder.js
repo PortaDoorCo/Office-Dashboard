@@ -340,19 +340,11 @@ const mapStateToProps = (state, prop) => ({
     open: true,
     part_list: [
       {
-        woodtype: state.part_list.woodtypes[0],
-        boxBottomWoodtype: state.part_list.woodtypes[0],
-        boxThickness: state.part_list.boxThickness[0],
-        boxBottoms: state.part_list.boxBottoms[0],
-        assembly: state.part_list.assembly[0],
-        notchDrill: state.part_list.notchDrill[0],
-        drawerFinishes: state.part_list.drawerFinishes[0],
         dimensions: [
           {
             scoop: state.part_list.scoop[0],
             dividers: state.part_list.dividers[0]
           }
-
         ],
         addPrice: 0
       }

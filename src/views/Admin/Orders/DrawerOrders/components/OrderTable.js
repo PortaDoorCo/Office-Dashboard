@@ -19,15 +19,17 @@ const required = value => value ? undefined : 'Required';
 const renderField = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
   <Fragment>
     <Input {...input} {...custom} />
-    {error && <FormFeedback>{error}</FormFeedback>}
-    {!error && warning && <FormText>{warning}</FormText>}
+    {touched &&
+        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
   </Fragment>
 );
 const renderFieldDisabled = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
   <Fragment>
     <Input {...input} {...custom} disabled style={{ display: 'none' }} />
-    {error && <FormFeedback>{error}</FormFeedback>}
-    {!error && warning && <FormText>{warning}</FormText>}
+    {touched &&
+        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
   </Fragment>
 );
 
@@ -84,28 +86,36 @@ class OrderTable extends Component {
                           name={`${table}.qty`}
                           type="text"
                           component={renderField}
-                          label="qty" />
+                          label="qty"
+                          validate={required}
+                          />
                       </td>
                       <td>
                         <Field
                           name={`${table}.width`}
                           type="text"
                           component={renderField}
-                          label="width" />
+                          label="width"
+                          validate={required}
+                          />
                       </td>
                       <td>
                         <Field
                           name={`${table}.depth`}
                           type="text"
                           component={renderField}
-                          label="depth" />
+                          label="depth"
+                          validate={required}
+                          />
                       </td>
                       <td>
                         <Field
                           name={`${table}.height`}
                           type="text"
                           component={renderField}
-                          label="height" />
+                          label="height"
+                          validate={required}
+                          />
                       </td>
                       <td >
                         <Field

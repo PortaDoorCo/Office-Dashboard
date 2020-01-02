@@ -28,6 +28,8 @@ const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 const Handle = Slider.Handle;
 
+const required = value => (value ? undefined : 'Required');
+
 const handle = (props) => {
   const { value, dragging, index, ...restProps } = props;
   return (
@@ -86,16 +88,18 @@ const renderField = ({
 }) => (
     <Fragment>
       <Input {...input} {...custom} />
-      {error && <FormFeedback>{error}</FormFeedback>}
-      {!error && warning && <FormText>{warning}</FormText>}
+      {touched &&
+        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
     </Fragment>
   );
 
 const renderFieldDisabled = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
   <Fragment>
     <Input {...input} {...custom} disabled style={{ display: 'none' }} />
-    {error && <FormFeedback>{error}</FormFeedback>}
-    {!error && warning && <FormText>{warning}</FormText>}
+    {touched &&
+        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
   </Fragment>
 );
 
@@ -182,6 +186,7 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part }) =
                         type="text"
                         component={renderField}
                         label="qty"
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -191,6 +196,7 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part }) =
                         component={renderField}
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
+                        validate={required}
                       />
                     </td>
 
@@ -201,6 +207,7 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part }) =
                         component={renderField}
                         onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                         label="height"
+                        validate={required}
                       />
                     </td>
 

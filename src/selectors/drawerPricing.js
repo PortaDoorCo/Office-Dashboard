@@ -26,10 +26,10 @@ const taxRate = state => {
 
   if (state.part_list.loadedDrawerFinishes) {
     if (orders) {
-      if (!orders.values.jobInfo) {
+      if (!orders.values.job_info) {
         return [];
       } else {
-        return state.form.DrawerOrder.values.jobInfo.customer.TaxRate;
+        return state.form.DrawerOrder.values.job_info.customer.TaxRate;
       }
     } else {
       return [];
@@ -44,10 +44,10 @@ export const itemPriceSelector = createSelector(
   (parts) =>
     parts.map((part, index) => {
       console.log(part)
-      const wood = part.woodtype.PRICE;
-      const assembly = part.assembly.Price;
-      const finish = part.drawerFinishes.Price;
-      const notchDrill = part.notchDrill.Price;
+      const wood =  part.woodtype ? part.woodtype.PRICE : 0 ;
+      const assembly = part.assembly? part.assembly.Price :0;
+      const finish = part.drawerFinishes ? part.drawerFinishes.Price : 0;
+      const notchDrill = part.notchDrill ? part.notchDrill.Price : 0;
 
       // console.log(part.dimensions);
 
@@ -82,10 +82,10 @@ export const linePriceSelector = createSelector(
   (parts) =>
     parts.map((part, index) => {
       console.log(part)
-      const wood = part.woodtype.PRICE;
-      const assembly = part.assembly.Price;
-      const finish = part.drawerFinishes.Price;
-      const notchDrill = part.notchDrill.Price;
+      const wood =  part.woodtype ? part.woodtype.PRICE : 0 ;
+      const assembly = part.assembly? part.assembly.Price :0;
+      const finish = part.drawerFinishes ? part.drawerFinishes.Price : 0;
+      const notchDrill = part.notchDrill ? part.notchDrill.Price : 0;
 
 
       if (part.dimensions) {

@@ -117,7 +117,7 @@ class DoorInfo extends Component {
   componentDidUpdate(prevProps, prevState) {
 
     if (this.props.formState !== prevProps.formState) {
-      if (this.props.formState) {
+      if (this.props.formState && this.props.formState.part_list) {
         this.setState({
           designFilter: this.props.formState.part_list.map((i, index) => {
             let filter = this.props.designs.filter(
@@ -135,54 +135,58 @@ class DoorInfo extends Component {
           })
         });
 
+
         this.setState({
           mouldFilter: this.props.formState.part_list.map((i, index) => {
-            if (i.design.Construction === 'Cope') {
-              let filter = this.props.moulds.filter(
-                el => el.Construction === i.construction.value
-              );
-              return filter;
-            } else if (i.design.Construction === 'MT') {
-              if (i.design.NAME.includes('15MT')) {
+            if(i.design){
+              if (i.design.Construction === 'Cope') {
                 let filter = this.props.moulds.filter(
-                  el => el.Construction === 'Cope'
+                  el => el.Construction === i.construction.value
+                );
+                return filter;
+              } else if (i.design.Construction === 'MT') {
+                if (i.design.NAME.includes('15MT')) {
+                  let filter = this.props.moulds.filter(
+                    el => el.Construction === 'Cope'
+                  );
+                  this.props.dispatch(
+                    change('Orders', `part_list[${index}].moulds`, filter[0])
+                  );
+                  return filter;
+                } else {
+                  let filter = this.props.moulds.filter(
+                    el =>
+                      i.design.NAME ? el.Thickness === parseFloat(i.thickness.value) &&
+                        el.NAME.includes(i.design.NAME.substr(4, 3)) : el.NAME
+  
+                  );
+                  this.props.dispatch(
+                    change('Orders', `part_list[${index}].moulds`, filter[0])
+                  );
+                  return filter;
+                }
+              } else if (i.design.Construction === 'M') {
+                let filter = this.props.moulds.filter(el =>
+                  i.design.NAME
+                    ? el.NAME.includes(i.design.NAME.substr(4, 3))
+                    : el.NAME
                 );
                 this.props.dispatch(
                   change('Orders', `part_list[${index}].moulds`, filter[0])
                 );
                 return filter;
-              } else {
-                let filter = this.props.moulds.filter(
-                  el =>
-                    i.design.NAME ? el.Thickness === parseFloat(i.thickness.value) &&
-                      el.NAME.includes(i.design.NAME.substr(4, 3)) : el.NAME
-
-                );
+              } else if (i.design.Construction === 'Special') {
+                let filter = this.props.moulds.filter(el => el.NAME);
                 this.props.dispatch(
                   change('Orders', `part_list[${index}].moulds`, filter[0])
                 );
                 return filter;
               }
-            } else if (i.design.Construction === 'M') {
-              let filter = this.props.moulds.filter(el =>
-                i.design.NAME
-                  ? el.NAME.includes(i.design.NAME.substr(4, 3))
-                  : el.NAME
-              );
-              this.props.dispatch(
-                change('Orders', `part_list[${index}].moulds`, filter[0])
-              );
-              return filter;
-            } else if (i.design.Construction === 'Special') {
-              let filter = this.props.moulds.filter(el => el.NAME);
-              this.props.dispatch(
-                change('Orders', `part_list[${index}].moulds`, filter[0])
-              );
-              return filter;
+              else {
+                return [];
+              }
             }
-            else {
-              return [];
-            }
+            
           })
         });
       }
@@ -408,13 +412,6 @@ class DoorInfo extends Component {
               orderType: orderType[0],
               construction: construction[0],
               thickness: thickness[0],
-              woodtype: woodtypes[0],
-              design: designs[0],
-              edges: edges[0],
-              moulds: moulds[0],
-              panels: panels[0],
-              hinges: hinges[0],
-              finish: finish[0],
               dimensions: [{
                 panelsH: 1,
                 panelsW: 1,
