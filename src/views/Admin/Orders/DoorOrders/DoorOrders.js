@@ -429,7 +429,7 @@ class DoorOrders extends Component {
               this.props.formState.part_list.map((part, i) => {
                 return (
                   <div>
-                    {/* <Row style={{ height: '100%' }}>
+                    <Row style={{ height: '100%' }}>
                       <Col>
                         <Sticky
                           top={100}
@@ -442,7 +442,7 @@ class DoorOrders extends Component {
 
                         </Sticky>
                       </Col>
-                    </Row> */}
+                    </Row>
                     <Row>
                       <Col>
 
