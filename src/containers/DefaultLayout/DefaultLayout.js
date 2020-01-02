@@ -53,29 +53,31 @@ class DefaultLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const props = this.props;
     console.log(this.props.customerDBLoaded);
 
+    // await props.loadOrders();
+    await props.loadSales();
+    await props.countOrders();
+    await props.getWoodtypes();
+    await props.getDesigns();
+    await props.getEdges();
+    await props.getFinish();
+    await props.getGrades();
+    await props.getMoulds();
+    await props.getPanels();
+    await props.getHinges();
+    await props.getBoxThickness();
+    await props.getBoxBottoms();
+    await props.getAssembly();
+    await props.getNotch();
+    await props.getDrawerFinish();
+    await props.loadShippingMethod();
+    // await props.loadCustomers();
+
     if (!this.props.customerDBLoaded) {
-      props.loadOrders();
-      props.loadSales();
-      props.countOrders();
-      props.loadCustomers();
-      props.getWoodtypes();
-      props.getDesigns();
-      props.getEdges();
-      props.getFinish();
-      props.getGrades();
-      props.getMoulds();
-      props.getPanels();
-      props.getHinges();
-      props.getBoxThickness();
-      props.getBoxBottoms();
-      props.getAssembly();
-      props.getNotch();
-      props.getDrawerFinish();
-      props.loadShippingMethod();
+
     }
 
     const token = Cookies.get("jwt");
@@ -84,18 +86,18 @@ class DefaultLayout extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.orders.sessionOrders !== prevProps.orders.sessionOrders) {
-      this.props.countOrders();
-      this.props.loadOrders();
-    }
-    if (this.props.orders.sessionCustomers !== prevProps.orders.sessionCustomers) {
-      this.props.loadCustomers();
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.props.orders.sessionOrders !== prevProps.orders.sessionOrders) {
+  //     this.props.countOrders();
+  //     this.props.loadOrders();
+  //   }
+  //   if (this.props.orders.sessionCustomers !== prevProps.orders.sessionCustomers) {
+  //     this.props.loadCustomers();
+  //   }
+  // }
 
   render() {
-    if (!this.props.customerDBLoaded && !this.props.ordersDBLoaded) {
+    if ((!this.props.loadedWoodtype && !this.props.loadedDesign && !this.props.loadedEdge && !this.props.loadedMould && !this.props.loadedPanel && !this.props.loadedGrade && !this.props.loadedFinish && !this.props.loadedBoxThickness && !this.props.loadedBoxBottoms && !this.props.loadedAssembly && !this.props.loadedNotchb && !this.props.loadedHinges && !this.props.loadedDrawerFinishes)) {
       return <Loader />;
     } else {
       return (
@@ -161,6 +163,18 @@ const mapStateToProps = (state, prop) => ({
   sessionCustomers: state.Orders.sessionCustomers,
   customerDBLoaded: state.Orders.customerDBLoaded,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
+  loadedWoodtype: state.part_list.loadedWoodtype,
+  loadedDesign: state.part_list.loadedDesign,
+  loadedEdge: state.part_list.loadedEdge,
+  loadedMould: state.part_list.loadedMould,
+  loadedPanel: state.part_list.loadedPanel,
+  loadedFinish: state.part_list.loadedFinish,
+  loadedBoxThickness: state.part_list.loadedBoxThickness,
+  loadedBoxBottoms: state.part_list.loadedBoxBottoms,
+  loadedAssembly: state.part_list.loadedAssembly,
+  loadedNotch: state.part_list.loadedNotch,
+  loadedHinges: state.part_list.loadedHinges,
+  loadedDrawerFinishes: state.part_list.loadedDrawerFinishes
 });
 
 const mapDispatchToProps = dispatch =>

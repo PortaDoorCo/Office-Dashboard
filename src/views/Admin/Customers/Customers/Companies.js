@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CompanyTable from './CompanyTable'
+import CompanyTable2 from './CompanyTable2'
 import AddCustomer from '../AddCustomer/AddCustomer';
 import {
   loadCustomers,
@@ -13,7 +13,7 @@ class Companies extends Component {
   render() {
     return (
       <div>
-        <CompanyTable
+        <CompanyTable2
           customerDB={this.props.customerDB}
         />
       </div>
