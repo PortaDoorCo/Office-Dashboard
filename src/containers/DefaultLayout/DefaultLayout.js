@@ -56,8 +56,6 @@ class DefaultLayout extends Component {
   componentDidMount = async () => {
     const props = this.props;
     console.log(this.props.customerDBLoaded);
-
-    // await props.loadOrders();
     await props.loadSales();
     await props.countOrders();
     await props.getWoodtypes();
@@ -74,27 +72,12 @@ class DefaultLayout extends Component {
     await props.getNotch();
     await props.getDrawerFinish();
     await props.loadShippingMethod();
-    // await props.loadCustomers();
-
-    if (!this.props.customerDBLoaded) {
-
-    }
 
     const token = Cookies.get("jwt");
     if (!this.props.loggedIn) {
       this.props.login(token);
     }
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.props.orders.sessionOrders !== prevProps.orders.sessionOrders) {
-  //     this.props.countOrders();
-  //     this.props.loadOrders();
-  //   }
-  //   if (this.props.orders.sessionCustomers !== prevProps.orders.sessionCustomers) {
-  //     this.props.loadCustomers();
-  //   }
-  // }
 
   render() {
     if ((!this.props.loadedWoodtype 
