@@ -171,15 +171,14 @@ class DrawerBoxInfo extends Component {
           color="primary"
           onClick={() =>
             fields.push({
-              woodtype: woodtypes[0],
-              boxBottomWoodtype: woodtypes[0],
-              boxThickness: boxThickness[0],
-              boxBottoms: boxBottoms[0],
-              assembly: assembly[0],
-              notchDrill: notchDrill[0],
-              drawerFinishes: drawerFinishes[0],
-              dimensions: [],
+              dimensions: [
+                {
+                  scoop: scoop[0],
+                  dividers: dividers[0]
+                }
+              ],
               addPrice: 0
+     
             })
           }
         >
