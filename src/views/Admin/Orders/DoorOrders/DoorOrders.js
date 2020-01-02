@@ -114,7 +114,7 @@ class DoorOrders extends Component {
     };
 
     if (values.part_list[0].dimensions.length > 0) {
-      console.log(order);
+  
       submitOrder(order);
       reset();
       window.scrollTo(0, 0);
@@ -178,7 +178,7 @@ class DoorOrders extends Component {
             if (part.dimensions) {
               return part.dimensions.forEach((info, index) => {
 
-                console.log(info)
+     
 
                 this.props.dispatch(
                   change(
@@ -313,7 +313,7 @@ class DoorOrders extends Component {
   };
 
   render() {
-    console.log('fssssss', this.props.formState)
+
     const {
       submitted,
       handleSubmit,
@@ -337,9 +337,7 @@ class DoorOrders extends Component {
     } = this.props;
 
     console.log(tax)
-    console.log(total)
-    console.log(addPriceSelector)
-    console.log(subTotal)
+
 
     return (
       <div className="animated fadeIn resize">
