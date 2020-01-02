@@ -58,7 +58,7 @@ class Login extends Component {
     const { email, password } = this.state;
 
     axios
-      .post('/auth/local', {
+      .post('https://portadoor-server-production.herokuapp.com/auth/local', {
         identifier: email,
         password: password
       })
