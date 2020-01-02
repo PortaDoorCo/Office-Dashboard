@@ -1,0 +1,73 @@
+import React, { Component } from 'react';
+import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
+import { Card, CardBody, CardColumns, CardHeader } from 'reactstrap';
+import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+
+
+
+
+
+class Charts extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+
+    let house = this.props.data.filter(item => {
+      return item.jobInfo.customer.sale.fullName.includes("House")
+    })
+    let harold = this.props.data.filter(item => {
+      return item.jobInfo.customer.sale.fullName.includes("Harold")
+    })
+    let joseph = this.props.data.filter(item => {
+      return item.jobInfo.customer.sale.fullName.includes("Joseph")
+    })
+    let peter = this.props.data.filter(item => {
+      return item.jobInfo.customer.sale.fullName.includes("Peter")
+    })
+    let meg = this.props.data.filter(item => {
+      return item.jobInfo.customer.sale.fullName.includes("Meg")
+    })
+    let krista = this.props.data.filter(item => {
+      return item.jobInfo.customer.sale.fullName.includes("Krista")
+    })
+
+    const bar = {
+      labels: ['House', 'Harold', 'Joseph', 'Peter', 'Meg', 'Krista'],
+      datasets: [
+        {
+          label: 'Sales Reps',
+          backgroundColor: 'rgba(43, 160, 125, 0.24)',
+          borderColor: '#000000',
+          borderWidth: 0.5,
+          hoverBackgroundColor: 'rgba(194, 234, 234, 0.45)',
+          hoverBorderColor: '#000000',
+          data: [house.length, harold.length, joseph.length, peter.length, meg.length, krista.length],
+        },
+      ],
+    };
+
+
+    const options = {
+      tooltips: {
+        enabled: false,
+        custom: CustomTooltips
+      },
+      maintainAspectRatio: true
+    }
+
+    return (
+      <div className="animated fadeIn">
+        <Card>
+          <CardBody>
+            <div className="chart-wrapper">
+              <Bar data={bar} options={options} height={75} />
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+    );
+  }
+}
+
+export default Charts;

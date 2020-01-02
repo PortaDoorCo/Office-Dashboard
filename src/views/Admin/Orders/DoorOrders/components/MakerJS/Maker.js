@@ -1,0 +1,121 @@
+import { Blueprint, sbp } from 'svg-blueprint'
+import makerjs from 'makerjs'
+import ReactDOM from 'react-dom';
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import React, { useState, useEffect, createRef, useRef } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+    reduxForm,
+    FormSection,
+    getFormValues,
+    change,
+    blur,
+    focus,
+    FieldArray
+} from 'redux-form';
+import Door from './Door'
+import numQty from 'numeric-quantity';
+import Ratio from 'lb-ratio';
+
+
+
+const Maker = props => {
+
+    const { i, index, formState } = props;
+
+    const ref = useRef(null);
+    const [id, setID] = useState('');
+    const [loaded, setLoaded] = useState(false);
+    const [bps, setBps] = useState(null);
+    const [pathItem, setPathItem] = useState(null);
+    // const [width, setWidth] = useState(0);
+
+    let width = formState.part_list[i].dimensions[index].width ? numQty(formState.part_list[i].dimensions[index].width) : 0
+    let height = formState.part_list[i].dimensions[index].height ? numQty(formState.part_list[i].dimensions[index].height) : 0
+    let leftStile = formState.part_list[i].dimensions[index].leftStile ? numQty(formState.part_list[i].dimensions[index].leftStile) : 0
+    let rightStile = formState.part_list[i].dimensions[index].rightStile ? numQty(formState.part_list[i].dimensions[index].rightStile) : 0
+    let topRail = formState.part_list[i].dimensions[index].topRail ? numQty(formState.part_list[i].dimensions[index].topRail) : 0
+    let bottomRail = formState.part_list[i].dimensions[index].bottomRail ? numQty(formState.part_list[i].dimensions[index].bottomRail) : 0
+    let panelsH = formState.part_list[i].dimensions[index].panelsH ? parseInt(formState.part_list[i].dimensions[index].panelsH) : 0
+    let panelsW = formState.part_list[i].dimensions[index].panelsW ? parseInt(formState.part_list[i].dimensions[index].panelsW) : 0
+    let horizontalMidRailSize = formState.part_list[i].dimensions[index].horizontalMidRailSize ? numQty(formState.part_list[i].dimensions[index].horizontalMidRailSize) : 0
+    let verticalMidRailSize = formState.part_list[i].dimensions[index].verticalMidRailSize ? numQty(formState.part_list[i].dimensions[index].verticalMidRailSize) : 0
+
+
+    console.log(verticalMidRailSize)
+
+    useEffect(() => {
+        console.log('yoooo in effetc', bps)
+        setID(ref.current.id)
+        let bp;
+        if (bps) {
+            bps.remove(pathItem);
+            bp = bps;
+        } else {
+            bp = new Blueprint({
+                parentElement: ref.current,
+                className: `svg-${props.index}`,
+                width: '100%',
+                height: '100%',
+                gridOpacity: 0.3,
+                gridColor: "#000000",
+                backgroundColor: "#FFFFFF",
+                stroke: "#000000",
+                axisOpacity: 0.0001,
+            })
+        }
+
+
+        const door = new Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, 0);
+        const path = makerjs.exporter.toSVGPathData(door, { origin: [0, 0] });
+        setPathItem(bp.append('path', { d: path }));
+        bp.hide('grid')
+        bp.hide('statusbar')
+        bp.fit()
+        //bp.redraw();
+        setBps(bp);
+    }, [props.height, props.width, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize]);
+
+
+
+    console.log(ref)
+
+
+    const onMouseOver = () => {
+        disableBodyScroll(id);
+    }
+
+    const onMouseLeave = () => {
+        clearAllBodyScrollLocks();
+    }
+
+    return (
+        <span
+            id={`makerJS${props.index}`}
+            onMouseOver={onMouseOver}
+            onMouseLeave={onMouseLeave}
+            ref={ref}
+            style={{ width: '100%', height: '300px' }}
+        />
+    );
+
+}
+
+const mapStateToProps = state => ({
+    formState: getFormValues('DoorOrder')(state),
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(
+        {
+
+        },
+        dispatch
+    );
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Maker);
+

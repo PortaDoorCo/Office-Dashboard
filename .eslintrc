@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    // ...
+    "react-hooks"
+  ],
+  "extends": ["react-app"],
+  "rules": {
+    // ...
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "linebreak-style": 0,
+    "no-console": 0,
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
+  }
+}

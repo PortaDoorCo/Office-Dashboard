@@ -1,0 +1,61 @@
+// Here you can add other styles
+.aside-menu {
+
+  .nav-tabs .nav-link,
+  .callout {
+    border-radius: 0;
+  }
+}
+
+.sidebar {
+
+  .sidebar-nav,
+  ul.nav {
+    width: $sidebar-width - 30px;
+  }
+}
+
+.resize {
+  zoom: 80%;
+}
+
+.modal-lg {
+  max-width: 80%;
+}
+
+.done {
+  color: red;
+  text-decoration: line-through;
+}
+
+.undone {
+  color: #61dafb;
+}
+
+.icon {
+  margin: 6px 10px 6px 0;
+}
+
+ul>li:hover {
+  background-color: #f5f5f5;
+}
+
+.submit {
+  width: 120%;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+///dev express
+.dx-command-select {
+  width: 50px !important;
+  min-width: 50px !important;
+}
