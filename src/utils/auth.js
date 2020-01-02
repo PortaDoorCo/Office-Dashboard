@@ -11,7 +11,7 @@ import axios from 'axios'
 
 const url = 'https://portadoor-server-production.herokuapp.com/'
 
-const apiUrl = url || "http://localhost:1337";
+const apiUrl = 'https://portadoor-server-production.herokuapp.com/' || "http://localhost:1337";
 const strapi = new Strapi(apiUrl);
 
 export const strapiRegister = async (username, email, password, name) => {
