@@ -97,7 +97,19 @@ class DefaultLayout extends Component {
   // }
 
   render() {
-    if ((!this.props.loadedWoodtype && !this.props.loadedDesign && !this.props.loadedEdge && !this.props.loadedMould && !this.props.loadedPanel && !this.props.loadedGrade && !this.props.loadedFinish && !this.props.loadedBoxThickness && !this.props.loadedBoxBottoms && !this.props.loadedAssembly && !this.props.loadedNotchb && !this.props.loadedHinges && !this.props.loadedDrawerFinishes)) {
+    if ((!this.props.loadedWoodtype 
+      && !this.props.loadedDesign 
+      && !this.props.loadedEdge 
+      && !this.props.loadedMould 
+      && !this.props.loadedPanel 
+      && !this.props.loadedGrade 
+      && !this.props.loadedFinish 
+      && !this.props.loadedBoxThickness 
+      && !this.props.loadedBoxBottoms 
+      && !this.props.loadedAssembly 
+      && !this.props.loadedNotchb 
+      && !this.props.loadedHinges 
+      && !this.props.loadedDrawerFinishes)) {
       return <Loader />;
     } else {
       return (
