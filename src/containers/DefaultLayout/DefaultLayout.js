@@ -109,7 +109,10 @@ class DefaultLayout extends Component {
       && !this.props.loadedAssembly 
       && !this.props.loadedNotchb 
       && !this.props.loadedHinges 
-      && !this.props.loadedDrawerFinishes)) {
+      && !this.props.loadedDrawerFinishes
+      && !this.props.customerDBLoaded
+      && !this.props.ordersDBLoaded
+      )) {
       return <Loader />;
     } else {
       return (
@@ -136,7 +139,7 @@ class DefaultLayout extends Component {
                 <Suspense fallback={this.loading()}>
                   <Switch>
                     {routes.map((route, idx) => {
-                      return route.component ? (
+                      return route.component  ? (
                         <Route
                           key={idx}
                           path={route.path}
