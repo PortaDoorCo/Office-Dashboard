@@ -44,6 +44,7 @@ import { login } from "../../redux/users/actions";
 
 import Loader from '../../views/Admin/Loader/Loader'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -54,7 +55,7 @@ class DefaultLayout extends Component {
 
   componentDidMount = async () => {
 
-    
+
     const props = this.props;
     await props.loadOrders();
     await props.loadSales();
