@@ -32,16 +32,31 @@ export default (data, startDate, endDate, status) => {
         if (i.orderType === "Door Order") {
             i.part_list.map(part => {
                 if (part.orderType.value === "Door") {
-                    doors++
-                    doorTotal++
+                    console.log('part',part)
+
+                    part.dimensions.map(j => {
+                        doors = doors += parseInt(j.qty)
+                        doorTotal = doorTotal += parseInt(j.qty)
+                    })
+                    
+                    
                 } else {
-                    dfs++
-                    dfTotal++
+                    part.dimensions.map(j => {
+                        dfs = dfs += parseInt(j.qty)
+                        dfTotal = dfTotal += parseInt(j.qty)
+                    })
                 }
             })
         } else {
-            boxes++
-            boxTotal++
+
+            i.part_list.map(part => {
+                part.dimensions.map(j => {
+                    boxes = boxes += parseInt(j.qty)
+                    boxTotal = boxTotal += parseInt(j.qty)
+                })
+            })
+
+            
         }
         return tableBody.push(
             [moment(i.createdAt).format("MM/DD/YYYY"),

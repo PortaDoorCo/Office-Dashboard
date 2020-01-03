@@ -79,6 +79,16 @@ class DefaultLayout extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.orders.sessionOrders !== prevProps.orders.sessionOrders) {
+      this.props.countOrders();
+      this.props.loadOrders();
+    }
+    if (this.props.orders.sessionCustomers !== prevProps.orders.sessionCustomers) {
+      this.props.loadCustomers();
+    }
+  }
+
   render() {
     if ((!this.props.loadedWoodtype 
       && !this.props.loadedDesign 
