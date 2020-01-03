@@ -133,7 +133,7 @@ class OrderTable extends React.Component {
 
     if (!modal) {
       const x = row.row.data;
-      console.log(x);
+      console.log('asdfasdfasdf',x);
       this.setState({
         selectedOrder: [
           {
@@ -147,6 +147,7 @@ class OrderTable extends React.Component {
             shippingAddress: x.jobInfo,
             linePrice: x.linePrice,
             total: x.total,
+            tax: x.tax,
             orderNum: x.orderNum,
             orderType: x.orderType,
             itemPrice: x.itemPrice,
