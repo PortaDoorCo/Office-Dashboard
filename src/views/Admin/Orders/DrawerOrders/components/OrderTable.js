@@ -136,11 +136,17 @@ class OrderTable extends Component {
                           validate={required} />
                       </td>
                       <td style={{ width: '150px' }}>
+                      {prices[i] ?
                         <Input
                           type="text"
                           className="form-control"
                           placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                        /> : <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$0.00"}
                         />
+                      }
                       </td>
 
                       <td >
