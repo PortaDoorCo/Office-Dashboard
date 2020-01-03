@@ -143,7 +143,7 @@ export default data => {
       columns: [
         { text: '', style: 'totals', width: 347 },
         { text: 'Tax:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${data.tax}`, style: 'fonts', alignment: 'right' }
+        { text: `$${(data.tax).toFixed(2)}`, style: 'fonts', alignment: 'right' }
       ],
       margin: [0, 10, 0, 0]
     },
