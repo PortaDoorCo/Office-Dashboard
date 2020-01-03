@@ -43,8 +43,7 @@ import {
 import { login } from "../../redux/users/actions";
 
 import Loader from '../../views/Admin/Loader/Loader'
-import { NotificationContainer } from 'react-notifications';
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -54,8 +53,10 @@ class DefaultLayout extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
   componentDidMount = async () => {
+
+    
     const props = this.props;
-    console.log(this.props.customerDBLoaded);
+    await props.loadOrders();
     await props.loadSales();
     await props.countOrders();
     await props.getWoodtypes();
@@ -79,6 +80,11 @@ class DefaultLayout extends Component {
     }
   }
 
+  onNewOrder = (e) => {
+    
+    console.log(e)
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.props.orders.sessionOrders !== prevProps.orders.sessionOrders) {
       this.props.countOrders();
@@ -90,6 +96,8 @@ class DefaultLayout extends Component {
   }
 
   render() {
+
+
     if ((!this.props.loadedWoodtype 
       && !this.props.loadedDesign 
       && !this.props.loadedEdge 

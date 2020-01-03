@@ -56,6 +56,7 @@ import Sticky from 'react-stickynode';
 import moment from 'moment'
 import Maker from './components/MakerJS/Maker';
 // import { ReactComponent as Maker } from './components/MakerJS/Maker';
+import io from 'socket.io-client';
 
 const dueDate = moment(new Date()).add(7, 'days').format()
 
@@ -115,7 +116,7 @@ class DoorOrders extends Component {
 
     if (values.part_list[0].dimensions.length > 0) {
   
-      submitOrder(order);
+      await submitOrder(order);
       reset();
       window.scrollTo(0, 0);
     } else {

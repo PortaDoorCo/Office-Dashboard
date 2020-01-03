@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
+import io from 'socket.io-client';
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
@@ -83,6 +84,16 @@ export function loadOrders() {
   };
 }
 
+export function loadOrderSubmitted() {
+  return async function (dispatch) {
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders/5e0e7d7df863b200179227be`);
+    const data = await res.json();
+    return await dispatch({
+
+    });
+  };
+}
+
 export function loadCustomerOrder(customer) {
   return async function (dispatch) {
     return dispatch({
@@ -97,7 +108,7 @@ export function submitOrder(order) {
     try {
       const res = axios.post(`https://portadoor-server-production.herokuapp.com/orders`, order);
       const data = await res;
-      NotificationManager.success('Your order was successfully submitted', 'Submit Success', 2000);
+      // NotificationManager.success('Your order was successfully submitted', 'Submit Success', 2000);
       return dispatch({
         type: SUBMIT_ORDER,
         data: data

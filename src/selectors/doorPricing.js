@@ -21,7 +21,6 @@ const partListSelector = state => {
 
 const taxRate = state => {
   const orders = state.form.DoorOrder;
-  console.log(orders)
   if (state.part_list.loadedFinish) {
     if (orders) {
       if (!orders.values.job_info) {
@@ -48,14 +47,14 @@ export const itemPriceSelector = createSelector(
       const finish = part.finish ? part.finish.price : 0;
       const hinge = part.hinges ? part.hinges.Price : 0;
 
-      // console.log(part.dimensions);
+    
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
           let widths = numQty(i.width);
           let heights = numQty(i.height);
 
-          // console.log(i);
+       
 
           const price =
             (((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood +
@@ -84,14 +83,14 @@ export const linePriceSelector = createSelector(
       const finish = part.finish ? part.finish.price : 0;
       const hinge = part.hinges ? part.hinges.Price : 0;
 
-      // console.log(part.dimensions);
+  
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
           let widths = numQty(i.width);
           let heights = numQty(i.height);
 
-          // console.log(i);
+       
 
           const price =
             (((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood +
@@ -142,8 +141,7 @@ export const subTotalSelector = createSelector(
 export const taxSelector = createSelector(
   [subTotalSelector, taxRate],
   
-  (subTotal, tax) => (console.log(tax),
-    subTotal.reduce((acc, item) => acc + item, 0) * tax)
+  (subTotal, tax) => subTotal.reduce((acc, item) => acc + item, 0) * tax
 );
 
 export const totalSelector = createSelector(
