@@ -98,9 +98,8 @@ class OrderTable extends React.Component {
     }
 
     componentDidMount() {
-
-        socket.on('order_submitted', res => (this.state.productData.load(), NotificationManager.success('New Order', `Order #${res.orderNum} added`, 2000)) )
-        // console.log(this.state.productData.refresh())
+        const dataGrid = this.dataGrid.instance;
+        socket.on('order_submitted', res => (dataGrid.refresh(), NotificationManager.success('New Order', `Order #${res.orderNum} added`, 2000)) )
     }
 
     onSelectionChanged(e) {
@@ -304,7 +303,7 @@ class OrderTable extends React.Component {
             <React.Fragment>
                 <DataGrid
                     id="Orders"
-                    dataSource={this.props.orders}
+                    dataSource={productData}
                     keyExpr="id"
                     allowColumnReordering={true}
                     showBorders={true}

@@ -5,6 +5,7 @@ import StatusTable from './components/StatusTable'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Charts from './components/Chart'
+import { loadOrders } from '../../../redux/orders/actions'
 
 const Tracking = (props) => {
   const [activeTab, setActiveTab] = useState('1');
@@ -83,42 +84,49 @@ const Tracking = (props) => {
         <TabPane tabId="1">
           <StatusTable
             orders={props.orders}
+            loadOrders={props.loadOrders}
             status="Quote"
           />
         </TabPane>
         <TabPane tabId="2">
           <StatusTable
             orders={props.orders}
+            loadOrders={props.loadOrders}
             status="In Production"
           />
         </TabPane>
         <TabPane tabId="3">
           <StatusTable
             orders={props.orders}
+            loadOrders={props.loadOrders}
             status="Invoiced"
           />
         </TabPane>
         <TabPane tabId="4">
           <StatusTable
             orders={props.orders}
+            loadOrders={props.loadOrders}
             status="Ordered"
           />
         </TabPane>
         <TabPane tabId="5">
           <StatusTable
             orders={props.orders}
+            loadOrders={props.loadOrders}
             status="Station 1"
           />
         </TabPane>
         <TabPane tabId="6">
           <StatusTable
             orders={props.orders}
+            loadOrders={props.loadOrders}
             status="Station 2"
           />
         </TabPane>
         <TabPane tabId="7">
           <StatusTable
             orders={props.orders}
+            loadOrders={props.loadOrders}
             status="Shipped"
           />
         </TabPane>
@@ -134,7 +142,7 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-
+      loadOrders
     },
     dispatch
   );

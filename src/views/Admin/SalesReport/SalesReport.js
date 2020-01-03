@@ -4,11 +4,14 @@ import classnames from 'classnames';
 import StatusTable from './components/StatusTable'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { loadOrders } from '../../../redux/orders/actions'
 import Charts from './components/Chart'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
 import { SelectBox, DateBox } from 'devextreme-react';
+import io from 'socket.io-client';
+const socket = io('https://server.portadoor.com/');
 
 momentLocaliser(moment)
 
@@ -27,16 +30,17 @@ const SalesReport = (props) => {
   }
 
   useEffect(() => {
-    console.log('yoooo usee')
     const filteredOrders = orders.filter(item => {
       let date = new Date(item.createdAt);
       return date.getDate() >= startDate.getDate() && date.getDate() <= endDate.getDate();
     })
     setData(filteredOrders);
     console.log(filteredOrders)
-  }, [startDate, endDate])
+  }, [startDate, endDate, orders])
 
-  console.log(orders)
+  useEffect(() => {
+    socket.on('order_submitted', res => props.loadOrders())
+}, [])
 
   const minDate = new Date(orders[orders.length - 1].createdAt)
 
@@ -176,7 +180,7 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-
+      loadOrders
     },
     dispatch
   );
