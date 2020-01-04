@@ -29,7 +29,8 @@ class CustomerPage extends Component {
       edit: false,
       selectedOrder: [],
       modal: false,
-      orderEdit: false
+      orderEdit: false,
+      orders: []
     };
 
     this.toggle = this.toggle.bind(this);
@@ -44,6 +45,15 @@ class CustomerPage extends Component {
       withFirstAndLast: false
     };
   }
+
+  componentDidMount() { 
+    this.setState({ orders: this.props.orders.filter(
+      x => x.jobInfo.customer.id === this.props.selectedCompanies.id
+    )});
+
+  }
+
+
 
 
   toggle = () => {
@@ -74,9 +84,9 @@ class CustomerPage extends Component {
     const { locations, defaultCenter } = this.props;
     console.log(defaultCenter);
 
-    const orders = this.props.orders.filter(
+     let orders= this.props.orders.filter(
       x => x.jobInfo.customer.id === this.props.selectedCompanies.id
-    );
+    )
 
     return (
       <div className="animated resize">

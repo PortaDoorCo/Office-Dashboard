@@ -39,6 +39,9 @@ import Geocode from "react-geocode";
 import CustomerPage from './CustomerPage';
 import { Item } from 'devextreme-react/form';
 import states from '../AddCustomer/states'
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
 
 
 momentLocaliser(moment);
@@ -88,7 +91,7 @@ class CustomerTable extends React.Component {
             locations: [],
             defaultCenter: [],
             productData: new CustomStore({
-                load: () => this.props.loadCustomers(),
+                load: () => this.props.loadCustomers(cookie),
                 update: (key, values) => this.props.updateCustomer(key.id, values),
                 insert: (values) => this.props.submitCustomer(values),
             }),
