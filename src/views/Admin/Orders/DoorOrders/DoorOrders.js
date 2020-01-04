@@ -19,8 +19,6 @@ import {
   getFormValues,
   change,
   FieldArray,
-  focus,
-  isValid
 } from 'redux-form';
 import {
   addToCart,
@@ -54,8 +52,9 @@ import SideBar from './components/SideBar';
 import Ratio from 'lb-ratio'
 import Sticky from 'react-stickynode';
 import moment from 'moment'
-import Maker from './components/MakerJS/Maker';
-// import { ReactComponent as Maker } from './components/MakerJS/Maker';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
 
 const dueDate = moment(new Date()).add(7, 'days').format()
 
@@ -116,7 +115,7 @@ class DoorOrders extends Component {
 
     if (values.part_list[0].dimensions.length > 0) {
   
-      await submitOrder(order);
+      await submitOrder(order, cookie );
       this.setState({updateSubmit: !this.state.updateSubmit})
       reset();
       window.scrollTo(0, 0);
@@ -334,13 +333,8 @@ class DoorOrders extends Component {
       hinges,
       total,
       dispatch,
-      tax,
-      orders,
-      addPriceSelector
+      tax
     } = this.props;
-
-    console.log(tax)
-
 
     return (
       <div className="animated fadeIn resize">
