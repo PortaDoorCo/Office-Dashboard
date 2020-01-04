@@ -8,6 +8,10 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import { Item } from 'devextreme-react/form';
 import CustomStore from 'devextreme/data/custom_store';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
+
 
 class Edges extends React.Component {
     constructor(props) {
@@ -25,9 +29,9 @@ class Edges extends React.Component {
             currentFilter: this.applyFilterTypes[0].key,
             productData: new CustomStore({
                 load: () => this.props.getProduct(),
-                insert: (values) => this.props.addProduct(values, "edges"),
-                update: (key, values) => this.props.updateProduct(key.id, values, 'edges'),
-                remove: (key) => this.props.deleteProduct(key.id, 'edges')
+                insert: (values) => this.props.addProduct(values, "edges", cookie),
+                update: (key, values) => this.props.updateProduct(key.id, values, 'edges', cookie),
+                remove: (key) => this.props.deleteProduct(key.id, 'edges', cookie)
             })
 
         };
