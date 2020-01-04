@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
+import io from 'socket.io-client';
+import Cookies from "js-cookie";
+const socket = io('https://server.portadoor.com/');
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
@@ -21,6 +24,10 @@ export const LOAD_SHIPPING_METHODS = 'LOAD_SHIPPING_METHODS';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 
 const url = 'https://portadoor-server-production.herokuapp.com/'
+const cookie = Cookies.get("jwt");
+
+
+console.log('COOKIE', cookie)
 
 export function addToCart(
   order,
@@ -63,7 +70,13 @@ export function shippingAddress(address) {
 
 export function countOrders() {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders/count`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders/count`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
     const data = await res.json();
     return dispatch({
       type: COUNT_ORDERS,
@@ -74,7 +87,13 @@ export function countOrders() {
 
 export function loadOrders() {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders?_limit=500&_sort=orderNum:DESC`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders?_limit=500&_sort=orderNum:DESC`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
     const data = await res.json();
     return await dispatch({
       type: LOAD_ORDERS,
@@ -85,7 +104,13 @@ export function loadOrders() {
 
 export function loadOrderSubmitted() {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders/5e0e7d7df863b200179227be`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders/5e0e7d7df863b200179227be`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
     const data = await res.json();
     return await dispatch({
 
@@ -105,7 +130,13 @@ export function loadCustomerOrder(customer) {
 export function submitOrder(order) {
   return async function (dispatch) {
     try {
-      const res = axios.post(`https://portadoor-server-production.herokuapp.com/orders`, order);
+      const res = axios.post(`https://portadoor-server-production.herokuapp.com/orders`, order,
+        {
+          headers: {
+            'Authorization': `Bearer ${cookie}`
+          }
+        }
+      );
       const data = await res;
       // NotificationManager.success('Your order was successfully submitted', 'Submit Success', 2000);
       return dispatch({
@@ -121,7 +152,13 @@ export function submitOrder(order) {
 
 export function loadCustomers() {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/companyprofiles?_limit=2000&_sort=CUSTNO:ASC`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/companyprofiles?_limit=2000&_sort=CUSTNO:ASC`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
     const data = await res.json();
     return await dispatch({
       type: LOAD_CUSTOMERS,
@@ -133,7 +170,13 @@ export function loadCustomers() {
 export function updateCustomer(custId, customer) {
   return async function (dispatch) {
     try {
-      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/companyprofiles/${custId}`, customer);
+      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/companyprofiles/${custId}`, customer,
+        {
+          headers: {
+            'Authorization': `Bearer ${cookie}`
+          }
+        }
+      );
       const data = await res;
       console.log(data);
       NotificationManager.success(`Customer has been update!`, 'Customer Updated!', 2000);
@@ -150,7 +193,13 @@ export function updateCustomer(custId, customer) {
 
 export function loadSales() {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/sales`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/sales`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
     const data = await res.json();
     return dispatch({
       type: LOAD_SALES,
@@ -161,7 +210,11 @@ export function loadSales() {
 
 export function loadShippingMethod() {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/shippingmethods`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/shippingmethods`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: LOAD_SHIPPING_METHODS,
@@ -173,7 +226,11 @@ export function loadShippingMethod() {
 export function submitCustomer(customer) {
   return async function (dispatch) {
     try {
-      const res = await axios.post(`https://portadoor-server-production.herokuapp.com/companyprofiles`, customer);
+      const res = await axios.post(`https://portadoor-server-production.herokuapp.com/companyprofiles`, customer, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
       const data = await res;
       console.log(data);
       NotificationManager.success(`Customer has been added!`, 'Submission Succeeded!', 2000);
@@ -208,9 +265,14 @@ export function updateOrder(orderId, order) {
   return async function (dispatch) {
 
     try {
-      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/orders/${orderId}`, order);
+      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/orders/${orderId}`, order, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
       const data = await res;
       console.log(data);
+      NotificationManager.success(`Order ${data.data.orderNum} has been update!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_ORDER,
         data: data
@@ -226,7 +288,11 @@ export function updateOrder(orderId, order) {
 export function updateStatus(orderId, status) {
   return async function (dispatch) {
     try {
-      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, status);
+      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, status, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
       const data = await res;
       console.log(data);
       // NotificationManager.success(`Order ${data.data.orderNum} has been update!`, 'Order Updated!', 2000);
