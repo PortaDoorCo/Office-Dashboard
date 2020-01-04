@@ -100,8 +100,8 @@ class OrderTable extends React.Component {
 
     componentDidMount() {
         const dataGrid = this.dataGrid.instance;
-        socket.on('order_submitted', res => (dataGrid.refresh(), NotificationManager.success(`Order #${res.orderNum} added`,'New Order' , 2000)) )
-        socket.on('status_updated', (res,updatedStatus) => (console.log(updatedStatus.status),dataGrid.refresh(), NotificationManager.success(`Order #${res.orderNum} has been updated to ${updatedStatus.status}`, `An order has been updated`, 2000)) )
+        socket.on('order_submitted', res => (dataGrid.refresh()))
+        socket.on('status_updated', (res,updatedStatus) => (dataGrid.refresh()) )
     }
 
     onSelectionChanged(e) {
