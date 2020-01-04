@@ -43,7 +43,7 @@ import {
 import { login } from "../../redux/users/actions";
 
 import Loader from '../../views/Admin/Loader/Loader'
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationContainer } from 'react-notifications';
 
 
 
@@ -58,9 +58,9 @@ class DefaultLayout extends Component {
 
   componentDidMount = async() => {
     const props = this.props;
-    console.log(props.loggedIn)
+
     const cookie = await Cookies.get("jwt");
-    console.log(cookie)
+
     if(cookie){
       
       await props.loadSales(cookie);
@@ -88,7 +88,7 @@ class DefaultLayout extends Component {
 
   onNewOrder = (e) => {
 
-    console.log(e)
+
   }
 
   render() {

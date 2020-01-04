@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 import {
   Table,
   Input,
-  FormFeedback,
-  FormText,
   Row,
   Col,
   Button

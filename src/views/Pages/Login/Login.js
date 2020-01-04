@@ -63,18 +63,15 @@ class Login extends Component {
         password: password
       })
       .then(response => {
-        // Handle success.
-        // console.log("Well done!");
-        // console.log("User profile", response.data.user);
+
         console.log('User token', response.data.jwt);
-        console.log('test');
-        // this.props.login(response.data.jwt);
+
+
         if (!process.browser) {
           return;
         }
         Cookies.set('username', response.data.user);
         Cookies.set('jwt', response.data.jwt, { expires: 0.8 });
-        console.log(Cookies.get('jwt'));
         this.setState({ loading: true }, () => {
           this.props.login(Cookies.get('jwt'));
         })

@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import StatusTable from './components/StatusTable'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders } from '../../../redux/orders/actions'
 import Charts from './components/Chart'
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
-import { SelectBox, DateBox } from 'devextreme-react';
+import { DateBox } from 'devextreme-react';
 import io from 'socket.io-client';
 const socket = io('https://server.portadoor.com/');
 
 momentLocaliser(moment)
-
-
-
 
 const SalesReport = (props) => {
   const { orders } = props;
@@ -35,13 +31,13 @@ const SalesReport = (props) => {
       return date.getDate() >= startDate.getDate() && date.getDate() <= endDate.getDate();
     })
     setData(filteredOrders);
-    console.log(filteredOrders)
+
   }, [startDate, endDate, orders])
 
   useEffect(() => {
     socket.on('order_submitted', res => props.loadOrders())
     socket.on('status_updated', res => props.loadOrders())
-}, [])
+  })
 
   const minDate = new Date(orders[orders.length - 1].createdAt)
 

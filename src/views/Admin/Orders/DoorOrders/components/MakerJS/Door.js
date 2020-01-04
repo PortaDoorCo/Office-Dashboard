@@ -3,14 +3,12 @@ var _ = require('lodash')
 
 var DoorInner = (function () {
     function DoorInner(width, height, leftStile, rightStile, topRail, bottomRail) {
-        var mm = makerjs.model;
-
         var line = makerjs.paths.Line;
         var ls = Math.min(leftStile, 0);
         var rs = Math.min(rightStile, 0);
         var tr = Math.min(topRail, 0);
         var br = Math.min(bottomRail, 0);
-        // var d = rim;
+
         this.paths = {
             bottom: new line([ls, -0], [width - br, -0]),
             top: new line([ls, height], [width - rs, height]),
@@ -27,8 +25,6 @@ var midRails = (function () {
         var line = makerjs.paths.Line;
         var ls = Math.min(leftStile, 0);
         var rs = Math.min(rightStile, 0);
-        var tr = Math.min(topRail, 0);
-        var br = Math.min(bottomRail, 0);
 
         const mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
             let a = new line([ls, ((height / panelsH) * (i)) + (horizontalMidRailSize / 2)], [width - rs, ((height / panelsH) * (i)) + (horizontalMidRailSize / 2)])
@@ -47,14 +43,8 @@ var midRails = (function () {
 
 var vRails = (function () {
     function vRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize) {
-        var mm = makerjs.model;
-
-        console.log('VVVVV', verticalMidRailSize)
 
         var line = makerjs.paths.Line;
-        var ls = Math.min(leftStile, 0);
-        var rs = Math.min(rightStile, 0);
-        var tr = Math.min(topRail, 0);
         var br = Math.min(bottomRail, 0);
 
         let vr;
@@ -188,9 +178,17 @@ var vRails = (function () {
                 break;
             case 6:
                 v = []
+                break;
+            default: 
+            vr = Array.from(Array(panelsW).keys()).slice(1).map(i => {
+                let a = new line([((width / panelsW) * (i)) + (verticalMidRailSize / 2), br], [((width / panelsW) * (i)) + (verticalMidRailSize / 2), height - br])
+                let b = new line([((width / panelsW) * (i)) - (verticalMidRailSize / 2), br], [((width / panelsW) * (i)) - (verticalMidRailSize / 2), height - br])
+                return [a, b]
+            })
+            v = _.flatten(vr)
         }
 
-        console.log(v)
+        
         this.paths = v
 
     }
@@ -200,9 +198,7 @@ var vRails = (function () {
 
 function Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, solid) {
     var mm = makerjs.models;
-    var cornerRadius = leftStile;
-
-    console.log(panelsW)
+  
     this.models = {
         outer: new mm.Rectangle(width + (leftStile + rightStile), height + (topRail + bottomRail))
     };

@@ -4,7 +4,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
   Form,
@@ -21,7 +20,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   linePriceSelector,
-  itemPriceSelector,
   subTotalSelector,
   taxSelector,
   totalSelector,
@@ -54,8 +52,7 @@ class DoorEdit extends Component {
       const update = () => {
         const customer = this.props.formState && this.props.formState.customer;
         const part_list = this.props.formState && this.props.formState.part_list;
-        console.log(part_list)
-
+       
         if (customer && (customer !== (prevProps.formState && prevProps.formState.customer))) {
           this.props.dispatch(
             change(
@@ -102,14 +99,14 @@ class DoorEdit extends Component {
         }
 
 
-        console.log(part_list);
+     
 
 
         part_list.forEach((part, i) => {
           if (part.dimensions) {
             return part.dimensions.forEach((info, index) => {
 
-              console.log(info)
+         
 
 
               if (info.panelsW > 1) {
@@ -152,8 +149,6 @@ class DoorEdit extends Component {
           if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
             return part.dimensions.forEach((info, index) => {
 
-              console.log("PART  ", part)
-              console.log("DIMENSION  ", info)
 
               this.props.dispatch(
                 change(
@@ -218,7 +213,7 @@ class DoorEdit extends Component {
   }
 
   submit = async (values, e) => {
-    console.log(values);
+   
     const { updateOrder, loadOrders, reset } = this.props;
 
     const order = {
@@ -241,8 +236,6 @@ class DoorEdit extends Component {
   };
 
   render() {
-    const props = this.props;
-
     const {
       handleSubmit,
       prices,
@@ -259,12 +252,10 @@ class DoorEdit extends Component {
       order,
       dimensions,
       part_list,
-      editable,
       tax,
       total
     } = this.props;
 
-    console.log(this.props.selectedOrder[0]);
     return (
       <div className="animated resize">
         <Form onSubmit={handleSubmit(this.submit)}>

@@ -59,7 +59,7 @@ export default data => {
                 ]
             ];
             sortedDimensions.forEach((item, index) => {
-                console.log(item)
+            
                 bottoms.push([
                     { text: item.item, style: 'fonts' },
                     { text: item.qty, style: 'fonts' },
@@ -74,7 +74,7 @@ export default data => {
 
 
             const groupedByDepth = _.groupBy(i.dimensions, 'depth');
-            Object.entries(groupedByDepth).map(([k, v], lineIn) => {
+            Object.entries(groupedByDepth).map(([k, v]) => {
 
                 const groupedMaterialBody = []
 
@@ -87,9 +87,10 @@ export default data => {
                     ]
                 }
 
-                groupedMaterialBody.push(mb)
-                materialBody.push(groupedMaterialBody)
-
+                return (
+                    groupedMaterialBody.push(mb),
+                    materialBody.push(groupedMaterialBody)
+                )
             })
 
             return [

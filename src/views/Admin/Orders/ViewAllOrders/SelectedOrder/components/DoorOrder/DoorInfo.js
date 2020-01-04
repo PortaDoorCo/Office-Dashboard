@@ -177,6 +177,7 @@ class DoorInfo extends Component {
             }
           })
         });
+        return
       }
     }
   }
@@ -192,7 +193,6 @@ class DoorInfo extends Component {
       hinges,
       formState,
       prices,
-      dimensions,
       part_list,
       subTotal
     } = this.props;

@@ -6,7 +6,7 @@ import Orders from './Components/Orders'
 export default (data, startDate, endDate, status) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
-    console.log(data)
+
 
 
     const documentDefinition = {

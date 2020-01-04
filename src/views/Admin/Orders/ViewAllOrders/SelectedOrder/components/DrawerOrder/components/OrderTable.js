@@ -44,7 +44,6 @@ class OrderTable extends Component {
 
     const { fields, scoop, dividers, prices, i, subTotal, part } = this.props;
 
-    console.log(prices)
 
     if (prices.length > 0) {
       return (
@@ -121,7 +120,7 @@ class OrderTable extends Component {
                           disabled
                         />
 
-                        {console.log(index)}
+                     
                       </td>
 
                       <td >

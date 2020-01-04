@@ -27,7 +27,7 @@ class DeleteModal extends Component {
   deleteItem = async (url) => {
     if (this.state.password === this.state.matchPassword) {
       const data = this.props.deleteKey
-      console.log(data)
+     
       await this.props.deleteProduct(data.id, this.props.url)
       alert("here")
       await this.clearChanges()
@@ -56,7 +56,7 @@ class DeleteModal extends Component {
 
   render() {
     const props = this.props
-    console.log(this.state.password)
+    
     return (
       <div className="animated noPrint">
         <Modal

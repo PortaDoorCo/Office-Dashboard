@@ -91,7 +91,7 @@ export default data => {
 
                 const groupedMaterialBody = []
 
-                v.forEach((item, index) => {
+                return v.forEach((item, index) => {
 
 
                     let mb = {
@@ -102,10 +102,11 @@ export default data => {
                             { text: '', style: 'fonts' },
                         ]
                     }
-                    groupedMaterialBody.push(mb)
-                    materialBody.push(groupedMaterialBody)
-
+                    return (groupedMaterialBody.push(mb),
+                    materialBody.push(groupedMaterialBody))
+                    
                 });
+                
             })
 
             return [

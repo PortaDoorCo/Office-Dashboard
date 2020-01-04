@@ -2,38 +2,26 @@
 
 
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap';
 import DataGrid, {
     Column,
-    Editing,
-    Popup,
     Paging,
     Lookup,
     RequiredRule,
-    Position,
-    Form,
     Pager,
-    FilterRow,
     HeaderFilter,
-    SearchPanel,
     ColumnFixing,
-    Selection,
-    Export,
     Summary,
     TotalItem
 } from 'devextreme-react/data-grid';
-import { Checkbox, Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import { SelectBox, DateBox } from 'devextreme-react';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.css';
-import CustomStore from 'devextreme/data/custom_store';
 import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
 import SalesmenReport from '../../Orders/ViewAllOrders/PrintOuts/Reports/SalesmenReport';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/DoorPDF';
-import DrawerPDF from '../../Orders/ViewAllOrders/PrintOuts/DrawerPDF'
+
 
 
 
@@ -97,7 +85,7 @@ class StatusTable extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.orders !== this.props.orders) {
             const filteredItems = this.props.orders.filter(item => (item.jobInfo.customer.sale.fullName && item.jobInfo.customer.sale.fullName.includes(this.props.status)));
-            console.log(filteredItems)
+          
             this.setState({
                 filteredItems: filteredItems
             })
@@ -127,7 +115,7 @@ class StatusTable extends React.Component {
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-        console.log(e);
+       
         this.selectionChangedBySelectBox = false;
 
         this.setState({
@@ -144,7 +132,7 @@ class StatusTable extends React.Component {
     }
 
     toggle = row => {
-        const { modal, edit } = this.state;
+        const { modal } = this.state;
 
         this.setState({
             modal: !modal,
@@ -153,7 +141,7 @@ class StatusTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
-            console.log(x);
+          
             this.setState({
                 selectedOrder: [
                     {
@@ -183,7 +171,7 @@ class StatusTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-                    console.log('clicked');
+                 
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -217,14 +205,14 @@ class StatusTable extends React.Component {
     }
 
     onFilterValueChanged = e => {
-        console.log(e)
+     
         this.setState({
             filterStatus: e.value
         })
     }
 
     calculateCellValue = data => {
-        console.log(new Date(data.createdAt).getTime());
+
         return new Date(data.createdAt).getTime();
     }
 
@@ -286,13 +274,7 @@ class StatusTable extends React.Component {
 
 
     render() {
-        const {
-            productData,
-            selectedRowKeys,
-        } = this.state;
-        const { startDate, endDate } = this.state;
-        const { orders } = this.props;
-
+        const { selectedRowKeys } = this.state;
         return (
             <React.Fragment>
                 <DataGrid

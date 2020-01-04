@@ -1,32 +1,22 @@
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap';
 import DataGrid, {
     Column,
     Editing,
-    Popup,
     Paging,
     Lookup,
     RequiredRule,
-    Position,
-    Form,
     Pager,
-    FilterRow,
     HeaderFilter,
     SearchPanel,
     ColumnFixing,
     Selection,
-    Export,
-    Summary,
-    TotalItem
 } from 'devextreme-react/data-grid';
-import { Checkbox, Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import { SelectBox, DateBox } from 'devextreme-react';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.css';
 import CustomStore from 'devextreme/data/custom_store';
 import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
-import Report1 from '../../Orders/ViewAllOrders/PrintOuts/Reports/Report1';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/DoorPDF';
@@ -85,7 +75,7 @@ class OrderTable extends React.Component {
             endDate: new Date(),
             productData: new CustomStore({
                 load: () => this.props.loadOrders(cookie),
-                update: (key, values) => (this.props.updateStatus(key.id, values, cookie), console.log(key)),
+                update: (key, values) => (this.props.updateStatus(key.id, values, cookie)),
             }),
         };
         this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -98,7 +88,7 @@ class OrderTable extends React.Component {
         // this.onExportBreakdows = this.onExportBreakdows.bind(this)
         this.onFilterStatus = this.onFilterStatus.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
-        this.onUpdated = this.onUpdated.bind(this);
+
     }
 
     componentDidMount() {
@@ -109,7 +99,7 @@ class OrderTable extends React.Component {
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-        console.log(e);
+      
         this.selectionChangedBySelectBox = false;
 
         this.setState({
@@ -126,7 +116,7 @@ class OrderTable extends React.Component {
     }
 
     toggle = row => {
-        const { modal, edit } = this.state;
+        const { modal } = this.state;
 
         this.setState({
             modal: !modal,
@@ -135,7 +125,7 @@ class OrderTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
-            console.log(x);
+         
             this.setState({
                 selectedOrder: [
                     {
@@ -166,7 +156,7 @@ class OrderTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-                    console.log('clicked');
+                  
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -200,18 +190,18 @@ class OrderTable extends React.Component {
     }
 
     calculateCellValue = data => {
-        console.log(new Date(data.createdAt).getTime());
+        
         return new Date(data.createdAt).getTime();
     }
 
     onExportBreakdowns = e => {
-        console.log(this.state.selectedRowsData)
+      
         if (this.state.selectedRowKeys.length > 0) {
             this.state.selectedRowsData.map(i => {
                 if (i.orderType === "Door Order") {
-                    DoorPDF(i);
+                    return DoorPDF(i);
                 } else {
-                    DrawerPDF(i)
+                    return DrawerPDF(i)
                 }
             })
             this.setState({
@@ -226,7 +216,7 @@ class OrderTable extends React.Component {
 
     onFilterStatus({ value }) {
         const dataGrid = this.dataGrid.instance;
-        console.log(value)
+
 
         if (value === 'All') {
             dataGrid.clearFilter();
@@ -273,8 +263,7 @@ class OrderTable extends React.Component {
                         'class': 'dx-datagrid-export-button breakdown'
                     },
                     onClick: function () {
-                        // e.component.exportToExcel(false);
-                        console.log(e)
+                      
                         onExportBreakdowns()
                     }
                 }
@@ -285,31 +274,23 @@ class OrderTable extends React.Component {
     saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
 
     customTotal(data) {
-        console.log(data);
+      
         return `Total: $${data.value.toFixed(2)}`;
     }
 
     customCount(data) {
-        console.log(data);
+      
         return `Orders: ${data.value}`;
     }
 
-    onUpdated = (e) => {
-    console.log('onUpdated',e)
-    console.log(e.data)
-    console.log([{...e.data}, e.key.orderNum])
-    // this.props.updateStatus(e.key.id, e.data)
-    }
+
 
 
     render() {
         const {
             productData,
             selectedRowKeys,
-        } = this.state;
-        const { startDate, endDate } = this.state;
-        const { orders } = this.props;
-        const minDate = orders.length > 0 ? new Date(orders[orders.length - 1].createdAt) : new Date();
+        } = this.state;      
 
         return (
             <React.Fragment>
@@ -321,7 +302,7 @@ class OrderTable extends React.Component {
                     showBorders={true}
                     allowColumnResizing={true}
                     columnAutoWidth={true}
-                    onRowUpdated={this.onUpdated}
+                    
                     onSelectionChanged={this.onSelectionChanged}
                     onToolbarPreparing={this.onToolbarPreparing}
                     // onExporting={this.onExporting}

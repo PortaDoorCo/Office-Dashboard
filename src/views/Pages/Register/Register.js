@@ -41,7 +41,6 @@ class Register extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    console.log('test');
 
     // Request API.
     const { Username, Email, Password, FullName } = this.state;
@@ -65,8 +64,6 @@ class Register extends Component {
   };
 
   render() {
-    console.log(this.state.Username);
-
     if (this.state.signedUp) {
       return <Redirect to="/dashboard" />;
     }

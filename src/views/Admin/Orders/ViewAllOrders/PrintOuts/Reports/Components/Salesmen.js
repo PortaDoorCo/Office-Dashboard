@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default (data, startDate, endDate, status) => {
-    console.log(data, startDate, endDate, status)
+
     const tableBody = [
         [
             { text: 'Date' },
@@ -29,11 +29,11 @@ export default (data, startDate, endDate, status) => {
         if (i.orderType === "Door Order") {
             i.part_list.map(part => {
                 if (part.orderType.value === "Door") {
-                    doors++
-                    doorTotal++
+                    return (doors++,
+                    doorTotal++)
                 } else {
-                    dfs++
-                    dfTotal++
+                    return(dfs++,
+                    dfTotal++)
                 }
             })
         } else {

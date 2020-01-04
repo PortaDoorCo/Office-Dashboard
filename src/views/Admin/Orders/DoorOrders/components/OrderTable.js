@@ -3,36 +3,18 @@ import {
   Label,
   Table,
   Input,
-  FormFeedback,
-  FormText,
   Row,
   Col,
-  Button,
-  // Tooltip
+  Button
 } from "reactstrap";
-import { Tooltip } from 'antd'
-import "antd/dist/antd.css";
-import { Checkbox } from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css'
-
-
-import {
-  Field,
-
-} from "redux-form";
+import { Checkbox } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
+import { Field}  from "redux-form";
 import Ratio from "lb-ratio";
-import Slider from 'rc-slider';
-
-import 'rc-slider/assets/index.css';
-import Maker from '../components/MakerJS/Maker'
-
-
+import Maker from '../components/MakerJS/Maker';
 
 
 const required = value => (value ? undefined : 'Required');
-
-
-
 
 
 const renderField = ({
@@ -63,7 +45,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, updateSubmit }) => {
+const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit }) => {
 
   const [uneven, setUneven] = useState(false)
   const [width, setWidth] = useState([])
@@ -104,16 +86,6 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
     }
     setHeight(newHeight);
   }
-
-
-
-
-
-  const RangeSelector = props => (
-    <div>
-      <Slider defaultValue={50} />
-    </div>
-  )
 
 
   return (
@@ -309,7 +281,7 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
 
               <Row>
                 <Col>
-                  {console.log('fffff', height)}
+           
                   {height[index] > 0 ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker

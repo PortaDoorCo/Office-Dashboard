@@ -1,14 +1,16 @@
 import React from 'react';
-import { Input } from 'reactstrap'
 import DataGrid, {
   Column, Editing, Popup, Paging, Lookup, RequiredRule, Position,
-  Form, Pager, FilterRow, HeaderFilter, SearchPanel, ColumnFixing
+  Form, Pager, SearchPanel, ColumnFixing
 } from 'devextreme-react/data-grid';
-import { SelectBox, CheckBox, FileUploader } from 'devextreme-react';
+import { FileUploader } from 'devextreme-react';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import { Item } from 'devextreme-react/form';
 import CustomStore from 'devextreme/data/custom_store';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
 
 
 const thickness = [
@@ -56,10 +58,10 @@ class Moulds extends React.Component {
       showHeaderFilter: true,
       currentFilter: this.applyFilterTypes[0].key,
       productData: new CustomStore({
-        load: () => this.props.getProduct(),
-        insert: (values) => this.props.addProduct(values, "moulds"),
-        update: (key, values) => this.props.updateProduct(key.id, values, 'moulds'),
-        remove: (key) => this.props.deleteProduct(key.id, 'moulds')
+        load: () => this.props.getProduct(cookie),
+        insert: (values) => this.props.addProduct(values, "moulds", cookie),
+        update: (key, values) => this.props.updateProduct(key.id, values, 'moulds', cookie),
+        remove: (key) => this.props.deleteProduct(key.id, 'moulds', cookie)
       })
 
     };
@@ -87,17 +89,17 @@ class Moulds extends React.Component {
         <div
           style={{ width: '100px', height: '100px', margin: 'auto' }}
         >
-          <img src={rowData.data.photo.url} style={{ width: '100px', height: '100px' }} />
+          <img src={rowData.data.photo.url} alt='moulds' style={{ width: '100px', height: '100px' }} />
         </div>
       )
     }
   }
 
   onUploaded = (cell, e) => {
-    console.log(e)
+  
     const data = JSON.parse(e.request.response)
     const id = data[0].id
-    console.log(id)
+  
     cell.setValue(id)
   }
 
@@ -133,8 +135,8 @@ class Moulds extends React.Component {
   }
 
   render() {
-    const { productData, imageId } = this.state;
-    console.log('imagesdfsdf', imageId)
+    const { productData } = this.state;
+    
     return (
       <React.Fragment>
         <DataGrid

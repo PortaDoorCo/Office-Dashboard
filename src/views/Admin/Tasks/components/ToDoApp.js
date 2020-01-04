@@ -30,11 +30,9 @@ class TodoApp extends React.Component {
       }
       this.props.createTask(task)
       // this.setState({ todoItems: todoItems });
-      console.log(todoItem)
+   
     }
     removeItem(itemIndex, id) {
-      console.log(itemIndex)
-      console.log(id)
       this.props.removeTask(id)
     }
     markTodoDone(itemIndex, id) {
@@ -51,7 +49,7 @@ class TodoApp extends React.Component {
       this.props.markDone(id, done)
     }
     render() {
-      console.log(this.props.tasks)
+     
       return (
         <div id="main">
           <TodoHeader />

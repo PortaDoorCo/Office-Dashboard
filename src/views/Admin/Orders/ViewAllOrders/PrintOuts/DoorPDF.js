@@ -11,7 +11,7 @@ import Invoice from './Door_PDF/Invoice'
 export default data => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
-  console.log(data)
+
 
   const documentDefinition = {
     pageSize: 'A4',
@@ -44,7 +44,7 @@ export default data => {
       }
     }
   };
-  const fileName = `Order_${data.orderNum}`
+  // const fileName = `Order_${data.orderNum}`
   pdfMake.createPdf(documentDefinition).open();
 
 

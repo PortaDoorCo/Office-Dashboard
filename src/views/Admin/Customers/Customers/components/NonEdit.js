@@ -12,13 +12,12 @@ import {
   Input,
 
 } from 'reactstrap';
-import toPercent from 'decimal-to-percent'
 
 class NonEdit extends Component {
 
   render() {
     const props = this.props;
-    console.log(props)
+
 
 
 
