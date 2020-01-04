@@ -410,16 +410,15 @@ class DoorInfo extends Component {
         <Button
           color="primary"
           onClick={() =>
+            formState.part_list[formState.part_list.length - 1].dimensions.length > 0 ?
             fields.push({
               orderType: orderType[0],
               construction: construction[0],
               thickness: thickness[0],
-              dimensions: [{
-                panelsH: 1,
-                panelsW: 1,
-              }],
+              dimensions: [],
               addPrice: 0
             })
+            : alert('please complete previous item')
           }
         >
           Add Item

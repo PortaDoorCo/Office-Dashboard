@@ -63,6 +63,7 @@ const StatusTable = (props) => {
 
     useEffect(() => {
         socket.on('order_submitted', res => props.loadOrders())
+        socket.on('status_updated', res => props.loadOrders())
     }, [])
 
 

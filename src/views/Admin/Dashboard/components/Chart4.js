@@ -26,7 +26,7 @@ class Chart4 extends Component {
 
     const groups = [];
     filteredOrders.forEach(item => {
-      console.log(item);
+ 
       groups.push(item.status);
     });
 
