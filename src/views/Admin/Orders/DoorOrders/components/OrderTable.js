@@ -7,12 +7,16 @@ import {
   FormText,
   Row,
   Col,
-  Button
+  Button,
 } from "reactstrap";
-// import { Button } from 'antd'
+// import { Tooltip } from 'antd'
+import Tooltip from '@material-ui/core/Tooltip';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 import "antd/dist/antd.css";
 import { Checkbox } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
+
 
 import {
   Field,
@@ -20,9 +24,10 @@ import {
 } from "redux-form";
 import Ratio from "lb-ratio";
 import Slider from 'rc-slider';
-import Tooltip from 'rc-tooltip';
+
 import 'rc-slider/assets/index.css';
 import Maker from '../components/MakerJS/Maker'
+
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
@@ -113,6 +118,7 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
   const [uneven, setUneven] = useState(false)
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   useEffect(() => {
 
@@ -120,7 +126,7 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
     setWidth(init)
     setHeight(init)
 
-  },[updateSubmit])
+  }, [updateSubmit])
 
   const toggle = () => {
     setUneven(!uneven)
@@ -147,6 +153,10 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
     }
     setHeight(newHeight);
   }
+
+
+
+  const toggleToolTip = () => setTooltipOpen(!tooltipOpen);
 
 
 
@@ -396,32 +406,40 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
               <br />
             </Fragment>
           ))}
-          <Button
-            color="primary"
-            className="btn-circle"
-            onClick={() =>
-              fields.push({
-                panelsH: 1,
-                panelsW: 1,
-                leftStile: fraction(
-                  formState.part_list[formState.part_list.length - 1].design.L_STILE_W
-                ),
-                rightStile: fraction(
-                  formState.part_list[formState.part_list.length - 1].design.R_STILE_W
-                ),
-                topRail: fraction(
-                  formState.part_list[formState.part_list.length - 1].design.TOP_RAIL_W
-                ),
-                bottomRail: fraction(
-                  formState.part_list[formState.part_list.length - 1].design.BOT_RAIL_W
-                ),
-                horizontalMidRailSize: 0,
-                verticalMidRailSize: 0
-              })
-            }
-          >
-            +
-      </Button>
+          <Row>
+            <Col>
+       
+                <Button
+                  color="primary"
+                  className="btn-circle"
+                  onClick={(e) =>
+                    formState.part_list[formState.part_list.length - 1].design ?
+                      fields.push({
+                        panelsH: 1,
+                        panelsW: 1,
+                        leftStile: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.L_STILE_W
+                        ),
+                        rightStile: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.R_STILE_W
+                        ),
+                        topRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.TOP_RAIL_W
+                        ),
+                        bottomRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.BOT_RAIL_W
+                        ),
+                        horizontalMidRailSize: 0,
+                        verticalMidRailSize: 0
+                      }) : alert('please select a design')
+                  }
+                >
+                  +
+                </Button>
+        
+            </Col>
+          </Row>
+
           <Row>
             <Col xs="4" />
             <Col xs="5" />
