@@ -39,6 +39,6 @@ export default data => {
     }
   };
 
-  const fileName = `Order_${data.orderNum}`
+  // const fileName = `Order_${data.orderNum}`
   pdfMake.createPdf(documentDefinition).open();
 };

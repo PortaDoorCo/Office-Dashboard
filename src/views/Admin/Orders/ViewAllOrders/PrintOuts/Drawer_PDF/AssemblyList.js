@@ -136,10 +136,13 @@ export default data => {
         }
 
 
-        info.push(groupedInfoBody)
-        tableBody.push(groupedTableBody)
-        groupedMaterialBody.push(mb)
-        materialBody.push(groupedMaterialBody)
+        return (
+          info.push(groupedInfoBody),
+          tableBody.push(groupedTableBody),
+          groupedMaterialBody.push(mb),
+          materialBody.push(groupedMaterialBody)
+        )
+
 
       });
 

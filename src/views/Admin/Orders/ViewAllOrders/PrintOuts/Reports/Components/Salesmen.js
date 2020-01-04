@@ -29,11 +29,11 @@ export default (data, startDate, endDate, status) => {
         if (i.orderType === "Door Order") {
             i.part_list.map(part => {
                 if (part.orderType.value === "Door") {
-                    doors++
-                    doorTotal++
+                    return (doors++,
+                    doorTotal++)
                 } else {
-                    dfs++
-                    dfTotal++
+                    return(dfs++,
+                    dfTotal++)
                 }
             })
         } else {

@@ -1,32 +1,22 @@
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap';
 import DataGrid, {
     Column,
     Editing,
-    Popup,
     Paging,
     Lookup,
     RequiredRule,
-    Position,
-    Form,
     Pager,
-    FilterRow,
     HeaderFilter,
     SearchPanel,
     ColumnFixing,
     Selection,
-    Export,
-    Summary,
-    TotalItem
 } from 'devextreme-react/data-grid';
-import { Checkbox, Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import { SelectBox, DateBox } from 'devextreme-react';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.css';
 import CustomStore from 'devextreme/data/custom_store';
 import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
-import Report1 from '../../Orders/ViewAllOrders/PrintOuts/Reports/Report1';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/DoorPDF';
@@ -126,7 +116,7 @@ class OrderTable extends React.Component {
     }
 
     toggle = row => {
-        const { modal, edit } = this.state;
+        const { modal } = this.state;
 
         this.setState({
             modal: !modal,
@@ -209,9 +199,9 @@ class OrderTable extends React.Component {
         if (this.state.selectedRowKeys.length > 0) {
             this.state.selectedRowsData.map(i => {
                 if (i.orderType === "Door Order") {
-                    DoorPDF(i);
+                    return DoorPDF(i);
                 } else {
-                    DrawerPDF(i)
+                    return DrawerPDF(i)
                 }
             })
             this.setState({
@@ -300,10 +290,7 @@ class OrderTable extends React.Component {
         const {
             productData,
             selectedRowKeys,
-        } = this.state;
-        const { startDate, endDate } = this.state;
-        const { orders } = this.props;
-        const minDate = orders.length > 0 ? new Date(orders[orders.length - 1].createdAt) : new Date();
+        } = this.state;      
 
         return (
             <React.Fragment>

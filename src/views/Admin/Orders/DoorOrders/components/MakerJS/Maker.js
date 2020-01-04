@@ -1,24 +1,14 @@
-import { Blueprint, sbp } from 'svg-blueprint'
+import { Blueprint } from 'svg-blueprint'
 import makerjs from 'makerjs'
-import ReactDOM from 'react-dom';
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import React, { useState, useEffect, createRef, useRef } from 'react';
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-    reduxForm,
-    FormSection,
     getFormValues,
-    change,
-    blur,
-    focus,
-    FieldArray
 } from 'redux-form';
 import Door from './Door'
 import numQty from 'numeric-quantity';
-import Ratio from 'lb-ratio';
-
-
 
 const Maker = props => {
 
@@ -26,7 +16,6 @@ const Maker = props => {
 
     const ref = useRef(null);
     const [id, setID] = useState('');
-    const [loaded, setLoaded] = useState(false);
     const [bps, setBps] = useState(null);
     const [pathItem, setPathItem] = useState(null);
     // const [width, setWidth] = useState(0);
@@ -74,7 +63,7 @@ const Maker = props => {
         bp.fit()
         //bp.redraw();
         setBps(bp);
-    }, [props.height, props.width, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize]);
+    }, [props.height, props.width, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, bps, height, pathItem, props.index, width]);
 
 
 

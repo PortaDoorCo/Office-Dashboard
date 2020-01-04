@@ -1,6 +1,6 @@
 import React from 'react';
 import DataGrid, {
-    Column, Editing, Popup, Paging, Lookup, RequiredRule, Position,
+    Column, Editing, Popup, Paging, RequiredRule, Position,
     Form, Pager, SearchPanel, ColumnFixing
 } from 'devextreme-react/data-grid';
 import { FileUploader } from 'devextreme-react';
@@ -8,37 +8,6 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import { Item } from 'devextreme-react/form';
 import CustomStore from 'devextreme/data/custom_store';
-
-
-const thickness = [
-    {
-        name: '0.75',
-        value: 0.75
-    },
-    {
-        name: '1',
-        value: 1
-    }
-];
-
-const construction = [
-    {
-        name: 'Cope And Stick',
-        value: 'Cope'
-    },
-    {
-        name: 'Mitered Construction',
-        value: 'M'
-    },
-    {
-        name: 'MT Construction',
-        value: 'MT'
-    },
-    {
-        name: 'Special Item',
-        value: 'Special'
-    }
-];
 
 class Edges extends React.Component {
     constructor(props) {
@@ -86,7 +55,7 @@ class Edges extends React.Component {
                 <div
                     style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                    <img src={rowData.data.photo.url} style={{ width: '100px', height: '100px' }} />
+                    <img src={rowData.data.photo.url} alt='edges' style={{ width: '100px', height: '100px' }} />
                 </div>
             )
         }
@@ -132,7 +101,7 @@ class Edges extends React.Component {
     }
 
     render() {
-        const { productData, imageId } = this.state;
+        const { productData } = this.state;
 
         return (
             <React.Fragment>

@@ -12,5 +12,5 @@ export default (item, part) => {
         pattern: 'Bottoms'
     }
 
-    return `(${item.qty}) - ${fraction((parseInt(item.width) - (part.boxThickness.Decimal * 2) + 0.5))} x ${fraction((parseInt(item.depth) - (part.boxThickness.Decimal * 2) + 0.5))}`
+   
 };

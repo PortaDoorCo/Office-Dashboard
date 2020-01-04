@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NotificationManager } from 'react-notifications';
-import Cookies from "js-cookie";
+
 
 export const GET_WOODTYPES = 'GET_WOODTYPES';
 export const GET_DESIGNS = 'GET_DESIGNS';
@@ -23,10 +23,6 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
-
-const url = 'https://portadoor-server-production.herokuapp.com/'
-const cookie = Cookies.get("jwt");
-
 
 export function getWoodtypes(cookie) {
   return async function (dispatch) {
@@ -277,6 +273,7 @@ export function updateProduct(orderId, product, url, cookie) {
       // NotificationManager.success(`Product Updated!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_PRODUCT,
+        data:data
       });
     } catch (error) {
       console.error(error);

@@ -118,6 +118,7 @@ class DoorInfo extends Component {
 
     if (this.props.formState !== prevProps.formState) {
       if (this.props.formState && this.props.formState.part_list) {
+        return(
         this.setState({
           designFilter: this.props.formState.part_list.map((i, index) => {
             let filter = this.props.designs.filter(
@@ -125,7 +126,7 @@ class DoorInfo extends Component {
 
                 el.OrderType === i.orderType.value &&
                 el.Construction === i.construction.value &&
-                el.THICKNESS == i.thickness.value
+                el.THICKNESS === i.thickness.value
             );
             if (filter.length > 0) {
               return filter;
@@ -133,7 +134,7 @@ class DoorInfo extends Component {
               return this.props.designs
             }
           })
-        });
+        }),
 
 
         this.setState({
@@ -188,7 +189,9 @@ class DoorInfo extends Component {
             }
             
           })
-        });
+        })
+        )
+       
       }
     }
   }
@@ -197,8 +200,6 @@ class DoorInfo extends Component {
     const {
       fields,
       woodtypes,
-      designs,
-      moulds,
       panels,
       edges,
       finish,

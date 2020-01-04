@@ -111,7 +111,7 @@ export default data => {
             { text: ' Total: ', width: 129, style: 'totals', alignment: 'left' },
             { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
             {
-              stack: [,
+              stack: [
                 {
                   columns: [
                     { text: 'Additional Price', style: 'totals', margin: [0, 0, 0, 0], },
