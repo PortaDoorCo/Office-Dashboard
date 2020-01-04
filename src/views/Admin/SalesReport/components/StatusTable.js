@@ -34,6 +34,8 @@ import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/DoorPDF';
 import DrawerPDF from '../../Orders/ViewAllOrders/PrintOuts/DrawerPDF'
+import io from 'socket.io-client';
+const socket = io('https://server.portadoor.com/');
 
 
 momentLocaliser(moment);
@@ -90,6 +92,8 @@ class StatusTable extends React.Component {
         // this.onFilterValueChanged = this.onFilterValueChanged.bind(this)
 
     }
+
+
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.orders !== this.props.orders) {
