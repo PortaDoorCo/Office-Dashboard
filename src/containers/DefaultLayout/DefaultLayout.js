@@ -45,6 +45,8 @@ import { login } from "../../redux/users/actions";
 import Loader from '../../views/Admin/Loader/Loader'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
+
+
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -53,68 +55,30 @@ class DefaultLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
-  componentDidMount = async () => {
-
-
-    const props = this.props;
-    await props.loadOrders();
-    await props.loadSales();
-    await props.countOrders();
-    await props.getWoodtypes();
-    await props.getDesigns();
-    await props.getEdges();
-    await props.getFinish();
-    await props.getGrades();
-    await props.getMoulds();
-    await props.getPanels();
-    await props.getHinges();
-    await props.getBoxThickness();
-    await props.getBoxBottoms();
-    await props.getAssembly();
-    await props.getNotch();
-    await props.getDrawerFinish();
-    await props.loadShippingMethod();
-
-    const token = Cookies.get("jwt");
-    if (!this.props.loggedIn) {
-      this.props.login(token);
-    }
-  }
-
   onNewOrder = (e) => {
-    
-    console.log(e)
-  }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.orders.sessionOrders !== prevProps.orders.sessionOrders) {
-      this.props.countOrders();
-      this.props.loadOrders();
-    }
-    if (this.props.orders.sessionCustomers !== prevProps.orders.sessionCustomers) {
-      this.props.loadCustomers();
-    }
+    console.log(e)
   }
 
   render() {
 
 
-    if ((!this.props.loadedWoodtype 
-      && !this.props.loadedDesign 
-      && !this.props.loadedEdge 
-      && !this.props.loadedMould 
-      && !this.props.loadedPanel 
-      && !this.props.loadedGrade 
-      && !this.props.loadedFinish 
-      && !this.props.loadedBoxThickness 
-      && !this.props.loadedBoxBottoms 
-      && !this.props.loadedAssembly 
-      && !this.props.loadedNotchb 
-      && !this.props.loadedHinges 
+    if ((!this.props.loadedWoodtype
+      && !this.props.loadedDesign
+      && !this.props.loadedEdge
+      && !this.props.loadedMould
+      && !this.props.loadedPanel
+      && !this.props.loadedGrade
+      && !this.props.loadedFinish
+      && !this.props.loadedBoxThickness
+      && !this.props.loadedBoxBottoms
+      && !this.props.loadedAssembly
+      && !this.props.loadedNotchb
+      && !this.props.loadedHinges
       && !this.props.loadedDrawerFinishes
       && !this.props.customerDBLoaded
       && !this.props.ordersDBLoaded
-      )) {
+    )) {
       return <Loader />;
     } else {
       return (
@@ -141,7 +105,7 @@ class DefaultLayout extends Component {
                 <Suspense fallback={this.loading()}>
                   <Switch>
                     {routes.map((route, idx) => {
-                      return route.component  ? (
+                      return route.component ? (
                         <Route
                           key={idx}
                           path={route.path}
