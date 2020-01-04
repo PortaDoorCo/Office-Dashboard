@@ -97,7 +97,7 @@ class StatusTable extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.orders !== this.props.orders) {
             const filteredItems = this.props.orders.filter(item => (item.jobInfo.customer.sale.fullName && item.jobInfo.customer.sale.fullName.includes(this.props.status)));
-            console.log(filteredItems)
+          
             this.setState({
                 filteredItems: filteredItems
             })
@@ -127,7 +127,7 @@ class StatusTable extends React.Component {
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-        console.log(e);
+       
         this.selectionChangedBySelectBox = false;
 
         this.setState({
@@ -153,7 +153,7 @@ class StatusTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
-            console.log(x);
+          
             this.setState({
                 selectedOrder: [
                     {
@@ -183,7 +183,7 @@ class StatusTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-                    console.log('clicked');
+                 
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -217,14 +217,14 @@ class StatusTable extends React.Component {
     }
 
     onFilterValueChanged = e => {
-        console.log(e)
+     
         this.setState({
             filterStatus: e.value
         })
     }
 
     calculateCellValue = data => {
-        console.log(new Date(data.createdAt).getTime());
+
         return new Date(data.createdAt).getTime();
     }
 

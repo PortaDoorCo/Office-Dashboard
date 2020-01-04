@@ -59,7 +59,7 @@ export default data => {
                 ]
             ];
             sortedDimensions.forEach((item, index) => {
-                console.log(item)
+            
                 bottoms.push([
                     { text: item.item, style: 'fonts' },
                     { text: item.qty, style: 'fonts' },

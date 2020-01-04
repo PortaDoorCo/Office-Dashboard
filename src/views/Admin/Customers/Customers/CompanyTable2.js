@@ -105,7 +105,7 @@ class CustomerTable extends React.Component {
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-        console.log(e);
+     
         this.selectionChangedBySelectBox = false;
 
         this.setState({
@@ -131,7 +131,7 @@ class CustomerTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
-            console.log('skldfjsdkfj', x.id);
+          
             await this.setState({
                 selectedCompanies: x,
                 selectedOrder: x.id,
@@ -165,7 +165,7 @@ class CustomerTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-                    console.log('clicked');
+             
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -202,12 +202,12 @@ class CustomerTable extends React.Component {
     saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
 
     customTotal(data) {
-        console.log(data);
+     
         return `Total: $${data.value.toFixed(2)}`;
     }
 
     customCount(data) {
-        console.log(data);
+      
         return `Orders: ${data.value}`;
     }
 

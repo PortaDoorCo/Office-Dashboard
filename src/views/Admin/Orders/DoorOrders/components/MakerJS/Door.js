@@ -49,7 +49,6 @@ var vRails = (function () {
     function vRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize) {
         var mm = makerjs.model;
 
-        console.log('VVVVV', verticalMidRailSize)
 
         var line = makerjs.paths.Line;
         var ls = Math.min(leftStile, 0);
@@ -190,7 +189,7 @@ var vRails = (function () {
                 v = []
         }
 
-        console.log(v)
+        
         this.paths = v
 
     }
@@ -202,7 +201,7 @@ function Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH
     var mm = makerjs.models;
     var cornerRadius = leftStile;
 
-    console.log(panelsW)
+  
     this.models = {
         outer: new mm.Rectangle(width + (leftStile + rightStile), height + (topRail + bottomRail))
     };

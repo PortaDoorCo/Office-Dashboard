@@ -8,7 +8,7 @@ class TodoList extends React.Component {
 
     render() {
       var items = this.props.items.map((item, index) => {
-        // console.log(item._id)
+    
         return (
           <TodoListItem
             key={item._id}

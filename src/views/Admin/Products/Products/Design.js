@@ -125,10 +125,10 @@ class Design extends React.Component {
     }
 
     onUploaded = (cell, e) => {
-      console.log(e);
+    
       const data = JSON.parse(e.request.response);
       const id = data[0].id;
-      console.log(id);
+   
       cell.setValue(id);
     }
 

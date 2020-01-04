@@ -339,7 +339,7 @@ class DoorOrders extends Component {
       addPriceSelector
     } = this.props;
 
-    console.log(tax)
+
 
 
     return (

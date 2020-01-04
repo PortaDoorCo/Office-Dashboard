@@ -12,7 +12,6 @@ export default data => {
 
   const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0)
 
-  console.log('dataaaa',data)
 
 
   return [
@@ -51,7 +50,7 @@ export default data => {
       canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
     },
     data.part_list.map((part, i) => {
-      console.log(part)
+   
       const tableBody = [
         [
           { text: 'Item', style: 'fonts' },
@@ -65,8 +64,7 @@ export default data => {
 
 
       part.dimensions.forEach((item, index) => {
-        // Panels(item, part);
-        console.log(data)
+
         tableBody.push([
           { text: index + 1, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },

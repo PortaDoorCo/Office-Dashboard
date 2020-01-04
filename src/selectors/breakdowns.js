@@ -32,6 +32,6 @@ export const partSelector = createSelector(
       const finish = part.finish.price;
       const hinge = part.hinges.Price;
 
-      console.log(part);
+ 
     })
 );

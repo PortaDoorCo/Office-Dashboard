@@ -59,7 +59,7 @@ class MarkerWithInfoWindow extends Component {
 }
 
 const GoogleMapsComponent = withScriptjs(withGoogleMap((props) => {
-    console.log(props)
+ 
     return (
         <GoogleMap defaultZoom={defaultZoom} center={props.defaultCenter[0]}>
             {<MarkerList locations={props.locations} />}
@@ -81,7 +81,7 @@ class Maps extends Component {
 
     render() {
 
-        console.log(this.state.locations)
+     
 
         return (
             <div className="animated fadeIn">

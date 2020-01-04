@@ -58,7 +58,7 @@ const StatusTable = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log("ORDERS", props.orders)
+      
     }, [props.orders])
 
     useEffect(() => {

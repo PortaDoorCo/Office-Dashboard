@@ -40,7 +40,7 @@ const CustomerOrders = (props) => {
 
 
     useEffect(() => {
-        console.log('filter text changed', data)
+   
         const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
         setData(filteredItems);
     }, [filterText, props.orders])

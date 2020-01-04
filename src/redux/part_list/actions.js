@@ -55,7 +55,7 @@ export function getDesigns(cookie) {
       }
     });
     const data = await res.json();
-    console.log(data);
+ 
     return dispatch({
       type: GET_DESIGNS,
       data: data
@@ -244,7 +244,7 @@ export function getHinges(cookie) {
 }
 
 export function addProduct(product, url, cookie) {
-  console.log(product)
+
   return async function (dispatch) {
     try {
       const { data } = await axios.post(`/${url}`, product, {
@@ -252,7 +252,7 @@ export function addProduct(product, url, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-      console.log(data)
+   
       // NotificationManager.success('Product Added', 'Product Added', 2000);
       return dispatch({
         type: ADD_PRODUCT,
@@ -273,7 +273,7 @@ export function updateProduct(orderId, product, url, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-      console.log('dataaaaaa', data);
+    
       // NotificationManager.success(`Product Updated!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_PRODUCT,
@@ -293,7 +293,7 @@ export function deleteProduct(orderId, product, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-      console.log('dataaaaaa', data);
+    
       // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: DELETE_PRODUCT,
@@ -316,7 +316,7 @@ export function uploadFile(file, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       })
-      console.log('dataaaaaa', data);
+  
       // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: UPLOAD_FILE,

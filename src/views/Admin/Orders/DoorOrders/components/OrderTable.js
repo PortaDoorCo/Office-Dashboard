@@ -309,7 +309,7 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
 
               <Row>
                 <Col>
-                  {console.log('fffff', height)}
+           
                   {height[index] > 0 ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker
