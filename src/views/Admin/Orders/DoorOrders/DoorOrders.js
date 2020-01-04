@@ -19,6 +19,8 @@ import {
   getFormValues,
   change,
   FieldArray,
+  focus,
+  isValid
 } from 'redux-form';
 import {
   addToCart,
@@ -52,6 +54,8 @@ import SideBar from './components/SideBar';
 import Ratio from 'lb-ratio'
 import Sticky from 'react-stickynode';
 import moment from 'moment'
+import Maker from './components/MakerJS/Maker';
+// import { ReactComponent as Maker } from './components/MakerJS/Maker';
 
 const dueDate = moment(new Date()).add(7, 'days').format()
 
@@ -81,7 +85,6 @@ class DoorOrders extends Component {
   };
 
   submit = async (values, e) => {
-    e.preventDefault()
     const {
       reset,
       prices,
@@ -173,9 +176,12 @@ class DoorOrders extends Component {
             )
           );
 
-          part_list.map((part, i) => {
+          part_list.forEach((part, i) => {
             if (part.dimensions) {
               return part.dimensions.forEach((info, index) => {
+
+     
+
                 this.props.dispatch(
                   change(
                     'DoorOrder',
@@ -328,10 +334,12 @@ class DoorOrders extends Component {
       hinges,
       total,
       dispatch,
-      tax
+      tax,
+      orders,
+      addPriceSelector
     } = this.props;
 
-
+    console.log(tax)
 
 
     return (
