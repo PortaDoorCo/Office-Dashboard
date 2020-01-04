@@ -82,7 +82,7 @@ class OrderTable extends React.Component {
             endDate: new Date(),
             productData: new CustomStore({
                 load: () => this.props.loadOrders(),
-                update: (key, values) => this.props.updateStatus(key.id, values),
+                update: (key, values) => (this.props.updateStatus(key.id, values, key.orderNum), console.log(key)),
             }),
         };
         this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -95,11 +95,13 @@ class OrderTable extends React.Component {
         // this.onExportBreakdows = this.onExportBreakdows.bind(this)
         this.onFilterStatus = this.onFilterStatus.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.onUpdated = this.onUpdated.bind(this);
     }
 
     componentDidMount() {
         const dataGrid = this.dataGrid.instance;
-        socket.on('order_submitted', res => (dataGrid.refresh(), NotificationManager.success('New Order', `Order #${res.orderNum} added`, 2000)) )
+        socket.on('order_submitted', res => (dataGrid.refresh(), NotificationManager.success(`Order #${res.orderNum} added`,'New Order' , 2000)) )
+        socket.on('status_updated', (res,updatedStatus) => (console.log(updatedStatus.status),dataGrid.refresh(), NotificationManager.success(`Order #${res.orderNum} has been updated to ${updatedStatus.status}`, `An order has been updated`, 2000)) )
     }
 
     onSelectionChanged(e) {
@@ -289,6 +291,13 @@ class OrderTable extends React.Component {
         return `Orders: ${data.value}`;
     }
 
+    onUpdated = (e) => {
+    console.log('onUpdated',e)
+    console.log(e.data)
+    console.log([{...e.data}, e.key.orderNum])
+    // this.props.updateStatus(e.key.id, e.data)
+    }
+
 
     render() {
         const {
@@ -309,6 +318,7 @@ class OrderTable extends React.Component {
                     showBorders={true}
                     allowColumnResizing={true}
                     columnAutoWidth={true}
+                    onRowUpdated={this.onUpdated}
                     onSelectionChanged={this.onSelectionChanged}
                     onToolbarPreparing={this.onToolbarPreparing}
                     // onExporting={this.onExporting}
