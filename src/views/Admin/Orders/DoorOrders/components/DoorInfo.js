@@ -197,6 +197,8 @@ class DoorInfo extends Component {
     const {
       fields,
       woodtypes,
+      designs,
+      moulds,
       panels,
       edges,
       finish,
@@ -208,8 +210,6 @@ class DoorInfo extends Component {
       subTotal,
       updateSubmit
     } = this.props;
-
-    console.log(this.state.designFilter)
 
     return (
       <div>
