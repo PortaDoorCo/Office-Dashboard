@@ -40,14 +40,14 @@ import {
   getAssembly,
   getNotch
 } from '../../../../redux/part_list/actions';
-import moment from 'moment';
+import moment from 'moment-business-days'
 import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
 
-const dueDate = moment(new Date()).add(7, 'days').format();
+const dueDate = moment(new Date()).businessAdd(7)._d
 
 let options = {};
 options = {
