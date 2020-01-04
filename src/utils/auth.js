@@ -4,13 +4,6 @@
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 import Strapi from "strapi-sdk-javascript/build/main";
-import axios from 'axios'
-
-
-// import Router from "next/router";
-
-const url = 'https://portadoor-server-production.herokuapp.com/'
-
 const apiUrl = 'https://portadoor-server-production.herokuapp.com/' || "http://localhost:1337";
 const strapi = new Strapi(apiUrl);
 
@@ -43,7 +36,7 @@ export const setToken = token => {
   }
   Cookies.set("username", token.user.username);
   Cookies.set("jwt", token.jwt, { expires: 0.8 });
-  console.log(Cookies.get("jwt"))
+
 
   if (Cookies.get("username")) {
     // Router.push("/");

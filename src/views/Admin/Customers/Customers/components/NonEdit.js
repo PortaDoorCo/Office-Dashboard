@@ -18,7 +18,7 @@ class NonEdit extends Component {
 
   render() {
     const props = this.props;
-    console.log(props)
+
 
 
 

@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default (data, startDate, endDate, status) => {
-    console.log(data, startDate, endDate, status)
+
     const tableBody = [
         [
             { text: 'Date' },

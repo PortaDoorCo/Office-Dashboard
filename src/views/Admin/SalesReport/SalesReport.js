@@ -35,7 +35,7 @@ const SalesReport = (props) => {
       return date.getDate() >= startDate.getDate() && date.getDate() <= endDate.getDate();
     })
     setData(filteredOrders);
-    console.log(filteredOrders)
+   
   }, [startDate, endDate, orders])
 
   useEffect(() => {

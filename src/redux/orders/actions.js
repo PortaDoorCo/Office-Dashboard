@@ -176,7 +176,7 @@ export function updateCustomer(custId, customer, cookie) {
         }
       );
       const data = await res;
-      console.log(data);
+    
       NotificationManager.success(`Customer has been update!`, 'Customer Updated!', 2000);
       return dispatch({
         type: UPDATE_CUSTOMER,
@@ -230,7 +230,7 @@ export function submitCustomer(customer, cookie) {
         }
       });
       const data = await res;
-      console.log(data);
+    
       NotificationManager.success(`Customer has been added!`, 'Submission Succeeded!', 2000);
       return dispatch({
         type: SUBMIT_CUSTOMER,
@@ -269,7 +269,7 @@ export function updateOrder(orderId, order, cookie) {
         }
       });
       const data = await res;
-      console.log(data);
+   
       NotificationManager.success(`Order ${data.data.orderNum} has been update!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_ORDER,
@@ -292,7 +292,7 @@ export function updateStatus(orderId, status, cookie) {
         }
       });
       const data = await res;
-      console.log(data);
+ 
       // NotificationManager.success(`Order ${data.data.orderNum} has been update!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_STATUS,

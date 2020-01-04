@@ -15,7 +15,7 @@ export default data => {
       ]
     ];
     i.dimensions.forEach((item, index) => {
-      console.log(item)
+    
 
       tableBody.push([
         { text: index + 1, style: 'fonts' },

@@ -51,7 +51,7 @@ const CompanyTable = (props) => {
 
 
     useEffect(() => {
-        console.log('filter text changed', data)
+      
         // const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
         // setData(filteredItems);
     }, [filterText])
@@ -108,9 +108,7 @@ const CompanyTable = (props) => {
                     console.error(error);
                 }
             );
-            // console.log((address))
-            // const request = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`)
-            // console.log(request)
+
         } else {
             return
         }

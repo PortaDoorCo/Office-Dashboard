@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default (data, startDate, endDate, status) => {
-    console.log(data, startDate, endDate, status)
+  
     const tableBody = [
         [
             { text: 'Date' },
@@ -32,8 +32,7 @@ export default (data, startDate, endDate, status) => {
         if (i.orderType === "Door Order") {
             i.part_list.map(part => {
                 if (part.orderType.value === "Door") {
-                    console.log('part',part)
-
+                 
                     part.dimensions.map(j => {
                         doors = doors += parseInt(j.qty)
                         doorTotal = doorTotal += parseInt(j.qty)
@@ -73,7 +72,7 @@ export default (data, startDate, endDate, status) => {
         )
     })
 
-    console.log(doorTotal)
+
 
     let totalBody = [
         ['', 'Doors', 'DFs', 'Boxes', 'Total', ''],

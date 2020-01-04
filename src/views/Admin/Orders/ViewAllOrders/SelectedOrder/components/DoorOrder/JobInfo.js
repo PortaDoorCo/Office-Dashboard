@@ -54,7 +54,7 @@ class JobInfo extends Component {
   };
 
   render() {
-    console.log()
+ 
     return (
       <div>
         <Row>

@@ -104,8 +104,9 @@ export default data => {
                     }
                     groupedMaterialBody.push(mb)
                     materialBody.push(groupedMaterialBody)
-
+                    
                 });
+                return
             })
 
             return [

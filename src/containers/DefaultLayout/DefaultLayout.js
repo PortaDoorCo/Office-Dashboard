@@ -58,9 +58,9 @@ class DefaultLayout extends Component {
 
   componentDidMount = async() => {
     const props = this.props;
-    console.log(props.loggedIn)
+
     const cookie = await Cookies.get("jwt");
-    console.log(cookie)
+
     if(cookie){
       
       await props.loadSales(cookie);
@@ -88,7 +88,7 @@ class DefaultLayout extends Component {
 
   onNewOrder = (e) => {
 
-    console.log(e)
+
   }
 
   render() {

@@ -9,7 +9,7 @@ import Invoice from './Drawer_PDF/Invoice'
 export default data => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
-  console.log(data)
+
 
   const documentDefinition = {
     pageSize: 'A4',

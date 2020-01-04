@@ -12,7 +12,7 @@ export default data => {
 
   const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0)
 
-  console.log(data)
+
 
 
   return [
@@ -64,8 +64,6 @@ export default data => {
 
       let sortedDimensions = part.dimensions.sort(function (a, b) { return a.item - b.item })
       sortedDimensions.forEach((item, index) => {
-        // Panels(item, part);
-        console.log(data)
         tableBody.push([
           { text: item.item, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
@@ -106,7 +104,7 @@ export default data => {
             { text: ' Total: ', width: 129, style: 'totals', alignment: 'left' },
             { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
             {
-              stack: [,
+              stack: [
                 {
                   columns: [
                     { text: 'Additional Price', style: 'totals', margin: [0, 0, 0, 0], },

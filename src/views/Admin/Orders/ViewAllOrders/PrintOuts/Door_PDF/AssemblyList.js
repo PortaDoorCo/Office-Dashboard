@@ -62,7 +62,7 @@ export default data => {
         ]
       ];
 
-      console.log(tableBody)
+    
 
       i.dimensions.forEach((item, index) => {
         tableBody.push([

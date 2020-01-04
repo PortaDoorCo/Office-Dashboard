@@ -75,7 +75,7 @@ class OrderPage extends Component {
 
   downloadPDF = () => {
     const data = this.props.selectedOrder[0];
-    console.log(data);
+
     if (data.orderType === "Door Order") {
       DoorPDF(data);
     } else {
@@ -86,7 +86,7 @@ class OrderPage extends Component {
   render() {
     const props = this.props;
 
-    console.log(props)
+   
 
 
     if (this.state.page === 'invoice') {

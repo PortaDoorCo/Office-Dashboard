@@ -50,7 +50,7 @@ class DrawerOrders extends Component {
   // };
 
   submit = async (values, e) => {
-    console.log(values);
+
     const { updateOrder, loadOrders } = this.props;
 
     const order = {
@@ -146,7 +146,7 @@ class DrawerOrders extends Component {
       tax
     } = this.props;
 
-    console.log('Test This');
+  
 
     return (
       <div className="animated fadeIn resize">

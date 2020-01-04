@@ -85,7 +85,7 @@ class OrderTable extends React.Component {
             endDate: new Date(),
             productData: new CustomStore({
                 load: () => this.props.loadOrders(cookie),
-                update: (key, values) => (this.props.updateStatus(key.id, values, cookie), console.log(key)),
+                update: (key, values) => (this.props.updateStatus(key.id, values, cookie)),
             }),
         };
         this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -98,7 +98,7 @@ class OrderTable extends React.Component {
         // this.onExportBreakdows = this.onExportBreakdows.bind(this)
         this.onFilterStatus = this.onFilterStatus.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
-        this.onUpdated = this.onUpdated.bind(this);
+
     }
 
     componentDidMount() {
@@ -109,7 +109,7 @@ class OrderTable extends React.Component {
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-        console.log(e);
+      
         this.selectionChangedBySelectBox = false;
 
         this.setState({
@@ -135,7 +135,7 @@ class OrderTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
-            console.log(x);
+         
             this.setState({
                 selectedOrder: [
                     {
@@ -166,7 +166,7 @@ class OrderTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-                    console.log('clicked');
+                  
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -200,12 +200,12 @@ class OrderTable extends React.Component {
     }
 
     calculateCellValue = data => {
-        console.log(new Date(data.createdAt).getTime());
+        
         return new Date(data.createdAt).getTime();
     }
 
     onExportBreakdowns = e => {
-        console.log(this.state.selectedRowsData)
+      
         if (this.state.selectedRowKeys.length > 0) {
             this.state.selectedRowsData.map(i => {
                 if (i.orderType === "Door Order") {
@@ -226,7 +226,7 @@ class OrderTable extends React.Component {
 
     onFilterStatus({ value }) {
         const dataGrid = this.dataGrid.instance;
-        console.log(value)
+
 
         if (value === 'All') {
             dataGrid.clearFilter();
@@ -273,8 +273,7 @@ class OrderTable extends React.Component {
                         'class': 'dx-datagrid-export-button breakdown'
                     },
                     onClick: function () {
-                        // e.component.exportToExcel(false);
-                        console.log(e)
+                      
                         onExportBreakdowns()
                     }
                 }
@@ -285,21 +284,16 @@ class OrderTable extends React.Component {
     saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
 
     customTotal(data) {
-        console.log(data);
+      
         return `Total: $${data.value.toFixed(2)}`;
     }
 
     customCount(data) {
-        console.log(data);
+      
         return `Orders: ${data.value}`;
     }
 
-    onUpdated = (e) => {
-    console.log('onUpdated',e)
-    console.log(e.data)
-    console.log([{...e.data}, e.key.orderNum])
-    // this.props.updateStatus(e.key.id, e.data)
-    }
+
 
 
     render() {
@@ -321,7 +315,7 @@ class OrderTable extends React.Component {
                     showBorders={true}
                     allowColumnResizing={true}
                     columnAutoWidth={true}
-                    onRowUpdated={this.onUpdated}
+                    
                     onSelectionChanged={this.onSelectionChanged}
                     onToolbarPreparing={this.onToolbarPreparing}
                     // onExporting={this.onExporting}

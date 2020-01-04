@@ -6,7 +6,7 @@ import Login from "./views/Pages/Login/Login";
 import Register from "./views/Pages/Register/Register";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 import { loadOrders, loadCustomers, countOrders, loadSales, loadShippingMethod } from "./redux/orders/actions";
 import { setLogin } from "./redux/users/actions";
 import {
@@ -36,7 +36,7 @@ const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
   <Route
     {...rest}
     render={props => {
-      console.log('isauthhhhhh', rest.isLogged)
+    
       return rest.isLogged ? (
         <Component {...props} isLogged={rest.isLogged}  />
       ) : (

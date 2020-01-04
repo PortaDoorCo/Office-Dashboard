@@ -18,7 +18,7 @@ class TodoListItem extends React.Component {
       this.props.markTodoDone(index, id);
     }
     render() {
-      console.log(this.props.item.done)
+
       var todoClass = this.props.item.done ? "done" : "undone";
       return (
         <li className="list-group-item ">
