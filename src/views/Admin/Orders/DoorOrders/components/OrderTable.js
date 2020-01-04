@@ -45,7 +45,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, updateSubmit }) => {
+const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit }) => {
 
   const [uneven, setUneven] = useState(false)
   const [width, setWidth] = useState([])
