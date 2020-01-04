@@ -8,6 +8,10 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import { Item } from 'devextreme-react/form';
 import CustomStore from 'devextreme/data/custom_store';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
+
 
 const numPanels = [
   {
@@ -89,9 +93,9 @@ class Design extends React.Component {
       currentFilter: this.applyFilterTypes[0].key,
       productData: new CustomStore({
         load: () => this.props.getProduct(),
-        insert: (values) => this.props.addProduct(values, 'designs'),
-        update: (key, values) => this.props.updateProduct(key.id, values, 'designs'),
-        remove: (key) => this.props.deleteProduct(key.id, 'designs')
+        insert: (values) => this.props.addProduct(values, 'designs', cookie),
+        update: (key, values) => this.props.updateProduct(key.id, values, 'designs',cookie),
+        remove: (key) => this.props.deleteProduct(key.id, 'designs',cookie)
       })
     };
     this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);

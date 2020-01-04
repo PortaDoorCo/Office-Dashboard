@@ -8,6 +8,9 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import { Item } from 'devextreme-react/form';
 import CustomStore from 'devextreme/data/custom_store';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
 
 class Panels extends React.Component {
     constructor(props) {
@@ -25,9 +28,9 @@ class Panels extends React.Component {
             currentFilter: this.applyFilterTypes[0].key,
             productData: new CustomStore({
                 load: () => this.props.getProduct(),
-                insert: (values) => this.props.addProduct(values, "finishes"),
-                update: (key, values) => this.props.updateProduct(key.id, values, 'finishes'),
-                remove: (key) => this.props.deleteProduct(key.id, 'finishes')
+                insert: (values) => this.props.addProduct(values, "finishes", cookie),
+                update: (key, values) => this.props.updateProduct(key.id, values, 'finishes', cookie),
+                remove: (key) => this.props.deleteProduct(key.id, 'finishes', cookie)
             })
 
         };
