@@ -43,10 +43,9 @@ const Maker = props => {
     let verticalMidRailSize = formState.part_list[i].dimensions[index].verticalMidRailSize ? numQty(formState.part_list[i].dimensions[index].verticalMidRailSize) : 0
 
 
-    console.log(verticalMidRailSize)
 
     useEffect(() => {
-        console.log('yoooo in effetc', bps)
+
         setID(ref.current.id)
         let bp;
         if (bps) {
@@ -79,7 +78,6 @@ const Maker = props => {
 
 
 
-    console.log(ref)
 
 
     const onMouseOver = () => {

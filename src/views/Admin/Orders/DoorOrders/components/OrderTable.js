@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import {
   Label,
   Table,
@@ -98,8 +98,8 @@ const renderFieldDisabled = ({ input, props, meta: { touched, error, warning }, 
   <Fragment>
     <Input {...input} {...custom} disabled style={{ display: 'none' }} />
     {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+      ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+        (warning && <span style={{ color: 'red' }}>{warning}</span>))}
   </Fragment>
 );
 
@@ -108,11 +108,19 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part }) => {
+const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, updateSubmit }) => {
 
   const [uneven, setUneven] = useState(false)
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
+
+  useEffect(() => {
+
+    let init = []
+    setWidth(init)
+    setHeight(init)
+
+  },[updateSubmit])
 
   const toggle = () => {
     setUneven(!uneven)
@@ -130,7 +138,6 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part }) =
   }
 
   const h = (e, v, i) => {
-    console.log('vvvvvv', v)
     e.preventDefault();
     let newHeight = [...height]
     if (height[i]) {
@@ -228,11 +235,18 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part }) =
                       />
                     </td>
                     <td>
-                      <Input
-                        type="text"
-                        className="form-control"
-                        placeholder={"$" + prices[i][index].toFixed(2) || 0}
-                      />
+                      {prices[i] ?
+                        <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                        /> : <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$0.00"}
+                        />
+                      }
+
                     </td>
                     <td>
                       <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>

@@ -207,7 +207,8 @@ class DoorInfo extends Component {
       prices,
       part_list,
       isValid,
-      subTotal
+      subTotal,
+      updateSubmit
     } = this.props;
 
     return (
@@ -400,6 +401,7 @@ class DoorInfo extends Component {
                 formState={formState}
                 isValid={isValid}
                 part={part}
+                updateSubmit={updateSubmit}
               />
               <div />
             </div>

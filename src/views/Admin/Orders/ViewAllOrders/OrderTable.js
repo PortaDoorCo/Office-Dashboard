@@ -32,6 +32,8 @@ import momentLocaliser from 'react-widgets-moment';
 import DoorPDF from './PrintOuts/DoorPDF';
 import DrawerPDF from './PrintOuts/DrawerPDF'
 import { NotificationManager } from 'react-notifications';
+import io from 'socket.io-client';
+const socket = io('https://server.portadoor.com/');
 
 
 momentLocaliser(moment);
@@ -103,11 +105,12 @@ class OrderTable extends React.Component {
       ['createdAt', '<=', moment().endOf('day').valueOf()]
     ];
     dataGrid.filter(filter);
+    socket.on('order_submitted', res => (dataGrid.refresh()) )
   }
 
   onSelectionChanged(e) {
     const { selectedRowKeys, selectedRowsData } = e;
-    console.log(e);
+ 
     this.selectionChangedBySelectBox = false;
 
     this.setState({
@@ -133,7 +136,7 @@ class OrderTable extends React.Component {
 
     if (!modal) {
       const x = row.row.data;
-      console.log('asdfasdfasdf',x);
+  
       this.setState({
         selectedOrder: [
           {
@@ -164,7 +167,7 @@ class OrderTable extends React.Component {
     <Tooltip title="View Order" placement="top">
       <IconButton
         onClick={event => {
-          console.log('clicked');
+ 
           event.preventDefault();
           this.toggle(row);
         }}
@@ -252,12 +255,11 @@ class OrderTable extends React.Component {
   }
 
   calculateCellValue = data => {
-    console.log(new Date(data.createdAt).getTime());
     return new Date(data.createdAt).getTime();
   }
 
   onExportBreakdowns = e => {
-    console.log(this.state.selectedRowsData)
+
     if (this.state.selectedRowKeys.length > 0) {
       this.state.selectedRowsData.map(i => {
         if (i.orderType === "Door Order") {
@@ -313,7 +315,7 @@ class OrderTable extends React.Component {
   }
   onFilterStatus({ value }) {
     const dataGrid = this.dataGrid.instance;
-    console.log(value)
+
 
     if (value === 'All') {
       dataGrid.clearFilter();
@@ -361,8 +363,7 @@ class OrderTable extends React.Component {
             'class': 'dx-datagrid-export-button breakdown'
           },
           onClick: function () {
-            // e.component.exportToExcel(false);
-            console.log(e)
+
             onExportBreakdowns()
           }
         }
@@ -389,12 +390,12 @@ class OrderTable extends React.Component {
   saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
 
   customTotal(data) {
-    console.log(data);
+
     return `Total: $${data.value.toFixed(2)}`;
   }
 
   customCount(data) {
-    console.log(data);
+ 
     return `Orders: ${data.value}`;
   }
 

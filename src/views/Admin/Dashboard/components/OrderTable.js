@@ -35,7 +35,8 @@ import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers, updateStatus } from '../../../../redux/orders/actions';
-
+import io from 'socket.io-client';
+const socket = io('https://server.portadoor.com/');
 
 momentLocaliser(moment);
 
@@ -81,8 +82,7 @@ class OrderTable extends React.Component {
             endDate: new Date(),
             productData: new CustomStore({
                 load: () => this.props.loadOrders(),
-                update: (key, values) =>
-                    this.props.updateStatus(key.id, values),
+                update: (key, values) => this.props.updateStatus(key.id, values),
             }),
         };
         this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -94,9 +94,13 @@ class OrderTable extends React.Component {
         this.onToolbarPreparing = this.onToolbarPreparing.bind(this)
         // this.onExportBreakdows = this.onExportBreakdows.bind(this)
         this.onFilterStatus = this.onFilterStatus.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
     }
 
-
+    componentDidMount() {
+        const dataGrid = this.dataGrid.instance;
+        socket.on('order_submitted', res => (dataGrid.refresh(), NotificationManager.success('New Order', `Order #${res.orderNum} added`, 2000)) )
+    }
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
@@ -324,7 +328,7 @@ class OrderTable extends React.Component {
                         showInfo={true}
                     />
 
-                    <Editing mode="cell" allowUpdating={true} />
+                    <Editing mode="cell" allowUpdating={true} allowAdding={true} />
                     <Selection mode="multiple" showCheckBoxesMode="always" />
                     {/* <Export enabled={true} /> */}
                     <Column
