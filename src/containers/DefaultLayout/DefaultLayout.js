@@ -47,6 +47,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 
 
+
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -54,6 +55,36 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 class DefaultLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+
+  componentDidMount = async() => {
+    const props = this.props;
+    console.log(props.loggedIn)
+    const cookie = await Cookies.get("jwt");
+    console.log(cookie)
+    if(cookie){
+      
+      await props.loadSales(cookie);
+      await props.countOrders(cookie);
+      await props.getWoodtypes(cookie);
+      await props.getDesigns(cookie);
+      await props.getEdges(cookie);
+      await props.getFinish(cookie);
+      await props.getGrades(cookie);
+      await props.getMoulds(cookie);
+      await props.getPanels(cookie);
+      await props.getHinges(cookie);
+      await props.getBoxThickness(cookie);
+      await props.getBoxBottoms(cookie);
+      await props.getAssembly(cookie);
+      await props.getNotch(cookie);
+      await props.getDrawerFinish(cookie);
+      await props.loadShippingMethod(cookie);
+      await props.loadOrders(cookie);
+    } else {
+      alert('not logged in')
+    }
+
+  }
 
   onNewOrder = (e) => {
 
@@ -63,22 +94,9 @@ class DefaultLayout extends Component {
   render() {
 
 
-    if ((!this.props.loadedWoodtype
-      && !this.props.loadedDesign
-      && !this.props.loadedEdge
-      && !this.props.loadedMould
-      && !this.props.loadedPanel
-      && !this.props.loadedGrade
-      && !this.props.loadedFinish
-      && !this.props.loadedBoxThickness
-      && !this.props.loadedBoxBottoms
-      && !this.props.loadedAssembly
-      && !this.props.loadedNotchb
-      && !this.props.loadedHinges
-      && !this.props.loadedDrawerFinishes
-      && !this.props.customerDBLoaded
-      && !this.props.ordersDBLoaded
-    )) {
+    if (
+      !this.props.orders.length>0
+    ) {
       return <Loader />;
     } else {
       return (
@@ -139,7 +157,7 @@ class DefaultLayout extends Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-  orders: state.Orders,
+  orders: state.Orders.orders,
   sessionOrders: state.Orders.sessionOrders,
   sessionCustomers: state.Orders.sessionCustomers,
   customerDBLoaded: state.Orders.customerDBLoaded,
@@ -155,7 +173,8 @@ const mapStateToProps = (state, prop) => ({
   loadedAssembly: state.part_list.loadedAssembly,
   loadedNotch: state.part_list.loadedNotch,
   loadedHinges: state.part_list.loadedHinges,
-  loadedDrawerFinishes: state.part_list.loadedDrawerFinishes
+  loadedDrawerFinishes: state.part_list.loadedDrawerFinishes,
+  loggedIn: state.users.loggedIn
 });
 
 const mapDispatchToProps = dispatch =>
