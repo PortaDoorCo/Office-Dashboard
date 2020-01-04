@@ -43,6 +43,9 @@ import {
 import moment from 'moment';
 import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
 
 const dueDate = moment(new Date()).add(7, 'days').format();
 
@@ -110,7 +113,7 @@ class DoorOrders extends Component {
     };
 
     if (values.part_list[0].dimensions.length > 0) {
-      submitOrder(order);
+      submitOrder(order, cookie);
       reset();
       window.scrollTo(0, 0);
     } else {
