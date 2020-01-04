@@ -62,14 +62,12 @@ class DefaultLayout extends Component {
     const cookie = await Cookies.get("jwt");
 
     if(cookie){
-      
       await props.loadSales(cookie);
       await props.countOrders(cookie);
       await props.getWoodtypes(cookie);
       await props.getDesigns(cookie);
       await props.getEdges(cookie);
       await props.getFinish(cookie);
-      await props.getGrades(cookie);
       await props.getMoulds(cookie);
       await props.getPanels(cookie);
       await props.getHinges(cookie);
