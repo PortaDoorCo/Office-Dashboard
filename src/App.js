@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { loadOrders, loadCustomers, countOrders, loadSales, loadShippingMethod } from "./redux/orders/actions";
+import { setLogin } from "./redux/users/actions";
 import {
   getWoodtypes,
   getDesigns,
@@ -37,7 +38,7 @@ const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
     render={props => {
       console.log('isauthhhhhh', rest.isLogged)
       return rest.isLogged ? (
-        <Component {...props} />
+        <Component {...props} isLogged={rest.isLogged}  />
       ) : (
         <Redirect to={{ pathname: "/login" }} />
       )
@@ -60,38 +61,17 @@ class App extends Component {
       this.setState({
         isAuth: true
       });
+      this.props.setLogin()
     }
   }
 
-  componentDidMount = async() => {
+  componentDidMount = () => {
     this.cookies()
     socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000)))
     socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated to ${updatedStatus.status}`, `An order has been updated`, 2000)))
-
-
-    const props = this.props;
-    await props.loadOrders();
-    await props.loadSales();
-    await props.countOrders();
-    await props.getWoodtypes();
-    await props.getDesigns();
-    await props.getEdges();
-    await props.getFinish();
-    await props.getGrades();
-    await props.getMoulds();
-    await props.getPanels();
-    await props.getHinges();
-    await props.getBoxThickness();
-    await props.getBoxBottoms();
-    await props.getAssembly();
-    await props.getNotch();
-    await props.getDrawerFinish();
-    await props.loadShippingMethod();
-
-
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate = async(prevProps) => {
     if (this.props.loggedIn !== prevProps.loggedIn) {
       this.cookies()
     }
@@ -154,7 +134,8 @@ bindActionCreators(
     getBoxBottoms,
     getAssembly,
     getNotch,
-    getDrawerFinish
+    getDrawerFinish,
+    setLogin
   },
   dispatch
 );

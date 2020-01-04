@@ -1,4 +1,4 @@
-import { REGISTER_USER, LOGIN, CREATE_TASK, MARK_DONE, REMOVE_TASK } from "./actions";
+import { REGISTER_USER, LOGIN, CREATE_TASK, MARK_DONE, REMOVE_TASK, SET_LOGIN } from "./actions";
 
 const initialState = {
   user: [],
@@ -37,6 +37,11 @@ export default function(state = initialState, action) {
         ...state,
         tasks: state.tasks.filter(task => task._id !== action.id)
       };
+      case SET_LOGIN:
+        return {
+          ...state,
+          loggedIn: true
+        };
 
     default:
       return {

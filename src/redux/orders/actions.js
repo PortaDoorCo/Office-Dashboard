@@ -24,10 +24,8 @@ export const LOAD_SHIPPING_METHODS = 'LOAD_SHIPPING_METHODS';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 
 const url = 'https://portadoor-server-production.herokuapp.com/'
-const cookie = Cookies.get("jwt");
 
 
-console.log('COOKIE', cookie)
 
 export function addToCart(
   order,
@@ -68,7 +66,7 @@ export function shippingAddress(address) {
   };
 }
 
-export function countOrders() {
+export function countOrders(cookie) {
   return async function (dispatch) {
     const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders/count`,
       {
@@ -85,7 +83,7 @@ export function countOrders() {
   };
 }
 
-export function loadOrders() {
+export function loadOrders(cookie) {
   return async function (dispatch) {
     const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders?_limit=500&_sort=orderNum:DESC`,
       {
@@ -102,7 +100,7 @@ export function loadOrders() {
   };
 }
 
-export function loadOrderSubmitted() {
+export function loadOrderSubmitted(cookie) {
   return async function (dispatch) {
     const res = await fetch(`https://portadoor-server-production.herokuapp.com/orders/5e0e7d7df863b200179227be`,
       {
@@ -127,7 +125,7 @@ export function loadCustomerOrder(customer) {
   };
 }
 
-export function submitOrder(order) {
+export function submitOrder(order, cookie) {
   return async function (dispatch) {
     try {
       const res = axios.post(`https://portadoor-server-production.herokuapp.com/orders`, order,
@@ -150,7 +148,7 @@ export function submitOrder(order) {
   };
 }
 
-export function loadCustomers() {
+export function loadCustomers(cookie) {
   return async function (dispatch) {
     const res = await fetch(`https://portadoor-server-production.herokuapp.com/companyprofiles?_limit=2000&_sort=CUSTNO:ASC`,
       {
@@ -167,7 +165,7 @@ export function loadCustomers() {
   };
 }
 
-export function updateCustomer(custId, customer) {
+export function updateCustomer(custId, customer, cookie) {
   return async function (dispatch) {
     try {
       const res = await axios.put(`https://portadoor-server-production.herokuapp.com/companyprofiles/${custId}`, customer,
@@ -191,7 +189,7 @@ export function updateCustomer(custId, customer) {
   };
 }
 
-export function loadSales() {
+export function loadSales(cookie) {
   return async function (dispatch) {
     const res = await fetch(`https://portadoor-server-production.herokuapp.com/sales`,
       {
@@ -208,7 +206,7 @@ export function loadSales() {
   };
 }
 
-export function loadShippingMethod() {
+export function loadShippingMethod(cookie) {
   return async function (dispatch) {
     const res = await fetch(`https://portadoor-server-production.herokuapp.com/shippingmethods`, {
       headers: {
@@ -223,7 +221,7 @@ export function loadShippingMethod() {
   };
 }
 
-export function submitCustomer(customer) {
+export function submitCustomer(customer, cookie) {
   return async function (dispatch) {
     try {
       const res = await axios.post(`https://portadoor-server-production.herokuapp.com/companyprofiles`, customer, {
@@ -244,7 +242,7 @@ export function submitCustomer(customer) {
   };
 }
 
-export function resetOrder() {
+export function resetOrder(cookie) {
   return async function (dispatch) {
     return dispatch({
       type: RESET_ORDER
@@ -252,7 +250,7 @@ export function resetOrder() {
   };
 }
 
-export function loadSelectedOrder(data) {
+export function loadSelectedOrder(data, cookie) {
   return async function (dispatch) {
     return dispatch({
       type: LOAD_SELECTED_ORDER,
@@ -261,7 +259,7 @@ export function loadSelectedOrder(data) {
   };
 }
 
-export function updateOrder(orderId, order) {
+export function updateOrder(orderId, order, cookie) {
   return async function (dispatch) {
 
     try {
@@ -285,7 +283,7 @@ export function updateOrder(orderId, order) {
 }
 
 
-export function updateStatus(orderId, status) {
+export function updateStatus(orderId, status, cookie) {
   return async function (dispatch) {
     try {
       const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, status, {
