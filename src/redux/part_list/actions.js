@@ -243,13 +243,13 @@ export function addProduct(product, url, cookie) {
 
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(`/${url}`, product, {
+      const { data } = await axios.post(`https://portadoor-server-production.herokuapp.com/${url}`, product, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
       });
    
-      // NotificationManager.success('Product Added', 'Product Added', 2000);
+      NotificationManager.success('Product Added', 'Product Added', 2000);
       return dispatch({
         type: ADD_PRODUCT,
         data: data
@@ -264,7 +264,7 @@ export function addProduct(product, url, cookie) {
 export function updateProduct(orderId, product, url, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.put(`/${url}/${orderId}`, product, {
+      const { data } = await axios.put(`https://portadoor-server-production.herokuapp.com/${url}/${orderId}`, product, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
@@ -285,7 +285,7 @@ export function updateProduct(orderId, product, url, cookie) {
 export function deleteProduct(orderId, product, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.delete(`/${product}/${orderId}`, {
+      const { data } = await axios.delete(`https://portadoor-server-production.herokuapp.com/${product}/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }

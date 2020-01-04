@@ -58,7 +58,7 @@ class Moulds extends React.Component {
       showHeaderFilter: true,
       currentFilter: this.applyFilterTypes[0].key,
       productData: new CustomStore({
-        load: () => this.props.getProduct(),
+        load: () => this.props.getProduct(cookie),
         insert: (values) => this.props.addProduct(values, "moulds", cookie),
         update: (key, values) => this.props.updateProduct(key.id, values, 'moulds', cookie),
         remove: (key) => this.props.deleteProduct(key.id, 'moulds', cookie)
