@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import {
   Label,
   Table,
@@ -108,11 +108,19 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part }) => {
+const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, updateSubmit }) => {
 
   const [uneven, setUneven] = useState(false)
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
+
+  useEffect(() => {
+
+    let init = []
+    setWidth(init)
+    setHeight(init)
+
+  },[updateSubmit])
 
   const toggle = () => {
     setUneven(!uneven)
@@ -130,7 +138,6 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part }) =
   }
 
   const h = (e, v, i) => {
-    console.log('vvvvvv', v)
     e.preventDefault();
     let newHeight = [...height]
     if (height[i]) {

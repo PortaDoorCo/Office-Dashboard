@@ -72,7 +72,8 @@ class DoorOrders extends Component {
     this.state = {
       collapse: true,
       loaded: false,
-      customerAddress: []
+      customerAddress: [],
+      updateSubmit: false
     };
   }
 
@@ -117,6 +118,7 @@ class DoorOrders extends Component {
     if (values.part_list[0].dimensions.length > 0) {
   
       await submitOrder(order);
+      this.setState({updateSubmit: !this.state.updateSubmit})
       reset();
       window.scrollTo(0, 0);
     } else {
@@ -334,6 +336,7 @@ class DoorOrders extends Component {
       total,
       dispatch,
       tax,
+      orders,
       addPriceSelector
     } = this.props;
 
@@ -377,6 +380,7 @@ class DoorOrders extends Component {
                     subTotal={subTotal}
                     dispatch={dispatch}
                     isValid={isValid}
+                    updateSubmit={this.state.submit}
                   />
 
                   <div className="mb-3" />
