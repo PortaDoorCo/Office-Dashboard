@@ -45,7 +45,7 @@ class Chart1 extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     Chart.pluginService.register({
       beforeDraw: function (chart) {
         if (chart.chart.config.data.labels.length === 0) {

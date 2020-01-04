@@ -7,10 +7,9 @@ import DrawerEdit from './DrawerEdit'
 class EditSelectedOrder extends React.Component {
 
   render() {
-    console.log(this.props.selectedOrder)
+    
     const { selectedOrder, editable, toggle } = this.props;
 
-    console.log(selectedOrder)
     return (
       <div>
         {selectedOrder[0].orderType === "Door Order" ?

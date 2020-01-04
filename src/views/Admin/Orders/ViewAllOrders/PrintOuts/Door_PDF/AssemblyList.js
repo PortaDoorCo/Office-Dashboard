@@ -1,8 +1,6 @@
 import moment from 'moment';
 import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
-import VMR from '../Breakdowns/Doors/Stiles/VMR'
 import Rails from '../Breakdowns/Doors/Rails/Rails';
-import HM from '../Breakdowns/Doors/Rails/HM'
 import Panels from '../Breakdowns/Doors/Panels';
 import Size from '../Breakdowns/Doors/Size';
 
@@ -62,7 +60,7 @@ export default data => {
         ]
       ];
 
-      console.log(tableBody)
+    
 
       i.dimensions.forEach((item, index) => {
         tableBody.push([

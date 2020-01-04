@@ -9,7 +9,7 @@ const fraction = num => {
 export default (info, part) => {
     const add_len = part.design.S_ADD_LEN;
 
-    console.log(info)
+
 
     const VMR = `( ${(parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty))} ) ${fraction(info.leftStile)} x ${fraction(
         Math.floor(
@@ -33,7 +33,7 @@ export default (info, part) => {
     )} - VM`;
 
     if (info.panelsH && info.panelsW > 1) {
-        console.log(VMR)
+
         return `${VMR}`;
     } else if (info.panelsH > 1 && info.panelsW) {
         return `${VMR2}`;

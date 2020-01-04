@@ -1,5 +1,4 @@
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap';
 import DataGrid, {
     Column,
     Editing,
@@ -10,28 +9,17 @@ import DataGrid, {
     Position,
     Form,
     Pager,
-    FilterRow,
-    HeaderFilter,
+
     SearchPanel,
     ColumnFixing,
-    Selection,
-    Export,
-    Summary,
-    TotalItem
 } from 'devextreme-react/data-grid';
-import { Checkbox, Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import { SelectBox, DateBox } from 'devextreme-react';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.css';
 import CustomStore from 'devextreme/data/custom_store';
-// import OrderPage from './OrderPage';
-// import Report1 from './PrintOuts/Reports/Report1';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-// import DoorPDF from './PrintOuts/DoorPDF';
-// import DrawerPDF from './PrintOuts/DrawerPDF'
-import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadCustomers, updateCustomer, submitCustomer } from '../../../../redux/orders/actions'
@@ -45,25 +33,6 @@ const cookie = Cookies.get("jwt");
 
 
 momentLocaliser(moment);
-
-const status = [
-    {
-        name: 'Quote',
-        value: 'Quote',
-    },
-    {
-        name: 'Invoiced',
-        value: 'Invoiced',
-    },
-    {
-        name: 'Ordered',
-        value: 'Ordered',
-    },
-    {
-        name: 'In Production',
-        value: 'In Production',
-    },
-];
 
 const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production']
 
@@ -105,7 +74,7 @@ class CustomerTable extends React.Component {
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-        console.log(e);
+     
         this.selectionChangedBySelectBox = false;
 
         this.setState({
@@ -122,7 +91,7 @@ class CustomerTable extends React.Component {
     }
 
     toggle = async row => {
-        const { modal, edit } = this.state;
+        const { modal } = this.state;
 
 
         this.setState({
@@ -131,7 +100,7 @@ class CustomerTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
-            console.log('skldfjsdkfj', x.id);
+          
             await this.setState({
                 selectedCompanies: x,
                 selectedOrder: x.id,
@@ -165,7 +134,7 @@ class CustomerTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-                    console.log('clicked');
+             
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -202,12 +171,12 @@ class CustomerTable extends React.Component {
     saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
 
     customTotal(data) {
-        console.log(data);
+     
         return `Total: $${data.value.toFixed(2)}`;
     }
 
     customCount(data) {
-        console.log(data);
+      
         return `Orders: ${data.value}`;
     }
 

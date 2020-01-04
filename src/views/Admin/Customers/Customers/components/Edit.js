@@ -6,7 +6,6 @@ import {
   Button,
   Row,
   Col,
-  Form,
   FormGroup,
   Label,
   Input,
@@ -18,11 +17,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   reduxForm,
-  FormSection,
-  getFormValues,
-  change,
   Field,
-  FieldArray
 } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import { updateCustomer } from '../../../../../redux/orders/actions'
@@ -32,7 +27,7 @@ const required = value => (value ? undefined : 'Required');
 const renderField = ({
   input,
   props,
-  meta: { touched, error, warning },
+  meta: { error, warning },
   ...custom
 }) => (
     <Fragment>
@@ -78,17 +73,6 @@ class Edit extends Component {
   };
 
   submit = async (values, e) => {
-    const {
-      reset,
-      prices,
-      itemPrice,
-      subTotal,
-      total,
-      submitOrder,
-      orderNum,
-
-    } = this.props;
-
     const id = values.id
 
     const data = {
@@ -96,18 +80,14 @@ class Edit extends Component {
       Ship_Via: values.Ship_Via.Name,
       sale: values.sale.id
     }
-
-    console.log('vakues ,', data)
-
     await this.props.updateCustomer(id, data)
     await this.props.onEdit()
   };
 
   render() {
-    console.log(this.props.test);
 
     const props = this.props
-    console.log('props', props)
+
     const {
       handleSubmit,
       salesReps,

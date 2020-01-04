@@ -13,7 +13,6 @@ export default (info, part) => {
   const leftStile = (part.design.L_STILE_W !== numQty(info.leftStile) ? (numQty(info.leftStile) + 0.0625) : numQty(info.leftStile))
   const rightStile = (part.design.R_STILE_W !== numQty(info.rightStile) ? (numQty(info.rightStile) + 0.0625) : numQty(info.rightStile))
   const horizMull = (part.design.H_MULL_WTH !== numQty(info.horizontalMidRailSize) ? (numQty(info.horizontalMidRailSize) + 0.0625) : numQty(info.horizontalMidRailSize))
-  const vertMull = (part.design.V_MULL_WTH !== numQty(info.verticalMidRailSize) ? (numQty(info.verticalMidRailSize) + 0.0625) : numQty(info.verticalMidRailSize))
 
 
 

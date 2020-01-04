@@ -6,7 +6,6 @@ import Salesmen from './Components/Salesmen'
 export default (data, startDate, endDate, status) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
-    console.log(data)
 
 
     const documentDefinition = {

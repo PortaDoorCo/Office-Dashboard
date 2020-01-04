@@ -19,7 +19,7 @@ export default data => {
 
     i.dimensions.forEach((item, index) => {
 
-      console.log('RAILS!! ', Rails(item, i))
+     
 
 
       if ((item.panelsH && item.panelsW > 1) || (item.panelsH > 1 && item.panelsW)) {

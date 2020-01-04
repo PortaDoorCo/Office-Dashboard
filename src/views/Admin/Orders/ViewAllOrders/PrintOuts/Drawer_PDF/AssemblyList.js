@@ -111,7 +111,7 @@ export default data => {
 
 
         v.forEach((item, index) => {
-          console.log('i ,', lineIn)
+         
           let tb = [
             { text: item.item, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
@@ -136,10 +136,13 @@ export default data => {
         }
 
 
-        info.push(groupedInfoBody)
-        tableBody.push(groupedTableBody)
-        groupedMaterialBody.push(mb)
-        materialBody.push(groupedMaterialBody)
+        return (
+          info.push(groupedInfoBody),
+          tableBody.push(groupedTableBody),
+          groupedMaterialBody.push(mb),
+          materialBody.push(groupedMaterialBody)
+        )
+
 
       });
 
@@ -161,7 +164,7 @@ export default data => {
       })
 
       const materialBreakdown = materialBody.map((i, index) => {
-        console.log(i)
+    
         return i
       })
 

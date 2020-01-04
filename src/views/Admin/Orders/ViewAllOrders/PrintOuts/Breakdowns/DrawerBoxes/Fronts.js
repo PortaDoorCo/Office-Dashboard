@@ -1,5 +1,3 @@
-import Ratio from 'lb-ratio';
-
 
 export default (item, part) => {
 

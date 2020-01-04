@@ -112,7 +112,7 @@ class AddCustomer extends Component {
       Notes: values.Notes
     };
 
-    console.log(values.SalesPerson.id);
+
     await submitCustomer(company);
     await reset()
     await toggle()
@@ -126,7 +126,7 @@ class AddCustomer extends Component {
 
     const { handleSubmit, modal, toggle, salesReps } = this.props;
 
-    console.log(states)
+  
 
     return (
       <div className="animated fadeIn">

@@ -123,5 +123,3 @@ export default data => {
     { text: '', pageBreak: 'before' },
   ];
 };
-
-console.log("kjttsd")

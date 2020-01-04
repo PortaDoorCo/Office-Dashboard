@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NotificationManager } from 'react-notifications';
-import Cookies from "js-cookie";
+
 
 export const GET_WOODTYPES = 'GET_WOODTYPES';
 export const GET_DESIGNS = 'GET_DESIGNS';
@@ -23,10 +23,6 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
-
-const url = 'https://portadoor-server-production.herokuapp.com/'
-const cookie = Cookies.get("jwt");
-
 
 export function getWoodtypes(cookie) {
   return async function (dispatch) {
@@ -55,7 +51,7 @@ export function getDesigns(cookie) {
       }
     });
     const data = await res.json();
-    console.log(data);
+ 
     return dispatch({
       type: GET_DESIGNS,
       data: data
@@ -244,16 +240,16 @@ export function getHinges(cookie) {
 }
 
 export function addProduct(product, url, cookie) {
-  console.log(product)
+
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(`/${url}`, product, {
+      const { data } = await axios.post(`https://portadoor-server-production.herokuapp.com/${url}`, product, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
       });
-      console.log(data)
-      // NotificationManager.success('Product Added', 'Product Added', 2000);
+   
+      NotificationManager.success('Product Added', 'Product Added', 2000);
       return dispatch({
         type: ADD_PRODUCT,
         data: data
@@ -268,15 +264,16 @@ export function addProduct(product, url, cookie) {
 export function updateProduct(orderId, product, url, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.put(`/${url}/${orderId}`, product, {
+      const { data } = await axios.put(`https://portadoor-server-production.herokuapp.com/${url}/${orderId}`, product, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
       });
-      console.log('dataaaaaa', data);
+    
       // NotificationManager.success(`Product Updated!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_PRODUCT,
+        data:data
       });
     } catch (error) {
       console.error(error);
@@ -288,12 +285,12 @@ export function updateProduct(orderId, product, url, cookie) {
 export function deleteProduct(orderId, product, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.delete(`/${product}/${orderId}`, {
+      const { data } = await axios.delete(`https://portadoor-server-production.herokuapp.com/${product}/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
       });
-      console.log('dataaaaaa', data);
+    
       // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: DELETE_PRODUCT,
@@ -316,7 +313,7 @@ export function uploadFile(file, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       })
-      console.log('dataaaaaa', data);
+  
       // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: UPLOAD_FILE,

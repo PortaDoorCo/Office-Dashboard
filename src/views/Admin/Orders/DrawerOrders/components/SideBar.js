@@ -7,19 +7,9 @@ import {
     CardBody,
 } from 'reactstrap';
 
-const style = {
-    margin: 'auto',
-    width: '100%',
-    height: 'auto'
-};
-
-const comingSoon =
-    'https://res.cloudinary.com/porta-door/image/upload/v1567619819/d4apmwwcrqmpe3tilboe.png';
 
 class SideBar extends Component {
     render() {
-        const { part } = this.props;
-
         return (
             <div className="animated">
                 <Card>

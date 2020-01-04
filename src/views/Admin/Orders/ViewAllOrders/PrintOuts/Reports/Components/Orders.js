@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default (data, startDate, endDate, status) => {
-    console.log(data, startDate, endDate, status)
+  
     const tableBody = [
         [
             { text: 'Date' },
@@ -32,27 +32,26 @@ export default (data, startDate, endDate, status) => {
         if (i.orderType === "Door Order") {
             i.part_list.map(part => {
                 if (part.orderType.value === "Door") {
-                    console.log('part',part)
-
-                    part.dimensions.map(j => {
-                        doors = doors += parseInt(j.qty)
-                        doorTotal = doorTotal += parseInt(j.qty)
+                 
+                    return part.dimensions.map(j => {
+                        return(doors = doors += parseInt(j.qty),
+                        doorTotal = doorTotal += parseInt(j.qty))
                     })
                     
                     
                 } else {
-                    part.dimensions.map(j => {
-                        dfs = dfs += parseInt(j.qty)
-                        dfTotal = dfTotal += parseInt(j.qty)
+                    return part.dimensions.map(j => {
+                        return(dfs = dfs += parseInt(j.qty),
+                        dfTotal = dfTotal += parseInt(j.qty))
                     })
                 }
             })
         } else {
 
             i.part_list.map(part => {
-                part.dimensions.map(j => {
-                    boxes = boxes += parseInt(j.qty)
-                    boxTotal = boxTotal += parseInt(j.qty)
+                return part.dimensions.map(j => {
+                    return (boxes = boxes += parseInt(j.qty),
+                    boxTotal = boxTotal += parseInt(j.qty))
                 })
             })
 
@@ -73,7 +72,7 @@ export default (data, startDate, endDate, status) => {
         )
     })
 
-    console.log(doorTotal)
+
 
     let totalBody = [
         ['', 'Doors', 'DFs', 'Boxes', 'Total', ''],

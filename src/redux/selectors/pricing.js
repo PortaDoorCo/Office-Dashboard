@@ -131,8 +131,6 @@ export const linePriceSelector = createSelector(
     dimensions],
   (wood, design, edge, finish, hinges, dimension) => dimension.map(i => {
 
-    console.log("Wood " + wood, "design " + design, "edge " + edge, "finish " + finish, "dimension " + JSON.stringify(dimension))
-
     let widths = numQty(i.width);
     let heights = numQty(i.height);
     const price = (((Math.ceil(widths) * (Math.ceil(heights)) / 144) * wood + (design + edge + finish + hinges)) * parseInt(i.qty) || 0);

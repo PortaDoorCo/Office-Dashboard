@@ -1,6 +1,6 @@
 import React from 'react';
 import DataGrid, {
-    Column, Editing, Popup, Paging, Lookup, RequiredRule, Position,
+    Column, Editing, Popup, Paging, RequiredRule, Position,
     Form, Pager, SearchPanel, ColumnFixing
 } from 'devextreme-react/data-grid';
 import { FileUploader } from 'devextreme-react';
@@ -8,37 +8,10 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import { Item } from 'devextreme-react/form';
 import CustomStore from 'devextreme/data/custom_store';
+import Cookies from "js-cookie";
 
+const cookie = Cookies.get("jwt");
 
-const thickness = [
-    {
-        name: '0.75',
-        value: 0.75
-    },
-    {
-        name: '1',
-        value: 1
-    }
-];
-
-const construction = [
-    {
-        name: 'Cope And Stick',
-        value: 'Cope'
-    },
-    {
-        name: 'Mitered Construction',
-        value: 'M'
-    },
-    {
-        name: 'MT Construction',
-        value: 'MT'
-    },
-    {
-        name: 'Special Item',
-        value: 'Special'
-    }
-];
 
 class Edges extends React.Component {
     constructor(props) {
@@ -55,10 +28,10 @@ class Edges extends React.Component {
             showHeaderFilter: true,
             currentFilter: this.applyFilterTypes[0].key,
             productData: new CustomStore({
-                load: () => this.props.getProduct(),
-                insert: (values) => this.props.addProduct(values, "edges"),
-                update: (key, values) => this.props.updateProduct(key.id, values, 'edges'),
-                remove: (key) => this.props.deleteProduct(key.id, 'edges')
+                load: () => this.props.getProduct(cookie),
+                insert: (values) => this.props.addProduct(values, "edges", cookie),
+                update: (key, values) => this.props.updateProduct(key.id, values, 'edges', cookie),
+                remove: (key) => this.props.deleteProduct(key.id, 'edges', cookie)
             })
 
         };
@@ -86,17 +59,17 @@ class Edges extends React.Component {
                 <div
                     style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                    <img src={rowData.data.photo.url} style={{ width: '100px', height: '100px' }} />
+                    <img src={rowData.data.photo.url} alt='edges' style={{ width: '100px', height: '100px' }} />
                 </div>
             )
         }
     }
 
     onUploaded = (cell, e) => {
-        console.log(e)
+     
         const data = JSON.parse(e.request.response)
         const id = data[0].id
-        console.log(id)
+      
         cell.setValue(id)
     }
 
@@ -132,7 +105,7 @@ class Edges extends React.Component {
     }
 
     render() {
-        const { productData, imageId } = this.state;
+        const { productData } = this.state;
 
         return (
             <React.Fragment>

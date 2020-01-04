@@ -5,7 +5,6 @@ import {
 } from 'reactstrap';
 import OrderTable from './components/OrderTable'
 import CompanyTable2 from '../Customers/Customers/CompanyTable2'
-import Companies from '../Customers/Customers/Companies';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers } from '../../../redux/orders/actions';

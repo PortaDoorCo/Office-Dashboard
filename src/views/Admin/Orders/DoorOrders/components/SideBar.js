@@ -20,7 +20,7 @@ class SideBar extends Component {
   render() {
 
     const { part } = this.props;
-    console.log('yoooooo', part)
+  
     return (
       <div className="animated">
         <Card>

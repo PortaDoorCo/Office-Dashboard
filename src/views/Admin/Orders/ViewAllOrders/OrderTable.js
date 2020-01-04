@@ -1,25 +1,20 @@
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import DataGrid, {
   Column,
   Editing,
-  Popup,
   Paging,
   Lookup,
   RequiredRule,
-  Position,
-  Form,
   Pager,
-  FilterRow,
   HeaderFilter,
   SearchPanel,
   ColumnFixing,
   Selection,
-  Export,
   Summary,
   TotalItem
 } from 'devextreme-react/data-grid';
-import { Checkbox, Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
 import { SelectBox, DateBox } from 'devextreme-react';
 import 'devextreme/dist/css/dx.common.css';
@@ -131,7 +126,7 @@ class OrderTable extends React.Component {
   }
 
   toggle = row => {
-    const { modal, edit } = this.state;
+    const { modal } = this.state;
 
     this.setState({
       modal: !modal,
@@ -267,9 +262,9 @@ class OrderTable extends React.Component {
     if (this.state.selectedRowKeys.length > 0) {
       this.state.selectedRowsData.map(i => {
         if (i.orderType === "Door Order") {
-          DoorPDF(i);
+          return DoorPDF(i);
         } else {
-          DrawerPDF(i)
+          return DrawerPDF(i)
         }
       })
       this.setState({
@@ -283,7 +278,6 @@ class OrderTable extends React.Component {
   }
 
   onExportReports = e => {
-    const dataGrid = this.dataGrid.instance;
     const data = this.state.selectedRowsData
     const startDate = this.state.startDate
     const endDate = this.state.endDate

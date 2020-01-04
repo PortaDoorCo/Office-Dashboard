@@ -15,9 +15,6 @@ export default (info, part) => {
   const vertMull = (part.design.V_MULL_WTH !== numQty(info.verticalMidRailSize) ? (numQty(info.verticalMidRailSize) + 0.0625) : numQty(info.verticalMidRailSize))
   const horizMull = (part.design.H_MULL_WTH !== numQty(info.horizontalMidRailSize) ? (numQty(info.horizontalMidRailSize) + 0.0625) : numQty(info.horizontalMidRailSize))
 
-  console.log(part.design.V_MULL_WTH !== numQty(info.verticalMidRailSize))
-  console.log(part.design.V_MULL_WTH)
-  console.log(numQty(info.verticalMidRailSize))
 
   if (part.design.NAME === "PRP 15") {
     if (info.leftStile === info.rightStile) {

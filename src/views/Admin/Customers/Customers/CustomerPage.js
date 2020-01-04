@@ -82,7 +82,7 @@ class CustomerPage extends Component {
   render() {
     const props = this.props;
     const { locations, defaultCenter } = this.props;
-    console.log(defaultCenter);
+
 
      let orders= this.props.orders.filter(
       x => x.jobInfo.customer.id === this.props.selectedCompanies.id

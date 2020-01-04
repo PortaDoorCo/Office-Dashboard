@@ -1,15 +1,17 @@
 import React from 'react';
-import Button from 'devextreme-react/button';
 import DataGrid, {
   Column, Editing, Popup, Paging, Lookup, RequiredRule, Position,
-  Form, Pager, FilterRow, HeaderFilter, SearchPanel, ColumnFixing
+  Form, Pager, SearchPanel, ColumnFixing
 } from 'devextreme-react/data-grid';
-import { SelectBox, CheckBox, FileUploader } from 'devextreme-react';
+import { FileUploader } from 'devextreme-react';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import { Item } from 'devextreme-react/form';
-import DeleteModal from '../DeleteModal';
 import CustomStore from 'devextreme/data/custom_store';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
+
 
 const numPanels = [
   {
@@ -90,10 +92,10 @@ class Design extends React.Component {
       showHeaderFilter: true,
       currentFilter: this.applyFilterTypes[0].key,
       productData: new CustomStore({
-        load: () => this.props.getProduct(),
-        insert: (values) => this.props.addProduct(values, 'designs'),
-        update: (key, values) => this.props.updateProduct(key.id, values, 'designs'),
-        remove: (key) => this.props.deleteProduct(key.id, 'designs')
+        load: () => this.props.getProduct(cookie),
+        insert: (values) => this.props.addProduct(values, 'designs', cookie),
+        update: (key, values) => this.props.updateProduct(key.id, values, 'designs',cookie),
+        remove: (key) => this.props.deleteProduct(key.id, 'designs',cookie)
       })
     };
     this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -118,17 +120,17 @@ class Design extends React.Component {
           <div
             style={{ width: '100px', height: '100px', margin: 'auto' }}
           >
-            <img src={rowData.data.photo.url} style={{ width: '100px', height: '100px' }} />
+            <img src={rowData.data.photo.url} alt='design' style={{ width: '100px', height: '100px' }} />
           </div>
         );
       }
     }
 
     onUploaded = (cell, e) => {
-      console.log(e);
+    
       const data = JSON.parse(e.request.response);
       const id = data[0].id;
-      console.log(id);
+   
       cell.setValue(id);
     }
 
