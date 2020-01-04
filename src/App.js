@@ -5,6 +5,9 @@ import Cookies from "js-cookie";
 import Login from "./views/Pages/Login/Login";
 import Register from "./views/Pages/Register/Register";
 import { connect } from 'react-redux';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import io from 'socket.io-client';
+const socket = io('http://localhost:1337/');
 
 const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -45,6 +48,8 @@ class App extends Component {
 
   componentDidMount() {
     this.cookies()
+    socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000)))
+    socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated to ${updatedStatus.status}`, `An order has been updated`, 2000)))
   }
 
   componentDidUpdate(prevProps) {
