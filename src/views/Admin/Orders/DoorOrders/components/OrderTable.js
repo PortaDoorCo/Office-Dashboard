@@ -8,11 +8,9 @@ import {
   Row,
   Col,
   Button,
+  // Tooltip
 } from "reactstrap";
-// import { Tooltip } from 'antd'
-import Tooltip from '@material-ui/core/Tooltip';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
+import { Tooltip } from 'antd'
 import "antd/dist/antd.css";
 import { Checkbox } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
@@ -29,61 +27,13 @@ import 'rc-slider/assets/index.css';
 import Maker from '../components/MakerJS/Maker'
 
 
-const createSliderWithTooltip = Slider.createSliderWithTooltip;
-const Range = createSliderWithTooltip(Slider.Range);
-const Handle = Slider.Handle;
+
 
 const required = value => (value ? undefined : 'Required');
 
-const handle = (props) => {
-  const { value, dragging, index, ...restProps } = props;
-  return (
-    <Tooltip
-      prefixCls="rc-slider-tooltip"
-      overlay={value}
-      visible={dragging}
-      placement="top"
-      key={index}
-    >
-      <Handle value={value} {...restProps} />
-    </Tooltip>
-  );
-};
 
-const marks = {
-  0: {
-    style: {
-      color: 'red',
-    },
-    label: <strong>Top</strong>,
-  },
-  100: {
-    style: {
-      color: 'red',
-    },
-    label: <strong>Bottom</strong>,
-  },
-}
 
-const slider = field => (
-  <div>
-    {console.log(field)}
 
-    <Range
-      {...field}
-      onChange={field.input.onChange}
-      handle={handle}
-      marks={marks}
-      max={field.max}
-    // value={field.input.value}
-    // disabled
-    >
-      {field.children}
-    </Range>
-    {field.meta.touched && field.meta.error &&
-      <span className="error">{field.meta.error}</span>}
-  </div>
-)
 
 const renderField = ({
   input,
@@ -118,7 +68,8 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
   const [uneven, setUneven] = useState(false)
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+
 
   useEffect(() => {
 
@@ -153,10 +104,6 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
     }
     setHeight(newHeight);
   }
-
-
-
-  const toggleToolTip = () => setTooltipOpen(!tooltipOpen);
 
 
 
@@ -350,17 +297,6 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
                     </Col>
                     <Col lg='9' />
                   </Row>
-                  <Row>
-                    <Col>
-                      {console.log(formState.part_list[i].dimensions[index].height)}
-                      <Field
-                        name={`${table}.unEvenSplit`}
-                        test={23}
-                        max={parseFloat(formState.part_list[i].dimensions[index].height)}
-                        component={slider}
-                      />
-                    </Col>
-                  </Row>
                 </div>
                 : null
               }
@@ -408,8 +344,7 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
           ))}
           <Row>
             <Col>
-       
-                <Button
+            <Button
                   color="primary"
                   className="btn-circle"
                   onClick={(e) =>
@@ -435,8 +370,7 @@ const OrderTable = ({ fields, isValid, formState, i, prices, subTotal, part, upd
                   }
                 >
                   +
-                </Button>
-        
+                </Button>        
             </Col>
           </Row>
 
