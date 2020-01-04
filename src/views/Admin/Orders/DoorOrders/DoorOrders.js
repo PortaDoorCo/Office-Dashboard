@@ -51,12 +51,12 @@ import 'react-notifications/lib/notifications.css';
 import SideBar from './components/SideBar';
 import Ratio from 'lb-ratio'
 import Sticky from 'react-stickynode';
-import moment from 'moment'
+import moment from 'moment-business-days'
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
 
-const dueDate = moment(new Date()).add(7, 'days').format()
+const dueDate = moment(new Date()).businessAdd(7)._d
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
