@@ -1,6 +1,6 @@
 import React from 'react';
 import DataGrid, {
-    Column, Editing, Popup, Paging, Lookup, RequiredRule, Position,
+    Column, Editing, Popup, Paging, RequiredRule, Position,
     Form, Pager, SearchPanel, ColumnFixing
 } from 'devextreme-react/data-grid';
 import { FileUploader } from 'devextreme-react';
@@ -51,7 +51,7 @@ class Panels extends React.Component {
                 <div
                     style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                    <img src={rowData.data.photo.url} style={{ width: '100px', height: '100px' }} />
+                    <img src={rowData.data.photo.url} alt='finish' style={{ width: '100px', height: '100px' }} />
                 </div>
             )
         }
@@ -97,7 +97,7 @@ class Panels extends React.Component {
     }
 
     render() {
-        const { productData, imageId } = this.state;
+        const { productData } = this.state;
 
         return (
             <React.Fragment>

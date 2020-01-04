@@ -8,14 +8,12 @@ import {
   Row,
   Col
 } from 'reactstrap';
-
 import SelectedOrder from './SelectedOrder/SelectedOrder';
 import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
 import Invoice from '../../Invoice/Invoice';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateOrder, loadOrders } from '../../../../redux/orders/actions';
-import Launch from '@material-ui/icons/Launch';
 import Edit from '@material-ui/icons/Edit';
 import Dashboard from '@material-ui/icons/Dashboard';
 import Description from '@material-ui/icons/Description';

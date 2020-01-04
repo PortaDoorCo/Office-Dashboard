@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
     Input,
     Button,
@@ -9,7 +9,7 @@ import OrderPage from '../../../Orders/ViewAllOrders/OrderPage';
 import moment from 'moment';
 
 import DataTable from 'react-data-table-component';
-import { Checkbox, Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox'
 import differenceBy from 'lodash/differenceBy';
 
@@ -27,7 +27,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 const CustomerOrders = (props) => {
-    const [selectedRows, setSelectedRows] = useState([]);
+    const [selectedRows] = useState([]);
     const [toggleCleared, setToggleCleared] = useState(false);
     const [data, setData] = useState(props.orders);
     const [modal, setModal] = useState(false)
@@ -45,13 +45,7 @@ const CustomerOrders = (props) => {
         setData(filteredItems);
     }, [filterText, props.orders])
 
-    const handleRowSelected = useCallback(state => {
-        setSelectedRows(state.selectedRows);
-    }, []);
-
-
-
-    const subHeaderComponentMemo = useMemo(() => {
+    const subHeaderComponentMemo = useCallback(() => {
         const handleClear = () => {
             if (filterText) {
                 setResetPaginationToggle(!resetPaginationToggle);
@@ -90,7 +84,7 @@ const CustomerOrders = (props) => {
             return
         }
 
-
+        toggle()
     }
 
     const editable = () => {
@@ -99,7 +93,7 @@ const CustomerOrders = (props) => {
 
 
 
-    const columns = useMemo(clickHandler => [
+    const columns = () => [
 
         {
             selector: 'orderNum',
@@ -146,9 +140,9 @@ const CustomerOrders = (props) => {
                 </IconButton>
             </Tooltip>
         },
-    ]);
+    ];
 
-    const contextActions = useMemo(() => {
+    const contextActions = useCallback(() => {
         const handleDelete = () => {
 
             if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.orderNum)}?`)) {

@@ -44,12 +44,12 @@ export const itemPriceSelector = createSelector(
   (parts) =>
     parts.map((part, index) => {
 
-      const wood =  part.woodtype ? part.woodtype.PRICE : 0 ;
-      const assembly = part.assembly? part.assembly.Price :0;
+      const wood = part.woodtype ? part.woodtype.PRICE : 0;
+      const assembly = part.assembly ? part.assembly.Price : 0;
       const finish = part.drawerFinishes ? part.drawerFinishes.Price : 0;
       const notchDrill = part.notchDrill ? part.notchDrill.Price : 0;
 
- 
+
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
@@ -57,7 +57,7 @@ export const itemPriceSelector = createSelector(
           let heights = numQty(i.height);
           let depths = numQty(i.depth)
 
-    
+
 
           const price =
             (((((((Math.ceil(widths) + (Math.ceil(depths) * 2)) * heights) / 144) * wood) + (assembly + finish + notchDrill))
@@ -81,9 +81,9 @@ export const linePriceSelector = createSelector(
   [partListSelector],
   (parts) =>
     parts.map((part, index) => {
-   
-      const wood =  part.woodtype ? part.woodtype.PRICE : 0 ;
-      const assembly = part.assembly? part.assembly.Price :0;
+
+      const wood = part.woodtype ? part.woodtype.PRICE : 0;
+      const assembly = part.assembly ? part.assembly.Price : 0;
       const finish = part.drawerFinishes ? part.drawerFinishes.Price : 0;
       const notchDrill = part.notchDrill ? part.notchDrill.Price : 0;
 
@@ -117,7 +117,6 @@ export const addPriceSelector = createSelector(
   [partListSelector],
   (parts) =>
     parts.map((part, index) => {
-      const addPrice = part.addPrice
       if (part.addPrice) {
         return parseFloat(part.addPrice);
       } else {

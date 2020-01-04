@@ -33,25 +33,25 @@ export default (data, startDate, endDate, status) => {
             i.part_list.map(part => {
                 if (part.orderType.value === "Door") {
                  
-                    part.dimensions.map(j => {
-                        doors = doors += parseInt(j.qty)
-                        doorTotal = doorTotal += parseInt(j.qty)
+                    return part.dimensions.map(j => {
+                        return(doors = doors += parseInt(j.qty),
+                        doorTotal = doorTotal += parseInt(j.qty))
                     })
                     
                     
                 } else {
-                    part.dimensions.map(j => {
-                        dfs = dfs += parseInt(j.qty)
-                        dfTotal = dfTotal += parseInt(j.qty)
+                    return part.dimensions.map(j => {
+                        return(dfs = dfs += parseInt(j.qty),
+                        dfTotal = dfTotal += parseInt(j.qty))
                     })
                 }
             })
         } else {
 
             i.part_list.map(part => {
-                part.dimensions.map(j => {
-                    boxes = boxes += parseInt(j.qty)
-                    boxTotal = boxTotal += parseInt(j.qty)
+                return part.dimensions.map(j => {
+                    return (boxes = boxes += parseInt(j.qty),
+                    boxTotal = boxTotal += parseInt(j.qty))
                 })
             })
 

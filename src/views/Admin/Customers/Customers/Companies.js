@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CompanyTable2 from './CompanyTable2'
-import AddCustomer from '../AddCustomer/AddCustomer';
 import {
   loadCustomers,
   loadOrders,

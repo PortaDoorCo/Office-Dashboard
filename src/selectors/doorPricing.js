@@ -114,7 +114,6 @@ export const addPriceSelector = createSelector(
   [partListSelector],
   (parts) =>
     parts.map((part, index) => {
-      const addPrice = part.addPrice
       if (part.addPrice) {
         return parseFloat(part.addPrice);
       } else {

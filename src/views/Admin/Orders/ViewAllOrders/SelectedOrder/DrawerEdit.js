@@ -20,7 +20,6 @@ import {
 } from 'redux-form';
 import {
   linePriceSelector,
-  itemPriceSelector,
   subTotalSelector,
   totalSelector,
   taxSelector,

@@ -2,38 +2,26 @@
 
 
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap';
 import DataGrid, {
     Column,
-    Editing,
-    Popup,
     Paging,
     Lookup,
     RequiredRule,
-    Position,
-    Form,
     Pager,
-    FilterRow,
     HeaderFilter,
-    SearchPanel,
     ColumnFixing,
-    Selection,
-    Export,
     Summary,
     TotalItem
 } from 'devextreme-react/data-grid';
-import { Checkbox, Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import { SelectBox, DateBox } from 'devextreme-react';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.css';
-import CustomStore from 'devextreme/data/custom_store';
 import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
 import SalesmenReport from '../../Orders/ViewAllOrders/PrintOuts/Reports/SalesmenReport';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/DoorPDF';
-import DrawerPDF from '../../Orders/ViewAllOrders/PrintOuts/DrawerPDF'
+
 
 
 
@@ -144,7 +132,7 @@ class StatusTable extends React.Component {
     }
 
     toggle = row => {
-        const { modal, edit } = this.state;
+        const { modal } = this.state;
 
         this.setState({
             modal: !modal,
@@ -286,13 +274,7 @@ class StatusTable extends React.Component {
 
 
     render() {
-        const {
-            productData,
-            selectedRowKeys,
-        } = this.state;
-        const { startDate, endDate } = this.state;
-        const { orders } = this.props;
-
+        const { selectedRowKeys } = this.state;
         return (
             <React.Fragment>
                 <DataGrid

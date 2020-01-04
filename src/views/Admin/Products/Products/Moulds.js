@@ -1,10 +1,9 @@
 import React from 'react';
-import { Input } from 'reactstrap'
 import DataGrid, {
   Column, Editing, Popup, Paging, Lookup, RequiredRule, Position,
-  Form, Pager, FilterRow, HeaderFilter, SearchPanel, ColumnFixing
+  Form, Pager, SearchPanel, ColumnFixing
 } from 'devextreme-react/data-grid';
-import { SelectBox, CheckBox, FileUploader } from 'devextreme-react';
+import { FileUploader } from 'devextreme-react';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import { Item } from 'devextreme-react/form';
@@ -87,7 +86,7 @@ class Moulds extends React.Component {
         <div
           style={{ width: '100px', height: '100px', margin: 'auto' }}
         >
-          <img src={rowData.data.photo.url} style={{ width: '100px', height: '100px' }} />
+          <img src={rowData.data.photo.url} alt='moulds' style={{ width: '100px', height: '100px' }} />
         </div>
       )
     }
@@ -133,7 +132,7 @@ class Moulds extends React.Component {
   }
 
   render() {
-    const { productData, imageId } = this.state;
+    const { productData } = this.state;
     
     return (
       <React.Fragment>

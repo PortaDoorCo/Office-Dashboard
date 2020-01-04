@@ -113,7 +113,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  const { type, data, update } = action;
+  const { type, data } = action;
   switch (type) {
     case GET_WOODTYPES:
       return {

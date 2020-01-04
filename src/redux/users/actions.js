@@ -10,12 +10,10 @@ export const MARK_DONE = 'MARK_DONE';
 export const REMOVE_TASK = 'REMOVE_TASK'
 export const SET_LOGIN = 'SET_LOGIN'
 
-const url = 'https://portadoor-server-production.herokuapp.com/'
-
 
 export function registerUser(user) {
   return async function (dispatch) {
-    const res = await axios.post(`https://portadoor-server-production.herokuapp.com/auth/local/register`, user);
+    await axios.post(`https://portadoor-server-production.herokuapp.com/auth/local/register`, user);
  
     return dispatch({
       type: REGISTER_USER,
@@ -57,13 +55,11 @@ export function createTask(task) {
 
 export function markDone(id, done) {
   return async function (dispatch) {
-    const res = await axios.put(`https://portadoor-server-production.herokuapp.com/tasks/${id}`, done, {
+    await axios.put(`https://portadoor-server-production.herokuapp.com/tasks/${id}`, done, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
-    });
-    const data = await res;
-  
+    });  
     return dispatch({
       type: MARK_DONE,
       id: id

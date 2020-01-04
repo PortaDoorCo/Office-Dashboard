@@ -43,7 +43,7 @@ import {
 import { login } from "../../redux/users/actions";
 
 import Loader from '../../views/Admin/Loader/Loader'
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationContainer } from 'react-notifications';
 
 
 
