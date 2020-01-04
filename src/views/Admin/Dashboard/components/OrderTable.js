@@ -36,7 +36,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers, updateStatus } from '../../../../redux/orders/actions';
 import io from 'socket.io-client';
+import Cookies from "js-cookie";
 const socket = io('https://server.portadoor.com/');
+
+const cookie = Cookies.get("jwt");
 
 momentLocaliser(moment);
 
@@ -81,7 +84,7 @@ class OrderTable extends React.Component {
             startDate: new Date(),
             endDate: new Date(),
             productData: new CustomStore({
-                load: () => this.props.loadOrders(),
+                load: () => this.props.loadOrders(cookie),
                 update: (key, values) => (this.props.updateStatus(key.id, values, key.orderNum), console.log(key)),
             }),
         };

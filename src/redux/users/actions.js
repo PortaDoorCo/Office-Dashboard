@@ -1,10 +1,14 @@
 import axios from 'axios';
+import Cookies from "js-cookie";
+const cookie = Cookies.get("jwt");
+
 
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN = 'LOGIN';
 export const CREATE_TASK = 'CREATE_TASK';
 export const MARK_DONE = 'MARK_DONE';
 export const REMOVE_TASK = 'REMOVE_TASK'
+export const SET_LOGIN = 'SET_LOGIN'
 
 const url = 'https://portadoor-server-production.herokuapp.com/'
 
@@ -36,7 +40,11 @@ export function login(token) {
 
 export function createTask(task) {
   return async function (dispatch) {
-    const res = await axios.post(`https://portadoor-server-production.herokuapp.com/tasks`, task);
+    const res = await axios.post(`https://portadoor-server-production.herokuapp.com/tasks`, task, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res;
     console.log(data);
     return dispatch({
@@ -49,7 +57,11 @@ export function createTask(task) {
 
 export function markDone(id, done) {
   return async function (dispatch) {
-    const res = await axios.put(`https://portadoor-server-production.herokuapp.com/tasks/${id}`, done);
+    const res = await axios.put(`https://portadoor-server-production.herokuapp.com/tasks/${id}`, done, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res;
     console.log(data);
     return dispatch({
@@ -65,6 +77,14 @@ export function removeTask(id) {
     return dispatch({
       type: REMOVE_TASK,
       id: id
+    });
+  };
+}
+
+export function setLogin() {
+  return async function (dispatch) {
+    return dispatch({
+      type: SET_LOGIN,
     });
   };
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NotificationManager } from 'react-notifications';
+import Cookies from "js-cookie";
 
 export const GET_WOODTYPES = 'GET_WOODTYPES';
 export const GET_DESIGNS = 'GET_DESIGNS';
@@ -24,10 +25,18 @@ export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
 
 const url = 'https://portadoor-server-production.herokuapp.com/'
+const cookie = Cookies.get("jwt");
 
-export function getWoodtypes() {
+
+export function getWoodtypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/woodtypes?_limit=2000&_sort=_id:ASC`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/woodtypes?_limit=2000&_sort=_id:ASC`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
     const data = await res.json();
     return dispatch({
       type: GET_WOODTYPES,
@@ -36,11 +45,15 @@ export function getWoodtypes() {
   };
 }
 
-export function getDesigns() {
+export function getDesigns(cookie) {
 
   return async function (dispatch) {
 
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/designs?_limit=2000&_sort=Index:ASC`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/designs?_limit=2000&_sort=Index:ASC`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     console.log(data);
     return dispatch({
@@ -50,9 +63,13 @@ export function getDesigns() {
   };
 }
 
-export function getEdges() {
+export function getEdges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/edges?_limit=200&_sort=_id:ASC`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/edges?_limit=200&_sort=_id:ASC`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_EDGES,
@@ -61,9 +78,13 @@ export function getEdges() {
   };
 }
 
-export function getMoulds() {
+export function getMoulds(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/moulds?_limit=200&_sort=Index:ASC`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/moulds?_limit=200&_sort=Index:ASC`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_MOULDS,
@@ -72,9 +93,13 @@ export function getMoulds() {
   };
 }
 
-export function getPanels() {
+export function getPanels(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/panels?_limit=200&_sort=PANEL_CODE:ASC`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/panels?_limit=200&_sort=PANEL_CODE:ASC`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_PANELS,
@@ -83,9 +108,13 @@ export function getPanels() {
   };
 }
 
-export function getGrades() {
+export function getGrades(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/grades`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/grades`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_GRADES,
@@ -94,9 +123,13 @@ export function getGrades() {
   };
 }
 
-export function getFinish() {
+export function getFinish(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/finishes?_limit=200&_sort=_id:ASC`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/finishes?_limit=200&_sort=_id:ASC`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_FINISH,
@@ -105,9 +138,13 @@ export function getFinish() {
   };
 }
 
-export function getBoxThickness() {
+export function getBoxThickness(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/boxthicknesses`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/boxthicknesses`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_BOX_THICKNESS,
@@ -116,9 +153,13 @@ export function getBoxThickness() {
   };
 }
 
-export function getBoxBottoms() {
+export function getBoxBottoms(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/boxbottoms`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/boxbottoms`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    })
     const data = await res.json();
     return dispatch({
       type: GET_BOX_BOTTOMS,
@@ -127,9 +168,13 @@ export function getBoxBottoms() {
   };
 }
 
-export function getAssembly() {
+export function getAssembly(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/assemblies`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/assemblies`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_ASSEMBLY,
@@ -138,9 +183,13 @@ export function getAssembly() {
   };
 }
 
-export function getNotch() {
+export function getNotch(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/notchdrills`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/notchdrills`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_NOTCH,
@@ -149,9 +198,13 @@ export function getNotch() {
   };
 }
 
-export function getDrawerFinish() {
+export function getDrawerFinish(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/drawerfinishes`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/drawerfinishes`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_DRAWER_FINISH,
@@ -160,9 +213,13 @@ export function getDrawerFinish() {
   };
 }
 
-export function getDoorExtras() {
+export function getDoorExtras(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/doorextras`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/doorextras`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_DOOR_EXTRAS,
@@ -171,9 +228,13 @@ export function getDoorExtras() {
   };
 }
 
-export function getHinges() {
+export function getHinges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://portadoor-server-production.herokuapp.com/hinges`);
+    const res = await fetch(`https://portadoor-server-production.herokuapp.com/hinges`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
     const data = await res.json();
     return dispatch({
       type: GET_HINGES,
@@ -182,11 +243,15 @@ export function getHinges() {
   };
 }
 
-export function addProduct(product, url) {
+export function addProduct(product, url, cookie) {
   console.log(product)
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(`/${url}`, product);
+      const { data } = await axios.post(`/${url}`, product, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
       console.log(data)
       // NotificationManager.success('Product Added', 'Product Added', 2000);
       return dispatch({
@@ -200,10 +265,14 @@ export function addProduct(product, url) {
   };
 }
 
-export function updateProduct(orderId, product, url) {
+export function updateProduct(orderId, product, url, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.put(`/${url}/${orderId}`, product);
+      const { data } = await axios.put(`/${url}/${orderId}`, product, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
       console.log('dataaaaaa', data);
       // NotificationManager.success(`Product Updated!`, 'Order Updated!', 2000);
       return dispatch({
@@ -216,10 +285,14 @@ export function updateProduct(orderId, product, url) {
   };
 }
 
-export function deleteProduct(orderId, product) {
+export function deleteProduct(orderId, product, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.delete(`/${product}/${orderId}`);
+      const { data } = await axios.delete(`/${product}/${orderId}`, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
       console.log('dataaaaaa', data);
       // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
@@ -235,10 +308,14 @@ export function deleteProduct(orderId, product) {
 
 
 
-export function uploadFile(file) {
+export function uploadFile(file, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(`https://portadoor-server-production.herokuapp.com/upload`, file)
+      const { data } = await axios.post(`https://portadoor-server-production.herokuapp.com/upload`, file, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      })
       console.log('dataaaaaa', data);
       // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
@@ -252,7 +329,7 @@ export function uploadFile(file) {
   };
 }
 
-export function getPhotoId(i) {
+export function getPhotoId(i, cookie) {
   return async function (dispatch) {
     try {
       return dispatch({
