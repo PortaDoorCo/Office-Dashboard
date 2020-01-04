@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 import io from 'socket.io-client';
+const socket = io('https://server.portadoor.com/');
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
@@ -209,7 +210,7 @@ export function updateOrder(orderId, order) {
   return async function (dispatch) {
 
     try {
-      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, order);
+      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/orders/${orderId}`, order);
       const data = await res;
       console.log(data);
       NotificationManager.success(`Order ${data.data.orderNum} has been update!`, 'Order Updated!', 2000);
@@ -227,12 +228,11 @@ export function updateOrder(orderId, order) {
 
 export function updateStatus(orderId, status) {
   return async function (dispatch) {
-
     try {
       const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, status);
       const data = await res;
       console.log(data);
-      NotificationManager.success(`Order ${data.data.orderNum} has been update!`, 'Order Updated!', 2000);
+      // NotificationManager.success(`Order ${data.data.orderNum} has been update!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_STATUS,
       });

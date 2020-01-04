@@ -40,6 +40,7 @@ const SalesReport = (props) => {
 
   useEffect(() => {
     socket.on('order_submitted', res => props.loadOrders())
+    socket.on('status_updated', res => props.loadOrders())
 }, [])
 
   const minDate = new Date(orders[orders.length - 1].createdAt)

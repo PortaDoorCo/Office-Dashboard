@@ -56,7 +56,6 @@ import Sticky from 'react-stickynode';
 import moment from 'moment'
 import Maker from './components/MakerJS/Maker';
 // import { ReactComponent as Maker } from './components/MakerJS/Maker';
-import io from 'socket.io-client';
 
 const dueDate = moment(new Date()).add(7, 'days').format()
 
@@ -418,7 +417,7 @@ class DoorOrders extends Component {
             </Card>
           </Col>
           <Col lg="4">
-            {(this.props.formState && this.props.formState.part_list && this.props.formState.part_list[0].dimensions.length > 0) ? (
+            {(this.props.formState && this.props.formState.part_list) ? (
               this.props.formState.part_list.map((part, i) => {
                 return (
                   <div>
@@ -485,10 +484,7 @@ const mapStateToProps = state => ({
           value: 0.75
         },
 
-        dimensions: [{
-          panelsH: 1,
-          panelsW: 1,
-        }],
+        dimensions: [],
         addPrice: 0
       }
     ],
