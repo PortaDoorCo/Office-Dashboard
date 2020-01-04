@@ -81,6 +81,7 @@ class DoorOrders extends Component {
   };
 
   submit = async (values, e) => {
+    e.preventDefault()
     const {
       reset,
       prices,
@@ -172,12 +173,9 @@ class DoorOrders extends Component {
             )
           );
 
-          part_list.forEach((part, i) => {
+          part_list.map((part, i) => {
             if (part.dimensions) {
               return part.dimensions.forEach((info, index) => {
-
-     
-
                 this.props.dispatch(
                   change(
                     'DoorOrder',

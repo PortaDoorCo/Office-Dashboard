@@ -59,7 +59,9 @@ const CustomerOrders = (props) => {
     const toggle = (row) => {
         setModal(!modal);
 
+
         if (!modal) {
+            console.log(row)
             setSelectedOrder(
                 [
                     {
@@ -76,15 +78,14 @@ const CustomerOrders = (props) => {
                         orderNum: row.orderNum,
                         orderType: row.orderType,
                         itemPrice: row.itemPrice,
-                        subTotals: row.subTotals
+                        subTotals: row.subTotals,
+                        tax: row.tax
                     }
                 ]
             )
         } else {
             return
         }
-
-        toggle()
     }
 
     const editable = () => {

@@ -114,7 +114,7 @@ class DoorInfo extends Component {
     if (this.props.formState !== prevProps.formState) {
       if (this.props.formState) {
         this.setState({
-          designFilter: this.props.formState.part_list.forEach((i, index) => {
+          designFilter: this.props.formState.part_list.map((i, index) => {
             let filter = this.props.designs.filter(
               el =>
                 el.OrderType === i.orderType.value &&
@@ -128,7 +128,7 @@ class DoorInfo extends Component {
         });
 
         this.setState({
-          mouldFilter: this.props.formState.part_list.forEach((i, index) => {
+          mouldFilter: this.props.formState.part_list.map((i, index) => {
             if (i.design.Construction === 'Cope') {
               let filter = this.props.moulds.filter(
                 el => el.Construction === i.construction.value
