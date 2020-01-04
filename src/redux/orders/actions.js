@@ -226,7 +226,7 @@ export function updateOrder(orderId, order) {
 export function updateStatus(orderId, status) {
   return async function (dispatch) {
     try {
-      const res = await axios.put(`http://localhost:1337/orders/${orderId}`, status);
+      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, status);
       const data = await res;
       console.log(data);
       // NotificationManager.success(`Order ${data.data.orderNum} has been update!`, 'Order Updated!', 2000);

@@ -106,7 +106,7 @@ class Edges extends React.Component {
         return (
             <div>
                 <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                    <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadUrl="http://localhost:1337/upload" />
+                    <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadUrl="https://server.portadoor.com/upload" />
                 </form>
             </div>
         )
