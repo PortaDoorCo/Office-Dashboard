@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
-import io from 'socket.io-client';
-const socket = io('https://server.portadoor.com/');
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
