@@ -5,7 +5,24 @@ import Cookies from "js-cookie";
 import Login from "./views/Pages/Login/Login";
 import Register from "./views/Pages/Register/Register";
 import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { loadOrders, loadCustomers, countOrders, loadSales, loadShippingMethod } from "./redux/orders/actions";
+import {
+  getWoodtypes,
+  getDesigns,
+  getEdges,
+  getFinish,
+  getGrades,
+  getMoulds,
+  getPanels,
+  getHinges,
+  getBoxThickness,
+  getBoxBottoms,
+  getAssembly,
+  getNotch,
+  getDrawerFinish
+} from "./redux/part_list/actions";
 import io from 'socket.io-client';
 const socket = io('http://localhost:1337/');
 
@@ -46,10 +63,32 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = async() => {
     this.cookies()
     socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000)))
     socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated to ${updatedStatus.status}`, `An order has been updated`, 2000)))
+
+
+    const props = this.props;
+    await props.loadOrders();
+    await props.loadSales();
+    await props.countOrders();
+    await props.getWoodtypes();
+    await props.getDesigns();
+    await props.getEdges();
+    await props.getFinish();
+    await props.getGrades();
+    await props.getMoulds();
+    await props.getPanels();
+    await props.getHinges();
+    await props.getBoxThickness();
+    await props.getBoxBottoms();
+    await props.getAssembly();
+    await props.getNotch();
+    await props.getDrawerFinish();
+    await props.loadShippingMethod();
+
+
   }
 
   componentDidUpdate(prevProps) {
@@ -95,9 +134,33 @@ const mapStateToProps = state => ({
   loggedIn: state.users.loggedIn
 });
 
+const mapDispatchToProps = dispatch =>
+bindActionCreators(
+  {
+    loadOrders,
+    loadCustomers,
+    loadSales,
+    loadShippingMethod,
+    getWoodtypes,
+    getDesigns,
+    getEdges,
+    getFinish,
+    getGrades,
+    getMoulds,
+    getPanels,
+    getHinges, 
+    countOrders,
+    getBoxThickness,
+    getBoxBottoms,
+    getAssembly,
+    getNotch,
+    getDrawerFinish
+  },
+  dispatch
+);
 
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(App);

@@ -55,31 +55,31 @@ class DefaultLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
-  componentDidMount = async () => {
-    const props = this.props;
-    await props.loadOrders();
-    await props.loadSales();
-    await props.countOrders();
-    await props.getWoodtypes();
-    await props.getDesigns();
-    await props.getEdges();
-    await props.getFinish();
-    await props.getGrades();
-    await props.getMoulds();
-    await props.getPanels();
-    await props.getHinges();
-    await props.getBoxThickness();
-    await props.getBoxBottoms();
-    await props.getAssembly();
-    await props.getNotch();
-    await props.getDrawerFinish();
-    await props.loadShippingMethod();
+  // componentDidMount = async () => {
+  //   const props = this.props;
+  //   await props.loadOrders();
+  //   await props.loadSales();
+  //   await props.countOrders();
+  //   await props.getWoodtypes();
+  //   await props.getDesigns();
+  //   await props.getEdges();
+  //   await props.getFinish();
+  //   await props.getGrades();
+  //   await props.getMoulds();
+  //   await props.getPanels();
+  //   await props.getHinges();
+  //   await props.getBoxThickness();
+  //   await props.getBoxBottoms();
+  //   await props.getAssembly();
+  //   await props.getNotch();
+  //   await props.getDrawerFinish();
+  //   await props.loadShippingMethod();
 
-    const token = Cookies.get("jwt");
-    if (!this.props.loggedIn) {
-      this.props.login(token);
-    }
-  }
+  //   const token = Cookies.get("jwt");
+  //   if (!this.props.loggedIn) {
+  //     this.props.login(token);
+  //   }
+  // }
 
   onNewOrder = (e) => {
 
