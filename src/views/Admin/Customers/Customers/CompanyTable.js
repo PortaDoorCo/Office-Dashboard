@@ -2,20 +2,10 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { Row, Col, Input, Button } from 'reactstrap';
 
 import CustomerPage from './CustomerPage';
-import AddCustomer from '../AddCustomer/AddCustomer';
-import {
-    loadCustomers,
-    loadOrders,
-    loadCustomerOrder
-} from '../../../../redux/orders/actions';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Add from '@material-ui/icons/Add';
 import DataTable from 'react-data-table-component';
-import { Checkbox, Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox'
 import differenceBy from 'lodash/differenceBy';
-import axios from 'axios'
 import Geocode from "react-geocode";
 
 const apiKey = 'AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE';

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     Input,
     Button,
@@ -45,7 +45,7 @@ const CustomerOrders = (props) => {
         setData(filteredItems);
     }, [filterText, props.orders])
 
-    const subHeaderComponentMemo = useCallback(() => {
+    const subHeaderComponentMemo = useMemo(clickHandler => {
         const handleClear = () => {
             if (filterText) {
                 setResetPaginationToggle(!resetPaginationToggle);
@@ -93,7 +93,7 @@ const CustomerOrders = (props) => {
 
 
 
-    const columns = () => [
+    const columns = useMemo(clickHandler => [
 
         {
             selector: 'orderNum',
@@ -140,9 +140,9 @@ const CustomerOrders = (props) => {
                 </IconButton>
             </Tooltip>
         },
-    ];
+    ]);
 
-    const contextActions = useCallback(() => {
+    const contextActions = useMemo(() => {
         const handleDelete = () => {
 
             if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.orderNum)}?`)) {
