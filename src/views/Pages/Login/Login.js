@@ -63,10 +63,6 @@ class Login extends Component {
         password: password
       })
       .then(response => {
-
-        console.log('User token', response.data.jwt);
-
-
         if (!process.browser) {
           return;
         }
