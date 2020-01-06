@@ -78,7 +78,7 @@ class OrderTable extends React.Component {
       productData: new CustomStore({
         load: () => this.props.loadOrders(cookie),
         update: (key, values) =>
-          this.props.updateStatus(key.id, values),
+          this.props.updateStatus(key.id, values, cookie),
       }),
     };
     this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
