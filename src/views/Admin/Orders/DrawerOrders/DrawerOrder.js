@@ -81,7 +81,7 @@ class DoorOrders extends Component {
     this.refs.notify.notificationAlert(options);
   };
 
-  submit = async (values, e) => {
+  submit = async ({ values, e }) => {
     const {
       reset,
       prices,
@@ -94,6 +94,8 @@ class DoorOrders extends Component {
     } = this.props;
 
     // const orderNum = 100 + orders.length + 1;
+    console.log(values)
+    console.log(e)
 
     const orderType = 'Drawer Order';
 
@@ -202,6 +204,12 @@ class DoorOrders extends Component {
     this.props.reset();
   };
 
+  onKeyPress(event) {
+    if (event.which === 13 /* Enter */) {
+      event.preventDefault();
+    }
+  }
+
   render() {
     const {
       submitted,
@@ -235,7 +243,7 @@ class DoorOrders extends Component {
                 <strong>Door Order</strong>
               </CardHeader>
               <CardBody>
-                <form onSubmit={handleSubmit(this.submit)}>
+              <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
                   {!submitted ? (
                     <FormSection name="job_info">
                       <JobInfo
