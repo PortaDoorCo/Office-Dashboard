@@ -7,7 +7,8 @@ import {
   Col,
   Button
 } from "reactstrap";
-import { Checkbox } from 'semantic-ui-react';
+import { Checkbox as CheckboxUI } from 'semantic-ui-react';
+// import Checkbox from 'material-ui/Checkbox'
 import 'semantic-ui-css/semantic.min.css';
 import { Field } from "redux-form";
 import Ratio from "lb-ratio";
@@ -40,6 +41,24 @@ const renderFieldDisabled = ({ input, props, meta: { touched, error, warning }, 
   </Fragment>
 );
 
+const renderCheckbox = ({
+  input: { value, onChange, ...input },
+  meta: { touched, error },
+  ...rest
+}) => (
+  <div>
+    <CheckboxUI
+    toggle
+      {...input}
+      {...rest}
+      defaultChecked={!!value}
+      onChange={(e, data) => onChange(data.checked)}
+      type="checkbox"
+    />
+    {touched && error && <span>{error}</span>}
+  </div>
+);
+
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
@@ -47,7 +66,8 @@ const fraction = num => {
 
 const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit }) => {
 
-  const [uneven, setUneven] = useState(false)
+  const [placeholder, setPlaceholder] = useState(false)
+  const [uneven, setUneven] = useState([])
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
 
@@ -268,8 +288,8 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                             name={`${table}.unEvenSplitInput`}
                             component={renderField}
                           />
-                          <Checkbox className="mr-3" label='Bottom to Top' onClick={toggle} />
-                          <Checkbox label='Top to Bottom' onClick={toggle} />
+                          {/* <Checkbox className="mr-3" label='Bottom to Top' onClick={toggle} />
+                          <Checkbox label='Top to Bottom' onClick={toggle} /> */}
                         </Col>
                       </Row>
                       <Row className='mt-2'>
@@ -287,7 +307,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               <Row>
                 <Col lg='9' />
                 <Col>
-                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) === 2) ? <Checkbox label='Uneven Split' onClick={toggle} /> : null}
+                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) === 2) ? <Field name={`${table}.unevenCheck`} component={renderCheckbox} label="Uneven Split"/> : null}
                 </Col>
               </Row>
 
