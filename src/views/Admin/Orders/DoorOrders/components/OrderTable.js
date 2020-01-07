@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 import { Checkbox } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import { Field}  from "redux-form";
+import { Field } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../components/MakerJS/Maker';
 
@@ -261,23 +261,23 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 <div className='mb-3'>
                   <Row>
                     <Col>
-                    <Row>
-                      <Col>
-                      <Label for="exampleSelect">Position of Horizontal Mid Rail</Label>
-                      <Field
-                        name={`${table}.unEvenSplitInput`}
-                        component={renderField}
-                      />
-                       <Checkbox className="mr-3" label='Bottom to Top' onClick={toggle} />
-                       <Checkbox label='Top to Bottom' onClick={toggle} />
+                      <Row>
+                        <Col>
+                          <Label for="exampleSelect"><strong>Position of Horizontal Mid Rail</strong></Label>
+                          <Field
+                            name={`${table}.unEvenSplitInput`}
+                            component={renderField}
+                          />
+                          <Checkbox className="mr-3" label='Bottom to Top' onClick={toggle} />
+                          <Checkbox label='Top to Bottom' onClick={toggle} />
+                        </Col>
+                      </Row>
+                      <Row className='mt-2'>
+                        <Col>
+                          Distance is up to bottom of mullion
                       </Col>
-                    </Row>
-                    <Row className='mt-2'>
-                      <Col>
-                      Distance is up to bottom of mullion
-                      </Col>
-                    </Row>
-                      
+                      </Row>
+
                     </Col>
                     <Col lg='9' />
                   </Row>
@@ -287,13 +287,13 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               <Row>
                 <Col lg='9' />
                 <Col>
-                  {(formState.part_list[i].dimensions[index].panelsH === 1) ? <Checkbox label='Uneven Split' onClick={toggle} /> : null}
+                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) === 2) ? <Checkbox label='Uneven Split' onClick={toggle} /> : null}
                 </Col>
               </Row>
 
               <Row>
                 <Col>
-           
+
                   {height[index] > 0 ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker
@@ -328,33 +328,33 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           ))}
           <Row>
             <Col>
-            <Button
-                  color="primary"
-                  className="btn-circle"
-                  onClick={(e) =>
-                    formState.part_list[formState.part_list.length - 1].design ?
-                      fields.push({
-                        panelsH: 1,
-                        panelsW: 1,
-                        leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.L_STILE_W
-                        ),
-                        rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.R_STILE_W
-                        ),
-                        topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.TOP_RAIL_W
-                        ),
-                        bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.BOT_RAIL_W
-                        ),
-                        horizontalMidRailSize: 0,
-                        verticalMidRailSize: 0
-                      }) : alert('please select a design')
-                  }
-                >
-                  +
-                </Button>        
+              <Button
+                color="primary"
+                className="btn-circle"
+                onClick={(e) =>
+                  formState.part_list[formState.part_list.length - 1].design ?
+                    fields.push({
+                      panelsH: 1,
+                      panelsW: 1,
+                      leftStile: fraction(
+                        formState.part_list[formState.part_list.length - 1].design.L_STILE_W
+                      ),
+                      rightStile: fraction(
+                        formState.part_list[formState.part_list.length - 1].design.R_STILE_W
+                      ),
+                      topRail: fraction(
+                        formState.part_list[formState.part_list.length - 1].design.TOP_RAIL_W
+                      ),
+                      bottomRail: fraction(
+                        formState.part_list[formState.part_list.length - 1].design.BOT_RAIL_W
+                      ),
+                      horizontalMidRailSize: 0,
+                      verticalMidRailSize: 0
+                    }) : alert('please select a design')
+                }
+              >
+                +
+                </Button>
             </Col>
           </Row>
 
