@@ -114,9 +114,9 @@ class DoorOrders extends Component {
     };
 
     if (values.part_list[0].dimensions.length > 0) {
-  
-      await submitOrder(order, cookie );
-      this.setState({updateSubmit: !this.state.updateSubmit})
+
+      await submitOrder(order, cookie);
+      this.setState({ updateSubmit: !this.state.updateSubmit })
       reset();
       window.scrollTo(0, 0);
     } else {
@@ -179,7 +179,7 @@ class DoorOrders extends Component {
             if (part.dimensions) {
               return part.dimensions.forEach((info, index) => {
 
-     
+
 
                 this.props.dispatch(
                   change(
@@ -313,6 +313,12 @@ class DoorOrders extends Component {
     this.props.reset();
   };
 
+  onKeyPress(event) {
+    if (event.which === 13 /* Enter */) {
+      event.preventDefault();
+    }
+  }
+
   render() {
 
     const {
@@ -345,7 +351,7 @@ class DoorOrders extends Component {
                 <strong>Door Order</strong>
               </CardHeader>
               <CardBody>
-                <form onSubmit={handleSubmit(this.submit)}>
+                <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
                   {!submitted ? (
                     <FormSection name="job_info">
                       <JobInfo
