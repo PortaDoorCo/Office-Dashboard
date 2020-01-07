@@ -261,11 +261,23 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 <div className='mb-3'>
                   <Row>
                     <Col>
-                      <Label for="exampleSelect">Select</Label>
+                    <Row>
+                      <Col>
+                      <Label for="exampleSelect">Position of Horizontal Mid Rail</Label>
                       <Field
                         name={`${table}.unEvenSplitInput`}
                         component={renderField}
                       />
+                       <Checkbox className="mr-3" label='Bottom to Top' onClick={toggle} />
+                       <Checkbox label='Top to Bottom' onClick={toggle} />
+                      </Col>
+                    </Row>
+                    <Row className='mt-2'>
+                      <Col>
+                      Distance is up to bottom of mullion
+                      </Col>
+                    </Row>
+                      
                     </Col>
                     <Col lg='9' />
                   </Row>
@@ -275,7 +287,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               <Row>
                 <Col lg='9' />
                 <Col>
-                  {(formState.part_list[i].dimensions[index].panelsH > 1 || formState.part_list[i].dimensions[index].panelsW > 1) ? <Checkbox label='Uneven Split' onClick={toggle} /> : null}
+                  {(formState.part_list[i].dimensions[index].panelsH === 1) ? <Checkbox label='Uneven Split' onClick={toggle} /> : null}
                 </Col>
               </Row>
 
