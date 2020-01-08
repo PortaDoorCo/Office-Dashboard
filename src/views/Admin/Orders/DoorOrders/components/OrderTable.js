@@ -356,7 +356,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         <Col>
                           <p style={{ textAlign: 'center' }}><strong>Position of Horizontal Mid Rail</strong></p>
                           <Field
-                            name={`${table}.unEvenSplitInput`}
+                            name={`${table}.unevenSplitInput`}
                             component={renderField}
                           />
                           <Row>
@@ -420,7 +420,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       ),
                       horizontalMidRailSize: 0,
                       verticalMidRailSize: 0,
-                      unEvenSplitInput: "0"
+                      unevenSplitInput: "0"
                     }) : alert('please select a design')
                 }
               >
