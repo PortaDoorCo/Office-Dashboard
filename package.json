@@ -63,6 +63,7 @@
     "lodash": "^4.17.15",
     "makerjs": "^0.17.0",
     "material-table": "^1.54.1",
+    "material-ui": "^0.20.2",
     "mathjs": "^5.2.0",
     "moment": "^2.22.1",
     "moment-business-days": "^1.1.3",

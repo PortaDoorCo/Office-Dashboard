@@ -7,15 +7,28 @@ import {
   Col,
   Button
 } from "reactstrap";
-import { Checkbox } from 'semantic-ui-react';
+import { Checkbox as CheckboxUI } from 'semantic-ui-react';
+// import Checkbox from 'material-ui/Checkbox'
 import 'semantic-ui-css/semantic.min.css';
-import { Field}  from "redux-form";
+import { Field } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../components/MakerJS/Maker';
+import DropdownList from 'react-widgets/lib/DropdownList';
 
 
 const required = value => (value ? undefined : 'Required');
 
+
+const unevenDirection = [
+  {
+    name: 'Top to Bottom',
+    value: 'Top'
+  },
+  {
+    name: 'Bottom to Top',
+    value: "Bottom"
+  }
+];
 
 const renderField = ({
   input,
@@ -24,7 +37,7 @@ const renderField = ({
   ...custom
 }) => (
     <Fragment>
-      <Input {...input} {...custom} />
+      <Input {...input} {...custom} autocomplete="new-password" />
       {touched &&
         ((error && <span style={{ color: 'red' }}>{error}</span>) ||
           (warning && <span style={{ color: 'red' }}>{warning}</span>))}
@@ -40,6 +53,62 @@ const renderFieldDisabled = ({ input, props, meta: { touched, error, warning }, 
   </Fragment>
 );
 
+const renderCheckbox = ({
+  input: { value, onChange, ...input },
+  meta: { touched, error },
+  ...rest
+}) => (
+    <div>
+      <CheckboxUI
+        {...input}
+        {...rest}
+        defaultChecked={!!value}
+        onChange={(e, data) => onChange(data.checked)}
+        type="checkbox"
+      />
+      {touched && error && <span>{error}</span>}
+    </div>
+  );
+
+const renderCheckboxToggle = ({
+  input: { value, onChange, ...input },
+  meta: { touched, error },
+  ...rest
+}) => (
+    <div>
+      <CheckboxUI
+        toggle
+        {...input}
+        {...rest}
+        defaultChecked={!!value}
+        onChange={(e, data) => onChange(data.checked)}
+        type="checkbox"
+      />
+      {touched && error && <span>{error}</span>}
+    </div>
+  );
+
+const renderDropdownList = ({
+  input,
+  data,
+  valueField,
+  textField,
+  meta: { touched, error, warning }
+}) => (
+    <div>
+      <DropdownList
+        {...input}
+        data={data}
+        valueField={valueField}
+        textField={textField}
+        onChange={input.onChange}
+      />
+      {touched &&
+        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+    </div>
+  );
+
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
@@ -47,7 +116,6 @@ const fraction = num => {
 
 const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit }) => {
 
-  const [uneven, setUneven] = useState(false)
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
 
@@ -60,10 +128,6 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
     setHeight(init)
 
   }, [updateSubmit])
-
-  const toggle = () => {
-    setUneven(!uneven)
-  }
 
   const w = (e, v, i) => {
     e.preventDefault();
@@ -257,31 +321,16 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                   <tr />
                 </tbody>
               </Table>
-              {uneven ?
-                <div className='mb-3'>
-                  <Row>
-                    <Col>
-                      <Label for="exampleSelect">Select</Label>
-                      <Field
-                        name={`${table}.unEvenSplitInput`}
-                        component={renderField}
-                      />
-                    </Col>
-                    <Col lg='9' />
-                  </Row>
-                </div>
-                : null
-              }
               <Row>
                 <Col lg='9' />
                 <Col>
-                  {(formState.part_list[i].dimensions[index].panelsH > 1 || formState.part_list[i].dimensions[index].panelsW > 1) ? <Checkbox label='Uneven Split' onClick={toggle} /> : null}
+                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) === 2) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
                 </Col>
               </Row>
 
               <Row>
                 <Col>
-           
+
                   {height[index] > 0 ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker
@@ -297,6 +346,39 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
                 </Col>
               </Row>
+
+              {formState.part_list[i].dimensions[index].unevenCheck && parseInt(formState.part_list[i].dimensions[index].panelsH) ===2 ?
+                <div className='mb-3'>
+                  <Row>
+                    <Col>
+                      <Row>
+                        <Col />
+                        <Col>
+                          <p style={{ textAlign: 'center' }}><strong>Position of Horizontal Mid Rail</strong></p>
+                          <Field
+                            name={`${table}.unevenSplitInput`}
+                            component={renderField}
+                          />
+                          <Row>
+                            <Col>
+                              <p style={{ textAlign: 'center' }}>Top to Bottom</p>
+                            </Col>
+                            <Col style={{ margin: 'auto' }}>
+                              <Field name={`${table}.unevenSplit`} component={renderCheckboxToggle} label="Uneven Split" />
+                            </Col>
+                            <Col>
+                              <p style={{ textAlign: 'center' }}>Bottom to Top</p>
+                            </Col>
+                          </Row>
+                        </Col>
+                        <Col />
+                      </Row>
+                    </Col>
+
+                  </Row>
+                </div>
+                : null
+              }
 
               <Row className='mt-2'>
                 <Col>
@@ -316,33 +398,34 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           ))}
           <Row>
             <Col>
-            <Button
-                  color="primary"
-                  className="btn-circle"
-                  onClick={(e) =>
-                    formState.part_list[formState.part_list.length - 1].design ?
-                      fields.push({
-                        panelsH: 1,
-                        panelsW: 1,
-                        leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.L_STILE_W
-                        ),
-                        rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.R_STILE_W
-                        ),
-                        topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.TOP_RAIL_W
-                        ),
-                        bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.BOT_RAIL_W
-                        ),
-                        horizontalMidRailSize: 0,
-                        verticalMidRailSize: 0
-                      }) : alert('please select a design')
-                  }
-                >
-                  +
-                </Button>        
+              <Button
+                color="primary"
+                className="btn-circle"
+                onClick={(e) =>
+                  formState.part_list[formState.part_list.length - 1].design ?
+                    fields.push({
+                      panelsH: 1,
+                      panelsW: 1,
+                      leftStile: fraction(
+                        formState.part_list[formState.part_list.length - 1].design.L_STILE_W
+                      ),
+                      rightStile: fraction(
+                        formState.part_list[formState.part_list.length - 1].design.R_STILE_W
+                      ),
+                      topRail: fraction(
+                        formState.part_list[formState.part_list.length - 1].design.TOP_RAIL_W
+                      ),
+                      bottomRail: fraction(
+                        formState.part_list[formState.part_list.length - 1].design.BOT_RAIL_W
+                      ),
+                      horizontalMidRailSize: 0,
+                      verticalMidRailSize: 0,
+                      unevenSplitInput: "0"
+                    }) : alert('please select a design')
+                }
+              >
+                +
+                </Button>
             </Col>
           </Row>
 
