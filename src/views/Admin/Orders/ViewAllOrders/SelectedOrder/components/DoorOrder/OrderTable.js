@@ -195,6 +195,24 @@ const OrderTable = ({
             </Table>
             <Row>
               <Col>
+{/* 
+
+                <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
+                  <Maker
+                    width={width[index]}
+                    height={height[index]}
+                    i={i}
+                    index={index}
+                    style={{ width: '100%', height: '300px' }}
+                  />
+                </div> */}
+                
+
+
+                </Col>
+            </Row>
+            <Row>
+              <Col>
                 <strong>Notes</strong>
                 <Field
                   name={`${dimension}.notes`}
