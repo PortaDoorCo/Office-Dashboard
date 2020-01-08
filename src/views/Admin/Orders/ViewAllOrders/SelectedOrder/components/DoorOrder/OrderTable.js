@@ -12,6 +12,7 @@ import {
   Field,
 } from "redux-form";
 import Ratio from "lb-ratio";
+import Maker from './MakerJS/Edit/Maker'
 
 
 const renderField = ({
@@ -70,6 +71,7 @@ const OrderTable = ({
                     <Field
                       name={`${dimension}.width`}
                       type="text"
+                      onBlur
                       component={renderField}
                       label="width"
                     />
@@ -78,6 +80,7 @@ const OrderTable = ({
                     <Field
                       name={`${dimension}.height`}
                       type="text"
+                      onBlur
                       component={renderField}
                       label="height"
                     />
@@ -195,21 +198,19 @@ const OrderTable = ({
             </Table>
             <Row>
               <Col>
-{/* 
+
 
                 <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                   <Maker
-                    width={width[index]}
-                    height={height[index]}
                     i={i}
                     index={index}
                     style={{ width: '100%', height: '300px' }}
                   />
-                </div> */}
-                
+                </div>
 
 
-                </Col>
+
+              </Col>
             </Row>
             <Row>
               <Col>
