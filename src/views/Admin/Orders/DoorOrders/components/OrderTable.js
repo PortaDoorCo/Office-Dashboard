@@ -347,7 +347,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 </Col>
               </Row>
 
-              {formState.part_list[i].dimensions[index].unevenCheck ?
+              {formState.part_list[i].dimensions[index].unevenCheck && parseInt(formState.part_list[i].dimensions[index].panelsH) ===2 ?
                 <div className='mb-3'>
                   <Row>
                     <Col>
