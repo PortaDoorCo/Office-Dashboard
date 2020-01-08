@@ -14,7 +14,7 @@ import {
   Table,
 
 } from 'reactstrap';
-import Maker from './MakerJS/Maker';
+import Maker from './MakerJS/Selected/Maker';
 import numQty from 'numeric-quantity';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
