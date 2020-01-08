@@ -37,7 +37,7 @@ const renderField = ({
   ...custom
 }) => (
     <Fragment>
-      <Input {...input} {...custom} />
+      <Input {...input} {...custom} autocomplete="new-password" />
       {touched &&
         ((error && <span style={{ color: 'red' }}>{error}</span>) ||
           (warning && <span style={{ color: 'red' }}>{warning}</span>))}
