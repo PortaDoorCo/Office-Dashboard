@@ -15,6 +15,7 @@ import {
 
 } from 'reactstrap';
 import Maker from './MakerJS/Maker';
+import numQty from 'numeric-quantity';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
@@ -379,16 +380,16 @@ class DoorSelect extends React.Component {
                                   <Col>
                                     <div id={`selected-makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                                       <Maker
-                                        width={parseInt(info.width)}
-                                        height={parseInt(info.height)}
+                                        width={numQty(info.width)}
+                                        height={numQty(info.height)}
                                         panelsH={parseInt(info.panelsH)}
                                         panelsW={parseInt(info.panelsW)}
-                                        leftStile={parseInt(info.leftStile)}
-                                        rightStile={parseInt(info.rightStile)}
-                                        bottomRail={parseInt(info.bottomRail)}
-                                        topRail={parseInt(info.topRail)}
-                                        horizontalMidRailSize={parseInt(info.horizontalMidRailSize)}
-                                        verticalMidRailSize={parseInt(info.verticalMidRailSize)}
+                                        leftStile={numQty(info.leftStile)}
+                                        rightStile={numQty(info.rightStile)}
+                                        bottomRail={numQty(info.bottomRail)}
+                                        topRail={numQty(info.topRail)}
+                                        horizontalMidRailSize={numQty(info.horizontalMidRailSize)}
+                                        verticalMidRailSize={numQty(info.verticalMidRailSize)}
                                         i={i}
                                         index={index}
                                         style={{ width: '100%', height: '300px' }}

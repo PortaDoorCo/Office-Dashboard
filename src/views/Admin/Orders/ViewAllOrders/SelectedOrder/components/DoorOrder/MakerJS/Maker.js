@@ -18,20 +18,6 @@ const Maker = props => {
     const [id, setID] = useState('');
     const [bps, setBps] = useState(null);
     const [pathItem, setPathItem] = useState(null);
-    // const [width, setWidth] = useState(0);
-
-    // let width = width ? width : 0
-    // let height = height ? height : 0
-    // let leftStile = leftStile ? leftStile : 0
-    // let rightStile = rightStile ? rightStile : 0
-    // let topRail = topRail ? topRail : 0
-    // let bottomRail = bottomRail ? bottomRail : 0
-    // let panelsH = panelsH ? panelsH : 0
-    // let panelsW = panelsW ? panelsW : 0
-    // let horizontalMidRailSize = horizontalMidRailSize ? horizontalMidRailSize : 0
-    // let verticalMidRailSize = verticalMidRailSize ? verticalMidRailSize : 0
-
-
 
     useEffect(() => {
 
