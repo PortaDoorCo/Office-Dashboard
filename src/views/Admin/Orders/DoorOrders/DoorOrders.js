@@ -203,7 +203,7 @@ class DoorOrders extends Component {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
-                      `part_list[${i}].dimensions[${index}].unEvenSplitInput`,
+                      `part_list[${i}].dimensions[${index}].unevenSplitInput`,
                       '0'
                     )
                   )
