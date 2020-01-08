@@ -179,7 +179,41 @@ class DoorOrders extends Component {
             if (part.dimensions) {
               return part.dimensions.forEach((info, index) => {
 
+                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2){
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenCheck`,
+                      false
+                    )
+                  )
+                }
 
+                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2){
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenSplit`,
+                      false
+                    )
+                  )
+                }
+
+                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2){
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unEvenSplitInput`,
+                      '0'
+                    )
+                  )
+                }
+
+
+
+
+
+                
 
                 this.props.dispatch(
                   change(

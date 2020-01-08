@@ -364,14 +364,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                               <p style={{ textAlign: 'center' }}>Top to Bottom</p>
                             </Col>
                             <Col style={{ margin: 'auto' }}>
-                              <Field
-                                name={`${part}.unevenSplit`}
-                                component={renderCheckboxToggle}
-                                data={unevenDirection}
-                                valueField="value"
-                                textField="name"
-                                validate={required}
-                              />
+                              <Field name={`${table}.unevenSplit`} component={renderCheckboxToggle} label="Uneven Split" />
                             </Col>
                             <Col>
                               <p style={{ textAlign: 'center' }}>Bottom to Top</p>
@@ -427,7 +420,6 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       ),
                       horizontalMidRailSize: 0,
                       verticalMidRailSize: 0,
-                      top: true,
                       unEvenSplitInput: "0"
                     }) : alert('please select a design')
                 }
