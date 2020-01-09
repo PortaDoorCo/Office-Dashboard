@@ -241,14 +241,12 @@ export function updateOrder(orderId, order, cookie) {
   return async function (dispatch) {
 
     try {
-      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/orders/${orderId}`, order, {
+      const res = await axios.put(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, order, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
       });
       const data = await res;
-   
-      NotificationManager.success(`Order ${data.data.orderNum} has been update!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_ORDER,
         data: data

@@ -28,6 +28,9 @@ import {
 import DrawerBoxInfo from './components/DrawerOrder/components/DrawerBoxInfo';
 import JobInfo from './components/DrawerOrder/components/JobInfo';
 import { updateOrder, loadOrders } from '../../../../../redux/orders/actions';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
 
 class DrawerOrders extends Component {
   constructor(props) {
@@ -50,25 +53,25 @@ class DrawerOrders extends Component {
 
   submit = async (values, e) => {
 
-    const { updateOrder, loadOrders } = this.props;
+    const { updateOrder, loadOrders, prices, itemPrice, subTotal,tax,total } = this.props;
 
     const order = {
-      'jobInfo.jobName': values.jobName,
-      linePrice: this.props.prices,
-      'jobInfo.orderNum': values.orderNum,
       part_list: values.part_list,
-      'jobInfo.poNum': values.poNum,
-      companyprofile: values.customer.id,
-      'jobInfo.status': values.status,
-      total: this.props.total
+      jobInfo: values.jobInfo,
+      companyprofile: values.jobInfo.customer.id,
+      linePrice: prices,
+      itemPrice: itemPrice,
+      subTotals: subTotal,
+      tax: tax,
+      total: total,
     };
 
     const orderId = values.id;
 
-    await updateOrder(orderId, order);
+    await updateOrder(orderId, order, cookie);
     await this.props.reset();
     await this.props.toggle();
-    await loadOrders();
+    await loadOrders(cookie);
   };
 
   componentDidUpdate(prevProps) {
@@ -125,6 +128,12 @@ class DrawerOrders extends Component {
       update();
     }
   }
+
+  cancelOrder = async() => {
+    await this.props.reset();
+    await this.props.editable();
+  };
+
 
   render() {
     const {
@@ -254,7 +263,8 @@ const mapDispatchToProps = dispatch =>
 
 DrawerOrders = reduxForm({
   form: 'DrawerOrder',
-  enableReinitialize: true
+  enableReinitialize: true,
+  destroyOnUnmount: false,
 })(DrawerOrders);
 
 export default connect(

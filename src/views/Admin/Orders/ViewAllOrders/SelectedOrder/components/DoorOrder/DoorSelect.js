@@ -14,6 +14,8 @@ import {
   Table,
 
 } from 'reactstrap';
+import Maker from './MakerJS/Selected/Maker';
+import numQty from 'numeric-quantity';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
@@ -30,7 +32,7 @@ class DoorSelect extends React.Component {
     const { order } = this.props;
     // const company = order.CompanyName;
 
- 
+
 
     return (
       <div className="animated resize">
@@ -374,6 +376,27 @@ class DoorSelect extends React.Component {
                                     <tr />
                                   </tbody>
                                 </Table>
+                                <Row>
+                                  <Col>
+                                    <div id={`selected-makerJS${index}`} style={{ width: '100%', height: '300px' }}>
+                                      <Maker
+                                        width={numQty(info.width)}
+                                        height={numQty(info.height)}
+                                        panelsH={parseInt(info.panelsH)}
+                                        panelsW={parseInt(info.panelsW)}
+                                        leftStile={numQty(info.leftStile)}
+                                        rightStile={numQty(info.rightStile)}
+                                        bottomRail={numQty(info.bottomRail)}
+                                        topRail={numQty(info.topRail)}
+                                        horizontalMidRailSize={numQty(info.horizontalMidRailSize)}
+                                        verticalMidRailSize={numQty(info.verticalMidRailSize)}
+                                        i={i}
+                                        index={index}
+                                        style={{ width: '100%', height: '300px' }}
+                                      />
+                                    </div>
+                                  </Col>
+                                </Row>
                                 <Row>
                                   <Col>
                                     <strong>Notes</strong>
