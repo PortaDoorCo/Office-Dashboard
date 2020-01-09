@@ -81,7 +81,7 @@ class DoorOrders extends Component {
     this.refs.notify.notificationAlert(options);
   };
 
-  submit = async ({ values, e }) => {
+  submit = async (values, e) => {
     const {
       reset,
       prices,
