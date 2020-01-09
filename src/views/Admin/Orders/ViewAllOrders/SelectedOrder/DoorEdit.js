@@ -242,6 +242,11 @@ class DoorEdit extends Component {
     await this.props.dispatch(reset('DoorOrder'))
   };
 
+  cancelOrder = async() => {
+    await this.props.reset();
+    await this.props.editable();
+  };
+
   render() {
     const {
       handleSubmit,
@@ -320,7 +325,7 @@ class DoorEdit extends Component {
                 <Col>
                   <Button color="danger" onClick={this.cancelOrder} style={{ width: "100%" }}>
                     Cancel
-                        </Button>
+                  </Button>
                 </Col>
               </Row>
             </Col>

@@ -129,6 +129,12 @@ class DrawerOrders extends Component {
     }
   }
 
+  cancelOrder = async() => {
+    await this.props.reset();
+    await this.props.editable();
+  };
+
+
   render() {
     const {
       handleSubmit,
