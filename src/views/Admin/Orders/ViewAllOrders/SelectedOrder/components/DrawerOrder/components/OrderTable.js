@@ -19,7 +19,7 @@ const required = value => value ? undefined : 'Required';
 
 const renderField = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
   <Fragment>
-    <Input {...input} {...custom} />
+    <Input autocomplete="new-password" {...input} {...custom} />
     {error && <FormFeedback>{error}</FormFeedback>}
     {!error && warning && <FormText>{warning}</FormText>}
   </Fragment>

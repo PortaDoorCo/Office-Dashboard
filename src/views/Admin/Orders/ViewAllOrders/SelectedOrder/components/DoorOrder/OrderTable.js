@@ -12,6 +12,7 @@ import {
   Field,
 } from "redux-form";
 import Ratio from "lb-ratio";
+import Maker from './MakerJS/Edit/Maker'
 
 
 const renderField = ({
@@ -21,7 +22,7 @@ const renderField = ({
   ...custom
 }) => (
     <Fragment>
-      <Input {...(touched ? { valid: !error } : {})} {...input} {...custom} />
+      <Input autocomplete="new-password" {...(touched ? { valid: !error } : {})} {...input} {...custom} />
       {error && <FormFeedback>{error}</FormFeedback>}
       {!error && warning && <FormText>{warning}</FormText>}
     </Fragment>
@@ -70,6 +71,7 @@ const OrderTable = ({
                     <Field
                       name={`${dimension}.width`}
                       type="text"
+                      onBlur
                       component={renderField}
                       label="width"
                     />
@@ -78,6 +80,7 @@ const OrderTable = ({
                     <Field
                       name={`${dimension}.height`}
                       type="text"
+                      onBlur
                       component={renderField}
                       label="height"
                     />
@@ -193,6 +196,22 @@ const OrderTable = ({
                 <tr />
               </tbody>
             </Table>
+            <Row>
+              <Col>
+
+
+                <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
+                  <Maker
+                    i={i}
+                    index={index}
+                    style={{ width: '100%', height: '300px' }}
+                  />
+                </div>
+
+
+
+              </Col>
+            </Row>
             <Row>
               <Col>
                 <strong>Notes</strong>
