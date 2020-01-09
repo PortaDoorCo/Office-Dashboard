@@ -244,6 +244,7 @@ class DoorEdit extends Component {
 
   cancelOrder = async() => {
     await this.props.reset();
+    
     await this.props.editable();
   };
 
