@@ -8,13 +8,15 @@ import {
   Col,
   Form,
   CardSubtitle,
-  Input
+  Input,
+  Button
 } from 'reactstrap';
 import {
   reduxForm,
   getFormValues,
   change,
-  FieldArray
+  FieldArray,
+  reset
 } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -29,6 +31,9 @@ import { updateOrder, loadOrders } from '../../../../../redux/orders/actions';
 import JobInfo from './components/DoorOrder/JobInfo';
 import DoorInfo from './components/DoorOrder/DoorInfo';
 import Ratio from 'lb-ratio';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -40,7 +45,7 @@ class DoorEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filter: []
+      filter: [],
     };
   }
 
@@ -52,7 +57,7 @@ class DoorEdit extends Component {
       const update = () => {
         const customer = this.props.formState && this.props.formState.customer;
         const part_list = this.props.formState && this.props.formState.part_list;
-       
+
         if (customer && (customer !== (prevProps.formState && prevProps.formState.customer))) {
           this.props.dispatch(
             change(
@@ -99,14 +104,14 @@ class DoorEdit extends Component {
         }
 
 
-     
+
 
 
         part_list.forEach((part, i) => {
           if (part.dimensions) {
             return part.dimensions.forEach((info, index) => {
 
-         
+
 
 
               if (info.panelsW > 1) {
@@ -213,26 +218,28 @@ class DoorEdit extends Component {
   }
 
   submit = async (values, e) => {
-   
-    const { updateOrder, loadOrders, reset } = this.props;
+
+    const { updateOrder, loadOrders, reset, prices, itemPrice, subTotal, tax, total, orderNum, orderType } = this.props;
+
+    console.log(values)
 
     const order = {
-      'jobInfo.jobName': values.jobName,
-      linePrice: this.props.prices,
-      'jobInfo.orderNum': values.orderNum,
       part_list: values.part_list,
-      'jobInfo.poNum': values.poNum,
-      companyprofile: values.customer.id,
-      'jobInfo.status': values.status,
-      total: this.props.total
+      jobInfo: values.jobInfo,
+      companyprofile: values.jobInfo.customer.id,
+      linePrice: prices,
+      itemPrice: itemPrice,
+      subTotals: subTotal,
+      tax: tax,
+      total: total,
     };
 
     const orderId = values.id;
 
-    await updateOrder(orderId, order);
-    await reset();
+    await updateOrder(orderId, order, cookie);
     await this.props.toggle();
-    await loadOrders();
+    await loadOrders(cookie);
+    await this.props.dispatch(reset('DoorOrder'))
   };
 
   render() {
@@ -287,7 +294,6 @@ class DoorEdit extends Component {
                     subTotal={subTotal}
                     part_list={part_list}
                   />
-
                   <hr />
                 </CardBody>
               </Card>
@@ -301,6 +307,22 @@ class DoorEdit extends Component {
               <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" />
               <strong>Total: </strong>
               <Input placeholder={'$' + total.toFixed(2)} className="mb-3" />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs="4" />
+            <Col xs="5" />
+            <Col xs="3">
+              <Row>
+                <Col>
+                  <Button color="primary" className="submit">Submit</Button>
+                </Col>
+                <Col>
+                  <Button color="danger" onClick={this.cancelOrder} style={{ width: "100%" }}>
+                    Cancel
+                        </Button>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Form>
@@ -347,6 +369,7 @@ const mapDispatchToProps = dispatch =>
 DoorEdit = reduxForm({
   form: 'DoorOrder',
   enableReinitialize: true,
+  destroyOnUnmount: false,
 })(DoorEdit);
 
 export default connect(

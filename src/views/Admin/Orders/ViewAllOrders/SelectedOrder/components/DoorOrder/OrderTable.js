@@ -22,7 +22,7 @@ const renderField = ({
   ...custom
 }) => (
     <Fragment>
-      <Input {...(touched ? { valid: !error } : {})} {...input} {...custom} />
+      <Input autocomplete="new-password" {...(touched ? { valid: !error } : {})} {...input} {...custom} />
       {error && <FormFeedback>{error}</FormFeedback>}
       {!error && warning && <FormText>{warning}</FormText>}
     </Fragment>

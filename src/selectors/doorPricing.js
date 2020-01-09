@@ -4,9 +4,8 @@ import numQty from "numeric-quantity";
 const partListSelector = state => {
   const orders = state.form.DoorOrder;
 
-  if (state.part_list.loadedFinish) {
     if (orders) {
-      if (!state.form.DoorOrder.values.part_list) {
+      if ((!state.form.DoorOrder.values && !state.form.DoorOrder.values.part_list)) {
         return [];
       } else {
         return state.form.DoorOrder.values.part_list;
@@ -14,9 +13,7 @@ const partListSelector = state => {
     } else {
       return [];
     }
-  } else {
-    return [];
-  }
+  
 };
 
 const taxRate = state => {
