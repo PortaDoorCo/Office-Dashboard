@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
   Card,
   CardHeader,
@@ -51,9 +50,6 @@ class DoorEdit extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.formState !== prevProps.formState) {
-
-
-
       const update = () => {
         const customer = this.props.formState && this.props.formState.customer;
         const part_list = this.props.formState && this.props.formState.part_list;
@@ -103,17 +99,9 @@ class DoorEdit extends Component {
           );
         }
 
-
-
-
-
         part_list.forEach((part, i) => {
           if (part.dimensions) {
             return part.dimensions.forEach((info, index) => {
-
-
-
-
               if (info.panelsW > 1) {
                 if (
                   info.panelsW !==
@@ -244,7 +232,7 @@ class DoorEdit extends Component {
 
   cancelOrder = async() => {
     await this.props.reset();
-    
+
     await this.props.editable();
   };
 

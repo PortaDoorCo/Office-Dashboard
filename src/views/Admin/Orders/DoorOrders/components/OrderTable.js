@@ -364,7 +364,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                               <p style={{ textAlign: 'center' }}>Top to Bottom</p>
                             </Col>
                             <Col style={{ margin: 'auto' }}>
-                              <Field name={`${table}.unevenSplit`} component={renderCheckboxToggle} label="Uneven Split" />
+                              <Field name={`${table}.unevenSplit`} component={renderCheckboxToggle} />
                             </Col>
                             <Col>
                               <p style={{ textAlign: 'center' }}>Bottom to Top</p>
