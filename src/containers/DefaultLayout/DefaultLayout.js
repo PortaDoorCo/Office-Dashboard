@@ -45,9 +45,6 @@ import { login } from "../../redux/users/actions";
 import Loader from '../../views/Admin/Loader/Loader'
 import { NotificationContainer } from 'react-notifications';
 
-
-
-
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -62,6 +59,7 @@ class DefaultLayout extends Component {
     const cookie = await Cookies.get("jwt");
 
     if(cookie){
+      await props.login(cookie);
       await props.loadSales(cookie);
       await props.countOrders(cookie);
       await props.getWoodtypes(cookie);
@@ -78,14 +76,10 @@ class DefaultLayout extends Component {
       await props.getDrawerFinish(cookie);
       await props.loadShippingMethod(cookie);
       await props.loadOrders(cookie);
+      
     } else {
       alert('not logged in')
     }
-
-  }
-
-  onNewOrder = (e) => {
-
 
   }
 

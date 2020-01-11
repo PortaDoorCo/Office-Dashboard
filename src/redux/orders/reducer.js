@@ -13,7 +13,8 @@ import {
   LOAD_SALES,
   SUBMIT_CUSTOMER,
   LOAD_SHIPPING_METHODS,
-  UPDATE_CUSTOMER
+  UPDATE_CUSTOMER,
+  UPDATE_ORDER_NUM
 } from './actions';
 
 import uniqid from 'uniqid';
@@ -145,6 +146,11 @@ export default function (state = initialState, action) {
         ...state,
         shippingMethods: data
       };
+      case UPDATE_ORDER_NUM:
+        return {
+          ...state,
+          orderNum: state.orderNum + 1
+        };
     default:
       return {
         ...state,
