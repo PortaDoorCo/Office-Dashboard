@@ -19,6 +19,7 @@ export const LOAD_SALES = 'LOAD_SALES';
 export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const LOAD_SHIPPING_METHODS = 'LOAD_SHIPPING_METHODS';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
+export const UPDATE_ORDER_NUM = 'UPDATE_ORDER_NUM'
 
 export function addToCart(
   order,
@@ -283,6 +284,14 @@ export function selectDateRange(date) {
     return dispatch({
       type: SELECT_DATE_RANGE,
       date: date
+    });
+  };
+}
+
+export function updateOrderNum() {
+  return async function (dispatch) {
+    return dispatch({
+      type: UPDATE_ORDER_NUM,
     });
   };
 }

@@ -92,7 +92,9 @@ class DoorOrders extends Component {
       tax,
       total,
       submitOrder,
-      orderNum
+      orderNum,
+      user,
+      orders
     } = this.props;
 
     const orderType = 'Door Order';
@@ -110,11 +112,11 @@ class DoorOrders extends Component {
       orderNum: orderNum,
       orderType: orderType,
       DueDate: values.job_info.DueDate,
-
+      user: user.id,
+      userName: user.username
     };
 
     if (values.part_list[0].dimensions.length > 0) {
-
       await submitOrder(order, cookie);
       this.setState({ updateSubmit: !this.state.updateSubmit })
       reset();
@@ -208,12 +210,6 @@ class DoorOrders extends Component {
                     )
                   )
                 }
-
-
-
-
-
-                
 
                 this.props.dispatch(
                   change(
@@ -498,6 +494,8 @@ const mapStateToProps = state => ({
   customers: state.Orders.customerDB,
   address: state.Orders.address,
   customerDBLoaded: state.Orders.customerDBLoaded,
+
+  user: state.users.user,
 
   submitted: state.Orders.submitted,
   initialValues: {
