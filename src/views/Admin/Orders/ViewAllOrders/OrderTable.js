@@ -520,6 +520,12 @@ class OrderTable extends React.Component {
             />
           </Column>
           <Column
+              dataField="user.FirstName"
+              caption="Submitted By"
+              allowEditing={false}
+          >
+          </Column>
+          <Column
             dataField="total"
             caption="Total"
             format={this.saleAmountFormat}
