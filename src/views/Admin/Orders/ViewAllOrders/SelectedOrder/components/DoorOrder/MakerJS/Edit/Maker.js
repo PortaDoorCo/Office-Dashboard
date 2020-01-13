@@ -46,7 +46,7 @@ const Maker = props => {
         } else {
             bp = new Blueprint({
                 parentElement: ref.current,
-                className: `svg-${props.index}`,
+                className: `edited-svg-${props.index}`,
                 width: '100%',
                 height: '100%',
                 gridOpacity: 0.3,
@@ -82,7 +82,7 @@ const Maker = props => {
 
     return (
         <span
-            id={`makerJS${props.index}`}
+            id={`edited-makerJS${props.index}`}
             onMouseOver={onMouseOver}
             onMouseLeave={onMouseLeave}
             ref={ref}
