@@ -390,6 +390,8 @@ class DoorSelect extends React.Component {
                                         topRail={numQty(info.topRail)}
                                         horizontalMidRailSize={numQty(info.horizontalMidRailSize)}
                                         verticalMidRailSize={numQty(info.verticalMidRailSize)}
+                                        unevenCheck={(info.unevenCheck)}
+                                        unevenSplitInput={numQty(info.unevenSplitInput)}
                                         i={i}
                                         index={index}
                                         style={{ width: '100%', height: '300px' }}
@@ -397,6 +399,32 @@ class DoorSelect extends React.Component {
                                     </div>
                                   </Col>
                                 </Row>
+                                {info.unevenCheck && parseInt(info.panelsH) === 2 && parseInt(info.panelsW) === 1 ?
+                                  <div className='mb-3'>
+                                    <Row>
+                                      <Col>
+                                        <Row>
+                                          <Col />
+                                          <Col>
+                                            <p style={{ textAlign: 'center' }}><strong>Position of Horizontal Mid Rail</strong></p>
+                                            <Input
+                                              placeholder={info.unevenSplitInput}
+                                              disabled
+                                            />
+                                            <Row>
+                                              <Col>
+                                                <p style={{ textAlign: 'center' }}>Height to Top of Horiz. Mullion</p>
+                                              </Col>
+                                            </Row>
+                                          </Col>
+                                          <Col />
+                                        </Row>
+                                      </Col>
+
+                                    </Row>
+                                  </div>
+                                  : null
+                                }
                                 <Row>
                                   <Col>
                                     <strong>Notes</strong>
