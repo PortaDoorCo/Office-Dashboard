@@ -324,7 +324,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               <Row>
                 <Col lg='9' />
                 <Col>
-                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) === 2) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
+                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) === 2 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 )  ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
                 </Col>
               </Row>
 
@@ -347,7 +347,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 </Col>
               </Row>
 
-              {formState.part_list[i].dimensions[index].unevenCheck && parseInt(formState.part_list[i].dimensions[index].panelsH) ===2 ?
+              {formState.part_list[i].dimensions[index].unevenCheck && parseInt(formState.part_list[i].dimensions[index].panelsH) === 2 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 ?
                 <div className='mb-3'>
                   <Row>
                     <Col>
@@ -361,13 +361,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           />
                           <Row>
                             <Col>
-                              <p style={{ textAlign: 'center' }}>Top to Bottom</p>
-                            </Col>
-                            <Col style={{ margin: 'auto' }}>
-                              <Field name={`${table}.unevenSplit`} component={renderCheckboxToggle} />
-                            </Col>
-                            <Col>
-                              <p style={{ textAlign: 'center' }}>Bottom to Top</p>
+                              <p style={{ textAlign: 'center' }}>Height to Top of Horiz. Mullion</p>
                             </Col>
                           </Row>
                         </Col>

@@ -210,7 +210,7 @@ class OrderTable extends React.Component {
             })
         } else {
             NotificationManager.error('Please Select an Order', 'Order Not Selected', 2000);
-        }
+        } 
 
     }
 
