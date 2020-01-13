@@ -199,7 +199,7 @@ const OrderTable = ({
             </Table>
             <Row>
               <Col>
-              <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
+              <div id={`edited-makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                   <Maker
                     i={i}
                     index={index}
