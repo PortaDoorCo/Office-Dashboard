@@ -41,6 +41,28 @@ var midRails = (function () {
     return midRails;
 })();
 
+var unevenMidRails = (function () {
+    function unevenMidRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, horizontalMidRailSize, unevenInput) {
+
+        var line = makerjs.paths.Line;
+        var ls = Math.min(leftStile, 0);
+        var rs = Math.min(rightStile, 0);
+
+        const mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
+            let a = new line([ls, height - unevenInput], [width - rs, height - unevenInput])
+            let b = new line([ls, (height - unevenInput) - horizontalMidRailSize], [width - rs, (height - unevenInput) - horizontalMidRailSize])
+            return [a, b]
+        })
+
+        let m = _.flatten(mr)
+
+        this.paths = m
+
+
+    }
+    return unevenMidRails;
+})();
+
 var vRails = (function () {
     function vRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize) {
 
@@ -196,7 +218,7 @@ var vRails = (function () {
 })();
 
 
-function Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, solid) {
+function Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize,unevenCheck, unevenInput, solid) {
     var mm = makerjs.models;
   
     this.models = {
@@ -205,7 +227,12 @@ function Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH
     if (!solid) {
         this.models['inner'] = new DoorInner(width, height, leftStile, rightStile, topRail, bottomRail);
         if (parseInt(panelsH) > 1) {
-            this.models[`midRails`] = new midRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, horizontalMidRailSize);
+            if(unevenCheck){
+                this.models[`unevenMidRails`] = new unevenMidRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, horizontalMidRailSize, unevenInput);
+            }else {
+                this.models[`midRails`] = new midRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, horizontalMidRailSize);
+            }
+            
         }
         if (parseInt(panelsW) > 1) {
             this.models[`vRails`] = new vRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize);

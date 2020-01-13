@@ -30,6 +30,9 @@ const Maker = props => {
     let panelsW = formState.part_list[i].dimensions[index].panelsW ? parseInt(formState.part_list[i].dimensions[index].panelsW) : 0
     let horizontalMidRailSize = formState.part_list[i].dimensions[index].horizontalMidRailSize ? numQty(formState.part_list[i].dimensions[index].horizontalMidRailSize) : 0
     let verticalMidRailSize = formState.part_list[i].dimensions[index].verticalMidRailSize ? numQty(formState.part_list[i].dimensions[index].verticalMidRailSize) : 0
+    let unevenInput = formState.part_list[i].dimensions[index].unevenSplitInput ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput) : 0
+    let unevenCheck = formState.part_list[i].dimensions[index].unevenCheck ? numQty(formState.part_list[i].dimensions[index].unevenCheck) : false
+
 
 
 
@@ -55,7 +58,7 @@ const Maker = props => {
         }
 
 
-        const door = new Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, 0);
+        const door = new Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize,unevenCheck, unevenInput, 0);
         const path = makerjs.exporter.toSVGPathData(door, { origin: [0, 0] });
         setPathItem(bp.append('path', { d: path }));
         bp.hide('grid')
@@ -63,7 +66,7 @@ const Maker = props => {
         bp.fit()
         //bp.redraw();
         setBps(bp);
-    }, [height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize]);
+    }, [props.height, props.width, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, unevenInput]);
 
 
 
