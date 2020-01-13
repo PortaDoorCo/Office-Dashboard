@@ -17,46 +17,94 @@ export default (info, part) => {
 
  
   const add_len = part.design.S_ADD_LEN;
-  const door = `( ${(info.panelsH > 1 && info.panelsW < 2) ? (parseInt(info.panelsH) * parseInt(info.qty)) : (info.panelsW > 1 && info.panelsH < 2) ? (parseInt(info.panelsW) * parseInt(info.qty)) : (parseInt(info.panelsW) > 1 && parseInt(info.panelsH) > 1) ? (parseInt(info.panelsH) * parseInt(info.panelsW)) * parseInt(info.qty) : info.qty} ) ${fraction(
-    (numQty(info.width) +
-      add_len -
-      numQty(leftStile) -
-      numQty(rightStile)
-      - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
-  )
-    } x ${
-    fraction(
-      (numQty(info.height) +
+
+
+    const door = [
+      {
+        qty: `${(info.panelsH > 1 && info.panelsW < 2) ? (parseInt(info.panelsH) * parseInt(info.qty)) : (info.panelsW > 1 && info.panelsH < 2) ? (parseInt(info.panelsW) * parseInt(info.qty)) : (parseInt(info.panelsW) > 1 && parseInt(info.panelsH) > 1) ? (parseInt(info.panelsH) * parseInt(info.panelsW)) * parseInt(info.qty) : info.qty}`,
+        measurement: `${fraction(
+          (numQty(info.width) +
+          add_len -
+          numQty(leftStile) -
+          numQty(rightStile)
+          - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
+        )} x ${fraction(
+          (numQty(info.height) +
+            add_len -
+            numQty(topRail) -
+            numQty(bottomRail)
+            - (numQty(info.horizontalMidRailSize) * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2)
+        )}`,
+        pattern: 'PR'
+      },
+  ]
+
+
+  const df = [
+    {
+      qty: `${info.qty}`,
+      measurement: `${fraction(
+        numQty(info.height) +
         add_len -
         numQty(topRail) -
-        numQty(bottomRail)
-        - (numQty(info.horizontalMidRailSize) * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2)
-    )
-    } `;
+        numQty(bottomRail) +
+        (INSET * 2)
+      )} x ${fraction(
+        numQty(info.width) +
+        add_len -
+        numQty(leftStile) -
+        numQty(rightStile) +
+        (INSET * 2)
+      )}`,
+      pattern: 'PR'
+    },
+]
 
-  const df = `( ${info.qty} ) ${
-    fraction(
-      numQty(info.height) +
-      add_len -
-      numQty(topRail) -
-      numQty(bottomRail) +
-      (INSET * 2)
-    )
-    } x ${
-    fraction(
-      numQty(info.width) +
-      add_len -
-      numQty(leftStile) -
-      numQty(rightStile) +
-      (INSET * 2)
-    )
-    } `;
+
+
+
+  const unevenSplit = [
+      {
+        qty: `${(info.panelsH > 1 && info.panelsW < 2) ? (parseInt(info.panelsH) * parseInt(info.qty)) : (info.panelsW > 1 && info.panelsH < 2) ? (parseInt(info.panelsW) * parseInt(info.qty)) : (parseInt(info.panelsW) > 1 && parseInt(info.panelsH) > 1) ? (parseInt(info.panelsH) * parseInt(info.panelsW)) * parseInt(info.qty) : info.qty}`,
+        measurement: `${fraction(
+          (numQty(info.width) +
+          add_len -
+          numQty(leftStile) -
+          numQty(rightStile)
+          - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
+        )} x ${fraction(
+          (numQty(info.unevenSplitInput) - numQty(topRail) + (INSET * 2) + 0.0625)
+        )}`,
+        pattern: 'PR'
+      },
+      {
+        qty: `${(info.panelsH > 1 && info.panelsW < 2) ? (parseInt(info.panelsH) * parseInt(info.qty)) : (info.panelsW > 1 && info.panelsH < 2) ? (parseInt(info.panelsW) * parseInt(info.qty)) : (parseInt(info.panelsW) > 1 && parseInt(info.panelsH) > 1) ? (parseInt(info.panelsH) * parseInt(info.panelsW)) * parseInt(info.qty) : info.qty}`,
+        measurement: `${fraction((numQty(info.width) +
+          add_len -
+          numQty(leftStile) -
+          numQty(rightStile)
+          - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
+          )} x ${fraction((numQty(info.height) + add_len)
+              - numQty(info.unevenSplitInput)
+              - numQty(info.horizontalMidRailSize)
+              - numQty(info.bottomRail)
+              + (INSET * 2)
+              -0.0625
+          )}`,
+        pattern: "PR"
+      }
+  ]
 
   if (part.orderType.value === 'Door') {
     if (part.panels.PANEL === "NONE") {
       return 'GLASS'
     } else {
-      return door;
+      if(info.unevenCheck) {
+        return unevenSplit
+      } else {
+        return door;
+      }
+      
     }
   } else {
     return df;

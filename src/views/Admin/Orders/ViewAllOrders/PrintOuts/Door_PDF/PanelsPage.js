@@ -22,9 +22,9 @@ export default data => {
       tableBody.push([
         { text: index + 1, style: 'fonts' },
         { text: `${i.design.NAME}`, style: 'fonts' },
-        { text: Panels(item, i).substring(1, 4), style: 'fonts' },
-        { text: Panels(item, i).substring(6), style: 'fonts' },
-        { text: `${i.panels.IS_FLAT ? 'PF' : 'PR'}`, style: 'fonts' },
+        { text: Panels(item, i).map(panel => { return `${panel.qty} \n` }), style: 'fonts' },
+        { text: Panels(item, i).map(panel => { return `${panel.measurement} \n` }), style: 'fonts' },
+        { text: Panels(item, i).map(panel => { return `${panel.pattern} \n` }), style: 'fonts' },
         { text: '' },
         { text: `${i.panels.PANEL}` }
       ]);
