@@ -36,6 +36,7 @@ const fraction = num => {
 const OrderTable = ({
   fields,
   formState,
+  part_list,
   i,
   prices,
   subTotal,
@@ -198,9 +199,7 @@ const OrderTable = ({
             </Table>
             <Row>
               <Col>
-
-
-                <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
+              <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                   <Maker
                     i={i}
                     index={index}
@@ -212,6 +211,35 @@ const OrderTable = ({
 
               </Col>
             </Row>
+
+            {console.log(formState ? formState.part_list[i].dimensions[index] : 0)}
+
+            {formState && formState.part_list[i].dimensions[index].unevenCheck && parseInt(formState.part_list[i].dimensions[index].panelsH) === 2 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 ?
+              <div className='mb-3'>
+                <Row>
+                  <Col>
+                    <Row>
+                      <Col />
+                      <Col>
+                        <p style={{ textAlign: 'center' }}><strong>Position of Horizontal Mid Rail</strong></p>
+                        <Field
+                          name={`${dimension}.unevenSplitInput`}
+                          component={renderField}
+                        />
+                        <Row>
+                          <Col>
+                            <p style={{ textAlign: 'center' }}>Height to Top of Horiz. Mullion</p>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col />
+                    </Row>
+                  </Col>
+
+                </Row>
+              </div>
+              : null
+            }
             <Row>
               <Col>
                 <strong>Notes</strong>
