@@ -181,7 +181,7 @@ class DoorOrders extends Component {
             if (part.dimensions) {
               return part.dimensions.forEach((info, index) => {
 
-                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2){
+                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1){
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -191,7 +191,7 @@ class DoorOrders extends Component {
                   )
                 }
 
-                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2){
+                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1){
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -201,7 +201,7 @@ class DoorOrders extends Component {
                   )
                 }
 
-                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2){
+                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1){
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -244,11 +244,6 @@ class DoorOrders extends Component {
                         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
                         fraction(part.design.H_MULL_WTH)
                       ),
-                      change(
-                        'DoorOrder',
-                        `part_list[${i}].dimensions[${index}].unEvenSplit[0]`,
-                        25
-                      )
                     );
                   }
                 }

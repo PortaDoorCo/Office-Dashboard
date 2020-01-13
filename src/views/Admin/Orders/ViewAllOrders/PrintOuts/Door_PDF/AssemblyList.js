@@ -108,7 +108,7 @@ export default data => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 50, 115, 105, 110, 22],
+            widths: [22, 15, 50, 115, 105, 120, '*'],
             body: tableBody
           },
           layout: 'lightHorizontalLines'
