@@ -22,6 +22,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DoorPDF from './PrintOuts/Pages/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/DrawerPDF';
+import StilesPDF from './PrintOuts/Pages/StilesPDF';
+import RailsPDF from './PrintOuts/Pages/RailsPDF';
+import PanelsPDF from './PrintOuts/Pages/PanelsPDF';
+import MaterialsPDF from './PrintOuts/Pages/MaterialsPDF';
+import QCPDF from './PrintOuts/Pages/QCPDF';
+import InvoicePDF from './PrintOuts/Pages/InvoicePDF';
+
 import Select from 'react-select';
 
 const options = [
@@ -42,7 +49,8 @@ class OrderPage extends Component {
       edit: false,
       orderEdit: false,
       page: [],
-      tooltipOpen: false
+      tooltipOpen: false,
+      selectedOption: [],
     };
   }
 
@@ -76,10 +84,55 @@ class OrderPage extends Component {
   downloadPDF = () => {
     const data = this.props.selectedOrder[0];
     if (data.orderType === "Door Order") {
-      DoorPDF(data);
+      this.state.selectedOption.map((option, index) => {
+        switch (option.value) {
+          case 'All':
+            DoorPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Acknowledgement':
+            InvoicePDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Invoice':
+            InvoicePDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Stiles':
+            StilesPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Rails':
+            RailsPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Panels':
+            PanelsPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Materials':
+            MaterialsPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'QC':
+            QCPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          default:
+            return
+        }
+      })
+
     } else {
       DrawerPDF(data)
     }
+  };
+
+  handleChange = selectedOption => {
+    this.setState(
+      { selectedOption },
+      () => console.log(`Option selected:`, this.state.selectedOption)
+    );
   };
 
   render() {
@@ -159,13 +212,15 @@ class OrderPage extends Component {
                           <Col lg='8'>
                             <div className='mt-3 mb-2'>
                               <Select
+                                value={this.state.selectedOption}
+                                onChange={this.handleChange}
                                 options={options}
                                 isMulti={true}
                               />
                             </div>
                           </Col>
                           <Col>
-                            <Tooltip title="Breakdowns" placement="top" className="mb-3">
+                            <Tooltip title="Print" placement="top" className="mb-3">
                               <IconButton onClick={this.downloadPDF}>
                                 <Print style={{ width: '40', height: '40' }} />
                               </IconButton>
