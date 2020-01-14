@@ -34,9 +34,11 @@ import QCPDF from './PrintOuts/Pages/QCPDF';
 import InvoicePDF from './PrintOuts/Pages/InvoicePDF';
 
 import Select from 'react-select';
+import ProfilesPDF from './PrintOuts/Pages/ProfilesPDF';
 
 const options = [
   { value: 'All', label: 'All' },
+  { value: 'Profiles', label: 'Profiles' },
   { value: 'Acknowledgement', label: 'Acknowledgement' },
   { value: 'Invoice', label: 'Invoice' },
   { value: 'Stiles', label: 'Stiles' },
@@ -45,6 +47,7 @@ const options = [
   { value: 'Materials', label: 'Materials' },
   { value: 'QC', label: 'QC' },
 ];
+
 
 class OrderPage extends Component {
   constructor(props) {
@@ -55,6 +58,7 @@ class OrderPage extends Component {
       page: [],
       tooltipOpen: false,
       selectedOption: [],
+      edgePhoto: null
     };
   }
 
@@ -116,6 +120,10 @@ class OrderPage extends Component {
             break;
           case 'Materials':
             MaterialsPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Profiles':
+            ProfilesPDF(data, this.state.edgePhoto);
             this.setState({ selectedOption: [] })
             break;
           case 'QC':
