@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardBody,
   Input,
+  FormGroup
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -44,8 +45,11 @@ import moment from 'moment-business-days'
 import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import Cookies from "js-cookie";
+import { FileUploader } from 'devextreme-react';
 
 const cookie = Cookies.get("jwt");
+const header = { 'Authorization': 'Bearer ' + cookie };
+
 
 const dueDate = moment(new Date()).businessAdd(7)._d
 
@@ -68,7 +72,8 @@ class DoorOrders extends Component {
     this.state = {
       collapse: true,
       loaded: false,
-      customerAddress: []
+      customerAddress: [],
+      files:[]
     };
   }
 
@@ -111,7 +116,8 @@ class DoorOrders extends Component {
       total: total,
       orderNum: orderNum,
       orderType: orderType,
-      DueDate: values.job_info.DueDate
+      DueDate: values.job_info.DueDate,
+      files: this.state.files
     };
 
     if (values.part_list[0].dimensions.length > 0) {
@@ -208,6 +214,13 @@ class DoorOrders extends Component {
     if (event.which === 13 /* Enter */) {
       event.preventDefault();
     }
+  }
+
+  onUploaded = (e) => {
+    const data = JSON.parse(e.request.response);
+    const id = data[0].id;
+    const a = [...this.state.files, id]
+    this.setState({ files: a })
   }
 
   render() {
@@ -309,6 +322,21 @@ class DoorOrders extends Component {
             </Card>
           </Col>
           <Col lg="4">
+          <Row>
+              <Col>
+                <Card>
+                  <CardBody>
+                    <FormGroup>
+                      <h3>Upload Files</h3>
+                      <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
+                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://localhost:1337/upload" />
+                      </form>
+                    </FormGroup>
+                  </CardBody>
+                </Card>
+
+              </Col>
+            </Row>
             {this.props.formState ? (
               this.props.formState.part_list.map((part, i) => {
                 return (
