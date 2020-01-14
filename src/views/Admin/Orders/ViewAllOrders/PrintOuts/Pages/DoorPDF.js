@@ -1,24 +1,28 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
-import AssemblyList from './Drawer_PDF/AssemblyList';
-import Sides from './Drawer_PDF/Sides';
-import Bottoms from './Drawer_PDF/Bottoms'
-import Invoice from './Drawer_PDF/Invoice'
-
+import AssemblyList from '../Door_PDF/AssemblyList';
+import StilesPage from '../Door_PDF/StilesPage';
+import RailsPage from '../Door_PDF/RailsPage';
+import PanelsPage from '../Door_PDF/PanelsPage';
+import MaterialsList from '../Door_PDF/MaterialsList'
+import QC_Checklist from '../Door_PDF/QC_Checklist'
+import Invoice from '../Door_PDF/Invoice'
 
 export default data => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
-
 
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: [
       AssemblyList(data),
-      Sides(data),
-      Bottoms(data),
-      Invoice(data)
+      StilesPage(data),
+      RailsPage(data),
+      PanelsPage(data),
+      MaterialsList(data),
+      QC_Checklist(data),
+      Invoice(data),
     ],
     styles: {
       woodtype: {
@@ -38,7 +42,7 @@ export default data => {
       }
     }
   };
-
   // const fileName = `Order_${data.orderNum}`
   pdfMake.createPdf(documentDefinition).open();
+
 };
