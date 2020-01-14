@@ -352,7 +352,7 @@ class DoorOrders extends Component {
     const data = JSON.parse(e.request.response);
     const id = data[0].id;
     const a = [...this.state.files, id]
-    this.setState({files: a})
+    this.setState({ files: a })
   }
 
   render() {
@@ -458,12 +458,17 @@ class DoorOrders extends Component {
           <Col lg="4">
             <Row>
               <Col>
-                <FormGroup>
-                  <h3>Upload Files</h3>
-                  <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                    <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://localhost:1337/upload" />
-                  </form>
-                </FormGroup>
+                <Card>
+                  <CardBody>
+                    <FormGroup>
+                      <h3>Upload Files</h3>
+                      <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
+                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://localhost:1337/upload" />
+                      </form>
+                    </FormGroup>
+                  </CardBody>
+                </Card>
+
               </Col>
             </Row>
             {(this.props.formState && this.props.formState.part_list) ? (
