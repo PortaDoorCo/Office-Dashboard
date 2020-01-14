@@ -16,12 +16,24 @@ import { bindActionCreators } from 'redux';
 import { updateOrder, loadOrders } from '../../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
 import Dashboard from '@material-ui/icons/Dashboard';
-import Description from '@material-ui/icons/Description';
+import Print from '@material-ui/icons/Print';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DoorPDF from './PrintOuts/DoorPDF';
-import DrawerPDF from './PrintOuts/DrawerPDF';
+import DoorPDF from './PrintOuts/Pages/DoorPDF';
+import DrawerPDF from './PrintOuts/Pages/DrawerPDF';
+import Select from 'react-select';
+
+const options = [
+  { value: 'All', label: 'All' },
+  { value: 'Acknowledgement', label: 'Acknowledgement' },
+  { value: 'Invoice', label: 'Invoice' },
+  { value: 'Stiles', label: 'Stiles' },
+  { value: 'Rails', label: 'Rails' },
+  { value: 'Panels', label: 'Panels' },
+  { value: 'Materials', label: 'Materials' },
+  { value: 'QC', label: 'QC' },
+];
 
 class OrderPage extends Component {
   constructor(props) {
@@ -61,19 +73,8 @@ class OrderPage extends Component {
     });
   };
 
-  updateOrderProduction = async () => {
-    const orderId = this.props.selectedOrder[0].id;
-    const order = {
-      'status': 'In Production'
-    };
-    await this.props.updateOrder(orderId, order);
-    await this.props.loadOrders();
-    await this.props.toggle();
-  };
-
   downloadPDF = () => {
     const data = this.props.selectedOrder[0];
-
     if (data.orderType === "Door Order") {
       DoorPDF(data);
     } else {
@@ -84,7 +85,7 @@ class OrderPage extends Component {
   render() {
     const props = this.props;
 
-   
+
 
 
     if (this.state.page === 'invoice') {
@@ -151,32 +152,26 @@ class OrderPage extends Component {
                             <Edit style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
-
-                        <Tooltip title="Breakdowns" placement="top">
-                          <IconButton onClick={this.downloadPDF}>
-                            <Dashboard style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
-
-                        <Tooltip title="Invoice" placement="top">
-                          <IconButton onClick={this.invoice}>
-                            <Description style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
                       </Col>
                       <Col />
-                      <Col />
                       <Col>
-                        <div className="float-right">
-                          <div>
-                            <strong>Order Status: </strong>{' '}
-                            {!this.props.selectedOrder[0] ? (
-                              <div />
-                            ) : (
-                                this.props.selectedOrder[0].status
-                              )}
-                          </div>
-                        </div>
+                        <Row>
+                          <Col lg='8'>
+                            <div className='mt-3 mb-2'>
+                              <Select
+                                options={options}
+                                isMulti={true}
+                              />
+                            </div>
+                          </Col>
+                          <Col>
+                            <Tooltip title="Breakdowns" placement="top" className="mb-3">
+                              <IconButton onClick={this.downloadPDF}>
+                                <Print style={{ width: '40', height: '40' }} />
+                              </IconButton>
+                            </Tooltip>
+                          </Col>
+                        </Row>
                       </Col>
                     </Row>
                   </div>
