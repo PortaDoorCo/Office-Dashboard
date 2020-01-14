@@ -11,6 +11,7 @@ import {
   Card,
   Table
 } from 'reactstrap';
+import { Link } from "react-router-dom";
 import SelectedOrder from './SelectedOrder/SelectedOrder';
 import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
 import Invoice from '../../Invoice/Invoice';
@@ -244,7 +245,7 @@ class OrderPage extends Component {
                                 <tr>
                                   <th scope="row">{index + 1}</th>
                                   <td>{i.name}</td>
-                                  <td style={{ textAlign: 'right' }}><Button>View</Button></td>
+                                  <td style={{ textAlign: 'right' }}><a href={i.url} target="_blank">View</a></td>
                                 </tr>
                               )) : null}
                             </tbody>
