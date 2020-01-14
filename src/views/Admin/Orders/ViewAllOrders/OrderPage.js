@@ -6,7 +6,10 @@ import {
   ModalFooter,
   Button,
   Row,
-  Col
+  Col,
+  CardBody,
+  Card,
+  Table
 } from 'reactstrap';
 import SelectedOrder from './SelectedOrder/SelectedOrder';
 import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
@@ -138,9 +141,6 @@ class OrderPage extends Component {
   render() {
     const props = this.props;
 
-
-
-
     if (this.state.page === 'invoice') {
       return (
         <div className="animated noPrint">
@@ -231,6 +231,31 @@ class OrderPage extends Component {
                     </Row>
                   </div>
                 )}
+              <div>
+                {props.selectedOrder[0] && props.selectedOrder[0].files.length > 0 ?
+                  <Row>
+                    <Col lg='12'>
+                      <Card>
+                        <CardBody>
+                          <h5>Files</h5>
+                          <Table striped>
+                            <tbody>
+                              {props.selectedOrder[0] ? props.selectedOrder[0].files.map((i, index) => (
+                                <tr>
+                                  <th scope="row">{index + 1}</th>
+                                  <td>{i.name}</td>
+                                  <td style={{ textAlign: 'right' }}><Button>View</Button></td>
+                                </tr>
+                              )) : null}
+                            </tbody>
+                          </Table>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+                  : null
+                }
+              </div>
               <div>
                 {!this.props.edit ? (
                   <SelectedOrder
