@@ -126,12 +126,13 @@ class Design extends React.Component {
       }
     }
 
-    onUploaded = (cell, e) => {
+    onUploaded = (cell,e) => {
     
       const data = JSON.parse(e.request.response);
       const id = data[0].id;
    
       cell.setValue(id);
+
     }
 
 
@@ -142,7 +143,6 @@ class Design extends React.Component {
           <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
             <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadUrl="http://server.portadoor.com/upload" />
           </form>
-
         </div>
       );
     }
