@@ -59,7 +59,7 @@ export default (data, edgePhoto) => {
                                     style: 'fonts'
                                 },
                                 {
-                                    image: edgePhoto
+                                    image: edgePhoto[0]
                                 }
 
                             ]
