@@ -43,11 +43,11 @@ import base64Img from 'base64-img'
 const toDataUrl = (url, callback) => {
   const xhr = new XMLHttpRequest();
   xhr.onload = () => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-          callback(reader.result);
-      };
-      reader.readAsDataURL(xhr.response);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
   };
   xhr.open('GET', url);
   xhr.responseType = 'blob';
@@ -56,8 +56,8 @@ const toDataUrl = (url, callback) => {
 
 const options = [
   { value: 'All', label: 'All' },
-  { value: 'Profiles', label: 'Profiles' },
-  { value: 'Acknowledgement', label: 'Acknowledgement' },
+  // { value: 'Profiles', label: 'Profiles' },
+  // { value: 'Acknowledgement', label: 'Acknowledgement' },
   { value: 'Invoice', label: 'Invoice' },
   { value: 'Stiles', label: 'Stiles' },
   { value: 'Rails', label: 'Rails' },
@@ -142,30 +142,45 @@ class OrderPage extends Component {
             break;
           case 'Profiles':
 
-          //base64 image here
-
-          const edgesPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.edges.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.edges.photo.url, (result) => {
+            const edgesPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.edges.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.edges.photo.url, (result) => {
                   resolve(result)
-              });
-            })
-          });
+                });
+              })
+            });
 
-          let edges;
-          try {
-            console.log('before edgesss', edges);
-            edges = await Promise.all(edgesPromiseArr);
-            console.log('after edgesss', edges);
-          } catch(err) {
-            console.log('errrrrrr', err);
-          }
+            const mouldsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.moulds.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.moulds.photo.url, (result) => {
+                  resolve(result)
+                });
+              })
+            });
 
-          //moulds 
-          //panels
-            
 
-            ProfilesPDF(data, edges);
+            console.log(this.props.selectedOrder[0])
+            const panelsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.panels.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.panels.photo.url, (result) => {
+                  resolve(result)
+                });
+              })
+            });
+
+            let edges;
+            let moulds;
+            let panels;
+
+            try {
+              edges = await Promise.all(edgesPromiseArr);
+              moulds = await Promise.all(mouldsPromiseArr);
+              panels = await Promise.all(panelsPromiseArr);
+            } catch (err) {
+              console.log('errrrrrr', err);
+            }
+
+            ProfilesPDF(data, edges, moulds, panels);
             this.setState({ selectedOption: [] })
             break;
           case 'QC':

@@ -6,7 +6,7 @@ import Size from '../Breakdowns/Doors/Size';
 import base64Img from 'base64-img'
 
 
-export default (data, edgePhoto) => {
+export default (data, edges, moulds, panels) => {
     return [
         {
             columns: [
@@ -14,34 +14,19 @@ export default (data, edgePhoto) => {
                     stack: [
 
                         { text: 'Profiles', bold: true },
-                        `Shipping Date: ${moment(data.jobInfo.DueDate).format('MM/DD/YYYY')}`,
                     ]
                 },
                 {
                     stack: [
 
                         { text: 'Porta Door Co. Inc.', alignment: 'center' },
-                        { text: '65 Cogwheel Lane', alignment: 'center' },
-                        { text: 'Seymour, CT', alignment: 'center' },
-                        { text: '203-888-6191', alignment: 'center' },
-                        { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
                     ]
                 },
                 {
                     stack: [
                         { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-                        { text: `Est. Ship: ${moment(data.jobInfo.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
                     ]
                 }
-            ]
-        },
-        {
-            columns: [
-                {
-                    text: `${data.jobInfo.jobName} - ${data.jobInfo.customer.Company}`,
-                    margin: [0, 10]
-                },
-                { text: 'Job: None', alignment: 'right', margin: [0, 0, 80, 0] }
             ]
         },
         {
@@ -59,22 +44,46 @@ export default (data, edgePhoto) => {
                                     style: 'fonts'
                                 },
                                 {
-                                    image: edgePhoto[0]
+                                    image: edges,
+                                    width: 100,
+                                    height: 100,
+                                    fit: [100, 100]
                                 }
 
                             ]
                         },
                         {
                             stack: [
-                                { text: 'Thickness: 3/4"', style: 'fonts' },
                                 {
-                                    text: `IP: ${i.moulds.NAME}   Edge: ${i.edges.NAME}`,
+                                    text: `${i.moulds.NAME}`,
                                     style: 'fonts'
+                                },
+                                {
+                                    image: moulds,
+                                    width: 100,
+                                    height: 100,
+                                    fit: [100, 100]
                                 }
-                            ],
-                            alignment: 'right'
-                        }
-                    ]
+
+                            ]
+                        },
+                        {
+                            stack: [
+                                {
+                                    text: `${i.panels.PANEL}`,
+                                    style: 'fonts'
+                                },
+                                {
+                                    image: panels,
+                                    width: 100,
+                                    height: 100,
+                                    fit: [100, 100]
+                                }
+
+                            ]
+                        },
+                    ],
+
                 },
                 {
                     canvas: [
@@ -86,7 +95,6 @@ export default (data, edgePhoto) => {
                     canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
                 }
             ];
-        }),
-        { text: '', pageBreak: 'before' }
+        })
     ];
 };
