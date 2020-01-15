@@ -1,15 +1,8 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
-import AssemblyList from '../Door_PDF/AssemblyList';
-import StilesPage from '../Door_PDF/StilesPage';
-import RailsPage from '../Door_PDF/RailsPage';
-import PanelsPage from '../Door_PDF/PanelsPage';
-import MaterialsList from '../Door_PDF/MaterialsList'
-import QC_Checklist from '../Door_PDF/QC_Checklist'
-import Invoice from '../Door_PDF/Invoice'
 import Profiles from '../Door_PDF/Profiles'
 
-export default (data, edgePhoto) => {
+export default (data, edges, moulds, panels) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
@@ -18,7 +11,7 @@ export default (data, edgePhoto) => {
         pageSize: 'A4',
         pageOrientation: 'portrait',
         content: [
-            Profiles(data, edgePhoto),
+            Profiles(data, edges, moulds, panels),
         ],
         styles: {
             woodtype: {
