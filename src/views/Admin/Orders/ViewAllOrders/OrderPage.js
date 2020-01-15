@@ -36,6 +36,24 @@ import InvoicePDF from './PrintOuts/Pages/InvoicePDF';
 import Select from 'react-select';
 import ProfilesPDF from './PrintOuts/Pages/ProfilesPDF';
 
+import base64Img from 'base64-img'
+
+
+
+const toDataUrl = (url, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+          callback(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
+};
+
 const options = [
   { value: 'All', label: 'All' },
   { value: 'Profiles', label: 'Profiles' },
@@ -92,7 +110,7 @@ class OrderPage extends Component {
   downloadPDF = () => {
     const data = this.props.selectedOrder[0];
     if (data.orderType === "Door Order") {
-      this.state.selectedOption.map((option, index) => {
+      this.state.selectedOption.map(async option => {
         switch (option.value) {
           case 'All':
             DoorPDF(data);
@@ -123,7 +141,31 @@ class OrderPage extends Component {
             this.setState({ selectedOption: [] })
             break;
           case 'Profiles':
-            ProfilesPDF(data, this.state.edgePhoto);
+
+          //base64 image here
+
+          const edgesPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.edges.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.edges.photo.url, (result) => {
+                  resolve(result)
+              });
+            })
+          });
+
+          let edges;
+          try {
+            console.log('before edgesss', edges);
+            edges = await Promise.all(edgesPromiseArr);
+            console.log('after edgesss', edges);
+          } catch(err) {
+            console.log('errrrrrr', err);
+          }
+
+          //moulds 
+          //panels
+            
+
+            ProfilesPDF(data, edges);
             this.setState({ selectedOption: [] })
             break;
           case 'QC':
