@@ -66,7 +66,7 @@ const Maker = props => {
         bp.fit()
         //bp.redraw();
         setBps(bp);
-    }, [props.height, props.width, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, unevenInput]);
+    }, [height, width, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, unevenInput]);
 
 
 

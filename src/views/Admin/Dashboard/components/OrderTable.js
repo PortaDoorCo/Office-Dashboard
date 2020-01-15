@@ -19,8 +19,8 @@ import CustomStore from 'devextreme/data/custom_store';
 import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/DoorPDF';
-import DrawerPDF from '../../Orders/ViewAllOrders/PrintOuts/DrawerPDF'
+import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/DoorPDF';
+import DrawerPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/DrawerPDF'
 import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -125,6 +125,7 @@ class OrderTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
+
          
             this.setState({
                 selectedOrder: [
@@ -143,7 +144,8 @@ class OrderTable extends React.Component {
                         orderType: x.orderType,
                         itemPrice: x.itemPrice,
                         subTotals: x.subTotals,
-                        tax: x.tax
+                        tax: x.tax,
+                        files: x.files
                     },
                 ],
             });

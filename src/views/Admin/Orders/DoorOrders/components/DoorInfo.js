@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   FormGroup,
   Label,
-  Button
+  Button,
+  Input
 } from 'reactstrap';
 import 'antd/dist/antd.css';
 import DropdownList from 'react-widgets/lib/DropdownList';
@@ -16,8 +17,15 @@ import {
   FieldArray,
   change
 } from 'redux-form';
+import FieldFileInput from './UploadComponent'
+import { FileUploader } from 'devextreme-react';
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
 
 const required = value => (value ? undefined : 'Required');
+
+const header = { 'Authorization': 'Bearer ' + cookie };
 
 const construction = [
   {
@@ -82,6 +90,7 @@ const renderDropdownListFilter = ({
     </div>
   );
 
+
 const renderDropdownList = ({
   input,
   data,
@@ -101,6 +110,20 @@ const renderDropdownList = ({
         ((error && <span style={{ color: 'red' }}>{error}</span>) ||
           (warning && <span style={{ color: 'red' }}>{warning}</span>))}
     </div>
+  );
+
+const renderField = ({
+  input,
+  props,
+  meta: { touched, error, warning },
+  ...custom
+}) => (
+    <Fragment>
+      <Input {...input} {...custom} autocomplete="new-password" />
+      {touched &&
+        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+    </Fragment>
   );
 
 
@@ -138,7 +161,7 @@ class DoorInfo extends Component {
 
         this.setState({
           mouldFilter: this.props.formState.part_list.map((i, index) => {
-            if(i.design){
+            if (i.design) {
               if (i.design.Construction === 'Cope') {
                 let filter = this.props.moulds.filter(
                   el => el.Construction === i.construction.value
@@ -158,7 +181,7 @@ class DoorInfo extends Component {
                     el =>
                       i.design.NAME ? el.Thickness === parseFloat(i.thickness.value) &&
                         el.NAME.includes(i.design.NAME.substr(4, 3)) : el.NAME
-  
+
                   );
                   this.props.dispatch(
                     change('Orders', `part_list[${index}].moulds`, filter[0])
@@ -186,7 +209,7 @@ class DoorInfo extends Component {
                 return [];
               }
             }
-            
+
           })
         });
       }
@@ -383,11 +406,19 @@ class DoorInfo extends Component {
               <Col xs="4">
                 <FormGroup>
                   <strong>
-                    <Label for="exampleText">Job Notes</Label>
+                    <Label for="jobNotes">Job Notes</Label>
+                    <Field
+                      name={`${part}.notes`}
+                      type="textarea"
+                      component={renderField}
+                    />
+
+
                   </strong>
                 </FormGroup>
               </Col>
             </Row>
+
             <div>
               <CardSubtitle className="mt-4 mb-1">Dimensions</CardSubtitle>
               <div className="mt-1" />
@@ -411,14 +442,15 @@ class DoorInfo extends Component {
           color="primary"
           onClick={() =>
             formState.part_list[formState.part_list.length - 1].dimensions.length > 0 ?
-            fields.push({
-              orderType: orderType[0],
-              construction: construction[0],
-              thickness: thickness[0],
-              dimensions: [],
-              addPrice: 0
-            })
-            : alert('please complete previous item')
+              fields.push({
+                orderType: orderType[0],
+                construction: construction[0],
+                thickness: thickness[0],
+                dimensions: [],
+                addPrice: 0,
+                files: []
+              })
+              : alert('please complete previous item')
           }
         >
           Add Item

@@ -6,7 +6,8 @@ import {
   CardHeader,
   CardBody,
   Input,
-  Button
+  Button,
+  FormGroup
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -53,8 +54,10 @@ import Ratio from 'lb-ratio'
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days'
 import Cookies from "js-cookie";
+import { FileUploader } from 'devextreme-react';
 
 const cookie = Cookies.get("jwt");
+const header = { 'Authorization': 'Bearer ' + cookie };
 
 const dueDate = moment(new Date()).businessAdd(7)._d
 
@@ -71,7 +74,8 @@ class DoorOrders extends Component {
       collapse: true,
       loaded: false,
       customerAddress: [],
-      updateSubmit: false
+      updateSubmit: false,
+      files: []
     };
   }
 
@@ -113,7 +117,8 @@ class DoorOrders extends Component {
       orderType: orderType,
       DueDate: values.job_info.DueDate,
       user: user.id,
-      userName: user.username
+      userName: user.username,
+      files: this.state.files
     };
 
     if (values.part_list[0].dimensions.length > 0) {
@@ -181,7 +186,7 @@ class DoorOrders extends Component {
             if (part.dimensions) {
               return part.dimensions.forEach((info, index) => {
 
-                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1){
+                if (parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -191,7 +196,7 @@ class DoorOrders extends Component {
                   )
                 }
 
-                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1){
+                if (parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -201,7 +206,7 @@ class DoorOrders extends Component {
                   )
                 }
 
-                if(parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1){
+                if (parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -327,7 +332,6 @@ class DoorOrders extends Component {
           }
 
         };
-
         update();
       }
     }
@@ -344,7 +348,15 @@ class DoorOrders extends Component {
     }
   }
 
+  onUploaded = (e) => {
+    const data = JSON.parse(e.request.response);
+    const id = data[0].id;
+    const a = [...this.state.files, id]
+    this.setState({ files: a })
+  }
+
   render() {
+    console.log('files   ', this.state.files)
 
     const {
       submitted,
@@ -388,6 +400,8 @@ class DoorOrders extends Component {
                       />
                     </FormSection>
                   ) : null}
+
+
 
                   <FieldArray
                     name="part_list"
@@ -442,6 +456,21 @@ class DoorOrders extends Component {
             </Card>
           </Col>
           <Col lg="4">
+            <Row>
+              <Col>
+                <Card>
+                  <CardBody>
+                    <FormGroup>
+                      <h3>Upload Files</h3>
+                      <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
+                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://localhost:1337/upload" />
+                      </form>
+                    </FormGroup>
+                  </CardBody>
+                </Card>
+
+              </Col>
+            </Row>
             {(this.props.formState && this.props.formState.part_list) ? (
               this.props.formState.part_list.map((part, i) => {
                 return (
@@ -512,7 +541,7 @@ const mapStateToProps = state => ({
         },
 
         dimensions: [],
-        addPrice: 0
+        addPrice: 0,
       }
     ],
     job_info: {

@@ -322,7 +322,11 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 </tbody>
               </Table>
               <Row>
-                <Col lg='9' />
+                <Col lg='9'>
+                {height[index] > 0 ? 
+                  <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
+                : null}
+                </Col>
                 <Col>
                   {(parseInt(formState.part_list[i].dimensions[index].panelsH) === 2 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 )  ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
                 </Col>
@@ -331,7 +335,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               <Row>
                 <Col>
 
-                  {height[index] > 0 ?
+                  {(height[index] > 0 && formState.part_list[i].dimensions[index].showBuilder) ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker
                         width={width[index]}
@@ -414,7 +418,8 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       ),
                       horizontalMidRailSize: 0,
                       verticalMidRailSize: 0,
-                      unevenSplitInput: "0"
+                      unevenSplitInput: "0",
+                      showBuilder: false
                     }) : alert('please select a design')
                 }
               >
