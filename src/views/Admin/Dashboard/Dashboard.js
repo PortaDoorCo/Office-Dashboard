@@ -4,6 +4,7 @@ import {
   Col,
 } from 'reactstrap';
 import OrderTable from './components/OrderTable'
+import RestrictedOrderTable from './components/RestrictedOrderTable'
 import CompanyTable2 from '../Customers/Customers/CompanyTable2'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -45,32 +46,44 @@ class Dashboard extends Component {
 
   render() {
 
+    const { role } = this.props;
+
 
     return (
       <div className="animated fadeIn">
-        <Row>
-          <Col lg="4">
-            <Chart2 />
-          </Col>
-          <Col lg="4">
-            <Chart3 />
-          </Col>
-          <Col lg="4">
-            <Chart4 />
-          </Col>
-        </Row>
+        {role.type === 'management' || role.type === 'root' ?
+          <div>
+            <Row>
+              <Col lg="4">
+                <Chart2 />
+              </Col>
+              <Col lg="4">
+                <Chart3 />
+              </Col>
+              <Col lg="4">
+                <Chart4 />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Chart1 />
+              </Col>
+            </Row>
+          </div>
+          : null
+        }
 
         <Row>
           <Col>
-            <Chart1 />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col>
-            <OrderTable
-              orders={this.props.orders}
-            />
+            {role.type === 'management' || role.type === 'root' ?
+              <OrderTable
+                orders={this.props.orders}
+              />
+              :
+              <RestrictedOrderTable
+                orders={this.props.orders}
+              />
+            }
           </Col>
 
         </Row>
@@ -109,7 +122,8 @@ const mapStateToProps = (state, prop) => ({
   loadedGrade: state.part_list.loadedGrade,
   loadedFinish: state.part_list.loadedFinish,
   loadedHinges: state.part_list.loadedHinges,
-  loggedIn: state.users.loggedIn
+  loggedIn: state.users.loggedIn,
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>

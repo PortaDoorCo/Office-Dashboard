@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers, updateStatus } from '../../../../redux/orders/actions';
 import OrderTable from './OrderTable';
+import RestrictedOrderTable from './RestrictedOrderTable'
 
 class ViewAllOrders extends Component {
   constructor(props) {
@@ -11,8 +12,9 @@ class ViewAllOrders extends Component {
     this.state = {};
   }
   render() {
-    const { orders, loadOrders, updateStatus } = this.props;
+    const { orders, loadOrders, updateStatus, role } = this.props;
     return (
+      role.type === 'management' || role.type === 'root' ? 
       <div>
         {orders.length &&
           <div>
@@ -28,6 +30,20 @@ class ViewAllOrders extends Component {
           </div>
         }
       </div>
+      : 
+      <div>{orders.length &&
+        <div>
+          <Row>
+            <Col>
+              <RestrictedOrderTable
+                orders={orders}
+                loadOrders={loadOrders}
+                updateStatus={updateStatus}
+              />
+            </Col>
+          </Row>
+        </div>
+      }</div>
     );
   }
 }
@@ -36,7 +52,8 @@ class ViewAllOrders extends Component {
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   orderNum: state.Orders.orderNum,
-  ordersDBLoaded: state.Orders.ordersDBLoaded
+  ordersDBLoaded: state.Orders.ordersDBLoaded,
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
