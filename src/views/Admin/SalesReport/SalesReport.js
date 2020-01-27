@@ -15,7 +15,7 @@ const socket = io('https://server.portadoor.com/');
 momentLocaliser(moment)
 
 const SalesReport = (props) => {
-  const { orders } = props;
+  const { orders, role } = props;
   const [activeTab, setActiveTab] = useState('1');
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
@@ -41,7 +41,9 @@ const SalesReport = (props) => {
 
   const minDate = new Date(orders[orders.length - 1].createdAt)
 
+  
   return (
+    role.type === 'management' || role.type === 'root' ? 
     <div>
       <Row className="mb-3">
         <Col lg='7' />
@@ -166,12 +168,16 @@ const SalesReport = (props) => {
           />
         </TabPane>
       </TabContent>
+    </div> : 
+    <div>
+      Restricted Access
     </div>
-  );
+  ) 
 }
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
