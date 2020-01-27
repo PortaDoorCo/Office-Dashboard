@@ -79,7 +79,8 @@ const CustomerOrders = (props) => {
                         orderType: row.orderType,
                         itemPrice: row.itemPrice,
                         subTotals: row.subTotals,
-                        tax: row.tax
+                        tax: row.tax,
+                        files: row.files
                     }
                 ]
             )
