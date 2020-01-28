@@ -75,7 +75,7 @@ class RestrictedOrderTable extends React.Component {
             endDate: new Date(),
             productData: new CustomStore({
                 load: () => this.props.loadOrders(cookie),
-                update: (key, values) => (this.props.updateStatus(key.id, values, cookie)),
+                update: (key, values) => (this.props.updateStatus(key.id, key, values, cookie)),
             }),
         };
         this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);

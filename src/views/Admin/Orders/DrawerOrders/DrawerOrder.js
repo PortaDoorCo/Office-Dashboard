@@ -117,7 +117,13 @@ class DoorOrders extends Component {
       orderNum: orderNum,
       orderType: orderType,
       DueDate: values.job_info.DueDate,
-      files: this.state.files
+      files: this.state.files,
+      tracking: [
+        { 
+          "status": values.job_info.status,
+          "date": new Date()
+        }
+      ]
     };
 
     if (values.part_list[0].dimensions.length > 0) {
