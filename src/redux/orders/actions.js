@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
+import moment from 'moment'
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
@@ -154,7 +155,7 @@ export function updateCustomer(custId, customer, cookie) {
         }
       );
       const data = await res;
-    
+
       NotificationManager.success(`Customer has been update!`, 'Customer Updated!', 2000);
       return dispatch({
         type: UPDATE_CUSTOMER,
@@ -207,8 +208,8 @@ export function submitCustomer(customer, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-      
-    
+
+
       NotificationManager.success(`Customer has been added!`, 'Submission Succeeded!', 2000);
       return dispatch({
         type: SUBMIT_CUSTOMER,
@@ -239,6 +240,7 @@ export function loadSelectedOrder(data, cookie) {
 }
 
 export function updateOrder(orderId, order, cookie) {
+
   return async function (dispatch) {
 
     try {
@@ -260,10 +262,24 @@ export function updateOrder(orderId, order, cookie) {
 }
 
 
-export function updateStatus(orderId, status, cookie) {
+export function updateStatus(orderId, key, status, cookie) {
+  console.log(key)
+  console.log(status)
+  const item = {
+    status: status.status,
+    tracking: [
+      ...key.tracking,
+      {
+        "status": status.status,
+        "date": new Date()
+      }
+    ]
+  }
+
+  console.log(item)
   return async function (dispatch) {
     try {
-     await axios.put(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, status, {
+     await axios.put(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, item, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }

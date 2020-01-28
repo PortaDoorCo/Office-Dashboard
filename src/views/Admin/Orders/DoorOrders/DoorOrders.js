@@ -122,7 +122,7 @@ class DoorOrders extends Component {
       tracking: [
         { 
           "status": values.job_info.status,
-          "date": moment(new Date())
+          "date": new Date()
         }
       ]
     };
