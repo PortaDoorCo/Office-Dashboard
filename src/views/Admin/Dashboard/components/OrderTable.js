@@ -75,7 +75,7 @@ class OrderTable extends React.Component {
             endDate: new Date(),
             productData: new CustomStore({
                 load: () => this.props.loadOrders(cookie),
-                update: (key, values) => (this.props.updateStatus(key.id, values, cookie)),
+                update: (key, values) => (this.props.updateStatus(key.id, key, values, cookie)),
             }),
         };
         this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -145,7 +145,8 @@ class OrderTable extends React.Component {
                         itemPrice: x.itemPrice,
                         subTotals: x.subTotals,
                         tax: x.tax,
-                        files: x.files
+                        files: x.files,
+                        tracking: x.tracking
                     },
                 ],
             });

@@ -78,7 +78,7 @@ class OrderTable extends React.Component {
       productData: new CustomStore({
         load: () => this.props.loadOrders(cookie),
         update: (key, values) =>
-          this.props.updateStatus(key.id, values, cookie),
+          this.props.updateStatus(key.id, key, values, cookie),
       }),
     };
     this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -135,6 +135,7 @@ class OrderTable extends React.Component {
 
     if (!modal) {
       const x = row.row.data;
+
   
       this.setState({
         selectedOrder: [
@@ -145,7 +146,6 @@ class OrderTable extends React.Component {
             status: x.status,
             poNum: x.jobInfo.poNum,
             part_list: x.part_list,
-            dimensions: x.dimensions,
             shippingAddress: x.jobInfo,
             linePrice: x.linePrice,
             total: x.total,
@@ -154,6 +154,8 @@ class OrderTable extends React.Component {
             orderType: x.orderType,
             itemPrice: x.itemPrice,
             subTotals: x.subTotals,
+            files: x.files,
+            tracking: x.tracking
           },
         ],
       });

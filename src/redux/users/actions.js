@@ -13,7 +13,7 @@ export const SET_LOGIN = 'SET_LOGIN'
 
 export function registerUser(user) {
   return async function (dispatch) {
-    await axios.post(`http://localhost:1337/auth/local/register`, user);
+    await axios.post(`https://portadoor-server-production.herokuapp.com/auth/local/register`, user);
  
     return dispatch({
       type: REGISTER_USER,
@@ -23,7 +23,7 @@ export function registerUser(user) {
 
 export function login(token) {
   return async function (dispatch) {
-    const res = await axios.get(`http://localhost:1337/users/me`, {
+    const res = await axios.get(`https://portadoor-server-production.herokuapp.com/users/me`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

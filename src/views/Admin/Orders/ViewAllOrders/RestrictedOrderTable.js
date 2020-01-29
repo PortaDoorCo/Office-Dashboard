@@ -78,7 +78,7 @@ class RestrictedOrderTable extends React.Component {
       productData: new CustomStore({
         load: () => this.props.loadOrders(cookie),
         update: (key, values) =>
-          this.props.updateStatus(key.id, values, cookie),
+          this.props.updateStatus(key.id, key, values, cookie),
       }),
     };
     this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -96,7 +96,7 @@ class RestrictedOrderTable extends React.Component {
 
   componentDidMount() {
     const dataGrid = this.dataGrid.instance;
-    socket.on('order_submitted', res => (dataGrid.refresh()) )
+    socket.on('order_submitted', res => (dataGrid.refresh()))
     socket.on('status_updated', res => dataGrid.refresh())
     let filter = [
       ['createdAt', '>=', moment().startOf('day').valueOf()],
@@ -109,7 +109,7 @@ class RestrictedOrderTable extends React.Component {
 
   onSelectionChanged(e) {
     const { selectedRowKeys, selectedRowsData } = e;
- 
+
     this.selectionChangedBySelectBox = false;
 
     this.setState({
@@ -135,7 +135,7 @@ class RestrictedOrderTable extends React.Component {
 
     if (!modal) {
       const x = row.row.data;
-  
+
       this.setState({
         selectedOrder: [
           {
@@ -167,7 +167,7 @@ class RestrictedOrderTable extends React.Component {
     <Tooltip title="View Order" placement="top">
       <IconButton
         onClick={event => {
- 
+
           event.preventDefault();
           this.toggle(row);
         }}
@@ -367,7 +367,7 @@ class RestrictedOrderTable extends React.Component {
           }
         }
       }
-      );
+    );
   }
 
   saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
@@ -378,7 +378,7 @@ class RestrictedOrderTable extends React.Component {
   }
 
   customCount(data) {
- 
+
     return `Orders: ${data.value}`;
   }
 
