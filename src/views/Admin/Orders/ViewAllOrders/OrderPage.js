@@ -173,7 +173,7 @@ class OrderPage extends Component {
             });
 
 
-            console.log(this.props.selectedOrder[0])
+
             const panelsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.panels.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.panels.photo.url, (result) => {
@@ -270,6 +270,7 @@ class OrderPage extends Component {
                       <IconButton onClick={this.props.editable}>
                         <ArrowBack style={{ width: '40', height: '40' }} />
                       </IconButton>
+
                       <Tooltip title="Tracking History" placement="top">
                           <IconButton onClick={this.toggleTracking}>
                             <List style={{ width: '40', height: '40' }} />
@@ -372,8 +373,6 @@ class OrderPage extends Component {
                             <tbody>
                               {props.selectedOrder[0] && props.selectedOrder[0].tracking ? props.selectedOrder[0].tracking.slice(0).reverse().map((i, index) => (
                                 <tr>
-                                  {console.log(i)}
-                                  {/* <th scope="row">{index + 1}</th> */}
                                   <th>{i.status}</th>
                                   <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
                                 </tr>
