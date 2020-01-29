@@ -145,7 +145,8 @@ class OrderTable extends React.Component {
                         itemPrice: x.itemPrice,
                         subTotals: x.subTotals,
                         tax: x.tax,
-                        files: x.files
+                        files: x.files,
+                        tracking: x.tracking
                     },
                 ],
             });

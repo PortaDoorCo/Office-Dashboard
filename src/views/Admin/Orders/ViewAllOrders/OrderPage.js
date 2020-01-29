@@ -9,7 +9,8 @@ import {
   Col,
   CardBody,
   Card,
-  Table
+  Table,
+  Collapse
 } from 'reactstrap';
 import { Link } from "react-router-dom";
 import SelectedOrder from './SelectedOrder/SelectedOrder';
@@ -21,6 +22,8 @@ import { updateOrder, loadOrders } from '../../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
 import Dashboard from '@material-ui/icons/Dashboard';
 import Print from '@material-ui/icons/Print';
+import Attachment from '@material-ui/icons/Attachment';
+import List from '@material-ui/icons/List';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -35,6 +38,7 @@ import InvoicePDF from './PrintOuts/Pages/InvoicePDF';
 
 import Select from 'react-select';
 import ProfilesPDF from './PrintOuts/Pages/ProfilesPDF';
+import moment from 'moment'
 
 import base64Img from 'base64-img'
 
@@ -76,7 +80,9 @@ class OrderPage extends Component {
       page: [],
       tooltipOpen: false,
       selectedOption: [],
-      edgePhoto: null
+      edgePhoto: null,
+      trackingOpen: false,
+      filesOpen: false
     };
   }
 
@@ -106,6 +112,14 @@ class OrderPage extends Component {
       tooltipOpen: !this.state.tooltipOpen
     });
   };
+
+  toggleTracking = () => this.setState({
+    trackingOpen: !this.state.trackingOpen
+  })
+
+  toggleFiles = () => this.setState({
+    filesOpen: !this.state.filesOpen
+  })
 
   downloadPDF = () => {
     const data = this.props.selectedOrder[0];
@@ -256,6 +270,12 @@ class OrderPage extends Component {
                       <IconButton onClick={this.props.editable}>
                         <ArrowBack style={{ width: '40', height: '40' }} />
                       </IconButton>
+                      <Tooltip title="Tracking History" placement="top">
+                          <IconButton onClick={this.toggleTracking}>
+                            <List style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
+
                     </Col>
                     <Col />
                     <Col />
@@ -265,17 +285,36 @@ class OrderPage extends Component {
                   <div>
                     <Row></Row>
                     <Row>
+
                       <Col>
                         <Tooltip title="Edit" placement="top">
                           <IconButton onClick={this.props.editable}>
                             <Edit style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
+
+                        <Tooltip title="Tracking History" placement="top">
+                          <IconButton onClick={this.toggleTracking}>
+                            <List style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
+
+
+                        {(props.selectedOrder[0] && props.selectedOrder[0].files.length > 0) ?
+                          <Tooltip title="View Files" placement="top">
+                            <IconButton onClick={this.toggleFiles}>
+                              <Attachment style={{ width: '40', height: '40' }} />
+                            </IconButton>
+                          </Tooltip>
+                          : null
+                        }
                       </Col>
+
                       <Col />
+
                       <Col>
                         <Row>
-                          <Col lg='8'>
+                          <Col lg='6'>
                             <div className='mt-3 mb-2'>
                               <Select
                                 value={this.state.selectedOption}
@@ -298,7 +337,7 @@ class OrderPage extends Component {
                   </div>
                 )}
               <div>
-                {props.selectedOrder[0] && props.selectedOrder[0].files.length > 0 ?
+                <Collapse isOpen={this.state.filesOpen}>
                   <Row>
                     <Col lg='12'>
                       <Card>
@@ -319,9 +358,35 @@ class OrderPage extends Component {
                       </Card>
                     </Col>
                   </Row>
-                  : null
-                }
+                </Collapse>
               </div>
+
+              <div>
+                <Collapse isOpen={this.state.trackingOpen}>
+                  <Row>
+                    <Col lg='12'>
+                      <Card>
+                        <CardBody>
+                          <h5>Tracking History</h5>
+                          <Table striped>
+                            <tbody>
+                              {props.selectedOrder[0] && props.selectedOrder[0].tracking ? props.selectedOrder[0].tracking.slice(0).reverse().map((i, index) => (
+                                <tr>
+                                  {console.log(i)}
+                                  {/* <th scope="row">{index + 1}</th> */}
+                                  <th>{i.status}</th>
+                                  <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+                                </tr>
+                              )) : null}
+                            </tbody>
+                          </Table>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+                </Collapse>
+              </div>
+
               <div>
                 {!this.props.edit ? (
                   <SelectedOrder
