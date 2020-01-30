@@ -60,7 +60,7 @@ const toDataUrl = (url, callback) => {
 
 const options = [
   { value: 'All', label: 'All' },
-  // { value: 'Profiles', label: 'Profiles' },
+  { value: 'Profiles', label: 'Profiles' },
   // { value: 'Acknowledgement', label: 'Acknowledgement' },
   { value: 'Invoice', label: 'Invoice' },
   { value: 'Stiles', label: 'Stiles' },
