@@ -108,12 +108,12 @@ export function loadCustomerOrder(customer) {
 export function submitOrder(order, cookie) {
   return async function (dispatch) {
     try {
-      const res = axios.post(`https://portadoor-server-production.herokuapp.com/orders`, order,
-        {
-          headers: {
-            'Authorization': `Bearer ${cookie}`
-          }
-        }
+      const res = axios.post(`http://localhost:1337/orders`, order,
+        // {
+        //   headers: {
+        //     'Authorization': `Bearer ${cookie}`
+        //   }
+        // }
       );
       const data = await res;
       return dispatch({

@@ -86,11 +86,11 @@ class DefaultLayout extends Component {
   render() {
 
 
-    if (
-      !this.props.orders.length>0
-    ) {
-      return <Loader />;
-    } else {
+    // if (
+    //   !this.props.orders.length>0
+    // ) {
+    //   return <Loader />;
+    // } else {
       return (
         <div className="app">
           <NotificationContainer />
@@ -146,7 +146,7 @@ class DefaultLayout extends Component {
       );
     }
   }
-}
+// }
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,

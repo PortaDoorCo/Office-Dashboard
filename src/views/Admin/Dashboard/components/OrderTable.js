@@ -50,6 +50,10 @@ const status = [
         name: 'In Production',
         value: 'In Production',
     },
+    {
+        name: 'LATE',
+        value: 'LATE',
+    },
 ];
 
 const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production']
@@ -365,7 +369,7 @@ class OrderTable extends React.Component {
                         <RequiredRule />
                     </Column>
                     <Column
-                        dataField="DueDate"
+                        dataField="dueDate"
                         caption="Due Date"
                         dataType="datetime"
                         format="M/d/yyyy"
