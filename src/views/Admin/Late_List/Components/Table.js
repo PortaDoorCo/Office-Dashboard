@@ -69,49 +69,10 @@ class StatusTable extends React.Component {
             endDate: new Date(),
             filteredItems: []
         };
-        this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
-        this.onShowHeaderFilterChanged = this.onShowHeaderFilterChanged.bind(this);
-        this.onCurrentFilterChanged = this.onCurrentFilterChanged.bind(this);
         this.onSelectionChanged = this.onSelectionChanged.bind(this);
-        this.onToolbarPreparing = this.onToolbarPreparing.bind(this);
         this.calculateCellValue = this.calculateCellValue.bind(this);
-        this.onToolbarPreparing = this.onToolbarPreparing.bind(this)
-        // this.onFilterValueChanged = this.onFilterValueChanged.bind(this)
-
     }
 
-
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.orders !== this.props.orders) {
-            const filteredItems = this.props.orders.filter(item => (item.jobInfo.customer.sale.fullName && item.jobInfo.customer.sale.fullName.includes(this.props.status)));
-          
-            this.setState({
-                filteredItems: filteredItems
-            })
-        }
-        if (prevState.filterStatus !== this.state.filterStatus) {
-            const saleFilter = this.props.orders.filter(item => (item.jobInfo.customer.sale.fullName && item.jobInfo.customer.sale.fullName.includes(this.props.status)));
-            const filterStatus = saleFilter.filter(sale => {
-                if (this.state.filterStatus === "All") {
-                    return sale
-                } else {
-                    return sale.status === this.state.filterStatus
-                }
-            }
-            )
-
-            if (this.state.filterStatus === "All") {
-                this.setState({
-                    filteredItems: saleFilter
-                })
-            } else {
-                this.setState({
-                    filteredItems: filterStatus
-                })
-            }
-        }
-    }
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
@@ -189,31 +150,6 @@ class StatusTable extends React.Component {
         return <span>{moment(row.displayValue).format('ddd MM/D/YYYY')}</span>;
     }
 
-    onShowFilterRowChanged(e) {
-        this.setState({
-            showFilterRow: e.value,
-        });
-        this.clearFilter();
-    }
-    onShowHeaderFilterChanged(e) {
-        this.setState({
-            showHeaderFilter: e.value,
-        });
-        this.clearFilter();
-    }
-    onCurrentFilterChanged(e) {
-        this.setState({
-            currentFilter: e.value,
-        });
-    }
-
-    onFilterValueChanged = e => {
-     
-        this.setState({
-            filterStatus: e.value
-        })
-    }
-
     calculateCellValue = data => {
 
         return new Date(data.createdAt).getTime();
@@ -230,39 +166,6 @@ class StatusTable extends React.Component {
         }
 
 
-    }
-
-    onToolbarPreparing(e) {
-        let onExportReports = this.onExportReports.bind(this)
-        e.toolbarOptions.items.unshift(
-            {
-                location: 'after',
-                widget: 'dxSelectBox',
-                options: {
-                    width: 200,
-                    items: statusFilter,
-                    value: this.state.filterStatus,
-                    onValueChanged: this.onFilterValueChanged.bind(this)
-                },
-            },
-            {
-                location: 'after',
-                locateInMenu: 'auto',
-                sortIndex: 30,
-                widget: 'dxButton',
-                options: {
-                    text: 'Reports',
-                    icon: 'export',
-                    hint: 'Export selected data',
-                    elementAttr: {
-                        'class': 'dx-datagrid-export-button'
-                    },
-                    onClick: function () {
-                        onExportReports()
-                    }
-                }
-            }
-        );
     }
 
     saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
@@ -282,7 +185,7 @@ class StatusTable extends React.Component {
             <React.Fragment>
                 <DataGrid
                     id="Orders"
-                    dataSource={this.state.filteredItems}
+                    dataSource={this.props.orders}
                     keyExpr="id"
                     allowColumnReordering={true}
                     showBorders={true}
@@ -340,7 +243,7 @@ class StatusTable extends React.Component {
                         <RequiredRule />
                     </Column>
                     <Column
-                        dataField="DueDate"
+                        dataField="dueDate"
                         caption="Due Date"
                         dataType="datetime"
                         format="M/d/yyyy"
@@ -383,12 +286,6 @@ class StatusTable extends React.Component {
                             column="total"
                             summaryType="count"
                             customizeText={this.customCount}
-                        />
-                        <TotalItem
-                            column="total"
-                            summaryType="sum"
-                            valueFormat={this.saleAmountFormat}
-                            customizeText={this.customTotal}
                         />
                     </Summary>
                 </DataGrid>

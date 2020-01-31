@@ -72,10 +72,10 @@ const status = ['Quote', 'Ordered', 'Shipped', 'RUSH']
 const required = value => value ? undefined : 'Required';
 
 
+
 const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
   <DateTimePicker
     onChange={onChange}
-    format="DD MMM YYYY"
     time={showTime}
     value={!value ? null : new Date(value)}
   />
