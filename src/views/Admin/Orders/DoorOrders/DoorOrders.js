@@ -103,6 +103,8 @@ class DoorOrders extends Component {
 
     const orderType = 'Door Order';
 
+    console.log(values.job_info.DueDate)
+
     const order = {
       part_list: values.part_list,
       status: values.job_info.status,
@@ -115,7 +117,7 @@ class DoorOrders extends Component {
       total: total,
       orderNum: orderNum,
       orderType: orderType,
-      DueDate: values.job_info.DueDate,
+      dueDate: values.job_info.DueDate,
       user: user.id,
       userName: user.username,
       files: this.state.files,
@@ -384,6 +386,9 @@ class DoorOrders extends Component {
       dispatch,
       tax
     } = this.props;
+
+    console.log(formState? formState : 'fuck')
+
 
     return (
       <div className="animated fadeIn resize">
