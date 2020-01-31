@@ -96,7 +96,7 @@ class OrderTable extends React.Component {
 
   componentDidMount() {
     const dataGrid = this.dataGrid.instance;
-    socket.on('order_submitted', res => (dataGrid.refresh()) )
+    socket.on('order_submitted', res => (dataGrid.refresh()))
     socket.on('status_updated', res => dataGrid.refresh())
     let filter = [
       ['createdAt', '>=', moment().startOf('day').valueOf()],
@@ -109,7 +109,7 @@ class OrderTable extends React.Component {
 
   onSelectionChanged(e) {
     const { selectedRowKeys, selectedRowsData } = e;
- 
+
     this.selectionChangedBySelectBox = false;
 
     this.setState({
@@ -136,7 +136,7 @@ class OrderTable extends React.Component {
     if (!modal) {
       const x = row.row.data;
 
-  
+
       this.setState({
         selectedOrder: [
           {
@@ -168,7 +168,7 @@ class OrderTable extends React.Component {
     <Tooltip title="View Order" placement="top">
       <IconButton
         onClick={event => {
- 
+
           event.preventDefault();
           this.toggle(row);
         }}
@@ -395,7 +395,7 @@ class OrderTable extends React.Component {
   }
 
   customCount(data) {
- 
+
     return `Orders: ${data.value}`;
   }
 
@@ -501,7 +501,7 @@ class OrderTable extends React.Component {
             <RequiredRule />
           </Column>
           <Column
-            dataField="DueDate"
+            dataField="dueDate"
             caption="Due Date"
             dataType="datetime"
             format="M/d/yyyy"
@@ -522,9 +522,16 @@ class OrderTable extends React.Component {
             />
           </Column>
           <Column
-              dataField="user.FirstName"
-              caption="Submitted By"
-              allowEditing={false}
+            dataField="user.FirstName"
+            caption="Submitted By"
+            allowEditing={false}
+          >
+          </Column>
+          <Column
+            dataField="late"
+            caption="Late"
+            dataType="boolean"
+            allowEditing={false}
           >
           </Column>
           <Column
