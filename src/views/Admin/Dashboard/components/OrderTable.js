@@ -396,6 +396,13 @@ class OrderTable extends React.Component {
                     >
                     </Column>
                     <Column
+                        dataField="late"
+                        caption="Late"
+                        dataType="boolean"
+                        allowEditing={false}
+                    >
+                    </Column>
+                    <Column
                         dataField="total"
                         caption="Total"
                         format={this.saleAmountFormat}
@@ -403,6 +410,7 @@ class OrderTable extends React.Component {
                     >
                         <RequiredRule />
                     </Column>
+
                     <Column
                         type="buttons"
                         buttons={[

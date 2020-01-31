@@ -10,6 +10,7 @@ const Calendar = React.lazy(() => import('./views/Admin/Calendar'));
 const Tracking = React.lazy(() => import('./views/Admin/Tracking/Tracking'));
 const PurchaseOrders = React.lazy(() => import('./views/Admin/PurchaseOrders/PurchaseOrders'));
 const SalesReport = React.lazy(() => import('./views/Admin/SalesReport/SalesReport'));
+const LateList = React.lazy(() => import('./views/Admin/Late_List/Late_List'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -24,6 +25,7 @@ const routes = [
   { path: '/tracking', name: 'Tracking', component: Tracking },
   { path: '/purchase-orders', name: 'Purchase Orders', component: PurchaseOrders },
   { path: '/sales-reports', name: 'Sales Reports', component: SalesReport },
+  { path: '/late-list', name: 'Late List', component: LateList },
 ];
 
 

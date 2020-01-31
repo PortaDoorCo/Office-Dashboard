@@ -49,6 +49,11 @@ export default {
         },
 
         {
+          name: 'Late List',
+          url: '/late-list',
+        },
+
+        {
           name: 'Purchase Orders',
           url: '/purchase-orders',
         },
