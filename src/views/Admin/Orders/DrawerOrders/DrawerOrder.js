@@ -95,10 +95,10 @@ class DoorOrders extends Component {
       total,
       submitOrder,
       orderNum,
-      tax
+      tax,
+      user
     } = this.props;
 
-    // const orderNum = 100 + orders.length + 1;
     console.log(values)
     console.log(e)
 
@@ -116,7 +116,9 @@ class DoorOrders extends Component {
       total: total,
       orderNum: orderNum,
       orderType: orderType,
-      DueDate: values.job_info.DueDate,
+      dueDate: values.job_info.DueDate,
+      user: user.id,
+      userName: user.username,
       files: this.state.files,
       tracking: [
         { 
@@ -379,6 +381,8 @@ const mapStateToProps = (state, prop) => ({
   customers: state.Orders.customerDB,
   address: state.Orders.address,
   orderNum: state.Orders.orderNum,
+
+  user: state.users.user,
 
   submitted: state.Orders.submitted,
   initialValues: {

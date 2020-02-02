@@ -27,20 +27,27 @@ import List from '@material-ui/icons/List';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DoorPDF from './PrintOuts/Pages/DoorPDF';
-import DrawerPDF from './PrintOuts/Pages/DrawerPDF';
-import StilesPDF from './PrintOuts/Pages/StilesPDF';
-import RailsPDF from './PrintOuts/Pages/RailsPDF';
-import PanelsPDF from './PrintOuts/Pages/PanelsPDF';
-import MaterialsPDF from './PrintOuts/Pages/MaterialsPDF';
-import QCPDF from './PrintOuts/Pages/QCPDF';
-import InvoicePDF from './PrintOuts/Pages/InvoicePDF';
+import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
+import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
+import StilesPDF from './PrintOuts/Pages/Door/StilesPDF';
+import RailsPDF from './PrintOuts/Pages/Door/RailsPDF';
+import PanelsPDF from './PrintOuts/Pages/Door/PanelsPDF';
+import MaterialsPDF from './PrintOuts/Pages/Door/MaterialsPDF';
+import QCPDF from './PrintOuts/Pages/Door/QCPDF';
+import InvoicePDF from './PrintOuts/Pages/Door/InvoicePDF';
 
 import Select from 'react-select';
-import ProfilesPDF from './PrintOuts/Pages/ProfilesPDF';
+import ProfilesPDF from './PrintOuts/Pages/Door/ProfilesPDF';
 import moment from 'moment'
 
 import base64Img from 'base64-img'
+import AcknowledgementPDF from './PrintOuts/Pages/Door/AcknowledgementPDF';
+import DrawerAcnowledgementPDF from './PrintOuts/Pages/Drawer/AcknowledgementPDF';
+import DrawerInvoicePDF from './PrintOuts/Pages/Drawer/InvoicePDF';
+import DrawerAssemblyListPDF from './PrintOuts/Pages/Drawer/AssemblyListPDF'
+import DrawerBottomsPDF from './PrintOuts/Pages/Drawer/BottomsPDF'
+import DrawerSidesPDF from './PrintOuts/Pages/Drawer/SidesPDF'
+
 
 
 
@@ -58,17 +65,8 @@ const toDataUrl = (url, callback) => {
   xhr.send();
 };
 
-const options = [
-  { value: 'All', label: 'All' },
-  { value: 'Profiles', label: 'Profiles' },
-  // { value: 'Acknowledgement', label: 'Acknowledgement' },
-  { value: 'Invoice', label: 'Invoice' },
-  { value: 'Stiles', label: 'Stiles' },
-  { value: 'Rails', label: 'Rails' },
-  { value: 'Panels', label: 'Panels' },
-  { value: 'Materials', label: 'Materials' },
-  { value: 'QC', label: 'QC' },
-];
+
+
 
 
 class OrderPage extends Component {
@@ -131,7 +129,7 @@ class OrderPage extends Component {
             this.setState({ selectedOption: [] })
             break;
           case 'Acknowledgement':
-            InvoicePDF(data);
+            AcknowledgementPDF(data);
             this.setState({ selectedOption: [] })
             break;
           case 'Invoice':
@@ -207,7 +205,36 @@ class OrderPage extends Component {
       })
 
     } else {
-      DrawerPDF(data)
+      this.state.selectedOption.map(async option => {
+        switch (option.value) {
+          case 'All':
+            DrawerPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Acknowledgement':
+            DrawerAcnowledgementPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Invoice':
+            DrawerInvoicePDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Assembly':
+            DrawerAssemblyListPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+          case 'Bottoms':
+            DrawerBottomsPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
+            case 'Sides':
+              DrawerSidesPDF(data);
+              this.setState({ selectedOption: [] })
+              break;
+          default:
+            return
+        }
+      })
     }
   };
 
@@ -220,6 +247,38 @@ class OrderPage extends Component {
 
   render() {
     const props = this.props;
+
+    // let options;
+
+    console.log(props)
+
+    let options;
+    let selectedOrder = props.selectedOrder[0] ? props.selectedOrder[0] : "Door Order"
+
+    if (selectedOrder.orderType === "Door Order") {
+      options = [
+        { value: 'All', label: 'All' },
+        { value: 'Profiles', label: 'Profiles' },
+        { value: 'Acknowledgement', label: 'Acknowledgement' },
+        { value: 'Invoice', label: 'Invoice' },
+        { value: 'Stiles', label: 'Stiles' },
+        { value: 'Rails', label: 'Rails' },
+        { value: 'Panels', label: 'Panels' },
+        { value: 'Materials', label: 'Materials' },
+        { value: 'QC', label: 'QC' },
+      ];
+    } else if (selectedOrder.orderType === "Drawer Order") {
+      options = [
+        { value: 'All', label: 'All' },
+        { value: 'Acknowledgement', label: 'Acknowledgement' },
+        { value: 'Invoice', label: 'Invoice' },
+        { value: 'Assembly', label: 'Assembly List' },
+        { value: 'Bottoms', label: 'Box Bottoms' },
+        { value: 'Sides', label: 'Box Sides' },
+      ];
+    }
+
+
 
     if (this.state.page === 'invoice') {
       return (
@@ -272,10 +331,10 @@ class OrderPage extends Component {
                       </IconButton>
 
                       <Tooltip title="Tracking History" placement="top">
-                          <IconButton onClick={this.toggleTracking}>
-                            <List style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
+                        <IconButton onClick={this.toggleTracking}>
+                          <List style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
                     </Col>
                     <Col />

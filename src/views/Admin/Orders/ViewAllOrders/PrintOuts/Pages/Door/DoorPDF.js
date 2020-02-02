@@ -1,12 +1,13 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
-import AssemblyList from '../Door_PDF/AssemblyList';
-import StilesPage from '../Door_PDF/StilesPage';
-import RailsPage from '../Door_PDF/RailsPage';
-import PanelsPage from '../Door_PDF/PanelsPage';
-import MaterialsList from '../Door_PDF/MaterialsList'
-import QC_Checklist from '../Door_PDF/QC_Checklist'
-import Invoice from '../Door_PDF/Invoice'
+import AssemblyList from '../../Door_PDF/AssemblyList';
+import StilesPage from '../../Door_PDF/StilesPage';
+import RailsPage from '../../Door_PDF/RailsPage';
+import PanelsPage from '../../Door_PDF/PanelsPage';
+import MaterialsList from '../../Door_PDF/MaterialsList'
+import QC_Checklist from '../../Door_PDF/QC_Checklist'
+import Invoice from '../../Door_PDF/Invoice'
+import Acknowledgement from '../../Door_PDF/Acknowledgement'
 
 export default data => {
   const { vfs } = vfsFonts.pdfMake;
@@ -22,6 +23,7 @@ export default data => {
       PanelsPage(data),
       MaterialsList(data),
       QC_Checklist(data),
+      Acknowledgement(data),
       Invoice(data),
     ],
     styles: {
