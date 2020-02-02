@@ -29,6 +29,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
+import AssemblyListPDF from './PrintOuts/Pages/Door/AssemblyPDF';
 import StilesPDF from './PrintOuts/Pages/Door/StilesPDF';
 import RailsPDF from './PrintOuts/Pages/Door/RailsPDF';
 import PanelsPDF from './PrintOuts/Pages/Door/PanelsPDF';
@@ -125,9 +126,52 @@ class OrderPage extends Component {
       this.state.selectedOption.map(async option => {
         switch (option.value) {
           case 'All':
-            DoorPDF(data);
+
+            const edgesPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.edges.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.edges.photo.url, (result) => {
+                  resolve(result)
+                });
+              })
+            });
+
+            const mouldsPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.moulds.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.moulds.photo.url, (result) => {
+                  resolve(result)
+                });
+              })
+            });
+
+
+
+            const panelsPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.panels.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.panels.photo.url, (result) => {
+                  resolve(result)
+                });
+              })
+            });
+
+            let edges1;
+            let moulds1;
+            let panels1;
+
+            try {
+              edges1 = await Promise.all(edgesPromiseArr1);
+              moulds1 = await Promise.all(mouldsPromiseArr1);
+              panels1 = await Promise.all(panelsPromiseArr1);
+            } catch (err) {
+              console.log('errrrrrr', err);
+            }
+
+            DoorPDF(data, edges1, moulds1, panels1);
             this.setState({ selectedOption: [] })
             break;
+            case 'Assembly':
+              AssemblyListPDF(data);
+              this.setState({ selectedOption: [] })
+              break;
           case 'Acknowledgement':
             AcknowledgementPDF(data);
             this.setState({ selectedOption: [] })
@@ -258,13 +302,14 @@ class OrderPage extends Component {
     if (selectedOrder.orderType === "Door Order") {
       options = [
         { value: 'All', label: 'All' },
-        { value: 'Profiles', label: 'Profiles' },
+        { value: 'Assembly', label: 'Assembly List' },
         { value: 'Acknowledgement', label: 'Acknowledgement' },
         { value: 'Invoice', label: 'Invoice' },
         { value: 'Stiles', label: 'Stiles' },
         { value: 'Rails', label: 'Rails' },
         { value: 'Panels', label: 'Panels' },
         { value: 'Materials', label: 'Materials' },
+        { value: 'Profiles', label: 'Profiles' },
         { value: 'QC', label: 'QC' },
       ];
     } else if (selectedOrder.orderType === "Drawer Order") {

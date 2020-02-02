@@ -1,10 +1,3 @@
-import moment from 'moment';
-import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
-import Rails from '../Breakdowns/Doors/Rails/Rails';
-import Panels from '../Breakdowns/Doors/Panels';
-import Size from '../Breakdowns/Doors/Size';
-import base64Img from 'base64-img'
-
 
 export default (data, edges, moulds, panels) => {
     return [
@@ -95,6 +88,7 @@ export default (data, edges, moulds, panels) => {
                     canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
                 }
             ];
-        })
+        }),
+        { text: '', pageBreak: 'before' }
     ];
 };
