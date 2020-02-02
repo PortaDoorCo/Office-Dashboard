@@ -12,7 +12,6 @@ import {
   Table,
   Collapse
 } from 'reactstrap';
-import { Link } from "react-router-dom";
 import SelectedOrder from './SelectedOrder/SelectedOrder';
 import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
 import Invoice from '../../Invoice/Invoice';
@@ -20,7 +19,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateOrder, loadOrders } from '../../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
-import Dashboard from '@material-ui/icons/Dashboard';
 import Print from '@material-ui/icons/Print';
 import Attachment from '@material-ui/icons/Attachment';
 import List from '@material-ui/icons/List';
@@ -41,7 +39,7 @@ import Select from 'react-select';
 import ProfilesPDF from './PrintOuts/Pages/Door/ProfilesPDF';
 import moment from 'moment'
 
-import base64Img from 'base64-img'
+
 import AcknowledgementPDF from './PrintOuts/Pages/Door/AcknowledgementPDF';
 import DrawerAcnowledgementPDF from './PrintOuts/Pages/Drawer/AcknowledgementPDF';
 import DrawerInvoicePDF from './PrintOuts/Pages/Drawer/InvoicePDF';
