@@ -19,8 +19,8 @@ import CustomStore from 'devextreme/data/custom_store';
 import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/DoorPDF';
-import DrawerPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/DrawerPDF'
+import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/Door/DoorPDF';
+import DrawerPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/Drawer/DrawerPDF'
 import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -94,12 +94,12 @@ class RestrictedOrderTable extends React.Component {
     componentDidMount() {
         const dataGrid = this.dataGrid.instance;
         socket.on('order_submitted', res => (dataGrid.refresh()))
-        socket.on('status_updated', (res,updatedStatus) => (dataGrid.refresh()) )
+        socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
     }
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-      
+
         this.selectionChangedBySelectBox = false;
 
         this.setState({
@@ -126,7 +126,7 @@ class RestrictedOrderTable extends React.Component {
         if (!modal) {
             const x = row.row.data;
 
-         
+
             this.setState({
                 selectedOrder: [
                     {
@@ -158,7 +158,7 @@ class RestrictedOrderTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-                  
+
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -192,12 +192,12 @@ class RestrictedOrderTable extends React.Component {
     }
 
     calculateCellValue = data => {
-        
+
         return new Date(data.createdAt).getTime();
     }
 
     onExportBreakdowns = e => {
-      
+
         if (this.state.selectedRowKeys.length > 0) {
             this.state.selectedRowsData.map(i => {
                 if (i.orderType === "Door Order") {
@@ -212,7 +212,7 @@ class RestrictedOrderTable extends React.Component {
             })
         } else {
             NotificationManager.error('Please Select an Order', 'Order Not Selected', 2000);
-        } 
+        }
 
     }
 
@@ -265,7 +265,7 @@ class RestrictedOrderTable extends React.Component {
                         'class': 'dx-datagrid-export-button breakdown'
                     },
                     onClick: function () {
-                      
+
                         onExportBreakdowns()
                     }
                 }
@@ -276,12 +276,12 @@ class RestrictedOrderTable extends React.Component {
     saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
 
     customTotal(data) {
-      
+
         return `Total: $${data.value.toFixed(2)}`;
     }
 
     customCount(data) {
-      
+
         return `Orders: ${data.value}`;
     }
 
@@ -292,7 +292,7 @@ class RestrictedOrderTable extends React.Component {
         const {
             productData,
             selectedRowKeys,
-        } = this.state;      
+        } = this.state;
 
         return (
             <React.Fragment>
@@ -304,7 +304,7 @@ class RestrictedOrderTable extends React.Component {
                     showBorders={true}
                     allowColumnResizing={true}
                     columnAutoWidth={true}
-                    
+
                     onSelectionChanged={this.onSelectionChanged}
                     onToolbarPreparing={this.onToolbarPreparing}
                     // onExporting={this.onExporting}
@@ -364,7 +364,7 @@ class RestrictedOrderTable extends React.Component {
                         <RequiredRule />
                     </Column>
                     <Column
-                        dataField="DueDate"
+                        dataField="dueDate"
                         caption="Due Date"
                         dataType="datetime"
                         format="M/d/yyyy"
@@ -383,6 +383,14 @@ class RestrictedOrderTable extends React.Component {
                             valueExpr="value"
                             displayExpr="name"
                         />
+                    </Column>
+
+                    <Column
+                        dataField="late"
+                        caption="Late"
+                        dataType="boolean"
+                        allowEditing={false}
+                    >
                     </Column>
 
                     <Column
