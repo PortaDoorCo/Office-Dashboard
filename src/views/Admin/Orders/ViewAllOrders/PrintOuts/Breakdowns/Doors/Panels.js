@@ -39,6 +39,14 @@ export default (info, part) => {
       },
   ]
 
+  const none = [
+    {
+      qty: ``,
+      measurement: ``,
+      pattern: 'GLASS'
+    },
+]
+
 
   const df = [
     {
@@ -97,7 +105,7 @@ export default (info, part) => {
 
   if (part.orderType.value === 'Door') {
     if (part.panels.PANEL === "NONE") {
-      return 'GLASS'
+      return none
     } else {
       if(info.unevenCheck) {
         return unevenSplit
