@@ -92,6 +92,7 @@ class OrderTable extends React.Component {
         // this.onExportBreakdows = this.onExportBreakdows.bind(this)
         this.onFilterStatus = this.onFilterStatus.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.onRowPrepared = this.onRowPrepared.bind(this);
 
     }
 
@@ -111,6 +112,12 @@ class OrderTable extends React.Component {
             selectedRowsData,
         });
     }
+
+    onRowPrepared(e) {  
+        if (e.rowType == 'data' && e.data.late == true) {  
+                e.rowElement.style.backgroundColor = '#FEEBEB';  
+            }  
+        }
 
     editable = () => {
         const { edit } = this.state;
@@ -312,6 +319,7 @@ class OrderTable extends React.Component {
                     
                     onSelectionChanged={this.onSelectionChanged}
                     onToolbarPreparing={this.onToolbarPreparing}
+                    onRowPrepared={this.onRowPrepared}
                     // onExporting={this.onExporting}
                     ref={ref => (this.dataGrid = ref)}
                     selectedRowKeys={selectedRowKeys}
@@ -395,13 +403,7 @@ class OrderTable extends React.Component {
                         allowEditing={false}
                     >
                     </Column>
-                    <Column
-                        dataField="late"
-                        caption="Late"
-                        dataType="boolean"
-                        allowEditing={false}
-                    >
-                    </Column>
+
                     <Column
                         dataField="total"
                         caption="Total"
