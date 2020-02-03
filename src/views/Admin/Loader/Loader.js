@@ -4,7 +4,10 @@ import {
   Row,
   Col,
   Container,
-  Button
+  Button,
+  Navbar,
+  NavbarBrand,
+  NavbarText
 } from "reactstrap";
 import { unsetToken } from "../../../utils/auth";
 
@@ -22,12 +25,21 @@ class Loader extends Component {
   render() {
 
     return (
+      <div>
+      <Navbar color="light" light expand="md">
+        <NavbarBrand href="/">Porta Door Co. Inc.</NavbarBrand>
+    
+        <Button color="primary" className="ml-auto" onClick={this.logOut}>Log Out</Button>
+          
+      
+      </Navbar>
+      
       <div className="app flex-row align-items-center">
         <Container>
           <Row>
             <Col lg='9' />
             <Col>
-              <Button color="primary" className="mr-5" onClick={this.logOut}>Log Out</Button>
+              
             </Col>
           </Row>
           <Row className="justify-content-center">
@@ -48,6 +60,7 @@ class Loader extends Component {
           </Row>
 
         </Container>
+      </div>
       </div>
     );
   }
