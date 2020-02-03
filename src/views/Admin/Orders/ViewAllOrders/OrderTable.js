@@ -39,19 +39,31 @@ const status = [
   {
     name: 'Quote',
     value: 'Quote',
-  },
-  {
+},
+{
     name: 'Invoiced',
     value: 'Invoiced',
-  },
-  {
+},
+{
     name: 'Ordered',
     value: 'Ordered',
-  },
-  {
+},
+{
     name: 'In Production',
     value: 'In Production',
-  },
+},
+{
+    name: 'Complete',
+    value: 'Complete',
+},
+{
+    name: 'Shipped',
+    value: 'Shipped',
+},
+{
+    name: 'LATE',
+    value: 'LATE',
+},
 ];
 
 const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production']
@@ -92,6 +104,7 @@ class OrderTable extends React.Component {
     this.onToolbarPreparing = this.onToolbarPreparing.bind(this)
     // this.onExportBreakdows = this.onExportBreakdows.bind(this)
     this.onFilterStatus = this.onFilterStatus.bind(this);
+    this.onRowPrepared = this.onRowPrepared.bind(this);
   }
 
   componentDidMount() {
@@ -117,6 +130,12 @@ class OrderTable extends React.Component {
       selectedRowsData,
     });
   }
+
+  onRowPrepared(e) {
+    if (e.rowType == 'data' && e.data.late == true) {
+        e.rowElement.style.backgroundColor = '#FEEBEB';
+    }
+}
 
   editable = () => {
     const { edit } = this.state;
@@ -527,13 +546,7 @@ class OrderTable extends React.Component {
             allowEditing={false}
           >
           </Column>
-          <Column
-            dataField="late"
-            caption="Late"
-            dataType="boolean"
-            allowEditing={false}
-          >
-          </Column>
+
           <Column
             dataField="total"
             caption="Total"

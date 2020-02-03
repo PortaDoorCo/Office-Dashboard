@@ -51,6 +51,14 @@ const status = [
         value: 'In Production',
     },
     {
+        name: 'Complete',
+        value: 'Complete',
+    },
+    {
+        name: 'Shipped',
+        value: 'Shipped',
+    },
+    {
         name: 'LATE',
         value: 'LATE',
     },
@@ -92,24 +100,31 @@ class OrderTable extends React.Component {
         // this.onExportBreakdows = this.onExportBreakdows.bind(this)
         this.onFilterStatus = this.onFilterStatus.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.onRowPrepared = this.onRowPrepared.bind(this);
 
     }
 
     componentDidMount() {
         const dataGrid = this.dataGrid.instance;
         socket.on('order_submitted', res => (dataGrid.refresh()))
-        socket.on('status_updated', (res,updatedStatus) => (dataGrid.refresh()) )
+        socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
     }
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-      
+
         this.selectionChangedBySelectBox = false;
 
         this.setState({
             selectedRowKeys,
             selectedRowsData,
         });
+    }
+
+    onRowPrepared(e) {
+        if (e.rowType == 'data' && e.data.late == true) {
+            e.rowElement.style.backgroundColor = '#FEEBEB';
+        }
     }
 
     editable = () => {
@@ -130,7 +145,7 @@ class OrderTable extends React.Component {
         if (!modal) {
             const x = row.row.data;
 
-         
+
             this.setState({
                 selectedOrder: [
                     {
@@ -163,7 +178,7 @@ class OrderTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-                  
+
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -197,12 +212,12 @@ class OrderTable extends React.Component {
     }
 
     calculateCellValue = data => {
-        
+
         return new Date(data.createdAt).getTime();
     }
 
     onExportBreakdowns = e => {
-      
+
         if (this.state.selectedRowKeys.length > 0) {
             this.state.selectedRowsData.map(i => {
                 if (i.orderType === "Door Order") {
@@ -217,7 +232,7 @@ class OrderTable extends React.Component {
             })
         } else {
             NotificationManager.error('Please Select an Order', 'Order Not Selected', 2000);
-        } 
+        }
 
     }
 
@@ -270,7 +285,7 @@ class OrderTable extends React.Component {
                         'class': 'dx-datagrid-export-button breakdown'
                     },
                     onClick: function () {
-                      
+
                         onExportBreakdowns()
                     }
                 }
@@ -281,12 +296,12 @@ class OrderTable extends React.Component {
     saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
 
     customTotal(data) {
-      
+
         return `Total: $${data.value.toFixed(2)}`;
     }
 
     customCount(data) {
-      
+
         return `Orders: ${data.value}`;
     }
 
@@ -297,7 +312,7 @@ class OrderTable extends React.Component {
         const {
             productData,
             selectedRowKeys,
-        } = this.state;      
+        } = this.state;
 
         return (
             <React.Fragment>
@@ -309,9 +324,10 @@ class OrderTable extends React.Component {
                     showBorders={true}
                     allowColumnResizing={true}
                     columnAutoWidth={true}
-                    
+
                     onSelectionChanged={this.onSelectionChanged}
                     onToolbarPreparing={this.onToolbarPreparing}
+                    onRowPrepared={this.onRowPrepared}
                     // onExporting={this.onExporting}
                     ref={ref => (this.dataGrid = ref)}
                     selectedRowKeys={selectedRowKeys}
@@ -395,13 +411,7 @@ class OrderTable extends React.Component {
                         allowEditing={false}
                     >
                     </Column>
-                    <Column
-                        dataField="late"
-                        caption="Late"
-                        dataType="boolean"
-                        allowEditing={false}
-                    >
-                    </Column>
+
                     <Column
                         dataField="total"
                         caption="Total"
