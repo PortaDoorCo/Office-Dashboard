@@ -194,7 +194,7 @@ class DoorOrders extends Component {
             if (part.dimensions) {
               return part.dimensions.forEach((info, index) => {
 
-                if (parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -204,7 +204,7 @@ class DoorOrders extends Component {
                   )
                 }
 
-                if (parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -214,7 +214,7 @@ class DoorOrders extends Component {
                   )
                 }
 
-                if (parseInt(part_list[i].dimensions[index].panelsH) !== 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
                       'DoorOrder',

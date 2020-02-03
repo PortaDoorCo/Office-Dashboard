@@ -328,7 +328,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 : null}
                 </Col>
                 <Col>
-                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) === 2 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 )  ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
+                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 )  ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
                 </Col>
               </Row>
 
@@ -351,28 +351,24 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 </Col>
               </Row>
 
-              {formState.part_list[i].dimensions[index].unevenCheck && parseInt(formState.part_list[i].dimensions[index].panelsH) === 2 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 ?
+              {formState.part_list[i].dimensions[index].unevenCheck ?
                 <div className='mb-3'>
                   <Row>
-                    <Col>
-                      <Row>
-                        <Col />
-                        <Col>
-                          <p style={{ textAlign: 'center' }}><strong>Position of Horizontal Mid Rail</strong></p>
-                          <Field
-                            name={`${table}.unevenSplitInput`}
-                            component={renderField}
-                          />
-                          <Row>
-                            <Col>
-                              <p style={{ textAlign: 'center' }}>Height to Top of Horiz. Mullion</p>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col />
-                      </Row>
-                    </Col>
-
+                  {Array.from(Array(parseInt(formState.part_list[i].dimensions[index].panelsH)).keys()).slice(1).map((i,index)=> {
+                    return (
+                      <div>
+                          <Col />
+                          <Col>
+                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Position of Horizontal Mid Rail</strong></p>
+                            <Field
+                              name={`${table}.unevenSplitInput`}
+                              component={renderField}
+                            />
+                          </Col>
+                          <Col />
+                          </div>
+                    )
+                  })}
                   </Row>
                 </div>
                 : null
