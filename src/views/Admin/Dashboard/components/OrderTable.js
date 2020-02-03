@@ -19,8 +19,8 @@ import CustomStore from 'devextreme/data/custom_store';
 import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/DoorPDF';
-import DrawerPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/DrawerPDF'
+import DoorPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/Door/DoorPDF';
+import DrawerPDF from '../../Orders/ViewAllOrders/PrintOuts/Pages/Drawer/DrawerPDF'
 import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

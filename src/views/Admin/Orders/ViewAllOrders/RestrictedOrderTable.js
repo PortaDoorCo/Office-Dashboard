@@ -24,8 +24,8 @@ import OrderPage from './OrderPage';
 import Report1 from './PrintOuts/Reports/Report1';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import DoorPDF from './PrintOuts/Pages/DoorPDF';
-import DrawerPDF from './PrintOuts/Pages/DrawerPDF'
+import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
+import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF'
 import { NotificationManager } from 'react-notifications';
 import io from 'socket.io-client';
 import Cookies from "js-cookie";
@@ -484,7 +484,7 @@ class RestrictedOrderTable extends React.Component {
             <RequiredRule />
           </Column>
           <Column
-            dataField="DueDate"
+            dataField="dueDate"
             caption="Due Date"
             dataType="datetime"
             format="M/d/yyyy"
@@ -503,6 +503,13 @@ class RestrictedOrderTable extends React.Component {
               valueExpr="value"
               displayExpr="name"
             />
+          </Column>
+          <Column
+            dataField="late"
+            caption="Late"
+            dataType="boolean"
+            allowEditing={false}
+          >
           </Column>
           <Column
             type="buttons"

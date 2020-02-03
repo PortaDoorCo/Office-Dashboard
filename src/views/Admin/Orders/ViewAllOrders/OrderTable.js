@@ -24,8 +24,8 @@ import OrderPage from './OrderPage';
 import Report1 from './PrintOuts/Reports/Report1';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import DoorPDF from './PrintOuts/Pages/DoorPDF';
-import DrawerPDF from './PrintOuts/Pages/DrawerPDF'
+import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
+import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF'
 import { NotificationManager } from 'react-notifications';
 import io from 'socket.io-client';
 import Cookies from "js-cookie";
