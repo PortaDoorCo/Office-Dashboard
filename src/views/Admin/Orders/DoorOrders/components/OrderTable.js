@@ -359,7 +359,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <div>
                           <Col />
                           <Col>
-                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Position of Horizontal Mid Rail</strong></p>
+                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index+1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
