@@ -30,7 +30,11 @@ const Maker = props => {
     let panelsW = formState.part_list[i].dimensions[index].panelsW ? parseInt(formState.part_list[i].dimensions[index].panelsW) : 0
     let horizontalMidRailSize = formState.part_list[i].dimensions[index].horizontalMidRailSize ? numQty(formState.part_list[i].dimensions[index].horizontalMidRailSize) : 0
     let verticalMidRailSize = formState.part_list[i].dimensions[index].verticalMidRailSize ? numQty(formState.part_list[i].dimensions[index].verticalMidRailSize) : 0
-    let unevenInput = formState.part_list[i].dimensions[index].unevenSplitInput ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput) : 0
+    let unevenInput1 = formState.part_list[i].dimensions[index].unevenSplitInput0 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput0) : 0
+    let unevenInput2 = formState.part_list[i].dimensions[index].unevenSplitInput1 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput1) : 0
+    let unevenInput3 = formState.part_list[i].dimensions[index].unevenSplitInput2 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput2) : 0
+    let unevenInput4 = formState.part_list[i].dimensions[index].unevenSplitInput3 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput3) : 0
+    let unevenInput5 = formState.part_list[i].dimensions[index].unevenSplitInput4 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput4) : 0
     let unevenCheck = formState.part_list[i].dimensions[index].unevenCheck ? numQty(formState.part_list[i].dimensions[index].unevenCheck) : false
 
 
@@ -58,7 +62,24 @@ const Maker = props => {
         }
 
 
-        const door = new Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize,unevenCheck, unevenInput, 0);
+        const door = new Door(
+            width,
+            height,
+            leftStile,
+            rightStile,
+            topRail,
+            bottomRail,
+            panelsH,
+            panelsW,
+            horizontalMidRailSize,
+            verticalMidRailSize,
+            unevenCheck,
+            unevenInput1,
+            unevenInput2,
+            unevenInput3,
+            unevenInput4,
+            unevenInput5,
+            0);
         const path = makerjs.exporter.toSVGPathData(door, { origin: [0, 0] });
         setPathItem(bp.append('path', { d: path }));
         bp.hide('grid')
@@ -66,7 +87,22 @@ const Maker = props => {
         bp.fit()
         //bp.redraw();
         setBps(bp);
-    }, [height, width, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, unevenInput]);
+    }, [props.height,
+        props.width,
+        leftStile,
+        rightStile,
+        topRail,
+        bottomRail,
+        panelsH,
+        panelsW,
+        horizontalMidRailSize,
+        verticalMidRailSize,
+        unevenInput1,
+        unevenInput2,
+        unevenInput3,
+        unevenInput4,
+        unevenInput5,
+    ]);
 
 
 
