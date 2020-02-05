@@ -377,6 +377,7 @@ class DoorSelect extends React.Component {
                                   </tbody>
                                 </Table>
                                 <Row>
+                                  {console.log(info)}
                                   <Col>
                                     <div id={`selected-makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                                       <Maker
@@ -391,7 +392,11 @@ class DoorSelect extends React.Component {
                                         horizontalMidRailSize={numQty(info.horizontalMidRailSize)}
                                         verticalMidRailSize={numQty(info.verticalMidRailSize)}
                                         unevenCheck={(info.unevenCheck)}
-                                        unevenSplitInput={numQty(info.unevenSplitInput)}
+                                        unevenInput1={numQty(info.unevenSplitInput0)}
+                                        unevenInput2={numQty(info.unevenSplitInput1)}
+                                        unevenInput3={numQty(info.unevenSplitInput2)}
+                                        unevenInput4={numQty(info.unevenSplitInput3)}
+                                        unevenInput5={numQty(info.unevenSplitInput4)}
                                         i={i}
                                         index={index}
                                         style={{ width: '100%', height: '300px' }}
@@ -399,28 +404,31 @@ class DoorSelect extends React.Component {
                                     </div>
                                   </Col>
                                 </Row>
-                                {info.unevenCheck && parseInt(info.panelsH) === 2 && parseInt(info.panelsW) === 1 ?
+                                {info.unevenCheck ?
+
                                   <div className='mb-3'>
                                     <Row>
-                                      <Col>
-                                        <Row>
-                                          <Col />
-                                          <Col>
-                                            <p style={{ textAlign: 'center' }}><strong>Position of Horizontal Mid Rail</strong></p>
-                                            <Input
-                                              placeholder={info.unevenSplitInput}
-                                              disabled
-                                            />
-                                            <Row>
-                                              <Col>
-                                                <p style={{ textAlign: 'center' }}>Height to Top of Horiz. Mullion</p>
-                                              </Col>
-                                            </Row>
-                                          </Col>
-                                          <Col />
-                                        </Row>
-                                      </Col>
+                                      {Array.from(Array(parseInt(info.panelsH)).keys()).slice(1).map((i, v) => {
 
+                                        let unevenSplit = info.unevenSplitInput[0]
+                                        console.log(v)
+                                        console.log(info)
+                                        console.log(unevenSplit)
+
+                                        return (
+                                          <div>
+                                            <Col />
+                                            <Col>
+                                              <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {v + 1}</strong></p>
+                                              <Input
+                                                placeholder={info.unevenSplitInput[v]}
+                                                disabled
+                                              />
+                                            </Col>
+                                            <Col />
+                                          </div>
+                                        )
+                                      })}
                                     </Row>
                                   </div>
                                   : null
@@ -456,7 +464,7 @@ class DoorSelect extends React.Component {
             </Col>
           </Row>
         </div>
-      </div>
+      </div >
     );
   }
 }
