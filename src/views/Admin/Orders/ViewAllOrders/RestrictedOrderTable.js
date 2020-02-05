@@ -449,6 +449,7 @@ class RestrictedOrderTable extends React.Component {
           // onExporting={this.onExporting}
           ref={ref => (this.dataGrid = ref)}
           selectedRowKeys={selectedRowKeys}
+          onRowPrepared={this.onRowPrepared}
         >
           <ColumnFixing enabled={true} />
           <SearchPanel
