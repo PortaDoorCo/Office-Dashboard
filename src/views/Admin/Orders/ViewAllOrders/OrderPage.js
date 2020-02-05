@@ -473,7 +473,7 @@ class OrderPage extends Component {
                           <h5>Tracking History</h5>
                           <Table striped>
                             <tbody>
-                              {props.selectedOrder[0] && props.selectedOrder[0].tracking ? props.selectedOrder[0].tracking.slice(0).reverse().map((i, index) => (
+                              {(props.selectedOrder[0] && props.selectedOrder[0].tracking)? props.selectedOrder[0].tracking.slice(0).reverse().map((i, index) => (
                                 <tr>
                                   <th>{i.status}</th>
                                   <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
