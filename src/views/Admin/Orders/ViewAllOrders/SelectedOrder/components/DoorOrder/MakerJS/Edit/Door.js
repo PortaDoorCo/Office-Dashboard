@@ -42,22 +42,147 @@ var midRails = (function () {
 })();
 
 var unevenMidRails = (function () {
-    function unevenMidRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, horizontalMidRailSize, unevenInput) {
+    function unevenMidRails(
+        width,
+        height,
+        leftStile,
+        rightStile,
+        topRail,
+        bottomRail,
+        panelsH,
+        horizontalMidRailSize,
+        unevenInput1,
+        unevenInput2,
+        unevenInput3,
+        unevenInput4,
+        unevenInput5,
+    ) {
 
         var line = makerjs.paths.Line;
         var ls = Math.min(leftStile, 0);
         var rs = Math.min(rightStile, 0);
 
-        const mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
-            let a = new line([ls, height - unevenInput], [width - rs, height - unevenInput])
-            let b = new line([ls, (height - unevenInput) - horizontalMidRailSize], [width - rs, (height - unevenInput) - horizontalMidRailSize])
-            return [a, b]
-        })
+        let mr;
+        let m;
 
-        let m = _.flatten(mr)
+        let y1;
+        let y2;
+        let y3;
+        let y4;
+        let y5;
+
+        switch (panelsH) {
+            case 2:
+
+                y1 = ((height+topRail) - unevenInput1)
+
+                mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
+                    let a = new line([ls, y1], [width - rs, y1])
+                    let b = new line([ls, y1 - horizontalMidRailSize], [width - rs, y1 - horizontalMidRailSize])
+                    return [a, b]
+                })
+
+                m = _.flatten(mr)
+                break;
+            case 3:
+                y1 = ((height+topRail) - unevenInput1)
+                y2 = y1 - unevenInput2
+
+                mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
+                    let a = new line([ls, y1], [width - rs, y1])
+                    let b = new line([ls, y1 - horizontalMidRailSize], [width - rs, y1 - horizontalMidRailSize])
+
+                    let c = new line([ls, y2], [width - rs, y2])
+                    let d = new line([ls, y2 - horizontalMidRailSize], [width - rs, y2 - horizontalMidRailSize])
+
+                    return [a, b, c, d]
+                })
+
+                m = _.flatten(mr)
+                break;
+            case 4:
+                y1 = ((height+topRail) - unevenInput1)
+                y2 = y1 - unevenInput2
+                y3 = y2 - unevenInput3
+
+                mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
+                    let a = new line([ls, y1], [width - rs, y1])
+                    let b = new line([ls, y1 - horizontalMidRailSize], [width - rs, y1 - horizontalMidRailSize])
+
+                    let c = new line([ls, y2], [width - rs, y2])
+                    let d = new line([ls, y2 - horizontalMidRailSize], [width - rs, y2 - horizontalMidRailSize])
+
+                    let e = new line([ls, y3], [width - rs, y3])
+                    let f = new line([ls, y3 - horizontalMidRailSize], [width - rs, y3 - horizontalMidRailSize])
+
+                    return [a, b, c, d, e, f]
+                })
+
+                m = _.flatten(mr)
+                break;
+            case 5:
+                y1 = ((height+topRail) - unevenInput1)
+                y2 = y1 - unevenInput2
+                y3 = y2 - unevenInput3
+                y4 = y3 - unevenInput4
+
+                mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
+                    let a = new line([ls, y1], [width - rs, y1])
+                    let b = new line([ls, y1 - horizontalMidRailSize], [width - rs, y1 - horizontalMidRailSize])
+
+                    let c = new line([ls, y2], [width - rs, y2])
+                    let d = new line([ls, y2 - horizontalMidRailSize], [width - rs, y2 - horizontalMidRailSize])
+
+                    let e = new line([ls, y3], [width - rs, y3])
+                    let f = new line([ls, y3 - horizontalMidRailSize], [width - rs, y3 - horizontalMidRailSize])
+
+                    let g = new line([ls, y4], [width - rs, y4])
+                    let h = new line([ls, y4 - horizontalMidRailSize], [width - rs, y4 - horizontalMidRailSize])
+
+                    return [a, b, c, d, e, f, g, h]
+                })
+
+                m = _.flatten(mr)
+                break;
+            case 6:
+                y1 = ((height+topRail) - unevenInput1)
+                y2 = y1 - unevenInput2
+                y3 = y2 - unevenInput3
+                y4 = y3 - unevenInput4
+                y5 = y4 - unevenInput5
+
+                mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
+                    let a = new line([ls, y1], [width - rs, y1])
+                    let b = new line([ls, y1 - horizontalMidRailSize], [width - rs, y1 - horizontalMidRailSize])
+
+                    let c = new line([ls, y2], [width - rs, y2])
+                    let d = new line([ls, y2 - horizontalMidRailSize], [width - rs, y2 - horizontalMidRailSize])
+
+                    let e = new line([ls, y3], [width - rs, y3])
+                    let f = new line([ls, y3 - horizontalMidRailSize], [width - rs, y3 - horizontalMidRailSize])
+
+                    let g = new line([ls, y4], [width - rs, y4])
+                    let h = new line([ls, y4 - horizontalMidRailSize], [width - rs, y4 - horizontalMidRailSize])
+
+                    let j = new line([ls, y5], [width - rs, y5])
+                    let k = new line([ls, y5 - horizontalMidRailSize], [width - rs, y5 - horizontalMidRailSize])
+
+                    return [a, b, c, d, e, f, g, h, j, k]
+                })
+
+                m = _.flatten(mr)
+                break;
+            default:
+                mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
+                    let a = new line([ls, height - unevenInput1], [width - rs, height - unevenInput1])
+                    let b = new line([ls, (height - unevenInput1) - horizontalMidRailSize], [width - rs, (height - unevenInput1) - horizontalMidRailSize])
+                    return [a, b]
+                })
+
+                m = _.flatten(mr)
+        }
 
         this.paths = m
-
 
     }
     return unevenMidRails;
@@ -201,16 +326,16 @@ var vRails = (function () {
             case 6:
                 v = []
                 break;
-            default: 
-            vr = Array.from(Array(panelsW).keys()).slice(1).map(i => {
-                let a = new line([((width / panelsW) * (i)) + (verticalMidRailSize / 2), br], [((width / panelsW) * (i)) + (verticalMidRailSize / 2), height - br])
-                let b = new line([((width / panelsW) * (i)) - (verticalMidRailSize / 2), br], [((width / panelsW) * (i)) - (verticalMidRailSize / 2), height - br])
-                return [a, b]
-            })
-            v = _.flatten(vr)
+            default:
+                vr = Array.from(Array(panelsW).keys()).slice(1).map(i => {
+                    let a = new line([((width / panelsW) * (i)) + (verticalMidRailSize / 2), br], [((width / panelsW) * (i)) + (verticalMidRailSize / 2), height - br])
+                    let b = new line([((width / panelsW) * (i)) - (verticalMidRailSize / 2), br], [((width / panelsW) * (i)) - (verticalMidRailSize / 2), height - br])
+                    return [a, b]
+                })
+                v = _.flatten(vr)
         }
 
-        
+
         this.paths = v
 
     }
@@ -218,21 +343,52 @@ var vRails = (function () {
 })();
 
 
-function Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize,unevenCheck, unevenInput, solid) {
+function Door(
+    width,
+    height,
+    leftStile,
+    rightStile,
+    topRail,
+    bottomRail,
+    panelsH,
+    panelsW,
+    horizontalMidRailSize,
+    verticalMidRailSize,
+    unevenCheck,
+    unevenInput1,
+    unevenInput2,
+    unevenInput3,
+    unevenInput4,
+    unevenInput5,
+    solid) {
     var mm = makerjs.models;
-  
+
     this.models = {
         outer: new mm.Rectangle(width + (leftStile + rightStile), height + (topRail + bottomRail))
     };
     if (!solid) {
         this.models['inner'] = new DoorInner(width, height, leftStile, rightStile, topRail, bottomRail);
         if (parseInt(panelsH) > 1) {
-            if(unevenCheck){
-                this.models[`unevenMidRails`] = new unevenMidRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, horizontalMidRailSize, unevenInput);
-            }else {
+            if (unevenCheck) {
+                this.models[`unevenMidRails`] = new unevenMidRails(
+                    width,
+                    height,
+                    leftStile,
+                    rightStile,
+                    topRail,
+                    bottomRail,
+                    panelsH,
+                    horizontalMidRailSize,
+                    unevenInput1,
+                    unevenInput2,
+                    unevenInput3,
+                    unevenInput4,
+                    unevenInput5,
+                );
+            } else {
                 this.models[`midRails`] = new midRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, horizontalMidRailSize);
             }
-            
+
         }
         if (parseInt(panelsW) > 1) {
             this.models[`vRails`] = new vRails(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize);
