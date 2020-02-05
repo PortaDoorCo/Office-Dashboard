@@ -214,32 +214,30 @@ const OrderTable = ({
 
             {console.log(formState ? formState.part_list[i].dimensions[index] : 0)}
 
-            {formState && formState.part_list[i].dimensions[index].unevenCheck && parseInt(formState.part_list[i].dimensions[index].panelsH) === 2 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 ?
-              <div className='mb-3'>
-                <Row>
-                  <Col>
-                    <Row>
-                      <Col />
-                      <Col>
-                        <p style={{ textAlign: 'center' }}><strong>Position of Horizontal Mid Rail</strong></p>
-                        <Field
-                          name={`${dimension}.unevenSplitInput`}
-                          component={renderField}
-                        />
-                        <Row>
-                          <Col>
-                            <p style={{ textAlign: 'center' }}>Height to Top of Horiz. Mullion</p>
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col />
-                    </Row>
-                  </Col>
 
-                </Row>
-              </div>
-              : null
-            }
+            {formState && formState.part_list[i].dimensions[index].unevenCheck ?
+                <div className='mb-3'>
+                  <Row>
+                  {Array.from(Array(parseInt(formState.part_list[i].dimensions[index].panelsH)).keys()).slice(1).map((i,index)=> {
+                    return (
+                      <div>
+                          <Col />
+                          <Col>
+                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index+1}</strong></p>
+                            <Field
+                              name={`${dimension}.unevenSplitInput${index}`}
+                              component={renderField}
+                            />
+                          </Col>
+                          <Col />
+                          </div>
+                    )
+                  })}
+                  </Row>
+                </div>
+                : null
+              }
+
             <Row>
               <Col>
                 <strong>Notes</strong>
