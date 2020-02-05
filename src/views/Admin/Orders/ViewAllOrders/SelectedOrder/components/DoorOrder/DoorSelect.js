@@ -377,6 +377,7 @@ class DoorSelect extends React.Component {
                                   </tbody>
                                 </Table>
                                 <Row>
+                                  {console.log(info)}
                                   <Col>
                                     <div id={`selected-makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                                       <Maker
@@ -391,7 +392,11 @@ class DoorSelect extends React.Component {
                                         horizontalMidRailSize={numQty(info.horizontalMidRailSize)}
                                         verticalMidRailSize={numQty(info.verticalMidRailSize)}
                                         unevenCheck={(info.unevenCheck)}
-                                        unevenSplitInput={numQty(info.unevenSplitInput)}
+                                        unevenInput1={numQty(info.unevenSplitInput0)}
+                                        unevenInput2={numQty(info.unevenSplitInput1)}
+                                        unevenInput3={numQty(info.unevenSplitInput2)}
+                                        unevenInput4={numQty(info.unevenSplitInput3)}
+                                        unevenInput5={numQty(info.unevenSplitInput4)}
                                         i={i}
                                         index={index}
                                         style={{ width: '100%', height: '300px' }}

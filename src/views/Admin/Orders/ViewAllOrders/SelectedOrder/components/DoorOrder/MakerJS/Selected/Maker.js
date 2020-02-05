@@ -12,7 +12,7 @@ import numQty from 'numeric-quantity';
 
 const Maker = props => {
 
-    const { i, index, formState, width, height, leftStile, rightStile, topRail, bottomRail, horizontalMidRailSize, verticalMidRailSize, panelsH, panelsW, unevenSplitInput, unevenCheck } = props;
+    const { i, index, formState, width, height, leftStile, rightStile, topRail, bottomRail, horizontalMidRailSize, verticalMidRailSize, panelsH, panelsW, unevenInput1,unevenInput2,unevenInput3,unevenInput4,unevenInput5, unevenCheck } = props;
 
     const ref = useRef(null);
     const [id, setID] = useState('');
@@ -29,7 +29,7 @@ const Maker = props => {
         } else {
             bp = new Blueprint({
                 parentElement: ref.current,
-                className: `selected-svg-${props.index}`,
+                className: `svg-${props.index}`,
                 width: '100%',
                 height: '100%',
                 gridOpacity: 0.3,
@@ -41,7 +41,24 @@ const Maker = props => {
         }
 
 
-        const door = new Door(width, height, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, unevenCheck, unevenSplitInput, 0);
+        const door = new Door(
+            width,
+            height,
+            leftStile,
+            rightStile,
+            topRail,
+            bottomRail,
+            panelsH,
+            panelsW,
+            horizontalMidRailSize,
+            verticalMidRailSize,
+            unevenCheck,
+            unevenInput1,
+            unevenInput2,
+            unevenInput3,
+            unevenInput4,
+            unevenInput5,
+            0);
         const path = makerjs.exporter.toSVGPathData(door, { origin: [0, 0] });
         setPathItem(bp.append('path', { d: path }));
         bp.hide('grid')
@@ -49,9 +66,22 @@ const Maker = props => {
         bp.fit()
         //bp.redraw();
         setBps(bp);
-    }, [props.height, props.width, leftStile, rightStile, topRail, bottomRail, panelsH, panelsW, horizontalMidRailSize, verticalMidRailSize, unevenSplitInput]);
-
-
+    }, [props.height,
+        props.width,
+        leftStile,
+        rightStile,
+        topRail,
+        bottomRail,
+        panelsH,
+        panelsW,
+        horizontalMidRailSize,
+        verticalMidRailSize,
+        unevenInput1,
+        unevenInput2,
+        unevenInput3,
+        unevenInput4,
+        unevenInput5,
+    ]);
 
 
 
