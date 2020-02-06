@@ -212,8 +212,6 @@ class OrderPage extends Component {
               })
             });
 
-
-
             const panelsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.panels && i.panels.photo && i.panels.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.panels.photo.url, (result) => {

@@ -1,7 +1,11 @@
 
 export default (data, edges, moulds, panels) => {
 
-    const e = edges.length ? edges: ['sdkfjdkfj']
+    let blob = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfkAgYBCi9OVkBsAAACaElEQVR42u3V3XKiMAAF4L7/G5xErYBaq9v6s6OtLlD/ocBDbQCB7Ey7FbgwF+fcSIA5fgYTHhIj83BvAFlkkUUWWWQZErLIIsuEkEUWWSaELLLIMiFkkUWWCSGLLLJMCFlkkWVCyCKLLBNCFllkmRCyyLoD6wXXgz2K+Okwfht05OAtvqm/Ycn3rM9O0bj9pzEa5cej6AZV05JvWeEYReMSIz9PqEYzyNUpeJOY/axqXPI1K5g/SZSNUyy0S4Cbfv6BCP5valPyNWuXT/F1NMCmurRCPz94xKqclB5+ZwcvsOOmJTewouPx6JaNHeyrS8+Y5wdzTMqTLsRRfXzkHw1LfmalORWNIfDx3BP2r3M6srDNT29hVTdPMYiTqH+dtIYl9Vjl0pbv2a/289M+utXNYRfrZJHaWpTUY20A2wsCz84ekcAhP32A0O52IV0hTu1KarH812W2u8Q2xkkiq0ap3z5VM7FqW1KHVcZLZ7xfzX9fv6geoxO3LWnEUrtNkAyrf+tQv3gQkJe2JY1YYdo4KbbFJabatchCF08tS+qwYutxW8y4mv91saQttfaqLOCcpb5jNimpNVtjWJ9ZtYPXJLkI7NLRDkJ7Zvt0ga3RCdqU1GOpLcfxgovnoJt2zNDzosTv6W9Z9QgX2VdOWpTUZCUbke+E3ewXRkNAqHfwSFt3c1jp8ld/e7d5SV1Wcp5ZUtqLMB/Fa0dKZ60Vqpfy7srrhU1LbmTdNWSRRZYJIYssskwIWWSRZULIIossE0IWWWSZELLIIsuEkEUWWSaELLLIMiFkkUWWCSGLLLJMCFlkkWVC/gI+i6YMw2buTAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMC0wMi0wNlQxMDoxMDo0NyswOTowMEvdSK8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjAtMDItMDZUMTA6MTA6NDcrMDk6MDA6gPATAAAAAElFTkSuQmCC'
+
+    const e = edges.length ? edges : blob
+    const m = moulds.length ? moulds : blob
+    const p = panels.length ? panels : blob
 
     return [
         {
@@ -55,7 +59,7 @@ export default (data, edges, moulds, panels) => {
                                     style: 'fonts'
                                 },
                                 {
-                                    image: moulds,
+                                    image: m,
                                     width: 100,
                                     height: 100,
                                     fit: [100, 100]
@@ -70,7 +74,7 @@ export default (data, edges, moulds, panels) => {
                                     style: 'fonts'
                                 },
                                 {
-                                    image: panels,
+                                    image: p,
                                     width: 100,
                                     height: 100,
                                     fit: [100, 100]
