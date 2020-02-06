@@ -410,7 +410,7 @@ class DoorSelect extends React.Component {
                                     <Row>
                                       {Array.from(Array(parseInt(info.panelsH)).keys()).slice(1).map((i, v) => {
 
-                                        let unevenSplit = info.unevenSplitInput[0]
+                                        let unevenSplit = info.unevenSplitInput0
                                         console.log(v)
                                         console.log(info)
                                         console.log(unevenSplit)
@@ -421,7 +421,7 @@ class DoorSelect extends React.Component {
                                             <Col>
                                               <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {v + 1}</strong></p>
                                               <Input
-                                                placeholder={info.unevenSplitInput[v]}
+                                                placeholder={info[`unevenSplitInput${v}`]}
                                                 disabled
                                               />
                                             </Col>
