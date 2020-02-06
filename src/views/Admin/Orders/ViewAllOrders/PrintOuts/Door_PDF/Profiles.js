@@ -1,5 +1,8 @@
 
 export default (data, edges, moulds, panels) => {
+
+    const e = edges.length ? edges: ['sdkfjdkfj']
+
     return [
         {
             columns: [
@@ -37,7 +40,7 @@ export default (data, edges, moulds, panels) => {
                                     style: 'fonts'
                                 },
                                 {
-                                    image: edges,
+                                    image: e,
                                     width: 100,
                                     height: 100,
                                     fit: [100, 100]
