@@ -74,15 +74,20 @@ export default (info, part) => {
   const unevenSplit = [
       {
         qty: `${(info.panelsH > 1 && info.panelsW < 2) ? (parseInt(info.panelsH) * parseInt(info.qty)) : (info.panelsW > 1 && info.panelsH < 2) ? (parseInt(info.panelsW) * parseInt(info.qty)) : (parseInt(info.panelsW) > 1 && parseInt(info.panelsH) > 1) ? (parseInt(info.panelsH) * parseInt(info.panelsW)) * parseInt(info.qty) : info.qty}`,
-        measurement: `${fraction(
-          (numQty(info.width) +
-          add_len -
-          numQty(leftStile) -
-          numQty(rightStile)
-          - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
-        )} x ${fraction(
-          (numQty(info.unevenSplitInput) - numQty(topRail) + (INSET * 2) + 0.0625)
-        )}`,
+
+
+        measurement: Array.from(Array(parseInt(info.panelsH)).keys()).slice(1).map((i, v) => {
+          return `${fraction(
+            (numQty(info.width) +
+            add_len -
+            numQty(leftStile) -
+            numQty(rightStile)
+            - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
+          )} x ${fraction(
+            (numQty(info[`unevenSplitInput${v}`]) + (INSET * 2))
+          )}
+          `
+        }),
         pattern: 'PR'
       },
       {
