@@ -409,12 +409,6 @@ class DoorSelect extends React.Component {
                                   <div className='mb-3'>
                                     <Row>
                                       {Array.from(Array(parseInt(info.panelsH)).keys()).slice(1).map((i, v) => {
-
-                                        let unevenSplit = info.unevenSplitInput0
-                                        console.log(v)
-                                        console.log(info)
-                                        console.log(unevenSplit)
-
                                         return (
                                           <div>
                                             <Col />
