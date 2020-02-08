@@ -12,7 +12,7 @@ export default (info, part) => {
   const bottomRail = (part.design.BOT_RAIL_W !== numQty(info.bottomRail) ? (numQty(info.bottomRail) + 0.0625) : numQty(info.bottomRail))
   const leftStile = (part.design.L_STILE_W !== numQty(info.leftStile) ? (numQty(info.leftStile) + 0.0625) : numQty(info.leftStile))
   const rightStile = (part.design.R_STILE_W !== numQty(info.rightStile) ? (numQty(info.rightStile) + 0.0625) : numQty(info.rightStile))
-  const horizMull = (part.design.H_MULL_WTH !== numQty(info.horizontalMidRailSize) ? (numQty(info.horizontalMidRailSize) + 0.0625) : numQty(info.horizontalMidRailSize))
+  const horizMull = numQty(info.horizontalMidRailSize)
 
 
 
@@ -36,7 +36,7 @@ export default (info, part) => {
           qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
           measurement: `${fraction(horizMull)} x ${fraction(
             numQty(info.width) +
-            0.125 -
+            part.design.S_ADD_LEN -
             numQty(leftStile) -
             numQty(rightStile) +
             part.design.TENON
