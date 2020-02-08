@@ -5,6 +5,8 @@ import Panels from '../Breakdowns/Doors/Panels';
 export default data => {
   return data.part_list.map((i, index) => {
 
+
+
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -18,7 +20,7 @@ export default data => {
     ];
 
     i.dimensions.forEach((item, index) => {
-      Panels(item, i);
+      console.log('PANELLLSSSS',Panels(item, i));
       tableBody.push([
         { text: index + 1, style: 'fonts' },
         { text: `${i.design.NAME}`, style: 'fonts' },
