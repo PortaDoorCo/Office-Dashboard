@@ -28,8 +28,10 @@ const SalesReport = (props) => {
   }, [orders])
 
   useEffect(() => {
-    socket.on('order_submitted', res => props.loadOrders())
-    socket.on('status_updated', res => props.loadOrders())
+    const dataGrid = this.dataGrid.instance;
+    socket.on('order_submitted', res => (dataGrid.refresh()))
+    socket.on('order_deleted', res => (dataGrid.refresh()))
+    socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
   })
   
   return (
