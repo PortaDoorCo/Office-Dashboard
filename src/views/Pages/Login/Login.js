@@ -30,6 +30,8 @@ import {
 } from '../../../redux/part_list/actions';
 import { loadOrders, loadCustomers } from '../../../redux/orders/actions';
 import PropTypes from 'prop-types';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 class Login extends Component {
   static propTypes = {
@@ -72,6 +74,10 @@ class Login extends Component {
           this.props.login(Cookies.get('jwt'));
         })
       })
+      .catch((error) => {
+        console.log("Problem submitting New Post", error);
+        NotificationManager.error('Login Credentials Incorrect', 'Error', 2000);
+      });
   };
 
   render() {
@@ -85,6 +91,7 @@ class Login extends Component {
         <div className="app flex-row align-items-center">
           <Container>
             <Row className="justify-content-center">
+            <NotificationContainer />
               <Col md="8">
                 <CardGroup className="mb-4">
                   <Card className="p-4">
