@@ -24,6 +24,7 @@ import Attachment from '@material-ui/icons/Attachment';
 import List from '@material-ui/icons/List';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
+import Delete from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
@@ -416,7 +417,7 @@ class OrderPage extends Component {
 
                       <Col>
                         <Row>
-                          <Col lg='6'>
+                          <Col lg='7'>
                             <div className='mt-3 mb-2'>
                               <Select
                                 value={this.state.selectedOption}
@@ -430,6 +431,11 @@ class OrderPage extends Component {
                             <Tooltip title="Print" placement="top" className="mb-3">
                               <IconButton onClick={this.downloadPDF}>
                                 <Print style={{ width: '40', height: '40' }} />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Delete Order" placement="top" className="mb-3">
+                              <IconButton onClick={this.downloadPDF}>
+                                <Delete style={{ width: '40', height: '40' }} />
                               </IconButton>
                             </Tooltip>
                           </Col>
