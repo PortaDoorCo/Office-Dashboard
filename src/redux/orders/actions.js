@@ -21,6 +21,7 @@ export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const LOAD_SHIPPING_METHODS = 'LOAD_SHIPPING_METHODS';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 export const UPDATE_ORDER_NUM = 'UPDATE_ORDER_NUM'
+export const DELETE_ORDER = 'DELETE_ORDER'
 
 export function addToCart(
   order,
@@ -126,6 +127,28 @@ export function submitOrder(order, cookie) {
     }
   };
 }
+
+
+export function deleteOrder(orderId, cookie) {
+  return async function (dispatch) {
+    try {
+      const res = await axios.delete(`https://portadoor-server-production.herokuapp.com/orders/${orderId}`, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
+      const data = await res;
+      return dispatch({
+        type: DELETE_ORDER,
+      });
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
+  };
+}
+
+
 
 export function loadCustomers(cookie) {
   return async function (dispatch) {

@@ -30,6 +30,7 @@ const SalesReport = (props) => {
   useEffect(() => {
     socket.on('order_submitted', res => props.loadOrders())
     socket.on('status_updated', res => props.loadOrders())
+    socket.on('order_deleted', res => props.loadOrders())
   })
   
   return (
