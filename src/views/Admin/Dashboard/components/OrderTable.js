@@ -87,7 +87,7 @@ class OrderTable extends React.Component {
             endDate: new Date(),
             productData: new CustomStore({
                 load: () => this.props.loadOrders(cookie),
-                update: (key, values) => (this.props.updateStatus(key.id, key, values, cookie)),
+                update: (key, values) => (this.props.updateStatus(key.id, key, values, cookie))
             }),
         };
         this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -324,7 +324,6 @@ class OrderTable extends React.Component {
                     showBorders={true}
                     allowColumnResizing={true}
                     columnAutoWidth={true}
-
                     onSelectionChanged={this.onSelectionChanged}
                     onToolbarPreparing={this.onToolbarPreparing}
                     onRowPrepared={this.onRowPrepared}
