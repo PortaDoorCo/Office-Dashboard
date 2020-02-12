@@ -21,9 +21,10 @@ import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
 import SalesmenReport from '../../Orders/ViewAllOrders/PrintOuts/Reports/SalesmenReport';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
+import io from 'socket.io-client';
 
 
-
+const socket = io('https://server.portadoor.com/');
 
 momentLocaliser(moment);
 
@@ -83,6 +84,10 @@ class StatusTable extends React.Component {
 
 
     componentDidUpdate(prevProps, prevState) {
+        const dataGrid = this.dataGrid.instance;
+        socket.on('order_submitted', res => (dataGrid.refresh()))
+        socket.on('order_deleted', res => (dataGrid.refresh()))
+        socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
         if (prevProps.orders !== this.props.orders) {
             const filteredItems = this.props.orders.filter(item => (item.jobInfo.customer.sale.fullName && item.jobInfo.customer.sale.fullName.includes(this.props.status)));
           
