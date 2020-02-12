@@ -7,7 +7,7 @@ import Register from "./views/Pages/Register/Register";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { NotificationManager } from 'react-notifications';
-import { loadOrders, loadCustomers, countOrders, loadSales, loadShippingMethod, updateOrderNum } from "./redux/orders/actions";
+import { loadOrders, loadCustomers, loadSales, loadShippingMethod } from "./redux/orders/actions";
 import { setLogin } from "./redux/users/actions";
 import {
   getWoodtypes,
@@ -67,8 +67,7 @@ class App extends Component {
 
   componentDidMount = () => {
     this.cookies()
-    socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000)))
-    socket.on('order_submitted', res => (this.props.updateOrderNum()))
+    socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), console.log(res)))
     socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, `An order has been updated`, 2000)))
     socket.on('order_deleted', res => (NotificationManager.success(`Order Deleted`, 'Order Deleted', 2000)))
   }
@@ -131,14 +130,13 @@ bindActionCreators(
     getMoulds,
     getPanels,
     getHinges, 
-    countOrders,
     getBoxThickness,
     getBoxBottoms,
     getAssembly,
     getNotch,
     getDrawerFinish,
     setLogin,
-    updateOrderNum
+
   },
   dispatch
 );
