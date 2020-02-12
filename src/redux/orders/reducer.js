@@ -34,7 +34,7 @@ const initialState = {
   jobInfo: [],
   sessionOrders: 0,
   sessionCustomers: 0,
-  orderNum: 0,
+
   selectedDateRange: 'day',
   shippingMethods: []
 };
@@ -66,11 +66,7 @@ export default function (state = initialState, action) {
         orders: data,
         ordersDBLoaded: true
       };
-    case COUNT_ORDERS:
-      return {
-        ...state,
-        orderNum: data + 100
-      };
+
     case LOAD_CUSTOMER_ORDER:
       return {
         ...state,
@@ -146,11 +142,7 @@ export default function (state = initialState, action) {
         ...state,
         shippingMethods: data
       };
-      case UPDATE_ORDER_NUM:
-        return {
-          ...state,
-          orderNum: state.orderNum + 1
-        };
+
     default:
       return {
         ...state,

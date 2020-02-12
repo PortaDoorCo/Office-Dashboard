@@ -27,7 +27,6 @@ import {
   shippingAddress,
   submitOrder,
   loadOrders,
-  countOrders
 } from '../../../../redux/orders/actions';
 import {
   linePriceSelector,
@@ -115,7 +114,6 @@ class DoorOrders extends Component {
       subTotals: subTotal,
       tax: tax,
       total: total,
-      orderNum: orderNum,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
       user: user.id,
@@ -594,7 +592,6 @@ const mapDispatchToProps = dispatch =>
       getHinges,
       submitOrder,
       loadOrders,
-      countOrders
     },
     dispatch
   );
