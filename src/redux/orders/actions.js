@@ -138,7 +138,6 @@ export function deleteOrder(orderId, cookie) {
         }
       });
       const data = await res;
-      NotificationManager.error('Order Deleted', 'Success', 2000);
       return dispatch({
         type: DELETE_ORDER,
       });
