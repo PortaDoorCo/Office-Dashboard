@@ -17,13 +17,14 @@ import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
 import Invoice from '../../Invoice/Invoice';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateOrder, loadOrders } from '../../../../redux/orders/actions';
+import { updateOrder, loadOrders, deleteOrder } from '../../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
 import Print from '@material-ui/icons/Print';
 import Attachment from '@material-ui/icons/Attachment';
 import List from '@material-ui/icons/List';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
+import Delete from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
@@ -46,6 +47,9 @@ import DrawerInvoicePDF from './PrintOuts/Pages/Drawer/InvoicePDF';
 import DrawerAssemblyListPDF from './PrintOuts/Pages/Drawer/AssemblyListPDF'
 import DrawerBottomsPDF from './PrintOuts/Pages/Drawer/BottomsPDF'
 import DrawerSidesPDF from './PrintOuts/Pages/Drawer/SidesPDF'
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
 
 
 
@@ -79,7 +83,8 @@ class OrderPage extends Component {
       selectedOption: [],
       edgePhoto: null,
       trackingOpen: false,
-      filesOpen: false
+      filesOpen: false,
+      deleteModal: false
     };
   }
 
@@ -118,6 +123,16 @@ class OrderPage extends Component {
     filesOpen: !this.state.filesOpen
   })
 
+  toggleDeleteModal = () => this.setState({
+    deleteModal: !this.state.deleteModal
+  })
+
+  deleteOrder = async () => { 
+    await this.props.deleteOrder(this.props.selectedOrder[0].id, cookie)
+    await this.toggleDeleteModal()
+    await this.props.toggle()
+  }
+
   downloadPDF = () => {
     const data = this.props.selectedOrder[0];
     if (data.orderType === "Door Order") {
@@ -125,7 +140,7 @@ class OrderPage extends Component {
         switch (option.value) {
           case 'All':
 
-            const edgesPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i =>  i.edges && i.edges.photo && i.edges.photo.url).map(i => {
+            const edgesPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.edges && i.edges.photo && i.edges.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.edges.photo.url, (result) => {
                   resolve(result)
@@ -166,10 +181,10 @@ class OrderPage extends Component {
             DoorPDF(data, edges1, moulds1, panels1);
             this.setState({ selectedOption: [] })
             break;
-            case 'Assembly':
-              AssemblyListPDF(data);
-              this.setState({ selectedOption: [] })
-              break;
+          case 'Assembly':
+            AssemblyListPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
           case 'Acknowledgement':
             AcknowledgementPDF(data);
             this.setState({ selectedOption: [] })
@@ -268,10 +283,10 @@ class OrderPage extends Component {
             DrawerBottomsPDF(data);
             this.setState({ selectedOption: [] })
             break;
-            case 'Sides':
-              DrawerSidesPDF(data);
-              this.setState({ selectedOption: [] })
-              break;
+          case 'Sides':
+            DrawerSidesPDF(data);
+            this.setState({ selectedOption: [] })
+            break;
           default:
             return
         }
@@ -385,6 +400,19 @@ class OrderPage extends Component {
                 </div>
               ) : (
                   <div>
+
+                    <Modal isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal}>
+                      <ModalHeader toggle={this.toggleDeleteModal}>Delete Order</ModalHeader>
+                      <ModalBody>
+                        Are You Sure You Want To Delete This Order?
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="danger" onClick={this.deleteOrder}>Delete Order</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleDeleteModal}>Cancel</Button>
+                      </ModalFooter>
+                    </Modal>
+
+
                     <Row></Row>
                     <Row>
 
@@ -416,7 +444,7 @@ class OrderPage extends Component {
 
                       <Col>
                         <Row>
-                          <Col lg='6'>
+                          <Col lg='7'>
                             <div className='mt-3 mb-2'>
                               <Select
                                 value={this.state.selectedOption}
@@ -430,6 +458,11 @@ class OrderPage extends Component {
                             <Tooltip title="Print" placement="top" className="mb-3">
                               <IconButton onClick={this.downloadPDF}>
                                 <Print style={{ width: '40', height: '40' }} />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Delete Order" placement="top" className="mb-3">
+                              <IconButton onClick={this.toggleDeleteModal}>
+                                <Delete style={{ width: '40', height: '40' }} />
                               </IconButton>
                             </Tooltip>
                           </Col>
@@ -472,7 +505,7 @@ class OrderPage extends Component {
                           <h5>Tracking History</h5>
                           <Table striped>
                             <tbody>
-                              {(props.selectedOrder[0] && props.selectedOrder[0].tracking)? props.selectedOrder[0].tracking.slice(0).reverse().map((i, index) => (
+                              {(props.selectedOrder[0] && props.selectedOrder[0].tracking) ? props.selectedOrder[0].tracking.slice(0).reverse().map((i, index) => (
                                 <tr>
                                   <th>{i.status}</th>
                                   <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
@@ -522,7 +555,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       updateOrder,
-      loadOrders
+      loadOrders,
+      deleteOrder
     },
     dispatch
   );

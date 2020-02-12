@@ -87,7 +87,7 @@ class OrderTable extends React.Component {
             endDate: new Date(),
             productData: new CustomStore({
                 load: () => this.props.loadOrders(cookie),
-                update: (key, values) => (this.props.updateStatus(key.id, key, values, cookie)),
+                update: (key, values) => (this.props.updateStatus(key.id, key, values, cookie))
             }),
         };
         this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -107,6 +107,7 @@ class OrderTable extends React.Component {
     componentDidMount() {
         const dataGrid = this.dataGrid.instance;
         socket.on('order_submitted', res => (dataGrid.refresh()))
+        socket.on('order_deleted', res => (dataGrid.refresh()))
         socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
     }
 
@@ -324,7 +325,6 @@ class OrderTable extends React.Component {
                     showBorders={true}
                     allowColumnResizing={true}
                     columnAutoWidth={true}
-
                     onSelectionChanged={this.onSelectionChanged}
                     onToolbarPreparing={this.onToolbarPreparing}
                     onRowPrepared={this.onRowPrepared}
