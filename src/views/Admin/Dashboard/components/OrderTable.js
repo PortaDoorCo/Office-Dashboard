@@ -290,7 +290,8 @@ class OrderTable extends React.Component {
                         onExportBreakdowns()
                     }
                 }
-            }
+            },
+            
         );
     }
 
@@ -345,7 +346,7 @@ class OrderTable extends React.Component {
                         showInfo={true}
                     />
 
-                    <Editing mode="cell" allowUpdating={true} allowAdding={true} />
+                    <Editing mode="cell" allowUpdating={true} />
                     <Selection mode="multiple" showCheckBoxesMode="always" />
                     {/* <Export enabled={true} /> */}
                     <Column
