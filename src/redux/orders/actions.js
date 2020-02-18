@@ -287,7 +287,7 @@ export function updateStatus(orderId, key, status, cookie) {
   console.log(item)
   return async function (dispatch) {
     try {
-     await axios.put(`https://server.portadoor.com/orders/${orderId}`, item, {
+     await axios.put(`https://server.portadoor.com/orders/status/${orderId}`, item, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }

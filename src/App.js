@@ -68,6 +68,7 @@ class App extends Component {
   componentDidMount = () => {
     this.cookies()
     socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), console.log(res)))
+    socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), console.log(res)))
     socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, `An order has been updated`, 2000)))
     socket.on('order_deleted', res => (NotificationManager.success(`Order Deleted`, 'Order Deleted', 2000)))
   }
