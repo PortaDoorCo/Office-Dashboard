@@ -109,6 +109,7 @@ class RestrictedOrderTable extends React.Component {
         socket.on('order_submitted', res => (dataGrid.refresh()))
         socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
         socket.on('order_deleted', res => (dataGrid.refresh()))
+        socket.on('order_updated', res => (dataGrid.refresh()))
     }
 
     onSelectionChanged(e) {
