@@ -81,6 +81,7 @@ const renderDropdownListFilter = ({
         data={data}
         valueField={valueField}
         textField={textField}
+        placeholder="Select"
         onChange={input.onChange}
         filter
       />
@@ -104,6 +105,7 @@ const renderDropdownList = ({
         data={data}
         valueField={valueField}
         textField={textField}
+        placeholder="Select"
         onChange={input.onChange}
       />
       {touched &&

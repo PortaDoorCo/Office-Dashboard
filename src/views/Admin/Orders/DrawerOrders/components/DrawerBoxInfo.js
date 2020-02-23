@@ -22,6 +22,7 @@ const renderDropdownList = ({ input, data, valueField, textField, meta: { touche
       data={data}
       valueField={valueField}
       textField={textField}
+      placeholder="Select"
       onChange={input.onChange}
     />
     {touched && ((error && <span style={{ color: 'red' }}>{error}</span>) || (warning && <span style={{ color: 'red' }}>{warning}</span>))}
