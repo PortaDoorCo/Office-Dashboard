@@ -24,9 +24,11 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
 
+const db_url = "http://localhost:1337"
+
 export function getWoodtypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/woodtypes?_limit=2000&_sort=_id:ASC`,
+    const res = await fetch(`${db_url}/woodtypes?_limit=2000&_sort=_id:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -45,7 +47,7 @@ export function getDesigns(cookie) {
 
   return async function (dispatch) {
 
-    const res = await fetch(`https://server.portadoor.com/designs?_limit=2000&_sort=Index:ASC`, {
+    const res = await fetch(`${db_url}/designs?_limit=2000&_sort=Index:ASC`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -61,7 +63,7 @@ export function getDesigns(cookie) {
 
 export function getEdges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/edges?_limit=200&_sort=_id:ASC`, {
+    const res = await fetch(`${db_url}/edges?_limit=200&_sort=_id:ASC`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -76,7 +78,7 @@ export function getEdges(cookie) {
 
 export function getMoulds(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/moulds?_limit=200&_sort=Index:ASC`, {
+    const res = await fetch(`${db_url}/moulds?_limit=200&_sort=Index:ASC`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -91,7 +93,7 @@ export function getMoulds(cookie) {
 
 export function getPanels(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/panels?_limit=200&_sort=PANEL_CODE:ASC`, {
+    const res = await fetch(`${db_url}/panels?_limit=200&_sort=PANEL_CODE:ASC`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -106,7 +108,7 @@ export function getPanels(cookie) {
 
 export function getGrades(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/grades`, {
+    const res = await fetch(`${db_url}/grades`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -121,7 +123,7 @@ export function getGrades(cookie) {
 
 export function getFinish(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/finishes?_limit=200&_sort=_id:ASC`, {
+    const res = await fetch(`${db_url}/finishes?_limit=200&_sort=_id:ASC`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -136,7 +138,7 @@ export function getFinish(cookie) {
 
 export function getBoxThickness(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/boxthicknesses`, {
+    const res = await fetch(`${db_url}/boxthicknesses`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -151,7 +153,7 @@ export function getBoxThickness(cookie) {
 
 export function getBoxBottoms(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/boxbottoms`, {
+    const res = await fetch(`${db_url}/boxbottoms`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -166,7 +168,7 @@ export function getBoxBottoms(cookie) {
 
 export function getAssembly(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/assemblies`, {
+    const res = await fetch(`${db_url}/assemblies`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -181,7 +183,7 @@ export function getAssembly(cookie) {
 
 export function getNotch(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/notchdrills`, {
+    const res = await fetch(`${db_url}/notchdrills`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -196,7 +198,7 @@ export function getNotch(cookie) {
 
 export function getDrawerFinish(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/drawerfinishes`, {
+    const res = await fetch(`${db_url}/drawerfinishes`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -211,7 +213,7 @@ export function getDrawerFinish(cookie) {
 
 export function getDoorExtras(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/doorextras`, {
+    const res = await fetch(`${db_url}/doorextras`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -226,7 +228,7 @@ export function getDoorExtras(cookie) {
 
 export function getHinges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`https://server.portadoor.com/hinges`, {
+    const res = await fetch(`${db_url}/hinges`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -243,7 +245,7 @@ export function addProduct(product, url, cookie) {
 
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(`https://server.portadoor.com/${url}`, product, {
+      const { data } = await axios.post(`${db_url}/${url}`, product, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
@@ -264,7 +266,7 @@ export function addProduct(product, url, cookie) {
 export function updateProduct(orderId, product, url, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.put(`https://server.portadoor.com/${url}/${orderId}`, product, {
+      const { data } = await axios.put(`${db_url}/${url}/${orderId}`, product, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
@@ -285,7 +287,7 @@ export function updateProduct(orderId, product, url, cookie) {
 export function deleteProduct(orderId, product, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.delete(`https://server.portadoor.com/${product}/${orderId}`, {
+      const { data } = await axios.delete(`${db_url}/${product}/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
@@ -308,7 +310,7 @@ export function deleteProduct(orderId, product, cookie) {
 export function uploadFile(file, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(`https://server.portadoor.com/upload`, file, {
+      const { data } = await axios.post(`${db_url}/upload`, file, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
