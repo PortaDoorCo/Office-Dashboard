@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 import moment from 'moment'
+import db_url from '../db_url'
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
@@ -22,9 +23,6 @@ export const LOAD_SHIPPING_METHODS = 'LOAD_SHIPPING_METHODS';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 export const UPDATE_ORDER_NUM = 'UPDATE_ORDER_NUM'
 export const DELETE_ORDER = 'DELETE_ORDER'
-
-
-const db_url = "http://localhost:1337"
 
 export function addToCart(
   order,
