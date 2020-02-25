@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NotificationManager } from 'react-notifications';
+import db_url from '../db_url'
 
 
 export const GET_WOODTYPES = 'GET_WOODTYPES';
@@ -23,8 +24,6 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
-
-const db_url = "http://localhost:1337"
 
 export function getWoodtypes(cookie) {
   return async function (dispatch) {

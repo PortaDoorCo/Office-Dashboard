@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
+import db_url from '../db_url'
 const cookie = Cookies.get("jwt");
 
 
@@ -11,7 +12,7 @@ export const MARK_DONE = 'MARK_DONE';
 export const REMOVE_TASK = 'REMOVE_TASK'
 export const SET_LOGIN = 'SET_LOGIN'
 
-const db_url = "http://localhost:1337"
+
 
 
 export function registerUser(user) {
