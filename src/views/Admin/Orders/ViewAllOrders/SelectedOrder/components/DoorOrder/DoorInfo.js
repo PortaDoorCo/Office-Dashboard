@@ -196,6 +196,9 @@ class DoorInfo extends Component {
       part_list,
       subTotal
     } = this.props;
+
+    console.log(designs)
+
     return (
       <div>
         {fields.map((part, index) => (
@@ -283,7 +286,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.design`}
                     component={renderDropdownListFilter}
-                    data={this.state.designFilter[index]}
+                    data={designs}
                     valueField="value"
                     textField="NAME"
                     validate={required}
@@ -297,7 +300,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.moulds`}
                     component={renderDropdownList}
-                    data={this.state.mouldFilter[index]}
+                    data={moulds}
                     valueField="value"
                     textField="NAME"
                     validate={required}
