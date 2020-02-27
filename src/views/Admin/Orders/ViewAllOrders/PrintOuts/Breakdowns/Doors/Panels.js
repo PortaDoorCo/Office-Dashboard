@@ -27,7 +27,7 @@ export default (info, part) => {
 
 
 
-  const unevenSplitTotal = unevenSplitArray.reduce(reducer);
+  const unevenSplitTotal = unevenSplitArray.length>0 ? unevenSplitArray.reduce(reducer) : 0;
 
 
   const door = [
