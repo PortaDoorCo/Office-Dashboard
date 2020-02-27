@@ -18,7 +18,6 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
                     <Input id="search" type="text" placeholder="Filter Orders" value={filterText} onChange={onFilter} />
                 </Col>
             </Row>
-
         </div>
     </>
 );
