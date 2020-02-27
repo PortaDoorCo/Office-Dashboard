@@ -257,7 +257,7 @@ class DoorOrders extends Component {
       <div className="animated fadeIn resize">
         <NotificationAlert ref="notify" />
         <Row>
-          <Col xs="12" sm="12" md="12" lg="7">
+          <Col xs="12" sm="12" md="12" lg="8">
             <Card>
               <CardHeader>
                 <strong>Door Order</strong>
@@ -314,7 +314,7 @@ class DoorOrders extends Component {
                     <Col xs="3">
                       <Row>
                         <Col>
-                          <Button color="primary" className="submit">Submit</Button>
+                          <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
                         </Col>
                         <Col>
                           <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>

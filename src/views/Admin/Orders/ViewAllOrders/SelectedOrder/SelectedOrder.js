@@ -10,6 +10,7 @@ class SelectedOrder extends React.Component {
     const props = this.props;
 
     const order = props.selectedOrder[0]
+    console.log(order)
     // const company = order.CompanyName;
 
  

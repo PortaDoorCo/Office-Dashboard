@@ -385,9 +385,6 @@ class DoorOrders extends Component {
       tax
     } = this.props;
 
-    console.log(formState? formState : 'fuck')
-
-
     return (
       <div className="animated fadeIn resize">
         <Row>
@@ -450,7 +447,7 @@ class DoorOrders extends Component {
                     <Col xs="3">
                       <Row>
                         <Col>
-                          <Button color="primary" className="submit">Submit</Button>
+                          <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
                         </Col>
                         <Col>
                           <Button color="danger" onClick={this.cancelOrder} style={{ width: "100%" }}>
