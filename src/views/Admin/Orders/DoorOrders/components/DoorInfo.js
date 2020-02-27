@@ -147,15 +147,12 @@ class DoorInfo extends Component {
           designFilter: this.props.formState.part_list.map((i, index) => {
             let filter = this.props.designs.filter(
               el =>
-
                 el.OrderType === i.orderType.value &&
                 el.Construction === i.construction.value &&
                 el.THICKNESS == i.thickness.value
             );
-            if (filter.length > 0) {
+            if (filter) {
               return filter;
-            } else {
-              return this.props.designs
             }
           })
         });
@@ -324,7 +321,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.design`}
                     component={renderDropdownListFilter}
-                    data={this.state.designFilter[index]}
+                    data={this.props.designs}
                     valueField="value"
                     textField="NAME"
                     validate={required}

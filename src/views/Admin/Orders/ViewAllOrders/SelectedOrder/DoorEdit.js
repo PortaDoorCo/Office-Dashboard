@@ -256,6 +256,8 @@ class DoorEdit extends Component {
       total
     } = this.props;
 
+    console.log(designs)
+
     return (
       <div className="animated resize">
         <Form onSubmit={handleSubmit(this.submit)}>
