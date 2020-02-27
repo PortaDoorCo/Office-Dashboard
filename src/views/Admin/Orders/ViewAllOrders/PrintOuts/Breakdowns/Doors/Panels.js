@@ -22,7 +22,7 @@ export default (info, part) => {
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
   const unevenSplitArray = Array.from(Array(parseInt(info.panelsH)).keys()).slice(1).map((i, v) => {
-    return info[`unevenSplitInput${v}`] ? numQty(info[`unevenSplitInput${v}`]) : [0]
+    return numQty(info[`unevenSplitInput${v}`]) 
   })
 
 
