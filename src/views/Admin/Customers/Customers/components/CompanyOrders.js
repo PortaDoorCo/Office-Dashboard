@@ -80,7 +80,8 @@ const CustomerOrders = (props) => {
                         itemPrice: row.itemPrice,
                         subTotals: row.subTotals,
                         tax: row.tax,
-                        files: row.files
+                        files: row.files,
+                        tracking: row.tracking
                     }
                 ]
             )
