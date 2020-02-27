@@ -8,18 +8,12 @@ const fraction = num => {
 
 export default (info, part) => {
   const add_len = part.design.S_ADD_LEN;
-  const topRail = (numQty(part.design.TOP_RAIL_W) !== numQty(info.topRail) ? (numQty(info.topRail) + 0.0625) : numQty(info.topRail))
-  const bottomRail = (numQty(part.design.BOT_RAIL_W) !== numQty(info.bottomRail) ? (numQty(info.bottomRail) + 0.0625) : numQty(info.bottomRail))
-  const leftStile = (numQty(part.design.L_STILE_W) !== numQty(info.leftStile) ? (numQty(info.leftStile) + 0.0625) : numQty(info.leftStile))
-  const rightStile = (numQty(part.design.R_STILE_W) !== numQty(info.rightStile) ? (numQty(info.rightStile) + 0.0625) : numQty(info.rightStile))
-  const vertMull = (numQty(part.design.V_MULL_WTH) !== numQty(info.verticalMidRailSize) ? (numQty(info.verticalMidRailSize) + 0.0625) : numQty(info.verticalMidRailSize))
-  const horizMull = (numQty(part.design.H_MULL_WTH) !== numQty(info.horizontalMidRailSize) ? (numQty(info.horizontalMidRailSize) + 0.0625) : numQty(info.horizontalMidRailSize))
-
-  console.log(numQty(part.design.L_STILE_W))
-  console.log((numQty(info.leftStile)))
-  console.log(part.design)
-  console.log(fraction(2.313))
-
+  const topRail = numQty(info.topRail);
+  const bottomRail = numQty(info.bottomRail);
+  const leftStile = numQty(info.leftStile);
+  const rightStile = numQty(info.rightStile);
+  const vertMull = numQty(info.verticalMidRailSize);
+  const horizMull = numQty(info.horizontalMidRailSize);
 
     if (info.leftStile === info.rightStile) {
       if (info.panelsW > 1) {

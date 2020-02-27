@@ -321,7 +321,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.design`}
                     component={renderDropdownListFilter}
-                    data={this.props.designs}
+                    data={this.state.designFilter[index]}
                     valueField="value"
                     textField="NAME"
                     validate={required}
