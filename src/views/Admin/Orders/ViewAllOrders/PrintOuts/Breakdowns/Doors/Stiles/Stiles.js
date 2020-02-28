@@ -22,7 +22,7 @@ export default (info, part) => {
         {
           qty: info.qty * 2,
           measurement: `${fraction(
-            numQty(leftStile) + 0.0625
+            numQty(leftStile)
           )} x ${fraction(numQty(info.height) + add_len)}`,
           pattern: "LR"
         },
