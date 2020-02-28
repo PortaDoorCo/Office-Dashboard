@@ -323,9 +323,10 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               </Table>
               <Row>
                 <Col lg='9'>
-                {height[index] > 0 ? 
+                {(height[index] > 0) ? 
                   <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
-                : null}
+                :
+                null}
                 </Col>
                 <Col>
                   {(parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 )  ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}

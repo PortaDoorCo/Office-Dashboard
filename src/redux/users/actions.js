@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
+import db_url from '../db_url'
 const cookie = Cookies.get("jwt");
+
 
 
 export const REGISTER_USER = 'REGISTER_USER';
@@ -11,9 +13,11 @@ export const REMOVE_TASK = 'REMOVE_TASK'
 export const SET_LOGIN = 'SET_LOGIN'
 
 
+
+
 export function registerUser(user) {
   return async function (dispatch) {
-    await axios.post(`https://portadoor-server-production.herokuapp.com/auth/local/register`, user);
+    await axios.post(`${db_url}/auth/local/register`, user);
  
     return dispatch({
       type: REGISTER_USER,
@@ -23,7 +27,7 @@ export function registerUser(user) {
 
 export function login(token) {
   return async function (dispatch) {
-    const res = await axios.get(`https://portadoor-server-production.herokuapp.com/users/me`, {
+    const res = await axios.get(`${db_url}/users/me`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -38,7 +42,7 @@ export function login(token) {
 
 export function createTask(task) {
   return async function (dispatch) {
-    const res = await axios.post(`https://portadoor-server-production.herokuapp.com/tasks`, task, {
+    const res = await axios.post(`${db_url}/tasks`, task, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -55,7 +59,7 @@ export function createTask(task) {
 
 export function markDone(id, done) {
   return async function (dispatch) {
-    await axios.put(`https://portadoor-server-production.herokuapp.com/tasks/${id}`, done, {
+    await axios.put(`${db_url}/tasks/${id}`, done, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }

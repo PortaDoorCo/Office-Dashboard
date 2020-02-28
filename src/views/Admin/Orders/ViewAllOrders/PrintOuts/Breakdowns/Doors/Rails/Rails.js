@@ -8,14 +8,12 @@ const fraction = num => {
 
 export default (info, part) => {
 
-  const topRail = (part.design.TOP_RAIL_W !== numQty(info.topRail) ? (numQty(info.topRail) + 0.0625) : numQty(info.topRail))
-  const bottomRail = (part.design.BOT_RAIL_W !== numQty(info.bottomRail) ? (numQty(info.bottomRail) + 0.0625) : numQty(info.bottomRail))
-  const leftStile = (part.design.L_STILE_W !== numQty(info.leftStile) ? (numQty(info.leftStile) + 0.0625) : numQty(info.leftStile))
-  const rightStile = (part.design.R_STILE_W !== numQty(info.rightStile) ? (numQty(info.rightStile) + 0.0625) : numQty(info.rightStile))
-  const horizMull = numQty(info.horizontalMidRailSize)
-
-
-
+  const topRail = numQty(info.topRail);
+  const bottomRail = numQty(info.bottomRail);
+  const leftStile = numQty(info.leftStile);
+  const rightStile = numQty(info.rightStile);
+  const horizMull = numQty(info.horizontalMidRailSize);
+ 
   if (info.topRail === info.bottomRail) {
     if ((info.panelsH && info.panelsW > 1) || (info.panelsW && info.panelsH > 1)) {
       return [
