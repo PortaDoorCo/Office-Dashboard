@@ -8,10 +8,10 @@ const fraction = num => {
 
 export default (info, part) => {
 
-  const topRail = (part.design.TOP_RAIL_W !== numQty(info.topRail) ? (numQty(info.topRail) + 0.0625) : numQty(info.topRail))
-  const bottomRail = (part.design.BOT_RAIL_W !== numQty(info.bottomRail) ? (numQty(info.bottomRail) + 0.0625) : numQty(info.bottomRail))
-  const leftStile = (part.design.L_STILE_W !== numQty(info.leftStile) ? (numQty(info.leftStile) + 0.0625) : numQty(info.leftStile))
-  const rightStile = (part.design.R_STILE_W !== numQty(info.rightStile) ? (numQty(info.rightStile) + 0.0625) : numQty(info.rightStile))
+  const topRail = numQty(info.topRail)
+  const bottomRail = numQty(info.bottomRail)
+  const leftStile = numQty(info.leftStile)
+  const rightStile = numQty(info.rightStile)
 
   const INSET = part.panels.IN_SET
 
@@ -22,12 +22,10 @@ export default (info, part) => {
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
   const unevenSplitArray = Array.from(Array(parseInt(info.panelsH)).keys()).slice(1).map((i, v) => {
-    return numQty(info[`unevenSplitInput${v}`]) 
-  })
+    return numQty(info[`unevenSplitInput${v}`])
+  }) 
 
-
-
-  const unevenSplitTotal = unevenSplitArray.length>0 ? unevenSplitArray.reduce(reducer) : 0;
+  const unevenSplitTotal = unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
 
 
   const door = [
@@ -36,15 +34,15 @@ export default (info, part) => {
       measurement: `${fraction(
         (numQty(info.width) +
           add_len -
-          numQty(leftStile) -
-          numQty(rightStile)
+          (leftStile) -
+          (rightStile)
           - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
       )} x ${fraction(
         (numQty(info.height) +
           add_len -
-          numQty(topRail) -
-          numQty(bottomRail)
-          - (numQty(info.horizontalMidRailSize) * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2)
+          (topRail) -
+          (bottomRail)
+          - (numQty(info.horizontalMidRailSize) * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2) 
       )}`,
       pattern: 'PR'
     },
@@ -107,7 +105,7 @@ export default (info, part) => {
         - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
       )} x ${fraction(numQty(info.height)
         - unevenSplitTotal
-        - ( numQty(info.horizontalMidRailSize) * (numQty(info.panelsH)-1) )
+        - (numQty(info.horizontalMidRailSize) * (numQty(info.panelsH) - 1))
         - numQty(info.bottomRail)
         - numQty(info.topRail)
         + (INSET * 2)
