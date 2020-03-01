@@ -1,6 +1,6 @@
-import Cope from './designs/Cope'
-import Miter from './designs/Miter'
-import MT from './designs/MT'
+import Cope from './designs/Cope/Cope'
+import Miter from './designs/Miter/Miter'
+import MT from './designs/MT/MT'
 
 export default (info, part) => {
 
