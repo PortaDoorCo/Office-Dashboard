@@ -22,7 +22,7 @@ export default (info, part) => {
 
   if (info.leftStile === info.rightStile) {
     if (parseInt(info.panelsW) > 1) {
-      if(!part.design.LOCK_UPDN){
+      if (!part.design.LOCK_UPDN) {
         return [
           {
             qty: info.qty * 2,
@@ -34,13 +34,15 @@ export default (info, part) => {
           {
             qty: (parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty)),
             measurement: `${fraction(vertMull)} x ${fraction(
+              Math.ceil(
                 ((numQty(info.height) +
-                  add_len -
-                  topRail -
-                  bottomRail -
-                  numQty(horizMull) * (numQty(info.panelsH) - 1)) /
-                  numQty(info.panelsH) +
-                  part.design.TENON)
+                add_len -
+                topRail -
+                bottomRail -
+                numQty(horizMull) * (numQty(info.panelsH) - 1)) /
+                numQty(info.panelsH) +
+                part.design.TENON)
+                * 16) / 16
             )}`,
             pattern: "VM7"
           },
@@ -57,30 +59,30 @@ export default (info, part) => {
           {
             qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
             measurement: `${fraction(vertMull)} x ${fraction(
-                ((numQty(info.height) +
-                  add_len -
-                  topRail -
-                  bottomRail +
-                  part.design.TENON
-                  ))
+              Math.ceil((numQty(info.height) +
+                add_len -
+                topRail -
+                bottomRail +
+                part.design.TENON
+              ) * 16) / 16
             )}`,
             pattern: "VM3"
           },
         ]
       }
     } else {
-        return [
-          {
-            qty: info.qty * 2,
-            measurement: `${fraction(
-              leftStile
-            )} x ${fraction(numQty(info.height) + add_len)}`,
-            pattern: "LR"
-          }
-        ]
-      }
+      return [
+        {
+          qty: info.qty * 2,
+          measurement: `${fraction(
+            leftStile
+          )} x ${fraction(numQty(info.height) + add_len)}`,
+          pattern: "LR"
+        }
+      ]
+    }
 
-      
+
     // } if (parseInt(info.panelsH) > 1 && parseInt(info.panelsW > 1)) {
     //   return [
     //     {
@@ -107,7 +109,7 @@ export default (info, part) => {
   }
   else {
     if (info.panelsW > 1) {
-      if(!part.design.LOCK_UPDN){
+      if (!part.design.LOCK_UPDN) {
         return [
           {
             qty: info.qty,
@@ -126,7 +128,7 @@ export default (info, part) => {
           {
             qty: (parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty)),
             measurement: `${fraction(leftStile)} x ${fraction(
-              Math.floor(
+              Math.ceil(
                 ((numQty(info.height) +
                   add_len -
                   topRail -
@@ -159,20 +161,20 @@ export default (info, part) => {
           {
             qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
             measurement: `${fraction(vertMull)} x ${fraction(
-                ((numQty(info.height) +
-                  add_len -
-                  topRail -
-                  bottomRail +
-                  part.design.TENON
-                  ))
+              Math.ceil((numQty(info.height) +
+                add_len -
+                topRail -
+                bottomRail +
+                part.design.TENON
+              ) * 16) / 16
             )}`,
             pattern: "VM9"
           },
         ]
       }
-      
-    } 
-    
+
+    }
+
 
 
     else {

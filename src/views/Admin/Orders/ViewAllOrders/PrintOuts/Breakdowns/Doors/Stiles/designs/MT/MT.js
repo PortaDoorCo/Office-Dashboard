@@ -22,12 +22,14 @@ export default (info, part) => {
   // console.log(numQty(horizMull))
   // console.log(fraction(numQty(info.horizontalMidRailSize)))
   // console.log(part.design.H_MULL_ADD)
-
   // console.log(topRail)
 
 
+  console.log(numQty(info.height))
+  console.log(topRail)
+  console.log(bottomRail)
   console.log(horizMull)
-  console.log(frac2dec(info.horizontalMidRailSize) + part.design.H_MULL_ADD)
+  console.log(part.design.TENON)
 
 
   if (info.leftStile === info.rightStile) {
@@ -44,13 +46,16 @@ export default (info, part) => {
           {
             qty: (parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty)),
             measurement: `${fraction(vertMull)} x ${fraction(
-                ((numQty(info.height) +
+                Math.ceil(
+                  ((numQty(info.height) +
                   add_len -
                   topRail -
                   bottomRail -
                   horizMull * (numQty(info.panelsH) - 1)) /
                   numQty(info.panelsH) +
                   part.design.TENON)
+                  * 16 
+                  ) / 16
             )}`,
             pattern: "VM7"
           },
@@ -67,12 +72,13 @@ export default (info, part) => {
           {
             qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
             measurement: `${fraction(vertMull)} x ${fraction(
-                ((numQty(info.height) +
+                Math.ceil((numQty(info.height) +
                   add_len -
                   topRail -
                   bottomRail +
-                  part.design.TENON
-                  ))
+                  part.design.TENON)
+                  * 16
+                  ) / 16
             )}`,
             pattern: "VM3"
           },
@@ -136,7 +142,7 @@ export default (info, part) => {
           {
             qty: (parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty)),
             measurement: `${fraction(leftStile)} x ${fraction(
-              Math.floor(
+              Math.ceil(
                 ((numQty(info.height) +
                   add_len -
                   topRail -
@@ -169,12 +175,13 @@ export default (info, part) => {
           {
             qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
             measurement: `${fraction(vertMull)} x ${fraction(
-                ((numQty(info.height) +
+                Math.ceil((numQty(info.height) +
                   add_len -
                   topRail -
                   bottomRail +
-                  part.design.TENON
-                  ))
+                  part.design.TENON)
+                  * 16
+                  ) / 16
             )}`,
             pattern: "VM9"
           },
