@@ -16,8 +16,6 @@ export default (info, part) => {
   const horizMull = numQty(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
 
   const INSET = part.panels.IN_SET
-
-
   const add_len = part.design.S_ADD_LEN;
 
 
