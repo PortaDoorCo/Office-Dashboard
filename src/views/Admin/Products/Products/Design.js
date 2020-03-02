@@ -215,16 +215,22 @@ class Design extends React.Component {
 
                 <Item itemType="group" caption="Stiles" colCount={2} colSpan={2}>
                   <Item dataField="L_STILE_W" />
+                  <Item dataField="LS_MILL_AD" />
                   <Item dataField="R_STILE_W" />
+                  <Item dataField="RS_MILL_AD" />
                 </Item>
                 <Item itemType="group" caption="Rails" colCount={2} colSpan={2}>
                   <Item dataField="TOP_RAIL_W" />
+                  <Item dataField="TR_MILL_AD" />
                   <Item dataField="BOT_RAIL_W" />
+                  <Item dataField="BR_MILL_AD" />
                 </Item>
 
                 <Item itemType="group" caption="Mullions" colCount={2} colSpan={2}>
                   <Item dataField="H_MULL_WTH" />
+                  <Item dataField="H_MULL_ADD" />
                   <Item dataField="V_MULL_WTH" />
+                  <Item dataField="V_MULL_ADD" />
                 </Item>
                 <Item itemType="group" caption="Panels" colCount={2} colSpan={2}>
                   <Item dataField="NUMHPANELS" />
@@ -247,12 +253,18 @@ class Design extends React.Component {
             <Column dataField="NAME" caption="Name" width={150} fixed={true}><RequiredRule /></Column>
             <Column dataField="photo" caption="Photo" width={150} fixed={true} cellRender={this.renderPhoto} editCellRender={this.editCellRender} setCellValue={this.setCellValue}></Column>
             <Column dataField="L_STILE_W" caption="Left Stile Width"><RequiredRule /></Column>
+            <Column dataField="LS_MILL_AD" caption="Left Stile Mill Add"><RequiredRule /></Column>
             <Column dataField="R_STILE_W" caption="Right Stile Width"><RequiredRule /></Column>
+            <Column dataField="RS_MILL_AD" caption="Right Stile Mill Add"><RequiredRule /></Column>
             <Column dataField="TOP_RAIL_W" caption="Top Rail Width"><RequiredRule /></Column>
+            <Column dataField="TR_MILL_AD" caption="Top Rail Mill Add"><RequiredRule /></Column>
             <Column dataField="BOT_RAIL_W" caption="Bottom Rail Width"><RequiredRule /></Column>
+            <Column dataField="BR_MILL_AD" caption="Bottom Rail Mill Add"><RequiredRule /></Column>
             <Column dataField="S_ADD_LEN" caption="ADD LENGTH"><RequiredRule /></Column>
             <Column dataField="H_MULL_WTH" caption="H Mull Width"><RequiredRule /></Column>
+            <Column dataField="H_MULL_ADD" caption="H Mull Add"><RequiredRule /></Column>
             <Column dataField="V_MULL_WTH" caption="V Mull Width"><RequiredRule /></Column>
+            <Column dataField="V_MULL_ADD" caption="V Mull Add"><RequiredRule /></Column>
             <Column dataField="NUMHPANELS" caption="Number of Panels High"><RequiredRule />
               <Lookup dataSource={numPanels} valueExpr="ID" displayExpr="Name" />
             </Column>

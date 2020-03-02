@@ -318,8 +318,12 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       />
                     </td>
                   </tr>
+                  <Row>
+                    <p className="ml-3">*Finish Stile/Rail Sizes*</p>
+                  </Row>
                   <tr />
                 </tbody>
+                
               </Table>
               <Row>
                 <Col lg='9'>
