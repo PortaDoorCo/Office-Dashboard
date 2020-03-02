@@ -8,10 +8,12 @@ const fraction = num => {
 
 export default (info, part) => {
 
-  const topRail = numQty(info.topRail)
-  const bottomRail = numQty(info.bottomRail)
-  const leftStile = numQty(info.leftStile)
-  const rightStile = numQty(info.rightStile)
+  const topRail = numQty(info.topRail) + part.design.TR_MILL_AD;
+  const bottomRail = numQty(info.bottomRail) + part.design.BR_MILL_AD;
+  const leftStile = numQty(info.leftStile) + part.design.LS_MILL_AD;
+  const rightStile = numQty(info.rightStile) + part.design.RS_MILL_AD;
+  const vertMull = numQty(info.verticalMidRailSize) + part.design.V_MULL_ADD;
+  const horizMull = numQty(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
 
   const INSET = part.panels.IN_SET
 
@@ -36,13 +38,13 @@ export default (info, part) => {
           add_len -
           (leftStile) -
           (rightStile)
-          - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
+          - (vertMull * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
       )} x ${fraction(
         (numQty(info.height) +
           add_len -
           (topRail) -
           (bottomRail)
-          - (numQty(info.horizontalMidRailSize) * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2) 
+          - (horizMull * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2) 
       )}`,
       pattern: 'PR'
     },
@@ -63,14 +65,14 @@ export default (info, part) => {
       measurement: `${fraction(
         numQty(info.height) +
         add_len -
-        numQty(topRail) -
-        numQty(bottomRail) +
+        topRail -
+        bottomRail +
         (INSET * 2)
       )} x ${fraction(
         numQty(info.width) +
         add_len -
-        numQty(leftStile) -
-        numQty(rightStile) +
+        leftStile -
+        rightStile +
         (INSET * 2)
       )}`,
       pattern: 'PR'
@@ -87,9 +89,9 @@ export default (info, part) => {
         measurement: `${fraction(
           (numQty(info.width) +
             add_len -
-            numQty(leftStile) -
-            numQty(rightStile)
-            - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
+            leftStile -
+            rightStile
+            - (vertMull * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
         )} x ${fraction(
           (numQty(info[`unevenSplitInput${v}`]) + (INSET * 2))
         )}`,
@@ -100,14 +102,14 @@ export default (info, part) => {
       qty: `${info.qty}`,
       measurement: `${fraction((numQty(info.width) +
         add_len -
-        numQty(leftStile) -
-        numQty(rightStile)
-        - (numQty(info.verticalMidRailSize) * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
+        leftStile -
+        rightStile
+        - (vertMull * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
       )} x ${fraction(numQty(info.height)
         - unevenSplitTotal
-        - (numQty(info.horizontalMidRailSize) * (numQty(info.panelsH) - 1))
-        - numQty(info.bottomRail)
-        - numQty(info.topRail)
+        - (horizMull * (numQty(info.panelsH) - 1))
+        - bottomRail
+        - topRail
         + (INSET * 2)
       )}`,
       pattern: "PR"
