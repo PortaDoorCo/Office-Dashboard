@@ -27,9 +27,9 @@ export default (info, part) => {
               topRail
             )} x ${fraction(
               numQty(info.width) +
-              part.design.S_ADD_LEN -
-              numQty(leftStile) -
-              numQty(rightStile) +
+              add_len -
+              leftStile -
+              rightStile +
               part.design.TENON
             )}`,
             pattern: 'TB'
@@ -38,9 +38,9 @@ export default (info, part) => {
             qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
             measurement: `${fraction(horizMull)} x ${fraction(
               numQty(info.width) +
-              part.design.S_ADD_LEN -
-              numQty(leftStile) -
-              numQty(rightStile) +
+              add_len -
+              leftStile -
+              rightStile +
               part.design.TENON
             )}`,
             pattern: "HM"
@@ -54,9 +54,9 @@ export default (info, part) => {
               topRail
             )} x ${fraction(
               numQty(info.width) +
-              part.design.S_ADD_LEN -
-              numQty(leftStile) -
-              numQty(rightStile) +
+              add_len -
+              leftStile -
+              rightStile +
               part.design.TENON
             )}`,
             pattern: 'TB'
@@ -87,9 +87,9 @@ export default (info, part) => {
             topRail
           )} x ${fraction(
             numQty(info.width) +
-            part.design.S_ADD_LEN -
-            numQty(leftStile) -
-            numQty(rightStile) +
+            add_len -
+            leftStile -
+            rightStile +
             part.design.TENON
           )}`,
           pattern: 'TB'
@@ -107,9 +107,9 @@ export default (info, part) => {
               topRail
             )} x ${fraction(
               numQty(info.width) +
-              part.design.S_ADD_LEN -
-              numQty(leftStile) -
-              numQty(rightStile) +
+              add_len -
+              leftStile -
+              rightStile +
               part.design.TENON
             )}`,
             pattern: "T"
@@ -120,9 +120,9 @@ export default (info, part) => {
               bottomRail
             )} x ${fraction(
               numQty(info.width) +
-              part.design.S_ADD_LEN -
-              numQty(leftStile) -
-              numQty(rightStile) +
+              add_len -
+              leftStile -
+              rightStile +
               part.design.TENON
             )}`,
             pattern: "B"
@@ -131,9 +131,9 @@ export default (info, part) => {
             qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
             measurement: `${fraction(horizMull)} x ${fraction(
               numQty(info.width) +
-              0.125 -
-              numQty(leftStile) -
-              numQty(rightStile) +
+              add_len -
+              leftStile -
+              rightStile +
               part.design.TENON
             )}`,
             pattern: "HM"
@@ -147,9 +147,9 @@ export default (info, part) => {
               topRail
             )} x ${fraction(
               numQty(info.width) +
-              part.design.S_ADD_LEN -
-              numQty(leftStile) -
-              numQty(rightStile) +
+              add_len -
+              leftStile -
+              rightStile +
               part.design.TENON
             )}`,
             pattern: "T"
@@ -160,9 +160,9 @@ export default (info, part) => {
               bottomRail
             )} x ${fraction(
               numQty(info.width) +
-              part.design.S_ADD_LEN -
-              numQty(leftStile) -
-              numQty(rightStile) +
+              add_len -
+              leftStile -
+              rightStile +
               part.design.TENON
             )}`,
             pattern: "B"
@@ -194,9 +194,9 @@ export default (info, part) => {
             topRail
           )} x ${fraction(
             numQty(info.width) +
-            part.design.S_ADD_LEN -
-            numQty(leftStile) -
-            numQty(rightStile) +
+            add_len -
+            leftStile -
+            rightStile +
             part.design.TENON
           )}`,
           pattern: "T"
@@ -207,9 +207,9 @@ export default (info, part) => {
             bottomRail
           )} x ${fraction(
             numQty(info.width) +
-            part.design.S_ADD_LEN -
-            numQty(leftStile) -
-            numQty(rightStile) +
+            add_len -
+            leftStile -
+            rightStile +
             part.design.TENON
           )}`,
           pattern: "B"
