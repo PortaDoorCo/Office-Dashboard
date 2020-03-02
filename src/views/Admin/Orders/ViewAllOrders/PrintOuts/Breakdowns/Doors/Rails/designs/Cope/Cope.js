@@ -1,5 +1,6 @@
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
+import frac2dec from '../../../frac2dec'
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -10,12 +11,12 @@ const fraction = num => {
 export default (info, part) => {
 
   const add_len = part.design.S_ADD_LEN;
-  const topRail = numQty(info.topRail) + part.design.TR_MILL_AD;
-  const bottomRail = numQty(info.bottomRail) + part.design.BR_MILL_AD;
-  const leftStile = numQty(info.leftStile) + part.design.LS_MILL_AD;
-  const rightStile = numQty(info.rightStile) + part.design.RS_MILL_AD;
-  const vertMull = numQty(info.verticalMidRailSize) + part.design.V_MULL_ADD;
-  const horizMull = numQty(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
+  const topRail = frac2dec(info.topRail) + part.design.TR_MILL_AD;
+  const bottomRail = frac2dec(info.bottomRail) + part.design.BR_MILL_AD;
+  const leftStile = frac2dec(info.leftStile) + part.design.LS_MILL_AD;
+  const rightStile = frac2dec(info.rightStile) + part.design.RS_MILL_AD;
+  const vertMull = frac2dec(info.verticalMidRailSize) + part.design.V_MULL_ADD;
+  const horizMull = frac2dec(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
 
   if (info.topRail === info.bottomRail) {
     if ((info.panelsH && info.panelsW > 1) || (info.panelsW && info.panelsH > 1)) {
