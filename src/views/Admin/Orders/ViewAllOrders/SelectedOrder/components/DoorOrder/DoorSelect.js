@@ -167,7 +167,7 @@ class DoorSelect extends React.Component {
                           <h5>Part List</h5>
                         </CardSubtitle>
                         <Row>
-                          <Col xs="3">
+                          <Col xs="4">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="woodtype">Woodtype</Label>
@@ -178,7 +178,7 @@ class DoorSelect extends React.Component {
                               />
                             </FormGroup>
                           </Col>
-                          <Col xs="3">
+                          <Col xs="4">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="design">Design</Label>
@@ -187,15 +187,8 @@ class DoorSelect extends React.Component {
                               <Input placeholder={part.design.NAME} disabled />
                             </FormGroup>
                           </Col>
-                          <Col xs="3">
-                            <FormGroup>
-                              <strong>
-                                <Label htmlFor="edge">Edge</Label>
-                              </strong>
-                              <Input placeholder={part.edges.NAME} disabled />
-                            </FormGroup>
-                          </Col>
-                          <Col xs="3">
+
+                          <Col xs="4">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="mould">Mould</Label>
@@ -206,7 +199,15 @@ class DoorSelect extends React.Component {
                         </Row>
 
                         <Row>
-                          <Col xs="4">
+                        <Col xs="3">
+                            <FormGroup>
+                              <strong>
+                                <Label htmlFor="edge">Edge</Label>
+                              </strong>
+                              <Input placeholder={part.edges.NAME} disabled />
+                            </FormGroup>
+                          </Col>
+                          <Col xs="3">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="panel">Panel</Label>
@@ -215,21 +216,21 @@ class DoorSelect extends React.Component {
                             </FormGroup>
                           </Col>
 
-                          <Col xs="4">
-                            <FormGroup>
-                              <strong>
-                                <Label htmlFor="grade-thickness">Finish</Label>
-                              </strong>
-                              <Input placeholder={part.finish.name} disabled />
-                            </FormGroup>
-                          </Col>
-
-                          <Col xs="4">
+                          <Col xs="3">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="finish">Hinges</Label>
                               </strong>
                               <Input placeholder={part.hinges.Name} disabled />
+                            </FormGroup>
+                          </Col>
+
+                          <Col xs="3">
+                            <FormGroup>
+                              <strong>
+                                <Label htmlFor="grade-thickness">Finish</Label>
+                              </strong>
+                              <Input placeholder={part.finish.name} disabled />
                             </FormGroup>
                           </Col>
                         </Row>
