@@ -24,7 +24,7 @@ export default (info, part) => {
 
   const unevenSplitArray = Array.from(Array(parseInt(info.panelsH)).keys()).slice(1).map((i, v) => {
     return numQty(info[`unevenSplitInput${v}`])
-  }) 
+  })
 
   const unevenSplitTotal = unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
 
@@ -33,17 +33,20 @@ export default (info, part) => {
     {
       qty: `${(info.panelsH > 1 && info.panelsW < 2) ? (parseInt(info.panelsH) * parseInt(info.qty)) : (info.panelsW > 1 && info.panelsH < 2) ? (parseInt(info.panelsW) * parseInt(info.qty)) : (parseInt(info.panelsW) > 1 && parseInt(info.panelsH) > 1) ? (parseInt(info.panelsH) * parseInt(info.panelsW)) * parseInt(info.qty) : info.qty}`,
       measurement: `${fraction(
-        (numQty(info.width) +
-          add_len -
-          (leftStile) -
-          (rightStile)
-          - (vertMull * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
+        Math.ceil((
+          (numQty(info.width) +
+            add_len -
+            (leftStile) -
+            (rightStile)
+            - (vertMull * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)) * 16) / 16
       )} x ${fraction(
-        (numQty(info.height) +
-          add_len -
-          (topRail) -
-          (bottomRail)
-          - (horizMull * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2) 
+        Math.ceil((
+          (numQty(info.height) +
+            add_len -
+            (topRail) -
+            (bottomRail)
+            - (horizMull * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2))
+          * 16) / 16
       )}`,
       pattern: 'PR'
     },
