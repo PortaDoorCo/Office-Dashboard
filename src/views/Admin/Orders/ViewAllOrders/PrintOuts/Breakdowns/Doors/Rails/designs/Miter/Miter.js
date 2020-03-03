@@ -18,6 +18,12 @@ export default (info, part) => {
   const vertMull = frac2dec(info.verticalMidRailSize) + part.design.V_MULL_ADD;
   const horizMull = frac2dec(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
 
+  console.log(leftStile)
+  console.log(rightStile)
+  console.log(vertMull)
+  console.log(part.design.TENON)
+  console.log(add_len)
+
   if (info.topRail === info.bottomRail) {
     if ((info.panelsH && info.panelsW > 1) || (info.panelsW && info.panelsH > 1)) {
       if (!part.design.LOCK_UPDN) {
@@ -59,7 +65,7 @@ export default (info, part) => {
             qty: (parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty)),
             measurement: `${fraction(horizMull)} x ${fraction(
               Math.ceil(
-                ((numQty(info.width) +
+                ((numQty(info.width) -
                   leftStile -
                   rightStile -
                   vertMull * (numQty(info.panelsW) - 1)) /
