@@ -273,6 +273,7 @@ class Design extends React.Component {
             </Column>
             <Column dataField="DESIGNCOST" caption="Price"><RequiredRule /></Column>
             <Column dataField="TENON" caption="Tenon Factor"><RequiredRule /></Column>
+            <Column dataField="LOCK_UPDN" caption="LOCK UPDN"><RequiredRule /></Column>
             <Column dataField="THICKNESS" caption="Thickness"><RequiredRule />
               <Lookup dataSource={thickness} valueExpr="value" displayExpr="name" />
             </Column>
