@@ -16,32 +16,36 @@ export default (info, part) => {
   const rightStile = frac2dec(info.rightStile) + part.design.RS_MILL_AD;
   const vertMull = frac2dec(info.verticalMidRailSize) + part.design.V_MULL_ADD;
   const horizMull = frac2dec(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
+  const panelsH = parseInt(info.panelsH)
+  const panelsW = parseInt(info.panelsW)
+  const height = frac2dec(info.height)
+  const width = frac2dec(info.width)
+  const qty = parseInt(info.qty)
+  const tenon_factor = part.design.TENON
 
-  console.log(part.design.LOCK_UPDN)
 
-
-  if (info.leftStile === info.rightStile) {
-    if (parseInt(info.panelsW) > 1) {
+  if (leftStile === rightStile) {
+    if ((panelsW > 1) || (panelsH > 1)) {
       if (!part.design.LOCK_UPDN) {
         return [
           {
-            qty: info.qty * 2,
+            qty: (qty * 2),
             measurement: `${fraction(
               leftStile
-            )} x ${fraction(numQty(info.height) + add_len)}`,
+            )} x ${fraction(height + add_len)}`,
             pattern: "LR"
           },
           {
-            qty: (parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty)),
+            qty: (panelsH * (panelsW - 1) * qty),
             measurement: `${fraction(vertMull)} x ${fraction(
-              Math.ceil(
-                ((numQty(info.height) +
+              Math.round(
+                ((height +
                 add_len -
                 topRail -
                 bottomRail -
-                numQty(horizMull) * (numQty(info.panelsH) - 1)) /
-                numQty(info.panelsH) +
-                part.design.TENON)
+                horizMull * (panelsH - 1)) /
+                panelsH +
+                tenon_factor)
                 * 16) / 16
             )}`,
             pattern: "VM7"
@@ -50,20 +54,20 @@ export default (info, part) => {
       } else {
         return [
           {
-            qty: info.qty * 2,
+            qty: (qty * 2),
             measurement: `${fraction(
               leftStile
-            )} x ${fraction(numQty(info.height) + add_len)}`,
+            )} x ${fraction(height + add_len)}`,
             pattern: "LR"
           },
           {
-            qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
+            qty: (((panelsW) - 1) * qty),
             measurement: `${fraction(vertMull)} x ${fraction(
-              Math.ceil((numQty(info.height) +
+              Math.round((height +
                 add_len -
                 topRail -
                 bottomRail +
-                part.design.TENON
+                tenon_factor
               ) * 16) / 16
             )}`,
             pattern: "VM3"
@@ -73,69 +77,44 @@ export default (info, part) => {
     } else {
       return [
         {
-          qty: info.qty * 2,
+          qty: (qty * 2),
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(numQty(info.height) + add_len)}`,
+          )} x ${fraction(height + add_len)}`,
           pattern: "LR"
         }
       ]
     }
-
-
-    // } if (parseInt(info.panelsH) > 1 && parseInt(info.panelsW > 1)) {
-    //   return [
-    //     {
-    //       qty: info.qty * 2,
-    //       measurement: `${fraction(
-    //         numQty(leftStile)
-    //       )} x ${fraction(numQty(info.height) + add_len)}`,
-    //       pattern: "LR"
-    //     },
-    //     {
-    //       qty: (info.panelsH - 1) * parseInt(info.qty),
-    //       measurement: `${fraction(vertMull)} x ${fraction(
-    //         numQty(info.height) +
-    //         add_len -
-    //         numQty(leftStile) -
-    //         numQty(rightStile) +
-    //         part.design.TENON
-    //       )}`,
-    //       pattern: "VM2"
-    //     }
-    //   ]
-    // }
-
   }
   else {
-    if (info.panelsW > 1) {
+    if ((panelsW > 1) || (panelsH > 1)) {
       if (!part.design.LOCK_UPDN) {
         return [
           {
-            qty: info.qty,
+            qty: qty,
             measurement: `${fraction(
               leftStile
-            )} x ${fraction(numQty(info.height) + add_len)}`,
+            )} x ${fraction(height + add_len)}`,
             pattern: "L"
           },
           {
-            qty: info.qty,
+            qty: qty,
             measurement: `${fraction(
               rightStile
-            )} x ${fraction(numQty(info.height) + add_len)}`,
+            )} x ${fraction(height + add_len)}`,
             pattern: "R"
           },
           {
-            qty: (parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty)),
+            qty: (panelsH * (panelsW - 1) * qty),
             measurement: `${fraction(leftStile)} x ${fraction(
-              Math.ceil(
-                ((numQty(info.height) +
+              Math.round(
+                ((height +
                   add_len -
                   topRail -
                   bottomRail -
-                  numQty(horizMull) * (numQty(info.panelsH) - 1)) /
-                  numQty(info.panelsH) +
-                  part.design.TENON) *
+                  horizMull * (panelsH - 1)) /
+                  panelsH +
+                  tenon_factor) *
                 16
               ) / 16
             )}`,
@@ -145,89 +124,52 @@ export default (info, part) => {
       } else {
         return [
           {
-            qty: info.qty,
+            qty: height,
             measurement: `${fraction(
               leftStile
-            )} x ${fraction(numQty(info.height) + add_len)}`,
+            )} x ${fraction(height + add_len)}`,
             pattern: "L"
           },
           {
-            qty: info.qty,
+            qty: height,
             measurement: `${fraction(
               rightStile
-            )} x ${fraction(numQty(info.height) + add_len)}`,
+            )} x ${fraction(height + add_len)}`,
             pattern: "R"
           },
           {
-            qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
+            qty: (((panelsW) - 1) * qty),
             measurement: `${fraction(vertMull)} x ${fraction(
-              Math.ceil((numQty(info.height) +
+              Math.round((height +
                 add_len -
                 topRail -
                 bottomRail +
-                part.design.TENON
+                tenon_factor
               ) * 16) / 16
             )}`,
             pattern: "VM9"
           },
         ]
       }
-
     }
-
-
-
     else {
       return [
         {
-          qty: info.qty,
+          qty: height,
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(numQty(info.height) + add_len)}`,
+          )} x ${fraction(height + add_len)}`,
           pattern: "L"
         },
         {
-          qty: info.qty,
+          qty: height,
           measurement: `${fraction(
             rightStile
-          )} x ${fraction(numQty(info.height) + add_len)}`,
+          )} x ${fraction(height + add_len)}`,
           pattern: "R"
         }
 
       ]
     }
   }
-
-  // else if (parseInt(info.panelsH) > 1 && parseInt(info.panelsW > 1)) {
-  //   return [
-  //     {
-  //       qty: info.qty,
-  //       measurement: `${fraction(
-  //         numQty(leftStile)
-  //       )} x ${fraction(numQty(info.height) + add_len)}`,
-  //       pattern: "L"
-  //     },
-  //     {
-  //       qty: info.qty,
-  //       measurement: `${fraction(
-  //         numQty(rightStile)
-  //       )} x ${fraction(numQty(info.height) + add_len)}`,
-  //       pattern: "R"
-  //     },
-  //     {
-  //       qty: (info.panelsH - 1) * parseInt(info.qty),
-  //       measurement: `${fraction(leftStile)} x ${fraction(
-  //         numQty(info.height) +
-  //         add_len -
-  //         numQty(leftStile) -
-  //         numQty(rightStile) +
-  //         part.design.TENON
-  //       )}`,
-  //       pattern: "VM2"
-  //     }
-  //   ]
-  // }
-
-
-
 };
