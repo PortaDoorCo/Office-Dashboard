@@ -17,34 +17,34 @@ export default (info, part) => {
   const rightStile = frac2dec(info.rightStile) + part.design.RS_MILL_AD;
   const vertMull = frac2dec(info.verticalMidRailSize) + part.design.V_MULL_ADD;
   const horizMull = frac2dec(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
+  const panelsH = parseInt(info.panelsH)
+  const panelsW = parseInt(info.panelsW)
+  const height = frac2dec(info.height)
+  const width = frac2dec(info.width)
+  const qty = parseInt(info.qty)
+  const tenon_factor = part.design.TENON
 
-  console.log(leftStile)
-  console.log(rightStile)
-  console.log(vertMull)
-  console.log(part.design.TENON)
-  console.log(add_len)
-
-  if (info.topRail === info.bottomRail) {
-    if ((info.panelsH && info.panelsW > 1) || (info.panelsW && info.panelsH > 1)) {
+  if (topRail === bottomRail) {
+    if ((panelsW > 1) || (panelsH > 1)) {
       if (!part.design.LOCK_UPDN) {
         return [
           {
-            qty: info.qty * 2,
+            qty: (qty * 2),
             measurement: `${fraction(
               topRail
             )} x ${fraction(
-              numQty(info.width) + add_len
+              width + add_len
             )}`,
             pattern: 'TB'
           },
           {
-            qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
+            qty: (((panelsH) - 1) * qty),
             measurement: `${fraction(horizMull)} x ${fraction(
-              Math.ceil((numQty(info.width) +
+              Math.round((width +
                 add_len -
                 leftStile -
                 rightStile +
-                part.design.TENON)
+                tenon_factor)
                 * 16) / 16
             )}`,
             pattern: "HM"
@@ -53,24 +53,24 @@ export default (info, part) => {
       } else {
         return [
           {
-            qty: info.qty * 2,
+            qty: (qty * 2),
             measurement: `${fraction(
               topRail
             )} x ${fraction(
-              numQty(info.width) + add_len
+              width + add_len
             )}`,
             pattern: 'TB'
           },
           {
-            qty: (parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty)),
+            qty: (((panelsH - 1) * panelsW) * qty),
             measurement: `${fraction(horizMull)} x ${fraction(
-              Math.ceil(
-                ((numQty(info.width) -
+              Math.round(
+                ((width -
                   leftStile -
                   rightStile -
-                  vertMull * (numQty(info.panelsW) - 1)) /
-                  numQty(info.panelsW) +
-                  part.design.TENON)
+                  vertMull * (panelsW - 1)) /
+                  panelsW +
+                  tenon_factor)
                 * 16) / 16
             )}`,
             pattern: "HM1"
@@ -81,47 +81,47 @@ export default (info, part) => {
     } else {
       return [
         {
-          qty: info.qty * 2,
+          qty: (qty * 2),
           measurement: `${fraction(
             topRail
           )} x ${fraction(
-            numQty(info.width) + add_len
+            width + add_len
           )}`,
           pattern: 'TB'
         }
       ];
     }
   } else {
-    if ((info.panelsH && info.panelsW > 1) || (info.panelsH > 1 && info.panelsW)) {
+    if ((panelsW > 1) || (panelsW)) {
       if (!part.design.LOCK_UPDN) {
         return [
           {
-            qty: info.qty,
+            qty: qty,
             measurement: `${fraction(
               topRail
             )} x ${fraction(
-              numQty(info.width) + add_len
+              width + add_len
             )}`,
             pattern: "T"
           },
           {
-            qty: info.qty,
+            qty: qty,
             measurement: `${fraction(
               bottomRail
             )} x ${fraction(
-              numQty(info.width) + add_len
+              width + add_len
             )}`,
             pattern: "B"
           },
           {
-            qty: `${(info.panelsW > 1 && info.panelsH < 2) ? ((info.panelsW - 1) * info.qty) : (info.panelsH > 1 && info.panelsW < 2) ? ((info.panelsH - 1) * info.qty) : (parseInt(info.panelsH) - 1) * info.qty}`,
+            qty: ((panelsH) - 1) * qty,
             measurement: `${fraction(horizMull)} x ${fraction(
-              Math.ceil((
-                numQty(info.width) +
-                part.design.S_ADD_LEN -
+              Math.round((
+                width +
+                add_len -
                 leftStile -
                 rightStile +
-                part.design.TENON)
+                tenon_factor)
                 * 16) / 16
             )}`,
             pattern: "HM12"
@@ -130,34 +130,34 @@ export default (info, part) => {
       } else {
         return [
           {
-            qty: info.qty,
+            qty: qty,
             measurement: `${fraction(
               topRail
             )} x ${fraction(
-              numQty(info.width) + add_len
+              width + add_len
             )}`,
             pattern: "T"
           },
           {
-            qty: info.qty,
+            qty: qty,
             measurement: `${fraction(
               bottomRail
             )} x ${fraction(
-              numQty(info.width) + add_len
+              width + add_len
             )}`,
             pattern: "B"
           },
           {
-            qty: (parseInt(info.panelsH) * (parseInt(info.panelsW) - 1) * parseInt(info.qty)),
+            qty: (((panelsH - 1) * panelsW) * qty),
             measurement: `${fraction(horizMull)} x ${fraction(
-              Math.ceil(
-                ((numQty(info.width) +
+              Math.round(
+                ((width +
                   add_len -
                   leftStile -
                   rightStile -
-                  vertMull * (numQty(info.panelsW) - 1)) /
-                  numQty(info.panelsW) +
-                  part.design.TENON)
+                  vertMull * (panelsW - 1)) /
+                  panelsW +
+                  tenon_factor)
                 * 16) / 16
             )}`,
             pattern: "HM"
@@ -168,20 +168,20 @@ export default (info, part) => {
     } else {
       return [
         {
-          qty: info.qty,
+          qty: qty,
           measurement: `${fraction(
             topRail
           )} x ${fraction(
-            numQty(info.width) + add_len
+            width + add_len
           )}`,
           pattern: "T"
         },
         {
-          qty: info.qty,
+          qty: qty,
           measurement: `${fraction(
             bottomRail
           )} x ${fraction(
-            numQty(info.width) + add_len
+            width + add_len
           )}`,
           pattern: "B"
         },

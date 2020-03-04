@@ -8,21 +8,27 @@ const fraction = num => {
 };
 
 export default (info, part) => {
-
+  const add_len = part.design.S_ADD_LEN;
   const topRail = frac2dec(info.topRail) + part.design.TR_MILL_AD;
   const bottomRail = frac2dec(info.bottomRail) + part.design.BR_MILL_AD;
   const leftStile = frac2dec(info.leftStile) + part.design.LS_MILL_AD;
   const rightStile = frac2dec(info.rightStile) + part.design.RS_MILL_AD;
   const vertMull = frac2dec(info.verticalMidRailSize) + part.design.V_MULL_ADD;
   const horizMull = frac2dec(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
+  const panelsH = parseInt(info.panelsH)
+  const panelsW = parseInt(info.panelsW)
+  const height = frac2dec(info.height)
+  const width = frac2dec(info.width)
+  const qty = parseInt(info.qty)
+  const tenon_factor = part.design.TENON
 
   const INSET = part.panels.IN_SET
-  const add_len = part.design.S_ADD_LEN;
+
 
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
-  const unevenSplitArray = Array.from(Array(parseInt(info.panelsH)).keys()).slice(1).map((i, v) => {
+  const unevenSplitArray = Array.from(Array(panelsH).keys()).slice(1).map((i, v) => {
     return numQty(info[`unevenSplitInput${v}`])
   })
 
@@ -30,22 +36,22 @@ export default (info, part) => {
 
   let door;
 
-  if(part.design.Construction === "M") {
+  if (part.design.Construction === "M") {
     door = [
       {
-        qty: `${(info.panelsH > 1 && info.panelsW < 2) ? (parseInt(info.panelsH) * parseInt(info.qty)) : (info.panelsW > 1 && info.panelsH < 2) ? (parseInt(info.panelsW) * parseInt(info.qty)) : (parseInt(info.panelsW) > 1 && parseInt(info.panelsH) > 1) ? (parseInt(info.panelsH) * parseInt(info.panelsW)) * parseInt(info.qty) : info.qty}`,
+        qty: `${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty}`,
         measurement: `${fraction(
-          Math.ceil((
-            (numQty(info.width) -
-              (leftStile) -
-              (rightStile)
-              - (vertMull * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)) * 16) / 16
+          Math.round((
+            (width -
+              leftStile -
+              rightStile
+              - (vertMull * (panelsW - 1))) / panelsW + (INSET * 2)) * 16) / 16
         )} x ${fraction(
-          Math.ceil((
-            (numQty(info.height) -
+          Math.round((
+            (height -
               (topRail) -
               (bottomRail)
-              - (horizMull * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2))
+              - (horizMull * (panelsH - 1))) / panelsH + (INSET * 2))
             * 16) / 16
         )}`,
         pattern: 'PR'
@@ -54,21 +60,21 @@ export default (info, part) => {
   } else {
     door = [
       {
-        qty: `${(info.panelsH > 1 && info.panelsW < 2) ? (parseInt(info.panelsH) * parseInt(info.qty)) : (info.panelsW > 1 && info.panelsH < 2) ? (parseInt(info.panelsW) * parseInt(info.qty)) : (parseInt(info.panelsW) > 1 && parseInt(info.panelsH) > 1) ? (parseInt(info.panelsH) * parseInt(info.panelsW)) * parseInt(info.qty) : info.qty}`,
+        qty: `${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty}`,
         measurement: `${fraction(
-          Math.ceil((
-            (numQty(info.width) +
+          Math.round((
+            (width +
               add_len -
               (leftStile) -
               (rightStile)
-              - (vertMull * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)) * 16) / 16
+              - (vertMull * (panelsW - 1))) / panelsW + (INSET * 2)) * 16) / 16
         )} x ${fraction(
-          Math.ceil((
-            (numQty(info.height) +
+          Math.round((
+            (height +
               add_len -
               (topRail) -
               (bottomRail)
-              - (horizMull * (parseInt(info.panelsH) - 1))) / parseInt(info.panelsH) + (INSET * 2))
+              - (horizMull * (panelsH - 1))) / panelsH + (INSET * 2))
             * 16) / 16
         )}`,
         pattern: 'PR'
@@ -82,84 +88,84 @@ export default (info, part) => {
 
 
 
-const none = [
-  {
-    qty: ``,
-    measurement: ``,
-    pattern: 'GLASS'
-  },
-]
+  const none = [
+    {
+      qty: ``,
+      measurement: ``,
+      pattern: 'GLASS'
+    },
+  ]
 
 
-const df = [
-  {
-    qty: `${info.qty}`,
-    measurement: `${fraction(
-      numQty(info.height) +
-      add_len -
-      topRail -
-      bottomRail +
-      (INSET * 2)
-    )} x ${fraction(
-      numQty(info.width) +
-      add_len -
-      leftStile -
-      rightStile +
-      (INSET * 2)
-    )}`,
-    pattern: 'PR'
-  },
-]
-
-
-
-
-const unevenSplit = [
-  ...Array.from(Array(parseInt(info.panelsH)).keys()).slice(1).map((i, v) => {
-    return {
+  const df = [
+    {
       qty: `${info.qty}`,
       measurement: `${fraction(
-        (numQty(info.width) +
-          add_len -
-          leftStile -
-          rightStile
-          - (vertMull * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
+        height +
+        add_len -
+        topRail -
+        bottomRail +
+        (INSET * 2)
       )} x ${fraction(
-        (numQty(info[`unevenSplitInput${v}`]) + (INSET * 2))
+        width +
+        add_len -
+        leftStile -
+        rightStile +
+        (INSET * 2)
       )}`,
       pattern: 'PR'
-    }
-  }),
-  {
-    qty: `${info.qty}`,
-    measurement: `${fraction((numQty(info.width) +
-      add_len -
-      leftStile -
-      rightStile
-      - (vertMull * (parseInt(info.panelsW) - 1))) / parseInt(info.panelsW) + (INSET * 2)
-    )} x ${fraction(numQty(info.height)
-      - unevenSplitTotal
-      - (horizMull * (numQty(info.panelsH) - 1))
-      - bottomRail
-      - topRail
-      + (INSET * 2)
-    )}`,
-    pattern: "PR"
-  }
-]
+    },
+  ]
 
-if (part.orderType.value === 'Door') {
-  if (part.panels.PANEL === "NONE") {
-    return none
-  } else {
-    if (info.unevenCheck) {
-      return unevenSplit
+
+
+
+  const unevenSplit = [
+    ...Array.from(Array(panelsH).keys()).slice(1).map((i, v) => {
+      return {
+        qty: qty,
+        measurement: `${fraction(
+          (width +
+            add_len -
+            leftStile -
+            rightStile
+            - (vertMull * (panelsW - 1))) / panelsW + (INSET * 2)
+        )} x ${fraction(
+          (numQty(info[`unevenSplitInput${v}`]) + (INSET * 2))
+        )}`,
+        pattern: 'PR'
+      }
+    }),
+    {
+      qty: qty,
+      measurement: `${fraction((width +
+        add_len -
+        leftStile -
+        rightStile
+        - (vertMull * (panelsW - 1))) / panelsW + (INSET * 2)
+      )} x ${fraction(height
+        - unevenSplitTotal
+        - (horizMull * (panelsH - 1))
+        - bottomRail
+        - topRail
+        + (INSET * 2)
+      )}`,
+      pattern: "PR"
+    }
+  ]
+
+  if (part.orderType.value === 'Door') {
+    if (part.panels.PANEL === "NONE") {
+      return none
     } else {
-      return door;
-    }
+      if (info.unevenCheck) {
+        return unevenSplit
+      } else {
+        return door;
+      }
 
+    }
+  } else {
+    return df;
   }
-} else {
-  return df;
-}
 };
