@@ -154,10 +154,16 @@ class DoorInfo extends Component {
             if (filter) {
               return filter;
             }
+
           })
-        });
-
-
+        }, () => {
+          
+          this.setState({
+            mouldFilter: this.props.formState.part_list.map((i, index) => {
+              return (i.design && i.design.mould && [i.design.mould]) || this.props.moulds
+            })
+          }, () => console.log('proppsssss', this.props, 'state===>>', this.state))
+        })
       }
     }
   }
@@ -282,7 +288,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.moulds`}
                     component={renderDropdownList}
-                    data={this.props.moulds}
+                    data={this.state.mouldFilter[index] || this.props.moulds}
                     valueField="value"
                     textField="NAME"
                     validate={required}
