@@ -158,59 +158,6 @@ class DoorInfo extends Component {
         });
 
 
-        this.setState({
-          mouldFilter: this.props.formState.part_list.map((i, index) => {
-            if (i.design) {
-              if (i.design.Construction === 'Cope') {
-                let filter = this.props.moulds.filter(
-                  el => el.Construction === i.construction.value
-                );
-                return filter;
-              } else if (i.design.Construction === 'MT') {
-                if (i.design.NAME.includes('15MT')) {
-                  let filter = this.props.moulds.filter(
-                    el => el.Construction === 'Cope'
-                  );
-                  this.props.dispatch(
-                    change('Orders', `part_list[${index}].moulds`, filter[0])
-                  );
-                  return filter;
-                } else {
-                  let filter = this.props.moulds.filter(
-                    el =>
-                      i.design.NAME ? el.Thickness === parseFloat(i.thickness.value) &&
-                        el.NAME.includes(i.design.NAME.substr(4, 3)) : el.NAME
-
-                  );
-                  this.props.dispatch(
-                    change('Orders', `part_list[${index}].moulds`, filter[0])
-                  );
-                  return filter;
-                }
-              } else if (i.design.Construction === 'M') {
-                let filter = this.props.moulds.filter(el =>
-                  i.design.NAME
-                    ? el.NAME.includes(i.design.NAME.substr(4, 3))
-                    : el.NAME
-                );
-                this.props.dispatch(
-                  change('Orders', `part_list[${index}].moulds`, filter[0])
-                );
-                return filter;
-              } else if (i.design.Construction === 'Special') {
-                let filter = this.props.moulds.filter(el => el.NAME);
-                this.props.dispatch(
-                  change('Orders', `part_list[${index}].moulds`, filter[0])
-                );
-                return filter;
-              }
-              else {
-                return [];
-              }
-            }
-
-          })
-        });
       }
     }
   }
@@ -335,7 +282,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.moulds`}
                     component={renderDropdownList}
-                    data={this.state.mouldFilter[index]}
+                    data={this.props.moulds}
                     valueField="value"
                     textField="NAME"
                     validate={required}

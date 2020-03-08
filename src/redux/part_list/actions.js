@@ -77,7 +77,7 @@ export function getEdges(cookie) {
 
 export function getMoulds(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/moulds?_limit=200&_sort=Index:ASC`, {
+    const res = await fetch(`${db_url}/moulds?_limit=200&_sort=Item:ASC`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
