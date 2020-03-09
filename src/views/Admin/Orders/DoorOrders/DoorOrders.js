@@ -548,7 +548,8 @@ const mapStateToProps = state => ({
           name: '4/4',
           value: 0.75
         },
-
+        arches: state.part_list.arches[0],
+        hinges: state.part_list.hinges[1],
         dimensions: [],
         addPrice: 0,
       }
