@@ -63,7 +63,7 @@ export function getDesigns(cookie) {
 
 export function getEdges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/edges?_limit=200&_sort=_id:ASC`, {
+    const res = await fetch(`${db_url}/edges?_limit=200&_sort=Item:ASC`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
