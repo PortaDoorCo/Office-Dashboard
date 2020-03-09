@@ -331,7 +331,7 @@ class DoorInfo extends Component {
 
               <Col xs="3">
                 <FormGroup>
-                  <Label htmlFor="panel">Arches</Label>
+                  <Label htmlFor="arches">Arches</Label>
                   <Field
                     name={`${part}.arches`}
                     component={renderDropdownListFilter}

@@ -245,6 +245,7 @@ class DoorEdit extends Component {
       edges,
       moulds,
       panels,
+      arches,
       grades,
       finish,
       formState,
@@ -281,6 +282,7 @@ class DoorEdit extends Component {
                     panels={panels}
                     grades={grades}
                     finish={finish}
+                    arches={arches}
                     hinges={hinges}
                     order={order}
                     formState={formState}
@@ -337,6 +339,7 @@ const mapStateToProps = (state, props) => ({
   panels: state.part_list.panels,
   grades: state.part_list.grades,
   finish: state.part_list.finish,
+  arches: state.part_list.arches,
   hinges: state.part_list.hinges,
   construction: state.part_list.construction,
   orderType: state.part_list.orderType,
