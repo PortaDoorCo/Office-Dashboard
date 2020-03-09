@@ -34,6 +34,7 @@ import {
   getMoulds,
   getPanels,
   getHinges,
+  getArches,
   getBoxThickness,
   getBoxBottoms,
   getAssembly,
@@ -68,6 +69,7 @@ class DefaultLayout extends Component {
       await props.getMoulds(cookie);
       await props.getPanels(cookie);
       await props.getHinges(cookie);
+      await props.getArches(cookie);
       await props.getBoxThickness(cookie);
       await props.getBoxBottoms(cookie);
       await props.getAssembly(cookie);
@@ -183,6 +185,7 @@ const mapDispatchToProps = dispatch =>
       getMoulds,
       getPanels,
       getHinges,
+      getArches,
       login,
       getBoxThickness,
       getBoxBottoms,

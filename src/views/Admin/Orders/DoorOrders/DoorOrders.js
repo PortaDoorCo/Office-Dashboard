@@ -374,6 +374,7 @@ class DoorOrders extends Component {
       edges,
       moulds,
       panels,
+      arches,
       finish,
       customers,
       formState,
@@ -419,6 +420,7 @@ class DoorOrders extends Component {
                     panels={panels}
                     finish={finish}
                     hinges={hinges}
+                    arches={arches}
                     prices={prices}
                     formState={formState}
                     subTotal={subTotal}
@@ -520,6 +522,7 @@ const mapStateToProps = state => ({
   moulds: state.part_list.moulds,
   panels: state.part_list.panels,
   finish: state.part_list.finish,
+  arches: state.part_list.arches,
   hinges: state.part_list.hinges,
   customers: state.Orders.customerDB,
   address: state.Orders.address,

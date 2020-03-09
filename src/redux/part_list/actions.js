@@ -10,6 +10,7 @@ export const GET_MOULDS = 'GET_MOULDS';
 export const GET_PANELS = 'GET_PANELS';
 export const GET_GRADES = 'GET_GRADES';
 export const GET_FINISH = 'GET_FINISH';
+export const GET_ARCHES = 'GET_ARCHES';
 
 export const GET_BOX_THICKNESS = 'GET_BOX_THICKNESS';
 export const GET_BOX_BOTTOMS = 'GET_BOX_BOTTOMS';
@@ -130,6 +131,21 @@ export function getFinish(cookie) {
     const data = await res.json();
     return dispatch({
       type: GET_FINISH,
+      data: data
+    });
+  };
+}
+
+export function getArches(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/arches?_sort=Item:ASC`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
+    const data = await res.json();
+    return dispatch({
+      type: GET_ARCHES,
       data: data
     });
   };

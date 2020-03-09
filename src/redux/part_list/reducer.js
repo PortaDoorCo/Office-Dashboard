@@ -12,6 +12,7 @@ import {
   GET_NOTCH,
   GET_DOOR_EXTRAS,
   GET_HINGES,
+  GET_ARCHES,
   GET_DRAWER_FINISH,
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
@@ -35,6 +36,7 @@ const initialState = {
   drawerFinishes: ["Loading"],
   doorExtras: ["Loading"],
   hinges: ["Loading"],
+  arches: ["Loading"],
   scoop: [
     {
       Name: "No",
@@ -96,6 +98,7 @@ const initialState = {
   loadedPanel: false,
   loadedGrade: false,
   loadedFinish: false,
+  loadedArches: false,
   loadedBoxThickness: false,
   loadedBoxBottoms: false,
   loadedAssembly: false,
@@ -157,6 +160,12 @@ export default function (state = initialState, action) {
         finish: data,
         loadedFinish: true
       };
+      case GET_ARCHES:
+        return {
+          ...state,
+          arches: data,
+          loadedArches: true
+        };
     case GET_BOX_THICKNESS:
       return {
         ...state,
