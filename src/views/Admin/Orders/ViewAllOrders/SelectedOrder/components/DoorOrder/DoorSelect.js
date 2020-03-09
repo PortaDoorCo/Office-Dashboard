@@ -167,7 +167,7 @@ class DoorSelect extends React.Component {
                           <h5>Part List</h5>
                         </CardSubtitle>
                         <Row>
-                          <Col xs="4">
+                          <Col xs="3">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="woodtype">Woodtype</Label>
@@ -178,7 +178,7 @@ class DoorSelect extends React.Component {
                               />
                             </FormGroup>
                           </Col>
-                          <Col xs="4">
+                          <Col xs="3">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="design">Design</Label>
@@ -188,7 +188,7 @@ class DoorSelect extends React.Component {
                             </FormGroup>
                           </Col>
 
-                          <Col xs="4">
+                          <Col xs="3">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="mould">Mould</Label>
@@ -196,10 +196,7 @@ class DoorSelect extends React.Component {
                               <Input placeholder={part.moulds.NAME} disabled />
                             </FormGroup>
                           </Col>
-                        </Row>
-
-                        <Row>
-                        <Col xs="3">
+                          <Col xs="3">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="edge">Edge</Label>
@@ -207,12 +204,25 @@ class DoorSelect extends React.Component {
                               <Input placeholder={part.edges.NAME} disabled />
                             </FormGroup>
                           </Col>
+                        </Row>
+
+                        <Row>
+
                           <Col xs="3">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="panel">Panel</Label>
                               </strong>
                               <Input placeholder={part.panels.PANEL} disabled />
+                            </FormGroup>
+                          </Col>
+
+                          <Col xs="3">
+                            <FormGroup>
+                              <strong>
+                                <Label htmlFor="arch">Arch</Label>
+                              </strong>
+                              <Input placeholder={part.arches.ARCH} disabled />
                             </FormGroup>
                           </Col>
 

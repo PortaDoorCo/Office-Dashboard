@@ -192,6 +192,7 @@ class DoorInfo extends Component {
       panels,
       edges,
       finish,
+      arches,
       hinges,
       formState,
       prices,
@@ -267,8 +268,8 @@ class DoorInfo extends Component {
               </Col>
             </Row>
             <Row>
-              {/* <Col xs="1" /> */}
-              <Col xs="4">
+
+              <Col xs="3">
                 <FormGroup>
                   <Label htmlFor="woodtype">Woodtype</Label>
                   <Field
@@ -282,7 +283,7 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="4">
+              <Col xs="3">
                 <FormGroup>
                   <Label htmlFor="design">Design</Label>
                   <Field
@@ -296,7 +297,7 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="4">
+              <Col xs="3">
                 <FormGroup>
                   <Label htmlFor="mould">Mould</Label>
                   <Field
@@ -309,9 +310,7 @@ class DoorInfo extends Component {
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              {/* <Col xs="1" /> */}
+
               <Col xs="3">
                 <FormGroup>
                   <Label htmlFor="edge">Edge</Label>
@@ -326,6 +325,11 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
+            </Row>
+            <Row>
+              {/* <Col xs="1" /> */}
+
+
               <Col xs="3">
                 <FormGroup>
                   <Label htmlFor="panel">Panel</Label>
@@ -335,6 +339,20 @@ class DoorInfo extends Component {
                     data={panels}
                     valueField="value"
                     textField="PANEL"
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+
+              <Col xs="3">
+                <FormGroup>
+                  <Label htmlFor="arches">Arches</Label>
+                  <Field
+                    name={`${part}.arches`}
+                    component={renderDropdownListFilter}
+                    data={arches}
+                    valueField="value"
+                    textField="ARCH"
                     validate={required}
                   />
                 </FormGroup>
