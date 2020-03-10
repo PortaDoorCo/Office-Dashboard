@@ -70,7 +70,7 @@ const thickness = [
   }
 ];
 
-const renderReactSelect = ({
+const renderMultiSelect = ({
   input,
   data,
   valueField,
@@ -280,8 +280,7 @@ class DoorInfo extends Component {
               </Col>
             </Row>
             <Row>
-              {/* <Col xs="1" /> */}
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="woodtype">Woodtype</Label>
                   <Field
@@ -295,7 +294,7 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="design">Design</Label>
                   <Field
@@ -309,7 +308,7 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="mould">Mould</Label>
                   <Field
@@ -323,7 +322,12 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="3">
+
+
+            </Row>
+            <Row>
+
+            <Col xs="3">
                 <FormGroup>
                   <Label htmlFor="edge">Edge</Label>
                   <Field
@@ -336,10 +340,6 @@ class DoorInfo extends Component {
                   />
                 </FormGroup>
               </Col>
-
-            </Row>
-            <Row>
-
 
               <Col xs="3">
                 <FormGroup>
@@ -383,38 +383,14 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="3">
-                <FormGroup>
-                  <Label htmlFor="finish">Finish</Label>
-                  <Field
-                    name={`${part}.finish`}
-                    component={renderDropdownListFilter}
-                    data={finish}
-                    valueField="value"
-                    textField="name"
-                    validate={required}
-                  />
-                </FormGroup>
-              </Col>
             </Row>
             <Row>
-              <Col xs="4">
-                <FormGroup>
-                <Label for="jobNotes">Door Options</Label>
-                <Field
-                    name={`${part}.doorOptions`}
-                    component={renderReactSelect}
-                    data={doorOptions}
-                    textField="option"
-                />
-                </FormGroup>
-              </Col>
               <Col xs="4">
                 <FormGroup>
                 <Label for="jobNotes">Door Extras</Label>
                 <Field
                     name={`${part}.doorExtras`}
-                    component={renderReactSelect}
+                    component={renderMultiSelect}
                     data={doorExtras}
                     textField="Name"
                 />
@@ -447,6 +423,7 @@ class DoorInfo extends Component {
                 subTotal={subTotal}
                 part_list={part_list}
                 formState={formState}
+                doorOptions={doorOptions}
                 isValid={isValid}
                 part={part}
                 updateSubmit={updateSubmit}
