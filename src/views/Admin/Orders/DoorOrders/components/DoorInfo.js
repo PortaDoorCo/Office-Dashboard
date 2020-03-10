@@ -211,6 +211,24 @@ class DoorInfo extends Component {
               )
             )
           }
+
+          if(part.design && part.design.mould){
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].moulds`,
+                part.design.mould
+              )
+            );
+          } else {
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].moulds`,
+                
+              )
+            );
+          }
         }
       });
 
