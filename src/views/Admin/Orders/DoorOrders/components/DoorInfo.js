@@ -203,6 +203,7 @@ class DoorInfo extends Component {
       finish,
       hinges,
       doorOptions,
+      doorExtras,
       arches,
       formState,
       prices,
@@ -408,6 +409,17 @@ class DoorInfo extends Component {
                 />
                 </FormGroup>
               </Col>
+              <Col xs="4">
+                <FormGroup>
+                <Label for="jobNotes">Door Extras</Label>
+                <Field
+                    name={`${part}.doorExtras`}
+                    component={renderReactSelect}
+                    data={doorExtras}
+                    textField="Name"
+                />
+                </FormGroup>
+              </Col>
             </Row>
             <Row>
               <Col xs="4">
@@ -419,8 +431,6 @@ class DoorInfo extends Component {
                       type="textarea"
                       component={renderField}
                     />
-
-
                   </strong>
                 </FormGroup>
               </Col>
