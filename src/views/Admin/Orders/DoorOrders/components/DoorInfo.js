@@ -390,7 +390,7 @@ class DoorInfo extends Component {
                 <FormGroup>
                 <Label for="jobNotes">Misc Items</Label>
                 <Field
-                    name={`${part}.doorExtras`}
+                    name={`${part}.miscItems`}
                     component={renderMultiSelect}
                     data={doorExtras}
                     textField="Name"
@@ -398,7 +398,7 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
             </Row>
-            <Row>
+            <Row className="mt-2">
               <Col xs="4">
                 <FormGroup>
                   <strong>
