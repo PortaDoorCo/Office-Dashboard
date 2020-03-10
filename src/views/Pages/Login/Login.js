@@ -23,7 +23,6 @@ import {
   getDesigns,
   getEdges,
   getFinish,
-  getGrades,
   getMoulds,
   getPanels,
   getHinges
@@ -192,7 +191,6 @@ const mapDispatchToProps = dispatch =>
       getDesigns,
       getEdges,
       getFinish,
-      getGrades,
       getMoulds,
       getPanels,
       getHinges

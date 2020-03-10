@@ -18,7 +18,8 @@ import {
   DELETE_PRODUCT,
   ADD_PRODUCT,
   UPLOAD_FILE,
-  GET_PHOTO_ID
+  GET_PHOTO_ID,
+  GET_DOOR_OPTIONS
 } from "./actions";
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
   notchDrill: ["Loading"],
   drawerFinishes: ["Loading"],
   doorExtras: ["Loading"],
+  doorOptions: ["Loading"],
   hinges: ["Loading"],
   arches: ["Loading"],
   scoop: [
@@ -104,6 +106,7 @@ const initialState = {
   loadedAssembly: false,
   loadedNotch: false,
   loadedDoorExtras: false,
+  loadedDoorOptions: false,
   loadedHinges: false,
   loadedDrawerFinishes: false,
 
@@ -160,12 +163,12 @@ export default function (state = initialState, action) {
         finish: data,
         loadedFinish: true
       };
-      case GET_ARCHES:
-        return {
-          ...state,
-          arches: data,
-          loadedArches: true
-        };
+    case GET_ARCHES:
+      return {
+        ...state,
+        arches: data,
+        loadedArches: true
+      };
     case GET_BOX_THICKNESS:
       return {
         ...state,
@@ -201,6 +204,12 @@ export default function (state = initialState, action) {
         ...state,
         doorExtras: data,
         loadedDoorExtras: true
+      };
+    case GET_DOOR_OPTIONS:
+      return {
+        ...state,
+        doorOptions: data,
+        loadedDoorOptions: true
       };
     case GET_HINGES:
       return {

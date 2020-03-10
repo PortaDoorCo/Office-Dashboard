@@ -30,7 +30,6 @@ import {
   getDesigns,
   getEdges,
   getFinish,
-  getGrades,
   getMoulds,
   getPanels,
   getHinges,
@@ -39,7 +38,9 @@ import {
   getBoxBottoms,
   getAssembly,
   getNotch,
-  getDrawerFinish
+  getDrawerFinish,
+  getDoorExtras,
+  getDoorOptions
 } from "../../redux/part_list/actions";
 import { login } from "../../redux/users/actions";
 
@@ -70,6 +71,8 @@ class DefaultLayout extends Component {
       await props.getPanels(cookie);
       await props.getHinges(cookie);
       await props.getArches(cookie);
+      await props.getDoorOptions(cookie);
+      await props.getDoorExtras(cookie);
       await props.getBoxThickness(cookie);
       await props.getBoxBottoms(cookie);
       await props.getAssembly(cookie);
@@ -181,7 +184,6 @@ const mapDispatchToProps = dispatch =>
       getDesigns,
       getEdges,
       getFinish,
-      getGrades,
       getMoulds,
       getPanels,
       getHinges,
@@ -191,7 +193,9 @@ const mapDispatchToProps = dispatch =>
       getBoxBottoms,
       getAssembly,
       getNotch,
-      getDrawerFinish
+      getDrawerFinish,
+      getDoorExtras,
+      getDoorOptions
     },
     dispatch
   );

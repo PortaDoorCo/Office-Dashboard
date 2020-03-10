@@ -19,6 +19,7 @@ export const GET_NOTCH = 'GET_NOTCH';
 export const GET_DOOR_EXTRAS = 'GET_DOOR_EXTRAS';
 export const GET_HINGES = 'GET_HINGES';
 export const GET_DRAWER_FINISH = 'GET_DRAWER_FINISH'
+export const GET_DOOR_OPTIONS = 'GET_DOOR_OPTIONS'
 
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -106,20 +107,37 @@ export function getPanels(cookie) {
   };
 }
 
-export function getGrades(cookie) {
+export function getDoorExtras(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/grades`, {
+    const res = await fetch(`${db_url}/doorextras`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
     });
     const data = await res.json();
     return dispatch({
-      type: GET_GRADES,
+      type: GET_DOOR_EXTRAS,
       data: data
     });
   };
 }
+
+export function getDoorOptions(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/door-options`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
+    const data = await res.json();
+    return dispatch({
+      type: GET_DOOR_OPTIONS,
+      data: data
+    });
+  };
+}
+
+
 
 export function getFinish(cookie) {
   return async function (dispatch) {
@@ -226,20 +244,7 @@ export function getDrawerFinish(cookie) {
   };
 }
 
-export function getDoorExtras(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/doorextras`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: GET_DOOR_EXTRAS,
-      data: data
-    });
-  };
-}
+
 
 export function getHinges(cookie) {
   return async function (dispatch) {
