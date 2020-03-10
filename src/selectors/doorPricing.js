@@ -43,8 +43,9 @@ export const itemPriceSelector = createSelector(
       const edge = part.edges ? part.edges.ADDCOST : 0;
       const finish = part.finish ? part.finish.price : 0;
       const hinge = part.hinges ? part.hinges.Price : 0;
-
-    
+      let miscItems = part.miscItems ? part.miscItems.map(i => { return i.Price}) : []
+      let miscItemsPrice = (miscItems.reduce((acc, item) => acc + item, 0))
+      console.log(miscItemsPrice)
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
@@ -55,7 +56,7 @@ export const itemPriceSelector = createSelector(
 
           const price =
             (((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood +
-              (design + edge + finish + hinge)) || 0;
+              (design + edge + finish + hinge) + miscItemsPrice) || 0;
 
           if (heights > -1) {
             return price;
@@ -79,6 +80,8 @@ export const linePriceSelector = createSelector(
       const edge = part.edges ? part.edges.ADDCOST : 0;
       const finish = part.finish ? part.finish.price : 0;
       const hinge = part.hinges ? part.hinges.Price : 0;
+      let miscItems = part.miscItems ? part.miscItems.map(i => { return i.Price}) : []
+      let miscItemsPrice = (miscItems.reduce((acc, item) => acc + item, 0))
 
   
 
@@ -87,11 +90,9 @@ export const linePriceSelector = createSelector(
           let widths = numQty(i.width);
           let heights = numQty(i.height);
 
-       
-
           const price =
             (((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood +
-              (design + edge + finish + hinge)) *
+              (design + edge + finish + hinge) + miscItemsPrice) *
             parseInt(i.qty) || 0;
 
           if (heights > -1) {
