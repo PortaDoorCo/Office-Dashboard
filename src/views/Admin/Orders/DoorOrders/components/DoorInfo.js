@@ -189,9 +189,33 @@ class DoorInfo extends Component {
             })
           }, () => console.log('proppsssss', this.props, 'state===>>', this.state))
         })
+
       }
+
+      this.props.formState.part_list.forEach((part, i) => {
+        if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
+          if(part.design && part.design.arch){
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].arches`,
+                part.design.arch
+              )
+            );
+          } else {
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].arches`,
+                this.props.arches[0]
+              )
+            )
+          }
+        }
+      });
+
     }
-  }
+  }d
 
   render() {
     const {
