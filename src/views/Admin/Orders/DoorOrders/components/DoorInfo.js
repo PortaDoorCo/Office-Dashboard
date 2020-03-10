@@ -85,6 +85,7 @@ const renderMultiSelect = ({
         data={data}
         valueField={valueField}
         textField={textField}
+        placeholder="Add Misc Items"
       />
       {touched &&
         ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -387,7 +388,7 @@ class DoorInfo extends Component {
             <Row>
               <Col xs="4">
                 <FormGroup>
-                <Label for="jobNotes">Door Extras</Label>
+                <Label for="jobNotes">Misc Items</Label>
                 <Field
                     name={`${part}.doorExtras`}
                     component={renderMultiSelect}

@@ -15,6 +15,7 @@ import Ratio from "lb-ratio";
 import Maker from '../components/MakerJS/Maker';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import Multiselect from 'react-widgets/lib/Multiselect'
+import 'react-widgets/dist/css/react-widgets.css';
 import PanelsTable from './Table/Table'
 import GlassTable from './Table/Glass'
 
