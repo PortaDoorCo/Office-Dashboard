@@ -14,6 +14,7 @@ import { Field } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../components/MakerJS/Maker';
 import DropdownList from 'react-widgets/lib/DropdownList';
+import Multiselect from 'react-widgets/lib/Multiselect'
 
 
 const required = value => (value ? undefined : 'Required');
@@ -29,6 +30,30 @@ const unevenDirection = [
     value: "Bottom"
   }
 ];
+
+
+const renderMultiSelect = ({
+  input,
+  data,
+  valueField,
+  textField,
+  meta: { touched, error, warning }
+}) => (
+    <div>
+      <Multiselect
+        {...input}
+        onBlur={() => input.onBlur()}
+        value={input.value || []} // requires value to be an array
+        data={data}
+        valueField={valueField}
+        textField={textField}
+      />
+      {touched &&
+        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+    </div>
+  );
+
 
 const renderField = ({
   input,
@@ -114,7 +139,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit }) => {
+const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -323,17 +348,17 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                   </Row>
                   <tr />
                 </tbody>
-                
+
               </Table>
               <Row>
                 <Col lg='9'>
-                {(height[index] > 0) ? 
-                  <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
-                :
-                null}
+                  {(height[index] > 0) ?
+                    <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
+                    :
+                    null}
                 </Col>
                 <Col>
-                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1 )  ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
+                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
                 </Col>
               </Row>
 
@@ -359,28 +384,42 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               {formState.part_list[i].dimensions[index].unevenCheck ?
                 <div className='mb-3'>
                   <Row>
-                  {Array.from(Array(parseInt(formState.part_list[i].dimensions[index].panelsH)).keys()).slice(1).map((i,index)=> {
-                    return (
-                      <div>
+                    {Array.from(Array(parseInt(formState.part_list[i].dimensions[index].panelsH)).keys()).slice(1).map((i, index) => {
+                      return (
+                        <div>
                           <Col />
                           <Col>
-                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index+1}</strong></p>
+                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index + 1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
                             />
                           </Col>
                           <Col />
-                          </div>
-                    )
-                  })}
+                        </div>
+                      )
+                    })}
                   </Row>
                 </div>
                 : null
               }
 
-              <Row className='mt-2'>
-                <Col>
+              {formState.part_list[i].panels && formState.part_list[i].panels.PANEL === "GLASS" ?
+                <Row className='mt-2'>
+                  <Col xs="4">
+                    <Label for="jobNotes">Lites</Label>
+                    <Field
+                      name={`${part}.doorOptions`}
+                      component={renderMultiSelect}
+                      data={doorOptions}
+                      textField="option"
+                    />
+                  </Col>
+                </Row> : null
+              }
+
+              <Row>
+                <Col xs="4">
                   <strong>Notes</strong>
                   <Field
                     name={`${table}.notes`}
@@ -388,7 +427,6 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     component={renderField}
                     label="notes"
                   />
-
                 </Col>
 
               </Row>
