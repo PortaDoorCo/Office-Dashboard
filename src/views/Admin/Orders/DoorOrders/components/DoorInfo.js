@@ -10,6 +10,7 @@ import {
 } from 'reactstrap';
 import 'antd/dist/antd.css';
 import DropdownList from 'react-widgets/lib/DropdownList';
+import Multiselect from 'react-widgets/lib/Multiselect'
 import 'react-widgets/dist/css/react-widgets.css';
 import OrderTable from './OrderTable';
 import {
@@ -20,6 +21,7 @@ import {
 import FieldFileInput from './UploadComponent'
 import { FileUploader } from 'devextreme-react';
 import Cookies from "js-cookie";
+import Select from 'react-select';
 
 const cookie = Cookies.get("jwt");
 
@@ -67,6 +69,28 @@ const thickness = [
     value: 1
   }
 ];
+
+const renderReactSelect = ({
+  input,
+  data,
+  valueField,
+  textField,
+  meta: { touched, error, warning }
+}) => (
+    <div>
+      <Multiselect
+        {...input}
+        onBlur={() => input.onBlur()}
+        value={input.value || []} // requires value to be an array
+        data={data}
+        valueField={valueField}
+        textField={textField}
+      />
+      {touched &&
+        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+    </div>
+  );
 
 const renderDropdownListFilter = ({
   input,
@@ -157,7 +181,7 @@ class DoorInfo extends Component {
 
           })
         }, () => {
-          
+
           this.setState({
             mouldFilter: this.props.formState.part_list.map((i, index) => {
               return (i.design && i.design.mould && [i.design.mould]) || this.props.moulds
@@ -178,6 +202,7 @@ class DoorInfo extends Component {
       edges,
       finish,
       hinges,
+      doorOptions,
       arches,
       formState,
       prices,
@@ -368,6 +393,19 @@ class DoorInfo extends Component {
                     textField="name"
                     validate={required}
                   />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs="4">
+                <FormGroup>
+                <Label for="jobNotes">Door Options</Label>
+                <Field
+                    name={`${part}.doorOptions`}
+                    component={renderReactSelect}
+                    data={doorOptions}
+                    textField="option"
+                />
                 </FormGroup>
               </Col>
             </Row>

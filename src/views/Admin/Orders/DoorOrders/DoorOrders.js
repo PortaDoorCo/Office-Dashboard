@@ -41,7 +41,6 @@ import {
   getDesigns,
   getEdges,
   getFinish,
-  getGrades,
   getMoulds,
   getPanels,
   getHinges
@@ -376,6 +375,7 @@ class DoorOrders extends Component {
       panels,
       arches,
       finish,
+      doorOptions,
       customers,
       formState,
       isValid,
@@ -421,6 +421,7 @@ class DoorOrders extends Component {
                     finish={finish}
                     hinges={hinges}
                     arches={arches}
+                    doorOptions={doorOptions}
                     prices={prices}
                     formState={formState}
                     subTotal={subTotal}
@@ -524,6 +525,7 @@ const mapStateToProps = state => ({
   finish: state.part_list.finish,
   arches: state.part_list.arches,
   hinges: state.part_list.hinges,
+  doorOptions: state.part_list.doorOptions,
   customers: state.Orders.customerDB,
   address: state.Orders.address,
   customerDBLoaded: state.Orders.customerDBLoaded,
@@ -586,7 +588,6 @@ const mapDispatchToProps = dispatch =>
       getDesigns,
       getEdges,
       getFinish,
-      getGrades,
       getMoulds,
       getPanels,
       shippingAddress,

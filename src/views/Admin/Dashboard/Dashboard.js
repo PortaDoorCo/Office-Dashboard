@@ -14,7 +14,6 @@ import {
   getDesigns,
   getEdges,
   getFinish,
-  getGrades,
   getMoulds,
   getPanels,
   getHinges
@@ -109,7 +108,6 @@ const mapStateToProps = (state, prop) => ({
   edges: state.part_list.edges,
   moulds: state.part_list.moulds,
   panels: state.part_list.panels,
-  grades: state.part_list.grades,
   finish: state.part_list.finish,
   hinges: state.part_list.hinges,
   customerDBLoaded: state.Orders.customerDBLoaded,
@@ -135,7 +133,6 @@ const mapDispatchToProps = dispatch =>
       getDesigns,
       getEdges,
       getFinish,
-      getGrades,
       getMoulds,
       getPanels,
       getHinges,
