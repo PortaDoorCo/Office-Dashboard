@@ -41,22 +41,21 @@ export const itemPriceSelector = createSelector(
       const wood = part.woodtype ? part.woodtype.PRICE : 0;
       const design = part.design ? part.design.DESIGNCOST : 0;
       const edge = part.edges ? part.edges.ADDCOST : 0;
-      const finish = part.finish ? part.finish.price : 0;
       const hinge = part.hinges ? part.hinges.Price : 0;
       let miscItems = part.miscItems ? part.miscItems.map(i => { return i.Price}) : []
       let miscItemsPrice = (miscItems.reduce((acc, item) => acc + item, 0))
+    
       console.log(miscItemsPrice)
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
           let widths = numQty(i.width);
           let heights = numQty(i.height);
-
-       
+          let lites = i.lites ? i.lites.addcost : 0
 
           const price =
             (((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood +
-              (design + edge + finish + hinge) + miscItemsPrice) || 0;
+              (design + edge + miscItemsPrice + hinge + lites)) || 0;
 
           if (heights > -1) {
             return price;
@@ -78,21 +77,20 @@ export const linePriceSelector = createSelector(
       const wood = part.woodtype ? part.woodtype.PRICE : 0;
       const design = part.design ? part.design.DESIGNCOST : 0;
       const edge = part.edges ? part.edges.ADDCOST : 0;
-      const finish = part.finish ? part.finish.price : 0;
       const hinge = part.hinges ? part.hinges.Price : 0;
       let miscItems = part.miscItems ? part.miscItems.map(i => { return i.Price}) : []
       let miscItemsPrice = (miscItems.reduce((acc, item) => acc + item, 0))
 
-  
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
           let widths = numQty(i.width);
           let heights = numQty(i.height);
+          let lites = i.lites ? i.lites.addcost : 0
 
           const price =
             (((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood +
-              (design + edge + finish + hinge) + miscItemsPrice) *
+              (design + edge + miscItemsPrice + hinge + lites)) *
             parseInt(i.qty) || 0;
 
           if (heights > -1) {
