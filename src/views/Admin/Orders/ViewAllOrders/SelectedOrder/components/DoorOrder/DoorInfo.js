@@ -108,80 +108,6 @@ class DoorInfo extends Component {
       test: []
     };
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-
-  //   if (this.props.formState !== prevProps.formState) {
-  //     if (this.props.formState) {
-  //       this.setState({
-  //         designFilter: this.props.formState.part_list.map((i, index) => {
-  //           let filter = this.props.designs.filter(
-  //             el =>
-  //               el.OrderType === i.orderType.value &&
-  //               el.Construction === i.construction.value &&
-  //               el.THICKNESS === parseFloat(i.thickness.value)
-  //           );
-  //           if (filter) {
-  //             return filter;
-  //           }
-  //         })
-  //       });
-
-  //       this.setState({
-  //         mouldFilter: this.props.formState.part_list.map((i, index) => {
-  //           if (i.design.Construction === 'Cope') {
-  //             let filter = this.props.moulds.filter(
-  //               el => el.Construction === i.construction.value
-  //             );
-  //             return filter;
-  //           } else if (i.design.Construction === 'MT') {
-  //             if (i.design.NAME.includes('15MT')) {
-  //               let filter = this.props.moulds.filter(
-  //                 el => el.Construction === 'Cope'
-  //               );
-  //               this.props.dispatch(
-  //                 change('Orders', `part_list[${index}].moulds`, filter[0])
-  //               );
-  //               return filter;
-  //             } else {
-  //               let filter = this.props.moulds.filter(
-  //                 el =>
-  //                   i.design.NAME ? el.Thickness === parseFloat(i.thickness.value) &&
-  //                     el.NAME.includes(i.design.NAME.substr(4, 3)) : el.NAME
-
-  //               );
-  //               this.props.dispatch(
-  //                 change('Orders', `part_list[${index}].moulds`, filter[0])
-  //               );
-  //               return filter;
-  //             }
-  //           } else if (i.design.Construction === 'M') {
-  //             let filter = this.props.moulds.filter(el =>
-  //               i.design.NAME
-  //                 ? el.NAME.includes(i.design.NAME.substr(4, 3))
-  //                 : el.NAME
-  //             );
-  //             this.props.dispatch(
-  //               change('Orders', `part_list[${index}].moulds`, filter[0])
-  //             );
-  //             return filter;
-  //           } else if (i.design.Construction === 'Special') {
-  //             let filter = this.props.moulds.filter(el => el.NAME);
-  //             this.props.dispatch(
-  //               change('Orders', `part_list[${index}].moulds`, filter[0])
-  //             );
-  //             return filter;
-  //           }
-  //           else {
-  //             return [];
-  //           }
-  //         })
-  //       });
-  //       return
-  //     }
-  //   }
-  // }
-
   
   render() {
     const {
@@ -311,6 +237,12 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
+
+
+            </Row>
+            <Row>
+              {/* <Col xs="1" /> */}
+
               <Col xs="3">
                 <FormGroup>
                   <Label htmlFor="edge">Edge</Label>
@@ -324,11 +256,6 @@ class DoorInfo extends Component {
                   />
                 </FormGroup>
               </Col>
-
-            </Row>
-            <Row>
-              {/* <Col xs="1" /> */}
-
 
               <Col xs="3">
                 <FormGroup>
@@ -372,19 +299,6 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="3">
-                <FormGroup>
-                  <Label htmlFor="finish">Finish</Label>
-                  <Field
-                    name={`${part}.finish`}
-                    component={renderDropdownList}
-                    data={finish}
-                    valueField="value"
-                    textField="name"
-                    validate={required}
-                  />
-                </FormGroup>
-              </Col>
             </Row>
             <Row>
               <Col xs="4">
