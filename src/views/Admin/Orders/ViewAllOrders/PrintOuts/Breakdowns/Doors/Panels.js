@@ -21,6 +21,7 @@ export default (info, part) => {
   const width = numQty(info.width)
   const qty = parseInt(info.qty)
   const tenon_factor = part.design.TENON
+  const lites = info.lites ? info.lites.option : ""
 
   const INSET = part.panels.IN_SET
 
@@ -39,7 +40,7 @@ export default (info, part) => {
   if (part.design.Construction === "M") {
     door = [
       {
-        qty: `${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty}`,
+        qty: `(${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty})`,
         measurement: `${fraction(
           Math.round((
             (width -
@@ -60,7 +61,7 @@ export default (info, part) => {
   } else {
     door = [
       {
-        qty: `${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty}`,
+        qty: `(${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty})`,
         measurement: `${fraction(
           Math.round((
             (width +
@@ -92,7 +93,7 @@ export default (info, part) => {
     {
       qty: ``,
       measurement: ``,
-      pattern: 'GLASS'
+      pattern: `GLASS \n ${lites}`
     },
   ]
 
@@ -155,7 +156,7 @@ export default (info, part) => {
   ]
 
   if (part.orderType.value === 'Door') {
-    if (part.panels.PANEL === "NONE") {
+    if (part.panels.PANEL === "GLASS") {
       return none
     } else {
       if (info.unevenCheck) {
