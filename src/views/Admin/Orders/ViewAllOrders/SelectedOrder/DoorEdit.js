@@ -136,68 +136,6 @@ class DoorEdit extends Component {
             return null;
           }
         });
-
-        part_list.forEach((part, i) => {
-
-          // if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
-          //   return part.dimensions.forEach((info, index) => {
-
-          //     this.props.dispatch(
-          //       change(
-          //         'DoorOrder',
-          //         `part_list[${i}].dimensions[${index}].leftStile`,
-          //         fraction(part.design.L_STILE_W)
-          //       )
-          //     );
-
-          //     this.props.dispatch(
-          //       change(
-          //         'DoorOrder',
-          //         `part_list[${i}].dimensions[${index}].rightStile`,
-          //         fraction(part.design.R_STILE_W)
-          //       )
-          //     );
-
-          //     this.props.dispatch(
-          //       change(
-          //         'DoorOrder',
-          //         `part_list[${i}].dimensions[${index}].topRail`,
-          //         fraction(part.design.TOP_RAIL_W)
-          //       )
-          //     );
-
-          //     this.props.dispatch(
-          //       change(
-          //         'DoorOrder',
-          //         `part_list[${i}].dimensions[${index}].bottomRail`,
-          //         fraction(part.design.BOT_RAIL_W)
-          //       )
-          //     );
-
-          //     if (info.panelsH > 1) {
-          //       this.props.dispatch(
-          //         change(
-          //           'DoorOrder',
-          //           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-          //           fraction(part.design.TOP_RAIL_W)
-          //         )
-          //       );
-          //     }
-
-          //     if (info.panelsW > 1) {
-          //       this.props.dispatch(
-          //         change(
-          //           'DoorOrder',
-          //           `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-          //           fraction(part.design.TOP_RAIL_W)
-          //         )
-          //       );
-          //     }
-          //   });
-          // } else {
-          //   return null;
-          // }
-        });
       };
 
       update();

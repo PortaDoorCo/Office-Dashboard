@@ -18,6 +18,7 @@ import Maker from './MakerJS/Selected/Maker';
 import numQty from 'numeric-quantity';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import PanelsTable from './Table/PanelTable'
 
 
 
@@ -167,7 +168,7 @@ class DoorSelect extends React.Component {
                           <h5>Part List</h5>
                         </CardSubtitle>
                         <Row>
-                          <Col xs="3">
+                          <Col xs="4">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="woodtype">Woodtype</Label>
@@ -178,7 +179,7 @@ class DoorSelect extends React.Component {
                               />
                             </FormGroup>
                           </Col>
-                          <Col xs="3">
+                          <Col xs="4">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="design">Design</Label>
@@ -188,7 +189,7 @@ class DoorSelect extends React.Component {
                             </FormGroup>
                           </Col>
 
-                          <Col xs="3">
+                          <Col xs="4">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="mould">Mould</Label>
@@ -196,7 +197,12 @@ class DoorSelect extends React.Component {
                               <Input placeholder={part.moulds.NAME} disabled />
                             </FormGroup>
                           </Col>
-                          <Col xs="3">
+
+                        </Row>
+
+                        <Row>
+
+                        <Col xs="3">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="edge">Edge</Label>
@@ -204,9 +210,6 @@ class DoorSelect extends React.Component {
                               <Input placeholder={part.edges.NAME} disabled />
                             </FormGroup>
                           </Col>
-                        </Row>
-
-                        <Row>
 
                           <Col xs="3">
                             <FormGroup>
@@ -235,17 +238,9 @@ class DoorSelect extends React.Component {
                             </FormGroup>
                           </Col>
 
-                          <Col xs="3">
-                            <FormGroup>
-                              <strong>
-                                <Label htmlFor="grade-thickness">Finish</Label>
-                              </strong>
-                              <Input placeholder={part.finish.name} disabled />
-                            </FormGroup>
-                          </Col>
                         </Row>
 
-                        <Row>
+                        <Row className="mt-2">
                           <Col xs="4">
                             <FormGroup>
                               <strong>
@@ -264,129 +259,14 @@ class DoorSelect extends React.Component {
                           {part.dimensions.map((info, index) => {
                             return (
                               <Fragment key={index}>
-                                <Table>
-                                  <thead>
-                                    <tr>
-                                      <th>Qty</th>
-                                      <th>Width</th>
-                                      <th>Height</th>
 
-                                      <th>Panel High</th>
-                                      <th>Panels Wide</th>
-                                      <th>Price</th>
-                                      <th />
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>
-                                        <Input
-                                          placeholder={info.qty}
-                                          disabled
-                                        />
-                                      </td>
-                                      <td>
-                                        <Input
-                                          placeholder={info.width}
-                                          disabled
-                                        />
-                                      </td>
-                                      <td>
-                                        <Input
-                                          placeholder={info.height}
-                                          disabled
-                                        />
-                                      </td>
+                                <PanelsTable 
+                                  info={info}
+                                  order={order}
+                                  i={i}
+                                  index={index}
+                                />
 
-                                      <td>
-                                        <Input
-                                          placeholder={info.panelsH}
-                                          disabled
-                                        />
-                                      </td>
-                                      <td>
-                                        <Input
-                                          placeholder={info.panelsW}
-                                          disabled
-                                        />
-                                      </td>
-                                      <td>
-                                        <Input
-                                          disabled
-                                          type="text"
-                                          className="form-control"
-                                          placeholder={
-                                            '$' +
-                                            order.linePrice[i][index].toFixed(
-                                              2
-                                            ) || 0
-                                          }
-                                        />
-                                      </td>
-                                      <td />
-                                    </tr>
-
-                                    <tr>
-                                      <td>
-                                        <strong>
-                                          <p>Left Stile</p>
-                                        </strong>
-                                        <Input
-                                          placeholder={info.leftStile}
-                                          disabled
-                                        />
-                                      </td>
-                                      <td>
-                                        <strong>
-                                          <p>Right Stile</p>
-                                        </strong>
-                                        <Input
-                                          placeholder={info.rightStile}
-                                          disabled
-                                        />
-                                      </td>
-                                      <td>
-                                        <strong>
-                                          <p>Top Rail</p>
-                                        </strong>
-                                        <Input
-                                          placeholder={info.topRail}
-                                          disabled
-                                        />
-                                      </td>
-                                      <td>
-                                        <strong>
-                                          <p>Bottom Rail</p>
-                                        </strong>
-                                        <Input
-                                          placeholder={info.bottomRail}
-                                          disabled
-                                        />
-                                      </td>
-                                      <td>
-                                        <strong>
-                                          <p>Hori. Mid Rail</p>
-                                        </strong>
-                                        <Input
-                                          placeholder={
-                                            info.horizontalMidRailSize
-                                          }
-                                          disabled
-                                        />
-                                      </td>
-                                      <td>
-                                        <strong>
-                                          <p>Vert. Mid Rail</p>
-                                        </strong>
-                                        <Input
-                                          placeholder={info.verticalMidRailSize}
-                                          disabled
-                                        />
-                                      </td>
-                                    </tr>
-                                    <tr />
-                                  </tbody>
-                                </Table>
                                 <Row>
                                   {console.log(info)}
                                   <Col>
