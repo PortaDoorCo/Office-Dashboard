@@ -19,6 +19,7 @@ import numQty from 'numeric-quantity';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import PanelsTable from './Table/PanelTable'
+import GlassTable from './Table/GlassTable'
 
 
 
@@ -202,7 +203,7 @@ class DoorSelect extends React.Component {
 
                         <Row>
 
-                        <Col xs="3">
+                          <Col xs="3">
                             <FormGroup>
                               <strong>
                                 <Label htmlFor="edge">Edge</Label>
@@ -260,12 +261,25 @@ class DoorSelect extends React.Component {
                             return (
                               <Fragment key={index}>
 
-                                <PanelsTable 
-                                  info={info}
-                                  order={order}
-                                  i={i}
-                                  index={index}
-                                />
+                                {console.log(part)}
+
+                                {part.panels.PANEL === "GLASS" ?
+                                  <GlassTable
+                                    info={info}
+                                    order={order}
+                                    i={i}
+                                    index={index}
+                                  /> :
+
+                                  <PanelsTable
+                                    info={info}
+                                    order={order}
+                                    i={i}
+                                    index={index}
+                                  />
+                                }
+
+
 
                                 <Row>
                                   {console.log(info)}
