@@ -13,6 +13,8 @@ import {
 } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from './MakerJS/Edit/Maker'
+import PanelsTable from './Table/DoorEdit/PanelTable'
+import GlassTable from './Table/DoorEdit/GlassTable'
 
 
 const renderField = ({
@@ -40,166 +42,43 @@ const OrderTable = ({
   i,
   prices,
   subTotal,
-  part
+  part,
+  doorOptions
 }) => (
     <div>
       {fields.map((dimension, index) => {
         return (
           <Fragment key={index}>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Qty</th>
-                  <th>Width</th>
-                  <th>Height</th>
-                  <th>Panel High</th>
-                  <th>Panels Wide</th>
-                  <th>Price</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <Field
-                      name={`${dimension}.qty`}
-                      type="text"
-                      component={renderField}
-                      label="qty"
-                    />
-                  </td>
-                  <td>
-                    <Field
-                      name={`${dimension}.width`}
-                      type="text"
-                      onBlur
-                      component={renderField}
-                      label="width"
-                    />
-                  </td>
-                  <td>
-                    <Field
-                      name={`${dimension}.height`}
-                      type="text"
-                      onBlur
-                      component={renderField}
-                      label="height"
-                    />
-                  </td>
 
-                  <td>
-                    <Field
-                      name={`${dimension}.panelsH`}
-                      type="text"
-                      component={renderField}
-                      label="horizontalMidRail"
-                    />
-                  </td>
-                  <td>
-                    <Field
-                      name={`${dimension}.panelsW`}
-                      type="text"
-                      component={renderField}
-                      label="verticalMidRail"
-                    />
-                  </td>
-                  <td>
-                    {prices[i] ? (
-                      <Input
-                        type="text"
-                        className="form-control"
-                        name="linePrice"
-                        disabled
-                        placeholder={"$" + prices[i][index].toFixed(2) || 0}
-                      />
-                    ) : null}
-                  </td>
-                  <td>
-                    <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
-                      X
-                    </Button>
-                  </td>
-                </tr>
+            {console.log(part_list)}
+            {console.log(part)}
+            {formState && formState.part_list && formState.part_list[i].panels.PANEL === "GLASS" ?
+              <GlassTable
+                dimension={dimension}
+                renderField={renderField}
+                i={i}
+                index={index}
+                prices={prices}
+                fields={fields}
+                doorOptions={doorOptions}
+              />
+              :
+              <PanelsTable
+                dimension={dimension}
+                renderField={renderField}
+                i={i}
+                index={index}
+                prices={prices}
+                fields={fields}
+              />
+            }
 
-                <tr>
-                  <td>
-                    <strong>
-                      <p>Left Stile</p>
-                    </strong>
-                    <Field
-                      name={`${dimension}.leftStile`}
-                      type="text"
-                      component={renderField}
-                      label="leftStile"
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Right Stile</p>
-                    </strong>
-                    <Field
-                      name={`${dimension}.rightStile`}
-                      type="text"
-                      component={renderField}
-                      label="rightStile"
-                      value="2 3/4"
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Top Rail</p>
-                    </strong>
-                    <Field
-                      name={`${dimension}.topRail`}
-                      type="text"
-                      component={renderField}
-                      label="topRail"
-                      value="2 3/4"
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Bottom Rail</p>
-                    </strong>
-                    <Field
-                      name={`${dimension}.bottomRail`}
-                      type="text"
-                      component={renderField}
-                      label="bottomRail"
-                      value="2 3/4"
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Hori. Mid Rail</p>
-                    </strong>
-                    <Field
-                      name={`${dimension}.horizontalMidRailSize`}
-                      type="text"
-                      component={renderField}
-                      label="horizontalMidRail"
-                      value="2 3/4"
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Vert. Mid Rail</p>
-                    </strong>
-                    <Field
-                      name={`${dimension}.verticalMidRailSize`}
-                      type="text"
-                      component={renderField}
-                      label="verticalMidRail"
-                      value="2 3/4"
-                    />
-                  </td>
-                </tr>
-                <tr />
-              </tbody>
-            </Table>
+
+
+
             <Row>
               <Col>
-              <div id={`edited-makerJS${index}`} style={{ width: '100%', height: '300px' }}>
+                <div id={`edited-makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                   <Maker
                     i={i}
                     index={index}
@@ -216,27 +95,27 @@ const OrderTable = ({
 
 
             {formState && formState.part_list[i].dimensions[index].unevenCheck ?
-                <div className='mb-3'>
-                  <Row>
-                  {Array.from(Array(parseInt(formState.part_list[i].dimensions[index].panelsH)).keys()).slice(1).map((i,index)=> {
+              <div className='mb-3'>
+                <Row>
+                  {Array.from(Array(parseInt(formState.part_list[i].dimensions[index].panelsH)).keys()).slice(1).map((i, index) => {
                     return (
                       <div>
-                          <Col />
-                          <Col>
-                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index+1}</strong></p>
-                            <Field
-                              name={`${dimension}.unevenSplitInput${index}`}
-                              component={renderField}
-                            />
-                          </Col>
-                          <Col />
-                          </div>
+                        <Col />
+                        <Col>
+                          <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index + 1}</strong></p>
+                          <Field
+                            name={`${dimension}.unevenSplitInput${index}`}
+                            component={renderField}
+                          />
+                        </Col>
+                        <Col />
+                      </div>
                     )
                   })}
-                  </Row>
-                </div>
-                : null
-              }
+                </Row>
+              </div>
+              : null
+            }
 
             <Row>
               <Col>

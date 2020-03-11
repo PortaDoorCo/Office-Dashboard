@@ -8,6 +8,7 @@ import {
   Button,
 } from "reactstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
+import Multiselect from 'react-widgets/lib/Multiselect'
 import "react-widgets/dist/css/react-widgets.css";
 import {
   Field,
@@ -54,6 +55,29 @@ const thickness = [
     value: 1
   }
 ];
+
+const renderMultiSelect = ({
+  input,
+  data,
+  valueField,
+  textField,
+  meta: { touched, error, warning }
+}) => (
+    <div>
+      <Multiselect
+        {...input}
+        onBlur={() => input.onBlur()}
+        value={input.value || []} // requires value to be an array
+        data={data}
+        valueField={valueField}
+        textField={textField}
+        placeholder="Add Misc Items"
+      />
+      {touched &&
+        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+    </div>
+  );
 
 const renderDropdownListFilter = ({
   input,
@@ -120,13 +144,15 @@ class DoorInfo extends Component {
       finish,
       arches,
       hinges,
+      doorOptions,
+      doorExtras,
       formState,
       prices,
       part_list,
       subTotal
     } = this.props;
 
-    console.log(designs)
+    console.log(doorOptions)
 
     return (
       <div>
@@ -195,7 +221,7 @@ class DoorInfo extends Component {
             </Row>
             <Row>
 
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="woodtype">Woodtype</Label>
                   <Field
@@ -209,7 +235,7 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="design">Design</Label>
                   <Field
@@ -223,7 +249,7 @@ class DoorInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="mould">Mould</Label>
                   <Field
@@ -300,6 +326,21 @@ class DoorInfo extends Component {
               </Col>
 
             </Row>
+
+            <Row>
+              <Col xs="4">
+                <FormGroup>
+                <Label for="jobNotes">Misc Items</Label>
+                <Field
+                    name={`${part}.miscItems`}
+                    component={renderMultiSelect}
+                    data={doorExtras}
+                    textField="Name"
+                />
+                </FormGroup>
+              </Col>
+            </Row>
+
             <Row>
               <Col xs="4">
                 <FormGroup>
@@ -321,6 +362,7 @@ class DoorInfo extends Component {
                 part_list={part_list}
                 formState={formState}
                 part={part}
+                doorOptions={doorOptions}
               />
               <div />
             </div>
