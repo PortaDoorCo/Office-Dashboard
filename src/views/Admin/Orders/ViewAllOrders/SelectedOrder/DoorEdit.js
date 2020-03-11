@@ -148,9 +148,25 @@ class DoorEdit extends Component {
 
     console.log(values)
 
+    const jobInfo = {
+      jobName: values.jobInfo.jobName,
+      status: values.jobInfo.status,
+      poNum: values.jobInfo.poNum,
+      Address1: values.jobInfo.Address1,
+      Address2: values.jobInfo.Address2,
+      City: values.jobInfo.City,
+      State: values.jobInfo.State,
+      Zip: values.jobInfo.Zip,
+      Phone: values.jobInfo.Phone,
+      DueDate: values.jobInfo.DueDate,
+      customer: {
+        Company: values.jobInfo.customer.Company
+      }
+    }
+
     const order = {
       part_list: values.part_list,
-      jobInfo: values.jobInfo,
+      jobInfo: jobInfo,
       companyprofile: values.jobInfo.customer.id,
       linePrice: prices,
       itemPrice: itemPrice,
@@ -186,6 +202,8 @@ class DoorEdit extends Component {
       arches,
       grades,
       finish,
+      doorExtras,
+      doorOptions,
       formState,
       hinges,
       order,
@@ -195,7 +213,7 @@ class DoorEdit extends Component {
       total
     } = this.props;
 
-    console.log(designs)
+    console.log(order)
 
     return (
       <div className="animated resize">
@@ -221,6 +239,8 @@ class DoorEdit extends Component {
                     grades={grades}
                     finish={finish}
                     arches={arches}
+                    doorOptions={doorOptions}
+                    doorExtras={doorExtras}
                     hinges={hinges}
                     order={order}
                     formState={formState}
@@ -279,6 +299,8 @@ const mapStateToProps = (state, props) => ({
   finish: state.part_list.finish,
   arches: state.part_list.arches,
   hinges: state.part_list.hinges,
+  doorOptions: state.part_list.doorOptions,
+  doorExtras: state.part_list.doorExtras,
   construction: state.part_list.construction,
   orderType: state.part_list.orderType,
   thickness: state.part_list.thickness,

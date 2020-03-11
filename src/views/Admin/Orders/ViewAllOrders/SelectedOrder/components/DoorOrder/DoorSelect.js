@@ -18,8 +18,8 @@ import Maker from './MakerJS/Selected/Maker';
 import numQty from 'numeric-quantity';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import PanelsTable from './Table/PanelTable'
-import GlassTable from './Table/GlassTable'
+import PanelsTable from './Table/DoorSelect/PanelTable'
+import GlassTable from './Table/DoorSelect/GlassTable'
 
 
 

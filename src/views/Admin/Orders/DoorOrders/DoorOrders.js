@@ -103,10 +103,26 @@ class DoorOrders extends Component {
 
     console.log(values.job_info.DueDate)
 
+    const jobInfo = {
+      jobName: values.job_info.jobName,
+      status: values.job_info.status,
+      poNum: values.job_info.poNum,
+      Address1: values.job_info.Address1,
+      Address2: values.job_info.Address2,
+      City: values.job_info.City,
+      State: values.job_info.State,
+      Zip: values.job_info.Zip,
+      Phone: values.job_info.Phone,
+      DueDate: values.job_info.DueDate,
+      customer: {
+        Company: values.job_info.customer.Company
+      }
+    }
+
     const order = {
       part_list: values.part_list,
       status: values.job_info.status,
-      jobInfo: values.job_info,
+      jobInfo: jobInfo,
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
       itemPrice: itemPrice,
@@ -119,7 +135,7 @@ class DoorOrders extends Component {
       userName: user.username,
       files: this.state.files,
       tracking: [
-        { 
+        {
           "status": values.job_info.status,
           "date": new Date()
         }
@@ -474,7 +490,7 @@ class DoorOrders extends Component {
                     <FormGroup>
                       <h3>Upload Files</h3>
                       <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://localhost:1337/upload" />
+                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://server.portadoor.com/upload" />
                       </form>
                     </FormGroup>
                   </CardBody>
