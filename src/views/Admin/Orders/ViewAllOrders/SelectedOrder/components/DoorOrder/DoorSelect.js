@@ -246,6 +246,14 @@ class DoorSelect extends React.Component {
                             <FormGroup>
                               <strong>
                                 <Label for="exampleText">Job Notes</Label>
+                                {part.miscItems ? part.miscItems.map(i=> {
+                                  return (
+                                    <ul>
+                                      <li>{i.Name}</li>
+                                    </ul>
+                                    
+                                    )
+                                }) : ""}
                               </strong>
                             </FormGroup>
                           </Col>
