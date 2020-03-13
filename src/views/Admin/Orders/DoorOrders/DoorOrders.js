@@ -303,13 +303,23 @@ class DoorOrders extends Component {
                       )
                     );
 
-                    this.props.dispatch(
-                      change(
-                        'DoorOrder',
-                        `part_list[${i}].dimensions[${index}].topRail`,
-                        fraction(part.design ? part.design.R_STILE_W : 0)
-                      )
-                    );
+                    if(part.design && part.design.arch){
+                      this.props.dispatch(
+                        change(
+                          'DoorOrder',
+                          `part_list[${i}].dimensions[${index}].topRail`,
+                          fraction(part.design ? part.design.arch.RAIL_WIDTH : 0)
+                        )
+                      );
+                    } else {
+                      this.props.dispatch(
+                        change(
+                          'DoorOrder',
+                          `part_list[${i}].dimensions[${index}].topRail`,
+                          fraction(part.design ? part.design.R_STILE_W : 0)
+                        )
+                      );
+                    }
 
                     this.props.dispatch(
                       change(

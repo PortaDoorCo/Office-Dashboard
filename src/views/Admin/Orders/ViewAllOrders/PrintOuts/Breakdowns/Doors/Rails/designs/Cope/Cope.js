@@ -27,6 +27,9 @@ export default (info, part) => {
   const qty = parseInt(info.qty)
   const tenon_factor = part.design.TENON
 
+
+  console.log(part)
+
   if (topRail === bottomRail) {
     if ((panelsW > 1) || (panelsH > 1)) {
       if (!part.design.LOCK_UPDN) {
