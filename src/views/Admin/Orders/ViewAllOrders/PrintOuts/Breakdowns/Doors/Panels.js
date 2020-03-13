@@ -8,6 +8,7 @@ const fraction = num => {
 };
 
 export default (info, part) => {
+  
   const add_len = part.design.S_ADD_LEN;
   const topRail = numQty(info.topRail) + part.design.TR_MILL_AD;
   const bottomRail = numQty(info.bottomRail) + part.design.BR_MILL_AD;

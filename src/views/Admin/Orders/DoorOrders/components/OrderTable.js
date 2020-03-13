@@ -298,7 +298,29 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 color="primary"
                 className="btn-circle"
                 onClick={(e) =>
-                  formState.part_list[formState.part_list.length - 1].design ?
+                  (formState.part_list[formState.part_list.length - 1].design && formState.part_list[formState.part_list.length - 1].design.arch && formState.part_list[formState.part_list.length - 1].design.ARCHED_TOP && formState.part_list[formState.part_list.length - 1].design.ARCHED_BOT) ?
+                  fields.push({
+                    panelsH: 1,
+                    panelsW: 1,
+                    leftStile: fraction(
+                      formState.part_list[formState.part_list.length - 1].design.L_STILE_W
+                    ),
+                    rightStile: fraction(
+                      formState.part_list[formState.part_list.length - 1].design.R_STILE_W
+                    ),
+                    topRail: fraction(
+                      formState.part_list[formState.part_list.length - 1].design.arch.RAIL_WIDTH
+                    ),
+                    bottomRail: fraction(
+                      formState.part_list[formState.part_list.length - 1].design.arch.RAIL_WIDTH
+                    ),
+                    horizontalMidRailSize: 0,
+                    verticalMidRailSize: 0,
+                    unevenSplitInput: "0",
+                    showBuilder: false
+                  })
+                  :
+                  (formState.part_list[formState.part_list.length - 1].design && formState.part_list[formState.part_list.length - 1].design.arch && formState.part_list[formState.part_list.length - 1].design.ARCHED_TOP) ?
                     fields.push({
                       panelsH: 1,
                       panelsW: 1,
@@ -309,7 +331,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         formState.part_list[formState.part_list.length - 1].design.R_STILE_W
                       ),
                       topRail: fraction(
-                        formState.part_list[formState.part_list.length - 1].design.TOP_RAIL_W
+                        formState.part_list[formState.part_list.length - 1].design.arch.RAIL_WIDTH
                       ),
                       bottomRail: fraction(
                         formState.part_list[formState.part_list.length - 1].design.BOT_RAIL_W
@@ -318,7 +340,29 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       verticalMidRailSize: 0,
                       unevenSplitInput: "0",
                       showBuilder: false
-                    }) : alert('please select a design')
+                    })
+                    : (formState.part_list[formState.part_list.length - 1].design) ?
+                      fields.push({
+                        panelsH: 1,
+                        panelsW: 1,
+                        leftStile: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.L_STILE_W
+                        ),
+                        rightStile: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.R_STILE_W
+                        ),
+                        topRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.TOP_RAIL_W
+                        ),
+                        bottomRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.BOT_RAIL_W
+                        ),
+                        horizontalMidRailSize: 0,
+                        verticalMidRailSize: 0,
+                        unevenSplitInput: "0",
+                        showBuilder: false
+                      })
+                      : alert('please select a design')
                 }
               >
                 +
