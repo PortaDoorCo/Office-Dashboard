@@ -11,7 +11,7 @@ export default (info, part) => {
   
   const add_len = part.design.S_ADD_LEN;
   const topRail = numQty(info.topRail) + part.design.TR_MILL_AD;
-  const bottomRail = numQty(info.bottomRail) + part.design.BR_MILL_AD;
+  const bottomRail = part.design.ARCHED_BOT ? numQty(info.bottomRail) + part.design.TR_MILL_AD : numQty(info.bottomRail) + part.design.BR_MILL_AD;
   const leftStile = numQty(info.leftStile) + part.design.LS_MILL_AD;
   const rightStile = numQty(info.rightStile) + part.design.RS_MILL_AD;
   const vertMull = numQty(info.verticalMidRailSize) + part.design.V_MULL_ADD;
@@ -23,6 +23,7 @@ export default (info, part) => {
   const qty = parseInt(info.qty)
   const tenon_factor = part.design.TENON
   const lites = info.lites ? info.lites.option : ""
+  const archHeight = part.design.ARCHED_BOT ? (part.arches.ARCHHEIGHT + add_len) * 2 : part.arches.ARCHHEIGHT + add_len
 
   const INSET = part.panels.IN_SET
 
@@ -60,28 +61,53 @@ export default (info, part) => {
       },
     ]
   } else {
-    door = [
-      {
-        qty: `(${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty})`,
-        measurement: `${fraction(
-          Math.round((
-            (width +
-              add_len -
-              (leftStile) -
-              (rightStile)
-              - (vertMull * (panelsW - 1))) / panelsW + (INSET * 2)) * 16) / 16
-        )} x ${fraction(
-          Math.round((
-            (height +
-              add_len -
-              (topRail) -
-              (bottomRail)
-              - (horizMull * (panelsH - 1))) / panelsH + (INSET * 2))
-            * 16) / 16
-        )}`,
-        pattern: 'PR'
-      },
-    ]
+    if(part.design.arch){
+      door = [
+        {
+          qty: `(${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty})`,
+          measurement: `${fraction(
+            Math.round((
+              (width +
+                add_len -
+                (leftStile) -
+                (rightStile)
+                - (vertMull * (panelsW - 1))) / panelsW + (INSET * 2)) * 16) / 16
+          )} x ${fraction(
+            Math.round((
+              (height +
+                add_len -
+                (topRail) -
+                (bottomRail)
+                - (horizMull * (panelsH - 1))) / panelsH + (INSET * 2) + archHeight)
+              * 16) / 16
+          )}`,
+          pattern: 'PR'
+        },
+      ]
+    } else {
+      door = [
+        {
+          qty: `(${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty})`,
+          measurement: `${fraction(
+            Math.round((
+              (width +
+                add_len -
+                (leftStile) -
+                (rightStile)
+                - (vertMull * (panelsW - 1))) / panelsW + (INSET * 2)) * 16) / 16
+          )} x ${fraction(
+            Math.round((
+              (height +
+                add_len -
+                (topRail) -
+                (bottomRail)
+                - (horizMull * (panelsH - 1))) / panelsH + (INSET * 2))
+              * 16) / 16
+          )}`,
+          pattern: 'PR'
+        },
+      ]
+    }
   }
 
 
