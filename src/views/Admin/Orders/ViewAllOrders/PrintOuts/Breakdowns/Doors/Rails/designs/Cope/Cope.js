@@ -15,7 +15,7 @@ export default (info, part) => {
 
   const add_len = part.design.S_ADD_LEN;
   const topRail = numQty(info.topRail) + part.design.TR_MILL_AD;
-  const bottomRail = numQty(info.bottomRail) + part.design.BR_MILL_AD;
+  const bottomRail = part.design.ARCHED_BOT ? numQty(info.bottomRail) + part.design.TR_MILL_AD : numQty(info.bottomRail) + part.design.BR_MILL_AD;
   const leftStile = numQty(info.leftStile) + part.design.LS_MILL_AD;
   const rightStile = numQty(info.rightStile) + part.design.RS_MILL_AD;
   const vertMull = numQty(vMidRail) + part.design.V_MULL_ADD;
