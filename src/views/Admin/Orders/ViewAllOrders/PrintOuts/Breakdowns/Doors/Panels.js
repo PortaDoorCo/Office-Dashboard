@@ -23,7 +23,7 @@ export default (info, part) => {
   const qty = parseInt(info.qty)
   const tenon_factor = part.design.TENON
   const lites = info.lites ? info.lites.option : ""
-  const archHeight = part.design.ARCHED_BOT ? (part.arches.ARCHHEIGHT + add_len) * 2 : part.arches.ARCHHEIGHT + add_len
+  const archHeight = part.design.ARCHED_BOT ? (part.arches.ARCHHEIGHT + add_len) * 2 : part.design.ARCHED_TOP ? (part.arches.ARCHHEIGHT + add_len) : 0
 
   const INSET = part.panels.IN_SET
 
@@ -61,7 +61,6 @@ export default (info, part) => {
       },
     ]
   } else {
-    if(part.design.arch){
       door = [
         {
           qty: `(${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty})`,
@@ -84,30 +83,7 @@ export default (info, part) => {
           pattern: 'PR'
         },
       ]
-    } else {
-      door = [
-        {
-          qty: `(${(panelsH > 1 && panelsW < 2) ? (panelsH * qty) : (panelsW > 1 && panelsH < 2) ? (panelsW * qty) : (panelsW > 1 && panelsH > 1) ? (panelsH * panelsW) * qty : qty})`,
-          measurement: `${fraction(
-            Math.round((
-              (width +
-                add_len -
-                (leftStile) -
-                (rightStile)
-                - (vertMull * (panelsW - 1))) / panelsW + (INSET * 2)) * 16) / 16
-          )} x ${fraction(
-            Math.round((
-              (height +
-                add_len -
-                (topRail) -
-                (bottomRail)
-                - (horizMull * (panelsH - 1))) / panelsH + (INSET * 2))
-              * 16) / 16
-          )}`,
-          pattern: 'PR'
-        },
-      ]
-    }
+
   }
 
 

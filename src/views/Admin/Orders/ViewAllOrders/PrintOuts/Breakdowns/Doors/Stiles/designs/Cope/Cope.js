@@ -17,12 +17,13 @@ export default (info, part) => {
   const rightStile = numQty(info.rightStile) + part.design.RS_MILL_AD;
   const vertMull = numQty(info.verticalMidRailSize) + part.design.V_MULL_ADD;
   const horizMull = numQty(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
-  const panelsH = parseInt(info.panelsH)
-  const panelsW = parseInt(info.panelsW)
+  const panelsH = numQty(info.panelsH)
+  const panelsW = numQty(info.panelsW)
   const height = numQty(info.height)
   const width = numQty(info.width)
   const qty = parseInt(info.qty)
   const tenon_factor = part.design.TENON
+
 
 
   if (leftStile === rightStile) {
@@ -46,7 +47,8 @@ export default (info, part) => {
                 bottomRail -
                 horizMull * (panelsH - 1)) /
                 panelsH +
-                tenon_factor)
+                tenon_factor
+                )
                 * 16) / 16
             )}`,
             pattern: "VM7"

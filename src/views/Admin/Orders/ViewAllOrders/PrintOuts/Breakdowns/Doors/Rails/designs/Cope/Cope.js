@@ -75,7 +75,7 @@ export default (info, part) => {
                 tenon_factor)
                 * 16) / 16
             )}`,
-            pattern: 'TB'
+            pattern: 'TB 1'
           },
           {
             qty: (((panelsH - 1) * panelsW) * qty),
