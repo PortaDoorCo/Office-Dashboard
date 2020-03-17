@@ -164,76 +164,76 @@ class DoorInfo extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  // componentDidUpdate(prevProps, prevState) {
 
-    if (this.props.formState !== prevProps.formState) {
-      if (this.props.formState && this.props.formState.part_list) {
-        this.setState({
-          designFilter: this.props.formState.part_list.map((i, index) => {
-            let filter = this.props.designs.filter(
-              el =>
-                el.OrderType === i.orderType.value &&
-                el.Construction === i.construction.value &&
-                el.THICKNESS == i.thickness.value
-            );
-            if (filter) {
-              return filter;
-            }
+  //   if (this.props.formState !== prevProps.formState) {
+  //     if (this.props.formState && this.props.formState.part_list) {
+  //       this.setState({
+  //         designFilter: this.props.formState.part_list.map((i, index) => {
+  //           let filter = this.props.designs.filter(
+  //             el =>
+  //               el.OrderType === i.orderType.value &&
+  //               el.Construction === i.construction.value &&
+  //               el.THICKNESS == i.thickness.value
+  //           );
+  //           if (filter) {
+  //             return filter;
+  //           }
 
-          })
-        }, () => {
+  //         })
+  //       }, () => {
 
-          this.setState({
-            mouldFilter: this.props.formState.part_list.map((i, index) => {
-              return (i.design && i.design.mould && [i.design.mould]) || this.props.moulds
-            })
-          }, () => console.log('proppsssss', this.props, 'state===>>', this.state))
-        })
+  //         this.setState({
+  //           mouldFilter: this.props.formState.part_list.map((i, index) => {
+  //             return (i.design && i.design.mould && [i.design.mould]) || this.props.moulds
+  //           })
+  //         }, () => console.log('proppsssss', this.props, 'state===>>', this.state))
+  //       })
 
-      }
+  //     }
 
-      this.props.formState.part_list.forEach((part, i) => {
-        if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
-          if(part.design && part.design.arch){
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].arches`,
-                part.design.arch
-              )
-            );
-          } else {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].arches`,
-                this.props.arches[0]
-              )
-            )
-          }
+  //     this.props.formState.part_list.forEach((part, i) => {
+  //       if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
+  //         if(part.design && part.design.arch){
+  //           this.props.dispatch(
+  //             change(
+  //               'DoorOrder',
+  //               `part_list[${i}].arches`,
+  //               part.design.arch
+  //             )
+  //           );
+  //         } else {
+  //           this.props.dispatch(
+  //             change(
+  //               'DoorOrder',
+  //               `part_list[${i}].arches`,
+  //               this.props.arches[0]
+  //             )
+  //           )
+  //         }
 
-          if(part.design && part.design.mould){
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].moulds`,
-                part.design.mould
-              )
-            );
-          } else {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].moulds`,
+  //         if(part.design && part.design.mould){
+  //           this.props.dispatch(
+  //             change(
+  //               'DoorOrder',
+  //               `part_list[${i}].moulds`,
+  //               part.design.mould
+  //             )
+  //           );
+  //         } else {
+  //           this.props.dispatch(
+  //             change(
+  //               'DoorOrder',
+  //               `part_list[${i}].moulds`,
                 
-              )
-            );
-          }
-        }
-      });
+  //             )
+  //           );
+  //         }
+  //       }
+  //     });
 
-    }
-  }d
+  //   }
+  // }
 
   render() {
     const {
@@ -329,7 +329,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.woodtype`}
                     component={renderDropdownListFilter}
-                    data={woodtypes}
+                    data={orderType}
                     valueField="value"
                     textField="NAME"
                     validate={required}
@@ -343,7 +343,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.design`}
                     component={renderDropdownListFilter}
-                    data={this.state.designFilter[index]}
+                    data={orderType}
                     valueField="value"
                     textField="NAME"
                     validate={required}
@@ -357,7 +357,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.moulds`}
                     component={renderDropdownList}
-                    data={this.state.mouldFilter[index] || this.props.moulds}
+                    data={orderType}
                     valueField="value"
                     textField="NAME"
                     validate={required}
@@ -376,7 +376,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.edges`}
                     component={renderDropdownListFilter}
-                    data={edges}
+                    data={orderType}
                     valueField="value"
                     textField="NAME"
                     validate={required}
@@ -390,7 +390,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.panels`}
                     component={renderDropdownListFilter}
-                    data={panels}
+                    data={orderType}
                     valueField="value"
                     textField="PANEL"
                     validate={required}
@@ -404,7 +404,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.arches`}
                     component={renderDropdownListFilter}
-                    data={arches}
+                    data={orderType}
                     valueField="value"
                     textField="ARCH"
                     validate={required}
@@ -418,7 +418,7 @@ class DoorInfo extends Component {
                   <Field
                     name={`${part}.hinges`}
                     component={renderDropdownList}
-                    data={hinges}
+                    data={orderType}
                     valueField="value"
                     textField="Name"
                     validate={required}
@@ -434,7 +434,7 @@ class DoorInfo extends Component {
                 <Field
                     name={`${part}.miscItems`}
                     component={renderMultiSelect}
-                    data={doorExtras}
+                    data={orderType}
                     textField="Name"
                 />
                 </FormGroup>
@@ -478,7 +478,7 @@ class DoorInfo extends Component {
         <Button
           color="primary"
           onClick={() =>
-            formState.part_list[formState.part_list.length - 1].dimensions.length > 0 ?
+
               fields.push({
                 orderType: orderType[0],
                 construction: construction[0],
@@ -487,7 +487,7 @@ class DoorInfo extends Component {
                 addPrice: 0,
                 files: []
               })
-              : alert('please complete previous item')
+
           }
         >
           Add Item
