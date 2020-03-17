@@ -50,7 +50,7 @@ class Dashboard extends Component {
 
     return (
       <div className="animated fadeIn">
-        {role.type === 'management' || role.type === 'root' ?
+        {/* {role.type === 'management' || role.type === 'root' ?
           <div>
             <Row>
               <Col lg="4">
@@ -70,19 +70,19 @@ class Dashboard extends Component {
             </Row>
           </div>
           : null
-        }
+        } */}
 
         <Row>
           <Col>
-            {role.type === 'management' || role.type === 'root' ?
+            {/* {role.type === 'management' || role.type === 'root' ? */}
               <OrderTable
                 orders={this.props.orders}
               />
-              :
+              {/* :
               <RestrictedOrderTable
                 orders={this.props.orders}
-              />
-            }
+              /> */}
+            {/* } */}
           </Col>
 
         </Row>

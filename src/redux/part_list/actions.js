@@ -4,22 +4,20 @@ import db_url from '../db_url'
 
 
 export const GET_WOODTYPES = 'GET_WOODTYPES';
-export const GET_DESIGNS = 'GET_DESIGNS';
-export const GET_EDGES = 'GET_EDGES';
-export const GET_MOULDS = 'GET_MOULDS';
-export const GET_PANELS = 'GET_PANELS';
-export const GET_GRADES = 'GET_GRADES';
-export const GET_FINISH = 'GET_FINISH';
-export const GET_ARCHES = 'GET_ARCHES';
-
-export const GET_BOX_THICKNESS = 'GET_BOX_THICKNESS';
-export const GET_BOX_BOTTOMS = 'GET_BOX_BOTTOMS';
-export const GET_ASSEMBLY = 'GET_ASSEMBLY';
-export const GET_NOTCH = 'GET_NOTCH';
-export const GET_DOOR_EXTRAS = 'GET_DOOR_EXTRAS';
-export const GET_HINGES = 'GET_HINGES';
-export const GET_DRAWER_FINISH = 'GET_DRAWER_FINISH'
-export const GET_DOOR_OPTIONS = 'GET_DOOR_OPTIONS'
+export const GET_APPLIED_MOULDS = 'GET_APPLIED_MOULDS';
+export const GET_BASE_CAP = 'GET_BASE_CAP';
+export const GET_BASEBOARDS = 'GET_BASEBOARDS'
+export const GET_CASINGS = 'GET_CASINGS'
+export const GET_CHAIR_RAILS = 'GET_CHAIR_RAILS'
+export const GET_COPE_DESIGNS = 'GET_COPE_DESIGNS'
+export const GET_CROWN_MOULDINGS = 'GET_CROWN_MOULDINGS'
+export const GET_EDGE_SLABS = 'GET_EDGE_SLABS'
+export const GET_EDGES = 'GET_EDGES'
+export const GET_FINISH = 'GET_FINISH'
+export const GET_LITES = 'GET_LITES'
+export const GET_MT_DF_DESIGNS = 'GET_MT_DF_DESIGNS'
+export const GET_MITER_DF_DESIGNS = 'GET_MITER_DF_DESIGNS'
+export const GET_MITER_DESIGNS = 'GET_MITER_DESIGNS'
 
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -29,7 +27,7 @@ export const GET_PHOTO_ID = 'GET_PHOTO_ID'
 
 export function getWoodtypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/woodtypes?_limit=2000&_sort=_id:ASC`,
+    const res = await fetch(`${db_url}/woodtypes`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -44,19 +42,138 @@ export function getWoodtypes(cookie) {
   };
 }
 
-export function getDesigns(cookie) {
-
+export function getAppliedMoulds(cookie) {
   return async function (dispatch) {
-
-    const res = await fetch(`${db_url}/designs?_limit=2000&_sort=Index:ASC`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
+    const res = await fetch(`${db_url}/applied-profiles`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
       }
-    });
+    );
     const data = await res.json();
- 
     return dispatch({
-      type: GET_DESIGNS,
+      type: GET_APPLIED_MOULDS,
+      data: data
+    });
+  };
+}
+
+
+export function getBaseCap(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/base-caps`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BASE_CAP,
+      data: data
+    });
+  };
+}
+
+export function getBaseboards(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/baseboards`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BASEBOARDS,
+      data: data
+    });
+  };
+}
+
+export function getCasings(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/casings`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_CASINGS,
+      data: data
+    });
+  };
+}
+
+export function getChairRails(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/chair-rails`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_CHAIR_RAILS,
+      data: data
+    });
+  };
+}
+
+export function getCopeDesigns(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/cope-designs`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_COPE_DESIGNS,
+      data: data
+    });
+  };
+}
+
+export function getCrownMouldings(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/crown-mouldings`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_CROWN_MOULDINGS,
+      data: data
+    });
+  };
+}
+
+export function getEdgeSlabs(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/edge-slabs`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_EDGE_SLABS,
       data: data
     });
   };
@@ -64,11 +181,13 @@ export function getDesigns(cookie) {
 
 export function getEdges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/edges?_limit=200&_sort=Item:ASC`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
+    const res = await fetch(`${db_url}/edge-slabs`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
       }
-    });
+    );
     const data = await res.json();
     return dispatch({
       type: GET_EDGES,
@@ -77,75 +196,15 @@ export function getEdges(cookie) {
   };
 }
 
-export function getMoulds(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/moulds?_limit=200&_sort=Item:ASC`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: GET_MOULDS,
-      data: data
-    });
-  };
-}
-
-export function getPanels(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/panels?_limit=200&_sort=PANEL_CODE:ASC`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: GET_PANELS,
-      data: data
-    });
-  };
-}
-
-export function getDoorExtras(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/doorextras`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: GET_DOOR_EXTRAS,
-      data: data
-    });
-  };
-}
-
-export function getDoorOptions(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/door-options`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: GET_DOOR_OPTIONS,
-      data: data
-    });
-  };
-}
-
-
-
 export function getFinish(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/finishes?_limit=200&_sort=_id:ASC`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
+    const res = await fetch(`${db_url}/finishes`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
       }
-    });
+    );
     const data = await res.json();
     return dispatch({
       type: GET_FINISH,
@@ -154,91 +213,69 @@ export function getFinish(cookie) {
   };
 }
 
-export function getArches(cookie) {
+export function getLites(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/arches?_sort=Item:ASC`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
+    const res = await fetch(`${db_url}/lites`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
       }
-    });
+    );
     const data = await res.json();
     return dispatch({
-      type: GET_ARCHES,
+      type: GET_LITES,
       data: data
     });
   };
 }
 
-export function getBoxThickness(cookie) {
+export function get_MT_DF_Designs(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/boxthicknesses`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
+    const res = await fetch(`${db_url}/mt-df-designs`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
       }
-    });
+    );
     const data = await res.json();
     return dispatch({
-      type: GET_BOX_THICKNESS,
+      type: GET_MT_DF_DESIGNS,
       data: data
     });
   };
 }
 
-export function getBoxBottoms(cookie) {
+export function get_Miter_DF_Designs(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/boxbottoms`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
+    const res = await fetch(`${db_url}/miter-df-designs`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
       }
-    })
+    );
     const data = await res.json();
     return dispatch({
-      type: GET_BOX_BOTTOMS,
+      type: GET_MITER_DF_DESIGNS,
       data: data
     });
   };
 }
 
-export function getAssembly(cookie) {
+export function getMiterDesigns(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/assemblies`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
+    const res = await fetch(`${db_url}/miter-designs`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
       }
-    });
+    );
     const data = await res.json();
     return dispatch({
-      type: GET_ASSEMBLY,
-      data: data
-    });
-  };
-}
-
-export function getNotch(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/notchdrills`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: GET_NOTCH,
-      data: data
-    });
-  };
-}
-
-export function getDrawerFinish(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/drawerfinishes`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: GET_DRAWER_FINISH,
+      type: GET_MITER_DESIGNS,
       data: data
     });
   };
@@ -246,20 +283,47 @@ export function getDrawerFinish(cookie) {
 
 
 
-export function getHinges(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/hinges`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: GET_HINGES,
-      data: data
-    });
-  };
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export function addProduct(product, url, cookie) {
 

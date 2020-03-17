@@ -46,12 +46,12 @@ class CustomerPage extends Component {
     };
   }
 
-  componentDidMount() { 
-    this.setState({ orders: this.props.orders.filter(
-      x => x.jobInfo.customer.id === this.props.selectedCompanies.id
-    )});
+  // componentDidMount() { 
+  //   this.setState({ orders: this.props.orders.filter(
+  //     x => x.jobInfo.customer.id === this.props.selectedCompanies.id
+  //   )});
 
-  }
+  // }
 
 
 
@@ -84,9 +84,9 @@ class CustomerPage extends Component {
     const { locations, defaultCenter } = this.props;
 
 
-     let orders= this.props.orders.filter(
-      x => x.jobInfo.customer.id === this.props.selectedCompanies.id
-    )
+    //  let orders= this.props.orders.filter(
+    //   x => x.jobInfo.customer.id === this.props.selectedCompanies.id
+    // )
 
     return (
       <div className="animated resize">
@@ -119,9 +119,9 @@ class CustomerPage extends Component {
                       locations={locations}
                       defaultCenter={defaultCenter}
                     />
-                    <CompanyOrders
+                    {/* <CompanyOrders
                       orders={orders}
-                    />
+                    /> */}
                   </div>
                 </Card>
               </Col>
