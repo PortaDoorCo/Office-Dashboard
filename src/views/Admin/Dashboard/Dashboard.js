@@ -10,13 +10,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers } from '../../../redux/orders/actions';
 import {
-  getWoodtypes,
-  getDesigns,
-  getEdges,
-  getFinish,
-  getMoulds,
-  getPanels,
-  getHinges
+  // getWoodtypes,
+  // getDesigns,
+  // getEdges,
+  // getFinish,
+  // getMoulds,
+  // getPanels,
+  // getHinges
 } from '../../../redux/part_list/actions';
 import { login } from '../../../redux/users/actions';
 import Chart1 from './components/Chart1';
@@ -129,13 +129,13 @@ const mapDispatchToProps = dispatch =>
     {
       loadOrders,
       loadCustomers,
-      getWoodtypes,
-      getDesigns,
-      getEdges,
-      getFinish,
-      getMoulds,
-      getPanels,
-      getHinges,
+      // getWoodtypes,
+      // getDesigns,
+      // getEdges,
+      // getFinish,
+      // getMoulds,
+      // getPanels,
+      // getHinges,
       login
     },
     dispatch

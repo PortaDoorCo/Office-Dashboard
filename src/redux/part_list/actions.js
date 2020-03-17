@@ -18,10 +18,8 @@ export const GET_LITES = 'GET_LITES'
 export const GET_MITER_DF_DESIGNS = 'GET_MITER_DF_DESIGNS'
 export const GET_MITER_DESIGNS = 'GET_MITER_DESIGNS'
 export const GET_MOULDINGS_LENGTHS = 'GET_MOULDINGS_LENGTHS'
-export const GET_MITER_DESIGNS = 'GET_MITER_DESIGNS'
 export const GET_MT_DESIGNS = 'GET_MT_DESIGNS'
 export const GET_MT_DF_DESIGNS = 'GET_MT_DF_DESIGNS'
-export const GET_ORDERS = 'GET_ORDERS'
 export const GET_PANELS = 'GET_PANELS'
 export const GET_PLYNTHS_STOOLS = 'GET_PLYNTHS_STOOLS'
 export const GET_PROFILES = 'GET_PROFILES'
@@ -320,23 +318,6 @@ export function get_MT_DF_Designs(cookie) {
     const data = await res.json();
     return dispatch({
       type: GET_MT_DF_DESIGNS,
-      data: data
-    });
-  };
-}
-
-export function getOrders(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/orders`,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
-      }
-    );
-    const data = await res.json();
-    return dispatch({
-      type: GET_ORDERS,
       data: data
     });
   };

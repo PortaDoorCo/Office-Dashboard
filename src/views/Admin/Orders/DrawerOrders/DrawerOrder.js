@@ -34,13 +34,13 @@ import {
   taxSelector,
   addPriceSelector
 } from '../../../../selectors/drawerPricing';
-import {
-  getWoodtypes,
-  getBoxThickness,
-  getBoxBottoms,
-  getAssembly,
-  getNotch
-} from '../../../../redux/part_list/actions';
+// import {
+//   getWoodtypes,
+//   getBoxThickness,
+//   getBoxBottoms,
+//   getAssembly,
+//   getNotch
+// } from '../../../../redux/part_list/actions';
 import moment from 'moment-business-days'
 import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
@@ -424,12 +424,12 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       submitOrder,
-      getWoodtypes,
+      // getWoodtypes,
       loadCustomers,
-      getBoxThickness,
-      getBoxBottoms,
-      getAssembly,
-      getNotch
+      // getBoxThickness,
+      // getBoxBottoms,
+      // getAssembly,
+      // getNotch
     },
     dispatch
   );

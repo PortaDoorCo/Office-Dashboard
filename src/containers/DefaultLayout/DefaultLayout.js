@@ -26,21 +26,9 @@ import { bindActionCreators } from "redux";
 
 import { loadOrders, loadCustomers, loadSales, loadShippingMethod } from "../../redux/orders/actions";
 import {
-  getWoodtypes,
-  getDesigns,
-  getEdges,
-  getFinish,
-  getMoulds,
-  getPanels,
-  getHinges,
-  getArches,
-  getBoxThickness,
-  getBoxBottoms,
-  getAssembly,
-  getNotch,
-  getDrawerFinish,
-  getDoorExtras,
-  getDoorOptions
+
+
+
 } from "../../redux/part_list/actions";
 import { login } from "../../redux/users/actions";
 
@@ -63,22 +51,6 @@ class DefaultLayout extends Component {
     if(cookie){
       await props.login(cookie);
       await props.loadSales(cookie);
-      await props.getWoodtypes(cookie);
-      await props.getDesigns(cookie);
-      await props.getEdges(cookie);
-      await props.getFinish(cookie);
-      await props.getMoulds(cookie);
-      await props.getPanels(cookie);
-      await props.getHinges(cookie);
-      await props.getArches(cookie);
-      await props.getDoorOptions(cookie);
-      await props.getDoorExtras(cookie);
-      await props.getBoxThickness(cookie);
-      await props.getBoxBottoms(cookie);
-      await props.getAssembly(cookie);
-      await props.getNotch(cookie);
-      await props.getDrawerFinish(cookie);
-      await props.loadShippingMethod(cookie);
       await props.loadOrders(cookie);
       
     } else {
@@ -154,22 +126,8 @@ class DefaultLayout extends Component {
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
-  sessionOrders: state.Orders.sessionOrders,
-  sessionCustomers: state.Orders.sessionCustomers,
   customerDBLoaded: state.Orders.customerDBLoaded,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
-  loadedWoodtype: state.part_list.loadedWoodtype,
-  loadedDesign: state.part_list.loadedDesign,
-  loadedEdge: state.part_list.loadedEdge,
-  loadedMould: state.part_list.loadedMould,
-  loadedPanel: state.part_list.loadedPanel,
-  loadedFinish: state.part_list.loadedFinish,
-  loadedBoxThickness: state.part_list.loadedBoxThickness,
-  loadedBoxBottoms: state.part_list.loadedBoxBottoms,
-  loadedAssembly: state.part_list.loadedAssembly,
-  loadedNotch: state.part_list.loadedNotch,
-  loadedHinges: state.part_list.loadedHinges,
-  loadedDrawerFinishes: state.part_list.loadedDrawerFinishes,
   loggedIn: state.users.loggedIn
 });
 
@@ -180,22 +138,22 @@ const mapDispatchToProps = dispatch =>
       loadCustomers,
       loadSales,
       loadShippingMethod,
-      getWoodtypes,
-      getDesigns,
-      getEdges,
-      getFinish,
-      getMoulds,
-      getPanels,
-      getHinges,
-      getArches,
+      // getWoodtypes,
+      // getDesigns,
+      // getEdges,
+      // getFinish,
+      // getMoulds,
+      // getPanels,
+      // getHinges,
+      // getArches,
       login,
-      getBoxThickness,
-      getBoxBottoms,
-      getAssembly,
-      getNotch,
-      getDrawerFinish,
-      getDoorExtras,
-      getDoorOptions
+      // getBoxThickness,
+      // getBoxBottoms,
+      // getAssembly,
+      // getNotch,
+      // getDrawerFinish,
+      // getDoorExtras,
+      // getDoorOptions
     },
     dispatch
   );

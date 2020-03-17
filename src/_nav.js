@@ -26,11 +26,11 @@ export default {
       url: '/door-order',
 
     },
-    {
-      name: 'Drawer Order',
-      url: '/drawer-order',
+    // {
+    //   name: 'Drawer Order',
+    //   url: '/drawer-order',
 
-    },
+    // },
     {
       name: 'Reports',
       icon: '',
