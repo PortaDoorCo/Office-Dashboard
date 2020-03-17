@@ -18,6 +18,7 @@ import Multiselect from 'react-widgets/lib/Multiselect'
 import 'react-widgets/dist/css/react-widgets.css';
 import PanelsTable from './Table'
 import GlassTable from './Glass'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../RenderInputs/renderInputs'
 
 
 const required = value => (value ? undefined : 'Required');
@@ -35,107 +36,7 @@ const unevenDirection = [
 ];
 
 
-const renderMultiSelect = ({
-  input,
-  data,
-  valueField,
-  textField,
-  meta: { touched, error, warning }
-}) => (
-    <div>
-      <Multiselect
-        {...input}
-        onBlur={() => input.onBlur()}
-        value={input.value || []} // requires value to be an array
-        data={data}
-        valueField={valueField}
-        textField={textField}
-      />
-      {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-    </div>
-  );
 
-
-const renderField = ({
-  input,
-  props,
-  meta: { touched, error, warning },
-  ...custom
-}) => (
-    <Fragment>
-      <Input {...input} {...custom} autocomplete="new-password" />
-      {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-    </Fragment>
-  );
-
-const renderFieldDisabled = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
-  <Fragment>
-    <Input {...input} {...custom} disabled style={{ display: 'none' }} />
-    {touched &&
-      ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-        (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-  </Fragment>
-);
-
-const renderCheckbox = ({
-  input: { value, onChange, ...input },
-  meta: { touched, error },
-  ...rest
-}) => (
-    <div>
-      <CheckboxUI
-        {...input}
-        {...rest}
-        defaultChecked={!!value}
-        onChange={(e, data) => onChange(data.checked)}
-        type="checkbox"
-      />
-      {touched && error && <span>{error}</span>}
-    </div>
-  );
-
-const renderCheckboxToggle = ({
-  input: { value, onChange, ...input },
-  meta: { touched, error },
-  ...rest
-}) => (
-    <div>
-      <CheckboxUI
-        toggle
-        {...input}
-        {...rest}
-        defaultChecked={!!value}
-        onChange={(e, data) => onChange(data.checked)}
-        type="checkbox"
-      />
-      {touched && error && <span>{error}</span>}
-    </div>
-  );
-
-const renderDropdownList = ({
-  input,
-  data,
-  valueField,
-  textField,
-  meta: { touched, error, warning }
-}) => (
-    <div>
-      <DropdownList
-        {...input}
-        data={data}
-        valueField={valueField}
-        textField={textField}
-        onChange={input.onChange}
-      />
-      {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-    </div>
-  );
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -188,20 +89,18 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
             <Fragment key={index}>
 
 
-                <PanelsTable
-                  table={table}
-                  index={index}
-                  renderField={renderField}
-                  renderFieldDisabled={renderFieldDisabled}
-                  required={required}
-                  w={w}
-                  formState={formState}
-                  i={i}
-                  h={h}
-                  prices={prices}
-                  fields={fields}
-                />
-              
+              <PanelsTable
+                table={table}
+                index={index}
+                required={required}
+                w={w}
+                formState={formState}
+                i={i}
+                h={h}
+                prices={prices}
+                fields={fields}
+              />
+
 
 
 
@@ -281,29 +180,51 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 color="primary"
                 className="btn-circle"
                 onClick={(e) =>
-                  (formState.part_list[formState.part_list.length - 1].profile) ?
+                  (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].design ?
                     fields.push({
                       panelsH: 1,
                       panelsW: 1,
                       leftStile: fraction(
-                        formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                        formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
                       ),
                       rightStile: fraction(
-                        formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                        formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
                       ),
                       topRail: fraction(
-                        formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                        formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
                       ),
                       bottomRail: fraction(
-                        formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                        formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
                       ),
                       horizontalMidRailSize: 0,
                       verticalMidRailSize: 0,
                       unevenSplitInput: "0",
                       showBuilder: false
                     })
-                    : alert('please select a profile')
-                }
+                    :
+                    (formState.part_list[formState.part_list.length - 1].construction.value === "Cope" && formState.part_list[formState.part_list.length - 1].profile) ?
+                      fields.push({
+                        panelsH: 1,
+                        panelsW: 1,
+                        leftStile: fraction(
+                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                        ),
+                        rightStile: fraction(
+                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                        ),
+                        topRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                        ),
+                        bottomRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                        ),
+                        horizontalMidRailSize: 0,
+                        verticalMidRailSize: 0,
+                        unevenSplitInput: "0",
+                        showBuilder: false
+                      })
+                      : alert('please select a profile')
+                  )}
               >
                 +
                 </Button>

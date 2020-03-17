@@ -524,18 +524,18 @@ const mapStateToProps = state => ({
     part_list: [
       {
 
-        construction: {
-          name: 'Cope And Stick',
-          value: 'Cope'
-        },
-        orderType: {
-          name: 'Door Order',
-          value: 'Door'
-        },
-        thickness: {
-          name: '4/4',
-          value: 0.75
-        },
+        // construction: {
+        //   name: 'Cope And Stick',
+        //   value: 'Cope'
+        // },
+        // orderType: {
+        //   name: 'Door Order',
+        //   value: 'Door'
+        // },
+        // thickness: {
+        //   name: '4/4',
+        //   value: 0.75
+        // },
         dimensions: [],
         addPrice: 0,
       }

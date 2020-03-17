@@ -23,6 +23,8 @@ import { FileUploader } from 'devextreme-react';
 import Cookies from "js-cookie";
 import Select from 'react-select';
 import CopeDoor from './Cope/Door'
+import MiterDoor from './Miter/Door'
+
 import DoorFilter from './Filter/Filter'
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
 
@@ -48,8 +50,16 @@ const construction = [
     value: 'MT'
   },
   {
-    name: 'Special Item',
-    value: 'Special'
+    name: 'Frame Only',
+    value: 'Frame_Only'
+  },
+  {
+    name: 'One Piece Door',
+    value: 'One_Piece'
+  },
+  {
+    name: 'Slab Type Door',
+    value: 'Slab_Door'
   }
 ];
 
@@ -85,77 +95,6 @@ class DoorInfo extends Component {
       test: []
     };
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-
-  //   if (this.props.formState !== prevProps.formState) {
-  //     if (this.props.formState && this.props.formState.part_list) {
-  //       this.setState({
-  //         designFilter: this.props.formState.part_list.map((i, index) => {
-  //           let filter = this.props.designs.filter(
-  //             el =>
-  //               el.OrderType === i.orderType.value &&
-  //               el.Construction === i.construction.value &&
-  //               el.THICKNESS == i.thickness.value
-  //           );
-  //           if (filter) {
-  //             return filter;
-  //           }
-
-  //         })
-  //       }, () => {
-
-  //         this.setState({
-  //           mouldFilter: this.props.formState.part_list.map((i, index) => {
-  //             return (i.design && i.design.mould && [i.design.mould]) || this.props.moulds
-  //           })
-  //         }, () => console.log('proppsssss', this.props, 'state===>>', this.state))
-  //       })
-
-  //     }
-
-  //     this.props.formState.part_list.forEach((part, i) => {
-  //       if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
-  //         if(part.design && part.design.arch){
-  //           this.props.dispatch(
-  //             change(
-  //               'DoorOrder',
-  //               `part_list[${i}].arches`,
-  //               part.design.arch
-  //             )
-  //           );
-  //         } else {
-  //           this.props.dispatch(
-  //             change(
-  //               'DoorOrder',
-  //               `part_list[${i}].arches`,
-  //               this.props.arches[0]
-  //             )
-  //           )
-  //         }
-
-  //         if(part.design && part.design.mould){
-  //           this.props.dispatch(
-  //             change(
-  //               'DoorOrder',
-  //               `part_list[${i}].moulds`,
-  //               part.design.mould
-  //             )
-  //           );
-  //         } else {
-  //           this.props.dispatch(
-  //             change(
-  //               'DoorOrder',
-  //               `part_list[${i}].moulds`,
-
-  //             )
-  //           );
-  //         }
-  //       }
-  //     });
-
-  //   }
-  // }
 
   render() {
     const {
@@ -202,13 +141,29 @@ class DoorInfo extends Component {
               thickness={thickness}
             />
 
-            <CopeDoor
-              part={part}
-              index={index}
-            />
 
 
 
+            {(formState &&
+              formState.part_list[index] &&
+              formState.part_list[index].construction &&
+              formState.part_list[index].construction.value === "Cope") ?
+
+              <CopeDoor
+                part={part}
+                index={index}
+              /> :
+              (formState &&
+                formState.part_list[index] &&
+                formState.part_list[index].construction &&
+                formState.part_list[index].construction.value === "M") ?
+                <MiterDoor
+                  part={part}
+                  index={index}
+                /> 
+                :
+              null
+            }
 
 
             {/* <Row>
