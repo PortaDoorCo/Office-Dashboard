@@ -26,9 +26,13 @@ import { bindActionCreators } from "redux";
 
 import { loadOrders, loadCustomers, loadSales, loadShippingMethod } from "../../redux/orders/actions";
 import {
-
-
-
+  getWoodtypes,
+  getCopeDesigns,
+  getEdges,
+  getPanels,
+  getProfiles,
+  getAppliedMoulds,
+  getFinish
 } from "../../redux/part_list/actions";
 import { login } from "../../redux/users/actions";
 
@@ -52,6 +56,14 @@ class DefaultLayout extends Component {
       await props.login(cookie);
       await props.loadSales(cookie);
       await props.loadOrders(cookie);
+
+      // await props.getWoodtypes(cookie);
+      // await props.getCopeDesigns(cookie);
+      // await props.getEdges(cookie);
+      // await props.getPanels(cookie);
+      // await props.getProfiles(cookie);
+      // await props.getAppliedMoulds(cookie);
+      // await props.getFinish(cookie);
       
     } else {
       alert('not logged in')
@@ -138,14 +150,17 @@ const mapDispatchToProps = dispatch =>
       loadCustomers,
       loadSales,
       loadShippingMethod,
-      // getWoodtypes,
-      // getDesigns,
-      // getEdges,
-      // getFinish,
-      // getMoulds,
-      // getPanels,
-      // getHinges,
-      // getArches,
+
+      getWoodtypes,
+      getCopeDesigns,
+      getEdges,
+      getPanels,
+      getProfiles,
+      getAppliedMoulds,
+      getFinish,
+
+
+
       login,
       // getBoxThickness,
       // getBoxBottoms,
