@@ -15,9 +15,18 @@ export const GET_EDGE_SLABS = 'GET_EDGE_SLABS'
 export const GET_EDGES = 'GET_EDGES'
 export const GET_FINISH = 'GET_FINISH'
 export const GET_LITES = 'GET_LITES'
-export const GET_MT_DF_DESIGNS = 'GET_MT_DF_DESIGNS'
 export const GET_MITER_DF_DESIGNS = 'GET_MITER_DF_DESIGNS'
 export const GET_MITER_DESIGNS = 'GET_MITER_DESIGNS'
+export const GET_MOULDINGS_LENGTHS = 'GET_MOULDINGS_LENGTHS'
+export const GET_MITER_DESIGNS = 'GET_MITER_DESIGNS'
+export const GET_MT_DESIGNS = 'GET_MT_DESIGNS'
+export const GET_MT_DF_DESIGNS = 'GET_MT_DF_DESIGNS'
+export const GET_ORDERS = 'GET_ORDERS'
+export const GET_PANELS = 'GET_PANELS'
+export const GET_PLYNTHS_STOOLS = 'GET_PLYNTHS_STOOLS'
+export const GET_PROFILES = 'GET_PROFILES'
+export const GET_SOLID_CROWNS = 'GET_SOLID_CROWNS'
+export const GET_WAINSCOT_BEADS = 'GET_WAINSCOT_BEADS'
 
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -230,22 +239,6 @@ export function getLites(cookie) {
   };
 }
 
-export function get_MT_DF_Designs(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/mt-df-designs`,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
-      }
-    );
-    const data = await res.json();
-    return dispatch({
-      type: GET_MT_DF_DESIGNS,
-      data: data
-    });
-  };
-}
 
 export function get_Miter_DF_Designs(cookie) {
   return async function (dispatch) {
@@ -281,9 +274,158 @@ export function getMiterDesigns(cookie) {
   };
 }
 
+export function getMouldingsLengths(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/mouldings-lengths`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_MOULDINGS_LENGTHS,
+      data: data
+    });
+  };
+}
 
+export function getMTDesigns(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/mt-designs`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_MT_DESIGNS,
+      data: data
+    });
+  };
+}
 
+export function get_MT_DF_Designs(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/mt-df-designs`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_MT_DF_DESIGNS,
+      data: data
+    });
+  };
+}
 
+export function getOrders(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/orders`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_ORDERS,
+      data: data
+    });
+  };
+}
+
+export function getPanels(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/panels`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_PANELS,
+      data: data
+    });
+  };
+}
+
+export function get_Plyths_Stools(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/plynths-stools`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_PLYNTHS_STOOLS,
+      data: data
+    });
+  };
+}
+
+export function getProfiles(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/profiles`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_PROFILES,
+      data: data
+    });
+  };
+}
+
+export function getSolidCrowns(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/solid-crowns`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_SOLID_CROWNS,
+      data: data
+    });
+  };
+}
+
+export function get_Wainscot_Beads(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/wainscot-beads`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_WAINSCOT_BEADS,
+      data: data
+    });
+  };
+}
 
 
 
