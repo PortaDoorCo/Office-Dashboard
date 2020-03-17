@@ -12,7 +12,7 @@ import 'antd/dist/antd.css';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import Multiselect from 'react-widgets/lib/Multiselect'
 import 'react-widgets/dist/css/react-widgets.css';
-import OrderTable from '../OrderTable';
+import OrderTable from '../Table/OrderTable';
 import {
   Field,
   FieldArray,

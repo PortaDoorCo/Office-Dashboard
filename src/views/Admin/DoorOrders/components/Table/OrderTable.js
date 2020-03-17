@@ -12,12 +12,12 @@ import { Checkbox as CheckboxUI } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import { Field } from "redux-form";
 import Ratio from "lb-ratio";
-import Maker from './MakerJS/Maker';
+import Maker from '../MakerJS/Maker';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import Multiselect from 'react-widgets/lib/Multiselect'
 import 'react-widgets/dist/css/react-widgets.css';
-import PanelsTable from './Table/Table'
-import GlassTable from './Table/Glass'
+import PanelsTable from './Table'
+import GlassTable from './Glass'
 
 
 const required = value => (value ? undefined : 'Required');
@@ -187,24 +187,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           {fields.map((table, index) => (
             <Fragment key={index}>
 
-              {formState.part_list[i].panels && formState.part_list[i].panels.PANEL === "GLASS" ?
-                <GlassTable
-                  table={table}
-                  index={index}
-                  renderField={renderField}
-                  renderFieldDisabled={renderFieldDisabled}
-                  renderMultiSelect={renderMultiSelect}
-                  renderDropdownList={renderDropdownList}
-                  required={required}
-                  w={w}
-                  formState={formState}
-                  i={i}
-                  h={h}
-                  prices={prices}
-                  fields={fields}
-                  doorOptions={doorOptions}
-                />
-                :
+
                 <PanelsTable
                   table={table}
                   index={index}
@@ -218,7 +201,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                   prices={prices}
                   fields={fields}
                 />
-              }
+              
 
 
 
@@ -298,7 +281,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 color="primary"
                 className="btn-circle"
                 onClick={(e) =>
-                  (formState.part_list[formState.part_list.length - 1].design) ?
+                  (formState.part_list[formState.part_list.length - 1].profile) ?
                     fields.push({
                       panelsH: 1,
                       panelsW: 1,
@@ -319,7 +302,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       unevenSplitInput: "0",
                       showBuilder: false
                     })
-                    : alert('please select a design')
+                    : alert('please select a profile')
                 }
               >
                 +
