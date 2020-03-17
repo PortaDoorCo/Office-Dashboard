@@ -237,6 +237,7 @@ class DoorOrders extends Component {
                     index + 1
                   )
                 )
+
                 if (info.panelsW > 1) {
                   if (
                     info.panelsW !==
@@ -380,19 +381,12 @@ class DoorOrders extends Component {
       prices,
       subTotal,
 
-      woodtypes,
-      cope_designs,
-      edges,
-      profiles,
-      panels,
-      applied_moulds,
-      finishes,
 
       customers,
       formState,
       isValid,
       address,
-      hinges,
+
       total,
       dispatch,
       tax
@@ -425,17 +419,6 @@ class DoorOrders extends Component {
                   <FieldArray
                     name="part_list"
                     component={DoorInfo}
-
-
-                    woodtypes={woodtypes}
-                    cope_designs={cope_designs}
-                    edges={edges}
-                    profiles={profiles}
-                    panels={panels}
-                    applied_moulds={applied_moulds}
-                    finishes={finishes}
-
-
                     // prices={prices}
                     formState={formState}
                     // subTotal={subTotal}
@@ -530,15 +513,6 @@ class DoorOrders extends Component {
 
 const mapStateToProps = state => ({
 
-  woodtypes: state.part_list.woodtypes,
-  cope_designs: state.part_list.cope_designs,
-  edges: state.part_list.edges,
-  finishes: state.part_list.finishes,
-  panels: state.part_list.panels,
-  profiles: state.part_list.profiles,
-  applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes,
-
   customers: state.Orders.customerDB,
   customerDBLoaded: state.Orders.customerDBLoaded,
 
@@ -594,14 +568,6 @@ const mapDispatchToProps = dispatch =>
     {
       addToCart,
       loadCustomers,
-      // getWoodtypes,
-      // getDesigns,
-      // getEdges,
-      // getFinish,
-      // getMoulds,
-      // getPanels,
-      shippingAddress,
-      // getHinges,
       submitOrder,
       loadOrders,
     },
