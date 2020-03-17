@@ -1,19 +1,28 @@
 import {
   GET_WOODTYPES,
-  GET_DESIGNS,
+  GET_APPLIED_MOULDS,
+  GET_BASE_CAP,
+  GET_BASEBOARDS,
+  GET_CASINGS,
+  GET_CHAIR_RAILS,
+  GET_COPE_DESIGNS,
+  GET_CROWN_MOULDINGS,
+  GET_EDGE_SLABS,
   GET_EDGES,
   GET_FINISH,
-  GET_GRADES,
-  GET_MOULDS,
+  GET_LITES,
+  GET_MITER_DF_DESIGNS,
+  GET_MITER_DESIGNS,
+  GET_MOULDINGS_LENGTHS,
+  GET_MT_DESIGNS,
+  GET_MT_DF_DESIGNS,
   GET_PANELS,
-  GET_BOX_THICKNESS,
-  GET_BOX_BOTTOMS,
-  GET_ASSEMBLY,
-  GET_NOTCH,
-  GET_DOOR_EXTRAS,
-  GET_HINGES,
-  GET_ARCHES,
-  GET_DRAWER_FINISH,
+  GET_PLYNTHS_STOOLS,
+  GET_PROFILES,
+  GET_SOLID_CROWNS,
+  GET_WAINSCOT_BEADS,
+
+
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
   ADD_PRODUCT,
@@ -24,21 +33,29 @@ import {
 
 const initialState = {
   woodtypes: ["Loading"],
-  designs: ["Loading"],
+  applied_moulds: ["Loading"],
+  base_caps: ["Loading"],
+  baseboards: ["Loading"],
+  casings: ["Loading"],
+  chair_rails: ["Loading"],
+  cope_designs: ["Loading"],
+  crown_mouldings: ["Loading"],
+  edge_slabs: ["Loading"],
   edges: ["Loading"],
-  moulds: ["Loading"],
+  finishes: ["Loading"],
+  lites: ["Loading"],
+  miter_DF_designs: ["Loading"],
+  miter_designs: ["Loading"],
+  mouldings_lengths: ["Loading"],
+  mt_designs: ["Loading"],
+  mt_DF_designs: ["Loading"],
   panels: ["Loading"],
-  grades: ["Loading"],
-  finish: ["Loading"],
-  boxThickness: ["Loading"],
-  boxBottoms: ["Loading"],
-  assembly: ["Loading"],
-  notchDrill: ["Loading"],
-  drawerFinishes: ["Loading"],
-  doorExtras: ["Loading"],
-  doorOptions: ["Loading"],
-  hinges: ["Loading"],
-  arches: ["Loading"],
+  plynths_stools: ["Loading"],
+  profiles: ["Loading"],
+  solid_crowns: ["Loading"],
+  wainscot_beads: ["Loading"],
+
+
   scoop: [
     {
       Name: "No",
@@ -94,21 +111,29 @@ const initialState = {
   ],
 
   loadedWoodtype: false,
-  loadedDesign: false,
-  loadedEdge: false,
-  loadedMould: false,
-  loadedPanel: false,
-  loadedGrade: false,
-  loadedFinish: false,
-  loadedArches: false,
-  loadedBoxThickness: false,
-  loadedBoxBottoms: false,
-  loadedAssembly: false,
-  loadedNotch: false,
-  loadedDoorExtras: false,
-  loadedDoorOptions: false,
-  loadedHinges: false,
-  loadedDrawerFinishes: false,
+  loadedAppliedMoulds: false,
+  loadedBaseCaps: false,
+  loadedBaseboards: false,
+  loadedCasings: false,
+  loadedChairRails: false,
+  loadedCopeDesigns: false,
+  loadedCrownMouldings: false,
+  loadedEdgeSlabs: false,
+  loadedEdges: false,
+  loadedFinishes: false,
+  loadedLites: false,
+  loadedMiter_DF_Designs: false,
+  loadedMiterDesigns: false,
+  loadedMouldingsLengths: false,
+  loaded_MT_Designs: false,
+  loaded_MT_DF_Designs: false,
+  loadedOrders: false,
+  loadedPanels: false,
+  loaded_Plynths_Stools: false,
+  loadedProfiles: false,
+  loadedSolidCrowns: false,
+  loadedWainscotBeads: false,
+
 
   error: null,
 
@@ -127,96 +152,146 @@ export default function (state = initialState, action) {
         woodtypes: data,
         loadedWoodtype: true
       };
-    case GET_DESIGNS:
+    case GET_APPLIED_MOULDS:
       return {
         ...state,
-        designs: data,
-        loadedDesign: true
+        applied_moulds: data,
+        loadedAppliedMoulds: true
+      };
+    case GET_BASE_CAP:
+      return {
+        ...state,
+        base_caps: data,
+        loadedBaseCaps: true
+      };
+    case GET_BASEBOARDS:
+      return {
+        ...state,
+        baseboards: data,
+        loadedBaseboards: true
+      };
+    case GET_CASINGS:
+      return {
+        ...state,
+        casings: data,
+        loadedCasings: true
+      };
+    case GET_CHAIR_RAILS:
+      return {
+        ...state,
+        chair_rails: data,
+        loadedChairRails: true
+      };
+    case GET_COPE_DESIGNS:
+      return {
+        ...state,
+        cope_designs: data,
+        loadedCopeDesigns: true
+      };
+    case GET_CROWN_MOULDINGS:
+      return {
+        ...state,
+        crown_mouldings: data,
+        loadedCrownMouldings: true
+      };
+    case GET_EDGE_SLABS:
+      return {
+        ...state,
+        edge_slabs: data,
+        loadedEdgeSlabs: true
       };
     case GET_EDGES:
       return {
         ...state,
         edges: data,
-        loadedEdge: true
+        loadedEdges: true
       };
-    case GET_MOULDS:
+    case GET_FINISH:
       return {
         ...state,
-        moulds: data,
-        loadedMould: true
+        finishes: data,
+        loadedFinishes: true
+      };
+    case GET_LITES:
+      return {
+        ...state,
+        lites: data,
+        loadedLites: true
+      };
+    case GET_MITER_DF_DESIGNS:
+      return {
+        ...state,
+        miter_DF_designs: data,
+        loadedMiter_DF_Designs: true
+      };
+    case GET_MITER_DESIGNS:
+      return {
+        ...state,
+        miter_designs: data,
+        loadedMiterDesigns: true
+      };
+    case GET_MOULDINGS_LENGTHS:
+      return {
+        ...state,
+        mouldings_lengths: data,
+        loadedMouldingsLengths: true
+      };
+    case GET_MT_DESIGNS:
+      return {
+        ...state,
+        mt_designs: data,
+        loaded_MT_Designs: true
+      };
+    case GET_MT_DF_DESIGNS:
+      return {
+        ...state,
+        mt_DF_designs: data,
+        loaded_MT_Designs: true
       };
     case GET_PANELS:
       return {
         ...state,
         panels: data,
-        loadedPanel: true
+        loadedPanels: true
       };
-    case GET_GRADES:
+    case GET_PLYNTHS_STOOLS:
       return {
         ...state,
-        grades: data,
-        loadedGrade: true
+        plynths_stools: data,
+        loaded_Plynths_Stools: true
       };
-    case GET_FINISH:
+    case GET_PROFILES:
       return {
         ...state,
-        finish: data,
-        loadedFinish: true
+        profiles: data,
+        loadedProfiles: true
       };
-    case GET_ARCHES:
+    case GET_SOLID_CROWNS:
       return {
         ...state,
-        arches: data,
-        loadedArches: true
+        solid_crowns: data,
+        loadedSolidCrowns: true
       };
-    case GET_BOX_THICKNESS:
+    case GET_WAINSCOT_BEADS:
       return {
         ...state,
-        boxThickness: data,
-        loadedBoxThickness: true
+        wainscot_beads: data,
+        loadedWainscotBeads: true
       };
-    case GET_BOX_BOTTOMS:
-      return {
-        ...state,
-        boxBottoms: data,
-        loadedBoxBottoms: true
-      };
-    case GET_ASSEMBLY:
-      return {
-        ...state,
-        assembly: data,
-        loadedAssembly: true
-      };
-    case GET_DRAWER_FINISH:
-      return {
-        ...state,
-        drawerFinishes: data,
-        loadedDrawerFinishes: true
-      };
-    case GET_NOTCH:
-      return {
-        ...state,
-        notchDrill: data,
-        loadedNotch: true
-      };
-    case GET_DOOR_EXTRAS:
-      return {
-        ...state,
-        doorExtras: data,
-        loadedDoorExtras: true
-      };
-    case GET_DOOR_OPTIONS:
-      return {
-        ...state,
-        doorOptions: data,
-        loadedDoorOptions: true
-      };
-    case GET_HINGES:
-      return {
-        ...state,
-        hinges: data,
-        loadedHinges: true
-      };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     case ADD_PRODUCT:
       return {
         ...state,

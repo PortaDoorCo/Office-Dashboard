@@ -17,7 +17,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/door-order', name: 'Door Orders', component: DoorOrders },
-  { path: '/drawer-order', name: 'Drawer Orders', component: DrawerOrders },
+  // { path: '/drawer-order', name: 'Drawer Orders', component: DrawerOrders },
   { path: '/view-orders', name: 'Orders', component: Orders },
   { path: '/customers', name: 'Customers', component: Customers },
   { path: '/products', name: 'Products', component: Products },

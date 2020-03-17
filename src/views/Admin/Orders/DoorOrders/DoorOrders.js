@@ -37,13 +37,13 @@ import {
   addPriceSelector
 } from '../../../../selectors/doorPricing';
 import {
-  getWoodtypes,
-  getDesigns,
-  getEdges,
-  getFinish,
-  getMoulds,
-  getPanels,
-  getHinges
+  // getWoodtypes,
+  // getDesigns,
+  // getEdges,
+  // getFinish,
+  // getMoulds,
+  // getPanels,
+  // getHinges
 } from '../../../../redux/part_list/actions';
 import PropTypes from 'prop-types';
 import 'react-notifications/lib/notifications.css';
@@ -611,14 +611,14 @@ const mapDispatchToProps = dispatch =>
     {
       addToCart,
       loadCustomers,
-      getWoodtypes,
-      getDesigns,
-      getEdges,
-      getFinish,
-      getMoulds,
-      getPanels,
+      // getWoodtypes,
+      // getDesigns,
+      // getEdges,
+      // getFinish,
+      // getMoulds,
+      // getPanels,
       shippingAddress,
-      getHinges,
+      // getHinges,
       submitOrder,
       loadOrders,
     },

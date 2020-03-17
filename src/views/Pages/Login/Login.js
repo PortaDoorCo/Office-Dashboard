@@ -19,13 +19,13 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loader from '../Loader/Loader';
 import {
-  getWoodtypes,
-  getDesigns,
-  getEdges,
-  getFinish,
-  getMoulds,
-  getPanels,
-  getHinges
+  // getWoodtypes,
+  // getDesigns,
+  // getEdges,
+  // getFinish,
+  // getMoulds,
+  // getPanels,
+  // getHinges
 } from '../../../redux/part_list/actions';
 import { loadOrders, loadCustomers } from '../../../redux/orders/actions';
 import PropTypes from 'prop-types';
@@ -187,13 +187,13 @@ const mapDispatchToProps = dispatch =>
       login,
       loadOrders,
       loadCustomers,
-      getWoodtypes,
-      getDesigns,
-      getEdges,
-      getFinish,
-      getMoulds,
-      getPanels,
-      getHinges
+      // getWoodtypes,
+      // getDesigns,
+      // getEdges,
+      // getFinish,
+      // getMoulds,
+      // getPanels,
+      // getHinges
     },
     dispatch
   );
