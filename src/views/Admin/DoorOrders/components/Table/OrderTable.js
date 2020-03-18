@@ -180,7 +180,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 color="primary"
                 className="btn-circle"
                 onClick={(e) =>
-                  (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].design ?
+                  ((formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].design) ?
                     fields.push({
                       panelsH: 1,
                       panelsW: 1,
@@ -202,29 +202,51 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       showBuilder: false
                     })
                     :
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "Cope" && formState.part_list[formState.part_list.length - 1].profile) ?
+                    (formState.part_list[formState.part_list.length - 1].construction.value === "MT" && formState.part_list[formState.part_list.length - 1].design) ?
                       fields.push({
                         panelsH: 1,
                         panelsW: 1,
                         leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
                         ),
                         rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
                         ),
                         topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
                         ),
                         bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
                         ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,
                         unevenSplitInput: "0",
                         showBuilder: false
                       })
-                      : alert('please select a profile')
-                  )}
+                      :
+                      (formState.part_list[formState.part_list.length - 1].construction.value === "Cope" && formState.part_list[formState.part_list.length - 1].profile) ?
+                        fields.push({
+                          panelsH: 1,
+                          panelsW: 1,
+                          leftStile: fraction(
+                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          ),
+                          rightStile: fraction(
+                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          ),
+                          topRail: fraction(
+                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          ),
+                          bottomRail: fraction(
+                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          ),
+                          horizontalMidRailSize: 0,
+                          verticalMidRailSize: 0,
+                          unevenSplitInput: "0",
+                          showBuilder: false
+                        })
+                        : alert('please select a profile')
+                    )}
               >
                 +
                 </Button>

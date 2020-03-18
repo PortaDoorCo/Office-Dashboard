@@ -302,6 +302,38 @@ class DoorOrders extends Component {
                   }
                 }
 
+                if(part_list[i].construction.value === "MT"){
+                  if (info.panelsW > 1) {
+                    if (
+                      info.panelsW !==
+                      prevProps.formState.part_list[i].dimensions[index].panelsW
+                    ) {
+                      return this.props.dispatch(
+                        change(
+                          'DoorOrder',
+                          `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                        )
+                      );
+                    }
+                  }
+  
+                  if (info.panelsH > 1) {
+                    if (
+                      info.panelsH !==
+                      prevProps.formState.part_list[i].dimensions[index].panelsH
+                    ) {
+                      return this.props.dispatch(
+                        change(
+                          'DoorOrder',
+                          `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                        ),
+                      );
+                    }
+                  }
+                }
+
 
 
 
@@ -442,6 +474,74 @@ class DoorOrders extends Component {
                             'DoorOrder',
                             `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
                             fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                          )
+                        );
+                      }
+                    });
+                  } else {
+                    return
+                  }
+                } else {
+                  return
+                }
+              }
+
+              if(part && part.construction && part.construction.value === "MT") {
+                if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
+                  if (part.dimensions) {
+                    part.dimensions.forEach((info, index) => {
+                      this.props.dispatch(
+                        change(
+                          'DoorOrder',
+                          `part_list[${i}].dimensions[${index}].leftStile`,
+                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                        )
+                      );
+  
+                      this.props.dispatch(
+                        change(
+                          'DoorOrder',
+                          `part_list[${i}].dimensions[${index}].rightStile`,
+                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                        )
+                      );
+  
+  
+                      this.props.dispatch(
+                        change(
+                          'DoorOrder',
+                          `part_list[${i}].dimensions[${index}].topRail`,
+                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                        )
+                      );
+  
+  
+                      this.props.dispatch(
+                        change(
+                          'DoorOrder',
+                          `part_list[${i}].dimensions[${index}].bottomRail`,
+                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                        )
+                      );
+  
+  
+  
+                      if (parseInt(info.panelsH) > 1) {
+                        this.props.dispatch(
+                          change(
+                            'DoorOrder',
+                            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                            fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                          )
+                        );
+                      }
+  
+                      if (parseInt(info.panelsW) > 1) {
+                        this.props.dispatch(
+                          change(
+                            'DoorOrder',
+                            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                            fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
                           )
                         );
                       }
@@ -634,19 +734,18 @@ const mapStateToProps = state => ({
     open: true,
     part_list: [
       {
-
-        // construction: {
-        //   name: 'Cope And Stick',
-        //   value: 'Cope'
-        // },
-        // orderType: {
-        //   name: 'Door Order',
-        //   value: 'Door'
-        // },
-        // thickness: {
-        //   name: '4/4',
-        //   value: 0.75
-        // },
+        construction: {
+          name: 'Cope And Stick',
+          value: 'Cope'
+        },
+        orderType: {
+          name: 'Door Order',
+          value: 'Door'
+        },
+        thickness: {
+          name: '4/4',
+          value: 0.75
+        },
         dimensions: [],
         addPrice: 0,
       }
