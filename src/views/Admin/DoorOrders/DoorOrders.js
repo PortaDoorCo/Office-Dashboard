@@ -200,6 +200,14 @@ class DoorOrders extends Component {
             if (part.dimensions) {
               return part.dimensions.forEach((info, index) => {
 
+                this.props.dispatch(
+                  change(
+                    'DoorOrder',
+                    `part_list[${i}].dimensions[${index}].item`,
+                    index + 1
+                  )
+                )
+
                 if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
@@ -230,13 +238,6 @@ class DoorOrders extends Component {
                   )
                 }
 
-                this.props.dispatch(
-                  change(
-                    'DoorOrder',
-                    `part_list[${i}].dimensions[${index}].item`,
-                    index + 1
-                  )
-                )
 
                 if(part_list[i].construction.value === "Cope"){
                   if (info.panelsW > 1) {
