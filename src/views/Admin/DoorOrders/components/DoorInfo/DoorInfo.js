@@ -24,6 +24,7 @@ import Cookies from "js-cookie";
 import Select from 'react-select';
 import CopeDoor from './Cope/Door'
 import MiterDoor from './Miter/Door'
+import MTDoor from './MT/Door'
 
 import DoorFilter from './Filter/Filter'
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
@@ -160,9 +161,18 @@ class DoorInfo extends Component {
                 <MiterDoor
                   part={part}
                   index={index}
-                /> 
+                />
                 :
-              null
+                (formState &&
+                  formState.part_list[index] &&
+                  formState.part_list[index].construction &&
+                  formState.part_list[index].construction.value === "MT") ?
+                  <MTDoor
+                    part={part}
+                    index={index}
+                  />
+                  :
+                  null
             }
 
 
