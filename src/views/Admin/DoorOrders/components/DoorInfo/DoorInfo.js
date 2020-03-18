@@ -22,9 +22,12 @@ import FieldFileInput from '../UploadComponent'
 import { FileUploader } from 'devextreme-react';
 import Cookies from "js-cookie";
 import Select from 'react-select';
+
 import CopeDoor from './Cope/Door'
 import MiterDoor from './Miter/Door'
 import MTDoor from './MT/Door'
+
+import CopeDF from './Cope/DF'
 
 import DoorFilter from './Filter/Filter'
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
@@ -49,6 +52,17 @@ const construction = [
   {
     name: 'MT Construction',
     value: 'MT'
+  }
+];
+
+const orderType = [
+  {
+    name: 'Door Order',
+    value: 'Door'
+  },
+  {
+    name: 'Drawer Front',
+    value: 'DF'
   },
   {
     name: 'Frame Only',
@@ -61,17 +75,6 @@ const construction = [
   {
     name: 'Slab Type Door',
     value: 'Slab_Door'
-  }
-];
-
-const orderType = [
-  {
-    name: 'Door Order',
-    value: 'Door'
-  },
-  {
-    name: 'Drawer Front',
-    value: 'DF'
   }
 ];
 
@@ -111,6 +114,8 @@ class DoorInfo extends Component {
       updateSubmit
     } = this.props;
 
+
+
     return (
       <div>
         {fields.map((part, index) => (
@@ -142,60 +147,88 @@ class DoorInfo extends Component {
               thickness={thickness}
             />
 
-
-
-
             {(formState &&
               formState.part_list[index] &&
-              formState.part_list[index].construction &&
-              formState.part_list[index].construction.value === "Cope") ?
+              formState.part_list[index].orderType &&
+              formState.part_list[index].orderType.value === "Door")
+              ?
 
-              <CopeDoor
-                part={part}
-                index={index}
-              /> :
-              (formState &&
-                formState.part_list[index] &&
-                formState.part_list[index].construction &&
-                formState.part_list[index].construction.value === "M") ?
-                <MiterDoor
-                  part={part}
-                  index={index}
-                />
-                :
-                (formState &&
+              //DOOR
+              <div>
+                {(formState &&
                   formState.part_list[index] &&
                   formState.part_list[index].construction &&
-                  formState.part_list[index].construction.value === "MT") ?
-                  <MTDoor
+                  formState.part_list[index].construction.value === "Cope") ?
+
+                  <CopeDoor
                     part={part}
                     index={index}
                   />
                   :
-                  null
+                  (formState &&
+                    formState.part_list[index] &&
+                    formState.part_list[index].construction &&
+                    formState.part_list[index].construction.value === "M") ?
+                    <MiterDoor
+                      part={part}
+                      index={index}
+                    />
+                    :
+                    (formState &&
+                      formState.part_list[index] &&
+                      formState.part_list[index].construction &&
+                      formState.part_list[index].construction.value === "MT") ?
+                      <MTDoor
+                        part={part}
+                        index={index}
+                      />
+                      :
+                      null
+                }
+              </div>
+              :
+              (formState &&
+                formState.part_list[index] &&
+                formState.part_list[index].orderType &&
+                formState.part_list[index].orderType.value === "DF") ?
+                
+                //Drawer Fronts
+                <div>
+                  {(formState &&
+                    formState.part_list[index] &&
+                    formState.part_list[index].construction &&
+                    formState.part_list[index].construction.value === "Cope") ?
+
+                    <CopeDF
+                      part={part}
+                      index={index}
+                    />
+                    :
+                    (formState &&
+                      formState.part_list[index] &&
+                      formState.part_list[index].construction &&
+                      formState.part_list[index].construction.value === "M") ?
+                      <MiterDoor
+                        part={part}
+                        index={index}
+                      />
+                      :
+                      (formState &&
+                        formState.part_list[index] &&
+                        formState.part_list[index].construction &&
+                        formState.part_list[index].construction.value === "MT") ?
+                        <MTDoor
+                          part={part}
+                          index={index}
+                        />
+                        :
+                        null
+                  }
+
+                </div>
+                :
+                null
             }
-
-
-            {/* <Row>
-              <Col xs="4">
-                <FormGroup>
-                <Label for="jobNotes">Misc Items</Label>
-                <Field
-                    name={`${part}.miscItems`}
-                    component={renderMultiSelect}
-                    data={orderType}
-                    textField="Name"
-                />
-                </FormGroup>
-              </Col>
-
-
-
-            </Row> */}
-
-
-
-
 
             <Row className="mt-2">
               <Col xs="4">
