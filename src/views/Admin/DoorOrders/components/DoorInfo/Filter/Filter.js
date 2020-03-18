@@ -24,7 +24,6 @@ const DoorFilter = ({ part, construction, thickness, orderType }) => {
     return (
         <Fragment>
             <Row>
-                
               <Col xs="4">
                 <FormGroup>
                   <Label for="orderType">Order Type</Label>

@@ -25,6 +25,9 @@ export const GET_PLYNTHS_STOOLS = 'GET_PLYNTHS_STOOLS'
 export const GET_PROFILES = 'GET_PROFILES'
 export const GET_SOLID_CROWNS = 'GET_SOLID_CROWNS'
 export const GET_WAINSCOT_BEADS = 'GET_WAINSCOT_BEADS'
+export const GET_FACE_FRAME_DESIGNS = 'GET_FACE_FRAME_DESIGNS'
+export const GET_FACE_FRAME_TOP_RAILS = 'GET_FACE_FRAME_TOP_RAILS'
+export const GET_FURNITURE_FEET = 'GET_FURNITURE_FEET'
 
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -403,6 +406,58 @@ export function get_Wainscot_Beads(cookie) {
     const data = await res.json();
     return dispatch({
       type: GET_WAINSCOT_BEADS,
+      data: data
+    });
+  };
+}
+
+export function get_Face_Frame_Designs(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/face-frame-designs`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_FACE_FRAME_DESIGNS,
+      data: data
+    });
+  };
+}
+
+export function get_Face_Frame_Top_Rails(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/face-frame-top-rails`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_FACE_FRAME_TOP_RAILS,
+      data: data
+    });
+  };
+}
+
+
+export function getFurnitureFeet(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/furniture-feets`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_FURNITURE_FEET,
       data: data
     });
   };

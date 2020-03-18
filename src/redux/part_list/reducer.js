@@ -21,6 +21,9 @@ import {
   GET_PROFILES,
   GET_SOLID_CROWNS,
   GET_WAINSCOT_BEADS,
+  GET_FACE_FRAME_DESIGNS,
+  GET_FACE_FRAME_TOP_RAILS,
+  GET_FURNITURE_FEET,
 
 
   UPDATE_PRODUCT,
@@ -54,6 +57,9 @@ const initialState = {
   profiles: ["Loading"],
   solid_crowns: ["Loading"],
   wainscot_beads: ["Loading"],
+  face_frame_designs: ["Loading"],
+  face_frame_top_rails: ["Loading"],
+  furniture_feet: ["Loading"],
 
 
   scoop: [
@@ -133,6 +139,9 @@ const initialState = {
   loadedProfiles: false,
   loadedSolidCrowns: false,
   loadedWainscotBeads: false,
+  loadedFaceFrameDesigns: false,
+  loadedFaceFrameTopRails: false,
+  loadedFurnitureFeets: false,
 
 
   error: null,
@@ -278,6 +287,25 @@ export default function (state = initialState, action) {
         wainscot_beads: data,
         loadedWainscotBeads: true
       };
+    case GET_FACE_FRAME_DESIGNS:
+      return {
+        ...state,
+        face_frame_designs: data,
+        loadedFaceFrameDesigns: true
+      };
+    case GET_FACE_FRAME_TOP_RAILS:
+      return {
+        ...state,
+        face_frame_top_rails: data,
+        loadedFaceFrameTopRails: true
+      };
+    case GET_FURNITURE_FEET:
+      return {
+        ...state,
+        furniture_feet: data,
+        loadedFurnitureFeets: true
+      };
+
 
 
 

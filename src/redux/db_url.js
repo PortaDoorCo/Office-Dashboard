@@ -1,2 +1,2 @@
-const db_url = 'https://infinite-woodland-96977.herokuapp.com'
+const db_url = 'http://localhost:1337'
 export default db_url

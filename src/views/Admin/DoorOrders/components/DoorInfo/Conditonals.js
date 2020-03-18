@@ -17,11 +17,15 @@ import MTDoor from './MT/Door'
 
 import CopeDF from './Cope/DF'
 import MiterDF from './Miter/DF'
+import MT_DF from './MT/DF'
+import Frame_Only from './FrameOnly/FrameOnly'
 
 const Conditionals = ({ formState, part, index }) => {
 
     if(formState && formState.part_list){
 
+
+        //Doors
         if (formState.part_list[index].orderType.value === "Door") {
 
             if (formState.part_list[index].construction.value === "Cope") {
@@ -52,6 +56,7 @@ const Conditionals = ({ formState, part, index }) => {
             }
         }
 
+        //Drawer Fronts
         if (formState.part_list[index].orderType.value === "DF") {
             if (formState.part_list[index].construction.value === "Cope") {
                 return (
@@ -69,6 +74,35 @@ const Conditionals = ({ formState, part, index }) => {
                     />
                 )
             }
+            if (formState.part_list[index].construction.value === "MT") {
+                return (
+                    <MT_DF
+                        part={part}
+                        index={index}
+                    />
+                )
+            }
+        }
+
+        if(formState.part_list[index].orderType.value === "Frame_Only"){
+            return (
+                <Frame_Only
+                part={part}
+                index={index}
+            />
+            )
+        }
+
+
+
+
+
+
+
+
+
+        else {
+            return null
         }
 
        
