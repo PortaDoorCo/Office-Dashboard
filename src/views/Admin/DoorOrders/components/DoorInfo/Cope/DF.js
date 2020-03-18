@@ -11,7 +11,6 @@ import {
 import { Field } from "redux-form";
 import {
   getWoodtypes,
-  getCopeDesigns,
   getEdges,
   getPanels,
   getProfiles,
@@ -35,7 +34,6 @@ class CopeDF extends Component {
     const cookie = await Cookies.get("jwt");
     const {
       getWoodtypes,
-      getCopeDesigns,
       getEdges,
       getPanels,
       getProfiles,
@@ -45,7 +43,6 @@ class CopeDF extends Component {
 
     if(cookie){
       await getWoodtypes(cookie);
-      await getCopeDesigns(cookie);
       await getEdges(cookie);
       await getPanels(cookie);
       await getProfiles(cookie);
@@ -62,7 +59,6 @@ class CopeDF extends Component {
     const {
       part,
       woodtypes,
-      cope_designs,
       edges,
       profiles,
       panels,
@@ -170,7 +166,6 @@ class CopeDF extends Component {
 
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
-  cope_designs: state.part_list.cope_designs,
   edges: state.part_list.edges,
   finishes: state.part_list.finishes,
   panels: state.part_list.panels,
@@ -183,7 +178,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getWoodtypes,
-      getCopeDesigns,
       getEdges,
       getPanels,
       getProfiles,

@@ -31,6 +31,7 @@ import CopeDF from './Cope/DF'
 
 import DoorFilter from './Filter/Filter'
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
+import Conditionals from './Conditonals'
 
 
 
@@ -147,88 +148,11 @@ class DoorInfo extends Component {
               thickness={thickness}
             />
 
-            {(formState &&
-              formState.part_list[index] &&
-              formState.part_list[index].orderType &&
-              formState.part_list[index].orderType.value === "Door")
-              ?
-
-              //DOOR
-              <div>
-                {(formState &&
-                  formState.part_list[index] &&
-                  formState.part_list[index].construction &&
-                  formState.part_list[index].construction.value === "Cope") ?
-
-                  <CopeDoor
-                    part={part}
-                    index={index}
-                  />
-                  :
-                  (formState &&
-                    formState.part_list[index] &&
-                    formState.part_list[index].construction &&
-                    formState.part_list[index].construction.value === "M") ?
-                    <MiterDoor
-                      part={part}
-                      index={index}
-                    />
-                    :
-                    (formState &&
-                      formState.part_list[index] &&
-                      formState.part_list[index].construction &&
-                      formState.part_list[index].construction.value === "MT") ?
-                      <MTDoor
-                        part={part}
-                        index={index}
-                      />
-                      :
-                      null
-                }
-              </div>
-              :
-              (formState &&
-                formState.part_list[index] &&
-                formState.part_list[index].orderType &&
-                formState.part_list[index].orderType.value === "DF") ?
-                
-                //Drawer Fronts
-                <div>
-                  {(formState &&
-                    formState.part_list[index] &&
-                    formState.part_list[index].construction &&
-                    formState.part_list[index].construction.value === "Cope") ?
-
-                    <CopeDF
-                      part={part}
-                      index={index}
-                    />
-                    :
-                    (formState &&
-                      formState.part_list[index] &&
-                      formState.part_list[index].construction &&
-                      formState.part_list[index].construction.value === "M") ?
-                      <MiterDoor
-                        part={part}
-                        index={index}
-                      />
-                      :
-                      (formState &&
-                        formState.part_list[index] &&
-                        formState.part_list[index].construction &&
-                        formState.part_list[index].construction.value === "MT") ?
-                        <MTDoor
-                          part={part}
-                          index={index}
-                        />
-                        :
-                        null
-                  }
-
-                </div>
-                :
-                null
-            }
+            <Conditionals
+              formState={formState}
+              part={part}
+              index={index}
+            />
 
             <Row className="mt-2">
               <Col xs="4">
