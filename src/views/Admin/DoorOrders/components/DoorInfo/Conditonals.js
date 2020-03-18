@@ -16,12 +16,14 @@ import MiterDoor from './Miter/Door'
 import MTDoor from './MT/Door'
 
 import CopeDF from './Cope/DF'
+import MiterDF from './Miter/DF'
 
 const Conditionals = ({ formState, part, index }) => {
 
     if(formState && formState.part_list){
 
         if (formState.part_list[index].orderType.value === "Door") {
+
             if (formState.part_list[index].construction.value === "Cope") {
                 return (
                     <CopeDoor
@@ -46,6 +48,25 @@ const Conditionals = ({ formState, part, index }) => {
                     part={part}
                     index={index}
                   />
+                )
+            }
+        }
+
+        if (formState.part_list[index].orderType.value === "DF") {
+            if (formState.part_list[index].construction.value === "Cope") {
+                return (
+                    <CopeDF
+                        part={part}
+                        index={index}
+                    />
+                )
+            }
+            if (formState.part_list[index].construction.value === "M") {
+                return (
+                    <MiterDF
+                        part={part}
+                        index={index}
+                    />
                 )
             }
         }
