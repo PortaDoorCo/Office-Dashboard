@@ -2,7 +2,7 @@ import React from 'react';
 
 const Dashboard = React.lazy(() => import('./views/Admin/Dashboard'));
 const DoorOrders = React.lazy(() => import('./views/Admin/DoorOrders/DoorOrders'));
-const DrawerOrders = React.lazy(() => import('./views/Admin/Orders/DrawerOrders/DrawerOrder'));
+const DrawerOrders = React.lazy(() => import('./views/Admin/DrawerOrders/DrawerOrder'));
 const Orders = React.lazy(() => import('./views/Admin/Orders/ViewAllOrders/ViewAllOrders'));
 const Customers = React.lazy(() => import('./views/Admin/Customers/Customers/Companies'));
 const Products = React.lazy(() => import('./views/Admin/Products/Products'));
