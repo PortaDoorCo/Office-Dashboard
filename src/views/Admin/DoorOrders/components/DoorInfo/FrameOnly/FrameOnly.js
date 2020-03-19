@@ -15,9 +15,6 @@ import {
   get_Face_Frame_Top_Rails,
   getFurnitureFeet,
   getEdges,
-  getPanels,
-  getAppliedMoulds,
-  getFinish
 } from "../../../../../../redux/part_list/actions";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -39,10 +36,6 @@ class Frame_Only extends Component {
       get_Face_Frame_Designs,
       get_Face_Frame_Top_Rails,
       getFurnitureFeet,
-      getEdges,
-      getPanels,
-      getAppliedMoulds,
-      getFinish
     } = this.props;
 
     if(cookie){
@@ -50,10 +43,6 @@ class Frame_Only extends Component {
       await get_Face_Frame_Designs(cookie);
       await get_Face_Frame_Top_Rails(cookie);
       await getFurnitureFeet(cookie);
-      await getEdges(cookie);
-      await getPanels(cookie);
-      await getAppliedMoulds(cookie);
-      await getFinish(cookie);
       
     } else {
       alert('not logged in')
@@ -69,9 +58,6 @@ class Frame_Only extends Component {
       face_frame_top_rails,
       furniture_feets,
       edges,
-      panels,
-      applied_moulds,
-      finishes
     } = this.props;
     return (
       <div>
@@ -163,10 +149,6 @@ const mapStateToProps = state => ({
   face_frame_top_rails: state.part_list.face_frame_top_rails,
   furniture_feets: state.part_list.furniture_feets,
   edges: state.part_list.edges,
-  panels: state.part_list.panels,
-  profiles: state.part_list.profiles,
-  applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes
 });
 
 const mapDispatchToProps = dispatch =>
@@ -177,9 +159,6 @@ const mapDispatchToProps = dispatch =>
       get_Face_Frame_Top_Rails,
       getFurnitureFeet,
       getEdges,
-      getPanels,
-      getAppliedMoulds,
-      getFinish
     },
     dispatch
   );
