@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DrawerBoxInfo from './components/DrawerBoxInfo';
-import JobInfo from '../OrderInfo/JobInfo';
+import JobInfo from '../Orders/OrderInfo/JobInfo';
 import NotificationAlert from 'react-notification-alert';
 import 'react-notifications/lib/notifications.css';
 import {
@@ -25,7 +25,7 @@ import {
 import {
   submitOrder,
   loadCustomers,
-} from '../../../../redux/orders/actions';
+} from '../../../redux/orders/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -33,7 +33,7 @@ import {
   totalSelector,
   taxSelector,
   addPriceSelector
-} from '../../../../selectors/drawerPricing';
+} from '../../../selectors/drawerPricing';
 // import {
 //   getWoodtypes,
 //   getBoxThickness,
