@@ -8,11 +8,12 @@ import {
   Button,
   Input
 } from "reactstrap";
-import { Field } from "redux-form";
+import { Field, FieldArray } from "redux-form";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
+import Miter_Table from '../../Table/Doors/Miter_Table'
 
 const required = value => (value ? undefined : 'Required');
 
@@ -31,7 +32,12 @@ class MiterDoor extends Component {
       profiles,
       panels,
       applied_moulds,
-      finishes
+      finishes,
+
+      isValid,
+      index,
+      part_list,
+      formState,
     } = this.props;
     return (
       <div>
@@ -77,16 +83,8 @@ class MiterDoor extends Component {
               />
             </FormGroup>
           </Col>
-
-
-
         </Row>
         <Row>
-
-
-
-
-
           <Col xs="6">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
@@ -116,6 +114,39 @@ class MiterDoor extends Component {
           </Col>
 
         </Row>
+
+        <Row className="mt-2">
+          <Col xs="4">
+            <FormGroup>
+              <strong>
+                <Label for="jobNotes">Job Notes</Label>
+                <Field
+                  name={`${part}.notes`}
+                  type="textarea"
+                  component={renderField}
+                />
+              </strong>
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <div>
+          <CardSubtitle className="mt-4 mb-1">Dimensions</CardSubtitle>
+          <div className="mt-1" />
+          <FieldArray
+            name={`${part}.dimensions`}
+            component={Miter_Table}
+            i={index}
+            // prices={prices}
+            // subTotal={subTotal}
+            part_list={part_list}
+            formState={formState}
+            isValid={isValid}
+            part={part}
+          // updateSubmit={updateSubmit}
+          />
+        </div>
+
       </div>
     );
   }

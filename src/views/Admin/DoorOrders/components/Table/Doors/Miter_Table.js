@@ -7,18 +7,12 @@ import {
   Col,
   Button
 } from "reactstrap";
-import { Checkbox as CheckboxUI } from 'semantic-ui-react';
-// import Checkbox from 'material-ui/Checkbox'
 import 'semantic-ui-css/semantic.min.css';
 import { Field } from "redux-form";
 import Ratio from "lb-ratio";
-import Maker from '../MakerJS/Maker';
-import DropdownList from 'react-widgets/lib/DropdownList';
-import Multiselect from 'react-widgets/lib/Multiselect'
+import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import PanelsTable from './Table'
-import GlassTable from './Glass'
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
 
 
 const required = value => (value ? undefined : 'Required');
@@ -43,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -174,9 +168,9 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
                     </td>
                     <td>
-                      <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
                         X
-</Button>
+                        </Button>
                     </td>
                   </tr>
 
@@ -338,21 +332,21 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 className="btn-circle"
                 onClick={(e) =>
                   (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "Cope" && formState.part_list[formState.part_list.length - 1].profile) ?
+                    (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].design) ?
                       fields.push({
                         panelsH: 1,
                         panelsW: 1,
                         leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
                         ),
                         rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
                         ),
                         topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
                         ),
                         bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
                         ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,
@@ -392,4 +386,4 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   )
 };
 
-export default OrderTable;
+export default Miter_Table;

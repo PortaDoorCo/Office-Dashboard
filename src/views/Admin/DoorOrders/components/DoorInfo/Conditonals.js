@@ -22,7 +22,8 @@ import Frame_Only from './FrameOnly/FrameOnly'
 import One_Piece_Door from './One_Piece/One_Piece'
 import Slab_Door from './Slab_Door/Slab_Door'
 
-const Conditionals = ({ formState, part, index }) => {
+
+const Conditionals = ({ formState, part, index, isValid, part_list }) => {
 
     if(formState && formState.part_list){
 
@@ -35,6 +36,9 @@ const Conditionals = ({ formState, part, index }) => {
                     <CopeDoor
                         part={part}
                         index={index}
+                        isValid={isValid}
+                        part_list={part_list}
+                        formState={formState}
                     />
                 )
             }
@@ -44,6 +48,9 @@ const Conditionals = ({ formState, part, index }) => {
                     <MiterDoor
                     part={part}
                     index={index}
+                    isValid={isValid}
+                    part_list={part_list}
+                    formState={formState}
                   />
                 )
             }
