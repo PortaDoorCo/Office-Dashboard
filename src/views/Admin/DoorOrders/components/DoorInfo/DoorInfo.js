@@ -59,8 +59,8 @@ const orderType = [
     value: 'DF'
   },
   {
-    name: 'Frame Only',
-    value: 'Frame_Only'
+    name: 'Face Frame',
+    value: 'Face_Frame'
   },
   {
     name: 'One Piece Door',
