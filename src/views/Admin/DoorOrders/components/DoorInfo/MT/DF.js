@@ -8,11 +8,12 @@ import {
   Button,
   Input
 } from "reactstrap";
-import { Field } from "redux-form";
+import { Field, FieldArray } from "redux-form";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
+import MT_Table from '../../Table/DFs/MT_Table';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -31,7 +32,12 @@ class MT_DF extends Component {
       edges,
       panels,
       applied_moulds,
-      finishes
+      finishes,
+
+      isValid,
+      index,
+      part_list,
+      formState,
     } = this.props;
     return (
       <div>
@@ -112,6 +118,39 @@ class MT_DF extends Component {
           </Col>
 
         </Row>
+
+        <Row className="mt-2">
+          <Col xs="4">
+            <FormGroup>
+              <strong>
+                <Label for="jobNotes">Job Notes</Label>
+                <Field
+                  name={`${part}.notes`}
+                  type="textarea"
+                  component={renderField}
+                />
+              </strong>
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <div>
+          <CardSubtitle className="mt-4 mb-1">Dimensions</CardSubtitle>
+          <div className="mt-1" />
+          <FieldArray
+            name={`${part}.dimensions`}
+            component={MT_Table}
+            i={index}
+            // prices={prices}
+            // subTotal={subTotal}
+            part_list={part_list}
+            formState={formState}
+            isValid={isValid}
+            part={part}
+          // updateSubmit={updateSubmit}
+          />
+        </div>
+
       </div>
     );
   }
