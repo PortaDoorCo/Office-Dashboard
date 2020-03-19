@@ -46,6 +46,10 @@ const construction = [
   {
     name: 'MT Construction',
     value: 'MT'
+  },
+  {
+    name: 'Glass Door',
+    value: 'Glass'
   }
 ];
 
