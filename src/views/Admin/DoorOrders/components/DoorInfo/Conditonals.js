@@ -20,6 +20,7 @@ import MiterDF from './Miter/DF'
 import MT_DF from './MT/DF'
 import Frame_Only from './FrameOnly/FrameOnly'
 import One_Piece_Door from './One_Piece/One_Piece'
+import Slab_Door from './Slab_Door/Slab_Door'
 
 const Conditionals = ({ formState, part, index }) => {
 
@@ -97,6 +98,15 @@ const Conditionals = ({ formState, part, index }) => {
         if(formState.part_list[index].orderType.value === "One_Piece"){
             return (
                 <One_Piece_Door
+                part={part}
+                index={index}
+            />
+            )
+        }
+
+        if(formState.part_list[index].orderType.value === "Slab_Door"){
+            return (
+                <Slab_Door
                 part={part}
                 index={index}
             />
