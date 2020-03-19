@@ -24,6 +24,10 @@ import {
   GET_FACE_FRAME_DESIGNS,
   GET_FACE_FRAME_TOP_RAILS,
   GET_FURNITURE_FEET,
+  GET_ONE_PIECE_WOODTYPES,
+  GET_ONE_PIECE_DESIGNS,
+  GET_ONE_PIECE_PANELS,
+  GET_ONE_PIECE_EDGES,
 
 
   UPDATE_PRODUCT,
@@ -59,7 +63,11 @@ const initialState = {
   wainscot_beads: ["Loading"],
   face_frame_designs: ["Loading"],
   face_frame_top_rails: ["Loading"],
-  furniture_feet: ["Loading"],
+  furniture_feets: ["Loading"],
+  one_piece_woodtypes: ["Loading"],
+  one_piece_designs: ["Loading"],
+  one_piece_panels: ["Loading"],
+  one_piece_edges: ["Loading"],
 
 
   scoop: [
@@ -142,7 +150,10 @@ const initialState = {
   loadedFaceFrameDesigns: false,
   loadedFaceFrameTopRails: false,
   loadedFurnitureFeets: false,
-
+  loadedOnePieceWoodtypes: false,
+  loadedOnePieceDesigns: false,
+  loadedOnePiecePanels: false,
+  loadedOnePieceEdges: false,
 
   error: null,
 
@@ -302,8 +313,33 @@ export default function (state = initialState, action) {
     case GET_FURNITURE_FEET:
       return {
         ...state,
-        furniture_feet: data,
+        furniture_feets: data,
         loadedFurnitureFeets: true
+      };
+
+    case GET_ONE_PIECE_WOODTYPES:
+      return {
+        ...state,
+        one_piece_woodtypes: data,
+        loadedOnePieceWoodtypes: true
+      };
+    case GET_ONE_PIECE_DESIGNS:
+      return {
+        ...state,
+        one_piece_designs: data,
+        loadedOnePieceDesigns: true
+      };
+    case GET_ONE_PIECE_PANELS:
+      return {
+        ...state,
+        one_piece_panels: data,
+        loadedOnePiecePanels: true
+      };
+    case GET_ONE_PIECE_EDGES:
+      return {
+        ...state,
+        one_piece_edges: data,
+        loadedOnePieceEdges: true
       };
 
 

@@ -28,6 +28,10 @@ export const GET_WAINSCOT_BEADS = 'GET_WAINSCOT_BEADS'
 export const GET_FACE_FRAME_DESIGNS = 'GET_FACE_FRAME_DESIGNS'
 export const GET_FACE_FRAME_TOP_RAILS = 'GET_FACE_FRAME_TOP_RAILS'
 export const GET_FURNITURE_FEET = 'GET_FURNITURE_FEET'
+export const GET_ONE_PIECE_WOODTYPES = 'GET_ONE_PIECE_WOODTYPES'
+export const GET_ONE_PIECE_DESIGNS = 'GET_ONE_PIECE_DESIGNS'
+export const GET_ONE_PIECE_PANELS = 'GET_ONE_PIECE_PANELS'
+export const GET_ONE_PIECE_EDGES = 'GET_ONE_PIECE_EDGES'
 
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -36,6 +40,7 @@ export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
 
 export function getWoodtypes(cookie) {
+  console.log("FIREEEEE")
   return async function (dispatch) {
     const res = await fetch(`${db_url}/woodtypes`,
       {
@@ -463,6 +468,73 @@ export function getFurnitureFeet(cookie) {
   };
 }
 
+export function getOnePieceWoodtypes(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/woodtypes?one_piece=true`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_ONE_PIECE_WOODTYPES,
+      data: data
+    });
+  };
+}
+
+export function getOnePieceDesigns(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/cope-designs?one_piece=true`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_ONE_PIECE_DESIGNS,
+      data: data
+    });
+  };
+}
+
+export function getOnePiecePanels(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/panels?one_piece=true`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_ONE_PIECE_PANELS,
+      data: data
+    });
+  };
+}
+
+export function getOnePieceEdges(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/edges?one_piece=true`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_ONE_PIECE_EDGES,
+      data: data
+    });
+  };
+}
 
 
 
