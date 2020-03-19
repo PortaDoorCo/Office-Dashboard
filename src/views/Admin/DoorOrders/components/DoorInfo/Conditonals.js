@@ -14,6 +14,7 @@ import { renderField, renderFieldDisabled } from '../RenderInputs/renderInputs'
 import CopeDoor from './Cope/Door'
 import MiterDoor from './Miter/Door'
 import MTDoor from './MT/Door'
+import GlassDoor from './Glass/Glass_Door'
 
 import CopeDF from './Cope/DF'
 import MiterDF from './Miter/DF'
@@ -58,6 +59,18 @@ const Conditionals = ({ formState, part, index, isValid, part_list }) => {
             if(formState.part_list[index].construction.value === "MT"){
                 return (
                     <MTDoor
+                    part={part}
+                    index={index}
+                    isValid={isValid}
+                    part_list={part_list}
+                    formState={formState}
+                  />
+                )
+            }
+
+            if(formState.part_list[index].construction.value === "Glass"){
+                return (
+                    <GlassDoor
                     part={part}
                     index={index}
                     isValid={isValid}
