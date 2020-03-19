@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -292,21 +292,21 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                 className="btn-circle"
                 onClick={(e) =>
                   (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].design) ?
+                    (formState.part_list[formState.part_list.length - 1].construction.value === "MT" && formState.part_list[formState.part_list.length - 1].design) ?
                       fields.push({
                         panelsH: 1,
                         panelsW: 1,
                         leftStile: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
                           ),
                           rightStile: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
                           ),
                           topRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
                           ),
                           bottomRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
                           ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,
@@ -346,4 +346,4 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
   )
 };
 
-export default Miter_Table;
+export default MT_Table;
