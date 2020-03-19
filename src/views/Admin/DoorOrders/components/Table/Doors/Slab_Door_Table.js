@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -275,4 +275,4 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
   )
 };
 
-export default One_Piece_Table;
+export default Slab_Door_Table;
