@@ -9,14 +9,6 @@ import {
   Input
 } from "reactstrap";
 import { Field } from "redux-form";
-import {
-  getWoodtypes,
-  getMTDesigns,
-  getEdges,
-  getPanels,
-  getAppliedMoulds,
-  getFinish
-} from "../../../../../../redux/part_list/actions";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
@@ -29,31 +21,6 @@ class MT_Door extends Component {
   constructor(props) {
     super(props);
   }
-
-  componentDidMount = async () => {
-    const cookie = await Cookies.get("jwt");
-    const {
-      getWoodtypes,
-      getMTDesigns,
-      getEdges,
-      getPanels,
-      getAppliedMoulds,
-      getFinish
-    } = this.props;
-
-    if(cookie){
-      await getWoodtypes(cookie);
-      await getMTDesigns(cookie);
-      await getEdges(cookie);
-      await getPanels(cookie);
-      await getAppliedMoulds(cookie);
-      await getFinish(cookie);
-      
-    } else {
-      alert('not logged in')
-    }
-  }
-
 
   render() {
     const {
@@ -177,12 +144,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getMTDesigns,
-      getEdges,
-      getPanels,
-      getAppliedMoulds,
-      getFinish
+
     },
     dispatch
   );

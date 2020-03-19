@@ -9,14 +9,6 @@ import {
   Input
 } from "reactstrap";
 import { Field } from "redux-form";
-import {
-  getWoodtypes,
-  getMTDesigns,
-  getEdges,
-  getPanels,
-  getAppliedMoulds,
-  getFinish
-} from "../../../../../../redux/part_list/actions";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
@@ -28,30 +20,6 @@ const required = value => (value ? undefined : 'Required');
 class MT_DF extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount = async () => {
-    const cookie = await Cookies.get("jwt");
-    const {
-      getWoodtypes,
-      getMTDesigns,
-      getEdges,
-      getPanels,
-      getAppliedMoulds,
-      getFinish
-    } = this.props;
-
-    if(cookie){
-      await getWoodtypes(cookie);
-      await getMTDesigns(cookie);
-      await getEdges(cookie);
-      await getPanels(cookie);
-      await getAppliedMoulds(cookie);
-      await getFinish(cookie);
-      
-    } else {
-      alert('not logged in')
-    }
   }
 
 
@@ -163,12 +131,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getMTDesigns,
-      getEdges,
-      getPanels,
-      getAppliedMoulds,
-      getFinish
+
     },
     dispatch
   );

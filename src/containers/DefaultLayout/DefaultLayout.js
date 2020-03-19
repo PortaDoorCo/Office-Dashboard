@@ -27,12 +27,38 @@ import { bindActionCreators } from "redux";
 import { loadOrders, loadCustomers, loadSales, loadShippingMethod } from "../../redux/orders/actions";
 import {
   getWoodtypes,
-  getCopeDesigns,
-  getEdges,
-  getPanels,
-  getProfiles,
   getAppliedMoulds,
-  getFinish
+  getBaseCap,
+  getBaseboards,
+  getCasings,
+  getChairRails,
+  getCopeDesigns,
+  getCrownMouldings,
+  getEdgeSlabs,
+  getEdges,
+  getFinish,
+  getLites,
+  get_Miter_DF_Designs,
+  getMiterDesigns,
+  getMouldingsLengths,
+  getMTDesigns,
+  get_MT_DF_Designs,
+  getPanels,
+  get_Plyths_Stools,
+  getProfiles,
+  getSolidCrowns,
+  get_Wainscot_Beads,
+  get_Face_Frame_Designs,
+  get_Face_Frame_Top_Rails,
+  getFurnitureFeet,
+  getOnePieceWoodtypes,
+  getOnePieceDesigns,
+  getOnePiecePanels,
+  getOnePieceEdges,
+
+
+
+
 } from "../../redux/part_list/actions";
 import { login } from "../../redux/users/actions";
 
@@ -49,21 +75,79 @@ class DefaultLayout extends Component {
 
   componentDidMount = async() => {
     const props = this.props;
+    const {
+      getWoodtypes,
+      getAppliedMoulds,
+      getBaseCap,
+      getBaseboards,
+      getCasings,
+      getChairRails,
+      getCopeDesigns,
+      getCrownMouldings,
+      getEdgeSlabs,
+      getEdges,
+      getFinish,
+      getLites,
+      get_Miter_DF_Designs,
+      getMiterDesigns,
+      getMouldingsLengths,
+      getMTDesigns,
+      get_MT_DF_Designs,
+      getPanels,
+      get_Plyths_Stools,
+      getProfiles,
+      getSolidCrowns,
+      get_Wainscot_Beads,
+      get_Face_Frame_Designs,
+      get_Face_Frame_Top_Rails,
+      getFurnitureFeet,
+      getOnePieceWoodtypes,
+      getOnePieceDesigns,
+      getOnePiecePanels,
+      getOnePieceEdges,
+
+      login,
+      loadSales,
+      loadOrders
+
+    } = this.props;
 
     const cookie = await Cookies.get("jwt");
 
     if(cookie){
-      await props.login(cookie);
-      await props.loadSales(cookie);
-      await props.loadOrders(cookie);
+      await login(cookie);
+      await loadSales(cookie);
+      await loadOrders(cookie);
 
-      // await props.getWoodtypes(cookie);
-      // await props.getCopeDesigns(cookie);
-      // await props.getEdges(cookie);
-      // await props.getPanels(cookie);
-      // await props.getProfiles(cookie);
-      // await props.getAppliedMoulds(cookie);
-      // await props.getFinish(cookie);
+      await getWoodtypes(cookie);
+      await getAppliedMoulds(cookie);
+      await getBaseCap(cookie);
+      await getBaseboards(cookie);
+      await getCasings(cookie);
+      await getChairRails(cookie);
+      await getCopeDesigns(cookie);
+      await getCrownMouldings(cookie);
+      await getEdgeSlabs(cookie);
+      await getEdges(cookie);
+      await getFinish(cookie);
+      await getLites(cookie);
+      await get_Miter_DF_Designs(cookie);
+      await getMiterDesigns(cookie);
+      await getMouldingsLengths(cookie);
+      await getMTDesigns(cookie);
+      await get_MT_DF_Designs(cookie);
+      await getPanels(cookie);
+      await get_Plyths_Stools(cookie);
+      await getProfiles(cookie);
+      await getSolidCrowns(cookie);
+      await get_Wainscot_Beads(cookie);
+      await get_Face_Frame_Designs(cookie);
+      await get_Face_Frame_Top_Rails(cookie);
+      await getFurnitureFeet(cookie);
+      await getOnePieceWoodtypes(cookie);
+      await getOnePieceDesigns(cookie);
+      await getOnePiecePanels(cookie);
+      await getOnePieceEdges(cookie);
       
     } else {
       alert('not logged in')
@@ -152,12 +236,34 @@ const mapDispatchToProps = dispatch =>
       loadShippingMethod,
 
       getWoodtypes,
-      getCopeDesigns,
-      getEdges,
-      getPanels,
-      getProfiles,
       getAppliedMoulds,
+      getBaseCap,
+      getBaseboards,
+      getCasings,
+      getChairRails,
+      getCopeDesigns,
+      getCrownMouldings,
+      getEdgeSlabs,
+      getEdges,
       getFinish,
+      getLites,
+      get_Miter_DF_Designs,
+      getMiterDesigns,
+      getMouldingsLengths,
+      getMTDesigns,
+      get_MT_DF_Designs,
+      getPanels,
+      get_Plyths_Stools,
+      getProfiles,
+      getSolidCrowns,
+      get_Wainscot_Beads,
+      get_Face_Frame_Designs,
+      get_Face_Frame_Top_Rails,
+      getFurnitureFeet,
+      getOnePieceWoodtypes,
+      getOnePieceDesigns,
+      getOnePiecePanels,
+      getOnePieceEdges,
 
 
 

@@ -9,14 +9,7 @@ import {
   Input
 } from "reactstrap";
 import { Field } from "redux-form";
-import {
-  getWoodtypes,
-  getEdges,
-  getPanels,
-  getProfiles,
-  getAppliedMoulds,
-  getFinish
-} from "../../../../../../redux/part_list/actions";
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
@@ -30,29 +23,6 @@ class CopeDF extends Component {
     super(props);
   }
 
-  componentDidMount = async () => {
-    const cookie = await Cookies.get("jwt");
-    const {
-      getWoodtypes,
-      getEdges,
-      getPanels,
-      getProfiles,
-      getAppliedMoulds,
-      getFinish
-    } = this.props;
-
-    if(cookie){
-      await getWoodtypes(cookie);
-      await getEdges(cookie);
-      await getPanels(cookie);
-      await getProfiles(cookie);
-      await getAppliedMoulds(cookie);
-      await getFinish(cookie);
-      
-    } else {
-      alert('not logged in')
-    }
-  }
 
 
   render() {
@@ -177,12 +147,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getEdges,
-      getPanels,
-      getProfiles,
-      getAppliedMoulds,
-      getFinish
+
     },
     dispatch
   );
