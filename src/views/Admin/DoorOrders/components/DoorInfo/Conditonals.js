@@ -86,6 +86,7 @@ const Conditionals = ({ formState, part, index }) => {
             }
         }
 
+        //Frame Only Doors
         if(formState.part_list[index].orderType.value === "Frame_Only"){
             return (
                 <Frame_Only
@@ -95,6 +96,8 @@ const Conditionals = ({ formState, part, index }) => {
             )
         }
 
+
+        //One Piece Doors
         if(formState.part_list[index].orderType.value === "One_Piece"){
             return (
                 <One_Piece_Door
@@ -104,6 +107,8 @@ const Conditionals = ({ formState, part, index }) => {
             )
         }
 
+
+        //Slab Doors
         if(formState.part_list[index].orderType.value === "Slab_Door"){
             return (
                 <Slab_Door
