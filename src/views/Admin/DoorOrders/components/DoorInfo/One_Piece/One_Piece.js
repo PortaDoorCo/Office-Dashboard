@@ -67,7 +67,7 @@ class One_Piece_Door extends Component {
                         <FormGroup>
                             <Label htmlFor="mould">Edge</Label>
                             <Field
-                                name={`${part}.edges`}
+                                name={`${part}.edge`}
                                 component={renderDropdownList}
                                 data={one_piece_edges}
                                 valueField="value"
@@ -82,9 +82,9 @@ class One_Piece_Door extends Component {
 
                     <Col xs="6">
                         <FormGroup>
-                            <Label htmlFor="hinges">Panels</Label>
+                            <Label htmlFor="hinges">Panel</Label>
                             <Field
-                                name={`${part}.face_frame_top_rail`}
+                                name={`${part}.panel`}
                                 component={renderDropdownList}
                                 data={one_piece_panels}
                                 valueField="value"
@@ -97,9 +97,9 @@ class One_Piece_Door extends Component {
 
                     <Col xs="6">
                         <FormGroup>
-                            <Label htmlFor="hinges">Finishes</Label>
+                            <Label htmlFor="hinges">Finish</Label>
                             <Field
-                                name={`${part}.furniture_feets`}
+                                name={`${part}.finish`}
                                 component={renderDropdownList}
                                 data={finishes}
                                 valueField="value"

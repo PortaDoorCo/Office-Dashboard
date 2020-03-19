@@ -66,7 +66,7 @@ class Frame_Only extends Component {
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
-                name={`${part}.edges`}
+                name={`${part}.edge`}
                 component={renderDropdownList}
                 data={edges}
                 valueField="value"
@@ -98,7 +98,7 @@ class Frame_Only extends Component {
             <FormGroup>
               <Label htmlFor="hinges">Furniture Feet</Label>
               <Field
-                name={`${part}.furniture_feets`}
+                name={`${part}.furniture_feet`}
                 component={renderDropdownList}
                 data={furniture_feets}
                 valueField="value"
