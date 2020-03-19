@@ -76,7 +76,7 @@ class CopeDoor extends Component {
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
-                name={`${part}.edges`}
+                name={`${part}.edge`}
                 component={renderDropdownList}
                 data={edges}
                 valueField="value"
@@ -109,7 +109,7 @@ class CopeDoor extends Component {
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
-                name={`${part}.panels`}
+                name={`${part}.panel`}
                 component={renderDropdownListFilter}
                 data={panels}
                 valueField="value"
@@ -123,7 +123,7 @@ class CopeDoor extends Component {
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
-                name={`${part}.arches`}
+                name={`${part}.applied_profile`}
                 component={renderDropdownListFilter}
                 data={applied_moulds}
                 valueField="value"
@@ -137,7 +137,7 @@ class CopeDoor extends Component {
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
-                name={`${part}.hinges`}
+                name={`${part}.finish`}
                 component={renderDropdownList}
                 data={finishes}
                 valueField="value"

@@ -60,6 +60,9 @@ const Conditionals = ({ formState, part, index, isValid, part_list }) => {
                     <MTDoor
                     part={part}
                     index={index}
+                    isValid={isValid}
+                    part_list={part_list}
+                    formState={formState}
                   />
                 )
             }
@@ -72,6 +75,9 @@ const Conditionals = ({ formState, part, index, isValid, part_list }) => {
                     <CopeDF
                         part={part}
                         index={index}
+                        isValid={isValid}
+                        part_list={part_list}
+                        formState={formState}
                     />
                 )
             }
@@ -80,6 +86,9 @@ const Conditionals = ({ formState, part, index, isValid, part_list }) => {
                     <MiterDF
                         part={part}
                         index={index}
+                        isValid={isValid}
+                        part_list={part_list}
+                        formState={formState}
                     />
                 )
             }
@@ -88,6 +97,9 @@ const Conditionals = ({ formState, part, index, isValid, part_list }) => {
                     <MT_DF
                         part={part}
                         index={index}
+                        isValid={isValid}
+                        part_list={part_list}
+                        formState={formState}
                     />
                 )
             }
@@ -99,6 +111,9 @@ const Conditionals = ({ formState, part, index, isValid, part_list }) => {
                 <Frame_Only
                 part={part}
                 index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
             />
             )
         }
@@ -110,6 +125,9 @@ const Conditionals = ({ formState, part, index, isValid, part_list }) => {
                 <One_Piece_Door
                 part={part}
                 index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
             />
             )
         }
@@ -121,6 +139,9 @@ const Conditionals = ({ formState, part, index, isValid, part_list }) => {
                 <Slab_Door
                 part={part}
                 index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
             />
             )
         }

@@ -68,7 +68,7 @@ class MT_DF extends Component {
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
-                name={`${part}.edges`}
+                name={`${part}.edge`}
                 component={renderDropdownList}
                 data={edges}
                 valueField="value"
@@ -86,7 +86,7 @@ class MT_DF extends Component {
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
-                name={`${part}.panels`}
+                name={`${part}.panel`}
                 component={renderDropdownListFilter}
                 data={panels}
                 valueField="value"
@@ -101,7 +101,7 @@ class MT_DF extends Component {
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
-                name={`${part}.hinges`}
+                name={`${part}.finish`}
                 component={renderDropdownList}
                 data={finishes}
                 valueField="value"

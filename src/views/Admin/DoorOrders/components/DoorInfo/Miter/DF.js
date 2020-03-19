@@ -68,7 +68,7 @@ class MiterDF extends Component {
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
-                name={`${part}.panels`}
+                name={`${part}.panel`}
                 component={renderDropdownListFilter}
                 data={panels}
                 valueField="value"
@@ -82,7 +82,7 @@ class MiterDF extends Component {
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
-                name={`${part}.hinges`}
+                name={`${part}.finish`}
                 component={renderDropdownList}
                 data={finishes}
                 valueField="value"
