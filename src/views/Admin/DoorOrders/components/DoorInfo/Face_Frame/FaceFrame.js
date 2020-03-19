@@ -8,16 +8,17 @@ import {
   Button,
   Input
 } from "reactstrap";
-import { Field } from "redux-form";
+import { Field, FieldArray } from "redux-form";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs';
+import Frame_Only_Table from '../../Table/Doors/Frame_Only_Table'
 
 const required = value => (value ? undefined : 'Required');
 
 
-class Frame_Only extends Component {
+class FaceFrame extends Component {
   constructor(props) {
     super(props);
   }
@@ -30,6 +31,11 @@ class Frame_Only extends Component {
       face_frame_top_rails,
       furniture_feets,
       edges,
+
+      isValid,
+      index,
+      part_list,
+      formState,
     } = this.props;
     return (
       <div>
@@ -109,6 +115,38 @@ class Frame_Only extends Component {
           </Col>
 
         </Row>
+
+        <Row className="mt-2">
+          <Col xs="4">
+            <FormGroup>
+              <strong>
+                <Label for="jobNotes">Job Notes</Label>
+                <Field
+                  name={`${part}.notes`}
+                  type="textarea"
+                  component={renderField}
+                />
+              </strong>
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <div>
+          <CardSubtitle className="mt-4 mb-1">Dimensions</CardSubtitle>
+          <div className="mt-1" />
+          <FieldArray
+            name={`${part}.dimensions`}
+            component={Frame_Only_Table}
+            i={index}
+            // prices={prices}
+            // subTotal={subTotal}
+            part_list={part_list}
+            formState={formState}
+            isValid={isValid}
+            part={part}
+          // updateSubmit={updateSubmit}
+          />
+        </div>
       </div>
     );
   }
@@ -134,4 +172,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Frame_Only);
+)(FaceFrame);

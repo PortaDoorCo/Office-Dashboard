@@ -18,7 +18,7 @@ import MTDoor from './MT/Door'
 import CopeDF from './Cope/DF'
 import MiterDF from './Miter/DF'
 import MT_DF from './MT/DF'
-import Frame_Only from './FrameOnly/FrameOnly'
+import FaceFrame from '../DoorInfo/Face_Frame/FaceFrame'
 import One_Piece_Door from './One_Piece/One_Piece'
 import Slab_Door from './Slab_Door/Slab_Door'
 
@@ -106,9 +106,9 @@ const Conditionals = ({ formState, part, index, isValid, part_list }) => {
         }
 
         //Frame Only Doors
-        if(formState.part_list[index].orderType.value === "Frame_Only"){
+        if(formState.part_list[index].orderType.value === "Face_Frame"){
             return (
-                <Frame_Only
+                <FaceFrame
                 part={part}
                 index={index}
                 isValid={isValid}
