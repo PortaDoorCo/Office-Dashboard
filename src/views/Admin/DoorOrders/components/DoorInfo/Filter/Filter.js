@@ -130,10 +130,6 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
   } else {
     return null
   }
-
-
-
-
 }
 
 export default DoorFilter;
