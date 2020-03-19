@@ -22,13 +22,6 @@ import FieldFileInput from '../UploadComponent'
 import { FileUploader } from 'devextreme-react';
 import Cookies from "js-cookie";
 import Select from 'react-select';
-
-import CopeDoor from './Cope/Door'
-import MiterDoor from './Miter/Door'
-import MTDoor from './MT/Door'
-
-import CopeDF from './Cope/DF'
-
 import DoorFilter from './Filter/Filter'
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
 import Conditionals from './Conditonals'
@@ -141,6 +134,7 @@ class DoorInfo extends Component {
             </CardSubtitle>
 
             <DoorFilter
+              formState={formState}
               part={part}
               index={index}
               orderType={orderType}
