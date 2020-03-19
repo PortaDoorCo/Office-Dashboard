@@ -9,13 +9,6 @@ import {
     Input
 } from "reactstrap";
 import { Field } from "redux-form";
-import {
-    getOnePieceWoodtypes,
-    getOnePieceDesigns,
-    getOnePieceEdges,
-    getOnePiecePanels,
-    getFinish
-} from "../../../../../../redux/part_list/actions";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
@@ -27,27 +20,6 @@ const required = value => (value ? undefined : 'Required');
 class One_Piece_Door extends Component {
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount = async () => {
-        const cookie = await Cookies.get("jwt");
-        const {
-            getOnePieceWoodtypes,
-            getOnePieceDesigns,
-            getOnePieceEdges,
-            getOnePiecePanels,
-            getFinish
-        } = this.props;
-
-        if (cookie) {
-            await getOnePieceWoodtypes(cookie);
-            await getOnePieceDesigns(cookie);
-            await getOnePieceEdges(cookie);
-            await getOnePiecePanels(cookie);
-            await getFinish(cookie);
-        } else {
-            alert('not logged in')
-        }
     }
 
 
@@ -155,11 +127,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            getOnePieceWoodtypes,
-            getOnePieceDesigns,
-            getOnePieceEdges,
-            getOnePiecePanels,
-            getFinish
+
         },
         dispatch
     );

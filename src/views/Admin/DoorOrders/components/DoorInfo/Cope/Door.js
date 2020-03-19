@@ -9,15 +9,6 @@ import {
   Input
 } from "reactstrap";
 import { Field } from "redux-form";
-import {
-  getWoodtypes,
-  getCopeDesigns,
-  getEdges,
-  getPanels,
-  getProfiles,
-  getAppliedMoulds,
-  getFinish
-} from "../../../../../../redux/part_list/actions";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
@@ -29,32 +20,6 @@ const required = value => (value ? undefined : 'Required');
 class CopeDoor extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount = async () => {
-    const cookie = await Cookies.get("jwt");
-    const {
-      getWoodtypes,
-      getCopeDesigns,
-      getEdges,
-      getPanels,
-      getProfiles,
-      getAppliedMoulds,
-      getFinish
-    } = this.props;
-
-    if(cookie){
-      await getWoodtypes(cookie);
-      await getCopeDesigns(cookie);
-      await getEdges(cookie);
-      await getPanels(cookie);
-      await getProfiles(cookie);
-      await getAppliedMoulds(cookie);
-      await getFinish(cookie);
-      
-    } else {
-      alert('not logged in')
-    }
   }
 
 
@@ -196,13 +161,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getCopeDesigns,
-      getEdges,
-      getPanels,
-      getProfiles,
-      getAppliedMoulds,
-      getFinish
+
     },
     dispatch
   );

@@ -9,13 +9,6 @@ import {
   Input
 } from "reactstrap";
 import { Field } from "redux-form";
-import {
-  getWoodtypes,
-  get_Face_Frame_Designs,
-  get_Face_Frame_Top_Rails,
-  getFurnitureFeet,
-  getEdges,
-} from "../../../../../../redux/part_list/actions";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
@@ -28,27 +21,6 @@ class Frame_Only extends Component {
   constructor(props) {
     super(props);
   }
-
-  componentDidMount = async () => {
-    const cookie = await Cookies.get("jwt");
-    const {
-      getWoodtypes,
-      get_Face_Frame_Designs,
-      get_Face_Frame_Top_Rails,
-      getFurnitureFeet,
-    } = this.props;
-
-    if(cookie){
-      await getWoodtypes(cookie);
-      await get_Face_Frame_Designs(cookie);
-      await get_Face_Frame_Top_Rails(cookie);
-      await getFurnitureFeet(cookie);
-      
-    } else {
-      alert('not logged in')
-    }
-  }
-
 
   render() {
     const {
@@ -154,11 +126,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      get_Face_Frame_Designs,
-      get_Face_Frame_Top_Rails,
-      getFurnitureFeet,
-      getEdges,
+
     },
     dispatch
   );

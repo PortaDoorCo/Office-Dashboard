@@ -9,13 +9,6 @@ import {
   Input
 } from "reactstrap";
 import { Field } from "redux-form";
-import {
-  getWoodtypes,
-  getMiterDesigns,
-  getPanels,
-  getAppliedMoulds,
-  getFinish
-} from "../../../../../../redux/part_list/actions";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
@@ -28,29 +21,6 @@ class MiterDF extends Component {
   constructor(props) {
     super(props);
   }
-
-  componentDidMount = async () => {
-    const cookie = await Cookies.get("jwt");
-    const {
-      getWoodtypes,
-      getMiterDesigns,
-      getPanels,
-      getAppliedMoulds,
-      getFinish
-    } = this.props;
-
-    if(cookie){
-      await getWoodtypes(cookie);
-      await getMiterDesigns(cookie);
-      await getPanels(cookie);
-      await getAppliedMoulds(cookie);
-      await getFinish(cookie);
-      
-    } else {
-      alert('not logged in')
-    }
-  }
-
 
   render() {
     const {
@@ -138,11 +108,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getMiterDesigns,
-      getPanels,
-      getAppliedMoulds,
-      getFinish
+
     },
     dispatch
   );
