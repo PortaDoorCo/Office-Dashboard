@@ -24,7 +24,7 @@ import Cookies from "js-cookie";
 import Select from 'react-select';
 import DoorFilter from './Filter/Filter'
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
-import Conditionals from './Conditonals'
+import Conditionals from './Conditionals'
 
 
 
