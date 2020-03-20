@@ -145,426 +145,426 @@ class DoorOrders extends Component {
     }
   };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.formState !== prevProps.formState) {
-      if (this.props.formState) {
-        const update = async () => {
-          const form = await this.props.formState;
-          const customer = await form.job_info.customer;
-          const part_list = await form.part_list;
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.formState !== prevProps.formState) {
+  //     if (this.props.formState) {
+  //       const update = async () => {
+  //         const form = await this.props.formState;
+  //         const customer = await form.job_info.customer;
+  //         const part_list = await form.part_list;
 
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Address1',
-              customer.Shipping_Address1 || customer.Address1
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Address2',
-              customer.Shipping_Address2 || customer.Address2
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.City',
-              customer.Shipping_City || customer.City
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.State',
-              customer.Shipping_State || customer.State
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Zip',
-              customer.Shipping_Zip || customer.Zip
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Phone',
-              customer.Shipping_Phone || customer.Phone1
-            )
-          );
+  //         this.props.dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             'job_info.Address1',
+  //             customer.Shipping_Address1 || customer.Address1
+  //           )
+  //         );
+  //         this.props.dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             'job_info.Address2',
+  //             customer.Shipping_Address2 || customer.Address2
+  //           )
+  //         );
+  //         this.props.dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             'job_info.City',
+  //             customer.Shipping_City || customer.City
+  //           )
+  //         );
+  //         this.props.dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             'job_info.State',
+  //             customer.Shipping_State || customer.State
+  //           )
+  //         );
+  //         this.props.dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             'job_info.Zip',
+  //             customer.Shipping_Zip || customer.Zip
+  //           )
+  //         );
+  //         this.props.dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             'job_info.Phone',
+  //             customer.Shipping_Phone || customer.Phone1
+  //           )
+  //         );
 
-          part_list.forEach((part, i) => {
-            if (part.dimensions) {
-              return part.dimensions.forEach((info, index) => {
+  //         part_list.forEach((part, i) => {
+  //           if (part.dimensions) {
+  //             return part.dimensions.forEach((info, index) => {
 
-                this.props.dispatch(
-                  change(
-                    'DoorOrder',
-                    `part_list[${i}].dimensions[${index}].item`,
-                    index + 1
-                  )
-                )
+  //               this.props.dispatch(
+  //                 change(
+  //                   'DoorOrder',
+  //                   `part_list[${i}].dimensions[${index}].item`,
+  //                   index + 1
+  //                 )
+  //               )
 
-                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
-                  this.props.dispatch(
-                    change(
-                      'DoorOrder',
-                      `part_list[${i}].dimensions[${index}].unevenCheck`,
-                      false
-                    )
-                  )
-                }
+  //               if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+  //                 this.props.dispatch(
+  //                   change(
+  //                     'DoorOrder',
+  //                     `part_list[${i}].dimensions[${index}].unevenCheck`,
+  //                     false
+  //                   )
+  //                 )
+  //               }
 
-                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
-                  this.props.dispatch(
-                    change(
-                      'DoorOrder',
-                      `part_list[${i}].dimensions[${index}].unevenSplit`,
-                      false
-                    )
-                  )
-                }
+  //               if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+  //                 this.props.dispatch(
+  //                   change(
+  //                     'DoorOrder',
+  //                     `part_list[${i}].dimensions[${index}].unevenSplit`,
+  //                     false
+  //                   )
+  //                 )
+  //               }
 
-                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
-                  this.props.dispatch(
-                    change(
-                      'DoorOrder',
-                      `part_list[${i}].dimensions[${index}].unevenSplitInput`,
-                      '0'
-                    )
-                  )
-                }
+  //               if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+  //                 this.props.dispatch(
+  //                   change(
+  //                     'DoorOrder',
+  //                     `part_list[${i}].dimensions[${index}].unevenSplitInput`,
+  //                     '0'
+  //                   )
+  //                 )
+  //               }
 
 
-                if(part_list[i].construction.value === "Cope"){
-                  if (info.panelsW > 1) {
-                    if (
-                      info.panelsW !==
-                      prevProps.formState.part_list[i].dimensions[index].panelsW
-                    ) {
-                      return this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                          fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                        )
-                      );
-                    }
-                  }
+  //               if(part_list[i].construction.value === "Cope"){
+  //                 if (info.panelsW > 1) {
+  //                   if (
+  //                     info.panelsW !==
+  //                     prevProps.formState.part_list[i].dimensions[index].panelsW
+  //                   ) {
+  //                     return this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+  //                         fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+  //                       )
+  //                     );
+  //                   }
+  //                 }
   
-                  if (info.panelsH > 1) {
-                    if (
-                      info.panelsH !==
-                      prevProps.formState.part_list[i].dimensions[index].panelsH
-                    ) {
-                      return this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                          fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                        ),
-                      );
-                    }
-                  }
-                }
+  //                 if (info.panelsH > 1) {
+  //                   if (
+  //                     info.panelsH !==
+  //                     prevProps.formState.part_list[i].dimensions[index].panelsH
+  //                   ) {
+  //                     return this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+  //                         fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+  //                       ),
+  //                     );
+  //                   }
+  //                 }
+  //               }
 
-                if(part_list[i].construction.value === "M"){
-                  if (info.panelsW > 1) {
-                    if (
-                      info.panelsW !==
-                      prevProps.formState.part_list[i].dimensions[index].panelsW
-                    ) {
-                      return this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                          fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                        )
-                      );
-                    }
-                  }
+  //               if(part_list[i].construction.value === "M"){
+  //                 if (info.panelsW > 1) {
+  //                   if (
+  //                     info.panelsW !==
+  //                     prevProps.formState.part_list[i].dimensions[index].panelsW
+  //                   ) {
+  //                     return this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+  //                         fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //                       )
+  //                     );
+  //                   }
+  //                 }
   
-                  if (info.panelsH > 1) {
-                    if (
-                      info.panelsH !==
-                      prevProps.formState.part_list[i].dimensions[index].panelsH
-                    ) {
-                      return this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                          fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                        ),
-                      );
-                    }
-                  }
-                }
+  //                 if (info.panelsH > 1) {
+  //                   if (
+  //                     info.panelsH !==
+  //                     prevProps.formState.part_list[i].dimensions[index].panelsH
+  //                   ) {
+  //                     return this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+  //                         fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //                       ),
+  //                     );
+  //                   }
+  //                 }
+  //               }
 
-                if(part_list[i].construction.value === "MT"){
-                  if (info.panelsW > 1) {
-                    if (
-                      info.panelsW !==
-                      prevProps.formState.part_list[i].dimensions[index].panelsW
-                    ) {
-                      return this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                        )
-                      );
-                    }
-                  }
+  //               if(part_list[i].construction.value === "MT"){
+  //                 if (info.panelsW > 1) {
+  //                   if (
+  //                     info.panelsW !==
+  //                     prevProps.formState.part_list[i].dimensions[index].panelsW
+  //                   ) {
+  //                     return this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+  //                         fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+  //                       )
+  //                     );
+  //                   }
+  //                 }
   
-                  if (info.panelsH > 1) {
-                    if (
-                      info.panelsH !==
-                      prevProps.formState.part_list[i].dimensions[index].panelsH
-                    ) {
-                      return this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                        ),
-                      );
-                    }
-                  }
-                }
-
-
+  //                 if (info.panelsH > 1) {
+  //                   if (
+  //                     info.panelsH !==
+  //                     prevProps.formState.part_list[i].dimensions[index].panelsH
+  //                   ) {
+  //                     return this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+  //                         fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+  //                       ),
+  //                     );
+  //                   }
+  //                 }
+  //               }
 
 
 
-              });
-            } else {
-              return null;
-            }
-          });
 
-          if (part_list) {
-            part_list.forEach((part, i) => {
-              console.log(part)
-              if(part && part.construction && part.construction.value === "Cope") {
-                if ((part && part.profile) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].profile)
-                  ||
-                  (part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)  
-                ) {
-                  if (part.dimensions) {
-                    part.dimensions.forEach((info, index) => {
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].leftStile`,
-                          fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-                        )
-                      );
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].rightStile`,
-                          fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-                        )
-                      );
-  
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].topRail`,
-                          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.TOP_RAIL_ADD) : 0)
-                        )
-                      );
-  
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].bottomRail`,
-                          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.BTM_RAIL_ADD) : 0)
-                        )
-                      );
-  
-  
-  
-                      if (parseInt(info.panelsH) > 1) {
-                        this.props.dispatch(
-                          change(
-                            'DoorOrder',
-                            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                            fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                          )
-                        );
-                      }
-  
-                      if (parseInt(info.panelsW) > 1) {
-                        this.props.dispatch(
-                          change(
-                            'DoorOrder',
-                            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                            fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                          )
-                        );
-                      }
-                    });
-                  } else {
-                    return
-                  }
-                } else {
-                  return
-                }
-              }
 
-              if(part && part.construction && part.construction.value === "M") {
-                if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
-                  if (part.dimensions) {
-                    part.dimensions.forEach((info, index) => {
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].leftStile`,
-                          fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                        )
-                      );
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].rightStile`,
-                          fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                        )
-                      );
-  
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].topRail`,
-                          fraction(part.design ? (part.design.PROFILE_WIDTH + part.design.TOP_RAIL_ADD ) : 0)
-                        )
-                      );
-  
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].bottomRail`,
-                          fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                        )
-                      );
-  
-  
-  
-                      if (parseInt(info.panelsH) > 1) {
-                        this.props.dispatch(
-                          change(
-                            'DoorOrder',
-                            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                            fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                          )
-                        );
-                      }
-  
-                      if (parseInt(info.panelsW) > 1) {
-                        this.props.dispatch(
-                          change(
-                            'DoorOrder',
-                            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                            fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                          )
-                        );
-                      }
-                    });
-                  } else {
-                    return
-                  }
-                } else {
-                  return
-                }
-              }
+  //             });
+  //           } else {
+  //             return null;
+  //           }
+  //         });
 
-              if(part && part.construction && part.construction.value === "MT") {
-                if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
-                  if (part.dimensions) {
-                    part.dimensions.forEach((info, index) => {
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].leftStile`,
-                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                        )
-                      );
+  //         if (part_list) {
+  //           part_list.forEach((part, i) => {
+  //             console.log(part)
+  //             if(part && part.construction && part.construction.value === "Cope") {
+  //               if ((part && part.profile) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].profile)
+  //                 ||
+  //                 (part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)  
+  //               ) {
+  //                 if (part.dimensions) {
+  //                   part.dimensions.forEach((info, index) => {
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].leftStile`,
+  //                         fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+  //                       )
+  //                     );
   
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].rightStile`,
-                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                        )
-                      );
-  
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].topRail`,
-                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                        )
-                      );
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].rightStile`,
+  //                         fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+  //                       )
+  //                     );
   
   
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].bottomRail`,
-                          fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                        )
-                      );
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].topRail`,
+  //                         fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.TOP_RAIL_ADD) : 0)
+  //                       )
+  //                     );
+  
+  
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].bottomRail`,
+  //                         fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.BTM_RAIL_ADD) : 0)
+  //                       )
+  //                     );
   
   
   
-                      if (parseInt(info.panelsH) > 1) {
-                        this.props.dispatch(
-                          change(
-                            'DoorOrder',
-                            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                            fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                          )
-                        );
-                      }
+  //                     if (parseInt(info.panelsH) > 1) {
+  //                       this.props.dispatch(
+  //                         change(
+  //                           'DoorOrder',
+  //                           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+  //                           fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+  //                         )
+  //                       );
+  //                     }
   
-                      if (parseInt(info.panelsW) > 1) {
-                        this.props.dispatch(
-                          change(
-                            'DoorOrder',
-                            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                            fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                          )
-                        );
-                      }
-                    });
-                  } else {
-                    return
-                  }
-                } else {
-                  return
-                }
-              }
+  //                     if (parseInt(info.panelsW) > 1) {
+  //                       this.props.dispatch(
+  //                         change(
+  //                           'DoorOrder',
+  //                           `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+  //                           fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+  //                         )
+  //                       );
+  //                     }
+  //                   });
+  //                 } else {
+  //                   return
+  //                 }
+  //               } else {
+  //                 return
+  //               }
+  //             }
 
-            });
-          } else {
-            return
-          }
+  //             if(part && part.construction && part.construction.value === "M") {
+  //               if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
+  //                 if (part.dimensions) {
+  //                   part.dimensions.forEach((info, index) => {
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].leftStile`,
+  //                         fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //                       )
+  //                     );
+  
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].rightStile`,
+  //                         fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //                       )
+  //                     );
+  
+  
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].topRail`,
+  //                         fraction(part.design ? (part.design.PROFILE_WIDTH + part.design.TOP_RAIL_ADD ) : 0)
+  //                       )
+  //                     );
+  
+  
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].bottomRail`,
+  //                         fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //                       )
+  //                     );
+  
+  
+  
+  //                     if (parseInt(info.panelsH) > 1) {
+  //                       this.props.dispatch(
+  //                         change(
+  //                           'DoorOrder',
+  //                           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+  //                           fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //                         )
+  //                       );
+  //                     }
+  
+  //                     if (parseInt(info.panelsW) > 1) {
+  //                       this.props.dispatch(
+  //                         change(
+  //                           'DoorOrder',
+  //                           `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+  //                           fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //                         )
+  //                       );
+  //                     }
+  //                   });
+  //                 } else {
+  //                   return
+  //                 }
+  //               } else {
+  //                 return
+  //               }
+  //             }
 
-        };
-        update();
-      }
-    }
-  }
+  //             if(part && part.construction && part.construction.value === "MT") {
+  //               if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
+  //                 if (part.dimensions) {
+  //                   part.dimensions.forEach((info, index) => {
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].leftStile`,
+  //                         fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+  //                       )
+  //                     );
+  
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].rightStile`,
+  //                         fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+  //                       )
+  //                     );
+  
+  
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].topRail`,
+  //                         fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+  //                       )
+  //                     );
+  
+  
+  //                     this.props.dispatch(
+  //                       change(
+  //                         'DoorOrder',
+  //                         `part_list[${i}].dimensions[${index}].bottomRail`,
+  //                         fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+  //                       )
+  //                     );
+  
+  
+  
+  //                     if (parseInt(info.panelsH) > 1) {
+  //                       this.props.dispatch(
+  //                         change(
+  //                           'DoorOrder',
+  //                           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+  //                           fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+  //                         )
+  //                       );
+  //                     }
+  
+  //                     if (parseInt(info.panelsW) > 1) {
+  //                       this.props.dispatch(
+  //                         change(
+  //                           'DoorOrder',
+  //                           `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+  //                           fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+  //                         )
+  //                       );
+  //                     }
+  //                   });
+  //                 } else {
+  //                   return
+  //                 }
+  //               } else {
+  //                 return
+  //               }
+  //             }
+
+  //           });
+  //         } else {
+  //           return
+  //         }
+
+  //       };
+  //       update();
+  //     }
+  //   }
+  // }
 
   cancelOrder = e => {
     e.preventDefault();

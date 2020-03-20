@@ -43,6 +43,15 @@ class Conditionals extends Component {
             || (part && part.construction) !== (prevProps.formState && prevProps.formState.part_list && prevProps.formState.part_list[i].construction)
             )) {
 
+              if(part.dimensions){
+                this.props.dispatch(
+                  change(
+                    'DoorOrder',
+                    `part_list[${i}].dimensions`,
+                    []
+                  )
+                )
+              }
 
               if(part.design){
                 this.props.dispatch(
@@ -179,12 +188,6 @@ class Conditionals extends Component {
                   )
                 )
               }
-
-
-   
-
-
-
             }
           });
         } else {
