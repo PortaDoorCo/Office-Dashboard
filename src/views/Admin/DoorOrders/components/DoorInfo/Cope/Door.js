@@ -23,9 +23,6 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-
-
-
 class CopeDoor extends Component {
   constructor(props) {
     super(props);
@@ -37,13 +34,12 @@ class CopeDoor extends Component {
       if (this.props.formState) {
         const update = async () => {
           const form = await this.props.formState;
-          const customer = await form.job_info.customer;
           const part_list = await form.part_list;
 
 
           part_list.forEach((part, i) => {
             if (part.dimensions) {
-              return part.dimensions.forEach((info, index) => {
+              part.dimensions.forEach((info, index) => {
 
                 this.props.dispatch(
                   change(
@@ -84,122 +80,194 @@ class CopeDoor extends Component {
                 }
 
 
-                if(part_list[i].construction.value === "Cope"){
-                  if (info.panelsW > 1) {
-                    if (
-                      info.panelsW !==
-                      prevProps.formState.part_list[i].dimensions[index].panelsW
-                    ) {
-                      return this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                          fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                        )
-                      );
-                    }
-                  }
-  
-                  if (info.panelsH > 1) {
-                    if (
-                      info.panelsH !==
-                      prevProps.formState.part_list[i].dimensions[index].panelsH
-                    ) {
-                      return this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                          fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                        ),
-                      );
-                    }
+
+                if (parseInt(info.panelsW) > 1) {
+                  
+                  if (
+                    info.panelsW !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsW
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
                   }
                 }
 
+                if (parseInt(info.panelsH) > 1) {
+              
+                  if (
+                    info.panelsH !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsH
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      ),
+                    );
+                  }
+                }
               });
             } else {
-              return null;
+              return;
+            }
+          })
+
+          part_list.forEach((part, i) => {
+
+            if (part.dimensions) {
+              part.dimensions.forEach((info, index) => {
+
+                this.props.dispatch(
+                  change(
+                    'DoorOrder',
+                    `part_list[${i}].dimensions[${index}].item`,
+                    index + 1
+                  )
+                )
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenCheck`,
+                      false
+                    )
+                  )
+                }
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenSplit`,
+                      false
+                    )
+                  )
+                }
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenSplitInput`,
+                      '0'
+                    )
+                  )
+                }
+
+
+
+                if (parseInt(info.panelsW) > 1) {
+
+                  if (
+                    info.panelsW !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsW
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
+                  }
+                }
+
+                if (parseInt(info.panelsH) > 1) {
+
+                  if (
+                    info.panelsH !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsH
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      ),
+                    );
+                  }
+                }
+              });
+            } else {
+              return;
+            }
+
+            if ((part && part.profile) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].profile)
+              ||
+              (part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)
+            ) {
+              if (part.dimensions) {
+                part.dimensions.forEach((info, index) => {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].leftStile`,
+                      fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+                    )
+                  );
+
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].rightStile`,
+                      fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+                    )
+                  );
+
+
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].topRail`,
+                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.TOP_RAIL_ADD) : 0)
+                    )
+                  );
+
+
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].bottomRail`,
+                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.BTM_RAIL_ADD) : 0)
+                    )
+                  );
+
+
+
+                  if (parseInt(info.panelsH) > 1) {
+                    this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
+                  }
+
+                  if (parseInt(info.panelsW) > 1) {
+                    this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
+                  }
+                });
+              } else {
+                return
+              }
+            } else {
+              return
             }
           });
-
-          if (part_list) {
-            part_list.forEach((part, i) => {
-              console.log(part)
-              if(part && part.construction && part.construction.value === "Cope") {
-                if ((part && part.profile) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].profile)
-                  ||
-                  (part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)  
-                ) {
-                  if (part.dimensions) {
-                    part.dimensions.forEach((info, index) => {
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].leftStile`,
-                          fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-                        )
-                      );
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].rightStile`,
-                          fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-                        )
-                      );
-  
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].topRail`,
-                          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.TOP_RAIL_ADD) : 0)
-                        )
-                      );
-  
-  
-                      this.props.dispatch(
-                        change(
-                          'DoorOrder',
-                          `part_list[${i}].dimensions[${index}].bottomRail`,
-                          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.BTM_RAIL_ADD) : 0)
-                        )
-                      );
-  
-  
-  
-                      if (parseInt(info.panelsH) > 1) {
-                        this.props.dispatch(
-                          change(
-                            'DoorOrder',
-                            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                            fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                          )
-                        );
-                      }
-  
-                      if (parseInt(info.panelsW) > 1) {
-                        this.props.dispatch(
-                          change(
-                            'DoorOrder',
-                            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                            fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                          )
-                        );
-                      }
-                    });
-                  } else {
-                    return
-                  }
-                } else {
-                  return
-                }
-              }
-            });
-          } else {
-            return
-          }
-
         };
         update();
       }
@@ -383,20 +451,8 @@ const mapStateToProps = state => ({
   finishes: state.part_list.finishes
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-
-    },
-    dispatch
-  );
-
-  CopeDoor = reduxForm({
-    form: 'DoorOrder',
-    enableReinitialize: true
-  })(CopeDoor);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(CopeDoor);
