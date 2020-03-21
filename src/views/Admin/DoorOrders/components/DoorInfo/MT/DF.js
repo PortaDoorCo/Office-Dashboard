@@ -8,19 +8,101 @@ import {
   Button,
   Input
 } from "reactstrap";
-import { Field, FieldArray } from "redux-form";
+import { Field, FieldArray, change } from "redux-form";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
 import MT_Table from '../../Table/DFs/MT_Table';
+import Ratio from 'lb-ratio'
 
 const required = value => (value ? undefined : 'Required');
+
+const fraction = num => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
 
 
 class MT_DF extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.formState !== prevProps.formState) {
+      if (this.props.formState) {
+        const update = async () => {
+          const form = await this.props.formState;
+          const part_list = await form.part_list;
+
+
+          part_list.forEach((part, i) => {
+            if (part.dimensions) {
+              part.dimensions.forEach((info, index) => {
+
+                this.props.dispatch(
+                  change(
+                    'DoorOrder',
+                    `part_list[${i}].dimensions[${index}].item`,
+                    index + 1
+                  )
+                )
+              });
+            } else {
+              return;
+            }
+          })
+
+          part_list.forEach((part, i) => {
+            if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
+              if (part.dimensions) {
+                part.dimensions.forEach((info, index) => {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].leftStile`,
+                      fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                    )
+                  );
+
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].rightStile`,
+                      fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                    )
+                  );
+
+
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].topRail`,
+                      fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                    )
+                  );
+
+
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].bottomRail`,
+                      fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                    )
+                  );
+                });
+              } else {
+                return
+              }
+            } else {
+              return
+            }
+          });
+        };
+        update();
+      }
+    }
   }
 
 
@@ -167,15 +249,8 @@ const mapStateToProps = state => ({
   finishes: state.part_list.finishes
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-
-    },
-    dispatch
-  );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(MT_DF);
