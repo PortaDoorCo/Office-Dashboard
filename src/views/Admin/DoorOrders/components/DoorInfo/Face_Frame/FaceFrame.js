@@ -8,19 +8,118 @@ import {
   Button,
   Input
 } from "reactstrap";
-import { Field, FieldArray } from "redux-form";
+import { Field, FieldArray, change } from "redux-form";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs';
 import Frame_Only_Table from '../../Table/Doors/Frame_Only_Table'
+import Ratio from 'lb-ratio'
 
 const required = value => (value ? undefined : 'Required');
 
+const fraction = num => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
 
 class FaceFrame extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.formState !== prevProps.formState) {
+      if (this.props.formState) {
+        const update = async () => {
+          const form = await this.props.formState;
+          const part_list = await form.part_list;
+
+
+          part_list.forEach((part, i) => {
+            if (part.dimensions) {
+              part.dimensions.forEach((info, index) => {
+
+                this.props.dispatch(
+                  change(
+                    'DoorOrder',
+                    `part_list[${i}].dimensions[${index}].item`,
+                    index + 1
+                  )
+                )
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenCheck`,
+                      false
+                    )
+                  )
+                }
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenSplit`,
+                      false
+                    )
+                  )
+                }
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenSplitInput`,
+                      '0'
+                    )
+                  )
+                }
+
+
+
+                if (parseInt(info.panelsW) > 1) {
+                  
+                  if (
+                    info.panelsW !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsW
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                        fraction(2.375)
+                      )
+                    );
+                  }
+                }
+
+                if (parseInt(info.panelsH) > 1) {
+              
+                  if (
+                    info.panelsH !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsH
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                        fraction(2.375)
+                      ),
+                    );
+                  }
+                }
+              });
+            } else {
+              return;
+            }
+          })
+        };
+        update();
+      }
+    }
   }
 
   render() {
@@ -161,15 +260,7 @@ const mapStateToProps = state => ({
   edges: state.part_list.edges,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-
-    },
-    dispatch
-  );
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(FaceFrame);
