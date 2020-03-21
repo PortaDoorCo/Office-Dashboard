@@ -79,8 +79,6 @@ class MT_Door extends Component {
                   )
                 }
 
-
-
                 if (parseInt(info.panelsW) > 1) {
                   
                   if (
@@ -91,7 +89,7 @@ class MT_Door extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
                       )
                     );
                   }
@@ -107,7 +105,7 @@ class MT_Door extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
                       ),
                     );
                   }
@@ -119,85 +117,6 @@ class MT_Door extends Component {
           })
 
           part_list.forEach((part, i) => {
-
-            if (part.dimensions) {
-              part.dimensions.forEach((info, index) => {
-
-                this.props.dispatch(
-                  change(
-                    'DoorOrder',
-                    `part_list[${i}].dimensions[${index}].item`,
-                    index + 1
-                  )
-                )
-
-                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
-                  this.props.dispatch(
-                    change(
-                      'DoorOrder',
-                      `part_list[${i}].dimensions[${index}].unevenCheck`,
-                      false
-                    )
-                  )
-                }
-
-                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
-                  this.props.dispatch(
-                    change(
-                      'DoorOrder',
-                      `part_list[${i}].dimensions[${index}].unevenSplit`,
-                      false
-                    )
-                  )
-                }
-
-                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
-                  this.props.dispatch(
-                    change(
-                      'DoorOrder',
-                      `part_list[${i}].dimensions[${index}].unevenSplitInput`,
-                      '0'
-                    )
-                  )
-                }
-
-
-
-                if (parseInt(info.panelsW) > 1) {
-                  if (
-                    info.panelsW !==
-                    prevProps.formState.part_list[i].dimensions[index].panelsW
-                  ) {
-                    return this.props.dispatch(
-                      change(
-                        'DoorOrder',
-                        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                      )
-                    );
-                  }
-                }
-
-                if (parseInt(info.panelsH) > 1) {
-
-                  if (
-                    info.panelsH !==
-                    prevProps.formState.part_list[i].dimensions[index].panelsH
-                  ) {
-                    return this.props.dispatch(
-                      change(
-                        'DoorOrder',
-                        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
-                      ),
-                    );
-                  }
-                }
-              });
-            } else {
-              return;
-            }
-
             if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
               if (part.dimensions) {
                 part.dimensions.forEach((info, index) => {
