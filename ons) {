@@ -1,0 +1,237 @@
+[33m3d9c32f[m[33m ([m[1;36mHEAD -> [m[1;32mALLMOXY_MIGRATION[m[33m)[m cope door component update
+[33mbcf8621[m[33m ([m[1;31morigin/ALLMOXY_MIGRATION[m[33m)[m untouch
+[33ma250b56[m redux form change ordertype
+[33ma5cd5fb[m slab door table
+[33m92db873[m one piece table
+[33m8aab883[m glass doors
+[33m346b6fe[m update face frame
+[33mef6221e[m MT table dfs
+[33m92f1ec8[m miter df table
+[33mc226d03[m MT table
+[33m2908300[m update miter table
+[33m5b171ed[m update
+[33mb90b390[m fix
+[33med97312[m conditional filter
+[33m96db64c[m add slab doors
+[33mc7b3cef[m move drawer orders
+[33m900b73d[m refactor load apis
+[33m7370c02[m one piece door
+[33m757e10a[m one piece redux
+[33m275ff8f[m frame only
+[33m49c3a48[m miter df
+[33m230c59a[m conditionals
+[33mbc2f9de[m add cope df
+[33mf45c751[m mt door designs
+[33mc9f9740[m miter designs
+[33m978d4e7[m update miter doors
+[33mbd52a78[m update doors
+[33mbf0f3ef[m update door orders
+[33m496f297[m update part_list actions/reducers
+[33mecd9377[m update actions
+[33m1e44414[m allmoxy migration
+[33m4670fdd[m[33m ([m[1;31morigin/3/10/20[m[33m, [m[1;32m3/10/20[m[33m)[m update
+[33m17ee781[m update arch breakdowns
+[33ma540f9c[m add arch into door order
+[33mcf95537[m update
+[33mbfd90cb[m add lite to breakdowns
+[33maadaf22[m update order submit payload
+[33m62d6704[m added misc items to door select
+[33mbe13038[m add lites to door select
+[33mc9dc889[m update door edit table
+[33m04d1eb0[m[33m ([m[1;32m3/9/20[m[33m)[m update auto mould selection
+[33mb5d2ed9[m add automatic arch redux form
+[33mb53c47f[m add lite pricing
+[33m37d1396[m add misc items price
+[33mc9f6f79[m fix misc items
+[33m0134e9d[m add lite tables
+[33mb19a02a[m add lites
+[33m759b7dd[m[33m ([m[1;31morigin/3/9/20[m[33m)[m add door extras
+[33m4e402ec[m add door options
+[33m65f28ab[m edge item asc
+[33mba23fa3[m add initial values
+[33m8451ffa[m add arch to door edit
+[33mf25844f[m add arches
+[33me9f4baa[m add date to chart
+[33m47683ce[m[33m ([m[1;32m3/8/20[m[33m)[m update loading / numqty
+[33m9338939[m update mould filter
+[33m9f706f9[m update db migration / moulds
+[33m3c1de98[m[33m ([m[1;31morigin/3/6/20[m[33m, [m[1;32m3/6/20[m[33m)[m update breakdowns
+[33m9fb6775[m[33m ([m[1;31morigin/breakdowns_3/1/20[m[33m)[m refactor breakdowns
+[33m8bc6fd4[m update miter designs breakdowns
+[33m054f59c[m update breakdowns
+[33m62c6a2e[m update math ceil
+[33mb133645[m add frac2dec
+[33m23c92c4[m update
+[33m0616559[m update breakdowns
+[33m16db1d2[m update breakdowns
+[33ma4fc2e2[m fix selected order
+[33m7ccb473[m update stile/rails breakdowns and mill adds
+[33m82c672e[m fix panel math
+[33mdc3e2d9[m update folder structure
+[33me9258bb[m update breakdown files
+[33m9309e8a[m update breakdown for MT
+[33m024a968[m update Mitered breakdowns
+[33m1c3bf10[m[33m ([m[1;31morigin/2/27[m[33m)[m uneven split
+[33m871a61c[m tracking compnay orders
+[33m35f1555[m update door filter on door order
+[33mb2aa678[m update
+[33mc0e6162[m edit order
+[33mda1b7bc[m update 2/27
+[33m160522b[m update 2/27
+[33m90430ae[m update redux
+[33m5021969[m update redux url db
+[33mfdf0e9d[m update redux db url
+[33mb5c3666[m add placeholder
+[33mcc059bb[m Merge pull request #28 from heyjaypray/slack
+[33m9d3db4a[m[33m ([m[1;31morigin/slack[m[33m)[m update slack controller _ status etc
+[33mbaded07[m remove add button on order tables
+[33ma469bea[m copyright year
+[33m218d32a[m Merge pull request #27 from heyjaypray/update_order_num
+[33m920d1a6[m[33m ([m[1;31morigin/update_order_num[m[33m)[m update orders num
+[33m649a473[m Merge pull request #26 from heyjaypray/fixes-2-12-20
+[33m8429dfb[m[33m ([m[1;31morigin/fixes-2-12-20[m[33m)[m update late list
+[33m4204160[m update all tables to socket
+[33m011efc1[m update delete order
+[33m9cd4eba[m update delete icon on order
+[33mc9b5b9f[m add notfication login credentials"
+[33m9785471[m Merge pull request #25 from heyjaypray/uneven-breakdown-panels
+[33m2fa47d5[m[33m ([m[1;31morigin/uneven-breakdown-panels[m[33m, [m[1;32muneven-breakdown-panels[m[33m)[m update uneven breakdowns
+[33mc18a214[m update breakdowns
+[33m80e87bb[m Merge pull request #24 from heyjaypray/breakdown-uneven
+[33madefdd4[m[33m ([m[1;31morigin/breakdown-uneven[m[33m)[m update blob
+[33m35c7000[m[33m ([m[1;32mbreakdown-uneven[m[33m)[m update profile photos
+[33m966093b[m Merge pull request #23 from heyjaypray/uneven-splits-3
+[33mafa1c78[m[33m ([m[1;31morigin/uneven-splits-3[m[33m, [m[1;32muneven-splits-3[m[33m)[m update
+[33me0c5701[m update edited order
+[33m499e265[m update
+[33m3b4fb7e[m update selected order uneven split
+[33me8ed753[m update tracking for restricted tables
+[33ma08bfd2[m update tables
+[33md01d009[m Merge pull request #22 from heyjaypray/uneven-split-2
+[33m7dc36b2[m[33m ([m[1;31morigin/uneven-split-2[m[33m, [m[1;32muneven-split-2[m[33m)[m update uneven splits
+[33m4040f92[m update
+[33m2433fe6[m update maker js in uneven split
+[33m8b2c8b1[m update uneven splits
+[33m8b8e4af[m Merge pull request #21 from heyjaypray/color-late-list
+[33m6a5ed08[m[33m ([m[1;31morigin/color-late-list[m[33m, [m[1;32mcolor-late-list[m[33m)[m update late list
+[33m3da7c4a[m add color
+[33md47244b[m Merge pull request #20 from heyjaypray/update_2_2_20
+[33m6349696[m[33m ([m[1;31morigin/update_2_2_20[m[33m, [m[1;32mupdate_2_2_20[m[33m)[m fix log out button on loader
+[33m2ed382f[m fix profiles in assembly list
+[33m8d97727[m fix no panel assembly
+[33mbc02f88[m update drawer pdfs
+[33m4cf968a[m Merge pull request #19 from heyjaypray/latelist
+[33m721fa25[m[33m ([m[1;31morigin/latelist[m[33m, [m[1;32mlatelist[m[33m)[m update
+[33m4b2e2d2[m clean up
+[33mc414bd9[m update late list
+[33m814796c[m update list
+[33m1ce7303[m update late list
+[33m894a4ed[m Merge pull request #18 from heyjaypray/update-tracking
+[33m70b0cbf[m[33m ([m[1;31morigin/update-tracking[m[33m, [m[1;32mupdate-tracking[m[33m)[m remove console logs
+[33m5dfb439[m update tracking
+[33m95fcf9e[m[33m ([m[1;32mtracking-history[m[33m)[m update tracking history
+[33ma8869e2[m update order
+[33mee7b75e[m update
+[33mc7d8943[m Merge pull request #17 from heyjaypray/permissions
+[33ma129780[m[33m ([m[1;31morigin/permissions[m[33m, [m[1;32mpermissions[m[33m)[m update permissions
+[33mf2d2da8[m Merge pull request #16 from heyjaypray/1-14-20
+[33m9620c2f[m[33m ([m[1;31morigin/1-14-20[m[33m)[m update
+[33med3de76[m update image
+[33m2ecb013[m update
+[33mefe9004[m view uploaded files
+[33m8641636[m update file on orders
+[33md5c2a54[m upload drawerbox
+[33m019a1dc[m add card
+[33ma6dff62[m add file upload
+[33m94b3476[m update
+[33mf5881f8[m conditonal view builder
+[33m88e17b3[m update print outs
+[33m136fcdb[m update pdf pages
+[33m63a37bd[m Merge pull request #15 from heyjaypray/uneven-split-3
+[33m03118bf[m[33m ([m[1;31morigin/uneven-split-3[m[33m)[m update
+[33m599b571[m Merge pull request #14 from heyjaypray/uneven-split-2
+[33m4b028a7[m update
+[33m3c01e1f[m Merge pull request #13 from heyjaypray/uneven-split
+[33m06bcf0b[m[33m ([m[1;31morigin/uneven-split[m[33m)[m update split
+[33mc163fae[m update uneven split
+[33ma5b15b6[m Merge pull request #12 from heyjaypray/order-association
+[33m89dfe84[m update association
+[33m1d52b93[m update order nums
+[33mcaaa7aa[m update
+[33mca6d96f[m update
+[33me5d27d1[m Merge pull request #11 from heyjaypray/add-maker
+[33mc37b3fd[m[33m ([m[1;31morigin/add-maker[m[33m, [m[1;32madd-maker[m[33m)[m update
+[33mba8657f[m fix update orders
+[33m4b1db3b[m update edit order
+[33m832f691[m update
+[33m3d4f6e7[m add maker to old orders
+[33m62233a5[m Merge pull request #10 from heyjaypray/uneven-split
+[33m5145ad1[m[33m ([m[1;32muneven-split[m[33m)[m remove autocomplete drawer
+[33md0edb94[m remove autocomplete
+[33m49aeaf0[m update
+[33m6b0bc83[m update panels H reset
+[33mb51f921[m update
+[33m86e7e05[m update
+[33mf8fa869[m add toggle
+[33m1dc317e[m update
+[33meec0a32[m uneven split
+[33ma6d2064[m fix enter key form submission
+[33m96eb322[m update order table cookie
+[33m8243d96[m remove console log jwt
+[33m16800d3[m remove unwanted api request
+[33m12b8c7b[m update business day lead time
+[33mececb7a[m drawer box auth
+[33me1acdcf[m Merge pull request #9 from heyjaypray/cleanup
+[33m42a8c74[m[33m ([m[1;31morigin/cleanup[m[33m, [m[1;32mcleanup[m[33m)[m update auth products
+[33meb30089[m add auth to products
+[33md88b6bb[m cleanup
+[33m64df455[m fix endless loop
+[33m50a5e24[m fix
+[33m45d5dc6[m update
+[33mb5b8b6d[m fix customer page
+[33m5e051a2[m clean up
+[33m738c1ea[m clean up
+[33m0010311[m Merge pull request #8 from heyjaypray/fix-auth-update
+[33me9dd8bb[m[33m ([m[1;31morigin/fix-auth-update[m[33m, [m[1;32mfix-auth-update[m[33m)[m fix auth update order
+[33m0a1f33f[m Merge pull request #7 from heyjaypray/update-auth-api
+[33meb9cdbc[m[33m ([m[1;31morigin/update-auth-api[m[33m, [m[1;32mupdate-auth-api[m[33m, [m[1;32mapi2[m[33m)[m update auth api
+[33mc3761d3[m update
+[33m261c931[m update urls
+[33ma930521[m Merge pull request #6 from heyjaypray/socket-update-notification
+[33m7596560[m[33m ([m[1;31morigin/socket-update-notification[m[33m)[m update
+[33m1df580b[m clean up load
+[33meab64ec[m update notfications
+[33mc887589[m update notification
+[33m01b1626[m Merge pull request #5 from heyjaypray/update-socket
+[33m8e83f92[m[33m ([m[1;31morigin/update-socket[m[33m, [m[1;32mupdate-socket[m[33m)[m update socket io
+[33md36e4a5[m Merge pull request #4 from heyjaypray/socketio
+[33m8c95756[m[33m ([m[1;31morigin/socketio[m[33m, [m[1;32msocketio[m[33m)[m update maker render
+[33m5e68225[m update socket io on reports
+[33m8105d5a[m update socket io
+[33mfeaba30[m quick fix
+[33mb2a98b9[m update tax drawer pdf
+[33m5ed48eb[m update
+[33m1beaee2[m Merge pull request #3 from heyjaypray/tax-fix
+[33m45c6060[m[33m ([m[1;31morigin/tax-fix[m[33m, [m[1;32mtax-fix[m[33m)[m update tax
+[33m1e9291a[m Merge pull request #2 from heyjaypray/fix-order-load
+[33m0ce09ae[m[33m ([m[1;31morigin/fix-order-load[m[33m, [m[1;32mfix-order-load[m[33m)[m update tax rate
+[33mf97e99a[m update drawer order
+[33m827e041[m update door order
+[33m1007e0f[m update
+[33m1a0e388[m update load
+[33m1c3ddcb[m refactor loading
+[33m108444b[m fix customer table and loading
+[33mc15c189[m update
+[33me01c8d2[m Merge pull request #1 from heyjaypray/init
+[33mfcec9de[m[33m ([m[1;31morigin/init[m[33m, [m[1;32minit[m[33m)[m u
+[33mf201f50[m update
+[33m330a72f[m[33m ([m[1;32mfix-sidebar[m[33m)[m remove sidebar temporarily
+[33m1c7da7f[m update
+[33ma664ed6[m update login
+[33mf27b47f[m update
+[33m301dec8[m update
+[33m4f17879[m update
+[33m45321db[m update
+[33md25863f[m update
+[33m0eefdcd[m update
+[33m949d6aa[m update

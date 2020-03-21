@@ -355,20 +355,8 @@ const mapStateToProps = state => ({
 
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-
-    },
-    dispatch
-  );
-
-Conditionals = reduxForm({
-  form: 'DoorOrder',
-  enableReinitialize: true
-})(Conditionals);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Conditionals);
