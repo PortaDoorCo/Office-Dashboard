@@ -8,7 +8,7 @@ import {
   Button,
   Input
 } from "reactstrap";
-import { Field, FieldArray } from "redux-form";
+import { Field, FieldArray, change } from "redux-form";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
@@ -21,6 +21,38 @@ const required = value => (value ? undefined : 'Required');
 class Slab_Door extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.formState !== prevProps.formState) {
+      if (this.props.formState) {
+        const update = async () => {
+          const form = await this.props.formState;
+          const part_list = await form.part_list;
+
+
+          part_list.forEach((part, i) => {
+            if (part.dimensions) {
+              part.dimensions.forEach((info, index) => {
+
+                this.props.dispatch(
+                  change(
+                    'DoorOrder',
+                    `part_list[${i}].dimensions[${index}].item`,
+                    index + 1
+                  )
+                )
+              });
+            } else {
+              return;
+            }
+          })
+
+
+        };
+        update();
+      }
+    }
   }
 
   render() {
