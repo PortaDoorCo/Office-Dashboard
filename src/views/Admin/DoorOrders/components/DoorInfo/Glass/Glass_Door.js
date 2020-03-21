@@ -8,20 +8,271 @@ import {
   Button,
   Input
 } from "reactstrap";
-import { Field, FieldArray } from "redux-form";
+import { Field, FieldArray, change } from "redux-form";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
 import Glass_Table from '../../Table/Doors/Glass_Table'
+import Ratio from 'lb-ratio'
 
 const required = value => (value ? undefined : 'Required');
 
+const fraction = num => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
 
 class GlassDoor extends Component {
   constructor(props) {
     super(props);
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.formState !== prevProps.formState) {
+      if (this.props.formState) {
+        const update = async () => {
+          const form = await this.props.formState;
+          const part_list = await form.part_list;
+
+
+          part_list.forEach((part, i) => {
+            if (part.dimensions) {
+              part.dimensions.forEach((info, index) => {
+
+                this.props.dispatch(
+                  change(
+                    'DoorOrder',
+                    `part_list[${i}].dimensions[${index}].item`,
+                    index + 1
+                  )
+                )
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenCheck`,
+                      false
+                    )
+                  )
+                }
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenSplit`,
+                      false
+                    )
+                  )
+                }
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenSplitInput`,
+                      '0'
+                    )
+                  )
+                }
+
+
+
+                if (parseInt(info.panelsW) > 1) {
+                  
+                  if (
+                    info.panelsW !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsW
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
+                  }
+                }
+
+                if (parseInt(info.panelsH) > 1) {
+              
+                  if (
+                    info.panelsH !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsH
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      ),
+                    );
+                  }
+                }
+              });
+            } else {
+              return;
+            }
+          })
+
+          part_list.forEach((part, i) => {
+
+            if (part.dimensions) {
+              part.dimensions.forEach((info, index) => {
+
+                this.props.dispatch(
+                  change(
+                    'DoorOrder',
+                    `part_list[${i}].dimensions[${index}].item`,
+                    index + 1
+                  )
+                )
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenCheck`,
+                      false
+                    )
+                  )
+                }
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenSplit`,
+                      false
+                    )
+                  )
+                }
+
+                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].unevenSplitInput`,
+                      '0'
+                    )
+                  )
+                }
+
+
+
+                if (parseInt(info.panelsW) > 1) {
+
+                  if (
+                    info.panelsW !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsW
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
+                  }
+                }
+
+                if (parseInt(info.panelsH) > 1) {
+
+                  if (
+                    info.panelsH !==
+                    prevProps.formState.part_list[i].dimensions[index].panelsH
+                  ) {
+                    return this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      ),
+                    );
+                  }
+                }
+              });
+            } else {
+              return;
+            }
+
+            if ((part && part.profile) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].profile)
+              ||
+              (part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)
+            ) {
+              if (part.dimensions) {
+                part.dimensions.forEach((info, index) => {
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].leftStile`,
+                      fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+                    )
+                  );
+
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].rightStile`,
+                      fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+                    )
+                  );
+
+
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].topRail`,
+                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.TOP_RAIL_ADD) : 0)
+                    )
+                  );
+
+
+                  this.props.dispatch(
+                    change(
+                      'DoorOrder',
+                      `part_list[${i}].dimensions[${index}].bottomRail`,
+                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.BTM_RAIL_ADD) : 0)
+                    )
+                  );
+
+
+
+                  if (parseInt(info.panelsH) > 1) {
+                    this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
+                  }
+
+                  if (parseInt(info.panelsW) > 1) {
+                    this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
+                  }
+                });
+              } else {
+                return
+              }
+            } else {
+              return
+            }
+          });
+        };
+        update();
+      }
+    }
+  }
+
 
 
   render() {
@@ -199,15 +450,9 @@ const mapStateToProps = state => ({
   finishes: state.part_list.finishes
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
 
-    },
-    dispatch
-  );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(GlassDoor);
