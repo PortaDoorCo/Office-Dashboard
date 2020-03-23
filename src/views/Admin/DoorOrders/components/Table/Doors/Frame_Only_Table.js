@@ -97,8 +97,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                     <th>Qty</th>
                     <th>Width</th>
                     <th>Height</th>
-                    <th>Panel High</th>
-                    <th>Panels Wide</th>
+                    <th>Openings</th>
                     <th>Price</th>
                     <th />
                   </tr>
@@ -138,33 +137,25 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
 
                     <td>
                       <Field
-                        name={`${table}.panelsH`}
+                        name={`${table}.openings`}
                         type="text"
                         component={renderField}
                         label="horizontalMidRail"
                       />
                     </td>
                     <td>
-                      <Field
-                        name={`${table}.panelsW`}
-                        type="text"
-                        component={renderField}
-                        label="verticalMidRail"
-                      />
-                    </td>
-                    <td>
-                      {/* {prices[i] ?
-                <Input
-                    type="text"
-                    className="form-control"
-                    // placeholder={"$" + prices[i][index].toFixed(2) || 0}
-                /> : */}
-                      <Input
-                        type="text"
-                        className="form-control"
-                        placeholder={"$0.00"}
-                      />
-                      {/* } */}
+                      {prices[i] ?
+                        <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                        /> :
+                        <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$0.00"}
+                        />
+                      }
 
                     </td>
                     <td>
@@ -230,17 +221,6 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="horizontalMidRail"
-                      />
-                    </td>
-                    <td>
-                      <strong>
-                        <p>Vert. Mid Rail</p>
-                      </strong>
-                      <Field
-                        name={`${table}.verticalMidRailSize`}
-                        type="text"
-                        component={renderField}
-                        label="verticalMidRail"
                       />
                     </td>
                   </tr>
@@ -332,8 +312,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                 className="btn-circle"
                 onClick={(e) =>
                   fields.push({
-                    panelsH: 1,
-                    panelsW: 1,
+                    openings: 1,
                     leftStile: fraction(2.375),
                     rightStile: fraction(2.375),
                     topRail: fraction(2.375),

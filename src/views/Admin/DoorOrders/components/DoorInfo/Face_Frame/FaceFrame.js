@@ -14,7 +14,15 @@ import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs';
 import Frame_Only_Table from '../../Table/Doors/Frame_Only_Table'
-import Ratio from 'lb-ratio'
+import Ratio from 'lb-ratio';
+import {
+  linePriceSelector,
+  itemPriceSelector,
+  subTotalSelector,
+  taxSelector,
+  totalSelector,
+  addPriceSelector
+} from '../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -135,6 +143,7 @@ class FaceFrame extends Component {
       index,
       part_list,
       formState,
+      prices
     } = this.props;
     return (
       <div>
@@ -237,7 +246,7 @@ class FaceFrame extends Component {
             name={`${part}.dimensions`}
             component={Frame_Only_Table}
             i={index}
-            // prices={prices}
+            prices={prices}
             // subTotal={subTotal}
             part_list={part_list}
             formState={formState}
@@ -258,6 +267,7 @@ const mapStateToProps = state => ({
   face_frame_top_rails: state.part_list.face_frame_top_rails,
   furniture_feets: state.part_list.furniture_feets,
   edges: state.part_list.edges,
+  prices: linePriceSelector(state),
 });
 
 export default connect(
