@@ -165,7 +165,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           placeholder={"$0.00"}
                         />
                       }
-
                     </td>
                     <td>
                       <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
