@@ -14,6 +14,14 @@ import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
 import Slab_Door_Table from '../../Table/Doors/Slab_Door_Table'
+import {
+  linePriceSelector,
+  itemPriceSelector,
+  subTotalSelector,
+  taxSelector,
+  totalSelector,
+  addPriceSelector
+} from '../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -61,13 +69,14 @@ class Slab_Door extends Component {
       woodtypes,
       cope_designs,
       edges,
-      applied_profiles,
+      applied_moulds,
       finishes,
 
       isValid,
       index,
       part_list,
       formState,
+      prices
     } = this.props;
     return (
       <div>
@@ -117,13 +126,13 @@ class Slab_Door extends Component {
 
         <Row>
 
-          <Col xs="6">
+        <Col xs="6">
             <FormGroup>
-              <Label htmlFor="hinges">Applied Profiles</Label>
+              <Label htmlFor="applied_profile">Applied Profiles</Label>
               <Field
                 name={`${part}.applied_profile`}
-                component={renderDropdownList}
-                data={applied_profiles}
+                component={renderDropdownListFilter}
+                data={applied_moulds}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -170,7 +179,7 @@ class Slab_Door extends Component {
             name={`${part}.dimensions`}
             component={Slab_Door_Table}
             i={index}
-            // prices={prices}
+            prices={prices}
             // subTotal={subTotal}
             part_list={part_list}
             formState={formState}
@@ -189,19 +198,14 @@ const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
   cope_designs: state.part_list.cope_designs,
   edges: state.part_list.edges,
-  applied_profiles: state.part_list.applied_profiles,
+  applied_moulds: state.part_list.applied_moulds,
   finishes: state.part_list.finishes,
+
+  prices: linePriceSelector(state),
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-
-    },
-    dispatch
-  );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Slab_Door);
