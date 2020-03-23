@@ -135,18 +135,18 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                     </td>
 
                     <td>
-                      {/* {prices[i] ?
-                    <Input
-                      type="text"
-                      className="form-control"
-                      // placeholder={"$" + prices[i][index].toFixed(2) || 0}
-                      /> : */}
-                      <Input
-                        type="text"
-                        className="form-control"
-                        placeholder={"$0.00"}
-                      />
-                      {/* } */}
+                      {prices[i] ?
+                        <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                        /> :
+                        <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$0.00"}
+                        />
+                      }
 
                     </td>
                     <td>

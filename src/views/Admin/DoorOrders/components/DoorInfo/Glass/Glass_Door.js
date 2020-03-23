@@ -15,6 +15,14 @@ import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
 import Glass_Table from '../../Table/Doors/Glass_Table'
 import Ratio from 'lb-ratio'
+import {
+  linePriceSelector,
+  itemPriceSelector,
+  subTotalSelector,
+  taxSelector,
+  totalSelector,
+  addPriceSelector
+} from '../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -211,6 +219,7 @@ class GlassDoor extends Component {
       index,
       part_list,
       formState,
+      prices
 
     } = this.props;
     return (
@@ -342,7 +351,7 @@ class GlassDoor extends Component {
             name={`${part}.dimensions`}
             component={Glass_Table}
             i={index}
-            // prices={prices}
+            prices={prices}
             // subTotal={subTotal}
             part_list={part_list}
             formState={formState}
@@ -367,7 +376,9 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes
+  finishes: state.part_list.finishes,
+
+  prices: linePriceSelector(state),
 });
 
 

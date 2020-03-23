@@ -14,6 +14,14 @@ import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
 import One_Piece_Table from '../../Table/Doors/One_Piece_Table'
+import {
+    linePriceSelector,
+    itemPriceSelector,
+    subTotalSelector,
+    taxSelector,
+    totalSelector,
+    addPriceSelector
+  } from '../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -70,6 +78,7 @@ class One_Piece_Door extends Component {
             index,
             part_list,
             formState,
+            prices
         } = this.props;
         return (
             <div>
@@ -172,7 +181,7 @@ class One_Piece_Door extends Component {
                         name={`${part}.dimensions`}
                         component={One_Piece_Table}
                         i={index}
-                        // prices={prices}
+                        prices={prices}
                         // subTotal={subTotal}
                         part_list={part_list}
                         formState={formState}
@@ -193,17 +202,11 @@ const mapStateToProps = state => ({
     one_piece_edges: state.part_list.one_piece_edges,
     one_piece_panels: state.part_list.one_piece_panels,
     finishes: state.part_list.finishes,
+
+    prices: linePriceSelector(state),
 });
-
-const mapDispatchToProps = dispatch =>
-    bindActionCreators(
-        {
-
-        },
-        dispatch
-    );
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
 )(One_Piece_Door);
