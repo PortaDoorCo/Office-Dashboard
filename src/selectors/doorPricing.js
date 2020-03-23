@@ -38,35 +38,38 @@ export const itemPriceSelector = createSelector(
   [partListSelector],
   (parts) =>
     parts.map((part, index) => {
+
+      console.log(part)
+
       const wood = part.woodtype ? part.woodtype.PRICE : 0;
       const design = part.design ? part.design.DESIGNCOST : 0;
       const edge = part.edges ? part.edges.ADDCOST : 0;
       const hinge = part.hinges ? part.hinges.Price : 0;
-      let miscItems = part.miscItems ? part.miscItems.map(i => { return i.Price}) : []
-      let miscItemsPrice = (miscItems.reduce((acc, item) => acc + item, 0))
+      // let miscItems = part.miscItems ? part.miscItems.map(i => { return i.Price}) : []
+      // let miscItemsPrice = (miscItems.reduce((acc, item) => acc + item, 0))
     
-      console.log(miscItemsPrice)
+      // console.log(miscItemsPrice)
 
-      if (part.dimensions) {
-        const linePrice = part.dimensions.map(i => {
-          let widths = numQty(i.width);
-          let heights = numQty(i.height);
-          let lites = i.lites ? i.lites.addcost : 0
+      // if (part.dimensions) {
+      //   const linePrice = part.dimensions.map(i => {
+      //     let widths = numQty(i.width);
+      //     let heights = numQty(i.height);
+      //     let lites = i.lites ? i.lites.addcost : 0
 
-          const price =
-            (((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood +
-              (design + edge + miscItemsPrice + hinge + lites)) || 0;
+      //     const price =
+      //       (((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood +
+      //         (design + edge + miscItemsPrice + hinge + lites)) || 0;
 
-          if (heights > -1) {
-            return price;
-          } else {
-            return 0;
-          }
-        });
-        return linePrice;
-      } else {
-        return 0;
-      }
+      //     if (heights > -1) {
+      //       return price;
+      //     } else {
+      //       return 0;
+      //     }
+      //   });
+      //   return linePrice;
+      // } else {
+      //   return 0;
+      // }
     })
 );
 
@@ -74,12 +77,15 @@ export const linePriceSelector = createSelector(
   [partListSelector],
   (parts) =>
     parts.map((part, index) => {
-      const wood = part.woodtype ? part.woodtype.PRICE : 0;
-      const design = part.design ? part.design.DESIGNCOST : 0;
-      const edge = part.edges ? part.edges.ADDCOST : 0;
-      const hinge = part.hinges ? part.hinges.Price : 0;
-      let miscItems = part.miscItems ? part.miscItems.map(i => { return i.Price}) : []
-      let miscItemsPrice = (miscItems.reduce((acc, item) => acc + item, 0))
+      console.log(part)
+      const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
+      const design = part.design ? part.design.UPCHARGE : 0;
+      const edge = part.edge ? part.edge.UPCHARGE : 0;
+      const panel = part.panel ? part.panel.UPCHARGE : 0;
+      const applied_profile = part.applied_profile ? part.applied_profile.UPCHARGE : 0;
+      const finish = part.finish ? part.finish.UPCHARGE : 0;
+
+
 
 
       if (part.dimensions) {
@@ -89,8 +95,8 @@ export const linePriceSelector = createSelector(
           let lites = i.lites ? i.lites.addcost : 0
 
           const price =
-            (((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood +
-              (design + edge + miscItemsPrice + hinge + lites)) *
+            ((((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood) +
+              (design + edge + panel + applied_profile + finish)) *
             parseInt(i.qty) || 0;
 
           if (heights > -1) {
