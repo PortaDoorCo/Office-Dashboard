@@ -84,6 +84,7 @@ export const linePriceSelector = createSelector(
       const panel = part.panel ? part.panel.UPCHARGE : 0;
       const applied_profile = part.applied_profile ? part.applied_profile.UPCHARGE : 0;
       const finish = part.finish ? part.finish.UPCHARGE : 0;
+      const lites = part.lites ? part.lites.UPCHARGE : 0
 
 
 
@@ -92,11 +93,10 @@ export const linePriceSelector = createSelector(
         const linePrice = part.dimensions.map(i => {
           let widths = numQty(i.width);
           let heights = numQty(i.height);
-          let lites = i.lites ? i.lites.addcost : 0
 
           const price =
             ((((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood) +
-              (design + edge + panel + applied_profile + finish)) *
+              (design + edge + panel + applied_profile + finish + lites)) *
             parseInt(i.qty) || 0;
 
           if (heights > -1) {
