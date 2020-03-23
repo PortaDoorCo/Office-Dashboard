@@ -88,7 +88,6 @@ export const linePriceSelector = createSelector(
       const ff_opening_cost = part.design ? part.design.opening_cost : 0
       const ff_top_rail_design = part.face_frame_top_rail ? part.face_frame_top_rail.UPCHARGE : 0
       const furniture_feet = part.furniture_feet ? part.furniture_feet.UPCHARGE : 0
-      const ff_design = part.design ? part.design.opening_cost : 0
 
 
 
