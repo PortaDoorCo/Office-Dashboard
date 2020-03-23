@@ -135,22 +135,22 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                     </td>
 
                     <td>
-                      {/* {prices[i] ?
-                <Input
-                    type="text"
-                    className="form-control"
-                    // placeholder={"$" + prices[i][index].toFixed(2) || 0}
-                /> : */}
-                      <Input
-                        type="text"
-                        className="form-control"
-                        placeholder={"$0.00"}
-                      />
-                      {/* } */}
+                      {prices[i] ?
+                        <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                        /> :
+                        <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$0.00"}
+                        />
+                      }
 
                     </td>
                     <td>
-                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                      <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
                         X
                         </Button>
                     </td>
@@ -297,17 +297,17 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         panelsH: 1,
                         panelsW: 1,
                         leftStile: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
-                          ),
-                          rightStile: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
-                          ),
-                          topRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
-                          ),
-                          bottomRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
-                          ),
+                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                        ),
+                        rightStile: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                        ),
+                        topRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                        ),
+                        bottomRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                        ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,
                         unevenSplitInput: "0",
