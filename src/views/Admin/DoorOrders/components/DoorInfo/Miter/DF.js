@@ -15,6 +15,14 @@ import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
 import Miter_Table from '../../Table/DFs/Miter_Table'
 import Ratio from 'lb-ratio'
+import {
+  linePriceSelector,
+  itemPriceSelector,
+  subTotalSelector,
+  taxSelector,
+  totalSelector,
+  addPriceSelector
+} from '../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -116,6 +124,8 @@ class MiterDF extends Component {
       index,
       part_list,
       formState,
+
+      prices
     } = this.props;
     return (
       <div>
@@ -199,7 +209,7 @@ class MiterDF extends Component {
             name={`${part}.dimensions`}
             component={Miter_Table}
             i={index}
-            // prices={prices}
+            prices={prices}
             // subTotal={subTotal}
             part_list={part_list}
             formState={formState}
@@ -218,7 +228,9 @@ const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
   miter_designs: state.part_list.miter_designs,
   panels: state.part_list.panels,
-  finishes: state.part_list.finishes
+  finishes: state.part_list.finishes,
+
+  prices: linePriceSelector(state),
 });
 
 

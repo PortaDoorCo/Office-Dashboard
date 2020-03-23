@@ -15,6 +15,14 @@ import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
 import MT_Table from '../../Table/DFs/MT_Table';
 import Ratio from 'lb-ratio'
+import {
+  linePriceSelector,
+  itemPriceSelector,
+  subTotalSelector,
+  taxSelector,
+  totalSelector,
+  addPriceSelector
+} from '../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -120,6 +128,7 @@ class MT_DF extends Component {
       index,
       part_list,
       formState,
+      prices
     } = this.props;
     return (
       <div>
@@ -223,7 +232,7 @@ class MT_DF extends Component {
             name={`${part}.dimensions`}
             component={MT_Table}
             i={index}
-            // prices={prices}
+            prices={prices}
             // subTotal={subTotal}
             part_list={part_list}
             formState={formState}
@@ -246,7 +255,9 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes
+  finishes: state.part_list.finishes,
+
+  prices: linePriceSelector(state),
 });
 
 

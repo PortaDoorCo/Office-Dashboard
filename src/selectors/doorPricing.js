@@ -4,16 +4,16 @@ import numQty from "numeric-quantity";
 const partListSelector = state => {
   const orders = state.form.DoorOrder;
 
-    if (orders) {
-      if ((!state.form.DoorOrder.values && !state.form.DoorOrder.values.part_list)) {
-        return [];
-      } else {
-        return state.form.DoorOrder.values.part_list;
-      }
-    } else {
+  if (orders) {
+    if ((!state.form.DoorOrder.values && !state.form.DoorOrder.values.part_list)) {
       return [];
+    } else {
+      return state.form.DoorOrder.values.part_list;
     }
-  
+  } else {
+    return [];
+  }
+
 };
 
 const taxRate = state => {
@@ -47,7 +47,7 @@ export const itemPriceSelector = createSelector(
       const hinge = part.hinges ? part.hinges.Price : 0;
       // let miscItems = part.miscItems ? part.miscItems.map(i => { return i.Price}) : []
       // let miscItemsPrice = (miscItems.reduce((acc, item) => acc + item, 0))
-    
+
       // console.log(miscItemsPrice)
 
       // if (part.dimensions) {
@@ -85,7 +85,6 @@ export const linePriceSelector = createSelector(
       const applied_profile = part.applied_profile ? part.applied_profile.UPCHARGE : 0;
       const finish = part.finish ? part.finish.UPCHARGE : 0;
       const lites = part.lites ? part.lites.UPCHARGE : 0
-
 
 
 
@@ -141,7 +140,7 @@ export const subTotalSelector = createSelector(
 
 export const taxSelector = createSelector(
   [subTotalSelector, taxRate],
-  
+
   (subTotal, tax) => subTotal.reduce((acc, item) => acc + item, 0) * tax
 );
 

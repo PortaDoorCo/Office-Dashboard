@@ -135,22 +135,22 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                     </td>
 
                     <td>
-                      {/* {prices[i] ?
-                <Input
-                    type="text"
-                    className="form-control"
-                    // placeholder={"$" + prices[i][index].toFixed(2) || 0}
-                /> : */}
-                      <Input
-                        type="text"
-                        className="form-control"
-                        placeholder={"$0.00"}
-                      />
-                      {/* } */}
+                      {prices[i] ?
+                        <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                        /> :
+                        <Input
+                          type="text"
+                          className="form-control"
+                          placeholder={"$0.00"}
+                        />
+                      }
 
                     </td>
                     <td>
-                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                      <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
                         X
                         </Button>
                     </td>
@@ -297,17 +297,17 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         panelsH: 1,
                         panelsW: 1,
                         leftStile: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
-                          ),
-                          rightStile: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
-                          ),
-                          topRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
-                          ),
-                          bottomRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
-                          ),
+                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                        ),
+                        rightStile: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                        ),
+                        topRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                        ),
+                        bottomRail: fraction(
+                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                        ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,
                         unevenSplitInput: "0",
