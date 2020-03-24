@@ -364,7 +364,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           <Row>
             <Col xs="4" />
             <Col xs="5" />
-            {/* <Col xs="3">
+            <Col xs="3">
               <strong>Addtional Price: </strong>
               <Field
                 name={`${part}.addPrice`}
@@ -379,7 +379,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               ) : (
                   <Input placeholder="0" />
                 )}
-            </Col> */}
+            </Col>
           </Row>
         </Fragment>
       </div> : <div />
