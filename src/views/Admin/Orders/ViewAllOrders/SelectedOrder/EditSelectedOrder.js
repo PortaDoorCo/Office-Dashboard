@@ -1,6 +1,6 @@
 import React from "react";
-import DoorEdit from './DoorEdit'
-import DrawerEdit from './DrawerEdit'
+// import DoorEdit from './DoorEdit'
+import DoorOrder from './DoorOrders/DoorOrders'
 
 
 
@@ -9,20 +9,16 @@ class EditSelectedOrder extends React.Component {
   render() {
     
     const { selectedOrder, editable, toggle } = this.props;
-
+    console.log(selectedOrder[0])
     return (
       <div>
         {selectedOrder[0].orderType === "Door Order" ?
-          <DoorEdit
+          <DoorOrder
             selectedOrder={selectedOrder}
-            editable={editable}
-            toggle={toggle}
+            // editable={editable}
+            // toggle={toggle}
           /> :
-          <DrawerEdit
-            selectedOrder={selectedOrder}
-            editable={editable}
-            toggle={toggle}
-          />
+          <div />
         }
 
 

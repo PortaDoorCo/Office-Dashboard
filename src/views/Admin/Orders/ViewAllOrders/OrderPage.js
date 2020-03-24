@@ -12,7 +12,7 @@ import {
   Table,
   Collapse
 } from 'reactstrap';
-import SelectedOrder from './SelectedOrder/SelectedOrder';
+// import SelectedOrder from './SelectedOrder/SelectedOrder';
 import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
 import Invoice from '../../Invoice/Invoice';
 import { connect } from 'react-redux';
@@ -127,7 +127,7 @@ class OrderPage extends Component {
     deleteModal: !this.state.deleteModal
   })
 
-  deleteOrder = async () => { 
+  deleteOrder = async () => {
     await this.props.deleteOrder(this.props.selectedOrder[0].id, cookie)
     await this.toggleDeleteModal()
     await this.props.toggle()
@@ -521,7 +521,18 @@ class OrderPage extends Component {
               </div>
 
               <div>
-                  {/* order edit here */}
+                {/* order edit here */}
+                {!this.props.edit ? (
+                  <div />
+                ) : (
+                    <div>
+                      <EditSelectedOrder
+                        selectedOrder={props.selectedOrder}
+                        // editable={this.props.editable}
+                        // toggle={props.toggle}
+                      />
+                    </div>
+                  )}
               </div>
             </ModalBody>
             <ModalFooter>
