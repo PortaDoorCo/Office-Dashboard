@@ -521,20 +521,7 @@ class OrderPage extends Component {
               </div>
 
               <div>
-                {!this.props.edit ? (
-                  <SelectedOrder
-                    selectedOrder={props.selectedOrder}
-                  // ref={el => (this.componentRef = el)}
-                  />
-                ) : (
-                    <div>
-                      <EditSelectedOrder
-                        selectedOrder={props.selectedOrder}
-                        editable={this.props.editable}
-                        toggle={props.toggle}
-                      />
-                    </div>
-                  )}
+                  {/* order edit here */}
               </div>
             </ModalBody>
             <ModalFooter>
