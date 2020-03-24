@@ -147,6 +147,7 @@ class OrderTable extends React.Component {
         if (!modal) {
             const x = row.row.data;
 
+            console.log('xxx', x)
 
             this.setState({
                 selectedOrder: [
@@ -316,6 +317,8 @@ class OrderTable extends React.Component {
             productData,
             selectedRowKeys,
         } = this.state;
+
+       // console.log('this.state.selectedOrder', this.state.selectedOrder);
 
         return (
             <React.Fragment>

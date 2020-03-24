@@ -109,55 +109,57 @@ class DoorInfo extends Component {
       part_list,
       isValid,
       subTotal,
-      updateSubmit
+      updateSubmit,
+
     } = this.props;
-
-
 
     return (
       <div>
-        {fields.map((part, index) => (
-          <div id={`item-${index}`} key={index}>
-            <hr />
-            <CardSubtitle className="mt-4">
-              <Row>
-                <Col lg="11">
-                  <div>
-                    <h2>Item #{index + 1}</h2>
-                  </div>
+        {fields.map((part, index) => {
 
-                </Col>
-                <Col>
-                  {fields.length > 1 ? (
-                    <Button color="danger" onClick={() => fields.remove(index)}>
-                      x
-                    </Button>
-                  ) : null}
-                </Col>
-              </Row>
-            </CardSubtitle>
+          console.log('part', part);
 
-            <DoorFilter
-              formState={formState}
-              part={part}
-              index={index}
-              orderType={orderType}
-              construction={construction}
-              thickness={thickness}
-            />
-
-            <Conditionals
-              formState={formState}
-              part={part}
-              index={index}
-              part_list={part_list}
-              isValid={isValid}
-            />
-
-           
-          
-          </div>
-        ))}
+          return (
+            <div id={`item-${index}`} key={index}>
+              <hr />
+              <CardSubtitle className="mt-4">
+                <Row>
+                  <Col lg="11">
+                    <div>
+                      <h2>Item #{index + 1}</h2>
+                    </div>
+  
+                  </Col>
+                  <Col>
+                    {fields.length > 1 ? (
+                      <Button color="danger" onClick={() => fields.remove(index)}>
+                        x
+                      </Button>
+                    ) : null}
+                  </Col>
+                </Row>
+              </CardSubtitle>
+  
+              <DoorFilter
+                formState={formState}
+                part={part}
+                index={index}
+                orderType={orderType}
+                construction={construction}
+                thickness={thickness}
+              />
+  
+              <Conditionals
+                formState={formState}
+                part={part}
+                index={index}
+  
+                isValid={isValid}
+              />
+  
+            </div>
+          )
+        })}
         <Button
           color="primary"
           onClick={() =>

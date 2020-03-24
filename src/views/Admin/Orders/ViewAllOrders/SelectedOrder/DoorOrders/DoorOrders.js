@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DoorInfo from './components/DoorInfo/DoorInfo';
-import JobInfo from '../../../OrderInfo/JobInfo';
+import JobInfo from './components/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
 import {
   reduxForm,
@@ -49,14 +49,6 @@ import { FileUploader } from 'devextreme-react';
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
 
-
-const fraction = num => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
-
-
-const dueDate = moment(new Date()).businessAdd(7)._d
 
 class DoorOrders extends Component {
   constructor(props) {
@@ -220,15 +212,12 @@ class DoorOrders extends Component {
   }
 
   render() {
-    console.log('files   ', this.state.files)
 
     const {
       submitted,
       handleSubmit,
       prices,
       subTotal,
-
-
       customers,
       formState,
       isValid,
@@ -236,10 +225,10 @@ class DoorOrders extends Component {
 
       total,
       dispatch,
-      tax
+      tax,
     } = this.props;
 
-    console.log('TAX : ', tax)
+    console.log(this.props.selectedOrder[0])
 
     return (
       <div className="animated fadeIn resize">
@@ -251,19 +240,16 @@ class DoorOrders extends Component {
               </CardHeader>
               <CardBody>
                 <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
-                  {!submitted ? (
-                    <FormSection name="job_info">
-                      <JobInfo
-                        customers={customers}
-                        change={change}
-                        address={address}
-                        loaded={this.state.loaded}
-                        handleAddress={this.handleAddress}
-                      />
-                    </FormSection>
-                  ) : null}
 
-
+                  <FormSection name="jobInfo">
+                    <JobInfo
+                      customers={customers}
+                      change={change}
+                      address={address}
+                      loaded={this.state.loaded}
+                      handleAddress={this.handleAddress}
+                    />
+                  </FormSection>
 
                   <FieldArray
                     name="part_list"
@@ -360,23 +346,37 @@ class DoorOrders extends Component {
   }
 }
 
-const mapStateToProps = (state,props) => ({
+const mapStateToProps = (state, props) => {
 
-  customers: state.Orders.customerDB,
-  customerDBLoaded: state.Orders.customerDBLoaded,
 
-  user: state.users.user,
+  return {
+    initialValues: props.selectedOrder[0],
+    order: props.selectedOrder[0],
+    customers: state.Orders.customerDB,
+    customerDBLoaded: state.Orders.customerDBLoaded,
 
-  submitted: state.Orders.submitted,
-  initialValues: props.selectedOrder[0],
-  formState: getFormValues('DoorOrder')(state),
-  // prices: linePriceSelector(state),
-  // itemPrice: itemPriceSelector(state),
-  // subTotal: subTotalSelector(state),
-  total: totalSelector(state),
-  tax: taxSelector(state),
-  addPriceSelector: addPriceSelector(state)
-});
+    user: state.users.user,
+
+    woodtypes: state.part_list.woodtypes,
+    cope_designs: state.part_list.cope_designs,
+    edges: state.part_list.edges,
+    finishes: state.part_list.finishes,
+    panels: state.part_list.panels,
+    profiles: state.part_list.profiles,
+    applied_moulds: state.part_list.applied_moulds,
+
+    part_list: props.selectedOrder[0].part_list,
+    submitted: state.Orders.submitted,
+
+    formState: getFormValues('DoorOrder')(state),
+    // prices: linePriceSelector(state),
+    // itemPrice: itemPriceSelector(state),
+    // subTotal: subTotalSelector(state),
+    total: totalSelector(state),
+    tax: taxSelector(state),
+    addPriceSelector: addPriceSelector(state)
+  }
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -392,7 +392,7 @@ const mapDispatchToProps = dispatch =>
 // eslint-disable-next-line no-class-assign
 DoorOrders = reduxForm({
   form: 'DoorOrder',
-  enableReinitialize: true
+  enableReinitialize: true,
 })(DoorOrders);
 
 export default connect(

@@ -226,6 +226,8 @@ class CopeDoor extends Component {
       subTotal
 
     } = this.props;
+
+    console.log('parttt', part_list)
     return (
       <div>
         <Row>

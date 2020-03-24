@@ -306,7 +306,7 @@ class OrderPage extends Component {
 
     // let options;
 
-    console.log(props)
+    // console.log(props)
 
     let options;
     let selectedOrder = props.selectedOrder[0] ? props.selectedOrder[0] : "Door Order"
