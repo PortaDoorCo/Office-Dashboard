@@ -115,7 +115,7 @@ class DoorOrders extends Component {
     const order = {
       part_list: values.part_list,
       status: values.job_info.status,
-      jobInfo: jobInfo,
+      job_info: jobInfo,
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
       itemPrice: itemPrice,

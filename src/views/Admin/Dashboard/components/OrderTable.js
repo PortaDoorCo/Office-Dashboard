@@ -153,10 +153,10 @@ class OrderTable extends React.Component {
                 selectedOrder: [
                     {
                         id: x.id,
-                        jobInfo: x.jobInfo,
-                        jobName: x.jobInfo.jobName,
+                        job_info: x.job_info,
+                        jobName: x.job_info.jobName,
                         status: x.status,
-                        poNum: x.jobInfo.poNum,
+                        poNum: x.job_info.poNum,
                         part_list: x.part_list,
                         dimensions: x.dimensions,
                         shippingAddress: x.jobInfo,
@@ -363,7 +363,7 @@ class OrderTable extends React.Component {
                         <RequiredRule />
                     </Column>
                     <Column
-                        dataField="jobInfo.customer.Company"
+                        dataField="job_info.customer.Company"
                         caption="Company Name"
                         allowEditing={false}
                     >

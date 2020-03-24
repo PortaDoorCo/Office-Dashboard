@@ -137,61 +137,60 @@ class DoorOrders extends Component {
     }
   };
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.formState !== prevProps.formState) {
-  //     if (this.props.formState) {
-  //       const update = async () => {
-  //         const form = await this.props.formState;
-  //         const customer = await form.job_info.customer;
-  //         const part_list = await form.part_list;
-
-  //         this.props.dispatch(
-  //           change(
-  //             'DoorOrder',
-  //             'job_info.Address1',
-  //             customer.Shipping_Address1 || customer.Address1
-  //           )
-  //         );
-  //         this.props.dispatch(
-  //           change(
-  //             'DoorOrder',
-  //             'job_info.Address2',
-  //             customer.Shipping_Address2 || customer.Address2
-  //           )
-  //         );
-  //         this.props.dispatch(
-  //           change(
-  //             'DoorOrder',
-  //             'job_info.City',
-  //             customer.Shipping_City || customer.City
-  //           )
-  //         );
-  //         this.props.dispatch(
-  //           change(
-  //             'DoorOrder',
-  //             'job_info.State',
-  //             customer.Shipping_State || customer.State
-  //           )
-  //         );
-  //         this.props.dispatch(
-  //           change(
-  //             'DoorOrder',
-  //             'job_info.Zip',
-  //             customer.Shipping_Zip || customer.Zip
-  //           )
-  //         );
-  //         this.props.dispatch(
-  //           change(
-  //             'DoorOrder',
-  //             'job_info.Phone',
-  //             customer.Shipping_Phone || customer.Phone1
-  //           )
-  //         );
-  //       };
-  //       update();
-  //     }
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    if (this.props.formState !== prevProps.formState) {
+      if (this.props.formState) {
+        const update = async () => {
+          const form = await this.props.formState;
+          const customer = form.job_info.customer
+          
+          await this.props.dispatch(
+            change(
+              'DoorOrder',
+              'job_info.Address1',
+              customer.Shipping_Address1 || customer.Address1
+            )
+          );
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              'job_info.Address2',
+              customer.Shipping_Address2 || customer.Address2
+            )
+          );
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              'job_info.City',
+              customer.Shipping_City || customer.City
+            )
+          );
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              'job_info.State',
+              customer.Shipping_State || customer.State
+            )
+          );
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              'job_info.Zip',
+              customer.Shipping_Zip || customer.Zip
+            )
+          );
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              'job_info.Phone',
+              customer.Shipping_Phone || customer.Phone1
+            )
+          );
+        };
+        update();
+      }
+    }
+  }
 
   cancelOrder = e => {
     e.preventDefault();
@@ -241,7 +240,7 @@ class DoorOrders extends Component {
               <CardBody>
                 <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
 
-                  <FormSection name="jobInfo">
+                  <FormSection name="job_info">
                     <JobInfo
                       customers={customers}
                       change={change}
@@ -271,7 +270,7 @@ class DoorOrders extends Component {
                     <Col xs="5" />
                     <Col xs="3">
                       <strong>Tax: </strong>
-                      <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" />
+                      {/* <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" /> */}
                       <strong>Total: </strong>
                       <Input placeholder={'$' + total.toFixed(2)} className="mb-3" />
                     </Col>
@@ -373,7 +372,7 @@ const mapStateToProps = (state, props) => {
     // itemPrice: itemPriceSelector(state),
     // subTotal: subTotalSelector(state),
     total: totalSelector(state),
-    tax: taxSelector(state),
+    // tax: taxSelector(state),
     addPriceSelector: addPriceSelector(state)
   }
 };
