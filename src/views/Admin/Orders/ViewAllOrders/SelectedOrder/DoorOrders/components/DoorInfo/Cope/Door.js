@@ -227,7 +227,6 @@ class CopeDoor extends Component {
 
     } = this.props;
 
-    console.log("strinnng", part_list)
     return (
       <div>
         <Row>
@@ -272,9 +271,6 @@ class CopeDoor extends Component {
               />
             </FormGroup>
           </Col>
-
-
-
         </Row>
         <Row>
 

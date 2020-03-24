@@ -203,15 +203,7 @@ class Conditionals extends Component {
 
     } = this.props;
 
-    console.log('conditionals', {
-      part,
-      part_list,
-      formState
-    });
-
     if (formState && formState.part_list) {
-
-
       //Doors
       if (formState.part_list[index].orderType.value === "Door") {
 
