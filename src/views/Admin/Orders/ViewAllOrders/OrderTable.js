@@ -157,6 +157,7 @@ class OrderTable extends React.Component {
     if (!modal) {
       const x = row.row.data;
 
+      console.log('x', x);
 
       this.setState({
         selectedOrder: [
