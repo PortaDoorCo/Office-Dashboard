@@ -239,6 +239,8 @@ class DoorOrders extends Component {
       tax
     } = this.props;
 
+    console.log('TAX : ', tax)
+
     return (
       <div className="animated fadeIn resize">
         <Row>
@@ -283,9 +285,9 @@ class DoorOrders extends Component {
                     <Col xs="5" />
                     <Col xs="3">
                       <strong>Tax: </strong>
-                      {/* <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" /> */}
+                      <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" />
                       <strong>Total: </strong>
-                      {/* <Input placeholder={'$' + total.toFixed(2)} className="mb-3" /> */}
+                      <Input placeholder={'$' + total.toFixed(2)} className="mb-3" />
                     </Col>
                   </Row>
                   <Row>
@@ -404,9 +406,9 @@ const mapStateToProps = state => ({
   // prices: linePriceSelector(state),
   // itemPrice: itemPriceSelector(state),
   // subTotal: subTotalSelector(state),
-  // total: totalSelector(state),
-  // tax: taxSelector(state),
-  // addPriceSelector: addPriceSelector(state)
+  total: totalSelector(state),
+  tax: taxSelector(state),
+  addPriceSelector: addPriceSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>

@@ -18,7 +18,6 @@ const partListSelector = state => {
 
 const taxRate = state => {
   const orders = state.form.DoorOrder;
-  if (state.part_list.loadedFinish) {
     if (orders) {
       if (!orders.values.job_info) {
         return [];
@@ -28,9 +27,6 @@ const taxRate = state => {
     } else {
       return [];
     }
-  } else {
-    return [];
-  }
 };
 
 
@@ -199,11 +195,11 @@ export const subTotalSelector = createSelector(
 export const taxSelector = createSelector(
   [subTotalSelector, taxRate],
 
-  (subTotal, tax) => subTotal.reduce((acc, item) => acc + item, 0) * tax
+  (subTotal, tax) =>(subTotal.reduce((acc, item) => acc + item, 0) * tax)
 );
 
 export const totalSelector = createSelector(
   [subTotalSelector, taxSelector],
-  (subTotal, tax) => subTotal.reduce((acc, item) => acc + item, 0) + tax
+  (subTotal, tax) => (subTotal.reduce((acc, item) => acc + item, 0) + tax)
 );
 
