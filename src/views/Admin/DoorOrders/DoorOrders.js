@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DoorInfo from './components/DoorInfo/DoorInfo';
-import JobInfo from '../Orders/OrderInfo/JobInfo';
+import JobInfo from './components/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
 import {
   reduxForm,
@@ -255,7 +255,7 @@ class DoorOrders extends Component {
                     <FormSection name="job_info">
                       <JobInfo
                         customers={customers}
-                        change={change}
+                        formState={formState}
                         address={address}
                         loaded={this.state.loaded}
                         handleAddress={this.handleAddress}

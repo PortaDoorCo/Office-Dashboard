@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DrawerBoxInfo from './components/DrawerBoxInfo';
-import JobInfo from '../Orders/OrderInfo/JobInfo';
+import JobInfo from './components/JobInfo/JobInfo';
 import NotificationAlert from 'react-notification-alert';
 import 'react-notifications/lib/notifications.css';
 import {
