@@ -143,7 +143,9 @@ class FaceFrame extends Component {
       index,
       part_list,
       formState,
-      prices
+      prices,
+      itemPrice,
+      subTotal
     } = this.props;
     return (
       <div>
@@ -247,7 +249,7 @@ class FaceFrame extends Component {
             component={Frame_Only_Table}
             i={index}
             prices={prices}
-            // subTotal={subTotal}
+            subTotal={subTotal}
             part_list={part_list}
             formState={formState}
             isValid={isValid}
@@ -268,6 +270,8 @@ const mapStateToProps = state => ({
   furniture_feets: state.part_list.furniture_feets,
   edges: state.part_list.edges,
   prices: linePriceSelector(state),
+  itemPrice: itemPriceSelector(state),
+  subTotal: subTotalSelector(state),
 });
 
 export default connect(

@@ -213,7 +213,9 @@ class MT_Door extends Component {
       part_list,
       formState,
 
-      prices
+      prices,
+      itemPrice,
+      subTotal
     } = this.props;
     return (
       <div>
@@ -332,7 +334,7 @@ class MT_Door extends Component {
             component={MT_Table}
             i={index}
             prices={prices}
-            // subTotal={subTotal}
+            subTotal={subTotal}
             part_list={part_list}
             formState={formState}
             isValid={isValid}
@@ -358,6 +360,8 @@ const mapStateToProps = state => ({
   finishes: state.part_list.finishes,
 
   prices: linePriceSelector(state),
+  itemPrice: itemPriceSelector(state),
+  subTotal: subTotalSelector(state),
 });
 
 

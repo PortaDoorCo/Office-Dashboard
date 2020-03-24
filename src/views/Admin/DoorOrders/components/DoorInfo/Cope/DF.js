@@ -131,7 +131,9 @@ class CopeDF extends Component {
       index,
       part_list,
       formState,
-      prices
+      prices,
+      itemPrice,
+      subTotal
     } = this.props;
     return (
       <div>
@@ -250,7 +252,7 @@ class CopeDF extends Component {
             component={Cope_Table}
             i={index}
             prices={prices}
-            // subTotal={subTotal}
+            subTotal={subTotal}
             part_list={part_list}
             formState={formState}
             isValid={isValid}
@@ -274,6 +276,8 @@ const mapStateToProps = state => ({
   finishes: state.part_list.finishes,
 
   prices: linePriceSelector(state),
+  itemPrice: itemPriceSelector(state),
+  subTotal: subTotalSelector(state),
 });
 
 
