@@ -14,10 +14,10 @@ import {
 } from 'reactstrap';
 // import SelectedOrder from './SelectedOrder/SelectedOrder';
 import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
-import Invoice from '../../Invoice/Invoice';
+import Invoice from '../Invoice/Invoice';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateOrder, loadOrders, deleteOrder } from '../../../../redux/orders/actions';
+import { updateOrder, loadOrders, deleteOrder } from '../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
 import Print from '@material-ui/icons/Print';
 import Attachment from '@material-ui/icons/Attachment';

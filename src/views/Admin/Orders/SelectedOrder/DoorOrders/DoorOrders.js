@@ -27,7 +27,7 @@ import {
   shippingAddress,
   submitOrder,
   loadOrders,
-} from '../../../../../../redux/orders/actions';
+} from '../../../../../redux/orders/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -35,7 +35,7 @@ import {
   taxSelector,
   totalSelector,
   addPriceSelector
-} from '../../../../../../selectors/doorPricing';
+} from '../../../../../selectors/doorPricing';
 
 import PropTypes from 'prop-types';
 import 'react-notifications/lib/notifications.css';

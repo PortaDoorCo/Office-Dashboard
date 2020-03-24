@@ -21,7 +21,7 @@ import {
   taxSelector,
   totalSelector,
   addPriceSelector
-} from '../../../../../../../../../selectors/doorPricing';
+} from '../../../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 

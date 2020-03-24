@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
-import Miter_Table from '../../Table/Doors/Miter_Table'
+import MT_Table from '../../Table/Doors/MT_Table'
 import Ratio from 'lb-ratio'
 import {
   linePriceSelector,
@@ -22,9 +22,7 @@ import {
   taxSelector,
   totalSelector,
   addPriceSelector
-} from '../../../../../../../../../selectors/doorPricing';
-
-
+} from '../../../../../../../../selectors/doorPricing';
 
 
 const required = value => (value ? undefined : 'Required');
@@ -34,7 +32,7 @@ const fraction = num => {
 };
 
 
-class MiterDoor extends Component {
+class MT_Door extends Component {
   constructor(props) {
     super(props);
   }
@@ -89,8 +87,6 @@ class MiterDoor extends Component {
                   )
                 }
 
-
-
                 if (parseInt(info.panelsW) > 1) {
                   
                   if (
@@ -101,7 +97,7 @@ class MiterDoor extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
                       )
                     );
                   }
@@ -117,7 +113,7 @@ class MiterDoor extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
                       ),
                     );
                   }
@@ -136,7 +132,7 @@ class MiterDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].leftStile`,
-                      fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                      fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
                     )
                   );
 
@@ -144,7 +140,7 @@ class MiterDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].rightStile`,
-                      fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                      fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
                     )
                   );
 
@@ -153,7 +149,7 @@ class MiterDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].topRail`,
-                      fraction(part.design ? (part.design.PROFILE_WIDTH + part.design.TOP_RAIL_ADD) : 0)
+                      fraction(part.design ? (part.design.MID_RAIL_MINIMUMS) : 0)
                     )
                   );
 
@@ -162,7 +158,7 @@ class MiterDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].bottomRail`,
-                      fraction(part.design ? (part.design.PROFILE_WIDTH + part.design.BTM_RAIL_ADD) : 0)
+                      fraction(part.design ? (part.design.MID_RAIL_MINIMUMS) : 0)
                     )
                   );
 
@@ -173,7 +169,7 @@ class MiterDoor extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
                       )
                     );
                   }
@@ -183,7 +179,7 @@ class MiterDoor extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
                       )
                     );
                   }
@@ -201,13 +197,13 @@ class MiterDoor extends Component {
     }
   }
 
+
   render() {
     const {
       part,
       woodtypes,
-      miter_designs,
+      mt_designs,
       edges,
-      profiles,
       panels,
       applied_moulds,
       finishes,
@@ -216,6 +212,7 @@ class MiterDoor extends Component {
       index,
       part_list,
       formState,
+
       prices,
       itemPrice,
       subTotal
@@ -243,13 +240,31 @@ class MiterDoor extends Component {
               <Field
                 name={`${part}.design`}
                 component={renderDropdownListFilter}
-                data={miter_designs}
+                data={mt_designs}
                 valueField="value"
                 textField="NAME"
                 validate={required}
               />
             </FormGroup>
           </Col>
+
+          <Col xs="4">
+            <FormGroup>
+              <Label htmlFor="mould">Edge</Label>
+              <Field
+                name={`${part}.edge`}
+                component={renderDropdownList}
+                data={edges}
+                valueField="value"
+                textField="NAME"
+                validate={required}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+
 
           <Col xs="4">
             <FormGroup>
@@ -264,9 +279,9 @@ class MiterDoor extends Component {
               />
             </FormGroup>
           </Col>
-        </Row>
-        <Row>
-          <Col xs="6">
+
+
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -280,7 +295,7 @@ class MiterDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="6">
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
@@ -316,7 +331,7 @@ class MiterDoor extends Component {
           <div className="mt-1" />
           <FieldArray
             name={`${part}.dimensions`}
-            component={Miter_Table}
+            component={MT_Table}
             i={index}
             prices={prices}
             subTotal={subTotal}
@@ -328,6 +343,7 @@ class MiterDoor extends Component {
           />
         </div>
 
+
       </div>
     );
   }
@@ -336,9 +352,8 @@ class MiterDoor extends Component {
 
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
-  miter_designs: state.part_list.miter_designs,
+  mt_designs: state.part_list.mt_designs,
   edges: state.part_list.edges,
-  finishes: state.part_list.finishes,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
@@ -350,8 +365,7 @@ const mapStateToProps = state => ({
 });
 
 
-
 export default connect(
   mapStateToProps,
   null
-)(MiterDoor);
+)(MT_Door);

@@ -24,10 +24,10 @@ import {
   totalSelector,
   taxSelector,
   addPriceSelector
-} from '../../../../../selectors/drawerPricing';
+} from '../../../../selectors/drawerPricing';
 import DrawerBoxInfo from './components/DrawerOrder/components/DrawerBoxInfo';
 import JobInfo from './components/DrawerOrder/components/JobInfo';
-import { updateOrder, loadOrders } from '../../../../../redux/orders/actions';
+import { updateOrder, loadOrders } from '../../../../redux/orders/actions';
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
