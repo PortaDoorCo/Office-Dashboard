@@ -116,9 +116,6 @@ class DoorInfo extends Component {
     return (
       <div>
         {fields.map((part, index) => {
-
-          console.log('part', part);
-
           return (
             <div id={`item-${index}`} key={index}>
               <hr />

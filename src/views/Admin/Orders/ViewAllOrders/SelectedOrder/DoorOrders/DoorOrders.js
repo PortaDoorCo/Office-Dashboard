@@ -232,7 +232,7 @@ class DoorOrders extends Component {
     return (
       <div className="animated fadeIn resize">
         <Row>
-          <Col xs="12" sm="12" md="12" lg="7">
+          <Col xs="12" sm="12" md="12" lg="12">
             <Card>
               <CardHeader>
                 <strong>Door Order</strong>
@@ -294,50 +294,6 @@ class DoorOrders extends Component {
                 </form>
               </CardBody>
             </Card>
-          </Col>
-          <Col lg="4">
-            <Row>
-              <Col>
-                <Card>
-                  <CardBody>
-                    <FormGroup>
-                      <h3>Upload Files</h3>
-                      <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://server.portadoor.com/upload" />
-                      </form>
-                    </FormGroup>
-                  </CardBody>
-                </Card>
-
-              </Col>
-            </Row>
-            {(this.props.formState && this.props.formState.part_list) ? (
-              this.props.formState.part_list.map((part, i) => {
-                return (
-                  <div>
-                    <Row style={{ height: '100%' }}>
-                      <Col>
-                        <Sticky
-                          top={100}
-                          bottomBoundary={`#item-${i}`}
-                          enabled={true}
-                          key={i}
-                        >
-                          <SideBar key={i} i={i} part={part} />
-                        </Sticky>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-
-                      </Col>
-                    </Row>
-                  </div>
-                );
-              })
-            ) : (
-                <div />
-              )}
           </Col>
         </Row>
       </div>
