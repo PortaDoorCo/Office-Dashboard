@@ -16,7 +16,7 @@ import {
 } from '../../../../redux/orders/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
+import OrderPage from '../../Orders/OrderPage';
 import CompanyOrders from './components/CompanyOrders'
 import Maps from './components/Maps'
 
