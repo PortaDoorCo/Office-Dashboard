@@ -1,5 +1,5 @@
 import moment from 'moment';
-import Panels from '../Breakdowns/Doors/Panels';
+import Panels from '../Breakdowns/Doors/Panels/Panels';
 import Size from '../Breakdowns/Doors/Size';
 
 export default data => {
