@@ -4,13 +4,13 @@ import MT from './designs/MT/MT'
 
 
 export default (info, part) => {
-  if (part.design.Construction === "Cope") {
-    return Cope(info,part)
-  } 
-  if (part.design.Construction === "M"){
-    return Miter(info,part)
-  } 
-  if (part.design.Construction === "MT") {
-    return MT(info,part)
+  if (part.construction.value === "Cope") {
+    return Cope(info, part)
+  }
+  if (part.construction.value === "M") {
+    return Miter(info, part)
+  }
+  if (part.construction.value === "MT") {
+    return MT(info, part)
   }
 };

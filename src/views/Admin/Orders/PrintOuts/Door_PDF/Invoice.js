@@ -32,7 +32,7 @@ export default data => {
         {
           stack: [
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Est. Ship: ${moment(data.jobInfo.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
+            { text: `Est. Ship: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
           ]
         }
       ]
@@ -40,7 +40,7 @@ export default data => {
     {
       columns: [
         {
-          text: `${data.jobInfo.jobName} - ${data.jobInfo.customer.Company}`,
+          text: `${data.job_info.jobName} - ${data.job_info.customer.Company}`,
           margin: [0, 10]
         },
         { text: 'Job: None', alignment: 'right', margin: [0, 0, 80, 0] }
