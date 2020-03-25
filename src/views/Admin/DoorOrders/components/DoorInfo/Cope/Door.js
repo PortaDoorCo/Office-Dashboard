@@ -154,7 +154,7 @@ class CopeDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].topRail`,
-                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.TOP_RAIL_ADD) : 0)
+                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
                     )
                   );
 
@@ -163,7 +163,7 @@ class CopeDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].bottomRail`,
-                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.BTM_RAIL_ADD) : 0)
+                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
                     )
                   );
 
