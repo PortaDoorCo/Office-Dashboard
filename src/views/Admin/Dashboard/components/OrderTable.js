@@ -27,7 +27,7 @@ import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers, updateStatus } from '../../../../redux/orders/actions';
 import io from 'socket.io-client';
 import Cookies from "js-cookie";
-const socket = io('https://server.portadoor.com/');
+const socket = io('https://infinite-woodland-96977.herokuapp.com/');
 
 const cookie = Cookies.get("jwt");
 
