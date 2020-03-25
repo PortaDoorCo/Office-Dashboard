@@ -15,8 +15,8 @@ export default (info, part) => {
     const top_rail_add = part.design.TOP_RAIL_ADD
     const btm_rail_add = part.design.BTM_RAIL_ADD
 
-    const topRail = numQty(info.topRail) + top_rail_add
-    const bottomRail = numQty(info.bottomRail) + btm_rail_add
+    const topRail = numQty(info.topRail)
+    const bottomRail = numQty(info.bottomRail)
     const leftStile = numQty(info.leftStile)
     const rightStile = numQty(info.rightStile)
     const vertMull = numQty(vMidRail)
@@ -27,7 +27,7 @@ export default (info, part) => {
     const width = numQty(info.width)
     const qty = parseInt(info.qty)
 
-    const lites = part.lites? part.lites.NAME : ''
+    const lites = part.lites ? part.lites.NAME : ''
 
     const inset = part.profile.INSET
     const edge_factor = part.edge.LIP_FACTOR
@@ -45,9 +45,6 @@ export default (info, part) => {
     })
 
     const unevenSplitTotal = unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
-
-
-
 
     const door = [
         {
@@ -68,10 +65,6 @@ export default (info, part) => {
     ]
 
 
-
-
-
-
     const none = [
         {
             qty: ``,
@@ -79,30 +72,6 @@ export default (info, part) => {
             pattern: ``
         },
     ]
-
-
-    const df = [
-        {
-            qty: `${info.qty}`,
-            measurement: `${fraction(
-                height +
-                add_len -
-                topRail -
-                bottomRail +
-                (INSET * 2)
-            )} x ${fraction(
-                width +
-                add_len -
-                leftStile -
-                rightStile +
-                (INSET * 2)
-            )}`,
-            pattern: 'PR'
-        },
-    ]
-
-
-
 
     const unevenSplit = [
         ...Array.from(Array(panelsH).keys()).slice(1).map((i, v) => {
@@ -138,18 +107,11 @@ export default (info, part) => {
         }
     ]
 
-    if (part.orderType.value === 'Door') {
-        if (part.panel.NAME === "GLASS") {
-            return none
-        } else {
-            if (info.unevenCheck) {
-                return unevenSplit
-            } else {
-                return door;
-            }
 
-        }
+    if (info.unevenCheck) {
+        return unevenSplit
     } else {
-        return df;
+        return door;
     }
+
 };

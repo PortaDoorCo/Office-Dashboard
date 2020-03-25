@@ -120,7 +120,7 @@ export default (info, part) => {
             pattern: "B"
           },
           {
-            qty: (((panelsH - 1) * panelsW) * qty),
+            qty: ((panelsH - 1)* qty),
             measurement: `${fraction(horizMull)} x ${fraction(
               Math.round(
                 (
