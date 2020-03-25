@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -110,6 +110,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         component={renderField}
                         label="qty"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -120,6 +121,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -131,6 +133,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                         label="height"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -139,20 +142,25 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         <Input
                           type="text"
                           className="form-control"
+                          disabled={edit}
                           placeholder={"$" + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
                           className="form-control"
+                          disabled={edit}
                           placeholder={"$0.00"}
                         />
                       }
 
                     </td>
                     <td>
-                      <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
-                        X
+                      {!edit ?
+                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                          X
                         </Button>
+                        : <div />
+                      }
                     </td>
                   </tr>
 
@@ -166,6 +174,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         type="text"
                         component={renderField}
                         label="leftStile"
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -177,6 +186,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         type="text"
                         component={renderField}
                         label="rightStile"
+                        edit={edit}
 
                       />
                     </td>
@@ -189,6 +199,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         type="text"
                         component={renderField}
                         label="topRail"
+                        edit={edit}
 
                       />
                     </td>
@@ -201,6 +212,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         type="text"
                         component={renderField}
                         label="bottomRail"
+                        edit={edit}
                       />
                     </td>
                   </tr>
@@ -259,6 +271,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
+                              edit={edit}
                             />
                           </Col>
                           <Col />
@@ -278,6 +291,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                     type="textarea"
                     component={renderField}
                     label="notes"
+                    edit={edit}
                   />
                 </Col>
 
@@ -287,46 +301,50 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
           ))}
           <Row>
             <Col>
-              <Button
-                color="primary"
-                className="btn-circle"
-                onClick={(e) =>
-                  (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].design) ?
-                      fields.push({
-                        panelsH: 1,
-                        panelsW: 1,
-                        leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
-                        ),
-                        rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
-                        ),
-                        topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
-                        ),
-                        bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
-                        ),
-                        horizontalMidRailSize: 0,
-                        verticalMidRailSize: 0,
-                        unevenSplitInput: "0",
-                        showBuilder: false
-                      })
-                      : alert('please select a design')
-                  )}
-              >
-                +
-                </Button>
+              {!edit ?
+                <Button
+                  color="primary"
+                  className="btn-circle"
+                  onClick={(e) =>
+                    (
+                      (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].design) ?
+                        fields.push({
+                          panelsH: 1,
+                          panelsW: 1,
+                          leftStile: fraction(
+                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          ),
+                          rightStile: fraction(
+                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          ),
+                          topRail: fraction(
+                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          ),
+                          bottomRail: fraction(
+                            formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          ),
+                          horizontalMidRailSize: 0,
+                          verticalMidRailSize: 0,
+                          unevenSplitInput: "0",
+                          showBuilder: false
+                        })
+                        : alert('please select a design')
+                    )}
+                >
+                  +
+            </Button> : <div />
+              }
+
             </Col>
           </Row>
 
           <Row>
             <Col xs="4" />
             <Col xs="5" />
-            {/* <Col xs="3">
+            <Col xs="3">
               <strong>Addtional Price: </strong>
               <Field
+                edit={edit}
                 name={`${part}.addPrice`}
                 type="text"
                 component={renderField}
@@ -334,12 +352,12 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
               />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                <Input disabled={edit} placeholder={subTotal[i].toFixed(2) || 0} />
 
               ) : (
-                  <Input placeholder="0" />
+                  <Input disabled={edit} placeholder="0" />
                 )}
-            </Col> */}
+            </Col>
           </Row>
         </Fragment>
       </div> : <div />

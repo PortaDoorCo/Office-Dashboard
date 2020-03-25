@@ -145,7 +145,8 @@ class FaceFrame extends Component {
       formState,
       prices,
       itemPrice,
-      subTotal
+      subTotal,
+      edit
     } = this.props;
     return (
       <div>
@@ -160,6 +161,7 @@ class FaceFrame extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -174,6 +176,7 @@ class FaceFrame extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -188,6 +191,7 @@ class FaceFrame extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -205,6 +209,7 @@ class FaceFrame extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -220,6 +225,7 @@ class FaceFrame extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -235,6 +241,7 @@ class FaceFrame extends Component {
                   name={`${part}.notes`}
                   type="textarea"
                   component={renderField}
+                  edit={edit}
                 />
               </strong>
             </FormGroup>
@@ -254,6 +261,7 @@ class FaceFrame extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
+            edit={edit}
           // updateSubmit={updateSubmit}
           />
         </div>

@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -112,6 +112,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         component={renderField}
                         label="qty"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -122,6 +123,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -133,6 +135,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                         label="height"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -142,6 +145,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="horizontalMidRail"
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -150,17 +154,20 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="verticalMidRail"
+                        edit={edit}
                       />
                     </td>
                     <td>
                       {prices[i] ?
                         <Input
                           type="text"
+                          edit={edit}
                           className="form-control"
                           placeholder={"$" + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
+                          edit={edit}
                           className="form-control"
                           placeholder={"$0.00"}
                         />
@@ -168,9 +175,13 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
 
                     </td>
                     <td>
-                      <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
-                        X
+                      {!edit ?
+                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                          X
                         </Button>
+                        :
+                        <div />
+                      }
                     </td>
                   </tr>
 
@@ -184,6 +195,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="leftStile"
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -195,7 +207,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="rightStile"
-
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -207,7 +219,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="topRail"
-
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -219,6 +231,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="bottomRail"
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -230,6 +243,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="horizontalMidRail"
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -241,6 +255,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="verticalMidRail"
+                        edit={edit}
                       />
                     </td>
                   </tr>
@@ -299,6 +314,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
+                              edit={edit}
                             />
                           </Col>
                           <Col />
@@ -318,6 +334,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                     type="textarea"
                     component={renderField}
                     label="notes"
+                    edit={edit}
                   />
                 </Col>
 
@@ -327,37 +344,40 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
           ))}
           <Row>
             <Col>
-              <Button
-                color="primary"
-                className="btn-circle"
-                onClick={(e) =>
-                  (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "MT" && formState.part_list[formState.part_list.length - 1].design) ?
-                      fields.push({
-                        panelsH: 1,
-                        panelsW: 1,
-                        leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
-                        ),
-                        rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
-                        ),
-                        topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
-                        ),
-                        bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
-                        ),
-                        horizontalMidRailSize: 0,
-                        verticalMidRailSize: 0,
-                        unevenSplitInput: "0",
-                        showBuilder: false
-                      })
-                      : alert('please select a profile')
-                  )}
-              >
-                +
-                </Button>
+              {!edit ?
+                <Button
+                  color="primary"
+                  className="btn-circle"
+                  onClick={(e) =>
+                    (
+                      (formState.part_list[formState.part_list.length - 1].construction.value === "MT" && formState.part_list[formState.part_list.length - 1].design) ?
+                        fields.push({
+                          panelsH: 1,
+                          panelsW: 1,
+                          leftStile: fraction(
+                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          ),
+                          rightStile: fraction(
+                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          ),
+                          topRail: fraction(
+                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          ),
+                          bottomRail: fraction(
+                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          ),
+                          horizontalMidRailSize: 0,
+                          verticalMidRailSize: 0,
+                          unevenSplitInput: "0",
+                          showBuilder: false
+                        })
+                        : alert('please select a profile')
+                    )}
+                >
+                  +
+                </Button> : <div />
+          }
+
             </Col>
           </Row>
 
@@ -367,6 +387,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
             <Col xs="3">
               <strong>Addtional Price: </strong>
               <Field
+                edit={edit}
                 name={`${part}.addPrice`}
                 type="text"
                 component={renderField}
@@ -374,10 +395,10 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
               />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                <Input disabled={edit} placeholder={subTotal[i].toFixed(2) || 0} />
 
               ) : (
-                  <Input placeholder="0" />
+                  <Input disabled={edit} placeholder="0" />
                 )}
             </Col>
           </Row>

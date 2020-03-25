@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -111,6 +111,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         component={renderField}
                         label="qty"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -121,6 +122,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -132,6 +134,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                         label="height"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -141,17 +144,20 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="horizontalMidRail"
+                        edit={edit}
                       />
                     </td>
                     <td>
                       {prices[i] ?
                         <Input
                           type="text"
+                          disabled={edit}
                           className="form-control"
                           placeholder={"$" + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
+                          disabled={edit}
                           className="form-control"
                           placeholder={"$0.00"}
                         />
@@ -159,9 +165,13 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
 
                     </td>
                     <td>
-                      <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
-                        X
-                        </Button>
+                      {!edit ?
+                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                          X
+                    </Button>
+                        :
+                        <div />
+                      }
                     </td>
                   </tr>
 
@@ -175,6 +185,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="leftStile"
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -186,6 +197,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="rightStile"
+                        edit={edit}
 
                       />
                     </td>
@@ -198,6 +210,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="topRail"
+                        edit={edit}
 
                       />
                     </td>
@@ -210,6 +223,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="bottomRail"
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -221,6 +235,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="horizontalMidRail"
+                        edit={edit}
                       />
                     </td>
                   </tr>
@@ -279,6 +294,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
+                              edit={edit}
                             />
                           </Col>
                           <Col />
@@ -298,6 +314,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                     type="textarea"
                     component={renderField}
                     label="notes"
+                    edit={edit}
                   />
                 </Col>
 
@@ -307,25 +324,29 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
           ))}
           <Row>
             <Col>
-              <Button
-                color="primary"
-                className="btn-circle"
-                onClick={(e) =>
-                  fields.push({
-                    openings: 1,
-                    leftStile: fraction(2.375),
-                    rightStile: fraction(2.375),
-                    topRail: fraction(2.375),
-                    bottomRail: fraction(2.375),
-                    horizontalMidRailSize: 0,
-                    verticalMidRailSize: 0,
-                    unevenSplitInput: "0",
-                    showBuilder: false
-                  })
-                }
-              >
-                +
-                </Button>
+              {!edit ?
+                <Button
+                  color="primary"
+                  className="btn-circle"
+                  onClick={(e) =>
+                    fields.push({
+                      openings: 1,
+                      leftStile: fraction(2.375),
+                      rightStile: fraction(2.375),
+                      topRail: fraction(2.375),
+                      bottomRail: fraction(2.375),
+                      horizontalMidRailSize: 0,
+                      verticalMidRailSize: 0,
+                      unevenSplitInput: "0",
+                      showBuilder: false
+                    })
+                  }
+                >
+                  +
+                          </Button>
+                : <div />
+              }
+
             </Col>
           </Row>
 
@@ -335,6 +356,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
             <Col xs="3">
               <strong>Addtional Price: </strong>
               <Field
+                edit={edit}
                 name={`${part}.addPrice`}
                 type="text"
                 component={renderField}
@@ -342,10 +364,10 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
               />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                <Input disabled={edit} placeholder={subTotal[i].toFixed(2) || 0} />
 
               ) : (
-                  <Input placeholder="0" />
+                  <Input disabled={edit} placeholder="0" />
                 )}
             </Col>
           </Row>
