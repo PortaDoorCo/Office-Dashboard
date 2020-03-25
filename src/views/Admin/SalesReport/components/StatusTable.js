@@ -24,7 +24,7 @@ import momentLocaliser from 'react-widgets-moment';
 import io from 'socket.io-client';
 
 
-const socket = io('https://server.portadoor.com/');
+const socket = io('https://infinite-woodland-96977.herokuapp.com/');
 
 momentLocaliser(moment);
 

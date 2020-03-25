@@ -29,7 +29,7 @@ import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF'
 import { NotificationManager } from 'react-notifications';
 import io from 'socket.io-client';
 import Cookies from "js-cookie";
-const socket = io('https://server.portadoor.com/');
+const socket = io('https://infinite-woodland-96977.herokuapp.com/');
 
 const cookie = Cookies.get("jwt");
 

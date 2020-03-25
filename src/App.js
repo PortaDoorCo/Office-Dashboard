@@ -24,7 +24,7 @@ import {
   // getDrawerFinish
 } from "./redux/part_list/actions";
 import io from 'socket.io-client';
-const socket = io('https://server.portadoor.com/');
+const socket = io('https://infinite-woodland-96977.herokuapp.com/');
 
 const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
