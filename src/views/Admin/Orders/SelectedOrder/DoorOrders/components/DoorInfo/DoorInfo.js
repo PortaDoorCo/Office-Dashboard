@@ -110,6 +110,7 @@ class DoorInfo extends Component {
       isValid,
       subTotal,
       updateSubmit,
+      edit
 
     } = this.props;
 
@@ -125,7 +126,7 @@ class DoorInfo extends Component {
                     <div>
                       <h2>Item #{index + 1}</h2>
                     </div>
-  
+
                   </Col>
                   <Col>
                     {fields.length > 1 ? (
@@ -136,44 +137,51 @@ class DoorInfo extends Component {
                   </Col>
                 </Row>
               </CardSubtitle>
-  
+
               <DoorFilter
                 formState={formState}
                 part={part}
                 index={index}
+                edit={edit}
                 orderType={orderType}
                 construction={construction}
                 thickness={thickness}
               />
-  
+
               <Conditionals
                 formState={formState}
                 part={part}
                 index={index}
-  
+                edit={edit}
                 isValid={isValid}
               />
-  
+
             </div>
           )
         })}
-        <Button
-          color="primary"
-          onClick={() =>
 
-            fields.push({
-              orderType: orderType[0],
-              construction: construction[0],
-              thickness: thickness[0],
-              dimensions: [],
-              addPrice: 0,
-              files: []
-            })
+        {!edit ?
+          <Button
+            color="primary"
+            onClick={() =>
 
-          }
-        >
-          Add Item
-        </Button>
+              fields.push({
+                orderType: orderType[0],
+                construction: construction[0],
+                thickness: thickness[0],
+                dimensions: [],
+                addPrice: 0,
+                files: []
+              })
+
+            }
+          >
+            Add Item
+              </Button>
+          :
+          <div />
+        }
+
       </div>
     );
   }

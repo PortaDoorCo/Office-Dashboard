@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit }) => {
 
   console.log('part COPed_table', part)
 
@@ -114,6 +114,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     component={renderField}
                     label="qty"
                     validate={required}
+                    edit={edit}
                   />
                 </td>
                 <td>
@@ -124,6 +125,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                     label="width"
                     validate={required}
+                    edit={edit}
                   />
                 </td>
 
@@ -135,6 +137,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                     label="height"
                     validate={required}
+                    edit={edit}
                   />
                 </td>
 
@@ -144,6 +147,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     type="text"
                     component={renderField}
                     label="horizontalMidRail"
+                    edit={edit}
                   />
                 </td>
                 <td>
@@ -152,6 +156,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     type="text"
                     component={renderField}
                     label="verticalMidRail"
+                    edit={edit}
                   />
                 </td>
                 <td>
@@ -159,19 +164,26 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     <Input
                       type="text"
                       className="form-control"
+                      disabled={edit}
                       placeholder={"$" + prices[i][index].toFixed(2) || 0}
                     /> :
                     <Input
                       type="text"
                       className="form-control"
+                      disabled={edit}
                       placeholder={"$0.00"}
                     />
                   }
                 </td>
                 <td>
-                  <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
-                    X
-                        </Button>
+                  {!edit ?
+                    <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                      X
+                    </Button> 
+                    :
+                    <div />
+                  }
+
                 </td>
               </tr>
 
@@ -185,6 +197,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     type="text"
                     component={renderField}
                     label="leftStile"
+                    edit={edit}
                   />
                 </td>
                 <td>
@@ -196,6 +209,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     type="text"
                     component={renderField}
                     label="rightStile"
+                    edit={edit}
 
                   />
                 </td>
@@ -208,6 +222,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     type="text"
                     component={renderField}
                     label="topRail"
+                    edit={edit}
 
                   />
                 </td>
@@ -220,6 +235,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     type="text"
                     component={renderField}
                     label="bottomRail"
+                    edit={edit}
                   />
                 </td>
                 <td>
@@ -231,6 +247,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     type="text"
                     component={renderField}
                     label="horizontalMidRail"
+                    edit={edit}
                   />
                 </td>
                 <td>
@@ -242,6 +259,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     type="text"
                     component={renderField}
                     label="verticalMidRail"
+                    edit={edit}
                   />
                 </td>
               </tr>
@@ -319,6 +337,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 type="textarea"
                 component={renderField}
                 label="notes"
+                edit={edit}
               />
             </Col>
 
@@ -328,37 +347,41 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
       ))}
       <Row>
         <Col>
-          <Button
-            color="primary"
-            className="btn-circle"
-            onClick={(e) =>
-              (
-                (formState.part_list[formState.part_list.length - 1].construction.value === "Cope" && formState.part_list[formState.part_list.length - 1].profile) ?
-                  fields.push({
-                    panelsH: 1,
-                    panelsW: 1,
-                    leftStile: fraction(
-                      formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
-                    ),
-                    rightStile: fraction(
-                      formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
-                    ),
-                    topRail: fraction(
-                      formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
-                    ),
-                    bottomRail: fraction(
-                      formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
-                    ),
-                    horizontalMidRailSize: 0,
-                    verticalMidRailSize: 0,
-                    unevenSplitInput: "0",
-                    showBuilder: false
-                  })
-                  : alert('please select a profile')
-              )}
-          >
-            +
-                </Button>
+          {!edit ?
+            <Button
+              color="primary"
+              className="btn-circle"
+              onClick={(e) =>
+                (
+                  (formState.part_list[formState.part_list.length - 1].construction.value === "Cope" && formState.part_list[formState.part_list.length - 1].profile) ?
+                    fields.push({
+                      panelsH: 1,
+                      panelsW: 1,
+                      leftStile: fraction(
+                        formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                      ),
+                      rightStile: fraction(
+                        formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                      ),
+                      topRail: fraction(
+                        formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                      ),
+                      bottomRail: fraction(
+                        formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                      ),
+                      horizontalMidRailSize: 0,
+                      verticalMidRailSize: 0,
+                      unevenSplitInput: "0",
+                      showBuilder: false
+                    })
+                    : alert('please select a profile')
+                )}
+            >
+              +
+            </Button> :
+            <div />
+          }
+
         </Col>
       </Row>
 

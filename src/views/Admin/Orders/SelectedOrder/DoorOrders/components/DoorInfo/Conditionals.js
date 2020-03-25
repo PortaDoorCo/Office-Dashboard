@@ -200,6 +200,7 @@ class Conditionals extends Component {
       index,
       isValid,
       part_list,
+      edit
 
     } = this.props;
 
@@ -215,6 +216,7 @@ class Conditionals extends Component {
               isValid={isValid}
               part_list={formState.part_list}
               formState={formState}
+              edit={edit}
 
             />
           )
@@ -228,6 +230,7 @@ class Conditionals extends Component {
               isValid={isValid}
               part_list={part_list}
               formState={formState}
+              edit={edit}
             />
           )
         }
@@ -240,6 +243,7 @@ class Conditionals extends Component {
               isValid={isValid}
               part_list={part_list}
               formState={formState}
+              edit={edit}
             />
           )
         }
@@ -252,6 +256,7 @@ class Conditionals extends Component {
               isValid={isValid}
               part_list={part_list}
               formState={formState}
+              edit={edit}
             />
           )
         }
@@ -267,6 +272,7 @@ class Conditionals extends Component {
               isValid={isValid}
               part_list={part_list}
               formState={formState}
+              edit={edit}
             />
           )
         }
@@ -278,6 +284,7 @@ class Conditionals extends Component {
               isValid={isValid}
               part_list={part_list}
               formState={formState}
+              edit={edit}
             />
           )
         }
@@ -289,6 +296,7 @@ class Conditionals extends Component {
               isValid={isValid}
               part_list={part_list}
               formState={formState}
+              edit={edit}
             />
           )
         }
@@ -303,6 +311,7 @@ class Conditionals extends Component {
             isValid={isValid}
             part_list={part_list}
             formState={formState}
+            edit={edit}
           />
         )
       }
@@ -317,6 +326,7 @@ class Conditionals extends Component {
             isValid={isValid}
             part_list={part_list}
             formState={formState}
+            edit={edit}
           />
         )
       }
@@ -331,6 +341,7 @@ class Conditionals extends Component {
             isValid={isValid}
             part_list={part_list}
             formState={formState}
+            edit={edit}
           />
         )
       }
