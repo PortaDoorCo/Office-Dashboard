@@ -127,7 +127,8 @@ class MiterDF extends Component {
 
       prices,
       itemPrice,
-      subTotal
+      subTotal,
+      edit
     } = this.props;
     return (
       <div>
@@ -142,6 +143,7 @@ class MiterDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -156,6 +158,7 @@ class MiterDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -170,6 +173,7 @@ class MiterDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -184,6 +188,7 @@ class MiterDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -198,6 +203,7 @@ class MiterDF extends Component {
                   name={`${part}.notes`}
                   type="textarea"
                   component={renderField}
+                  edit={edit}
                 />
               </strong>
             </FormGroup>
@@ -217,6 +223,7 @@ class MiterDF extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
+            edit={edit}
           // updateSubmit={updateSubmit}
           />
         </div>

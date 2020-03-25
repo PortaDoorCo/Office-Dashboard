@@ -215,7 +215,8 @@ class MT_Door extends Component {
 
       prices,
       itemPrice,
-      subTotal
+      subTotal,
+      edit
     } = this.props;
     return (
       <div>
@@ -230,6 +231,7 @@ class MT_Door extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -244,6 +246,7 @@ class MT_Door extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -258,6 +261,7 @@ class MT_Door extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -276,6 +280,7 @@ class MT_Door extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -291,6 +296,7 @@ class MT_Door extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -305,6 +311,7 @@ class MT_Door extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -320,6 +327,7 @@ class MT_Door extends Component {
                   name={`${part}.notes`}
                   type="textarea"
                   component={renderField}
+                  edit={edit}
                 />
               </strong>
             </FormGroup>
@@ -339,6 +347,7 @@ class MT_Door extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
+            edit={edit}
           // updateSubmit={updateSubmit}
           />
         </div>

@@ -133,7 +133,8 @@ class CopeDF extends Component {
       formState,
       prices,
       itemPrice,
-      subTotal
+      subTotal,
+      edit
     } = this.props;
     return (
       <div>
@@ -148,6 +149,7 @@ class CopeDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -162,6 +164,7 @@ class CopeDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -176,6 +179,7 @@ class CopeDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -193,6 +197,7 @@ class CopeDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -209,6 +214,7 @@ class CopeDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -223,6 +229,7 @@ class CopeDF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -238,6 +245,7 @@ class CopeDF extends Component {
                   name={`${part}.notes`}
                   type="textarea"
                   component={renderField}
+                  edit={edit}
                 />
               </strong>
             </FormGroup>
@@ -257,6 +265,7 @@ class CopeDF extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
+            edit={edit}
           // updateSubmit={updateSubmit}
           />
         </div>

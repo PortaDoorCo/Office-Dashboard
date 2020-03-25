@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -110,6 +110,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                         component={renderField}
                         label="qty"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -120,6 +121,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -131,6 +133,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                         onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                         label="height"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -138,11 +141,13 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                       {prices[i] ?
                         <Input
                           type="text"
+                          disabled={edit}
                           className="form-control"
                           placeholder={"$" + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
+                          disabled={edit}
                           className="form-control"
                           placeholder={"$0.00"}
                         />
@@ -150,9 +155,13 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
 
                     </td>
                     <td>
-                      <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
-                        X
+                      {!edit ?
+                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                          X
                         </Button>
+                        :
+                        <div />
+                      }
                     </td>
                   </tr>
 
@@ -208,6 +217,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
+                              edit={edit}
                             />
                           </Col>
                           <Col />
@@ -227,6 +237,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                     type="textarea"
                     component={renderField}
                     label="notes"
+                    edit={edit}
                   />
                 </Col>
 
@@ -236,17 +247,20 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
           ))}
           <Row>
             <Col>
-              <Button
-                color="primary"
-                className="btn-circle"
-                onClick={(e) =>
-                  fields.push({
-                    showBuilder: false
-                  })
-                }
-              >
-                +
-                </Button>
+              {!edit ?
+                <Button
+                  color="primary"
+                  className="btn-circle"
+                  onClick={(e) =>
+                    fields.push({
+                      showBuilder: false
+                    })
+                  }
+                >
+                  +
+                </Button> : <div />
+              }
+
             </Col>
           </Row>
 
@@ -256,6 +270,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
             <Col xs="3">
               <strong>Addtional Price: </strong>
               <Field
+                edit={edit}
                 name={`${part}.addPrice`}
                 type="text"
                 component={renderField}
@@ -263,10 +278,10 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
               />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                <Input disabled={edit} placeholder={subTotal[i].toFixed(2) || 0} />
 
               ) : (
-                  <Input placeholder="0" />
+                  <Input disabled={edit} placeholder="0" />
                 )}
             </Col>
           </Row>
