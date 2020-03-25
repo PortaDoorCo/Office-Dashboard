@@ -47,7 +47,7 @@ export default (info, part) => {
           pattern: "LR"
         },
         {
-          qty: (((panelsW) - 1) * qty),
+          qty: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
           measurement: `${fraction(vertMull)} x ${fraction(
             Math.round((
               ((height -
@@ -91,7 +91,7 @@ export default (info, part) => {
           pattern: "R"
         },
         {
-          qty: (((panelsW) - 1) * qty),
+          qty: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
           measurement: `${fraction(vertMull)} x ${fraction(
             Math.round((
               ((height -

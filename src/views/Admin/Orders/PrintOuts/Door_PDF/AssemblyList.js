@@ -55,7 +55,7 @@ export default data => {
           { text: 'WxH', style: 'fonts' },
           { text: 'Stile', style: 'fonts' },
           { text: 'Rails', style: 'fonts' },
-          { text: 'Panels WxH', style: 'fonts' },
+          // { text: 'Panels WxH', style: 'fonts' },
           { text: 'Cab #', style: 'fonts' }
         ]
       ];
@@ -69,7 +69,7 @@ export default data => {
           { text: Size(item), style: 'fonts' },
           { text: Stiles(item, i).map(stile => { return `(${stile.qty}) ${stile.measurement} - ${stile.pattern} \n` }), style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `(${rail.qty}) ${rail.measurement} - ${rail.pattern} \n` }), style: 'fonts' },
-          { text: Panels(item, i).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n` }), style: 'fonts' },
+          // { text: Panels(item, i).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n` }), style: 'fonts' },
           ' '
         ]);
       });
@@ -108,7 +108,7 @@ export default data => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 50, 115, 105, 120, '*'],
+            widths: [22, 15, 50, 115,  120, '*'],
             body: tableBody
           },
           layout: 'lightHorizontalLines'
