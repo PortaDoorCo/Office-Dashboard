@@ -161,13 +161,13 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       {prices[i] ?
                         <Input
                           type="text"
-                          edit={edit}
+                          disabled={edit}
                           className="form-control"
                           placeholder={"$" + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
-                          edit={edit}
+                          disabled={edit}
                           className="form-control"
                           placeholder={"$0.00"}
                         />

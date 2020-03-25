@@ -192,9 +192,10 @@ class DoorOrders extends Component {
     }
   }
 
-  cancelOrder = e => {
-    e.preventDefault();
-    this.props.reset();
+  cancelOrder = async() => {
+    await this.props.reset();
+
+    await this.props.editable();
   };
 
   onKeyPress(event) {
