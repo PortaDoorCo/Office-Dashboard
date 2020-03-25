@@ -143,7 +143,7 @@ class DoorOrders extends Component {
         const update = async () => {
           const form = await this.props.formState;
           const customer = form.job_info.customer
-          
+
           await this.props.dispatch(
             change(
               'DoorOrder',
@@ -222,6 +222,8 @@ class DoorOrders extends Component {
       isValid,
       address,
 
+      edit,
+
       total,
       dispatch,
       tax,
@@ -247,6 +249,7 @@ class DoorOrders extends Component {
                       address={address}
                       loaded={this.state.loaded}
                       handleAddress={this.handleAddress}
+                      edit={edit}
                     />
                   </FormSection>
 
@@ -258,6 +261,9 @@ class DoorOrders extends Component {
                     // subTotal={subTotal}
                     dispatch={dispatch}
                     isValid={isValid}
+
+                    edit={edit}
+
                     updateSubmit={this.state.submit}
                   />
 
@@ -279,16 +285,20 @@ class DoorOrders extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
-                      <Row>
-                        <Col>
-                          <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
-                        </Col>
-                        <Col>
-                          <Button color="danger" onClick={this.cancelOrder} style={{ width: "100%" }}>
-                            Cancel
-                        </Button>
-                        </Col>
-                      </Row>
+                      {!edit ?
+                        <Row>
+                          <Col>
+                            <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
+                          </Col>
+                          <Col>
+                            <Button color="danger" onClick={this.cancelOrder} style={{ width: "100%" }}>
+                              Cancel
+                                            </Button>
+                          </Col>
+                        </Row> :
+                        <div />
+                    }
+
                     </Col>
                   </Row>
                 </form>

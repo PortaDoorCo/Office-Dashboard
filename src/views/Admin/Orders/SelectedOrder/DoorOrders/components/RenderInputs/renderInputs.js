@@ -20,6 +20,7 @@ export const renderMultiSelect = ({
     data,
     valueField,
     textField,
+    edit,
     meta: { touched, error, warning }
 }) => (
         <div>
@@ -31,6 +32,7 @@ export const renderMultiSelect = ({
                 valueField={valueField}
                 textField={textField}
                 placeholder="Add Misc Items"
+                disabled={edit}
             />
             {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -43,6 +45,7 @@ export const renderDropdownListFilter = ({
     data,
     valueField,
     textField,
+    edit,
     meta: { touched, error, warning }
 }) => (
         <div>
@@ -54,6 +57,7 @@ export const renderDropdownListFilter = ({
                 placeholder="Select"
                 onChange={input.onChange}
                 filter
+                disabled={edit}
             />
             {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -67,6 +71,7 @@ export const renderDropdownList = ({
     data,
     valueField,
     textField,
+    edit,
     meta: { touched, error, warning }
 }) => (
         <div>
@@ -77,6 +82,7 @@ export const renderDropdownList = ({
                 textField={textField}
                 placeholder="Select"
                 onChange={input.onChange}
+                disabled={edit}
             />
             {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -87,11 +93,12 @@ export const renderDropdownList = ({
 export const renderField = ({
     input,
     props,
+    edit,
     meta: { touched, error, warning },
     ...custom
 }) => (
         <Fragment>
-            <Input {...input} {...custom} autocomplete="new-password" />
+            <Input {...input} {...custom} disabled={edit} autocomplete="new-password" />
             {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
                     (warning && <span style={{ color: 'red' }}>{warning}</span>))}
@@ -112,6 +119,7 @@ export const renderCheckboxToggle = ({
                 defaultChecked={!!value}
                 onChange={(e, data) => onChange(data.checked)}
                 type="checkbox"
+                disabled={input.edit}
             />
             {touched && error && <span>{error}</span>}
         </div>
@@ -129,6 +137,7 @@ export const renderCheckbox = ({
                 defaultChecked={!!value}
                 onChange={(e, data) => onChange(data.checked)}
                 type="checkbox"
+                
             />
             {touched && error && <span>{error}</span>}
         </div>

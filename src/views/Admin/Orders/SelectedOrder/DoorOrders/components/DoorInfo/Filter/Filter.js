@@ -19,7 +19,7 @@ const required = value => (value ? undefined : 'Required');
 
 
 
-const DoorFilter = ({ formState, index, part, construction, thickness, orderType }) => {
+const DoorFilter = ({ formState, index, part, construction, thickness, orderType, edit }) => {
 
   if(formState && formState.part_list){
     if ((formState.part_list[index].orderType.value === "Door") || (formState.part_list[index].orderType.value === "DF")) {
@@ -36,6 +36,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   valueField="value"
                   textField="name"
                   validate={required}
+                  edit={edit}
                 />
               </FormGroup>
             </Col>
@@ -50,6 +51,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   valueField="value"
                   textField="name"
                   validate={required}
+                  edit={edit}
                 />
               </FormGroup>
             </Col>
@@ -64,6 +66,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   valueField="value"
                   textField="name"
                   validate={required}
+                  edit={edit}
                 />
               </FormGroup>
             </Col>
@@ -85,6 +88,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   valueField="value"
                   textField="name"
                   validate={required}
+                  edit={edit}
                 />
               </FormGroup>
             </Col>
@@ -99,6 +103,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   valueField="value"
                   textField="name"
                   validate={required}
+                  edit={edit}
                 />
               </FormGroup>
             </Col>
@@ -119,6 +124,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   valueField="value"
                   textField="name"
                   validate={required}
+                  edit={edit}
                 />
               </FormGroup>
             </Col>

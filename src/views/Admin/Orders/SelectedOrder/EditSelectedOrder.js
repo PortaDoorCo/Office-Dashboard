@@ -8,24 +8,30 @@ class EditSelectedOrder extends React.Component {
 
   render() {
     
-    const { selectedOrder, editable, toggle } = this.props;
+    const { selectedOrder, editable, edit, toggle } = this.props;
     // console.log('selected order', selectedOrder[0])
-    return (
-      <div>
-        {selectedOrder[0].orderType === "Door Order" ?
-          <DoorOrder
-            selectedOrder={selectedOrder}
-            // editable={editable}
-            // toggle={toggle}
-          /> :
-          <div />
-        }
 
-
-
-      </div>
-
-    );
+    if(selectedOrder[0]) {
+      return (
+        <div>
+          {selectedOrder[0].orderType === "Door Order" ?
+            <DoorOrder
+              selectedOrder={selectedOrder}
+              editable={editable}
+              edit={edit}
+              // toggle={toggle}
+            /> :
+            <div />
+          }
+        </div>
+  
+      );
+    } else {
+      return (
+        <div />
+      )
+    }
+    
   }
 }
 

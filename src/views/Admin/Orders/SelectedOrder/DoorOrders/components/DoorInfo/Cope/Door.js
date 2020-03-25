@@ -220,6 +220,8 @@ class CopeDoor extends Component {
       part_list,
       formState,
 
+      edit,
+
 
       prices,
       itemPrice,
@@ -240,6 +242,7 @@ class CopeDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -254,6 +257,7 @@ class CopeDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -268,6 +272,7 @@ class CopeDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -284,6 +289,7 @@ class CopeDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -298,6 +304,7 @@ class CopeDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -312,6 +319,7 @@ class CopeDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -326,6 +334,7 @@ class CopeDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -342,6 +351,7 @@ class CopeDoor extends Component {
                   name={`${part}.notes`}
                   type="textarea"
                   component={renderField}
+                  edit={edit}
                 />
               </strong>
             </FormGroup>
@@ -362,6 +372,7 @@ class CopeDoor extends Component {
             isValid={isValid}
             part={part}
             part_list={part_list}
+            edit={edit}
           // updateSubmit={updateSubmit}
           />
         </div>
