@@ -87,7 +87,7 @@ export default data => {
           columns: [
             { text: `${i.woodtype.NAME}`, style: 'woodtype' },
             {
-              text: `IP: ${i.moulds.NAME}`,
+              text: `IP: ${i.profile.NAME}`,
               style: 'woodtype',
               alignment: 'left'
             },
