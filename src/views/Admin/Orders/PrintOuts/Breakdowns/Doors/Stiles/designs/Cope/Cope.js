@@ -16,8 +16,8 @@ export default (info, part) => {
   const top_rail_add = part.design.TOP_RAIL_ADD
   const btm_rail_add = part.design.BTM_RAIL_ADD
 
-  const topRail = numQty(info.topRail) + top_rail_add
-  const bottomRail = numQty(info.bottomRail) + btm_rail_add
+  const topRail = numQty(info.topRail)
+  const bottomRail = numQty(info.bottomRail)
   const leftStile = numQty(info.leftStile)
   const rightStile = numQty(info.rightStile)
   const vertMull = numQty(vMidRail)
@@ -50,13 +50,8 @@ export default (info, part) => {
           qty: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
           measurement: `${fraction(vertMull)} x ${fraction(
             Math.round((
-              ((height -
-                topRail -
-                bottomRail -
-                (horizMull *
-                  (panelsH - 1))) /
-              panelsH) + inset + (edge_factor / panelsH)
-            ) * 16) / 16
+              ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
+              + inset + (edge_factor / panelsH)) * 16) / 16
           )}`,
           pattern: "VM3"
         },
@@ -99,7 +94,7 @@ export default (info, part) => {
                 bottomRail -
                 (horizMull *
                   (panelsH - 1))) /
-              panelsH) + inset + (edge_factor / panelsH)
+                panelsH) + inset + (edge_factor / panelsH)
             ) * 16) / 16
           )}`,
           pattern: "VM9"
