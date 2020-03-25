@@ -229,7 +229,7 @@ class DoorOrders extends Component {
       tax,
     } = this.props;
 
-    console.log(this.props.selectedOrder[0])
+    console.log('TOTAL!" ',total)
 
     return (
       <div className="animated fadeIn resize">
@@ -276,9 +276,9 @@ class DoorOrders extends Component {
                     <Col xs="5" />
                     <Col xs="3">
                       <strong>Tax: </strong>
-                      {/* <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" /> */}
+                      <Input disabled={edit} placeholder={'$' + tax.toFixed(2)} className="mb-2" />
                       <strong>Total: </strong>
-                      <Input placeholder={'$' + total.toFixed(2)} className="mb-3" />
+                      <Input disabled={edit} placeholder={'$' + total.toFixed(2)} className="mb-3" />
                     </Col>
                   </Row>
                   <Row>
@@ -293,12 +293,11 @@ class DoorOrders extends Component {
                           <Col>
                             <Button color="danger" onClick={this.cancelOrder} style={{ width: "100%" }}>
                               Cancel
-                                            </Button>
+                            </Button>
                           </Col>
                         </Row> :
                         <div />
                     }
-
                     </Col>
                   </Row>
                 </form>
@@ -338,7 +337,7 @@ const mapStateToProps = (state, props) => {
     // itemPrice: itemPriceSelector(state),
     // subTotal: subTotalSelector(state),
     total: totalSelector(state),
-    // tax: taxSelector(state),
+    tax: taxSelector(state),
     addPriceSelector: addPriceSelector(state)
   }
 };

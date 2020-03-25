@@ -52,10 +52,6 @@ class JobInfo extends Component {
   }
 
 
-
-
-
-
   render() {
     const { customers, edit } = this.props;
 

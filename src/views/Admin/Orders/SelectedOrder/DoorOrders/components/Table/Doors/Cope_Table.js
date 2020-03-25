@@ -391,6 +391,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         <Col xs="3">
           <strong>Addtional Price: </strong>
           <Field
+            edit={edit}
             name={`${part}.addPrice`}
             type="text"
             component={renderField}
@@ -398,10 +399,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           />
           <strong>Sub Total: </strong>
           {subTotal[i] ? (
-            <Input placeholder={subTotal[i].toFixed(2) || 0} />
+            <Input disabled={edit} placeholder={subTotal[i].toFixed(2) || 0} />
 
           ) : (
-              <Input placeholder="0" />
+              <Input disabled={edit} placeholder="0" />
             )}
         </Col>
       </Row>

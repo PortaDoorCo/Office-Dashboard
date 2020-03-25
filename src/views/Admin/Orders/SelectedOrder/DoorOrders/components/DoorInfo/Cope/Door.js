@@ -396,6 +396,7 @@ const mapStateToProps = (state, props) => ({
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
+  total: totalSelector(state),
 
 });
 
