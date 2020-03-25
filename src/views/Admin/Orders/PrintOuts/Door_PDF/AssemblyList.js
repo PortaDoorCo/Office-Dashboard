@@ -81,7 +81,7 @@ export default data => {
             {
               stack: [
                 {
-                  text: `${i.design.NAME} - ${i.panels.PANEL}`,
+                  text: `${i.design.NAME} - ${i.panel.NAME}`,
                   style: 'fonts'
                 },
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' }
@@ -91,7 +91,7 @@ export default data => {
               stack: [
                 { text: 'Thickness: 3/4"', style: 'fonts' },
                 {
-                  text: `IP: ${i.moulds.NAME}   Edge: ${i.edges.NAME}`,
+                  text: `IP: ${i.profile.NAME}   Edge: ${i.edge.NAME}`,
                   style: 'fonts'
                 }
               ],
