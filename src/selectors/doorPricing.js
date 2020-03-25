@@ -200,6 +200,6 @@ export const taxSelector = createSelector(
 
 export const totalSelector = createSelector(
   [subTotalSelector, taxSelector],
-  (subTotal, tax) => (subTotal.reduce((acc, item) => acc + item, 0) + tax)
+  (subTotal, tax) => (console.log(tax),(subTotal.reduce((acc, item) => acc + item, 0) + tax))
 );
 
