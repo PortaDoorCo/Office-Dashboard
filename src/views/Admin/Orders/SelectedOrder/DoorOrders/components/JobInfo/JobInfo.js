@@ -25,12 +25,17 @@ const required = value => value ? undefined : 'Required';
 
 
 
-const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
+const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
+<div>
+{console.log(edit)}
   <DateTimePicker
     onChange={onChange}
     time={showTime}
     value={!value ? null : new Date(value)}
+    disabled={edit}
   />
+</div>
+
 
 
 class JobInfo extends Component {
@@ -69,6 +74,7 @@ class JobInfo extends Component {
                 name="DueDate"
                 showTime={false}
                 component={renderDateTimePicker}
+                edit={edit}
               />
               <p>7 Business Day Lead Time</p>
             </FormGroup>
