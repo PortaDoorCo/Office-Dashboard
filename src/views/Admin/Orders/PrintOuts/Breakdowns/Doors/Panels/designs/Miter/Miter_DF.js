@@ -12,7 +12,8 @@ export default (info, part) => {
     const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0
     const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0
 
-
+    const top_rail_add = part.design.TOP_RAIL_ADD
+    const btm_rail_add = part.design.BTM_RAIL_ADD
 
     const topRail = numQty(info.topRail)
     const bottomRail = numQty(info.bottomRail)
@@ -28,9 +29,9 @@ export default (info, part) => {
 
     const lites = part.lites ? part.lites.NAME : ''
 
-    const inset = part.profile.INSET
-    const edge_factor = part.edge.LIP_FACTOR
+
     const panel_factor = part.panel.PANEL_FACTOR
+    const profile_width = part.design.PROFILE_WIDTH
 
     const add_len = 0
     const INSET = 0
@@ -51,12 +52,12 @@ export default (info, part) => {
             measurement: `${fraction(
                 Math.round((
                     ((width - leftStile - rightStile - (vertMull * (panelsW - 1))) / panelsW)
-                    + panel_factor + (edge_factor / panelsW))
+                    + panel_factor)
                     * 16) / 16
             )} x ${fraction(
                 Math.round((
                     ((height - topRail - bottomRail - (horizMull * (panelsH - 1))) / panelsH)
-                    + panel_factor + (edge_factor / panelsH))
+                    + panel_factor)
                     * 16) / 16
             )}`,
             pattern: 'PR'

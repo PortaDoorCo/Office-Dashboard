@@ -40,7 +40,7 @@ export default (data, edges, moulds, panels) => {
                         {
                             stack: [
                                 {
-                                    text: `${i.edges.NAME}`,
+                                    text: `${i.edge.NAME}`,
                                     style: 'fonts'
                                 },
                                 {
@@ -55,7 +55,7 @@ export default (data, edges, moulds, panels) => {
                         {
                             stack: [
                                 {
-                                    text: `${i.moulds.NAME}`,
+                                    text: `${i.profile ? i.profile.NAME : ''}`,
                                     style: 'fonts'
                                 },
                                 {
@@ -70,7 +70,7 @@ export default (data, edges, moulds, panels) => {
                         {
                             stack: [
                                 {
-                                    text: `${i.panels.PANEL}`,
+                                    text: `${i.panel.NAME}`,
                                     style: 'fonts'
                                 },
                                 {

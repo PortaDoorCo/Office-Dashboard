@@ -23,16 +23,16 @@ export default data => {
       console.log('PANELLLSSSS',Panels(item, i));
       tableBody.push([
         { text: index + 1, style: 'fonts' },
-        { text: `${i.design.NAME}`, style: 'fonts' },
+        { text: `${i.design ? i.design.NAME : 'PRP 15'}`, style: 'fonts' },
         { text: Panels(item, i).map(panel => { return `${panel.qty} \n` }), style: 'fonts' },
         { text: Panels(item, i).map(panel => { return `${panel.measurement} \n` }), style: 'fonts' },
         { text: Panels(item, i).map(panel => { return `${panel.pattern} \n` }), style: 'fonts' },
         { text: '' },
-        { text: `${i.panels.PANEL}` }
+        { text: `${i.panel.NAME}` }
       ]);
     });
 
-    if (i.panels.PANEL === "NONE") {
+    if (i.panel.NAME === "NONE") {
       return null
     } else {
       return [
@@ -76,7 +76,7 @@ export default data => {
             columns: [
               { text: `${i.woodtype.NAME}`, style: 'woodtype' },
               {
-                text: `IP: ${i.moulds.NAME}`,
+                text: `IP: ${i.profile.NAME}`,
                 style: 'woodtype',
                 alignment: 'left'
               },
