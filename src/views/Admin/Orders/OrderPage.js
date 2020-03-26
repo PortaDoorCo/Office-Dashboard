@@ -529,7 +529,7 @@ class OrderPage extends Component {
                     selectedOrder={props.selectedOrder}
                     editable={this.props.editable}
                     edit={!this.props.edit}
-                  // toggle={props.toggle}
+                  toggle={props.toggle}
                   />
                 </div>
               </div>

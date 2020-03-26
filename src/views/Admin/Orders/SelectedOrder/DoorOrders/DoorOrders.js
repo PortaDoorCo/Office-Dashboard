@@ -27,6 +27,7 @@ import {
   shippingAddress,
   submitOrder,
   loadOrders,
+  updateOrder
 } from '../../../../../redux/orders/actions';
 import {
   linePriceSelector,
@@ -79,7 +80,7 @@ class DoorOrders extends Component {
       subTotal,
       tax,
       total,
-      submitOrder,
+      updateOrder,
       user,
       orders
     } = this.props;
@@ -100,41 +101,29 @@ class DoorOrders extends Component {
       Phone: values.job_info.Phone,
       DueDate: values.job_info.DueDate,
       customer: {
-        Company: values.job_info.customer.Company
+        Company: values.job_info.customer.Company,
+        TaxRate: values.job_info.customer.TaxRate,
       }
     }
 
     const order = {
       part_list: values.part_list,
-      status: values.job_info.status,
-      jobInfo: jobInfo,
+      job_info: jobInfo,
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
       itemPrice: itemPrice,
       subTotals: subTotal,
       tax: tax,
       total: total,
-      orderType: orderType,
       dueDate: values.job_info.DueDate,
-      user: user.id,
-      userName: user.username,
-      files: this.state.files,
-      tracking: [
-        {
-          "status": values.job_info.status,
-          "date": new Date()
-        }
-      ]
     };
 
-    if (values.part_list[0].dimensions.length > 0) {
-      await submitOrder(order, cookie);
-      this.setState({ updateSubmit: !this.state.updateSubmit })
-      reset();
-      window.scrollTo(0, 0);
-    } else {
-      return
-    }
+    const orderId = values.id;
+
+    await updateOrder(orderId, order, cookie);
+    await this.props.toggle();
+    await loadOrders(cookie);
+    await this.props.dispatch(reset('DoorOrder'))
   };
 
   componentDidUpdate(prevProps) {
@@ -350,6 +339,7 @@ const mapDispatchToProps = dispatch =>
       loadCustomers,
       submitOrder,
       loadOrders,
+      updateOrder
     },
     dispatch
   );
