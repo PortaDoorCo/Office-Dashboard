@@ -56,7 +56,7 @@ class FaceFrame extends Component {
                   )
                 )
 
-                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                if (parseInt(part_list[i].dimensions[index].openings) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -66,7 +66,7 @@ class FaceFrame extends Component {
                   )
                 }
 
-                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                if (parseInt(part_list[i].dimensions[index].openings) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -76,7 +76,7 @@ class FaceFrame extends Component {
                   )
                 }
 
-                if (parseInt(part_list[i].dimensions[index].panelsH) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
+                if (parseInt(part_list[i].dimensions[index].openings) < 2 || parseInt(part_list[i].dimensions[index].panelsW) !== 1) {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
@@ -104,11 +104,11 @@ class FaceFrame extends Component {
                   }
                 }
 
-                if (parseInt(info.panelsH) > 1) {
+                if (parseInt(info.openings) > 1) {
               
                   if (
-                    info.panelsH !==
-                    prevProps.formState.part_list[i].dimensions[index].panelsH
+                    info.openings !==
+                    prevProps.formState.part_list[i].dimensions[index].openings
                   ) {
                     return this.props.dispatch(
                       change(
