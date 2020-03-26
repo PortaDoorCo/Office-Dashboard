@@ -28,8 +28,8 @@ export default (info, part) => {
   const width = numQty(info.width)
   const qty = parseInt(info.qty)
 
-  const inset = part.profile.INSET
-  const edge_factor = part.edge.LIP_FACTOR
+  // const inset = part.profile.INSET
+
 
   const add_len = 0;
   const tenon_factor = 0;
@@ -43,7 +43,7 @@ export default (info, part) => {
           qty: (qty * 2),
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height + edge_factor)}`,
+          )} x ${fraction(height)}`,
           pattern: "LR"
         },
         {
@@ -51,7 +51,7 @@ export default (info, part) => {
           measurement: `${fraction(vertMull)} x ${fraction(
             Math.round((
               ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
-              + inset + (edge_factor / panelsH)) * 16) / 16
+              ) * 16) / 16
           )}`,
           pattern: "VM3"
         },
@@ -62,7 +62,7 @@ export default (info, part) => {
           qty: (qty * 2),
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height + edge_factor)}`,
+          )} x ${fraction(height)}`,
           pattern: "LR"
         }
       ]
@@ -75,14 +75,14 @@ export default (info, part) => {
           qty: qty,
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height + edge_factor)}`,
+          )} x ${fraction(height)}`,
           pattern: "L"
         },
         {
-          qty: qty,
+          qty:  qty,
           measurement: `${fraction(
             rightStile
-          )} x ${fraction(height + edge_factor)}`,
+          )} x ${fraction(height)}`,
           pattern: "R"
         },
         {
@@ -90,7 +90,7 @@ export default (info, part) => {
           measurement: `${fraction(vertMull)} x ${fraction(
             Math.round((
               ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
-              + inset + (edge_factor / panelsH)) * 16) / 16
+              ) * 16) / 16
           )}`,
           pattern: "VM9"
         },
@@ -99,17 +99,17 @@ export default (info, part) => {
     else {
       return [
         {
-          qty: qty,
+          qty:  qty,
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height + edge_factor)}`,
+          )} x ${fraction(height)}`,
           pattern: "L"
         },
         {
           qty: qty,
           measurement: `${fraction(
             rightStile
-          )} x ${fraction(height + edge_factor)}`,
+          )} x ${fraction(height)}`,
           pattern: "R"
         }
 

@@ -25,7 +25,7 @@ export default data => {
       if ((item.panelsH && item.panelsW > 1) || (item.panelsH > 1 && item.panelsW)) {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
-          { text: `${i.design.NAME}`, style: 'fonts' },
+          { text: `${i.design ? i.design.NAME : 'PRP 15'}`, style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
@@ -35,7 +35,7 @@ export default data => {
       } else {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
-          { text: `${i.design.NAME}`, style: 'fonts' },
+          { text: `${i.design ? i.design.NAME : 'PRP 15'}`, style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
@@ -87,7 +87,7 @@ export default data => {
           columns: [
             { text: `${i.woodtype.NAME}`, style: 'woodtype' },
             {
-              text: `IP: ${i.profile.NAME}`,
+              text: `IP: ${i.profile ? i.profile.NAME : ''}`,
               style: 'woodtype',
               alignment: 'left'
             },

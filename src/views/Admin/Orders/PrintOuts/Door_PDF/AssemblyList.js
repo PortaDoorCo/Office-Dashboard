@@ -81,7 +81,7 @@ export default data => {
             {
               stack: [
                 {
-                  text: `${i.design.NAME} - ${i.panel.NAME}`,
+                  text: `${i.design ? i.design.NAME : 'PRP 15'} - ${i.panel.NAME}`,
                   style: 'fonts'
                 },
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' }

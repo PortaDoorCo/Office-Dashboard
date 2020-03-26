@@ -19,7 +19,7 @@ export default data => {
 
       tableBody.push([
         { text: index + 1, style: 'fonts' },
-        { text: `${i.design.NAME}`, style: 'fonts' },
+        { text: `${i.design ? i.design.NAME : 'PRP 15'}`, style: 'fonts' },
         { text: Stiles(item, i).map(stile => { return `${stile.qty} \n` }), style: 'fonts' },
         { text: Stiles(item, i).map(stile => { return `${stile.measurement} \n` }), style: 'fonts' },
         // { text: '' }
@@ -67,7 +67,7 @@ export default data => {
           columns: [
             { text: `${i.woodtype.NAME}`, style: 'woodtype' },
             {
-              text: `IP: ${i.profile.NAME}`,
+              text: `IP: ${i.profile ? i.profile.NAME : ''}`,
               style: 'woodtype',
               alignment: 'left'
             },
