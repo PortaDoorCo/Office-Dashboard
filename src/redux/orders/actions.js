@@ -249,7 +249,7 @@ export function loadSelectedOrder(data, cookie) {
 }
 
 export function updateOrder(orderId, order, cookie) {
-
+  console.log("SKDFJDSFKLJSDF")
   return async function (dispatch) {
 
     try {

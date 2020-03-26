@@ -19,7 +19,7 @@ class EditSelectedOrder extends React.Component {
               selectedOrder={selectedOrder}
               editable={editable}
               edit={edit}
-              // toggle={toggle}
+              toggle={toggle}
             /> :
             <div />
           }
