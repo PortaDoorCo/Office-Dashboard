@@ -9,77 +9,60 @@ const fraction = num => {
 };
 
 export default (info, part) => {
-  const add_len = part.design.S_ADD_LEN;
-  const topRail = numQty(info.topRail) + part.design.TR_MILL_AD;
-  const bottomRail = numQty(info.bottomRail) + part.design.BR_MILL_AD;
-  const leftStile = numQty(info.leftStile) + part.design.LS_MILL_AD;
-  const rightStile = numQty(info.rightStile) + part.design.RS_MILL_AD;
-  const vertMull = numQty(info.verticalMidRailSize) + part.design.V_MULL_ADD;
-  const horizMull = numQty(info.horizontalMidRailSize) + part.design.H_MULL_ADD;
+
+  const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0
+  const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0
+
+  const top_rail_add = part.design.TOP_RAIL_ADD
+  const btm_rail_add = part.design.BTM_RAIL_ADD
+
+  const topRail = numQty(info.topRail)
+  const bottomRail = numQty(info.bottomRail)
+  const leftStile = numQty(info.leftStile)
+  const rightStile = numQty(info.rightStile)
+  const vertMull = numQty(vMidRail)
+  const horizMull = numQty(hMidRail)
   const panelsH = parseInt(info.panelsH)
   const panelsW = parseInt(info.panelsW)
   const height = numQty(info.height)
   const width = numQty(info.width)
   const qty = parseInt(info.qty)
-  const tenon_factor = part.design.TENON
+
+  // const inset = part.profile.INSET
+
+
+  const add_len = 0;
+  const tenon_factor = 0;
+
 
 
   if (leftStile === rightStile) {
     if ((panelsW > 1) || (panelsH > 1)) {
-      if (!part.design.LOCK_UPDN) {
-        return [
-          {
-            qty: (qty * 2),
-            measurement: `${fraction(
-              leftStile
-            )} x ${fraction(height + add_len)}`,
-            pattern: "LR"
-          },
-          {
-            qty: (panelsH * (panelsW - 1) * qty),
-            measurement: `${fraction(vertMull)} x ${fraction(
-              Math.round(
-                ((height +
-                add_len -
-                topRail -
-                bottomRail -
-                horizMull * (panelsH - 1)) /
-                panelsH +
-                tenon_factor)
-                * 16) / 16
-            )}`,
-            pattern: "VM7"
-          },
-        ]
-      } else {
-        return [
-          {
-            qty: (qty * 2),
-            measurement: `${fraction(
-              leftStile
-            )} x ${fraction(height + add_len)}`,
-            pattern: "LR"
-          },
-          {
-            qty: (((panelsW) - 1) * qty),
-            measurement: `${fraction(vertMull)} x ${fraction(
-              Math.round((height -
-                topRail -
-                bottomRail +
-                tenon_factor
+      return [
+        {
+          qty: (qty * 2),
+          measurement: `${fraction(
+            leftStile
+          )} x ${fraction(height)}`,
+          pattern: "LR"
+        },
+        {
+          qty: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
+          measurement: `${fraction(vertMull)} x ${fraction(
+            Math.round((
+              ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
               ) * 16) / 16
-            )}`,
-            pattern: "VM3"
-          },
-        ]
-      }
+          )}`,
+          pattern: "VM3"
+        },
+      ]
     } else {
       return [
         {
           qty: (qty * 2),
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height + add_len)}`,
+          )} x ${fraction(height)}`,
           pattern: "LR"
         }
       ]
@@ -87,83 +70,46 @@ export default (info, part) => {
   }
   else {
     if ((panelsW > 1) || (panelsH > 1)) {
-      if (!part.design.LOCK_UPDN) {
-        return [
-          {
-            qty: qty,
-            measurement: `${fraction(
-              leftStile
-            )} x ${fraction(height + add_len)}`,
-            pattern: "L"
-          },
-          {
-            qty: qty,
-            measurement: `${fraction(
-              rightStile
-            )} x ${fraction(height + add_len)}`,
-            pattern: "R"
-          },
-          {
-            qty: (panelsH * (panelsW - 1) * qty),
-            measurement: `${fraction(leftStile)} x ${fraction(
-              Math.round(
-                ((height +
-                  add_len -
-                  topRail -
-                  bottomRail -
-                  horizMull * (panelsH - 1)) /
-                  panelsH +
-                  tenon_factor) *
-                16
-              ) / 16
-            )}`,
-            pattern: "VM4"
-          },
-        ]
-      } else {
-        return [
-          {
-            qty: height,
-            measurement: `${fraction(
-              leftStile
-            )} x ${fraction(height + add_len)}`,
-            pattern: "L"
-          },
-          {
-            qty: height,
-            measurement: `${fraction(
-              rightStile
-            )} x ${fraction(height + add_len)}`,
-            pattern: "R"
-          },
-          {
-            qty: (((panelsW) - 1) * qty),
-            measurement: `${fraction(vertMull)} x ${fraction(
-              Math.round((height -
-                topRail -
-                bottomRail +
-                tenon_factor
+      return [
+        {
+          qty: qty,
+          measurement: `${fraction(
+            leftStile
+          )} x ${fraction(height)}`,
+          pattern: "L"
+        },
+        {
+          qty:  qty,
+          measurement: `${fraction(
+            rightStile
+          )} x ${fraction(height)}`,
+          pattern: "R"
+        },
+        {
+          qty: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
+          measurement: `${fraction(vertMull)} x ${fraction(
+            Math.round((
+              ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
               ) * 16) / 16
-            )}`,
-            pattern: "VM9"
-          },
-        ]
-      }
+          )}`,
+          pattern: "VM9"
+        },
+      ]
     }
     else {
       return [
         {
-          qty: height,
+          qty:  qty,
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height + add_len)}`,
+          )} x ${fraction(height)}`,
           pattern: "L"
         },
         {
-          qty: height,
+          qty: qty,
           measurement: `${fraction(
             rightStile
-          )} x ${fraction(height + add_len)}`,
+          )} x ${fraction(height)}`,
           pattern: "R"
         }
 

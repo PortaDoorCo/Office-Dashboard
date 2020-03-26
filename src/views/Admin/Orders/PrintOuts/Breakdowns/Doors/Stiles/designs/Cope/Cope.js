@@ -72,14 +72,14 @@ export default (info, part) => {
     if ((panelsW > 1) || (panelsH > 1)) {
       return [
         {
-          qty: height,
+          qty: qty,
           measurement: `${fraction(
             leftStile
           )} x ${fraction(height + edge_factor)}`,
           pattern: "L"
         },
         {
-          qty: height,
+          qty: qty,
           measurement: `${fraction(
             rightStile
           )} x ${fraction(height + edge_factor)}`,
@@ -89,13 +89,8 @@ export default (info, part) => {
           qty: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
           measurement: `${fraction(vertMull)} x ${fraction(
             Math.round((
-              ((height -
-                topRail -
-                bottomRail -
-                (horizMull *
-                  (panelsH - 1))) /
-                panelsH) + inset + (edge_factor / panelsH)
-            ) * 16) / 16
+              ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
+              + inset + (edge_factor / panelsH)) * 16) / 16
           )}`,
           pattern: "VM9"
         },
@@ -104,14 +99,14 @@ export default (info, part) => {
     else {
       return [
         {
-          qty: height,
+          qty: qty,
           measurement: `${fraction(
             leftStile
           )} x ${fraction(height + edge_factor)}`,
           pattern: "L"
         },
         {
-          qty: height,
+          qty: qty,
           measurement: `${fraction(
             rightStile
           )} x ${fraction(height + edge_factor)}`,
