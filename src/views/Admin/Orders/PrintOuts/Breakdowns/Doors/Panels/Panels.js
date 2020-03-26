@@ -8,7 +8,7 @@ import MT_DF from './designs/MT/MT_DF'
 
 import Face_Frame from './designs/Face_Frame/Face_Frame'
 import One_Piece_Door from './designs/One_Piece_Door/One_Piece_Door'
-
+import Slab_Door from './designs/Slab_Door/Slab_Door'
 
 export default (info, part) => {
 
@@ -42,6 +42,11 @@ export default (info, part) => {
 
   if(part.orderType.value === "One_Piece") {
     return One_Piece_Door(info)
+  }
+
+  
+  if(part.orderType.value === "Slab_Door") {
+    return Slab_Door(info)
   }
 
 
