@@ -60,7 +60,7 @@ export default data => {
         ]
       ];
 
-    
+
 
       i.dimensions.forEach((item, index) => {
         tableBody.push([
@@ -91,7 +91,7 @@ export default data => {
               stack: [
                 { text: 'Thickness: 3/4"', style: 'fonts' },
                 {
-                  text: `IP: ${i.profile.NAME}   Edge: ${i.edge.NAME}`,
+                  text: `IP: ${i.profile ? i.profile.NAME : ''}   Edge: ${i.edge ? i.edge.NAME : ''}`,
                   style: 'fonts'
                 }
               ],
