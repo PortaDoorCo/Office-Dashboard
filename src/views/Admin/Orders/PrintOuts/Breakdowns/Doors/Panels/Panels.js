@@ -7,6 +7,7 @@ import Miter_DF from './designs/Miter/Miter_DF'
 import MT_DF from './designs/MT/MT_DF'
 
 import Face_Frame from './designs/Face_Frame/Face_Frame'
+import One_Piece_Door from './designs/One_Piece_Door/One_Piece_Door'
 
 
 export default (info, part) => {
@@ -37,6 +38,10 @@ export default (info, part) => {
 
   if(part.orderType.value === "Face_Frame") {
     return Face_Frame(info,part)
+  }
+
+  if(part.orderType.value === "One_Piece") {
+    return One_Piece_Door(info)
   }
 
 
