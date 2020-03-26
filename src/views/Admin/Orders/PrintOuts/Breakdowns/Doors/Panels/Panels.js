@@ -1,6 +1,6 @@
 import Cope_Door from './designs/Cope/Cope_Door'
 import Miter_Door from './designs/Miter/Miter_Door'
-// import MT from './designs/MT/MT'
+import MT_Door from './designs/MT/MT_Door'
 
 
 export default (info, part) => {
@@ -11,7 +11,6 @@ export default (info, part) => {
     return Miter_Door(info, part)
   }
   if (part.construction.value === "MT") {
-    return
-    // return MT(info, part)
+    return MT_Door(info, part)
   }
 };
