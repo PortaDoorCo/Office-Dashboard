@@ -6,6 +6,10 @@ import Cope_DF from './designs/Cope/Coper_DF'
 import Miter_DF from './designs/Miter/Miter_DF'
 import MT_DF from './designs/MT/MT_DF'
 
+import Face_Frame from './designs/Face_Frame/Face_Frame'
+
+
+
 
 export default (info, part) => {
 
@@ -31,6 +35,10 @@ export default (info, part) => {
     if (part.construction.value === "MT") {
       return MT_DF(info, part)
     }
+  }
+
+  if(part.orderType.value === "Face_Frame") {
+    return Face_Frame(info,part)
   }
 
 

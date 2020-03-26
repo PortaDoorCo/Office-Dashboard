@@ -70,7 +70,7 @@ export default (data, edges, moulds, panels) => {
                         {
                             stack: [
                                 {
-                                    text: `${i.panel.NAME}`,
+                                    text: `${i.panel ? i.panel.NAME : ''}`,
                                     style: 'fonts'
                                 },
                                 {
