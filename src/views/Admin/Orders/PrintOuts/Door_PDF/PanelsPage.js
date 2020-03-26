@@ -28,11 +28,11 @@ export default data => {
         { text: Panels(item, i).map(panel => { return `${panel.measurement} \n` }), style: 'fonts' },
         { text: Panels(item, i).map(panel => { return `${panel.pattern} \n` }), style: 'fonts' },
         { text: '' },
-        { text: `${i.panel.NAME}` }
+        { text: `${i.panel ? i.panel.NAME : 'Glass'}` }
       ]);
     });
 
-    if (i.panel.NAME === "NONE") {
+    if (!i.panel) {
       return null
     } else {
       return [
@@ -76,7 +76,7 @@ export default data => {
             columns: [
               { text: `${i.woodtype.NAME}`, style: 'woodtype' },
               {
-                text: `IP: ${i.profile.NAME}`,
+                text: `IP: ${i.profile ? i.profile.NAME : ''}`,
                 style: 'woodtype',
                 alignment: 'left'
               },

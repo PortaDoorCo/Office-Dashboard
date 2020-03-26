@@ -73,7 +73,7 @@ export default data => {
             },
             {
               stack: [
-                { text: `PNL: ${i.panel.NAME}  IP: ${i.profile ? i.profile.NAME : ''}  NO HINGE  Edge: ${i.edge.NAME}`, style: 'fonts' },
+                { text: `PNL: ${i.panel ? i.panel.NAME : 'Glass'}  IP: ${i.profile ? i.profile.NAME : ''}  NO HINGE  Edge: ${i.edge ? i.edge.NAME : ''}`, style: 'fonts' },
               ],
               alignment: 'right'
             }
