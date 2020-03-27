@@ -67,9 +67,9 @@ export default data => {
           { text: index + 1, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
           { text: Size(item), style: 'fonts' },
-          { text: Stiles(item, i).map(stile => { return `(${stile.qty}) ${stile.measurement} - ${stile.pattern} \n` }), style: 'fonts' },
-          { text: Rails(item, i).map(rail => { return `(${rail.qty}) ${rail.measurement} - ${rail.pattern} \n` }), style: 'fonts' },
-          { text: Panels(item, i).map(panel => { return `(${panel.qty}) ${panel.measurement} - ${panel.pattern} \n` }), style: 'fonts' },
+          { text: Stiles(item, i).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n` }), style: 'fonts' },
+          { text: Rails(item, i).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n` }), style: 'fonts' },
+          { text: Panels(item, i).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n` }), style: 'fonts' },
           ' '
         ]);
       });

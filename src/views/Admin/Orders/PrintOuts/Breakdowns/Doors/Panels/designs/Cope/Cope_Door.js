@@ -12,8 +12,7 @@ export default (info, part) => {
     const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0
     const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0
 
-    const top_rail_add = part.design.TOP_RAIL_ADD
-    const btm_rail_add = part.design.BTM_RAIL_ADD
+
 
     const topRail = numQty(info.topRail)
     const bottomRail = numQty(info.bottomRail)
@@ -48,7 +47,7 @@ export default (info, part) => {
 
     const door = [
         {
-            qty: (panelsH * panelsW),
+            qty: `(${(panelsH * panelsW)})`,
             measurement: `${fraction(
                 Math.round((
                     ((width - leftStile - rightStile - (vertMull * (panelsW - 1))) / panelsW)
@@ -64,19 +63,10 @@ export default (info, part) => {
         },
     ]
 
-
-    const none = [
-        {
-            qty: ``,
-            measurement: `GLASS \n ${lites}`,
-            pattern: ``
-        },
-    ]
-
     const unevenSplit = [
         ...Array.from(Array(panelsH).keys()).slice(1).map((i, v) => {
             return {
-                qty: qty,
+                qty: `(${qty})`,
                 measurement: `${fraction(
                     (width +
                         add_len -
@@ -90,7 +80,7 @@ export default (info, part) => {
             }
         }),
         {
-            qty: qty,
+            qty: `(${qty})`,
             measurement: `${fraction((width +
                 add_len -
                 leftStile -

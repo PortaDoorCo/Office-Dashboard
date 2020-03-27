@@ -36,7 +36,7 @@ export default (info, part) => {
     if ((panelsW > 1) || (panelsH > 1)) {
       return [
         {
-          qty: (qty * 2),
+          qty: `(${(qty * 2)})`,
           measurement: `${fraction(
             topRail
           )} x ${fraction(
@@ -51,7 +51,7 @@ export default (info, part) => {
           pattern: 'TB'
         },
         {
-          qty: (((panelsH) - 1) * qty),
+          qty: `(${((panelsH - 1)* qty)})`,
           measurement: `${fraction(horizMull)} x ${fraction(
             Math.round((
               (width -
@@ -67,7 +67,7 @@ export default (info, part) => {
     } else {
       return [
         {
-          qty: (qty * 2),
+          qty: `(${(qty * 2)})`,
           measurement: `${fraction(
             topRail
           )} x ${fraction(
@@ -87,7 +87,7 @@ export default (info, part) => {
     if ((panelsW > 1) || (panelsH > 1)) {
         return [
           {
-            qty: qty,
+            qty: `(${(qty)})`,
             measurement: `${fraction(
               topRail
             )} x ${fraction(
@@ -102,7 +102,7 @@ export default (info, part) => {
             pattern: "T"
           },
           {
-            qty: qty,
+            qty: `(${(qty)})`,
             measurement: `${fraction(
               bottomRail
             )} x ${fraction(
@@ -117,7 +117,7 @@ export default (info, part) => {
             pattern: "B"
           },
           {
-            qty: ((panelsH - 1)* qty),
+            qty: `(${((panelsH - 1)* qty)})`,
             measurement: `${fraction(horizMull)} x ${fraction(
               Math.round(
                 (
@@ -134,7 +134,7 @@ export default (info, part) => {
     } else {
       return [
         {
-          qty: qty,
+          qty: `(${(qty)})`,
           measurement: `${fraction(
             topRail
           )} x ${fraction(
@@ -149,7 +149,7 @@ export default (info, part) => {
           pattern: "T"
         },
         {
-          qty: qty,
+          qty: `(${(qty)})`,
           measurement: `${fraction(
             bottomRail
           )} x ${fraction(
