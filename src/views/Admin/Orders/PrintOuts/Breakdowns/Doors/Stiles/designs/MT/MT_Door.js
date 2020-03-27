@@ -40,14 +40,14 @@ export default (info, part) => {
     if ((panelsW > 1) || (panelsH > 1)) {
       return [
         {
-          qty: (qty * 2),
+          qty: `(${(qty * 2)})`,
           measurement: `${fraction(
             leftStile
           )} x ${fraction(height + edge_factor)}`,
           pattern: "LR"
         },
         {
-          qty: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
+          qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
           measurement: `${fraction(vertMull)} x ${fraction(
             Math.round((
               ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
@@ -59,7 +59,7 @@ export default (info, part) => {
     } else {
       return [
         {
-          qty: (qty * 2),
+          qty: `(${(qty * 2)})`,
           measurement: `${fraction(
             leftStile
           )} x ${fraction(height + edge_factor)}`,
@@ -72,21 +72,21 @@ export default (info, part) => {
     if ((panelsW > 1) || (panelsH > 1)) {
       return [
         {
-          qty: qty,
+          qty: `(${(qty)})`,
           measurement: `${fraction(
             leftStile
           )} x ${fraction(height + edge_factor)}`,
           pattern: "L"
         },
         {
-          qty: qty,
+          qty: `(${(qty)})`,
           measurement: `${fraction(
             rightStile
           )} x ${fraction(height + edge_factor)}`,
           pattern: "R"
         },
         {
-          qty: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
+          qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
           measurement: `${fraction(vertMull)} x ${fraction(
             Math.round((
               ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
@@ -99,14 +99,14 @@ export default (info, part) => {
     else {
       return [
         {
-          qty: qty,
+          qty: `(${(qty)})`,
           measurement: `${fraction(
             leftStile
           )} x ${fraction(height + edge_factor)}`,
           pattern: "L"
         },
         {
-          qty: qty,
+          qty: `(${(qty)})`,
           measurement: `${fraction(
             rightStile
           )} x ${fraction(height + edge_factor)}`,

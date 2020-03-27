@@ -15,7 +15,7 @@ export default (info) => {
   
     const door = [
         {
-            qty: qty,
+            qty: `(${qty})`,
             measurement: `${fraction(
                 Math.round((
                     width)

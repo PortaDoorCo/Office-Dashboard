@@ -16,13 +16,13 @@ export default (info, part) => {
   const top_rail_add = part.design.TOP_RAIL_ADD
   const btm_rail_add = part.design.BTM_RAIL_ADD
 
-  const topRail = numQty(info.topRail)
-  const bottomRail = numQty(info.bottomRail)
+  const topRail = numQty(info.topRail) + top_rail_add
+  const bottomRail = numQty(info.bottomRail) + btm_rail_add
   const leftStile = numQty(info.leftStile)
   const rightStile = numQty(info.rightStile)
   const vertMull = numQty(vMidRail)
   const horizMull = numQty(hMidRail)
-  const panelsH = parseInt(info.openings)
+  const panelsH = parseInt(info.panelsH)
   const panelsW = parseInt(info.panelsW)
   const height = numQty(info.height)
   const width = numQty(info.width)
@@ -39,7 +39,7 @@ export default (info, part) => {
     if ((panelsW > 1) || (panelsH > 1)) {
       return [
         {
-          qty: (qty * 2),
+          qty: `(${(qty * 2)})`,
           measurement: `${fraction(
             topRail
           )} x ${fraction(
@@ -54,7 +54,7 @@ export default (info, part) => {
           pattern: 'TB'
         },
         {
-          qty: (((panelsH) - 1) * qty),
+          qty: `(${(((panelsH) - 1) * qty)})`,
           measurement: `${fraction(horizMull)} x ${fraction(
             Math.round((
               (width -
@@ -70,7 +70,7 @@ export default (info, part) => {
     } else {
       return [
         {
-          qty: (qty * 2),
+          qty: `(${(qty * 2)})`,
           measurement: `${fraction(
             topRail
           )} x ${fraction(
@@ -90,7 +90,7 @@ export default (info, part) => {
     if ((panelsW > 1) || (panelsH > 1)) {
         return [
           {
-            qty: qty,
+            qty: `(${(qty)})`,
             measurement: `${fraction(
               topRail
             )} x ${fraction(
@@ -105,7 +105,7 @@ export default (info, part) => {
             pattern: "T"
           },
           {
-            qty: qty,
+            qty: `(${(qty)})`,
             measurement: `${fraction(
               bottomRail
             )} x ${fraction(
@@ -120,7 +120,7 @@ export default (info, part) => {
             pattern: "B"
           },
           {
-            qty: ((panelsH - 1)* qty),
+            qty: `(${(((panelsH) - 1) * qty)})`,
             measurement: `${fraction(horizMull)} x ${fraction(
               Math.round(
                 (
@@ -137,7 +137,7 @@ export default (info, part) => {
     } else {
       return [
         {
-          qty: qty,
+          qty: `(${(qty)})`,
           measurement: `${fraction(
             topRail
           )} x ${fraction(
@@ -152,7 +152,7 @@ export default (info, part) => {
           pattern: "T"
         },
         {
-          qty: qty,
+          qty: `(${(qty)})`,
           measurement: `${fraction(
             bottomRail
           )} x ${fraction(

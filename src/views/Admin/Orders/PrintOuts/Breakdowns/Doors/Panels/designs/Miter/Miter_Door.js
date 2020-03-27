@@ -48,7 +48,7 @@ export default (info, part) => {
 
     const door = [
         {
-            qty: (panelsH * panelsW),
+            qty: `(${(panelsH * panelsW)})`,
             measurement: `${fraction(
                 Math.round((
                     ((width - leftStile - rightStile - (vertMull * (panelsW - 1))) / panelsW)
@@ -64,19 +64,10 @@ export default (info, part) => {
         },
     ]
 
-
-    const none = [
-        {
-            qty: ``,
-            measurement: `GLASS \n ${lites}`,
-            pattern: ``
-        },
-    ]
-
     const unevenSplit = [
         ...Array.from(Array(panelsH).keys()).slice(1).map((i, v) => {
             return {
-                qty: qty,
+                qty: `(${qty})`,
                 measurement: `${fraction(
                     (width +
                         add_len -
@@ -90,7 +81,7 @@ export default (info, part) => {
             }
         }),
         {
-            qty: qty,
+            qty: `(${qty})`,
             measurement: `${fraction((width +
                 add_len -
                 leftStile -
