@@ -26,6 +26,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
 import AssemblyListPDF from './PrintOuts/Pages/Door/AssemblyPDF';
@@ -47,6 +48,8 @@ import DrawerInvoicePDF from './PrintOuts/Pages/Drawer/InvoicePDF';
 import DrawerAssemblyListPDF from './PrintOuts/Pages/Drawer/AssemblyListPDF'
 import DrawerBottomsPDF from './PrintOuts/Pages/Drawer/BottomsPDF'
 import DrawerSidesPDF from './PrintOuts/Pages/Drawer/SidesPDF'
+
+import Balance from './Balance'
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
@@ -84,7 +87,8 @@ class OrderPage extends Component {
       edgePhoto: null,
       trackingOpen: false,
       filesOpen: false,
-      deleteModal: false
+      deleteModal: false,
+      balanceOpen: false
     };
   }
 
@@ -117,6 +121,10 @@ class OrderPage extends Component {
 
   toggleTracking = () => this.setState({
     trackingOpen: !this.state.trackingOpen
+  })
+
+  toggleBalance = () => this.setState({
+    balanceOpen: !this.state.balanceOpen
   })
 
   toggleFiles = () => this.setState({
@@ -393,6 +401,12 @@ class OrderPage extends Component {
                         </IconButton>
                       </Tooltip>
 
+                      <Tooltip title="Balance" placement="top">
+                          <IconButton onClick={this.toggleBalance}>
+                            <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
+
                     </Col>
                     <Col />
                     <Col />
@@ -426,6 +440,12 @@ class OrderPage extends Component {
                         <Tooltip title="Tracking History" placement="top">
                           <IconButton onClick={this.toggleTracking}>
                             <List style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title="Balance" placement="top">
+                          <IconButton onClick={this.toggleBalance}>
+                            <AttachMoneyIcon style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
 
@@ -513,6 +533,22 @@ class OrderPage extends Component {
                               )) : null}
                             </tbody>
                           </Table>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+                </Collapse>
+              </div>
+
+
+              <div>
+                <Collapse isOpen={this.state.balanceOpen}>
+                  <Row>
+                    <Col lg='12'>
+                      <Card>
+                        <CardBody>
+                          <h5>Balance</h5>
+                                <Balance />
                         </CardBody>
                       </Card>
                     </Col>

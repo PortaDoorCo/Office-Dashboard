@@ -219,7 +219,7 @@ class DoorOrders extends Component {
       tax,
     } = this.props;
 
-    console.log('TOTAL!" ',total)
+    console.log('subTotal!" ',subTotal)
 
     return (
       <div className="animated fadeIn resize">

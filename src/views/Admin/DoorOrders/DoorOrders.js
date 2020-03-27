@@ -20,6 +20,7 @@ import {
   getFormValues,
   change,
   FieldArray,
+  Field
 } from 'redux-form';
 import {
   addToCart,
@@ -45,9 +46,12 @@ import Sticky from 'react-stickynode';
 import moment from 'moment-business-days'
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
+import { renderField } from './components/RenderInputs/renderInputs'
+
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
+
 
 
 const fraction = num => {
@@ -123,6 +127,7 @@ class DoorOrders extends Component {
       subTotals: subTotal,
       tax: tax,
       total: total,
+      balance_paid: values.balance_paid,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
       user: user.id,
@@ -153,6 +158,14 @@ class DoorOrders extends Component {
           const form = await this.props.formState;
           const customer = await form.job_info.customer;
           const part_list = await form.part_list;
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              'balance_paid',
+              0
+            )
+          );
 
           this.props.dispatch(
             change(
@@ -240,7 +253,7 @@ class DoorOrders extends Component {
       tax
     } = this.props;
 
-    console.log('TAX : ', tax)
+    console.log('subTotal : ', subTotal)
 
     return (
       <div className="animated fadeIn resize">
@@ -263,8 +276,6 @@ class DoorOrders extends Component {
                       />
                     </FormSection>
                   ) : null}
-
-
 
                   <FieldArray
                     name="part_list"
