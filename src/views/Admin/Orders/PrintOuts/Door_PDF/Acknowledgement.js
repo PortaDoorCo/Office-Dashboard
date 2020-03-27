@@ -4,9 +4,6 @@ import Size from '../Breakdowns/Doors/Size';
 
 export default data => {
 
-  console.log(data)
-  return
-
   const qty = data.part_list.map((part, i) => {
     return part.dimensions.map((dim, index) => {
       return parseInt(dim.qty)
@@ -53,7 +50,7 @@ export default data => {
       canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
     },
     data.part_list.map((part, i) => {
-   
+
       const tableBody = [
         [
           { text: 'Item', style: 'fonts' },
@@ -89,7 +86,7 @@ export default data => {
             },
             {
               stack: [
-                { text: `IP: ${part.moulds.NAME} NO HINGE  Edge: ${part.edges.NAME}`, style: 'fonts' },
+                { text: `IP: ${part.profile ? part.profile.NAME : ''} NO HINGE  Edge: ${part.edge ? part.edge.NAME : ''}`, style: 'fonts' },
               ],
               alignment: 'right'
             }

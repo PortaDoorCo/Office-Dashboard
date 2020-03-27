@@ -404,9 +404,9 @@ const mapStateToProps = state => ({
     }
   },
   formState: getFormValues('DoorOrder')(state),
-  // prices: linePriceSelector(state),
-  // itemPrice: itemPriceSelector(state),
-  // subTotal: subTotalSelector(state),
+  prices: linePriceSelector(state),
+  itemPrice: itemPriceSelector(state),
+  subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state)

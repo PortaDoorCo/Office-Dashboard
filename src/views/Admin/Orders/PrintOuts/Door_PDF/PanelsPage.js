@@ -23,7 +23,7 @@ export default data => {
       console.log('PANELLLSSSS',Panels(item, i));
       tableBody.push([
         { text: index + 1, style: 'fonts' },
-        { text: `${i.design ? i.design.NAME : 'PRP 15'}`, style: 'fonts' },
+        { text: `${i.design ? i.design.NAME : i.construction.name + ' ' + i.orderType.value}`, style: 'fonts' },
         { text: Panels(item, i).map(panel => { return `${panel.qty} \n` }), style: 'fonts' },
         { text: Panels(item, i).map(panel => { return `${panel.measurement} \n` }), style: 'fonts' },
         { text: Panels(item, i).map(panel => { return `${panel.pattern} \n` }), style: 'fonts' },

@@ -6,6 +6,11 @@ import Size from '../Breakdowns/Doors/Size';
 
 
 export default data => {
+
+  
+console.log(data)
+
+
   return [
     {
       columns: [
@@ -48,6 +53,12 @@ export default data => {
       canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
     },
     data.part_list.map((i, index) => {
+
+      console.log(data)
+
+
+      
+
       const tableBody = [
         [
           { text: 'Item', style: 'fonts' },
@@ -81,7 +92,11 @@ export default data => {
             {
               stack: [
                 {
-                  text: `${i.design ? i.design.NAME : 'PRP 15'} - ${i.panel ? i.panel.NAME : 'Glass'}`,
+                  text: `${i.orderType.name}`,
+                  style: 'fonts'
+                },
+                {
+                  text: `${i.design ? i.design.NAME : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`,
                   style: 'fonts'
                 },
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' }

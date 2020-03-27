@@ -36,7 +36,6 @@ class CopeDF extends Component {
   constructor(props) {
     super(props);
   }
-
   
   componentDidUpdate(prevProps) {
     if (this.props.formState !== prevProps.formState) {
@@ -44,7 +43,6 @@ class CopeDF extends Component {
         const update = async () => {
           const form = await this.props.formState;
           const part_list = await form.part_list;
-
 
           part_list.forEach((part, i) => {
             if (part.dimensions) {
