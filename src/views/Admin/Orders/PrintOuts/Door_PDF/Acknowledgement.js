@@ -10,6 +10,8 @@ export default data => {
     }).reduce((acc, item) => acc + item, 0)
   })
 
+
+
   const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0)
 
 
@@ -164,7 +166,7 @@ export default data => {
       columns: [
         { text: '', style: 'totals', width: 347 },
         { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: '-$0.00', style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+        { text: `$${(data.balance_paid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 2, 0, 0],
 
