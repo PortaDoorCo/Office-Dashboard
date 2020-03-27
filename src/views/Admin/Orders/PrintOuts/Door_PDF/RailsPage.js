@@ -25,7 +25,7 @@ export default data => {
       if ((item.panelsH && item.panelsW > 1) || (item.panelsH > 1 && item.panelsW)) {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
-          { text: `${i.design ? i.design.NAME : 'PRP 15'}`, style: 'fonts' },
+          { text: `${i.design ? i.design.NAME : i.construction.name}`, style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
@@ -35,7 +35,7 @@ export default data => {
       } else {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
-          { text: `${i.design ? i.design.NAME : 'PRP 15'}`, style: 'fonts' },
+          { text: `${i.design ? i.design.NAME : i.construction.name + ' ' + i.orderType.value}`, style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
           { text: Rails(item, i).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },

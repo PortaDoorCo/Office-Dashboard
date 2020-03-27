@@ -16,8 +16,8 @@ export default (info, part) => {
   const top_rail_add = part.design.TOP_RAIL_ADD
   const btm_rail_add = part.design.BTM_RAIL_ADD
 
-  const topRail = numQty(info.topRail) + top_rail_add
-  const bottomRail = numQty(info.bottomRail) + btm_rail_add
+  const topRail = numQty(info.topRail)
+  const bottomRail = numQty(info.bottomRail)
   const leftStile = numQty(info.leftStile)
   const rightStile = numQty(info.rightStile)
   const vertMull = numQty(vMidRail)

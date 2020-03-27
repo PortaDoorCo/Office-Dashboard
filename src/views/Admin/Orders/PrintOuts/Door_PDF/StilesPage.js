@@ -19,7 +19,7 @@ export default data => {
 
       tableBody.push([
         { text: index + 1, style: 'fonts' },
-        { text: `${i.design ? i.design.NAME : 'PRP 15'}`, style: 'fonts' },
+        { text: `${i.design ? i.design.NAME : i.construction.name + ' ' + i.orderType.value}`, style: 'fonts' },
         { text: Stiles(item, i).map(stile => { return `${stile.qty} \n` }), style: 'fonts' },
         { text: Stiles(item, i).map(stile => { return `${stile.measurement} \n` }), style: 'fonts' },
         // { text: '' }
