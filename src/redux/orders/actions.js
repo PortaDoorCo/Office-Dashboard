@@ -23,6 +23,7 @@ export const LOAD_SHIPPING_METHODS = 'LOAD_SHIPPING_METHODS';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 export const UPDATE_ORDER_NUM = 'UPDATE_ORDER_NUM'
 export const DELETE_ORDER = 'DELETE_ORDER'
+export const UPDATE_BALANCE = 'UPDATE_BALANCE'
 
 export function addToCart(
   order,
@@ -295,6 +296,41 @@ export function updateStatus(orderId, key, status, cookie) {
       });
       return dispatch({
         type: UPDATE_STATUS,
+      });
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
+  };
+}
+
+export function updateBalance(orderId, balance, cookie) {
+
+  const item = {
+    balance_due: balance.balance_due,
+    balance_paid: balance.balance_paid,
+    balance_history: [
+      ...balance.balance_history,
+      {
+        "balance_due": parseFloat(balance.balance_due),
+        "balance_paid": parseFloat(balance.balance_paid),
+        "date": new Date()
+      }
+    ]
+  }
+  console.log(balance)
+  console.log(item)
+
+
+  return async function (dispatch) {
+    try {
+     await axios.put(`${db_url}/orders/${orderId}`, item, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
+      return dispatch({
+        type: UPDATE_BALANCE,
       });
     } catch (error) {
       console.error(error);

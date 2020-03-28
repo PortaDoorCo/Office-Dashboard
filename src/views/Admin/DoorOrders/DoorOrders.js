@@ -139,6 +139,13 @@ class DoorOrders extends Component {
           "status": values.job_info.status,
           "date": new Date()
         }
+      ],
+      balance_history: [
+        {
+          "balance_due": total,
+          "balance_paid": values.balance_paid,
+          "date": new Date()
+        }
       ]
     };
 

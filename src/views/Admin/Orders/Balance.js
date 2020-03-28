@@ -20,7 +20,7 @@ import {
   balanceSelector,
   subTotal_Total
 } from '../../../selectors/doorPricing';
-import { updateOrder } from '../../../redux/orders/actions'
+import { updateOrder, updateBalance, loadOrders } from '../../../redux/orders/actions'
 
 
 const cookie = Cookies.get("jwt");
@@ -68,17 +68,36 @@ class Balance extends Component {
   submit = async (values) => {
     console.log(values)
 
-    const { updateOrder } = this.props;
+    const { updateBalance } = this.props;
 
     const id = values.id
 
     const order = {
       balance_due: values.balance_due,
-      balance_paid: values.balance_paid
+      balance_paid: values.pay_balance,
+      balance_history: values.balance_history
     }
 
-    await updateOrder(id, order, cookie);
+
+
+    await updateBalance(id, order, cookie);
     await this.props.toggleBalance();
+
+    await this.props.dispatch(
+      change(
+        'DoorOrder',
+        'balance_history',
+        [
+          ...values.balance_history,
+          {
+            "balance_due": parseFloat(values.balance_due),
+            "balance_paid": parseFloat(values.pay_balance),
+            "date": new Date()
+          }
+        ]
+
+      )
+    )
 
   }
 
@@ -98,7 +117,7 @@ class Balance extends Component {
         <div>
           <form onSubmit={handleSubmit(this.submit)}>
             <Row>
-              <Col xs="2">
+              <Col>
                 <FormGroup>
                   <Label htmlFor="Total">Total</Label>
                   <Field
@@ -112,7 +131,7 @@ class Balance extends Component {
             </Row>
 
             <Row>
-              <Col xs="2">
+              <Col>
                 <FormGroup>
                   <Label htmlFor="Total">Tax</Label>
                   <Field
@@ -138,15 +157,15 @@ class Balance extends Component {
             </Row>
 
             <Row>
-              <Col xs="2">
+              <Col>
                 <FormGroup>
-                  <Label htmlFor="design">Balance Paid</Label>
+                  <Label htmlFor="design">Pay Balance</Label>
                   <Field
-                    name='balance_paid'
+                    name='pay_balance'
                     type="text"
                     onBlur={this.changeBalance}
                     component={renderField}
-                    label="balance_paid" />
+                    label="pay_balance" />
                 </FormGroup>
               </Col>
             </Row>
@@ -154,7 +173,7 @@ class Balance extends Component {
             <hr />
 
             <Row>
-              <Col xs="2">
+              <Col>
                 <FormGroup>
                   <Label htmlFor="design">Total Due</Label>
                   <Field
@@ -168,7 +187,7 @@ class Balance extends Component {
             </Row>
 
             <Row>
-              <Col xs='3'>
+              <Col>
                 <Button color="primary" className="mr-1">Pay</Button>
                 <Button color="danger" onClick={this.cancel}>Cancel</Button>
               </Col>
@@ -200,7 +219,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       change,
-      updateOrder
+      updateOrder,
+      updateBalance
     },
     dispatch
   );

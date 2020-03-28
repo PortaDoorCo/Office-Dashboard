@@ -13,6 +13,9 @@ import {
   Collapse
 } from 'reactstrap';
 // import SelectedOrder from './SelectedOrder/SelectedOrder';
+import {
+  getFormValues,
+} from 'redux-form';
 import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
 import Invoice from '../Invoice/Invoice';
 import { connect } from 'react-redux';
@@ -50,6 +53,7 @@ import DrawerBottomsPDF from './PrintOuts/Pages/Drawer/BottomsPDF'
 import DrawerSidesPDF from './PrintOuts/Pages/Drawer/SidesPDF'
 
 import Balance from './Balance'
+import BalanceHistory from './BalanceHistory'
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
@@ -311,6 +315,7 @@ class OrderPage extends Component {
 
   render() {
     const props = this.props;
+    const { formState } = this.props;
 
     // let options;
 
@@ -402,10 +407,10 @@ class OrderPage extends Component {
                       </Tooltip>
 
                       <Tooltip title="Balance" placement="top">
-                          <IconButton onClick={this.toggleBalance}>
-                            <AttachMoneyIcon style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
+                        <IconButton onClick={this.toggleBalance}>
+                          <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
                     </Col>
                     <Col />
@@ -544,14 +549,22 @@ class OrderPage extends Component {
               <div>
                 <Collapse isOpen={this.state.balanceOpen}>
                   <Row>
-                    <Col lg='12'>
+                    <Col lg='4'>
                       <Card>
                         <CardBody>
                           <h5>Balance</h5>
-                                <Balance
-                                  toggleBalance={this.toggleBalance}
-                                  selectedOrder={props.selectedOrder}
-                                />
+                          <Balance
+                            toggleBalance={this.toggleBalance}
+                            selectedOrder={props.selectedOrder}
+                          />
+                        </CardBody>
+                      </Card>
+                    </Col>
+                    <Col>
+                      <Card>
+                        <CardBody>
+                          <h5>Balance History</h5>
+                            <BalanceHistory />
                         </CardBody>
                       </Card>
                     </Col>
@@ -568,7 +581,7 @@ class OrderPage extends Component {
                     selectedOrder={props.selectedOrder}
                     editable={this.props.editable}
                     edit={!this.props.edit}
-                  toggle={props.toggle}
+                    toggle={props.toggle}
                   />
                 </div>
               </div>
@@ -585,7 +598,9 @@ class OrderPage extends Component {
   }
 }
 
-const mapStateToProps = (state, prop) => ({});
+const mapStateToProps = (state, prop) => ({
+  formState: getFormValues('DoorOrder')(state),
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

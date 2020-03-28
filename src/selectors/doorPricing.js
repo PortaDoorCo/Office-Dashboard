@@ -32,10 +32,23 @@ const taxRate = state => {
 const balance = state => {
   const orders = state.form.DoorOrder;
     if (orders) {
-      if (!orders.values.balance_paid) {
+      if (!orders.values.pay_balance) {
         return 0;
       } else {
-        return parseFloat(state.form.DoorOrder.values.balance_paid);
+        return parseFloat(state.form.DoorOrder.values.pay_balance);
+      }
+    } else {
+      return 0;
+    }
+};
+
+const balanceDue = state => {
+  const orders = state.form.DoorOrder;
+    if (orders) {
+      if (!orders.values.balance_due) {
+        return 0;
+      } else {
+        return parseFloat(state.form.DoorOrder.values.balance_due);
       }
     } else {
       return 0;
@@ -222,7 +235,7 @@ export const totalSelector = createSelector(
 );
 
 export const balanceSelector = createSelector(
-  [totalSelector, balance],
+  [balanceDue, balance],
   (total, balance) => total - balance
 );
 
