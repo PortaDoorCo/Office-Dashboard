@@ -550,6 +550,7 @@ class OrderPage extends Component {
                           <h5>Balance</h5>
                                 <Balance
                                   toggleBalance={this.toggleBalance}
+                                  selectedOrder={props.selectedOrder}
                                 />
                         </CardBody>
                       </Card>
