@@ -52,7 +52,7 @@ class Balance extends Component {
       change(
         'DoorOrder',
         'balance_paid',
-        0
+        this.props.selectedOrder[0].balance_paid
       )
     );
 
@@ -60,7 +60,7 @@ class Balance extends Component {
       change(
         'DoorOrder',
         'balance_due',
-        this.props.total.toFixed(2)
+        this.props.selectedOrder[0].balance_due
       )
     );
   }
@@ -87,10 +87,11 @@ class Balance extends Component {
     const {
       formState,
       balance,
-      handleSubmit
+      handleSubmit,
+      selectedOrder
     } = this.props;
 
-    console.log(balance)
+    console.log(selectedOrder)
 
     if (formState) {
       return (
