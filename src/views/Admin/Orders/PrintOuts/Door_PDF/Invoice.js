@@ -169,7 +169,6 @@ export default data => {
         { text: `$${(data.balance_paid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 2, 0, 0],
-
     },
     {
       columns: [

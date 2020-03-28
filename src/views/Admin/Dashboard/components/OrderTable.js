@@ -169,7 +169,8 @@ class OrderTable extends React.Component {
                         tax: x.tax,
                         files: x.files,
                         tracking: x.tracking,
-                        balance_paid: x.balance_paid
+                        balance_paid: x.balance_paid,
+                        balance_due: x.balance_due
                     },
                 ],
             });

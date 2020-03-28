@@ -128,6 +128,7 @@ class DoorOrders extends Component {
       tax: tax,
       total: total,
       balance_paid: values.balance_paid,
+      balance_due: total,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
       user: user.id,
