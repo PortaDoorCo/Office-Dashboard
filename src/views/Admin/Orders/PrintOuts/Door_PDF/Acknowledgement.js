@@ -175,7 +175,7 @@ export default data => {
       columns: [
         { text: '', style: 'totals', width: 347 },
         { text: 'Balance Due:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(data.total).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+        { text: `$${(data.balance_due).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 15, 0, 0]
     },
