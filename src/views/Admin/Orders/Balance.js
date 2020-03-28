@@ -48,21 +48,7 @@ class Balance extends Component {
   }
 
   cancel = () => {
-    this.props.dispatch(
-      change(
-        'DoorOrder',
-        'balance_paid',
-        this.props.selectedOrder[0].balance_paid
-      )
-    );
-
-    this.props.dispatch(
-      change(
-        'DoorOrder',
-        'balance_due',
-        this.props.selectedOrder[0].balance_due
-      )
-    );
+    this.props.toggleBalance()
   }
 
   submit = async (values) => {
@@ -81,7 +67,14 @@ class Balance extends Component {
 
 
     await updateBalance(id, order, cookie);
-    await this.props.toggleBalance();
+
+    await this.props.dispatch(
+      change(
+        'DoorOrder',
+        'pay_balance',
+        0
+      )
+    )
 
     await this.props.dispatch(
       change(
@@ -119,7 +112,7 @@ class Balance extends Component {
             <Row>
               <Col>
                 <FormGroup>
-                  <Label htmlFor="Total">Total</Label>
+                  <Label htmlFor="Total">Order Total</Label>
                   <Field
                     name='total'
                     type="text"
@@ -133,39 +126,13 @@ class Balance extends Component {
             <Row>
               <Col>
                 <FormGroup>
-                  <Label htmlFor="Total">Tax</Label>
+                  <Label htmlFor="Total">Sales Tax</Label>
                   <Field
                     name='tax'
                     type="text"
                     component={renderField}
                     edit={true}
                     label="total" />
-                </FormGroup>
-              </Col>
-
-              {/* <Col xs="2">
-              <FormGroup>
-                <Label htmlFor="Total">Discount</Label>
-                <Field
-                  name='discount'
-                  type="text"
-                  component={renderField}
-                  edit={true}
-                  label="total" />
-              </FormGroup>
-            </Col> */}
-            </Row>
-
-            <Row>
-              <Col>
-                <FormGroup>
-                  <Label htmlFor="design">Pay Balance</Label>
-                  <Field
-                    name='pay_balance'
-                    type="text"
-                    onBlur={this.changeBalance}
-                    component={renderField}
-                    label="pay_balance" />
                 </FormGroup>
               </Col>
             </Row>
@@ -182,6 +149,21 @@ class Balance extends Component {
                     edit={true}
                     component={renderField}
                     label="total_due" />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="design">Pay Balance</Label>
+                  <Field
+                    name='pay_balance'
+                    type="text"
+                    placeholder="0"
+                    onBlur={this.changeBalance}
+                    component={renderField}
+                    label="pay_balance" />
                 </FormGroup>
               </Col>
             </Row>
