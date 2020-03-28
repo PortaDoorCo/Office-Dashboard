@@ -111,8 +111,9 @@ class Balance extends Component {
           </Row>
 
           <Row>
-            <Col xs='4'>
-              <Button color="primary">Pay</Button>
+            <Col xs='3'>
+              <Button color="primary" className="mr-1">Pay</Button>
+              <Button color="danger">Cancel</Button>
             </Col>
           </Row>
         </div>
