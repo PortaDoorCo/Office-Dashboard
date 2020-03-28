@@ -20,6 +20,10 @@ import {
   balanceSelector,
   subTotal_Total
 } from '../../../selectors/doorPricing';
+import { updateOrder } from '../../../redux/orders/actions'
+
+
+const cookie = Cookies.get("jwt");
 
 const required = value => (value ? undefined : 'Required');
 
@@ -61,11 +65,29 @@ class Balance extends Component {
     );
   }
 
+  submit = async (values) => {
+    console.log(values)
+
+    const { updateOrder } = this.props;
+
+    const id = values.id
+
+    const order = {
+      balance_due: values.balance_due,
+      balance_paid: values.balance_paid
+    }
+
+    await updateOrder(id, order, cookie);
+    await this.props.toggleBalance();
+
+  }
+
 
   render() {
     const {
       formState,
-      balance
+      balance,
+      handleSubmit
     } = this.props;
 
     console.log(balance)
@@ -73,34 +95,35 @@ class Balance extends Component {
     if (formState) {
       return (
         <div>
-          <Row>
-            <Col xs="2">
-              <FormGroup>
-                <Label htmlFor="Total">Total</Label>
-                <Field
-                  name='total'
-                  type="text"
-                  component={renderField}
-                  edit={true}
-                  label="total" />
-              </FormGroup>
-            </Col>
-          </Row>
+          <form onSubmit={handleSubmit(this.submit)}>
+            <Row>
+              <Col xs="2">
+                <FormGroup>
+                  <Label htmlFor="Total">Total</Label>
+                  <Field
+                    name='total'
+                    type="text"
+                    component={renderField}
+                    edit={true}
+                    label="total" />
+                </FormGroup>
+              </Col>
+            </Row>
 
-          <Row>
-            <Col xs="2">
-              <FormGroup>
-                <Label htmlFor="Total">Tax</Label>
-                <Field
-                  name='tax'
-                  type="text"
-                  component={renderField}
-                  edit={true}
-                  label="total" />
-              </FormGroup>
-            </Col>
+            <Row>
+              <Col xs="2">
+                <FormGroup>
+                  <Label htmlFor="Total">Tax</Label>
+                  <Field
+                    name='tax'
+                    type="text"
+                    component={renderField}
+                    edit={true}
+                    label="total" />
+                </FormGroup>
+              </Col>
 
-            {/* <Col xs="2">
+              {/* <Col xs="2">
               <FormGroup>
                 <Label htmlFor="Total">Discount</Label>
                 <Field
@@ -111,45 +134,46 @@ class Balance extends Component {
                   label="total" />
               </FormGroup>
             </Col> */}
-          </Row>
+            </Row>
 
-          <Row>
-            <Col xs="2">
-              <FormGroup>
-                <Label htmlFor="design">Balance Paid</Label>
-                <Field
-                  name='balance_paid'
-                  type="text"
-                  onBlur={this.changeBalance}
-                  component={renderField}
-                  label="balance_paid" />
-              </FormGroup>
-            </Col>
-          </Row>
+            <Row>
+              <Col xs="2">
+                <FormGroup>
+                  <Label htmlFor="design">Balance Paid</Label>
+                  <Field
+                    name='balance_paid'
+                    type="text"
+                    onBlur={this.changeBalance}
+                    component={renderField}
+                    label="balance_paid" />
+                </FormGroup>
+              </Col>
+            </Row>
 
-          <hr />
-          
-          <Row>
-            <Col xs="2">
-              <FormGroup>
-                <Label htmlFor="design">Total Due</Label>
-                <Field
-                  name='balance_due'
-                  type="text"
-                  edit={true}
-                  component={renderField}
-                  label="total_due" />
-              </FormGroup>
-            </Col>
-          </Row>
+            <hr />
 
-          <Row>
-            <Col xs='3'>
-              <Button color="primary" className="mr-1">Pay</Button>
-              <Button color="danger" onClick={this.cancel}>Cancel</Button>
-            </Col>
-          </Row>
-        </div>
+            <Row>
+              <Col xs="2">
+                <FormGroup>
+                  <Label htmlFor="design">Total Due</Label>
+                  <Field
+                    name='balance_due'
+                    type="text"
+                    edit={true}
+                    component={renderField}
+                    label="total_due" />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs='3'>
+                <Button color="primary" className="mr-1">Pay</Button>
+                <Button color="danger" onClick={this.cancel}>Cancel</Button>
+              </Col>
+            </Row>
+          </form>
+        </div >
       );
     } else {
       return (
@@ -171,6 +195,15 @@ const mapStateToProps = (state, props) => ({
 
 });
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      change,
+      updateOrder
+    },
+    dispatch
+  );
+
 Balance = reduxForm({
   form: 'DoorOrder',
 })(Balance);
@@ -178,5 +211,5 @@ Balance = reduxForm({
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Balance);
