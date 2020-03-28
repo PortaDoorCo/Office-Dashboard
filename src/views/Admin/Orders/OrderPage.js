@@ -548,7 +548,9 @@ class OrderPage extends Component {
                       <Card>
                         <CardBody>
                           <h5>Balance</h5>
-                                <Balance />
+                                <Balance
+                                  toggleBalance={this.toggleBalance}
+                                />
                         </CardBody>
                       </Card>
                     </Col>

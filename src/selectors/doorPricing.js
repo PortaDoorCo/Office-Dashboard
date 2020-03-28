@@ -29,6 +29,19 @@ const taxRate = state => {
     }
 };
 
+const balance = state => {
+  const orders = state.form.DoorOrder;
+    if (orders) {
+      if (!orders.values.balance_paid) {
+        return 0;
+      } else {
+        return parseFloat(state.form.DoorOrder.values.balance_paid);
+      }
+    } else {
+      return 0;
+    }
+};
+
 
 export const itemPriceSelector = createSelector(
   [partListSelector],
@@ -192,6 +205,11 @@ export const subTotalSelector = createSelector(
     })
 );
 
+export const subTotal_Total = createSelector(
+  [subTotalSelector],
+  (subTotal) =>subTotal.reduce((acc, item) => acc + item, 0)
+);
+
 export const taxSelector = createSelector(
   [subTotalSelector, taxRate],
 
@@ -201,5 +219,10 @@ export const taxSelector = createSelector(
 export const totalSelector = createSelector(
   [subTotalSelector, taxSelector],
   (subTotal, tax) => (console.log(tax),(subTotal.reduce((acc, item) => acc + item, 0) + tax))
+);
+
+export const balanceSelector = createSelector(
+  [totalSelector, balance],
+  (total, balance) => total - balance
 );
 

@@ -16,7 +16,9 @@ import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, render
 
 import Ratio from 'lb-ratio';
 import {
-  totalSelector
+  totalSelector,
+  balanceSelector,
+  subTotal_Total
 } from '../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
@@ -31,20 +33,46 @@ class Balance extends Component {
     super(props);
   }
 
+  changeBalance = () => {
+    this.props.dispatch(
+      change(
+        'DoorOrder',
+        'balance_due',
+        this.props.balance.toFixed("2")
+      )
+    );
+  }
 
+  cancel = () => {
+    this.props.dispatch(
+      change(
+        'DoorOrder',
+        'balance_paid',
+        0
+      )
+    );
+
+    this.props.dispatch(
+      change(
+        'DoorOrder',
+        'balance_due',
+        this.props.total.toFixed(2)
+      )
+    );
+  }
 
 
   render() {
     const {
-      formState
-
+      formState,
+      balance
     } = this.props;
+
+    console.log(balance)
 
     if (formState) {
       return (
         <div>
-
-
           <Row>
             <Col xs="2">
               <FormGroup>
@@ -55,18 +83,6 @@ class Balance extends Component {
                   component={renderField}
                   edit={true}
                   label="total" />
-              </FormGroup>
-            </Col>
-
-            <Col xs="2">
-              <FormGroup>
-                <Label htmlFor="design">Total Due</Label>
-                <Field
-                  name='balance_paid'
-                  type="text"
-                  edit={true}
-                  component={renderField}
-                  label="balance_paid" />
               </FormGroup>
             </Col>
           </Row>
@@ -84,7 +100,7 @@ class Balance extends Component {
               </FormGroup>
             </Col>
 
-            <Col xs="2">
+            {/* <Col xs="2">
               <FormGroup>
                 <Label htmlFor="Total">Discount</Label>
                 <Field
@@ -94,7 +110,7 @@ class Balance extends Component {
                   edit={true}
                   label="total" />
               </FormGroup>
-            </Col>
+            </Col> */}
           </Row>
 
           <Row>
@@ -104,8 +120,25 @@ class Balance extends Component {
                 <Field
                   name='balance_paid'
                   type="text"
+                  onBlur={this.changeBalance}
                   component={renderField}
                   label="balance_paid" />
+              </FormGroup>
+            </Col>
+          </Row>
+
+          <hr />
+          
+          <Row>
+            <Col xs="2">
+              <FormGroup>
+                <Label htmlFor="design">Total Due</Label>
+                <Field
+                  name='balance_due'
+                  type="text"
+                  edit={true}
+                  component={renderField}
+                  label="total_due" />
               </FormGroup>
             </Col>
           </Row>
@@ -113,7 +146,7 @@ class Balance extends Component {
           <Row>
             <Col xs='3'>
               <Button color="primary" className="mr-1">Pay</Button>
-              <Button color="danger">Cancel</Button>
+              <Button color="danger" onClick={this.cancel}>Cancel</Button>
             </Col>
           </Row>
         </div>
@@ -132,6 +165,9 @@ const mapStateToProps = (state, props) => ({
 
   formState: getFormValues('DoorOrder')(state),
   total: totalSelector(state),
+  subTotal: subTotal_Total(state),
+  balance: balanceSelector(state),
+
 
 });
 
