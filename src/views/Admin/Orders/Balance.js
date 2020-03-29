@@ -63,7 +63,6 @@ class Balance extends Component {
       balance_due: parseFloat(this.props.balance) - parseFloat(values.pay_balance),
       balance_paid: values.pay_balance,
       balance_history:  values.balance_history
-
     }
 
 
