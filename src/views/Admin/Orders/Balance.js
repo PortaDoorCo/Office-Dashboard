@@ -18,7 +18,8 @@ import Ratio from 'lb-ratio';
 import {
   totalSelector,
   balanceSelector,
-  subTotal_Total
+  subTotal_Total,
+  balanceTotalSelector
 } from '../../../selectors/doorPricing';
 import { updateOrder, updateBalance, loadOrders } from '../../../redux/orders/actions'
 
@@ -100,10 +101,11 @@ class Balance extends Component {
       formState,
       balance,
       handleSubmit,
-      selectedOrder
+      selectedOrder,
+      balanceTotal
     } = this.props;
 
-    console.log(selectedOrder)
+    console.log(balanceTotal)
 
     if (formState) {
       return (
@@ -137,6 +139,18 @@ class Balance extends Component {
               </Col>
             </Row>
 
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="balance_paid">Balance Paid</Label>
+                  <Input
+                      disabled
+                      placeholder={`$${balanceTotal}`}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+
             <hr />
 
             <Row>
@@ -150,20 +164,6 @@ class Balance extends Component {
                     onBlur={this.changeBalance}
                     component={renderField}
                     label="pay_balance" />
-                </FormGroup>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col>
-                <FormGroup>
-                  <Label htmlFor="design">Total Due after Payment</Label>
-                  <Field
-                    name='balance_due'
-                    type="text"
-                    edit={true}
-                    component={renderField}
-                    label="total_due" />
                 </FormGroup>
               </Col>
             </Row>
@@ -193,7 +193,7 @@ const mapStateToProps = (state, props) => ({
   total: totalSelector(state),
   subTotal: subTotal_Total(state),
   balance: balanceSelector(state),
-
+  balanceTotal: balanceTotalSelector(state)
 
 });
 

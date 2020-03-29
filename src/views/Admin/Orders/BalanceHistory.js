@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
 import {
-  Table
+  Table,
+  Row,
+  Col
 } from 'reactstrap';
 import moment from 'moment'
 import {
   getFormValues,
-  reduxForm
+  reduxForm,
+  Field
 } from 'redux-form';
 import { connect } from 'react-redux'
+import {
+  totalSelector,
+  balanceSelector,
+  subTotal_Total,
+  balanceTotalSelector
+} from '../../../selectors/doorPricing';
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from './SelectedOrder/DoorOrders/components/RenderInputs/renderInputs'
 
 class BalanceHistory extends Component {
   render() {
-    const { formState } = this.props;
+    const { formState, balanceTotal, balance } = this.props;
 
-    if(formState){
+    if (formState) {
       console.log(formState)
       return (
         <div>
@@ -23,7 +33,7 @@ class BalanceHistory extends Component {
                 <th>Payment Date</th>
                 <th>Balance Due</th>
                 <th>Balance Paid</th>
-  
+
               </tr>
             </thead>
             <tbody>
@@ -37,6 +47,19 @@ class BalanceHistory extends Component {
               )) : null}
             </tbody>
           </Table>
+          <Row className='mt-3'>
+            <Col>
+              <h3>Total Paid:</h3> <p>
+                ${balanceTotal}
+              </p>
+            </Col>
+          </Row>
+          <Row className='mt-3'>
+            <Col>
+              <h3>Total Owed:</h3>
+              ${balance.toFixed(2)}
+            </Col>
+          </Row>
         </div>
       );
     } else {
@@ -50,6 +73,8 @@ class BalanceHistory extends Component {
 
 const mapStateToProps = (state, prop) => ({
   formState: getFormValues('DoorOrder')(state),
+  balanceTotal: balanceTotalSelector(state),
+  balance: balanceSelector(state)
 });
 
 BalanceHistory = reduxForm({
