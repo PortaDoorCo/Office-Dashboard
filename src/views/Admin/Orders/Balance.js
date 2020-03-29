@@ -142,20 +142,6 @@ class Balance extends Component {
             <Row>
               <Col>
                 <FormGroup>
-                  <Label htmlFor="design">Total Due</Label>
-                  <Field
-                    name='balance_due'
-                    type="text"
-                    edit={true}
-                    component={renderField}
-                    label="total_due" />
-                </FormGroup>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col>
-                <FormGroup>
                   <Label htmlFor="design">Pay Balance</Label>
                   <Field
                     name='pay_balance'
@@ -164,6 +150,20 @@ class Balance extends Component {
                     onBlur={this.changeBalance}
                     component={renderField}
                     label="pay_balance" />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="design">Total Due after Payment</Label>
+                  <Field
+                    name='balance_due'
+                    type="text"
+                    edit={true}
+                    component={renderField}
+                    label="total_due" />
                 </FormGroup>
               </Col>
             </Row>
