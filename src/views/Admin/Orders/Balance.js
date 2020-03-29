@@ -60,9 +60,10 @@ class Balance extends Component {
     const id = values.id
 
     const order = {
-      balance_due: values.balance_due,
+      balance_due: parseFloat(this.props.balance) - parseFloat(values.pay_balance),
       balance_paid: values.pay_balance,
-      balance_history: values.balance_history
+      balance_history:  values.balance_history
+
     }
 
 
@@ -84,7 +85,7 @@ class Balance extends Component {
         [
           ...values.balance_history,
           {
-            "balance_due": parseFloat(values.balance_due),
+            "balance_due": parseFloat(this.props.balance) - parseFloat(values.pay_balance),
             "balance_paid": parseFloat(values.pay_balance),
             "date": new Date()
           }
