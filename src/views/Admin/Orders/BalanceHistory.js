@@ -37,7 +37,7 @@ class BalanceHistory extends Component {
               </tr>
             </thead>
             <tbody>
-              {(formState && formState.balance_history) ? formState.balance_history.slice(0).reverse().map((i, index) => (
+              {(formState && formState.balance_history) ? formState.balance_history.slice(0).map((i, index) => (
                 <tr>
                   {console.log(i)}
                   <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
@@ -50,7 +50,7 @@ class BalanceHistory extends Component {
           <Row className='mt-3'>
             <Col>
               <h3>Total Paid:</h3> <p>
-                ${balanceTotal}
+                ${balanceTotal.toFixed(2)}
               </p>
             </Col>
           </Row>
