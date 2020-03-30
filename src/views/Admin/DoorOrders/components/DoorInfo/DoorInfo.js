@@ -101,9 +101,6 @@ class DoorInfo extends Component {
   render() {
     const {
       fields,
-
-
-
       formState,
       prices,
       part_list,
