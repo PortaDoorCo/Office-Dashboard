@@ -56,6 +56,11 @@ import {
   getOnePiecePanels,
   getOnePieceEdges,
 
+  getBoxBottomThickness,
+  getBoxFinishes,
+  getBoxNotches,
+  getBoxThicknesses,
+  getBoxWoodtypes
 
 
 
@@ -106,6 +111,12 @@ class DefaultLayout extends Component {
       getOnePiecePanels,
       getOnePieceEdges,
 
+      getBoxBottomThickness,
+      getBoxFinishes,
+      getBoxNotches,
+      getBoxThicknesses,
+      getBoxWoodtypes,
+
       login,
       loadSales,
       loadOrders
@@ -148,6 +159,12 @@ class DefaultLayout extends Component {
       await getOnePieceDesigns(cookie);
       await getOnePiecePanels(cookie);
       await getOnePieceEdges(cookie);
+
+      await getBoxBottomThickness(cookie);
+      await getBoxFinishes(cookie);
+      await getBoxNotches(cookie);
+      await getBoxThicknesses(cookie);
+      await getBoxWoodtypes(cookie);
       
     } else {
       alert('not logged in')
@@ -264,6 +281,12 @@ const mapDispatchToProps = dispatch =>
       getOnePieceDesigns,
       getOnePiecePanels,
       getOnePieceEdges,
+
+      getBoxBottomThickness,
+      getBoxFinishes,
+      getBoxNotches,
+      getBoxThicknesses,
+      getBoxWoodtypes,
 
 
 
