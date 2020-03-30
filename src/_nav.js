@@ -22,15 +22,14 @@ export default {
 
     },
     {
-      name: 'New Order',
-      url: '/new-order',
+      name: 'Door-Order',
+      url: '/door-order',
 
     },
-    // {
-    //   name: 'Drawer Order',
-    //   url: '/drawer-order',
-
-    // },
+    {
+      name: 'Drawer Order',
+      url: '/drawer-order',
+    },
     {
       name: 'Reports',
       icon: '',

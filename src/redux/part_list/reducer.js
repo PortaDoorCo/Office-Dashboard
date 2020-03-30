@@ -29,6 +29,12 @@ import {
   GET_ONE_PIECE_PANELS,
   GET_ONE_PIECE_EDGES,
 
+  GET_BOX_BOTTOM_THICKNESS,
+  GET_BOX_FINISH,
+  GET_BOX_NOTCHES,
+  GET_BOX_THICKNESS,
+  GET_BOX_WOODTYPES,
+
 
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
@@ -68,6 +74,12 @@ const initialState = {
   one_piece_designs: ["Loading"],
   one_piece_panels: ["Loading"],
   one_piece_edges: ["Loading"],
+
+  box_bottom_thickness: ["Loading"],
+  box_finish: ["Loading"],
+  box_notches: ["Loading"],
+  box_thickness: ["Loading"],
+  box_woodtypes: ["Loading"],
 
 
   scoop: [
@@ -154,6 +166,12 @@ const initialState = {
   loadedOnePieceDesigns: false,
   loadedOnePiecePanels: false,
   loadedOnePieceEdges: false,
+
+  loadedBoxBottomThickness: false,
+  loadedBoxFinish: false,
+  loadedBoxNotches: false,
+  loadedBoxThickness: false,
+  loadedBoxWoodtypes: false,
 
   error: null,
 
@@ -340,6 +358,38 @@ export default function (state = initialState, action) {
         ...state,
         one_piece_edges: data,
         loadedOnePieceEdges: true
+      };
+
+
+    case GET_BOX_BOTTOM_THICKNESS:
+      return {
+        ...state,
+        box_bottom_thickness: data,
+        loadedBoxBottomThickness: true
+      };
+    case GET_BOX_FINISH:
+      return {
+        ...state,
+        box_finish: data,
+        loadedBoxFinish: true
+      };
+    case GET_BOX_NOTCHES:
+      return {
+        ...state,
+        box_notches: data,
+        loadedBoxNotches: true
+      };
+    case GET_BOX_THICKNESS:
+      return {
+        ...state,
+        box_thickness: data,
+        loadedBoxThickness: true
+      };
+    case GET_BOX_WOODTYPES:
+      return {
+        ...state,
+        box_woodtypes: data,
+        loadedBoxWoodtypes: true
       };
 
 

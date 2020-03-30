@@ -33,6 +33,12 @@ export const GET_ONE_PIECE_DESIGNS = 'GET_ONE_PIECE_DESIGNS'
 export const GET_ONE_PIECE_PANELS = 'GET_ONE_PIECE_PANELS'
 export const GET_ONE_PIECE_EDGES = 'GET_ONE_PIECE_EDGES'
 
+export const GET_BOX_BOTTOM_THICKNESS = 'GET_BOX_BOTTOM_THICKNESS'
+export const GET_BOX_FINISH = 'GET_BOX_FINISH'
+export const GET_BOX_NOTCHES = 'GET_BOX_NOTCHES'
+export const GET_BOX_THICKNESS = 'GET_BOX_THICKNESS'
+export const GET_BOX_WOODTYPES = 'GET_BOX_WOODTYPES'
+
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const DELETE_PRODUCT = 'DELETE_PRODUCT'
@@ -535,6 +541,93 @@ export function getOnePieceEdges(cookie) {
     });
   };
 }
+
+
+export function getBoxBottomThickness(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/box-bottom-thicknesses`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BOX_BOTTOM_THICKNESS,
+      data: data
+    });
+  };
+}
+
+export function getBoxFinishes(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/box-finishes`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BOX_FINISH,
+      data: data
+    });
+  };
+}
+
+export function getBoxNotches(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/box-notches`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BOX_NOTCHES,
+      data: data
+    });
+  };
+}
+
+export function getBoxThicknesses(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/box-thicknesses`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BOX_THICKNESS,
+      data: data
+    });
+  };
+}
+
+export function getBoxWoodtypes(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/box-woodtypes`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BOX_WOODTYPES,
+      data: data
+    });
+  };
+}
+
 
 
 

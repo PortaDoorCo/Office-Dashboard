@@ -58,7 +58,7 @@ class DrawerBoxInfo extends Component {
             </CardSubtitle>
             <Row>
               {/* <Col xs="1" /> */}
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="woodtypeSelection">Woodtype</Label>
                   <Field
@@ -70,7 +70,7 @@ class DrawerBoxInfo extends Component {
                     validate={required} />
                 </FormGroup>
               </Col>
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="box-thickness">Box Thickness</Label>
                   <Field
@@ -78,11 +78,11 @@ class DrawerBoxInfo extends Component {
                     component={renderDropdownList}
                     data={boxThickness}
                     valueField="value"
-                    textField="Thickness"
+                    textField="NAME"
                     validate={required} />
                 </FormGroup>
               </Col>
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="box-bottom-woodtype">Box Bottom Woodtype</Label>
                   <Field
@@ -94,7 +94,10 @@ class DrawerBoxInfo extends Component {
                     validate={required} />
                 </FormGroup>
               </Col>
-              <Col xs="3">
+
+            </Row>
+            <Row>
+            <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="box-bottoms">Box Bottom Thickness</Label>
                   <Field
@@ -102,23 +105,7 @@ class DrawerBoxInfo extends Component {
                     component={renderDropdownList}
                     data={boxBottoms}
                     valueField="value"
-                    textField="Thickness"
-                    validate={required} />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-
-
-              <Col xs="4">
-                <FormGroup>
-                  <Label htmlFor="assembly">Assembly</Label>
-                  <Field
-                    name={`${part}.assembly`}
-                    component={renderDropdownList}
-                    data={assembly}
-                    valueField="value"
-                    textField="Name"
+                    textField="NAME"
                     validate={required} />
                 </FormGroup>
               </Col>
@@ -131,19 +118,19 @@ class DrawerBoxInfo extends Component {
                     component={renderDropdownList}
                     data={notchDrill}
                     valueField="value"
-                    textField="Name"
+                    textField="NAME"
                     validate={required} />
                 </FormGroup>
               </Col>
               <Col xs="4">
                 <FormGroup>
-                  <Label htmlFor="finish">Finish</Label>
+                  <Label htmlFor="finish">Finish/Assembly</Label>
                   <Field
                     name={`${part}.drawerFinishes`}
                     component={renderDropdownList}
                     data={drawerFinishes}
                     valueField="value"
-                    textField="Name"
+                    textField="NAME"
                     validate={required} />
                 </FormGroup>
               </Col>

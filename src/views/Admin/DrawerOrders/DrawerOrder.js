@@ -368,13 +368,13 @@ class DoorOrders extends Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-  woodtypes: state.part_list.woodtypes,
-  boxBottomWoodtype: state.part_list.woodtypes,
-  boxThickness: state.part_list.boxThickness,
-  boxBottoms: state.part_list.boxBottoms,
+  woodtypes: state.part_list.box_woodtypes,
+  boxBottomWoodtype: state.part_list.box_woodtypes,
+  boxThickness: state.part_list.box_thickness,
+  boxBottoms: state.part_list.box_bottom_thickness,
   assembly: state.part_list.assembly,
-  notchDrill: state.part_list.notchDrill,
-  drawerFinishes: state.part_list.drawerFinishes,
+  notchDrill: state.part_list.box_notches,
+  drawerFinishes: state.part_list.box_finish,
   scoop: state.part_list.scoop,
   dividers: state.part_list.dividers,
   customers: state.Orders.customerDB,
