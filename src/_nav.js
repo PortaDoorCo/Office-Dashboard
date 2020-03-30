@@ -22,8 +22,8 @@ export default {
 
     },
     {
-      name: 'Door Order',
-      url: '/door-order',
+      name: 'New Order',
+      url: '/new-order',
 
     },
     // {
