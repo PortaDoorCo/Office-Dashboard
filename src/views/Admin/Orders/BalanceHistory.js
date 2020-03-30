@@ -21,7 +21,7 @@ import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, render
 
 class BalanceHistory extends Component {
   render() {
-    const { formState, balanceTotal, balance } = this.props;
+    const { formState, balanceTotal, balance, total } = this.props;
 
     if (formState) {
       console.log(formState)
@@ -49,14 +49,20 @@ class BalanceHistory extends Component {
           </Table>
           <Row className='mt-3'>
             <Col>
-              <h3>Total Paid:</h3> <p>
-                ${balanceTotal.toFixed(2)}
-              </p>
+              <h3>Order Total:</h3>
+                ${total.toFixed(2)}
             </Col>
           </Row>
           <Row className='mt-3'>
             <Col>
-              <h3>Total Owed:</h3>
+              <h3>Total Paid:</h3>
+                ${balanceTotal.toFixed(2)}
+            </Col>
+          </Row>
+          <hr />
+          <Row className='mt-3'>
+            <Col>
+              <h3>Balance Due:</h3>
               ${balance.toFixed(2)}
             </Col>
           </Row>
@@ -74,7 +80,8 @@ class BalanceHistory extends Component {
 const mapStateToProps = (state, prop) => ({
   formState: getFormValues('DoorOrder')(state),
   balanceTotal: balanceTotalSelector(state),
-  balance: balanceSelector(state)
+  balance: balanceSelector(state),
+  total: totalSelector(state),
 });
 
 BalanceHistory = reduxForm({
