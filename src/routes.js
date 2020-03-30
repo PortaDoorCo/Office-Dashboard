@@ -16,7 +16,7 @@ const LateList = React.lazy(() => import('./views/Admin/Late_List/Late_List'));
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/door-order', name: 'Door Orders', component: DoorOrders },
+  { path: '/new-order', name: 'New Order', component: DoorOrders },
   // { path: '/drawer-order', name: 'Drawer Orders', component: DrawerOrders },
   { path: '/view-orders', name: 'Orders', component: Orders },
   { path: '/customers', name: 'Customers', component: Customers },
