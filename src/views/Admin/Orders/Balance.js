@@ -154,7 +154,7 @@ class Balance extends Component {
             <hr />
 
             <Row>
-              <Col>
+              <Col xs='3'>
                 <FormGroup>
                   <Label htmlFor="design">Pay Balance</Label>
                   <Field
