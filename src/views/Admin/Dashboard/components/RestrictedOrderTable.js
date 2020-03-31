@@ -149,27 +149,7 @@ class RestrictedOrderTable extends React.Component {
 
 
             this.setState({
-                selectedOrder: [
-                    {
-                        id: x.id,
-                        jobInfo: x.jobInfo,
-                        jobName: x.jobInfo.jobName,
-                        status: x.status,
-                        poNum: x.jobInfo.poNum,
-                        part_list: x.part_list,
-                        dimensions: x.dimensions,
-                        shippingAddress: x.jobInfo,
-                        linePrice: x.linePrice,
-                        total: x.total,
-                        orderNum: x.orderNum,
-                        orderType: x.orderType,
-                        itemPrice: x.itemPrice,
-                        subTotals: x.subTotals,
-                        tax: x.tax,
-                        files: x.files,
-                        tracking: x.tracking
-                    },
-                ],
+                selectedOrder: [x],
             });
         } else {
             return;
