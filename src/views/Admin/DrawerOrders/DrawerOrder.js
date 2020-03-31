@@ -285,7 +285,7 @@ class DoorOrders extends Component {
       <div className="animated fadeIn resize">
         <NotificationAlert ref="notify" />
         <Row>
-          <Col xs="12" sm="12" md="12" lg="8">
+          <Col xs="12" sm="12" md="12" lg="7">
             <Card>
               <CardHeader>
                 <strong>Door Order</strong>
