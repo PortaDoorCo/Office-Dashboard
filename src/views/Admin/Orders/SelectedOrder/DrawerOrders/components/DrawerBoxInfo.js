@@ -12,28 +12,16 @@ import { Field, FieldArray } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';
 import OrderTable from './OrderTable';
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from './RenderInputs/renderInputs'
 
 
 const required = value => value ? undefined : 'Required';
-
-const renderDropdownList = ({ input, data, valueField, textField, meta: { touched, error, warning } }) => (
-  <div>
-    <DropdownList {...input}
-      data={data}
-      valueField={valueField}
-      textField={textField}
-      placeholder="Select"
-      onChange={input.onChange}
-    />
-    {touched && ((error && <span style={{ color: 'red' }}>{error}</span>) || (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-  </div>
-);
 
 class DrawerBoxInfo extends Component {
 
 
   render() {
-    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, assembly, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState } = this.props;
+    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, assembly, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState, edit } = this.props;
     return (
       <div>
         {fields.map((part, index) => (
@@ -51,7 +39,7 @@ class DrawerBoxInfo extends Component {
                   {fields.length > 1 ? (
                     <Button color="danger" onClick={() => fields.remove(index)}>
                       x
-                  </Button>
+                    </Button>
                   ) : null}
                 </Col>
               </Row>
@@ -67,6 +55,7 @@ class DrawerBoxInfo extends Component {
                     data={woodtypes}
                     valueField="value"
                     textField="NAME"
+                    edit={edit}
                     validate={required} />
                 </FormGroup>
               </Col>
@@ -79,6 +68,7 @@ class DrawerBoxInfo extends Component {
                     data={boxThickness}
                     valueField="value"
                     textField="NAME"
+                    edit={edit}
                     validate={required} />
                 </FormGroup>
               </Col>
@@ -91,13 +81,14 @@ class DrawerBoxInfo extends Component {
                     data={boxBottomWoodtype}
                     valueField="value"
                     textField="NAME"
+                    edit={edit}
                     validate={required} />
                 </FormGroup>
               </Col>
 
             </Row>
             <Row>
-            <Col xs="4">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="box-bottoms">Box Bottom Thickness</Label>
                   <Field
@@ -106,6 +97,7 @@ class DrawerBoxInfo extends Component {
                     data={boxBottoms}
                     valueField="value"
                     textField="NAME"
+                    edit={edit}
                     validate={required} />
                 </FormGroup>
               </Col>
@@ -119,6 +111,7 @@ class DrawerBoxInfo extends Component {
                     data={notchDrill}
                     valueField="value"
                     textField="NAME"
+                    edit={edit}
                     validate={required} />
                 </FormGroup>
               </Col>
@@ -131,6 +124,7 @@ class DrawerBoxInfo extends Component {
                     data={drawerFinishes}
                     valueField="value"
                     textField="NAME"
+                    edit={edit}
                     validate={required} />
                 </FormGroup>
               </Col>
@@ -147,6 +141,7 @@ class DrawerBoxInfo extends Component {
                 prices={prices}
                 subTotal={subTotal}
                 part={part}
+                edit={edit}
                 // part_list={part_list}
                 formState={formState}
               />
@@ -155,23 +150,29 @@ class DrawerBoxInfo extends Component {
           </div>
         ))}
 
-        <Button
-          color="primary"
-          onClick={() =>
-            fields.push({
-              dimensions: [
-                {
-                  scoop: scoop[0],
-                  dividers: dividers[0]
-                }
-              ],
-              addPrice: 0
-     
-            })
-          }
-        >
-          Add Item
-      </Button>
+        {!edit
+          ?
+          <Button
+            color="primary"
+            onClick={() =>
+              fields.push({
+                dimensions: [
+                  {
+                    scoop: scoop[0],
+                    dividers: dividers[0]
+                  }
+                ],
+                addPrice: 0
+
+              })
+            }
+          >
+            Add Item
+    </Button>
+          :
+          <div />
+        }
+
       </div >
 
     );

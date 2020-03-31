@@ -9,46 +9,16 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
-import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled } from './RenderInputs/renderInputs'
 
 const required = value => value ? undefined : 'Required';
-
-const renderField = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
-  <Fragment>
-    <Input {...input} {...custom} autocomplete="new-password" />
-    {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-  </Fragment>
-);
-const renderFieldDisabled = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
-  <Fragment>
-    <Input {...input} {...custom} disabled style={{ display: 'none' }} />
-    {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-  </Fragment>
-);
-
-const renderDropdownList = ({ input, data, valueField, textField, meta: { touched, error, warning } }) => (
-  <div style={{ "width": "90px" }}>
-    <DropdownList {...input}
-      data={data}
-      valueField={valueField}
-      textField={textField}
-      onChange={input.onChange}
-    />
-    {touched && ((error && <span style={{ color: 'red' }}>{error}</span>) || (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-  </div>
-);
-
 
 class OrderTable extends Component {
 
   render() {
 
-    const { fields, scoop, dividers, prices, i, subTotal, part, formState } = this.props;
+    const { fields, scoop, dividers, prices, i, subTotal, part, formState, edit } = this.props;
 
 
     return (
@@ -63,6 +33,7 @@ class OrderTable extends Component {
                     type="text"
                     component={renderFieldDisabled}
                     label="item"
+                    edit={edit}
                   />
                   <thead>
                     <tr>
@@ -86,6 +57,7 @@ class OrderTable extends Component {
                           component={renderField}
                           label="qty"
                           validate={required}
+                          edit={edit}
                           />
                       </td>
                       <td>
@@ -95,6 +67,7 @@ class OrderTable extends Component {
                           component={renderField}
                           label="width"
                           validate={required}
+                          edit={edit}
                           />
                       </td>
                       <td>
@@ -104,6 +77,7 @@ class OrderTable extends Component {
                           component={renderField}
                           label="depth"
                           validate={required}
+                          edit={edit}
                           />
                       </td>
                       <td>
@@ -113,6 +87,7 @@ class OrderTable extends Component {
                           component={renderField}
                           label="height"
                           validate={required}
+                          edit={edit}
                           />
                       </td>
                       <td >
@@ -122,7 +97,8 @@ class OrderTable extends Component {
                           data={scoop}
                           valueField="Value"
                           textField="Name"
-                          validate={required} />
+                          validate={required}
+                          edit={edit} />
                       </td>
                       <td>
                         <Field
@@ -131,24 +107,31 @@ class OrderTable extends Component {
                           data={dividers}
                           valueField="Value"
                           textField="Name"
-                          validate={required} />
+                          validate={required}
+                          edit={edit} />
                       </td>
                       <td style={{ width: '150px' }}>
                       {prices[i] ?
                         <Input
                           type="text"
                           className="form-control"
+                          disabled={edit}
                           placeholder={"$" + prices[i][index].toFixed(2) || 0}
                         /> : <Input
                           type="text"
                           className="form-control"
                           placeholder={"$0.00"}
+                          disabled={edit}
                         />
                       }
                       </td>
 
                       <td >
-                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>X</Button>
+                        {!edit ? 
+                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>X</Button> :
+                        <div />
+                      }
+                        
                       </td>
 
                     </tr>
@@ -166,6 +149,7 @@ class OrderTable extends Component {
                       name={`${table}.notes`}
                       type="textarea"
                       component={renderField}
+                      edit={edit}
                       label="notes" />
                   </Col>
                   <Col>
@@ -177,10 +161,14 @@ class OrderTable extends Component {
               </Fragment>
 
             )}
+            {!edit ?
             <Button color="primary" className="btn-circle" onClick={() => fields.push({
               scoop: scoop[0],
               dividers: dividers[0]
-            })}>+</Button>
+            })}>+</Button> 
+            : <div />
+          }
+
             <Row>
               <Col xs="4" />
               <Col xs="5" />
@@ -190,12 +178,13 @@ class OrderTable extends Component {
                   name={`${part}.addPrice`}
                   type="text"
                   component={renderField}
+                  edit={edit}
                   label="addPrice" />
                 <strong>Sub Total: </strong>
                 {subTotal[i] ? (
-                  <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                  <Input disabled={edit} placeholder={subTotal[i].toFixed(2) || 0} />
                 ) : (
-                    <Input placeholder="0" />
+                    <Input disabled={edit} placeholder="0" />
                   )}
               </Col>
             </Row>
