@@ -6,12 +6,13 @@ const fraction = num => {
 };
 export default (item, part) => {
 
-    const depth = (parseInt(item.depth) - (part.boxThickness.Decimal * 2) + 0.6875)
-    const thickness = part.boxThickness.Thickness
+    const depth = parseInt(item.depth)
+    const sideDeduction = part.boxThickness.SIDE_DEDUCTION
+    const thickness = part.boxThickness.NAME
     return {
         qty: (parseInt(item.qty) * 2),
         depth: depth,
-        measurement: `${item.height} x ${fraction(depth)} x ${thickness}`,
+        measurement: `${item.height} x ${fraction(depth - sideDeduction)} x ${thickness}`,
         pattern: "Sides"
     }
 
