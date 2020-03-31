@@ -6,37 +6,33 @@ import numQty from "numeric-quantity";
 const partListSelector = state => {
   const orders = state.form.DrawerOrder;
 
-  if (state.part_list.loadedDrawerFinishes) {
-    if (orders) {
-      if (!state.form.DrawerOrder.values.part_list) {
-        return [];
-      } else {
-        return state.form.DrawerOrder.values.part_list;
-      }
-    } else {
+
+  if (orders) {
+    if (!state.form.DrawerOrder.values.part_list) {
       return [];
+    } else {
+      return state.form.DrawerOrder.values.part_list;
     }
   } else {
     return [];
   }
+
 };
 
 const taxRate = state => {
   const orders = state.form.DrawerOrder;
 
-  if (state.part_list.loadedDrawerFinishes) {
-    if (orders) {
-      if (!orders.values.job_info) {
-        return [];
-      } else {
-        return state.form.DrawerOrder.values.job_info.customer.TaxRate;
-      }
-    } else {
+
+  if (orders) {
+    if (!orders.values.job_info) {
       return [];
+    } else {
+      return state.form.DrawerOrder.values.job_info.customer.TaxRate;
     }
   } else {
     return [];
   }
+
 };
 
 export const itemPriceSelector = createSelector(
@@ -44,10 +40,11 @@ export const itemPriceSelector = createSelector(
   (parts) =>
     parts.map((part, index) => {
 
-      const wood = part.woodtype ? part.woodtype.PRICE : 0;
-      const assembly = part.assembly ? part.assembly.Price : 0;
-      const finish = part.drawerFinishes ? part.drawerFinishes.Price : 0;
-      const notchDrill = part.notchDrill ? part.notchDrill.Price : 0;
+      console.log(part)
+
+      const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
+      const finish = part.drawerFinishes ? part.drawerFinishes.UPCHARGE : 0;
+      const notchDrill = part.notchDrill ? part.notchDrill.PRICE : 0;
 
 
 
@@ -60,7 +57,7 @@ export const itemPriceSelector = createSelector(
 
 
           const price =
-            (((((((Math.ceil(widths) + (Math.ceil(depths) * 2)) * heights) / 144) * wood) + (assembly + finish + notchDrill))
+            (((((((Math.ceil(widths) + (Math.ceil(depths) * 2)) * heights) / 144) * wood) + (finish + notchDrill))
 
             ))
 
@@ -82,10 +79,12 @@ export const linePriceSelector = createSelector(
   (parts) =>
     parts.map((part, index) => {
 
-      const wood = part.woodtype ? part.woodtype.PRICE : 0;
-      const assembly = part.assembly ? part.assembly.Price : 0;
-      const finish = part.drawerFinishes ? part.drawerFinishes.Price : 0;
-      const notchDrill = part.notchDrill ? part.notchDrill.Price : 0;
+      console.log(part)
+
+      const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
+      const finish = part.drawerFinishes ? part.drawerFinishes.UPCHARGE : 0;
+      const notchDrill = part.notchDrill ? part.notchDrill.PRICE : 0;
+
 
 
       if (part.dimensions) {
@@ -95,8 +94,9 @@ export const linePriceSelector = createSelector(
           let depths = numQty(i.depth)
 
 
+
           const price =
-            (((((((Math.ceil(widths) + (Math.ceil(depths) * 2)) * heights) / 144) * wood) + (assembly + finish + notchDrill)) * parseInt(i.qty)
+            (((((((Math.ceil(widths) + (Math.ceil(depths) * 2)) * heights) / 144) * wood) + (finish + notchDrill))
 
             ))
 
