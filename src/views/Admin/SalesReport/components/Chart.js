@@ -11,26 +11,29 @@ class Charts extends Component {
   render() {
 
     let house = this.props.data.filter(item => {
-      return item.jobInfo.customer.sale.fullName.includes("House")
+      return item.sale.fullName.includes("House")
     })
     let harold = this.props.data.filter(item => {
-      return item.jobInfo.customer.sale.fullName.includes("Harold")
+      return item.sale.fullName.includes("Harold")
+    })
+    let ned = this.props.data.filter(item => {
+      return item.sale.fullName.includes("Ned")
     })
     let joseph = this.props.data.filter(item => {
-      return item.jobInfo.customer.sale.fullName.includes("Joseph")
+      return item.sale.fullName.includes("Joseph")
     })
     let peter = this.props.data.filter(item => {
-      return item.jobInfo.customer.sale.fullName.includes("Peter")
+      return item.sale.fullName.includes("Peter")
     })
     let meg = this.props.data.filter(item => {
-      return item.jobInfo.customer.sale.fullName.includes("Meg")
+      return item.sale.fullName.includes("Meg")
     })
     let krista = this.props.data.filter(item => {
-      return item.jobInfo.customer.sale.fullName.includes("Krista")
+      return item.sale.fullName.includes("Krista")
     })
 
     const bar = {
-      labels: ['House', 'Harold', 'Joseph', 'Peter', 'Meg', 'Krista'],
+      labels: ['House', 'Harold', 'Ned', 'Joseph', 'Peter', 'Meg', 'Krista'],
       datasets: [
         {
           label: 'Sales Reps',
@@ -39,7 +42,7 @@ class Charts extends Component {
           borderWidth: 0.5,
           hoverBackgroundColor: 'rgba(194, 234, 234, 0.45)',
           hoverBorderColor: '#000000',
-          data: [house.length, harold.length, joseph.length, peter.length, meg.length, krista.length],
+          data: [house.length, harold.length, ned.length, joseph.length, peter.length, meg.length, krista.length],
         },
       ],
     };

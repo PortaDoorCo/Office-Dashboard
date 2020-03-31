@@ -160,28 +160,7 @@ class OrderTable extends React.Component {
       console.log('x', x);
 
       this.setState({
-        selectedOrder: [
-          {
-            id: x.id,
-            job_info: x.job_info,
-            jobName: x.job_info.jobName,
-            status: x.status,
-            poNum: x.job_info.poNum,
-            part_list: x.part_list,
-            dimensions: x.dimensions,
-            shippingAddress: x.jobInfo,
-            linePrice: x.linePrice,
-            total: x.total,
-            orderNum: x.orderNum,
-            orderType: x.orderType,
-            itemPrice: x.itemPrice,
-            subTotals: x.subTotals,
-            tax: x.tax,
-            files: x.files,
-            tracking: x.tracking,
-            balance_paid: x.balance_paid
-          },
-        ],
+        selectedOrder: [x],
       });
     } else {
       return;

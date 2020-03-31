@@ -114,6 +114,7 @@ class DoorOrders extends Component {
       customer: {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
+        sale: values.job_info.customer.sale.id
       }
     }
 
@@ -146,7 +147,8 @@ class DoorOrders extends Component {
           "balance_paid": values.balance_paid,
           "date": new Date()
         }
-      ]
+      ],
+      sale: values.job_info.customer.sale.id
     };
 
     if (values.part_list[0].dimensions.length > 0) {
