@@ -52,8 +52,12 @@ import DrawerAssemblyListPDF from './PrintOuts/Pages/Drawer/AssemblyListPDF'
 import DrawerBottomsPDF from './PrintOuts/Pages/Drawer/BottomsPDF'
 import DrawerSidesPDF from './PrintOuts/Pages/Drawer/SidesPDF'
 
-import Balance from './Balance'
-import BalanceHistory from './BalanceHistory'
+import DoorBalance from './Balance/Door_Order/Balance'
+import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory'
+
+import DrawerBalance from './Balance/Drawer_Order/Balance'
+import DrawerBalanceHistory from './Balance/Drawer_Order/BalanceHistory'
+
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
@@ -317,9 +321,11 @@ class OrderPage extends Component {
     const props = this.props;
     const { formState } = this.props;
 
+    
+
     // let options;
 
-    // console.log(props)
+    console.log(props.selectedOrder)
 
     let options;
     let selectedOrder = props.selectedOrder[0] ? props.selectedOrder[0] : "Door Order"
@@ -553,10 +559,26 @@ class OrderPage extends Component {
                       <Card>
                         <CardBody>
                           <h5>Balance</h5>
-                          <Balance
-                            toggleBalance={this.toggleBalance}
-                            selectedOrder={props.selectedOrder}
-                          />
+                          {/* <DoorBalance
+                              toggleBalance={this.toggleBalance}
+                              selectedOrder={props.selectedOrder}
+                            /> */}
+                          {props.selectedOrder[0] && props.selectedOrder[0].orderType === "Door Order"
+                            ?
+                            <DoorBalance
+                              toggleBalance={this.toggleBalance}
+                              selectedOrder={props.selectedOrder}
+                            /> :
+                            props.selectedOrder[0] && props.selectedOrder[0].orderType === "Drawer Order"
+                            ?
+                            <DrawerBalance
+                              toggleBalance={this.toggleBalance}
+                              selectedOrder={props.selectedOrder}
+                            />
+                            : 
+                            <div />
+                          }
+
                         </CardBody>
                       </Card>
                     </Col>
@@ -564,7 +586,13 @@ class OrderPage extends Component {
                       <Card>
                         <CardBody>
                           <h5>Balance History</h5>
-                            <BalanceHistory />
+                          {props.selectedOrder[0] && props.selectedOrder[0].orderType === "Door Order"
+                            ?
+                            <DoorBalanceHistory /> :
+                            <div />
+                            // <DrawerBalanceHistory />
+                          }
+
                         </CardBody>
                       </Card>
                     </Col>

@@ -12,7 +12,7 @@ import { Field, FieldArray, reduxForm, change, reset, getFormValues } from "redu
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from './SelectedOrder/DoorOrders/components/RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../SelectedOrder/DoorOrders/components/RenderInputs/renderInputs'
 
 import Ratio from 'lb-ratio';
 import {
@@ -20,8 +20,8 @@ import {
   balanceSelector,
   subTotal_Total,
   balanceTotalSelector
-} from '../../../selectors/doorPricing';
-import { updateOrder, updateBalance, loadOrders } from '../../../redux/orders/actions'
+} from '../../../../../selectors/doorPricing';
+import { updateOrder, updateBalance, loadOrders } from '../../../../../redux/orders/actions'
 
 
 const cookie = Cookies.get("jwt");

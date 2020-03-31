@@ -16,8 +16,8 @@ import {
   balanceSelector,
   subTotal_Total,
   balanceTotalSelector
-} from '../../../selectors/doorPricing';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from './SelectedOrder/DoorOrders/components/RenderInputs/renderInputs'
+} from '../../../../../selectors/doorPricing';
+
 
 class BalanceHistory extends Component {
   render() {
