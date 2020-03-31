@@ -97,7 +97,7 @@ export default data => {
                     let mb = {
                         columns: [
                             { text: `${i.woodtype.NAME}`, style: 'fonts' },
-                            { text: `${k} x ${i.boxThickness.Thickness}`, style: 'fonts' },
+                            { text: `${k} x ${i.boxThickness.NAME}`, style: 'fonts' },
                             { text: `= ${LinearIN(v, i)} Lin IN`, style: 'fonts' },
                             { text: '', style: 'fonts' },
                         ]
