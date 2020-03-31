@@ -52,7 +52,7 @@ class Dashboard extends Component {
 
     return (
       <div className="animated fadeIn">
-        {role.type === 'management' || role.type === 'authentication' ?
+        {role.type === 'management' || role.type === 'authenticated' ?
           <div>
             <Row>
               <Col lg="4">
@@ -76,7 +76,7 @@ class Dashboard extends Component {
 
         <Row>
           <Col>
-             {role.type === 'management' || role.type === 'authentication' ? 
+             {role.type === 'management' || role.type === 'authenticated' ? 
             <OrderTable
               orders={this.props.orders}
             />

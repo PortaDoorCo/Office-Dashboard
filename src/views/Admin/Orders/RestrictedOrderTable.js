@@ -460,7 +460,7 @@ class RestrictedOrderTable extends React.Component {
             <RequiredRule />
           </Column>
           <Column
-            dataField="jobInfo.customer.Company"
+            dataField="job_info.customer.Company"
             caption="Company Name"
             allowEditing={false}
           >
