@@ -6,33 +6,37 @@ import numQty from "numeric-quantity";
 const partListSelector = state => {
   const orders = state.form.DrawerOrder;
 
-
-  if (orders) {
-    if (!state.form.DrawerOrder.values.part_list) {
-      return [];
+  if (state.part_list.loadedBoxWoodtypes) {
+    if (orders) {
+      if (!state.form.DrawerOrder.values.part_list) {
+        return [];
+      } else {
+        return state.form.DrawerOrder.values.part_list;
+      }
     } else {
-      return state.form.DrawerOrder.values.part_list;
+      return [];
     }
   } else {
     return [];
   }
-
 };
 
 const taxRate = state => {
   const orders = state.form.DrawerOrder;
 
-
-  if (orders) {
-    if (!orders.values.job_info) {
-      return [];
+  if (state.part_list.loadedBoxWoodtypes) {
+    if (orders) {
+      if (!orders.values.job_info) {
+        return [];
+      } else {
+        return state.form.DrawerOrder.values.job_info.customer.TaxRate;
+      }
     } else {
-      return state.form.DrawerOrder.values.job_info.customer.TaxRate;
+      return [];
     }
   } else {
     return [];
   }
-
 };
 
 export const itemPriceSelector = createSelector(
