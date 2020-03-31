@@ -104,9 +104,27 @@ class DoorOrders extends Component {
 
     const orderType = 'Drawer Order';
 
+    const jobInfo = {
+      jobName: values.job_info.jobName,
+      status: values.job_info.status,
+      poNum: values.job_info.poNum,
+      Address1: values.job_info.Address1,
+      Address2: values.job_info.Address2,
+      City: values.job_info.City,
+      State: values.job_info.State,
+      Zip: values.job_info.Zip,
+      Phone: values.job_info.Phone,
+      DueDate: values.job_info.DueDate,
+      customer: {
+        Company: values.job_info.customer.Company,
+        TaxRate: values.job_info.customer.TaxRate,
+      }
+    }
+
+
     const order = {
       part_list: values.part_list,
-      jobInfo: values.job_info,
+      job_info: jobInfo,
       status: values.job_info.status,
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
@@ -114,6 +132,8 @@ class DoorOrders extends Component {
       subTotals: subTotal,
       tax: tax,
       total: total,
+      balance_paid: 0,
+      balance_due: total,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
       user: user.id,
@@ -122,6 +142,13 @@ class DoorOrders extends Component {
       tracking: [
         { 
           "status": values.job_info.status,
+          "date": new Date()
+        }
+      ],
+      balance_history: [
+        {
+          "balance_due": total,
+          "balance_paid": values.balance_paid,
           "date": new Date()
         }
       ]
