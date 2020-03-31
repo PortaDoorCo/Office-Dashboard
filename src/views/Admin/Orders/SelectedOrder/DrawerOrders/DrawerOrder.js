@@ -276,7 +276,8 @@ class DrawerOrder extends Component {
       customers,
       formState,
       address,
-      tax
+      tax,
+      edit
     } = this.props;
 
     console.log(prices)
@@ -285,7 +286,7 @@ class DrawerOrder extends Component {
       <div className="animated fadeIn resize">
         <NotificationAlert ref="notify" />
         <Row>
-          <Col xs="12" sm="12" md="12" lg="7">
+          <Col xs="12" sm="12" md="12" lg="12">
             <Card>
               <CardHeader>
                 <strong>Door Order</strong>
@@ -301,6 +302,7 @@ class DrawerOrder extends Component {
                         formState={formState}
                         loaded={this.state.loaded}
                         handleAddress={this.handleAddress}
+                        edit={edit}
                       />
                     </FormSection>
                   ) : null}
@@ -320,6 +322,7 @@ class DrawerOrder extends Component {
                     formState={formState}
                     prices={prices}
                     subTotal={subTotal}
+                    edit={edit}
                   />
 
                   <div className="mb-3" />
@@ -331,15 +334,17 @@ class DrawerOrder extends Component {
                     <Col xs="5" />
                     <Col xs="3">
                       <strong>Tax: </strong>
-                      <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" />
+                      <Input disabled={edit} placeholder={'$' + tax.toFixed(2)} className="mb-2" />
                       <strong>Total: </strong>
-                      <Input placeholder={'$' + total.toFixed(2)} className="mb-3" />
+                      <Input disabled={edit} placeholder={'$' + total.toFixed(2)} className="mb-3" />
                     </Col>
                   </Row>
                   <Row>
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
+                      {!edit 
+                      ?
                       <Row>
                         <Col>
                           <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
@@ -350,44 +355,15 @@ class DrawerOrder extends Component {
                           </Button>
                         </Col>
                       </Row>
+                      :
+                      <div />
+                    }
+
                     </Col>
                   </Row>
                 </form>
               </CardBody>
             </Card>
-          </Col>
-          <Col lg="4">
-          <Row>
-              <Col>
-                <Card>
-                  <CardBody>
-                    <FormGroup>
-                      <h3>Upload Files</h3>
-                      <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://localhost:1337/upload" />
-                      </form>
-                    </FormGroup>
-                  </CardBody>
-                </Card>
-
-              </Col>
-            </Row>
-            {this.props.formState ? (
-              this.props.formState.part_list.map((part, i) => {
-                return (
-                  <Sticky
-                    top={100}
-                    bottomBoundary={`#item-${i}`}
-                    enabled={true}
-                    key={i}
-                  >
-                    <SideBar key={i} i={i} part={part} />
-                  </Sticky>
-                );
-              })
-            ) : (
-                <div />
-              )}
           </Col>
         </Row>
       </div>

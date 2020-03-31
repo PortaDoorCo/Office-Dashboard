@@ -14,59 +14,11 @@ import 'react-widgets/dist/css/react-widgets.css';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
 
 momentLocaliser(moment)
 
-const renderDropdownListFilter = ({
-  input,
-  data,
-  valueField,
-  textField,
-  meta: { touched, error, warning }
-}) => (
-    <div>
-      <DropdownList
-        {...input}
-        data={data}
-        valueField={valueField}
-        textField={textField}
-        onChange={input.onChange}
-        filter
-      />
-      {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-    </div>
-  );
 
-const renderDropdownList = ({
-  input,
-  data,
-  valueField,
-  textField,
-  meta: { touched, error, warning }
-}) => (
-    <div>
-      <DropdownList
-        {...input}
-        data={data}
-        valueField={valueField}
-        textField={textField}
-        onChange={input.onChange}
-      />
-      {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-    </div>
-  );
-
-const renderField = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
-  <Fragment>
-    <Input {...input} {...custom} />
-    {/* {error && <FormFeedback>{error}</FormFeedback>}
-    {!error && warning && <FormText>{warning}</FormText>} */}
-  </Fragment>
-);
 
 const status = ['Quote', 'Ordered', 'Shipped', 'RUSH']
 
@@ -74,11 +26,12 @@ const required = value => value ? undefined : 'Required';
 
 
 
-const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
+const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
   <DateTimePicker
     onChange={onChange}
     time={showTime}
     value={!value ? null : new Date(value)}
+    disabled={edit} 
   />
 
 
@@ -150,7 +103,7 @@ class JobInfo extends Component {
 
 
   render() {
-    const { customers } = this.props;
+    const { customers, edit } = this.props;
 
     return (
 
@@ -165,6 +118,7 @@ class JobInfo extends Component {
                 name="DueDate"
                 showTime={false}
                 component={renderDateTimePicker}
+                edit={edit}
               />
               <p>7 Business Day Lead Time</p>
             </FormGroup>
@@ -179,6 +133,7 @@ class JobInfo extends Component {
                 name='jobName'
                 type="text"
                 component={renderField}
+                edit={edit}
                 label="JobName" />
             </FormGroup>
           </Col>
@@ -192,6 +147,7 @@ class JobInfo extends Component {
                 onChange={this.onChangeCustomer}
                 valueField="value"
                 textField="Company"
+                edit={edit}
                 validate={required} />
 
             </FormGroup>
@@ -205,6 +161,7 @@ class JobInfo extends Component {
                 data={status}
                 valueField="value"
                 textField="name"
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -216,6 +173,7 @@ class JobInfo extends Component {
                 component={renderField}
                 valueField="value"
                 textField="name"
+                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -238,6 +196,7 @@ class JobInfo extends Component {
                 name='Address1'
                 type="text"
                 component={renderField}
+                edit={edit}
                 label="Address1" />
             </FormGroup>
           </Col>
@@ -253,6 +212,7 @@ class JobInfo extends Component {
                 name='Address2'
                 type="text"
                 component={renderField}
+                edit={edit}
                 label="Address2" />
             </FormGroup>
           </Col>
@@ -269,6 +229,7 @@ class JobInfo extends Component {
                 name='City'
                 type="text"
                 component={renderField}
+                edit={edit}
                 label="City" />
             </FormGroup>
           </Col>
@@ -279,6 +240,7 @@ class JobInfo extends Component {
                 name='State'
                 type="text"
                 component={renderField}
+                edit={edit}
                 label="State" />
             </FormGroup>
           </Col>
@@ -289,6 +251,7 @@ class JobInfo extends Component {
                 name='Zip'
                 type="text"
                 component={renderField}
+                edit={edit}
                 label="Zip" />
             </FormGroup>
           </Col>
@@ -299,6 +262,7 @@ class JobInfo extends Component {
                 name='Phone'
                 type="text"
                 component={renderField}
+                edit={edit}
                 label="Phone" />
             </FormGroup>
           </Col>
