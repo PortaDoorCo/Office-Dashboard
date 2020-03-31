@@ -589,8 +589,10 @@ class OrderPage extends Component {
                           {props.selectedOrder[0] && props.selectedOrder[0].orderType === "Door Order"
                             ?
                             <DoorBalanceHistory /> :
+                            props.selectedOrder[0] && props.selectedOrder[0].orderType === "Drawer Order"
+                            ?
+                            <DrawerBalanceHistory /> :
                             <div />
-                            // <DrawerBalanceHistory />
                           }
 
                         </CardBody>
