@@ -25,7 +25,7 @@ import {
 import {
   submitOrder,
   loadCustomers,
-} from '../../../redux/orders/actions';
+} from '../../../../../redux/orders/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -33,7 +33,7 @@ import {
   totalSelector,
   taxSelector,
   addPriceSelector
-} from '../../../selectors/drawerPricing';
+} from '../../../../../selectors/drawerPricing';
 // import {
 //   getWoodtypes,
 //   getBoxThickness,
@@ -66,7 +66,7 @@ options = {
   autoDismiss: 3
 };
 
-class DoorOrders extends Component {
+class DrawerOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -174,15 +174,6 @@ class DoorOrders extends Component {
           const form = await this.props.formState;
           const customer = await form.job_info.customer;
           const part_list = await form.part_list;
-
-          this.props.dispatch(
-            change(
-              'DrawerOrder',
-              'balance_paid',
-              0
-            )
-          );
-
 
           this.props.dispatch(
             change(
@@ -404,7 +395,11 @@ class DoorOrders extends Component {
   }
 }
 
-const mapStateToProps = (state, prop) => ({
+const mapStateToProps = (state, props) => ({
+
+  initialValues: props.selectedOrder[0],
+  order: props.selectedOrder[0],
+
   woodtypes: state.part_list.box_woodtypes,
   boxBottomWoodtype: state.part_list.box_woodtypes,
   boxThickness: state.part_list.box_thickness,
@@ -421,33 +416,7 @@ const mapStateToProps = (state, prop) => ({
   user: state.users.user,
 
   submitted: state.Orders.submitted,
-  initialValues: {
-    open: true,
-    part_list: [
-      {
-        dimensions: [
-          {
-            scoop: state.part_list.scoop[0],
-            dividers: state.part_list.dividers[0]
-          }
-        ],
-        addPrice: 0
-      }
-    ],
-    job_info: {
-      customer: state.Orders.customerDB[0],
-      jobName: '',
-      status: 'Quote',
-      poNum: '',
-      Address1: '',
-      Address2: '',
-      City: '',
-      State: '',
-      Zip: '',
-      Phone: '',
-      DueDate: dueDate
-    }
-  },
+  
   formState: getFormValues('DrawerOrder')(state),
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
@@ -471,12 +440,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-DoorOrders = reduxForm({
+DrawerOrder = reduxForm({
   form: 'DrawerOrder',
   enableReinitialize: true
-})(DoorOrders);
+})(DrawerOrder);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DoorOrders);
+)(DrawerOrder);
