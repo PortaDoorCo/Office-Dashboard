@@ -85,7 +85,7 @@ const mapStateToProps = (state, prop) => ({
 });
 
 BalanceHistory = reduxForm({
-  form: 'DoorOrder',
+  form: 'DrawerOrder',
 })(BalanceHistory);
 
 
