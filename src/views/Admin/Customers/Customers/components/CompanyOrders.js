@@ -63,27 +63,7 @@ const CustomerOrders = (props) => {
         if (!modal) {
             console.log(row)
             setSelectedOrder(
-                [
-                    {
-                        id: row.id,
-                        jobInfo: row.jobInfo,
-                        jobName: row.jobInfo.jobName,
-                        status: row.status,
-                        poNum: row.jobInfo.poNum,
-                        part_list: row.part_list,
-                        dimensions: row.dimensions,
-                        shippingAddress: row.jobInfo,
-                        linePrice: row.linePrice,
-                        total: row.total,
-                        orderNum: row.orderNum,
-                        orderType: row.orderType,
-                        itemPrice: row.itemPrice,
-                        subTotals: row.subTotals,
-                        tax: row.tax,
-                        files: row.files,
-                        tracking: row.tracking
-                    }
-                ]
+                [row]
             )
         } else {
             return
@@ -105,7 +85,7 @@ const CustomerOrders = (props) => {
 
         },
         {
-            selector: 'jobInfo.customer.Company',
+            selector: 'job_info.customer.Company',
             name: 'Company Name',
 
 
