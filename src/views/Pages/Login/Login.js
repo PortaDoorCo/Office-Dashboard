@@ -19,14 +19,13 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loader from '../Loader/Loader';
 import {
-  getWoodtypes,
-  getDesigns,
-  getEdges,
-  getFinish,
-  getGrades,
-  getMoulds,
-  getPanels,
-  getHinges
+  // getWoodtypes,
+  // getDesigns,
+  // getEdges,
+  // getFinish,
+  // getMoulds,
+  // getPanels,
+  // getHinges
 } from '../../../redux/part_list/actions';
 import { loadOrders, loadCustomers } from '../../../redux/orders/actions';
 import PropTypes from 'prop-types';
@@ -60,7 +59,7 @@ class Login extends Component {
     const { email, password } = this.state;
 
     axios
-      .post('https://portadoor-server-production.herokuapp.com/auth/local', {
+      .post('https://server.portadoor.com/auth/local', {
         identifier: email,
         password: password
       })
@@ -188,14 +187,13 @@ const mapDispatchToProps = dispatch =>
       login,
       loadOrders,
       loadCustomers,
-      getWoodtypes,
-      getDesigns,
-      getEdges,
-      getFinish,
-      getGrades,
-      getMoulds,
-      getPanels,
-      getHinges
+      // getWoodtypes,
+      // getDesigns,
+      // getEdges,
+      // getFinish,
+      // getMoulds,
+      // getPanels,
+      // getHinges
     },
     dispatch
   );

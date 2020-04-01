@@ -44,7 +44,7 @@ const SalesReport = (props) => {
 
   
   return (
-    role.type === 'management' || role.type === 'root' ? 
+    role.type === 'management' || role.type === 'authenticated' ? 
     <div>
       <Row className="mb-3">
         <Col lg='7' />
@@ -91,7 +91,7 @@ const SalesReport = (props) => {
             className={classnames({ active: activeTab === '3' })}
             onClick={() => { toggle('3'); }}
           >
-            <strong>Joseph</strong>
+            <strong>Ned</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -99,7 +99,7 @@ const SalesReport = (props) => {
             className={classnames({ active: activeTab === '4' })}
             onClick={() => { toggle('4'); }}
           >
-            <strong>Peter</strong>
+            <strong>Joseph</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -107,13 +107,21 @@ const SalesReport = (props) => {
             className={classnames({ active: activeTab === '5' })}
             onClick={() => { toggle('5'); }}
           >
-            <strong>Meg</strong>
+            <strong>Peter</strong>
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '6' })}
             onClick={() => { toggle('6'); }}
+          >
+            <strong>Meg</strong>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '7' })}
+            onClick={() => { toggle('7'); }}
           >
             <strong>Krista</strong>
           </NavLink>
@@ -139,7 +147,7 @@ const SalesReport = (props) => {
         <TabPane tabId="3">
           <StatusTable
             orders={data}
-            status="Joseph"
+            status="Ned"
             startDate={startDate}
             endDate={endDate}
           />
@@ -147,7 +155,7 @@ const SalesReport = (props) => {
         <TabPane tabId="4">
           <StatusTable
             orders={data}
-            status="Peter"
+            status="Joseph"
             startDate={startDate}
             endDate={endDate}
           />
@@ -155,12 +163,20 @@ const SalesReport = (props) => {
         <TabPane tabId="5">
           <StatusTable
             orders={data}
-            status="Meg"
+            status="Peter"
             startDate={startDate}
             endDate={endDate}
           />
         </TabPane>
         <TabPane tabId="6">
+          <StatusTable
+            orders={data}
+            status="Meg"
+            startDate={startDate}
+            endDate={endDate}
+          />
+        </TabPane>
+        <TabPane tabId="7">
           <StatusTable
             orders={data}
             status="Krista"

@@ -29,7 +29,6 @@ export default {
     {
       name: 'Drawer Order',
       url: '/drawer-order',
-
     },
     {
       name: 'Reports',
