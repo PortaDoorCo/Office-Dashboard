@@ -5,7 +5,7 @@ import DataTable from 'react-data-table-component';
 import { Checkbox } from '@material-ui/core';
 import differenceBy from 'lodash/differenceBy';
 import io from 'socket.io-client';
-const socket = io('https://infinite-woodland-96977.herokuapp.com/');
+const socket = io('https://server.portadoor.com/');
 
 
 

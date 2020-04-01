@@ -10,7 +10,7 @@ import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
 import { DateBox } from 'devextreme-react';
 import io from 'socket.io-client';
-const socket = io('https://infinite-woodland-96977.herokuapp.com/');
+const socket = io('https://server.portadoor.com/');
 
 momentLocaliser(moment)
 

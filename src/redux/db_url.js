@@ -1,2 +1,2 @@
-const db_url = 'https://infinite-woodland-96977.herokuapp.com'
+const db_url = 'https://server.portadoor.com'
 export default db_url
