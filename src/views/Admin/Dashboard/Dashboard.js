@@ -10,14 +10,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers } from '../../../redux/orders/actions';
 import {
-  getWoodtypes,
-  getDesigns,
-  getEdges,
-  getFinish,
-  getGrades,
-  getMoulds,
-  getPanels,
-  getHinges
+  // getWoodtypes,
+  // getDesigns,
+  // getEdges,
+  // getFinish,
+  // getMoulds,
+  // getPanels,
+  // getHinges
 } from '../../../redux/part_list/actions';
 import { login } from '../../../redux/users/actions';
 import Chart1 from './components/Chart1';
@@ -48,10 +47,12 @@ class Dashboard extends Component {
 
     const { role } = this.props;
 
+    console.log(role)
+
 
     return (
       <div className="animated fadeIn">
-        {role.type === 'management' || role.type === 'root' ?
+        {role.type === 'management' || role.type === 'authenticated' ?
           <div>
             <Row>
               <Col lg="4">
@@ -75,15 +76,15 @@ class Dashboard extends Component {
 
         <Row>
           <Col>
-            {role.type === 'management' || role.type === 'root' ?
-              <OrderTable
-                orders={this.props.orders}
-              />
-              :
+             {role.type === 'management' || role.type === 'authenticated' ? 
+            <OrderTable
+              orders={this.props.orders}
+            />
+             :
               <RestrictedOrderTable
                 orders={this.props.orders}
-              />
-            }
+              /> 
+             } 
           </Col>
 
         </Row>
@@ -109,7 +110,6 @@ const mapStateToProps = (state, prop) => ({
   edges: state.part_list.edges,
   moulds: state.part_list.moulds,
   panels: state.part_list.panels,
-  grades: state.part_list.grades,
   finish: state.part_list.finish,
   hinges: state.part_list.hinges,
   customerDBLoaded: state.Orders.customerDBLoaded,
@@ -131,14 +131,13 @@ const mapDispatchToProps = dispatch =>
     {
       loadOrders,
       loadCustomers,
-      getWoodtypes,
-      getDesigns,
-      getEdges,
-      getFinish,
-      getGrades,
-      getMoulds,
-      getPanels,
-      getHinges,
+      // getWoodtypes,
+      // getDesigns,
+      // getEdges,
+      // getFinish,
+      // getMoulds,
+      // getPanels,
+      // getHinges,
       login
     },
     dispatch

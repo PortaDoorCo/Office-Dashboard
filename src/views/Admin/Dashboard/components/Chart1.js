@@ -17,6 +17,7 @@ import moment from 'moment';
 import { selectDateRange } from '../../../../redux/orders/actions'
 
 
+
 const brandInfo = '#63c2de';
 
 
@@ -178,7 +179,7 @@ class Chart1 extends Component {
             <Row>
               <Col sm="5">
                 <CardTitle className="mb-0">Sales</CardTitle>
-                <div className="small text-muted">2019</div>
+                <div className="small text-muted">{moment().format('YYYY')}</div>
               </Col>
               <Col sm="7" className="d-none d-sm-inline-block">
                 {/* <Button color="primary" className="float-right">

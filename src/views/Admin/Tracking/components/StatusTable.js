@@ -41,7 +41,7 @@ const StatusTable = (props) => {
 
         },
         {
-            selector: 'jobInfo.customer.Company',
+            selector: 'job_info.customer.Company',
             name: 'Company Name',
 
 

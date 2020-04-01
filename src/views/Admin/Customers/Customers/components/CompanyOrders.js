@@ -5,7 +5,7 @@ import {
     Row,
     Col
 } from 'reactstrap';
-import OrderPage from '../../../Orders/ViewAllOrders/OrderPage';
+import OrderPage from '../../../Orders/OrderPage';
 import moment from 'moment';
 
 import DataTable from 'react-data-table-component';

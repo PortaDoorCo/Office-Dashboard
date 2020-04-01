@@ -17,8 +17,8 @@ import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.material.blue.light.css';
-import OrderPage from '../../Orders/ViewAllOrders/OrderPage';
-import SalesmenReport from '../../Orders/ViewAllOrders/PrintOuts/Reports/SalesmenReport';
+import OrderPage from '../../Orders/OrderPage';
+import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import io from 'socket.io-client';
@@ -89,14 +89,14 @@ class StatusTable extends React.Component {
         socket.on('order_deleted', res => (dataGrid.refresh()))
         socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
         if (prevProps.orders !== this.props.orders) {
-            const filteredItems = this.props.orders.filter(item => (item.jobInfo.customer.sale.fullName && item.jobInfo.customer.sale.fullName.includes(this.props.status)));
+            const filteredItems = this.props.orders.filter(item => (item.sale.fullName && item.sale.fullName.includes(this.props.status)));
           
             this.setState({
                 filteredItems: filteredItems
             })
         }
         if (prevState.filterStatus !== this.state.filterStatus) {
-            const saleFilter = this.props.orders.filter(item => (item.jobInfo.customer.sale.fullName && item.jobInfo.customer.sale.fullName.includes(this.props.status)));
+            const saleFilter = this.props.orders.filter(item => (item.sale.fullName && item.sale.fullName.includes(this.props.status)));
             const filterStatus = saleFilter.filter(sale => {
                 if (this.state.filterStatus === "All") {
                     return sale
@@ -148,27 +148,7 @@ class StatusTable extends React.Component {
             const x = row.row.data;
           
             this.setState({
-                selectedOrder: [
-                    {
-                        id: x.id,
-                        jobInfo: x.jobInfo,
-                        jobName: x.jobInfo.jobName,
-                        status: x.status,
-                        poNum: x.jobInfo.poNum,
-                        part_list: x.part_list,
-                        dimensions: x.dimensions,
-                        shippingAddress: x.jobInfo,
-                        linePrice: x.linePrice,
-                        total: x.total,
-                        orderNum: x.orderNum,
-                        orderType: x.orderType,
-                        itemPrice: x.itemPrice,
-                        subTotals: x.subTotals,
-                        tax: x.tax,
-                        files: x.files,
-                        tracking: x.tracking
-                    },
-                ],
+                selectedOrder: [x],
             });
         } else {
             return;

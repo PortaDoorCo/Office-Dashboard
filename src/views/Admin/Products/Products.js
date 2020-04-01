@@ -3,7 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateProduct, addProduct, getWoodtypes, deleteProduct, getDesigns, getMoulds, uploadFile, getPhotoId, getEdges, getPanels, getFinish } from '../../../redux/part_list/actions'
+// import { updateProduct, addProduct, getWoodtypes, deleteProduct, getDesigns, getMoulds, uploadFile, getPhotoId, getEdges, getPanels, getFinish } from '../../../redux/part_list/actions'
 import Design from './Products/Design'
 import Woodtype from './Products/Woodtype'
 import Moulds from './Products/Moulds'
@@ -168,17 +168,17 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      updateProduct,
-      addProduct,
-      deleteProduct,
-      getWoodtypes,
-      getDesigns,
-      getMoulds,
-      getEdges,
-      getPanels,
-      getFinish,
-      uploadFile,
-      getPhotoId
+      // updateProduct,
+      // addProduct,
+      // deleteProduct,
+      // getWoodtypes,
+      // getDesigns,
+      // getMoulds,
+      // getEdges,
+      // getPanels,
+      // getFinish,
+      // uploadFile,
+      // getPhotoId
     },
     dispatch
   );
