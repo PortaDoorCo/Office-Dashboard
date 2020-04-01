@@ -59,7 +59,7 @@ class Login extends Component {
     const { email, password } = this.state;
 
     axios
-      .post('https://infinite-woodland-96977.herokuapp.com/auth/local', {
+      .post('https://server.portadoor.com/auth/local', {
         identifier: email,
         password: password
       })
