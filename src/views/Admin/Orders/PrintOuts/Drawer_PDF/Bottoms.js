@@ -42,7 +42,7 @@ export default data => {
             ]
         },
         {
-            canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
+            canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }]
         },
         data.part_list.map((i, index) => {
             let sortedDimensions = i.dimensions.sort(function (a, b) { return b.width - a.width })
@@ -59,7 +59,7 @@ export default data => {
                 ]
             ];
             sortedDimensions.forEach((item, index) => {
-            
+
                 bottoms.push([
                     { text: item.item, style: 'fonts' },
                     { text: item.qty, style: 'fonts' },
@@ -99,7 +99,7 @@ export default data => {
                     columns: [
                         {
                             stack: [
-                                { text: `${i.woodtype.NAME}`, style: 'woodtype' }
+                                { text: `${i.boxBottoms.NAME} ${i.boxBottomWoodtype.NAME} Bottom`, style: 'woodtype' }
                             ]
                         },
                     ]
@@ -129,7 +129,11 @@ export default data => {
                 {
                     canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
                 },
-                materialBody
+                materialBody,
+                {
+                    canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }],
+                    margin: [0, 20, 0, 10]
+                },
 
             ];
         }),

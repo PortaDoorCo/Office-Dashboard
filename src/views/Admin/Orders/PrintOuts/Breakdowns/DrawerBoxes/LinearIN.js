@@ -1,11 +1,11 @@
 
-
+import numQty from 'numeric-quantity';
 
 export default (v, part) => {
 
     const calc = v.map(item => {
-        const sides = ((parseInt(item.depth) - part.boxThickness.SIDE_DEDUCTION)) * parseInt(item.qty)
-        const fronts = (parseInt(item.width) * 2) * parseInt(item.qty)
+        const sides = (numQty(item.depth) * 2) * parseInt(item.qty)
+        const fronts = (numQty(item.width) * 2) * parseInt(item.qty)
         const s = (sides + fronts)
         return s
     })
