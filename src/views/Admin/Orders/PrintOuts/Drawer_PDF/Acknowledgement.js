@@ -13,7 +13,12 @@ export default data => {
   const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0)
 
 
+  console.log(data)
 
+  const balanceDue = data.balance_history[data.balance_history.length - 1].balance_due;
+  const balancePaid = data.balance_history.reduce(function (accumulator, balance) {
+    return accumulator + balance.balance_paid;
+  }, 0);
 
   return [
     {
@@ -157,7 +162,7 @@ export default data => {
       columns: [
         { text: '', style: 'totals', width: 347 },
         { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: '-$0.00', style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+        { text: `$${(balancePaid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 2, 0, 0],
 
@@ -166,7 +171,7 @@ export default data => {
       columns: [
         { text: '', style: 'totals', width: 347 },
         { text: 'Balance Due:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(data.total).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+        { text: `$${(balanceDue).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 15, 0, 0]
     },
