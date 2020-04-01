@@ -150,7 +150,8 @@ class OrderPage extends Component {
   }
 
   downloadPDF = () => {
-    const data = this.props.selectedOrder[0];
+    const { formState, drawerState } = this.props;
+    const data = formState ? formState : drawerState ? drawerState : []
     if (data.orderType === "Door Order") {
       this.state.selectedOption.map(async option => {
         switch (option.value) {
@@ -319,9 +320,12 @@ class OrderPage extends Component {
 
   render() {
     const props = this.props;
-    const { formState } = this.props;
+    const { formState, drawerState } = this.props;
 
-    
+    console.log(formState)
+    console.log(drawerState)
+
+
 
     // let options;
 
@@ -356,55 +360,64 @@ class OrderPage extends Component {
 
 
 
-    if (this.state.page === 'invoice') {
-      return (
-        <div className="animated noPrint">
-          <Modal
-            isOpen={props.modal}
-            toggle={props.toggle}
-            className="modal-lg"
-          >
-            <ModalHeader toggle={props.toggle}>Order</ModalHeader>
-            <ModalBody>
-              <Row>
-                <Col>
-                  <IconButton onClick={props.toggle && this.close}>
-                    <ArrowBack style={{ width: '40', height: '40' }} />
-                  </IconButton>
-                </Col>
-                <Col />
-                <Col />
-              </Row>
-
+    return (
+      <div className="animated noPrint resize">
+        <Modal
+          isOpen={props.modal}
+          toggle={props.toggle}
+          className="modal-lg"
+        >
+          <ModalHeader toggle={props.toggle}>Order</ModalHeader>
+          <ModalBody>
+            {this.props.edit ? (
               <div>
-                <Invoice />
-              </div>
-            </ModalBody>
-            <ModalFooter>
-              <IconButton onClick={props.toggle && this.close}>
-                <ArrowBack style={{ width: '40', height: '40' }} />
-              </IconButton>
-            </ModalFooter>
-          </Modal>
-        </div>
-      );
-    } else {
-      return (
-        <div className="animated noPrint resize">
-          <Modal
-            isOpen={props.modal}
-            toggle={props.toggle}
-            className="modal-lg"
-          >
-            <ModalHeader toggle={props.toggle}>Order</ModalHeader>
-            <ModalBody>
-              {this.props.edit ? (
-                <div>
-                  <Row>
-                    <Col>
-                      <IconButton onClick={this.props.editable}>
-                        <ArrowBack style={{ width: '40', height: '40' }} />
+                <Row>
+                  <Col>
+                    <IconButton onClick={this.props.editable}>
+                      <ArrowBack style={{ width: '40', height: '40' }} />
+                    </IconButton>
+
+                    <Tooltip title="Tracking History" placement="top">
+                      <IconButton onClick={this.toggleTracking}>
+                        <List style={{ width: '40', height: '40' }} />
                       </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Balance" placement="top">
+                      <IconButton onClick={this.toggleBalance}>
+                        <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                      </IconButton>
+                    </Tooltip>
+
+                  </Col>
+                  <Col />
+                  <Col />
+                </Row>
+              </div>
+            ) : (
+                <div>
+
+                  <Modal isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal}>
+                    <ModalHeader toggle={this.toggleDeleteModal}>Delete Order</ModalHeader>
+                    <ModalBody>
+                      Are You Sure You Want To Delete This Order?
+                      </ModalBody>
+                    <ModalFooter>
+                      <Button color="danger" onClick={this.deleteOrder}>Delete Order</Button>{' '}
+                      <Button color="secondary" onClick={this.toggleDeleteModal}>Cancel</Button>
+                    </ModalFooter>
+                  </Modal>
+
+
+                  <Row></Row>
+                  <Row>
+
+                    <Col>
+                      <Tooltip title="Edit" placement="top">
+                        <IconButton onClick={this.props.editable}>
+                          <Edit style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
                       <Tooltip title="Tracking History" placement="top">
                         <IconButton onClick={this.toggleTracking}>
@@ -418,218 +431,178 @@ class OrderPage extends Component {
                         </IconButton>
                       </Tooltip>
 
+
+                      {(props.selectedOrder[0] && props.selectedOrder[0].files.length > 0) ?
+                        <Tooltip title="View Files" placement="top">
+                          <IconButton onClick={this.toggleFiles}>
+                            <Attachment style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
+                        : null
+                      }
                     </Col>
+
                     <Col />
-                    <Col />
-                  </Row>
-                </div>
-              ) : (
-                  <div>
 
-                    <Modal isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal}>
-                      <ModalHeader toggle={this.toggleDeleteModal}>Delete Order</ModalHeader>
-                      <ModalBody>
-                        Are You Sure You Want To Delete This Order?
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="danger" onClick={this.deleteOrder}>Delete Order</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleDeleteModal}>Cancel</Button>
-                      </ModalFooter>
-                    </Modal>
-
-
-                    <Row></Row>
-                    <Row>
-
-                      <Col>
-                        <Tooltip title="Edit" placement="top">
-                          <IconButton onClick={this.props.editable}>
-                            <Edit style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
-
-                        <Tooltip title="Tracking History" placement="top">
-                          <IconButton onClick={this.toggleTracking}>
-                            <List style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
-
-                        <Tooltip title="Balance" placement="top">
-                          <IconButton onClick={this.toggleBalance}>
-                            <AttachMoneyIcon style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
-
-
-                        {(props.selectedOrder[0] && props.selectedOrder[0].files.length > 0) ?
-                          <Tooltip title="View Files" placement="top">
-                            <IconButton onClick={this.toggleFiles}>
-                              <Attachment style={{ width: '40', height: '40' }} />
+                    <Col>
+                      <Row>
+                        <Col lg='7'>
+                          <div className='mt-3 mb-2'>
+                            <Select
+                              value={this.state.selectedOption}
+                              onChange={this.handleChange}
+                              options={options}
+                              isMulti={true}
+                            />
+                          </div>
+                        </Col>
+                        <Col>
+                          <Tooltip title="Print" placement="top" className="mb-3">
+                            <IconButton onClick={this.downloadPDF}>
+                              <Print style={{ width: '40', height: '40' }} />
                             </IconButton>
                           </Tooltip>
-                          : null
-                        }
-                      </Col>
-
-                      <Col />
-
-                      <Col>
-                        <Row>
-                          <Col lg='7'>
-                            <div className='mt-3 mb-2'>
-                              <Select
-                                value={this.state.selectedOption}
-                                onChange={this.handleChange}
-                                options={options}
-                                isMulti={true}
-                              />
-                            </div>
-                          </Col>
-                          <Col>
-                            <Tooltip title="Print" placement="top" className="mb-3">
-                              <IconButton onClick={this.downloadPDF}>
-                                <Print style={{ width: '40', height: '40' }} />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Delete Order" placement="top" className="mb-3">
-                              <IconButton onClick={this.toggleDeleteModal}>
-                                <Delete style={{ width: '40', height: '40' }} />
-                              </IconButton>
-                            </Tooltip>
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                  </div>
-                )}
-              <div>
-                <Collapse isOpen={this.state.filesOpen}>
-                  <Row>
-                    <Col lg='12'>
-                      <Card>
-                        <CardBody>
-                          <h5>Files</h5>
-                          <Table striped>
-                            <tbody>
-                              {props.selectedOrder[0] ? props.selectedOrder[0].files.map((i, index) => (
-                                <tr>
-                                  <th scope="row">{index + 1}</th>
-                                  <td>{i.name}</td>
-                                  <td style={{ textAlign: 'right' }}><a href={i.url} target="_blank">View</a></td>
-                                </tr>
-                              )) : null}
-                            </tbody>
-                          </Table>
-                        </CardBody>
-                      </Card>
+                          <Tooltip title="Delete Order" placement="top" className="mb-3">
+                            <IconButton onClick={this.toggleDeleteModal}>
+                              <Delete style={{ width: '40', height: '40' }} />
+                            </IconButton>
+                          </Tooltip>
+                        </Col>
+                      </Row>
                     </Col>
                   </Row>
-                </Collapse>
-              </div>
+                </div>
+              )}
+            <div>
+              <Collapse isOpen={this.state.filesOpen}>
+                <Row>
+                  <Col lg='12'>
+                    <Card>
+                      <CardBody>
+                        <h5>Files</h5>
+                        <Table striped>
+                          <tbody>
+                            {props.selectedOrder[0] ? props.selectedOrder[0].files.map((i, index) => (
+                              <tr>
+                                <th scope="row">{index + 1}</th>
+                                <td>{i.name}</td>
+                                <td style={{ textAlign: 'right' }}><a href={i.url} target="_blank">View</a></td>
+                              </tr>
+                            )) : null}
+                          </tbody>
+                        </Table>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Collapse>
+            </div>
 
-              <div>
-                <Collapse isOpen={this.state.trackingOpen}>
-                  <Row>
-                    <Col lg='12'>
-                      <Card>
-                        <CardBody>
-                          <h5>Tracking History</h5>
-                          <Table striped>
-                            <tbody>
-                              {(props.selectedOrder[0] && props.selectedOrder[0].tracking) ? props.selectedOrder[0].tracking.slice(0).reverse().map((i, index) => (
-                                <tr>
-                                  <th>{i.status}</th>
-                                  <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
-                                </tr>
-                              )) : null}
-                            </tbody>
-                          </Table>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </Collapse>
-              </div>
+            <div>
+              <Collapse isOpen={this.state.trackingOpen}>
+                <Row>
+                  <Col lg='12'>
+                    <Card>
+                      <CardBody>
+                        <h5>Tracking History</h5>
+                        <Table striped>
+                          <tbody>
+                            {(props.selectedOrder[0] && props.selectedOrder[0].tracking) ? props.selectedOrder[0].tracking.slice(0).reverse().map((i, index) => (
+                              <tr>
+                                <th>{i.status}</th>
+                                <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+                              </tr>
+                            )) : null}
+                          </tbody>
+                        </Table>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Collapse>
+            </div>
 
 
-              <div>
-                <Collapse isOpen={this.state.balanceOpen}>
-                  <Row>
-                    <Col lg='4'>
-                      <Card>
-                        <CardBody>
-                          <h5>Balance</h5>
-                          {/* <DoorBalance
+            <div>
+              <Collapse isOpen={this.state.balanceOpen}>
+                <Row>
+                  <Col lg='4'>
+                    <Card>
+                      <CardBody>
+                        <h5>Balance</h5>
+                        {/* <DoorBalance
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
                             /> */}
-                          {props.selectedOrder[0] && props.selectedOrder[0].orderType === "Door Order"
-                            ?
-                            <DoorBalance
-                              toggleBalance={this.toggleBalance}
-                              selectedOrder={props.selectedOrder}
-                            /> :
-                            props.selectedOrder[0] && props.selectedOrder[0].orderType === "Drawer Order"
+                        {props.selectedOrder[0] && props.selectedOrder[0].orderType === "Door Order"
+                          ?
+                          <DoorBalance
+                            toggleBalance={this.toggleBalance}
+                            selectedOrder={props.selectedOrder}
+                          /> :
+                          props.selectedOrder[0] && props.selectedOrder[0].orderType === "Drawer Order"
                             ?
                             <DrawerBalance
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
                             />
-                            : 
+                            :
                             <div />
-                          }
+                        }
 
-                        </CardBody>
-                      </Card>
-                    </Col>
-                    <Col>
-                      <Card>
-                        <CardBody>
-                          <h5>Balance History</h5>
-                          {props.selectedOrder[0] && props.selectedOrder[0].orderType === "Door Order"
-                            ?
-                            <DoorBalanceHistory /> :
-                            props.selectedOrder[0] && props.selectedOrder[0].orderType === "Drawer Order"
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col>
+                    <Card>
+                      <CardBody>
+                        <h5>Balance History</h5>
+                        {props.selectedOrder[0] && props.selectedOrder[0].orderType === "Door Order"
+                          ?
+                          <DoorBalanceHistory /> :
+                          props.selectedOrder[0] && props.selectedOrder[0].orderType === "Drawer Order"
                             ?
                             <DrawerBalanceHistory /> :
                             <div />
-                          }
+                        }
 
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </Collapse>
-              </div>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Collapse>
+            </div>
+
+            <div>
+              {/* order edit here */}
+
 
               <div>
-                {/* order edit here */}
-
-
-                <div>
-                  <EditSelectedOrder
-                    selectedOrder={props.selectedOrder}
-                    editable={this.props.editable}
-                    edit={!this.props.edit}
-                    toggle={props.toggle}
-                  />
-                </div>
+                <EditSelectedOrder
+                  selectedOrder={props.selectedOrder}
+                  editable={this.props.editable}
+                  edit={!this.props.edit}
+                  toggle={props.toggle}
+                />
               </div>
-            </ModalBody>
-            <ModalFooter>
-              <Button color="secondary" onClick={props.toggle}>
-                Close
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={props.toggle}>
+              Close
               </Button>
-            </ModalFooter>
-          </Modal>
-        </div>
-      );
-    }
+          </ModalFooter>
+        </Modal>
+      </div>
+    );
   }
 }
 
+
 const mapStateToProps = (state, prop) => ({
   formState: getFormValues('DoorOrder')(state),
+  drawerState: getFormValues("DrawerOrder")(state),
+  
 });
 
 const mapDispatchToProps = dispatch =>

@@ -43,7 +43,7 @@ class Balance extends Component {
       change(
         'DrawerOrder',
         'balance_due',
-        this.props.balance.toFixed("2")
+        this.props.balance
       )
     );
   }

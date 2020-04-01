@@ -38,16 +38,6 @@ class Balance extends Component {
     super(props);
   }
 
-  changeBalance = () => {
-    this.props.dispatch(
-      change(
-        'DoorOrder',
-        'balance_due',
-        this.props.balance.toFixed("2")
-      )
-    );
-  }
-
   cancel = () => {
     this.props.toggleBalance()
   }
@@ -76,6 +66,14 @@ class Balance extends Component {
         0
       )
     )
+
+    this.props.dispatch(
+      change(
+        'DoorOrder',
+        'balanceTotal',
+        this.props.balanceTotal
+      )
+    );
 
     await this.props.dispatch(
       change(

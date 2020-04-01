@@ -20,6 +20,9 @@ import {
 
 
 class BalanceHistory extends Component {
+
+  
+
   render() {
     const { formState, balanceTotal, balance, total } = this.props;
 
