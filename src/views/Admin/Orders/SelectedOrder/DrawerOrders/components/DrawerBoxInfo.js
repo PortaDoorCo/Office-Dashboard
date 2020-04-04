@@ -36,11 +36,16 @@ class DrawerBoxInfo extends Component {
 
                 </Col>
                 <Col>
-                  {fields.length > 1 ? (
-                    <Button color="danger" onClick={() => fields.remove(index)}>
-                      x
-                    </Button>
-                  ) : null}
+                  {!edit ?
+                    <div>
+                      {fields.length > 1 ? (
+                        <Button color="danger" onClick={() => fields.remove(index)}>
+                          x
+                        </Button>
+                      ) : null}
+                    </div> : <div />
+                  }
+
                 </Col>
               </Row>
             </CardSubtitle>
