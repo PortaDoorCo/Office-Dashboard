@@ -51,6 +51,26 @@ const status = [
         value: 'In Production',
     },
     {
+        name: 'Station 1',
+        value: 'Station 1',
+    },
+    {
+        name: 'Station 2',
+        value: 'Station 2',
+    },
+    {
+        name: 'Station 3',
+        value: 'Station 3',
+    },
+    {
+        name: 'Station 4',
+        value: 'Station 4',
+    },
+    {
+        name: 'Station 4',
+        value: 'Station 4',
+    },
+    {
         name: 'Complete',
         value: 'Complete',
     },
