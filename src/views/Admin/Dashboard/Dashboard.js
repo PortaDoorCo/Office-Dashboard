@@ -23,6 +23,7 @@ import Chart1 from './components/Chart1';
 import Chart2 from './components/Chart2';
 import Chart3 from './components/Chart3';
 import Chart4 from './components/Chart4'
+import Map from './components/Map'
 
 
 
@@ -68,6 +69,11 @@ class Dashboard extends Component {
             <Row>
               <Col>
                 <Chart1 />
+              </Col>
+            </Row>
+            <Row>
+              <Col style={{ height: 500 }}>
+                <Map />
               </Col>
             </Row>
           </div>
