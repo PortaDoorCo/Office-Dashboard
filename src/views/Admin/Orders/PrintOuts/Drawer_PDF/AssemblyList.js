@@ -49,7 +49,7 @@ export default data => {
       ]
     },
     {
-      canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
+      canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }]
     },
     data.part_list.map(i => {
 
@@ -70,7 +70,7 @@ export default data => {
               {
                 stack: [
                   {
-                    text: `Drawer Box ${i.boxThickness.Thickness}`,
+                    text: `Drawer Box ${i.boxThickness.NAME}`,
                     style: 'fonts'
                   },
                   { text: `${i.woodtype.NAME}`, style: 'woodtype' }
@@ -79,7 +79,7 @@ export default data => {
               {
                 stack: [
                   {
-                    text: `Bottom: ${i.boxBottomWoodtype.NAME}`,
+                    text: `Bottom: ${i.boxBottoms.NAME} ${i.boxBottomWoodtype.NAME} Bottom`,
                     style: 'fonts'
                   }
                 ],
@@ -111,7 +111,7 @@ export default data => {
 
 
         v.forEach((item, index) => {
-         
+
           let tb = [
             { text: item.item, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
@@ -158,13 +158,14 @@ export default data => {
             layout: 'lightHorizontalLines'
           },
           {
-            canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
+            canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }],
+
           }
         ]
       })
 
       const materialBreakdown = materialBody.map((i, index) => {
-    
+
         return i
       })
 
@@ -176,7 +177,11 @@ export default data => {
         {
           canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
         },
-        materialBreakdown
+        materialBreakdown,        
+        {
+          canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }],
+          margin: [0, 20, 0, 10]
+        },
       ]
 
       return body

@@ -25,6 +25,8 @@ import {
 import {
   submitOrder,
   loadCustomers,
+  loadOrders,
+  updateOrder
 } from '../../../../../redux/orders/actions';
 import {
   linePriceSelector,
@@ -96,7 +98,9 @@ class DrawerOrder extends Component {
       submitOrder,
       orderNum,
       tax,
-      user
+      user,
+      loadOrders,
+      updateOrder
     } = this.props;
 
     console.log(values)
@@ -154,13 +158,12 @@ class DrawerOrder extends Component {
       ]
     };
 
-    if (values.part_list[0].dimensions.length > 0) {
-      submitOrder(order, cookie);
-      reset();
-      window.scrollTo(0, 0);
-    } else {
-      e.preventDefault();
-    }
+    const orderId = values.id;
+
+    await updateOrder(orderId, order, cookie);
+    await this.props.toggle();
+    await loadOrders(cookie);
+    await this.props.dispatch(reset('DrawerOrder'))
   };
 
   componentDidMount() {
@@ -411,7 +414,9 @@ const mapDispatchToProps = dispatch =>
       // getBoxThickness,
       // getBoxBottoms,
       // getAssembly,
-      // getNotch
+      // getNotch,
+      loadOrders,
+      updateOrder
     },
     dispatch
   );
