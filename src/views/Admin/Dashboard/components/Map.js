@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import io from 'socket.io-client';
+const socket = io('https://server.portadoor.com/');
 
 const Marker = (props: any) => {
     const { color, name, id } = props;
@@ -11,6 +13,27 @@ const Marker = (props: any) => {
     );
 };
 class Map extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            driverLocation: {}
+        }
+    }
+
+    componentDidMount() {
+        socket.on('otherPositions', res =>
+            this.setState({
+                driverLocation: {
+                    latitude: res.position[0].coords.latitude,
+                    longitude: res.position[0].coords.longitude
+                }
+            })
+        )
+
+        
+    }
+
+
     static defaultProps = {
         center: {
             lat: 41.379521,
@@ -20,6 +43,8 @@ class Map extends Component {
     };
 
     render() {
+        const { driverLocation } = this.state;
+        console.log(driverLocation)
         return (
             // Important! Always set the container height explicitly
             <div style={{ height: '100%', width: '100%' }}>
@@ -30,8 +55,8 @@ class Map extends Component {
                     defaultZoom={this.props.zoom}
                 >
                     <Marker
-                        lat={41.379521}
-                        lng={-73.045469}
+                        lat={driverLocation.latitude}
+                        lng={driverLocation.longitude}
                         name="Driver"
                         color="red"
                     />
