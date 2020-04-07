@@ -16,35 +16,36 @@ class Map extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            driverLocation: {}
+            driverLocations: []
         }
     }
 
     componentDidMount() {
-        socket.on('otherPositions', res =>
+        socket.emit('position', {
+            coords: {
+                latitude: 32.2140789,
+                longitude: -110.9478166
+            }
+        })
+        socket.on('drivers', res => 
             this.setState({
-                driverLocation: {
-                    latitude: res.position[0].coords.latitude,
-                    longitude: res.position[0].coords.longitude
-                }
+                driverLocations: res
             })
         )
-
-        
     }
 
 
     static defaultProps = {
         center: {
-            lat: 41.379521,
-            lng: -73.045469
+            lat: 32.25888143746854,
+            lng: -110.94025981016813
         },
         zoom: 8
     };
 
     render() {
-        const { driverLocation } = this.state;
-        console.log(driverLocation)
+        const { driverLocations } = this.state;
+        console.log(driverLocations)
         return (
             // Important! Always set the container height explicitly
             <div style={{ height: '100%', width: '100%' }}>
@@ -54,12 +55,17 @@ class Map extends Component {
                     defaultCenter={this.props.center}
                     defaultZoom={this.props.zoom}
                 >
-                    <Marker
-                        lat={driverLocation.latitude}
-                        lng={driverLocation.longitude}
-                        name="Driver"
-                        color="red"
-                    />
+                    {this.state.driverLocations.map(i => {
+                        return (
+                            <Marker
+                            lat={i.coords.latitude}
+                            lng={i.coords.longitude}
+                            name="Driver"
+                            color="red"
+                        />
+                        )
+                    })}
+
                 </GoogleMapReact>
             </div>
         );
