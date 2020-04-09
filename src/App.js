@@ -7,24 +7,13 @@ import Register from "./views/Pages/Register/Register";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { NotificationManager } from 'react-notifications';
-import { loadOrders, loadCustomers, loadSales, loadShippingMethod } from "./redux/orders/actions";
+import { loadOrders, loadCustomers, loadSales, loadShippingMethod, getDeliveries } from "./redux/orders/actions";
 import { setLogin } from "./redux/users/actions";
-import {
-  // getWoodtypes,
-  // getDesigns,
-  // getEdges,
-  // getFinish,
-  // getMoulds,
-  // getPanels,
-  // getHinges,
-  // getBoxThickness,
-  // getBoxBottoms,
-  // getAssembly,
-  // getNotch,
-  // getDrawerFinish
-} from "./redux/part_list/actions";
 import io from 'socket.io-client';
 const socket = io('https://server.portadoor.com/');
+
+
+const cookie = Cookies.get("jwt");
 
 const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -66,10 +55,12 @@ class App extends Component {
 
   componentDidMount = () => {
     this.cookies()
+    this.props.getDeliveries(cookie)
     socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), console.log(res)))
     socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), console.log(res)))
     socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, `An order has been updated`, 2000)))
     socket.on('order_deleted', res => (NotificationManager.success(`Order Deleted`, 'Order Deleted', 2000)))
+    socket.on('delivery_added', res => this.props.getDeliveries(cookie))
   }
 
   componentDidUpdate = async(prevProps) => {
@@ -122,19 +113,8 @@ bindActionCreators(
     loadCustomers,
     loadSales,
     loadShippingMethod,
-    // getWoodtypes,
-    // getDesigns,
-    // getEdges,
-    // getFinish,
-    // getMoulds,
-    // getPanels,
-    // getHinges, 
-    // getBoxThickness,
-    // getBoxBottoms,
-    // getAssembly,
-    // getNotch,
-    // getDrawerFinish,
     setLogin,
+    getDeliveries
 
   },
   dispatch
