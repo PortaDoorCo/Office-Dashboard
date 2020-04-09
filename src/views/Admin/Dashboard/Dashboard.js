@@ -72,7 +72,7 @@ class Dashboard extends Component {
               </Col>
             </Row>
             <Row>
-              <Col style={{ height: 500 }}>
+              <Col style={{ height: 600 }}>
                 <Map />
               </Col>
             </Row>
