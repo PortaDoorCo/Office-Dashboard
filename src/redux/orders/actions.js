@@ -24,6 +24,7 @@ export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 export const UPDATE_ORDER_NUM = 'UPDATE_ORDER_NUM'
 export const DELETE_ORDER = 'DELETE_ORDER'
 export const UPDATE_BALANCE = 'UPDATE_BALANCE'
+export const LOAD_DELIVERIES = 'LOAD_DELIVERIES'
 
 export function addToCart(
   order,
@@ -345,6 +346,23 @@ export function selectDateRange(date) {
     return dispatch({
       type: SELECT_DATE_RANGE,
       date: date
+    });
+  };
+}
+
+export function getDeliveries(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/deliveries`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return await dispatch({
+      type: LOAD_DELIVERIES,
+      data: data
     });
   };
 }
