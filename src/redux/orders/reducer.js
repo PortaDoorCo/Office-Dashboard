@@ -14,7 +14,8 @@ import {
   SUBMIT_CUSTOMER,
   LOAD_SHIPPING_METHODS,
   UPDATE_CUSTOMER,
-  UPDATE_ORDER_NUM
+  UPDATE_ORDER_NUM,
+  LOAD_DELIVERIES
 } from './actions';
 
 import uniqid from 'uniqid';
@@ -34,6 +35,8 @@ const initialState = {
   jobInfo: [],
   sessionOrders: 0,
   sessionCustomers: 0,
+  deliveries: [],
+  sortedDestinations:[],
 
   selectedDateRange: 'day',
   shippingMethods: []
@@ -141,6 +144,20 @@ export default function (state = initialState, action) {
       return {
         ...state,
         shippingMethods: data
+      };
+    case LOAD_DELIVERIES:
+      const updatedDeliveries = [...state.deliveries, data];
+      // const sortedLocations = sortByDistance(state.current_location.coords, updatedDeliveries.map(i=>i.location), opts);
+  
+      // const sortedDestinations = sortedLocations.map(location => {
+      //     const deliveryCompany = updatedDeliveries.find(({ location: { latitude }}) => latitude === location.latitude);
+      //     return deliveryCompany;
+      // });
+   
+      return {
+          ...state,
+          deliveries: data,
+          // sortedDestinations
       };
 
     default:
