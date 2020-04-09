@@ -59,6 +59,7 @@ class Map extends Component {
     }
 
 
+
     static defaultProps = {
         center: {
             lat: 41.3879115,
