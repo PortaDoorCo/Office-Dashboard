@@ -7,7 +7,7 @@ import Register from "./views/Pages/Register/Register";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { NotificationManager } from 'react-notifications';
-import { loadOrders, loadCustomers, loadSales, loadShippingMethod, getDeliveries } from "./redux/orders/actions";
+import { loadOrders, loadCustomers, loadSales, loadShippingMethod } from "./redux/orders/actions";
 import { setLogin } from "./redux/users/actions";
 import io from 'socket.io-client';
 const socket = io('https://server.portadoor.com/');
@@ -55,7 +55,6 @@ class App extends Component {
 
   componentDidMount = () => {
     this.cookies()
-    this.props.getDeliveries(cookie)
     socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), console.log(res)))
     socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), console.log(res)))
     socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, `An order has been updated`, 2000)))
@@ -113,8 +112,7 @@ bindActionCreators(
     loadCustomers,
     loadSales,
     loadShippingMethod,
-    setLogin,
-    getDeliveries
+    setLogin
 
   },
   dispatch

@@ -274,8 +274,6 @@ export function updateOrder(orderId, order, cookie) {
 
 
 export function updateStatus(orderId, key, status, cookie) {
-  console.log(key)
-  console.log(status)
   const item = {
     status: status.status,
     tracking: [
@@ -287,7 +285,6 @@ export function updateStatus(orderId, key, status, cookie) {
     ]
   }
 
-  console.log(item)
   return async function (dispatch) {
     try {
      await axios.put(`${db_url}/orders/status/${orderId}`, item, {

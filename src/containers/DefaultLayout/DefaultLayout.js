@@ -24,7 +24,7 @@ import Cookies from "js-cookie";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { loadOrders, loadCustomers, loadSales, loadShippingMethod } from "../../redux/orders/actions";
+import { loadOrders, loadCustomers, loadSales, loadShippingMethod, getDeliveries } from "../../redux/orders/actions";
 import {
   getWoodtypes,
   getAppliedMoulds,
@@ -119,7 +119,8 @@ class DefaultLayout extends Component {
 
       login,
       loadSales,
-      loadOrders
+      loadOrders,
+      getDeliveries
 
     } = this.props;
 
@@ -129,6 +130,7 @@ class DefaultLayout extends Component {
       await login(cookie);
       await loadSales(cookie);
       await loadOrders(cookie);
+      await getDeliveries(cookie)
 
       await getWoodtypes(cookie);
       await getAppliedMoulds(cookie);
@@ -287,6 +289,7 @@ const mapDispatchToProps = dispatch =>
       getBoxNotches,
       getBoxThicknesses,
       getBoxWoodtypes,
+      getDeliveries,
 
 
 
