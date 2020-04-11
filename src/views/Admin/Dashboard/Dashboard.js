@@ -25,6 +25,7 @@ import Chart3 from './components/Chart3';
 import Chart4 from './components/Chart4'
 import Map from './components/Map'
 import Maps from './components/Maps'
+import StatusChart from '../Tracking/Tracking'
 
 
 
@@ -47,7 +48,7 @@ class Dashboard extends Component {
 
   render() {
 
-    const { role } = this.props;
+    const { role, orders } = this.props;
 
     console.log(role)
 
@@ -77,6 +78,7 @@ class Dashboard extends Component {
                 <Maps />
               </Col>
             </Row>
+
           </div>
           : null
         }
