@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'reactstrap';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
+import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import truck from '../../../../assets/icon/truck.png'
@@ -29,13 +30,24 @@ class DeliveryLocations extends Component {
 
     render() {
         const { locations } = this.props
-        return locations.map((location, index) => {
-            console.log(location)
-            return (
-                <DeliveryInfoWindow key={index} location={location} />
-            )
-        }
-        );
+        return (
+            <div>
+                <MarkerClusterer
+                    averageCenter
+                    enableRetinaIcons
+                    gridSize={60}
+                >
+                    {locations.map((location, index) => {
+                        console.log(location)
+                        return (
+                            <DeliveryInfoWindow key={index} location={location} />
+                        )
+                    })}
+                </MarkerClusterer>
+            </div>
+
+        )
+
     }
 }
 
@@ -79,6 +91,7 @@ class DeliveryInfoWindow extends Component {
                         <NavLink href={location.www} target="_blank">{location.companyprofile.Company}</NavLink>
                     </InfoWindow>}
             </Marker>
+
         )
     }
 }
