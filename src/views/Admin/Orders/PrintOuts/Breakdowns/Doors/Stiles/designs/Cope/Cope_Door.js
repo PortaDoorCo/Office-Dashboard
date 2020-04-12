@@ -34,7 +34,7 @@ export default (info, part) => {
 
 
   if (leftStile === rightStile) {
-    if ((panelsW > 1) || (panelsH > 1)) {
+    if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH == 1))) {
       return [
         {
           qty: `(${(qty * 2)})`,
@@ -66,7 +66,7 @@ export default (info, part) => {
     }
   }
   else {
-    if ((panelsW > 1) || (panelsH > 1)) {
+    if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH == 1))) {
       return [
         {
           qty: `(${(qty)})`,
