@@ -79,6 +79,8 @@ const StatusTable = (props) => {
                 onRowSelected={handleRowSelected}
                 clearSelectedRows={toggleCleared}
                 responsive
+                pagination={true}
+                paginationRowsPerPageOptions={[10, 15, 20, 25, 30]}
                 dense
             />
         </div>
