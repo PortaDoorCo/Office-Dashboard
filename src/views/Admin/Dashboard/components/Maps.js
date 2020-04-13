@@ -83,7 +83,7 @@ class DeliveryInfoWindow extends Component {
                 }}
 
                 position={loc}
-                title={location}
+                title={"Delivery"}
                 label={location.address}>
 
                 {this.state.isOpen &&
