@@ -7,7 +7,7 @@ import Register from "./views/Pages/Register/Register";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { NotificationManager } from 'react-notifications';
-import { loadOrders, loadCustomers, loadSales, loadShippingMethod } from "./redux/orders/actions";
+import { loadOrders, loadCustomers, loadSales, loadShippingMethod, getDeliveries } from "./redux/orders/actions";
 import { setLogin } from "./redux/users/actions";
 import io from 'socket.io-client';
 const socket = io('https://server.portadoor.com/');
@@ -112,7 +112,8 @@ bindActionCreators(
     loadCustomers,
     loadSales,
     loadShippingMethod,
-    setLogin
+    setLogin,
+    getDeliveries
 
   },
   dispatch

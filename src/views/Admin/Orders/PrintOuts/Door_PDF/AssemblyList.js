@@ -104,7 +104,7 @@ console.log(data)
             },
             {
               stack: [
-                { text: 'Thickness: 3/4"', style: 'fonts' },
+                { text: `Thickness: ${i.thickness.name}"`, style: 'fonts' },
                 {
                   text: `IP: ${i.profile ? i.profile.NAME : ''}   Edge: ${i.edge ? i.edge.NAME : ''}`,
                   style: 'fonts'

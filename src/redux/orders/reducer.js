@@ -17,6 +17,7 @@ import {
   UPDATE_ORDER_NUM,
   LOAD_DELIVERIES
 } from './actions';
+import moment from 'moment'
 
 import uniqid from 'uniqid';
 
@@ -36,7 +37,7 @@ const initialState = {
   sessionOrders: 0,
   sessionCustomers: 0,
   deliveries: [],
-  sortedDestinations:[],
+  sortedDestinations: [],
 
   selectedDateRange: 'day',
   shippingMethods: []
@@ -146,18 +147,21 @@ export default function (state = initialState, action) {
         shippingMethods: data
       };
     case LOAD_DELIVERIES:
-      const updatedDeliveries = [...state.deliveries, data];
+      const updatedDeliveries = data
+      const dateDeliveries = updatedDeliveries.filter(function (d, i) {
+        return moment(d.createdAt).isSame(new Date(), 'day')
+      })
       // const sortedLocations = sortByDistance(state.current_location.coords, updatedDeliveries.map(i=>i.location), opts);
-  
+
       // const sortedDestinations = sortedLocations.map(location => {
       //     const deliveryCompany = updatedDeliveries.find(({ location: { latitude }}) => latitude === location.latitude);
       //     return deliveryCompany;
       // });
-   
+
       return {
-          ...state,
-          deliveries: data,
-          // sortedDestinations
+        ...state,
+        deliveries: dateDeliveries,
+        // sortedDestinations
       };
 
     default:
