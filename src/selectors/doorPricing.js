@@ -145,9 +145,9 @@ export const linePriceSelector = createSelector(
   (parts) =>
     parts.map((part, index) => {
       console.log(part)
-      const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
-      const design = part.design ? part.design.UPCHARGE : 0;
-      const edge = part.edge ? part.edge.UPCHARGE : 0;
+      const wood = part.woodtype && part.thickness.value === 0.75 ? part.woodtype.STANDARD_GRADE : part.woodtype && part.thickness.value === 1 ? part.woodtype.STANDARD_GRADE_THICK :  0;
+      const design = part.design && part.thickness.value === 0.75 ? part.design.UPCHARGE : part.design && part.thickness.value === 1 ? part.design.UPCHARGE_THICK :  0;
+      const edge = part.edge && part.thickness.value === 0.75 ? part.edge.UPCHARGE : part.edge && part.thickness.value === 1 ? part.edge.UPCHARGE_THICK : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
       const applied_profile = part.applied_profile ? part.applied_profile.UPCHARGE : 0;
       const finish = part.finish ? part.finish.UPCHARGE : 0;

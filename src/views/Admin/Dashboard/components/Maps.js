@@ -175,7 +175,7 @@ const GoogleMapsComponent = withScriptjs(withGoogleMap((props) => {
 
     return (
         <GoogleMap defaultZoom={zoom} center={center}>
-            {<DeliveryLocations locations={props.locations} />}
+            {props.locations.length>0 ? <DeliveryLocations locations={props.locations} /> : <div />}
             {<DriverLocations locations={props.driverLocations} />}
         </GoogleMap>
     );
