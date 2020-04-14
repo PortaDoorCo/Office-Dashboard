@@ -27,32 +27,32 @@ const comingSoon =
 class SideBar extends Component {
   render() {
 
-    const { part } = this.props;
+    const { part, i } = this.props;
 
 
     if(part.orderType.value === "Door") {
 
       if(part.construction.value === "Cope") {
         return (
-          <CopeDoor part={part} />
+          <CopeDoor part={part} i={i} />
         )
       }
 
       else if(part.construction.value === "M") {
         return (
-          <MiterDoor part={part} />
+          <MiterDoor part={part} i={i} />
         )
       }
 
       else if(part.construction.value === "MT") {
         return (
-          <MTDoor part={part} />
+          <MTDoor part={part} i={i} />
         )
       }
 
       else if(part.construction.value === "Glass") {
         return (
-          <GlassDoor part={part} />
+          <GlassDoor part={part} i={i} />
         )
       }
 
@@ -66,19 +66,19 @@ class SideBar extends Component {
 
       if(part.construction.value === "Cope") {
         return (
-          <CopeDF part={part} />
+          <CopeDF part={part} i={i} />
         )
       }
 
       if(part.construction.value === "M") {
         return (
-          <MiterDF part={part} />
+          <MiterDF part={part} i={i} />
         )
       }
 
       if(part.construction.value === "MT") {
         return (
-          <MTDF part={part} />
+          <MTDF part={part} i={i} />
         )
       }
 
