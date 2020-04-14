@@ -11,6 +11,8 @@ import MiterDoor from './SideBar/Miter/Door'
 import MTDoor from './SideBar/MT/Door'
 import CopeDF from './SideBar/Cope/DF'
 import MiterDF from './SideBar/Miter/DF'
+import MTDF from './SideBar/MT/DF'
+import GlassDoor from './SideBar/Glass/Door'
 
 const style = {
   margin: 'auto',
@@ -47,6 +49,12 @@ class SideBar extends Component {
         )
       }
 
+      else if(part.construction.value === "Glass") {
+        return (
+          <GlassDoor part={part} />
+        )
+      }
+
       else {
         return (
           <div />
@@ -67,7 +75,11 @@ class SideBar extends Component {
         )
       }
 
-
+      if(part.construction.value === "MT") {
+        return (
+          <MTDF part={part} />
+        )
+      }
 
       else {
         return (
@@ -77,9 +89,21 @@ class SideBar extends Component {
 
     } else if (part.orderType.value === "Face_Frame") {
 
+      return (
+        <div />
+      )
+
     } else if (part.orderType.value === "One_Piece") {
 
+      return (
+        <div />
+      )
+
     } else if (part.orderType.value === "Slab") {
+
+      return (
+        <div />
+      )
 
     } else {
       return (
