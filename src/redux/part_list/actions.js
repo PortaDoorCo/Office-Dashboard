@@ -202,7 +202,7 @@ export function getEdgeSlabs(cookie) {
 
 export function getEdges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/edge-slabs`,
+    const res = await fetch(`${db_url}/edges`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
