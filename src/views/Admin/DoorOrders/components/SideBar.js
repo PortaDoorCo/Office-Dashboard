@@ -6,6 +6,8 @@ import {
   CardHeader,
   CardBody,
 } from 'reactstrap';
+import CopeDoor from './SideBar/Cope/Door'
+import MiterDoor from './SideBar/Miter/Door'
 
 const style = {
   margin: 'auto',
@@ -21,97 +23,35 @@ class SideBar extends Component {
 
     const { part } = this.props;
 
-    return (
-      <div className="animated">
-        <Card>
-          <CardHeader>
-            <h4>Item #{this.props.i + 1}</h4>
-          </CardHeader>
-          <CardBody>
-            <Row style={{ marginBottom: '10px' }}>
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Woodtype</h4>
-                <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
-                >
-                  {(part.woodtype && part.woodtype.photo) ? (
-                    <img src={part.woodtype.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Design</h4>
-                <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
-                >
-                  {(part.design && part.design.photo) ? (
-                    <img src={part.design.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
+    console.log(part)
 
+    if(part.orderType.value === "Door") {
 
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Edge</h4>
-                <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
-                >
-                  {(part.edge && part.edge.photo) ? (
-                    <img src={part.edge.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
+      if(part.construction.value === "Cope") {
+        return (
+          <CopeDoor part={part} />
+        )
+      }
 
+      if(part.construction.value === "M") {
+        return (
+          <MiterDoor part={part} />
+        )
+      }
 
-            </Row>
-            <Row>
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Profile</h4>
-                <div
-                  style={{ width: '120px', height: '120px', margin: 'auto' }}
-                >
-                  {(part.profile && part.profile.photo) ? (
-                    <img src={part.profile.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Panel</h4>
-                <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
-                >
-                  {(part.panel && part.panel.photo) ? (
-                    <img src={part.panel.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Applied Profile</h4>
-                <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
-                >
-                  {(part.applied_profile && part.applied_profile.photo) ? (
-                    <img src={part.applied_profile.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-      </div>
-    );
+    } else if (part.orderType.value === "DF") {
+
+    } else if (part.orderType.value === "Face_Frame") {
+
+    } else if (part.orderType.value === "One_Piece") {
+
+    } else if (part.orderType.value === "Slab") {
+
+    } else {
+      return (
+        <div />
+      );
+    }
   }
 }
 
