@@ -341,7 +341,7 @@ class DoorOrders extends Component {
                     <FormGroup>
                       <h3>Upload Files</h3>
                       <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://server.portadoor.com/upload" />
+                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="https://server.portadoor.com/upload" />
                       </form>
                     </FormGroup>
                   </CardBody>
