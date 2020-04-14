@@ -41,6 +41,20 @@ class SideBar extends Component {
                     )}
                 </div>
               </Col>
+              <Col>
+                <h4 style={{ textAlign: 'center' }}>Design</h4>
+                <div
+                  style={{ width: '100px', height: '100px', margin: 'auto' }}
+                >
+                  {(part.design && part.design.photo) ? (
+                    <img src={part.design.photo.url} style={style} alt="" />
+                  ) : (
+                      <img src={comingSoon} style={style} alt="" />
+                    )}
+                </div>
+              </Col>
+            </Row>
+            <Row>
 
               <Col>
                 <h4 style={{ textAlign: 'center' }}>Panel</h4>
@@ -55,48 +69,6 @@ class SideBar extends Component {
                 </div>
               </Col>
 
-
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Edge</h4>
-                <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
-                >
-                  {(part.edge && part.edge.photo) ? (
-                    <img src={part.edge.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
-
-
-            </Row>
-            <Row>
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Profile</h4>
-                <div
-                  style={{ width: '120px', height: '120px', margin: 'auto' }}
-                >
-                  {(part.profile && part.profile.photo) ? (
-                    <img src={part.profile.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
-
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Applied Profile</h4>
-                <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
-                >
-                  {(part.applied_profile && part.applied_profile.photo) ? (
-                    <img src={part.applied_profile.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
             </Row>
           </CardBody>
         </Card>
