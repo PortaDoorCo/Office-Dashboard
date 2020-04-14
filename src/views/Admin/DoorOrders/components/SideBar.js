@@ -13,6 +13,7 @@ import CopeDF from './SideBar/Cope/DF'
 import MiterDF from './SideBar/Miter/DF'
 import MTDF from './SideBar/MT/DF'
 import GlassDoor from './SideBar/Glass/Door'
+import OnePieceDoor from './SideBar/One_Piece/Door'
 
 const style = {
   margin: 'auto',
