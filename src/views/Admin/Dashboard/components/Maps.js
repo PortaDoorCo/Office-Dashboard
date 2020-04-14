@@ -194,12 +194,12 @@ class Maps extends Component {
 
     componentDidMount() {
 
-        socket.emit('position', {
-            coords: {
-                latitude: 41.3705498,
-                longitude: -73.2105237
-            }
-        })
+        // socket.emit('position', {
+        //     coords: {
+        //         latitude: 41.3705498,
+        //         longitude: -73.2105237
+        //     }
+        // })
 
         socket.on('drivers', res =>
             this.setState({
