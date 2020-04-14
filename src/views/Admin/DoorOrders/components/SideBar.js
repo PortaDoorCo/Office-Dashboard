@@ -20,7 +20,7 @@ class SideBar extends Component {
   render() {
 
     const { part } = this.props;
-  
+
     return (
       <div className="animated">
         <Card>
@@ -46,34 +46,38 @@ class SideBar extends Component {
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                  {(part.design && part.design.photo)? (
+                  {(part.design && part.design.photo) ? (
                     <img src={part.design.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
                     )}
                 </div>
               </Col>
-              <Col>
-                <h4 style={{ textAlign: 'center' }}>Mould</h4>
-                <div
-                  style={{ width: '120px', height: '120px', margin: 'auto' }}
-                >
-                  {(part.moulds && part.moulds.photo) ? (
-                    <img src={part.moulds.photo.url} style={style} alt="" />
-                  ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
-                </div>
-              </Col>
-            </Row>
-            <Row>
+
+
               <Col>
                 <h4 style={{ textAlign: 'center' }}>Edge</h4>
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                  {(part.edges && part.edges.photo) ? (
-                    <img src={part.edges.photo.url} style={style} alt="" />
+                  {(part.edge && part.edge.photo) ? (
+                    <img src={part.edge.photo.url} style={style} alt="" />
+                  ) : (
+                      <img src={comingSoon} style={style} alt="" />
+                    )}
+                </div>
+              </Col>
+
+
+            </Row>
+            <Row>
+              <Col>
+                <h4 style={{ textAlign: 'center' }}>Profile</h4>
+                <div
+                  style={{ width: '120px', height: '120px', margin: 'auto' }}
+                >
+                  {(part.profile && part.profile.photo) ? (
+                    <img src={part.profile.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
                     )}
@@ -84,20 +88,20 @@ class SideBar extends Component {
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                  {(part.panels && part.panels.photo) ? (
-                    <img src={part.panels.photo.url} style={style} alt="" />
+                  {(part.panel && part.panel.photo) ? (
+                    <img src={part.panel.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
                     )}
                 </div>
               </Col>
               <Col>
-                <h4 style={{ textAlign: 'center' }}>Finish</h4>
+                <h4 style={{ textAlign: 'center' }}>Applied Profile</h4>
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
                 >
-                  {(part.finish && part.finish.photo)? (
-                    <img src={part.finish.photo.url} style={style} alt="" />
+                  {(part.applied_profile && part.applied_profile.photo) ? (
+                    <img src={part.applied_profile.photo.url} style={style} alt="" />
                   ) : (
                       <img src={comingSoon} style={style} alt="" />
                     )}
