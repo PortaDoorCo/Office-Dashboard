@@ -43,7 +43,7 @@ export default (info, part) => {
             topRail
           )} x ${fraction(
             Math.round((
-              (width)
+              (width + 0.125)
             )
               * 16) / 16
           )}`,
@@ -70,7 +70,7 @@ export default (info, part) => {
             topRail
           )} x ${fraction(
             Math.round((
-              (width)
+              (width + 0.125)
             )
               * 16) / 16
           )}`,
@@ -87,7 +87,7 @@ export default (info, part) => {
             topRail
           )} x ${fraction(
             Math.round((
-              (width)
+              (width + 0.125)
             )
               * 16) / 16
           )}`,
@@ -99,7 +99,7 @@ export default (info, part) => {
             bottomRail
           )} x ${fraction(
             Math.round((
-              (width)
+              (width + 0.125)
             )
               * 16) / 16
           )}`,
@@ -127,7 +127,7 @@ export default (info, part) => {
             topRail
           )} x ${fraction(
             Math.round((
-              (width)
+              (width + 0.125)
             )
               * 16) / 16
           )}`,
@@ -139,7 +139,7 @@ export default (info, part) => {
             bottomRail
           )} x ${fraction(
             Math.round((
-              (width)
+              (width + 0.125)
             )
               * 16) / 16
           )}`,

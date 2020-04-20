@@ -43,7 +43,7 @@ export default (info, part) => {
           qty: `(${(qty * 2)})`,
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height)}`,
+          )} x ${fraction(height + 0.125)}`,
           pattern: "LR"
         },
         {
@@ -62,7 +62,7 @@ export default (info, part) => {
           qty: `(${(qty * 2)})`,
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height)}`,
+          )} x ${fraction(height + 0.125)}`,
           pattern: "LR"
         }
       ]
@@ -75,14 +75,14 @@ export default (info, part) => {
           qty: `(${(qty)})`,
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height)}`,
+          )} x ${fraction(height + 0.125)}`,
           pattern: "L"
         },
         {
           qty:  `(${(qty)})`,
           measurement: `${fraction(
             rightStile
-          )} x ${fraction(height)}`,
+          )} x ${fraction(height + 0.125)}`,
           pattern: "R"
         },
         {
@@ -102,14 +102,14 @@ export default (info, part) => {
           qty:  `(${(qty)})`,
           measurement: `${fraction(
             leftStile
-          )} x ${fraction(height)}`,
+          )} x ${fraction(height + 0.125)}`,
           pattern: "L"
         },
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
             rightStile
-          )} x ${fraction(height)}`,
+          )} x ${fraction(height + 0.125)}`,
           pattern: "R"
         }
 
