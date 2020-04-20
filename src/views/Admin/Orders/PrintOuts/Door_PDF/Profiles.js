@@ -40,7 +40,7 @@ export default (data, edges, moulds, panels) => {
                         {
                             stack: [
                                 {
-                                    text: `${i.edge.NAME}`,
+                                    text: `${i.edge ? i.edge.NAME : ''}`,
                                     style: 'fonts'
                                 },
                                 {

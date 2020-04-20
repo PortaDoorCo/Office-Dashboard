@@ -96,7 +96,7 @@ console.log(data)
                   style: 'fonts'
                 },
                 {
-                  text: `${i.design ? i.design.NAME : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`,
+                  text: `${i.design ? i.design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`,
                   style: 'fonts'
                 },
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' }
