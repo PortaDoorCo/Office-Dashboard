@@ -248,11 +248,11 @@ class MT_DF extends Component {
     );
   }
 }
-
+ 
 
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
-  mt_designs: state.part_list.mt_designs,
+  mt_designs: state.part_list.mt_DF_designs,
   edges: state.part_list.edges,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
