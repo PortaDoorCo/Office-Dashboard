@@ -32,7 +32,7 @@ export default (info, part) => {
   const edge_factor = part.edge.LIP_FACTOR
 
 
-  console.log(part)
+  console.log("INSET", inset)
   console.log(info)
 
   if (topRail === bottomRail) {
@@ -82,7 +82,7 @@ export default (info, part) => {
             )
               * 16) / 16
           )}`,
-          pattern: 'TB'
+          pattern: 'TB1'
         }
       ];
     }
