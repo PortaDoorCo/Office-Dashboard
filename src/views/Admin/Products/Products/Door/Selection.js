@@ -1,0 +1,57 @@
+import React, { Component, useState } from 'react';
+import { Row, Col } from 'reactstrap'
+import ProductCard from '../../components/Card'
+import Cope from './Cope'
+import MT from './MT'
+import Mitre from './Mitre'
+
+const Selection = (props) => {
+
+    const [subPage, setSubPage] = useState("index");
+    
+
+    if(subPage === "index") {
+        return (
+            <Row>
+                <Col xs='2' />
+                <Col>
+                    <Row>
+                        <Col>
+                            <ProductCard title={"Cope and Stick"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"cope"} />
+                        </Col>
+                        <Col>
+                            <ProductCard title={"MT Doors"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"mt"} />
+                        </Col>
+                        <Col>
+                            <ProductCard title={"Mitre Doors"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"m"} />
+                        </Col>
+                    </Row>
+                </Col>
+                <Col xs='2' />
+            </Row>
+        );
+    }
+
+    if(subPage === "cope"){
+        return <Cope />
+    }
+
+    if(subPage === "mt"){
+        return <MT />
+    }
+
+    if(subPage === "m"){
+        return <Mitre />
+    }
+
+    else {
+        return (
+            <div />
+        )
+    }
+
+
+
+}
+
+export default Selection;
