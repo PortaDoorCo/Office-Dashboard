@@ -25,7 +25,7 @@ const SalesReport = (props) => {
   const { role } = props;
 
   return (
-      role.type === 'management' || role.type === 'root' ?
+
         <div>
 
           <Nav tabs>
@@ -145,21 +145,19 @@ const SalesReport = (props) => {
               />
             </TabPane>
           </TabContent>
-        </div> :
-        <div>
-          Restricted Access
+
     </div>
     
   );
 }
 
 const mapStateToProps = (state, prop) => ({
-  designs: state.part_list.designs,
+  designs: state.part_list.cope_designs,
   woodtypes: state.part_list.woodtypes,
-  moulds: state.part_list.moulds,
+  moulds: state.part_list.profiles,
   edges: state.part_list.edges,
   panels: state.part_list.panels,
-  finish: state.part_list.finish,
+  finish: state.part_list.finishes,
   file: state.part_list.file,
   photoId: state.part_list.photoId,
   role: state.users.user.role

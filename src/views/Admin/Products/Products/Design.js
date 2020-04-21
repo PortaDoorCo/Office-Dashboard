@@ -92,10 +92,10 @@ class Design extends React.Component {
       showHeaderFilter: true,
       currentFilter: this.applyFilterTypes[0].key,
       productData: new CustomStore({
-        load: () => this.props.getProduct(cookie),
-        insert: (values) => this.props.addProduct(values, 'designs', cookie),
-        update: (key, values) => this.props.updateProduct(key.id, values, 'designs',cookie),
-        remove: (key) => this.props.deleteProduct(key.id, 'designs',cookie)
+        // load: () => this.props.getProduct(cookie),
+        // insert: (values) => this.props.addProduct(values, 'designs', cookie),
+        // update: (key, values) => this.props.updateProduct(key.id, values, 'designs',cookie),
+        // remove: (key) => this.props.deleteProduct(key.id, 'designs',cookie)
       })
     };
     this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
