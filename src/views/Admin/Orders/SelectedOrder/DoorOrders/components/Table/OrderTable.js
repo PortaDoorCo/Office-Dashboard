@@ -176,7 +176,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     <td>
                       <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
                         X
-</Button>
+                      </Button>
                     </td>
                   </tr>
 
@@ -270,6 +270,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     null}
                 </Col>
                 <Col>
+                
                   {(parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
                 </Col>
               </Row>

@@ -129,11 +129,15 @@ class DoorInfo extends Component {
 
                   </Col>
                   <Col>
-                    {fields.length > 1 ? (
-                      <Button color="danger" onClick={() => fields.remove(index)}>
-                        x
-                      </Button>
-                    ) : null}
+                    {!edit ?
+                      fields.length > 1 ? (
+                        <Button color="danger" onClick={() => fields.remove(index)}>
+                          x
+                        </Button>
+                      ) : null
+                      : null
+                    }
+
                   </Col>
                 </Row>
               </CardSubtitle>
