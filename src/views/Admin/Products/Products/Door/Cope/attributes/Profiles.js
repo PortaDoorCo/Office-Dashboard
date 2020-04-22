@@ -24,8 +24,9 @@ class Profiles extends React.Component {
             {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101065/112815953-stock-vector-no-image-available-icon-flat-vector.jpg?ver=6"} alt="Card image cap" /> }
             <CardBody>
               <CardTitle><strong>{card.NAME}</strong></CardTitle>
-              <CardTitle><strong>Price: </strong> ${card.UPCHARGE}</CardTitle>
-              <CardTitle><strong>Panel Factor: </strong> {card.PANEL_FACTOR}</CardTitle>
+              <CardTitle><strong>Inset: </strong> {card.INSET}</CardTitle>
+              <CardTitle><strong>Stile/Rail Width: </strong> {card.MINIMUM_STILE_WIDTH}</CardTitle>
+              <CardTitle><strong>Mid Rail Width: </strong> {card.MID_RAIL_MINIMUMS}</CardTitle>
             </CardBody>
           </Card>
         </div>
