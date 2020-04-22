@@ -1,173 +1,46 @@
 import React from 'react';
-import DataGrid, {
-    Column, Editing, Popup, Paging, Lookup, RequiredRule, Position,
-    Form, Pager, SearchPanel, ColumnFixing
-} from 'devextreme-react/data-grid';
-import { FileUploader } from 'devextreme-react';
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.material.blue.light.compact.css';
-import { Item } from 'devextreme-react/form';
-import CustomStore from 'devextreme/data/custom_store';
+import { Card, CardImg, CardBody, CardTitle, Button, ButtonGroup } from 'reactstrap'
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
 
 
-const thickness = [
-    {
-        name: '4/4',
-        value: 0.75
-    },
-    {
-        name: '5/4',
-        value: 1
-    }
-];
+
 
 class Woodtype extends React.Component {
-    constructor(props) {
-        super(props);
-        this.applyFilterTypes = [{
-            key: 'auto',
-            name: 'Immediately'
-        }, {
-            key: 'onClick',
-            name: 'On Button Click'
-        }];
-        this.state = {
-            showFilterRow: true,
-            showHeaderFilter: true,
-            currentFilter: this.applyFilterTypes[0].key,
-            productData: new CustomStore({
-                load: () => this.props.getProduct(cookie),
-                insert: (values) => this.props.addProduct(values, "woodtypes", cookie),
-                update: (key, values) => this.props.updateProduct(key.id, values, 'woodtypes', cookie),
-                remove: (key) => this.props.deleteProduct(key.id, 'woodtypes', cookie)
-            })
+  constructor(props) {
+    super(props);
+  }
 
-        };
-        this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
-        this.onShowHeaderFilterChanged = this.onShowHeaderFilterChanged.bind(this);
-        this.onCurrentFilterChanged = this.onCurrentFilterChanged.bind(this);
-    }
+  render() {
 
-    onInitNewRow = (e) => {
-        const { product } = this.props;
-        const item = product.length + 1
-        e.data.Item = item
-    }
+    console.log(this.props)
 
-    renderPhoto = (rowData) => {
-        if (!rowData.data.photo) {
-            return <div />
-        } else {
-            return (
-                <div
-                    style={{ width: '100px', height: '100px', margin: 'auto' }}
-                >
-                    <img src={rowData.data.photo.url} alt="wood" style={{ width: '100px', height: '100px' }} />
-                </div>
-            )
-        }
-    }
+    const card = this.props.woodtypes.map(card => {
+      console.log("CARD  ", card)
+      return (
+        <div className="mr-1 ml-1 flex-wrap" style={{width: "200px"}}>
+          <Card style={{height:"100%"}}>
+            {card.photo? <CardImg top width="100%" height="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" /> }
+            <CardBody>
+              <CardTitle><strong>{card.NAME}</strong></CardTitle>
+              <CardTitle><strong>4/4 Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
+              <CardTitle><strong>5/4 Price:</strong> ${card.STANDARD_GRADE_THICK}</CardTitle>
+              <Button color="primary">Edit</Button>
+            </CardBody>
+          </Card>
+        </div>
+      );
+    })
 
-    onUploaded = (cell, e) => {
-    
-        const data = JSON.parse(e.request.response)
-        const id = data[0].id
-    
-        cell.setValue(id)
-    }
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col d-flex align-content-start flex-wrap">{card}</div>
+        </div>
+      </div>
+    )
 
-
-    editCellRender = (cell) => {
-        let onUploaded = this.onUploaded.bind(this, cell)
-        return (
-            <div>
-                <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                    <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadUrl="https://server.portadoor.com/upload" />
-                </form>
-
-            </div>
-        )
-    }
-
-    onShowFilterRowChanged(e) {
-        this.setState({
-            showFilterRow: e.value
-        });
-        this.clearFilter();
-    }
-    onShowHeaderFilterChanged(e) {
-        this.setState({
-            showHeaderFilter: e.value
-        });
-        this.clearFilter();
-    }
-    onCurrentFilterChanged(e) {
-        this.setState({
-            currentFilter: e.value
-        });
-    }
-
-    render() {
-        const { productData } = this.state;
-        return (
-            <React.Fragment>
-                <DataGrid
-                    id="woodtypes"
-                    dataSource={productData}
-                    keyExpr="id"
-                    allowColumnReordering={true}
-                    showBorders={true}
-                    onInitNewRow={this.onInitNewRow}
-                    allowColumnResizing={true}
-                    columnMinWidth={50}
-                    columnAutoWidth={true}
-                >
-                    <ColumnFixing enabled={true} />
-                    <SearchPanel visible={true}
-                        width={240}
-                        placeholder="Search..." />
-
-                    <Paging defaultPageSize={20} />
-                    <Pager
-                        showPageSizeSelector={true}
-                        allowedPageSizes={[20, 50, 100]}
-                        showInfo={true} />
-                    <Editing
-                        mode="popup"
-                        allowUpdating={true}
-                        allowAdding={true}
-                        allowDeleting={true}
-                        refreshMode="full"
-                    >
-                        <Popup title="Woodtype" showTitle={true} width={700} height={525}>
-                            <Position my="top" at="top" of={window} />
-                        </Popup>
-                        <Form>
-                            <Item itemType="group" colCount={2} colSpan={2}>
-                                <Item dataField="NAME" />
-                                <Item dataField="PRICE" />
-                                <Item dataField="THICKNESS" />
-                            </Item>
-                            <Item itemType="group" colCount={2} colSpan={2}>
-                                <Item dataField="photo" />
-                            </Item>
-                        </Form>
-                    </Editing>
-                    <Column type="buttons" width={70} fixed={true} fixedPosition={'left'}
-                        buttons={['edit', 'delete']} />
-                    <Column dataField="Item" caption="Item" width={30} fixed={true} sortOrder='asc' ><RequiredRule /></Column>
-                    <Column dataField="NAME" caption="Name" fixed={true}><RequiredRule /></Column>
-                    <Column dataField="STANDARD_GRADE" caption="4/4 Price" fixed={true}><RequiredRule />
-                        {/* <Lookup dataSource={thickness} valueExpr="value" displayExpr="name" /> */}
-                    </Column>
-                    <Column dataField="STANDARD_GRADE_THICK" caption="5/4 Price" fixed={true}><RequiredRule /></Column>
-                    <Column dataField="photo" caption="Photo" fixed={true} cellRender={this.renderPhoto} editCellRender={this.editCellRender} setCellValue={this.setCellValue}></Column>
-                </DataGrid>
-            </React.Fragment>
-        );
-    }
+  }
 }
 export default Woodtype;

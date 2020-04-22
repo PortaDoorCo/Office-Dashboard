@@ -15,12 +15,12 @@ import ProductCard from '../../../components/Card'
 const Navigation = (props) => {
   console.log("prop nav ", props)
 
-  const { actions, back } = props;
+  const { actions, backPage } = props;
 
   return (
     <Col>
       <Button onClick={() => actions.setHome("index")}>Home</Button>
-      <Button onClick={() => back("index")}>Back</Button>
+      <Button onClick={() => actions.back("index")}>Back</Button>
     </Col>
   )
 }
@@ -73,13 +73,13 @@ const Cope = (props) => {
     return (
       <div>
         <Row>
-          <Navigation actions={props} back={setSubPage} />
+          <Navigation actions={props} back={setSubPage}  />
         </Row>
 
         <Row>
-          <Col>
-            <Woodtype getProduct={props.getWoodtypes} />
-          </Col>
+
+            <Woodtype getProduct={props.getWoodtypes} woodtypes={props.woodtypes} />
+
 
         </Row>
       </div>
@@ -95,7 +95,7 @@ const Cope = (props) => {
 
         <Row>
           <Col>
-            <Designs getProduct={props.getCopeDesigns} />
+            <Designs designs={props.designs} />
           </Col>
         </Row>
       </div>
@@ -111,7 +111,7 @@ const Cope = (props) => {
 
         <Row>
           <Col>
-            <Edges getProduct={props.getEdges} />
+            <Edges edges={props.edges} />
           </Col>
         </Row>
       </div>
@@ -127,7 +127,7 @@ const Cope = (props) => {
 
         <Row>
           <Col>
-            <Profiles getProduct={props.getProfiles} />
+            <Profiles profiles={props.profiles} />
           </Col>
         </Row>
       </div>
@@ -143,7 +143,7 @@ const Cope = (props) => {
 
         <Row>
           <Col>
-            <Panels getProduct={props.getPanels} />
+            <Panels panels={props.panels} />
           </Col>
         </Row>
       </div>
@@ -159,7 +159,7 @@ const Cope = (props) => {
 
         <Row>
           <Col>
-            <Applied_Profiles getProduct={props.getAppliedMoulds} />
+            <Applied_Profiles applied_profiles={props.applied_profiles} />
           </Col>
         </Row>
       </div>
@@ -180,7 +180,12 @@ const Cope = (props) => {
 }
 
 const mapStateToProps = state => ({
-
+  woodtypes: state.part_list.woodtypes,
+  designs: state.part_list.cope_designs,
+  edges: state.part_list.edges,
+  panels: state.part_list.panels,
+  profiles: state.part_list.profiles,
+  applied_profiles: state.part_list.applied_moulds
 });
 
 const mapDispatchToProps = dispatch =>
