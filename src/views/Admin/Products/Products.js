@@ -47,6 +47,10 @@ const Products = (props) => {
       <Selection setHome={setPage} />
     )
   }
+
+  else {
+    return <div />
+  }
 }
 
 export default Products

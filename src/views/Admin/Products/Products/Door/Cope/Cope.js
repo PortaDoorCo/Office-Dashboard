@@ -82,10 +82,7 @@ const Cope = (props) => {
         </Row>
 
         <Row>
-
             <Woodtype getProduct={props.getWoodtypes} woodtypes={props.woodtypes} />
-
-
         </Row>
       </div>
     )

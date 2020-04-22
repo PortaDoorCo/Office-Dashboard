@@ -49,11 +49,11 @@ const Selection = (props) => {
     }
 
     if (subPage === "mt") {
-        return <MT />
+        return <MT setHome={props.setHome} back={setSubPage} />
     }
 
     if (subPage === "m") {
-        return <Mitre />
+        return <Mitre setHome={props.setHome} back={setSubPage} />
     }
 
     else {

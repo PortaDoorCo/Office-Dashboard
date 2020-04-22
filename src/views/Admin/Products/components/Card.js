@@ -4,12 +4,8 @@ import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button} fro
 const ProductCard = (props) => {
   return (
     <div>
-      <Card height="100%">
+      <Card height="100%"  onClick={()=> props.setPage(props.page)}>
         <CardImg top width="100%" src={props.img} alt="Card image cap" />
-        <CardBody>
-          <CardTitle>{props.title}</CardTitle>
-          <Button onClick={()=> props.setPage(props.page)}>Button</Button>
-        </CardBody>
       </Card>
     </div>
   );
