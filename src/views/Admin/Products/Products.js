@@ -37,7 +37,7 @@ const Products = (props) => {
 
   if(page === "doors"){
     return (
-      <Selection setPage={setPage} />
+      <Selection setHome={setPage} />
     )
   }
 }

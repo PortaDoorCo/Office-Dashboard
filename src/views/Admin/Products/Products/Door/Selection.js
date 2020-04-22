@@ -1,46 +1,55 @@
 import React, { Component, useState } from 'react';
-import { Row, Col } from 'reactstrap'
+import { Row, Col,Button } from 'reactstrap'
 import ProductCard from '../../components/Card'
-import Cope from './Cope'
-import MT from './MT'
-import Mitre from './Mitre'
+import Cope from './Cope/Cope'
+import MT from './MT/MT'
+import Mitre from './Mitre/Mitre'
 
 const Selection = (props) => {
 
     const [subPage, setSubPage] = useState("index");
-    
 
-    if(subPage === "index") {
+
+    if (subPage === "index") {
         return (
-            <Row>
-                <Col xs='2' />
-                <Col>
-                    <Row>
-                        <Col>
-                            <ProductCard title={"Cope and Stick"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"cope"} />
-                        </Col>
-                        <Col>
-                            <ProductCard title={"MT Doors"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"mt"} />
-                        </Col>
-                        <Col>
-                            <ProductCard title={"Mitre Doors"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"m"} />
-                        </Col>
-                    </Row>
-                </Col>
-                <Col xs='2' />
-            </Row>
+            <div>
+                <Row>
+                    <Col>
+                        <Button onClick={(e) => props.setHome("index")}>Home</Button>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col xs='2' />
+                    <Col>
+                        <Row>
+                            <Col>
+                                <ProductCard title={"Cope and Stick"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"cope"} />
+                            </Col>
+                            <Col>
+                                <ProductCard title={"MT Doors"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"mt"} />
+                            </Col>
+                            <Col>
+                                <ProductCard title={"Mitre Doors"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"m"} />
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col xs='2' />
+                </Row>
+            </div>
+
         );
     }
 
-    if(subPage === "cope"){
-        return <Cope />
+    if (subPage === "cope") {
+        return <Cope setHome={props.setHome} back={setSubPage} />
     }
 
-    if(subPage === "mt"){
+    if (subPage === "mt") {
         return <MT />
     }
 
-    if(subPage === "m"){
+    if (subPage === "m") {
         return <Mitre />
     }
 
