@@ -26,7 +26,6 @@ class Applied_Profiles extends React.Component {
               <CardTitle><strong>{card.NAME}</strong></CardTitle>
               <CardTitle><strong>Price: </strong> ${card.UPCHARGE}</CardTitle>
               <CardTitle><strong>Rail Factor: </strong> {card.RAIL_FACTOR}</CardTitle>
-              <Button color="primary">Edit</Button>
             </CardBody>
           </Card>
         </div>

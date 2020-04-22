@@ -22,10 +22,13 @@ const Products = (props) => {
           <Col>
             <Row>
               <Col>
-                <ProductCard title={"Doors"} img={"https://picsum.photos/200"} setPage={setPage} page={"doors"} />
+                <ProductCard title={"Doors"} img={"https://www.portadoor.com/img/bg-img/cope.png"} setPage={setPage} page={"doors"} />
               </Col>
               <Col>
-                <ProductCard title={"Drawer Boxes"} img={"https://picsum.photos/200"} setPage={setPage} page={"drawers"} />
+                <ProductCard title={"Drawer Fronts"} img={"https://www.portadoor.com/img/bg-img/df.png"} setPage={setPage} page={"df"} />
+              </Col>
+              <Col>
+                <ProductCard title={"Drawer Boxes"} img={"https://www.portadoor.com/img/bg-img/drawer.png"} setPage={setPage} page={"drawers"} />
               </Col>
             </Row>
           </Col>

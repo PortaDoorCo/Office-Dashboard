@@ -28,7 +28,6 @@ class Edges extends React.Component {
               <CardTitle><strong>Lip Factor: </strong> {card.LIP_FACTOR}</CardTitle>
               <CardTitle><strong>Rail Add: </strong> {card.RAIL_ADD}</CardTitle>
               <CardTitle><strong>Stile Add: </strong> {card.STILE_ADD}</CardTitle>
-              <Button color="primary">Edit</Button>
             </CardBody>
           </Card>
         </div>

@@ -24,13 +24,13 @@ const Selection = (props) => {
                     <Col>
                         <Row>
                             <Col>
-                                <ProductCard title={"Cope and Stick"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"cope"} />
+                                <ProductCard title={"Cope and Stick"} img={"https://www.portadoor.com/img/bg-img/cope.png"} setPage={setSubPage} page={"cope"} />
                             </Col>
                             <Col>
-                                <ProductCard title={"MT Doors"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"mt"} />
+                                <ProductCard title={"MT Doors"} img={"https://www.portadoor.com/img/bg-img/MT.png"} setPage={setSubPage} page={"mt"} />
                             </Col>
                             <Col>
-                                <ProductCard title={"Mitre Doors"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"m"} />
+                                <ProductCard title={"Mitre Doors"} img={"https://www.portadoor.com/img/bg-img/miter.png"} setPage={setSubPage} page={"m"} />
                             </Col>
                         </Row>
                     </Col>

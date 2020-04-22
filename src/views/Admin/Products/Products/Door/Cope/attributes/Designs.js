@@ -28,7 +28,6 @@ class Designs extends React.Component {
               <CardTitle><strong>5/4 Price:</strong> ${card.UPCHARGE_THICK}</CardTitle>
               <CardTitle><strong>Top Rail Arch:</strong> {card.TOP_RAIL_ADD}</CardTitle>
               <CardTitle><strong>Bottom Rail Arch:</strong> {card.BTM_RAIL_ADD}</CardTitle>
-              <Button color="primary">Edit</Button>
             </CardBody>
           </Card>
         </div>

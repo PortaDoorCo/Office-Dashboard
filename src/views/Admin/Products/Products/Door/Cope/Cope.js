@@ -14,8 +14,7 @@ import ProductCard from '../../../components/Card'
 
 const Navigation = (props) => {
   console.log("prop nav ", props)
-
-  const { actions, backPage } = props;
+  const { actions, setCopePage } = props;
 
   return (
     <Col>
@@ -25,40 +24,41 @@ const Navigation = (props) => {
   )
 }
 
+
 const Cope = (props) => {
-  const [subPage, setSubPage] = useState("index");
+  const [copePage, setCopePage] = useState("index");
 
   console.log('cope props', props)
-  if (subPage === "index") {
+  if (copePage === "index") {
     return (
       <div>
-        <Row>
-          <Navigation actions={props} />
+        <Row className="mb-2">
+          <Navigation actions={props} setCopePage={setCopePage} />
         </Row>
         <Row>
           <Col xs='2' />
           <Col>
             <Row>
               <Col>
-                <ProductCard title={"Woodtype"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"woodtypes"} />
+                <ProductCard title={"Woodtype"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586894215/lbkmac7r4oihk6izofeq.jpg"} setPage={setCopePage} page={"woodtypes"} />
               </Col>
               <Col>
-                <ProductCard title={"Designs"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"designs"} />
+                <ProductCard title={"Designs"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586890553/cpvmmmwrbe2bg5bse6et.jpg"} setPage={setCopePage} page={"designs"} />
               </Col>
               <Col>
-                <ProductCard title={"Edges"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"edges"} />
+                <ProductCard title={"Edges"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586891981/pkri4aryt8jeucphntcl.png"} setPage={setCopePage} page={"edges"} />
               </Col>
             </Row>
 
             <Row>
               <Col>
-                <ProductCard title={"Profiles"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"profiles"} />
+                <ProductCard title={"Profiles"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586890869/geemwpiuqgvofkkcji5d.png"} setPage={setCopePage} page={"profiles"} />
               </Col>
               <Col>
-                <ProductCard title={"Panels"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"panels"} />
+                <ProductCard title={"Panels"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586894930/a763txikjeuju8a0uluc.png"} setPage={setCopePage} page={"panels"} />
               </Col>
               <Col>
-                <ProductCard title={"Applied Profiles"} img={"https://picsum.photos/200"} setPage={setSubPage} page={"applied_profiles"} />
+                <ProductCard title={"Applied Profiles"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586890323/fiphjvehfeaiechaefvc.png"} setPage={setCopePage} page={"applied_profiles"} />
               </Col>
             </Row>
 
@@ -66,14 +66,13 @@ const Cope = (props) => {
           <Col xs='2' />
         </Row>
       </div>
-
     );
   }
-  if (subPage === "woodtypes") {
+  if (copePage === "woodtypes") {
     return (
       <div>
-        <Row>
-          <Navigation actions={props} back={setSubPage}  />
+        <Row className="mb-2">
+          <Navigation  actions={props} setCopePage={setCopePage}   />
         </Row>
 
         <Row>
@@ -86,11 +85,11 @@ const Cope = (props) => {
     )
   }
 
-  if (subPage === "designs") {
+  if (copePage === "designs") {
     return (
       <div>
-        <Row>
-          <Navigation actions={props} back={setSubPage} />
+        <Row className="mb-2">
+          <Navigation actions={props} setCopePage={setCopePage} />
         </Row>
 
         <Row>
@@ -102,11 +101,11 @@ const Cope = (props) => {
     )
   }
 
-  if (subPage === "edges") {
+  if (copePage === "edges") {
     return (
       <div>
-        <Row>
-          <Navigation actions={props} back={setSubPage} />
+        <Row className="mb-2">
+          <Navigation actions={props} setCopePage={setCopePage} />
         </Row>
 
         <Row>
@@ -118,11 +117,11 @@ const Cope = (props) => {
     )
   }
 
-  if (subPage === "profiles") {
+  if (copePage === "profiles") {
     return (
       <div>
-        <Row>
-          <Navigation actions={props} back={setSubPage} />
+        <Row className="mb-2">
+          <Navigation actions={props} setCopePage={setCopePage} />
         </Row>
 
         <Row>
@@ -134,11 +133,11 @@ const Cope = (props) => {
     )
   }
 
-  if (subPage === "panels") {
+  if (copePage === "panels") {
     return (
       <div>
-        <Row>
-          <Navigation actions={props} back={setSubPage} />
+        <Row className="mb-2">
+          <Navigation actions={props} setCopePage={setCopePage} />
         </Row>
 
         <Row>
@@ -150,11 +149,11 @@ const Cope = (props) => {
     )
   }
 
-  if (subPage === "applied_profiles") {
+  if (copePage === "applied_profiles") {
     return (
       <div>
-        <Row>
-          <Navigation actions={props} back={setSubPage} />
+        <Row className="mb-2">
+          <Navigation actions={props} setCopePage={setCopePage} />
         </Row>
 
         <Row>
@@ -170,7 +169,7 @@ const Cope = (props) => {
     return (
       <div>
         <Row>
-          <Navigation actions={props} />
+          <Navigation actions={props} setCopePage={setCopePage} />
         </Row>
       </div>
     )
