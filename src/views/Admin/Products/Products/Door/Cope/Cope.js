@@ -9,7 +9,13 @@ import Profiles from './attributes/Profiles'
 import Panels from './attributes/Panels'
 import Applied_Profiles from './attributes/Applied_Profiles'
 import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds } from '../../../../../../redux/part_list/actions'
-import ProductCard from '../../../components/Card'
+import ProductCard from '../../../components/Card';
+import WoodtypePNG from './img/woodtypes.png';
+import DesignPNG from './img/designs.png';
+import EdgePNG from './img/edges.png';
+import ProfilePNG from './img/profiles.png';
+import PanelPNG from './img/panels.png'
+import AppliedPNG from './img/applied_profiles.png'
 
 
 const Navigation = (props) => {
@@ -40,25 +46,25 @@ const Cope = (props) => {
           <Col>
             <Row>
               <Col>
-                <ProductCard title={"Woodtype"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586894215/lbkmac7r4oihk6izofeq.jpg"} setPage={setCopePage} page={"woodtypes"} />
+                <ProductCard title={"Woodtype"} img={WoodtypePNG} setPage={setCopePage} page={"woodtypes"} />
               </Col>
               <Col>
-                <ProductCard title={"Designs"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586890553/cpvmmmwrbe2bg5bse6et.jpg"} setPage={setCopePage} page={"designs"} />
+                <ProductCard title={"Designs"} img={DesignPNG} setPage={setCopePage} page={"designs"} />
               </Col>
               <Col>
-                <ProductCard title={"Edges"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586891981/pkri4aryt8jeucphntcl.png"} setPage={setCopePage} page={"edges"} />
+                <ProductCard title={"Edges"} img={EdgePNG} setPage={setCopePage} page={"edges"} />
               </Col>
             </Row>
 
             <Row>
               <Col>
-                <ProductCard title={"Profiles"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586890869/geemwpiuqgvofkkcji5d.png"} setPage={setCopePage} page={"profiles"} />
+                <ProductCard title={"Profiles"} img={ProfilePNG} setPage={setCopePage} page={"profiles"} />
               </Col>
               <Col>
-                <ProductCard title={"Panels"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586894930/a763txikjeuju8a0uluc.png"} setPage={setCopePage} page={"panels"} />
+                <ProductCard title={"Panels"} img={PanelPNG} setPage={setCopePage} page={"panels"} />
               </Col>
               <Col>
-                <ProductCard title={"Applied Profiles"} img={"https://res.cloudinary.com/porta-door/image/upload/v1586890323/fiphjvehfeaiechaefvc.png"} setPage={setCopePage} page={"applied_profiles"} />
+                <ProductCard title={"Applied Profiles"} img={AppliedPNG} setPage={setCopePage} page={"applied_profiles"} />
               </Col>
             </Row>
 
