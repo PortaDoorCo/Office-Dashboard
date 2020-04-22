@@ -26,7 +26,6 @@ class Profiles extends React.Component {
               <CardTitle><strong>{card.NAME}</strong></CardTitle>
               <CardTitle><strong>Price: </strong> ${card.UPCHARGE}</CardTitle>
               <CardTitle><strong>Panel Factor: </strong> {card.PANEL_FACTOR}</CardTitle>
-              <Button color="primary">Edit</Button>
             </CardBody>
           </Card>
         </div>
