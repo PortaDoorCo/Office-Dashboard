@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardImg, CardBody, CardTitle, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap'
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
@@ -53,11 +53,25 @@ const Woodtype = (props) => {
         <Modal isOpen={modal} toggle={toggle} className={className}>
           <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
           <ModalBody>
-            <p>${product.STANDARD_GRADE}</p>
-            <p>${product.STANDARD_GRADE_THICK}</p>
-        </ModalBody>
+            <Row className="mb-2">
+              <Col>
+                {product.photo ? <CardImg top width="200px" height="200px" src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+                <Input type="file" name="file" id="exampleFile" className="mt-2" />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <p>4/4 Price</p>
+                <Input placeholder={`$${product.STANDARD_GRADE}`}></Input>
+              </Col>
+              <Col>
+                <p>5/4 Price</p>
+                <Input placeholder={`$${product.STANDARD_GRADE_THICK}`}></Input>
+              </Col>
+            </Row>
+          </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+            <Button color="primary" onClick={toggle}>Update</Button>{' '}
             <Button color="secondary" onClick={toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
