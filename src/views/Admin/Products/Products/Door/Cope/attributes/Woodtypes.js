@@ -54,8 +54,12 @@ const Woodtype = (props) => {
           <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
           <ModalBody>
             <Row className="mb-2">
+
               <Col>
-                {product.photo ? <CardImg top width="200px" height="200px" src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+              <div className="col d-flex align-content-start flex-wrap">
+              {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+              </div>
+                
                 <Input type="file" name="file" id="exampleFile" className="mt-2" />
               </Col>
             </Row>
