@@ -35,7 +35,7 @@ class Designs extends React.Component {
     })
 
     return (
-      <div className="container">
+      <div>
         <div className="row">
           <div className="col d-flex align-content-start flex-wrap">{card}</div>
         </div>
