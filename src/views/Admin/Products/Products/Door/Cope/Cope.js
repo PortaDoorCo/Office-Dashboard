@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Row, Col, Button } from 'reactstrap'
+import { Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardTitle } from 'reactstrap'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Woodtype from './attributes/Woodtypes'
@@ -32,151 +32,66 @@ const Navigation = (props) => {
 
 
 const Cope = (props) => {
-  const [copePage, setCopePage] = useState("index");
+  const [product, setProduct] = useState("index");
 
-  console.log('cope props', props)
-  if (copePage === "index") {
-    return (
-      <div>
-        <Row className="mb-2">
-          <Navigation actions={props} setCopePage={setCopePage} />
-        </Row>
-        <Row>
-          <Col xs='2' />
-          <Col>
-            <Row>
-              <Col>
-                <ProductCard title={"Woodtype"} img={WoodtypePNG} setPage={setCopePage} page={"woodtypes"} />
-              </Col>
-              <Col>
-                <ProductCard title={"Designs"} img={DesignPNG} setPage={setCopePage} page={"designs"} />
-              </Col>
-              <Col>
-                <ProductCard title={"Edges"} img={EdgePNG} setPage={setCopePage} page={"edges"} />
-              </Col>
-            </Row>
+  return (
+    <div>
+      <Row className="mb-2">
+        <Navigation actions={props} />
+      </Row>
 
-            <Row>
-              <Col>
-                <ProductCard title={"Profiles"} img={ProfilePNG} setPage={setCopePage} page={"profiles"} />
-              </Col>
-              <Col>
-                <ProductCard title={"Panels"} img={PanelPNG} setPage={setCopePage} page={"panels"} />
-              </Col>
-              <Col>
-                <ProductCard title={"Applied Profiles"} img={AppliedPNG} setPage={setCopePage} page={"applied_profiles"} />
-              </Col>
-            </Row>
+      <Row>
+        <Col />
+        <Col xs='3'>
+          <Card>
+            <CardImg top width="100%" src={"https://picsum.photos/200"} alt="Card image cap" />
+            <CardBody>
+              <Row>
+                <CardTitle>
+                  Cope and Stick
+              </CardTitle>
+              </Row>
 
-          </Col>
-          <Col xs='2' />
-        </Row>
-      </div>
-    );
-  }
-  if (copePage === "woodtypes") {
-    return (
-      <div>
-        <Row className="mb-2">
-          <Navigation  actions={props} setCopePage={setCopePage}   />
-        </Row>
+              <Row>
+                <p>
+                  Cope-and-stick joinery produces great-looking frames for cabinet doors, but you need specialized router bits or shaper cutters to do the job the traditional way. Those items don't come cheap. So we found a low-cost, low-tech alternative, based on a simple dovetail bit.
 
-        <Row>
+                  First, let's define some terms. "Stick" or "sticking" refers to the molded edge that's cut along the inside edge of the frame; pieces that meet that molding at a right angle must be "coped" to match the profile. Our technique replaces the usual round-over profile with a clean, simple bevel. It produces a subtle effect, not a dramatic one.
+
+                  If you have a router, a router table, a dovetail bit, and a slot cutter, you can do it the way we show here. Begin by cutting the stiles to their final length. Lay out the rails by adding 1" to the final inside width of the frame. That measurement will allow for a 1⁄2 " stub tenon on both ends of each rail.
+                </p>
+              </Row>
+
+              <Row className="mt-2">
+                <Button onClick={() => setProduct("woodtypes")}>Woodtype</Button>
+                <Button onClick={() => setProduct("designs")}>Designs</Button>
+                <Button>Edges</Button>
+                <Button>Profiles</Button>
+                <Button>Panels</Button>
+                <Button>Applied Profiles</Button>
+              </Row>
+
+            </CardBody>
+          </Card>
+        </Col>
+
+        <Col xs='8'>
+
+          {product === "woodtypes" ?
             <Woodtype getWoodtypes={props.getWoodtypes} woodtypes={props.woodtypes} updateProduct={props.updateProduct} />
-        </Row>
-      </div>
-    )
-  }
-
-  if (copePage === "designs") {
-    return (
-      <div>
-        <Row className="mb-2">
-          <Navigation actions={props} setCopePage={setCopePage} />
-        </Row>
-
-        <Row>
-          <Col>
+            :
+            product === "designs" ?
             <Designs designs={props.designs} />
-          </Col>
-        </Row>
-      </div>
-    )
-  }
+            :
+            <div>Select a design</div>
+          }
 
-  if (copePage === "edges") {
-    return (
-      <div>
-        <Row className="mb-2">
-          <Navigation actions={props} setCopePage={setCopePage} />
-        </Row>
 
-        <Row>
-          <Col>
-            <Edges edges={props.edges} />
-          </Col>
-        </Row>
-      </div>
-    )
-  }
 
-  if (copePage === "profiles") {
-    return (
-      <div>
-        <Row className="mb-2">
-          <Navigation actions={props} setCopePage={setCopePage} />
-        </Row>
-
-        <Row>
-          <Col>
-            <Profiles profiles={props.profiles} />
-          </Col>
-        </Row>
-      </div>
-    )
-  }
-
-  if (copePage === "panels") {
-    return (
-      <div>
-        <Row className="mb-2">
-          <Navigation actions={props} setCopePage={setCopePage} />
-        </Row>
-
-        <Row>
-          <Col>
-            <Panels panels={props.panels} />
-          </Col>
-        </Row>
-      </div>
-    )
-  }
-
-  if (copePage === "applied_profiles") {
-    return (
-      <div>
-        <Row className="mb-2">
-          <Navigation actions={props} setCopePage={setCopePage} />
-        </Row>
-
-        <Row>
-          <Col>
-            <Applied_Profiles applied_profiles={props.applied_profiles} />
-          </Col>
-        </Row>
-      </div>
-    )
-  }
-
-  else {
-    return (
-      <div>
-        <Row>
-          <Navigation actions={props} setCopePage={setCopePage} />
-        </Row>
-      </div>
-    )
-  }
+        </Col>
+      </Row>
+    </div>
+  )
 
 
 }

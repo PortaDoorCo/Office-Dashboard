@@ -82,7 +82,6 @@ const Woodtype = (props) => {
       </div>
 
       <div>
-        <Button color="danger" onClick={toggle}>{buttonLabel}</Button>
         <Modal isOpen={modal} toggle={toggle} className={className}>
           <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
           <ModalBody>
