@@ -56,7 +56,7 @@ const Woodtype = (props) => {
     await setModal(!modal)
     await props.getWoodtypes(cookie)
   }
-  
+
 
   const card = props.woodtypes.map(card => {
     return (
@@ -76,7 +76,17 @@ const Woodtype = (props) => {
 
   return (
 
-    <div className="container">
+    <div>
+
+      <Row className="mb-2">
+        <Col>
+          <Button color="primary" >Add New</Button>
+        </Col>
+      </Row>
+
+
+
+
       <div className="row">
         <div className="col d-flex align-content-start flex-wrap">{card}</div>
       </div>
@@ -98,7 +108,7 @@ const Woodtype = (props) => {
             <Row className="mb-2">
               <Col>
                 <Label for="Name">Name</Label>
-                <Input value={product.NAME}  name="NAME" onChange={(e) => changeName(e)}></Input>
+                <Input value={product.NAME} name="NAME" onChange={(e) => changeName(e)}></Input>
               </Col>
             </Row>
             <Row>
