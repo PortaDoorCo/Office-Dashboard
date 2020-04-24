@@ -8,7 +8,7 @@ import Edges from './attributes/Edges'
 import Profiles from './attributes/Profiles'
 import Panels from './attributes/Panels'
 import Applied_Profiles from './attributes/Applied_Profiles'
-import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds } from '../../../../../../redux/part_list/actions'
+import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../../redux/part_list/actions'
 import ProductCard from '../../../components/Card';
 import WoodtypePNG from './img/woodtypes.png';
 import DesignPNG from './img/designs.png';
@@ -82,7 +82,7 @@ const Cope = (props) => {
         </Row>
 
         <Row>
-            <Woodtype getProduct={props.getWoodtypes} woodtypes={props.woodtypes} />
+            <Woodtype getProduct={props.getWoodtypes} woodtypes={props.woodtypes} updateProduct={props.updateProduct} />
         </Row>
       </div>
     )
@@ -198,7 +198,8 @@ const mapDispatchToProps = dispatch =>
       getEdges,
       getProfiles,
       getPanels,
-      getAppliedMoulds
+      getAppliedMoulds,
+      updateProduct
     },
     dispatch
   );

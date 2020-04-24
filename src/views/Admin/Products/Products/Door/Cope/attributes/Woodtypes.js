@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap'
+import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap'
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
@@ -16,10 +16,10 @@ const Woodtype = (props) => {
 
   const [modal, setModal] = useState(false);
   const [product, setProduct] = useState({
+    id: '',
     NAME: '',
     STANDARD_GRADE: '',
     STANDARD_GRADE_THICK: ''
-
   });
 
   const toggle = (e) => {
@@ -27,9 +27,37 @@ const Woodtype = (props) => {
     setModal(!modal)
   };
 
+  const changePrice = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setProduct((prevState) => {
+      return ({
+        ...prevState,
+        [name]: parseFloat(value)
+      })
+    })
+  }
+
+  const changeName = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setProduct((prevState) => {
+      return ({
+        ...prevState,
+        [name]: value
+      })
+    })
+  }
+
+  const updateProduct = () => {
+    let id = product.id
+    let updatedProduct = product
+    props.updateProduct(id, updatedProduct, "woodtypes", cookie)
+  }
+
   const card = props.woodtypes.map(card => {
     return (
-      <div className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
+      <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
         <Card style={{ height: "100%" }} onClick={() => toggle(card)}>
           {card.photo ? <CardImg top width="100%" height="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
@@ -42,7 +70,9 @@ const Woodtype = (props) => {
     );
   })
 
+
   return (
+
     <div className="container">
       <div className="row">
         <div className="col d-flex align-content-start flex-wrap">{card}</div>
@@ -56,31 +86,36 @@ const Woodtype = (props) => {
             <Row className="mb-2">
 
               <Col>
-              <div className="col d-flex align-content-start flex-wrap">
-              {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
-              </div>
-                
+                <div className="col d-flex align-content-start flex-wrap">
+                  {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+                </div>
+
                 <Input type="file" name="file" id="exampleFile" className="mt-2" />
+              </Col>
+            </Row>
+            <Row className="mb-2">
+              <Col>
+                <Label for="Name">Name</Label>
+                <Input placeholder={`${product.NAME}`}  name="NAME" onChange={(e) => changeName(e)}></Input>
               </Col>
             </Row>
             <Row>
               <Col>
-                <p>4/4 Price</p>
-                <Input placeholder={`$${product.STANDARD_GRADE}`}></Input>
+                <Label for="4/4_Price">4/4 Price</Label>
+                <Input placeholder={`$${product.STANDARD_GRADE}`} name="STANDARD_GRADE" onChange={(e) => changePrice(e)}></Input>
               </Col>
               <Col>
-                <p>5/4 Price</p>
-                <Input placeholder={`$${product.STANDARD_GRADE_THICK}`}></Input>
+                <Label for="5/4_Price">5/4 Price</Label>
+                <Input placeholder={`$${product.STANDARD_GRADE_THICK}`} name="STANDARD_GRADE_THICK" onChange={(e) => changePrice(e)}></Input>
               </Col>
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={toggle}>Update</Button>{' '}
+            <Button color="primary" onClick={updateProduct}>Update</Button>{' '}
             <Button color="secondary" onClick={toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>
-
     </div>
   )
 
