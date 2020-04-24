@@ -49,11 +49,14 @@ const Woodtype = (props) => {
     })
   }
 
-  const updateProduct = () => {
+  const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    props.updateProduct(id, updatedProduct, "woodtypes", cookie)
+    await props.updateProduct(id, updatedProduct, "woodtypes", cookie)
+    await setModal(!modal)
+    await props.getWoodtypes(cookie)
   }
+  
 
   const card = props.woodtypes.map(card => {
     return (
@@ -96,17 +99,17 @@ const Woodtype = (props) => {
             <Row className="mb-2">
               <Col>
                 <Label for="Name">Name</Label>
-                <Input placeholder={`${product.NAME}`}  name="NAME" onChange={(e) => changeName(e)}></Input>
+                <Input value={product.NAME}  name="NAME" onChange={(e) => changeName(e)}></Input>
               </Col>
             </Row>
             <Row>
               <Col>
                 <Label for="4/4_Price">4/4 Price</Label>
-                <Input placeholder={`$${product.STANDARD_GRADE}`} name="STANDARD_GRADE" onChange={(e) => changePrice(e)}></Input>
+                <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => changePrice(e)}></Input>
               </Col>
               <Col>
                 <Label for="5/4_Price">5/4 Price</Label>
-                <Input placeholder={`$${product.STANDARD_GRADE_THICK}`} name="STANDARD_GRADE_THICK" onChange={(e) => changePrice(e)}></Input>
+                <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => changePrice(e)}></Input>
               </Col>
             </Row>
           </ModalBody>

@@ -82,7 +82,7 @@ const Cope = (props) => {
         </Row>
 
         <Row>
-            <Woodtype getProduct={props.getWoodtypes} woodtypes={props.woodtypes} updateProduct={props.updateProduct} />
+            <Woodtype getWoodtypes={props.getWoodtypes} woodtypes={props.woodtypes} updateProduct={props.updateProduct} />
         </Row>
       </div>
     )
