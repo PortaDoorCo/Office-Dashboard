@@ -1,6 +1,8 @@
 import React from 'react';
-import { Card, CardImg, CardBody, CardTitle, Button, ButtonGroup } from 'reactstrap'
+import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, ButtonGroup } from 'reactstrap'
 import Cookies from "js-cookie";
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 const cookie = Cookies.get("jwt");
 
@@ -34,9 +36,18 @@ class Applied_Profiles extends React.Component {
 
     return (
       <div>
-        <div className="row">
-          <div className="col d-flex align-content-start flex-wrap">{card}</div>
-        </div>
+        <Row className="mb-2">
+          <Col>
+            <Button color="primary" >Add New</Button>
+          </Col>
+        </Row>
+
+        <Row style={{ height: "600px" }}>
+          <PerfectScrollbar>
+            <div className="col d-flex align-content-start flex-wrap">{card}</div>
+          </PerfectScrollbar>
+        </Row>
+
       </div>
     )
 

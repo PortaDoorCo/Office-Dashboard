@@ -86,14 +86,10 @@ const Woodtype = (props) => {
         </Col>
       </Row>
 
-
-
-
-      <Row style={{ height: "500px" }}>
+      <Row style={{ height: "600px" }}>
         <PerfectScrollbar>
           <div className="col d-flex align-content-start flex-wrap">{card}</div>
         </PerfectScrollbar>
-
       </Row>
 
       <div>
