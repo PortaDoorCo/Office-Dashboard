@@ -48,8 +48,7 @@ const Cope = (props) => {
       </Row>
 
       <Row>
-        <Col />
-        <Col xs='3'>
+        <Col xs='4'>
           <Card>
             <CardImg top width="100%" src={"https://picsum.photos/1200"} alt="Card image cap" />
             <CardBody>
@@ -166,7 +165,7 @@ const Cope = (props) => {
 
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   woodtypes: state.part_list.woodtypes,
   designs: state.part_list.cope_designs,
   edges: state.part_list.edges,
