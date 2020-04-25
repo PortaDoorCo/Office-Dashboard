@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap'
 import Cookies from "js-cookie";
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 const cookie = Cookies.get("jwt");
 
@@ -87,9 +89,12 @@ const Woodtype = (props) => {
 
 
 
-      <div className="row">
-        <div className="col d-flex align-content-start flex-wrap">{card}</div>
-      </div>
+      <Row style={{ height: "500px" }}>
+        <PerfectScrollbar>
+          <div className="col d-flex align-content-start flex-wrap">{card}</div>
+        </PerfectScrollbar>
+
+      </Row>
 
       <div>
         <Modal isOpen={modal} toggle={toggle} className={className}>

@@ -31,6 +31,20 @@ export default (info, part) => {
   const add_len = 0;
   const tenon_factor = 0;
 
+  // <StateValue
+  //   state={
+  //     order: [[[]], [],],
+  //     values: {
+  //       [target]: value
+  //     }
+  //   }
+  // >
+  //   <Formula {...state}>
+  //   <inputs
+  //     onArgumentOrderChange
+  //     onValueChange
+  //   >
+  // </StateValue>
 
 
   if (leftStile === rightStile) {
