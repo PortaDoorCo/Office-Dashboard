@@ -16,10 +16,7 @@ class Applied_Profiles extends React.Component {
 
   render() {
 
-    console.log(this.props)
-
     const card = this.props.applied_profiles.map(card => {
-      console.log("CARD  ", card)
       return (
         <div className="mr-1 ml-1 flex-wrap" style={{width: "200px"}}>
           <Card style={{height:"100%"}}>

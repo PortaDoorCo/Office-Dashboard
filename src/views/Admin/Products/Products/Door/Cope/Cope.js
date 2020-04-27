@@ -18,6 +18,7 @@ import PanelPNG from './img/panels.png'
 import AppliedPNG from './img/applied_profiles.png'
 import classnames from 'classnames';
 import Editor from './editor/Editor'
+import EditorPage from './editor/EditorPage'
 
 
 const Navigation = (props) => {
@@ -53,8 +54,6 @@ const Cope = (props) => {
           <Card>
             <CardImg top width="100%" src={"https://picsum.photos/1200"} alt="Card image cap" />
             <CardBody>
-
-
               <Row className="mt-2">
                 <CardTitle>
                   <h1>Cope and Stick</h1>
@@ -123,16 +122,7 @@ const Cope = (props) => {
 
                   <p>If you have a router, a router table, a dovetail bit, and a slot cutter, you can do it the way we show here. Begin by cutting the stiles to their final length. Lay out the rails by adding 1" to the final inside width of the frame. That measurement will allow for a 1⁄2 " stub tenon on both ends of each rail.</p>
                 </Col>
-
               </Row>
-
-              <Row>
-                <Col>
-                  <Editor />
-                </Col>
-              </Row>
-
-
             </CardBody>
           </Card>
         </Col>
@@ -160,9 +150,9 @@ const Cope = (props) => {
               </TabPane>
             </TabContent>
           </Row>
-          <Row>
+          <Row className="mt-2">
             <Col>
-              <Editor />
+              <EditorPage />
             </Col>
           </Row>
 

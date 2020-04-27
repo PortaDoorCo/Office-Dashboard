@@ -44,6 +44,7 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
+export const GET_BREAKDOWNS = 'GET_BREAKDOWNS'
 
 export function getWoodtypes(cookie) {
   console.log("FIREEEEE")
@@ -630,44 +631,6 @@ export function getBoxWoodtypes(cookie) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export function addProduct(product, url, cookie) {
 
   return async function (dispatch) {
@@ -766,6 +729,23 @@ export function getPhotoId(i, cookie) {
       console.error(error);
       NotificationManager.error('There was an problem with your submission.  Your changes were not saved', 'Error', 4000);
     }
+  };
+}
+
+export function getBreakdowns(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/breakdowns`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BREAKDOWNS,
+      data: data
+    });
   };
 }
 
