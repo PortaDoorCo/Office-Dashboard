@@ -60,7 +60,9 @@ import {
   getBoxFinishes,
   getBoxNotches,
   getBoxThicknesses,
-  getBoxWoodtypes
+  getBoxWoodtypes,
+
+  getBreakdowns
 
 
 
@@ -117,6 +119,8 @@ class DefaultLayout extends Component {
       getBoxThicknesses,
       getBoxWoodtypes,
 
+      getBreakdowns,
+
       login,
       loadSales,
       loadOrders,
@@ -130,7 +134,8 @@ class DefaultLayout extends Component {
       await login(cookie);
       await loadSales(cookie);
       await loadOrders(cookie);
-      await getDeliveries(cookie)
+      await getDeliveries(cookie);
+      await getBreakdowns(cookie);
 
       await getWoodtypes(cookie);
       await getAppliedMoulds(cookie);
@@ -167,6 +172,7 @@ class DefaultLayout extends Component {
       await getBoxNotches(cookie);
       await getBoxThicknesses(cookie);
       await getBoxWoodtypes(cookie);
+      
       
     } else {
       alert('not logged in')
@@ -290,6 +296,8 @@ const mapDispatchToProps = dispatch =>
       getBoxThicknesses,
       getBoxWoodtypes,
       getDeliveries,
+
+      getBreakdowns,
 
 
 

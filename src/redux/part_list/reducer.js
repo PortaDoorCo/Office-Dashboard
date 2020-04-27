@@ -41,7 +41,8 @@ import {
   ADD_PRODUCT,
   UPLOAD_FILE,
   GET_PHOTO_ID,
-  GET_DOOR_OPTIONS
+  GET_DOOR_OPTIONS,
+  GET_BREAKDOWNS
 } from "./actions";
 
 const initialState = {
@@ -80,6 +81,8 @@ const initialState = {
   box_notches: ["Loading"],
   box_thickness: ["Loading"],
   box_woodtypes: ["Loading"],
+
+  breakdowns: [],
 
 
   scoop: [
@@ -172,6 +175,8 @@ const initialState = {
   loadedBoxNotches: false,
   loadedBoxThickness: false,
   loadedBoxWoodtypes: false,
+
+  loadedBreakdowns: false,
 
   error: null,
 
@@ -431,6 +436,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         photoId: data
+      }
+    case GET_BREAKDOWNS:
+      return {
+        ...state,
+        breakdowns: data
       }
     default:
       return state;
