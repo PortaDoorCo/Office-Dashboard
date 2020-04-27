@@ -17,6 +17,7 @@ import ProfilePNG from './img/profiles.png';
 import PanelPNG from './img/panels.png'
 import AppliedPNG from './img/applied_profiles.png'
 import classnames from 'classnames';
+import Editor from './editor/Editor'
 
 
 const Navigation = (props) => {
@@ -52,12 +53,12 @@ const Cope = (props) => {
           <Card>
             <CardImg top width="100%" src={"https://picsum.photos/1200"} alt="Card image cap" />
             <CardBody>
- 
+
 
               <Row className="mt-2">
                 <CardTitle>
                   <h1>Cope and Stick</h1>
-              </CardTitle>
+                </CardTitle>
               </Row>
 
               <Row className="mt-2 mb-3">
@@ -115,8 +116,8 @@ const Cope = (props) => {
 
               <Row>
                 <Col>
-                <p>
-                  Cope-and-stick joinery produces great-looking frames for cabinet doors, but you need specialized router bits or shaper cutters to do the job the traditional way. Those items don't come cheap. So we found a low-cost, low-tech alternative, based on a simple dovetail bit.</p>
+                  <p>
+                    Cope-and-stick joinery produces great-looking frames for cabinet doors, but you need specialized router bits or shaper cutters to do the job the traditional way. Those items don't come cheap. So we found a low-cost, low-tech alternative, based on a simple dovetail bit.</p>
 
                   <p>First, let's define some terms. "Stick" or "sticking" refers to the molded edge that's cut along the inside edge of the frame; pieces that meet that molding at a right angle must be "coped" to match the profile. Our technique replaces the usual round-over profile with a clean, simple bevel. It produces a subtle effect, not a dramatic one.</p>
 
@@ -127,7 +128,7 @@ const Cope = (props) => {
 
               <Row>
                 <Col>
-                  <code></code>
+                  <Editor />
                 </Col>
               </Row>
 
@@ -137,26 +138,34 @@ const Cope = (props) => {
         </Col>
 
         <Col xs='8'>
-          <TabContent activeTab={activeTab}>
-            <TabPane tabId="1">
-              <Woodtype getWoodtypes={props.getWoodtypes} woodtypes={props.woodtypes} updateProduct={props.updateProduct} />
-            </TabPane>
-            <TabPane tabId="2">
-              <Designs designs={props.designs} />
-            </TabPane>
-            <TabPane tabId="3">
-              <Edges edges={props.edges} />
-            </TabPane>
-            <TabPane tabId="4">
-              <Profiles profiles={props.profiles} />
-            </TabPane>
-            <TabPane tabId="5">
-              <Panels panels={props.panels} />
-            </TabPane>
-            <TabPane tabId="6">
-              <Applied_Profiles applied_profiles={props.applied_profiles} />
-            </TabPane>
-          </TabContent>
+          <Row>
+            <TabContent activeTab={activeTab}>
+              <TabPane tabId="1">
+                <Woodtype getWoodtypes={props.getWoodtypes} woodtypes={props.woodtypes} updateProduct={props.updateProduct} />
+              </TabPane>
+              <TabPane tabId="2">
+                <Designs designs={props.designs} />
+              </TabPane>
+              <TabPane tabId="3">
+                <Edges edges={props.edges} />
+              </TabPane>
+              <TabPane tabId="4">
+                <Profiles profiles={props.profiles} />
+              </TabPane>
+              <TabPane tabId="5">
+                <Panels panels={props.panels} />
+              </TabPane>
+              <TabPane tabId="6">
+                <Applied_Profiles applied_profiles={props.applied_profiles} />
+              </TabPane>
+            </TabContent>
+          </Row>
+          <Row>
+            <Col>
+              <Editor />
+            </Col>
+          </Row>
+
         </Col>
       </Row>
     </div>
