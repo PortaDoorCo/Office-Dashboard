@@ -138,11 +138,11 @@ const EditorComponent = (props) => {
           </Col>
         </Row>
 
-        <Row>
+        {/* <Row>
           <Col>
             <Button color="danger">SUBMIT CHANGES</Button>
           </Col>
-        </Row>
+        </Row> */}
 
       </Collapse>
 
