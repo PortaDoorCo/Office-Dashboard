@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap'
+import { Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Woodtype from './attributes/Woodtypes'
@@ -37,10 +37,13 @@ const Navigation = (props) => {
 const Cope = (props) => {
   const [product, setProduct] = useState("index");
   const [activeTab, setActiveTab] = useState('1');
+  const [openEditor, setOpenEditor] = useState(false);
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   }
+
+  const toggleEditor = () => setOpenEditor(!openEditor);
 
 
   return (
@@ -121,6 +124,8 @@ const Cope = (props) => {
                   <p>First, let's define some terms. "Stick" or "sticking" refers to the molded edge that's cut along the inside edge of the frame; pieces that meet that molding at a right angle must be "coped" to match the profile. Our technique replaces the usual round-over profile with a clean, simple bevel. It produces a subtle effect, not a dramatic one.</p>
 
                   <p>If you have a router, a router table, a dovetail bit, and a slot cutter, you can do it the way we show here. Begin by cutting the stiles to their final length. Lay out the rails by adding 1" to the final inside width of the frame. That measurement will allow for a 1⁄2 " stub tenon on both ends of each rail.</p>
+
+                  <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
                 </Col>
               </Row>
             </CardBody>
@@ -152,7 +157,14 @@ const Cope = (props) => {
           </Row>
           <Row className="mt-2">
             <Col>
-              <EditorPage />
+              
+              <Collapse isOpen={openEditor}>
+                <Card>
+                  <CardBody>
+                    <EditorPage />
+                  </CardBody>
+                </Card>
+              </Collapse>
             </Col>
           </Row>
 
