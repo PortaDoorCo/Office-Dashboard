@@ -10,7 +10,7 @@ import Invoice from '../../Door_PDF/Invoice'
 import Acknowledgement from '../../Door_PDF/Acknowledgement'
 import Profiles from '../../Door_PDF/Profiles'
 
-export default (data, edges, moulds, panels) => {
+export default (data, edges, moulds, panels, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
@@ -18,15 +18,15 @@ export default (data, edges, moulds, panels) => {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: [
-      AssemblyList(data),
-      StilesPage(data),
-      RailsPage(data),
-      PanelsPage(data),
-      MaterialsList(data),
-      QC_Checklist(data),
-      Profiles(data, edges, moulds, panels),
-      Acknowledgement(data),
-      Invoice(data),
+      AssemblyList(data, breakdowns),
+      StilesPage(data, breakdowns),
+      RailsPage(data, breakdowns),
+      PanelsPage(data, breakdowns),
+      MaterialsList(data, breakdowns),
+      QC_Checklist(data, breakdowns),
+      Profiles(data, edges, moulds, panels, breakdowns),
+      Acknowledgement(data, breakdowns),
+      Invoice(data, breakdowns),
     ],
     styles: {
       woodtype: {

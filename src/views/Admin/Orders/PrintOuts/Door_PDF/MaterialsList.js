@@ -2,7 +2,7 @@ import moment from 'moment';
 // import Panels from '../Breakdowns/Panels';
 
 
-export default data => {
+export default (data,breakdowns) => {
   return [
     {
       columns: [

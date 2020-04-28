@@ -150,7 +150,10 @@ class OrderPage extends Component {
   }
 
   downloadPDF = () => {
-    const { formState, drawerState } = this.props;
+    const { formState, drawerState, breakdowns } = this.props;
+
+    console.log("SDKLFJSDF", breakdowns)
+
     const data = formState ? formState : drawerState ? drawerState : []
     if (data.orderType === "Door Order") {
       this.state.selectedOption.map(async option => {
@@ -195,35 +198,35 @@ class OrderPage extends Component {
               console.log('errrrrrr', err);
             }
 
-            DoorPDF(data, edges1, moulds1, panels1);
+            DoorPDF(data, edges1, moulds1, panels1, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Assembly':
-            AssemblyListPDF(data);
+            AssemblyListPDF(data, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Acknowledgement':
-            AcknowledgementPDF(data);
+            AcknowledgementPDF(data ,breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Invoice':
-            InvoicePDF(data);
+            InvoicePDF(data, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Stiles':
-            StilesPDF(data);
+            StilesPDF(data, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Rails':
-            RailsPDF(data);
+            RailsPDF(data, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Panels':
-            PanelsPDF(data);
+            PanelsPDF(data, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Materials':
-            MaterialsPDF(data);
+            MaterialsPDF(data, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Profiles':
@@ -265,11 +268,11 @@ class OrderPage extends Component {
             }
 
             console.log('eeeee', edges, 'moooo', moulds, 'pannn', panels)
-            ProfilesPDF(data, edges, moulds, panels);
+            ProfilesPDF(data, edges, moulds, panels, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'QC':
-            QCPDF(data);
+            QCPDF(data, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           default:
@@ -602,6 +605,7 @@ class OrderPage extends Component {
 const mapStateToProps = (state, prop) => ({
   formState: getFormValues('DoorOrder')(state),
   drawerState: getFormValues("DrawerOrder")(state),
+  breakdowns: state.part_list.breakdowns
   
 });
 
