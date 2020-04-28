@@ -2,14 +2,20 @@ import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Editor from './Editor'
-import { Row, Col, Card, CardBody, CardTitle } from 'reactstrap'
+import { Row, Col, Card, CardBody, CardTitle, Button } from 'reactstrap'
 
 const EditorPage = (props) => {
   const [breakdowns, setBreakdowns] = useState(props.breakdowns);
-  console.log(breakdowns)
+
+  const [topRailEdit, setTopRailEdit] = useState(false);
+  const [bottomRailEdit, setBottomRailEdit] = useState(false);
+
+
+
   return (
     <div>
       <h3>Breakdowns</h3>
+      <Button color="primary">Edit Breakdowns</Button>
       <Row className="mt-2">
         <Col>
           <Card>
@@ -108,7 +114,13 @@ const EditorPage = (props) => {
 
 
 const mapStateToProps = (state) => ({
-  breakdowns: state.part_list.breakdowns[0]
+  breakdowns: state.part_list.breakdowns[0],
+  woodtypes: state.part_list.woodtypes,
+  designs: state.part_list.cope_designs,
+  edges: state.part_list.edges,
+  panels: state.part_list.panels,
+  profiles: state.part_list.profiles,
+  applied_profiles: state.part_list.applied_moulds
 });
 
 const mapDispatchToProps = dispatch =>
