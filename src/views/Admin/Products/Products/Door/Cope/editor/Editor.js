@@ -128,16 +128,6 @@ const EditorComponent = (props) => {
             </Row>
           </Col>
         </Row>
-
-
-        <Row className="mt-3">
-          <Col>
-            <p style={{ color: 'red' }}>**WARNING ** <br />
-              EDITING THESE VALUES MAY BREAK COMPONENTS IF NOT DONE CORRECTLY. <br />
-              PLEASE MAKE SURE YOUR MATH IS COMPLETE</p>
-          </Col>
-        </Row>
-
         {/* <Row>
           <Col>
             <Button color="danger">SUBMIT CHANGES</Button>
