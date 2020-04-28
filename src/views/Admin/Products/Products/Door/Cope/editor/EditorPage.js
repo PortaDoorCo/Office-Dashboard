@@ -34,7 +34,7 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-                Top Rail
+                <h4 style={{ textDecoration: 'underline' }}>Top Rail</h4>
             </CardTitle>
               <Row>
                 <Col>
@@ -59,7 +59,7 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-                Bottom Rail
+              <h4 style={{ textDecoration: 'underline' }}>Bottom Rail</h4>
             </CardTitle>
               <Row>
                 <Col>
@@ -86,7 +86,7 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-                Left Stile
+              <h4 style={{ textDecoration: 'underline' }}>Left Stile</h4>
             </CardTitle>
               <Row>
                 <Col>
@@ -109,7 +109,7 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-                Right Stile
+              <h4 style={{ textDecoration: 'underline' }}>Right Stile</h4>
             </CardTitle>
               <Row>
                 <Col>
@@ -134,7 +134,7 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-                Vertical Mid Rail
+              <h4 style={{ textDecoration: 'underline' }}>Vertical Mid Rail</h4>
             </CardTitle>
               <Row>
                 <Col>
@@ -156,7 +156,7 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-                Horizontal Mid Rail
+                <h4 style={{ textDecoration: 'underline' }}>Horizontal Mid Rail</h4>
             </CardTitle>
               <Row>
                 <Col>
@@ -181,7 +181,7 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-                Panel Width
+              <h4 style={{ textDecoration: 'underline' }}>Panel Width</h4>
             </CardTitle>
               <Editor code={breakdowns.panel_width} edit={panelWidthEdit} />
               <div className="mt-2">
@@ -194,7 +194,7 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-                Panel Height
+              <h4 style={{ textDecoration: 'underline' }}>Panel Height</h4>
             </CardTitle>
               <Editor code={breakdowns.panel_height} edit={panelHeightEdit} />
               <div className="mt-2">
