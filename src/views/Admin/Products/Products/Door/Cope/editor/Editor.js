@@ -82,10 +82,10 @@ const EditorComponent = (props) => {
               <div className="col d-flex align-content-start flex-wrap">
                 <Button onClick={() => onBtnClick('+')} outline color="danger">+</Button>
                 <Button onClick={() => onBtnClick('-')} outline color="danger">-</Button>
-                <Button outline color="danger">*</Button>
-                <Button outline color="danger">/</Button>
-                <Button outline color="danger">(</Button>
-                <Button outline color="danger">)</Button>
+                <Button onClick={() => onBtnClick('*')} outline color="danger">*</Button>
+                <Button onClick={() => onBtnClick('/')} outline color="danger">/</Button>
+                <Button onClick={() => onBtnClick('(')} outline color="danger">(</Button>
+                <Button onClick={() => onBtnClick(')')} outline color="danger">)</Button>
               </div>
             </Row>
           </Col>
@@ -120,16 +120,16 @@ const EditorComponent = (props) => {
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
-                <Button outline color="danger">Width</Button>
-                <Button outline color="danger">Height</Button>
-                <Button outline color="danger">Panels High</Button>
-                <Button outline color="danger">Panels Wide</Button>
-                <Button outline color="danger">Left Stile</Button>
-                <Button outline color="danger">Right Stile</Button>
-                <Button outline color="danger">Top Rail</Button>
-                <Button outline color="danger">Bottom Rail</Button>
-                <Button outline color="danger">Vertical Mull</Button>
-                <Button outline color="danger">Horizontal Mull</Button>
+                <Button onClick={() => onBtnClick('width')} outline color="danger">Width</Button>
+                <Button onClick={() => onBtnClick('height')} outline color="danger">Height</Button>
+                <Button onClick={() => onBtnClick('panelsH')} outline color="danger">Panels High</Button>
+                <Button onClick={() => onBtnClick('panelsW')} outline color="danger">Panels Wide</Button>
+                <Button onClick={() => onBtnClick('leftStile')} outline color="danger">Left Stile</Button>
+                <Button onClick={() => onBtnClick('rightStile')} outline color="danger">Right Stile</Button>
+                <Button onClick={() => onBtnClick('topRail')} outline color="danger">Top Rail</Button>
+                <Button onClick={() => onBtnClick('bottomRail')} outline color="danger">Bottom Rail</Button>
+                <Button onClick={() => onBtnClick('vertMull')} outline color="danger">Vertical Mull</Button>
+                <Button onClick={() => onBtnClick('horizMull')} outline color="danger">Horizontal Mull</Button>
               </div>
             </Row>
           </Col>
