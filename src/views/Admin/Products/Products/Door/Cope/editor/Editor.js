@@ -29,7 +29,7 @@ const EditorComponent = (props) => {
     const newVal = `${text.slice(0, startIndex)}${val}${text.slice(startIndex).replace(/\s+/, ' ')}`;
     setText(newVal);
     editorRef.current._input.value = newVal;
-    editorRef.current._input.selectionStart = editorRef.current._input.selectionEnd = startIndex+1;
+    editorRef.current._input.selectionStart = editorRef.current._input.selectionEnd = startIndex + val.length;
     editorRef.current._input.focus();
   }
 
@@ -39,7 +39,7 @@ const EditorComponent = (props) => {
         <Row>
           <Col>
             <Editor
-            //autoFocus
+              //autoFocus
               ref={editorRef}
               value={text}
               onValueChange={c => setText(c.replace(/\s+/, ' '))}
