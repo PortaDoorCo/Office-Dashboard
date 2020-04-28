@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
@@ -14,6 +14,8 @@ import { bindActionCreators } from 'redux';
 
 const EditorComponent = (props) => {
   const { code, edit } = props;
+  const [text, setText] = useState(code);
+  const editorRef = useRef(null);
   const woodtypes = props.woodtypes ? props.woodtypes[0] : []
   const designs = props.designs ? props.designs[0] : []
   const edges = props.edges ? props.edges[0] : []
@@ -33,6 +35,14 @@ const EditorComponent = (props) => {
     vertMull: ''
   }
 
+  const onBtnClick = (val) => {
+    const startIndex = editorRef.current._input.selectionStart;
+    const newVal = `${text.slice(0, startIndex)}${val}${text.slice(startIndex).replace(/\s+/, ' ')}`;
+    setText(newVal);
+    editorRef.current._input.value = newVal;
+    editorRef.current._input.selectionStart = editorRef.current._input.selectionEnd = startIndex+1;
+    editorRef.current._input.focus();
+  }
 
   if (edit) {
     return (
@@ -40,13 +50,21 @@ const EditorComponent = (props) => {
         <Row>
           <Col>
             <Editor
-              value={code}
-              onValueChange={code => console.log(code)}
+            //autoFocus
+              ref={editorRef}
+              value={text}
+              onValueChange={c => setText(c.replace(/\s+/, ' '))}
               highlight={code => highlight(code, languages.js)}
               padding={10}
               style={{
                 fontFamily: '"Fira code", "Fira Mono", monospace',
                 fontSize: 12,
+              }}
+              onKeyPress={e => {
+                e.persist();
+                if (e.charCode !== 32) {
+                  e.preventDefault();
+                }
               }}
             />
           </Col>
@@ -62,8 +80,8 @@ const EditorComponent = (props) => {
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
-                <Button outline color="danger">+</Button>
-                <Button outline color="danger">-</Button>
+                <Button onClick={() => onBtnClick('+')} outline color="danger">+</Button>
+                <Button onClick={() => onBtnClick('-')} outline color="danger">-</Button>
                 <Button outline color="danger">*</Button>
                 <Button outline color="danger">/</Button>
                 <Button outline color="danger">(</Button>
@@ -120,8 +138,8 @@ const EditorComponent = (props) => {
 
         <Row className="mt-3">
           <Col>
-              <p style={{color:'red'}}>**WARNING ** <br /> 
-              EDITING THESE VALUES MAY BREAK COMPONENTS IF NOT DONE CORRECTLY. <br /> 
+            <p style={{ color: 'red' }}>**WARNING ** <br />
+              EDITING THESE VALUES MAY BREAK COMPONENTS IF NOT DONE CORRECTLY. <br />
               PLEASE MAKE SURE YOUR MATH IS COMPLETE</p>
           </Col>
         </Row>
