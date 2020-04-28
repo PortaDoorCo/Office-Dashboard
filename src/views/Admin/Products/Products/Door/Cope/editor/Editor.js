@@ -150,7 +150,7 @@ const EditorComponent = (props) => {
   } else {
     return (
       <div>
-        <Input disabled placeholder={props.code} />
+        <Input type="textarea" disabled placeholder={props.code} />
       </div>
     )
   }

@@ -28,24 +28,6 @@ export default (info, part) => {
   const inset = part.profile.INSET
   const edge_factor = part.edge.LIP_FACTOR
 
-  const add_len = 0;
-  const tenon_factor = 0;
-
-  // <StateValue
-  //   state={
-  //     order: [[[]], [],],
-  //     values: {
-  //       [target]: value
-  //     }
-  //   }
-  // >
-  //   <Formula {...state}>
-  //   <inputs
-  //     onArgumentOrderChange
-  //     onValueChange
-  //   >
-  // </StateValue>
-
 
   if (leftStile === rightStile) {
     if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH == 1))) {
