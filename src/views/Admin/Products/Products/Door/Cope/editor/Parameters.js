@@ -5,7 +5,7 @@ const Parameters = props => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggle = () => setDropdownOpen(prevState => !prevState);
 
-    const keys = Object.keys(props.attributes)
+    const keys = props.attributes
 
     return (
         <div>
@@ -15,7 +15,7 @@ const Parameters = props => {
                 </DropdownToggle>
                 <DropdownMenu outline color="danger">
                     {keys.map(i => {
-                        return <DropdownItem color="danger">{i}</DropdownItem>
+                        return <DropdownItem onClick={() => props.onBtnClick(`${i}`)} color="danger">{i.toUpperCase()}</DropdownItem>
                     })}
                 </DropdownMenu>
             </Dropdown>
