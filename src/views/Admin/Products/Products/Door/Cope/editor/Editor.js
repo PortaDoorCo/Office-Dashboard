@@ -16,24 +16,13 @@ const EditorComponent = (props) => {
   const { code, edit } = props;
   const [text, setText] = useState(code);
   const editorRef = useRef(null);
-  const woodtypes = props.woodtypes ? props.woodtypes[0] : []
-  const designs = props.designs ? props.designs[0] : []
-  const edges = props.edges ? props.edges[0] : []
-  const panels = props.panels ? props.panels[0] : []
-  const profiles = props.profiles ? props.profiles[0] : []
-  const applied_profiles = props.applied_profiles ? props.applied_profiles[0] : []
-  const userInput = {
-    width: '',
-    height: '',
-    panelsH: '',
-    panelsW: '',
-    leftStile: '',
-    rightStile: '',
-    topRail: '',
-    bottomRail: '',
-    horizMull: '',
-    vertMull: ''
-  }
+
+  const designs = ['top_rail_arch', 'bottom_rail_arch']
+  const edges = ['stile_add', 'rail_add', 'edge_factor']
+  const panels = ['panel_factor']
+  const profiles = ['inset']
+  const applied_profiles = ['rail_add', 'rail_factor']
+
 
   const onBtnClick = (val) => {
     const startIndex = editorRef.current._input.selectionStart;
@@ -100,12 +89,11 @@ const EditorComponent = (props) => {
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
-                <Parameters attributes={woodtypes} name="Woodtypes" />
-                <Parameters attributes={designs} name="Designs" />
-                <Parameters attributes={edges} name="Edges" />
-                <Parameters attributes={profiles} name="Profiles" />
-                <Parameters attributes={panels} name="Panels" />
-                <Parameters attributes={applied_profiles} name="Applied Profiles" />
+                <Parameters onBtnClick={onBtnClick} attributes={designs} name="Designs" />
+                <Parameters onBtnClick={onBtnClick} attributes={edges} name="Edges" />
+                <Parameters onBtnClick={onBtnClick} attributes={profiles} name="Profiles" />
+                <Parameters onBtnClick={onBtnClick} attributes={panels} name="Panels" />
+                <Parameters onBtnClick={onBtnClick} attributes={applied_profiles} name="Applied Profiles" />
               </div>
             </Row>
           </Col>
