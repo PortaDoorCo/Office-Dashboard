@@ -15,7 +15,7 @@ const EditorPage = (props) => {
   return (
     <div>
       <h3>Breakdowns</h3>
-      <Button color="primary">Edit Breakdowns</Button>
+
       <Row className="mt-2">
         <Col>
           <Card>
@@ -23,7 +23,13 @@ const EditorPage = (props) => {
               <CardTitle>
                 Top Rail
             </CardTitle>
-              <Editor code={breakdowns.topRail} />
+              <Editor code={breakdowns.topRail} edit={topRailEdit} />
+
+              <div className="mt-2">
+                {topRailEdit ? <Button color="danger">Submit Changes</Button> : null}
+                <Button color="primary" onClick={() => setTopRailEdit(!topRailEdit)}>Edit</Button>
+              </div>
+
             </CardBody>
           </Card>
         </Col>

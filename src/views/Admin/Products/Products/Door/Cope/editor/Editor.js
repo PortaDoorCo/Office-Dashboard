@@ -13,9 +13,7 @@ import { bindActionCreators } from 'redux';
 
 
 const EditorComponent = (props) => {
-  const { code } = props;
-  const [edit, setEdit] = useState(false);
-
+  const { code, edit } = props;
   const woodtypes = props.woodtypes ? props.woodtypes[0] : []
   const designs = props.designs ? props.designs[0] : []
   const edges = props.edges ? props.edges[0] : []
@@ -54,6 +52,7 @@ const EditorComponent = (props) => {
           </Col>
         </Row>
 
+
         <Row className="mb-2">
           <Col>
             <Row>
@@ -89,7 +88,6 @@ const EditorComponent = (props) => {
                 <Parameters attributes={profiles} name="Profiles" />
                 <Parameters attributes={panels} name="Panels" />
                 <Parameters attributes={applied_profiles} name="Applied Profiles" />
-                <Parameters attributes={userInput} name="User Input" />
               </div>
             </Row>
           </Col>
@@ -112,14 +110,21 @@ const EditorComponent = (props) => {
                 <Button outline color="danger">Right Stile</Button>
                 <Button outline color="danger">Top Rail</Button>
                 <Button outline color="danger">Bottom Rail</Button>
-                <Button outline color="danger">Vertical Mullion</Button>
-                <Button outline color="danger">Horizontal Mullion</Button>
+                <Button outline color="danger">Vertical Mull</Button>
+                <Button outline color="danger">Horizontal Mull</Button>
               </div>
             </Row>
           </Col>
         </Row>
 
 
+        <Row className="mt-3">
+          <Col>
+              <p style={{color:'red'}}>**WARNING ** <br /> 
+              EDITING THESE VALUES MAY BREAK COMPONENTS IF NOT DONE CORRECTLY. <br /> 
+              PLEASE MAKE SURE YOUR MATH IS COMPLETE</p>
+          </Col>
+        </Row>
 
       </div>
 
