@@ -12,11 +12,13 @@ import Slab_Door from './designs/Slab_Door/Slab_Door'
 
 
 
-export default (info, part) => {
+export default (info, part, breakdowns) => {
+
+  console.log("SKLDFUFUCKKKK", breakdowns)
 
   if(part.orderType.value === "Door") {
     if (part.construction.value === "Cope") {
-      return Cope_Door(info, part)
+      return Cope_Door(info, part, breakdowns[0])
     }
     if (part.construction.value === "M") {
       return Miter_Door(info, part)
