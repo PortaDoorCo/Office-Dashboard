@@ -29,6 +29,18 @@ const Woodtype = (props) => {
     setModal(!modal)
   };
 
+  const addProduct = () => {
+    console.log("clicked")
+    const p = {
+      NAME: '',
+      STANDARD_GRADE: '',
+      STANDARD_GRADE_THICK: ''
+    }
+    setProduct(p)
+
+    console.log(product)
+  }
+
   const changePrice = (e) => {
     const value = e.target.value;
     const name = e.target.name;
@@ -82,7 +94,7 @@ const Woodtype = (props) => {
 
       <Row className="mb-2">
         <Col>
-          <Button color="primary" >Add New</Button>
+          <Button color="primary" onClick={()=> addProduct()} >Add New</Button>
         </Col>
       </Row>
 
