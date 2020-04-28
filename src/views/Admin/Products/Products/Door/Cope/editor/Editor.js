@@ -51,7 +51,7 @@ const EditorComponent = (props) => {
               }}
               onKeyPress={e => {
                 e.persist();
-                if (e.charCode !== 32) {
+                if (e.charCode < 48 && e.charCode !== 32 && e.charCode !== 46 ||  e.charCode > 57) {
                   e.preventDefault();
                 }
               }}
