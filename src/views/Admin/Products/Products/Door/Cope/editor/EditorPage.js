@@ -26,7 +26,6 @@ const EditorPage = (props) => {
               <Editor code={breakdowns.topRail} edit={topRailEdit} />
 
               <div className="mt-2">
-                {topRailEdit ? <Button color="danger">Submit Changes</Button> : null}
                 <Button color="primary" onClick={() => setTopRailEdit(!topRailEdit)}>Edit</Button>
               </div>
 

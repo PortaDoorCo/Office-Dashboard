@@ -51,7 +51,8 @@ const EditorComponent = (props) => {
               }}
               onKeyPress={e => {
                 e.persist();
-                if (e.charCode < 48 && e.charCode !== 32 && e.charCode !== 46 ||  e.charCode > 57) {
+                console.log(e.charCode)
+                if (e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45 ||  e.charCode > 57) {
                   e.preventDefault();
                 }
               }}
@@ -129,6 +130,12 @@ const EditorComponent = (props) => {
             <p style={{ color: 'red' }}>**WARNING ** <br />
               EDITING THESE VALUES MAY BREAK COMPONENTS IF NOT DONE CORRECTLY. <br />
               PLEASE MAKE SURE YOUR MATH IS COMPLETE</p>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <Button color="danger">SUBMIT CHANGES</Button>
           </Col>
         </Row>
 
