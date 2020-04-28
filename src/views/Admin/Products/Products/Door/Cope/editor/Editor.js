@@ -3,7 +3,7 @@ import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import { Input, Button, Row, Col } from 'reactstrap'
+import { Input, Button, Row, Col, Collapse } from 'reactstrap'
 import Parameters from './Parameters'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -32,35 +32,35 @@ const EditorComponent = (props) => {
     editorRef.current._input.selectionStart = editorRef.current._input.selectionEnd = startIndex + val.length;
     editorRef.current._input.focus();
   }
+  return (
+    <div>
 
-  if (edit) {
-    return (
-      <div>
-        <Row>
-          <Col>
-            <Editor
-              //autoFocus
-              ref={editorRef}
-              value={text}
-              onValueChange={c => setText(c.replace(/\s+/, ' '))}
-              highlight={code => highlight(code, languages.js)}
-              padding={10}
-              style={{
-                fontFamily: '"Fira code", "Fira Mono", monospace',
-                fontSize: 12,
-              }}
-              onKeyPress={e => {
-                e.persist();
-                console.log(e.charCode)
-                if (e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45 ||  e.charCode > 57) {
-                  e.preventDefault();
-                }
-              }}
-            />
-          </Col>
-        </Row>
+      <Row>
+        <Col>
+          <Editor
+            //autoFocus
+            disabled={!edit}
+            ref={editorRef}
+            value={text}
+            onValueChange={c => setText(c.replace(/\s+/, ' '))}
+            highlight={code => highlight(code, languages.js)}
+            padding={10}
+            style={{
+              fontFamily: '"Fira code", "Fira Mono", monospace',
+              fontSize: 12,
+            }}
+            onKeyPress={e => {
+              e.persist();
+              console.log(e.charCode)
+              if (e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45 || e.charCode > 57) {
+                e.preventDefault();
+              }
+            }}
+          />
+        </Col>
+      </Row>
 
-
+      <Collapse isOpen={edit}>
         <Row className="mb-2">
           <Col>
             <Row>
@@ -113,6 +113,11 @@ const EditorComponent = (props) => {
                 <Button onClick={() => onBtnClick('height')} outline color="danger">Height</Button>
                 <Button onClick={() => onBtnClick('panelsH')} outline color="danger">Panels High</Button>
                 <Button onClick={() => onBtnClick('panelsW')} outline color="danger">Panels Wide</Button>
+              </div>
+            </Row>
+
+            <Row>
+              <div className="col d-flex align-content-start flex-wrap">
                 <Button onClick={() => onBtnClick('leftStile')} outline color="danger">Left Stile</Button>
                 <Button onClick={() => onBtnClick('rightStile')} outline color="danger">Right Stile</Button>
                 <Button onClick={() => onBtnClick('topRail')} outline color="danger">Top Rail</Button>
@@ -139,16 +144,13 @@ const EditorComponent = (props) => {
           </Col>
         </Row>
 
-      </div>
+      </Collapse>
 
-    );
-  } else {
-    return (
-      <div>
-        <Input type="textarea" disabled placeholder={props.code} />
-      </div>
-    )
-  }
+
+    </div>
+
+  );
+
 
 }
 

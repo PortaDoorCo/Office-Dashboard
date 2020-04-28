@@ -3,12 +3,19 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Editor from './Editor'
 import { Row, Col, Card, CardBody, CardTitle, Button } from 'reactstrap'
+import { VerticalLine } from 'devextreme-react/chart';
 
 const EditorPage = (props) => {
   const [breakdowns, setBreakdowns] = useState(props.breakdowns);
 
   const [topRailEdit, setTopRailEdit] = useState(false);
   const [bottomRailEdit, setBottomRailEdit] = useState(false);
+  const [leftStileEdit, setLeftStileEdit] = useState(false);
+  const [rightStileEdit, setRightStileEdit] = useState(false);
+  const [verticalMidRailEdit, setVerticalMidRailEdit] = useState(false);
+  const [horizontalMidRailEdit, setHorizontalMidRailEdit] = useState(false);
+  const [panelWidthEdit, setPanelWidthEdit] = useState(false);
+  const [panelHeightEdit, setPanelHeightEdit] = useState(false);
 
 
 
@@ -38,7 +45,12 @@ const EditorPage = (props) => {
               <CardTitle>
                 Bottom Rail
             </CardTitle>
-              <Editor code={breakdowns.bottomRail} />
+              <Editor code={breakdowns.bottomRail} edit={bottomRailEdit} />
+
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setBottomRailEdit(!bottomRailEdit)}>Edit</Button>
+              </div>
+
             </CardBody>
           </Card>
         </Col>
@@ -51,7 +63,11 @@ const EditorPage = (props) => {
               <CardTitle>
                 Left Stile
             </CardTitle>
-              <Editor code={breakdowns.leftStile} />
+              <Editor code={breakdowns.leftStile} edit={leftStileEdit}  />
+
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setLeftStileEdit(!leftStileEdit)}>Edit</Button>
+              </div>
             </CardBody>
           </Card>
         </Col>
@@ -61,7 +77,10 @@ const EditorPage = (props) => {
               <CardTitle>
                 Right Stile
             </CardTitle>
-              <Editor code={breakdowns.rightStile} />
+              <Editor code={breakdowns.rightStile} edit={rightStileEdit}  />
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setRightStileEdit(!rightStileEdit)}>Edit</Button>
+              </div>
             </CardBody>
           </Card>
         </Col>
@@ -74,7 +93,10 @@ const EditorPage = (props) => {
               <CardTitle>
                 Vertical Mid Rail
             </CardTitle>
-              <Editor code={breakdowns.vertical_mid_rail} />
+              <Editor code={breakdowns.vertical_mid_rail} edit={verticalMidRailEdit}  />
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setVerticalMidRailEdit(!verticalMidRailEdit)}>Edit</Button>
+              </div>
             </CardBody>
           </Card>
         </Col>
@@ -84,7 +106,10 @@ const EditorPage = (props) => {
               <CardTitle>
                 Horizontal Mid Rail
             </CardTitle>
-              <Editor code={breakdowns.horizontal_mid_rail} />
+              <Editor code={breakdowns.horizontal_mid_rail} edit={horizontalMidRailEdit}  />
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setHorizontalMidRailEdit(!horizontalMidRailEdit)}>Edit</Button>
+              </div>
             </CardBody>
           </Card>
         </Col>
@@ -97,7 +122,10 @@ const EditorPage = (props) => {
               <CardTitle>
                 Panel Width
             </CardTitle>
-              <Editor code={breakdowns.panel_width} />
+              <Editor code={breakdowns.panel_width} edit={panelWidthEdit}  />
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setPanelWidthEdit(!panelWidthEdit)}>Edit</Button>
+              </div>
             </CardBody>
           </Card>
         </Col>
@@ -107,7 +135,10 @@ const EditorPage = (props) => {
               <CardTitle>
                 Panel Height
             </CardTitle>
-              <Editor code={breakdowns.panel_height} />
+              <Editor code={breakdowns.panel_height} edit={panelHeightEdit}  />
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setPanelHeightEdit(!panelHeightEdit)}>Edit</Button>
+              </div>
             </CardBody>
           </Card>
         </Col>
