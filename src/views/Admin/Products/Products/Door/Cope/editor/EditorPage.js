@@ -30,7 +30,17 @@ const EditorPage = (props) => {
               <CardTitle>
                 Top Rail
             </CardTitle>
-              <Editor code={breakdowns.topRail} edit={topRailEdit} />
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.topRail_width} edit={topRailEdit} />
+                </Col>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.topRail_height} edit={topRailEdit} />
+                </Col>
+              </Row>
+
 
               <div className="mt-2">
                 <Button color="primary" onClick={() => setTopRailEdit(!topRailEdit)}>Edit</Button>
@@ -45,7 +55,16 @@ const EditorPage = (props) => {
               <CardTitle>
                 Bottom Rail
             </CardTitle>
-              <Editor code={breakdowns.bottomRail} edit={bottomRailEdit} />
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.bottomRail_width} edit={bottomRailEdit} />
+                </Col>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.bottomRail_height} edit={bottomRailEdit} />
+                </Col>
+              </Row>
 
               <div className="mt-2">
                 <Button color="primary" onClick={() => setBottomRailEdit(!bottomRailEdit)}>Edit</Button>
@@ -63,7 +82,16 @@ const EditorPage = (props) => {
               <CardTitle>
                 Left Stile
             </CardTitle>
-              <Editor code={breakdowns.leftStile} edit={leftStileEdit}  />
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.leftStile_width} edit={leftStileEdit} />
+                </Col>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.leftStile_height} edit={leftStileEdit} />
+                </Col>
+              </Row>
 
               <div className="mt-2">
                 <Button color="primary" onClick={() => setLeftStileEdit(!leftStileEdit)}>Edit</Button>
@@ -77,7 +105,16 @@ const EditorPage = (props) => {
               <CardTitle>
                 Right Stile
             </CardTitle>
-              <Editor code={breakdowns.rightStile} edit={rightStileEdit}  />
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.rightStile_width} edit={rightStileEdit} />
+                </Col>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.rightStile_height} edit={rightStileEdit} />
+                </Col>
+              </Row>
               <div className="mt-2">
                 <Button color="primary" onClick={() => setRightStileEdit(!rightStileEdit)}>Edit</Button>
               </div>
@@ -93,7 +130,16 @@ const EditorPage = (props) => {
               <CardTitle>
                 Vertical Mid Rail
             </CardTitle>
-              <Editor code={breakdowns.vertical_mid_rail} edit={verticalMidRailEdit}  />
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.vertical_mid_rail_width} edit={verticalMidRailEdit} />
+                </Col>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.vertical_mid_rail_height} edit={verticalMidRailEdit} />
+                </Col>
+              </Row>
               <div className="mt-2">
                 <Button color="primary" onClick={() => setVerticalMidRailEdit(!verticalMidRailEdit)}>Edit</Button>
               </div>
@@ -106,7 +152,16 @@ const EditorPage = (props) => {
               <CardTitle>
                 Horizontal Mid Rail
             </CardTitle>
-              <Editor code={breakdowns.horizontal_mid_rail} edit={horizontalMidRailEdit}  />
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.horizontal_mid_rail_width} edit={horizontalMidRailEdit} />
+                </Col>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.horizontal_mid_rail_height} edit={horizontalMidRailEdit} />
+                </Col>
+              </Row>
               <div className="mt-2">
                 <Button color="primary" onClick={() => setHorizontalMidRailEdit(!horizontalMidRailEdit)}>Edit</Button>
               </div>
@@ -122,7 +177,7 @@ const EditorPage = (props) => {
               <CardTitle>
                 Panel Width
             </CardTitle>
-              <Editor code={breakdowns.panel_width} edit={panelWidthEdit}  />
+              <Editor code={breakdowns.panel_width} edit={panelWidthEdit} />
               <div className="mt-2">
                 <Button color="primary" onClick={() => setPanelWidthEdit(!panelWidthEdit)}>Edit</Button>
               </div>
@@ -135,7 +190,7 @@ const EditorPage = (props) => {
               <CardTitle>
                 Panel Height
             </CardTitle>
-              <Editor code={breakdowns.panel_height} edit={panelHeightEdit}  />
+              <Editor code={breakdowns.panel_height} edit={panelHeightEdit} />
               <div className="mt-2">
                 <Button color="primary" onClick={() => setPanelHeightEdit(!panelHeightEdit)}>Edit</Button>
               </div>
