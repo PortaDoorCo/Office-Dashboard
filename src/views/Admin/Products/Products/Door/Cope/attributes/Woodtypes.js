@@ -24,10 +24,14 @@ const Woodtype = (props) => {
     STANDARD_GRADE_THICK: ''
   });
 
-  const toggle = (e) => {
-    setProduct(e)
+  const toggle = () => {
     setModal(!modal)
   };
+
+  const setCard = card => {
+    setProduct(card)
+    toggle()
+  }
 
   const addProduct = () => {
     console.log("clicked")
@@ -75,7 +79,7 @@ const Woodtype = (props) => {
   const card = props.woodtypes.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
-        <Card style={{ height: "100%" }} onClick={() => toggle(card)}>
+        <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
           {card.photo ? <CardImg top width="100%" height="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
@@ -94,7 +98,7 @@ const Woodtype = (props) => {
 
       <Row className="mb-2">
         <Col>
-          <Button color="primary" onClick={()=> addProduct()} >Add New</Button>
+          <Button color="primary" onClick={addProduct} >Add New</Button>
         </Col>
       </Row>
 
