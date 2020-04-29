@@ -23,24 +23,28 @@ const Woodtype = (props) => {
     STANDARD_GRADE: '',
     STANDARD_GRADE_THICK: ''
   });
+  const [newProduct, setNewProduct] = useState(false)
 
   const toggle = () => {
     setModal(!modal)
   };
 
   const setCard = card => {
+    setNewProduct(false)
     setProduct(card)
     toggle()
   }
 
-  const addProduct = () => {
+  const addProd = () => {
     console.log("clicked")
     const p = {
       NAME: '',
       STANDARD_GRADE: '',
-      STANDARD_GRADE_THICK: ''
+      STANDARD_GRADE_THICK: '',
     }
+    setNewProduct(true)
     setProduct(p)
+    toggle()
 
     console.log(product)
   }
@@ -98,7 +102,7 @@ const Woodtype = (props) => {
 
       <Row className="mb-2">
         <Col>
-          <Button color="primary" onClick={addProduct} >Add New</Button>
+          <Button color="primary" onClick={addProd} >Add New</Button>
         </Col>
       </Row>
 
@@ -140,7 +144,12 @@ const Woodtype = (props) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={updateProduct}>Update</Button>{' '}
+            {newProduct ? 
+            <Button color="primary">Submit</Button>
+            :
+            <Button color="primary" onClick={updateProduct}>Update</Button>
+            }
+            
             <Button color="secondary" onClick={toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
