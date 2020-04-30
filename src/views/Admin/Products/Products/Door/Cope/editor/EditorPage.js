@@ -8,14 +8,21 @@ import { VerticalLine } from 'devextreme-react/chart';
 const EditorPage = (props) => {
   const [breakdowns, setBreakdowns] = useState(props.breakdowns);
 
-  const [topRailEdit, setTopRailEdit] = useState(false);
-  const [bottomRailEdit, setBottomRailEdit] = useState(false);
-  const [leftStileEdit, setLeftStileEdit] = useState(false);
-  const [rightStileEdit, setRightStileEdit] = useState(false);
-  const [verticalMidRailEdit, setVerticalMidRailEdit] = useState(false);
-  const [horizontalMidRailEdit, setHorizontalMidRailEdit] = useState(false);
-  const [panelWidthEdit, setPanelWidthEdit] = useState(false);
-  const [panelHeightEdit, setPanelHeightEdit] = useState(false);
+  const [topRailWidth, setTopRailWidth] = useState(false);
+  const [topRailHeight, setTopRailHeight] = useState(false);
+  const [bottomRailWidth, setBottomRailWidth] = useState(false);
+  const [bottomRailHeight, setBottomRailHeight] = useState(false);
+  const [leftStileWidth, setLeftStileWidth] = useState(false);
+  const [leftStileHeight, setLeftStileHeight] = useState(false);
+  const [rightStileWidth, setRightStileWidth] = useState(false);
+  const [rightStileHeight, setRightStileHeight] = useState(false);
+  const [verticalMidRailWidth, setVerticalMidRailWidth] = useState(false);
+  const [verticalMidRailHeight, setVerticalMidRailHeight] = useState(false);
+  const [horizontalMidRailWidth, setHorizontalMidRailWidth] = useState(false);
+  const [horizontalMidRailHeight, setHorizontalMidRailHeight] = useState(false);
+  const [panelWidth, setPanelWidth] = useState(false);
+  const [panelHeight, setPanelHeight] = useState(false);
+
 
 
 
@@ -35,21 +42,18 @@ const EditorPage = (props) => {
             <CardBody>
               <CardTitle>
                 <h4 style={{ textDecoration: 'underline' }}>Top Rail</h4>
-            </CardTitle>
+              </CardTitle>
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.topRail_width} edit={topRailEdit} />
+                  <Editor code={breakdowns.topRail_width} edit={topRailWidth} />
                 </Col>
-                <Col>
-                  Height
-                  <Editor code={breakdowns.topRail_height} edit={topRailEdit} />
-                </Col>
+
               </Row>
 
 
               <div className="mt-2">
-                <Button color="primary" onClick={() => setTopRailEdit(!topRailEdit)}>Edit</Button>
+                <Button color="primary" onClick={() => setTopRailWidth(!topRailWidth)}>Edit</Button>
               </div>
 
             </CardBody>
@@ -59,21 +63,17 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-              <h4 style={{ textDecoration: 'underline' }}>Bottom Rail</h4>
-            </CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Top Rail</h4>
+              </CardTitle>
               <Row>
                 <Col>
-                  Width
-                  <Editor code={breakdowns.bottomRail_width} edit={bottomRailEdit} />
-                </Col>
-                <Col>
                   Height
-                  <Editor code={breakdowns.bottomRail_height} edit={bottomRailEdit} />
+                  <Editor code={breakdowns.topRail_height} edit={topRailHeight} />
                 </Col>
               </Row>
 
               <div className="mt-2">
-                <Button color="primary" onClick={() => setBottomRailEdit(!bottomRailEdit)}>Edit</Button>
+                <Button color="primary" onClick={() => setTopRailHeight(!topRailHeight)}>Edit</Button>
               </div>
 
             </CardBody>
@@ -86,21 +86,17 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-              <h4 style={{ textDecoration: 'underline' }}>Left Stile</h4>
-            </CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Bottom Rail</h4>
+              </CardTitle>
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.leftStile_width} edit={leftStileEdit} />
-                </Col>
-                <Col>
-                  Height
-                  <Editor code={breakdowns.leftStile_height} edit={leftStileEdit} />
+                  <Editor code={breakdowns.bottomRail_width} edit={bottomRailWidth} />
                 </Col>
               </Row>
 
               <div className="mt-2">
-                <Button color="primary" onClick={() => setLeftStileEdit(!leftStileEdit)}>Edit</Button>
+                <Button color="primary" onClick={() => setBottomRailWidth(!bottomRailWidth)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -109,20 +105,16 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-              <h4 style={{ textDecoration: 'underline' }}>Right Stile</h4>
-            </CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Bottom Rail</h4>
+              </CardTitle>
               <Row>
                 <Col>
-                  Width
-                  <Editor code={breakdowns.rightStile_width} edit={rightStileEdit} />
-                </Col>
-                <Col>
                   Height
-                  <Editor code={breakdowns.rightStile_height} edit={rightStileEdit} />
+                  <Editor code={breakdowns.bottomRail_height} edit={bottomRailHeight} />
                 </Col>
               </Row>
               <div className="mt-2">
-                <Button color="primary" onClick={() => setRightStileEdit(!rightStileEdit)}>Edit</Button>
+                <Button color="primary" onClick={() => setBottomRailHeight(!bottomRailHeight)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -134,20 +126,140 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-              <h4 style={{ textDecoration: 'underline' }}>Vertical Mid Rail</h4>
-            </CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Left Stile</h4>
+              </CardTitle>
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.vertical_mid_rail_width} edit={verticalMidRailEdit} />
-                </Col>
-                <Col>
-                  Height
-                  <Editor code={breakdowns.vertical_mid_rail_height} edit={verticalMidRailEdit} />
+                  <Editor code={breakdowns.leftStile_width} edit={leftStileWidth} />
                 </Col>
               </Row>
               <div className="mt-2">
-                <Button color="primary" onClick={() => setVerticalMidRailEdit(!verticalMidRailEdit)}>Edit</Button>
+                <Button color="primary" onClick={() => setLeftStileWidth(!leftStileWidth)}>Edit</Button>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Left Stile</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.leftStile_height} edit={leftStileHeight} />
+                </Col>
+              </Row>
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setLeftStileHeight(!leftStileHeight)}>Edit</Button>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row className="mt-2">
+        <Col>
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Right Stile</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.rightStile_width} edit={rightStileWidth} />
+                </Col>
+              </Row>
+              
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setRightStileWidth(!rightStileWidth)}>Edit</Button>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Right Stile</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.rightStile_height} edit={rightStileHeight} />
+                </Col>
+              </Row>
+              
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setRightStileHeight(!rightStileHeight)}>Edit</Button>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row className="mt-2">
+        <Col>
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Vertical Mid Rail</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.vertical_mid_rail_width} edit={verticalMidRailWidth} />
+                </Col>
+              </Row>
+             
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setVerticalMidRailWidth(!verticalMidRailWidth)}>Edit</Button>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Vertical Mid Rail</h4>
+              </CardTitle>
+              
+              <Row>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.vertical_mid_rail_height} edit={verticalMidRailHeight} />
+                </Col>
+              </Row>
+              
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setVerticalMidRailHeight(!verticalMidRailHeight)}>Edit</Button>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row className="mt-2">
+        <Col>
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Horizontal Mid Rail</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.horizontal_mid_rail_width} edit={horizontalMidRailWidth} />
+                </Col>
+              </Row>
+
+              
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setHorizontalMidRailWidth(!horizontalMidRailWidth)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -157,19 +269,17 @@ const EditorPage = (props) => {
             <CardBody>
               <CardTitle>
                 <h4 style={{ textDecoration: 'underline' }}>Horizontal Mid Rail</h4>
-            </CardTitle>
+              </CardTitle>
+
               <Row>
                 <Col>
-                  Width
-                  <Editor code={breakdowns.horizontal_mid_rail_width} edit={horizontalMidRailEdit} />
-                </Col>
-                <Col>
                   Height
-                  <Editor code={breakdowns.horizontal_mid_rail_height} edit={horizontalMidRailEdit} />
+                  <Editor code={breakdowns.horizontal_mid_rail_height} edit={horizontalMidRailHeight} />
                 </Col>
               </Row>
+              
               <div className="mt-2">
-                <Button color="primary" onClick={() => setHorizontalMidRailEdit(!horizontalMidRailEdit)}>Edit</Button>
+                <Button color="primary" onClick={() => setHorizontalMidRailHeight(!horizontalMidRailHeight)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -181,11 +291,18 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-              <h4 style={{ textDecoration: 'underline' }}>Panel Width</h4>
-            </CardTitle>
-              <Editor code={breakdowns.panel_width} edit={panelWidthEdit} />
+                <h4 style={{ textDecoration: 'underline' }}>Panel</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.panel_width} edit={panelWidth} />
+                </Col>
+              </Row>
+
+              
               <div className="mt-2">
-                <Button color="primary" onClick={() => setPanelWidthEdit(!panelWidthEdit)}>Edit</Button>
+                <Button color="primary" onClick={() => setPanelWidth(!panelWidth)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -194,11 +311,17 @@ const EditorPage = (props) => {
           <Card>
             <CardBody>
               <CardTitle>
-              <h4 style={{ textDecoration: 'underline' }}>Panel Height</h4>
-            </CardTitle>
-              <Editor code={breakdowns.panel_height} edit={panelHeightEdit} />
+                <h4 style={{ textDecoration: 'underline' }}>Panel</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  Height
+                  <Editor code={breakdowns.panel_height} edit={panelHeight} />
+                </Col>
+              </Row>
+             
               <div className="mt-2">
-                <Button color="primary" onClick={() => setPanelHeightEdit(!panelHeightEdit)}>Edit</Button>
+                <Button color="primary" onClick={() => setPanelHeight(!panelHeight)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
