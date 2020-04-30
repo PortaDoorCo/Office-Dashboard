@@ -4,8 +4,12 @@ import { bindActionCreators } from 'redux';
 import Editor from './Editor'
 import { Row, Col, Card, CardBody, CardTitle, Button } from 'reactstrap'
 import { VerticalLine } from 'devextreme-react/chart';
+import { updateBreakdowns } from '../../../../../../../redux/part_list/actions'
 
 const EditorPage = (props) => {
+
+  const { updateBreakdowns } = props;
+
   const [breakdowns, setBreakdowns] = useState(props.breakdowns);
 
   const [topRailWidth, setTopRailWidth] = useState(false);
@@ -46,7 +50,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.topRail_width} edit={topRailWidth} />
+                  <Editor code={breakdowns.topRail_width} name={'topRail_width'} toggleEdit={setTopRailWidth}  edit={topRailWidth} />
                 </Col>
 
               </Row>
@@ -68,7 +72,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.topRail_height} edit={topRailHeight} />
+                  <Editor code={breakdowns.topRail_height} name={'topRail_height'} toggleEdit={setTopRailHeight}  edit={topRailHeight} />
                 </Col>
               </Row>
 
@@ -91,7 +95,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.bottomRail_width} edit={bottomRailWidth} />
+                  <Editor code={breakdowns.bottomRail_width} name={'bottomRail_width'}  toggleEdit={setBottomRailWidth} edit={bottomRailWidth} />
                 </Col>
               </Row>
 
@@ -110,7 +114,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.bottomRail_height} edit={bottomRailHeight} />
+                  <Editor code={breakdowns.bottomRail_height} name={'bottomRail_height'}  toggleEdit={setBottomRailHeight} edit={bottomRailHeight} />
                 </Col>
               </Row>
               <div className="mt-2">
@@ -131,7 +135,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.leftStile_width} edit={leftStileWidth} />
+                  <Editor code={breakdowns.leftStile_width} name={'leftStile_width'}  toggleEdit={setLeftStileWidth} edit={leftStileWidth} />
                 </Col>
               </Row>
               <div className="mt-2">
@@ -149,7 +153,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.leftStile_height} edit={leftStileHeight} />
+                  <Editor code={breakdowns.leftStile_height} name={'leftStile_height'}   toggleEdit={setLeftStileHeight} edit={leftStileHeight} />
                 </Col>
               </Row>
               <div className="mt-2">
@@ -170,7 +174,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.rightStile_width} edit={rightStileWidth} />
+                  <Editor code={breakdowns.rightStile_width} name={'rightStile_width'}  toggleEdit={setRightStileWidth} edit={rightStileWidth} />
                 </Col>
               </Row>
               
@@ -189,7 +193,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.rightStile_height} edit={rightStileHeight} />
+                  <Editor code={breakdowns.rightStile_height} name={'rightStile_height'}  toggleEdit={setRightStileHeight} edit={rightStileHeight} />
                 </Col>
               </Row>
               
@@ -211,7 +215,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.vertical_mid_rail_width} edit={verticalMidRailWidth} />
+                  <Editor code={breakdowns.vertical_mid_rail_width} name={'vertical_mid_rail_width'}  toggleEdit={setVerticalMidRailWidth} edit={verticalMidRailWidth} />
                 </Col>
               </Row>
              
@@ -231,7 +235,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.vertical_mid_rail_height} edit={verticalMidRailHeight} />
+                  <Editor code={breakdowns.vertical_mid_rail_height} name={'vertical_mid_rail_height'}  toggleEdit={setVerticalMidRailHeight} edit={verticalMidRailHeight} />
                 </Col>
               </Row>
               
@@ -253,7 +257,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.horizontal_mid_rail_width} edit={horizontalMidRailWidth} />
+                  <Editor code={breakdowns.horizontal_mid_rail_width} name={'horizontal_mid_rail_width'}  toggleEdit={setHorizontalMidRailWidth} edit={horizontalMidRailWidth} />
                 </Col>
               </Row>
 
@@ -274,7 +278,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.horizontal_mid_rail_height} edit={horizontalMidRailHeight} />
+                  <Editor code={breakdowns.horizontal_mid_rail_height} name={'horizontal_mid_rail_height'}  toggleEdit={setHorizontalMidRailHeight} edit={horizontalMidRailHeight} />
                 </Col>
               </Row>
               
@@ -296,7 +300,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.panel_width} edit={panelWidth} />
+                  <Editor code={breakdowns.panel_width} name={'panel_width'}   toggleEdit={setPanelWidth} edit={panelWidth} />
                 </Col>
               </Row>
 
@@ -316,7 +320,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.panel_height} edit={panelHeight} />
+                  <Editor code={breakdowns.panel_height} name={'panel_height'}  toggleEdit={setPanelHeight} edit={panelHeight} />
                 </Col>
               </Row>
              
@@ -346,7 +350,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-
+      updateBreakdowns
     },
     dispatch
   );
