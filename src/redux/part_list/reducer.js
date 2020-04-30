@@ -42,7 +42,8 @@ import {
   UPLOAD_FILE,
   GET_PHOTO_ID,
   GET_DOOR_OPTIONS,
-  GET_BREAKDOWNS
+  GET_BREAKDOWNS,
+  UPDATE_BREAKDOWNS
 } from "./actions";
 
 const initialState = {
@@ -441,6 +442,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         breakdowns: data
+      }
+    case UPDATE_BREAKDOWNS:
+      return {
+        ...state,
+        breakdowns: state.breakdowns.map(i => i.id === data.id ?
+          data : i
+        )
       }
     default:
       return state;

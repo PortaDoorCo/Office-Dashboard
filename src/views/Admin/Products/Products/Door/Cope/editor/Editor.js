@@ -3,25 +3,64 @@ import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import { Input, Button, Row, Col, Collapse } from 'reactstrap'
+import { Input, Button, Row, Col, Collapse, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import Parameters from './Parameters'
+import Cookies from "js-cookie";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { updateBreakdowns, getBreakdowns } from '../../../../../../../redux/part_list/actions'
 
-
+const cookie = Cookies.get("jwt");
 
 
 
 const EditorComponent = (props) => {
+
+  const {
+    buttonLabel,
+    className,
+    breakdowns,
+    name,
+    toggleEdit
+  } = props;
+
   const { code, edit } = props;
   const [text, setText] = useState(code);
   const editorRef = useRef(null);
+  const [modal, setModal] = useState(false)
 
   const designs = ['top_rail_arch', 'bottom_rail_arch']
   const edges = ['stile_add', 'rail_add', 'edge_factor']
   const panels = ['panel_factor']
   const profiles = ['inset']
   const applied_profiles = ['rail_add', 'rail_factor']
+
+  const toggle = () => {
+    setModal(!modal)
+  };
+
+  console.log(breakdowns)
+
+
+  const submit = async () => {
+
+    console.log('name ', name)
+    console.log('code ', text)
+    console.log('id ', breakdowns.id)
+
+    const id = breakdowns.id
+
+    const bd = {
+      ...breakdowns,
+      [name]: text
+    }
+
+    console.log(bd)
+
+    await props.updateBreakdowns(id, bd, cookie)
+    await setModal(!modal)
+    await toggleEdit()
+  }
 
 
   const onBtnClick = (val) => {
@@ -128,13 +167,25 @@ const EditorComponent = (props) => {
             </Row>
           </Col>
         </Row>
-        {/* <Row>
+        <Row>
           <Col>
-            <Button color="danger">SUBMIT CHANGES</Button>
+            <Button color="danger" onClick={toggle}>SUBMIT CHANGES</Button>
           </Col>
-        </Row> */}
+        </Row>
 
       </Collapse>
+
+
+      <Modal isOpen={modal} toggle={toggle} className={className}>
+        <ModalHeader toggle={toggle}>Are You Sure?</ModalHeader>
+        <ModalBody>
+          Are you sure you want to change this setting?
+          </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={submit}>Submit</Button>
+          <Button color="danger" onClick={toggle}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
 
 
     </div>
@@ -145,18 +196,14 @@ const EditorComponent = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  woodtypes: state.part_list.woodtypes,
-  designs: state.part_list.cope_designs,
-  edges: state.part_list.edges,
-  panels: state.part_list.panels,
-  profiles: state.part_list.profiles,
-  applied_profiles: state.part_list.applied_moulds
+  breakdowns: state.part_list.breakdowns[0]
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-
+      updateBreakdowns,
+      getBreakdowns
     },
     dispatch
   );

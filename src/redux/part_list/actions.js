@@ -45,6 +45,7 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
 export const GET_BREAKDOWNS = 'GET_BREAKDOWNS'
+export const UPDATE_BREAKDOWNS = 'UPDATE_BREAKDOWNS'
 
 export function getWoodtypes(cookie) {
   console.log("FIREEEEE")
@@ -640,7 +641,7 @@ export function addProduct(product, url, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-   
+
       NotificationManager.success('Product Added', 'Product Added', 2000);
       return dispatch({
         type: ADD_PRODUCT,
@@ -661,11 +662,11 @@ export function updateProduct(orderId, product, url, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-    
+
       // NotificationManager.success(`Product Updated!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_PRODUCT,
-        data:data
+        data: data
       });
     } catch (error) {
       console.error(error);
@@ -682,7 +683,7 @@ export function deleteProduct(orderId, product, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-    
+
       // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: DELETE_PRODUCT,
@@ -705,7 +706,7 @@ export function uploadFile(file, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       })
-  
+
       // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: UPLOAD_FILE,
@@ -748,4 +749,21 @@ export function getBreakdowns(cookie) {
     });
   };
 }
+
+export function updateBreakdowns(id, item, cookie) {
+  return async function (dispatch) {
+    const { data } = await axios.put(`${db_url}/breakdowns/${id}`, item, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    })
+    console.log(data)
+    NotificationManager.success(`Breakdown Updated!`, 'Breakdown Updated!', 2000);
+    return dispatch({
+      type: UPDATE_BREAKDOWNS,
+      data: data
+    });
+  };
+}
+
 
