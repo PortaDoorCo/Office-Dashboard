@@ -35,7 +35,7 @@ export default (info, part, breakdowns) => {
   console.log(part)
   console.log(info)
 
-  if (topRail === bottomRail) {
+  if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {
     if (((panelsW > 1) && (panelsH > 1)) || ((panelsH > 1) && (panelsW == 1))) {
       return [
         {

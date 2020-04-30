@@ -37,7 +37,7 @@ const Navigation = (props) => {
 const Cope = (props) => {
   const [product, setProduct] = useState("index");
   const [activeTab, setActiveTab] = useState('1');
-  const [openEditor, setOpenEditor] = useState(true);
+  const [openEditor, setOpenEditor] = useState(false);
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
