@@ -3,8 +3,13 @@ import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, ButtonGroup, Moda
 import Cookies from "js-cookie";
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import { FileUploader } from 'devextreme-react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getWoodtypes, updateProduct, addProduct } from '../../../../../../../redux/part_list/actions'
 
 const cookie = Cookies.get("jwt");
+const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
@@ -71,10 +76,37 @@ const Woodtype = (props) => {
     })
   }
 
+  const onUploaded = (e) => {
+    const data = JSON.parse(e.request.response);
+    console.log('eeeeeeeeeeeeeeeeee=======>>> ', data)
+    setProduct((prevState) => {
+      return ({
+        ...prevState,
+        photo: data[0]
+      })
+    })
+    return
+  }
+
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
     await props.updateProduct(id, updatedProduct, "woodtypes", cookie)
+    await setModal(!modal)
+    await props.getWoodtypes(cookie)
+  }
+
+  const submitProduct = async () => {
+    const item = props.woodtypes.length + 1
+    const submittedProduct = {
+      NAME: product.NAME,
+      STANDARD_GRADE: product.STANDARD_GRADE,
+      STANDARD_GRADE_THICK: product.STANDARD_GRADE_THICK,
+      photo: product.photo.id,
+      Item: item
+    }
+    console.log(submittedProduct)
+    await props.addProduct(submittedProduct, 'woodtypes', cookie)
     await setModal(!modal)
     await props.getWoodtypes(cookie)
   }
@@ -123,7 +155,10 @@ const Woodtype = (props) => {
                   {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
                 </div>
 
-                <Input type="file" name="file" id="exampleFile" className="mt-2" />
+                <form id="form" method="post" action="" encType="multipart/form-data">
+                    <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
+                </form>
+
               </Col>
             </Row>
             <Row className="mb-2">
@@ -145,7 +180,7 @@ const Woodtype = (props) => {
           </ModalBody>
           <ModalFooter>
             {newProduct ? 
-            <Button color="primary">Submit</Button>
+            <Button color="primary" onClick={submitProduct}>Submit</Button>
             :
             <Button color="primary" onClick={updateProduct}>Update</Button>
             }
@@ -160,4 +195,23 @@ const Woodtype = (props) => {
 
 }
 
-export default Woodtype;
+const mapStateToProps = (state) => ({
+  woodtypes: state.part_list.woodtypes,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getWoodtypes,
+      updateProduct,
+      addProduct
+    },
+    dispatch
+  );
+
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Woodtype);

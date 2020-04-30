@@ -136,7 +136,7 @@ const Cope = (props) => {
           <Row>
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1">
-                <Woodtype getWoodtypes={props.getWoodtypes} woodtypes={props.woodtypes} updateProduct={props.updateProduct} />
+                <Woodtype />
               </TabPane>
               <TabPane tabId="2">
                 <Designs designs={props.designs} />
