@@ -78,7 +78,6 @@ const Woodtype = (props) => {
 
   const onUploaded = (e) => {
     const data = JSON.parse(e.request.response);
-    console.log('eeeeeeeeeeeeeeeeee=======>>> ', data)
     setProduct((prevState) => {
       return ({
         ...prevState,
@@ -105,7 +104,6 @@ const Woodtype = (props) => {
       photo: product.photo.id,
       Item: item
     }
-    console.log(submittedProduct)
     await props.addProduct(submittedProduct, 'woodtypes', cookie)
     await setModal(!modal)
     await props.getWoodtypes(cookie)
