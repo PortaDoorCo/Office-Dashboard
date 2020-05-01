@@ -684,10 +684,13 @@ export function deleteProduct(orderId, product, cookie) {
         }
       });
 
-      // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
+
+      NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: DELETE_PRODUCT,
-        data: data
+        data: data,
+        product: product,
+        id: orderId
       });
     } catch (error) {
       console.error(error);
