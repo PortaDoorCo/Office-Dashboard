@@ -19,11 +19,12 @@ export default (info, part, breakdowns) => {
     if (part.construction.value === "Cope") {
       return Cope_Door(info, part, breakdowns[0])
     }
+    if (part.construction.value === "MT") {
+      return MT_Door(info, part,  breakdowns[1])
+    }
+
     if (part.construction.value === "M") {
       return Miter_Door(info, part)
-    }
-    if (part.construction.value === "MT") {
-      return MT_Door(info, part)
     }
 
   }
