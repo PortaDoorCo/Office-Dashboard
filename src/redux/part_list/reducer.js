@@ -420,11 +420,11 @@ export default function (state = initialState, action) {
         // })
       }
     case DELETE_PRODUCT:
-      const p = `state.${product}.filter(item => item.id !== id)`
-      const q = eval(p)
+      // const p = `state.${product}.filter(item => item.id !== id)`
+      // const q = eval(p)
       return {
         ...state,
-        [product]: q
+        // [product]: q
       }
     case UPDATE_PRODUCT:
       return {
