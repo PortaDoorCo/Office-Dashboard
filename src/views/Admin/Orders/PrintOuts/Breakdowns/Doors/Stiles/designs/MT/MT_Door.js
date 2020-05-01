@@ -8,13 +8,10 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-export default (info, part) => {
+export default (info, part, breakdowns) => {
 
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0
-
-  const top_rail_add = part.design.TOP_RAIL_ADD
-  const btm_rail_add = part.design.BTM_RAIL_ADD
 
   const topRail = numQty(info.topRail)
   const bottomRail = numQty(info.bottomRail)
@@ -35,23 +32,21 @@ export default (info, part) => {
   const tenon_factor = 0;
 
 
-
-  if (leftStile === rightStile) {
+  if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {
     if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH == 1))) {
       return [
         {
           qty: `(${(qty * 2)})`,
           measurement: `${fraction(
-            leftStile
-          )} x ${fraction(height + edge_factor)}`,
+            eval(breakdowns.leftStile_width)
+          )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: "LR"
         },
         {
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
-          measurement: `${fraction(vertMull)} x ${fraction(
-            Math.round((
-              ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
-              + inset + (edge_factor / panelsH)) * 16) / 16
+          measurement: `${fraction(eval(breakdowns.vertical_mid_rail_width))} x ${fraction(
+            Math.round(
+              eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
           pattern: "VM3"
         },
@@ -61,8 +56,8 @@ export default (info, part) => {
         {
           qty: `(${(qty * 2)})`,
           measurement: `${fraction(
-            leftStile
-          )} x ${fraction(height + edge_factor)}`,
+            eval(breakdowns.leftStile_width)
+          )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: "LR"
         }
       ]
@@ -74,23 +69,22 @@ export default (info, part) => {
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
-            leftStile
-          )} x ${fraction(height + edge_factor)}`,
+            eval(breakdowns.leftStile_width)
+          )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: "L"
         },
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
-            rightStile
-          )} x ${fraction(height + edge_factor)}`,
+            eval(breakdowns.rightStile_width)
+          )} x ${fraction(eval(breakdowns.rightStile_height))}`,
           pattern: "R"
         },
         {
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
-          measurement: `${fraction(vertMull)} x ${fraction(
-            Math.round((
-              ((height - topRail - bottomRail - (horizMull * (panelsH- 1))) / panelsH)
-              + inset + (edge_factor / panelsH)) * 16) / 16
+          measurement: `${fraction(eval(breakdowns.vertical_mid_rail_width))} x ${fraction(
+            Math.round(
+              eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
           pattern: "VM9"
         },
@@ -101,15 +95,15 @@ export default (info, part) => {
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
-            leftStile
-          )} x ${fraction(height + edge_factor)}`,
+            eval(breakdowns.leftStile_width)
+          )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: "L"
         },
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
-            rightStile
-          )} x ${fraction(height + edge_factor)}`,
+            eval(breakdowns.rightStile_width)
+          )} x ${fraction(eval(breakdowns.rightStile_height))}`,
           pattern: "R"
         }
 
