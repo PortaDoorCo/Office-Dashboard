@@ -13,13 +13,12 @@ const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
-const Woodtype = (props) => {
+const Designs = (props) => {
 
   const {
     buttonLabel,
     className
   } = props;
-
 
   const [modal, setModal] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
@@ -29,7 +28,8 @@ const Woodtype = (props) => {
     UPCHARGE: '',
     UPCHARGE_THICK: '',
     TOP_RAIL_ADD: '',
-    BTM_RAIL_ADD: ''
+    BTM_RAIL_ADD: '',
+    photo: null
   });
   const [newProduct, setNewProduct] = useState(false)
 
@@ -55,14 +55,15 @@ const Woodtype = (props) => {
       UPCHARGE: '',
       UPCHARGE_THICK: '',
       TOP_RAIL_ADD: '',
-      BTM_RAIL_ADD: ''
+      BTM_RAIL_ADD: '',
+      photo: null
     }
     setNewProduct(true)
     setProduct(p)
     toggle()
   }
 
-  const changePrice = (e) => {
+  const changeNumber = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     setProduct((prevState) => {
@@ -98,7 +99,7 @@ const Woodtype = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "designs", cookie)
+    await props.updateProduct(id, updatedProduct, "cope-designs", cookie)
     await setModal(!modal)
     await props.getCopeDesigns(cookie)
   }
@@ -106,21 +107,24 @@ const Woodtype = (props) => {
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'designs', cookie)
+    await props.deleteProduct(id, 'cope-designs', cookie)
+    await props.getCopeDesigns(cookie)
     await toggleWarningModal()
     await toggle()
   }
 
   const submitProduct = async () => {
-    const item = props.woodtypes.length + 1
+    const item = props.designs.length + 1
     const submittedProduct = {
       NAME: product.NAME,
-      STANDARD_GRADE: product.STANDARD_GRADE,
-      STANDARD_GRADE_THICK: product.STANDARD_GRADE_THICK,
-      photo: product.photo.id,
+      UPCHARGE: product.UPCHARGE,
+      UPCHARGE_THICK: product.UPCHARGE_THICK,
+      TOP_RAIL_ADD: product.TOP_RAIL_ADD,
+      BTM_RAIL_ADD: product.BTM_RAIL_ADD,
+      photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'designs', cookie)
+    await props.addProduct(submittedProduct, 'cope-designs', cookie)
     await setModal(!modal)
     await props.getCopeDesigns(cookie)
   }
@@ -130,7 +134,7 @@ const Woodtype = (props) => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
         <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
-          {card.photo ? <CardImg top width="100%" height="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+          {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
           <CardTitle><strong>{card.NAME}</strong></CardTitle>
               <CardTitle><strong>4/4 Price:</strong> ${card.UPCHARGE}</CardTitle>
@@ -187,21 +191,21 @@ const Woodtype = (props) => {
             <Row>
               <Col>
                 <Label for="4/4_Price">4/4 Price</Label>
-                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => changePrice(e)}></Input>
+                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => changeNumber(e)}></Input>
               </Col>
               <Col>
                 <Label for="5/4_Price">5/4 Price</Label>
-                <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => changePrice(e)}></Input>
+                <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => changeNumber(e)}></Input>
               </Col>
             </Row>
             <Row>
               <Col>
                 <Label for="4/4_Price">Top Rail Arch</Label>
-                <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => changePrice(e)}></Input>
+                <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => changeNumber(e)}></Input>
               </Col>
               <Col>
                 <Label for="5/4_Price">Bottom Rail Arch</Label>
-                <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => changePrice(e)}></Input>
+                <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => changeNumber(e)}></Input>
               </Col>
             </Row>
 
@@ -225,7 +229,6 @@ const Woodtype = (props) => {
                 <Button color="primary" onClick={submitProduct}>Submit</Button>
 
               </div>
-
               :
               <div>
                 <Button color="primary" onClick={updateProduct}>Update</Button>
@@ -254,7 +257,7 @@ const Woodtype = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  woodtypes: state.part_list.woodtypes,
+  designs: state.part_list.cope_designs,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -273,4 +276,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Woodtype);
+)(Designs);

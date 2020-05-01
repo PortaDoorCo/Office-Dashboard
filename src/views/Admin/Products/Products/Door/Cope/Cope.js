@@ -139,7 +139,7 @@ const Cope = (props) => {
                 <Woodtype />
               </TabPane>
               <TabPane tabId="2">
-                <Designs designs={props.designs} />
+                <Designs />
               </TabPane>
               <TabPane tabId="3">
                 <Edges edges={props.edges} />

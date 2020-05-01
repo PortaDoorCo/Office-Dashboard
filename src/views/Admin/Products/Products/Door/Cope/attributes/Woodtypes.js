@@ -60,7 +60,7 @@ const Woodtype = (props) => {
     console.log(product)
   }
 
-  const changePrice = (e) => {
+  const changeNumber = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     setProduct((prevState) => {
@@ -115,7 +115,7 @@ const Woodtype = (props) => {
       NAME: product.NAME,
       STANDARD_GRADE: product.STANDARD_GRADE,
       STANDARD_GRADE_THICK: product.STANDARD_GRADE_THICK,
-      photo: product.photo.id,
+      photo: product.photo ? product.photo.id : '',
       Item: item
     }
     await props.addProduct(submittedProduct, 'woodtypes', cookie)
@@ -128,7 +128,7 @@ const Woodtype = (props) => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
         <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
-          {card.photo ? <CardImg top width="100%" height="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+          {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>4/4 Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
@@ -182,11 +182,11 @@ const Woodtype = (props) => {
             <Row>
               <Col>
                 <Label for="4/4_Price">4/4 Price</Label>
-                <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => changePrice(e)}></Input>
+                <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => changeNumber(e)}></Input>
               </Col>
               <Col>
                 <Label for="5/4_Price">5/4 Price</Label>
-                <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => changePrice(e)}></Input>
+                <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => changeNumber(e)}></Input>
               </Col>
             </Row>
             <Row className="mt-5">
