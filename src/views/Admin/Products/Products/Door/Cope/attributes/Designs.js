@@ -63,18 +63,7 @@ const Designs = (props) => {
     toggle()
   }
 
-  const changeNumber = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    setProduct((prevState) => {
-      return ({
-        ...prevState,
-        [name]: parseFloat(value)
-      })
-    })
-  }
-
-  const changeName = (e) => {
+  const change = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     setProduct((prevState) => {
@@ -184,28 +173,28 @@ const Designs = (props) => {
             <Row className="mb-2">
               <Col>
                 <Label for="Name">Name</Label>
-                <Input value={product.NAME} name="NAME" onChange={(e) => changeName(e)}></Input>
+                <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
             <Row>
               <Col>
                 <Label for="4/4_Price">4/4 Price</Label>
-                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
               </Col>
               <Col>
                 <Label for="5/4_Price">5/4 Price</Label>
-                <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
             <Row>
               <Col>
                 <Label for="4/4_Price">Top Rail Arch</Label>
-                <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
               </Col>
               <Col>
                 <Label for="5/4_Price">Bottom Rail Arch</Label>
-                <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 

@@ -65,18 +65,7 @@ const Edges = (props) => {
     toggle()
   }
 
-  const changeNumber = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    setProduct((prevState) => {
-      return ({
-        ...prevState,
-        [name]: parseFloat(value)
-      })
-    })
-  }
-
-  const changeName = (e) => {
+  const change = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     setProduct((prevState) => {
@@ -187,29 +176,29 @@ const Edges = (props) => {
             <Row className="mb-2">
               <Col>
                 <Label for="Name">Name</Label>
-                <Input value={product.NAME} name="NAME" onChange={(e) => changeName(e)}></Input>
+                <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
             <Row>
               <Col>
                 <Label for="4/4_Price">4/4 Price</Label>
-                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
               </Col>
 
             </Row>
             <Row>
               <Col>
                 <Label for="5/4_Price">Stile Add</Label>
-                <Input value={product.STILE_ADD} name="STILE_ADD" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.STILE_ADD} name="STILE_ADD" onChange={(e) => change(e)}></Input>
               </Col>
               <Col>
                 <Label for="4/4_Price">Rail Add</Label>
-                <Input value={product.RAIL_ADD} name="RAIL_ADD" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.RAIL_ADD} name="RAIL_ADD" onChange={(e) => change(e)}></Input>
               </Col>
               <Col>
                 <Label for="5/4_Price">Lip Factor</Label>
-                <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
             <Row>

@@ -7,7 +7,7 @@ import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getPanels, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions'
-import { AppSwitch } from '@coreui/react'
+
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -59,18 +59,7 @@ const Panels = (props) => {
     toggle()
   }
 
-  const changeNumber = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    setProduct((prevState) => {
-      return ({
-        ...prevState,
-        [name]: parseFloat(value)
-      })
-    })
-  }
-
-  const changeName = (e) => {
+  const change = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     setProduct((prevState) => {
@@ -176,21 +165,21 @@ const Panels = (props) => {
             <Row className="mb-2">
               <Col>
                 <Label for="Name">Name</Label>
-                <Input value={product.NAME} name="NAME" onChange={(e) => changeName(e)}></Input>
+                <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
             <Row>
               <Col>
                 <Label for="4/4_Price">Price</Label>
-                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
               </Col>
 
             </Row>
             <Row>
               <Col>
                 <Label for="5/4_Price">Panel Factor</Label>
-                <Input value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 

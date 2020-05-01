@@ -60,18 +60,7 @@ const Woodtype = (props) => {
     console.log(product)
   }
 
-  const changeNumber = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    setProduct((prevState) => {
-      return ({
-        ...prevState,
-        [name]: parseFloat(value)
-      })
-    })
-  }
-
-  const changeName = (e) => {
+  const change = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     setProduct((prevState) => {
@@ -176,17 +165,17 @@ const Woodtype = (props) => {
             <Row className="mb-2">
               <Col>
                 <Label for="Name">Name</Label>
-                <Input value={product.NAME} name="NAME" onChange={(e) => changeName(e)}></Input>
+                <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
             <Row>
               <Col>
                 <Label for="4/4_Price">4/4 Price</Label>
-                <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
               </Col>
               <Col>
                 <Label for="5/4_Price">5/4 Price</Label>
-                <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
             <Row className="mt-5">
