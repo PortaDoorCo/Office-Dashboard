@@ -61,18 +61,7 @@ const Profiles = (props) => {
     toggle()
   }
 
-  const changeNumber = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    setProduct((prevState) => {
-      return ({
-        ...prevState,
-        [name]: parseFloat(value)
-      })
-    })
-  }
-
-  const changeName = (e) => {
+  const change = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     setProduct((prevState) => {
@@ -180,25 +169,25 @@ const Profiles = (props) => {
             <Row className="mb-2">
               <Col>
                 <Label for="Name">Name</Label>
-                <Input value={product.NAME} name="NAME" onChange={(e) => changeName(e)}></Input>
+                <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
             <Row>
               <Col>
                 <Label for="4/4_Price">Inset</Label>
-                <Input value={product.INSET} name="INSET" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
               </Col>
 
             </Row>
             <Row>
               <Col>
                 <Label for="5/4_Price">Stile/Rail Width</Label>
-                <Input value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
               </Col>
               <Col>
                 <Label for="5/4_Price">Mid Rail Width</Label>
-                <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => changeNumber(e)}></Input>
+                <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
