@@ -6,7 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getWoodtypes, updateProduct, addProduct } from '../../../../../../../redux/part_list/actions'
+import { getWoodtypes, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -22,6 +22,7 @@ const Woodtype = (props) => {
 
 
   const [modal, setModal] = useState(false);
+  const [warningModal, setWarningModal] = useState(false);
   const [product, setProduct] = useState({
     id: '',
     NAME: '',
@@ -33,6 +34,11 @@ const Woodtype = (props) => {
   const toggle = () => {
     setModal(!modal)
   };
+
+  const toggleWarningModal = () => {
+    setWarningModal(!warningModal)
+  };
+
 
   const setCard = card => {
     setNewProduct(false)
@@ -95,6 +101,14 @@ const Woodtype = (props) => {
     await props.getWoodtypes(cookie)
   }
 
+  const deleteProduct = async () => {
+    let id = product.id
+
+    await props.deleteProduct(id, 'woodtypes', cookie)
+    await toggleWarningModal()
+    await toggle()
+  }
+
   const submitProduct = async () => {
     const item = props.woodtypes.length + 1
     const submittedProduct = {
@@ -154,7 +168,7 @@ const Woodtype = (props) => {
                 </div>
 
                 <form id="form" method="post" action="" encType="multipart/form-data">
-                    <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
+                  <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
                 </form>
 
               </Col>
@@ -175,18 +189,47 @@ const Woodtype = (props) => {
                 <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => changePrice(e)}></Input>
               </Col>
             </Row>
+            <Row className="mt-5">
+             
+              <Col>
+                {newProduct ?
+                  <div />
+                  :
+                  <div>
+                    <Button color="danger" onClick={toggleWarningModal}>Delete</Button>
+                  </div>
+                }
+              </Col>
+            </Row>
           </ModalBody>
           <ModalFooter>
-            {newProduct ? 
-            <Button color="primary" onClick={submitProduct}>Submit</Button>
-            :
-            <Button color="primary" onClick={updateProduct}>Update</Button>
+            {newProduct ?
+              <div>
+                <Button color="primary" onClick={submitProduct}>Submit</Button>
+
+              </div>
+
+              :
+              <div>
+                <Button color="primary" onClick={updateProduct}>Update</Button>
+              </div>
             }
-            
+
             <Button color="secondary" onClick={toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>
+
+      <Modal isOpen={warningModal} toggle={toggleWarningModal} className={className}>
+        <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete this item?
+          </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={deleteProduct}>Yes</Button>
+          <Button color="primary" onClick={warningModal}>No</Button>
+        </ModalFooter>
+      </Modal>
     </div>
   )
 
@@ -202,7 +245,8 @@ const mapDispatchToProps = dispatch =>
     {
       getWoodtypes,
       updateProduct,
-      addProduct
+      addProduct,
+      deleteProduct
     },
     dispatch
   );

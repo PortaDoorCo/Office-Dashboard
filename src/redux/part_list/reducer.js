@@ -188,7 +188,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  const { type, data } = action;
+  const { type, data, product, id } = action;
   switch (type) {
     case GET_WOODTYPES:
       return {
@@ -420,9 +420,11 @@ export default function (state = initialState, action) {
         // })
       }
     case DELETE_PRODUCT:
+      const p = `state.${product}.filter(item => item.id !== id)`
+      const q = eval(p)
       return {
         ...state,
-        designs: state.designs.filter(item => item.id !== data.id)
+        [product]: q
       }
     case UPDATE_PRODUCT:
       return {
