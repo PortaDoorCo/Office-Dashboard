@@ -15,20 +15,24 @@ import {
   Col,
   NavbarText
 } from 'reactstrap';
+import Selection from './Selection'
 
 
 const Settings = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [selection, setSelection] = useState('index')
 
   const toggle = () => setIsOpen(!isOpen);
+
+  console.log(selection)
 
   return (
     <div>
       <Row>
         <Col>
           <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">Settings</NavbarBrand>
+            <NavbarBrand onClick={() => setSelection('index')}>Settings</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="mr-auto" navbar>
@@ -37,15 +41,22 @@ const Settings = (props) => {
                     Doors
               </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>
+                    <DropdownItem onClick={() => setSelection('cope_door')}>
                       Cope and Stick
                 </DropdownItem>
-                    <DropdownItem>
+                    <DropdownItem onClick={() => setSelection('mt_door')}>
                       MT Door
                 </DropdownItem>
-                    <DropdownItem>
-                      MItre Door
+                  <DropdownItem onClick={() => setSelection('miter_door')}>
+                      Mitre Door
                 </DropdownItem>
+                <DropdownItem onClick={() => setSelection('face_frame')}>
+                      Slab Type Door
+                </DropdownItem>
+                <DropdownItem onClick={() => setSelection('one_piece_door')}>
+                      One Piece Door
+                </DropdownItem>
+                
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
@@ -53,25 +64,35 @@ const Settings = (props) => {
                     Drawer Fronts
               </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>
+                    <DropdownItem onClick={() => setSelection('cope_df')}>
                       Cope and Stick
                 </DropdownItem>
-                    <DropdownItem>
-                      MT Door
+                    <DropdownItem onClick={() => setSelection('mt_df')}>
+                      MT Design
                 </DropdownItem>
-                    <DropdownItem>
-                      MItre Door
+                    <DropdownItem onClick={() => setSelection('miter_df')}>
+                      Mitre Design
                 </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Drawer Boxes
-              </DropdownToggle>
+                  </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem>
                       Dovetail Drawer Box
-                </DropdownItem>
+                  </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Face Frames
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>
+                      Face Frames
+                  </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
@@ -82,6 +103,11 @@ const Settings = (props) => {
               </Nav>
             </Collapse>
           </Navbar>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Selection selection={selection} />
         </Col>
       </Row>
     </div>
