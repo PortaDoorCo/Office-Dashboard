@@ -24,7 +24,7 @@ export default (info, part, breakdowns) => {
       return MT_Door(info, part, breakdowns[1])
     }
     if (part.construction.value === "M") {
-      return Miter_Door(info, part)
+      return Miter_Door(info, part, breakdowns[2])
     }
 
   }
