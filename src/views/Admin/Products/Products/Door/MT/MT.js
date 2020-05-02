@@ -83,6 +83,14 @@ const Cope = (props) => {
                   </NavItem>
                   <NavItem>
                     <NavLink
+                      className={classnames({ active: activeTab === '3' })}
+                      onClick={() => { toggle('3'); }}
+                    >
+                      Edges
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
                       className={classnames({ active: activeTab === '5' })}
                       onClick={() => { toggle('5'); }}
                     >

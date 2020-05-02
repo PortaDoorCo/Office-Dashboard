@@ -29,14 +29,15 @@ export default (info, part, breakdowns) => {
 
   if(part.orderType.value === "DF") {
     if (part.construction.value === "Cope") {
-      return Cope_DF(info, part)
-    }
-    if (part.construction.value === "M") {
-      return Miter_DF(info, part)
+      return Cope_DF(info, part, breakdowns[3])
     }
     if (part.construction.value === "MT") {
-      return MT_DF(info, part)
+      return MT_DF(info, part, breakdowns[4])
     }
+    if (part.construction.value === "M") {
+      return Miter_DF(info, part, breakdowns[5])
+    }
+
   }
 
   if(part.orderType.value === "Face_Frame") {

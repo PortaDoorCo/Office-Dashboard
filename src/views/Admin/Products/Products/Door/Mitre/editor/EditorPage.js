@@ -331,14 +331,13 @@ const EditorPage = (props) => {
           </Card>
         </Col>
       </Row>
-
     </div>
   )
 }
 
 
 const mapStateToProps = (state) => ({
-  breakdowns: state.part_list.breakdowns[0],
+  breakdowns: state.part_list.breakdowns[2],
   woodtypes: state.part_list.woodtypes,
   designs: state.part_list.cope_designs,
   edges: state.part_list.edges,
