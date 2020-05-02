@@ -338,7 +338,7 @@ const EditorPage = (props) => {
 
 
 const mapStateToProps = (state) => ({
-  breakdowns: state.part_list.breakdowns[0],
+  breakdowns: state.part_list.breakdowns[1],
   woodtypes: state.part_list.woodtypes,
   designs: state.part_list.cope_designs,
   edges: state.part_list.edges,
