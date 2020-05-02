@@ -48,10 +48,6 @@ const Cope = (props) => {
 
   return (
     <div>
-      <Row className="mb-2">
-        <Navigation actions={props} />
-      </Row>
-
       <Row>
         <Col xs='4'>
           <Card>
