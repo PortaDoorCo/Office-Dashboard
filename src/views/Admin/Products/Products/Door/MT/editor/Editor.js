@@ -39,14 +39,7 @@ const EditorComponent = (props) => {
     setModal(!modal)
   };
 
-  console.log(breakdowns)
-
-
   const submit = async () => {
-
-    console.log('name ', name)
-    console.log('code ', text)
-    console.log('id ', breakdowns.id)
 
     const id = breakdowns.id
 
@@ -54,8 +47,6 @@ const EditorComponent = (props) => {
       ...breakdowns,
       [name]: text
     }
-
-    console.log(bd)
 
     await props.updateBreakdowns(id, bd, cookie)
     await setModal(!modal)
