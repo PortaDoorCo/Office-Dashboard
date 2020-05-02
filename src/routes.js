@@ -5,7 +5,7 @@ const DoorOrders = React.lazy(() => import('./views/Admin/DoorOrders/DoorOrders'
 const DrawerOrders = React.lazy(() => import('./views/Admin/DrawerOrders/DrawerOrder'));
 const Orders = React.lazy(() => import('./views/Admin/Orders/ViewAllOrders'));
 const Customers = React.lazy(() => import('./views/Admin/Customers/Customers/Companies'));
-const Products = React.lazy(() => import('./views/Admin/Products/Products'));
+const Settings = React.lazy(() => import('./views/Admin/Settings/Settings'));
 const Calendar = React.lazy(() => import('./views/Admin/Calendar'));
 const Tracking = React.lazy(() => import('./views/Admin/Tracking/Tracking'));
 const PurchaseOrders = React.lazy(() => import('./views/Admin/PurchaseOrders/PurchaseOrders'));
@@ -20,7 +20,7 @@ const routes = [
   { path: '/drawer-order', name: 'Drawer Order', component: DrawerOrders },
   { path: '/view-orders', name: 'Orders', component: Orders },
   { path: '/customers', name: 'Customers', component: Customers },
-  { path: '/products', name: 'Products', component: Products },
+  { path: '/settings', name: 'Settings', component: Settings },
   { path: '/calendar', name: 'Calendar', component: Calendar },
   { path: '/tracking', name: 'Tracking', component: Tracking },
   { path: '/purchase-orders', name: 'Purchase Orders', component: PurchaseOrders },

@@ -67,8 +67,8 @@ export default {
 
     },
     {
-      name: 'Products',
-      url: '/products',
+      name: 'Settings',
+      url: '/settings',
 
     },
 
