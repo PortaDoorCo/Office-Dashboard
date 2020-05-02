@@ -12,8 +12,6 @@ import { updateBreakdowns, getBreakdowns } from '../../../../../../../redux/part
 
 const cookie = Cookies.get("jwt");
 
-
-
 const EditorComponent = (props) => {
 
   const {
