@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import ProductCard from './components/Card'
-import Selection from './Products/Door/Selection'
+import DoorSelection from './Products/Door/DoorSelection'
+import DFSelection from './Products/DrawerFront/DFSelection'
 
 import DoorPNG from './img/door.png'
 import df_PNG from './img/df.png'
@@ -44,9 +45,17 @@ const Products = (props) => {
 
   if(page === "doors"){
     return (
-      <Selection setHome={setPage} />
+      <DoorSelection setHome={setPage} />
     )
   }
+
+  if(page === "df"){
+    return (
+      <DFSelection setHome={setPage} />
+    )
+  }
+
+
 
   else {
     return <div />
