@@ -5,13 +5,14 @@ import MiterDoor from './Products/Door/Mitre/Mitre'
 import CopeDF from './Products/DrawerFront/Cope/Cope'
 import MTDF from './Products/DrawerFront/MT/MT'
 import MiterDF from './Products/DrawerFront/Mitre/Mitre'
+import AccountSettings from './AccountSettings'
 
 const Selection = props => {
 
     const { selection } = props;
     switch (selection) {
         case 'index':
-            return <div />
+            return <AccountSettings />
         case 'cope_door':
             return <CopeDoor />
         case 'mt_door':
@@ -25,7 +26,7 @@ const Selection = props => {
         case 'miter_df':
             return <MiterDF />
         default:
-            return <div />
+            return <AccountSettings />
     }
 
 }
