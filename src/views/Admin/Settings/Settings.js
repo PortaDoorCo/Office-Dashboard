@@ -95,6 +95,19 @@ const Settings = (props) => {
                   </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Pricing
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>
+                      Doors
+                  </DropdownItem>
+                  <DropdownItem>
+                      Drawer Boxes
+                  </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
               </Nav>
               <Nav pullRight>
                 <NavItem>
