@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
 import db_url from '../db_url'
+import { NotificationManager } from 'react-notifications';
 const cookie = Cookies.get("jwt");
 
 
@@ -11,6 +12,7 @@ export const CREATE_TASK = 'CREATE_TASK';
 export const MARK_DONE = 'MARK_DONE';
 export const REMOVE_TASK = 'REMOVE_TASK'
 export const SET_LOGIN = 'SET_LOGIN'
+export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT'
 
 
 
@@ -36,6 +38,22 @@ export function login(token) {
     return dispatch({
       type: LOGIN,
       user: res.data,
+    });
+  };
+}
+
+
+export function updateAccount(token, id, userInfo) {
+  return async function (dispatch) {
+    const res = await axios.put(`${db_url}/users/${id}`, userInfo, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    NotificationManager.success(`User Updated!`, 'User Updated!', 2000);
+    return dispatch({
+      type: UPDATE_ACCOUNT,
+      data: res.data
     });
   };
 }

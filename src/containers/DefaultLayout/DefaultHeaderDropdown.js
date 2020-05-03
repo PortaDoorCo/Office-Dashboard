@@ -82,7 +82,7 @@ class DefaultHeaderDropdown extends Component {
     return (
       <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle nav>
-          <img src={this.props.user.profile_picture ? '' : 'https://ombud.alaska.gov/wp-content/uploads/2018/01/no-user.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+          <img src={this.props.user.profile_picture ? this.props.user.profile_picture.url : 'https://ombud.alaska.gov/wp-content/uploads/2018/01/no-user.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
         </DropdownToggle>
         <DropdownMenu right>
           {/* <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
