@@ -6,7 +6,7 @@ import { AppSwitch } from '@coreui/react'
 import Avatar from 'react-avatar';
 import { FileUploader } from 'devextreme-react';
 import Cookies from "js-cookie";
-import { updateAccount, login } from '../../../redux/users/actions'
+import { updateAccount, login, forgotPassword } from '../../../redux/users/actions'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -54,6 +54,15 @@ const AccountSettings = props => {
     await login(cookie)
   }
 
+  const changePassword = async () => {
+    const { forgotPassword } = props;
+    const userInfo = {
+      'email': user.email
+    }
+    console.log(userInfo)
+    await forgotPassword(userInfo)
+  }
+
   return (
     <div>
       <Row>
@@ -61,7 +70,6 @@ const AccountSettings = props => {
           <Card>
             <CardBody>
               <CardTitle>Account Settings</CardTitle>
-
               <Row className="mb-3">
                 <Col>
                   <Avatar name="Foo Bar" src={user.profile_picture ? user.profile_picture.url : 'https://ombud.alaska.gov/wp-content/uploads/2018/01/no-user.jpg'} size="150" round />
@@ -112,7 +120,7 @@ const AccountSettings = props => {
 
               <Row className="mb-5">
                 <Col>
-                  <Button outline color="danger" onClick={() => alert('change password')}>Change Password</Button>
+                  <Button outline color="danger" onClick={changePassword}>Change Password</Button>
                 </Col>
               </Row>
 
@@ -156,7 +164,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       updateAccount,
-      login
+      login,
+      forgotPassword
     },
     dispatch
   );
