@@ -48,7 +48,7 @@ const AccountSettings = props => {
               <Form>
                 <Row className="mb-3">
                   <Col>
-                    <Avatar name="Foo Bar" src={user.profile_picture ? '' : 'https://ombud.alaska.gov/wp-content/uploads/2018/01/no-user.jpg'} size="150" round />
+                    <Avatar name="Foo Bar" src={user.profile_picture ? user.profile_picture.url : 'https://ombud.alaska.gov/wp-content/uploads/2018/01/no-user.jpg'} size="150" round />
                   </Col>
                 </Row>
                 <Row>
