@@ -51,7 +51,7 @@ const Cope = (props) => {
       <Row>
         <Col xs='4'>
           <Card>
-            <CardImg top width="100%" src={"https://picsum.photos/1200"} alt="Card image cap" />
+            {/* <CardImg top width="100%" src={"https://picsum.photos/1200"} alt="Card image cap" /> */}
             <CardBody>
               <Row className="mt-2">
                 <CardTitle>
