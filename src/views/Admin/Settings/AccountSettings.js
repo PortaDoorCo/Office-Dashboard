@@ -1,15 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Row, Input, Card, CardBody, Form, FormGroup, Label, FormText, Button, CardTitle } from 'reactstrap'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AppSwitch } from '@coreui/react'
 import Avatar from 'react-avatar';
+import { FileUploader } from 'devextreme-react';
+import Cookies from "js-cookie";
 
+const cookie = Cookies.get("jwt");
+const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 const AccountSettings = props => {
 
-  
+  const [user, setUser] = useState(props.user)
+
+
+  const change = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setUser((prevState) => {
+      return ({
+        ...prevState,
+        [name]: value
+      })
+    })
+  }
+
+  const onUploaded = (e) => {
+    const data = JSON.parse(e.request.response);
+    setUser((prevState) => {
+      return ({
+        ...prevState,
+        profile_picture: data[0]
+      })
+    })
+    return
+  }
+
   return (
     <div>
       <Row>
@@ -20,20 +48,33 @@ const AccountSettings = props => {
               <Form>
                 <Row className="mb-3">
                   <Col>
-                    <Avatar name="Foo Bar" src={"https://scontent.fphx1-2.fna.fbcdn.net/v/t1.0-9/12112383_10205202385274443_1374108948203053228_n.jpg?_nc_cat=100&_nc_sid=09cbfe&_nc_ohc=vNlkn60oggUAX_xmmcK&_nc_ht=scontent.fphx1-2.fna&oh=689ac33fdd5769641f997e1e4276a5ad&oe=5ED1D3F2"} size="150" round />
+                    <Avatar name="Foo Bar" src={user.profile_picture ? '' : 'https://ombud.alaska.gov/wp-content/uploads/2018/01/no-user.jpg'} size="150" round />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <form id="form" method="post" action="" encType="multipart/form-data">
+                      <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
+                    </form>
+                  </Col>
+                  <Col xs='8' />
+                </Row>
+                <Row className="mb-3">
+                  <Col>
+                    <p><strong>Status:</strong> {user.role.name}</p>
                   </Col>
                 </Row>
                 <Row>
                   <Col>
                     <FormGroup>
                       <Label>First Name</Label>
-                      <Input type="text" name="name" id="account_name" placeholder="Justin" />
+                      <Input value={user.FirstName} name="FirstName" onChange={(e) => change(e)} />
                     </FormGroup>
                   </Col>
                   <Col>
                     <FormGroup>
                       <Label>Last Name</Label>
-                      <Input type="text" name="name" id="account_name" placeholder="Romanos" />
+                      <Input value={user.LastName} name="LastName" onChange={(e) => change(e)} />
                     </FormGroup>
                   </Col>
                 </Row>
@@ -42,20 +83,20 @@ const AccountSettings = props => {
                   <Col>
                     <FormGroup>
                       <Label>Username</Label>
-                      <Input type="text" name="name" id="account_name" placeholder="heyjaypray" />
+                      <Input value={user.username} name="username" onChange={(e) => change(e)} />
                     </FormGroup>
                   </Col>
                   <Col>
                     <FormGroup>
                       <Label>Email</Label>
-                      <Input type="text" name="name" id="account_name" placeholder="hey@jaypray.com" />
+                      <Input value={user.email} name="email" onChange={(e) => change(e)} />
                     </FormGroup>
                   </Col>
                 </Row>
 
                 <Row className="mb-5">
                   <Col>
-                    <Button outline color="danger" onClick={()=>alert('change password')}>Change Password</Button>
+                    <Button outline color="danger" onClick={() => alert('change password')}>Change Password</Button>
                   </Col>
                 </Row>
 
