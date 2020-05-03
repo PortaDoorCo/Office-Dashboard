@@ -10,9 +10,10 @@ export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN = 'LOGIN';
 export const CREATE_TASK = 'CREATE_TASK';
 export const MARK_DONE = 'MARK_DONE';
-export const REMOVE_TASK = 'REMOVE_TASK'
-export const SET_LOGIN = 'SET_LOGIN'
-export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT'
+export const REMOVE_TASK = 'REMOVE_TASK';
+export const SET_LOGIN = 'SET_LOGIN';
+export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT';
+export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
 
 
 
@@ -54,6 +55,17 @@ export function updateAccount(token, id, userInfo) {
     return dispatch({
       type: UPDATE_ACCOUNT,
       data: res.data
+    });
+  };
+}
+
+export function forgotPassword(email) {
+  return async function (dispatch) {
+    await axios.post(`${db_url}/auth/forgot-password`, email).then(res => {
+      console.log(res)
+    });
+    return dispatch({
+      type: FORGOT_PASSWORD,
     });
   };
 }
