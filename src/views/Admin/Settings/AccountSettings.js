@@ -53,7 +53,7 @@ const AccountSettings = props => {
 
                 <Row className="mb-5">
                   <Col>
-                    <Button outline color="danger">Change Password</Button>
+                    <Button outline color="danger" onClick={()=>alert('change password')}>Change Password</Button>
                   </Col>
                 </Row>
 
