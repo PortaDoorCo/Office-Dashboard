@@ -118,7 +118,12 @@ const AccountSettings = props => {
                     <FormGroup>
                       <Label>Units</Label><br />
                       Fractions
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setUser((prevState) => {
+                      return ({
+                        ...prevState,
+                        units: !prevState.units
+                      })
+                    })} checked={user.units} />
                       Decimals
                     </FormGroup>
                   </Col>
