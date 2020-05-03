@@ -8,6 +8,8 @@ import Avatar from 'react-avatar';
 
 
 const AccountSettings = props => {
+
+  
   return (
     <div>
       <Row>
@@ -84,7 +86,7 @@ const AccountSettings = props => {
 }
 
 const mapStateToProps = state => ({
-
+  user: state.users.user
 
 });
 
