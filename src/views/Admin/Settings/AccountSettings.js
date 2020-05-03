@@ -38,6 +38,19 @@ const AccountSettings = props => {
     return
   }
 
+  const updateUser = async () => {
+    const submitUser = {
+      FirstName: user.FirstName,
+      LastName: user.LastName,
+      username: user.username,
+      email: user.email,
+      profile_picture: user.profile_picture ? user.profile_picture.id : '',
+      units: user.units
+    }
+
+    return
+  }
+
   return (
     <div>
       <Row>
