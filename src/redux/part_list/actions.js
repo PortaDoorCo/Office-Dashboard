@@ -44,6 +44,8 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
+export const GET_BREAKDOWNS = 'GET_BREAKDOWNS'
+export const UPDATE_BREAKDOWNS = 'UPDATE_BREAKDOWNS'
 
 export function getWoodtypes(cookie) {
   console.log("FIREEEEE")
@@ -630,44 +632,6 @@ export function getBoxWoodtypes(cookie) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export function addProduct(product, url, cookie) {
 
   return async function (dispatch) {
@@ -677,7 +641,7 @@ export function addProduct(product, url, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-   
+
       NotificationManager.success('Product Added', 'Product Added', 2000);
       return dispatch({
         type: ADD_PRODUCT,
@@ -698,11 +662,11 @@ export function updateProduct(orderId, product, url, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-    
+
       // NotificationManager.success(`Product Updated!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_PRODUCT,
-        data:data
+        data: data
       });
     } catch (error) {
       console.error(error);
@@ -719,11 +683,14 @@ export function deleteProduct(orderId, product, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-    
-      // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
+
+
+      NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: DELETE_PRODUCT,
-        data: data
+        data: data,
+        product: product,
+        id: orderId
       });
     } catch (error) {
       console.error(error);
@@ -742,7 +709,7 @@ export function uploadFile(file, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       })
-  
+
       // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: UPLOAD_FILE,
@@ -768,4 +735,38 @@ export function getPhotoId(i, cookie) {
     }
   };
 }
+
+export function getBreakdowns(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/breakdowns`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BREAKDOWNS,
+      data: data
+    });
+  };
+}
+
+export function updateBreakdowns(id, item, cookie) {
+  return async function (dispatch) {
+    const { data } = await axios.put(`${db_url}/breakdowns/${id}`, item, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    })
+    console.log(data)
+    NotificationManager.success(`Breakdown Updated!`, 'Breakdown Updated!', 2000);
+    return dispatch({
+      type: UPDATE_BREAKDOWNS,
+      data: data
+    });
+  };
+}
+
 

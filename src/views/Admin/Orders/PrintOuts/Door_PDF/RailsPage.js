@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Rails from '../Breakdowns/Doors/Rails/Rails'
 
-export default data => {
+export default (data, breakdowns) => {
 
   return data.part_list.map((i, index) => {
 
@@ -26,9 +26,9 @@ export default data => {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
           { text: `${i.design ? i.design.NAME : i.construction.name}`, style: 'fonts' },
-          { text: Rails(item, i).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
-          { text: Rails(item, i).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
-          { text: Rails(item, i).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
+          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
+          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
+          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
           { text: '' },
           { text: '' }
         ]);
@@ -36,9 +36,9 @@ export default data => {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
           { text: `${i.design ? i.design.NAME : i.construction.name + ' ' + i.orderType.value}`, style: 'fonts' },
-          { text: Rails(item, i).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
-          { text: Rails(item, i).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
-          { text: Rails(item, i).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
+          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
+          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
+          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
           { text: '' },
           { text: '' }
         ]);

@@ -2,7 +2,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
 import AssemblyList from '../../Door_PDF/AssemblyList';
 
-export default data => {
+export default (data,breakdowns) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
@@ -10,7 +10,7 @@ export default data => {
         pageSize: 'A4',
         pageOrientation: 'portrait',
         content: [
-            AssemblyList(data),
+            AssemblyList(data, breakdowns),
         ],
         styles: {
             woodtype: {

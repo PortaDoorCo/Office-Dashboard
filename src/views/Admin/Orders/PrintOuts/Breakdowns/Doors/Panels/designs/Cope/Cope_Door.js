@@ -7,7 +7,7 @@ const fraction = num => {
     return fraction.toLocaleString();
 };
 
-export default (info, part) => {
+export default (info, part, breakdowns) => {
 
     const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0
     const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0
@@ -49,14 +49,12 @@ export default (info, part) => {
         {
             qty: `(${(panelsH * panelsW)})`,
             measurement: `${fraction(
-                Math.round((
-                    ((width - leftStile - rightStile - (vertMull * (panelsW - 1))) / panelsW)
-                    + panel_factor + (edge_factor / panelsW))
+                Math.round(
+                    eval(breakdowns.panel_width)
                     * 16) / 16
             )} x ${fraction(
-                Math.round((
-                    ((height - topRail - bottomRail - (horizMull * (panelsH - 1))) / panelsH)
-                    + panel_factor + (edge_factor / panelsH))
+                Math.round(
+                    eval(breakdowns.panel_height)
                     * 16) / 16
             )}`,
             pattern: 'PR'
