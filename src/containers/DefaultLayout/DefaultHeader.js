@@ -4,12 +4,13 @@ import { Nav, NavItem, Button } from 'reactstrap';
 // import { Button } from 'antd';
 import PropTypes from 'prop-types';
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-// import DefaultHeaderDropdown  from './DefaultHeaderDropdown'
+import DefaultHeaderDropdown  from './DefaultHeaderDropdown'
 import logo from '../../assets/img/brand/portadoor.png'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 import { unsetToken } from "../../utils/auth";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Avatar from 'react-avatar';
 
 const propTypes = {
   children: PropTypes.node,
@@ -55,12 +56,14 @@ class DefaultHeader extends Component {
           <NavItem className="d-md-down-none">
             <NavLink to="#" className="nav-link"><i className="icon-location-pin"></i></NavLink>
           </NavItem>
-          <DefaultHeaderDropdown onLogout={this.props.onLogout} accnt/> */}
+          
           {/* 
           <NavItem className="px-3">
             <NavLink to="#" className="nav-link">Justin P. Romanos</NavLink>
           </NavItem> */}
-          <Button color="primary" className="mr-5" onClick={this.logOut}>Log Out</Button>
+          <DefaultHeaderDropdown className="mr-5" onLogout={this.logOut} user={this.props.user} accnt/>
+          <div className="mr-5" />
+          {/* <Button color="primary" className="mr-5" onClick={this.logOut}>Log Out</Button> */}
         </Nav>
         {/* <AppAsideToggler className="d-md-down-none" /> */}
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
@@ -73,7 +76,7 @@ DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;
 
 const mapStateToProps = (state, prop) => ({
-
+  user: state.users.user
 });
 
 const mapDispatchToProps = dispatch =>

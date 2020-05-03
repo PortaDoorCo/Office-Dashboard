@@ -41,7 +41,9 @@ import {
   ADD_PRODUCT,
   UPLOAD_FILE,
   GET_PHOTO_ID,
-  GET_DOOR_OPTIONS
+  GET_DOOR_OPTIONS,
+  GET_BREAKDOWNS,
+  UPDATE_BREAKDOWNS
 } from "./actions";
 
 const initialState = {
@@ -80,6 +82,8 @@ const initialState = {
   box_notches: ["Loading"],
   box_thickness: ["Loading"],
   box_woodtypes: ["Loading"],
+
+  breakdowns: [],
 
 
   scoop: [
@@ -173,6 +177,8 @@ const initialState = {
   loadedBoxThickness: false,
   loadedBoxWoodtypes: false,
 
+  loadedBreakdowns: false,
+
   error: null,
 
   productUrl: '',
@@ -182,7 +188,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  const { type, data } = action;
+  const { type, data, product, id } = action;
   switch (type) {
     case GET_WOODTYPES:
       return {
@@ -414,9 +420,11 @@ export default function (state = initialState, action) {
         // })
       }
     case DELETE_PRODUCT:
+      // const p = `state.${product}.filter(item => item.id !== id)`
+      // const q = eval(p)
       return {
         ...state,
-        designs: state.designs.filter(item => item.id !== data.id)
+        // [product]: q
       }
     case UPDATE_PRODUCT:
       return {
@@ -431,6 +439,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         photoId: data
+      }
+    case GET_BREAKDOWNS:
+      return {
+        ...state,
+        breakdowns: data
+      }
+    case UPDATE_BREAKDOWNS:
+      return {
+        ...state,
+        breakdowns: state.breakdowns.map(i => i.id === data.id ?
+          data : i
+        )
       }
     default:
       return state;

@@ -8,16 +8,16 @@ const fraction = num => {
 };
 
 
-export default (info, part) => {
+export default (info, part, breakdowns) => {
 
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0
 
-  const top_rail_add = part.design.TOP_RAIL_ADD
-  const btm_rail_add = part.design.BTM_RAIL_ADD
+  const top_rail_arch = part.design.TOP_RAIL_ADD
+  const btm_rail_arch = part.design.BTM_RAIL_ADD
 
-  const topRail = numQty(info.topRail) + top_rail_add
-  const bottomRail = numQty(info.bottomRail) + btm_rail_add
+  const topRail = numQty(info.topRail) 
+  const bottomRail = numQty(info.bottomRail)
   const leftStile = numQty(info.leftStile)
   const rightStile = numQty(info.rightStile)
   const vertMull = numQty(vMidRail)
@@ -35,33 +35,25 @@ export default (info, part) => {
   console.log(part)
   console.log(info)
 
-  if (topRail === bottomRail) {
+  if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {
     if (((panelsW > 1) && (panelsH > 1)) || ((panelsH > 1) && (panelsW == 1))) {
       return [
         {
           qty: `(${(qty * 2)})`,
           measurement: `${fraction(
-            topRail
+            eval(breakdowns.topRail_width)
           )} x ${fraction(
-            Math.round((
-              (width -
-                leftStile -
-                rightStile) +
-              (inset + edge_factor)
-            )
+            Math.round(
+              eval(breakdowns.topRail_height)
               * 16) / 16
           )}`,
           pattern: 'TB'
         },
         {
           qty: `(${(((panelsH) - 1) * qty)})`,
-          measurement: `${fraction(horizMull)} x ${fraction(
-            Math.round((
-              (width -
-                leftStile -
-                rightStile) +
-              (inset + edge_factor)
-            )
+          measurement: `${fraction(eval(breakdowns.horizontal_mid_rail_width))} x ${fraction(
+            Math.round(
+              eval(breakdowns.horizontal_mid_rail_height)
               * 16) / 16
           )}`,
           pattern: "HM"
@@ -72,14 +64,10 @@ export default (info, part) => {
         {
           qty: `(${(qty * 2)})`,
           measurement: `${fraction(
-            topRail
+            eval(breakdowns.topRail_width)
           )} x ${fraction(
-            Math.round((
-              (width -
-                leftStile -
-                rightStile) +
-              (inset + edge_factor)
-            )
+            Math.round(
+              eval(breakdowns.topRail_height)
               * 16) / 16
           )}`,
           pattern: 'TB'
@@ -92,14 +80,10 @@ export default (info, part) => {
           {
             qty: `(${(qty)})`,
             measurement: `${fraction(
-              topRail
+              eval(breakdowns.topRail_width)
             )} x ${fraction(
-              Math.round((
-                (width -
-                  leftStile -
-                  rightStile) +
-                (inset + edge_factor)
-              )
+              Math.round(
+                eval(breakdowns.topRail_height)
                 * 16) / 16
             )}`,
             pattern: "T"
@@ -107,28 +91,19 @@ export default (info, part) => {
           {
             qty: `(${(qty)})`,
             measurement: `${fraction(
-              bottomRail
+              eval(breakdowns.bottomRail_width)
             )} x ${fraction(
-              Math.round((
-                (width -
-                  leftStile -
-                  rightStile) +
-                (inset + edge_factor)
-              )
+              Math.round(
+                eval(breakdowns.bottomRail_height)
                 * 16) / 16
             )}`,
             pattern: "B"
           },
           {
             qty: `(${(((panelsH) - 1) * qty)})`,
-            measurement: `${fraction(horizMull)} x ${fraction(
+            measurement: `${fraction(eval(breakdowns.horizontal_mid_rail_width))} x ${fraction(
               Math.round(
-                (
-                  (width -
-                    leftStile -
-                    rightStile) +
-                  (inset + edge_factor)
-                )
+                eval(breakdowns.horizontal_mid_rail_height)
                 * 16) / 16
             )}`,
             pattern: "HM"
@@ -139,14 +114,10 @@ export default (info, part) => {
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
-            topRail
+            eval(breakdowns.topRail_width)
           )} x ${fraction(
-            Math.round((
-              (width -
-                leftStile -
-                rightStile) +
-              (inset + edge_factor)
-            )
+            Math.round(
+              eval(breakdowns.topRail_height)
               * 16) / 16
           )}`,
           pattern: "T"
@@ -154,14 +125,10 @@ export default (info, part) => {
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
-            bottomRail
+            eval(breakdowns.bottomRail_width)
           )} x ${fraction(
-            Math.round((
-              (width -
-                leftStile -
-                rightStile) +
-              (inset + edge_factor)
-            )
+            Math.round(
+              eval(breakdowns.bottomRail_height)
               * 16) / 16
           )}`,
           pattern: "B"

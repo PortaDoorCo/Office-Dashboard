@@ -2,7 +2,7 @@ import moment from 'moment';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 
 
-export default data => {
+export default (data, breakdowns) => {
   return data.part_list.map((i, index) => {
 
 
@@ -20,13 +20,12 @@ export default data => {
     ];
 
     i.dimensions.forEach((item, index) => {
-      console.log('PANELLLSSSS',Panels(item, i));
       tableBody.push([
         { text: index + 1, style: 'fonts' },
         { text: `${i.design ? i.design.NAME : i.construction.name + ' ' + i.orderType.value}`, style: 'fonts' },
-        { text: Panels(item, i).map(panel => { return `${panel.qty} \n` }), style: 'fonts' },
-        { text: Panels(item, i).map(panel => { return `${panel.measurement} \n` }), style: 'fonts' },
-        { text: Panels(item, i).map(panel => { return `${panel.pattern} \n` }), style: 'fonts' },
+        { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} \n` }), style: 'fonts' },
+        { text: Panels(item, i, breakdowns).map(panel => { return `${panel.measurement} \n` }), style: 'fonts' },
+        { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n` }), style: 'fonts' },
         { text: '' },
         { text: `${i.panel ? i.panel.NAME : 'Glass'}` }
       ]);

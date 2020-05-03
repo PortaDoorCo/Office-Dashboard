@@ -2,7 +2,7 @@ import moment from 'moment';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import Size from '../Breakdowns/Doors/Size';
 
-export default data => {
+export default (data, breakdowns) => {
   return [
     {
       columns: [
@@ -51,7 +51,7 @@ export default data => {
       ];
 
       i.dimensions.forEach((item, index) => {
-        Panels(item, i);
+        // Panels(item, i, breakdowns);
         tableBody.push([
           { text: index + 1, style: 'fonts' },
           { text: item.qty, style: 'fonts' },

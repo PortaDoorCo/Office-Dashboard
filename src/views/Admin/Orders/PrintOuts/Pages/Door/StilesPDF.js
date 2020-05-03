@@ -8,7 +8,7 @@ import MaterialsList from '../../Door_PDF/MaterialsList'
 import QC_Checklist from '../../Door_PDF/QC_Checklist'
 import Invoice from '../../Door_PDF/Invoice'
 
-export default data => {
+export default (data, breakdowns) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
@@ -16,7 +16,7 @@ export default data => {
         pageSize: 'A4',
         pageOrientation: 'portrait',
         content: [
-            StilesPage(data),
+            StilesPage(data, breakdowns),
         ],
         styles: {
             woodtype: {
