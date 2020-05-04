@@ -5,7 +5,7 @@ import LinearIN from '../Breakdowns/DrawerBoxes/LinearIN';
 import _ from 'lodash'
 
 
-export default data => {
+export default (data, breakdowns) => {
     return [
         {
             columns: [
@@ -64,8 +64,8 @@ export default data => {
                     { text: item.item, style: 'fonts' },
                     { text: item.qty, style: 'fonts' },
                     { text: Size(item, i), style: 'fonts' },
-                    { text: Bottoms(item, i).qty, style: 'fonts' },
-                    { text: Bottoms(item, i).measurement, style: 'fonts' },
+                    { text: Bottoms(item, i, breakdowns).qty, style: 'fonts' },
+                    { text: Bottoms(item, i, breakdowns).measurement, style: 'fonts' },
                 ])
             });
 
@@ -82,7 +82,7 @@ export default data => {
                     columns: [
                         { text: `${i.boxBottomWoodtype.NAME}`, style: 'fonts' },
                         { text: `${k} x ${i.boxThickness.NAME}`, style: 'fonts' },
-                        { text: `= ${LinearIN(v, i)} Lin IN`, style: 'fonts' },
+                        { text: `= ${LinearIN(v, i, breakdowns)} Lin IN`, style: 'fonts' },
                         { text: '', style: 'fonts' },
                     ]
                 }
