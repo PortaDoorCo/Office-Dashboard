@@ -6,32 +6,28 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getEdges, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions'
-import { AppSwitch } from '@coreui/react'
+import { getWoodtypes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
-const Edges = (props) => {
+const Woodtype = (props) => {
 
   const {
     buttonLabel,
     className
   } = props;
 
+
   const [modal, setModal] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [product, setProduct] = useState({
     id: '',
     NAME: '',
-    UPCHARGE: '',
-    STILE_ADD: '',
-    RAIL_ADD: '',
-    LIP_FACTOR: '',
-    one_piece: false,
-    photo: null
+    STANDARD_GRADE: '',
+    STANDARD_GRADE_THICK: ''
   });
   const [newProduct, setNewProduct] = useState(false)
 
@@ -51,18 +47,17 @@ const Edges = (props) => {
   }
 
   const addProd = () => {
+    console.log("clicked")
     const p = {
       NAME: '',
-      UPCHARGE: '',
-      STILE_ADD: '',
-      RAIL_ADD: '',
-      LIP_FACTOR: '',
-      one_piece: false,
-      photo: null
+      STANDARD_GRADE: '',
+      STANDARD_GRADE_THICK: '',
     }
     setNewProduct(true)
     setProduct(p)
     toggle()
+
+    console.log(product)
   }
 
   const change = (e) => {
@@ -90,58 +85,52 @@ const Edges = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "edges", cookie)
+    await props.updateProduct(id, updatedProduct, "woodtypes", cookie)
     await setModal(!modal)
-    await props.getEdges(cookie)
+    await props.getWoodtypes(cookie)
   }
 
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'edges', cookie)
-    await props.getEdges(cookie)
+    await props.deleteProduct(id, 'woodtypes', cookie)
     await toggleWarningModal()
     await toggle()
   }
 
   const submitProduct = async () => {
-    const item = props.edges.length + 1
+    const item = props.woodtypes.length + 1
     const submittedProduct = {
       NAME: product.NAME,
-      UPCHARGE: product.UPCHARGE,
-      STILE_ADD: product.STILE_ADD,
-      RAIL_ADD: product.RAIL_ADD,
-      LIP_FACTOR: product.LIP_FACTOR,
-      one_piece: false,
+      STANDARD_GRADE: product.STANDARD_GRADE,
+      STANDARD_GRADE_THICK: product.STANDARD_GRADE_THICK,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'edges', cookie)
+    await props.addProduct(submittedProduct, 'woodtypes', cookie)
     await setModal(!modal)
-    await props.getEdges(cookie)
+    await props.getWoodtypes(cookie)
   }
 
 
-  const card = props.edges.map(card => {
+  const card = props.woodtypes.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
         <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Price:</strong> ${card.UPCHARGE}</CardTitle>
-            <CardTitle><strong>Stile Add:</strong> ${card.STILE_ADD}</CardTitle>
-            <CardTitle><strong>Rail Add:</strong> {card.RAIL_ADD}</CardTitle>
-            <CardTitle><strong>Lip Factor:</strong> {card.LIP_FACTOR}</CardTitle>
+            <CardTitle><strong>4/4 Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
+            <CardTitle><strong>5/4 Price:</strong> ${card.STANDARD_GRADE_THICK}</CardTitle>
           </CardBody>
         </Card>
       </div>
     );
   })
 
-  console.log(product)
+
   return (
-    
+
     <div>
 
       <Row className="mb-2">
@@ -179,53 +168,18 @@ const Edges = (props) => {
                 <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
-
             <Row>
               <Col>
                 <Label for="4/4_Price">4/4 Price</Label>
-                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
-              </Col>
-
-            </Row>
-            <Row>
-              <Col>
-                <Label for="5/4_Price">Stile Add</Label>
-                <Input value={product.STILE_ADD} name="STILE_ADD" onChange={(e) => change(e)}></Input>
+                <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
               </Col>
               <Col>
-                <Label for="4/4_Price">Rail Add</Label>
-                <Input value={product.RAIL_ADD} name="RAIL_ADD" onChange={(e) => change(e)}></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">Lip Factor</Label>
-                <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
+                <Label for="5/4_Price">5/4 Price</Label>
+                <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <Row>
-                  <Col>
-                    <Label for="5/4_Price">One Piece</Label>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setProduct((prevState) => {
-                      return ({
-                        ...prevState,
-                        one_piece: !prevState.one_piece
-                      })
-                    })} checked={product.one_piece} />
-                  </Col>
-                </Row>
-
-
-              </Col>
-            </Row>
-
-
             <Row className="mt-5">
-
+             
               <Col>
                 {newProduct ?
                   <div />
@@ -243,6 +197,7 @@ const Edges = (props) => {
                 <Button color="primary" onClick={submitProduct}>Submit</Button>
 
               </div>
+
               :
               <div>
                 <Button color="primary" onClick={updateProduct}>Update</Button>
@@ -271,13 +226,13 @@ const Edges = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  edges: state.part_list.edges,
+  woodtypes: state.part_list.woodtypes,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getEdges,
+      getWoodtypes,
       updateProduct,
       addProduct,
       deleteProduct
@@ -290,4 +245,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Edges);
+)(Woodtype);
