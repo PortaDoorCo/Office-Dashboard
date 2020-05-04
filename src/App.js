@@ -4,6 +4,7 @@ import './App.scss';
 import Cookies from "js-cookie";
 import Login from "./views/Pages/Login/Login";
 import Register from "./views/Pages/Register/Register";
+import NewPassword from './views/Pages/NewPassword/NewPassword'
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { NotificationManager } from 'react-notifications';
@@ -24,12 +25,12 @@ const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
   <Route
     {...rest}
     render={props => {
-    
+
       return rest.isLogged ? (
-        <Component {...props} isLogged={rest.isLogged}  />
+        <Component {...props} isLogged={rest.isLogged} />
       ) : (
-        <Redirect to={{ pathname: "/login" }} />
-      )
+          <Redirect to={{ pathname: "/login" }} />
+        )
     }
     }
   />
@@ -62,7 +63,7 @@ class App extends Component {
     socket.on('delivery_added', res => this.props.getDeliveries(cookie))
   }
 
-  componentDidUpdate = async(prevProps) => {
+  componentDidUpdate = async (prevProps) => {
     if (this.props.loggedIn !== prevProps.loggedIn) {
       this.cookies()
     }
@@ -73,25 +74,30 @@ class App extends Component {
       <BrowserRouter>
         <React.Suspense fallback={loading()}>
           <Switch>
-              <Route
-                path="/login"
-                name="Login"
-                component={this.state.isAuth ? DefaultLayout : Login}
-              />
+            <Route
+              path="/login"
+              name="Login"
+              component={this.state.isAuth ? DefaultLayout : Login}
+            />
               }
               <Route
-                path="/register"
-                name="register"
-                component={this.state.isAuth ? DefaultLayout : Register}
-              />
-              <PrivateRoute
-                path="/"
-                name="Dashboard"
-                component={DefaultLayout}
-                isLogged={this.state.isAuth}
-              />
-              {/* <AuthRoute exact path="/" component={Full} /> */}
-        
+              path="/register"
+              name="register"
+              component={this.state.isAuth ? DefaultLayout : Register}
+            />
+            <Route
+              path="/new-password"
+              name="new-password"
+              component={this.state.isAuth ? DefaultLayout : NewPassword}
+            />
+            <PrivateRoute
+              path="/"
+              name="Dashboard"
+              component={DefaultLayout}
+              isLogged={this.state.isAuth}
+            />
+            {/* <AuthRoute exact path="/" component={Full} /> */}
+
             {/* <Route path="/" name="Home" render={props => <DefaultLayout {...props}/>} /> */}
           </Switch>
         </React.Suspense>
@@ -106,18 +112,18 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-bindActionCreators(
-  {
-    loadOrders,
-    loadCustomers,
-    loadSales,
-    loadShippingMethod,
-    setLogin,
-    getDeliveries
+  bindActionCreators(
+    {
+      loadOrders,
+      loadCustomers,
+      loadSales,
+      loadShippingMethod,
+      setLogin,
+      getDeliveries
 
-  },
-  dispatch
-);
+    },
+    dispatch
+  );
 
 
 export default connect(
