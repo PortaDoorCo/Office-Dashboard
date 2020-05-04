@@ -289,56 +289,13 @@ const EditorPage = (props) => {
           </Card>
         </Col>
       </Row>
-
-      <Row className="mt-2">
-        <Col>
-          <Card>
-            <CardBody>
-              <CardTitle>
-                <h4 style={{ textDecoration: 'underline' }}>Panel</h4>
-              </CardTitle>
-              <Row>
-                <Col>
-                  Width
-                  <Editor code={breakdowns.panel_width} name={'panel_width'}   toggleEdit={setPanelWidth} edit={panelWidth} />
-                </Col>
-              </Row>
-
-              
-              <div className="mt-2">
-                <Button color="primary" onClick={() => setPanelWidth(!panelWidth)}>Edit</Button>
-              </div>
-            </CardBody>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-            <CardBody>
-              <CardTitle>
-                <h4 style={{ textDecoration: 'underline' }}>Panel</h4>
-              </CardTitle>
-              <Row>
-                <Col>
-                  Height
-                  <Editor code={breakdowns.panel_height} name={'panel_height'}  toggleEdit={setPanelHeight} edit={panelHeight} />
-                </Col>
-              </Row>
-             
-              <div className="mt-2">
-                <Button color="primary" onClick={() => setPanelHeight(!panelHeight)}>Edit</Button>
-              </div>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-
     </div>
   )
 }
 
 
 const mapStateToProps = (state) => ({
-  breakdowns: state.part_list.breakdowns[0],
+  breakdowns: state.part_list.breakdowns[6],
   woodtypes: state.part_list.woodtypes,
   designs: state.part_list.cope_designs,
   edges: state.part_list.edges,
