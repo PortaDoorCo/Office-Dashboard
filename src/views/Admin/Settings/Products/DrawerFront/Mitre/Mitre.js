@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap'
+import { Breadcrumb, BreadcrumbItem, Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Woodtype from '../Attributes/Woodtypes'
@@ -16,8 +16,10 @@ const Navigation = (props) => {
 
   return (
     <Col>
-      <Button onClick={() => actions.setHome("index")}>Home</Button>
-      <Button onClick={() => actions.back("index")}>Back</Button>
+      <Breadcrumb>
+        <BreadcrumbItem>Drawer Front</BreadcrumbItem>
+        <BreadcrumbItem active>Mitre Design DF</BreadcrumbItem>
+      </Breadcrumb>
     </Col>
   )
 }
@@ -38,6 +40,9 @@ const Cope = (props) => {
   return (
     <div>
       <Row>
+        <Navigation />
+      </Row>
+      <Row>
         <Col xs='4'>
           <Card>
             {/* <CardImg top width="100%" src={"https://picsum.photos/1200"} alt="Card image cap" /> */}
@@ -45,7 +50,7 @@ const Cope = (props) => {
               <Row className="mt-2">
                 <Col>
                   <CardTitle>
-                    <h1>Mitre Doors - Drawer Front</h1>
+                    <h1>Mitre Design</h1>
                   </CardTitle>
                 </Col>
               </Row>
