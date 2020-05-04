@@ -7,6 +7,8 @@ import Avatar from 'react-avatar';
 import { FileUploader } from 'devextreme-react';
 import Cookies from "js-cookie";
 import { updateAccount, login, forgotPassword } from '../../../redux/users/actions'
+import LogOutModal from './LogOutModal'
+
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -15,7 +17,9 @@ const header = { 'Authorization': 'Bearer ' + cookie };
 const AccountSettings = props => {
 
   const [user, setUser] = useState(props.user)
+  const [modal, setModal] = useState(false);
 
+  const toggle = () => setModal(!modal);
 
   const change = (e) => {
     const value = e.target.value;
@@ -54,14 +58,7 @@ const AccountSettings = props => {
     await login(cookie)
   }
 
-  const changePassword = async () => {
-    const { forgotPassword } = props;
-    const userInfo = {
-      'email': user.email
-    }
-    console.log(userInfo)
-    await forgotPassword(userInfo)
-  }
+
 
   return (
     <div>
@@ -120,7 +117,7 @@ const AccountSettings = props => {
 
               <Row className="mb-5">
                 <Col>
-                  <Button outline color="danger" onClick={changePassword}>Change Password</Button>
+                  <Button outline color="danger" onClick={toggle}>Change Password</Button>
                 </Col>
               </Row>
 
@@ -151,6 +148,7 @@ const AccountSettings = props => {
         </Col>
         <Col />
       </Row>
+      <LogOutModal modal={modal} toggle={toggle} email={user.email} />
     </div>
   )
 }

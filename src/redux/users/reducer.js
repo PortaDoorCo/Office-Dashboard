@@ -1,9 +1,10 @@
-import { REGISTER_USER, LOGIN, CREATE_TASK, MARK_DONE, REMOVE_TASK, SET_LOGIN, UPDATE_ACCOUNT } from "./actions";
+import { REGISTER_USER, LOGIN, CREATE_TASK, MARK_DONE, REMOVE_TASK, SET_LOGIN, UPDATE_ACCOUNT, RESET_PASSWORD } from "./actions";
 
 const initialState = {
   user: [],
   tasks: [],
-  loggedIn: false
+  loggedIn: false,
+  passwordReset: false
 };
 
 export default function (state = initialState, action) {
@@ -25,6 +26,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: data
+      };
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        passwordReset: data
       };
     case CREATE_TASK:
       return {
