@@ -12,20 +12,15 @@ const EditorPage = (props) => {
 
   const [breakdowns, setBreakdowns] = useState(props.breakdowns);
 
-  const [topRailWidth, setTopRailWidth] = useState(false);
-  const [topRailHeight, setTopRailHeight] = useState(false);
-  const [bottomRailWidth, setBottomRailWidth] = useState(false);
-  const [bottomRailHeight, setBottomRailHeight] = useState(false);
-  const [leftStileWidth, setLeftStileWidth] = useState(false);
-  const [leftStileHeight, setLeftStileHeight] = useState(false);
-  const [rightStileWidth, setRightStileWidth] = useState(false);
-  const [rightStileHeight, setRightStileHeight] = useState(false);
-  const [verticalMidRailWidth, setVerticalMidRailWidth] = useState(false);
-  const [verticalMidRailHeight, setVerticalMidRailHeight] = useState(false);
-  const [horizontalMidRailWidth, setHorizontalMidRailWidth] = useState(false);
-  const [horizontalMidRailHeight, setHorizontalMidRailHeight] = useState(false);
-  const [panelWidth, setPanelWidth] = useState(false);
-  const [panelHeight, setPanelHeight] = useState(false);
+  const [bottomsWidth, setBottomsWidth] = useState(false);
+  const [bottomsDepth, setBottomsDepth] = useState(false);
+  const [frontsHeight, setFrontsHeight] = useState(false);
+  const [frontsWidth, setFrontsWidth] = useState(false);
+  const [frontsThickness, setFrontsThickness] = useState(false);
+  const [sidesHeight, setSidesHeight] = useState(false);
+  const [sidesDepth, setSidesDepth] = useState(false);
+  const [sidesThickness, setSidesThickness] = useState(false);
+
 
 
 
@@ -50,13 +45,13 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.bottoms_width} name={'bottoms_width'} toggleEdit={setTopRailWidth}  edit={topRailWidth} />
+                  <Editor code={breakdowns.bottoms_width} name={'bottoms_width'} toggleEdit={setBottomsWidth}  edit={bottomsWidth} />
                 </Col>
               </Row>
 
 
               <div className="mt-2">
-                <Button color="primary" onClick={() => setTopRailWidth(!topRailWidth)}>Edit</Button>
+                <Button color="primary" onClick={() => setBottomsWidth(!bottomsWidth)}>Edit</Button>
               </div>
 
             </CardBody>
@@ -71,12 +66,12 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Depth
-                  <Editor code={breakdowns.bottoms_depth} name={'bottoms_depth'} toggleEdit={setTopRailHeight}  edit={topRailHeight} />
+                  <Editor code={breakdowns.bottoms_depth} name={'bottoms_depth'} toggleEdit={setBottomsDepth}  edit={bottomsDepth} />
                 </Col>
               </Row>
 
               <div className="mt-2">
-                <Button color="primary" onClick={() => setTopRailHeight(!topRailHeight)}>Edit</Button>
+                <Button color="primary" onClick={() => setBottomsDepth(!bottomsDepth)}>Edit</Button>
               </div>
 
             </CardBody>
@@ -94,12 +89,12 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.fronts_height} name={'fronts_height'}  toggleEdit={setBottomRailWidth} edit={bottomRailWidth} />
+                  <Editor code={breakdowns.fronts_height} name={'fronts_height'}  toggleEdit={setFrontsHeight} edit={frontsHeight} />
                 </Col>
               </Row>
 
               <div className="mt-2">
-                <Button color="primary" onClick={() => setBottomRailWidth(!bottomRailWidth)}>Edit</Button>
+                <Button color="primary" onClick={() => setFrontsHeight(!frontsHeight)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -113,11 +108,11 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.fronts_width} name={'fronts_width'}  toggleEdit={setBottomRailHeight} edit={bottomRailHeight} />
+                  <Editor code={breakdowns.fronts_width} name={'fronts_width'}  toggleEdit={setFrontsWidth} edit={frontsWidth} />
                 </Col>
               </Row>
               <div className="mt-2">
-                <Button color="primary" onClick={() => setBottomRailHeight(!bottomRailHeight)}>Edit</Button>
+                <Button color="primary" onClick={() => setFrontsWidth(!frontsWidth)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -131,11 +126,11 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Thickness
-                  <Editor code={breakdowns.fronts_thickness} name={'fronts_thickness'}  toggleEdit={setBottomRailHeight} edit={bottomRailHeight} />
+                  <Editor code={breakdowns.fronts_thickness} name={'fronts_thickness'}  toggleEdit={setFrontsThickness} edit={frontsThickness} />
                 </Col>
               </Row>
               <div className="mt-2">
-                <Button color="primary" onClick={() => setBottomRailHeight(!bottomRailHeight)}>Edit</Button>
+                <Button color="primary" onClick={() => setFrontsThickness(!frontsThickness)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -152,11 +147,11 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.sides_height} name={'sides_height'}  toggleEdit={setLeftStileWidth} edit={leftStileWidth} />
+                  <Editor code={breakdowns.sides_height} name={'sides_height'}  toggleEdit={setSidesHeight} edit={sidesHeight} />
                 </Col>
               </Row>
               <div className="mt-2">
-                <Button color="primary" onClick={() => setLeftStileWidth(!leftStileWidth)}>Edit</Button>
+                <Button color="primary" onClick={() => setSidesHeight(!sidesHeight)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -170,11 +165,11 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Depth
-                  <Editor code={breakdowns.sides_depth} name={'sides_depth'}   toggleEdit={setLeftStileHeight} edit={leftStileHeight} />
+                  <Editor code={breakdowns.sides_depth} name={'sides_depth'}   toggleEdit={setSidesDepth} edit={sidesDepth} />
                 </Col>
               </Row>
               <div className="mt-2">
-                <Button color="primary" onClick={() => setLeftStileHeight(!leftStileHeight)}>Edit</Button>
+                <Button color="primary" onClick={() => setSidesDepth(!sidesDepth)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -188,11 +183,11 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Thickness
-                  <Editor code={breakdowns.sides_thickness} name={'sides_thickness'}   toggleEdit={setLeftStileHeight} edit={leftStileHeight} />
+                  <Editor code={breakdowns.sides_thickness} name={'sides_thickness'}   toggleEdit={setSidesThickness} edit={sidesThickness} />
                 </Col>
               </Row>
               <div className="mt-2">
-                <Button color="primary" onClick={() => setLeftStileHeight(!leftStileHeight)}>Edit</Button>
+                <Button color="primary" onClick={() => setSidesThickness(!sidesThickness)}>Edit</Button>
               </div>
             </CardBody>
           </Card>

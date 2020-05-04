@@ -29,11 +29,9 @@ const EditorComponent = (props) => {
   const editorRef = useRef(null);
   const [modal, setModal] = useState(false)
 
-  const designs = ['top_rail_arch', 'bottom_rail_arch']
-  const edges = ['stile_add', 'rail_add', 'edge_factor']
-  const panels = ['panel_factor']
-  const profiles = ['inset']
-  const applied_profiles = ['rail_add', 'rail_factor']
+  const box_thickness = ['sideDeduction', 'bottomWidthReduction', 'bottomLengthDeduction',]
+  const box_bottom_thickness = ['boxBottomThickness']
+
 
   const toggle = () => {
     setModal(!modal)
@@ -129,11 +127,8 @@ const EditorComponent = (props) => {
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
-                <Parameters onBtnClick={onBtnClick} attributes={designs} name="Designs" />
-                <Parameters onBtnClick={onBtnClick} attributes={edges} name="Edges" />
-                <Parameters onBtnClick={onBtnClick} attributes={profiles} name="Profiles" />
-                <Parameters onBtnClick={onBtnClick} attributes={panels} name="Panels" />
-                <Parameters onBtnClick={onBtnClick} attributes={applied_profiles} name="Applied Profiles" />
+                <Parameters onBtnClick={onBtnClick} attributes={box_thickness} name="Box Thickness" />
+                <Parameters onBtnClick={onBtnClick} attributes={box_bottom_thickness} name="Box Bottom Woodtype" />
               </div>
             </Row>
           </Col>
@@ -149,20 +144,8 @@ const EditorComponent = (props) => {
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
                 <Button onClick={() => onBtnClick('width')} outline color="danger">Width</Button>
+                <Button onClick={() => onBtnClick('depth')} outline color="danger">Depth</Button>
                 <Button onClick={() => onBtnClick('height')} outline color="danger">Height</Button>
-                <Button onClick={() => onBtnClick('panelsH')} outline color="danger">Panels High</Button>
-                <Button onClick={() => onBtnClick('panelsW')} outline color="danger">Panels Wide</Button>
-              </div>
-            </Row>
-
-            <Row>
-              <div className="col d-flex align-content-start flex-wrap">
-                <Button onClick={() => onBtnClick('leftStile')} outline color="danger">Left Stile</Button>
-                <Button onClick={() => onBtnClick('rightStile')} outline color="danger">Right Stile</Button>
-                <Button onClick={() => onBtnClick('topRail')} outline color="danger">Top Rail</Button>
-                <Button onClick={() => onBtnClick('bottomRail')} outline color="danger">Bottom Rail</Button>
-                <Button onClick={() => onBtnClick('vertMull')} outline color="danger">Vertical Mull</Button>
-                <Button onClick={() => onBtnClick('horizMull')} outline color="danger">Horizontal Mull</Button>
               </div>
             </Row>
           </Col>
