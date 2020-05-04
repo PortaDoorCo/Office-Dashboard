@@ -76,7 +76,6 @@ export default {
     // {
     //   name: 'Calendar',
     //   url: '/calendar',
-
     // },
 
   ]

@@ -6,6 +6,10 @@ import CopeDF from './Products/DrawerFront/Cope/Cope'
 import MTDF from './Products/DrawerFront/MT/MT'
 import MiterDF from './Products/DrawerFront/Mitre/Mitre'
 import AccountSettings from './AccountSettings'
+import SlabDoor from './Products/Door/Slab_Type_Door/Slab'
+import OnePiece from './Products/Door/One_Piece_Door/One_Piece'
+import FaceFrame from './Products/FaceFrame/FaceFrame'
+import DrawerBox from './Products/DrawerBox/DrawerBox'
 
 const Selection = props => {
 
@@ -25,6 +29,14 @@ const Selection = props => {
             return <MTDF />
         case 'miter_df':
             return <MiterDF />
+        case 'slab_type_door':
+            return <SlabDoor />
+        case 'one_piece_door':
+            return <OnePiece />
+        case 'face_frames':
+            return <FaceFrame />
+        case 'drawer_box':
+            return <DrawerBox />
         default:
             return <AccountSettings />
     }

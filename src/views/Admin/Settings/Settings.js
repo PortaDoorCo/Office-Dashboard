@@ -50,7 +50,7 @@ const Settings = (props) => {
                   <DropdownItem onClick={() => setSelection('miter_door')}>
                       Mitre Door
                 </DropdownItem>
-                <DropdownItem onClick={() => setSelection('face_frame')}>
+                <DropdownItem onClick={() => setSelection('slab_type_door')}>
                       Slab Type Door
                 </DropdownItem>
                 <DropdownItem onClick={() => setSelection('one_piece_door')}>
@@ -80,7 +80,7 @@ const Settings = (props) => {
                     Drawer Boxes
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>
+                    <DropdownItem onClick={() => setSelection('drawer_box')}>
                       Dovetail Drawer Box
                   </DropdownItem>
                   </DropdownMenu>
@@ -90,7 +90,7 @@ const Settings = (props) => {
                     Face Frames
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>
+                    <DropdownItem onClick={() => setSelection('face_frames')}>
                       Face Frames
                   </DropdownItem>
                   </DropdownMenu>
@@ -103,7 +103,7 @@ const Settings = (props) => {
                     <DropdownItem>
                       Doors
                   </DropdownItem>
-                  <DropdownItem>
+                  <DropdownItem >
                       Drawer Boxes
                   </DropdownItem>
                   </DropdownMenu>
