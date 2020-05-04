@@ -3,16 +3,17 @@ import { Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, Card
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Woodtype from './attributes/Woodtypes'
-import Designs from './attributes/Designs'
-import Edges from './attributes/Edges'
-import Profiles from './attributes/Profiles'
-import Panels from './attributes/Panels'
-import Applied_Profiles from './attributes/Applied_Profiles'
+import BoxThickness from './attributes/BoxThickness'
+import BoxBottomWoodtype from './attributes/BoxBottomWoodtype'
+import BoxBottomThickness from './attributes/BoxBottomThickness'
+
+
 import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions'
 import classnames from 'classnames';
 
 import EditorPage from './editor/EditorPage'
-
+import NotchDrill from './attributes/NotchDrill';
+import Finish from './attributes/Finish'
 
 const Navigation = (props) => {
   console.log("prop nav ", props)
@@ -67,7 +68,7 @@ const DrawerBox = (props) => {
                       className={classnames({ active: activeTab === '2' })}
                       onClick={() => { toggle('2'); }}
                     >
-                      Designs
+                      Box Thickness
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -75,7 +76,7 @@ const DrawerBox = (props) => {
                       className={classnames({ active: activeTab === '3' })}
                       onClick={() => { toggle('3'); }}
                     >
-                      Edges
+                      Box Bottom Woodtype
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -83,7 +84,7 @@ const DrawerBox = (props) => {
                       className={classnames({ active: activeTab === '4' })}
                       onClick={() => { toggle('4'); }}
                     >
-                      Profiles
+                      Box Bottom Thickness
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -91,7 +92,7 @@ const DrawerBox = (props) => {
                       className={classnames({ active: activeTab === '5' })}
                       onClick={() => { toggle('5'); }}
                     >
-                      Panels
+                      Notch and Drill
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -99,7 +100,7 @@ const DrawerBox = (props) => {
                       className={classnames({ active: activeTab === '6' })}
                       onClick={() => { toggle('6'); }}
                     >
-                      Applied Profiles
+                      Finish/Assembly
                     </NavLink>
                   </NavItem>
                 </Nav>
@@ -128,19 +129,19 @@ const DrawerBox = (props) => {
                 <Woodtype />
               </TabPane>
               <TabPane tabId="2">
-                <Designs />
+                <BoxThickness />
               </TabPane>
               <TabPane tabId="3">
-                <Edges edges={props.edges} />
+                <BoxBottomWoodtype />
               </TabPane>
               <TabPane tabId="4">
-                <Profiles profiles={props.profiles} />
+                <BoxBottomThickness />
               </TabPane>
               <TabPane tabId="5">
-                <Panels panels={props.panels} />
+                <NotchDrill />
               </TabPane>
               <TabPane tabId="6">
-                <Applied_Profiles applied_profiles={props.applied_profiles} />
+                <Finish />
               </TabPane>
             </TabContent>
           </Row>

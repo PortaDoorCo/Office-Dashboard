@@ -13,7 +13,7 @@ const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
-const Designs = (props) => {
+const NotchDrill = (props) => {
 
   const {
     buttonLabel,
@@ -246,7 +246,7 @@ const Designs = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.cope_designs,
+  designs: state.part_list.box_notches,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -265,4 +265,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Designs);
+)(NotchDrill);
