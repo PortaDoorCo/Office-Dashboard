@@ -73,16 +73,17 @@ export function forgotPassword(email) {
 
 export function resetPassword(code) {
   return async function (dispatch) {
-
-    await axios.post(`${db_url}/auth/reset-password`, code).then(res => {
-      NotificationManager.success('Password Reset', 'Success', 2000);
-      return dispatch({
+    try {
+      const res = axios.post(`${db_url}/auth/reset-password`, code);
+      const data = await res;
+      return await dispatch({
         type: RESET_PASSWORD,
         data: true
-      });  
-    }).catch(error => {
-      NotificationManager.error('Error', 'Error', 2000);
-    });
+      });
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
 
 
   };

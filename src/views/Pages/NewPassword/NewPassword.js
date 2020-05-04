@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { registerUser, resetPassword } from '../../../redux/users/actions';
 import { strapiRegister } from '../../../utils/auth';
-import { NotificationContainer } from 'react-notifications';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 const NewPassword = props => {
 
@@ -32,15 +32,20 @@ const NewPassword = props => {
     console.log(submitNewPassword)
 
     if ((password === passwordConfirmation) && password.length > 0) {
-      resetPassword(submitNewPassword)
+      await resetPassword(submitNewPassword)
+      await NotificationManager.success(`Password Updated!`, 'Password Updated!', 2000);
     } else {
       alert('your password do not match')
     }
   }
 
-  if(passwordReset){
-    return(
-      <Redirect to='/' />
+  if (passwordReset) {
+    return (
+      <div>
+        <NotificationContainer />
+        <Redirect to='/' />
+      </div>
+
     )
   } else {
     return (
