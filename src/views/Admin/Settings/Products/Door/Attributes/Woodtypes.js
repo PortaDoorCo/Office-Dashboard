@@ -6,29 +6,28 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getPanels, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions'
-
+import { getWoodtypes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
-const Panels = (props) => {
+const Woodtype = (props) => {
 
   const {
     buttonLabel,
     className
   } = props;
 
+
   const [modal, setModal] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [product, setProduct] = useState({
     id: '',
     NAME: '',
-    UPCHARGE: '',
-    PANEL_FACTOR: '',
-    photo: null
+    STANDARD_GRADE: '',
+    STANDARD_GRADE_THICK: ''
   });
   const [newProduct, setNewProduct] = useState(false)
 
@@ -48,15 +47,17 @@ const Panels = (props) => {
   }
 
   const addProd = () => {
+    console.log("clicked")
     const p = {
       NAME: '',
-      UPCHARGE: '',
-      PANEL_FACTOR: '',
-      photo: null
+      STANDARD_GRADE: '',
+      STANDARD_GRADE_THICK: '',
     }
     setNewProduct(true)
     setProduct(p)
     toggle()
+
+    console.log(product)
   }
 
   const change = (e) => {
@@ -84,51 +85,50 @@ const Panels = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "panels", cookie)
+    await props.updateProduct(id, updatedProduct, "woodtypes", cookie)
     await setModal(!modal)
-    await props.getPanels(cookie)
+    await props.getWoodtypes(cookie)
   }
 
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'panels', cookie)
-    await props.getPanels(cookie)
+    await props.deleteProduct(id, 'woodtypes', cookie)
     await toggleWarningModal()
     await toggle()
   }
 
   const submitProduct = async () => {
-    const item = props.panels.length + 1
+    const item = props.woodtypes.length + 1
     const submittedProduct = {
       NAME: product.NAME,
-      UPCHARGE: product.UPCHARGE,
-      PANEL_FACTOR: product.PANEL_FACTOR,
+      STANDARD_GRADE: product.STANDARD_GRADE,
+      STANDARD_GRADE_THICK: product.STANDARD_GRADE_THICK,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'panels', cookie)
+    await props.addProduct(submittedProduct, 'woodtypes', cookie)
     await setModal(!modal)
-    await props.getPanels(cookie)
+    await props.getWoodtypes(cookie)
   }
 
 
-  const card = props.panels.map(card => {
+  const card = props.woodtypes.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
         <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Price: </strong> ${card.UPCHARGE}</CardTitle>
-            <CardTitle><strong>Panel Factor: </strong> {card.PANEL_FACTOR}</CardTitle>
+            <CardTitle><strong>4/4 Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
+            <CardTitle><strong>5/4 Price:</strong> ${card.STANDARD_GRADE_THICK}</CardTitle>
           </CardBody>
         </Card>
       </div>
     );
   })
 
-  console.log(product)
+
   return (
 
     <div>
@@ -168,23 +168,18 @@ const Panels = (props) => {
                 <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
-
             <Row>
               <Col>
-                <Label for="4/4_Price">Price</Label>
-                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                <Label for="4/4_Price">4/4 Price</Label>
+                <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
               </Col>
-
-            </Row>
-            <Row>
               <Col>
-                <Label for="5/4_Price">Panel Factor</Label>
-                <Input value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
+                <Label for="5/4_Price">5/4 Price</Label>
+                <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
-
             <Row className="mt-5">
-
+             
               <Col>
                 {newProduct ?
                   <div />
@@ -202,6 +197,7 @@ const Panels = (props) => {
                 <Button color="primary" onClick={submitProduct}>Submit</Button>
 
               </div>
+
               :
               <div>
                 <Button color="primary" onClick={updateProduct}>Update</Button>
@@ -230,13 +226,13 @@ const Panels = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  panels: state.part_list.panels,
+  woodtypes: state.part_list.woodtypes,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getPanels,
+      getWoodtypes,
       updateProduct,
       addProduct,
       deleteProduct
@@ -249,4 +245,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Panels);
+)(Woodtype);

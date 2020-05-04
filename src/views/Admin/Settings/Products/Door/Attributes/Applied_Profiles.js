@@ -6,7 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getPanels, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions'
+import { getAppliedMoulds, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
 
 
 const cookie = Cookies.get("jwt");
@@ -14,7 +14,7 @@ const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
-const Panels = (props) => {
+const Applied_Profiles = (props) => {
 
   const {
     buttonLabel,
@@ -27,7 +27,7 @@ const Panels = (props) => {
     id: '',
     NAME: '',
     UPCHARGE: '',
-    PANEL_FACTOR: '',
+    RAIL_FACTOR: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false)
@@ -51,7 +51,7 @@ const Panels = (props) => {
     const p = {
       NAME: '',
       UPCHARGE: '',
-      PANEL_FACTOR: '',
+      RAIL_FACTOR: '',
       photo: null
     }
     setNewProduct(true)
@@ -84,36 +84,36 @@ const Panels = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "panels", cookie)
+    await props.updateProduct(id, updatedProduct, "applied-profiles", cookie)
     await setModal(!modal)
-    await props.getPanels(cookie)
+    await props.getAppliedMoulds(cookie)
   }
 
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'panels', cookie)
-    await props.getPanels(cookie)
+    await props.deleteProduct(id, 'applied-profiles', cookie)
+    await props.getAppliedMoulds(cookie)
     await toggleWarningModal()
     await toggle()
   }
 
   const submitProduct = async () => {
-    const item = props.panels.length + 1
+    const item = props.applied_profiles.length + 1
     const submittedProduct = {
       NAME: product.NAME,
       UPCHARGE: product.UPCHARGE,
-      PANEL_FACTOR: product.PANEL_FACTOR,
+      RAIL_FACTOR: product.RAIL_FACTOR,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'panels', cookie)
+    await props.addProduct(submittedProduct, 'applied-profiles', cookie)
     await setModal(!modal)
-    await props.getPanels(cookie)
+    await props.getAppliedMoulds(cookie)
   }
 
 
-  const card = props.panels.map(card => {
+  const card = props.applied_profiles.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
         <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
@@ -121,7 +121,7 @@ const Panels = (props) => {
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>Price: </strong> ${card.UPCHARGE}</CardTitle>
-            <CardTitle><strong>Panel Factor: </strong> {card.PANEL_FACTOR}</CardTitle>
+            <CardTitle><strong>Rail Factor: </strong> {card.RAIL_FACTOR}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -165,7 +165,7 @@ const Panels = (props) => {
             <Row className="mb-2">
               <Col>
                 <Label for="Name">Name</Label>
-                <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
+                <Input  value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
@@ -178,8 +178,8 @@ const Panels = (props) => {
             </Row>
             <Row>
               <Col>
-                <Label for="5/4_Price">Panel Factor</Label>
-                <Input value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
+                <Label for="5/4_Price">Rail Factor</Label>
+                <Input value={product.RAIL_FACTOR} name="RAIL_FACTOR" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
@@ -230,13 +230,13 @@ const Panels = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  panels: state.part_list.panels,
+  applied_profiles: state.part_list.applied_moulds,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getPanels,
+      getAppliedMoulds,
       updateProduct,
       addProduct,
       deleteProduct
@@ -249,4 +249,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Panels);
+)(Applied_Profiles);
