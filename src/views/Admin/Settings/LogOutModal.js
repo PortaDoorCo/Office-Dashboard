@@ -48,7 +48,7 @@ const LogOutModal = props => {
                 <p>You will be logged out...</p>
             </ModalBody>
             <ModalFooter>
-                <Button color="primary" onClick={changePassword}>Yes</Button>
+                <Button color="danger" onClick={changePassword}>Yes</Button>
                 <Button color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
         </Modal>
