@@ -14,6 +14,7 @@ export const REMOVE_TASK = 'REMOVE_TASK';
 export const SET_LOGIN = 'SET_LOGIN';
 export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT';
 export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
+export const RESET_PASSWORD = "RESET_PASSWORD";
 
 
 
@@ -21,7 +22,7 @@ export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
 export function registerUser(user) {
   return async function (dispatch) {
     await axios.post(`${db_url}/auth/local/register`, user);
- 
+
     return dispatch({
       type: REGISTER_USER,
     });
@@ -35,7 +36,7 @@ export function login(token) {
         Authorization: `Bearer ${token}`
       }
     });
- 
+
     return dispatch({
       type: LOGIN,
       user: res.data,
@@ -70,6 +71,23 @@ export function forgotPassword(email) {
   };
 }
 
+export function resetPassword(code) {
+  return async function (dispatch) {
+
+    await axios.post(`${db_url}/auth/reset-password`, code).then(res => {
+      NotificationManager.success('Password Reset', 'Success', 2000);
+      return dispatch({
+        type: RESET_PASSWORD,
+        data: true
+      });  
+    }).catch(error => {
+      NotificationManager.error('Error', 'Error', 2000);
+    });
+
+
+  };
+}
+
 export function createTask(task) {
   return async function (dispatch) {
     const res = await axios.post(`${db_url}/tasks`, task, {
@@ -78,7 +96,7 @@ export function createTask(task) {
       }
     });
     const data = await res;
-    
+
     return dispatch({
       type: CREATE_TASK,
       data: data.data
@@ -93,7 +111,7 @@ export function markDone(id, done) {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
-    });  
+    });
     return dispatch({
       type: MARK_DONE,
       id: id
