@@ -130,7 +130,7 @@ const Edges = (props) => {
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>Price:</strong> ${card.UPCHARGE}</CardTitle>
-            <CardTitle><strong>Stile Add:</strong> ${card.STILE_ADD}</CardTitle>
+            <CardTitle><strong>Stile Add:</strong> {card.STILE_ADD}</CardTitle>
             <CardTitle><strong>Rail Add:</strong> {card.RAIL_ADD}</CardTitle>
             <CardTitle><strong>Lip Factor:</strong> {card.LIP_FACTOR}</CardTitle>
           </CardBody>
