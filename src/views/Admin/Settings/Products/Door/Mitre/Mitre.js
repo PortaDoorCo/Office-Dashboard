@@ -43,48 +43,54 @@ const Cope = (props) => {
           <Card>
             {/* <CardImg top width="100%" src={"https://picsum.photos/1200"} alt="Card image cap" /> */}
             <CardBody>
-              <Row className="mt-2">
+              <Col>
                 <CardTitle>
                   <h1>Mitre Doors</h1>
                 </CardTitle>
+              </Col>
+              <Row className="mt-2">
+
               </Row>
 
               <Row className="mt-2 mb-3">
-                <Nav tabs>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '1' })}
-                      onClick={() => { toggle('1'); }}
-                    >
-                      Woodtype
+                <Col>
+                  <Nav tabs>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '1' })}
+                        onClick={() => { toggle('1'); }}
+                      >
+                        Woodtype
                     </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '2' })}
-                      onClick={() => { toggle('2'); }}
-                    >
-                      Designs
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '2' })}
+                        onClick={() => { toggle('2'); }}
+                      >
+                        Designs
                     </NavLink>
-                  </NavItem>
+                    </NavItem>
 
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '3' })}
-                      onClick={() => { toggle('3'); }}
-                    >
-                      Panels
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '3' })}
+                        onClick={() => { toggle('3'); }}
+                      >
+                        Panels
                     </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '4' })}
-                      onClick={() => { toggle('4'); }}
-                    >
-                      Applied Profiles
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '4' })}
+                        onClick={() => { toggle('4'); }}
+                      >
+                        Applied Profiles
                     </NavLink>
-                  </NavItem>
-                </Nav>
+                    </NavItem>
+                  </Nav>
+                </Col>
+
               </Row>
 
               <Row>
@@ -122,7 +128,7 @@ const Cope = (props) => {
           </Row>
           <Row className="mt-2">
             <Col>
-              
+
               <Collapse isOpen={openEditor}>
                 <Card>
                   <CardBody>
