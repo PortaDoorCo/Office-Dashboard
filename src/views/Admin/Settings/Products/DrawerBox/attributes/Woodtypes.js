@@ -6,7 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getWoodtypes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
+import { getBoxWoodtypes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -27,7 +27,6 @@ const Woodtype = (props) => {
     id: '',
     NAME: '',
     STANDARD_GRADE: '',
-    STANDARD_GRADE_THICK: ''
   });
   const [newProduct, setNewProduct] = useState(false)
 
@@ -51,7 +50,6 @@ const Woodtype = (props) => {
     const p = {
       NAME: '',
       STANDARD_GRADE: '',
-      STANDARD_GRADE_THICK: '',
     }
     setNewProduct(true)
     setProduct(p)
@@ -85,15 +83,15 @@ const Woodtype = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "woodtypes", cookie)
+    await props.updateProduct(id, updatedProduct, "box-woodtypes", cookie)
     await setModal(!modal)
-    await props.getWoodtypes(cookie)
+    await props.getBoxWoodtypes(cookie)
   }
 
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'woodtypes', cookie)
+    await props.deleteProduct(id, 'box-woodtypes', cookie)
     await toggleWarningModal()
     await toggle()
   }
@@ -103,13 +101,12 @@ const Woodtype = (props) => {
     const submittedProduct = {
       NAME: product.NAME,
       STANDARD_GRADE: product.STANDARD_GRADE,
-      STANDARD_GRADE_THICK: product.STANDARD_GRADE_THICK,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'woodtypes', cookie)
+    await props.addProduct(submittedProduct, 'box-woodtypes', cookie)
     await setModal(!modal)
-    await props.getWoodtypes(cookie)
+    await props.getBoxWoodtypes(cookie)
   }
 
 
@@ -120,8 +117,7 @@ const Woodtype = (props) => {
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>4/4 Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
-            <CardTitle><strong>5/4 Price:</strong> ${card.STANDARD_GRADE_THICK}</CardTitle>
+            <CardTitle><strong>Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -172,10 +168,6 @@ const Woodtype = (props) => {
               <Col>
                 <Label for="4/4_Price">4/4 Price</Label>
                 <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">5/4 Price</Label>
-                <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
             <Row className="mt-5">
@@ -232,7 +224,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
+      getBoxWoodtypes,
       updateProduct,
       addProduct,
       deleteProduct

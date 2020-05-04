@@ -6,7 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getCopeDesigns, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
+import { getBoxNotches, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -25,10 +25,7 @@ const NotchDrill = (props) => {
   const [product, setProduct] = useState({
     id: '',
     NAME: '',
-    UPCHARGE: '',
-    UPCHARGE_THICK: '',
-    TOP_RAIL_ADD: '',
-    BTM_RAIL_ADD: '',
+    PRICE: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false)
@@ -52,10 +49,7 @@ const NotchDrill = (props) => {
     console.log("clicked")
     const p = {
       NAME: '',
-      UPCHARGE: '',
-      UPCHARGE_THICK: '',
-      TOP_RAIL_ADD: '',
-      BTM_RAIL_ADD: '',
+      PRICE: '',
       photo: null
     }
     setNewProduct(true)
@@ -88,16 +82,16 @@ const NotchDrill = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "cope-designs", cookie)
+    await props.updateProduct(id, updatedProduct, "box-notch", cookie)
     await setModal(!modal)
-    await props.getCopeDesigns(cookie)
+    await props.getBoxNotches(cookie)
   }
 
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'cope-designs', cookie)
-    await props.getCopeDesigns(cookie)
+    await props.deleteProduct(id, 'box-notch', cookie)
+    await props.getBoxNotches(cookie)
     await toggleWarningModal()
     await toggle()
   }
@@ -106,16 +100,13 @@ const NotchDrill = (props) => {
     const item = props.designs.length + 1
     const submittedProduct = {
       NAME: product.NAME,
-      UPCHARGE: product.UPCHARGE,
-      UPCHARGE_THICK: product.UPCHARGE_THICK,
-      TOP_RAIL_ADD: product.TOP_RAIL_ADD,
-      BTM_RAIL_ADD: product.BTM_RAIL_ADD,
+      PRICE: product.PRICE,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'cope-designs', cookie)
+    await props.addProduct(submittedProduct, 'box-notch', cookie)
     await setModal(!modal)
-    await props.getCopeDesigns(cookie)
+    await props.getBoxNotches(cookie)
   }
 
 
@@ -126,10 +117,8 @@ const NotchDrill = (props) => {
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
           <CardTitle><strong>{card.NAME}</strong></CardTitle>
-              <CardTitle><strong>4/4 Price:</strong> ${card.UPCHARGE}</CardTitle>
-              <CardTitle><strong>5/4 Price:</strong> ${card.UPCHARGE_THICK}</CardTitle>
-              <CardTitle><strong>Top Rail Arch:</strong> {card.TOP_RAIL_ADD}</CardTitle>
-              <CardTitle><strong>Bottom Rail Arch:</strong> {card.BTM_RAIL_ADD}</CardTitle>
+              <CardTitle><strong>Price:</strong> ${card.PRICE}</CardTitle>
+
           </CardBody>
         </Card>
       </div>
@@ -179,22 +168,8 @@ const NotchDrill = (props) => {
 
             <Row>
               <Col>
-                <Label for="4/4_Price">4/4 Price</Label>
-                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">5/4 Price</Label>
-                <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Label for="4/4_Price">Top Rail Arch</Label>
-                <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">Bottom Rail Arch</Label>
-                <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
+                <Label for="4/4_Price">Price</Label>
+                <Input value={product.PRICE} name="PRICE" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
@@ -252,7 +227,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getCopeDesigns,
+      getBoxNotches,
       updateProduct,
       addProduct,
       deleteProduct
