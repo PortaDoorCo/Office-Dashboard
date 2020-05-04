@@ -6,15 +6,15 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getProfiles, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions'
-import { AppSwitch } from '@coreui/react'
+import { getAppliedMoulds, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
+
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
-const Profiles = (props) => {
+const Applied_Profiles = (props) => {
 
   const {
     buttonLabel,
@@ -26,9 +26,8 @@ const Profiles = (props) => {
   const [product, setProduct] = useState({
     id: '',
     NAME: '',
-    INSET: '',
-    MINIMUM_STILE_WIDTH: '',
-    MID_RAIL_MINIMUMS: '',
+    UPCHARGE: '',
+    RAIL_FACTOR: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false)
@@ -51,9 +50,8 @@ const Profiles = (props) => {
   const addProd = () => {
     const p = {
       NAME: '',
-      INSET: '',
-      MINIMUM_STILE_WIDTH: '',
-      MID_RAIL_MINIMUMS: '',
+      UPCHARGE: '',
+      RAIL_FACTOR: '',
       photo: null
     }
     setNewProduct(true)
@@ -86,46 +84,44 @@ const Profiles = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "profiles", cookie)
+    await props.updateProduct(id, updatedProduct, "applied-profiles", cookie)
     await setModal(!modal)
-    await props.getProfiles(cookie)
+    await props.getAppliedMoulds(cookie)
   }
 
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'profiles', cookie)
-    await props.getProfiles(cookie)
+    await props.deleteProduct(id, 'applied-profiles', cookie)
+    await props.getAppliedMoulds(cookie)
     await toggleWarningModal()
     await toggle()
   }
 
   const submitProduct = async () => {
-    const item = props.profiles.length + 1
+    const item = props.applied_profiles.length + 1
     const submittedProduct = {
       NAME: product.NAME,
-      INSET: product.INSET,
-      MINIMUM_STILE_WIDTH: product.MINIMUM_STILE_WIDTH,
-      MID_RAIL_MINIMUMS: product.MID_RAIL_MINIMUMS,
+      UPCHARGE: product.UPCHARGE,
+      RAIL_FACTOR: product.RAIL_FACTOR,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'profiles', cookie)
+    await props.addProduct(submittedProduct, 'applied-profiles', cookie)
     await setModal(!modal)
-    await props.getProfiles(cookie)
+    await props.getAppliedMoulds(cookie)
   }
 
 
-  const card = props.profiles.map(card => {
+  const card = props.applied_profiles.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
         <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Inset: </strong> {card.INSET}</CardTitle>
-              <CardTitle><strong>Stile/Rail Width: </strong> {card.MINIMUM_STILE_WIDTH}</CardTitle>
-              <CardTitle><strong>Mid Rail Width: </strong> {card.MID_RAIL_MINIMUMS}</CardTitle>
+            <CardTitle><strong>Price: </strong> {card.UPCHARGE}</CardTitle>
+            <CardTitle><strong>Rail Factor: </strong> {card.RAIL_FACTOR}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -134,7 +130,7 @@ const Profiles = (props) => {
 
   console.log(product)
   return (
-    
+
     <div>
 
       <Row className="mb-2">
@@ -169,25 +165,21 @@ const Profiles = (props) => {
             <Row className="mb-2">
               <Col>
                 <Label for="Name">Name</Label>
-                <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
+                <Input  value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
             <Row>
               <Col>
-                <Label for="4/4_Price">Inset</Label>
-                <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                <Label for="4/4_Price">Price</Label>
+                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
               </Col>
 
             </Row>
             <Row>
               <Col>
-                <Label for="5/4_Price">Stile/Rail Width</Label>
-                <Input value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">Mid Rail Width</Label>
-                <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                <Label for="5/4_Price">Rail Factor</Label>
+                <Input value={product.RAIL_FACTOR} name="RAIL_FACTOR" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
@@ -238,13 +230,13 @@ const Profiles = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  profiles: state.part_list.profiles,
+  applied_profiles: state.part_list.applied_moulds,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getProfiles,
+      getAppliedMoulds,
       updateProduct,
       addProduct,
       deleteProduct
@@ -257,4 +249,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Profiles);
+)(Applied_Profiles);
