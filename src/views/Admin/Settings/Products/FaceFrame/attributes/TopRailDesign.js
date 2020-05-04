@@ -6,7 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getProfiles, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
+import { get_Face_Frame_Top_Rails, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
 import { AppSwitch } from '@coreui/react'
 
 const cookie = Cookies.get("jwt");
@@ -26,9 +26,7 @@ const TopRailDesign = (props) => {
   const [product, setProduct] = useState({
     id: '',
     NAME: '',
-    INSET: '',
-    MINIMUM_STILE_WIDTH: '',
-    MID_RAIL_MINIMUMS: '',
+    UPCHARGE: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false)
@@ -51,9 +49,7 @@ const TopRailDesign = (props) => {
   const addProd = () => {
     const p = {
       NAME: '',
-      INSET: '',
-      MINIMUM_STILE_WIDTH: '',
-      MID_RAIL_MINIMUMS: '',
+      UPCHARGE: '',
       photo: null
     }
     setNewProduct(true)
@@ -86,16 +82,16 @@ const TopRailDesign = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "profiles", cookie)
+    await props.updateProduct(id, updatedProduct, "face-frame-top-rail", cookie)
     await setModal(!modal)
-    await props.getProfiles(cookie)
+    await props.get_Face_Frame_Top_Rails(cookie)
   }
 
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'profiles', cookie)
-    await props.getProfiles(cookie)
+    await props.deleteProduct(id, 'face-frame-top-rail', cookie)
+    await props.get_Face_Frame_Top_Rails(cookie)
     await toggleWarningModal()
     await toggle()
   }
@@ -104,15 +100,13 @@ const TopRailDesign = (props) => {
     const item = props.profiles.length + 1
     const submittedProduct = {
       NAME: product.NAME,
-      INSET: product.INSET,
-      MINIMUM_STILE_WIDTH: product.MINIMUM_STILE_WIDTH,
-      MID_RAIL_MINIMUMS: product.MID_RAIL_MINIMUMS,
+      UPCHARGE: product.UPCHARGE,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'profiles', cookie)
+    await props.addProduct(submittedProduct, 'face-frame-top-rail', cookie)
     await setModal(!modal)
-    await props.getProfiles(cookie)
+    await props.get_Face_Frame_Top_Rails(cookie)
   }
 
 
@@ -123,9 +117,7 @@ const TopRailDesign = (props) => {
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Inset: </strong> {card.INSET}</CardTitle>
-              <CardTitle><strong>Stile/Rail Width: </strong> {card.MINIMUM_STILE_WIDTH}</CardTitle>
-              <CardTitle><strong>Mid Rail Width: </strong> {card.MID_RAIL_MINIMUMS}</CardTitle>
+            <CardTitle><strong>Price: </strong> ${card.UPCHARGE}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -175,19 +167,8 @@ const TopRailDesign = (props) => {
 
             <Row>
               <Col>
-                <Label for="4/4_Price">Inset</Label>
-                <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
-              </Col>
-
-            </Row>
-            <Row>
-              <Col>
-                <Label for="5/4_Price">Stile/Rail Width</Label>
-                <Input value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">Mid Rail Width</Label>
-                <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                <Label for="4/4_Price">Price</Label>
+                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
@@ -244,7 +225,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getProfiles,
+      get_Face_Frame_Top_Rails,
       updateProduct,
       addProduct,
       deleteProduct

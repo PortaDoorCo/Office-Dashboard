@@ -120,7 +120,7 @@ const Panels = (props) => {
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Price: </strong> {card.UPCHARGE}</CardTitle>
+            <CardTitle><strong>Price: </strong> ${card.UPCHARGE}</CardTitle>
             <CardTitle><strong>Panel Factor: </strong> {card.PANEL_FACTOR}</CardTitle>
           </CardBody>
         </Card>
