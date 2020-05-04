@@ -62,7 +62,8 @@ import {
   getBoxThicknesses,
   getBoxWoodtypes,
 
-  getBreakdowns
+  getBreakdowns,
+  getBoxBreakdowns
 
 
 
@@ -120,6 +121,7 @@ class DefaultLayout extends Component {
       getBoxWoodtypes,
 
       getBreakdowns,
+      getBoxBreakdowns,
 
       login,
       loadSales,
@@ -136,7 +138,7 @@ class DefaultLayout extends Component {
       await loadOrders(cookie);
       await getDeliveries(cookie);
       await getBreakdowns(cookie);
-
+      await getBoxBreakdowns(cookie);
       await getWoodtypes(cookie);
       await getAppliedMoulds(cookie);
       await getBaseCap(cookie);
@@ -298,7 +300,7 @@ const mapDispatchToProps = dispatch =>
       getDeliveries,
 
       getBreakdowns,
-
+      getBoxBreakdowns,
 
 
       login,

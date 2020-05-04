@@ -1,7 +1,7 @@
 
 import numQty from 'numeric-quantity';
 
-export default (v, part) => {
+export default (v, part, breakdowns) => {
 
     const calc = v.map(item => {
         const sides = (numQty(item.depth) * 2) * parseInt(item.qty)

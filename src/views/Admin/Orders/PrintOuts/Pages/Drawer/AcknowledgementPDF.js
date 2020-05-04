@@ -2,7 +2,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
 import Acknowledgement from '../../Drawer_PDF/Acknowledgement'
 
-export default data => {
+export default (data, breakdowns) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
@@ -10,7 +10,7 @@ export default data => {
         pageSize: 'A4',
         pageOrientation: 'portrait',
         content: [
-            Acknowledgement(data),
+            Acknowledgement(data, breakdowns),
         ],
         styles: {
             woodtype: {

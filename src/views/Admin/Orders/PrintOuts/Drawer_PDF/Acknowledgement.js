@@ -2,7 +2,7 @@ import moment from 'moment';
 import Size from '../Breakdowns/DrawerBoxes/Size';
 
 
-export default data => {
+export default (data, breakdowns) => {
 
   const qty = data.part_list.map((part, i) => {
     return part.dimensions.map((dim, index) => {

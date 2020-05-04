@@ -7,7 +7,7 @@ import Invoice from '../../Drawer_PDF/Invoice'
 import Acknowledgement from '../../Drawer_PDF/Acknowledgement'
 
 
-export default data => {
+export default (data, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
@@ -16,11 +16,11 @@ export default data => {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: [
-      AssemblyList(data),
-      Sides(data),
-      Bottoms(data),
-      Acknowledgement(data),
-      Invoice(data)
+      AssemblyList(data, breakdowns),
+      Sides(data, breakdowns),
+      Bottoms(data, breakdowns),
+      Acknowledgement(data, breakdowns),
+      Invoice(data, breakdowns)
     ],
     styles: {
       woodtype: {
