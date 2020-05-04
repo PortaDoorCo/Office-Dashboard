@@ -48,62 +48,66 @@ const DrawerBox = (props) => {
             {/* <CardImg top width="100%" src={"https://picsum.photos/1200"} alt="Card image cap" /> */}
             <CardBody>
               <Row className="mt-2">
-                <CardTitle>
-                  <h1>Drawer Box</h1>
-                </CardTitle>
+                <Col>
+                  <CardTitle>
+                    <h1>Drawer Box</h1>
+                  </CardTitle>
+                </Col>
               </Row>
 
               <Row className="mt-2 mb-3">
-                <Nav tabs>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '1' })}
-                      onClick={() => { toggle('1'); }}
-                    >
-                      Woodtype
+                <Col>
+                  <Nav tabs>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '1' })}
+                        onClick={() => { toggle('1'); }}
+                      >
+                        Woodtype
                     </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '2' })}
-                      onClick={() => { toggle('2'); }}
-                    >
-                      Box Thickness
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '2' })}
+                        onClick={() => { toggle('2'); }}
+                      >
+                        Box Thickness
                     </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '3' })}
-                      onClick={() => { toggle('3'); }}
-                    >
-                      Box Bottom Woodtype
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '3' })}
+                        onClick={() => { toggle('3'); }}
+                      >
+                        Box Bottom Woodtype
                     </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '4' })}
-                      onClick={() => { toggle('4'); }}
-                    >
-                      Box Bottom Thickness
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '4' })}
+                        onClick={() => { toggle('4'); }}
+                      >
+                        Box Bottom Thickness
                     </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '5' })}
-                      onClick={() => { toggle('5'); }}
-                    >
-                      Notch and Drill
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '5' })}
+                        onClick={() => { toggle('5'); }}
+                      >
+                        Notch and Drill
                     </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '6' })}
-                      onClick={() => { toggle('6'); }}
-                    >
-                      Finish/Assembly
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '6' })}
+                        onClick={() => { toggle('6'); }}
+                      >
+                        Finish/Assembly
                     </NavLink>
-                  </NavItem>
-                </Nav>
+                    </NavItem>
+                  </Nav>
+                </Col>
               </Row>
 
               <Row>
@@ -147,7 +151,7 @@ const DrawerBox = (props) => {
           </Row>
           <Row className="mt-2">
             <Col>
-              
+
               <Collapse isOpen={openEditor}>
                 <Card>
                   <CardBody>
