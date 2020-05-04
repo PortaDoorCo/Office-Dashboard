@@ -73,11 +73,11 @@ export default {
     },
 
 
-    {
-      name: 'Calendar',
-      url: '/calendar',
+    // {
+    //   name: 'Calendar',
+    //   url: '/calendar',
 
-    },
+    // },
 
   ]
 };
