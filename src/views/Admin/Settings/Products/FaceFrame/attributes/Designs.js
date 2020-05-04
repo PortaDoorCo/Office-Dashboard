@@ -246,7 +246,7 @@ const Designs = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.cope_designs,
+  designs: state.part_list.face_frame_designs,
 });
 
 const mapDispatchToProps = dispatch =>

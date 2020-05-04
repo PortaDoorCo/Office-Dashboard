@@ -6,15 +6,14 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getPanels, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
-
+import { getCopeDesigns, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
-const Panels = (props) => {
+const BoxBottomWoodtype = (props) => {
 
   const {
     buttonLabel,
@@ -27,7 +26,9 @@ const Panels = (props) => {
     id: '',
     NAME: '',
     UPCHARGE: '',
-    PANEL_FACTOR: '',
+    UPCHARGE_THICK: '',
+    TOP_RAIL_ADD: '',
+    BTM_RAIL_ADD: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false)
@@ -48,10 +49,13 @@ const Panels = (props) => {
   }
 
   const addProd = () => {
+    console.log("clicked")
     const p = {
       NAME: '',
       UPCHARGE: '',
-      PANEL_FACTOR: '',
+      UPCHARGE_THICK: '',
+      TOP_RAIL_ADD: '',
+      BTM_RAIL_ADD: '',
       photo: null
     }
     setNewProduct(true)
@@ -84,51 +88,55 @@ const Panels = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "panels", cookie)
+    await props.updateProduct(id, updatedProduct, "cope-designs", cookie)
     await setModal(!modal)
-    await props.getPanels(cookie)
+    await props.getCopeDesigns(cookie)
   }
 
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'panels', cookie)
-    await props.getPanels(cookie)
+    await props.deleteProduct(id, 'cope-designs', cookie)
+    await props.getCopeDesigns(cookie)
     await toggleWarningModal()
     await toggle()
   }
 
   const submitProduct = async () => {
-    const item = props.panels.length + 1
+    const item = props.designs.length + 1
     const submittedProduct = {
       NAME: product.NAME,
       UPCHARGE: product.UPCHARGE,
-      PANEL_FACTOR: product.PANEL_FACTOR,
+      UPCHARGE_THICK: product.UPCHARGE_THICK,
+      TOP_RAIL_ADD: product.TOP_RAIL_ADD,
+      BTM_RAIL_ADD: product.BTM_RAIL_ADD,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'panels', cookie)
+    await props.addProduct(submittedProduct, 'cope-designs', cookie)
     await setModal(!modal)
-    await props.getPanels(cookie)
+    await props.getCopeDesigns(cookie)
   }
 
 
-  const card = props.panels.map(card => {
+  const card = props.designs.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
         <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
-            <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Price: </strong> {card.UPCHARGE}</CardTitle>
-            <CardTitle><strong>Panel Factor: </strong> {card.PANEL_FACTOR}</CardTitle>
+          <CardTitle><strong>{card.NAME}</strong></CardTitle>
+              <CardTitle><strong>4/4 Price:</strong> ${card.UPCHARGE}</CardTitle>
+              <CardTitle><strong>5/4 Price:</strong> ${card.UPCHARGE_THICK}</CardTitle>
+              <CardTitle><strong>Top Rail Arch:</strong> {card.TOP_RAIL_ADD}</CardTitle>
+              <CardTitle><strong>Bottom Rail Arch:</strong> {card.BTM_RAIL_ADD}</CardTitle>
           </CardBody>
         </Card>
       </div>
     );
   })
 
-  console.log(product)
+
   return (
 
     <div>
@@ -171,20 +179,28 @@ const Panels = (props) => {
 
             <Row>
               <Col>
-                <Label for="4/4_Price">Price</Label>
+                <Label for="4/4_Price">4/4 Price</Label>
                 <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
               </Col>
-
+              <Col>
+                <Label for="5/4_Price">5/4 Price</Label>
+                <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
+              </Col>
             </Row>
             <Row>
               <Col>
-                <Label for="5/4_Price">Panel Factor</Label>
-                <Input value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
+                <Label for="4/4_Price">Top Rail Arch</Label>
+                <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
+              </Col>
+              <Col>
+                <Label for="5/4_Price">Bottom Rail Arch</Label>
+                <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
-            <Row className="mt-5">
 
+            <Row className="mt-5">
+             
               <Col>
                 {newProduct ?
                   <div />
@@ -230,13 +246,13 @@ const Panels = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  panels: state.part_list.panels,
+  designs: state.part_list.box_woodtypes,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getPanels,
+      getCopeDesigns,
       updateProduct,
       addProduct,
       deleteProduct
@@ -249,4 +265,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Panels);
+)(BoxBottomWoodtype);

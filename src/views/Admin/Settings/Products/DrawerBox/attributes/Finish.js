@@ -6,15 +6,14 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getProfiles, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
-import { AppSwitch } from '@coreui/react'
+import { getCopeDesigns, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
-const Profiles = (props) => {
+const Finish = (props) => {
 
   const {
     buttonLabel,
@@ -26,9 +25,10 @@ const Profiles = (props) => {
   const [product, setProduct] = useState({
     id: '',
     NAME: '',
-    INSET: '',
-    MINIMUM_STILE_WIDTH: '',
-    MID_RAIL_MINIMUMS: '',
+    UPCHARGE: '',
+    UPCHARGE_THICK: '',
+    TOP_RAIL_ADD: '',
+    BTM_RAIL_ADD: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false)
@@ -49,11 +49,13 @@ const Profiles = (props) => {
   }
 
   const addProd = () => {
+    console.log("clicked")
     const p = {
       NAME: '',
-      INSET: '',
-      MINIMUM_STILE_WIDTH: '',
-      MID_RAIL_MINIMUMS: '',
+      UPCHARGE: '',
+      UPCHARGE_THICK: '',
+      TOP_RAIL_ADD: '',
+      BTM_RAIL_ADD: '',
       photo: null
     }
     setNewProduct(true)
@@ -86,55 +88,57 @@ const Profiles = (props) => {
   const updateProduct = async () => {
     let id = product.id
     let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "profiles", cookie)
+    await props.updateProduct(id, updatedProduct, "cope-designs", cookie)
     await setModal(!modal)
-    await props.getProfiles(cookie)
+    await props.getCopeDesigns(cookie)
   }
 
   const deleteProduct = async () => {
     let id = product.id
 
-    await props.deleteProduct(id, 'profiles', cookie)
-    await props.getProfiles(cookie)
+    await props.deleteProduct(id, 'cope-designs', cookie)
+    await props.getCopeDesigns(cookie)
     await toggleWarningModal()
     await toggle()
   }
 
   const submitProduct = async () => {
-    const item = props.profiles.length + 1
+    const item = props.designs.length + 1
     const submittedProduct = {
       NAME: product.NAME,
-      INSET: product.INSET,
-      MINIMUM_STILE_WIDTH: product.MINIMUM_STILE_WIDTH,
-      MID_RAIL_MINIMUMS: product.MID_RAIL_MINIMUMS,
+      UPCHARGE: product.UPCHARGE,
+      UPCHARGE_THICK: product.UPCHARGE_THICK,
+      TOP_RAIL_ADD: product.TOP_RAIL_ADD,
+      BTM_RAIL_ADD: product.BTM_RAIL_ADD,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
-    await props.addProduct(submittedProduct, 'profiles', cookie)
+    await props.addProduct(submittedProduct, 'cope-designs', cookie)
     await setModal(!modal)
-    await props.getProfiles(cookie)
+    await props.getCopeDesigns(cookie)
   }
 
 
-  const card = props.profiles.map(card => {
+  const card = props.designs.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
         <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
           <CardBody>
-            <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Inset: </strong> {card.INSET}</CardTitle>
-              <CardTitle><strong>Stile/Rail Width: </strong> {card.MINIMUM_STILE_WIDTH}</CardTitle>
-              <CardTitle><strong>Mid Rail Width: </strong> {card.MID_RAIL_MINIMUMS}</CardTitle>
+          <CardTitle><strong>{card.NAME}</strong></CardTitle>
+              <CardTitle><strong>4/4 Price:</strong> ${card.UPCHARGE}</CardTitle>
+              <CardTitle><strong>5/4 Price:</strong> ${card.UPCHARGE_THICK}</CardTitle>
+              <CardTitle><strong>Top Rail Arch:</strong> {card.TOP_RAIL_ADD}</CardTitle>
+              <CardTitle><strong>Bottom Rail Arch:</strong> {card.BTM_RAIL_ADD}</CardTitle>
           </CardBody>
         </Card>
       </div>
     );
   })
 
-  console.log(product)
+
   return (
-    
+
     <div>
 
       <Row className="mb-2">
@@ -175,24 +179,28 @@ const Profiles = (props) => {
 
             <Row>
               <Col>
-                <Label for="4/4_Price">Inset</Label>
-                <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                <Label for="4/4_Price">4/4 Price</Label>
+                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
               </Col>
-
+              <Col>
+                <Label for="5/4_Price">5/4 Price</Label>
+                <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
+              </Col>
             </Row>
             <Row>
               <Col>
-                <Label for="5/4_Price">Stile/Rail Width</Label>
-                <Input value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
+                <Label for="4/4_Price">Top Rail Arch</Label>
+                <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
               </Col>
               <Col>
-                <Label for="5/4_Price">Mid Rail Width</Label>
-                <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                <Label for="5/4_Price">Bottom Rail Arch</Label>
+                <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
               </Col>
             </Row>
 
-            <Row className="mt-5">
 
+            <Row className="mt-5">
+             
               <Col>
                 {newProduct ?
                   <div />
@@ -238,13 +246,13 @@ const Profiles = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  profiles: state.part_list.profiles,
+  designs: state.part_list.box_notches,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getProfiles,
+      getCopeDesigns,
       updateProduct,
       addProduct,
       deleteProduct
@@ -257,4 +265,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Profiles);
+)(Finish);

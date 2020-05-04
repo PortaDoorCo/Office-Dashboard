@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Woodtype from './attributes/Woodtypes'
 import Designs from './attributes/Designs'
 import Edges from './attributes/Edges'
-import Profiles from './attributes/Profiles'
+import TopRailDesign from './attributes/TopRailDesign'
 import Panels from './attributes/Panels'
 import Applied_Profiles from './attributes/Applied_Profiles'
 import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions'
@@ -82,23 +82,7 @@ const FaceFrame = (props) => {
                       className={classnames({ active: activeTab === '4' })}
                       onClick={() => { toggle('4'); }}
                     >
-                      Profiles
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '5' })}
-                      onClick={() => { toggle('5'); }}
-                    >
-                      Panels
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '6' })}
-                      onClick={() => { toggle('6'); }}
-                    >
-                      Applied Profiles
+                      Top Rail Design
                     </NavLink>
                   </NavItem>
                 </Nav>
@@ -133,13 +117,7 @@ const FaceFrame = (props) => {
                 <Edges edges={props.edges} />
               </TabPane>
               <TabPane tabId="4">
-                <Profiles profiles={props.profiles} />
-              </TabPane>
-              <TabPane tabId="5">
-                <Panels panels={props.panels} />
-              </TabPane>
-              <TabPane tabId="6">
-                <Applied_Profiles applied_profiles={props.applied_profiles} />
+                <TopRailDesign profiles={props.profiles} />
               </TabPane>
             </TabContent>
           </Row>

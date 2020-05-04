@@ -226,7 +226,7 @@ const Woodtype = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  woodtypes: state.part_list.woodtypes,
+  woodtypes: state.part_list.box_woodtypes,
 });
 
 const mapDispatchToProps = dispatch =>
