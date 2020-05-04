@@ -11,6 +11,7 @@ import Applied_Profiles from './attributes/Applied_Profiles'
 import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions'
 import classnames from 'classnames';
 import EditorPage from './editor/EditorPage'
+import FurnitureFeet from './attributes/Furniture_Feet'
 
 
 const Navigation = (props) => {
@@ -88,6 +89,14 @@ const FaceFrame = (props) => {
                         Top Rail Design
                     </NavLink>
                     </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '5' })}
+                        onClick={() => { toggle('5'); }}
+                      >
+                        Furniture Feet
+                    </NavLink>
+                    </NavItem>
                   </Nav>
                 </Col>
               </Row>
@@ -122,6 +131,9 @@ const FaceFrame = (props) => {
               </TabPane>
               <TabPane tabId="4">
                 <TopRailDesign profiles={props.profiles} />
+              </TabPane>
+              <TabPane tabId="5">
+                <FurnitureFeet />
               </TabPane>
             </TabContent>
           </Row>
