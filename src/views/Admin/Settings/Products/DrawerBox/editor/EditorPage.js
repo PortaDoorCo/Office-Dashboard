@@ -35,49 +35,7 @@ const EditorPage = (props) => {
               PLEASE MAKE SURE YOUR MATH IS COMPLETE</p>
         </Col>
       </Row>
-      <Row className="mt-2">
-        <Col>
-          <Card>
-            <CardBody>
-              <CardTitle>
-                <h4 style={{ textDecoration: 'underline' }}>Bottoms Width</h4>
-              </CardTitle>
-              <Row>
-                <Col>
-                  Width
-                  <Editor code={breakdowns.bottoms_width} name={'bottoms_width'} toggleEdit={setBottomsWidth}  edit={bottomsWidth} />
-                </Col>
-              </Row>
-
-
-              <div className="mt-2">
-                <Button color="primary" onClick={() => setBottomsWidth(!bottomsWidth)}>Edit</Button>
-              </div>
-
-            </CardBody>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-            <CardBody>
-              <CardTitle>
-                <h4 style={{ textDecoration: 'underline' }}>Bottoms Depth</h4>
-              </CardTitle>
-              <Row>
-                <Col>
-                  Depth
-                  <Editor code={breakdowns.bottoms_depth} name={'bottoms_depth'} toggleEdit={setBottomsDepth}  edit={bottomsDepth} />
-                </Col>
-              </Row>
-
-              <div className="mt-2">
-                <Button color="primary" onClick={() => setBottomsDepth(!bottomsDepth)}>Edit</Button>
-              </div>
-
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+      
 
       <Row className="mt-2">
         <Col>
@@ -189,6 +147,50 @@ const EditorPage = (props) => {
               <div className="mt-2">
                 <Button color="primary" onClick={() => setSidesThickness(!sidesThickness)}>Edit</Button>
               </div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row className="mt-2">
+        <Col>
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Bottoms Width</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  Width
+                  <Editor code={breakdowns.bottoms_width} name={'bottoms_width'} toggleEdit={setBottomsWidth}  edit={bottomsWidth} />
+                </Col>
+              </Row>
+
+
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setBottomsWidth(!bottomsWidth)}>Edit</Button>
+              </div>
+
+            </CardBody>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Bottoms Depth</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  Depth
+                  <Editor code={breakdowns.bottoms_depth} name={'bottoms_depth'} toggleEdit={setBottomsDepth}  edit={bottomsDepth} />
+                </Col>
+              </Row>
+
+              <div className="mt-2">
+                <Button color="primary" onClick={() => setBottomsDepth(!bottomsDepth)}>Edit</Button>
+              </div>
+
             </CardBody>
           </Card>
         </Col>
