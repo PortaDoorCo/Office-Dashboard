@@ -3,6 +3,12 @@
 import { createSelector } from "reselect";
 import numQty from "numeric-quantity";
 
+
+const pricingSelector = state => {
+  const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
+  return pricing
+}
+
 const partListSelector = state => {
   const orders = state.form.DrawerOrder;
 
@@ -55,8 +61,8 @@ const totalBalanceDue = state => {
 };
 
 export const itemPriceSelector = createSelector(
-  [partListSelector],
-  (parts) =>
+  [partListSelector, pricingSelector],
+  (parts, pricer) =>
     parts.map((part, index) => {
 
       console.log(part)
@@ -65,22 +71,17 @@ export const itemPriceSelector = createSelector(
       const finish = part.drawerFinishes ? part.drawerFinishes.UPCHARGE : 0;
       const notchDrill = part.notchDrill ? part.notchDrill.PRICE : 0;
 
-
+      console.log(pricer)
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
-          let widths = numQty(i.width);
-          let heights = numQty(i.height);
-          let depths = numQty(i.depth)
+          const width = Math.ceil(numQty(i.width));
+          const height = Math.ceil(numQty(i.height));
+          const depth = Math.ceil(numQty(i.depth))
 
+          const price = eval(pricer.drawer_box_pricing)
 
-
-          const price =
-            (((((((Math.ceil(widths) + (Math.ceil(depths) * 2)) * heights) / 144) * wood) + (finish + notchDrill))
-
-            ))
-
-          if (heights > -1) {
+          if (height > -1) {
             return price;
           } else {
             return 0;
@@ -94,8 +95,8 @@ export const itemPriceSelector = createSelector(
 );
 
 export const linePriceSelector = createSelector(
-  [partListSelector],
-  (parts) =>
+  [partListSelector, pricingSelector],
+  (parts, pricer) =>
     parts.map((part, index) => {
 
       console.log(part)
@@ -108,18 +109,13 @@ export const linePriceSelector = createSelector(
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
-          let widths = numQty(i.width);
-          let heights = numQty(i.height);
-          let depths = numQty(i.depth)
+          const width = Math.ceil(numQty(i.width));
+          const height = Math.ceil(numQty(i.height));
+          const depth = Math.ceil(numQty(i.depth))
 
+          const price = eval(pricer.drawer_box_pricing)
 
-
-          const price =
-            (((((((Math.ceil(widths) + (Math.ceil(depths) * 2)) * heights) / 144) * wood) + (finish + notchDrill))
-
-            ))
-
-          if (heights > -1) {
+          if (height > -1) {
             return price;
           } else {
             return 0;

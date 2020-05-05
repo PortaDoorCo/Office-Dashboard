@@ -35,6 +35,9 @@ import {
   GET_BOX_THICKNESS,
   GET_BOX_WOODTYPES,
 
+  GET_PRICING,
+  UPDATE_PRICING,
+
 
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
@@ -85,8 +88,9 @@ const initialState = {
   box_woodtypes: ["Loading"],
 
   breakdowns: [],
-  box_breakdowns: []
-  ,
+  box_breakdowns: [],
+
+  pricing: [],
 
   scoop: [
     {
@@ -456,6 +460,19 @@ export default function (state = initialState, action) {
       return {
         ...state,
         breakdowns: state.breakdowns.map(i => i.id === data.id ?
+          data : i
+        )
+      }
+
+    case GET_PRICING:
+      return {
+        ...state,
+        pricing: data
+      }
+    case UPDATE_PRICING:
+      return {
+        ...state,
+        pricing: state.pricing.map(i => i.id === data.id ?
           data : i
         )
       }

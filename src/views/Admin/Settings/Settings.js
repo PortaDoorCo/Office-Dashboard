@@ -100,10 +100,10 @@ const Settings = (props) => {
                     Pricing
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>
+                    <DropdownItem onClick={() => setSelection('door_pricing')}>
                       Doors
                   </DropdownItem>
-                  <DropdownItem >
+                  <DropdownItem onClick={() => setSelection('drawer_pricing')} >
                       Drawer Boxes
                   </DropdownItem>
                   </DropdownMenu>
