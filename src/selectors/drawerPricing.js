@@ -69,18 +69,13 @@ export const itemPriceSelector = createSelector(
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
-          let widths = numQty(i.width);
-          let heights = numQty(i.height);
-          let depths = numQty(i.depth)
+          const width = Math.ceil(numQty(i.width));
+          const height = Math.ceil(numQty(i.height));
+          const depth = Math.ceil(numQty(i.depth))
 
+          const price = (((((((width + (depth * 2)) * height) / 144) * wood) + (finish + notchDrill))))
 
-
-          const price =
-            (((((((Math.ceil(widths) + (Math.ceil(depths) * 2)) * heights) / 144) * wood) + (finish + notchDrill))
-
-            ))
-
-          if (heights > -1) {
+          if (height > -1) {
             return price;
           } else {
             return 0;
@@ -108,18 +103,13 @@ export const linePriceSelector = createSelector(
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
-          let widths = numQty(i.width);
-          let heights = numQty(i.height);
-          let depths = numQty(i.depth)
+          const width = Math.ceil(numQty(i.width));
+          const height = Math.ceil(numQty(i.height));
+          const depth = Math.ceil(numQty(i.depth))
 
+          const price = (((((((width + (depth * 2)) * height) / 144) * wood) + (finish + notchDrill))))
 
-
-          const price =
-            (((((((Math.ceil(widths) + (Math.ceil(depths) * 2)) * heights) / 144) * wood) + (finish + notchDrill))
-
-            ))
-
-          if (heights > -1) {
+          if (height > -1) {
             return price;
           } else {
             return 0;
