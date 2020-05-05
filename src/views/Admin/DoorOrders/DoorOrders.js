@@ -30,6 +30,7 @@ import {
   loadOrders,
 } from '../../../redux/orders/actions';
 import {
+  pricingSelector,
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
@@ -431,7 +432,8 @@ const mapStateToProps = state => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  addPriceSelector: addPriceSelector(state)
+  addPriceSelector: addPriceSelector(state),
+  // pricingSelector: pricingSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>

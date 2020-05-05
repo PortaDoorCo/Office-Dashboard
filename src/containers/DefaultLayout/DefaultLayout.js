@@ -63,7 +63,8 @@ import {
   getBoxWoodtypes,
 
   getBreakdowns,
-  getBoxBreakdowns
+  getBoxBreakdowns,
+  getPricing
 
 
 
@@ -123,6 +124,8 @@ class DefaultLayout extends Component {
       getBreakdowns,
       getBoxBreakdowns,
 
+      getPricing,
+
       login,
       loadSales,
       loadOrders,
@@ -137,6 +140,7 @@ class DefaultLayout extends Component {
       await loadSales(cookie);
       await loadOrders(cookie);
       await getDeliveries(cookie);
+      await getPricing(cookie);
       await getBreakdowns(cookie);
       await getBoxBreakdowns(cookie);
       await getWoodtypes(cookie);
@@ -301,6 +305,8 @@ const mapDispatchToProps = dispatch =>
 
       getBreakdowns,
       getBoxBreakdowns,
+
+      getPricing,
 
 
       login,

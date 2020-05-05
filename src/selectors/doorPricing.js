@@ -1,6 +1,12 @@
 import { createSelector } from "reselect";
 import numQty from "numeric-quantity";
 
+
+const pricingSelector = state => {
+  const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
+  return pricing
+}
+
 const partListSelector = state => {
   const orders = state.form.DoorOrder;
 
@@ -73,8 +79,8 @@ const totalBalanceDue = state => {
 
 
 export const itemPriceSelector = createSelector(
-  [partListSelector],
-  (parts) =>
+  [partListSelector, pricingSelector],
+  (parts, pricer) =>
     parts.map((part, index) => {
       console.log(part)
       const wood = part.woodtype && part.thickness.value === 0.75 ? part.woodtype.STANDARD_GRADE : (part.woodtype && part.thickness.value === 1) ? part.woodtype.STANDARD_GRADE_THICK :  0;
@@ -88,21 +94,22 @@ export const itemPriceSelector = createSelector(
       const ff_top_rail_design = part.face_frame_top_rail ? part.face_frame_top_rail.UPCHARGE : 0
       const furniture_feet = part.furniture_feet ? part.furniture_feet.UPCHARGE : 0
 
+      console.log(pricer)
+
 
       if (part.orderType.value === "Face_Frame") {
         if (part.dimensions) {
           const linePrice = part.dimensions.map(i => {
             console.log(i)
-            let widths = numQty(i.width);
-            let heights = numQty(i.height);
-            let openings = parseInt(i.openings)
+            const width = Math.ceil(numQty(i.width));
+            const height = Math.ceil(numQty(i.height));
+            const openings = parseInt(i.openings)
+            const qty = parseInt(i.qty) 
 
-            const price =
-              ((((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood) +
-                (((openings * ff_opening_cost)*ff_top_rail_design) + (furniture_feet + edge))) *
-              parseInt(i.qty) || 0;
+            const price = eval(pricer.face_frame_pricing)
+              || 0;
 
-            if (heights > -1) {
+            if (height > -1) {
               return price;
             } else {
               return 0;
@@ -116,17 +123,14 @@ export const itemPriceSelector = createSelector(
       } else {
         if (part.dimensions) {
           const linePrice = part.dimensions.map(i => {
-            let widths = numQty(i.width);
-            let heights = numQty(i.height);
+            const width = Math.ceil(numQty(i.width));
+            const height = Math.ceil(numQty(i.height));
+            const qty = parseInt(i.qty)
 
-            const price =
-              ((((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood) +
-                (design + edge + panel + applied_profile + finish + lites)) *
-              parseInt(i.qty) || 0;
+            const price = eval(pricer.door_pricing)
+            || 0
 
-              console.log('PRICE',price)
-
-            if (heights > -1) {
+            if (height > -1) {
               return price;
             } else {
               return 0;
@@ -142,8 +146,8 @@ export const itemPriceSelector = createSelector(
 
 
 export const linePriceSelector = createSelector(
-  [partListSelector],
-  (parts) =>
+  [partListSelector, pricingSelector],
+  (parts, pricer) =>
     parts.map((part, index) => {
       console.log(part)
       const wood = part.woodtype && part.thickness.value === 0.75 ? part.woodtype.STANDARD_GRADE : part.woodtype && part.thickness.value === 1 ? part.woodtype.STANDARD_GRADE_THICK :  0;
@@ -158,21 +162,21 @@ export const linePriceSelector = createSelector(
       const furniture_feet = part.furniture_feet ? part.furniture_feet.UPCHARGE : 0
 
 
+      console.log(pricer)
 
       if (part.orderType.value === "Face_Frame") {
         if (part.dimensions) {
           const linePrice = part.dimensions.map(i => {
             console.log(i)
-            let widths = numQty(i.width);
-            let heights = numQty(i.height);
-            let openings = parseInt(i.openings)
+            const width = Math.ceil(numQty(i.width));
+            const height = Math.ceil(numQty(i.height));
+            const openings = parseInt(i.openings)
+            const qty = parseInt(i.qty) 
 
-            const price =
-              ((((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood) +
-                (((openings * ff_opening_cost)*ff_top_rail_design) + (furniture_feet + edge))) *
-              parseInt(i.qty) || 0;
+            const price = eval(pricer.face_frame_pricing)
+              || 0;
 
-            if (heights > -1) {
+            if (height > -1) {
               return price;
             } else {
               return 0;
@@ -186,17 +190,14 @@ export const linePriceSelector = createSelector(
       } else {
         if (part.dimensions) {
           const linePrice = part.dimensions.map(i => {
-            let widths = numQty(i.width);
-            let heights = numQty(i.height);
+            const width = Math.ceil(numQty(i.width));
+            const height = Math.ceil(numQty(i.height));
+            const qty = parseInt(i.qty)
 
-            const price =
-              ((((Math.ceil(widths) * Math.ceil(heights)) / 144) * wood) +
-                (design + edge + panel + applied_profile + finish + lites)) *
-              parseInt(i.qty) || 0;
+            const price = eval(pricer.door_pricing)
+              || 0;
 
-            console.log('PRICE',price)
-
-            if (heights > -1) {
+            if (height > -1) {
               return price;
             } else {
               return 0;

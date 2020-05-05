@@ -47,6 +47,7 @@ export const GET_PHOTO_ID = 'GET_PHOTO_ID'
 export const GET_BREAKDOWNS = 'GET_BREAKDOWNS'
 export const UPDATE_BREAKDOWNS = 'UPDATE_BREAKDOWNS'
 export const GET_BOX_BREAKDOWNS = 'GET_BOX_BREAKDOWNS'
+export const GET_PRICING = 'GET_PRICING'
 
 export function getWoodtypes(cookie) {
   console.log("FIREEEEE")
@@ -787,4 +788,20 @@ export function getBoxBreakdowns(cookie) {
   };
 }
 
+export function getPricing(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/pricings`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_PRICING,
+      data: data
+    });
+  };
+}
 
