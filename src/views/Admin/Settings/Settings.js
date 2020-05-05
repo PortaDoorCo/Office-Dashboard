@@ -109,11 +109,7 @@ const Settings = (props) => {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
-              <Nav pullRight>
-                <NavItem>
-                  <NavLink href="/components/">Account Settings</NavLink>
-                </NavItem>
-              </Nav>
+            
             </Collapse>
           </Navbar>
         </Col>
