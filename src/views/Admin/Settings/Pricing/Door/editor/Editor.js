@@ -29,11 +29,14 @@ const EditorComponent = (props) => {
   const editorRef = useRef(null);
   const [modal, setModal] = useState(false)
 
-  const designs = ['top_rail_arch', 'bottom_rail_arch']
-  const edges = ['stile_add', 'rail_add', 'edge_factor']
-  const panels = ['panel_factor']
-  const profiles = ['inset']
-  const applied_profiles = ['rail_add', 'rail_factor']
+  const wood = ['wood']
+  const designs = ['design']
+  const edges = ['edge']
+  const panels = ['panel']
+  const applied_profiles = ['applied_profile']
+  const finish = ['finish']
+  const lites = ['lites']
+  const face_frame = ['openings', 'ff_opening_cost', 'ff_top_rail_design', 'furniture_feet']
 
   const toggle = () => {
     setModal(!modal)
@@ -129,11 +132,18 @@ const EditorComponent = (props) => {
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
-                <Parameters onBtnClick={onBtnClick} attributes={designs} name="Designs" />
+              <Parameters onBtnClick={onBtnClick} attributes={wood} name="Wood" />
+              <Parameters onBtnClick={onBtnClick} attributes={designs} name="Designs" />
                 <Parameters onBtnClick={onBtnClick} attributes={edges} name="Edges" />
-                <Parameters onBtnClick={onBtnClick} attributes={profiles} name="Profiles" />
                 <Parameters onBtnClick={onBtnClick} attributes={panels} name="Panels" />
+                <Parameters onBtnClick={onBtnClick} attributes={finish} name="Finish" />
                 <Parameters onBtnClick={onBtnClick} attributes={applied_profiles} name="Applied Profiles" />
+                <Parameters onBtnClick={onBtnClick} attributes={lites} name="Lites" />
+              </div>
+            </Row>
+            <Row>
+            <div className="col d-flex align-content-start flex-wrap">
+              <Parameters onBtnClick={onBtnClick} attributes={face_frame} name="Face Frame" />
               </div>
             </Row>
           </Col>
@@ -152,17 +162,6 @@ const EditorComponent = (props) => {
                 <Button onClick={() => onBtnClick('height')} outline color="danger">Height</Button>
                 <Button onClick={() => onBtnClick('panelsH')} outline color="danger">Panels High</Button>
                 <Button onClick={() => onBtnClick('panelsW')} outline color="danger">Panels Wide</Button>
-              </div>
-            </Row>
-
-            <Row>
-              <div className="col d-flex align-content-start flex-wrap">
-                <Button onClick={() => onBtnClick('leftStile')} outline color="danger">Left Stile</Button>
-                <Button onClick={() => onBtnClick('rightStile')} outline color="danger">Right Stile</Button>
-                <Button onClick={() => onBtnClick('topRail')} outline color="danger">Top Rail</Button>
-                <Button onClick={() => onBtnClick('bottomRail')} outline color="danger">Bottom Rail</Button>
-                <Button onClick={() => onBtnClick('vertMull')} outline color="danger">Vertical Mull</Button>
-                <Button onClick={() => onBtnClick('horizMull')} outline color="danger">Horizontal Mull</Button>
               </div>
             </Row>
           </Col>
