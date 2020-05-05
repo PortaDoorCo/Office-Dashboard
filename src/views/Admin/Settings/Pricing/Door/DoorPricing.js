@@ -13,8 +13,8 @@ const Navigation = (props) => {
   return (
     <Col>
       <Breadcrumb>
-        <BreadcrumbItem>Doors</BreadcrumbItem>
-        <BreadcrumbItem active>Cope and Stick</BreadcrumbItem>
+        <BreadcrumbItem>Pricing</BreadcrumbItem>
+        <BreadcrumbItem active>Door Pricing</BreadcrumbItem>
       </Breadcrumb>
     </Col>
   )
