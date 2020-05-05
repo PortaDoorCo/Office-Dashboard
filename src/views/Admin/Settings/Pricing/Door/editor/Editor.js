@@ -20,6 +20,7 @@ const EditorComponent = (props) => {
     buttonLabel,
     className,
     breakdowns,
+    pricing,
     name,
     toggleEdit
   } = props;
@@ -42,19 +43,17 @@ const EditorComponent = (props) => {
     setModal(!modal)
   };
 
-  console.log(breakdowns)
-
 
   const submit = async () => {
 
     console.log('name ', name)
     console.log('code ', text)
-    console.log('id ', breakdowns.id)
+    console.log('id ', pricing.id)
 
-    const id = breakdowns.id
+    const id = pricing.id
 
     const bd = {
-      ...breakdowns,
+      ...pricing,
       [name]: text
     }
 
@@ -195,7 +194,7 @@ const EditorComponent = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  breakdowns: state.part_list.breakdowns[0]
+  pricing: state.part_list.pricing[0]
 });
 
 const mapDispatchToProps = dispatch =>
