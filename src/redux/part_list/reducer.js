@@ -43,7 +43,8 @@ import {
   GET_PHOTO_ID,
   GET_DOOR_OPTIONS,
   GET_BREAKDOWNS,
-  UPDATE_BREAKDOWNS
+  UPDATE_BREAKDOWNS,
+  GET_BOX_BREAKDOWNS
 } from "./actions";
 
 const initialState = {
@@ -84,7 +85,8 @@ const initialState = {
   box_woodtypes: ["Loading"],
 
   breakdowns: [],
-
+  box_breakdowns: []
+  ,
 
   scoop: [
     {
@@ -444,6 +446,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         breakdowns: data
+      }
+    case GET_BOX_BREAKDOWNS:
+      return {
+        ...state,
+        box_breakdowns: data
       }
     case UPDATE_BREAKDOWNS:
       return {

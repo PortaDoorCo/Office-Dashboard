@@ -46,6 +46,7 @@ export const UPLOAD_FILE = 'UPLOAD_FILE'
 export const GET_PHOTO_ID = 'GET_PHOTO_ID'
 export const GET_BREAKDOWNS = 'GET_BREAKDOWNS'
 export const UPDATE_BREAKDOWNS = 'UPDATE_BREAKDOWNS'
+export const GET_BOX_BREAKDOWNS = 'GET_BOX_BREAKDOWNS'
 
 export function getWoodtypes(cookie) {
   console.log("FIREEEEE")
@@ -764,6 +765,23 @@ export function updateBreakdowns(id, item, cookie) {
     NotificationManager.success(`Breakdown Updated!`, 'Breakdown Updated!', 2000);
     return dispatch({
       type: UPDATE_BREAKDOWNS,
+      data: data
+    });
+  };
+}
+
+export function getBoxBreakdowns(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/breakdowns-boxes`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BOX_BREAKDOWNS,
       data: data
     });
   };

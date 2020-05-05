@@ -150,7 +150,7 @@ class OrderPage extends Component {
   }
 
   downloadPDF = () => {
-    const { formState, drawerState, breakdowns } = this.props;
+    const { formState, drawerState, breakdowns, box_breakdowns } = this.props;
 
     console.log("SDKLFJSDF", breakdowns)
 
@@ -284,27 +284,27 @@ class OrderPage extends Component {
       this.state.selectedOption.map(async option => {
         switch (option.value) {
           case 'All':
-            DrawerPDF(data);
+            DrawerPDF(data, box_breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Acknowledgement':
-            DrawerAcnowledgementPDF(data);
+            DrawerAcnowledgementPDF(data, box_breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Invoice':
-            DrawerInvoicePDF(data);
+            DrawerInvoicePDF(data, box_breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Assembly':
-            DrawerAssemblyListPDF(data);
+            DrawerAssemblyListPDF(data, box_breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Bottoms':
-            DrawerBottomsPDF(data);
+            DrawerBottomsPDF(data, box_breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Sides':
-            DrawerSidesPDF(data);
+            DrawerSidesPDF(data, box_breakdowns);
             this.setState({ selectedOption: [] })
             break;
           default:
@@ -605,7 +605,8 @@ class OrderPage extends Component {
 const mapStateToProps = (state, prop) => ({
   formState: getFormValues('DoorOrder')(state),
   drawerState: getFormValues("DrawerOrder")(state),
-  breakdowns: state.part_list.breakdowns
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns
   
 });
 

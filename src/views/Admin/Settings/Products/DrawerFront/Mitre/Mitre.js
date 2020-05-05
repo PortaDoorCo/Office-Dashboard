@@ -1,23 +1,12 @@
 import React, { Component, useState } from 'react';
-import { Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap'
+import { Breadcrumb, BreadcrumbItem, Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Woodtype from './attributes/Woodtypes'
+import Woodtype from '../Attributes/Woodtypes'
 import Designs from './attributes/Designs'
-import Edges from './attributes/Edges'
-import Profiles from './attributes/Profiles'
-import Panels from './attributes/Panels'
-import Applied_Profiles from './attributes/Applied_Profiles'
+import Panels from '../Attributes/Panels'
 import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../../redux/part_list/actions'
-import ProductCard from '../../../components/Card';
-import WoodtypePNG from './img/woodtypes.png';
-import DesignPNG from './img/designs.png';
-import EdgePNG from './img/edges.png';
-import ProfilePNG from './img/profiles.png';
-import PanelPNG from './img/panels.png'
-import AppliedPNG from './img/applied_profiles.png'
 import classnames from 'classnames';
-import Editor from './editor/Editor'
 import EditorPage from './editor/EditorPage'
 
 
@@ -27,8 +16,10 @@ const Navigation = (props) => {
 
   return (
     <Col>
-      <Button onClick={() => actions.setHome("index")}>Home</Button>
-      <Button onClick={() => actions.back("index")}>Back</Button>
+      <Breadcrumb>
+        <BreadcrumbItem>Drawer Front</BreadcrumbItem>
+        <BreadcrumbItem active>Mitre Design DF</BreadcrumbItem>
+      </Breadcrumb>
     </Col>
   )
 }
@@ -49,44 +40,51 @@ const Cope = (props) => {
   return (
     <div>
       <Row>
+        <Navigation />
+      </Row>
+      <Row>
         <Col xs='4'>
           <Card>
             {/* <CardImg top width="100%" src={"https://picsum.photos/1200"} alt="Card image cap" /> */}
             <CardBody>
               <Row className="mt-2">
-                <CardTitle>
-                  <h1>Mitre Doors - Drawer Front</h1>
-                </CardTitle>
+                <Col>
+                  <CardTitle>
+                    <h1>Mitre Design</h1>
+                  </CardTitle>
+                </Col>
               </Row>
 
               <Row className="mt-2 mb-3">
-                <Nav tabs>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '1' })}
-                      onClick={() => { toggle('1'); }}
-                    >
-                      Woodtype
+                <Col>
+                  <Nav tabs>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '1' })}
+                        onClick={() => { toggle('1'); }}
+                      >
+                        Woodtype
                     </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '2' })}
-                      onClick={() => { toggle('2'); }}
-                    >
-                      Designs
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '2' })}
+                        onClick={() => { toggle('2'); }}
+                      >
+                        Designs
                     </NavLink>
-                  </NavItem>
+                    </NavItem>
 
-                  <NavItem>
-                    <NavLink
-                      className={classnames({ active: activeTab === '3' })}
-                      onClick={() => { toggle('3'); }}
-                    >
-                      Panels
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '3' })}
+                        onClick={() => { toggle('3'); }}
+                      >
+                        Panels
                     </NavLink>
-                  </NavItem>
-                </Nav>
+                    </NavItem>
+                  </Nav>
+                </Col>
               </Row>
 
               <Row>
@@ -121,7 +119,7 @@ const Cope = (props) => {
           </Row>
           <Row className="mt-2">
             <Col>
-              
+
               <Collapse isOpen={openEditor}>
                 <Card>
                   <CardBody>
