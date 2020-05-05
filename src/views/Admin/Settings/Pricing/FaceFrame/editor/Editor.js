@@ -21,8 +21,7 @@ const EditorComponent = (props) => {
     className,
     breakdowns,
     name,
-    toggleEdit,
-    pricing
+    toggleEdit
   } = props;
 
   const { code, edit } = props;
@@ -31,9 +30,13 @@ const EditorComponent = (props) => {
   const [modal, setModal] = useState(false)
 
   const wood = ['wood']
+  const designs = ['design']
+  const edges = ['edge']
+  const panels = ['panel']
+  const applied_profiles = ['applied_profile']
   const finish = ['finish']
-  const notchDrill = ['notchDrill']
-
+  const lites = ['lites']
+  const face_frame = ['openings', 'ff_opening_cost', 'ff_top_rail_design', 'furniture_feet']
 
   const toggle = () => {
     setModal(!modal)
@@ -46,12 +49,12 @@ const EditorComponent = (props) => {
 
     console.log('name ', name)
     console.log('code ', text)
-    console.log('id ', pricing.id)
+    console.log('id ', breakdowns.id)
 
-    const id = pricing.id
+    const id = breakdowns.id
 
     const bd = {
-      ...pricing,
+      ...breakdowns,
       [name]: text
     }
 
@@ -129,9 +132,18 @@ const EditorComponent = (props) => {
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
-                <Parameters onBtnClick={onBtnClick} attributes={wood} name="Wood" />
+              <Parameters onBtnClick={onBtnClick} attributes={wood} name="Wood" />
+              <Parameters onBtnClick={onBtnClick} attributes={designs} name="Designs" />
+                <Parameters onBtnClick={onBtnClick} attributes={edges} name="Edges" />
+                <Parameters onBtnClick={onBtnClick} attributes={panels} name="Panels" />
                 <Parameters onBtnClick={onBtnClick} attributes={finish} name="Finish" />
-                <Parameters onBtnClick={onBtnClick} attributes={notchDrill} name="NotchDrill" />
+                <Parameters onBtnClick={onBtnClick} attributes={applied_profiles} name="Applied Profiles" />
+                <Parameters onBtnClick={onBtnClick} attributes={lites} name="Lites" />
+              </div>
+            </Row>
+            <Row>
+            <div className="col d-flex align-content-start flex-wrap">
+              <Parameters onBtnClick={onBtnClick} attributes={face_frame} name="Face Frame" />
               </div>
             </Row>
           </Col>
@@ -148,7 +160,8 @@ const EditorComponent = (props) => {
               <div className="col d-flex align-content-start flex-wrap">
                 <Button onClick={() => onBtnClick('width')} outline color="danger">Width</Button>
                 <Button onClick={() => onBtnClick('height')} outline color="danger">Height</Button>
-                <Button onClick={() => onBtnClick('depth')} outline color="danger">Depth</Button>
+                <Button onClick={() => onBtnClick('panelsH')} outline color="danger">Panels High</Button>
+                <Button onClick={() => onBtnClick('panelsW')} outline color="danger">Panels Wide</Button>
               </div>
             </Row>
           </Col>
@@ -182,7 +195,7 @@ const EditorComponent = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  pricing: state.part_list.pricing[0]
+  breakdowns: state.part_list.breakdowns[0]
 });
 
 const mapDispatchToProps = dispatch =>
