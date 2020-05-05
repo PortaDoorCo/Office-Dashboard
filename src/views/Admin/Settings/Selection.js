@@ -10,6 +10,8 @@ import SlabDoor from './Products/Door/Slab_Type_Door/Slab'
 import OnePiece from './Products/Door/One_Piece_Door/One_Piece'
 import FaceFrame from './Products/FaceFrame/FaceFrame'
 import DrawerBox from './Products/DrawerBox/DrawerBox'
+import DoorPricing from './Pricing/Door/DoorPricing'
+import DrawerPricing from './Pricing/DrawerBox/DrawerPricing'
 
 const Selection = props => {
 
@@ -37,6 +39,10 @@ const Selection = props => {
             return <FaceFrame />
         case 'drawer_box':
             return <DrawerBox />
+        case 'door_pricing':
+            return <DoorPricing />
+        case 'drawer_pricing':
+            return <DrawerPricing />
         default:
             return <AccountSettings />
     }
