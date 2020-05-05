@@ -7,26 +7,12 @@ import { updateBreakdowns } from '../../../../../../redux/part_list/actions'
 
 const EditorPage = (props) => {
 
-  const { updateBreakdowns } = props;
+  const { updateBreakdowns, pricing } = props;
 
   const [breakdowns, setBreakdowns] = useState(props.breakdowns);
 
-  const [topRailWidth, setTopRailWidth] = useState(false);
-  const [topRailHeight, setTopRailHeight] = useState(false);
-  const [bottomRailWidth, setBottomRailWidth] = useState(false);
-  const [bottomRailHeight, setBottomRailHeight] = useState(false);
-  const [leftStileWidth, setLeftStileWidth] = useState(false);
-  const [leftStileHeight, setLeftStileHeight] = useState(false);
-  const [rightStileWidth, setRightStileWidth] = useState(false);
-  const [rightStileHeight, setRightStileHeight] = useState(false);
-  const [verticalMidRailWidth, setVerticalMidRailWidth] = useState(false);
-  const [verticalMidRailHeight, setVerticalMidRailHeight] = useState(false);
-  const [horizontalMidRailWidth, setHorizontalMidRailWidth] = useState(false);
-  const [horizontalMidRailHeight, setHorizontalMidRailHeight] = useState(false);
-  const [panelWidth, setPanelWidth] = useState(false);
-  const [panelHeight, setPanelHeight] = useState(false);
-
-
+  const [doorPricing, setDoorPricing] = useState(false);
+  const [faceFramePricing, setFaceFramePricing] = useState(false);
 
 
   return (
@@ -48,12 +34,12 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={breakdowns.topRail_width} name={'topRail_width'} toggleEdit={setTopRailWidth}  edit={topRailWidth} />
+                  <Editor code={pricing.door_pricing} name={'door_pricing'} toggleEdit={setDoorPricing}  edit={doorPricing} />
                 </Col>
               </Row>
 
               <div className="mt-2">
-                <Button color="primary" onClick={() => setTopRailWidth(!topRailWidth)}>Edit</Button>
+                <Button color="primary" onClick={() => setDoorPricing(!doorPricing)}>Edit</Button>
               </div>
 
             </CardBody>
@@ -70,12 +56,12 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={breakdowns.bottomRail_width} name={'bottomRail_width'}  toggleEdit={setBottomRailWidth} edit={bottomRailWidth} />
+                  <Editor code={pricing.face_frame_pricing} name={'face_frame_pricing'}  toggleEdit={setFaceFramePricing} edit={faceFramePricing} />
                 </Col>
               </Row>
 
               <div className="mt-2">
-                <Button color="primary" onClick={() => setBottomRailWidth(!bottomRailWidth)}>Edit</Button>
+                <Button color="primary" onClick={() => setFaceFramePricing(!faceFramePricing)}>Edit</Button>
               </div>
             </CardBody>
           </Card>
@@ -87,13 +73,7 @@ const EditorPage = (props) => {
 
 
 const mapStateToProps = (state) => ({
-  breakdowns: state.part_list.breakdowns[0],
-  woodtypes: state.part_list.woodtypes,
-  designs: state.part_list.cope_designs,
-  edges: state.part_list.edges,
-  panels: state.part_list.panels,
-  profiles: state.part_list.profiles,
-  applied_profiles: state.part_list.applied_moulds
+  pricing: state.part_list.pricing[0],
 });
 
 const mapDispatchToProps = dispatch =>
