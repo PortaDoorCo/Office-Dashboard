@@ -80,20 +80,27 @@ class Dashboard extends Component {
             </Row>
 
           </div>
-          : null
+          :
+          <div>
+            <Row>
+              <Col style={{ height: 600 }}>
+                <Maps />
+              </Col>
+            </Row>
+          </div>
         }
 
         <Row>
           <Col>
-             {role.type === 'management' || role.type === 'authenticated' ? 
-            <OrderTable
-              orders={this.props.orders}
-            />
-             :
+            {role.type === 'management' || role.type === 'authenticated' ?
+              <OrderTable
+                orders={this.props.orders}
+              />
+              :
               <RestrictedOrderTable
                 orders={this.props.orders}
-              /> 
-             } 
+              />
+            }
           </Col>
 
         </Row>
