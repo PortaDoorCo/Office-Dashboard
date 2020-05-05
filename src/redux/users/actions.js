@@ -15,6 +15,7 @@ export const SET_LOGIN = 'SET_LOGIN';
 export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT';
 export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
 export const RESET_PASSWORD = "RESET_PASSWORD";
+export const GET_USERS = 'GET_USERS'
 
 
 
@@ -25,6 +26,21 @@ export function registerUser(user) {
 
     return dispatch({
       type: REGISTER_USER,
+    });
+  };
+}
+
+export function getUsers(token) {
+  return async function (dispatch) {
+    const res = await axios.get(`${db_url}/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return dispatch({
+      type: GET_USERS,
+      data: res.data,
     });
   };
 }
