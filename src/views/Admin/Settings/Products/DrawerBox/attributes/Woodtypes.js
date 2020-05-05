@@ -17,7 +17,8 @@ const Woodtype = (props) => {
 
   const {
     buttonLabel,
-    className
+    className,
+    role
   } = props;
 
 
@@ -125,100 +126,157 @@ const Woodtype = (props) => {
   })
 
 
-  return (
-
-    <div>
-
-      <Row className="mb-2">
-        <Col>
-          <Button color="primary" onClick={addProd} >Add New</Button>
-        </Col>
-      </Row>
-
-      <Row style={{ height: "600px" }}>
-        <PerfectScrollbar>
-          <div className="col d-flex align-content-start flex-wrap">{card}</div>
-        </PerfectScrollbar>
-      </Row>
+  if(role.type === 'management' || role.type === 'authenticated' ||  role.type === 'owner') {
+    return (
 
       <div>
-        <Modal isOpen={modal} toggle={toggle} className={className}>
-          <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
-          <ModalBody>
-            <Row className="mb-2">
-
-              <Col>
-                <div className="col d-flex align-content-start flex-wrap">
-                  {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
-                </div>
-
-                <form id="form" method="post" action="" encType="multipart/form-data">
-                  <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
-                </form>
-
-              </Col>
-            </Row>
-            <Row className="mb-2">
-              <Col>
-                <Label for="Name">Name</Label>
-                <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Label for="4/4_Price">4/4 Price</Label>
-                <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
-              </Col>
-            </Row>
-            <Row className="mt-5">
-             
-              <Col>
-                {newProduct ?
-                  <div />
-                  :
-                  <div>
-                    <Button color="danger" onClick={toggleWarningModal}>Delete</Button>
+  
+        <Row className="mb-2">
+          <Col>
+            <Button color="primary" onClick={addProd} >Add New</Button>
+          </Col>
+        </Row>
+  
+        <Row style={{ height: "600px" }}>
+          <PerfectScrollbar>
+            <div className="col d-flex align-content-start flex-wrap">{card}</div>
+          </PerfectScrollbar>
+        </Row>
+  
+        <div>
+          <Modal isOpen={modal} toggle={toggle} className={className}>
+            <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
+            <ModalBody>
+              <Row className="mb-2">
+  
+                <Col>
+                  <div className="col d-flex align-content-start flex-wrap">
+                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
                   </div>
-                }
-              </Col>
-            </Row>
-          </ModalBody>
+  
+                  <form id="form" method="post" action="" encType="multipart/form-data">
+                    <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
+                  </form>
+  
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col>
+                  <Label for="Name">Name</Label>
+                  <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">4/4 Price</Label>
+                  <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row className="mt-5">
+               
+                <Col>
+                  {newProduct ?
+                    <div />
+                    :
+                    <div>
+                      <Button color="danger" onClick={toggleWarningModal}>Delete</Button>
+                    </div>
+                  }
+                </Col>
+              </Row>
+            </ModalBody>
+            <ModalFooter>
+              {newProduct ?
+                <div>
+                  <Button color="primary" onClick={submitProduct}>Submit</Button>
+  
+                </div>
+  
+                :
+                <div>
+                  <Button color="primary" onClick={updateProduct}>Update</Button>
+                </div>
+              }
+  
+              <Button color="secondary" onClick={toggle}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+  
+        <Modal isOpen={warningModal} toggle={toggleWarningModal} className={className}>
+          <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete this item?
+            </ModalBody>
           <ModalFooter>
-            {newProduct ?
-              <div>
-                <Button color="primary" onClick={submitProduct}>Submit</Button>
-
-              </div>
-
-              :
-              <div>
-                <Button color="primary" onClick={updateProduct}>Update</Button>
-              </div>
-            }
-
-            <Button color="secondary" onClick={toggle}>Cancel</Button>
+            <Button color="danger" onClick={deleteProduct}>Yes</Button>
+            <Button color="primary" onClick={warningModal}>No</Button>
           </ModalFooter>
         </Modal>
       </div>
+    )
+  } else {
+    return (
 
-      <Modal isOpen={warningModal} toggle={toggleWarningModal} className={className}>
-        <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
-        <ModalBody>
-          Are you sure you want to delete this item?
-          </ModalBody>
-        <ModalFooter>
-          <Button color="danger" onClick={deleteProduct}>Yes</Button>
-          <Button color="primary" onClick={warningModal}>No</Button>
-        </ModalFooter>
-      </Modal>
-    </div>
-  )
+      <div>
+        <Row style={{ height: "600px" }}>
+          <PerfectScrollbar>
+            <div className="col d-flex align-content-start flex-wrap">{card}</div>
+          </PerfectScrollbar>
+        </Row>
+  
+        <div>
+          <Modal isOpen={modal} toggle={toggle} className={className}>
+            <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
+            <ModalBody>
+              <Row className="mb-2">
+  
+                <Col>
+                  <div className="col d-flex align-content-start flex-wrap">
+                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col>
+                  <Label for="Name">Name</Label>
+                  <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">4/4 Price</Label>
+                  <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={toggle}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+  
+        <Modal isOpen={warningModal} toggle={toggleWarningModal} className={className}>
+          <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete this item?
+            </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={deleteProduct}>Yes</Button>
+            <Button color="primary" onClick={warningModal}>No</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    )
+  }
+  
 
 
 }
 
 const mapStateToProps = (state) => ({
   woodtypes: state.part_list.box_woodtypes,
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>

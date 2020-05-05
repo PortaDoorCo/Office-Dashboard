@@ -18,7 +18,8 @@ const Edges = (props) => {
 
   const {
     buttonLabel,
-    className
+    className,
+    role
   } = props;
 
   const [modal, setModal] = useState(false);
@@ -139,139 +140,212 @@ const Edges = (props) => {
     );
   })
 
-  console.log(product)
-  return (
+
+  if(role.type === 'management' || role.type === 'authenticated' ||  role.type === 'owner') {
+    return (
     
-    <div>
-
-      <Row className="mb-2">
-        <Col>
-          <Button color="primary" onClick={addProd} >Add New</Button>
-        </Col>
-      </Row>
-
-      <Row style={{ height: "600px" }}>
-        <PerfectScrollbar>
-          <div className="col d-flex align-content-start flex-wrap">{card}</div>
-        </PerfectScrollbar>
-      </Row>
-
       <div>
-        <Modal isOpen={modal} toggle={toggle} className={className}>
-          <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
-          <ModalBody>
-            <Row className="mb-2">
-
-              <Col>
-                <div className="col d-flex align-content-start flex-wrap">
-                  {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
-                </div>
-
-                <form id="form" method="post" action="" encType="multipart/form-data">
-                  <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
-                </form>
-
-              </Col>
-            </Row>
-            <Row className="mb-2">
-              <Col>
-                <Label for="Name">Name</Label>
-                <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col>
-                <Label for="4/4_Price">4/4 Price</Label>
-                <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
-              </Col>
-
-            </Row>
-            <Row>
-              <Col>
-                <Label for="5/4_Price">Stile Add</Label>
-                <Input value={product.STILE_ADD} name="STILE_ADD" onChange={(e) => change(e)}></Input>
-              </Col>
-              <Col>
-                <Label for="4/4_Price">Rail Add</Label>
-                <Input value={product.RAIL_ADD} name="RAIL_ADD" onChange={(e) => change(e)}></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">Lip Factor</Label>
-                <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Row>
-                  <Col>
-                    <Label for="5/4_Price">One Piece</Label>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setProduct((prevState) => {
-                      return ({
-                        ...prevState,
-                        one_piece: !prevState.one_piece
-                      })
-                    })} checked={product.one_piece} />
-                  </Col>
-                </Row>
-
-
-              </Col>
-            </Row>
-
-
-            <Row className="mt-5">
-
-              <Col>
-                {newProduct ?
-                  <div />
-                  :
-                  <div>
-                    <Button color="danger" onClick={toggleWarningModal}>Delete</Button>
+  
+        <Row className="mb-2">
+          <Col>
+            <Button color="primary" onClick={addProd} >Add New</Button>
+          </Col>
+        </Row>
+  
+        <Row style={{ height: "600px" }}>
+          <PerfectScrollbar>
+            <div className="col d-flex align-content-start flex-wrap">{card}</div>
+          </PerfectScrollbar>
+        </Row>
+  
+        <div>
+          <Modal isOpen={modal} toggle={toggle} className={className}>
+            <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
+            <ModalBody>
+              <Row className="mb-2">
+  
+                <Col>
+                  <div className="col d-flex align-content-start flex-wrap">
+                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
                   </div>
-                }
-              </Col>
-            </Row>
-          </ModalBody>
+  
+                  <form id="form" method="post" action="" encType="multipart/form-data">
+                    <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
+                  </form>
+  
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col>
+                  <Label for="Name">Name</Label>
+                  <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+  
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">4/4 Price</Label>
+                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                </Col>
+  
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">Stile Add</Label>
+                  <Input value={product.STILE_ADD} name="STILE_ADD" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="4/4_Price">Rail Add</Label>
+                  <Input value={product.RAIL_ADD} name="RAIL_ADD" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">Lip Factor</Label>
+                  <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">One Piece</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setProduct((prevState) => {
+                        return ({
+                          ...prevState,
+                          one_piece: !prevState.one_piece
+                        })
+                      })} checked={product.one_piece} />
+                    </Col>
+                  </Row>
+  
+  
+                </Col>
+              </Row>
+  
+  
+              <Row className="mt-5">
+  
+                <Col>
+                  {newProduct ?
+                    <div />
+                    :
+                    <div>
+                      <Button color="danger" onClick={toggleWarningModal}>Delete</Button>
+                    </div>
+                  }
+                </Col>
+              </Row>
+            </ModalBody>
+            <ModalFooter>
+              {newProduct ?
+                <div>
+                  <Button color="primary" onClick={submitProduct}>Submit</Button>
+  
+                </div>
+                :
+                <div>
+                  <Button color="primary" onClick={updateProduct}>Update</Button>
+                </div>
+              }
+  
+              <Button color="secondary" onClick={toggle}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+  
+        <Modal isOpen={warningModal} toggle={toggleWarningModal} className={className}>
+          <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete this item?
+            </ModalBody>
           <ModalFooter>
-            {newProduct ?
-              <div>
-                <Button color="primary" onClick={submitProduct}>Submit</Button>
-
-              </div>
-              :
-              <div>
-                <Button color="primary" onClick={updateProduct}>Update</Button>
-              </div>
-            }
-
-            <Button color="secondary" onClick={toggle}>Cancel</Button>
+            <Button color="danger" onClick={deleteProduct}>Yes</Button>
+            <Button color="primary" onClick={warningModal}>No</Button>
           </ModalFooter>
         </Modal>
       </div>
-
-      <Modal isOpen={warningModal} toggle={toggleWarningModal} className={className}>
-        <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
-        <ModalBody>
-          Are you sure you want to delete this item?
-          </ModalBody>
-        <ModalFooter>
-          <Button color="danger" onClick={deleteProduct}>Yes</Button>
-          <Button color="primary" onClick={warningModal}>No</Button>
-        </ModalFooter>
-      </Modal>
-    </div>
-  )
+    )
+  } else {
+    return (
+    
+      <div>  
+        <Row style={{ height: "600px" }}>
+          <PerfectScrollbar>
+            <div className="col d-flex align-content-start flex-wrap">{card}</div>
+          </PerfectScrollbar>
+        </Row>
+  
+        <div>
+          <Modal isOpen={modal} toggle={toggle} className={className}>
+            <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
+            <ModalBody>
+              <Row className="mb-2">
+  
+                <Col>
+                  <div className="col d-flex align-content-start flex-wrap">
+                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col>
+                  <Label for="Name">Name</Label>
+                  <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+  
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">4/4 Price</Label>
+                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                </Col>
+  
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">Stile Add</Label>
+                  <Input value={product.STILE_ADD} name="STILE_ADD" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="4/4_Price">Rail Add</Label>
+                  <Input value={product.RAIL_ADD} name="RAIL_ADD" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">Lip Factor</Label>
+                  <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={toggle}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+  
+        <Modal isOpen={warningModal} toggle={toggleWarningModal} className={className}>
+          <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete this item?
+            </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={deleteProduct}>Yes</Button>
+            <Button color="primary" onClick={warningModal}>No</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    )
+  }
+  
 
 
 }
 
 const mapStateToProps = (state) => ({
   edges: state.part_list.edges,
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
