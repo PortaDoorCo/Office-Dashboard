@@ -48,6 +48,7 @@ export const GET_BREAKDOWNS = 'GET_BREAKDOWNS'
 export const UPDATE_BREAKDOWNS = 'UPDATE_BREAKDOWNS'
 export const GET_BOX_BREAKDOWNS = 'GET_BOX_BREAKDOWNS'
 export const GET_PRICING = 'GET_PRICING'
+export const UPDATE_PRICING = 'UPDATE_PRICING'
 
 export function getWoodtypes(cookie) {
   console.log("FIREEEEE")
@@ -800,6 +801,22 @@ export function getPricing(cookie) {
     const data = await res.json();
     return dispatch({
       type: GET_PRICING,
+      data: data
+    });
+  };
+}
+
+export function updatePricing(id, item, cookie) {
+  return async function (dispatch) {
+    const { data } = await axios.put(`${db_url}/pricings/${id}`, item, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    })
+    console.log(data)
+    NotificationManager.success(`Pricing Updated!`, 'Pricing Updated!', 2000);
+    return dispatch({
+      type: UPDATE_PRICING,
       data: data
     });
   };
