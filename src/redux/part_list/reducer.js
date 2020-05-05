@@ -36,6 +36,7 @@ import {
   GET_BOX_WOODTYPES,
 
   GET_PRICING,
+  UPDATE_PRICING,
 
 
   UPDATE_PRODUCT,
@@ -462,10 +463,18 @@ export default function (state = initialState, action) {
           data : i
         )
       }
+
     case GET_PRICING:
       return {
         ...state,
         pricing: data
+      }
+    case UPDATE_PRICING:
+      return {
+        ...state,
+        pricing: state.pricing.map(i => i.id === data.id ?
+          data : i
+        )
       }
     default:
       return state;

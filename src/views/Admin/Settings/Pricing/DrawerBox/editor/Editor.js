@@ -8,7 +8,7 @@ import Parameters from './Parameters'
 import Cookies from "js-cookie";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateBreakdowns, getBreakdowns } from '../../../../../../redux/part_list/actions'
+import { updatePricing, getPricing } from '../../../../../../redux/part_list/actions'
 
 const cookie = Cookies.get("jwt");
 
@@ -57,7 +57,7 @@ const EditorComponent = (props) => {
 
     console.log(bd)
 
-    await props.updateBreakdowns(id, bd, cookie)
+    await props.updatePricing(id, bd, cookie)
     await setModal(!modal)
     await toggleEdit()
   }
@@ -188,8 +188,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      updateBreakdowns,
-      getBreakdowns
+      updatePricing,
+      getPricing
     },
     dispatch
   );
