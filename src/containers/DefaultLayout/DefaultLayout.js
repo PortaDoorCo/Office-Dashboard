@@ -69,7 +69,7 @@ import {
 
 
 } from "../../redux/part_list/actions";
-import { login } from "../../redux/users/actions";
+import { login, getUsers } from "../../redux/users/actions";
 
 import Loader from '../../views/Admin/Loader/Loader'
 import { NotificationContainer } from 'react-notifications';
@@ -126,6 +126,8 @@ class DefaultLayout extends Component {
 
       getPricing,
 
+      getUsers,
+
       login,
       loadSales,
       loadOrders,
@@ -137,6 +139,7 @@ class DefaultLayout extends Component {
 
     if(cookie){
       await login(cookie);
+      await getUsers(cookie);
       await loadSales(cookie);
       await loadOrders(cookie);
       await getDeliveries(cookie);
@@ -307,6 +310,7 @@ const mapDispatchToProps = dispatch =>
       getBoxBreakdowns,
 
       getPricing,
+      getUsers,
 
 
       login,
