@@ -50,12 +50,12 @@ class Dashboard extends Component {
 
     const { role, orders } = this.props;
 
-    console.log(role)
+    console.log('role', role)
 
 
     return (
       <div className="animated fadeIn">
-        {role.type === 'management' || role.type === 'authenticated' ?
+        {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
           <div>
             <Row>
               <Col lg="4">

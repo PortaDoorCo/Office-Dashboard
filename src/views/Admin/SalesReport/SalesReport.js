@@ -44,7 +44,7 @@ const SalesReport = (props) => {
 
   
   return (
-    role.type === 'management' || role.type === 'authenticated' ? 
+    role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ? 
     <div>
       <Row className="mb-3">
         <Col lg='7' />

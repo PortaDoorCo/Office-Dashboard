@@ -39,8 +39,6 @@ const EditorComponent = (props) => {
     setModal(!modal)
   };
 
-  console.log(breakdowns)
-
 
   const submit = async () => {
 
