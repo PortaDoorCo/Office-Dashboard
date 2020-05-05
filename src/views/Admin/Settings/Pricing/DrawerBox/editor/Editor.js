@@ -29,12 +29,10 @@ const EditorComponent = (props) => {
   const editorRef = useRef(null);
   const [modal, setModal] = useState(false)
 
-  const designs = ['design']
-  const edges = ['edge']
-  const panels = ['panel']
-  const profiles = ['inset']
-  const applied_profiles = ['applied_profile']
-  const lites = ['lites']
+  const wood = ['wood']
+  const finish = ['finish']
+  const notchDrill = ['notchDrill']
+
 
   const toggle = () => {
     setModal(!modal)
@@ -130,12 +128,9 @@ const EditorComponent = (props) => {
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
-                <Parameters onBtnClick={onBtnClick} attributes={designs} name="Designs" />
-                <Parameters onBtnClick={onBtnClick} attributes={edges} name="Edges" />
-                <Parameters onBtnClick={onBtnClick} attributes={profiles} name="Profiles" />
-                <Parameters onBtnClick={onBtnClick} attributes={panels} name="Panels" />
-                <Parameters onBtnClick={onBtnClick} attributes={applied_profiles} name="Applied Profiles" />
-                <Parameters onBtnClick={onBtnClick} attributes={lites} name="Lites" />
+                <Parameters onBtnClick={onBtnClick} attributes={wood} name="Wood" />
+                <Parameters onBtnClick={onBtnClick} attributes={finish} name="Finish" />
+                <Parameters onBtnClick={onBtnClick} attributes={notchDrill} name="NotchDrill" />
               </div>
             </Row>
           </Col>
@@ -152,8 +147,7 @@ const EditorComponent = (props) => {
               <div className="col d-flex align-content-start flex-wrap">
                 <Button onClick={() => onBtnClick('width')} outline color="danger">Width</Button>
                 <Button onClick={() => onBtnClick('height')} outline color="danger">Height</Button>
-                <Button onClick={() => onBtnClick('panelsH')} outline color="danger">Panels High</Button>
-                <Button onClick={() => onBtnClick('panelsW')} outline color="danger">Panels Wide</Button>
+                <Button onClick={() => onBtnClick('depth')} outline color="danger">Depth</Button>
               </div>
             </Row>
           </Col>
