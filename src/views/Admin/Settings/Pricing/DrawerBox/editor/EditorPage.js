@@ -7,7 +7,7 @@ import { updateBreakdowns } from '../../../../../../redux/part_list/actions'
 
 const EditorPage = (props) => {
 
-  const { updateBreakdowns, pricing } = props;
+  const { updateBreakdowns, pricing, role } = props;
 
   const [breakdowns, setBreakdowns] = useState(props.breakdowns);
 
@@ -32,13 +32,17 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={pricing.drawer_box_pricing} name={'drawer_box_pricing'} toggleEdit={setDrawerBoxPricing}  edit={drawerBoxPricing} />
+                  <Editor code={pricing.drawer_box_pricing} name={'drawer_box_pricing'} toggleEdit={setDrawerBoxPricing} edit={drawerBoxPricing} />
                 </Col>
               </Row>
 
-              <div className="mt-2">
-                <Button color="primary" onClick={() => setDrawerBoxPricing(!drawerBoxPricing)}>Edit</Button>
-              </div>
+              {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
+                <div className="mt-2">
+                  <Button color="primary" onClick={() => setDrawerBoxPricing(!drawerBoxPricing)}>Edit</Button>
+                </div>
+                :
+                <div />
+              }
 
             </CardBody>
           </Card>
@@ -51,6 +55,7 @@ const EditorPage = (props) => {
 
 const mapStateToProps = (state) => ({
   pricing: state.part_list.pricing[0],
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>

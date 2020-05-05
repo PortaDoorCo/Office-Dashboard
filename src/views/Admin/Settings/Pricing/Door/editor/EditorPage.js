@@ -7,7 +7,7 @@ import { updateBreakdowns } from '../../../../../../redux/part_list/actions'
 
 const EditorPage = (props) => {
 
-  const { updateBreakdowns, pricing } = props;
+  const { updateBreakdowns, pricing, role } = props;
 
   const [breakdowns, setBreakdowns] = useState(props.breakdowns);
 
@@ -34,13 +34,17 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={pricing.door_pricing} name={'door_pricing'} toggleEdit={setDoorPricing}  edit={doorPricing} />
+                  <Editor code={pricing.door_pricing} name={'door_pricing'} toggleEdit={setDoorPricing} edit={doorPricing} />
                 </Col>
               </Row>
 
-              <div className="mt-2">
-                <Button color="primary" onClick={() => setDoorPricing(!doorPricing)}>Edit</Button>
-              </div>
+              {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
+                <div className="mt-2">
+                  <Button color="primary" onClick={() => setDoorPricing(!doorPricing)}>Edit</Button>
+                </div>
+                :
+                <div />
+              }
 
             </CardBody>
           </Card>
@@ -56,13 +60,17 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={pricing.face_frame_pricing} name={'face_frame_pricing'}  toggleEdit={setFaceFramePricing} edit={faceFramePricing} />
+                  <Editor code={pricing.face_frame_pricing} name={'face_frame_pricing'} toggleEdit={setFaceFramePricing} edit={faceFramePricing} />
                 </Col>
               </Row>
 
-              <div className="mt-2">
-                <Button color="primary" onClick={() => setFaceFramePricing(!faceFramePricing)}>Edit</Button>
-              </div>
+              {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
+                <div className="mt-2">
+                  <Button color="primary" onClick={() => setFaceFramePricing(!faceFramePricing)}>Edit</Button>
+                </div>
+                :
+                <div />
+              }
             </CardBody>
           </Card>
         </Col>
@@ -74,6 +82,7 @@ const EditorPage = (props) => {
 
 const mapStateToProps = (state) => ({
   pricing: state.part_list.pricing[0],
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>

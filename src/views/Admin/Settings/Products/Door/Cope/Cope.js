@@ -40,6 +40,8 @@ const Cope = (props) => {
 
   const toggleEditor = () => setOpenEditor(!openEditor);
 
+  const { role } = props;
+
 
   return (
     <div>
@@ -124,7 +126,10 @@ const Cope = (props) => {
 
                   <p>If you have a router, a router table, a dovetail bit, and a slot cutter, you can do it the way we show here. Begin by cutting the stiles to their final length. Lay out the rails by adding 1" to the final inside width of the frame. That measurement will allow for a 1⁄2 " stub tenon on both ends of each rail.</p>
 
-                  <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
+                  {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
+                    <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
+                    : <div />
+                  }
                 </Col>
               </Row>
             </CardBody>
@@ -181,7 +186,8 @@ const mapStateToProps = (state) => ({
   edges: state.part_list.edges,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
-  applied_profiles: state.part_list.applied_moulds
+  applied_profiles: state.part_list.applied_moulds,
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
