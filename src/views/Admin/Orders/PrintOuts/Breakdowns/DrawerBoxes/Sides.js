@@ -4,15 +4,18 @@ const fraction = num => {
     let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
     return fraction.toLocaleString();
 };
-export default (item, part) => {
+export default (item, part, breakdowns) => {
 
+    const b = breakdowns[0]
+
+    const height = item.height;
     const depth = parseInt(item.depth)
     const sideDeduction = part.boxThickness.SIDE_DEDUCTION
-    const thickness = part.boxThickness.NAME
+    const boxThickness = part.boxThickness.NAME
     return {
         qty: (parseInt(item.qty) * 2),
         depth: depth,
-        measurement: `${item.height} x ${fraction(depth - sideDeduction)} x ${thickness}`,
+        measurement: `${eval(b.sides_height)} x ${fraction(eval(b.sides_depth))} x ${eval(b.sides_thickness)}`,
         pattern: "Sides"
     }
 

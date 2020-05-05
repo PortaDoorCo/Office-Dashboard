@@ -2,8 +2,6 @@
 import numQty from 'numeric-quantity';
 
 export default (v, part) => {
-    console.log('part', part)
-    console.log("VVVVVV", v)
     const calc = v.map(item => {
         const sides = ((numQty(item.depth)) * 2) * parseInt(item.qty)
         const fronts = (numQty(item.width) * 2) * parseInt(item.qty)

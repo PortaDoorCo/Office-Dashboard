@@ -11,7 +11,8 @@ import SQFT from '../Breakdowns/DrawerBoxes/SQFT';
 
 
 
-export default data => {
+export default (data, breakdowns) => {
+  console.log("BREAKDOWNS", breakdowns)
   return [
     {
       columns: [
@@ -116,9 +117,9 @@ export default data => {
             { text: item.item, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
             { text: Size(item), style: 'fonts' },
-            { text: `${Sides(item, i).qty} - ${Sides(item, i).measurement}`, style: 'fonts' },
-            { text: `${Fronts(item, i).qty} - ${Fronts(item, i).measurement}`, style: 'fonts' },
-            { text: `${Bottoms(item, i).qty} - ${Bottoms(item, i).measurement}`, style: 'fonts' }
+            { text: `${Sides(item, i, breakdowns).qty} - ${Sides(item, i, breakdowns).measurement}`, style: 'fonts' },
+            { text: `${Fronts(item, i, breakdowns).qty} - ${Fronts(item, i, breakdowns).measurement}`, style: 'fonts' },
+            { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement}`, style: 'fonts' }
           ]
           groupedTableBody.push(tb)
         })
@@ -128,9 +129,9 @@ export default data => {
           columns: [
             { text: `${i.woodtype.NAME}`, style: 'fonts' },
             { text: `${k} x ${i.boxThickness.NAME}`, style: 'fonts' },
-            { text: `${SQFT(v, i)} Sq FT`, style: 'fonts' },
-            { text: `${LinearFT(v, i)} Lin FT`, style: 'fonts' },
-            { text: `${LinearIN(v, i)} Lin IN`, style: 'fonts' },
+            { text: `${SQFT(v, i, breakdowns)} Sq FT`, style: 'fonts' },
+            { text: `${LinearFT(v, i, breakdowns)} Lin FT`, style: 'fonts' },
+            { text: `${LinearIN(v, i, breakdowns)} Lin IN`, style: 'fonts' },
             { text: '', style: 'fonts' },
           ]
         }

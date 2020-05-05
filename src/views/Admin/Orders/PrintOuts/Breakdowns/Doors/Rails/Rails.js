@@ -43,7 +43,7 @@ export default (info, part, breakdowns) => {
   }
 
   if(part.orderType.value === "Face_Frame") {
-    return Face_Frame(info,part)
+    return Face_Frame(info,part, breakdowns[6])
   }
 
   if(part.orderType.value === "One_Piece") {

@@ -5,7 +5,7 @@ import LinearIN from '../Breakdowns/DrawerBoxes/LinearIN';
 import _ from 'lodash'
 
 
-export default data => {
+export default (data, breakdowns) => {
     return [
         {
             columns: [
@@ -60,9 +60,9 @@ export default data => {
 
                 fronts.push([
                     { text: item.item, style: 'fonts' },
-                    { text: Fronts(item, i).pattern, style: 'fonts' },
-                    { text: Fronts(item, i).qty, style: 'fonts' },
-                    { text: Fronts(item, i).measurement, style: 'fonts' },
+                    { text: Fronts(item, i, breakdowns).pattern, style: 'fonts' },
+                    { text: Fronts(item, i, breakdowns).qty, style: 'fonts' },
+                    { text: Fronts(item, i, breakdowns).measurement, style: 'fonts' },
                 ])
             });
             const sides = [
@@ -77,9 +77,9 @@ export default data => {
             sortedQty.forEach((item, index) => {
                 sides.push([
                     { text: item.item, style: 'fonts' },
-                    { text: Sides(item, i).pattern, style: 'fonts' },
-                    { text: Sides(item, i).qty, style: 'fonts' },
-                    { text: Sides(item, i).measurement, style: 'fonts' },
+                    { text: Sides(item, i, breakdowns).pattern, style: 'fonts' },
+                    { text: Sides(item, i, breakdowns).qty, style: 'fonts' },
+                    { text: Sides(item, i, breakdowns).measurement, style: 'fonts' },
                 ])
             });
 
@@ -98,7 +98,7 @@ export default data => {
                         columns: [
                             { text: `${i.woodtype.NAME}`, style: 'fonts' },
                             { text: `${k} x ${i.boxThickness.NAME}`, style: 'fonts' },
-                            { text: `= ${LinearIN(v, i)} Lin IN`, style: 'fonts' },
+                            { text: `= ${LinearIN(v, i, breakdowns)} Lin IN`, style: 'fonts' },
                             { text: '', style: 'fonts' },
                         ]
                     }
