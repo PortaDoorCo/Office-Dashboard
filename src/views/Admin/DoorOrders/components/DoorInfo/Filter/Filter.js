@@ -23,12 +23,12 @@ class DoorFilter extends Component {
     super(props);
   }
 
-  onChangeType = () => {
-
-
+  onChangeType = (index) => {
+    
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
-        if (part.dimensions) {
+        console.log('index====>>>', index, 'wooddd==>>', part.woodtype)
+        if (index === i && part.dimensions) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -38,7 +38,7 @@ class DoorFilter extends Component {
           )
         }
 
-        if (part.design) {
+        if (index === i && part.design) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -54,7 +54,7 @@ class DoorFilter extends Component {
           )
         }
 
-        if (part.woodtype) {
+        if (index === i && part.woodtype) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -69,7 +69,7 @@ class DoorFilter extends Component {
           )
         }
 
-        if (part.edge) {
+        if (index === i && part.edge) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -84,7 +84,7 @@ class DoorFilter extends Component {
           )
         }
 
-        if (part.panel) {
+        if (index === i && part.panel) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -99,7 +99,7 @@ class DoorFilter extends Component {
           )
         }
 
-        if (part.profile) {
+        if (index === i && part.profile) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -114,7 +114,7 @@ class DoorFilter extends Component {
           )
         }
 
-        if (part.applied_profile) {
+        if (index === i && part.applied_profile) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -129,7 +129,7 @@ class DoorFilter extends Component {
           )
         }
 
-        if (part.finish) {
+        if (index === i && part.finish) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -144,7 +144,7 @@ class DoorFilter extends Component {
           )
         }
 
-        if (part.face_frame_top_rail) {
+        if (index === i && part.face_frame_top_rail) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -159,7 +159,7 @@ class DoorFilter extends Component {
           )
         }
 
-        if (part.furniture_feet) {
+        if (index === i && part.furniture_feet) {
           this.props.dispatch(
             change(
               'DoorOrder',
@@ -191,6 +191,8 @@ class DoorFilter extends Component {
       orderType
     } = this.props;
 
+console.log('formstate==>>>', formState)
+
     if (formState && formState.part_list) {
       if ((formState.part_list[index].orderType.value === "Door") || (formState.part_list[index].orderType.value === "DF")) {
         return (
@@ -203,7 +205,7 @@ class DoorFilter extends Component {
                     name={`${part}.orderType`}
                     component={renderDropdownList}
                     data={orderType}
-                    onChange={this.onChangeType}
+                    onChange={() => this.onChangeType(index)}
                     valueField="value"
                     textField="name"
                     validate={required}
