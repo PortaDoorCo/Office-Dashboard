@@ -115,6 +115,8 @@ class DefaultLayout extends Component {
       getOnePiecePanels,
       getOnePieceEdges,
 
+      loadShippingMethod,
+
       getBoxBottomThickness,
       getBoxFinishes,
       getBoxNotches,
@@ -146,6 +148,7 @@ class DefaultLayout extends Component {
       await getPricing(cookie);
       await getBreakdowns(cookie);
       await getBoxBreakdowns(cookie);
+      await loadShippingMethod(cookie);
       await getWoodtypes(cookie);
       await getAppliedMoulds(cookie);
       await getBaseCap(cookie);
