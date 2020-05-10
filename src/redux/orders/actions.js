@@ -25,6 +25,8 @@ export const UPDATE_ORDER_NUM = 'UPDATE_ORDER_NUM'
 export const DELETE_ORDER = 'DELETE_ORDER'
 export const UPDATE_BALANCE = 'UPDATE_BALANCE'
 export const LOAD_DELIVERIES = 'LOAD_DELIVERIES'
+export const LOAD_PAYMENT_TYPES = 'LOAD_PAYMENT_TYPES'
+export const LOAD_PAYMENT_TERMS = 'LOAD_PAYMENT_TERMS'
 
 export function addToCart(
   order,
@@ -198,7 +200,7 @@ export function loadSales(cookie) {
 
 export function loadShippingMethod(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/shippingmethods`, {
+    const res = await fetch(`${db_url}/shipping-methods`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
@@ -210,6 +212,37 @@ export function loadShippingMethod(cookie) {
     });
   };
 }
+
+export function loadPaymentTypes(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/payment-type`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
+    const data = await res.json();
+    return dispatch({
+      type: LOAD_PAYMENT_TYPES,
+      data: data
+    });
+  };
+}
+
+export function loadPaymentTerms(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/payment-terms`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
+    const data = await res.json();
+    return dispatch({
+      type: LOAD_PAYMENT_TERMS,
+      data: data
+    });
+  };
+}
+
 
 export function submitCustomer(customer, cookie) {
   return async function (dispatch) {
