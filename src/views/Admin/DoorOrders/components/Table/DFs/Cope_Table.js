@@ -15,6 +15,7 @@ import 'react-widgets/dist/css/react-widgets.css';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import numQty from 'numeric-quantity'
 
 
 const required = value => (value ? undefined : 'Required');
@@ -121,6 +122,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
   }
 
+  console.log('HEIIIGHHHTTTT', height)
 
   return (
     formState ?
@@ -265,10 +267,14 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
               <Row>
                 <Col lg='9'>
-                  <Field
-                    name={`${table}.showBuilder`}
-                    component={renderCheckboxToggle}
-                    label="Show Builder" />
+                  {numQty(height[index]) > 0 ?
+                    <Field
+                      name={`${table}.showBuilder`}
+                      component={renderCheckboxToggle}
+                      label="Show Builder" />
+                    : null
+                  }
+
                 </Col>
                 <Col>
                   <Field
@@ -282,7 +288,9 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               <Row>
                 <Col>
 
-                  {(height[index] > 0 && formState.part_list[i].dimensions[index].showBuilder) ?
+                  {console.log('HEIGHTI NDERX', numQty(height[index]))}
+
+                  {((numQty(height[index]) > 0) && formState.part_list[i].dimensions[index].showBuilder) ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker
                         width={width[index]}
