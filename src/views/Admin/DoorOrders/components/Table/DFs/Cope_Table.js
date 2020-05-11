@@ -76,7 +76,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
     setHeight(newHeight);
   }
 
-  const updateFullFrame = (e,index) => {
+  const updateFullFrame = (e, index) => {
     console.log("asdfasdfasdf", e)
     console.log("LKSDJFKSLDJF", index)
 
@@ -85,7 +85,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
     const part = formState.part_list[i]
     console.log(part)
 
-    if(e){
+    if (e) {
       dispatch(
         change(
           'DoorOrder',
@@ -93,7 +93,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
         )
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -109,7 +109,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(part.profile ? (part.profile.DF_Reduction) : 0)
         )
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -265,21 +265,17 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
               <Row>
                 <Col lg='9'>
-                  {(height[index] > 0) ?
-                    <Field 
-                    name={`${table}.showBuilder`} 
+                  <Field
+                    name={`${table}.showBuilder`}
                     component={renderCheckboxToggle}
-                    
                     label="Show Builder" />
-                    :
-                    null}
                 </Col>
                 <Col>
-                  <Field 
-                  name={`${table}.full_frame`} 
-                  component={renderCheckboxToggle} 
-                  onChange={(e) => updateFullFrame(e, index)} 
-                  label="Full Frame" />
+                  <Field
+                    name={`${table}.full_frame`}
+                    component={renderCheckboxToggle}
+                    onChange={(e) => updateFullFrame(e, index)}
+                    label="Full Frame" />
                 </Col>
               </Row>
 
