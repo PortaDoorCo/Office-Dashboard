@@ -215,7 +215,7 @@ export function loadShippingMethod(cookie) {
 
 export function loadPaymentTypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/payment-type`, {
+    const res = await fetch(`${db_url}/payment-types`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }
