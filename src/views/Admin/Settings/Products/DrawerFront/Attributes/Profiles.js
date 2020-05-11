@@ -128,7 +128,7 @@ const Profiles = (props) => {
             <CardTitle><strong>Inset: </strong> {card.INSET}</CardTitle>
               <CardTitle><strong>Stile/Rail Width: </strong> {card.MINIMUM_STILE_WIDTH}</CardTitle>
               <CardTitle><strong>Mid Rail Width: </strong> {card.MID_RAIL_MINIMUMS}</CardTitle>
-              <CardTitle><strong>Drawer Front Reduction: </strong> {card.DF_Reduction}</CardTitle>
+              <CardTitle><strong>DF Reduction: </strong> {card.DF_Reduction}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -194,7 +194,7 @@ const Profiles = (props) => {
                   <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
-                  <Label for="5/4_Price">Drawer Front Reduction</Label>
+                  <Label for="5/4_Price">DF Reduction</Label>
                   <Input value={product.DF_Reduction} name="DF_Reduction" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
@@ -287,7 +287,7 @@ const Profiles = (props) => {
                   <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
-                  <Label for="5/4_Price">Drawer Front Reduction</Label>
+                  <Label for="5/4_Price">DF Reduction</Label>
                   <Input value={product.DF_Reduction} name="DF_Reduction" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>

@@ -63,6 +63,7 @@ class CopeDF extends Component {
 
           part_list.forEach((part, i) => {
             if ((part && part.profile) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].profile)) {
+              console.log('paaarrrrrttt',part)
               if (part.dimensions) {
                 part.dimensions.forEach((info, index) => {
                   this.props.dispatch(
@@ -86,7 +87,7 @@ class CopeDF extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].topRail`,
-                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+                      fraction(part.profile ? (part.profile.DF_Reduction) : 0)
                     )
                   );
 
@@ -95,7 +96,7 @@ class CopeDF extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].bottomRail`,
-                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+                      fraction(part.profile ? (part.profile.DF_Reduction) : 0)
                     )
                   );
                 });
@@ -255,6 +256,7 @@ class CopeDF extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
+            dispatch={this.props.dispatch}
           // updateSubmit={updateSubmit}
           />
         </div>
