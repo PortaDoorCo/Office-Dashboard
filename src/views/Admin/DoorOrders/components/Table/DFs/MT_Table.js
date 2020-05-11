@@ -8,7 +8,7 @@ import {
   Button
 } from "reactstrap";
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from "redux-form";
+import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, dispatch }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -72,6 +72,51 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
       newHeight = [...newHeight, v]
     }
     setHeight(newHeight);
+  }
+
+  const updateFullFrame = (e, index) => {
+    console.log("asdfasdfasdf", e)
+    console.log("LKSDJFKSLDJF", index)
+
+    console.log(formState)
+
+    const part = formState.part_list[i]
+    console.log(part)
+
+    if (e) {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.design ? (part.design.MID_RAIL_MINIMUMS) : 0)
+        )
+      );
+
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.design ? (part.design.MID_RAIL_MINIMUMS) : 0)
+        )
+      );
+    } else {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.design ? (part.design.DF_Reduction) : 0)
+        )
+      );
+
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.design ? (part.design.DF_Reduction) : 0)
+        )
+      );
+    }
+
   }
 
 
@@ -224,7 +269,11 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                     null}
                 </Col>
                 <Col>
-                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
+                <Field
+                    name={`${table}.full_frame`}
+                    component={renderCheckboxToggle}
+                    onChange={(e) => updateFullFrame(e, index)}
+                    label="Full Frame" />
                 </Col>
               </Row>
 
@@ -303,10 +352,10 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                           formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
                         ),
                         topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          formState.part_list[formState.part_list.length - 1].design.DF_Reduction
                         ),
                         bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          formState.part_list[formState.part_list.length - 1].design.DF_Reduction
                         ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,

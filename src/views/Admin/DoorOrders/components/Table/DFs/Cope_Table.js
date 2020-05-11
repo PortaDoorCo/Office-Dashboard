@@ -287,9 +287,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
               <Row>
                 <Col>
-
-                  {console.log('HEIGHTI NDERX', numQty(height[index]))}
-
                   {((numQty(height[index]) > 0) && formState.part_list[i].dimensions[index].showBuilder) ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker

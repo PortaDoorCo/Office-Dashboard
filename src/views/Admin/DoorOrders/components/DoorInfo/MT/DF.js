@@ -87,7 +87,7 @@ class MT_DF extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].topRail`,
-                      fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                      fraction(part.design ? part.design.DF_Reduction : 0)
                     )
                   );
 
@@ -96,7 +96,7 @@ class MT_DF extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].bottomRail`,
-                      fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                      fraction(part.design ? part.design.DF_Reduction : 0)
                     )
                   );
                 });
@@ -240,6 +240,7 @@ class MT_DF extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
+            dispatch={this.props.dispatch}
           // updateSubmit={updateSubmit}
           />
         </div>
@@ -252,7 +253,7 @@ class MT_DF extends Component {
 
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
-  mt_designs: state.part_list.mt_DF_designs,
+  mt_designs: state.part_list.mt_designs,
   edges: state.part_list.edges,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
