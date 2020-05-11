@@ -192,7 +192,7 @@ class CustomerTable extends React.Component {
             productData,
             selectedRowKeys,
         } = this.state;
-        const { salesReps, shippingMethods } = this.props
+        const { salesReps, shippingMethods, paymentTerms, paymentTypes } = this.props
 
 
 
@@ -364,16 +364,17 @@ class CustomerTable extends React.Component {
                         <RequiredRule />
                         <Lookup dataSource={shippingMethods} valueExpr="NAME" displayExpr="NAME" />
                     </Column>
+                    <Column dataField="PaymentType" caption="Payment Type" visible={false}>
+                        <RequiredRule />
+                        <Lookup dataSource={paymentTypes} valueExpr="NAME" displayExpr="NAME" />
+                    </Column>
                     <Column dataField="PMT_TERMS" caption="Payment Terms" visible={false}>
                         <RequiredRule />
+                        <Lookup dataSource={paymentTerms} valueExpr="NAME" displayExpr="NAME" />
                     </Column>
                     <Column dataField="TaxRate" caption="Tax Rate" visible={false}>
                         <RequiredRule />
                     </Column>
-
-
-
-
                 </DataGrid>
 
                 <CustomerPage
@@ -394,7 +395,9 @@ class CustomerTable extends React.Component {
 const mapStateToProps = (state, prop) => ({
     customerDB: state.Orders.customerDB,
     salesReps: state.Orders.salesReps,
-    shippingMethods: state.Orders.shippingMethods
+    shippingMethods: state.Orders.shippingMethods,
+    paymentTerms: state.Orders.paymentTerms,
+    paymentTypes: state.Orders.paymentTypes
 });
 
 const mapDispatchToProps = dispatch =>

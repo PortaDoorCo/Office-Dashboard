@@ -24,7 +24,16 @@ import Cookies from "js-cookie";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { loadOrders, loadCustomers, loadSales, loadShippingMethod, getDeliveries } from "../../redux/orders/actions";
+import {
+  loadOrders,
+  loadCustomers,
+  loadSales,
+  loadShippingMethod,
+  getDeliveries,
+  loadPaymentTypes,
+  loadPaymentTerms,
+} from "../../redux/orders/actions";
+
 import {
   getWoodtypes,
   getAppliedMoulds,
@@ -65,9 +74,6 @@ import {
   getBreakdowns,
   getBoxBreakdowns,
   getPricing
-
-
-
 } from "../../redux/part_list/actions";
 import { login, getUsers } from "../../redux/users/actions";
 
@@ -82,7 +88,7 @@ class DefaultLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     const props = this.props;
     const {
       getWoodtypes,
@@ -116,6 +122,8 @@ class DefaultLayout extends Component {
       getOnePieceEdges,
 
       loadShippingMethod,
+      loadPaymentTypes,
+      loadPaymentTerms,
 
       getBoxBottomThickness,
       getBoxFinishes,
@@ -139,7 +147,7 @@ class DefaultLayout extends Component {
 
     const cookie = await Cookies.get("jwt");
 
-    if(cookie){
+    if (cookie) {
       await login(cookie);
       await getUsers(cookie);
       await loadSales(cookie);
@@ -149,6 +157,8 @@ class DefaultLayout extends Component {
       await getBreakdowns(cookie);
       await getBoxBreakdowns(cookie);
       await loadShippingMethod(cookie);
+      await loadPaymentTypes(cookie);
+      await loadPaymentTerms(cookie);
       await getWoodtypes(cookie);
       await getAppliedMoulds(cookie);
       await getBaseCap(cookie);
@@ -184,8 +194,8 @@ class DefaultLayout extends Component {
       await getBoxNotches(cookie);
       await getBoxThicknesses(cookie);
       await getBoxWoodtypes(cookie);
-      
-      
+
+
     } else {
       alert('not logged in')
     }
@@ -196,7 +206,7 @@ class DefaultLayout extends Component {
 
 
     if (
-      !this.props.orders.length>0
+      !this.props.orders.length > 0
     ) {
       return <Loader />;
     } else {
@@ -314,6 +324,8 @@ const mapDispatchToProps = dispatch =>
 
       getPricing,
       getUsers,
+      loadPaymentTypes,
+      loadPaymentTerms,
 
 
       login,
