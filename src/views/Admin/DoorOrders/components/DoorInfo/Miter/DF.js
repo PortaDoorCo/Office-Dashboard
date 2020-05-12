@@ -150,7 +150,7 @@ class MiterDF extends Component {
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
-                name={`${part}.design`}
+                name={`${part}.miter_df_design`}
                 component={renderDropdownListFilter}
                 data={miter_designs}
                 valueField="value"
