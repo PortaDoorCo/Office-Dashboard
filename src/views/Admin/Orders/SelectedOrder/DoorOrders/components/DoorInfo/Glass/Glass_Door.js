@@ -262,7 +262,7 @@ class GlassDoor extends Component {
             <FormGroup>
               <Label htmlFor="design">Lites</Label>
               <Field
-                name={`${part}.lites`}
+                name={`${part}.lite`}
                 component={renderDropdownListFilter}
                 data={lites}
                 valueField="value"

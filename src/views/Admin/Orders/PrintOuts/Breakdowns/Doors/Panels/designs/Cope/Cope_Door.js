@@ -26,7 +26,7 @@ export default (info, part, breakdowns) => {
     const width = numQty(info.width)
     const qty = parseInt(info.qty)
 
-    const lites = part.lites ? part.lites.NAME : ''
+    const lites = part.lite ? part.lite.NAME : ''
 
     const inset = part.profile.INSET
     const edge_factor = part.edge.LIP_FACTOR
