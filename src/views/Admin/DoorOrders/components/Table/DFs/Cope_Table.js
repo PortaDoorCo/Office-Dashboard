@@ -8,11 +8,14 @@ import {
   Button
 } from "reactstrap";
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from "redux-form";
+import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import numQty from 'numeric-quantity'
 
 
 const required = value => (value ? undefined : 'Required');
@@ -37,7 +40,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, dispatch }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -74,6 +77,52 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
     setHeight(newHeight);
   }
 
+  const updateFullFrame = (e, index) => {
+    console.log("asdfasdfasdf", e)
+    console.log("LKSDJFKSLDJF", index)
+
+    console.log(formState)
+
+    const part = formState.part_list[i]
+    console.log(part)
+
+    if (e) {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+        )
+      );
+
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+        )
+      );
+    } else {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+        )
+      );
+
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+        )
+      );
+    }
+
+  }
+
+  console.log('HEIIIGHHHTTTT', height)
 
   return (
     formState ?
@@ -218,20 +267,27 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
               <Row>
                 <Col lg='9'>
-                  {(height[index] > 0) ?
-                    <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
-                    :
-                    null}
+                  {numQty(height[index]) > 0 ?
+                    <Field
+                      name={`${table}.showBuilder`}
+                      component={renderCheckboxToggle}
+                      label="Show Builder" />
+                    : null
+                  }
+
                 </Col>
                 <Col>
-                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
+                  <Field
+                    name={`${table}.full_frame`}
+                    component={renderCheckboxToggle}
+                    onChange={(e) => updateFullFrame(e, index)}
+                    label="Full Frame" />
                 </Col>
               </Row>
 
               <Row>
                 <Col>
-
-                  {(height[index] > 0 && formState.part_list[i].dimensions[index].showBuilder) ?
+                  {((numQty(height[index]) > 0) && formState.part_list[i].dimensions[index].showBuilder) ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker
                         width={width[index]}
@@ -303,15 +359,16 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                         ),
                         topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
                         ),
                         bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
                         ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,
                         unevenSplitInput: "0",
-                        showBuilder: false
+                        showBuilder: false,
+                        full_frame: false
                       })
                       : alert('please select a profile')
                   )}
@@ -325,7 +382,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
             <Col xs="4" />
             <Col xs="5" />
             <Col xs="3">
-            <strong>Addtional Price: </strong>
+              <strong>Addtional Price: </strong>
               <Field
                 name={`${part}.addPrice`}
                 type="text"
@@ -346,4 +403,22 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   )
 };
 
-export default Cope_Table;
+const mapStateToProps = state => ({
+
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+
+
+    },
+    dispatch
+  );
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(Cope_Table);
+

@@ -61,8 +61,8 @@ class CustomerTable extends React.Component {
             defaultCenter: [],
             productData: new CustomStore({
                 load: () => this.props.loadCustomers(cookie),
-                update: (key, values) => this.props.updateCustomer(key.id, values),
-                insert: (values) => this.props.submitCustomer(values),
+                update: (key, values) => this.props.updateCustomer(key.id, values, cookie),
+                insert: (values) => this.props.submitCustomer(values, cookie),
             }),
         };
         this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
@@ -192,7 +192,7 @@ class CustomerTable extends React.Component {
             productData,
             selectedRowKeys,
         } = this.state;
-        const { salesReps, shippingMethods } = this.props
+        const { salesReps, shippingMethods, paymentTerms, paymentTypes } = this.props
 
 
 
@@ -279,7 +279,7 @@ class CustomerTable extends React.Component {
 
                             <Item itemType="group" caption="Misc" colCount={2} colSpan={2}>
                                 <Item dataField="Ship_Via" />
-                                <Item dataField="PaymentMethod" />
+                                <Item dataField="PaymentType" />
                                 <Item dataField="PMT_TERMS" />
                                 <Item dataField="sale" />
                                 <Item dataField="TaxRate" />
@@ -362,18 +362,19 @@ class CustomerTable extends React.Component {
                     <Column dataField="Shipping_Zip" caption="Shipping Zip" visible={false} />
                     <Column dataField="Ship_Via" caption="Shipping Method" visible={false}>
                         <RequiredRule />
-                        <Lookup dataSource={shippingMethods} valueExpr="Name" displayExpr="Name" />
+                        <Lookup dataSource={shippingMethods} valueExpr="NAME" displayExpr="NAME" />
+                    </Column>
+                    <Column dataField="PaymentType" caption="Payment Type" visible={false}>
+                        <RequiredRule />
+                        <Lookup dataSource={paymentTypes} valueExpr="NAME" displayExpr="NAME" />
                     </Column>
                     <Column dataField="PMT_TERMS" caption="Payment Terms" visible={false}>
                         <RequiredRule />
+                        <Lookup dataSource={paymentTerms} valueExpr="NAME" displayExpr="NAME" />
                     </Column>
                     <Column dataField="TaxRate" caption="Tax Rate" visible={false}>
                         <RequiredRule />
                     </Column>
-
-
-
-
                 </DataGrid>
 
                 <CustomerPage
@@ -394,7 +395,9 @@ class CustomerTable extends React.Component {
 const mapStateToProps = (state, prop) => ({
     customerDB: state.Orders.customerDB,
     salesReps: state.Orders.salesReps,
-    shippingMethods: state.Orders.shippingMethods
+    shippingMethods: state.Orders.shippingMethods,
+    paymentTerms: state.Orders.paymentTerms,
+    paymentTypes: state.Orders.paymentTypes
 });
 
 const mapDispatchToProps = dispatch =>

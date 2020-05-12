@@ -103,7 +103,7 @@ class One_Piece_Door extends Component {
                         <FormGroup>
                             <Label htmlFor="design">Design</Label>
                             <Field
-                                name={`${part}.design`}
+                                name={`${part}.cope_design`}
                                 component={renderDropdownListFilter}
                                 data={one_piece_designs}
                                 valueField="value"

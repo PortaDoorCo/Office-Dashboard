@@ -68,23 +68,21 @@ console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
           { text: 'WxH', style: 'fonts' },
           { text: 'Stile', style: 'fonts' },
           { text: 'Rails', style: 'fonts' },
-          { text: 'Panels WxH', style: 'fonts' },
-          { text: 'Cab #', style: 'fonts' }
+          { text: 'Panels WxH', style: 'fonts' }
         ]
       ];
 
 
 
       i.dimensions.forEach((item, index) => {
-        console.log('BRSKAJSFDSDKLJ',breakdowns)
+        // console.log('BRSKAJSFDSDKLJ',breakdowns)
         tableBody.push([
           { text: index + 1, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
           { text: Size(item), style: 'fonts' },
           { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n` }), style: 'fonts' },
-          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n` }), style: 'fonts' },
+          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}` }), style: 'fonts' },
           { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n` }), style: 'fonts' },
-          ' '
         ]);
       });
 
@@ -126,7 +124,7 @@ console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 50, 115, 105, 120, '*'],
+            widths: [22, 15, 70, 115, 105, 120],
             body: tableBody
           },
           layout: 'lightHorizontalLines'

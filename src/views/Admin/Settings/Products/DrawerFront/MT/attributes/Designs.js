@@ -33,6 +33,7 @@ const Designs = (props) => {
     MINIMUM_STILE_WIDTH:'',
     MID_RAIL_MINIMUMS: '',
     INSET: '',
+    DF_Reduction: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false)
@@ -62,6 +63,7 @@ const Designs = (props) => {
       RAIL_FACTOR: '',
       MID_RAIL_MINIMUMS: '',
       INSET: '',
+      DF_Reduction: '',
       photo: null
     }
     setNewProduct(true)
@@ -118,6 +120,7 @@ const Designs = (props) => {
       MINIMUM_STILE_WIDTH:product.MINIMUM_STILE_WIDTH,
       MID_RAIL_MINIMUMS: product.MID_RAIL_MINIMUMS,
       INSET: product.INSET,
+      DF_Reduction: product.DF_Reduction,
       photo: product.photo ? product.photo.id : '',
       Item: item
     }
@@ -139,6 +142,7 @@ const Designs = (props) => {
               <CardTitle><strong>Rail Factor:</strong> {card.RAIL_FACTOR}</CardTitle>
               <CardTitle><strong>Stile/Rail Width:</strong> {card.MID_RAIL_MINIMUMS}</CardTitle>
               <CardTitle><strong>Inset:</strong> {card.INSET}</CardTitle>
+              <CardTitle><strong>DF Reduction:</strong> {card.DF_Reduction}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -208,6 +212,10 @@ const Designs = (props) => {
                 <Col>
                   <Label for="5/4_Price">Inset</Label>
                   <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">DF Reduction</Label>
+                  <Input value={product.DF_Reduction} name="DF_Reduction" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -305,6 +313,10 @@ const Designs = (props) => {
                 <Col>
                   <Label for="5/4_Price">Inset</Label>
                   <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">DF Reduction</Label>
+                  <Input value={product.DF_Reduction} name="DF_Reduction" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

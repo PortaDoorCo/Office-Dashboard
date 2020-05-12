@@ -7,7 +7,7 @@ export default (item, part, breakdowns) => {
 
     const height = item.height;
     const width = item.width;
-    const boxThickness = part.boxThickness.NAME
+    const boxThickness = part.box_thickness.NAME
 
     return {
         qty: (parseInt(item.qty) * 2),

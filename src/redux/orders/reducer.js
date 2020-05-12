@@ -15,7 +15,9 @@ import {
   LOAD_SHIPPING_METHODS,
   UPDATE_CUSTOMER,
   UPDATE_ORDER_NUM,
-  LOAD_DELIVERIES
+  LOAD_DELIVERIES,
+  LOAD_PAYMENT_TERMS,
+  LOAD_PAYMENT_TYPES
 } from './actions';
 import moment from 'moment'
 
@@ -40,7 +42,9 @@ const initialState = {
   sortedDestinations: [],
 
   selectedDateRange: 'day',
-  shippingMethods: []
+  shippingMethods: [],
+  paymentTypes: [],
+  paymentTerms: []
 };
 
 export default function (state = initialState, action) {
@@ -82,6 +86,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         orders: data
+      };
+    case LOAD_PAYMENT_TERMS:
+      return {
+        ...state,
+        paymentTerms: data
+      };
+    case LOAD_PAYMENT_TYPES:
+      return {
+        ...state,
+        paymentTypes: data
       };
     case LOAD_SALES:
       return {

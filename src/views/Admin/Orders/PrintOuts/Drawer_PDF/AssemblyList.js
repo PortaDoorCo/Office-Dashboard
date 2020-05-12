@@ -71,16 +71,16 @@ export default (data, breakdowns) => {
               {
                 stack: [
                   {
-                    text: `Drawer Box ${i.boxThickness.NAME}`,
+                    text: `Drawer Box ${i.box_thickness.NAME}`,
                     style: 'fonts'
                   },
-                  { text: `${i.woodtype.NAME}`, style: 'woodtype' }
+                  { text: `${i.box_woodtype.NAME}`, style: 'woodtype' }
                 ]
               },
               {
                 stack: [
                   {
-                    text: `Bottom: ${i.boxBottoms.NAME} ${i.boxBottomWoodtype.NAME} Bottom`,
+                    text: `Bottom: ${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`,
                     style: 'fonts'
                   }
                 ],
@@ -127,8 +127,8 @@ export default (data, breakdowns) => {
 
         let mb = {
           columns: [
-            { text: `${i.woodtype.NAME}`, style: 'fonts' },
-            { text: `${k} x ${i.boxThickness.NAME}`, style: 'fonts' },
+            { text: `${i.box_woodtype.NAME}`, style: 'fonts' },
+            { text: `${k} x ${i.box_thickness.NAME}`, style: 'fonts' },
             { text: `${SQFT(v, i, breakdowns)} Sq FT`, style: 'fonts' },
             { text: `${LinearFT(v, i, breakdowns)} Lin FT`, style: 'fonts' },
             { text: `${LinearIN(v, i, breakdowns)} Lin IN`, style: 'fonts' },

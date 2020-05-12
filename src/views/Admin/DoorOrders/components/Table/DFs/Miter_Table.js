@@ -13,6 +13,7 @@ import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
+import numQty from 'numeric-quantity'
 
 
 const required = value => (value ? undefined : 'Required');
@@ -73,6 +74,8 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
     }
     setHeight(newHeight);
   }
+
+
 
 
   return (
@@ -218,7 +221,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
 
               <Row>
                 <Col lg='9'>
-                  {(height[index] > 0) ?
+                  {(numQty(height[index]) > 0) ?
                     <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
                     :
                     null}
@@ -231,7 +234,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
               <Row>
                 <Col>
 
-                  {(height[index] > 0 && formState.part_list[i].dimensions[index].showBuilder) ?
+                  {(numQty(height[index]) > 0 && formState.part_list[i].dimensions[index].showBuilder) ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker
                         width={width[index]}
@@ -292,21 +295,21 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                 className="btn-circle"
                 onClick={(e) =>
                   (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].design) ?
+                    (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].miter_df_design) ?
                       fields.push({
                         panelsH: 1,
                         panelsW: 1,
                         leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                         ),
                         rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                         ),
                         topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                         ),
                         bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                         ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,

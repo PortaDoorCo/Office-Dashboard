@@ -67,9 +67,9 @@ export const itemPriceSelector = createSelector(
 
       console.log(part)
 
-      const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
-      const finish = part.drawerFinishes ? part.drawerFinishes.UPCHARGE : 0;
-      const notchDrill = part.notchDrill ? part.notchDrill.PRICE : 0;
+      const wood = part.box_woodtype ? part.box_woodtype.STANDARD_GRADE : 0;
+      const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
+      const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
 
       console.log(pricer)
 
@@ -101,9 +101,9 @@ export const linePriceSelector = createSelector(
 
       console.log(part)
 
-      const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
-      const finish = part.drawerFinishes ? part.drawerFinishes.UPCHARGE : 0;
-      const notchDrill = part.notchDrill ? part.notchDrill.PRICE : 0;
+      const wood = part.box_woodtype ? part.box_woodtype.STANDARD_GRADE : 0;
+      const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
+      const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
 
 
 

@@ -47,7 +47,8 @@ import {
   GET_DOOR_OPTIONS,
   GET_BREAKDOWNS,
   UPDATE_BREAKDOWNS,
-  GET_BOX_BREAKDOWNS
+  GET_BOX_BREAKDOWNS,
+  GET_BOX_BOTTOM_WOODTYPES
 } from "./actions";
 
 const initialState = {
@@ -86,6 +87,7 @@ const initialState = {
   box_notches: ["Loading"],
   box_thickness: ["Loading"],
   box_woodtypes: ["Loading"],
+  box_bottom_woodtypes: ["Loading"],
 
   breakdowns: [],
   box_breakdowns: [],
@@ -182,6 +184,7 @@ const initialState = {
   loadedBoxNotches: false,
   loadedBoxThickness: false,
   loadedBoxWoodtypes: false,
+  loadedBoxBottomWoodtypes: false,
 
   loadedBreakdowns: false,
 
@@ -403,7 +406,12 @@ export default function (state = initialState, action) {
         box_woodtypes: data,
         loadedBoxWoodtypes: true
       };
-
+    case GET_BOX_BOTTOM_WOODTYPES:
+      return {
+        ...state,
+        box_bottom_woodtypes: data,
+        loadedBoxBottomWoodtypes: true
+      };
 
 
 

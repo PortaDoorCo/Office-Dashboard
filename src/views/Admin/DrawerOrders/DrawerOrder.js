@@ -409,7 +409,7 @@ class DoorOrders extends Component {
 
 const mapStateToProps = (state, prop) => ({
   woodtypes: state.part_list.box_woodtypes,
-  boxBottomWoodtype: state.part_list.box_woodtypes,
+  boxBottomWoodtype: state.part_list.box_bottom_woodtypes,
   boxThickness: state.part_list.box_thickness,
   boxBottoms: state.part_list.box_bottom_thickness,
   assembly: state.part_list.assembly,

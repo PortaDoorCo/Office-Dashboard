@@ -12,8 +12,8 @@ export default (info, part, breakdowns) => {
     const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0
     const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0
 
-    const top_rail_add = part.design.TOP_RAIL_ADD
-    const btm_rail_add = part.design.BTM_RAIL_ADD
+    const top_rail_add = part.miter_df_design.TOP_RAIL_ADD
+    const btm_rail_add = part.miter_df_design.BTM_RAIL_ADD
 
     const topRail = numQty(info.topRail)
     const bottomRail = numQty(info.bottomRail)
@@ -27,11 +27,11 @@ export default (info, part, breakdowns) => {
     const width = numQty(info.width)
     const qty = parseInt(info.qty)
 
-    const lites = part.lites ? part.lites.NAME : ''
+    const lites = part.lite ? part.lite.NAME : ''
 
 
     const panel_factor = part.panel.PANEL_FACTOR
-    const profile_width = part.design.PROFILE_WIDTH
+    const profile_width = part.miter_df_design.PROFILE_WIDTH
 
     const add_len = 0
     const INSET = 0

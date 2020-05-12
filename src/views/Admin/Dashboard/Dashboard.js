@@ -57,7 +57,7 @@ class Dashboard extends Component {
       <div className="animated fadeIn">
         {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
           <div>
-            <Row>
+            {/* <Row>
               <Col lg="4">
                 <Chart2 />
               </Col>
@@ -72,7 +72,7 @@ class Dashboard extends Component {
               <Col>
                 <Chart1 />
               </Col>
-            </Row>
+            </Row> */}
             <Row>
               <Col style={{ height: 600 }}>
                 <Maps />
