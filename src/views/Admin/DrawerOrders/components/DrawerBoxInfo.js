@@ -62,7 +62,7 @@ class DrawerBoxInfo extends Component {
                 <FormGroup>
                   <Label htmlFor="woodtypeSelection">Woodtype</Label>
                   <Field
-                    name={`${part}.woodtype`}
+                    name={`${part}.box_woodtype`}
                     component={renderDropdownList}
                     data={woodtypes}
                     valueField="value"
@@ -74,7 +74,7 @@ class DrawerBoxInfo extends Component {
                 <FormGroup>
                   <Label htmlFor="box-thickness">Box Thickness</Label>
                   <Field
-                    name={`${part}.boxThickness`}
+                    name={`${part}.box_thickness`}
                     component={renderDropdownList}
                     data={boxThickness}
                     valueField="value"
@@ -86,7 +86,7 @@ class DrawerBoxInfo extends Component {
                 <FormGroup>
                   <Label htmlFor="box-bottom-woodtype">Box Bottom Woodtype</Label>
                   <Field
-                    name={`${part}.boxBottomWoodtype`}
+                    name={`${part}.box_bottom_woodtype`}
                     component={renderDropdownList}
                     data={boxBottomWoodtype}
                     valueField="value"
@@ -101,7 +101,7 @@ class DrawerBoxInfo extends Component {
                 <FormGroup>
                   <Label htmlFor="box-bottoms">Box Bottom Thickness</Label>
                   <Field
-                    name={`${part}.boxBottoms`}
+                    name={`${part}.box_bottom_thickness`}
                     component={renderDropdownList}
                     data={boxBottoms}
                     valueField="value"
@@ -114,7 +114,7 @@ class DrawerBoxInfo extends Component {
                 <FormGroup>
                   <Label htmlFor="notch-drill">Notch and Drill</Label>
                   <Field
-                    name={`${part}.notchDrill`}
+                    name={`${part}.box_notch`}
                     component={renderDropdownList}
                     data={notchDrill}
                     valueField="value"
@@ -126,7 +126,7 @@ class DrawerBoxInfo extends Component {
                 <FormGroup>
                   <Label htmlFor="finish">Finish/Assembly</Label>
                   <Field
-                    name={`${part}.drawerFinishes`}
+                    name={`${part}.box_finish`}
                     component={renderDropdownList}
                     data={drawerFinishes}
                     valueField="value"
