@@ -10,8 +10,8 @@ export default (item, part, breakdowns) => {
 
     const height = item.height;
     const depth = parseInt(item.depth)
-    const sideDeduction = part.boxThickness.SIDE_DEDUCTION
-    const boxThickness = part.boxThickness.NAME
+    const sideDeduction = part.box_thickness.SIDE_DEDUCTION
+    const boxThickness = part.box_thickness.NAME
     return {
         qty: (parseInt(item.qty) * 2),
         depth: depth,
