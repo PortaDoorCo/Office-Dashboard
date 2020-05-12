@@ -220,7 +220,7 @@ console.log('formstate==>>>', formState)
                     name={`${part}.construction`}
                     component={renderDropdownList}
                     data={construction}
-                    onChange={this.onChangeType}
+                    onChange={() => this.onChangeType(index)}
                     valueField="value"
                     textField="name"
                     validate={required}

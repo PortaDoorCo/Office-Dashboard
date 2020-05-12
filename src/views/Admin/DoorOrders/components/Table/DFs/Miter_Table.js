@@ -295,21 +295,21 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                 className="btn-circle"
                 onClick={(e) =>
                   (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].design) ?
+                    (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].miter_df_design) ?
                       fields.push({
                         panelsH: 1,
                         panelsW: 1,
                         leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                         ),
                         rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                         ),
                         topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                         ),
                         bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.PROFILE_WIDTH
+                          formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                         ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,
