@@ -128,7 +128,7 @@ class GlassDoor extends Component {
           part_list.forEach((part, i) => {
             if ((part && part.profile) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].profile)
               ||
-              (part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)
+              (part && part.cope_design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].cope_design)
             ) {
               if (part.dimensions) {
                 part.dimensions.forEach((info, index) => {
@@ -153,7 +153,7 @@ class GlassDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].topRail`,
-                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.TOP_RAIL_ADD) : 0)
+                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.cope_design.TOP_RAIL_ADD) : 0)
                     )
                   );
 
@@ -162,7 +162,7 @@ class GlassDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].bottomRail`,
-                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.design.BTM_RAIL_ADD) : 0)
+                      fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.cope_design.BTM_RAIL_ADD) : 0)
                     )
                   );
 
