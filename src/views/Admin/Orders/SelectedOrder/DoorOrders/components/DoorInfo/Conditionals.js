@@ -16,6 +16,7 @@ import CopeDoor from './Cope/Door'
 import MiterDoor from './Miter/Door'
 import MTDoor from './MT/Door'
 import GlassDoor from './Glass/Glass_Door'
+import Glass_DF from './Glass/Glass_DF'
 
 import CopeDF from './Cope/DF'
 import MiterDF from './Miter/DF'
@@ -30,166 +31,6 @@ class Conditionals extends Component {
   constructor(props) {
     super(props);
   }
-
-  // componentDidUpdate(prevProps) {
-
-  //   if (this.props.formState) {
-  //     const update = async () => {
-
-  //       if (this.props.formState && this.props.formState.part_list) {
-  //         this.props.formState.part_list.forEach((part, i) => {
-
-  //           if (((part && part.orderType) !== (prevProps.formState && prevProps.formState.part_list && prevProps.formState.part_list[i].orderType)
-  //           || (part && part.construction) !== (prevProps.formState && prevProps.formState.part_list && prevProps.formState.part_list[i].construction)
-  //           )) {
-
-
-
-  //             if(part.design){
-  //               this.props.dispatch(
-  //                 change(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].design`,
-  //                 )
-  //               )
-
-  //               this.props.dispatch(
-  //                 untouch(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].design`,
-  //                 )
-  //               )
-  //             }
-
-  //             if(part.woodtype){
-  //               this.props.dispatch(
-  //                 change(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].woodtype`,
-  //                 )
-  //               )
-  //               this.props.dispatch(
-  //                 untouch(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].woodtype`,
-  //                 )
-  //               )
-  //             }
-
-  //             if(part.edge){
-  //               this.props.dispatch(
-  //                 change(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].edge`,
-  //                 )
-  //               )
-  //               this.props.dispatch(
-  //                 untouch(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].edge`,
-  //                 )
-  //               )
-  //             }
-
-  //             if(part.panel){
-  //               this.props.dispatch(
-  //                 change(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].panel`,
-  //                 )
-  //               )
-  //               this.props.dispatch(
-  //                 untouch(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].panel`,
-  //                 )
-  //               )
-  //             }
-
-  //             if(part.profile){
-  //               this.props.dispatch(
-  //                 change(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].profile`,
-  //                 )
-  //               )
-  //               this.props.dispatch(
-  //                 untouch(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].profile`,
-  //                 )
-  //               )
-  //             }
-
-  //             if(part.applied_profile){
-  //               this.props.dispatch(
-  //                 change(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].applied_profile`,
-  //                 )
-  //               )
-  //               this.props.dispatch(
-  //                 untouch(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].applied_profile`,
-  //                 )
-  //               )
-  //             }
-
-  //             if(part.finish){
-  //               this.props.dispatch(
-  //                 change(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].finish`,
-  //                 )
-  //               )
-  //               this.props.dispatch(
-  //                 untouch(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].finish`,
-  //                 )
-  //               )
-  //             }
-
-  //             if(part.face_frame_top_rail){
-  //               this.props.dispatch(
-  //                 change(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].face_frame_top_rail`,
-  //                 )
-  //               )
-  //               this.props.dispatch(
-  //                 untouch(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].face_frame_top_rail`,
-  //                 )
-  //               )
-  //             }
-
-  //             if(part.furniture_feet){
-  //               this.props.dispatch(
-  //                 change(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].furniture_feet`,
-  //                 )
-  //               )
-  //               this.props.dispatch(
-  //                 untouch(
-  //                   'DoorOrder',
-  //                   `part_list[${i}].furniture_feet`,
-  //                 )
-  //               )
-  //             }
-  //           }
-  //         });
-  //       } else {
-  //         return
-  //       }
-
-  //     };
-  //     update();
-  //   }
-  // }
 
   render() {
 
@@ -291,6 +132,19 @@ class Conditionals extends Component {
         if (formState.part_list[index].construction.value === "MT") {
           return (
             <MT_DF
+              part={part}
+              index={index}
+              isValid={isValid}
+              part_list={part_list}
+              formState={formState}
+              edit={edit}
+            />
+          )
+        }
+
+        if (formState.part_list[index].construction.value === "Glass") {
+          return (
+            <Glass_DF
               part={part}
               index={index}
               isValid={isValid}
