@@ -307,21 +307,21 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                   className="btn-circle"
                   onClick={(e) =>
                     (
-                      (formState.part_list[formState.part_list.length - 1].construction.value === "MT" && formState.part_list[formState.part_list.length - 1].design) ?
+                      (formState.part_list[formState.part_list.length - 1].construction.value === "MT" && formState.part_list[formState.part_list.length - 1].mt_design) ?
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
                           leftStile: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                            formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                           ),
                           rightStile: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                            formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                           ),
                           topRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                            formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                           ),
                           bottomRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                            formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                           ),
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,
