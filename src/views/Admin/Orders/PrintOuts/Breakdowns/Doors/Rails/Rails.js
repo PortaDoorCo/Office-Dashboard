@@ -9,6 +9,7 @@ import MT_DF from './designs/MT/MT_DF'
 import Face_Frame from './designs/Face_Frame/Face_Frame'
 import One_Piece_Door from './designs/One_Piece_Door/One_Piece_Door'
 import Slab_Door from './designs/Slab_Door/Slab_Door'
+import Glass_Door from './designs/Glass/Glass'
 
 
 
@@ -25,6 +26,10 @@ export default (info, part, breakdowns) => {
     }
     if (part.construction.value === "M") {
       return Miter_Door(info, part, breakdowns[2])
+    }
+
+    if (part.construction.value === "Glass") {
+      return Glass_Door(info, part, breakdowns[6])
     }
 
   }

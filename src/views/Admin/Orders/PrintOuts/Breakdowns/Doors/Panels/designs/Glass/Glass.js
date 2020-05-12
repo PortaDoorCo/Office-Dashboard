@@ -5,7 +5,7 @@ import Ratio from 'lb-ratio';
 
 
 export default (info, part) => {
-    const lites = part.lite ? part.lite.NAME : ''
+    const lites = part.lites ? part.lites.NAME : ''
     const none = [
         {
             qty: ``,
