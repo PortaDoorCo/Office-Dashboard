@@ -101,7 +101,7 @@ class MiterDoor extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                        fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
                       )
                     );
                   }
@@ -117,7 +117,7 @@ class MiterDoor extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                        fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
                       ),
                     );
                   }
@@ -129,14 +129,14 @@ class MiterDoor extends Component {
           })
 
           part_list.forEach((part, i) => {
-            if ((part && part.design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].design)) {
+            if ((part && part.miter_design) !== (prevProps.formState && prevProps.formState.part_list[i] && prevProps.formState.part_list[i].miter_design)) {
               if (part.dimensions) {
                 part.dimensions.forEach((info, index) => {
                   this.props.dispatch(
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].leftStile`,
-                      fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                      fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
                     )
                   );
 
@@ -144,7 +144,7 @@ class MiterDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].rightStile`,
-                      fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                      fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
                     )
                   );
 
@@ -153,7 +153,7 @@ class MiterDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].topRail`,
-                      fraction(part.design ? (part.design.PROFILE_WIDTH + part.design.TOP_RAIL_ADD) : 0)
+                      fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.TOP_RAIL_ADD) : 0)
                     )
                   );
 
@@ -162,7 +162,7 @@ class MiterDoor extends Component {
                     change(
                       'DoorOrder',
                       `part_list[${i}].dimensions[${index}].bottomRail`,
-                      fraction(part.design ? (part.design.PROFILE_WIDTH + part.design.BTM_RAIL_ADD) : 0)
+                      fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.BTM_RAIL_ADD) : 0)
                     )
                   );
 
@@ -173,7 +173,7 @@ class MiterDoor extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                        fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
                       )
                     );
                   }
@@ -183,7 +183,7 @@ class MiterDoor extends Component {
                       change(
                         'DoorOrder',
                         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+                        fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
                       )
                     );
                   }
@@ -243,7 +243,7 @@ class MiterDoor extends Component {
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
-                name={`${part}.design`}
+                name={`${part}.miter_design`}
                 component={renderDropdownListFilter}
                 data={miter_designs}
                 valueField="value"

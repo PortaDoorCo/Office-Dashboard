@@ -13,7 +13,7 @@ import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
-
+import numQty from 'numeric-quantity'
 
 const required = value => (value ? undefined : 'Required');
 
@@ -258,7 +258,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
 
               <Row>
                 <Col lg='9'>
-                  {(height[index] > 0) ?
+                  {(numQty(height[index]) > 0) ?
                     <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
                     :
                     null}
@@ -271,7 +271,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
               <Row>
                 <Col>
 
-                  {(height[index] > 0 && formState.part_list[i].dimensions[index].showBuilder) ?
+                  {(numQty(height[index]) > 0 && formState.part_list[i].dimensions[index].showBuilder) ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker
                         width={width[index]}
@@ -332,21 +332,21 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                 className="btn-circle"
                 onClick={(e) =>
                   (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "MT" && formState.part_list[formState.part_list.length - 1].design) ?
+                    (formState.part_list[formState.part_list.length - 1].construction.value === "MT" && formState.part_list[formState.part_list.length - 1].mt_design) ?
                       fields.push({
                         panelsH: 1,
                         panelsW: 1,
                         leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                         ),
                         rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                         ),
                         topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                         ),
                         bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].design.MID_RAIL_MINIMUMS
+                          formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                         ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,

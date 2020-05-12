@@ -170,7 +170,7 @@ class FaceFrame extends Component {
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
-                name={`${part}.design`}
+                name={`${part}.face_frame_design`}
                 component={renderDropdownListFilter}
                 data={face_frame_designs}
                 valueField="value"

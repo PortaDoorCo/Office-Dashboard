@@ -38,6 +38,7 @@ export const GET_BOX_FINISH = 'GET_BOX_FINISH'
 export const GET_BOX_NOTCHES = 'GET_BOX_NOTCHES'
 export const GET_BOX_THICKNESS = 'GET_BOX_THICKNESS'
 export const GET_BOX_WOODTYPES = 'GET_BOX_WOODTYPES'
+export const GET_BOX_BOTTOM_WOODTYPES = 'GET_BOX_BOTTOM_WOODTYPES'
 
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -628,6 +629,23 @@ export function getBoxWoodtypes(cookie) {
     const data = await res.json();
     return dispatch({
       type: GET_BOX_WOODTYPES,
+      data: data
+    });
+  };
+}
+
+export function getBoxBottomWoodtypes(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/box-bottom-woodtypes`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BOX_BOTTOM_WOODTYPES,
       data: data
     });
   };
