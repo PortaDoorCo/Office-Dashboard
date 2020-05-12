@@ -85,7 +85,7 @@ export default (data, breakdowns) => {
           columns: [
             {
               stack: [
-                { text: `${part.woodtype.NAME}`, style: 'fonts' }
+                { text: `${part.box_woodtype.NAME}`, style: 'fonts' }
               ]
             }
           ]
