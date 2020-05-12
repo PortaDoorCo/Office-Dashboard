@@ -14,6 +14,7 @@ import MiterDF from './SideBar/Miter/DF'
 import MTDF from './SideBar/MT/DF'
 import GlassDoor from './SideBar/Glass/Door'
 import OnePieceDoor from './SideBar/One_Piece/Door'
+import Glass_DF from './SideBar/Glass/DF'
 
 const style = {
   margin: 'auto',
@@ -79,6 +80,12 @@ class SideBar extends Component {
       if(part.construction.value === "MT") {
         return (
           <MTDF part={part} i={i} />
+        )
+      }
+
+      if(part.construction.value === "Glass") {
+        return (
+          <Glass_DF part={part} i={i} />
         )
       }
 
