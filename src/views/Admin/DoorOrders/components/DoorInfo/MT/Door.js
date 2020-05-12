@@ -238,7 +238,7 @@ class MT_Door extends Component {
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
-                name={`${part}.design`}
+                name={`${part}.mt_design`}
                 component={renderDropdownListFilter}
                 data={mt_designs}
                 valueField="value"
