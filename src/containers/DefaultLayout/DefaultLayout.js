@@ -70,7 +70,7 @@ import {
   getBoxNotches,
   getBoxThicknesses,
   getBoxWoodtypes,
-
+  getBoxBottomWoodtypes,
   getBreakdowns,
   getBoxBreakdowns,
   getPricing
@@ -130,6 +130,7 @@ class DefaultLayout extends Component {
       getBoxNotches,
       getBoxThicknesses,
       getBoxWoodtypes,
+      getBoxBottomWoodtypes,
 
       getBreakdowns,
       getBoxBreakdowns,
@@ -188,7 +189,7 @@ class DefaultLayout extends Component {
       await getOnePieceDesigns(cookie);
       await getOnePiecePanels(cookie);
       await getOnePieceEdges(cookie);
-
+      await getBoxBottomWoodtypes(cookie);
       await getBoxBottomThickness(cookie);
       await getBoxFinishes(cookie);
       await getBoxNotches(cookie);
@@ -311,7 +312,7 @@ const mapDispatchToProps = dispatch =>
       getOnePieceDesigns,
       getOnePiecePanels,
       getOnePieceEdges,
-
+      getBoxBottomWoodtypes,
       getBoxBottomThickness,
       getBoxFinishes,
       getBoxNotches,
