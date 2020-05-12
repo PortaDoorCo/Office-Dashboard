@@ -23,6 +23,7 @@ import MT_DF from './MT/DF'
 import FaceFrame from './Face_Frame/FaceFrame'
 import One_Piece_Door from './One_Piece/One_Piece'
 import Slab_Door from './Slab_Door/Slab_Door'
+import Glass_DF from './Glass/Glass_DF'
 
 
 
@@ -122,6 +123,17 @@ class Conditionals extends Component {
         if (formState.part_list[index].construction.value === "MT") {
           return (
             <MT_DF
+              part={part}
+              index={index}
+              isValid={isValid}
+              part_list={part_list}
+              formState={formState}
+            />
+          )
+        }
+        if (formState.part_list[index].construction.value === "Glass") {
+          return (
+            <Glass_DF
               part={part}
               index={index}
               isValid={isValid}

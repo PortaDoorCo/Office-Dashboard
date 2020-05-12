@@ -41,6 +41,9 @@ export default (info, part, breakdowns) => {
     if (part.construction.value === "M") {
       return Miter_DF(info, part, breakdowns[5])
     }
+    if (part.construction.value === "Glass") {
+      return Glass_Door(info, part)
+    }
 
   }
 
