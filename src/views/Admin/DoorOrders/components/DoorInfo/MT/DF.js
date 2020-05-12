@@ -82,23 +82,44 @@ class MT_DF extends Component {
                     )
                   );
 
+                  if(info.full_frame) {
+                    this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].topRail`,
+                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
+  
+  
+                    this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].bottomRail`,
+                        fraction(part.design ? part.design.MID_RAIL_MINIMUMS : 0)
+                      )
+                    );
+                  } else {
+                    this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].topRail`,
+                        fraction(part.design ? part.design.DF_Reduction : 0)
+                      )
+                    );
+  
+  
+                    this.props.dispatch(
+                      change(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].bottomRail`,
+                        fraction(part.design ? part.design.DF_Reduction : 0)
+                      )
+                    );
+                  }
 
-                  this.props.dispatch(
-                    change(
-                      'DoorOrder',
-                      `part_list[${i}].dimensions[${index}].topRail`,
-                      fraction(part.design ? part.design.DF_Reduction : 0)
-                    )
-                  );
 
 
-                  this.props.dispatch(
-                    change(
-                      'DoorOrder',
-                      `part_list[${i}].dimensions[${index}].bottomRail`,
-                      fraction(part.design ? part.design.DF_Reduction : 0)
-                    )
-                  );
                 });
               } else {
                 return
