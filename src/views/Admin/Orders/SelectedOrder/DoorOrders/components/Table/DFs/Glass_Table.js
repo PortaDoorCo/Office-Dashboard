@@ -40,7 +40,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, dispatch }) => {
+const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, dispatch, edit }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -153,6 +153,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         component={renderField}
                         label="qty"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -163,6 +164,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -174,6 +176,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                         label="height"
                         validate={required}
+                        edit={edit}
                       />
                     </td>
 
@@ -182,6 +185,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         <Input
                           type="text"
                           className="form-control"
+                          disabled={edit}
                           placeholder={"$" + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
@@ -193,9 +197,12 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
                     </td>
                     <td>
-                      <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
-                        X
+                    {!edit ?
+                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                          X
                         </Button>
+                        : <div />
+                      }
                     </td>
                   </tr>
 
@@ -209,6 +216,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         type="text"
                         component={renderField}
                         label="leftStile"
+                        edit={edit}
                       />
                     </td>
                     <td>
@@ -220,6 +228,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         type="text"
                         component={renderField}
                         label="rightStile"
+                        edit={edit}
 
                       />
                     </td>
@@ -232,6 +241,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         type="text"
                         component={renderField}
                         label="topRail"
+                        edit={edit}
 
                       />
                     </td>
@@ -244,6 +254,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         type="text"
                         component={renderField}
                         label="bottomRail"
+                        edit={edit}
                       />
                     </td>
                   </tr>
@@ -271,11 +282,14 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
                 </Col>
                 <Col>
+                {!edit ?
                   <Field
                     name={`${table}.full_frame`}
                     component={renderCheckboxToggle}
                     onChange={(e) => updateFullFrame(e, index)}
-                    label="Full Frame" />
+                    label="Full Frame"
+                    />
+                    : null }
                 </Col>
               </Row>
 
@@ -328,6 +342,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     type="textarea"
                     component={renderField}
                     label="notes"
+                    edit={edit}
                   />
                 </Col>
 
@@ -337,6 +352,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           ))}
           <Row>
             <Col>
+            {!edit ?
               <Button
                 color="primary"
                 className="btn-circle"
@@ -369,6 +385,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               >
                 +
                 </Button>
+                : null }
             </Col>
           </Row>
 
@@ -382,10 +399,11 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 type="text"
                 component={renderField}
                 label="addPrice"
+                edit={edit}
               />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                <Input placeholder={subTotal[i].toFixed(2) || 0} disabled={edit} />
 
               ) : (
                   <Input placeholder="0" />
