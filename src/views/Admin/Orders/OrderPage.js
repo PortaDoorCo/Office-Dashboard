@@ -160,17 +160,17 @@ class OrderPage extends Component {
         switch (option.value) {
           case 'All':
 
-            const edgesPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.edges && i.edges.photo && i.edges.photo.url).map(i => {
+            const edgesPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
               return new Promise((resolve, reject) => {
-                toDataUrl(i.edges.photo.url, (result) => {
+                toDataUrl(i.edge.photo.url, (result) => {
                   resolve(result)
                 });
               })
             });
 
-            const mouldsPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.moulds && i.moulds.photo && i.moulds.photo.url).map(i => {
+            const mouldsPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
               return new Promise((resolve, reject) => {
-                toDataUrl(i.moulds.photo.url, (result) => {
+                toDataUrl(i.profile.photo.url, (result) => {
                   resolve(result)
                 });
               })
@@ -178,9 +178,9 @@ class OrderPage extends Component {
 
 
 
-            const panelsPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.panels && i.panels.photo && i.panels.photo.url).map(i => {
+            const panelsPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
               return new Promise((resolve, reject) => {
-                toDataUrl(i.panels.photo.url, (result) => {
+                toDataUrl(i.panel.photo.url, (result) => {
                   resolve(result)
                 });
               })
@@ -231,25 +231,25 @@ class OrderPage extends Component {
             break;
           case 'Profiles':
 
-            const edgesPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.edges && i.edges.photo && i.edges.photo.url).map(i => {
+            const edgesPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
               return new Promise((resolve, reject) => {
-                toDataUrl(i.edges.photo.url, (result) => {
+                toDataUrl(i.edge.photo.url, (result) => {
                   resolve(result)
                 });
               })
             });
 
-            const mouldsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.moulds && i.moulds.photo && i.moulds.photo.url).map(i => {
+            const mouldsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
               return new Promise((resolve, reject) => {
-                toDataUrl(i.moulds.photo.url, (result) => {
+                toDataUrl(i.profile.photo.url, (result) => {
                   resolve(result)
                 });
               })
             });
 
-            const panelsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.panels && i.panels.photo && i.panels.photo.url).map(i => {
+            const panelsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
               return new Promise((resolve, reject) => {
-                toDataUrl(i.panels.photo.url, (result) => {
+                toDataUrl(i.panel.photo.url, (result) => {
                   resolve(result)
                 });
               })
