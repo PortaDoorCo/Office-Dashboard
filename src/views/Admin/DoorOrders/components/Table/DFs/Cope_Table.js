@@ -114,7 +114,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
   }
 
-  console.log('HEIIIGHHHTTTT', height)
 
   return (
     formState ?
@@ -410,8 +409,5 @@ const mapDispatchToProps = dispatch =>
   );
 
 
-export default connect(
-  mapStateToProps,
-  null
-)(Cope_Table);
+export default connect()(Cope_Table);
 
