@@ -32,39 +32,6 @@ class One_Piece_Door extends Component {
         super(props);
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.formState !== prevProps.formState) {
-          if (this.props.formState) {
-            const update = async () => {
-              const form = await this.props.formState;
-              const part_list = await form.part_list;
-    
-    
-              part_list.forEach((part, i) => {
-                if (part.dimensions) {
-                  part.dimensions.forEach((info, index) => {
-    
-                    this.props.dispatch(
-                      change(
-                        'DoorOrder',
-                        `part_list[${i}].dimensions[${index}].item`,
-                        index + 1
-                      )
-                    )
-                  });
-                } else {
-                  return;
-                }
-              })
-    
-    
-            };
-            update();
-          }
-        }
-      }
-
-
     render() {
         const {
             part,
