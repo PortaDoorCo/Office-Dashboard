@@ -179,7 +179,8 @@ class OrderTable extends Component {
             )}
             <Button color="primary" className="btn-circle" onClick={() => fields.push({
               scoop: scoop[0],
-              dividers: dividers[0]
+              dividers: dividers[0],
+              item: fields.length + 1
             })}>+</Button>
             <Row>
               <Col xs="4" />
