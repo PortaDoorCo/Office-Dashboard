@@ -78,14 +78,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   }
 
   const updateFullFrame = (e, index) => {
-    console.log("asdfasdfasdf", e)
-    console.log("LKSDJFKSLDJF", index)
-
-    console.log(formState)
-
     const part = formState.part_list[i]
-    console.log(part)
-
     if (e) {
       dispatch(
         change(
@@ -110,7 +103,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(part.profile ? (part.profile.DF_Reduction) : 0)
         )
       );
-
       dispatch(
         change(
           'DoorOrder',
@@ -368,7 +360,8 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         verticalMidRailSize: 0,
                         unevenSplitInput: "0",
                         showBuilder: false,
-                        full_frame: false
+                        full_frame: false,
+                        item: fields.length + 1
                       })
                       : alert('please select a profile')
                   )}
