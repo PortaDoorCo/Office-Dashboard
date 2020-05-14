@@ -342,7 +342,10 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                       horizontalMidRailSize: 0,
                       verticalMidRailSize: 0,
                       unevenSplitInput: "0",
-                      showBuilder: false
+                      unevenSplit: false,
+                      unevenCheck: false,
+                      showBuilder: false,
+                      item: fields.length + 1
                     })
                   }
                 >
