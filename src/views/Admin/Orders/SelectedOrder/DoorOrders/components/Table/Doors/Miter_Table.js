@@ -373,7 +373,10 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,
                           unevenSplitInput: "0",
-                          showBuilder: false
+                          unevenSplit: false,
+                          unevenCheck: false,
+                          showBuilder: false,
+                          item: fields.length + 1
                         })
                         : alert('please select a profile')
                     )}

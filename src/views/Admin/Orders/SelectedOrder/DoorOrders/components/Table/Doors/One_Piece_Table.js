@@ -257,7 +257,8 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                   className="btn-circle"
                   onClick={(e) =>
                     fields.push({
-                      showBuilder: false
+                      showBuilder: false,
+                      item: fields.length + 1
                     })
                   }
                 >
