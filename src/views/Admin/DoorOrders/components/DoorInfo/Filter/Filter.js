@@ -256,7 +256,7 @@ console.log('formstate==>>>', formState)
                     name={`${part}.orderType`}
                     component={renderDropdownList}
                     data={orderType}
-                    onChange={this.onChangeType}
+                    onChange={() => this.onChangeType(index)}
                     valueField="value"
                     textField="name"
                     validate={required}
@@ -291,7 +291,7 @@ console.log('formstate==>>>', formState)
                     name={`${part}.orderType`}
                     component={renderDropdownList}
                     data={orderType}
-                    onChange={this.onChangeType}
+                    onChange={() => this.onChangeType(index)}
                     valueField="value"
                     textField="name"
                     validate={required}
@@ -309,12 +309,5 @@ console.log('formstate==>>>', formState)
   }
 }
 
-const mapStateToProps = state => ({
 
-});
-
-
-export default connect(
-  mapStateToProps,
-  null
-)(DoorFilter);
+export default connect()(DoorFilter);
