@@ -85,7 +85,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.cope_design.TOP_RAIL_ADD) : 0)
+          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
         )
       );
 
@@ -93,7 +93,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.cope_design.BTM_RAIL_ADD) : 0)
+          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
         )
       );
     } else {
@@ -362,7 +362,8 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         verticalMidRailSize: 0,
                         unevenSplitInput: "0",
                         showBuilder: false,
-                        full_frame: false
+                        full_frame: false,
+                        item: fields.length + 1
                       })
                       : alert('please select a profile')
                   )}
