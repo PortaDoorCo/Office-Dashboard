@@ -88,7 +88,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   }
 
   const twoWide = (index) => {
-    console.log(fields)
     const part = formState.part_list[i]
     dispatch(
       change(
