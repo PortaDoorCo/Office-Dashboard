@@ -35,18 +35,66 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
           )
         }
 
-        if (index === i && part.design) {
-          dispatch(
+        if (index === i && part.cope_design) {
+          this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].design`,
+              `part_list[${i}].cope_design`,
             )
           )
 
-          dispatch(
+          this.props.dispatch(
             untouch(
               'DoorOrder',
-              `part_list[${i}].design`,
+              `part_list[${i}].cope_design`,
+            )
+          )
+        }
+
+        if (index === i && part.miter_design) {
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].miter_design`,
+            )
+          )
+
+          this.props.dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].miter_design`,
+            )
+          )
+        }
+
+        if (index === i && part.mt_design) {
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].mt_design`,
+            )
+          )
+
+          this.props.dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].mt_design`,
+            )
+          )
+        }
+
+        if (index === i && part.miter_df_design) {
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].miter_df_design`,
+            )
+          )
+
+          this.props.dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].miter_df_design`,
             )
           )
         }
