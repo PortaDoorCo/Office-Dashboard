@@ -75,20 +75,15 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
   }
 
   const updateFullFrame = (e, index) => {
-    console.log("asdfasdfasdf", e)
-    console.log("LKSDJFKSLDJF", index)
-
-    console.log(formState)
 
     const part = formState.part_list[i]
-    console.log(part)
 
     if (e) {
       dispatch(
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(part.design ? (part.design.MID_RAIL_MINIMUMS) : 0)
+          fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
         )
       );
 
@@ -96,7 +91,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(part.design ? (part.design.MID_RAIL_MINIMUMS) : 0)
+          fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
         )
       );
     } else {
@@ -104,7 +99,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(part.design ? (part.design.DF_Reduction) : 0)
+          fraction(part.mt_design ? (part.mt_design.DF_Reduction) : 0)
         )
       );
 
@@ -112,7 +107,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(part.design ? (part.design.DF_Reduction) : 0)
+          fraction(part.mt_design ? (part.mt_design.DF_Reduction) : 0)
         )
       );
     }

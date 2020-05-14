@@ -148,6 +148,7 @@ class MT_DF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                onBlur={() => this.onChangeProfile()}
               />
             </FormGroup>
           </Col>
