@@ -229,22 +229,6 @@ class DoorOrders extends Component {
               customer.Shipping_Phone || customer.Phone1
             )
           );
-
-          part_list.forEach((part, i) => {
-            if (part.dimensions) {
-              return part.dimensions.forEach((info, index) => {
-                return this.props.dispatch(
-                  change(
-                    'DrawerOrder',
-                    `part_list[${i}].dimensions[${index}].item`,
-                    index + 1
-                  )
-                );
-              });
-            } else {
-              return null;
-            }
-          });
         };
         update();
       }
