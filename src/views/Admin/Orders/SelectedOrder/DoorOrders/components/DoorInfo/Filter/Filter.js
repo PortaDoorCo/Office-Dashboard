@@ -8,9 +8,9 @@ import {
   Button,
   Input
 } from "reactstrap";
-import { Field } from "redux-form";
+import { Field, change, untouch } from "redux-form";
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
-
+import { connect } from 'react-redux'
 
 const required = value => (value ? undefined : 'Required');
 
@@ -19,9 +19,164 @@ const required = value => (value ? undefined : 'Required');
 
 
 
-const DoorFilter = ({ formState, index, part, construction, thickness, orderType, edit }) => {
+const DoorFilter = ({ formState, index, part, construction, thickness, orderType, edit, dispatch }) => {
 
-  if(formState && formState.part_list){
+  const onChangeType = (index) => {
+    if (this.props.formState) {
+      this.props.formState.part_list.forEach((part, i) => {
+        console.log('index====>>>', index, 'wooddd==>>', part.woodtype)
+        if (index === i && part.dimensions) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions`,
+              []
+            )
+          )
+        }
+
+        if (index === i && part.design) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].design`,
+            )
+          )
+
+          dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].design`,
+            )
+          )
+        }
+
+        if (index === i && part.woodtype) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].woodtype`,
+            )
+          )
+          dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].woodtype`,
+            )
+          )
+        }
+
+        if (index === i && part.edge) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].edge`,
+            )
+          )
+          dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].edge`,
+            )
+          )
+        }
+
+        if (index === i && part.panel) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].panel`,
+            )
+          )
+          dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].panel`,
+            )
+          )
+        }
+
+        if (index === i && part.profile) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].profile`,
+            )
+          )
+          dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].profile`,
+            )
+          )
+        }
+
+        if (index === i && part.applied_profile) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].applied_profile`,
+            )
+          )
+          dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].applied_profile`,
+            )
+          )
+        }
+
+        if (index === i && part.finish) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].finish`,
+            )
+          )
+          dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].finish`,
+            )
+          )
+        }
+
+        if (index === i && part.face_frame_top_rail) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].face_frame_top_rail`,
+            )
+          )
+          dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].face_frame_top_rail`,
+            )
+          )
+        }
+
+        if (index === i && part.furniture_feet) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].furniture_feet`,
+            )
+          )
+          dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].furniture_feet`,
+            )
+          )
+        }
+
+      });
+
+    }
+  }
+
+  if (formState && formState.part_list) {
     if ((formState.part_list[index].orderType.value === "Door") || (formState.part_list[index].orderType.value === "DF")) {
       return (
         <Fragment>
@@ -33,6 +188,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   name={`${part}.orderType`}
                   component={renderDropdownList}
                   data={orderType}
+                  onChange={() => onChangeType(index)}
                   valueField="value"
                   textField="name"
                   validate={required}
@@ -40,7 +196,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                 />
               </FormGroup>
             </Col>
-  
+
             <Col xs="4">
               <FormGroup>
                 <Label for="construction">Construction</Label>
@@ -48,6 +204,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   name={`${part}.construction`}
                   component={renderDropdownList}
                   data={construction}
+                  onChange={() => onChangeType(index)}
                   valueField="value"
                   textField="name"
                   validate={required}
@@ -55,7 +212,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                 />
               </FormGroup>
             </Col>
-  
+
             <Col xs="4">
               <FormGroup>
                 <Label for="construction">Thickness</Label>
@@ -73,7 +230,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
           </Row>
         </Fragment>
       )
-    } 
+    }
     if (formState.part_list[index].orderType.value === "Frame_Only") {
       return (
         <Fragment>
@@ -85,6 +242,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   name={`${part}.orderType`}
                   component={renderDropdownList}
                   data={orderType}
+                  onChange={() => onChangeType(index)}
                   valueField="value"
                   textField="name"
                   validate={required}
@@ -92,7 +250,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                 />
               </FormGroup>
             </Col>
- 
+
             <Col xs="4">
               <FormGroup>
                 <Label for="construction">Thickness</Label>
@@ -121,6 +279,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
                   name={`${part}.orderType`}
                   component={renderDropdownList}
                   data={orderType}
+                  onChange={() => onChangeType(index)}
                   valueField="value"
                   textField="name"
                   validate={required}
@@ -138,4 +297,4 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
   }
 }
 
-export default DoorFilter;
+export default connect()(DoorFilter);
