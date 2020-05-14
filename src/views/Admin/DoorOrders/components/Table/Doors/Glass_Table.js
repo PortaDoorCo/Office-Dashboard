@@ -8,12 +8,13 @@ import {
   Button
 } from "reactstrap";
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from "redux-form";
+import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
-import numQty from 'numeric-quantity'
+import numQty from 'numeric-quantity';
+import { connect } from 'react-redux';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -37,7 +38,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
+const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, dispatch }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -74,6 +75,27 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
     setHeight(newHeight);
   }
 
+  const twoHigh = (index) => {
+    const part = formState.part_list[i]
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+      ),
+    );
+  }
+
+  const twoWide = (index) => {
+    const part = formState.part_list[i]
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+      )
+    );
+  }
 
   return (
     formState ?
@@ -142,6 +164,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         type="text"
                         component={renderField}
                         label="horizontalMidRail"
+                        onChange={() => twoHigh(index)}
                       />
                     </td>
                     <td>
@@ -150,6 +173,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         type="text"
                         component={renderField}
                         label="verticalMidRail"
+                        onChange={() => twoWide(index)}
                       />
                     </td>
                     <td>
@@ -386,4 +410,4 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   )
 };
 
-export default Cope_Table;
+export default connect()(Cope_Table);
