@@ -8,12 +8,12 @@ import {
   Button
 } from "reactstrap";
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from "redux-form";
+import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
-
+import { connect } from 'react-redux'
 
 const required = value => (value ? undefined : 'Required');
 
@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit }) => {
+const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -72,6 +72,17 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
       newHeight = [...newHeight, v]
     }
     setHeight(newHeight);
+  }
+
+  const twoHigh = (index) => {
+    const part = formState.part_list[i]
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+        fraction(2.375)
+      ),
+    );
   }
 
 
@@ -145,6 +156,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         component={renderField}
                         label="horizontalMidRail"
                         edit={edit}
+                        onChange={() => twoHigh(index)}
                       />
                     </td>
                     <td>
@@ -342,7 +354,10 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                       horizontalMidRailSize: 0,
                       verticalMidRailSize: 0,
                       unevenSplitInput: "0",
-                      showBuilder: false
+                      unevenSplit: false,
+                      unevenCheck: false,
+                      showBuilder: false,
+                      item: fields.length + 1
                     })
                   }
                 >
@@ -380,4 +395,4 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
   )
 };
 
-export default Frame_Only_Table;
+export default connect() (Frame_Only_Table);

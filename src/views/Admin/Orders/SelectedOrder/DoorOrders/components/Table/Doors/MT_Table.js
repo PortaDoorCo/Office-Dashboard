@@ -8,12 +8,12 @@ import {
   Button
 } from "reactstrap";
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from "redux-form";
+import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
-
+import { connect } from 'react-redux'
 
 const required = value => (value ? undefined : 'Required');
 
@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit }) => {
+const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -72,6 +72,28 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
       newHeight = [...newHeight, v]
     }
     setHeight(newHeight);
+  }
+
+  const twoHigh = (index) => {
+    const part = formState.part_list[i]
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+      ),
+    );
+  }
+
+  const twoWide = (index) => {
+    const part = formState.part_list[i]
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+      )
+    );
   }
 
 
@@ -146,6 +168,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         component={renderField}
                         label="horizontalMidRail"
                         edit={edit}
+                        onChange={() => twoHigh(index)}
                       />
                     </td>
                     <td>
@@ -155,6 +178,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         component={renderField}
                         label="verticalMidRail"
                         edit={edit}
+                        onChange={()=>twoWide(index)}
                       />
                     </td>
                     <td>
@@ -373,7 +397,10 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,
                           unevenSplitInput: "0",
-                          showBuilder: false
+                          unevenSplit: false,
+                          unevenCheck: false,
+                          showBuilder: false,
+                          item: fields.length + 1
                         })
                         : alert('please select a profile')
                     )}
@@ -411,4 +438,4 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
   )
 };
 
-export default MT_Table;
+export default connect() (MT_Table);

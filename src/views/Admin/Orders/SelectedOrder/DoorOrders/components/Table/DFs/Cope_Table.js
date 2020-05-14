@@ -8,12 +8,12 @@ import {
   Button
 } from "reactstrap";
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from "redux-form";
+import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
-
+import { connect } from 'react-redux';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -37,7 +37,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit }) => {
+const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])
@@ -72,6 +72,43 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
       newHeight = [...newHeight, v]
     }
     setHeight(newHeight);
+  }
+
+  const updateFullFrame = (e, index) => {
+    const part = formState.part_list[i]
+    if (e) {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+        )
+      );
+
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+        )
+      );
+    } else {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+        )
+      );
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+        )
+      );
+    }
+
   }
 
 
@@ -326,7 +363,9 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,
                           unevenSplitInput: "0",
-                          showBuilder: false
+                          showBuilder: false,
+                          full_frame: false,
+                          item: fields.length + 1
                         })
                         : alert('please select a profile')
                     )}
@@ -364,4 +403,4 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   )
 };
 
-export default Cope_Table;
+export default connect()(Cope_Table);
