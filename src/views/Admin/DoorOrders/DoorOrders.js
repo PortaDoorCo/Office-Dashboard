@@ -137,6 +137,7 @@ class DoorOrders extends Component {
       user: user.id,
       userName: user.username,
       files: this.state.files,
+      submittedBy: user.FirstName,
       tracking: [
         {
           "status": values.job_info.status,
