@@ -51,11 +51,12 @@ export default (info, part, breakdowns) => {
             qty: `(${(panelsH * panelsW)})`,
             measurement: `${fraction(
                 Math.round(
-                    eval(breakdowns.panel_width)
+                    eval(breakdowns.panel_height)
+                    
                     * 16) / 16
             )} x ${fraction(
                 Math.round(
-                    eval(breakdowns.panel_height)
+                    eval(breakdowns.panel_width)
                     * 16) / 16
             )}`,
             pattern: 'PR'

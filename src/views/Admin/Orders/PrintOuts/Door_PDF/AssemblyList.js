@@ -124,7 +124,7 @@ console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 70, 115, 105, 120],
+            widths: [22, 15, 80, 115, 105, 120],
             body: tableBody
           },
           layout: 'lightHorizontalLines'
