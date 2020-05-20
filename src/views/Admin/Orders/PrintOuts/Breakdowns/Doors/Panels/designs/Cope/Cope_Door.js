@@ -47,7 +47,7 @@ export default (info, part, breakdowns) => {
 
     const door = [
         {
-            qty: `(${(panelsH * panelsW)})`,
+            qty: `(${(panelsH * panelsW) * (qty)})`,
             measurement: `${fraction(
                 Math.round(
                     eval(breakdowns.panel_width)
