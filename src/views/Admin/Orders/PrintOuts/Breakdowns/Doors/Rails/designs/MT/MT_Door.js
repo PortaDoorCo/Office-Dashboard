@@ -16,10 +16,10 @@ export default (info, part, breakdowns) => {
   const top_rail_arch = part.mt_design.TOP_RAIL_ADD
   const btm_rail_arch = part.mt_design.BTM_RAIL_ADD
 
-  const topRail = numQty(info.topRail) 
-  const bottomRail = numQty(info.bottomRail)
-  const leftStile = numQty(info.leftStile)
-  const rightStile = numQty(info.rightStile)
+  const topRail = numQty(info.topRail) + (part.edge.LIP_FACTOR / 2)
+  const bottomRail = numQty(info.bottomRail) + (part.edge.LIP_FACTOR / 2)
+  const leftStile = numQty(info.leftStile) + (part.edge.LIP_FACTOR / 2)
+  const rightStile = numQty(info.rightStile) + (part.edge.LIP_FACTOR / 2)
   const vertMull = numQty(vMidRail)
   const horizMull = numQty(hMidRail)
   const panelsH = parseInt(info.panelsH)
