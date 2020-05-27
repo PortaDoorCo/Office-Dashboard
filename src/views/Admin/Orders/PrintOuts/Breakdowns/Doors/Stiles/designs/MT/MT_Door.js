@@ -13,10 +13,10 @@ export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0
 
-  const topRail = numQty(info.topRail)
-  const bottomRail = numQty(info.bottomRail)
-  const leftStile = numQty(info.leftStile)
-  const rightStile = numQty(info.rightStile)
+  const topRail = numQty(info.topRail) + (part.edge.LIP_FACTOR / 2)
+  const bottomRail = numQty(info.bottomRail) + (part.edge.LIP_FACTOR / 2)
+  const leftStile = numQty(info.leftStile) + (part.edge.LIP_FACTOR / 2)
+  const rightStile = numQty(info.rightStile) + (part.edge.LIP_FACTOR / 2)
   const vertMull = numQty(vMidRail)
   const horizMull = numQty(hMidRail)
   const panelsH = parseInt(info.panelsH)
