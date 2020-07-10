@@ -7,10 +7,10 @@ import Size from '../Breakdowns/Doors/Size';
 
 export default (data, breakdowns) => {
 
-  
-console.log(data)
 
-console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
+  console.log(data)
+
+  console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
 
 
   return [
@@ -59,7 +59,7 @@ console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
       console.log(data)
 
 
-      
+
 
       const tableBody = [
         [
@@ -97,7 +97,7 @@ console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
                   style: 'fonts'
                 },
                 {
-                  text: `${i.design ? i.design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`,
+                  text: `${i.cope_design ? i.cope_design.NAME + ' ' + i.construction.value : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`,
                   style: 'fonts'
                 },
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' }
