@@ -31,6 +31,7 @@ import { loadOrders, loadCustomers } from '../../../redux/orders/actions';
 import PropTypes from 'prop-types';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import db_url from '../../../redux/db_url'
 
 class Login extends Component {
   static propTypes = {
@@ -59,7 +60,7 @@ class Login extends Component {
     const { email, password } = this.state;
 
     axios
-      .post('https://server.portadoor.com/auth/local', {
+      .post(`${db_url}/auth/local`, {
         identifier: email,
         password: password
       })
