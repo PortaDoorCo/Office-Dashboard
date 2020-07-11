@@ -15,7 +15,6 @@ import FurnitureFeet from './attributes/Furniture_Feet'
 
 
 const Navigation = (props) => {
-  console.log("prop nav ", props)
   const { actions, setCopePage } = props;
 
   return (

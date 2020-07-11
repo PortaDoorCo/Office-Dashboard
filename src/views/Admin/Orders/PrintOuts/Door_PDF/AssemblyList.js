@@ -8,10 +8,6 @@ import Size from '../Breakdowns/Doors/Size';
 export default (data, breakdowns) => {
 
 
-  console.log(data)
-
-  console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
-
 
   return [
     {
@@ -56,11 +52,6 @@ export default (data, breakdowns) => {
     },
     data.part_list.map((i, index) => {
 
-      console.log(data)
-
-
-
-
       const tableBody = [
         [
           { text: 'Item', style: 'fonts' },
@@ -75,7 +66,7 @@ export default (data, breakdowns) => {
 
 
       i.dimensions.forEach((item, index) => {
-        // console.log('BRSKAJSFDSDKLJ',breakdowns)
+       
         tableBody.push([
           { text: index + 1, style: 'fonts' },
           { text: item.qty, style: 'fonts' },

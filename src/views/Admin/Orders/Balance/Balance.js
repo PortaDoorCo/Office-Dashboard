@@ -43,7 +43,7 @@ class Balance extends Component {
   }
 
   submit = async (values) => {
-    console.log(values)
+  
 
     const { updateBalance } = this.props;
 
@@ -103,7 +103,7 @@ class Balance extends Component {
       balanceTotal
     } = this.props;
 
-    console.log(balanceTotal)
+
 
     if (formState) {
       return (

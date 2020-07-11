@@ -10,7 +10,8 @@ import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
 import { DateBox } from 'devextreme-react';
 import io from 'socket.io-client';
-const socket = io('https://server.portadoor.com/');
+import db_url from '../../../redux/db_url'
+const socket = io(db_url);
 
 momentLocaliser(moment)
 

@@ -98,7 +98,7 @@ class JobInfo extends Component {
   render() {
     const { customers } = this.props;
 
-    console.log(this.props)
+
 
     return (
 

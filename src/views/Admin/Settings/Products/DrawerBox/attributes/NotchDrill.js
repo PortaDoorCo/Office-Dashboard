@@ -47,7 +47,6 @@ const NotchDrill = (props) => {
   }
 
   const addProd = () => {
-    console.log("clicked")
     const p = {
       NAME: '',
       PRICE: '',

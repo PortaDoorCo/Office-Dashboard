@@ -47,7 +47,6 @@ const BoxBottomWoodtype = (props) => {
   }
 
   const addProd = () => {
-    console.log("clicked")
     const p = {
       NAME: '',
       STANDARD_GRADE: '',
