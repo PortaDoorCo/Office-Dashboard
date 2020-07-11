@@ -26,8 +26,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers, updateStatus } from '../../../../redux/orders/actions';
 import io from 'socket.io-client';
+import db_url from '../../../../redux/db_url'
 import Cookies from "js-cookie";
-const socket = io('https://server.portadoor.com/');
+const socket = io(db_url);
 
 const cookie = Cookies.get("jwt");
 

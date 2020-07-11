@@ -49,7 +49,6 @@ const BoxThickness = (props) => {
   }
 
   const addProd = () => {
-    console.log("clicked")
     const p = {
       NAME: '',
       SIDE_DEDUCTION: '',

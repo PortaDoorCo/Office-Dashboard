@@ -33,9 +33,6 @@ export default (info, part, breakdowns) => {
   const inset = part.profile.INSET
   const edge_factor = part.edge.LIP_FACTOR
 
-  console.log('HHEEEERRRRREEEE', part.profile.MINIMUM_STILE_WIDTH)
-  console.log(part)
-  console.log(info)
 
   if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {
     if (((panelsW > 1) && (panelsH > 1)) || ((panelsH > 1) && (panelsW == 1))) {

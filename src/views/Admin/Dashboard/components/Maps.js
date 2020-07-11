@@ -8,8 +8,9 @@ import { bindActionCreators } from 'redux';
 import truck from '../../../../assets/icon/truck.png'
 import delivery from '../../../../assets/icon/delivery.png'
 import io from 'socket.io-client';
+import db_url from '../../../../redux/db_url'
 
-const socket = io('https://server.portadoor.com/');
+const socket = io(db_url);
 // To use the Google Maps JavaScript API, you must register your app project on the Google API Console and get a Google API key which you can add to your app
 const apiKey = 'AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE'
 
@@ -38,7 +39,7 @@ class DeliveryLocations extends Component {
                     gridSize={60}
                 >
                     {locations.map((location, index) => {
-                        console.log(location)
+                 
                         return (
                             <DeliveryInfoWindow key={index} location={location} />
                         )
@@ -68,7 +69,7 @@ class DeliveryInfoWindow extends Component {
     render() {
         const { location } = this.props;
 
-        console.log(location)
+      
 
         const loc = {
             lat: location.location.latitude,
@@ -107,7 +108,7 @@ class DriverLocations extends Component {
     render() {
         const { locations } = this.props
         return locations.map((location, index) => {
-            console.log(location)
+       
             return (
                 <DriverInfoWindow key={index} location={location} />
             )
@@ -133,7 +134,7 @@ class DriverInfoWindow extends Component {
     render() {
         const { location } = this.props;
 
-        console.log(location)
+  
 
         const loc = {
             lat: location.coords.latitude,
@@ -165,7 +166,7 @@ class DriverInfoWindow extends Component {
 
 const GoogleMapsComponent = withScriptjs(withGoogleMap((props) => {
 
-    console.log(props)
+
 
     const center = {
         lat: 41.3879115,

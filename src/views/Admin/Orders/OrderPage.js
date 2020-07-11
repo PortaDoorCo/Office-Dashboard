@@ -152,7 +152,7 @@ class OrderPage extends Component {
   downloadPDF = () => {
     const { formState, drawerState, breakdowns, box_breakdowns } = this.props;
 
-    console.log("SDKLFJSDF", breakdowns)
+ 
 
     const data = formState ? formState : drawerState ? drawerState : []
     if (data.orderType === "Door Order") {
@@ -267,7 +267,7 @@ class OrderPage extends Component {
               console.log('errrrrrr', err);
             }
 
-            console.log('eeeee', edges, 'moooo', moulds, 'pannn', panels)
+
             ProfilesPDF(data, edges, moulds, panels, breakdowns);
             this.setState({ selectedOption: [] })
             break;
@@ -325,14 +325,13 @@ class OrderPage extends Component {
     const props = this.props;
     const { formState, drawerState } = this.props;
 
-    console.log(formState)
-    console.log(drawerState)
+
 
 
 
     // let options;
 
-    console.log(props.selectedOrder)
+
 
     let options;
     let selectedOrder = props.selectedOrder[0] ? props.selectedOrder[0] : "Door Order"

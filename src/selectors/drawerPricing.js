@@ -65,13 +65,13 @@ export const itemPriceSelector = createSelector(
   (parts, pricer) =>
     parts.map((part, index) => {
 
-      console.log(part)
+    
 
       const wood = part.box_woodtype ? part.box_woodtype.STANDARD_GRADE : 0;
       const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
       const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
 
-      console.log(pricer)
+    
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
@@ -99,7 +99,7 @@ export const linePriceSelector = createSelector(
   (parts, pricer) =>
     parts.map((part, index) => {
 
-      console.log(part)
+    
 
       const wood = part.box_woodtype ? part.box_woodtype.STANDARD_GRADE : 0;
       const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;

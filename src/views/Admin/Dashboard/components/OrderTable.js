@@ -26,8 +26,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers, updateStatus } from '../../../../redux/orders/actions';
 import io from 'socket.io-client';
+import db_url from '../../../../redux/db_url'
 import Cookies from "js-cookie";
-const socket = io('https://server.portadoor.com/');
+const socket = io(db_url);
 
 const cookie = Cookies.get("jwt");
 
@@ -167,7 +168,6 @@ class OrderTable extends React.Component {
         if (!modal) {
             const x = row.row.data;
 
-            console.log('xxx', x)
 
             this.setState({
                 selectedOrder: [x],
@@ -318,7 +318,7 @@ class OrderTable extends React.Component {
             selectedRowKeys,
         } = this.state;
 
-       // console.log('this.state.selectedOrder', this.state.selectedOrder);
+
 
         return (
             <React.Fragment>

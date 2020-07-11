@@ -16,7 +16,6 @@ import NotchDrill from './attributes/NotchDrill';
 import Finish from './attributes/Finish'
 
 const Navigation = (props) => {
-  console.log("prop nav ", props)
   const { actions, setCopePage } = props;
 
   return (

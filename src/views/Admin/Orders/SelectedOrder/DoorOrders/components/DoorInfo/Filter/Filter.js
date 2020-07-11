@@ -24,7 +24,6 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
   const onChangeType = (index) => {
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
-        console.log('index====>>>', index, 'wooddd==>>', part.woodtype)
         if (index === i && part.dimensions) {
           dispatch(
             change(

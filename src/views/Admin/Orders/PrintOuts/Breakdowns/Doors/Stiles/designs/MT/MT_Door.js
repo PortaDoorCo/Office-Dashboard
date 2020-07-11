@@ -31,8 +31,6 @@ export default (info, part, breakdowns) => {
   const add_len = 0;
   const tenon_factor = 0;
 
-  console.log(eval(breakdowns.topRail_width))
-  console.log(eval(breakdowns.bottomRail_width))
 
 
   if (eval(breakdowns.leftStile_width) === eval(breakdowns.rightStile_width)) {

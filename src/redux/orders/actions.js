@@ -284,7 +284,7 @@ export function loadSelectedOrder(data, cookie) {
 }
 
 export function updateOrder(orderId, order, cookie) {
-  console.log("SKDFJDSFKLJSDF")
+
   return async function (dispatch) {
 
     try {
@@ -349,8 +349,7 @@ export function updateBalance(orderId, balance, cookie) {
       }
     ]
   }
-  console.log(balance)
-  console.log(item)
+
 
 
   return async function (dispatch) {

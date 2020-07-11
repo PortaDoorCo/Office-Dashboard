@@ -27,7 +27,7 @@ class DoorFilter extends Component {
     
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
-        console.log('index====>>>', index, 'wooddd==>>', part.woodtype)
+
         if (index === i && part.dimensions) {
           this.props.dispatch(
             change(
@@ -241,7 +241,7 @@ class DoorFilter extends Component {
       orderType
     } = this.props;
 
-console.log('formstate==>>>', formState)
+
 
     if (formState && formState.part_list) {
       if ((formState.part_list[index].orderType.value === "Door") || (formState.part_list[index].orderType.value === "DF")) {

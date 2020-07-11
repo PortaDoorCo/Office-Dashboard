@@ -11,7 +11,8 @@ import { NotificationManager } from 'react-notifications';
 import { loadOrders, loadCustomers, loadSales, loadShippingMethod, getDeliveries } from "./redux/orders/actions";
 import { setLogin } from "./redux/users/actions";
 import io from 'socket.io-client';
-const socket = io('https://server.portadoor.com/');
+import db_url from './redux/db_url'
+const socket = io(db_url);
 
 
 const cookie = Cookies.get("jwt");

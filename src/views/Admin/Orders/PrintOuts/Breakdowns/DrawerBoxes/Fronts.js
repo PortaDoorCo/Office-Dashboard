@@ -3,8 +3,6 @@ export default (item, part, breakdowns) => {
 
     const b = breakdowns[0]
 
-    console.log(b)
-
     const height = item.height;
     const width = item.width;
     const boxThickness = part.box_thickness.NAME

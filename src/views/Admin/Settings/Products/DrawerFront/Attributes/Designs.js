@@ -49,7 +49,6 @@ const Designs = (props) => {
   }
 
   const addProd = () => {
-    console.log("clicked")
     const p = {
       NAME: '',
       UPCHARGE: '',
