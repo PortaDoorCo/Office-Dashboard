@@ -53,7 +53,6 @@ const Designs = (props) => {
   }
 
   const addProd = () => {
-    console.log("clicked")
     const p = {
       NAME: '',
       UPCHARGE: '',
@@ -125,9 +124,6 @@ const Designs = (props) => {
     await setModal(!modal)
     await props.getMTDesigns(cookie)
   }
-
-  console.log(product)
-
 
   const card = props.designs.map(card => {
     return (

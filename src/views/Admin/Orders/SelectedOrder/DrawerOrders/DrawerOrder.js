@@ -103,8 +103,6 @@ class DrawerOrder extends Component {
       updateOrder
     } = this.props;
 
-    console.log(values)
-    console.log(e)
 
     const orderType = 'Drawer Order';
 
@@ -283,7 +281,6 @@ class DrawerOrder extends Component {
       edit
     } = this.props;
 
-    console.log(prices)
 
     return (
       <div className="animated fadeIn resize">

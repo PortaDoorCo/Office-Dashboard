@@ -99,7 +99,6 @@ class DoorOrders extends Component {
 
     const orderType = 'Door Order';
 
-    console.log(values.job_info.DueDate)
 
     const jobInfo = {
       jobName: values.job_info.jobName,
@@ -247,7 +246,7 @@ class DoorOrders extends Component {
   }
 
   render() {
-    console.log('files   ', this.state.files)
+
 
     const {
       submitted,
@@ -266,7 +265,7 @@ class DoorOrders extends Component {
       tax
     } = this.props;
 
-    console.log('subTotal : ', subTotal)
+
 
     return (
       <div className="animated fadeIn resize">

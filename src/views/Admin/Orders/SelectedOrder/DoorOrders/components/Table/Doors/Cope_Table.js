@@ -39,9 +39,6 @@ const fraction = num => {
 
 const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
-  console.log('part COPed_table', part)
-
-
 
   const [width, setWidth] = useState([])
   const [height, setHeight] = useState([])

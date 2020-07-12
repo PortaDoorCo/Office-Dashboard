@@ -5,7 +5,8 @@ import DataTable from 'react-data-table-component';
 import { Checkbox } from '@material-ui/core';
 import differenceBy from 'lodash/differenceBy';
 import io from 'socket.io-client';
-const socket = io('https://server.portadoor.com/');
+import db_url from '../../../../redux/db_url'
+const socket = io(db_url);
 
 
 

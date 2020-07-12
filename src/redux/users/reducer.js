@@ -28,7 +28,7 @@ export default function (state = initialState, action) {
         registeredUsers: data,
       };
     case UPDATE_ACCOUNT:
-      console.log(data)
+   
       return {
         ...state,
         user: data

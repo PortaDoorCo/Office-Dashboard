@@ -11,7 +11,6 @@ class Charts extends Component {
   render() {
 
     let house = this.props.data.filter(item => {
-      console.log(item)
       return []
       return item.sale.fullName.includes("House")
     })

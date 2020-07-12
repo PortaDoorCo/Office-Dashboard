@@ -47,7 +47,6 @@ const Woodtype = (props) => {
   }
 
   const addProd = () => {
-    console.log("clicked")
     const p = {
       NAME: '',
       STANDARD_GRADE: '',
@@ -55,8 +54,6 @@ const Woodtype = (props) => {
     setNewProduct(true)
     setProduct(p)
     toggle()
-
-    console.log(product)
   }
 
   const change = (e) => {

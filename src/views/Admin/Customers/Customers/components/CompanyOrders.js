@@ -61,7 +61,7 @@ const CustomerOrders = (props) => {
 
 
         if (!modal) {
-            console.log(row)
+      
             setSelectedOrder(
                 [row]
             )

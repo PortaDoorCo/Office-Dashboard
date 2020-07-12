@@ -50,7 +50,7 @@ class Dashboard extends Component {
 
     const { role, orders } = this.props;
 
-    console.log('role', role)
+
 
 
     return (

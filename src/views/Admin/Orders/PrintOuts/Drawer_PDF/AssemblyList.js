@@ -12,7 +12,7 @@ import SQFT from '../Breakdowns/DrawerBoxes/SQFT';
 
 
 export default (data, breakdowns) => {
-  console.log("BREAKDOWNS", breakdowns)
+
   return [
     {
       columns: [

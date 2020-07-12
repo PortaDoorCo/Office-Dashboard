@@ -82,7 +82,7 @@ export const itemPriceSelector = createSelector(
   [partListSelector, pricingSelector],
   (parts, pricer) =>
     parts.map((part, index) => {
-      console.log(part)
+     
       const wood = part.woodtype && part.thickness.value === 0.75 ? part.woodtype.STANDARD_GRADE : (part.woodtype && part.thickness.value === 1) ? part.woodtype.STANDARD_GRADE_THICK :  0;
       const design = part.design && part.thickness.value === 0.75 ? part.design.UPCHARGE : (part.design && part.thickness.value === 1) ? part.design.UPCHARGE_THICK :  0;
       const edge = part.edge ? part.edge.UPCHARGE : 0;
@@ -94,13 +94,12 @@ export const itemPriceSelector = createSelector(
       const ff_top_rail_design = part.face_frame_top_rail ? part.face_frame_top_rail.UPCHARGE : 0
       const furniture_feet = part.furniture_feet ? part.furniture_feet.UPCHARGE : 0
 
-      console.log(pricer)
-
+      
 
       if (part.orderType.value === "Face_Frame") {
         if (part.dimensions) {
           const linePrice = part.dimensions.map(i => {
-            console.log(i)
+        
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings)
@@ -115,7 +114,7 @@ export const itemPriceSelector = createSelector(
               return 0;
             }
           });
-          console.log(linePrice)
+         
           return linePrice;
         } else {
           return 0;
@@ -149,7 +148,7 @@ export const linePriceSelector = createSelector(
   [partListSelector, pricingSelector],
   (parts, pricer) =>
     parts.map((part, index) => {
-      console.log(part)
+
       const wood = part.woodtype && part.thickness.value === 0.75 ? part.woodtype.STANDARD_GRADE : part.woodtype && part.thickness.value === 1 ? part.woodtype.STANDARD_GRADE_THICK :  0;
       const design = part.design && part.thickness.value === 0.75 ? part.design.UPCHARGE : part.design && part.thickness.value === 1 ? part.design.UPCHARGE_THICK :  0;
       const edge = part.edge ? part.edge.UPCHARGE : 0;
@@ -162,12 +161,12 @@ export const linePriceSelector = createSelector(
       const furniture_feet = part.furniture_feet ? part.furniture_feet.UPCHARGE : 0
 
 
-      console.log(pricer)
+
 
       if (part.orderType.value === "Face_Frame") {
         if (part.dimensions) {
           const linePrice = part.dimensions.map(i => {
-            console.log(i)
+           
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings)
@@ -182,7 +181,7 @@ export const linePriceSelector = createSelector(
               return 0;
             }
           });
-          console.log(linePrice)
+       
           return linePrice;
         } else {
           return 0;

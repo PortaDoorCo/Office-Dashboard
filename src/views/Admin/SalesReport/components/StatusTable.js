@@ -22,9 +22,10 @@ import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import io from 'socket.io-client';
+import db_url from '../../../../redux/db_url'
 
 
-const socket = io('https://server.portadoor.com/');
+const socket = io(db_url);
 
 momentLocaliser(moment);
 
