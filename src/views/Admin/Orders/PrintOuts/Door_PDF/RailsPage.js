@@ -25,7 +25,7 @@ export default (data, breakdowns) => {
       if ((item.panelsH && item.panelsW > 1) || (item.panelsH > 1 && item.panelsW)) {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
-          { text: `${i.cope_design ? i.cope_design.NAME + ' ' + i.construction.value : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.construction.name}`, style: 'fonts' },
+          { text: `${i.cope_design ? i.cope_design.NAME + ' ' + i.construction.value : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value :  i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
@@ -35,7 +35,7 @@ export default (data, breakdowns) => {
       } else {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
-          { text: `${i.cope_design ? i.cope_design.NAME + ' ' + i.construction.value : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.construction.name}`, style: 'fonts' },
+          { text: `${i.cope_design ? i.cope_design.NAME + ' ' + i.construction.value : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value :  i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
