@@ -13,7 +13,7 @@ import { setLogin } from "./redux/users/actions";
 import io from 'socket.io-client';
 import db_url from './redux/db_url'
 const socket = io(db_url);
-
+socket.on('connect', () => console.log('conneee==>>>'))
 
 const cookie = Cookies.get("jwt");
 
@@ -56,6 +56,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    
     this.cookies()
     socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), console.log(res)))
     socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), console.log(res)))
