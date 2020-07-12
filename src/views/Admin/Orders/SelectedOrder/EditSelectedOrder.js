@@ -10,7 +10,7 @@ class EditSelectedOrder extends React.Component {
   render() {
     
     const { selectedOrder, editable, edit, toggle } = this.props;
-    // console.log('selected order', selectedOrder[0])
+
 
     if(selectedOrder[0]) {
       return (

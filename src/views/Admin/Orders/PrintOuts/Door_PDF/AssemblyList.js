@@ -7,10 +7,6 @@ import Size from '../Breakdowns/Doors/Size';
 
 export default (data, breakdowns) => {
 
-  
-console.log(data)
-
-console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
 
 
   return [
@@ -56,11 +52,6 @@ console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
     },
     data.part_list.map((i, index) => {
 
-      console.log(data)
-
-
-      
-
       const tableBody = [
         [
           { text: 'Item', style: 'fonts' },
@@ -75,7 +66,7 @@ console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
 
 
       i.dimensions.forEach((item, index) => {
-        // console.log('BRSKAJSFDSDKLJ',breakdowns)
+       
         tableBody.push([
           { text: index + 1, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
@@ -97,7 +88,7 @@ console.log("BBBBBBBRRREEAAAKKJ", breakdowns)
                   style: 'fonts'
                 },
                 {
-                  text: `${i.design ? i.design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`,
+                  text: `${i.cope_design ? i.cope_design.NAME + ' ' + i.construction.value : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value :  i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`,
                   style: 'fonts'
                 },
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' }

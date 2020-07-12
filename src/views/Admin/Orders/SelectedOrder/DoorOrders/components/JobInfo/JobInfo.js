@@ -27,7 +27,7 @@ const required = value => value ? undefined : 'Required';
 
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
 <div>
-{console.log(edit)}
+
   <DateTimePicker
     onChange={onChange}
     time={showTime}
@@ -54,8 +54,6 @@ class JobInfo extends Component {
 
   render() {
     const { customers, edit } = this.props;
-
-    console.log("EDIT", edit)
 
     return (
 

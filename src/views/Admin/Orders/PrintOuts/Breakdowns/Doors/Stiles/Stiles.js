@@ -14,7 +14,6 @@ import Glass_Door from './designs/Glass/Glass'
 
 export default (info, part, breakdowns) => {
 
-  console.log('BREAKDOWNSasdfasdf',breakdowns)
 
   if(part.orderType.value === "Door") {
     if (part.construction.value === "Cope") {

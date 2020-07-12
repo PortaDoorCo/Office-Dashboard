@@ -7,7 +7,7 @@ const fraction = num => {
 export default (item, part, breakdowns) => {
 
     const b = breakdowns[0]
-    console.log(b)
+
     const sideDeduction = part.box_thickness.SIDE_DEDUCTION
     const lengthDeduction = part.box_thickness.BOTTOM_LENGTH_DEDUCTION
     const width = parseInt(item.width)

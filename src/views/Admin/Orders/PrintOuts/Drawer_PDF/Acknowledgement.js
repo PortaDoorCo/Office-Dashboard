@@ -12,9 +12,6 @@ export default (data, breakdowns) => {
 
   const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0)
 
-
-  console.log(data)
-
   const balanceDue = data.balance_history[data.balance_history.length - 1].balance_due;
   const balancePaid = data.balance_history.reduce(function (accumulator, balance) {
     return accumulator + balance.balance_paid;

@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import io from 'socket.io-client';
 import truck from '../../../../assets/icon/truck.png'
 import delivery from '../../../../assets/icon/delivery.png'
-const socket = io('https://server.portadoor.com/');
+import db_url from '../../../../redux/db_url'
+const socket = io(db_url);
 
 
 
@@ -71,7 +72,7 @@ class Map extends Component {
     render() {
         const { driverLocations } = this.state;
         const { deliveries } = this.props;
-        console.log(driverLocations)
+       
         return (
             // Important! Always set the container height explicitly
             <div style={{ height: '100%', width: '100%' }}>

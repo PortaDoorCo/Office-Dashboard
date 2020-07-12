@@ -46,7 +46,6 @@ const BoxBottomThickness = (props) => {
   }
 
   const addProd = () => {
-    console.log("clicked")
     const p = {
       NAME: '',
       photo: null

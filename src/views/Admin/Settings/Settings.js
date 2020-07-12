@@ -25,8 +25,6 @@ const Settings = (props) => {
 
   const toggle = () => setIsOpen(!isOpen);
 
-  console.log(selection)
-
   return (
     <div>
       <Row>

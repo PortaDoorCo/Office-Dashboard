@@ -39,23 +39,16 @@ const EditorComponent = (props) => {
     setModal(!modal)
   };
 
-  console.log(breakdowns)
+
 
 
   const submit = async () => {
-
-    console.log('name ', name)
-    console.log('code ', text)
-    console.log('id ', breakdowns.id)
-
     const id = breakdowns.id
 
     const bd = {
       ...breakdowns,
       [name]: text
     }
-
-    console.log(bd)
 
     await props.updateBreakdowns(id, bd, cookie)
     await setModal(!modal)
@@ -90,7 +83,6 @@ const EditorComponent = (props) => {
             }}
             onKeyPress={e => {
               e.persist();
-              console.log(e.charCode)
               if (e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45 || e.charCode > 57) {
                 e.preventDefault();
               }

@@ -27,7 +27,7 @@ class BalanceHistory extends Component {
     const { formState, balanceTotal, balance, total } = this.props;
 
     if (formState) {
-      console.log(formState)
+ 
       return (
         <div>
           <Table striped>
@@ -42,7 +42,7 @@ class BalanceHistory extends Component {
             <tbody>
               {(formState && formState.balance_history) ? formState.balance_history.slice(0).map((i, index) => (
                 <tr>
-                  {console.log(i)}
+              
                   <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
                   <th>${i.balance_due.toFixed(2)}</th>
                   <td>-${i.balance_paid.toFixed(2)}</td>

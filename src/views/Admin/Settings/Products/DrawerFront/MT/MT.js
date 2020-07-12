@@ -14,7 +14,6 @@ import EditorPage from './editor/EditorPage'
 
 
 const Navigation = (props) => {
-  console.log("prop nav ", props)
   const { actions, setCopePage } = props;
 
   return (
