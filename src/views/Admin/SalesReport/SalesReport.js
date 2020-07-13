@@ -68,9 +68,9 @@ const SalesReport = (props) => {
         </Col>
       </Row>
 
-      {/* <Charts
+      <Charts
         data={data}
-      /> */}
+      />
 
 
       <Nav tabs>
