@@ -15,6 +15,8 @@ const socket = io(db_url);
 
 momentLocaliser(moment)
 
+// moment(this.state.startDate).startOf('day').valueOf()
+
 const SalesReport = (props) => {
   const { orders, role } = props;
   const [activeTab, setActiveTab] = useState('1');
@@ -29,7 +31,8 @@ const SalesReport = (props) => {
   useEffect(() => {
     const filteredOrders = orders.filter(item => {
       let date = new Date(item.createdAt);
-      return date.getDate() >= startDate.getDate() && date.getDate() <= endDate.getDate();
+      console.log(moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf())
+      return moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf();
     })
     setData(filteredOrders);
 
@@ -65,9 +68,9 @@ const SalesReport = (props) => {
         </Col>
       </Row>
 
-      {/* <Charts
+      <Charts
         data={data}
-      /> */}
+      />
 
 
       <Nav tabs>
