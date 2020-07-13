@@ -46,29 +46,9 @@ const status = [
         name: 'In Production',
         value: 'In Production',
     },
-    {
-        name: 'Station 1',
-        value: 'Station 1',
-    },
-    {
-        name: 'Station 2',
-        value: 'Station 2',
-    },
-    {
-        name: 'Station 3',
-        value: 'Station 3',
-    },
-    {
-        name: 'Station 4',
-        value: 'Station 4',
-    },
-    {
-        name: 'Shipped',
-        value: 'Shipped',
-    },
 ];
 
-const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production', 'Station 1', 'Station 2', 'Station 3', 'Station 4', 'Shipped']
+const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production']
 
 
 class StatusTable extends React.Component {
@@ -110,14 +90,14 @@ class StatusTable extends React.Component {
         socket.on('order_deleted', res => (dataGrid.refresh()))
         socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
         if (prevProps.orders !== this.props.orders) {
-            const filteredItems = this.props.orders.filter(item => (item.sale && item.sale.fullName && item.sale.fullName.includes(this.props.status)));
-          
+            const filteredItems = this.props.orders.filter(item => (item.sale.fullName && item.sale.fullName.includes(this.props.status)));
+
             this.setState({
                 filteredItems: filteredItems
             })
         }
         if (prevState.filterStatus !== this.state.filterStatus) {
-            const saleFilter = this.props.orders.filter(item => (item.sale && item.sale.fullName && item.sale.fullName.includes(this.props.status)));
+            const saleFilter = this.props.orders.filter(item => (item.sale.fullName && item.sale.fullName.includes(this.props.status)));
             const filterStatus = saleFilter.filter(sale => {
                 if (this.state.filterStatus === "All") {
                     return sale
@@ -141,7 +121,7 @@ class StatusTable extends React.Component {
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-       
+
         this.selectionChangedBySelectBox = false;
 
         this.setState({
@@ -167,7 +147,7 @@ class StatusTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
-          
+
             this.setState({
                 selectedOrder: [x],
             });
@@ -180,7 +160,7 @@ class StatusTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-                 
+
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -214,7 +194,7 @@ class StatusTable extends React.Component {
     }
 
     onFilterValueChanged = e => {
-     
+
         this.setState({
             filterStatus: e.value
         })
@@ -346,7 +326,7 @@ class StatusTable extends React.Component {
                         <RequiredRule />
                     </Column>
                     <Column
-                        dataField="dueDate"
+                        dataField="DueDate"
                         caption="Due Date"
                         dataType="datetime"
                         format="M/d/yyyy"
