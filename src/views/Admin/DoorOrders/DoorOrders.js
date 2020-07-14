@@ -49,6 +49,7 @@ import moment from 'moment-business-days'
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
 import { renderField } from './components/RenderInputs/renderInputs'
+import MiscItems from './components/MiscItems'
 
 
 const cookie = Cookies.get("jwt");
@@ -349,6 +350,15 @@ class DoorOrders extends Component {
                   </CardBody>
                 </Card>
 
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Card>
+                  <CardBody>
+                    <MiscItems />
+                  </CardBody>
+                </Card>
               </Col>
             </Row>
             {(this.props.formState && this.props.formState.part_list) ? (
