@@ -36,7 +36,8 @@ import {
   subTotalSelector,
   taxSelector,
   totalSelector,
-  addPriceSelector
+  addPriceSelector,
+  stileRailSelector
 } from '../../../selectors/doorPricing';
 
 import PropTypes from 'prop-types';
@@ -433,7 +434,7 @@ const mapStateToProps = state => ({
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
-  // pricingSelector: pricingSelector(state)
+  stileRailSelector: stileRailSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>

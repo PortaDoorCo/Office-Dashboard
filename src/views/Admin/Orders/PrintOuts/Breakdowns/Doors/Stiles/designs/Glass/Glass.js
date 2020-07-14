@@ -13,10 +13,10 @@ export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0
 
-  const topRail = numQty(info.topRail)
-  const bottomRail = numQty(info.bottomRail)
-  const leftStile = numQty(info.leftStile)
-  const rightStile = numQty(info.rightStile)
+  const topRail = numQty(info.topRail) === part.profile.MINIMUM_STILE_WIDTH ? numQty(info.topRail) : numQty(info.topRail) + (part.edge.LIP_FACTOR / 2)
+  const bottomRail = numQty(info.bottomRail) === part.profile.MINIMUM_STILE_WIDTH ? numQty(info.bottomRail) : numQty(info.bottomRail) + (part.edge.LIP_FACTOR / 2)
+  const leftStile = numQty(info.leftStile) === part.profile.MINIMUM_STILE_WIDTH ? numQty(info.leftStile) : numQty(info.leftStile) + (part.edge.LIP_FACTOR / 2)
+  const rightStile = numQty(info.rightStile) === part.profile.MINIMUM_STILE_WIDTH ? numQty(info.rightStile) : numQty(info.rightStile) + (part.edge.LIP_FACTOR / 2)
   const vertMull = numQty(vMidRail)
   const horizMull = numQty(hMidRail)
   const panelsH = parseInt(info.panelsH)
@@ -25,7 +25,7 @@ export default (info, part, breakdowns) => {
   const width = numQty(info.width)
   const qty = parseInt(info.qty)
 
-  const inset = 0
+  const inset = part.profile.INSET
   const edge_factor = part.edge.LIP_FACTOR
 
   if (eval(breakdowns.leftStile_width) === eval(breakdowns.rightStile_width)) {

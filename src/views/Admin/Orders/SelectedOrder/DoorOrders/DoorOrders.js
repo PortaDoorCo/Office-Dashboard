@@ -243,7 +243,7 @@ class DoorOrders extends Component {
                   <FieldArray
                     name="part_list"
                     component={DoorInfo}
-                    // prices={prices}
+                    prices={prices}
                     formState={formState}
                     // subTotal={subTotal}
                     dispatch={dispatch}
