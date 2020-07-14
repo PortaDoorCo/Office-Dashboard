@@ -31,7 +31,10 @@ let Inputs = props => {
         </tbody>
       </Table>
 
-      <Button color="primary" className="mt-3" onClick={() => fields.push()}>Add Item</Button>
+      <Button color="primary" className="mt-3" onClick={() => fields.push({
+        item: '',
+        price: 0
+      })}>Add Item</Button>
     </div>
   )
 }

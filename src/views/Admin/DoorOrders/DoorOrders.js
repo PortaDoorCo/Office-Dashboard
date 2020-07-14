@@ -37,7 +37,8 @@ import {
   taxSelector,
   totalSelector,
   addPriceSelector,
-  stileRailSelector
+  stileRailSelector,
+  miscTotalSelector
 } from '../../../selectors/doorPricing';
 
 import PropTypes from 'prop-types';
@@ -404,6 +405,7 @@ const mapStateToProps = state => ({
 
   submitted: state.Orders.submitted,
   initialValues: {
+    misc_items:[],
     open: true,
     part_list: [
       {
@@ -444,7 +446,8 @@ const mapStateToProps = state => ({
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
-  stileRailSelector: stileRailSelector(state)
+  stileRailSelector: stileRailSelector(state),
+  miscTotalSelector: miscTotalSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>
