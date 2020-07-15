@@ -130,6 +130,7 @@ class DoorOrders extends Component {
       linePrice: prices,
       itemPrice: itemPrice,
       subTotals: subTotal,
+      misc_items: values.misc_items,
       tax: tax,
       total: total,
       balance_paid: values.balance_paid,
