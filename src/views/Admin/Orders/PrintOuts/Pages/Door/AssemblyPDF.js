@@ -21,7 +21,7 @@ export default (data,breakdowns) => {
                 fontSize: 9
             },
             tableBold: {
-                fontSize: 9,
+                fontSize: 8,
                 bold: true
             },
             fontsBold: {

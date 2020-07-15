@@ -168,7 +168,7 @@ export default data => {
     },
     {
       columns: [
-        { text: `${data.misc_items.map(i => { return `${i.item} - $${i.price} \n` })}`, style: 'fonts', width: 347 },
+        { text: data.misc_items.map(i => { return `${i.item.toUpperCase()} - $${i.price} \n` }), style: 'fonts', width: 347 },
         { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(balancePaid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
