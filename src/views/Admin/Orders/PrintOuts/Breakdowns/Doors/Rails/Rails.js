@@ -29,7 +29,7 @@ export default (info, part, breakdowns) => {
     }
 
     if (part.construction.value === "Glass") {
-      return Glass_Door(info, part, breakdowns[6])
+      return Glass_Door(info, part, breakdowns[0])
     }
 
   }
@@ -46,7 +46,7 @@ export default (info, part, breakdowns) => {
     }
 
     if (part.construction.value === "Glass") {
-      return Glass_Door(info, part, breakdowns[6])
+      return Glass_Door(info, part, breakdowns[0])
     }
 
   }

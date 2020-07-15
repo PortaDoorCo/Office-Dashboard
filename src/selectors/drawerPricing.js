@@ -112,8 +112,9 @@ export const linePriceSelector = createSelector(
           const width = Math.ceil(numQty(i.width));
           const height = Math.ceil(numQty(i.height));
           const depth = Math.ceil(numQty(i.depth))
+          const qty = parseInt(i.qty) 
 
-          const price = eval(pricer.drawer_box_pricing)
+          const price = eval(pricer.drawer_box_pricing) * qty
 
           if (height > -1) {
             return price;

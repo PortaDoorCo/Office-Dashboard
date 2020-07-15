@@ -36,7 +36,9 @@ import {
   subTotalSelector,
   taxSelector,
   totalSelector,
-  addPriceSelector
+  addPriceSelector,
+  stileRailSelector,
+  miscTotalSelector
 } from '../../../selectors/doorPricing';
 
 import PropTypes from 'prop-types';
@@ -48,6 +50,7 @@ import moment from 'moment-business-days'
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
 import { renderField } from './components/RenderInputs/renderInputs'
+import MiscItems from './components/MiscItems'
 
 
 const cookie = Cookies.get("jwt");
@@ -127,6 +130,7 @@ class DoorOrders extends Component {
       linePrice: prices,
       itemPrice: itemPrice,
       subTotals: subTotal,
+      misc_items: values.misc_items,
       tax: tax,
       total: total,
       balance_paid: values.balance_paid,
@@ -350,6 +354,15 @@ class DoorOrders extends Component {
 
               </Col>
             </Row>
+            <Row>
+              <Col>
+                <Card>
+                  <CardBody>
+                    <MiscItems />
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
             {(this.props.formState && this.props.formState.part_list) ? (
               this.props.formState.part_list.map((part, i) => {
                 return (
@@ -393,6 +406,7 @@ const mapStateToProps = state => ({
 
   submitted: state.Orders.submitted,
   initialValues: {
+    misc_items:[],
     open: true,
     part_list: [
       {
@@ -433,7 +447,8 @@ const mapStateToProps = state => ({
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
-  // pricingSelector: pricingSelector(state)
+  stileRailSelector: stileRailSelector(state),
+  miscTotalSelector: miscTotalSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>
