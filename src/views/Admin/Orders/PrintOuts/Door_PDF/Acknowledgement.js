@@ -161,7 +161,7 @@ export default data => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
+        { text: 'Misc Items', style: 'totals', width: 347, decoration: 'underline' },
         { text: 'Quote Only:', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(data.total).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
@@ -169,7 +169,7 @@ export default data => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
+        { text: data.misc_items.map(i => { return `${i.item.toUpperCase()} - $${i.price} \n` }), style: 'fonts', width: 347 },
         { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(balancePaid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],

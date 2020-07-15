@@ -93,6 +93,7 @@ const initialState = {
   box_breakdowns: [],
 
   pricing: [],
+  itemPricing: [],
 
   scoop: [
     {
