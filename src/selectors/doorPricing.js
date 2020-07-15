@@ -188,7 +188,7 @@ export const itemPriceSelector = createSelector(
                 //leftStile
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.leftStile)) {
 
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = 10
@@ -205,7 +205,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //rightStile
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.rightStile)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = 10
@@ -222,7 +222,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //topRail
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.topRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = 10
@@ -239,7 +239,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //bottomRail
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.bottomRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = 10
@@ -260,7 +260,7 @@ export const itemPriceSelector = createSelector(
                 //leftStile
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.leftStile)) {
 
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.cope_design.UPCHARGE
@@ -277,7 +277,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //rightStile
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.rightStile)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.cope_design.UPCHARGE
@@ -294,7 +294,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //topRail
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.topRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.cope_design.UPCHARGE
@@ -311,7 +311,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //bottomRail
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.bottomRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.cope_design.UPCHARGE
@@ -335,7 +335,7 @@ export const itemPriceSelector = createSelector(
                 //leftStile
                 if (part.miter_df_design.PROFILE_WIDTH !== numQty(i.leftStile)) {
 
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_df_design.UPCHARGE
@@ -352,7 +352,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //rightStile
                 if (part.miter_df_design.PROFILE_WIDTH !== numQty(i.rightStile)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_df_design.UPCHARGE
@@ -369,7 +369,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //topRail
                 if (part.miter_df_design.PROFILE_WIDTH !== numQty(i.topRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_df_design.UPCHARGE
@@ -386,7 +386,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //bottomRail
                 if (part.miter_df_design.PROFILE_WIDTH !== numQty(i.bottomRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_df_design.UPCHARGE
@@ -405,7 +405,7 @@ export const itemPriceSelector = createSelector(
                 //leftStile
                 if (part.miter_design.PROFILE_WIDTH !== numQty(i.leftStile)) {
 
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_design.UPCHARGE
@@ -422,7 +422,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //rightStile
                 if (part.miter_design.PROFILE_WIDTH !== numQty(i.rightStile)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_design.UPCHARGE
@@ -439,7 +439,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //topRail
                 if (part.miter_design.PROFILE_WIDTH !== numQty(i.topRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_design.UPCHARGE
@@ -456,7 +456,7 @@ export const itemPriceSelector = createSelector(
                 }
                 //bottomRail
                 if (part.miter_design.PROFILE_WIDTH !== numQty(i.bottomRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_design.UPCHARGE
@@ -482,7 +482,7 @@ export const itemPriceSelector = createSelector(
               //leftStile
               if (part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.leftStile)) {
 
-                let price;
+                let price = 0;
 
                 if (part.thickness.value === 0.75) {
                   price = part.mt_design.UPCHARGE
@@ -500,7 +500,7 @@ export const itemPriceSelector = createSelector(
               //rightStile
               if (part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.rightStile)) {
 
-                let price;
+                let price = 0;
 
                 if (part.thickness.value === 0.75) {
                   price = part.mt_design.UPCHARGE
@@ -518,7 +518,7 @@ export const itemPriceSelector = createSelector(
               //topRail
               if (part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.topRail)) {
 
-                let price;
+                let price = 0;
 
                 if (part.thickness.value === 0.75) {
                   price = part.mt_design.UPCHARGE
@@ -536,7 +536,7 @@ export const itemPriceSelector = createSelector(
               //bottomRail
               if (part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.bottomRail)) {
 
-                let price;
+                let price = 0;
 
                 if (part.thickness.value === 0.75) {
                   price = part.mt_design.UPCHARGE
@@ -658,7 +658,7 @@ export const linePriceSelector = createSelector(
                 //leftStile
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.leftStile)) {
 
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = 10
@@ -675,7 +675,7 @@ export const linePriceSelector = createSelector(
                 }
                 //rightStile
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.rightStile)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = 10
@@ -692,7 +692,7 @@ export const linePriceSelector = createSelector(
                 }
                 //topRail
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.topRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = 10
@@ -709,7 +709,7 @@ export const linePriceSelector = createSelector(
                 }
                 //bottomRail
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.bottomRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = 10
@@ -730,7 +730,7 @@ export const linePriceSelector = createSelector(
                 //leftStile
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.leftStile)) {
 
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.cope_design.UPCHARGE
@@ -747,7 +747,7 @@ export const linePriceSelector = createSelector(
                 }
                 //rightStile
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.rightStile)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.cope_design.UPCHARGE
@@ -764,7 +764,7 @@ export const linePriceSelector = createSelector(
                 }
                 //topRail
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.topRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.cope_design.UPCHARGE
@@ -781,7 +781,7 @@ export const linePriceSelector = createSelector(
                 }
                 //bottomRail
                 if (part.profile.MINIMUM_STILE_WIDTH !== numQty(i.bottomRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.cope_design.UPCHARGE
@@ -805,7 +805,7 @@ export const linePriceSelector = createSelector(
                 //leftStile
                 if (part.miter_df_design.PROFILE_WIDTH !== numQty(i.leftStile)) {
 
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_df_design.UPCHARGE
@@ -822,7 +822,7 @@ export const linePriceSelector = createSelector(
                 }
                 //rightStile
                 if (part.miter_df_design.PROFILE_WIDTH !== numQty(i.rightStile)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_df_design.UPCHARGE
@@ -839,7 +839,7 @@ export const linePriceSelector = createSelector(
                 }
                 //topRail
                 if (part.miter_df_design.PROFILE_WIDTH !== numQty(i.topRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_df_design.UPCHARGE
@@ -856,7 +856,7 @@ export const linePriceSelector = createSelector(
                 }
                 //bottomRail
                 if (part.miter_df_design.PROFILE_WIDTH !== numQty(i.bottomRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_df_design.UPCHARGE
@@ -875,7 +875,7 @@ export const linePriceSelector = createSelector(
                 //leftStile
                 if (part.miter_design.PROFILE_WIDTH !== numQty(i.leftStile)) {
 
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_design.UPCHARGE
@@ -892,7 +892,7 @@ export const linePriceSelector = createSelector(
                 }
                 //rightStile
                 if (part.miter_design.PROFILE_WIDTH !== numQty(i.rightStile)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_design.UPCHARGE
@@ -909,7 +909,7 @@ export const linePriceSelector = createSelector(
                 }
                 //topRail
                 if (part.miter_design.PROFILE_WIDTH !== numQty(i.topRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_design.UPCHARGE
@@ -926,7 +926,7 @@ export const linePriceSelector = createSelector(
                 }
                 //bottomRail
                 if (part.miter_design.PROFILE_WIDTH !== numQty(i.bottomRail)) {
-                  let price;
+                  let price = 0;
 
                   if (part.thickness.value === 0.75) {
                     price = part.miter_design.UPCHARGE
@@ -952,7 +952,7 @@ export const linePriceSelector = createSelector(
               //leftStile
               if (part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.leftStile)) {
 
-                let price;
+                let price = 0;
 
                 if (part.thickness.value === 0.75) {
                   price = part.mt_design.UPCHARGE
@@ -970,7 +970,7 @@ export const linePriceSelector = createSelector(
               //rightStile
               if (part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.rightStile)) {
 
-                let price;
+                let price = 0;
 
                 if (part.thickness.value === 0.75) {
                   price = part.mt_design.UPCHARGE
@@ -988,7 +988,7 @@ export const linePriceSelector = createSelector(
               //topRail
               if (part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.topRail)) {
 
-                let price;
+                let price = 0;
 
                 if (part.thickness.value === 0.75) {
                   price = part.mt_design.UPCHARGE
@@ -1006,7 +1006,7 @@ export const linePriceSelector = createSelector(
               //bottomRail
               if (part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.bottomRail)) {
 
-                let price;
+                let price = 0;
 
                 if (part.thickness.value === 0.75) {
                   price = part.mt_design.UPCHARGE
@@ -1080,7 +1080,7 @@ export const subTotalSelector = createSelector(
 
 export const subTotal_Total = createSelector(
   [subTotalSelector, miscTotalSelector],
-  (subTotal, misc) => (subTotal.reduce((acc, item) => acc + item, 0))
+  (subTotal, misc) => subTotal.reduce((acc, item) => acc + item, 0)
 );
 
 export const taxSelector = createSelector(
