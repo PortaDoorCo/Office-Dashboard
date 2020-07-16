@@ -6,9 +6,6 @@ import Size from '../Breakdowns/Doors/Size';
 
 
 export default (data, breakdowns) => {
-
-
-
   return [
     {
       columns: [
