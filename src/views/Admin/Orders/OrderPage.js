@@ -186,19 +186,29 @@ class OrderPage extends Component {
               })
             });
 
+            const appliedProfilePromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.applied_profile.photo.url, (result) => {
+                  resolve(result)
+                });
+              })
+            });
+
             let edges1;
             let moulds1;
             let panels1;
+            let appliedProfiles1;
 
             try {
               edges1 = await Promise.all(edgesPromiseArr1);
               moulds1 = await Promise.all(mouldsPromiseArr1);
               panels1 = await Promise.all(panelsPromiseArr1);
+              appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
             } catch (err) {
               console.log('errrrrrr', err);
             }
 
-            DoorPDF(data, edges1, moulds1, panels1, breakdowns);
+            DoorPDF(data, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Assembly':
@@ -255,20 +265,30 @@ class OrderPage extends Component {
               })
             });
 
+            const appliedProfilePromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.applied_profile.photo.url, (result) => {
+                  resolve(result)
+                });
+              })
+            });
+
             let edges;
             let moulds;
             let panels;
+            let appliedProfiles;
 
             try {
               edges = await Promise.all(edgesPromiseArr);
               moulds = await Promise.all(mouldsPromiseArr);
               panels = await Promise.all(panelsPromiseArr);
+              appliedProfiles = await Promise.all(appliedProfilePromiseArr);
             } catch (err) {
               console.log('errrrrrr', err);
             }
 
 
-            ProfilesPDF(data, edges, moulds, panels, breakdowns);
+            ProfilesPDF(data, edges, moulds, panels, appliedProfiles, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'QC':
