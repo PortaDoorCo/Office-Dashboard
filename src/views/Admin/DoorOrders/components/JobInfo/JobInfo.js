@@ -97,7 +97,7 @@ class JobInfo extends Component {
 
 
   render() {
-    const { customers } = this.props;
+    const { customers, shippingMethods } = this.props;
 
 
 
@@ -252,7 +252,21 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-        <hr />
+        <Row>
+          <Col xs='3'>
+            <FormGroup>
+              <Label htmlFor="shipping_method">Shipping Method</Label>
+              <Field
+                name="ShippingMethod"
+                component={renderDropdownList}
+                data={shippingMethods}
+                valueField="value"
+                textField="NAME" />
+            </FormGroup>
+          </Col>
+        </Row>
+
+          <hr />
 
 
       </div>
@@ -262,7 +276,8 @@ class JobInfo extends Component {
 
 
 const mapStateToProps = state => ({
-  formState: getFormValues('DoorOrder')(state),
+          formState: getFormValues('DoorOrder')(state),
+  shippingMethods: state.Orders.shippingMethods
 });
 
 
