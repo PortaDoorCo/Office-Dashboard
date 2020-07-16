@@ -119,7 +119,8 @@ class DoorOrders extends Component {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
         sale: values.job_info.customer.sale.id
-      }
+      },
+      ShippingMethod: values.job_info.ShippingMethod
     }
 
     const order = {
@@ -437,7 +438,8 @@ const mapStateToProps = state => ({
       State: '',
       Zip: '',
       Phone: '',
-      DueDate: dueDate
+      DueDate: dueDate,
+      ShippingMethod: state.Orders.shippingMethods[0]
     }
   },
   formState: getFormValues('DoorOrder')(state),

@@ -212,7 +212,7 @@ class DoorOrders extends Component {
       address,
 
       edit,
-
+      shippingMethods,
       total,
       dispatch,
       tax,
@@ -237,6 +237,7 @@ class DoorOrders extends Component {
                       loaded={this.state.loaded}
                       handleAddress={this.handleAddress}
                       edit={edit}
+                      shippingMethods={shippingMethods}
                     />
                   </FormSection>
 
@@ -318,6 +319,8 @@ const mapStateToProps = (state, props) => {
 
     part_list: props.selectedOrder[0].part_list,
     submitted: state.Orders.submitted,
+
+    shippingMethods: state.Orders.shippingMethods,
 
     formState: getFormValues('DoorOrder')(state),
     prices: linePriceSelector(state),

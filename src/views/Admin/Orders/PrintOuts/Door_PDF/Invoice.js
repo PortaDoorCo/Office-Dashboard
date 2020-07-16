@@ -93,6 +93,7 @@ export default data => {
             {
               stack: [
                 { text: `IP: ${part.profile ? part.profile.NAME : ''} NO HINGE  Edge: ${part.edge ? part.edge.NAME : ''}`, style: 'fonts' },
+                { text: `Applied Profile: ${part.applied_profile.NAME}`, style: 'fonts' }
               ],
               alignment: 'right'
             }
