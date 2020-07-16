@@ -7,7 +7,7 @@ import {
   Input,
 
 } from "reactstrap";
-import { Field, change } from 'redux-form';
+import { Field, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import 'react-widgets/dist/css/react-widgets.css';
@@ -96,48 +96,48 @@ class JobInfo extends Component {
   }
 
 
-  onChangeCustomer = async () => {
+  onCompanyChange = async (e) => {
     const form = await this.props.formState;
     const customer = await form.job_info.customer;
 
     this.props.dispatch(
       change(
-        'DoorOrder',
+        'DrawerOrder',
         'job_info.Address1',
         customer.Shipping_Address1 || customer.Address1
       )
     );
     this.props.dispatch(
       change(
-        'DoorOrder',
+        'DrawerOrder',
         'job_info.Address2',
         customer.Shipping_Address2 || customer.Address2
       )
     );
     this.props.dispatch(
       change(
-        'DoorOrder',
+        'DrawerOrder',
         'job_info.City',
         customer.Shipping_City || customer.City
       )
     );
     this.props.dispatch(
       change(
-        'DoorOrder',
+        'DrawerOrder',
         'job_info.State',
         customer.Shipping_State || customer.State
       )
     );
     this.props.dispatch(
       change(
-        'DoorOrder',
+        'DrawerOrder',
         'job_info.Zip',
         customer.Shipping_Zip || customer.Zip
       )
     );
     this.props.dispatch(
       change(
-        'DoorOrder',
+        'DrawerOrder',
         'job_info.Phone',
         customer.Shipping_Phone || customer.Phone1
       )
@@ -189,7 +189,6 @@ class JobInfo extends Component {
                 name="customer"
                 component={renderDropdownListFilter}
                 data={customers}
-                onChange={this.onChangeCustomer}
                 valueField="value"
                 textField="Company"
                 validate={required} />
@@ -314,7 +313,7 @@ class JobInfo extends Component {
 
 
 const mapStateToProps = state => ({
-
+  formState: getFormValues('DrawerOrder')(state),
 });
 
 

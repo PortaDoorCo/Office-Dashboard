@@ -7,7 +7,7 @@ import {
   Input,
 
 } from "reactstrap";
-import { Field, change } from 'redux-form';
+import { Field, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import 'react-widgets/dist/css/react-widgets.css';
@@ -94,6 +94,56 @@ class JobInfo extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
+
+  componentDidMount =  async () => {
+      const form = await this.props.formState;
+      const customer = await form.job_info.customer;
+
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          'job_info.Address1',
+          customer.Shipping_Address1 || customer.Address1
+        )
+      );
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          'job_info.Address2',
+          customer.Shipping_Address2 || customer.Address2
+        )
+      );
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          'job_info.City',
+          customer.Shipping_City || customer.City
+        )
+      );
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          'job_info.State',
+          customer.Shipping_State || customer.State
+        )
+      );
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          'job_info.Zip',
+          customer.Shipping_Zip || customer.Zip
+        )
+      );
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          'job_info.Phone',
+          customer.Shipping_Phone || customer.Phone1
+        )
+      );
+  }
+
+
 
   render() {
     const { customers } = this.props;
@@ -261,7 +311,7 @@ class JobInfo extends Component {
 
 
 const mapStateToProps = state => ({
-
+  formState: getFormValues('DoorOrder')(state),
 });
 
 
