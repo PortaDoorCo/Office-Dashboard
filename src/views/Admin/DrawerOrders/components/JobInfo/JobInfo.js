@@ -95,60 +95,6 @@ class JobInfo extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-
-  onCompanyChange = async (e) => {
-    const form = await this.props.formState;
-    const customer = await form.job_info.customer;
-
-    this.props.dispatch(
-      change(
-        'DrawerOrder',
-        'job_info.Address1',
-        customer.Shipping_Address1 || customer.Address1
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DrawerOrder',
-        'job_info.Address2',
-        customer.Shipping_Address2 || customer.Address2
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DrawerOrder',
-        'job_info.City',
-        customer.Shipping_City || customer.City
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DrawerOrder',
-        'job_info.State',
-        customer.Shipping_State || customer.State
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DrawerOrder',
-        'job_info.Zip',
-        customer.Shipping_Zip || customer.Zip
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DrawerOrder',
-        'job_info.Phone',
-        customer.Shipping_Phone || customer.Phone1
-      )
-    );
-  }
-
-
-
-
-
-
   render() {
     const { customers } = this.props;
 
