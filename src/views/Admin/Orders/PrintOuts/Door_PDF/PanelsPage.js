@@ -22,7 +22,7 @@ export default (data, breakdowns) => {
     i.dimensions.forEach((item, index) => {
       tableBody.push([
         { text: index + 1, style: 'fonts' },
-        { text: `${i.cope_design ? i.cope_design.NAME + ' ' + i.construction.value : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
+        { text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
         { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} \n` }), style: 'fonts' },
         { text: Panels(item, i, breakdowns).map(panel => { return `${panel.measurement} \n` }), style: 'fonts' },
         { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n` }), style: 'fonts' },
@@ -99,7 +99,7 @@ export default (data, breakdowns) => {
           {
             table: {
               headerRows: 1,
-              widths: [25, 60, 25, 100, '*', '*', 100],
+              widths: [25, 100, 25, 100, '*', '*', 100],
               body: tableBody
             },
             layout: 'lightHorizontalLines'

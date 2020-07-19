@@ -88,7 +88,7 @@ export default (data, breakdowns) => {
                   style: 'fonts'
                 },
                 {
-                  text: `${i.cope_design ? i.cope_design.NAME + ' ' + i.construction.value : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`,
+                  text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`,
                   style: 'fonts'
                 },
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' }
@@ -97,11 +97,10 @@ export default (data, breakdowns) => {
             {
               stack: [
                 { text: `Thickness: ${i.thickness.name}"`, style: 'fonts' },
-                {
-                  text: `IP: ${i.profile ? i.profile.NAME : ''}   Edge: ${i.edge ? i.edge.NAME : ''}`,
-                  style: 'fonts'
-                },
-                { text: `Applied Profile: ${i.applied_profile.NAME}`, style: 'fonts' }
+                { text: `IP: ${i.profile ? i.profile.NAME : ''}`, style: 'fonts' },
+                { text: `Edge: ${i.edge ? i.edge.NAME : ''}`, style: 'fonts' },
+                { text: `Applied Profile: ${i.applied_profile.NAME}`, style: 'fonts' },
+                { text: `Finish: ${i.finish.NAME}`, style: 'fonts' }
               ],
               alignment: 'right'
             }
