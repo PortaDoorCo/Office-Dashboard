@@ -355,16 +355,16 @@ const mapStateToProps = state => ({
       }
     ],
     job_info: {
-      customer: state.Orders.customerDB[0],
+      customer: state.customers.customerDB[0],
       jobName: '',
       status: 'Quote',
       poNum: '',
-      Address1: state.Orders.customerDB[0].Address1,
-      Address2: state.Orders.customerDB[0].Address2,
-      City: state.Orders.customerDB[0].City,
-      State: state.Orders.customerDB[0].State,
-      Zip: state.Orders.customerDB[0].Zip,
-      Phone: state.Orders.customerDB[0].Phone,
+      Address1: state.customers.customerDB[0].Address1,
+      Address2: state.customers.customerDB[0].Address2,
+      City: state.customers.customerDB[0].City,
+      State: state.customers.customerDB[0].State,
+      Zip: state.customers.customerDB[0].Zip,
+      Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
       ShippingMethod: state.Orders.shippingMethods[0]
     }
