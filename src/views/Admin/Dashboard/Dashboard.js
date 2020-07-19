@@ -145,8 +145,8 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loadOrders,
-      loadCustomers,
+      // loadOrders,
+      // loadCustomers,
       // getWoodtypes,
       // getDesigns,
       // getEdges,
