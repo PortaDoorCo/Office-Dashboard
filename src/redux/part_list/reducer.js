@@ -188,6 +188,9 @@ const initialState = {
   loadedBoxBottomWoodtypes: false,
 
   loadedBreakdowns: false,
+  loadedBoxBreakdowns: false,
+
+  loadedPricing: false,
 
   error: null,
 
@@ -300,7 +303,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         mt_DF_designs: data,
-        loaded_MT_Designs: true
+        loaded_MT_DF_Designs: true
       };
     case GET_PANELS:
       return {
@@ -458,12 +461,14 @@ export default function (state = initialState, action) {
     case GET_BREAKDOWNS:
       return {
         ...state,
-        breakdowns: data
+        breakdowns: data,
+        loadedBreakdowns: true
       }
     case GET_BOX_BREAKDOWNS:
       return {
         ...state,
-        box_breakdowns: data
+        box_breakdowns: data,
+        loadedBoxBreakdowns: true
       }
     case UPDATE_BREAKDOWNS:
       return {
@@ -476,7 +481,8 @@ export default function (state = initialState, action) {
     case GET_PRICING:
       return {
         ...state,
-        pricing: data
+        pricing: data,
+        loadedPricing: true
       }
     case UPDATE_PRICING:
       return {
