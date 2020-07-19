@@ -44,7 +44,13 @@ const initialState = {
   selectedDateRange: 'day',
   shippingMethods: [],
   paymentTypes: [],
-  paymentTerms: []
+  paymentTerms: [],
+
+
+  loadedPaymentTypes: false,
+  loadedPaymentTerms: false,
+  loadedShippingMethods: false,
+  loadedSales: false
 };
 
 export default function (state = initialState, action) {
@@ -90,17 +96,20 @@ export default function (state = initialState, action) {
     case LOAD_PAYMENT_TERMS:
       return {
         ...state,
-        paymentTerms: data
+        paymentTerms: data,
+        loadedPaymentTerms: true
       };
     case LOAD_PAYMENT_TYPES:
       return {
         ...state,
-        paymentTypes: data
+        paymentTypes: data,
+        loadedPaymentTypes: true
       };
     case LOAD_SALES:
       return {
         ...state,
-        salesReps: data
+        salesReps: data,
+        loadedSales: true
       };
     case LOAD_CUSTOMERS:
       return {
@@ -158,7 +167,8 @@ export default function (state = initialState, action) {
     case LOAD_SHIPPING_METHODS:
       return {
         ...state,
-        shippingMethods: data
+        shippingMethods: data,
+        loadedShippingMethods: true
       };
     case LOAD_DELIVERIES:
       const updatedDeliveries = data

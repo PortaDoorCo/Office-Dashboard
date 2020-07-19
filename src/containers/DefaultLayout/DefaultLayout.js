@@ -185,7 +185,15 @@ class DefaultLayout extends Component {
       loadedBreakdowns,
 
       ordersDBLoaded,
-      customerDBLoaded
+      customerDBLoaded,
+
+      loadedPaymentTypes,
+      loadedPaymentTerms,
+      loadedShippingMethods,
+      loadedSales,
+
+      loadedBoxBreakdowns,
+      loadedPricing
     } = this.props;
 
     const cookie = await Cookies.get("jwt");
@@ -194,29 +202,47 @@ class DefaultLayout extends Component {
       await login(cookie);
       await getUsers(cookie);
 
-
-      await loadSales(cookie);
-
-      if(!ordersDBLoaded){
-        await loadOrders(cookie);
+      if(!loadedSales){
+        await loadSales(cookie);
       }
+      
 
-      if(!customerDBLoaded){
-        await loadCustomers(cookie);
+      // if(!ordersDBLoaded){
+      //   await loadOrders(cookie);
+      // }
+
+      // if(!customerDBLoaded){
+      //   await loadCustomers(cookie);
+      // }
+
+      if(!loadedPricing){
+        await getPricing(cookie);
       }
+      
 
+      if(!loadedBreakdowns){
+        await getBreakdowns(cookie);
+      }
+      
+      if(!loadedBoxBreakdowns){
+        await getBoxBreakdowns(cookie);
+      }
+      
 
-      await getPricing(cookie);
+      if(!loadedShippingMethods){
+        await loadShippingMethod(cookie);
+      }
+      
 
-      await getBreakdowns(cookie);
+      if(!loadedPaymentTypes){
+        await loadPaymentTypes(cookie);
+      }
+     
 
-      await getBoxBreakdowns(cookie);
-
-      await loadShippingMethod(cookie);
-
-      await loadPaymentTypes(cookie);
-
-      await loadPaymentTerms(cookie);
+      if(!loadedPaymentTerms){
+        await loadPaymentTerms(cookie);
+      }
+      
 
       if(!loadedWoodtype){
         await getWoodtypes(cookie);
@@ -474,9 +500,19 @@ const mapStateToProps = (state, prop) => ({
   loadedBoxBottomWoodtypes: state.part_list.loadedBoxBottomWoodtypes,
 
   loadedBreakdowns: state.part_list.loadedBreakdowns,
+  loadedBoxBreakdowns: state.part_list.loadedBoxBreakdowns,
 
   ordersDBLoaded: state.part_list.ordersDBLoaded,
-  customerDBLoaded: state.part_list.customerDBLoaded
+  customerDBLoaded: state.part_list.customerDBLoaded,
+
+  loadedPaymentTypes: state.Orders.loadedPaymentTypes,
+  loadedPaymentTerms: state.Orders.loadedPaymentTerms,
+  loadedShippingMethods: state.Orders.loadedShippingMethods,
+  loadedSales: state.Orders.loadedSales,
+
+  loadedBreakdowns: state.part_list.loadedBreakdowns,
+  loadedBoxBreakdowns: state.part_list.loadedBoxBreakdowns,
+  loadedPricing: state.part_list.loadedPricing
 });
 
 const mapDispatchToProps = dispatch =>
