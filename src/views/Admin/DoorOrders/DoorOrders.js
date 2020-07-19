@@ -23,9 +23,6 @@ import {
   Field
 } from 'redux-form';
 import {
-  addToCart,
-  loadCustomers,
-  shippingAddress,
   submitOrder,
   loadOrders,
 } from '../../../redux/orders/actions';
@@ -386,8 +383,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      addToCart,
-      loadCustomers,
       submitOrder,
       loadOrders,
     },

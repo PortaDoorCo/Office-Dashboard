@@ -12,7 +12,7 @@ import {
 import NonEdit from './components/NonEdit';
 import Edit from './components/Edit';
 import {
-  loadCustomerOrder
+
 } from '../../../../redux/orders/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -155,7 +155,7 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loadCustomerOrder
+
     },
     dispatch
   );

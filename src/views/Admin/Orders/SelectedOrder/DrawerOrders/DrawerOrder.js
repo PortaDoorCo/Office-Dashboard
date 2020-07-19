@@ -24,10 +24,12 @@ import {
 } from 'redux-form';
 import {
   submitOrder,
-  loadCustomers,
   loadOrders,
   updateOrder
 } from '../../../../../redux/orders/actions';
+import {
+  loadCustomers
+} from '../../../../../redux/customers/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -75,7 +77,7 @@ class DrawerOrder extends Component {
       collapse: true,
       loaded: false,
       customerAddress: [],
-      files:[]
+      files: []
     };
   }
 
@@ -142,7 +144,7 @@ class DrawerOrder extends Component {
       userName: user.username,
       files: this.state.files,
       tracking: [
-        { 
+        {
           "status": values.job_info.status,
           "date": new Date()
         }
@@ -292,7 +294,7 @@ class DrawerOrder extends Component {
                 <strong>Door Order</strong>
               </CardHeader>
               <CardBody>
-              <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
+                <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
                   {!submitted ? (
                     <FormSection name="job_info">
                       <JobInfo
@@ -343,21 +345,21 @@ class DrawerOrder extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
-                      {!edit 
-                      ?
-                      <Row>
-                        <Col>
-                          <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
-                        </Col>
-                        <Col>
-                          <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                            Cancel
+                      {!edit
+                        ?
+                        <Row>
+                          <Col>
+                            <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
+                          </Col>
+                          <Col>
+                            <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
+                              Cancel
                           </Button>
-                        </Col>
-                      </Row>
-                      :
-                      <div />
-                    }
+                          </Col>
+                        </Row>
+                        :
+                        <div />
+                      }
 
                     </Col>
                   </Row>
@@ -392,7 +394,7 @@ const mapStateToProps = (state, props) => ({
   user: state.users.user,
 
   submitted: state.Orders.submitted,
-  
+
   formState: getFormValues('DrawerOrder')(state),
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),

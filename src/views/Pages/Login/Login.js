@@ -18,16 +18,8 @@ import { login } from '../../../redux/users/actions';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loader from '../Loader/Loader';
-import {
-  // getWoodtypes,
-  // getDesigns,
-  // getEdges,
-  // getFinish,
-  // getMoulds,
-  // getPanels,
-  // getHinges
-} from '../../../redux/part_list/actions';
-import { loadOrders, loadCustomers } from '../../../redux/orders/actions';
+import { loadOrders } from '../../../redux/orders/actions';
+import { loadCustomers } from '../../../redux/customers/actions';
 import PropTypes from 'prop-types';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
