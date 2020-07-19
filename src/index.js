@@ -17,7 +17,34 @@ import rootReducer from "./rootReducer";
 
 const middleware = [thunk];
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)));
+const saveToLocalStorage = (state) => {
+    try {
+        const serializedState = JSON.stringify(state)
+        localStorage.setItem('state', serializedState)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const loadFromLocalStorage = (state) => {
+    try {
+        const serializedState = localStorage.getItem('state')
+        if (serializedState === null) return undefined
+        return JSON.parse(serializedState)
+    } catch (e) {
+        console.log(e)
+        return undefined
+    }
+}
+
+const persistedState = loadFromLocalStorage();
+
+const store = createStore(
+    rootReducer,
+    persistedState,
+    composeWithDevTools(applyMiddleware(...middleware)));
+
+store.subscribe(() => saveToLocalStorage(store.getState()))
 
 ReactDOM.render(
     <Provider store={store}>

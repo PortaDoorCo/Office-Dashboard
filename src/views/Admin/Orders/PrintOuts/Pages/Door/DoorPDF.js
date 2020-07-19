@@ -10,7 +10,7 @@ import Invoice from '../../Door_PDF/Invoice'
 import Acknowledgement from '../../Door_PDF/Acknowledgement'
 import Profiles from '../../Door_PDF/Profiles'
 
-export default (data, edges, moulds, panels, breakdowns) => {
+export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
@@ -24,7 +24,7 @@ export default (data, edges, moulds, panels, breakdowns) => {
       PanelsPage(data, breakdowns),
       MaterialsList(data, breakdowns),
       QC_Checklist(data, breakdowns),
-      Profiles(data, edges, moulds, panels, breakdowns),
+      Profiles(data, edges, moulds, panels, appliedProfiles, breakdowns),
       Acknowledgement(data, breakdowns),
       Invoice(data, breakdowns),
     ],
