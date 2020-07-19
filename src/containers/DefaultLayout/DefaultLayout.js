@@ -207,13 +207,13 @@ class DefaultLayout extends Component {
       }
       
 
-      // if(!ordersDBLoaded){
-      //   await loadOrders(cookie);
-      // }
+      if(!ordersDBLoaded){
+        await loadOrders(cookie);
+      }
 
-      // if(!customerDBLoaded){
-      //   await loadCustomers(cookie);
-      // }
+      if(!customerDBLoaded){
+        await loadCustomers(cookie);
+      }
 
       if(!loadedPricing){
         await getPricing(cookie);
