@@ -23,9 +23,8 @@ class Companies extends Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-  customerDB: state.Orders.customerDB,
-  customerDBLoaded: state.Orders.customerDBLoaded,
-  customerOrder: state.Orders.customerOrder
+  customerDB: state.customers.customerDB,
+  customerDBLoaded: state.customers.customerDBLoaded,
 });
 
 const mapDispatchToProps = dispatch =>

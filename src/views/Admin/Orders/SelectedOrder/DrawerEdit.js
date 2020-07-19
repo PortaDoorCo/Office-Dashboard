@@ -238,7 +238,7 @@ const mapStateToProps = (state, props) => ({
   drawerFinishes: state.part_list.drawerFinishes,
   scoop: state.part_list.scoop,
   dividers: state.part_list.dividers,
-  customers: state.Orders.customerDB,
+  customers: state.customers.customerDB,
   address: state.Orders.address,
   orderNum: state.Orders.orderNum,
 

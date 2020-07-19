@@ -120,7 +120,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
-  customerDB: state.Orders.customerDB,
+  customerDB: state.customers.customerDB,
   woodtypes: state.part_list.woodtypes,
   designs: state.part_list.designs,
   edges: state.part_list.edges,
@@ -128,7 +128,7 @@ const mapStateToProps = (state, prop) => ({
   panels: state.part_list.panels,
   finish: state.part_list.finish,
   hinges: state.part_list.hinges,
-  customerDBLoaded: state.Orders.customerDBLoaded,
+  customerDBLoaded: state.customers.customerDBLoaded,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   loadedWoodtype: state.part_list.loadedWoodtype,
   loadedDesign: state.part_list.loadedDesign,
