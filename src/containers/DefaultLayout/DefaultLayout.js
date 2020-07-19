@@ -196,194 +196,197 @@ class DefaultLayout extends Component {
       loadedSales,
 
       loadedBoxBreakdowns,
-      loadedPricing
+      loadedPricing,
+      loadCustomers
     } = this.props;
 
     const cookie = await Cookies.get("jwt");
 
     if (cookie) {
+      await loadCustomers(cookie);
       await login(cookie);
+      
       await getUsers(cookie);
 
-      if(!loadedSales){
+      if (!loadedSales) {
         await loadSales(cookie);
       }
-      
 
-      if(!ordersDBLoaded){
+
+      if (!ordersDBLoaded) {
         await loadOrders(cookie);
       }
 
-      if(!customerDBLoaded){
-        await loadCustomers(cookie);
-      }
 
-      if(!loadedPricing){
+
+
+
+      if (!loadedPricing) {
         await getPricing(cookie);
       }
-      
 
-      if(!loadedBreakdowns){
+
+      if (!loadedBreakdowns) {
         await getBreakdowns(cookie);
       }
-      
-      if(!loadedBoxBreakdowns){
+
+      if (!loadedBoxBreakdowns) {
         await getBoxBreakdowns(cookie);
       }
-      
 
-      if(!loadedShippingMethods){
+
+      if (!loadedShippingMethods) {
         await loadShippingMethod(cookie);
       }
-      
 
-      if(!loadedPaymentTypes){
+
+      if (!loadedPaymentTypes) {
         await loadPaymentTypes(cookie);
       }
-     
 
-      if(!loadedPaymentTerms){
+
+      if (!loadedPaymentTerms) {
         await loadPaymentTerms(cookie);
       }
-      
 
-      if(!loadedWoodtype){
+
+      if (!loadedWoodtype) {
         await getWoodtypes(cookie);
       }
 
-      if(!loadedAppliedMoulds){
+      if (!loadedAppliedMoulds) {
         await getAppliedMoulds(cookie);
       }
 
-      if(!loadedBaseCaps){
+      if (!loadedBaseCaps) {
         await getBaseCap(cookie);
       }
 
-      if(!loadedBaseboards){
+      if (!loadedBaseboards) {
         await getBaseboards(cookie);
       }
 
-      if(!loadedCasings){
+      if (!loadedCasings) {
         await getCasings(cookie);
       }
 
-      if(!loadedChairRails){
+      if (!loadedChairRails) {
         await getChairRails(cookie);
       }
 
-      if(!loadedCopeDesigns){
+      if (!loadedCopeDesigns) {
         await getCopeDesigns(cookie);
       }
 
-      if(!loadedCrownMouldings){
+      if (!loadedCrownMouldings) {
         await getCrownMouldings(cookie);
       }
 
-      if(!loadedEdgeSlabs){
+      if (!loadedEdgeSlabs) {
         await getEdgeSlabs(cookie);
       }
 
-      if(!loadedEdges){
+      if (!loadedEdges) {
         await getEdges(cookie);
       }
 
-      if(!loadedFinishes){
+      if (!loadedFinishes) {
         await getFinish(cookie);
       }
 
-      if(!loadedLites){
+      if (!loadedLites) {
         await getLites(cookie);
       }
 
-      if(!loadedMiter_DF_Designs){
+      if (!loadedMiter_DF_Designs) {
         await get_Miter_DF_Designs(cookie);
       }
 
-      if(!loadedMiterDesigns){
+      if (!loadedMiterDesigns) {
         await getMiterDesigns(cookie);
       }
 
-      if(!loadedMouldingsLengths){
+      if (!loadedMouldingsLengths) {
         await getMouldingsLengths(cookie);
       }
 
-      if(!loaded_MT_Designs){
+      if (!loaded_MT_Designs) {
         await getMTDesigns(cookie);
       }
 
-      if(!loaded_MT_DF_Designs){
+      if (!loaded_MT_DF_Designs) {
         await get_MT_DF_Designs(cookie);
       }
 
-      if(!loadedPanels){
+      if (!loadedPanels) {
         await getPanels(cookie);
       }
 
-      if(!loaded_Plynths_Stools){
+      if (!loaded_Plynths_Stools) {
         await get_Plyths_Stools(cookie);
       }
 
-      if(!loadedProfiles){
+      if (!loadedProfiles) {
         await getProfiles(cookie);
       }
 
-      if(!loadedSolidCrowns){
+      if (!loadedSolidCrowns) {
         await getSolidCrowns(cookie);
       }
 
-      if(!loadedWainscotBeads){
+      if (!loadedWainscotBeads) {
         await get_Wainscot_Beads(cookie);
       }
 
-      if(!loadedFaceFrameDesigns){
+      if (!loadedFaceFrameDesigns) {
         await get_Face_Frame_Designs(cookie);
       }
 
-      if(!loadedFaceFrameTopRails){
+      if (!loadedFaceFrameTopRails) {
         await get_Face_Frame_Top_Rails(cookie);
       }
 
-      if(!loadedFurnitureFeets){
+      if (!loadedFurnitureFeets) {
         await getFurnitureFeet(cookie);
       }
 
-      if(!loadedOnePieceWoodtypes){
+      if (!loadedOnePieceWoodtypes) {
         await getOnePieceWoodtypes(cookie);
       }
 
-      if(!loadedOnePieceDesigns){
+      if (!loadedOnePieceDesigns) {
         await getOnePieceDesigns(cookie);
       }
 
-      if(!loadedOnePiecePanels){
+      if (!loadedOnePiecePanels) {
         await getOnePiecePanels(cookie);
       }
 
-      if(!loadedOnePieceEdges){
+      if (!loadedOnePieceEdges) {
         await getOnePieceEdges(cookie);
       }
-      
-      if(!loadedBoxBottomWoodtypes){
+
+      if (!loadedBoxBottomWoodtypes) {
         await getBoxBottomWoodtypes(cookie);
       }
 
-      if(!loadedBoxBottomThickness){
+      if (!loadedBoxBottomThickness) {
         await getBoxBottomThickness(cookie);
       }
 
-      if(!loadedBoxFinish){
+      if (!loadedBoxFinish) {
         await getBoxFinishes(cookie);
       }
 
-      if(!loadedBoxNotches){
+      if (!loadedBoxNotches) {
         await getBoxNotches(cookie);
       }
 
-      if(!loadedBoxThickness){
+      if (!loadedBoxThickness) {
         await getBoxThicknesses(cookie);
       }
 
-      if(!loadedBoxWoodtypes){
+      if (!loadedBoxWoodtypes) {
         await getBoxWoodtypes(cookie);
       }
 
@@ -397,7 +400,7 @@ class DefaultLayout extends Component {
 
 
     if (
-      !this.props.orders.length > 0
+      !this.props.customerDBLoaded
     ) {
       return <Loader />;
     } else {
@@ -515,7 +518,9 @@ const mapStateToProps = (state, prop) => ({
 
   loadedBreakdowns: state.part_list.loadedBreakdowns,
   loadedBoxBreakdowns: state.part_list.loadedBoxBreakdowns,
-  loadedPricing: state.part_list.loadedPricing
+  loadedPricing: state.part_list.loadedPricing,
+
+  customerDB: state.customers.customerDB
 });
 
 const mapDispatchToProps = dispatch =>
