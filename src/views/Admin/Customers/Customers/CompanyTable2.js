@@ -379,7 +379,6 @@ class CustomerTable extends React.Component {
                 </DataGrid>
 
                 <CustomerPage
-
                     toggle={this.toggle}
                     modal={this.state.modal}
                     selectedCompanies={this.state.selectedCompanies}

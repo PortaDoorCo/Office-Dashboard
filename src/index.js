@@ -18,38 +18,18 @@ import { save, load } from "redux-localstorage-simple"
 
 const middleware = [thunk];
 
-// const saveToLocalStorage = (state) => {
-//     try {
-//         const serializedState = JSON.stringify(state)
-//         localStorage.setItem('state', serializedState)
-//     } catch (e) {
-//         console.log(e)
-//     }
-// }
 
-// const loadFromLocalStorage = (state) => {
-//     try {
-//         const serializedState = localStorage.getItem('state')
-//         if (serializedState === null) return undefined
-//         return JSON.parse(serializedState)
-//     } catch (e) {
-//         console.log(e)
-//         return undefined
-//     }
-// }
-
-// const persistedState = loadFromLocalStorage();
 
 const store = createStore(
     rootReducer,
     load({
-        ignoreStates: ['form', 'customers', 'sales', 'users']
+        ignoreStates: ['form', 'sales', 'users']
     }),
     composeWithDevTools(applyMiddleware(...middleware, save({
-        ignoreStates: ['form', 'customers', 'sales', 'users']
+        ignoreStates: ['form', 'sales', 'users']
     }))));
 
-// store.subscribe(() => saveToLocalStorage(store.getState()))
+
 
 ReactDOM.render(
     <Provider store={store}>
