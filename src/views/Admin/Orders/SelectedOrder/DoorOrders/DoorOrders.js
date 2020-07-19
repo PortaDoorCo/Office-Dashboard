@@ -22,13 +22,13 @@ import {
   FieldArray,
 } from 'redux-form';
 import {
-  addToCart,
-  loadCustomers,
-  shippingAddress,
   submitOrder,
   loadOrders,
   updateOrder
 } from '../../../../../redux/orders/actions';
+import {
+  loadCustomers
+} from '../../../../../redux/customers/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -336,7 +336,6 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      addToCart,
       loadCustomers,
       submitOrder,
       loadOrders,

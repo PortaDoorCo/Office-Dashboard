@@ -8,7 +8,9 @@ import NewPassword from './views/Pages/NewPassword/NewPassword'
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { NotificationManager } from 'react-notifications';
-import { loadOrders, loadCustomers, loadSales, loadShippingMethod, getDeliveries } from "./redux/orders/actions";
+import { loadOrders, loadShippingMethod, getDeliveries } from "./redux/orders/actions";
+import { loadSales} from "./redux/sales/actions";
+import { loadCustomers } from './redux/customers/actions'
 import { setLogin } from "./redux/users/actions";
 import io from 'socket.io-client';
 import db_url from './redux/db_url'

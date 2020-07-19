@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import CompanyTable2 from './CompanyTable2'
 import {
-  loadCustomers,
   loadOrders,
-  loadCustomerOrder
 } from '../../../../redux/orders/actions';
+
+import {
+  loadCustomers,
+} from '../../../../redux/customers/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -31,7 +33,6 @@ const mapDispatchToProps = dispatch =>
     {
       loadCustomers,
       loadOrders,
-      loadCustomerOrder
     },
     dispatch
   );

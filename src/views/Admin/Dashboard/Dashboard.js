@@ -8,7 +8,7 @@ import RestrictedOrderTable from './components/RestrictedOrderTable'
 import CompanyTable2 from '../Customers/Customers/CompanyTable2'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadOrders, loadCustomers } from '../../../redux/orders/actions';
+import { loadOrders, loadCustomers } from '../../../redux/customers/actions';
 import {
   // getWoodtypes,
   // getDesigns,
