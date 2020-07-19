@@ -23,10 +23,10 @@ const middleware = [thunk];
 const store = createStore(
     rootReducer,
     load({
-        ignoreStates: ['form', 'sales', 'users']
+        ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
     }),
     composeWithDevTools(applyMiddleware(...middleware, save({
-        ignoreStates: ['form', 'sales', 'users']
+        ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
     }))));
 
 
