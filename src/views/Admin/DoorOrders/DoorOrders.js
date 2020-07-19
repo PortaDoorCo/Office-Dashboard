@@ -57,13 +57,6 @@ const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
-
-const fraction = num => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
-
-
 const dueDate = moment(new Date()).businessAdd(7)._d
 
 class DoorOrders extends Component {
@@ -167,32 +160,6 @@ class DoorOrders extends Component {
       return
     }
   };
-
-  // componentDidMount() {
-  //   this.props.dispatch(
-  //     change(
-  //       'DoorOrder',
-  //       'balance_paid',
-  //       0
-  //     )
-  //   );
-  // }
-
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.formState !== prevProps.formState) {
-  //     if (this.props.formState) {
-  //       const update = async () => {
-  //         const form = await this.props.formState;
-  //         const customer = await form.job_info.customer;
-  //         const part_list = await form.part_list;
-
-
-
-  //       };
-  //       update();
-  //     }
-  //   }
-  // }
 
   cancelOrder = e => {
     e.preventDefault();
