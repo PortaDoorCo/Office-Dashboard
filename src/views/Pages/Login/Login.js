@@ -171,7 +171,7 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   loggedIn: state.users.loggedIn,
-  customerDBLoaded: state.Orders.customerDBLoaded
+  customerDBLoaded: state.customers.customerDBLoaded
 });
 
 const mapDispatchToProps = dispatch =>

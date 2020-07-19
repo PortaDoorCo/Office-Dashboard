@@ -230,7 +230,7 @@ class Chart1 extends Component {
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
-  customerDB: state.Orders.customerDB,
+  customerDB: state.customers.customerDB,
   selectedDateRange: state.Orders.selectedDateRange
 });
 

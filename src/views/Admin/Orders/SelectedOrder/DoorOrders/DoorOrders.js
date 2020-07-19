@@ -305,8 +305,8 @@ const mapStateToProps = (state, props) => {
   return {
     initialValues: props.selectedOrder[0],
     order: props.selectedOrder[0],
-    customers: state.Orders.customerDB,
-    customerDBLoaded: state.Orders.customerDBLoaded,
+    customers: state.customers.customerDB,
+    customerDBLoaded: state.customers.customerDBLoaded,
 
     user: state.users.user,
 

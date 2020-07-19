@@ -326,8 +326,8 @@ class DoorOrders extends Component {
 
 const mapStateToProps = state => ({
 
-  customers: state.Orders.customerDB,
-  customerDBLoaded: state.Orders.customerDBLoaded,
+  customers: state.customers.customerDB,
+  customerDBLoaded: state.customers.customerDBLoaded,
 
   user: state.users.user,
 

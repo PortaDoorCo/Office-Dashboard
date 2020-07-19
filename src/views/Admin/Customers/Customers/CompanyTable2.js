@@ -394,7 +394,7 @@ class CustomerTable extends React.Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-    customerDB: state.Orders.customerDB,
+    customerDB: state.customers.customerDB,
     salesReps: state.Orders.salesReps,
     shippingMethods: state.Orders.shippingMethods,
     paymentTerms: state.Orders.paymentTerms,

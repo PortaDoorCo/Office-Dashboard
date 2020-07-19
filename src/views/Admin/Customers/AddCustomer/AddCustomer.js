@@ -500,7 +500,7 @@ const mapStateToProps = (state, prop) => ({
   },
   formState: getFormValues("Customer")(state),
   salesReps: state.Orders.salesReps,
-  CUSTNO: state.Orders.customerDB[state.Orders.customerDB.length - 1].CUSTNO + 1
+  CUSTNO: state.customers.customerDB[state.customers.customerDB.length - 1].CUSTNO + 1
 
 });
 
