@@ -102,7 +102,8 @@ class DoorOrders extends Component {
       customer: {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
-      }
+      },
+      ShippingMethod: values.job_info.ShippingMethod
     }
 
     const order = {
@@ -180,7 +181,7 @@ class DoorOrders extends Component {
     }
   }
 
-  cancelOrder = async() => {
+  cancelOrder = async () => {
     await this.props.reset();
 
     await this.props.editable();
@@ -212,7 +213,7 @@ class DoorOrders extends Component {
       address,
 
       edit,
-
+      shippingMethods,
       total,
       dispatch,
       tax,
@@ -237,6 +238,7 @@ class DoorOrders extends Component {
                       loaded={this.state.loaded}
                       handleAddress={this.handleAddress}
                       edit={edit}
+                      shippingMethods={shippingMethods}
                     />
                   </FormSection>
 
@@ -263,9 +265,9 @@ class DoorOrders extends Component {
                     <Col xs="5" />
                     <Col xs="3">
                       <strong>Tax: </strong>
-                      <Input disabled={edit} placeholder={'$' + tax.toFixed(2)} className="mb-2" />
+                      {tax ? <Input disabled={edit} placeholder={'$' + tax.toFixed(2)} className="mb-2" /> : <Input disabled={edit} placeholder={'$0.00'} className="mb-2" />}
                       <strong>Total: </strong>
-                      <Input disabled={edit} placeholder={'$' + total.toFixed(2)} className="mb-3" />
+                      {total ? <Input disabled={edit} placeholder={'$' + total.toFixed(2)} className="mb-3" /> : <Input disabled={edit} placeholder={'$0.00'} className="mb-3" />}
                     </Col>
                   </Row>
                   <Row>
@@ -284,7 +286,7 @@ class DoorOrders extends Component {
                           </Col>
                         </Row> :
                         <div />
-                    }
+                      }
                     </Col>
                   </Row>
                 </form>
@@ -318,6 +320,8 @@ const mapStateToProps = (state, props) => {
 
     part_list: props.selectedOrder[0].part_list,
     submitted: state.Orders.submitted,
+
+    shippingMethods: state.Orders.shippingMethods,
 
     formState: getFormValues('DoorOrder')(state),
     prices: linePriceSelector(state),

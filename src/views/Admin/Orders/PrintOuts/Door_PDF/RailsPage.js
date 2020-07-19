@@ -29,7 +29,7 @@ export default (data, breakdowns) => {
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
-          { text: '' },
+          { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
           { text: '' }
         ]);
       } else {
@@ -39,7 +39,7 @@ export default (data, breakdowns) => {
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} \n` }), style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.measurement} \n` }), style: 'fonts' },
           { text: Rails(item, i, breakdowns).map(rail => { return `${rail.pattern} \n` }), style: 'fonts' },
-          { text: '' },
+          { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
           { text: '' }
         ]);
       }

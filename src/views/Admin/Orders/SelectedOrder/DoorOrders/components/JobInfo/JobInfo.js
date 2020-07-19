@@ -53,7 +53,7 @@ class JobInfo extends Component {
 
 
   render() {
-    const { customers, edit } = this.props;
+    const { customers, edit, shippingMethods } = this.props;
 
     return (
 
@@ -213,6 +213,21 @@ class JobInfo extends Component {
                 component={renderField}
                 edit={edit}
                 label="Phone" />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col xs='3'>
+            <FormGroup>
+              <Label htmlFor="shipping_method">Shipping Method</Label>
+              <Field
+                name="ShippingMethod"
+                component={renderDropdownList}
+                data={shippingMethods}
+                valueField="value"
+                edit={edit}
+                textField="NAME" />
             </FormGroup>
           </Col>
         </Row>

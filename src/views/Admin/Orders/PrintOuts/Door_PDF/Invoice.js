@@ -4,8 +4,6 @@ import Size from '../Breakdowns/Doors/Size';
 
 export default data => {
 
-  console.log('DATTAAAA', data)
-
   const qty = data.part_list.map((part, i) => {
     return part.dimensions.map((dim, index) => {
       return parseInt(dim.qty)
@@ -93,6 +91,7 @@ export default data => {
             {
               stack: [
                 { text: `IP: ${part.profile ? part.profile.NAME : ''} NO HINGE  Edge: ${part.edge ? part.edge.NAME : ''}`, style: 'fonts' },
+                { text: `Applied Profile: ${part.applied_profile.NAME}`, style: 'fonts' }
               ],
               alignment: 'right'
             }
