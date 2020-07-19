@@ -43,10 +43,10 @@ const middleware = [thunk];
 const store = createStore(
     rootReducer,
     load({
-        ignoreStates: ['form', 'customers', 'sales']
+        ignoreStates: ['form', 'customers', 'sales', 'users']
     }),
     composeWithDevTools(applyMiddleware(...middleware, save({
-        ignoreStates: ['form', 'customers', 'sales']
+        ignoreStates: ['form', 'customers', 'sales', 'users']
     }))));
 
 // store.subscribe(() => saveToLocalStorage(store.getState()))
