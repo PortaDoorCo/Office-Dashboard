@@ -57,13 +57,6 @@ const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
-
-const fraction = num => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
-
-
 const dueDate = moment(new Date()).businessAdd(7)._d
 
 class DoorOrders extends Component {
@@ -167,70 +160,6 @@ class DoorOrders extends Component {
       return
     }
   };
-
-  componentDidUpdate(prevProps) {
-    if (this.props.formState !== prevProps.formState) {
-      if (this.props.formState) {
-        const update = async () => {
-          const form = await this.props.formState;
-          const customer = await form.job_info.customer;
-          const part_list = await form.part_list;
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'balance_paid',
-              0
-            )
-          );
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Address1',
-              customer.Shipping_Address1 || customer.Address1
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Address2',
-              customer.Shipping_Address2 || customer.Address2
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.City',
-              customer.Shipping_City || customer.City
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.State',
-              customer.Shipping_State || customer.State
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Zip',
-              customer.Shipping_Zip || customer.Zip
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Phone',
-              customer.Shipping_Phone || customer.Phone1
-            )
-          );
-        };
-        update();
-      }
-    }
-  }
 
   cancelOrder = e => {
     e.preventDefault();
@@ -407,7 +336,8 @@ const mapStateToProps = state => ({
 
   submitted: state.Orders.submitted,
   initialValues: {
-    misc_items:[],
+    misc_items: [],
+    balance_paid: 0,
     open: true,
     part_list: [
       {
@@ -432,12 +362,12 @@ const mapStateToProps = state => ({
       jobName: '',
       status: 'Quote',
       poNum: '',
-      Address1: '',
-      Address2: '',
-      City: '',
-      State: '',
-      Zip: '',
-      Phone: '',
+      Address1: state.Orders.customerDB[0].Address1,
+      Address2: state.Orders.customerDB[0].Address2,
+      City: state.Orders.customerDB[0].City,
+      State: state.Orders.customerDB[0].State,
+      Zip: state.Orders.customerDB[0].Zip,
+      Phone: state.Orders.customerDB[0].Phone,
       DueDate: dueDate,
       ShippingMethod: state.Orders.shippingMethods[0]
     }
