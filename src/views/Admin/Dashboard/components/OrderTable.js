@@ -24,7 +24,8 @@ import DrawerPDF from '../../Orders/PrintOuts/Pages/Drawer/DrawerPDF'
 import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadOrders, loadCustomers, updateStatus } from '../../../../redux/orders/actions';
+import { loadOrders, updateStatus } from '../../../../redux/orders/actions';
+import {  loadCustomers } from '../../../../redux/customers/actions';
 import io from 'socket.io-client';
 import db_url from '../../../../redux/db_url'
 import Cookies from "js-cookie";

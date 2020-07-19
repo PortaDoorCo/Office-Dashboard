@@ -22,7 +22,8 @@ import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadCustomers, updateCustomer, submitCustomer } from '../../../../redux/orders/actions'
+import { loadCustomers, updateCustomer, submitCustomer } from '../../../../redux/customers/actions'
+
 import Geocode from "react-geocode";
 import CustomerPage from './CustomerPage';
 import { Item } from 'devextreme-react/form';

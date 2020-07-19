@@ -26,13 +26,16 @@ import { bindActionCreators } from "redux";
 
 import {
   loadOrders,
-  loadCustomers,
-  loadSales,
   loadShippingMethod,
   getDeliveries,
   loadPaymentTypes,
   loadPaymentTerms,
 } from "../../redux/orders/actions";
+import {
+  loadSales,
+} from "../../redux/sales/actions";
+
+import { loadCustomers } from '../../redux/customers/actions'
 
 import {
   getWoodtypes,
@@ -457,7 +460,7 @@ class DefaultLayout extends Component {
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
-  customerDBLoaded: state.Orders.customerDBLoaded,
+
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   loggedIn: state.users.loggedIn,
 
@@ -503,12 +506,12 @@ const mapStateToProps = (state, prop) => ({
   loadedBoxBreakdowns: state.part_list.loadedBoxBreakdowns,
 
   ordersDBLoaded: state.part_list.ordersDBLoaded,
-  customerDBLoaded: state.part_list.customerDBLoaded,
+  customerDBLoaded: state.customers.customerDBLoaded,
 
   loadedPaymentTypes: state.Orders.loadedPaymentTypes,
   loadedPaymentTerms: state.Orders.loadedPaymentTerms,
   loadedShippingMethods: state.Orders.loadedShippingMethods,
-  loadedSales: state.Orders.loadedSales,
+  loadedSales: state.sales.loadedSales,
 
   loadedBreakdowns: state.part_list.loadedBreakdowns,
   loadedBoxBreakdowns: state.part_list.loadedBoxBreakdowns,
