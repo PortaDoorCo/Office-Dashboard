@@ -90,10 +90,10 @@ class JobInfo extends Component {
     };
   }
 
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps) {
     const { formState } = this.props;
-    if(formState && formState.job_info && formState.job_info.customer){
-      if(formState.job_info.customer !== prevProps.formState.job_info.customer){
+    if (formState && formState.job_info && formState.job_info.customer) {
+      if (formState.job_info.customer !== prevProps.formState.job_info.customer) {
 
         const customer = formState.job_info.customer
 
@@ -171,8 +171,22 @@ class JobInfo extends Component {
               <p>7 Business Day Lead Time</p>
             </FormGroup>
           </Col>
-          <Col xs="8" />
+          <Col xs="5" />
+          <Col xs='3'>
+            <FormGroup>
+              <Label htmlFor="shipping_method">Shipping Method</Label>
+              <Field
+                name="ShippingMethod"
+                component={renderDropdownList}
+                data={shippingMethods}
+                valueField="value"
+                textField="NAME" />
+            </FormGroup>
+          </Col>
         </Row>
+
+
+
         <Row>
           <Col xs="3">
             <FormGroup>
@@ -301,20 +315,6 @@ class JobInfo extends Component {
                 type="text"
                 component={renderField}
                 label="Phone" />
-            </FormGroup>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs='3'>
-            <FormGroup>
-              <Label htmlFor="shipping_method">Shipping Method</Label>
-              <Field
-                name="ShippingMethod"
-                component={renderDropdownList}
-                data={shippingMethods}
-                valueField="value"
-                textField="NAME" />
             </FormGroup>
           </Col>
         </Row>

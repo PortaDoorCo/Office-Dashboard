@@ -20,7 +20,7 @@ import {
   Field,
 } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
-import { updateCustomer } from '../../../../../redux/orders/actions'
+import { updateCustomer } from '../../../../../redux/customers/actions'
 
 const required = value => (value ? undefined : 'Required');
 

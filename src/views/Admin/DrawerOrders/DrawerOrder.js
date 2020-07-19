@@ -23,9 +23,9 @@ import {
   FieldArray
 } from 'redux-form';
 import {
-  submitOrder,
-  loadCustomers,
+  submitOrder
 } from '../../../redux/orders/actions';
+import { loadCustomers } from '../../../redux/customers/actions'
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -73,7 +73,7 @@ class DoorOrders extends Component {
       collapse: true,
       loaded: false,
       customerAddress: [],
-      files:[]
+      files: []
     };
   }
 
@@ -119,7 +119,8 @@ class DoorOrders extends Component {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
         sale: values.job_info.customer.sale.id
-      }
+      },
+      ShippingMethod: values.job_info.ShippingMethod
     }
 
 
@@ -142,7 +143,7 @@ class DoorOrders extends Component {
       files: this.state.files,
       submittedBy: user.FirstName,
       tracking: [
-        { 
+        {
           "status": values.job_info.status,
           "date": new Date()
         }
@@ -211,7 +212,7 @@ class DoorOrders extends Component {
       tax
     } = this.props;
 
-  
+
 
     return (
       <div className="animated fadeIn resize">
@@ -223,7 +224,7 @@ class DoorOrders extends Component {
                 <strong>Door Order</strong>
               </CardHeader>
               <CardBody>
-              <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
+                <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
                   {!submitted ? (
                     <FormSection name="job_info">
                       <JobInfo
@@ -289,7 +290,7 @@ class DoorOrders extends Component {
             </Card>
           </Col>
           <Col lg="4">
-          <Row>
+            <Row>
               <Col>
                 <Card>
                   <CardBody>
@@ -342,7 +343,7 @@ const mapStateToProps = (state, prop) => ({
   orderNum: state.Orders.orderNum,
 
   user: state.users.user,
-  
+
 
   submitted: state.Orders.submitted,
   initialValues: {
@@ -360,17 +361,18 @@ const mapStateToProps = (state, prop) => ({
       }
     ],
     job_info: {
-      customer: state.Orders.customerDB[0],
+      customer: state.customers.customerDB[0],
       jobName: '',
       status: 'Quote',
       poNum: '',
-      Address1: state.Orders.customerDB[0].Address1,
-      Address2: state.Orders.customerDB[0].Address2,
-      City: state.Orders.customerDB[0].City,
-      State: state.Orders.customerDB[0].State,
-      Zip: state.Orders.customerDB[0].Zip,
-      Phone: state.Orders.customerDB[0].Phone,
-      DueDate: dueDate
+      Address1: state.customers.customerDB[0].Address1,
+      Address2: state.customers.customerDB[0].Address2,
+      City: state.customers.customerDB[0].City,
+      State: state.customers.customerDB[0].State,
+      Zip: state.customers.customerDB[0].Zip,
+      Phone: state.customers.customerDB[0].Phone,
+      DueDate: dueDate,
+      ShippingMethod: state.Orders.shippingMethods[0]
     }
   },
   formState: getFormValues('DrawerOrder')(state),

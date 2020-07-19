@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadOrders, loadCustomers, updateStatus } from '../../../redux/orders/actions';
+import { loadOrders, updateStatus } from '../../../redux/orders/actions';
+import { loadCustomers } from '../../../redux/customers/actions';
 import OrderTable from './OrderTable';
 import RestrictedOrderTable from './RestrictedOrderTable'
 
