@@ -12,6 +12,7 @@ import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import rootReducer from "./rootReducer";
+import { save, load } from "redux-localstorage-simple"
 
 
 
@@ -41,10 +42,14 @@ const persistedState = loadFromLocalStorage();
 
 const store = createStore(
     rootReducer,
-    persistedState,
-    composeWithDevTools(applyMiddleware(...middleware)));
+    load({
+        ignoreStates: ['form']
+    }),
+    composeWithDevTools(applyMiddleware(...middleware, save({
+        ignoreStates: ['form']
+    }))));
 
-store.subscribe(() => saveToLocalStorage(store.getState()))
+// store.subscribe(() => saveToLocalStorage(store.getState()))
 
 ReactDOM.render(
     <Provider store={store}>
