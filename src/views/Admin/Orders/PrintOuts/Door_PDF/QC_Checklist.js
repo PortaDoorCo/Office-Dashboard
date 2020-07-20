@@ -74,9 +74,9 @@ export default (data, breakdowns) => {
             {
               stack: [
                 { text: `Panel: ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
-                { text: `IP: ${i.profile ? i.profile.NAME : ''}`, style: 'fonts' },
+                { text: `IP: ${i.profile ? i.profile.NAME : 'None'}`, style: 'fonts' },
                 { text: `Finish: ${i.finish.NAME}`, style: 'fonts' },
-                { text: `Edge: ${i.edge ? i.edge.NAME : ''}`, style: 'fonts' },
+                { text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`, style: 'fonts' },
                 { text: 'No Hinge', style: 'fonts' },
               ],
               alignment: 'right'
