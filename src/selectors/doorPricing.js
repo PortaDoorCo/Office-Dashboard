@@ -93,23 +93,36 @@ const totalBalanceDue = state => {
 };
 
 
-export const stileRailSelector = createSelector(
+export const sqFTSelector = createSelector(
   [partListSelector, pricingSelector],
   (parts, pricer) =>
     parts.map((part, index) => {
 
       console.log('part', part)
 
+      let b = 1
 
-
+      if (part.dimensions) {
+        const a = part.dimensions.map(i => {
+          const width = Math.ceil(numQty(i.width))
+          const height = Math.ceil(numQty(i.height))
+          const calc = ((width * height) / 144)
+          console.log(calc)
+          return calc
+        })
+        console.log(a.reduce((acc, item) => acc + item, 0))
+        return a.reduce((acc, item) => acc + item, 0)
+      } else {
+        return 1
+      }
     })
 );
 
 
 
 export const itemPriceSelector = createSelector(
-  [partListSelector, pricingSelector],
-  (parts, pricer) =>
+  [partListSelector, pricingSelector, sqFTSelector],
+  (parts, pricer, sqFt) =>
     parts.map((part, index) => {
 
       let design = 0;
@@ -134,7 +147,7 @@ export const itemPriceSelector = createSelector(
         design = part.mt_df_design && part.thickness.value === 0.75 ? part.mt_df_design.UPCHARGE : (part.mt_df_design && part.thickness.value === 1) ? part.mt_df_design.UPCHARGE_THICK : 0;
       }
 
-      const wood = part.woodtype && part.thickness.value === 0.75 ? part.woodtype.STANDARD_GRADE : (part.woodtype && part.thickness.value === 1) ? part.woodtype.STANDARD_GRADE_THICK : 0;
+      const wood = part.woodtype && part.thickness.value === 0.75 ? part.woodtype.STANDARD_GRADE  : (part.woodtype && part.thickness.value === 1) ?  part.woodtype.STANDARD_GRADE_THICK : 0;
       // const design = part.design && part.thickness.value === 0.75 ? part.design.UPCHARGE : (part.design && part.thickness.value === 1) ? part.design.UPCHARGE_THICK :  0;
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
@@ -577,11 +590,13 @@ export const itemPriceSelector = createSelector(
 
 
 export const linePriceSelector = createSelector(
-  [partListSelector, pricingSelector],
-  (parts, pricer) =>
+  [partListSelector, pricingSelector, sqFTSelector],
+  (parts, pricer, sqFt) =>
     parts.map((part, index) => {
 
       let design = 0;
+
+      console.log('SQFT ====> ', sqFt[index])
 
       if (part.cope_design) {
         design = part.cope_design && part.thickness.value === 0.75 ? part.cope_design.UPCHARGE : (part.cope_design && part.thickness.value === 1) ? part.cope_design.UPCHARGE_THICK : 0;

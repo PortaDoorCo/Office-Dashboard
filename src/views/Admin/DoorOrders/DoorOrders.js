@@ -34,7 +34,7 @@ import {
   taxSelector,
   totalSelector,
   addPriceSelector,
-  stileRailSelector,
+  sqFTSelector,
   miscTotalSelector
 } from '../../../selectors/doorPricing';
 
@@ -376,7 +376,7 @@ const mapStateToProps = state => ({
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
-  stileRailSelector: stileRailSelector(state),
+  sqFTSelector: sqFTSelector(state),
   miscTotalSelector: miscTotalSelector(state)
 });
 
