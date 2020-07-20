@@ -121,8 +121,8 @@ export const sqFTSelector = createSelector(
 
 
 export const itemPriceSelector = createSelector(
-  [partListSelector, pricingSelector, sqFTSelector],
-  (parts, pricer, sqFt) =>
+  [partListSelector, pricingSelector],
+  (parts, pricer) =>
     parts.map((part, index) => {
 
       let design = 0;
@@ -590,13 +590,11 @@ export const itemPriceSelector = createSelector(
 
 
 export const linePriceSelector = createSelector(
-  [partListSelector, pricingSelector, sqFTSelector],
-  (parts, pricer, sqFt) =>
+  [partListSelector, pricingSelector],
+  (parts, pricer) =>
     parts.map((part, index) => {
 
       let design = 0;
-
-      console.log('SQFT ====> ', sqFt[index])
 
       if (part.cope_design) {
         design = part.cope_design && part.thickness.value === 0.75 ? part.cope_design.UPCHARGE : (part.cope_design && part.thickness.value === 1) ? part.cope_design.UPCHARGE_THICK : 0;
