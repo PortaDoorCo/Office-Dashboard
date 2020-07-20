@@ -97,7 +97,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
       )
     );
   }
-  
+
 
 
   return (
@@ -346,7 +346,16 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     label="notes"
                   />
                 </Col>
-
+                <Col xs='5' />
+                <Col xs='3'>
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderField}
+                    label="extraCost"
+                  />
+                </Col>
               </Row>
               <br />
             </Fragment>
@@ -357,7 +366,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 color="primary"
                 className="btn-circle"
                 onClick={(e) =>
-                  
                   (
                     (formState.part_list[formState.part_list.length - 1].construction.value === "Cope" && formState.part_list[formState.part_list.length - 1].profile) ?
                       fields.push({
