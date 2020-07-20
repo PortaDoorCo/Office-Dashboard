@@ -15,7 +15,7 @@ export const UPDATE_ORDER = 'UPDATE_ORDER';
 export const LOAD_CUSTOMER_ORDER = 'LOAD_CUSTOMER_ORDER';
 export const COUNT_ORDERS = 'COUNT_ORDERS';
 export const SELECT_DATE_RANGE = 'SELECT_DATE_RANGE';
-export const LOAD_SALES = 'LOAD_SALES';
+
 export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const LOAD_SHIPPING_METHODS = 'LOAD_SHIPPING_METHODS';
 
@@ -206,8 +206,6 @@ export function updateBalance(orderId, balance, cookie) {
       }
     ]
   }
-
-
 
   return async function (dispatch) {
     try {

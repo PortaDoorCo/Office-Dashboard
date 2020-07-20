@@ -217,6 +217,7 @@ class DefaultLayout extends Component {
         await loadOrders(cookie);
       }
 
+      await getDeliveries(cookie)
 
 
 
