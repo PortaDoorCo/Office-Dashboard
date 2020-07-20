@@ -97,9 +97,9 @@ export default (data, breakdowns) => {
             {
               stack: [
                 { text: `Thickness: ${i.thickness.name}"`, style: 'fonts' },
-                { text: `IP: ${i.profile ? i.profile.NAME : ''}`, style: 'fonts' },
-                { text: `Edge: ${i.edge ? i.edge.NAME : ''}`, style: 'fonts' },
-                { text: `Applied Profile: ${i.applied_profile.NAME}`, style: 'fonts' },
+                { text: `IP: ${i.profile ? i.profile.NAME : 'None'}`, style: 'fonts' },
+                { text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`, style: 'fonts' },
+                { text: `Applied Profile: ${i.applied_profile ? i.applied_profile.NAME : 'None'}`, style: 'fonts' },
                 { text: `Finish: ${i.finish.NAME}`, style: 'fonts' }
               ],
               alignment: 'right'
@@ -115,7 +115,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 40, 95, 95, 95, 80],
+            widths: [22, 15, 70, 95, 95, 95, 60],
             body: tableBody
           },
           layout: 'lightHorizontalLines'
