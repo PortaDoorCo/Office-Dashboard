@@ -42,70 +42,74 @@ class MiterDoor extends Component {
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list
+    const { index } = this.props;
+    const part = part_list[index]
 
-    part_list.forEach((part, i) => {
-        if (part.dimensions) {
-          part.dimensions.forEach((info, index) => {
+      if (part.dimensions) {
+        part.dimensions.forEach((info, j) => {
+
+          console.log('linnneee', `part_list[${index}].dimensions[${j}].leftStile`)
+
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${j}].leftStile`,
+              fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
+            )
+          );
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${j}].rightStile`,
+              fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
+            )
+          );
+
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${j}].topRail`,
+              fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.TOP_RAIL_ADD) : 0)
+            )
+          );
+
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${j}].bottomRail`,
+              fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.BTM_RAIL_ADD) : 0)
+            )
+          );
+
+
+
+          if (parseInt(info.panelsH) > 1) {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].leftStile`,
+                `part_list[${index}].dimensions[${j}].horizontalMidRailSize`,
                 fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
               )
             );
+          }
 
+          if (parseInt(info.panelsW) > 1) {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].rightStile`,
+                `part_list[${index}].dimensions[${j}].verticalMidRailSize`,
                 fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
               )
             );
-
-
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].topRail`,
-                fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.TOP_RAIL_ADD) : 0)
-              )
-            );
-
-
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].bottomRail`,
-                fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.BTM_RAIL_ADD) : 0)
-              )
-            );
-
-
-
-            if (parseInt(info.panelsH) > 1) {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                  fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
-                )
-              );
-            }
-
-            if (parseInt(info.panelsW) > 1) {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                  fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
-                )
-              );
-            }
-          });
-        } else {
-          return
-        }
-    });
+          }
+        });
+      } else {
+        return
+      }
   }
 
   render() {

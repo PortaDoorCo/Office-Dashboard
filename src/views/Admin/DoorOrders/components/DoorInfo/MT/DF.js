@@ -40,66 +40,64 @@ class MT_DF extends Component {
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list
+    const { index } = this.props;
+    const part = part_list[index]
 
-    part_list.forEach((part, i) => {
-        if (part.dimensions) {
-          part.dimensions.forEach((info, index) => {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].leftStile`,
-                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
-              )
-            );
+    if (part.dimensions) {
+      part.dimensions.forEach((info, i) => {
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].leftStile`,
+            fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+          )
+        );
 
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].rightStile`,
-                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
-              )
-            );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].rightStile`,
+            fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+          )
+        );
 
-            if(info.full_frame) {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].topRail`,
-                  fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
-                )
-              );
-  
-  
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].bottomRail`,
-                  fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
-                )
-              );
-            } else {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].topRail`,
-                  fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
-                )
-              );
-  
-  
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].bottomRail`,
-                  fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
-                )
-              );
-            }
-          });
+        if (info.full_frame) {
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${i}].topRail`,
+              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+            )
+          );
+
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${i}].bottomRail`,
+              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+            )
+          );
         } else {
-          return
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${i}].topRail`,
+              fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
+            )
+          );
+
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${i}].bottomRail`,
+              fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
+            )
+          );
         }
-    });
+      });
+    }
   }
 
 
@@ -239,7 +237,7 @@ class MT_DF extends Component {
     );
   }
 }
- 
+
 
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,

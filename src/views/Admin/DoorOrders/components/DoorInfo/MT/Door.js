@@ -40,70 +40,68 @@ class MT_Door extends Component {
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list
+    const { index } = this.props;
+    const part = part_list[index]
 
-    part_list.forEach((part, i) => {
-      if (part.dimensions) {
-        part.dimensions.forEach((info, index) => {
+    if (part.dimensions) {
+      part.dimensions.forEach((info, i) => {
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].leftStile`,
+            fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+          )
+        );
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].rightStile`,
+            fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+          )
+        );
+
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].topRail`,
+            fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
+          )
+        );
+
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].bottomRail`,
+            fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
+          )
+        );
+
+
+
+        if (parseInt(info.panelsH) > 1) {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].leftStile`,
-              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+              `part_list[${index}].dimensions[${i}].horizontalMidRailSize`,
+              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
             )
           );
+        }
 
+        if (parseInt(info.panelsW) > 1) {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].rightStile`,
-              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+              `part_list[${index}].dimensions[${i}].verticalMidRailSize`,
+              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
             )
           );
-
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].topRail`,
-              fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
-            )
-          );
-
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].bottomRail`,
-              fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
-            )
-          );
-
-
-
-          if (parseInt(info.panelsH) > 1) {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
-              )
-            );
-          }
-
-          if (parseInt(info.panelsW) > 1) {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
-              )
-            );
-          }
-        });
-      } else {
-        return
-      }
-    });
+        }
+      });
+    }
   }
 
 

@@ -39,70 +39,69 @@ class CopeDoor extends Component {
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list
-
-    part_list.forEach((part, i) => {
-        if (part.dimensions) {
-          part.dimensions.forEach((info, index) => {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].leftStile`,
-                fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-              )
-            );
-
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].rightStile`,
-                fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-              )
-            );
+    const { index } = this.props;
+    const part = part_list[index]
 
 
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].topRail`,
-                fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
-              )
-            );
+    if (part.dimensions) {
+      part.dimensions.forEach((info, i) => {
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].leftStile`,
+            fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+          )
+        );
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].rightStile`,
+            fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+          )
+        );
 
 
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].bottomRail`,
-                fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
-              )
-            );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].topRail`,
+            fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+          )
+        );
+
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].bottomRail`,
+            fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+          )
+        );
 
 
 
-            if (parseInt(info.panelsH) > 1) {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                  fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                )
-              );
-            }
-
-            if (parseInt(info.panelsW) > 1) {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                  fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                )
-              );
-            }
-          });
-        } else {
-          return
+        if (parseInt(info.panelsH) > 1) {
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${i}].horizontalMidRailSize`,
+              fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+            )
+          );
         }
-    });
+
+        if (parseInt(info.panelsW) > 1) {
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${index}].dimensions[${i}].verticalMidRailSize`,
+              fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
+            )
+          );
+        }
+      });
+    }
   }
 
   render() {

@@ -39,14 +39,20 @@ class MiterDF extends Component {
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list
+    const { index } = this.props;
+    const part = part_list[index]
 
-    part_list.forEach((part, i) => {
+
+
         if (part.dimensions) {
-          part.dimensions.forEach((info, index) => {
+          part.dimensions.forEach((info, j) => {
+
+            console.log(`part_list[${index}].dimensions[${j}].leftStile`)
+            
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].leftStile`,
+                `part_list[${index}].dimensions[${j}].leftStile`,
                 fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
               )
             );
@@ -54,7 +60,7 @@ class MiterDF extends Component {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].rightStile`,
+                `part_list[${index}].dimensions[${j}].rightStile`,
                 fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
               )
             );
@@ -63,7 +69,7 @@ class MiterDF extends Component {
               this.props.dispatch(
                 change(
                   'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].topRail`,
+                  `part_list[${index}].dimensions[${j}].topRail`,
                   fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
                 )
               );
@@ -72,7 +78,7 @@ class MiterDF extends Component {
               this.props.dispatch(
                 change(
                   'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].bottomRail`,
+                  `part_list[${index}].dimensions[${j}].bottomRail`,
                   fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
                 )
               );
@@ -80,7 +86,7 @@ class MiterDF extends Component {
               this.props.dispatch(
                 change(
                   'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].topRail`,
+                  `part_list[${index}].dimensions[${j}].topRail`,
                   fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
                 )
               );
@@ -89,16 +95,13 @@ class MiterDF extends Component {
               this.props.dispatch(
                 change(
                   'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].bottomRail`,
+                  `part_list[${index}].dimensions[${j}].bottomRail`,
                   fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
                 )
               );
             }
           });
-        } else {
-          return
         }
-    });
   }
 
   render() {
@@ -118,6 +121,8 @@ class MiterDF extends Component {
       itemPrice,
       subTotal
     } = this.props;
+
+    console.log(index)
     return (
       <div>
         <Row>
