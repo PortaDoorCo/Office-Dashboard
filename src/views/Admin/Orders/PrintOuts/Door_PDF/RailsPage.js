@@ -87,7 +87,7 @@ export default (data, breakdowns) => {
           columns: [
             { text: `${i.woodtype.NAME}`, style: 'woodtype' },
             {
-              text: `IP: ${i.profile ? i.profile.NAME : ''}`,
+              text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
               style: 'woodtype',
               alignment: 'left'
             },
@@ -115,7 +115,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [25, 100, 25, 100, '*', '*', 100],
+            widths: [25, 120, 25, 100, '*', '*', 100],
             body: tableBody
           },
           layout: 'lightHorizontalLines'

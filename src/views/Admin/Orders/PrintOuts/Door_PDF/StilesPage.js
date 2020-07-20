@@ -67,7 +67,7 @@ export default (data, breakdowns) => {
           columns: [
             { text: `${i.woodtype.NAME}`, style: 'woodtype' },
             {
-              text: `IP: ${i.profile ? i.profile.NAME : ''}`,
+              text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
               style: 'woodtype',
               alignment: 'left'
             },
