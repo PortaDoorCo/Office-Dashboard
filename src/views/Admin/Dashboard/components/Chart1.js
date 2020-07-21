@@ -14,7 +14,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { selectDateRange } from '../../../../redux/orders/actions'
+import { selectDateRange } from '../../../../redux/misc_items/actions'
 
 
 
@@ -231,7 +231,7 @@ class Chart1 extends Component {
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   customerDB: state.customers.customerDB,
-  selectedDateRange: state.Orders.selectedDateRange
+  selectedDateRange: state.misc_items.selectedDateRange
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
