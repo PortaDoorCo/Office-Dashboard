@@ -139,6 +139,13 @@ class JobInfo extends Component {
             customer.Shipping_Phone || customer.Phone1
           )
         );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'discount',
+            (customer.Discount * 100)
+          )
+        );
       }
     }
   }
