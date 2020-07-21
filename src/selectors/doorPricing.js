@@ -168,8 +168,9 @@ export const itemPriceSelector = createSelector(
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings)
             const qty = parseInt(i.qty)
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
 
-            const price = eval(pricer.face_frame_pricing)
+            const price = (eval(pricer.face_frame_pricing) + extraCost)
               || 0;
 
             if (height > -1) {
@@ -189,6 +190,7 @@ export const itemPriceSelector = createSelector(
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty)
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
 
 
             let leftStileAdd = 0
@@ -571,7 +573,7 @@ export const itemPriceSelector = createSelector(
 
 
 
-            const price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd)
+            const price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost)
               || 0;
 
             if (height > -1) {
@@ -638,8 +640,9 @@ export const linePriceSelector = createSelector(
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings)
             const qty = parseInt(i.qty)
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
 
-            const price = eval(pricer.face_frame_pricing) * qty
+            const price = (eval(pricer.face_frame_pricing) + extraCost) * qty
               || 0;
 
             if (height > -1) {
@@ -659,6 +662,9 @@ export const linePriceSelector = createSelector(
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty)
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
+
+            console.log('extraaaaa====> ', extraCost)
 
 
             let leftStileAdd = 0
@@ -1041,7 +1047,7 @@ export const linePriceSelector = createSelector(
 
 
 
-            const price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd) * qty
+            const price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) * qty
               || 0;
 
             if (height > -1) {
