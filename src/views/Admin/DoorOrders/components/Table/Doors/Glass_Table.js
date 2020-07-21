@@ -5,14 +5,17 @@ import {
   Input,
   Row,
   Col,
-  Button
+  Button,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText
 } from "reactstrap";
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
 import numQty from 'numeric-quantity';
 import { connect } from 'react-redux';
 
@@ -350,7 +353,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                   <Field
                     name={`${table}.extraCost`}
                     type="text"
-                    component={renderField}
+                    component={renderPrice}
                     label="extraCost"
                   />
                 </Col>
@@ -404,15 +407,26 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               <Field
                 name={`${part}.addPrice`}
                 type="text"
-                component={renderField}
+                component={renderPrice}
                 label="addPrice"
               />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                <InputGroup>
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>$</InputGroupText>
+                  </InputGroupAddon>
+                  <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                </InputGroup>
+
 
               ) : (
-                  <Input placeholder="0" />
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>$</InputGroupText>
+                    </InputGroupAddon>
+                    <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                  </InputGroup>
                 )}
             </Col>
           </Row>
