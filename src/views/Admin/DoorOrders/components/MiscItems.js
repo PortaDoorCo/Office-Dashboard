@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
-import { renderField, renderDropdownListFilter } from '../components/RenderInputs/renderInputs';
+import { renderField, renderDropdownListFilter, renderPrice } from '../components/RenderInputs/renderInputs';
 import { Button, Row, Col, Table, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 
@@ -33,7 +33,7 @@ let Inputs = props => {
                     textField="NAME"
                   />
                 </td>
-                <td style={{ width: '120px' }}><Field name={`${table}.price`} component={renderField} type="text" /></td>
+                <td style={{ width: '150px' }}><Field name={`${table}.price`} component={renderPrice} type="text" /></td>
                 <td><Button color="danger" onClick={() => fields.remove(index)}>X</Button></td>
               </tr>
             )
