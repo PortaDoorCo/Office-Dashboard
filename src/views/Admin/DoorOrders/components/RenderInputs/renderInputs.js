@@ -165,3 +165,16 @@ export const renderFieldDisabled = ({ input, props, meta: { touched, error, warn
                 (warning && <span style={{ color: 'red' }}>{warning}</span>))}
     </Fragment>
 );
+
+export const renderPriceHolder = ({ input }) => (
+    
+    <Fragment>
+        {console.log('IIIIIIIII===>',input)}
+        <InputGroup>
+            <InputGroupAddon addonType="prepend">
+                <InputGroupText>$</InputGroupText>
+            </InputGroupAddon>
+            <Input placeholder={input} autocomplete="new-password" />
+        </InputGroup>
+    </Fragment>
+)
