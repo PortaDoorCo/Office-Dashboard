@@ -344,6 +344,16 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     label="notes"
                   />
                 </Col>
+                <Col xs='5' />
+                <Col xs='3'>
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderField}
+                    label="extraCost"
+                  />
+                </Col>
 
               </Row>
               <br />
