@@ -1,9 +1,7 @@
 import React from 'react';
 import { Field, reduxForm, FieldArray } from 'redux-form';
 import { renderField } from '../components/RenderInputs/renderInputs';
-import { Button, Row, Col, Table } from 'reactstrap';
-
-
+import { Button, Row, Col, Table, Input } from 'reactstrap';
 
 
 let Inputs = props => {
@@ -13,6 +11,7 @@ let Inputs = props => {
       <Table>
         <thead>
           <tr>
+            <th>QTY</th>
             <th>Item</th>
             <th>Price</th>
             <th></th>
@@ -22,6 +21,7 @@ let Inputs = props => {
           {fields.map((table, index) => {
             return (
               <tr key={index}>
+                <td><Input /></td>
                 <td><Field name={`${table}.item`} component={renderField} type="text" /></td>
                 <td><Field name={`${table}.price`} component={renderField} type="text" /></td>
                 <td><Button color="danger" onClick={() => fields.remove(index)}>X</Button></td>

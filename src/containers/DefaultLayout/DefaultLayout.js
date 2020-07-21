@@ -26,11 +26,13 @@ import { bindActionCreators } from "redux";
 
 import {
   loadOrders,
-  loadShippingMethod,
   getDeliveries,
+} from "../../redux/orders/actions";
+import {
+  loadShippingMethod,
   loadPaymentTypes,
   loadPaymentTerms,
-} from "../../redux/orders/actions";
+} from "../../redux/misc_items/actions";
 import {
   loadSales,
 } from "../../redux/sales/actions";
@@ -401,7 +403,7 @@ class DefaultLayout extends Component {
 
 
     if (
-      !this.props.customerDBLoaded
+      !this.props.customerDBLoaded && this.props.orders.length > 0
     ) {
       return <Loader />;
     } else {

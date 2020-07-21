@@ -1,14 +1,9 @@
 import {
   LOAD_ORDERS,
   SUBMIT_ORDER,
-  LOAD_SELECTED_ORDER,
   UPDATE_ORDER,
-  LOAD_CUSTOMER_ORDER,
-  SELECT_DATE_RANGE,
-  LOAD_SHIPPING_METHODS,
   LOAD_DELIVERIES,
-  LOAD_PAYMENT_TERMS,
-  LOAD_PAYMENT_TYPES
+
 } from './actions';
 import moment from 'moment'
 
@@ -19,13 +14,6 @@ const initialState = {
   orders: [],
   deliveries: [],
   sortedDestinations: [],
-  selectedDateRange: 'day',
-  shippingMethods: [],
-  paymentTypes: [],
-  paymentTerms: [],
-  loadedPaymentTypes: false,
-  loadedPaymentTerms: false,
-  loadedShippingMethods: false,
 };
 
 export default function (state = initialState, action) {
@@ -37,57 +25,13 @@ export default function (state = initialState, action) {
         orders: data,
         ordersDBLoaded: true
       };
-
-    case LOAD_CUSTOMER_ORDER:
-      return {
-        ...state,
-        customerOrder: state.orders.filter(
-          order => order.companyprofile === data
-        )
-      };
-    case LOAD_SELECTED_ORDER:
-      return {
-        ...state,
-        orders: data
-      };
-    case LOAD_PAYMENT_TERMS:
-      return {
-        ...state,
-        paymentTerms: data,
-        loadedPaymentTerms: true
-      };
-    case LOAD_PAYMENT_TYPES:
-      return {
-        ...state,
-        paymentTypes: data,
-        loadedPaymentTypes: true
-      };
     case SUBMIT_ORDER:
       return {
         ...state,
-        cart: [],
-        submitted: false,
-        subTotal: [],
-        sessionOrders: state.sessionOrders + 1
       };
     case UPDATE_ORDER:
       return {
         ...state,
-        cart: [],
-        subTotal: [],
-        sessionOrders: state.sessionOrders + 1
-      };
-
-    case SELECT_DATE_RANGE:
-      return {
-        ...state,
-        selectedDateRange: date
-      };
-    case LOAD_SHIPPING_METHODS:
-      return {
-        ...state,
-        shippingMethods: data,
-        loadedShippingMethods: true
       };
     case LOAD_DELIVERIES:
       const updatedDeliveries = data

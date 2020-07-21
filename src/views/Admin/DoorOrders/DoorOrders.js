@@ -366,7 +366,7 @@ const mapStateToProps = state => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
-      ShippingMethod: state.Orders.shippingMethods[0]
+      ShippingMethod: state.misc_items.shippingMethods[0]
     }
   },
   formState: getFormValues('DoorOrder')(state),
