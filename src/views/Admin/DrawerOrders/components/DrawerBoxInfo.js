@@ -159,12 +159,7 @@ class DrawerBoxInfo extends Component {
           color="primary"
           onClick={() =>
             fields.push({
-              dimensions: [
-                {
-                  scoop: scoop[0],
-                  dividers: dividers[0]
-                }
-              ],
+              dimensions: [],
               addPrice: 0
      
             })

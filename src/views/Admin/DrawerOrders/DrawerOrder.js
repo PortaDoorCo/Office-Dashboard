@@ -385,12 +385,7 @@ const mapStateToProps = (state, prop) => ({
     discount: state.customers.customerDB[0].Discount,
     part_list: [
       {
-        dimensions: [
-          {
-            scoop: state.part_list.scoop[0],
-            dividers: state.part_list.dividers[0]
-          }
-        ],
+        dimensions: [],
         addPrice: 0
       }
     ],
