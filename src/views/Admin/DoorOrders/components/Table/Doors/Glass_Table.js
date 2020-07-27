@@ -18,6 +18,7 @@ import 'react-widgets/dist/css/react-widgets.css';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
 import numQty from 'numeric-quantity';
 import { connect } from 'react-redux';
+import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder'
 
 const required = value => (value ? undefined : 'Required');
 
@@ -412,21 +413,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <InputGroup>
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>$</InputGroupText>
-                  </InputGroupAddon>
-                  <Input placeholder={subTotal[i].toFixed(2) || 0} />
-                </InputGroup>
-
+                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
 
               ) : (
-                  <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>$</InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder={subTotal[i].toFixed(2) || 0} />
-                  </InputGroup>
+                  <RenderPriceHolder input={'0.00'} edit={true} />
                 )}
             </Col>
           </Row>
