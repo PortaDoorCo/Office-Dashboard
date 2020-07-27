@@ -46,6 +46,7 @@ import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
+import RenderPriceHolder from '../DoorOrders/components/RenderInputs/RenderPriceHolder'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -264,9 +265,12 @@ class DoorOrders extends Component {
                     <Col xs="5" />
                     <Col xs="3">
                       <strong>Tax: </strong>
-                      <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" />
+                      <RenderPriceHolder input={tax.toFixed(2)} edit={true} />
                       <strong>Total: </strong>
-                      <Input placeholder={'$' + total.toFixed(2)} className="mb-3" />
+                      <div className="mb-3">
+                        <RenderPriceHolder input={total.toFixed(2)} edit={true} />
+                      </div>
+
                     </Col>
                   </Row>
                   <Row>

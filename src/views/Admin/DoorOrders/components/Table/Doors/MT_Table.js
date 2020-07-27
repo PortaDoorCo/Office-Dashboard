@@ -12,9 +12,10 @@ import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
 import numQty from 'numeric-quantity'
 import { connect } from 'react-redux';
+import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder'
 
 const required = value => (value ? undefined : 'Required');
 
@@ -81,7 +82,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
       change(
         'DoorOrder',
         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
       ),
     );
   }
@@ -92,7 +93,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
       change(
         'DoorOrder',
         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
       )
     );
   }
@@ -346,7 +347,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                   <Field
                     name={`${table}.extraCost`}
                     type="text"
-                    component={renderField}
+                    component={renderPrice}
                     label="extraCost"
                   />
                 </Col>
@@ -402,15 +403,15 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
               <Field
                 name={`${part}.addPrice`}
                 type="text"
-                component={renderField}
+                component={renderPrice}
                 label="addPrice"
               />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
 
               ) : (
-                  <Input placeholder="0" />
+                <RenderPriceHolder input={'0.00'} edit={true} />
                 )}
             </Col>
           </Row>

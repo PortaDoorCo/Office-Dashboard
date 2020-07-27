@@ -417,10 +417,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <RenderPriceHolder input={subTotal[i].toFixed(2)} />
+                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
 
               ) : (
-                <RenderPriceHolder input={0.00} />
+                <RenderPriceHolder input={0.00} edit={true} />
                 )}
             </Col>
           </Row>
