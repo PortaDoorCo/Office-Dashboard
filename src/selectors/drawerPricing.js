@@ -27,6 +27,21 @@ const partListSelector = state => {
   }
 };
 
+const miscItemsSelector = state => {
+  const orders = state.form.DrawerOrder;
+  if (orders) {
+    if ((!state.form.DrawerOrder &&!state.form.DrawerOrder.values && !state.form.DrawerOrder.values.misc_items.length > 0)) {
+      return [];
+    } else {
+      return state.form.DrawerOrder.values.misc_items.map(i => {
+        return parseFloat(i.price)
+      })
+    }
+  } else {
+    return [];
+  }
+};
+
 const taxRate = state => {
   const orders = state.form.DrawerOrder;
 
@@ -113,8 +128,9 @@ export const linePriceSelector = createSelector(
           const height = Math.ceil(numQty(i.height));
           const depth = Math.ceil(numQty(i.depth))
           const qty = parseInt(i.qty) 
+          const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
 
-          const price = eval(pricer.drawer_box_pricing) * qty
+          const price = (eval(pricer.drawer_box_pricing) + extraCost) * qty
 
           if (height > -1) {
             return price;
@@ -139,6 +155,11 @@ export const addPriceSelector = createSelector(
         return 0;
       }
     })
+);
+
+export const miscTotalSelector = createSelector(
+  [miscItemsSelector],
+  (misc) => misc.reduce((acc, item) => acc + item, 0)
 );
 
 export const subTotalSelector = createSelector(
@@ -166,8 +187,8 @@ export const taxSelector = createSelector(
 );
 
 export const totalSelector = createSelector(
-  [subTotalSelector, taxSelector],
-  (subTotal, tax) => subTotal.reduce((acc, item) => acc + item, 0) + tax
+  [subTotalSelector, taxSelector, miscTotalSelector],
+  (subTotal, tax, misc) => (subTotal.reduce((acc, item) => acc + item, 0) + tax + misc)
 );
 
 
