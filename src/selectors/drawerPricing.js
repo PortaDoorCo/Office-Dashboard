@@ -9,6 +9,21 @@ const pricingSelector = state => {
   return pricing
 }
 
+
+const discountSelector = state => {
+  const orders = state.form.DrawerOrder;
+
+  if (orders) {
+    if ((!state.form.DrawerOrder.values && !state.form.DrawerOrder.values.discount)) {
+      return 0;
+    } else {
+      return (numQty(state.form.DrawerOrder.values.discount) / 100);
+    }
+  } else {
+    return 0;
+  }
+}
+
 const partListSelector = state => {
   const orders = state.form.DrawerOrder;
 
@@ -186,9 +201,21 @@ export const taxSelector = createSelector(
   (subTotal, tax) => subTotal.reduce((acc, item) => acc + item, 0) * tax
 );
 
+export const totalDiscountSelector = createSelector(
+  [subTotalSelector, discountSelector],
+  (subTotal, discount) => {
+    console.log('diiiiiiiii', subTotal.reduce((acc, item) => acc + item, 0))
+    return subTotal.reduce((acc, item) => acc + item, 0) * discount
+  }
+);
+
+
 export const totalSelector = createSelector(
-  [subTotalSelector, taxSelector, miscTotalSelector],
-  (subTotal, tax, misc) => (subTotal.reduce((acc, item) => acc + item, 0) + tax + misc)
+  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
+  (subTotal, tax, misc, discount) => {
+    console.log('DISCOUNT', discount)
+    return subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount
+  }
 );
 
 
