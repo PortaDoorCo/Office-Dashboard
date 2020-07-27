@@ -35,8 +35,8 @@ import {
   taxSelector,
   totalSelector,
   addPriceSelector,
-  sqFTSelector,
-  miscTotalSelector
+  miscTotalSelector,
+  totalDiscountSelector
 } from '../../../selectors/doorPricing';
 
 import PropTypes from 'prop-types';
@@ -361,7 +361,7 @@ const mapStateToProps = state => ({
     misc_items: [],
     balance_paid: 0,
     open: true,
-    discount: state.customers.customerDB[0].Discount,
+    discount: state.customers.customerDB[0].Discount ? state.customers.customerDB[0].Discount : 0,
     part_list: [
       {
         construction: {
@@ -402,8 +402,7 @@ const mapStateToProps = state => ({
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
-  sqFTSelector: sqFTSelector(state),
-  miscTotalSelector: miscTotalSelector(state)
+  miscTotalSelector: miscTotalSelector(state),
 });
 
 const mapDispatchToProps = dispatch =>

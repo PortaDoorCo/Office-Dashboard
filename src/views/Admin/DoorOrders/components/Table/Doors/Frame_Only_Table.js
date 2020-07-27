@@ -364,13 +364,6 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
             <Col xs="4" />
             <Col xs="5" />
             <Col xs="3">
-              <strong>Addtional Price: </strong>
-              <Field
-                name={`${part}.addPrice`}
-                type="text"
-                component={renderPrice}
-                label="addPrice"
-              />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
                 <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
