@@ -134,6 +134,23 @@ class DrawerBoxInfo extends Component {
                 </FormGroup>
               </Col>
             </Row>
+
+            <Row className="mt-2">
+              <Col xs="4">
+                <FormGroup>
+                  <strong>
+                    <Label for="jobNotes">Job Notes</Label>
+                    <Field
+                      name={`${part}.notes`}
+                      type="textarea"
+                      edit={edit}
+                      component={renderField}
+                    />
+                  </strong>
+                </FormGroup>
+              </Col>
+            </Row>
+
             <div>
               <CardSubtitle className="mt-4 mb-1">Dimensions</CardSubtitle>
               <div className="mt-1" />
