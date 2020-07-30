@@ -132,60 +132,7 @@ class DoorOrders extends Component {
     await this.props.dispatch(reset('DoorOrder'))
   };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.formState !== prevProps.formState) {
-      if (this.props.formState) {
-        const update = async () => {
-          const form = await this.props.formState;
-          const customer = form.job_info.customer
 
-          await this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Address1',
-              customer.Shipping_Address1 || customer.Address1
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Address2',
-              customer.Shipping_Address2 || customer.Address2
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.City',
-              customer.Shipping_City || customer.City
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.State',
-              customer.Shipping_State || customer.State
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Zip',
-              customer.Shipping_Zip || customer.Zip
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Phone',
-              customer.Shipping_Phone || customer.Phone1
-            )
-          );
-        };
-        update();
-      }
-    }
-  }
 
   cancelOrder = async () => {
     await this.props.reset();
