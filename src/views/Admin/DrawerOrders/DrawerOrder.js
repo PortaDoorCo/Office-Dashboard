@@ -142,6 +142,7 @@ class DoorOrders extends Component {
       itemPrice: itemPrice,
       subTotals: subTotal,
       tax: tax,
+      discount: values.discount,
       total: total,
       balance_paid: 0,
       balance_due: total,

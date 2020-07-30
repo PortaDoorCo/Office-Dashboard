@@ -10,7 +10,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled } from './RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderPrice } from './RenderInputs/renderInputs'
+import RenderPriceHolder from './RenderInputs/RenderPriceHolder'
 
 const required = value => value ? undefined : 'Required';
 
@@ -58,7 +59,7 @@ class OrderTable extends Component {
                           label="qty"
                           validate={required}
                           edit={edit}
-                          />
+                        />
                       </td>
                       <td>
                         <Field
@@ -68,7 +69,7 @@ class OrderTable extends Component {
                           label="width"
                           validate={required}
                           edit={edit}
-                          />
+                        />
                       </td>
                       <td>
                         <Field
@@ -78,7 +79,7 @@ class OrderTable extends Component {
                           label="depth"
                           validate={required}
                           edit={edit}
-                          />
+                        />
                       </td>
                       <td>
                         <Field
@@ -88,7 +89,7 @@ class OrderTable extends Component {
                           label="height"
                           validate={required}
                           edit={edit}
-                          />
+                        />
                       </td>
                       <td >
                         <Field
@@ -111,27 +112,27 @@ class OrderTable extends Component {
                           edit={edit} />
                       </td>
                       <td style={{ width: '150px' }}>
-                      {prices[i] ?
-                        <Input
-                          type="text"
-                          className="form-control"
-                          disabled={edit}
-                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
-                        /> : <Input
-                          type="text"
-                          className="form-control"
-                          placeholder={"$0.00"}
-                          disabled={edit}
-                        />
-                      }
+                        {prices[i] ?
+                          <Input
+                            type="text"
+                            className="form-control"
+                            disabled={edit}
+                            placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                          /> : <Input
+                            type="text"
+                            className="form-control"
+                            placeholder={"$0.00"}
+                            disabled={edit}
+                          />
+                        }
                       </td>
 
                       <td >
-                        {!edit ? 
-                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>X</Button> :
-                        <div />
-                      }
-                        
+                        {!edit ?
+                          <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>X</Button> :
+                          <div />
+                        }
+
                       </td>
 
                     </tr>
@@ -143,18 +144,27 @@ class OrderTable extends Component {
                   </tbody>
                 </Table>
                 <Row>
-                  <Col>
+                  <Col xs="4">
                     <strong>Notes</strong>
                     <Field
                       name={`${table}.notes`}
                       type="textarea"
                       component={renderField}
                       edit={edit}
-                      label="notes" />
+                      label="notes"
+                    />
                   </Col>
-                  <Col>
+                  <Col xs='5' />
+                  <Col xs='3'>
+                    <strong>Extra Design Cost</strong>
+                    <Field
+                      name={`${table}.extraCost`}
+                      type="text"
+                      component={renderPrice}
+                      edit={edit}
+                      label="extraCost"
+                    />
                   </Col>
-                  <Col></Col>
                 </Row>
                 <br />
 
@@ -162,29 +172,22 @@ class OrderTable extends Component {
 
             )}
             {!edit ?
-            <Button color="primary" className="btn-circle" onClick={() => fields.push({
-              scoop: scoop[0],
-              dividers: dividers[0]
-            })}>+</Button> 
-            : <div />
-          }
+              <Button color="primary" className="btn-circle" onClick={() => fields.push({
+                scoop: scoop[0],
+                dividers: dividers[0]
+              })}>+</Button>
+              : <div />
+            }
 
             <Row>
               <Col xs="4" />
               <Col xs="5" />
-              <Col xs="2">
-                <strong>Addtional Price: </strong>
-                <Field
-                  name={`${part}.addPrice`}
-                  type="text"
-                  component={renderField}
-                  edit={edit}
-                  label="addPrice" />
+              <Col xs="3">
                 <strong>Sub Total: </strong>
                 {subTotal[i] ? (
-                  <Input disabled={edit} placeholder={subTotal[i].toFixed(2) || 0} />
+                  <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
                 ) : (
-                    <Input disabled={edit} placeholder="0" />
+                    <RenderPriceHolder input={'0.00'} edit={true} />
                   )}
               </Col>
             </Row>

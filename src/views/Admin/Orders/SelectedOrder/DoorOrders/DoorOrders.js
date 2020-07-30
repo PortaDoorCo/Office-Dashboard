@@ -132,8 +132,6 @@ class DoorOrders extends Component {
     await this.props.dispatch(reset('DoorOrder'))
   };
 
-
-
   cancelOrder = async () => {
     await this.props.reset();
 
