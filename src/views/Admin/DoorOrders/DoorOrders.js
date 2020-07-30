@@ -111,7 +111,7 @@ class DoorOrders extends Component {
         TaxRate: values.job_info.customer.TaxRate,
         sale: values.job_info.customer.sale.id
       },
-      // ShippingMethod: values.job_info.ShippingMethod
+      ShippingMethod: values.job_info.ShippingMethod
     }
 
     const order = {

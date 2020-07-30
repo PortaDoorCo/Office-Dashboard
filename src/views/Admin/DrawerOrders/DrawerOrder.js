@@ -137,6 +137,7 @@ class DoorOrders extends Component {
       job_info: jobInfo,
       status: values.job_info.status,
       companyprofile: values.job_info.customer.id,
+      misc_items: values.misc_items,
       linePrice: prices,
       itemPrice: itemPrice,
       subTotals: subTotal,
