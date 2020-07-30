@@ -12,6 +12,7 @@ import { Field, FieldArray } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';
 import OrderTable from './OrderTable';
+import { renderField } from '../../DoorOrders/components/RenderInputs/renderInputs'
 
 
 const required = value => value ? undefined : 'Required';
@@ -135,6 +136,22 @@ class DrawerBoxInfo extends Component {
                 </FormGroup>
               </Col>
             </Row>
+
+            <Row className="mt-2">
+              <Col xs="4">
+                <FormGroup>
+                  <strong>
+                    <Label for="jobNotes">Job Notes</Label>
+                    <Field
+                      name={`${part}.notes`}
+                      type="textarea"
+                      component={renderField}
+                    />
+                  </strong>
+                </FormGroup>
+              </Col>
+            </Row>
+
             <div>
               <CardSubtitle className="mt-4 mb-1">Dimensions</CardSubtitle>
               <div className="mt-1" />
@@ -159,12 +176,7 @@ class DrawerBoxInfo extends Component {
           color="primary"
           onClick={() =>
             fields.push({
-              dimensions: [
-                {
-                  scoop: scoop[0],
-                  dividers: dividers[0]
-                }
-              ],
+              dimensions: [],
               addPrice: 0
      
             })

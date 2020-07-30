@@ -75,7 +75,7 @@ class Chart2 extends Component {
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
-  selectedDateRange: state.Orders.selectedDateRange
+  selectedDateRange: state.misc_items.selectedDateRange
 });
 
 const mapDispatchToProps = dispatch =>

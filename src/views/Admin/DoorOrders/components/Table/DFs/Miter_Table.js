@@ -12,8 +12,9 @@ import { Field } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
-import numQty from 'numeric-quantity'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
+import numQty from 'numeric-quantity';
+import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder'
 
 
 const required = value => (value ? undefined : 'Required');
@@ -283,7 +284,16 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                     label="notes"
                   />
                 </Col>
-
+                <Col xs='5' />
+                <Col xs='3'>
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    label="extraCost"
+                  />
+                </Col>
               </Row>
               <br />
             </Fragment>
@@ -329,19 +339,12 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
             <Col xs="4" />
             <Col xs="5" />
             <Col xs="3">
-            <strong>Addtional Price: </strong>
-              <Field
-                name={`${part}.addPrice`}
-                type="text"
-                component={renderField}
-                label="addPrice"
-              />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} />
+              <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
 
               ) : (
-                  <Input placeholder="0" />
+                <RenderPriceHolder input={'0.00'} edit={true} />
                 )}
             </Col>
           </Row>

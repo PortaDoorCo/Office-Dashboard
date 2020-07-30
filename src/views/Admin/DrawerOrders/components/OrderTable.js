@@ -11,6 +11,8 @@ import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';
+import RenderPriceHolder from '../../DoorOrders/components/RenderInputs/RenderPriceHolder'
+import { renderPrice } from '../../DoorOrders/components/RenderInputs/renderInputs'
 
 const required = value => value ? undefined : 'Required';
 
@@ -152,25 +154,31 @@ class OrderTable extends Component {
                       </td>
 
                     </tr>
-
-
                     <tr>
 
                     </tr>
                   </tbody>
                 </Table>
                 <Row>
-                  <Col>
+                <Col xs="4">
                     <strong>Notes</strong>
                     <Field
                       name={`${table}.notes`}
                       type="textarea"
                       component={renderField}
-                      label="notes" />
+                      label="notes"
+                    />
                   </Col>
-                  <Col>
+                  <Col xs='5' />
+                  <Col xs='3'>
+                    <strong>Extra Design Cost</strong>
+                    <Field
+                      name={`${table}.extraCost`}
+                      type="text"
+                      component={renderPrice}
+                      label="extraCost"
+                    />
                   </Col>
-                  <Col></Col>
                 </Row>
                 <br />
 
@@ -185,18 +193,12 @@ class OrderTable extends Component {
             <Row>
               <Col xs="4" />
               <Col xs="5" />
-              <Col xs="2">
-                <strong>Addtional Price: </strong>
-                <Field
-                  name={`${part}.addPrice`}
-                  type="text"
-                  component={renderField}
-                  label="addPrice" />
+              <Col xs="3">
                 <strong>Sub Total: </strong>
                 {subTotal[i] ? (
-                  <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
                 ) : (
-                    <Input placeholder="0" />
+                  <RenderPriceHolder input={'0.00'} edit={true} />
                   )}
               </Col>
             </Row>

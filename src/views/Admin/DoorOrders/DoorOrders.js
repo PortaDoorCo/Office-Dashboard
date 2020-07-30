@@ -7,7 +7,8 @@ import {
   CardBody,
   Input,
   Button,
-  FormGroup
+  FormGroup,
+  InputGroup, InputGroupAddon, InputGroupText,
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -34,8 +35,8 @@ import {
   taxSelector,
   totalSelector,
   addPriceSelector,
-  sqFTSelector,
-  miscTotalSelector
+  miscTotalSelector,
+  totalDiscountSelector
 } from '../../../selectors/doorPricing';
 
 import PropTypes from 'prop-types';
@@ -110,7 +111,7 @@ class DoorOrders extends Component {
         TaxRate: values.job_info.customer.TaxRate,
         sale: values.job_info.customer.sale.id
       },
-      // ShippingMethod: values.job_info.ShippingMethod
+      ShippingMethod: values.job_info.ShippingMethod
     }
 
     const order = {
@@ -124,6 +125,7 @@ class DoorOrders extends Component {
       misc_items: values.misc_items,
       tax: tax,
       total: total,
+      discount: values.discount,
       balance_paid: values.balance_paid,
       balance_due: total,
       orderType: orderType,
@@ -239,10 +241,33 @@ class DoorOrders extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
+                      <strong>Discount: </strong>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>%</InputGroupText>
+                        </InputGroupAddon>
+                        <Field
+                          name={'discount'}
+                          type="text"
+                          component={renderField}
+                          label="discount"
+                        />
+                      </InputGroup>
                       <strong>Tax: </strong>
-                      <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" />
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input disabled placeholder={tax.toFixed(2)} />
+                      </InputGroup>
+
                       <strong>Total: </strong>
-                      <Input placeholder={'$' + total.toFixed(2)} className="mb-3" />
+                      <InputGroup className='mb-3'>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input disabled placeholder={total.toFixed(2)} />
+                      </InputGroup>
                     </Col>
                   </Row>
                   <Row>
@@ -336,6 +361,7 @@ const mapStateToProps = state => ({
     misc_items: [],
     balance_paid: 0,
     open: true,
+    discount: state.customers.customerDB[0].Discount ? state.customers.customerDB[0].Discount : 0,
     part_list: [
       {
         construction: {
@@ -366,7 +392,7 @@ const mapStateToProps = state => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
-      ShippingMethod: state.Orders.shippingMethods[0]
+      ShippingMethod: state.misc_items.shippingMethods[0]
     }
   },
   formState: getFormValues('DoorOrder')(state),
@@ -376,8 +402,7 @@ const mapStateToProps = state => ({
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
-  sqFTSelector: sqFTSelector(state),
-  miscTotalSelector: miscTotalSelector(state)
+  miscTotalSelector: miscTotalSelector(state),
 });
 
 const mapDispatchToProps = dispatch =>

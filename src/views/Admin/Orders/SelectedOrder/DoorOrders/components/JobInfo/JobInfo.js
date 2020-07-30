@@ -7,13 +7,14 @@ import {
   Input,
 
 } from "reactstrap";
-import { Field } from 'redux-form';
+import { Field, change, getFormValues } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import 'react-widgets/dist/css/react-widgets.css';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
+import { connect } from 'react-redux';
 
 momentLocaliser(moment)
 
@@ -26,15 +27,15 @@ const required = value => value ? undefined : 'Required';
 
 
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
-<div>
+  <div>
 
-  <DateTimePicker
-    onChange={onChange}
-    time={showTime}
-    value={!value ? null : new Date(value)}
-    disabled={edit}
-  />
-</div>
+    <DateTimePicker
+      onChange={onChange}
+      time={showTime}
+      value={!value ? null : new Date(value)}
+      disabled={edit}
+    />
+  </div>
 
 
 
@@ -44,6 +45,66 @@ class JobInfo extends Component {
     this.state = {
       loaded: false
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    const { formState } = this.props;
+    if (formState && formState.job_info && formState.job_info.customer) {
+      if (formState.job_info.customer !== prevProps.formState.job_info.customer) {
+
+        const customer = formState.job_info.customer
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'job_info.Address1',
+            customer.Shipping_Address1 || customer.Address1
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'job_info.Address2',
+            customer.Shipping_Address2 || customer.Address2
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'job_info.City',
+            customer.Shipping_City || customer.City
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'job_info.State',
+            customer.Shipping_State || customer.State
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'job_info.Zip',
+            customer.Shipping_Zip || customer.Zip
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'job_info.Phone',
+            customer.Shipping_Phone || customer.Phone1
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'discount',
+            (customer.Discount * 100)
+          )
+        );
+      }
+    }
   }
 
 
@@ -59,7 +120,6 @@ class JobInfo extends Component {
 
       <div>
         <Row className="mb-3">
-
           <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
@@ -73,7 +133,19 @@ class JobInfo extends Component {
               <p>7 Business Day Lead Time</p>
             </FormGroup>
           </Col>
-          <Col xs="8" />
+          <Col xs="5" />
+          <Col xs='3'>
+            <FormGroup>
+              <Label htmlFor="shipping_method">Shipping Method</Label>
+              <Field
+                name="ShippingMethod"
+                component={renderDropdownList}
+                data={shippingMethods}
+                valueField="value"
+                edit={edit}
+                textField="NAME" />
+            </FormGroup>
+          </Col>
         </Row>
         <Row>
           <Col xs="3">
@@ -241,5 +313,14 @@ class JobInfo extends Component {
 }
 
 
-export default JobInfo
+const mapStateToProps = state => ({
+  formState: getFormValues('DoorOrder')(state),
+  shippingMethods: state.misc_items.shippingMethods
+});
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(JobInfo);
 

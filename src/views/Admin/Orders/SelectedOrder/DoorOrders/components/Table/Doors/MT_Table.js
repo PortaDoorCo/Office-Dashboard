@@ -12,7 +12,8 @@ import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
+import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder'
 import { connect } from 'react-redux'
 
 const required = value => (value ? undefined : 'Required');
@@ -80,7 +81,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
       change(
         'DoorOrder',
         `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
       ),
     );
   }
@@ -91,7 +92,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
       change(
         'DoorOrder',
         `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+        fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
       )
     );
   }
@@ -178,7 +179,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         component={renderField}
                         label="verticalMidRail"
                         edit={edit}
-                        onChange={()=>twoWide(index)}
+                        onChange={() => twoWide(index)}
                       />
                     </td>
                     <td>
@@ -303,11 +304,11 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                     null}
                 </Col>
                 <Col>
-                {!edit ?
-                (parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null
-                :
-                null
-              }
+                  {!edit ?
+                    (parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null
+                    :
+                    null
+                  }
                 </Col>
               </Row>
 
@@ -361,8 +362,19 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                     name={`${table}.notes`}
                     type="textarea"
                     component={renderField}
-                    label="notes"
                     edit={edit}
+                    label="notes"
+                  />
+                </Col>
+                <Col xs='5' />
+                <Col xs='3'>
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    edit={edit}
+                    label="extraCost"
                   />
                 </Col>
 
@@ -407,29 +419,20 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                 >
                   +
                 </Button> : <div />
-          }
+              }
 
             </Col>
           </Row>
 
           <Row>
-            <Col xs="4" />
+          <Col xs="4" />
             <Col xs="5" />
             <Col xs="3">
-              <strong>Addtional Price: </strong>
-              <Field
-                edit={edit}
-                name={`${part}.addPrice`}
-                type="text"
-                component={renderField}
-                label="addPrice"
-              />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input disabled={edit} placeholder={subTotal[i].toFixed(2) || 0} />
-
+              <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                  <Input disabled={edit} placeholder="0" />
+                <RenderPriceHolder input={'0.00'} edit={true} />
                 )}
             </Col>
           </Row>
@@ -438,4 +441,4 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
   )
 };
 
-export default connect() (MT_Table);
+export default connect()(MT_Table);

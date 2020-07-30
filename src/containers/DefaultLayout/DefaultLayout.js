@@ -26,11 +26,14 @@ import { bindActionCreators } from "redux";
 
 import {
   loadOrders,
-  loadShippingMethod,
   getDeliveries,
+} from "../../redux/orders/actions";
+import {
+  loadMiscItems,
+  loadShippingMethod,
   loadPaymentTypes,
   loadPaymentTerms,
-} from "../../redux/orders/actions";
+} from "../../redux/misc_items/actions";
 import {
   loadSales,
 } from "../../redux/sales/actions";
@@ -197,7 +200,9 @@ class DefaultLayout extends Component {
 
       loadedBoxBreakdowns,
       loadedPricing,
-      loadCustomers
+      loadCustomers,
+      loadMiscItems,
+      loadedMiscItems
     } = this.props;
 
     const cookie = await Cookies.get("jwt");
@@ -205,13 +210,16 @@ class DefaultLayout extends Component {
     if (cookie) {
       await loadCustomers(cookie);
       await login(cookie);
-      
+
       await getUsers(cookie);
 
       if (!loadedSales) {
         await loadSales(cookie);
       }
 
+      if (!loadedMiscItems) {
+        await loadMiscItems(cookie);
+      }
 
       if (!ordersDBLoaded) {
         await loadOrders(cookie);
@@ -401,7 +409,7 @@ class DefaultLayout extends Component {
 
 
     if (
-      !this.props.customerDBLoaded
+      !this.props.customerDBLoaded && this.props.orders.length > 0
     ) {
       return <Loader />;
     } else {
@@ -521,7 +529,8 @@ const mapStateToProps = (state, prop) => ({
   loadedBoxBreakdowns: state.part_list.loadedBoxBreakdowns,
   loadedPricing: state.part_list.loadedPricing,
 
-  customerDB: state.customers.customerDB
+  customerDB: state.customers.customerDB,
+  loadedMiscItems: state.misc_items.loadedMiscItems
 });
 
 const mapDispatchToProps = dispatch =>
@@ -577,6 +586,7 @@ const mapDispatchToProps = dispatch =>
       loadPaymentTypes,
       loadPaymentTerms,
 
+      loadMiscItems,
 
       login,
       // getBoxThickness,

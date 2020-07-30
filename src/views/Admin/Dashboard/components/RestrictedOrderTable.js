@@ -424,13 +424,16 @@ class RestrictedOrderTable extends React.Component {
                     />
 
                 </DataGrid>
-                <OrderPage
-                    toggle={this.toggle}
-                    modal={this.state.modal}
-                    selectedOrder={this.state.selectedOrder}
-                    editable={this.editable}
-                    edit={this.state.edit}
-                />
+                {
+                    this.state.modal ?
+                        <OrderPage
+                            toggle={this.toggle}
+                            modal={this.state.modal}
+                            selectedOrder={this.state.selectedOrder}
+                            editable={this.editable}
+                            edit={this.state.edit}
+                        /> : null
+                }
             </React.Fragment>
         );
     }

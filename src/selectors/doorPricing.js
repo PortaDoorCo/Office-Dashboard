@@ -7,6 +7,19 @@ const pricingSelector = state => {
   return pricing
 }
 
+const discountSelector = state => {
+  const orders = state.form.DoorOrder;
+
+  if (orders) {
+    if ((!state.form.DoorOrder.values && !state.form.DoorOrder.values.discount)) {
+      return 0;
+    } else {
+      return (numQty(state.form.DoorOrder.values.discount) / 100);
+    }
+  } else {
+    return 0;
+  }
+}
 
 const partListSelector = state => {
   const orders = state.form.DoorOrder;
@@ -93,36 +106,10 @@ const totalBalanceDue = state => {
 };
 
 
-export const sqFTSelector = createSelector(
-  [partListSelector, pricingSelector],
-  (parts, pricer) =>
-    parts.map((part, index) => {
-
-      console.log('part', part)
-
-      let b = 1
-
-      if (part.dimensions) {
-        const a = part.dimensions.map(i => {
-          const width = Math.ceil(numQty(i.width))
-          const height = Math.ceil(numQty(i.height))
-          const calc = ((width * height) / 144)
-          console.log(calc)
-          return calc
-        })
-        console.log(a.reduce((acc, item) => acc + item, 0))
-        return a.reduce((acc, item) => acc + item, 0)
-      } else {
-        return 1
-      }
-    })
-);
-
-
 
 export const itemPriceSelector = createSelector(
-  [partListSelector, pricingSelector, sqFTSelector],
-  (parts, pricer, sqFt) =>
+  [partListSelector, pricingSelector],
+  (parts, pricer) =>
     parts.map((part, index) => {
 
       let design = 0;
@@ -147,7 +134,7 @@ export const itemPriceSelector = createSelector(
         design = part.mt_df_design && part.thickness.value === 0.75 ? part.mt_df_design.UPCHARGE : (part.mt_df_design && part.thickness.value === 1) ? part.mt_df_design.UPCHARGE_THICK : 0;
       }
 
-      const wood = part.woodtype && part.thickness.value === 0.75 ? part.woodtype.STANDARD_GRADE  : (part.woodtype && part.thickness.value === 1) ?  part.woodtype.STANDARD_GRADE_THICK : 0;
+      const wood = part.woodtype && part.thickness.value === 0.75 ? part.woodtype.STANDARD_GRADE : (part.woodtype && part.thickness.value === 1) ? part.woodtype.STANDARD_GRADE_THICK : 0;
       // const design = part.design && part.thickness.value === 0.75 ? part.design.UPCHARGE : (part.design && part.thickness.value === 1) ? part.design.UPCHARGE_THICK :  0;
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
@@ -168,8 +155,9 @@ export const itemPriceSelector = createSelector(
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings)
             const qty = parseInt(i.qty)
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
 
-            const price = eval(pricer.face_frame_pricing)
+            const price = (eval(pricer.face_frame_pricing) + extraCost)
               || 0;
 
             if (height > -1) {
@@ -189,6 +177,7 @@ export const itemPriceSelector = createSelector(
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty)
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
 
 
             let leftStileAdd = 0
@@ -571,7 +560,7 @@ export const itemPriceSelector = createSelector(
 
 
 
-            const price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd)
+            const price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost)
               || 0;
 
             if (height > -1) {
@@ -590,13 +579,11 @@ export const itemPriceSelector = createSelector(
 
 
 export const linePriceSelector = createSelector(
-  [partListSelector, pricingSelector, sqFTSelector],
-  (parts, pricer, sqFt) =>
+  [partListSelector, pricingSelector],
+  (parts, pricer) =>
     parts.map((part, index) => {
 
       let design = 0;
-
-      console.log('SQFT ====> ', sqFt[index])
 
       if (part.cope_design) {
         design = part.cope_design && part.thickness.value === 0.75 ? part.cope_design.UPCHARGE : (part.cope_design && part.thickness.value === 1) ? part.cope_design.UPCHARGE_THICK : 0;
@@ -640,8 +627,9 @@ export const linePriceSelector = createSelector(
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings)
             const qty = parseInt(i.qty)
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
 
-            const price = eval(pricer.face_frame_pricing) * qty
+            const price = (eval(pricer.face_frame_pricing) + extraCost) * qty
               || 0;
 
             if (height > -1) {
@@ -661,6 +649,9 @@ export const linePriceSelector = createSelector(
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty)
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
+
+            console.log('extraaaaa====> ', extraCost)
 
 
             let leftStileAdd = 0
@@ -1043,7 +1034,7 @@ export const linePriceSelector = createSelector(
 
 
 
-            const price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd) * qty
+            const price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) * qty
               || 0;
 
             if (height > -1) {
@@ -1074,7 +1065,7 @@ export const addPriceSelector = createSelector(
 
 export const miscTotalSelector = createSelector(
   [miscItemsSelector],
-  (misc) => misc.reduce((acc, item) => acc + item, 0)
+  (misc) => (misc.reduce((acc, item) => acc + item, 0))
 );
 
 
@@ -1100,13 +1091,23 @@ export const subTotal_Total = createSelector(
 
 export const taxSelector = createSelector(
   [subTotalSelector, taxRate],
-
   (subTotal, tax) => (subTotal.reduce((acc, item) => acc + item, 0) * tax)
 );
 
+export const totalDiscountSelector = createSelector(
+  [subTotalSelector, miscTotalSelector, discountSelector],
+  (subTotal, misc, discount) => {
+    console.log('diiiiiiiii', subTotal.reduce((acc, item) => acc + item, 0))
+    return (subTotal.reduce((acc, item) => acc + item, 0) + misc) * discount
+  }
+);
+
 export const totalSelector = createSelector(
-  [subTotalSelector, taxSelector, miscTotalSelector],
-  (subTotal, tax, misc) => (subTotal.reduce((acc, item) => acc + item, 0) + tax + misc)
+  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
+  (subTotal, tax, misc, discount) => {
+    console.log('DISCOUNT', discount)
+    return subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount
+  }
 );
 
 

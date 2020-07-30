@@ -26,11 +26,6 @@ export const LOAD_DELIVERIES = 'LOAD_DELIVERIES'
 export const LOAD_PAYMENT_TYPES = 'LOAD_PAYMENT_TYPES'
 export const LOAD_PAYMENT_TERMS = 'LOAD_PAYMENT_TERMS'
 
-
-
-
-
-
 export function loadOrders(cookie) {
   return async function (dispatch) {
     const res = await fetch(`${db_url}/orders?_limit=500&_sort=orderNum:DESC`,
@@ -91,53 +86,6 @@ export function deleteOrder(orderId, cookie) {
     }
   };
 }
-
-export function loadShippingMethod(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/shipping-methods`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: LOAD_SHIPPING_METHODS,
-      data: data
-    });
-  };
-}
-
-export function loadPaymentTypes(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/payment-types`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: LOAD_PAYMENT_TYPES,
-      data: data
-    });
-  };
-}
-
-export function loadPaymentTerms(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/payment-terms`, {
-      headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
-    });
-    const data = await res.json();
-    return dispatch({
-      type: LOAD_PAYMENT_TERMS,
-      data: data
-    });
-  };
-}
-
-
 
 
 export function updateOrder(orderId, order, cookie) {
@@ -221,16 +169,6 @@ export function updateBalance(orderId, balance, cookie) {
       console.error(error);
       NotificationManager.error('There was an problem with your submission', 'Error', 2000);
     }
-  };
-}
-
-
-export function selectDateRange(date) {
-  return async function (dispatch) {
-    return dispatch({
-      type: SELECT_DATE_RANGE,
-      date: date
-    });
   };
 }
 

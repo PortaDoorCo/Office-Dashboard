@@ -5,14 +5,18 @@ import {
   Input,
   Row,
   Col,
-  Button
+  Button,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText
 } from "reactstrap";
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
+import RenderPriceHolder  from '../../RenderInputs/RenderPriceHolder'
 import numQty from 'numeric-quantity'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -97,7 +101,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
       )
     );
   }
-  
+
 
 
   return (
@@ -346,7 +350,16 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     label="notes"
                   />
                 </Col>
-
+                <Col xs='5' />
+                <Col xs='3'>
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    label="extraCost"
+                  />
+                </Col>
               </Row>
               <br />
             </Fragment>
@@ -357,7 +370,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 color="primary"
                 className="btn-circle"
                 onClick={(e) =>
-                  
                   (
                     (formState.part_list[formState.part_list.length - 1].construction.value === "Cope" && formState.part_list[formState.part_list.length - 1].profile) ?
                       fields.push({
@@ -396,19 +408,12 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
             <Col xs="4" />
             <Col xs="5" />
             <Col xs="3">
-              <strong>Addtional Price: </strong>
-              <Field
-                name={`${part}.addPrice`}
-                type="text"
-                component={renderField}
-                label="addPrice"
-              />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} />
+                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
 
               ) : (
-                  <Input placeholder="0" />
+                <RenderPriceHolder input={0.00} edit={true} />
                 )}
             </Col>
           </Row>

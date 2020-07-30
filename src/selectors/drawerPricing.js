@@ -9,6 +9,21 @@ const pricingSelector = state => {
   return pricing
 }
 
+
+const discountSelector = state => {
+  const orders = state.form.DrawerOrder;
+
+  if (orders) {
+    if ((!state.form.DrawerOrder.values && !state.form.DrawerOrder.values.discount)) {
+      return 0;
+    } else {
+      return (numQty(state.form.DrawerOrder.values.discount) / 100);
+    }
+  } else {
+    return 0;
+  }
+}
+
 const partListSelector = state => {
   const orders = state.form.DrawerOrder;
 
@@ -21,6 +36,21 @@ const partListSelector = state => {
       }
     } else {
       return [];
+    }
+  } else {
+    return [];
+  }
+};
+
+const miscItemsSelector = state => {
+  const orders = state.form.DrawerOrder;
+  if (orders) {
+    if ((!state.form.DrawerOrder &&!state.form.DrawerOrder.values && !state.form.DrawerOrder.values.misc_items.length > 0)) {
+      return [];
+    } else {
+      return state.form.DrawerOrder.values.misc_items.map(i => {
+        return parseFloat(i.price)
+      })
     }
   } else {
     return [];
@@ -113,8 +143,9 @@ export const linePriceSelector = createSelector(
           const height = Math.ceil(numQty(i.height));
           const depth = Math.ceil(numQty(i.depth))
           const qty = parseInt(i.qty) 
+          const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
 
-          const price = eval(pricer.drawer_box_pricing) * qty
+          const price = (eval(pricer.drawer_box_pricing) + extraCost) * qty
 
           if (height > -1) {
             return price;
@@ -141,6 +172,11 @@ export const addPriceSelector = createSelector(
     })
 );
 
+export const miscTotalSelector = createSelector(
+  [miscItemsSelector],
+  (misc) => misc.reduce((acc, item) => acc + item, 0)
+);
+
 export const subTotalSelector = createSelector(
   [linePriceSelector, addPriceSelector],
   (prices, add) =>
@@ -165,9 +201,21 @@ export const taxSelector = createSelector(
   (subTotal, tax) => subTotal.reduce((acc, item) => acc + item, 0) * tax
 );
 
+export const totalDiscountSelector = createSelector(
+  [subTotalSelector, miscTotalSelector, discountSelector],
+  (subTotal, misc, discount) => {
+    console.log('diiiiiiiii', subTotal.reduce((acc, item) => acc + item, 0))
+    return (subTotal.reduce((acc, item) => acc + item, 0) + misc) * discount
+  }
+);
+
+
 export const totalSelector = createSelector(
-  [subTotalSelector, taxSelector],
-  (subTotal, tax) => subTotal.reduce((acc, item) => acc + item, 0) + tax
+  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
+  (subTotal, tax, misc, discount) => {
+    console.log('DISCOUNT', discount)
+    return subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount
+  }
 );
 
 

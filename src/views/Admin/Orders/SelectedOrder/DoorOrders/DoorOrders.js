@@ -7,7 +7,10 @@ import {
   CardBody,
   Input,
   Button,
-  FormGroup
+  FormGroup,
+  InputGroup,
+  InputGroupText,
+  InputGroupAddon
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,6 +23,7 @@ import {
   getFormValues,
   change,
   FieldArray,
+  Field
 } from 'redux-form';
 import {
   submitOrder,
@@ -46,6 +50,7 @@ import Sticky from 'react-stickynode';
 import moment from 'moment-business-days'
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
+import { renderField } from './components/RenderInputs/renderInputs'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -115,6 +120,7 @@ class DoorOrders extends Component {
       subTotals: subTotal,
       tax: tax,
       total: total,
+      discount: values.discount,
       dueDate: values.job_info.DueDate,
     };
 
@@ -125,61 +131,6 @@ class DoorOrders extends Component {
     await loadOrders(cookie);
     await this.props.dispatch(reset('DoorOrder'))
   };
-
-  componentDidUpdate(prevProps) {
-    if (this.props.formState !== prevProps.formState) {
-      if (this.props.formState) {
-        const update = async () => {
-          const form = await this.props.formState;
-          const customer = form.job_info.customer
-
-          await this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Address1',
-              customer.Shipping_Address1 || customer.Address1
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Address2',
-              customer.Shipping_Address2 || customer.Address2
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.City',
-              customer.Shipping_City || customer.City
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.State',
-              customer.Shipping_State || customer.State
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Zip',
-              customer.Shipping_Zip || customer.Zip
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              'job_info.Phone',
-              customer.Shipping_Phone || customer.Phone1
-            )
-          );
-        };
-        update();
-      }
-    }
-  }
 
   cancelOrder = async () => {
     await this.props.reset();
@@ -264,10 +215,34 @@ class DoorOrders extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
+                      <strong>Discount: </strong>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>%</InputGroupText>
+                        </InputGroupAddon>
+                        <Field
+                          name={'discount'}
+                          type="text"
+                          component={renderField}
+                          edit={edit}
+                          label="discount"
+                        />
+                      </InputGroup>
                       <strong>Tax: </strong>
-                      {tax ? <Input disabled={edit} placeholder={'$' + tax.toFixed(2)} className="mb-2" /> : <Input disabled={edit} placeholder={'$0.00'} className="mb-2" />}
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input disabled placeholder={tax.toFixed(2)} />
+                      </InputGroup>
+
                       <strong>Total: </strong>
-                      {total ? <Input disabled={edit} placeholder={'$' + total.toFixed(2)} className="mb-3" /> : <Input disabled={edit} placeholder={'$0.00'} className="mb-3" />}
+                      <InputGroup className='mb-3'>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input disabled placeholder={total.toFixed(2)} />
+                      </InputGroup>
                     </Col>
                   </Row>
                   <Row>
