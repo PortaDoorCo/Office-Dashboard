@@ -411,6 +411,12 @@ class OrderPage extends Component {
                       </IconButton>
                     </Tooltip>
 
+                    {/* <Tooltip title="Misc Items" placement="top">
+                      <IconButton onClick={this.toggleBalance}>
+                        <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                      </IconButton>
+                    </Tooltip> */}
+
                   </Col>
                   <Col />
                   <Col />
@@ -452,6 +458,12 @@ class OrderPage extends Component {
                           <AttachMoneyIcon style={{ width: '40', height: '40' }} />
                         </IconButton>
                       </Tooltip>
+
+                      {/* <Tooltip title="Misc Items" placement="top">
+                        <IconButton onClick={this.toggleBalance}>
+                          <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip> */}
 
 
                       {(props.selectedOrder[0] && props.selectedOrder[0].files.length > 0) ?
