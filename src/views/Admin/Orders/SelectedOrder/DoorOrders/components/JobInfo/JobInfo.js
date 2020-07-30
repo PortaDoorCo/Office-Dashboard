@@ -59,8 +59,7 @@ class JobInfo extends Component {
 
       <div>
         <Row className="mb-3">
-
-          <Col>
+        <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
 
@@ -73,7 +72,19 @@ class JobInfo extends Component {
               <p>7 Business Day Lead Time</p>
             </FormGroup>
           </Col>
-          <Col xs="8" />
+          <Col xs="5" />
+          <Col xs='3'>
+            <FormGroup>
+              <Label htmlFor="shipping_method">Shipping Method</Label>
+              <Field
+                name="ShippingMethod"
+                component={renderDropdownList}
+                data={shippingMethods}
+                valueField="value"
+                edit={edit}
+                textField="NAME" />
+            </FormGroup>
+          </Col>
         </Row>
         <Row>
           <Col xs="3">

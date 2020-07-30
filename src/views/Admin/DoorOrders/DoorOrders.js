@@ -125,6 +125,7 @@ class DoorOrders extends Component {
       misc_items: values.misc_items,
       tax: tax,
       total: total,
+      discount: values.discount,
       balance_paid: values.balance_paid,
       balance_due: total,
       orderType: orderType,
@@ -267,7 +268,6 @@ class DoorOrders extends Component {
                         </InputGroupAddon>
                         <Input disabled placeholder={total.toFixed(2)} />
                       </InputGroup>
-                      
                     </Col>
                   </Row>
                   <Row>
