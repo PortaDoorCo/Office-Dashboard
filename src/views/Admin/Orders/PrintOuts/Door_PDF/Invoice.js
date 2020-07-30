@@ -159,6 +159,14 @@ export default data => {
     },
     {
       columns: [
+        { text: '', style: 'totals', width: 347 },
+        { text: 'Discount:', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `${(data.discount)} %`, style: 'fonts', alignment: 'right' }
+      ],
+      margin: [0, 10, 0, 0]
+    },
+    {
+      columns: [
         { text: 'Misc Items', style: 'totals', width: 347, decoration: 'underline' },
         { text: 'Quote Only:', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(data.total).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }

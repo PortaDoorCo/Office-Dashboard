@@ -12,7 +12,8 @@ import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
+import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder'
 import { connect } from 'react-redux'
 
 const required = value => (value ? undefined : 'Required');
@@ -354,14 +355,25 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               }
 
               <Row>
-                <Col xs="4">
+              <Col xs="4">
                   <strong>Notes</strong>
                   <Field
                     name={`${table}.notes`}
                     type="textarea"
                     component={renderField}
-                    label="notes"
                     edit={edit}
+                    label="notes"
+                  />
+                </Col>
+                <Col xs='5' />
+                <Col xs='3'>
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    edit={edit}
+                    label="extraCost"
                   />
                 </Col>
 
@@ -413,23 +425,14 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           </Row>
 
           <Row>
-            <Col xs="4" />
+          <Col xs="4" />
             <Col xs="5" />
             <Col xs="3">
-              <strong>Addtional Price: </strong>
-              <Field
-                edit={edit}
-                name={`${part}.addPrice`}
-                type="text"
-                component={renderField}
-                label="addPrice"
-              />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input disabled={edit} placeholder={subTotal[i].toFixed(2) || 0} />
-
+              <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                  <Input disabled={edit} placeholder="0" />
+                <RenderPriceHolder input={'0.00'} edit={true} />
                 )}
             </Col>
           </Row>
