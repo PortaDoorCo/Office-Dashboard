@@ -25,7 +25,7 @@ import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, updateStatus } from '../../../../redux/orders/actions';
-import {  loadCustomers } from '../../../../redux/customers/actions';
+import { loadCustomers } from '../../../../redux/customers/actions';
 import io from 'socket.io-client';
 import db_url from '../../../../redux/db_url'
 import Cookies from "js-cookie";
@@ -294,7 +294,7 @@ class OrderTable extends React.Component {
                     }
                 }
             },
-            
+
         );
     }
 
@@ -439,13 +439,17 @@ class OrderTable extends React.Component {
                     />
 
                 </DataGrid>
-                <OrderPage
-                    toggle={this.toggle}
-                    modal={this.state.modal}
-                    selectedOrder={this.state.selectedOrder}
-                    editable={this.editable}
-                    edit={this.state.edit}
-                />
+                {
+                    this.state.modal ?
+                        <OrderPage
+                            toggle={this.toggle}
+                            modal={this.state.modal}
+                            selectedOrder={this.state.selectedOrder}
+                            editable={this.editable}
+                            edit={this.state.edit}
+                        /> : null
+                }
+
             </React.Fragment>
         );
     }

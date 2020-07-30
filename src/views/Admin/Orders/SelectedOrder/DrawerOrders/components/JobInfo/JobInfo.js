@@ -7,7 +7,7 @@ import {
   Input,
 
 } from "reactstrap";
-import { Field, change } from 'redux-form';
+import { Field, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import DropdownList from 'react-widgets/lib/DropdownList'
 import 'react-widgets/dist/css/react-widgets.css';
@@ -31,7 +31,7 @@ const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
     onChange={onChange}
     time={showTime}
     value={!value ? null : new Date(value)}
-    disabled={edit} 
+    disabled={edit}
   />
 
 
@@ -103,17 +103,15 @@ class JobInfo extends Component {
 
 
   render() {
-    const { customers, edit } = this.props;
+    const { customers, edit, shippingMethods } = this.props;
 
     return (
 
       <div>
         <Row className="mb-3">
-
           <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
-
               <Field
                 name="DueDate"
                 showTime={false}
@@ -123,7 +121,19 @@ class JobInfo extends Component {
               <p>7 Business Day Lead Time</p>
             </FormGroup>
           </Col>
-          <Col xs="8" />
+          <Col xs="5" />
+          <Col xs='3'>
+            <FormGroup>
+              <Label htmlFor="shipping_method">Shipping Method</Label>
+              <Field
+                name="ShippingMethod"
+                component={renderDropdownList}
+                data={shippingMethods}
+                valueField="value"
+                edit={edit}
+                textField="NAME" />
+            </FormGroup>
+          </Col>
         </Row>
         <Row>
           <Col xs="3">
@@ -278,7 +288,8 @@ class JobInfo extends Component {
 
 
 const mapStateToProps = state => ({
-
+  formState: getFormValues('DoorOrder')(state),
+  shippingMethods: state.misc_items.shippingMethods
 });
 
 

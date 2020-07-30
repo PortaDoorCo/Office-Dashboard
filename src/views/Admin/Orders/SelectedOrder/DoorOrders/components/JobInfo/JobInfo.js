@@ -27,15 +27,15 @@ const required = value => value ? undefined : 'Required';
 
 
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
-<div>
+  <div>
 
-  <DateTimePicker
-    onChange={onChange}
-    time={showTime}
-    value={!value ? null : new Date(value)}
-    disabled={edit}
-  />
-</div>
+    <DateTimePicker
+      onChange={onChange}
+      time={showTime}
+      value={!value ? null : new Date(value)}
+      disabled={edit}
+    />
+  </div>
 
 
 
@@ -51,9 +51,9 @@ class JobInfo extends Component {
     const { formState } = this.props;
     if (formState && formState.job_info && formState.job_info.customer) {
       if (formState.job_info.customer !== prevProps.formState.job_info.customer) {
-  
+
         const customer = formState.job_info.customer
-  
+
         this.props.dispatch(
           change(
             'DoorOrder',
@@ -120,7 +120,7 @@ class JobInfo extends Component {
 
       <div>
         <Row className="mb-3">
-        <Col>
+          <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
 

@@ -6,7 +6,10 @@ import {
     FormGroup,
     Label,
     Button,
-    Input
+    Input,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupText
 } from 'reactstrap';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import Multiselect from 'react-widgets/lib/Multiselect'
@@ -105,6 +108,27 @@ export const renderField = ({
         </Fragment>
     );
 
+export const renderPrice = ({
+    input,
+    props,
+    edit,
+    meta: { touched, error, warning },
+    ...custom
+}) => (
+        <Fragment>
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                    <InputGroupText>$</InputGroupText>
+                </InputGroupAddon>
+                <Input {...input} {...custom} disabled={edit} autocomplete="new-password" />
+            </InputGroup>
+
+            {touched &&
+                ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+                    (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+        </Fragment>
+    );
+
 
 export const renderCheckboxToggle = ({
     input: { value, onChange, ...input },
@@ -137,7 +161,7 @@ export const renderCheckbox = ({
                 defaultChecked={!!value}
                 onChange={(e, data) => onChange(data.checked)}
                 type="checkbox"
-                
+
             />
             {touched && error && <span>{error}</span>}
         </div>
