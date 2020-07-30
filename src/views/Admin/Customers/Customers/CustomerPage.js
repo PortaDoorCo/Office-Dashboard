@@ -47,9 +47,11 @@ class CustomerPage extends Component {
   }
 
   componentDidMount() { 
-    this.setState({ orders: this.props.orders.filter(
-      x => x.job_info.customer.id === this.props.selectedCompanies.id
-    )});
+    if(this.props.orders.length > 0){
+      this.setState({ orders: this.props.orders.filter(
+        x => x.job_info.customer.id === this.props.selectedCompanies.id
+      )});
+    }
   }
 
 
@@ -82,10 +84,14 @@ class CustomerPage extends Component {
     const props = this.props;
     const { locations, defaultCenter } = this.props;
 
+    let orders;
 
-     let orders= this.props.orders.filter(
-      x => x.job_info.customer.id === this.props.selectedCompanies.id
-    )
+    if(this.props.orders.length > 0){
+      orders= this.props.orders.filter(
+        x => x.job_info.customer.id === this.props.selectedCompanies.id
+      )
+    }
+
 
     return (
       <div className="animated resize">

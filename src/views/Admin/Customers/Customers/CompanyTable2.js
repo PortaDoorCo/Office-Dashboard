@@ -75,7 +75,7 @@ class CustomerTable extends React.Component {
 
     onSelectionChanged(e) {
         const { selectedRowKeys, selectedRowsData } = e;
-     
+
         this.selectionChangedBySelectBox = false;
 
         this.setState({
@@ -101,7 +101,7 @@ class CustomerTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
-          
+
             await this.setState({
                 selectedCompanies: x,
                 selectedOrder: x.id,
@@ -135,7 +135,7 @@ class CustomerTable extends React.Component {
         <Tooltip title="View Order" placement="top">
             <IconButton
                 onClick={event => {
-             
+
                     event.preventDefault();
                     this.toggle(row);
                 }}
@@ -172,12 +172,12 @@ class CustomerTable extends React.Component {
     saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
 
     customTotal(data) {
-     
+
         return `Total: $${data.value.toFixed(2)}`;
     }
 
     customCount(data) {
-      
+
         return `Orders: ${data.value}`;
     }
 
@@ -378,15 +378,18 @@ class CustomerTable extends React.Component {
                     </Column>
                 </DataGrid>
 
-                <CustomerPage
-                    toggle={this.toggle}
-                    modal={this.state.modal}
-                    selectedCompanies={this.state.selectedCompanies}
-                    orders={this.state.selectedOrder}
-                    locations={this.state.locations}
-                    defaultCenter={this.state.defaultCenter}
-                    salesRep={this.state.salesRep}
-                />
+                {this.state.modal ?
+                    <CustomerPage
+                        toggle={this.toggle}
+                        modal={this.state.modal}
+                        selectedCompanies={this.state.selectedCompanies}
+                        orders={this.state.selectedOrder}
+                        locations={this.state.locations}
+                        defaultCenter={this.state.defaultCenter}
+                        salesRep={this.state.salesRep}
+                    /> : null
+                }
+
             </React.Fragment>
         );
     }

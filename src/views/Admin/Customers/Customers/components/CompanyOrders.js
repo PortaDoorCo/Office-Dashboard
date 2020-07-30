@@ -40,7 +40,7 @@ const CustomerOrders = (props) => {
 
 
     useEffect(() => {
-   
+
         const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
         setData(filteredItems);
     }, [filterText, props.orders])
@@ -61,7 +61,7 @@ const CustomerOrders = (props) => {
 
 
         if (!modal) {
-      
+
             setSelectedOrder(
                 [row]
             )
@@ -153,13 +153,17 @@ const CustomerOrders = (props) => {
                 subHeader
                 subHeaderComponent={subHeaderComponentMemo}
             />
-            <OrderPage
-                toggle={toggle}
-                modal={modal}
-                selectedOrder={selectedOrder}
-                editable={editable}
-                edit={orderEdit}
-            />
+            {
+                modal ?
+                    <OrderPage
+                        toggle={toggle}
+                        modal={modal}
+                        selectedOrder={selectedOrder}
+                        editable={editable}
+                        edit={orderEdit}
+                    /> : null
+            }
+
         </div>
     );
 };

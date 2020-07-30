@@ -8,7 +8,8 @@ import NewPassword from './views/Pages/NewPassword/NewPassword'
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { NotificationManager } from 'react-notifications';
-import { loadOrders, loadShippingMethod, getDeliveries } from "./redux/orders/actions";
+import { loadOrders, getDeliveries } from "./redux/orders/actions";
+import { loadShippingMethod } from "./redux/misc_items/actions";
 import { loadSales} from "./redux/sales/actions";
 import { loadCustomers } from './redux/customers/actions'
 import { setLogin } from "./redux/users/actions";

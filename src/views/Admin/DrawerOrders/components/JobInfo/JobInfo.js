@@ -139,6 +139,13 @@ class JobInfo extends Component {
             customer.Shipping_Phone || customer.Phone1
           )
         );
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'discount',
+            (customer.Discount * 100)
+          )
+        );
       }
     }
   }
@@ -324,7 +331,7 @@ class JobInfo extends Component {
 
 const mapStateToProps = state => ({
   formState: getFormValues('DrawerOrder')(state),
-  shippingMethods: state.Orders.shippingMethods
+  shippingMethods: state.misc_items.shippingMethods
 });
 
 

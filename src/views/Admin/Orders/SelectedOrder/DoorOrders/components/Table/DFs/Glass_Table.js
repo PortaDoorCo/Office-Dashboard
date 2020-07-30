@@ -12,7 +12,8 @@ import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
+import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import numQty from 'numeric-quantity'
@@ -197,7 +198,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
                     </td>
                     <td>
-                    {!edit ?
+                      {!edit ?
                         <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
                           X
                         </Button>
@@ -282,14 +283,14 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
                 </Col>
                 <Col>
-                {!edit ?
-                  <Field
-                    name={`${table}.full_frame`}
-                    component={renderCheckboxToggle}
-                    onChange={(e) => updateFullFrame(e, index)}
-                    label="Full Frame"
+                  {!edit ?
+                    <Field
+                      name={`${table}.full_frame`}
+                      component={renderCheckboxToggle}
+                      onChange={(e) => updateFullFrame(e, index)}
+                      label="Full Frame"
                     />
-                    : null }
+                    : null}
                 </Col>
               </Row>
 
@@ -341,8 +342,19 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     name={`${table}.notes`}
                     type="textarea"
                     component={renderField}
-                    label="notes"
                     edit={edit}
+                    label="notes"
+                  />
+                </Col>
+                <Col xs='5' />
+                <Col xs='3'>
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    edit={edit}
+                    label="extraCost"
                   />
                 </Col>
 
@@ -352,41 +364,41 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           ))}
           <Row>
             <Col>
-            {!edit ?
-              <Button
-                color="primary"
-                className="btn-circle"
-                onClick={(e) =>
-                  (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "Glass" && formState.part_list[formState.part_list.length - 1].profile) ?
-                      fields.push({
-                        panelsH: 1,
-                        panelsW: 1,
-                        leftStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
-                        ),
-                        rightStile: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
-                        ),
-                        topRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
-                        ),
-                        bottomRail: fraction(
-                          formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
-                        ),
-                        horizontalMidRailSize: 0,
-                        verticalMidRailSize: 0,
-                        unevenSplitInput: "0",
-                        showBuilder: false,
-                        full_frame: false,
-                        item: fields.length + 1
-                      })
-                      : alert('please select a profile')
-                  )}
-              >
-                +
+              {!edit ?
+                <Button
+                  color="primary"
+                  className="btn-circle"
+                  onClick={(e) =>
+                    (
+                      (formState.part_list[formState.part_list.length - 1].construction.value === "Glass" && formState.part_list[formState.part_list.length - 1].profile) ?
+                        fields.push({
+                          panelsH: 1,
+                          panelsW: 1,
+                          leftStile: fraction(
+                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          ),
+                          rightStile: fraction(
+                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                          ),
+                          topRail: fraction(
+                            formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
+                          ),
+                          bottomRail: fraction(
+                            formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
+                          ),
+                          horizontalMidRailSize: 0,
+                          verticalMidRailSize: 0,
+                          unevenSplitInput: "0",
+                          showBuilder: false,
+                          full_frame: false,
+                          item: fields.length + 1
+                        })
+                        : alert('please select a profile')
+                    )}
+                >
+                  +
                 </Button>
-                : null }
+                : null}
             </Col>
           </Row>
 
@@ -394,20 +406,11 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
             <Col xs="4" />
             <Col xs="5" />
             <Col xs="3">
-              <strong>Addtional Price: </strong>
-              <Field
-                name={`${part}.addPrice`}
-                type="text"
-                component={renderField}
-                label="addPrice"
-                edit={edit}
-              />
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-                <Input placeholder={subTotal[i].toFixed(2) || 0} disabled={edit} />
-
+                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                  <Input placeholder="0" />
+                  <RenderPriceHolder input={'0.00'} edit={true} />
                 )}
             </Col>
           </Row>

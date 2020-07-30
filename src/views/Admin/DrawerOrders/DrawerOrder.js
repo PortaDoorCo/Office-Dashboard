@@ -7,7 +7,10 @@ import {
   CardHeader,
   CardBody,
   Input,
-  FormGroup
+  FormGroup,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,7 +23,8 @@ import {
   FormSection,
   getFormValues,
   change,
-  FieldArray
+  FieldArray,
+  Field
 } from 'redux-form';
 import {
   submitOrder
@@ -32,7 +36,8 @@ import {
   subTotalSelector,
   totalSelector,
   taxSelector,
-  addPriceSelector
+  addPriceSelector,
+  miscTotalSelector
 } from '../../../selectors/drawerPricing';
 // import {
 //   getWoodtypes,
@@ -46,6 +51,9 @@ import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
+import RenderPriceHolder from '../DoorOrders/components/RenderInputs/RenderPriceHolder'
+import { renderField } from '../DoorOrders/components/RenderInputs/renderInputs'
+import MiscItems from './components/MiscItems'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -129,10 +137,12 @@ class DoorOrders extends Component {
       job_info: jobInfo,
       status: values.job_info.status,
       companyprofile: values.job_info.customer.id,
+      misc_items: values.misc_items,
       linePrice: prices,
       itemPrice: itemPrice,
       subTotals: subTotal,
       tax: tax,
+      discount: values.discount,
       total: total,
       balance_paid: 0,
       balance_due: total,
@@ -263,10 +273,25 @@ class DoorOrders extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
+                    <strong>Discount: </strong>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>%</InputGroupText>
+                        </InputGroupAddon>
+                        <Field
+                          name={'discount'}
+                          type="text"
+                          component={renderField}
+                          label="discount"
+                        />
+                      </InputGroup>
                       <strong>Tax: </strong>
-                      <Input placeholder={'$' + tax.toFixed(2)} className="mb-2" />
+                      <RenderPriceHolder input={tax.toFixed(2)} edit={true} />
                       <strong>Total: </strong>
-                      <Input placeholder={'$' + total.toFixed(2)} className="mb-3" />
+                      <div className="mb-3">
+                        <RenderPriceHolder input={total.toFixed(2)} edit={true} />
+                      </div>
+
                     </Col>
                   </Row>
                   <Row>
@@ -303,6 +328,15 @@ class DoorOrders extends Component {
                   </CardBody>
                 </Card>
 
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Card>
+                  <CardBody>
+                    <MiscItems />
+                  </CardBody>
+                </Card>
               </Col>
             </Row>
             {this.props.formState ? (
@@ -349,14 +383,11 @@ const mapStateToProps = (state, prop) => ({
   initialValues: {
     open: true,
     balance_paid: 0,
+    misc_items: [],
+    discount: state.customers.customerDB[0].Discount,
     part_list: [
       {
-        dimensions: [
-          {
-            scoop: state.part_list.scoop[0],
-            dividers: state.part_list.dividers[0]
-          }
-        ],
+        dimensions: [],
         addPrice: 0
       }
     ],
@@ -372,7 +403,7 @@ const mapStateToProps = (state, prop) => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
-      ShippingMethod: state.Orders.shippingMethods[0]
+      ShippingMethod: state.misc_items.shippingMethods[0]
     }
   },
   formState: getFormValues('DrawerOrder')(state),
@@ -381,7 +412,8 @@ const mapStateToProps = (state, prop) => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  addPriceSelector: addPriceSelector(state)
+  addPriceSelector: addPriceSelector(state),
+  miscTotalSelector: miscTotalSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>
