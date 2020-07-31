@@ -85,7 +85,7 @@ class MiscItems extends Component {
     }
 
     render() {
-        const { handleSubmit, pristine, reset, submitting, misc_items } = this.props
+        const { handleSubmit, pristine, reset, submitting, misc_items, edit } = this.props
         return (
             <div>
                 <h3>Misc Items</h3>

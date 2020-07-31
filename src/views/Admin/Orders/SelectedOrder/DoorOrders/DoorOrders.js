@@ -120,6 +120,7 @@ class DoorOrders extends Component {
       subTotals: subTotal,
       tax: tax,
       total: total,
+      misc_items: values.misc_items,
       discount: values.discount,
       dueDate: values.job_info.DueDate,
     };
