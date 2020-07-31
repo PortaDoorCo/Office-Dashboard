@@ -31,6 +31,7 @@ import OrderTable2 from './components/OrderTable2'
 
 
 
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -49,69 +50,66 @@ class Dashboard extends Component {
 
   render() {
 
-    const { role, orders } = this.props;
+    const { role, orders, customerDBLoaded } = this.props;
 
+      return (
+        <div className="animated fadeIn">
+          {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+            <div>
+              <Row>
+                <Col lg="4">
+                  <Chart2 />
+                </Col>
+                <Col lg="4">
+                  <Chart3 />
+                </Col>
+                <Col lg="4">
+                  <Chart4 />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Chart1 />
+                </Col>
+              </Row>
+              <Row>
+                <Col style={{ height: 600 }}>
+                  <Maps />
+                </Col>
+              </Row>
 
+            </div>
+            :
+            <div>
+              <Row>
+                <Col style={{ height: 600 }}>
+                  <Maps />
+                </Col>
+              </Row>
+            </div>
+          }
 
+          <Row className="mt-3">
+            <Col>
+              {role && (role.type === 'management' || role.type === 'authenticated') ?
+                <OrderTable2  />
+                :
+                null
+              }
+            </Col>
 
-    return (
-      <div className="animated fadeIn">
-        {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
-          <div>
-            <Row>
-              <Col lg="4">
-                <Chart2 />
-              </Col>
-              <Col lg="4">
-                <Chart3 />
-              </Col>
-              <Col lg="4">
-                <Chart4 />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Chart1 />
-              </Col>
-            </Row>
-            <Row>
-              <Col style={{ height: 600 }}>
-                <Maps />
-              </Col>
-            </Row>
+          </Row>
 
-          </div>
-          :
-          <div>
-            <Row>
-              <Col style={{ height: 600 }}>
-                <Maps />
-              </Col>
-            </Row>
-          </div>
-        }
+          <Row>
+            <Col>
+              <CompanyTable
+                customerDB={this.props.customerDB}
+              />
+            </Col>
 
-        <Row className="mt-3">
-          <Col>
-            {role && (role.type === 'management' || role.type === 'authenticated') ?
-              <OrderTable2  />
-              :
-              null
-            }
-          </Col>
-
-        </Row>
-
-        <Row>
-          <Col>
-            <CompanyTable
-              customerDB={this.props.customerDB}
-            />
-          </Col>
-
-        </Row>
-      </div>
-    );
+          </Row>
+        </div>
+      );
   }
 }
 
