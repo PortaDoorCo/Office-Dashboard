@@ -158,9 +158,6 @@ class OrderPage extends Component {
 
   downloadPDF = () => {
     const { formState, drawerState, breakdowns, box_breakdowns } = this.props;
-
-
-
     const data = formState ? formState : drawerState ? drawerState : []
     if (data.orderType === "Door Order") {
       this.state.selectedOption.map(async option => {
@@ -352,13 +349,7 @@ class OrderPage extends Component {
     const props = this.props;
     const { formState, drawerState } = this.props;
 
-
-
-
-
     // let options;
-
-
 
     let options;
     let selectedOrder = props.selectedOrder[0] ? props.selectedOrder[0] : "Door Order"
@@ -622,9 +613,9 @@ class OrderPage extends Component {
                       <CardBody>
                         <h5>Misc Items</h5>
                         {props.selectedOrder[0] && props.selectedOrder[0].orderType === 'Door Order' ?
-                          <DoorMiscItems /> : 
+                          <DoorMiscItems toggle={this.toggleMiscItems} edit={!this.props.edit} /> :
                           props.selectedOrder[0] && props.selectedOrder[0].orderType === 'Drawer Order' ?
-                          <DrawerMiscItems  /> : null
+                            <DrawerMiscItems toggle={this.toggleMiscItems} edit={!this.props.edit} /> : null
                         }
 
                       </CardBody>
