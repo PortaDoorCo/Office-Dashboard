@@ -409,9 +409,10 @@ class DefaultLayout extends Component {
 
   render() {
 
+    const { customerDBLoaded, ordersDBLoaded } = this.props;
 
     if (
-      !this.props.customerDBLoaded && this.props.orders.length > 0
+      ((!customerDBLoaded) && (!ordersDBLoaded))
     ) {
       return <Loader />;
     } else {
