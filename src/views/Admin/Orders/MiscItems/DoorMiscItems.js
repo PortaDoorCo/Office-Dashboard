@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
+import { Field, reduxForm, FieldArray, getFormValues, change, reset } from 'redux-form';
+import { bindActionCreators } from 'redux';
 import { renderField, renderDropdownListFilter, renderPrice } from '../SelectedOrder/DoorOrders/components/RenderInputs/renderInputs';
 import { Button, Row, Col, Table, Input } from 'reactstrap';
 import { connect } from 'react-redux';
+import Cookies from "js-cookie";
+import { loadOrders, updateOrder } from '../../../../redux/orders/actions'
 
+const cookie = Cookies.get("jwt");
 
 let Inputs = props => {
-    const { fields, misc_items } = props
+    const { fields, misc_items, edit } = props
 
     return (
         <div>
@@ -23,33 +27,42 @@ let Inputs = props => {
                     {fields.map((table, index) => {
                         return (
                             <tr key={index}>
-                                <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderField} type="text" /></td>
+                                <td style={{ width: '90px' }}><Field name={`${table}.qty`} edit={edit} component={renderField} type="text" /></td>
                                 <td >
                                     <Field
                                         name={`${table}.item`}
                                         component={renderDropdownListFilter}
                                         data={misc_items}
                                         valueField="value"
+                                        edit={edit}
                                         textField="NAME"
                                     />
                                 </td>
-                                <td style={{ width: '150px' }}><Field name={`${table}.price`} component={renderPrice} type="text" /></td>
-                                <td><Button color="danger" onClick={() => fields.remove(index)}>X</Button></td>
+                                <td style={{ width: '150px' }}><Field name={`${table}.price`} component={renderPrice} edit={edit} type="text" /></td>
+                                <td> {!edit ? <Button color="danger" onClick={() => fields.remove(index)}>X</Button> : null}</td>
                             </tr>
                         )
                     })}
                 </tbody>
             </Table>
 
-            <Button color="primary" className="mt-3" onClick={() => fields.push({
-                qty: 1,
-                price: 0
-            })}>Add Item</Button>
+            {!edit ?
+                <Button color="primary" className="mt-3" onClick={() => fields.push({
+                    qty: 1,
+                    price: 0
+                })}>Add Item</Button>
+                : null
+            }
+
         </div>
     )
 }
 
 class MiscItems extends Component {
+
+    constructor(props) {
+        super(props);
+    }
 
     componentDidUpdate(prevProps) {
         const { formState } = this.props;
@@ -86,10 +99,12 @@ class MiscItems extends Component {
 
     render() {
         const { handleSubmit, pristine, reset, submitting, misc_items, edit } = this.props
+
+
         return (
             <div>
                 <h3>Misc Items</h3>
-                <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} />
+                <FieldArray name="misc_items" component={Inputs} edit={edit} misc_items={misc_items} />
             </div>
         );
     }
@@ -102,6 +117,15 @@ const mapStateToProps = state => ({
     misc_items: state.misc_items.misc_items
 });
 
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(
+        {
+            updateOrder,
+            loadOrders
+        },
+        dispatch
+    );
+
 MiscItems = reduxForm({
     form: 'DoorOrder',
     enableReinitialize: true
@@ -110,5 +134,5 @@ MiscItems = reduxForm({
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(MiscItems);
