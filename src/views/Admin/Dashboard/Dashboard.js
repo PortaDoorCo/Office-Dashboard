@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 import OrderTable from './components/OrderTable'
 import RestrictedOrderTable from './components/RestrictedOrderTable'
-import CompanyTable2 from '../Customers/Customers/CompanyTable2'
+import CompanyTable from '../Customers/Customers/CompanyTable'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers } from '../../../redux/customers/actions';
@@ -27,6 +27,7 @@ import Map from './components/Map'
 import Maps from './components/Maps'
 import StatusChart from '../Tracking/Tracking'
 
+import OrderTable2 from './components/OrderTable2'
 
 
 
@@ -90,16 +91,12 @@ class Dashboard extends Component {
           </div>
         }
 
-        <Row>
+        <Row className="mt-3">
           <Col>
             {role && (role.type === 'management' || role.type === 'authenticated') ?
-              <OrderTable
-                orders={this.props.orders}
-              />
+              <OrderTable2  />
               :
-              <RestrictedOrderTable
-                orders={this.props.orders}
-              />
+              null
             }
           </Col>
 
@@ -107,7 +104,7 @@ class Dashboard extends Component {
 
         <Row>
           <Col>
-            <CompanyTable2
+            <CompanyTable
               customerDB={this.props.customerDB}
             />
           </Col>
