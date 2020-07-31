@@ -135,6 +135,7 @@ class DrawerOrder extends Component {
       tax: tax,
       total: total,
       discount: values.discount,
+      misc_items: values.misc_items,
       balance_paid: 0,
       balance_due: total,
       orderType: orderType,

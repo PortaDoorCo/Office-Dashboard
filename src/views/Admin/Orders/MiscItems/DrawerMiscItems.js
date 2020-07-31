@@ -55,15 +55,9 @@ class MiscItems extends Component {
         const { formState } = this.props;
         if (formState && formState.misc_items) {
             if ((formState && formState.misc_items) !== (prevProps.formState && prevProps.formState.misc_items)) {
-
                 const misc_items = formState.misc_items
-
-                // console.log("MISCCCCCC ===>", misc_items)
-
                 misc_items.forEach((i, index) => {
                     if (i.item) {
-                        console.log("MISC ITEM", i)
-
                         if (i.item.Price !== 0) {
                             this.props.dispatch(
                                 change(
@@ -75,11 +69,8 @@ class MiscItems extends Component {
                         } else {
                             return
                         }
-
                     }
-
                 })
-
             } else {
                 return
             }
