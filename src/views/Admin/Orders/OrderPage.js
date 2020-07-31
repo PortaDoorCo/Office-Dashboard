@@ -57,7 +57,8 @@ import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory'
 
 import DrawerBalance from './Balance/Drawer_Order/Balance'
 import DrawerBalanceHistory from './Balance/Drawer_Order/BalanceHistory'
-import MiscItems from './MiscItems/MiscItems'
+import DoorMiscItems from './MiscItems/DoorMiscItems'
+import DrawerMiscItems from './MiscItems/DrawerMiscItems'
 
 import Cookies from "js-cookie";
 
@@ -158,7 +159,7 @@ class OrderPage extends Component {
   downloadPDF = () => {
     const { formState, drawerState, breakdowns, box_breakdowns } = this.props;
 
- 
+
 
     const data = formState ? formState : drawerState ? drawerState : []
     if (data.orderType === "Door Order") {
@@ -222,7 +223,7 @@ class OrderPage extends Component {
             this.setState({ selectedOption: [] })
             break;
           case 'Acknowledgement':
-            AcknowledgementPDF(data ,breakdowns);
+            AcknowledgementPDF(data, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Invoice':
@@ -620,7 +621,12 @@ class OrderPage extends Component {
                     <Card>
                       <CardBody>
                         <h5>Misc Items</h5>
-                        <MiscItems />
+                        {props.selectedOrder[0] && props.selectedOrder[0].orderType === 'Door Order' ?
+                          <DoorMiscItems /> : 
+                          props.selectedOrder[0] && props.selectedOrder[0].orderType === 'Drawer Order' ?
+                          <DrawerMiscItems /> : null
+                        }
+
                       </CardBody>
                     </Card>
                   </Col>
@@ -659,7 +665,7 @@ const mapStateToProps = (state, prop) => ({
   drawerState: getFormValues("DrawerOrder")(state),
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns
-  
+
 });
 
 const mapDispatchToProps = dispatch =>

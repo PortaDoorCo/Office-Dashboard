@@ -26,10 +26,8 @@ const discountSelector = state => {
 
 const partListSelector = state => {
   const orders = state.form.DrawerOrder;
-
-  if (state.part_list.loadedBoxWoodtypes) {
     if (orders) {
-      if (!state.form.DrawerOrder.values.part_list) {
+      if (!state.form.DrawerOrder && !state.form.DrawerOrder.values && !state.form.DrawerOrder.values.part_list) {
         return [];
       } else {
         return state.form.DrawerOrder.values.part_list;
@@ -37,9 +35,6 @@ const partListSelector = state => {
     } else {
       return [];
     }
-  } else {
-    return [];
-  }
 };
 
 const miscItemsSelector = state => {
