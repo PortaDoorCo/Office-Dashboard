@@ -40,7 +40,7 @@ const CompanyTable = (props) => {
 
 
     useEffect(() => {
-      
+
         // const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
         // setData(filteredItems);
     }, [filterText])
@@ -119,12 +119,12 @@ const CompanyTable = (props) => {
             sortable: true
 
         },
-        {
-            selector: 'sale.fullName',
-            name: 'Sales Person',
+        // {
+        //     selector: 'sale.fullName',
+        //     name: 'Sales Person',
 
 
-        },
+        // },
         {
             selector: 'Contact',
             name: 'Contact',
@@ -147,7 +147,7 @@ const CompanyTable = (props) => {
         {
             name: '',
             button: true,
-            cell: row => <Tooltip title="View Order" placement="top">
+            cell: row => <Tooltip title="View Company" placement="top">
                 <IconButton onClick={function (event) {
                     event.preventDefault()
                     toggle(row)
@@ -187,14 +187,17 @@ const CompanyTable = (props) => {
                 subHeader
                 subHeaderComponent={subHeaderComponentMemo}
             />
-            <CustomerPage
-                toggle={toggle}
-                modal={modal}
-                selectedCompanies={selectedCompanies}
-                orders={selectedOrder}
-                locations={locations}
-                defaultCenter={defaultCenter}
-            />
+            {modal ?
+                <CustomerPage
+                    toggle={toggle}
+                    modal={modal}
+                    selectedCompanies={selectedCompanies}
+                    orders={selectedOrder}
+                    locations={locations}
+                    defaultCenter={defaultCenter}
+                /> : null
+            }
+
         </div>
     );
 };

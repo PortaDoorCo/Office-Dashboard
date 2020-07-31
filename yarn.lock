@@ -4408,6 +4408,11 @@ deepmerge@^2.1.1:
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
   integrity sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==
 
+deepmerge@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.2.2.tgz#44d2ea3679b8f4d4ffba33f03d865fc1e7bf4955"
+  integrity sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==
+
 default-gateway@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/default-gateway/-/default-gateway-4.2.0.tgz#167104c7500c2115f6dd69b0a536bb8ed720552b"
@@ -8350,6 +8355,11 @@ lodash.merge@^4.6.0:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
+lodash.orderby@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.orderby/-/lodash.orderby-4.6.0.tgz#e697f04ce5d78522f54d9338b32b81a3393e4eb3"
+  integrity sha1-5pfwTOXXhSL1TZM4syuBozk+TrM=
+
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -8610,7 +8620,7 @@ memoize-one@^4.0.3:
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-4.1.0.tgz#a2387c58c03fff27ca390c31b764a79addf3f906"
   integrity sha512-2GApq0yI/b22J2j9rhbrAlsHb0Qcz+7yWxeLG8h+95sl1XPUgeLimQSOdur4Vw7cUhrBHwaUZxWFZueojqNRzA==
 
-memoize-one@^5.0.0, memoize-one@^5.0.4, memoize-one@^5.1.1:
+memoize-one@^5.0.0, memoize-one@^5.0.4:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
   integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
@@ -11549,13 +11559,13 @@ react-currency-format@^1.0.0:
   dependencies:
     prop-types "^15.6.0"
 
-react-data-table-component@^3.7.0:
-  version "3.10.3"
-  resolved "https://registry.yarnpkg.com/react-data-table-component/-/react-data-table-component-3.10.3.tgz#51d83ee0fac0f232dbeb26a7a2793504ff500f26"
-  integrity sha512-tr795Vr7MV5tl7SbVqcBaoex/w6PUP3gqJhwft2HiypBmB1UCl5OfbY7jsfI2RCHd7yYA/GVrDiFeVaamW0WTg==
+react-data-table-component@^6.9.8:
+  version "6.9.8"
+  resolved "https://registry.yarnpkg.com/react-data-table-component/-/react-data-table-component-6.9.8.tgz#73be279dbe816e93d8d7e183fac14341adc70fb6"
+  integrity sha512-emLerymzNoLZWIJHRPksjO/d9AW2EdWKWxkbP6xVzzvCN5mu6MHJxpiuEtp9FxwgGd+H7lJ0GPbl1lpM+CHZvA==
   dependencies:
-    lodash "^4.17.15"
-    memoize-one "^5.1.1"
+    deepmerge "^4.2.2"
+    lodash.orderby "^4.6.0"
     shortid "^2.2.15"
 
 react-datepicker@^2.10.0:
