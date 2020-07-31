@@ -57,6 +57,7 @@ import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory'
 
 import DrawerBalance from './Balance/Drawer_Order/Balance'
 import DrawerBalanceHistory from './Balance/Drawer_Order/BalanceHistory'
+import MiscItems from './MiscItems/MiscItems'
 
 import Cookies from "js-cookie";
 
@@ -96,7 +97,8 @@ class OrderPage extends Component {
       trackingOpen: false,
       filesOpen: false,
       deleteModal: false,
-      balanceOpen: false
+      balanceOpen: false,
+      miscItemsOpen: false
     };
   }
 
@@ -133,6 +135,10 @@ class OrderPage extends Component {
 
   toggleBalance = () => this.setState({
     balanceOpen: !this.state.balanceOpen
+  })
+
+  toggleMiscItems = () => this.setState({
+    miscItemsOpen: !this.state.miscItemsOpen
   })
 
   toggleFiles = () => this.setState({
@@ -411,11 +417,11 @@ class OrderPage extends Component {
                       </IconButton>
                     </Tooltip>
 
-                    {/* <Tooltip title="Misc Items" placement="top">
-                      <IconButton onClick={this.toggleBalance}>
+                    <Tooltip title="Misc Items" placement="top">
+                      <IconButton onClick={this.toggleMiscItems}>
                         <AttachMoneyIcon style={{ width: '40', height: '40' }} />
                       </IconButton>
-                    </Tooltip> */}
+                    </Tooltip>
 
                   </Col>
                   <Col />
@@ -459,11 +465,11 @@ class OrderPage extends Component {
                         </IconButton>
                       </Tooltip>
 
-                      {/* <Tooltip title="Misc Items" placement="top">
-                        <IconButton onClick={this.toggleBalance}>
+                      <Tooltip title="Misc Items" placement="top">
+                        <IconButton onClick={this.toggleMiscItems}>
                           <AttachMoneyIcon style={{ width: '40', height: '40' }} />
                         </IconButton>
-                      </Tooltip> */}
+                      </Tooltip>
 
 
                       {(props.selectedOrder[0] && props.selectedOrder[0].files.length > 0) ?
@@ -600,6 +606,21 @@ class OrderPage extends Component {
                             <div />
                         }
 
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Collapse>
+            </div>
+
+            <div>
+              <Collapse isOpen={this.state.miscItemsOpen}>
+                <Row>
+                  <Col lg='12'>
+                    <Card>
+                      <CardBody>
+                        <h5>Misc Items</h5>
+                        <MiscItems />
                       </CardBody>
                     </Card>
                   </Col>
