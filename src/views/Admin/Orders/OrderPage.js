@@ -28,6 +28,7 @@ import List from '@material-ui/icons/List';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
+import Dns from '@material-ui/icons/Dns';
 import Tooltip from '@material-ui/core/Tooltip';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
@@ -411,7 +412,7 @@ class OrderPage extends Component {
 
                     <Tooltip title="Misc Items" placement="top">
                       <IconButton onClick={this.toggleMiscItems}>
-                        <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                        <Dns style={{ width: '40', height: '40' }} />
                       </IconButton>
                     </Tooltip>
 
@@ -459,7 +460,7 @@ class OrderPage extends Component {
 
                       <Tooltip title="Misc Items" placement="top">
                         <IconButton onClick={this.toggleMiscItems}>
-                          <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                          <Dns style={{ width: '40', height: '40' }} />
                         </IconButton>
                       </Tooltip>
 
