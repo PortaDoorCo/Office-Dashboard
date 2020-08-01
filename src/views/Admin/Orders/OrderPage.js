@@ -28,6 +28,7 @@ import List from '@material-ui/icons/List';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
+import Dns from '@material-ui/icons/Dns';
 import Tooltip from '@material-ui/core/Tooltip';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
@@ -57,6 +58,8 @@ import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory'
 
 import DrawerBalance from './Balance/Drawer_Order/Balance'
 import DrawerBalanceHistory from './Balance/Drawer_Order/BalanceHistory'
+import DoorMiscItems from './MiscItems/DoorMiscItems'
+import DrawerMiscItems from './MiscItems/DrawerMiscItems'
 
 import Cookies from "js-cookie";
 
@@ -96,7 +99,8 @@ class OrderPage extends Component {
       trackingOpen: false,
       filesOpen: false,
       deleteModal: false,
-      balanceOpen: false
+      balanceOpen: false,
+      miscItemsOpen: false
     };
   }
 
@@ -135,6 +139,10 @@ class OrderPage extends Component {
     balanceOpen: !this.state.balanceOpen
   })
 
+  toggleMiscItems = () => this.setState({
+    miscItemsOpen: !this.state.miscItemsOpen
+  })
+
   toggleFiles = () => this.setState({
     filesOpen: !this.state.filesOpen
   })
@@ -151,9 +159,6 @@ class OrderPage extends Component {
 
   downloadPDF = () => {
     const { formState, drawerState, breakdowns, box_breakdowns } = this.props;
-
- 
-
     const data = formState ? formState : drawerState ? drawerState : []
     if (data.orderType === "Door Order") {
       this.state.selectedOption.map(async option => {
@@ -216,7 +221,7 @@ class OrderPage extends Component {
             this.setState({ selectedOption: [] })
             break;
           case 'Acknowledgement':
-            AcknowledgementPDF(data ,breakdowns);
+            AcknowledgementPDF(data, breakdowns);
             this.setState({ selectedOption: [] })
             break;
           case 'Invoice':
@@ -345,13 +350,7 @@ class OrderPage extends Component {
     const props = this.props;
     const { formState, drawerState } = this.props;
 
-
-
-
-
     // let options;
-
-
 
     let options;
     let selectedOrder = props.selectedOrder[0] ? props.selectedOrder[0] : "Door Order"
@@ -411,11 +410,11 @@ class OrderPage extends Component {
                       </IconButton>
                     </Tooltip>
 
-                    {/* <Tooltip title="Misc Items" placement="top">
-                      <IconButton onClick={this.toggleBalance}>
-                        <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                    <Tooltip title="Misc Items" placement="top">
+                      <IconButton onClick={this.toggleMiscItems}>
+                        <Dns style={{ width: '40', height: '40' }} />
                       </IconButton>
-                    </Tooltip> */}
+                    </Tooltip>
 
                   </Col>
                   <Col />
@@ -459,11 +458,11 @@ class OrderPage extends Component {
                         </IconButton>
                       </Tooltip>
 
-                      {/* <Tooltip title="Misc Items" placement="top">
-                        <IconButton onClick={this.toggleBalance}>
-                          <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                      <Tooltip title="Misc Items" placement="top">
+                        <IconButton onClick={this.toggleMiscItems}>
+                          <Dns style={{ width: '40', height: '40' }} />
                         </IconButton>
-                      </Tooltip> */}
+                      </Tooltip>
 
 
                       {(props.selectedOrder[0] && props.selectedOrder[0].files.length > 0) ?
@@ -608,6 +607,26 @@ class OrderPage extends Component {
             </div>
 
             <div>
+              <Collapse isOpen={this.state.miscItemsOpen}>
+                <Row>
+                  <Col lg='12'>
+                    <Card>
+                      <CardBody>
+                        <h5>Misc Items</h5>
+                        {props.selectedOrder[0] && props.selectedOrder[0].orderType === 'Door Order' ?
+                          <DoorMiscItems toggle={this.toggleMiscItems} edit={!this.props.edit} /> :
+                          props.selectedOrder[0] && props.selectedOrder[0].orderType === 'Drawer Order' ?
+                            <DrawerMiscItems toggle={this.toggleMiscItems} edit={!this.props.edit} /> : null
+                        }
+
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Collapse>
+            </div>
+
+            <div>
               {/* order edit here */}
 
 
@@ -638,7 +657,7 @@ const mapStateToProps = (state, prop) => ({
   drawerState: getFormValues("DrawerOrder")(state),
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns
-  
+
 });
 
 const mapDispatchToProps = dispatch =>
