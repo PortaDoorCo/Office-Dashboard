@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 import OrderTable from './components/OrderTable'
 import RestrictedOrderTable from './components/RestrictedOrderTable'
-import CompanyTable2 from '../Customers/Customers/CompanyTable2'
+import CompanyTable from '../Customers/Customers/CompanyTable'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers } from '../../../redux/customers/actions';
@@ -26,6 +26,8 @@ import Chart4 from './components/Chart4'
 import Map from './components/Map'
 import Maps from './components/Maps'
 import StatusChart from '../Tracking/Tracking'
+
+import OrderTable2 from './components/OrderTable2'
 
 
 
@@ -48,73 +50,66 @@ class Dashboard extends Component {
 
   render() {
 
-    const { role, orders } = this.props;
+    const { role, orders, customerDBLoaded } = this.props;
 
+      return (
+        <div className="animated fadeIn">
+          {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+            <div>
+              <Row>
+                <Col lg="4">
+                  <Chart2 />
+                </Col>
+                <Col lg="4">
+                  <Chart3 />
+                </Col>
+                <Col lg="4">
+                  <Chart4 />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Chart1 />
+                </Col>
+              </Row>
+              <Row>
+                <Col style={{ height: 600 }}>
+                  <Maps />
+                </Col>
+              </Row>
 
+            </div>
+            :
+            <div>
+              <Row>
+                <Col style={{ height: 600 }}>
+                  <Maps />
+                </Col>
+              </Row>
+            </div>
+          }
 
+          <Row className="mt-3">
+            <Col>
+              {role && (role.type === 'management' || role.type === 'authenticated') ?
+                <OrderTable2  />
+                :
+                null
+              }
+            </Col>
 
-    return (
-      <div className="animated fadeIn">
-        {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
-          <div>
-            <Row>
-              <Col lg="4">
-                <Chart2 />
-              </Col>
-              <Col lg="4">
-                <Chart3 />
-              </Col>
-              <Col lg="4">
-                <Chart4 />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Chart1 />
-              </Col>
-            </Row>
-            <Row>
-              <Col style={{ height: 600 }}>
-                <Maps />
-              </Col>
-            </Row>
+          </Row>
 
-          </div>
-          :
-          <div>
-            <Row>
-              <Col style={{ height: 600 }}>
-                <Maps />
-              </Col>
-            </Row>
-          </div>
-        }
-
-        <Row>
-          <Col>
-            {role && (role.type === 'management' || role.type === 'authenticated') ?
-              <OrderTable
-                orders={this.props.orders}
+          <Row>
+            <Col>
+              <CompanyTable
+                customerDB={this.props.customerDB}
               />
-              :
-              <RestrictedOrderTable
-                orders={this.props.orders}
-              />
-            }
-          </Col>
+            </Col>
 
-        </Row>
-
-        <Row>
-          <Col>
-            <CompanyTable2
-              customerDB={this.props.customerDB}
-            />
-          </Col>
-
-        </Row>
-      </div>
-    );
+          </Row>
+        </div>
+      );
   }
 }
 

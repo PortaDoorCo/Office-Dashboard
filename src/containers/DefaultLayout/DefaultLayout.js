@@ -208,6 +208,8 @@ class DefaultLayout extends Component {
     const cookie = await Cookies.get("jwt");
 
     if (cookie) {
+
+      await loadOrders(cookie);
       await loadCustomers(cookie);
       await login(cookie);
 
@@ -221,9 +223,9 @@ class DefaultLayout extends Component {
         await loadMiscItems(cookie);
       }
 
-      if (!ordersDBLoaded) {
-        await loadOrders(cookie);
-      }
+
+
+
 
       await getDeliveries(cookie)
 
@@ -407,9 +409,10 @@ class DefaultLayout extends Component {
 
   render() {
 
+    const { customerDBLoaded, ordersDBLoaded } = this.props;
 
     if (
-      !this.props.customerDBLoaded && this.props.orders.length > 0
+      ((!customerDBLoaded) && (!ordersDBLoaded))
     ) {
       return <Loader />;
     } else {
