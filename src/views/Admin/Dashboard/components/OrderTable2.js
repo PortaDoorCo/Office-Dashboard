@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import differenceBy from 'lodash/differenceBy';
 import { connect } from 'react-redux'
 import DataTable from 'react-data-table-component';
@@ -7,6 +7,12 @@ import moment from 'moment';
 import OrderPage from '../../Orders/OrderPage'
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox'
+import io from 'socket.io-client';
+import db_url from '../../../../redux/db_url'
+
+
+const socket = io(db_url);
+
 
 const actions = <Button key="add">Add</Button>;
 
@@ -31,6 +37,12 @@ const OrderTable = (props) => {
     const [modal, setModal] = useState(false);
     const [edit, setEdit] = useState(false);
 
+    useEffect(() => {
+        socket.on('order_submitted', res => (setData([...data, res])))
+        socket.on('order_updated', res => (setData([...data, res])))
+        socket.on('order_deleted', res => (setData([...data, res])))
+        socket.on('status_updated', (res, updatedStatus) => (setData([...data, res])))
+    }, [props.orders])
 
     const columns = [
         {
@@ -131,7 +143,7 @@ const OrderTable = (props) => {
             <DataTable
                 title="Orders"
                 columns={columns}
-                data={props.orders}
+                data={data}
                 // selectableRows
                 // actions={actions}
                 contextActions={contextActions}

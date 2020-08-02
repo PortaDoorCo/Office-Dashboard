@@ -3,7 +3,7 @@ import {
   SUBMIT_ORDER,
   UPDATE_ORDER,
   LOAD_DELIVERIES,
-
+  SOCKET_LOAD_ORDERS
 } from './actions';
 import moment from 'moment'
 
@@ -17,7 +17,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  const { type, data, date } = action;
+  const { type, data } = action;
   switch (type) {
     case LOAD_ORDERS:
       return {
@@ -32,6 +32,11 @@ export default function (state = initialState, action) {
     case UPDATE_ORDER:
       return {
         ...state,
+      };
+    case SOCKET_LOAD_ORDERS:
+      return {
+        ...state,
+        orders: [...state.orders, data]
       };
     case LOAD_DELIVERIES:
       const updatedDeliveries = data

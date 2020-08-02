@@ -40,7 +40,10 @@ import {
   subTotalSelector,
   totalSelector,
   taxSelector,
-  addPriceSelector
+  addPriceSelector,
+  miscTotalSelector,
+  balanceSelector,
+  balanceTotalSelector
 } from '../../../../../selectors/drawerPricing';
 import moment from 'moment-business-days'
 import SideBar from './components/SideBar';
@@ -100,7 +103,8 @@ class DrawerOrder extends Component {
       tax,
       user,
       loadOrders,
-      updateOrder
+      updateOrder,
+      balance
     } = this.props;
 
 
@@ -135,9 +139,9 @@ class DrawerOrder extends Component {
       tax: tax,
       total: total,
       discount: values.discount,
+      balance_paid: values.balance_paid,
+      balance_due: balance,
       misc_items: values.misc_items,
-      balance_paid: 0,
-      balance_due: total,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
       user: user.id,
@@ -425,7 +429,10 @@ const mapStateToProps = (state, props) => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  addPriceSelector: addPriceSelector(state)
+  addPriceSelector: addPriceSelector(state),
+  miscTotalSelector: miscTotalSelector(state),
+  balance: balanceSelector(state),
+  balanceTotal: balanceTotalSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>
