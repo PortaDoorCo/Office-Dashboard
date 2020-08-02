@@ -39,7 +39,10 @@ import {
   subTotalSelector,
   taxSelector,
   totalSelector,
-  addPriceSelector
+  addPriceSelector,
+  miscTotalSelector,
+  balanceSelector,
+  balanceTotalSelector
 } from '../../../../../selectors/doorPricing';
 
 import PropTypes from 'prop-types';
@@ -87,7 +90,8 @@ class DoorOrders extends Component {
       total,
       updateOrder,
       user,
-      orders
+      orders,
+      balance
     } = this.props;
 
     const orderType = 'Door Order';
@@ -120,6 +124,8 @@ class DoorOrders extends Component {
       subTotals: subTotal,
       tax: tax,
       total: total,
+      balance_paid: values.balance_paid,
+      balance_due: balance,
       misc_items: values.misc_items,
       discount: values.discount,
       dueDate: values.job_info.DueDate,
@@ -169,9 +175,15 @@ class DoorOrders extends Component {
       total,
       dispatch,
       tax,
+      balance,
+      balanceTotal
     } = this.props;
 
+
+    console.log('BALANCE TPTAL', balance)
+
     return (
+      
       <div className="animated fadeIn resize">
         <Row>
           <Col xs="12" sm="12" md="12" lg="12">
@@ -305,7 +317,10 @@ const mapStateToProps = (state, props) => {
     subTotal: subTotalSelector(state),
     total: totalSelector(state),
     tax: taxSelector(state),
-    addPriceSelector: addPriceSelector(state)
+    addPriceSelector: addPriceSelector(state),
+    miscTotalSelector: miscTotalSelector(state),
+    balance: balanceSelector(state),
+    balanceTotal: balanceTotalSelector(state)
   }
 };
 

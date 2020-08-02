@@ -93,7 +93,7 @@ const balanceDue = state => {
 const totalBalanceDue = state => {
   const orders = state.form.DoorOrder;
   if (orders) {
-    if (!orders.values.balance_history) {
+    if (!orders && !orders.values && !orders.values.balance_history) {
       return [];
     } else {
       return state.form.DoorOrder.values.balance_history.map(i => {
