@@ -32,17 +32,26 @@ const conditionalRowStyles = [
 const OrderTable = (props) => {
     const [selectedRows, setSelectedRows] = useState([]);
     const [toggleCleared, setToggleCleared] = useState(false);
-    const [data, setData] = useState(props.orders);
+    const [data, setData] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [modal, setModal] = useState(false);
     const [edit, setEdit] = useState(false);
 
+    
     useEffect(() => {
-        socket.on('order_submitted', res => (setData([...data, res])))
-        socket.on('order_updated', res => (setData([...data, res])))
-        socket.on('order_deleted', res => (setData([...data, res])))
-        socket.on('status_updated', (res, updatedStatus) => (setData([...data, res])))
-    }, [props.orders])
+
+    })
+
+    useEffect(() => {
+        // socket.on('order_submitted', res => (setData([...data, res])))
+        // socket.on('order_updated', res => (setData([...data, res])))
+        // socket.on('order_deleted', res => (setData([...data, res])))
+        // socket.on('status_updated', (res, updatedStatus) => (setData([...data, res])))
+        setData(JSON.parse(JSON.stringify(props.orders)))
+
+    }, [props.orders.length])
+
+    console.log('proopp==>>>>>', props.orders.length, 'data==>>>>>', data.length)
 
     const columns = [
         {
@@ -125,17 +134,17 @@ const OrderTable = (props) => {
         setEdit(!edit)
     }
 
-    const contextActions = useMemo(() => {
-        const handleDelete = () => {
+    // const contextActions = useMemo(() => {
+    //     const handleDelete = () => {
 
-            if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
-                setToggleCleared(!toggleCleared);
-                setData(differenceBy(data, selectedRows, 'name'));
-            }
-        };
+    //         if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
+    //             setToggleCleared(!toggleCleared);
+    //             setData(differenceBy(data, selectedRows, 'name'));
+    //         }
+    //     };
 
-        return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>Delete</Button>;
-    }, [data, selectedRows, toggleCleared]);
+    //     return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>Delete</Button>;
+    // }, [data, selectedRows, toggleCleared]);
 
 
     return (
@@ -146,7 +155,7 @@ const OrderTable = (props) => {
                 data={data}
                 // selectableRows
                 // actions={actions}
-                contextActions={contextActions}
+                //contextActions={contextActions}
                 onSelectedRowsChange={handleRowSelected}
                 clearSelectedRows={toggleCleared}
                 pagination
