@@ -46,11 +46,13 @@ class CustomerPage extends Component {
     };
   }
 
-  componentDidMount() { 
-    if(this.props.orders.length > 0){
-      this.setState({ orders: this.props.orders.filter(
-        x => x.job_info.customer.id === this.props.selectedCompanies.id
-      )});
+  componentDidMount() {
+    if (this.props.orders.length > 0) {
+      this.setState({
+        orders: this.props.orders.filter(
+          x => x.job_info.customer.id === this.props.selectedCompanies.id
+        )
+      });
     }
   }
 
@@ -86,8 +88,8 @@ class CustomerPage extends Component {
 
     let orders;
 
-    if(this.props.orders.length > 0){
-      orders= this.props.orders.filter(
+    if (this.props.orders.length > 0) {
+      orders = this.props.orders.filter(
         x => x.job_info.customer.id === this.props.selectedCompanies.id
       )
     }
@@ -139,14 +141,17 @@ class CustomerPage extends Component {
           </ModalFooter>
         </Modal>
 
-        <OrderPage
-          toggle={this.toggle}
-          modal={this.state.modal}
-          selectedOrder={this.state.selectedOrder}
-          company={this.props.selectedCompanies.Company}
-          editable={this.editable}
-          edit={this.state.orderEdit}
-        />
+        {!this.state.modal ?
+          <OrderPage
+            toggle={this.toggle}
+            modal={this.state.modal}
+            selectedOrder={this.state.selectedOrder}
+            company={this.props.selectedCompanies.Company}
+            editable={this.editable}
+            edit={this.state.orderEdit}
+          /> : null
+        }
+
       </div>
     );
   }
