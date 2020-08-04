@@ -95,7 +95,7 @@ class NonEdit extends Component {
                       <Label htmlFor="full-name">Sales Rep</Label>
                       <br />
                       <Input
-                        // placeholder={this.props.salesRep.fullName}
+                        placeholder={props.selectedCompanies.sale.fullName}
                         disabled
                       />
                     </FormGroup>
