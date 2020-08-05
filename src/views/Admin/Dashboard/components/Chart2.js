@@ -28,8 +28,23 @@ class Chart2 extends Component {
     const groups = [];
     filteredOrders.forEach(item => {
       item.part_list.forEach(part => {
+        console.log('partttt====>', part)
         if (item.orderType === "Door Order") {
-          groups.push(part.design);
+          switch (part.construction.value) {
+            case 'Cope':
+              groups.push(part.cope_design);
+              break;
+            case 'MT':
+              groups.push(part.mt_design);
+              break;
+            case 'M':
+              groups.push(part.miter_design);
+              break;
+            default:
+              // code block
+              return
+          }
+
         }
 
       })
