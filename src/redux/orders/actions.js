@@ -26,6 +26,8 @@ export const LOAD_DELIVERIES = 'LOAD_DELIVERIES'
 export const LOAD_PAYMENT_TYPES = 'LOAD_PAYMENT_TYPES'
 export const LOAD_PAYMENT_TERMS = 'LOAD_PAYMENT_TERMS'
 
+export const SOCKET_LOAD_ORDERS = 'SOCKET_LOAD_ORDERS'
+
 export function loadOrders(cookie) {
   return async function (dispatch) {
     const res = await fetch(`${db_url}/orders?_limit=500&_sort=orderNum:DESC`,
@@ -39,6 +41,16 @@ export function loadOrders(cookie) {
     return await dispatch({
       type: LOAD_ORDERS,
       data: data
+    });
+  };
+}
+
+export function socketLoadOrders(response) {
+  return async function (dispatch) {
+    console.log('SOCKET RESPONSE', response)
+    return await dispatch({
+      type: SOCKET_LOAD_ORDERS,
+      data: response
     });
   };
 }

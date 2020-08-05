@@ -59,6 +59,8 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+
+    const { loadOrders } = this.props;
     
     this.cookies()
     socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), console.log(res)))
