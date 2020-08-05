@@ -6,6 +6,7 @@ import {
 import OrderTable from './components/OrderTable'
 import RestrictedOrderTable from './components/RestrictedOrderTable'
 import CompanyTable from '../Customers/Customers/CompanyTable'
+import CompanyTable2 from '../Customers/Customers/CompanyTable2'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, loadCustomers } from '../../../redux/customers/actions';

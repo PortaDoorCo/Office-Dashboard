@@ -410,10 +410,10 @@ class DefaultLayout extends Component {
       }
 
 
-      socket.on('order_submitted', res => (socketLoadOrders(res)))
-      socket.on('order_updated', res => (socketLoadOrders(res)))
-      socket.on('order_deleted', res => (socketLoadOrders(res)))
-      socket.on('status_updated', (res, updatedStatus) => (socketLoadOrders(res)))
+      socket.on('order_submitted', res => (loadOrders(cookie)))
+      socket.on('order_updated', res => (loadOrders(cookie)))
+      socket.on('order_deleted', res => (loadOrders(cookie)))
+      socket.on('status_updated', (res, updatedStatus) => (loadOrders(cookie)))
 
 
     } else {
@@ -426,11 +426,11 @@ class DefaultLayout extends Component {
 
     const { customerDBLoaded, ordersDBLoaded } = this.props;
 
-    if (
-      ((!customerDBLoaded) && (!ordersDBLoaded))
-    ) {
-      return <Loader />;
-    } else {
+    // if (
+    //   ((!customerDBLoaded) && (!ordersDBLoaded))
+    // ) {
+    //   return <Loader />;
+    // } else {
       return (
         <div className="app">
           <NotificationContainer />
@@ -485,7 +485,7 @@ class DefaultLayout extends Component {
         </div>
       );
     }
-  }
+  // }
 }
 
 const mapStateToProps = (state, prop) => ({
