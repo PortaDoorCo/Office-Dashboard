@@ -145,8 +145,8 @@ const OrderTable = (props) => {
             cell: row => <div>
                 {/* <Select options={status} value={row.status} placeholder={row.status} onChange={(e) => handleStatusChange(e, row)} /> */}
                 <Select defaultValue={row.status} style={{ width: 160 }} onChange={(e) => handleStatusChange(e, row)}>
-                    {status.map(i => (
-                        <Option value={i.value}>{i.value}</Option>
+                    {status.map((i,index) => (
+                        <Option key={index} value={i.value}>{i.value}</Option>
                     ))}
                 </Select>
             </div>,

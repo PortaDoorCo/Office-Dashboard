@@ -318,7 +318,7 @@ class DoorOrders extends Component {
             {(this.props.formState && this.props.formState.part_list) ? (
               this.props.formState.part_list.map((part, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <Row style={{ height: '100%' }}>
                       <Col>
                         <Sticky
