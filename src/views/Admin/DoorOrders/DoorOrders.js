@@ -47,7 +47,7 @@ import Sticky from 'react-stickynode';
 import moment from 'moment-business-days'
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
-import { renderField } from './components/RenderInputs/renderInputs'
+import { renderField } from '../../../components/RenderInputs/renderInputs'
 import MiscItems from './components/MiscItems'
 
 
@@ -318,7 +318,7 @@ class DoorOrders extends Component {
             {(this.props.formState && this.props.formState.part_list) ? (
               this.props.formState.part_list.map((part, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <Row style={{ height: '100%' }}>
                       <Col>
                         <Sticky

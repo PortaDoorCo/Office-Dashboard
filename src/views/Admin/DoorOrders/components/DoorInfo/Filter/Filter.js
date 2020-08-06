@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import { connect } from 'react-redux';
 import { Field, change, reduxForm, untouch} from "redux-form";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
 
 
 const required = value => (value ? undefined : 'Required');

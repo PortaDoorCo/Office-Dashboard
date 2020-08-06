@@ -12,7 +12,7 @@ import { Field, FieldArray } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';
 import OrderTable from './OrderTable';
-import { renderField } from '../../DoorOrders/components/RenderInputs/renderInputs'
+import { renderField } from '../../../../components/RenderInputs/renderInputs'
 
 
 const required = value => value ? undefined : 'Required';

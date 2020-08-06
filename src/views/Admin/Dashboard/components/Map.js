@@ -59,6 +59,10 @@ class Map extends Component {
         )
     }
 
+    componentWillUnmount(){
+        socket.disconnect()
+    }
+
 
 
     static defaultProps = {

@@ -15,7 +15,7 @@ class RenderPriceHolder extends Component {
                     <InputGroupAddon addonType="prepend">
                         <InputGroupText>$</InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder={this.props.input} disabled={edit} autocomplete="new-password" />
+                    <Input placeholder={this.props.input} disabled={edit} autoComplete="new-password" />
                 </InputGroup>
             </div>
         );

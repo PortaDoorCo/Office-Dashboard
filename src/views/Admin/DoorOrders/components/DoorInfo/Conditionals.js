@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change, reduxForm, untouch } from "redux-form";
-import { renderField, renderFieldDisabled } from '../RenderInputs/renderInputs'
+
 import CopeDoor from './Cope/Door'
 import MiterDoor from './Miter/Door'
 import MTDoor from './MT/Door'

@@ -11,8 +11,8 @@ import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';
-import RenderPriceHolder from '../../DoorOrders/components/RenderInputs/RenderPriceHolder'
-import { renderPrice } from '../../DoorOrders/components/RenderInputs/renderInputs'
+import RenderPriceHolder from '../../../../components/RenderInputs/RenderPriceHolder'
+import { renderPrice } from '../../../../components/RenderInputs/renderInputs'
 
 const required = value => value ? undefined : 'Required';
 
