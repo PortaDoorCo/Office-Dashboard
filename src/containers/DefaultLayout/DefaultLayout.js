@@ -410,10 +410,10 @@ class DefaultLayout extends Component {
       }
 
 
-      socket.on('order_submitted', res => (loadOrders(cookie)))
-      socket.on('order_updated', res => (loadOrders(cookie)))
-      socket.on('order_deleted', res => (loadOrders(cookie)))
-      socket.on('status_updated', (res, updatedStatus) => (loadOrders(cookie)))
+      // socket.on('order_submitted', res => (loadOrders(cookie)))
+      // socket.on('order_updated', res => (loadOrders(cookie)))
+      // socket.on('order_deleted', res => (loadOrders(cookie)))
+      // socket.on('status_updated', (res, updatedStatus) => (loadOrders(cookie)))
 
 
     } else {
