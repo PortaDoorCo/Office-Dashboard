@@ -167,7 +167,7 @@ const CompanyTable = (props) => {
             }
         };
 
-        return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>Delete</Button>;
+        return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon="true">Delete</Button>;
     }, [data, selectedRows, toggleCleared]);
 
     return (

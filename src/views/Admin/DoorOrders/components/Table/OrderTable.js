@@ -18,7 +18,7 @@ import Multiselect from 'react-widgets/lib/Multiselect'
 import 'react-widgets/dist/css/react-widgets.css';
 import PanelsTable from './Table'
 import GlassTable from './Glass'
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs'
 
 
 const required = value => (value ? undefined : 'Required');
