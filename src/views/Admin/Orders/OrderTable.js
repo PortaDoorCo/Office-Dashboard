@@ -30,60 +30,76 @@ import { NotificationManager } from 'react-notifications';
 import io from 'socket.io-client';
 import db_url from '../../../redux/db_url'
 import Cookies from "js-cookie";
+import { connect } from 'react-redux'
 const socket = io(db_url);
 
 const cookie = Cookies.get("jwt");
 
 momentLocaliser(moment);
 
+const toDataUrl = (url, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
+};
+
+
 const status = [
   {
-      name: 'Quote',
-      value: 'Quote',
+    name: 'Quote',
+    value: 'Quote',
   },
   {
-      name: 'Invoiced',
-      value: 'Invoiced',
+    name: 'Invoiced',
+    value: 'Invoiced',
   },
   {
-      name: 'Ordered',
-      value: 'Ordered',
+    name: 'Ordered',
+    value: 'Ordered',
   },
   {
-      name: 'In Production',
-      value: 'In Production',
+    name: 'In Production',
+    value: 'In Production',
   },
   {
-      name: 'Station 1',
-      value: 'Station 1',
+    name: 'Station 1',
+    value: 'Station 1',
   },
   {
-      name: 'Station 2',
-      value: 'Station 2',
+    name: 'Station 2',
+    value: 'Station 2',
   },
   {
-      name: 'Station 3',
-      value: 'Station 3',
+    name: 'Station 3',
+    value: 'Station 3',
   },
   {
-      name: 'Station 4',
-      value: 'Station 4',
+    name: 'Station 4',
+    value: 'Station 4',
   },
   {
-      name: 'Station 4',
-      value: 'Station 4',
+    name: 'Station 4',
+    value: 'Station 4',
   },
   {
-      name: 'Complete',
-      value: 'Complete',
+    name: 'Complete',
+    value: 'Complete',
   },
   {
-      name: 'Shipped',
-      value: 'Shipped',
+    name: 'Shipped',
+    value: 'Shipped',
   },
   {
-      name: 'LATE',
-      value: 'LATE',
+    name: 'LATE',
+    value: 'LATE',
   },
 ];
 
@@ -156,9 +172,9 @@ class OrderTable extends React.Component {
 
   onRowPrepared(e) {
     if (e.rowType == 'data' && e.data.late == true) {
-        e.rowElement.style.backgroundColor = '#FEEBEB';
+      e.rowElement.style.backgroundColor = '#FEEBEB';
     }
-}
+  }
 
   editable = () => {
     const { edit } = this.state;
@@ -283,14 +299,66 @@ class OrderTable extends React.Component {
     return new Date(data.createdAt).getTime();
   }
 
-  onExportBreakdowns = e => {
+  onExportBreakdowns = async (e) => {
+
+    const { breakdowns, box_breakdowns } = this.props;
+
 
     if (this.state.selectedRowKeys.length > 0) {
-      this.state.selectedRowsData.map(i => {
+      this.state.selectedRowsData.map(async(i) => {
         if (i.orderType === "Door Order") {
-          return DoorPDF(i);
+
+          const edgesPromiseArr1 = i.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.edge.photo.url, (result) => {
+                resolve(result)
+              });
+            })
+          });
+
+          const mouldsPromiseArr1 = i.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.profile.photo.url, (result) => {
+                resolve(result)
+              });
+            })
+          });
+
+
+
+          const panelsPromiseArr1 = i.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.panel.photo.url, (result) => {
+                resolve(result)
+              });
+            })
+          });
+
+          const appliedProfilePromiseArr1 = i.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.applied_profile.photo.url, (result) => {
+                resolve(result)
+              });
+            })
+          });
+
+          let edges1;
+          let moulds1;
+          let panels1;
+          let appliedProfiles1;
+
+          try {
+            edges1 = await Promise.all(edgesPromiseArr1);
+            moulds1 = await Promise.all(mouldsPromiseArr1);
+            panels1 = await Promise.all(panelsPromiseArr1);
+            appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
+          } catch (err) {
+            console.log('errrrrrr', err);
+          }
+
+          return DoorPDF(i, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
         } else {
-          return DrawerPDF(i)
+          return DrawerPDF(i, box_breakdowns)
         }
       })
       this.setState({
@@ -586,18 +654,29 @@ class OrderTable extends React.Component {
           </Summary>
         </DataGrid>
         {
-            this.state.modal ?
-                <OrderPage
-                    toggle={this.toggle}
-                    modal={this.state.modal}
-                    selectedOrder={this.state.selectedOrder}
-                    editable={this.editable}
-                    edit={this.state.edit}
-                /> : null
+          this.state.modal ?
+            <OrderPage
+              toggle={this.toggle}
+              modal={this.state.modal}
+              selectedOrder={this.state.selectedOrder}
+              editable={this.editable}
+              edit={this.state.edit}
+            /> : null
         }
       </React.Fragment>
     );
   }
 }
 
-export default OrderTable;
+const mapStateToProps = (state, prop) => ({
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns
+
+});
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(OrderTable);
+
