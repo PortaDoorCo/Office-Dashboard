@@ -10,15 +10,15 @@ import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox'
 import io from 'socket.io-client';
 import db_url from '../../../../redux/db_url'
-// import Select from 'react-select'
-import { makeStyles } from '@material-ui/core/styles';
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
+import { Select } from 'antd';
+import { Input } from 'reactstrap'
 import MenuItem from '@material-ui/core/MenuItem';
-import { updateOrder, loadOrders } from '../../../../redux/orders/actions'
+import { updateStatus, loadOrders } from '../../../../redux/orders/actions'
 import Cookies from "js-cookie";
 
+
 const cookie = Cookies.get("jwt");
+const { Option } = Select;
 
 
 const status = [
@@ -86,15 +86,7 @@ const conditionalRowStyles = [
     },
 ];
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
+
 
 
 const OrderTable = (props) => {
@@ -105,18 +97,19 @@ const OrderTable = (props) => {
     const [modal, setModal] = useState(false);
     const [edit, setEdit] = useState(false);
 
-    const classes = useStyles();
+
 
     const handleStatusChange = async (e, row) => {
-        e.target.getAttribute = null
-        e.preventDefault();
-        const { updateOrder } = props;
+        const { updateStatus } = props;
 
-        const order = {
-            status: e.target.value
+        console.log('eeee', e)
+        console.log('rowww', row)
+
+        const status = {
+            status: e
         }
 
-        await updateOrder(row.id, order, cookie)
+        await updateStatus(row.id, row, status, cookie)
     }
 
     const columns = [
@@ -148,21 +141,14 @@ const OrderTable = (props) => {
         },
         {
             name: 'Status',
-            cell: row => <div style={{ width: '200px' }}>
-                <FormControl className={classes.formControl}>
-                    <Select
-                        labelId="status"
-                        id="status"
-                        value={row.status}
-                        autoWidth
-                        onChange={(e) => handleStatusChange(e, row)}
-                    >
-                        {status.map((i, index) => (
-                            <MenuItem key={index} value={i.value}>{i.label}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-
+            width: 130,
+            cell: row => <div style={{ width: '300px' }}>
+                {/* <Select options={status} value={row.status} placeholder={row.status} onChange={(e) => handleStatusChange(e, row)} /> */}
+                <Select defaultValue={row.status} style={{ width: 130 }} onChange={(e) => handleStatusChange(e, row)}>
+                    {status.map(i => (
+                        <Option value={i.value}>{i.value}</Option>
+                    ))}
+                </Select>
             </div>,
         },
         {
@@ -253,7 +239,7 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            updateOrder,
+            updateStatus,
             loadOrders
         },
         dispatch

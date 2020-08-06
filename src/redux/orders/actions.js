@@ -113,6 +113,7 @@ export function updateOrder(orderId, order, cookie) {
 
 
 export function updateStatus(orderId, key, status, cookie) {
+  console.log(status)
   const item = {
     status: status.status,
     tracking: [
