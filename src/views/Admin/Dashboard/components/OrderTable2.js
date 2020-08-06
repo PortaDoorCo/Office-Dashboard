@@ -157,8 +157,8 @@ const OrderTable = (props) => {
                         autoWidth
                         onChange={(e) => handleStatusChange(e, row)}
                     >
-                        {status.map(i => (
-                            <MenuItem value={i.value}>{i.label}</MenuItem>
+                        {status.map((i, index) => (
+                            <MenuItem key={index} value={i.value}>{i.label}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
