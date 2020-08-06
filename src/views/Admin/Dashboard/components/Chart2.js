@@ -28,7 +28,6 @@ class Chart2 extends Component {
     const groups = [];
     filteredOrders.forEach(item => {
       item.part_list.forEach(part => {
-        console.log('partttt====>', part)
         if (item.orderType === "Door Order") {
           switch (part.construction.value) {
             case 'Cope':
