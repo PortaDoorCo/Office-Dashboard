@@ -5,23 +5,16 @@ import {
   CardSubtitle,
   FormGroup,
   Label,
-  Button,
-  Input
 } from "reactstrap";
 import { Field, FieldArray, reduxForm, change } from "redux-form";
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Cookies from "js-cookie";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
 import Cope_Table from '../../Table/Doors/Cope_Table'
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
-  taxSelector,
-  totalSelector,
-  addPriceSelector
 } from '../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');

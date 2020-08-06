@@ -6,7 +6,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Input,
   FormGroup,
   InputGroup,
   InputGroupAddon,
@@ -102,7 +101,6 @@ class DoorOrders extends Component {
       subTotal,
       total,
       submitOrder,
-      orderNum,
       tax,
       user
     } = this.props;
@@ -374,7 +372,6 @@ const mapStateToProps = (state, prop) => ({
   dividers: state.part_list.dividers,
   customers: state.customers.customerDB,
   address: state.Orders.address,
-  orderNum: state.Orders.orderNum,
 
   user: state.users.user,
 

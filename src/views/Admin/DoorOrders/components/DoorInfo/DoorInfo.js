@@ -3,25 +3,9 @@ import {
   Row,
   Col,
   CardSubtitle,
-  FormGroup,
-  Label,
-  Button,
-  Input
+  Button
 } from 'reactstrap';
-import 'antd/dist/antd.css';
-import DropdownList from 'react-widgets/lib/DropdownList';
-import Multiselect from 'react-widgets/lib/Multiselect'
-import 'react-widgets/dist/css/react-widgets.css';
-import OrderTable from '../Table/OrderTable';
-import {
-  Field,
-  FieldArray,
-  change
-} from 'redux-form';
-import FieldFileInput from '../UploadComponent'
-import { FileUploader } from 'devextreme-react';
 import Cookies from "js-cookie";
-import Select from 'react-select';
 import DoorFilter from './Filter/Filter'
 import Conditionals from './Conditionals'
 

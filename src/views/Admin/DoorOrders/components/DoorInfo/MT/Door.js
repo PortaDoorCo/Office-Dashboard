@@ -4,24 +4,17 @@ import {
   Col,
   CardSubtitle,
   FormGroup,
-  Label,
-  Button,
-  Input
+  Label
 } from "reactstrap";
 import { Field, FieldArray, change } from "redux-form";
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Cookies from "js-cookie";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
 import MT_Table from '../../Table/Doors/MT_Table'
 import Ratio from 'lb-ratio'
 import {
   linePriceSelector,
   itemPriceSelector,
-  subTotalSelector,
-  taxSelector,
-  totalSelector,
-  addPriceSelector
+  subTotalSelector
 } from '../../../../../../selectors/doorPricing';
 
 

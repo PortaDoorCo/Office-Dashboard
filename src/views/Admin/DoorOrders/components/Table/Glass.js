@@ -10,7 +10,7 @@ import {
 
 import 'semantic-ui-css/semantic.min.css';
 import { Field } from "redux-form";
-import numQty from 'numeric-quantity'
+
 
 
 
