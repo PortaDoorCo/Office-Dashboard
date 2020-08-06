@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap'
+import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap'
 import Cookies from "js-cookie";
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -17,7 +17,6 @@ const header = { 'Authorization': 'Bearer ' + cookie };
 const Profiles = (props) => {
 
   const {
-    buttonLabel,
     className,
     role
   } = props;

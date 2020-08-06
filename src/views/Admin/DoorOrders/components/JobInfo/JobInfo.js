@@ -3,14 +3,10 @@ import {
   Row,
   Col,
   FormGroup,
-  Label,
-  Input,
-
+  Label
 } from "reactstrap";
 import { Field, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
-import DropdownList from 'react-widgets/lib/DropdownList'
-import 'react-widgets/dist/css/react-widgets.css';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'

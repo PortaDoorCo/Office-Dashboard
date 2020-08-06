@@ -1,24 +1,16 @@
 import React, { useState, Fragment, useEffect } from "react";
 import {
-  Label,
   Table,
   Input,
   Row,
   Col,
   Button
 } from "reactstrap";
-import { Checkbox as CheckboxUI } from 'semantic-ui-react';
-// import Checkbox from 'material-ui/Checkbox'
 import 'semantic-ui-css/semantic.min.css';
 import { Field } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../MakerJS/Maker';
-import DropdownList from 'react-widgets/lib/DropdownList';
-import Multiselect from 'react-widgets/lib/Multiselect'
-import 'react-widgets/dist/css/react-widgets.css';
-import PanelsTable from './Table'
-import GlassTable from './Glass'
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs'
+import { renderField, renderFieldDisabled, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs'
 
 
 const required = value => (value ? undefined : 'Required');

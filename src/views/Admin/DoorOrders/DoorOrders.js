@@ -19,7 +19,6 @@ import {
   reduxForm,
   FormSection,
   getFormValues,
-  change,
   FieldArray,
   Field
 } from 'redux-form';
@@ -28,7 +27,6 @@ import {
   loadOrders,
 } from '../../../redux/orders/actions';
 import {
-  pricingSelector,
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
@@ -36,13 +34,9 @@ import {
   totalSelector,
   addPriceSelector,
   miscTotalSelector,
-  totalDiscountSelector
 } from '../../../selectors/doorPricing';
-
-import PropTypes from 'prop-types';
 import 'react-notifications/lib/notifications.css';
 import SideBar from './components/SideBar';
-import Ratio from 'lb-ratio'
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days'
 import Cookies from "js-cookie";

@@ -72,11 +72,7 @@ class Dashboard extends Component {
 
           <Row className="mt-3">
             <Col>
-              {role && (role.type === 'management' || role.type === 'authenticated') ?
                 <OrderTable2  />
-                :
-                null
-              }
             </Col>
           </Row>
           <Row>
