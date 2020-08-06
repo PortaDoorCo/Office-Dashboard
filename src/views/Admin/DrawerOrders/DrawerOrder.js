@@ -51,8 +51,8 @@ import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
-import RenderPriceHolder from '../DoorOrders/components/RenderInputs/RenderPriceHolder'
-import { renderField } from '../DoorOrders/components/RenderInputs/renderInputs'
+import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolder'
+import { renderField } from '../../../components/RenderInputs/renderInputs'
 import MiscItems from './components/MiscItems'
 
 const cookie = Cookies.get("jwt");
