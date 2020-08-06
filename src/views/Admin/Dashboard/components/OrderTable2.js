@@ -117,19 +117,19 @@ const OrderTable = (props) => {
             name: 'Order #',
             selector: 'orderNum',
             sortable: true,
-            grow: 2,
         },
         {
             name: 'Company',
             selector: 'job_info.customer.Company',
             sortable: true,
-            grow: 2,
+            grow: 2
+
         },
         {
             name: 'Order Type',
             selector: 'orderType',
             sortable: true,
-            grow: 2,
+ 
         },
         {
             name: 'Date Ordered',
@@ -141,10 +141,10 @@ const OrderTable = (props) => {
         },
         {
             name: 'Status',
-            width: 130,
-            cell: row => <div style={{ width: '300px' }}>
+          
+            cell: row => <div>
                 {/* <Select options={status} value={row.status} placeholder={row.status} onChange={(e) => handleStatusChange(e, row)} /> */}
-                <Select defaultValue={row.status} style={{ width: 130 }} onChange={(e) => handleStatusChange(e, row)}>
+                <Select defaultValue={row.status} style={{ width: 160 }} onChange={(e) => handleStatusChange(e, row)}>
                     {status.map(i => (
                         <Option value={i.value}>{i.value}</Option>
                     ))}
@@ -155,17 +155,19 @@ const OrderTable = (props) => {
             name: 'Submitted By',
             selector: 'user.FirstName',
             sortable: true,
-            grow: 2,
+            
         },
+
         {
             name: 'Total',
             selector: 'total',
             sortable: true,
-            grow: 2,
+
         },
         {
             name: ' ',
             button: true,
+            grow: 2,
             cell: (row) => <Tooltip title="View Order" placement="top">
                 <IconButton onClick={function (event) {
                     event.preventDefault()
