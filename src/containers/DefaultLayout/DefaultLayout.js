@@ -27,7 +27,6 @@ import { bindActionCreators } from "redux";
 import {
   loadOrders,
   getDeliveries,
-  socketLoadOrders
 } from "../../redux/orders/actions";
 import {
   loadMiscItems,
@@ -210,7 +209,6 @@ class DefaultLayout extends Component {
       loadMiscItems,
       loadedMiscItems,
 
-      socketLoadOrders
     } = this.props;
 
     const cookie = await Cookies.get("jwt");
@@ -607,7 +605,6 @@ const mapDispatchToProps = dispatch =>
       loadMiscItems,
 
       login,
-      socketLoadOrders
       // getBoxThickness,
       // getBoxBottoms,
       // getAssembly,

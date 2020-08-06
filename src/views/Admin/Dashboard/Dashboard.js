@@ -5,6 +5,7 @@ import {
 } from 'reactstrap';
 import OrderTable from './components/OrderTable'
 import RestrictedOrderTable from './components/RestrictedOrderTable'
+import CompanyTable from '../Customers/Customers/CompanyTable'
 import CompanyTable2 from '../Customers/Customers/CompanyTable2'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -72,7 +73,7 @@ class Dashboard extends Component {
           <Row className="mt-3">
             <Col>
               {role && (role.type === 'management' || role.type === 'authenticated') ?
-                <OrderTable  />
+                <OrderTable2  />
                 :
                 null
               }
@@ -80,7 +81,7 @@ class Dashboard extends Component {
           </Row>
           <Row>
             <Col>
-              <CompanyTable2
+              <CompanyTable
                 customerDB={this.props.customerDB}
               />
             </Col>

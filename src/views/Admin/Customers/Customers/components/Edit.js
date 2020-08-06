@@ -22,41 +22,9 @@ import {
 import DropdownList from 'react-widgets/lib/DropdownList';
 import { updateCustomer } from '../../../../../redux/customers/actions'
 
+import { renderField, renderDropdownList } from '../../../../../components/RenderInputs/renderInputs'
+
 const required = value => (value ? undefined : 'Required');
-
-const renderField = ({
-  input,
-  props,
-  meta: { error, warning },
-  ...custom
-}) => (
-    <Fragment>
-      <Input {...input} {...custom} />
-      {error && <FormFeedback>{error}</FormFeedback>}
-      {!error && warning && <FormText>{warning}</FormText>}
-    </Fragment>
-  );
-
-const renderDropdownList = ({
-  input,
-  data,
-  valueField,
-  textField,
-  meta: { touched, error, warning }
-}) => (
-    <div>
-      <DropdownList
-        {...input}
-        data={data}
-        valueField={valueField}
-        textField={textField}
-        onChange={input.onChange}
-      />
-      {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-    </div>
-  );
 
 class Edit extends Component {
   constructor(props) {
@@ -91,7 +59,8 @@ class Edit extends Component {
     const {
       handleSubmit,
       salesReps,
-      shippingMethods
+      shippingMethods,
+      edit
     } = this.props;
 
 
@@ -119,6 +88,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -130,6 +100,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -141,6 +112,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -155,6 +127,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -165,9 +138,10 @@ class Edit extends Component {
                         name={'Ship_Via'}
                         component={renderDropdownList}
                         data={shippingMethods}
-                        valueField="Name"
-                        textField="Name"
+                        valueField="NAME"
+                        textField="NAME"
                         validate={required}
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -181,17 +155,19 @@ class Edit extends Component {
                         valueField="id"
                         textField="fullName"
                         validate={required}
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
                   <Col sm="3">
                     <FormGroup>
                       <Label htmlFor="full-name">Sales Tax</Label>
-                      <Input
-                        name="TaxRate"
-                        placeholder={toPercent(props.selectedCompanies.TaxRate)}
-                        value={this.state.TaxRate}
-                        onChange={this.handleChange}
+                      <Field
+                        name={'TaxRate'}
+                        type="text"
+                        component={renderField}
+                        label="tax_rate"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -205,6 +181,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -227,6 +204,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -239,6 +217,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -253,6 +232,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -264,6 +244,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -275,6 +256,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -286,6 +268,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -308,6 +291,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -320,6 +304,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -334,6 +319,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -345,6 +331,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -356,6 +343,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -367,6 +355,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        edit={edit}
                       />
                     </FormGroup>
                   </Col>
@@ -378,17 +367,27 @@ class Edit extends Component {
                   <Col>
                     <FormGroup>
                       <h6>Extra Notes</h6>
-                      <Input />
+                      <Input disabled={edit} />
                     </FormGroup>
                   </Col>
                 </Row>
 
-                <Button color="primary" size="lg">
-                  Submit
-                </Button>
-                <Button color="primary" size="lg" onClick={this.props.onEdit}>
-                  Cancel
-                </Button>
+                {edit ? 
+                <div>
+                  <Button onClick={this.props.onEdit} color="primary" size="lg">
+                    Edit
+                  </Button>
+                </div> :
+                <div>
+                  <Button color="primary" size="lg">
+                    Submit
+                  </Button>
+                  <Button color="primary" size="lg" onClick={this.props.onEdit}>
+                    Cancel
+                  </Button>
+                </div>
+              }
+
               </form>
             </CardBody>
           </Card>
@@ -401,7 +400,7 @@ class Edit extends Component {
 const mapStateToProps = (state, ownProps) => ({
   initialValues: ownProps.selectedCompanies,
   salesReps: state.Orders.salesReps,
-  shippingMethods: state.Orders.shippingMethods,
+  shippingMethods: state.misc_items.shippingMethods,
   test: ownProps
 });
 

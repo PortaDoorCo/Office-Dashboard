@@ -11,9 +11,11 @@ import Inbox from '@material-ui/icons/Inbox'
 import io from 'socket.io-client';
 import db_url from '../../../../redux/db_url'
 // import Select from 'react-select'
+import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
-import { updateOrder } from '../../../../redux/orders/actions'
+import { updateOrder, loadOrders } from '../../../../redux/orders/actions'
 import Cookies from "js-cookie";
 
 const cookie = Cookies.get("jwt");
@@ -53,10 +55,6 @@ const status = [
         value: 'Station 4',
     },
     {
-        label: 'Station 4',
-        value: 'Station 4',
-    },
-    {
         label: 'Complete',
         value: 'Complete',
     },
@@ -88,6 +86,16 @@ const conditionalRowStyles = [
     },
 ];
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+}));
+
 
 const OrderTable = (props) => {
     const [selectedRows, setSelectedRows] = useState([]);
@@ -97,29 +105,19 @@ const OrderTable = (props) => {
     const [modal, setModal] = useState(false);
     const [edit, setEdit] = useState(false);
 
+    const classes = useStyles();
+
     const handleStatusChange = async (e, row) => {
+        e.target.getAttribute = null
+        e.preventDefault();
         const { updateOrder } = props;
 
         const order = {
             status: e.target.value
         }
 
-        console.log('orderrrrr', row.id)
         await updateOrder(row.id, order, cookie)
     }
-
-    useEffect(() => {
-        setTimeout(() => {
-            console.log('hhiiiiiiiii', props.orders[0])
-            setData(props.orders)
-        }, 1000)
-
-    }, [props.orders])
-
-
-    console.log('data', data)
-    console.log('orders', props.orders)
-
 
     const columns = [
         {
@@ -151,17 +149,20 @@ const OrderTable = (props) => {
         {
             name: 'Status',
             cell: row => <div style={{ width: '200px' }}>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={row.status}
-                    autoWidth
-                    onChange={(e) => handleStatusChange(e, row)}
-                >
-                    {status.map(i => (
-                        <MenuItem value={i.value}>{i.label}</MenuItem>
-                    ))}
-                </Select>
+                <FormControl className={classes.formControl}>
+                    <Select
+                        labelId="status"
+                        id="status"
+                        value={row.status}
+                        autoWidth
+                        onChange={(e) => handleStatusChange(e, row)}
+                    >
+                        {status.map(i => (
+                            <MenuItem value={i.value}>{i.label}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
             </div>,
         },
         {
@@ -218,7 +219,7 @@ const OrderTable = (props) => {
             <DataTable
                 title="Orders"
                 columns={columns}
-                data={data}
+                data={props.orders}
                 onSelectedRowsChange={handleRowSelected}
                 clearSelectedRows={toggleCleared}
                 pagination
@@ -252,7 +253,8 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            updateOrder
+            updateOrder,
+            loadOrders
         },
         dispatch
     );

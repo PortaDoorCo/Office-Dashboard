@@ -103,18 +103,11 @@ class CustomerPage extends Component {
             <Row>
               <Col>
                 <Col>
-                  {this.state.edit === true ? (
-                    <Edit
-                      onEdit={this.onEdit}
-                      selectedCompanies={props.selectedCompanies}
-                    />
-                  ) : (
-                      <NonEdit
-                        onEdit={this.onEdit}
-                        selectedCompanies={props.selectedCompanies}
-                        salesRep={props.salesRep}
-                      />
-                    )}
+                  <Edit
+                    onEdit={this.onEdit}
+                    selectedCompanies={props.selectedCompanies}
+                    edit={!this.state.edit}
+                  />
                 </Col>
               </Col>
 
