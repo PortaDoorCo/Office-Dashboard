@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import differenceBy from 'lodash/differenceBy';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
 import { Button } from 'reactstrap'
 import moment from 'moment';
@@ -9,6 +10,65 @@ import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox'
 import io from 'socket.io-client';
 import db_url from '../../../../redux/db_url'
+// import Select from 'react-select'
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import { updateOrder } from '../../../../redux/orders/actions'
+import Cookies from "js-cookie";
+
+const cookie = Cookies.get("jwt");
+
+
+const status = [
+    {
+        label: 'Quote',
+        value: 'Quote',
+    },
+    {
+        label: 'Invoiced',
+        value: 'Invoiced',
+    },
+    {
+        label: 'Ordered',
+        value: 'Ordered',
+    },
+    {
+        label: 'In Production',
+        value: 'In Production',
+    },
+    {
+        label: 'Station 1',
+        value: 'Station 1',
+    },
+    {
+        label: 'Station 2',
+        value: 'Station 2',
+    },
+    {
+        label: 'Station 3',
+        value: 'Station 3',
+    },
+    {
+        label: 'Station 4',
+        value: 'Station 4',
+    },
+    {
+        label: 'Station 4',
+        value: 'Station 4',
+    },
+    {
+        label: 'Complete',
+        value: 'Complete',
+    },
+    {
+        label: 'Shipped',
+        value: 'Shipped',
+    },
+    {
+        label: 'LATE',
+        value: 'LATE',
+    },
+];
 
 
 const socket = io(db_url);
@@ -37,21 +97,29 @@ const OrderTable = (props) => {
     const [modal, setModal] = useState(false);
     const [edit, setEdit] = useState(false);
 
-    
+    const handleStatusChange = async (e, row) => {
+        const { updateOrder } = props;
+
+        const order = {
+            status: e.target.value
+        }
+
+        console.log('orderrrrr', row.id)
+        await updateOrder(row.id, order, cookie)
+    }
+
     useEffect(() => {
+        setTimeout(() => {
+            console.log('hhiiiiiiiii', props.orders[0])
+            setData(props.orders)
+        }, 1000)
 
-    })
+    }, [props.orders])
 
-    useEffect(() => {
-        // socket.on('order_submitted', res => (setData([...data, res])))
-        // socket.on('order_updated', res => (setData([...data, res])))
-        // socket.on('order_deleted', res => (setData([...data, res])))
-        // socket.on('status_updated', (res, updatedStatus) => (setData([...data, res])))
-        setData(JSON.parse(JSON.stringify(props.orders)))
 
-    }, [props.orders.length])
+    console.log('data', data)
+    console.log('orders', props.orders)
 
-    console.log('proopp==>>>>>', props.orders.length, 'data==>>>>>', data.length)
 
     const columns = [
         {
@@ -82,9 +150,19 @@ const OrderTable = (props) => {
         },
         {
             name: 'Status',
-            selector: 'status',
-            sortable: true,
-            grow: 2,
+            cell: row => <div style={{ width: '200px' }}>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={row.status}
+                    autoWidth
+                    onChange={(e) => handleStatusChange(e, row)}
+                >
+                    {status.map(i => (
+                        <MenuItem value={i.value}>{i.label}</MenuItem>
+                    ))}
+                </Select>
+            </div>,
         },
         {
             name: 'Submitted By',
@@ -134,18 +212,6 @@ const OrderTable = (props) => {
         setEdit(!edit)
     }
 
-    // const contextActions = useMemo(() => {
-    //     const handleDelete = () => {
-
-    //         if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
-    //             setToggleCleared(!toggleCleared);
-    //             setData(differenceBy(data, selectedRows, 'name'));
-    //         }
-    //     };
-
-    //     return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>Delete</Button>;
-    // }, [data, selectedRows, toggleCleared]);
-
 
     return (
         <div>
@@ -153,9 +219,6 @@ const OrderTable = (props) => {
                 title="Orders"
                 columns={columns}
                 data={data}
-                // selectableRows
-                // actions={actions}
-                //contextActions={contextActions}
                 onSelectedRowsChange={handleRowSelected}
                 clearSelectedRows={toggleCleared}
                 pagination
@@ -186,9 +249,18 @@ const mapStateToProps = (state, prop) => ({
     ordersDBLoaded: state.Orders.ordersDBLoaded
 });
 
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(
+        {
+            updateOrder
+        },
+        dispatch
+    );
+
+
 
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(OrderTable);
