@@ -16,7 +16,7 @@ import {
 class NonEdit extends Component {
 
   render() {
-    const props = this.props;
+    const { selectedCompanies } = this.props;
 
 
 
@@ -42,7 +42,7 @@ class NonEdit extends Component {
                       <Label htmlFor="companyName">Company Name</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Company}
+                        placeholder={selectedCompanies.Company}
                         disabled
                       />
                     </FormGroup>
@@ -52,7 +52,7 @@ class NonEdit extends Component {
                       <Label htmlFor="full-name">Full Name</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Contact}
+                        placeholder={selectedCompanies.Contact}
                         disabled
                       />
                     </FormGroup>
@@ -62,7 +62,7 @@ class NonEdit extends Component {
                       <Label htmlFor="full-name">Email</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.EMAIL}
+                        placeholder={selectedCompanies.EMAIL}
                         disabled
                       />
                     </FormGroup>
@@ -75,7 +75,7 @@ class NonEdit extends Component {
                       <Label htmlFor="companyName">Payment Method</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.PaymentMethod}
+                        placeholder={selectedCompanies.PaymentMethod}
                         disabled
                       />
                     </FormGroup>
@@ -85,7 +85,7 @@ class NonEdit extends Component {
                       <Label htmlFor="full-name">Shipping Method</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Ship_Via}
+                        placeholder={selectedCompanies.Ship_Via}
                         disabled
                       />
                     </FormGroup>
@@ -95,7 +95,7 @@ class NonEdit extends Component {
                       <Label htmlFor="full-name">Sales Rep</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.sale.fullName}
+                        // placeholder={props.selectedCompanies.sale.fullName}
                         disabled
                       />
                     </FormGroup>
@@ -104,7 +104,7 @@ class NonEdit extends Component {
                     <FormGroup>
                       <Label htmlFor="full-name">Sales Tax</Label>
                       <Input
-                        placeholder={props.selectedCompanies.TaxRate}
+                        placeholder={selectedCompanies.TaxRate}
                         disabled
                       />
                     </FormGroup>
@@ -116,7 +116,7 @@ class NonEdit extends Component {
                       <Label htmlFor="companyName">Payment Terms</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.PMT_TERMS}
+                        placeholder={selectedCompanies.PMT_TERMS}
                         disabled
                       />
                     </FormGroup>
@@ -138,7 +138,7 @@ class NonEdit extends Component {
                       <Label htmlFor="address1">Address 1</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Address1}
+                        placeholder={selectedCompanies.Address1}
                         disabled
                       />
                     </FormGroup>
@@ -149,7 +149,7 @@ class NonEdit extends Component {
                       <Label htmlFor="address2">Address 2</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Address2}
+                        placeholder={selectedCompanies.Address2}
                         disabled
                       />
                     </FormGroup>
@@ -162,7 +162,7 @@ class NonEdit extends Component {
                       <Label htmlFor="city">City</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.City}
+                        placeholder={selectedCompanies.City}
                         disabled
                       />
                     </FormGroup>
@@ -172,7 +172,7 @@ class NonEdit extends Component {
                       <Label htmlFor="state">State</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.State}
+                        placeholder={selectedCompanies.State}
                         disabled
                       />
                     </FormGroup>
@@ -182,7 +182,7 @@ class NonEdit extends Component {
                       <Label htmlFor="zipcode">Zip Code</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Zip}
+                        placeholder={selectedCompanies.Zip}
                         disabled
                       />
                     </FormGroup>
@@ -192,7 +192,7 @@ class NonEdit extends Component {
                       <Label htmlFor="phone">Phone Number</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Phone1}
+                        placeholder={selectedCompanies.Phone1}
                         disabled
                       />
                     </FormGroup>
@@ -213,7 +213,7 @@ class NonEdit extends Component {
                       <Label htmlFor="address1">Address 1</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Shipping_Address1}
+                        placeholder={selectedCompanies.Shipping_Address1}
                         disabled
                       />
                     </FormGroup>
@@ -224,7 +224,7 @@ class NonEdit extends Component {
                       <Label htmlFor="address2">Address 2</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Shipping_Address2}
+                        placeholder={selectedCompanies.Shipping_Address2}
                         disabled
                       />
                     </FormGroup>
@@ -237,7 +237,7 @@ class NonEdit extends Component {
                       <Label htmlFor="city">City</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Shipping_City}
+                        placeholder={selectedCompanies.Shipping_City}
                         disabled
                       />
                     </FormGroup>
@@ -247,7 +247,7 @@ class NonEdit extends Component {
                       <Label htmlFor="state">State</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Shipping_State}
+                        placeholder={selectedCompanies.Shipping_State}
                         disabled
                       />
                     </FormGroup>
@@ -257,7 +257,7 @@ class NonEdit extends Component {
                       <Label htmlFor="zipcode">Zip Code</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Shipping_Zip}
+                        placeholder={selectedCompanies.Shipping_Zip}
                         disabled
                       />
                     </FormGroup>
@@ -267,7 +267,7 @@ class NonEdit extends Component {
                       <Label htmlFor="phone">Phone Number</Label>
                       <br />
                       <Input
-                        placeholder={props.selectedCompanies.Shipping_Phone}
+                        placeholder={selectedCompanies.Shipping_Phone}
                         disabled
                       />
                     </FormGroup>

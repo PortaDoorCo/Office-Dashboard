@@ -12,7 +12,7 @@ import { Field, FieldArray, change } from "redux-form";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from "js-cookie";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
+import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
 import Slab_Door_Table from '../../Table/Doors/Slab_Door_Table'
 import {
   linePriceSelector,

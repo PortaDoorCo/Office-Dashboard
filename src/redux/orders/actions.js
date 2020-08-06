@@ -45,18 +45,6 @@ export function loadOrders(cookie) {
   };
 }
 
-export function socketLoadOrders(response) {
-  return async function (dispatch) {
-    console.log('SOCKET RESPONSE', response)
-    return await dispatch({
-      type: SOCKET_LOAD_ORDERS,
-      data: response
-    });
-  };
-}
-
-
-
 export function submitOrder(order, cookie) {
   return async function (dispatch) {
     try {
@@ -111,6 +99,7 @@ export function updateOrder(orderId, order, cookie) {
         }
       });
       const data = await res;
+      console.log('updated order', data)
       return dispatch({
         type: UPDATE_ORDER,
         data: data
@@ -124,6 +113,7 @@ export function updateOrder(orderId, order, cookie) {
 
 
 export function updateStatus(orderId, key, status, cookie) {
+  console.log(status)
   const item = {
     status: status.status,
     tracking: [

@@ -10,13 +10,15 @@ import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox'
 import io from 'socket.io-client';
 import db_url from '../../../../redux/db_url'
-// import Select from 'react-select'
-import Select from '@material-ui/core/Select';
+import { Select } from 'antd';
+import { Input } from 'reactstrap'
 import MenuItem from '@material-ui/core/MenuItem';
-import { updateOrder } from '../../../../redux/orders/actions'
+import { updateStatus, loadOrders } from '../../../../redux/orders/actions'
 import Cookies from "js-cookie";
 
+
 const cookie = Cookies.get("jwt");
+const { Option } = Select;
 
 
 const status = [
@@ -47,10 +49,6 @@ const status = [
     {
         label: 'Station 3',
         value: 'Station 3',
-    },
-    {
-        label: 'Station 4',
-        value: 'Station 4',
     },
     {
         label: 'Station 4',
@@ -89,6 +87,8 @@ const conditionalRowStyles = [
 ];
 
 
+
+
 const OrderTable = (props) => {
     const [selectedRows, setSelectedRows] = useState([]);
     const [toggleCleared, setToggleCleared] = useState(false);
@@ -97,48 +97,39 @@ const OrderTable = (props) => {
     const [modal, setModal] = useState(false);
     const [edit, setEdit] = useState(false);
 
-    const handleStatusChange = async (e, row) => {
-        const { updateOrder } = props;
 
-        const order = {
-            status: e.target.value
+
+    const handleStatusChange = async (e, row) => {
+        const { updateStatus } = props;
+
+        console.log('eeee', e)
+        console.log('rowww', row)
+
+        const status = {
+            status: e
         }
 
-        console.log('orderrrrr', row.id)
-        await updateOrder(row.id, order, cookie)
+        await updateStatus(row.id, row, status, cookie)
     }
-
-    useEffect(() => {
-        setTimeout(() => {
-            console.log('hhiiiiiiiii', props.orders[0])
-            setData(props.orders)
-        }, 1000)
-
-    }, [props.orders])
-
-
-    console.log('data', data)
-    console.log('orders', props.orders)
-
 
     const columns = [
         {
             name: 'Order #',
             selector: 'orderNum',
             sortable: true,
-            grow: 2,
         },
         {
             name: 'Company',
             selector: 'job_info.customer.Company',
             sortable: true,
-            grow: 2,
+            grow: 2
+
         },
         {
             name: 'Order Type',
             selector: 'orderType',
             sortable: true,
-            grow: 2,
+ 
         },
         {
             name: 'Date Ordered',
@@ -150,16 +141,12 @@ const OrderTable = (props) => {
         },
         {
             name: 'Status',
-            cell: row => <div style={{ width: '200px' }}>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={row.status}
-                    autoWidth
-                    onChange={(e) => handleStatusChange(e, row)}
-                >
-                    {status.map(i => (
-                        <MenuItem value={i.value}>{i.label}</MenuItem>
+          
+            cell: row => <div>
+                {/* <Select options={status} value={row.status} placeholder={row.status} onChange={(e) => handleStatusChange(e, row)} /> */}
+                <Select defaultValue={row.status} style={{ width: 160 }} onChange={(e) => handleStatusChange(e, row)}>
+                    {status.map((i,index) => (
+                        <Option key={index} value={i.value}>{i.value}</Option>
                     ))}
                 </Select>
             </div>,
@@ -168,17 +155,19 @@ const OrderTable = (props) => {
             name: 'Submitted By',
             selector: 'user.FirstName',
             sortable: true,
-            grow: 2,
+            
         },
+
         {
             name: 'Total',
             selector: 'total',
             sortable: true,
-            grow: 2,
+
         },
         {
             name: ' ',
             button: true,
+            grow: 2,
             cell: (row) => <Tooltip title="View Order" placement="top">
                 <IconButton onClick={function (event) {
                     event.preventDefault()
@@ -218,7 +207,7 @@ const OrderTable = (props) => {
             <DataTable
                 title="Orders"
                 columns={columns}
-                data={data}
+                data={props.orders}
                 onSelectedRowsChange={handleRowSelected}
                 clearSelectedRows={toggleCleared}
                 pagination
@@ -252,7 +241,8 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            updateOrder
+            updateStatus,
+            loadOrders
         },
         dispatch
     );

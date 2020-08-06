@@ -32,11 +32,12 @@ export default function (state = initialState, action) {
     case UPDATE_ORDER:
       return {
         ...state,
-      };
-    case SOCKET_LOAD_ORDERS:
-      return {
-        ...state,
-        orders: [...state.orders, data]
+        orders: state.orders.map((item, index) => {
+          if (item.id !== data.data.id) {
+            return item
+          }
+          return data.data
+        })
       };
     case LOAD_DELIVERIES:
       const updatedDeliveries = data

@@ -10,7 +10,7 @@ import {
 
 import 'semantic-ui-css/semantic.min.css';
 import { Field } from "redux-form";
-import { renderField, renderFieldDisabled } from '../RenderInputs/renderInputs'
+import { renderField, renderFieldDisabled } from '../../../../../components/RenderInputs/renderInputs'
 
 
 const PanelsTable = ({ table, index, required, w, i, h, formState, prices, fields }) => {
