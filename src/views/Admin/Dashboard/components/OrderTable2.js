@@ -97,30 +97,29 @@ const OrderTable = (props) => {
     const [modal, setModal] = useState(false);
     const [edit, setEdit] = useState(false);
 
-    const handleStatusChange = (e, row) => {
-        const { updateOrder} = props;
+    const handleStatusChange = async (e, row) => {
+        const { updateOrder } = props;
 
         const order = {
             status: e.target.value
         }
 
         console.log('orderrrrr', row.id)
-        updateOrder(row.id, order, cookie)
+        await updateOrder(row.id, order, cookie)
     }
 
     useEffect(() => {
+        setTimeout(() => {
+            console.log('hhiiiiiiiii', props.orders[0])
+            setData(props.orders)
+        }, 1000)
 
-        console.log('hhiiiiiiiii',props.orders[0])
-        setData(props.orders)
+    }, [props.orders])
 
-        socket.on('order_submitted', res => (setData(props.orders)))
-        socket.on('order_updated', res => (setData(props.orders)))
-        socket.on('order_deleted', res => (setData(props.orders)))
-        socket.on('status_updated', (res, updatedStatus) => (setData(props.orders)))
 
-    }, [])
+    console.log('data', data)
+    console.log('orders', props.orders)
 
-    console.log('proopp==>>>>>', props.orders.length, 'data==>>>>>', data.length)
 
     const columns = [
         {
@@ -157,7 +156,7 @@ const OrderTable = (props) => {
                     id="demo-simple-select"
                     value={row.status}
                     autoWidth
-                    onChange={(e) => handleStatusChange(e,row)}
+                    onChange={(e) => handleStatusChange(e, row)}
                 >
                     {status.map(i => (
                         <MenuItem value={i.value}>{i.label}</MenuItem>
@@ -213,18 +212,6 @@ const OrderTable = (props) => {
         setEdit(!edit)
     }
 
-    // const contextActions = useMemo(() => {
-    //     const handleDelete = () => {
-
-    //         if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
-    //             setToggleCleared(!toggleCleared);
-    //             setData(differenceBy(data, selectedRows, 'name'));
-    //         }
-    //     };
-
-    //     return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>Delete</Button>;
-    // }, [data, selectedRows, toggleCleared]);
-
 
     return (
         <div>
@@ -232,9 +219,6 @@ const OrderTable = (props) => {
                 title="Orders"
                 columns={columns}
                 data={data}
-                // selectableRows
-                // actions={actions}
-                //contextActions={contextActions}
                 onSelectedRowsChange={handleRowSelected}
                 clearSelectedRows={toggleCleared}
                 pagination
