@@ -1,4 +1,4 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from "react";
 import { connect } from 'react-redux';
 import CopeDoor from './Cope/Door'
 import MiterDoor from './Miter/Door'
@@ -31,7 +31,6 @@ class Conditionals extends Component {
     let component;
 
     if (formState && formState.part_list) {
-
       switch (formState.part_list[index].orderType.value) {
         case 'Door':
           switch (formState.part_list[index].construction.value) {
