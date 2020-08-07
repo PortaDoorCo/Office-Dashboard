@@ -227,8 +227,8 @@ class DrawerOrders extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  props: props.selectedOrder[0],
-  order: props.selectedOrder[0],
+  props: props.selectedOrder,
+  order: props.selectedOrder,
   woodtypes: state.part_list.woodtypes,
   boxBottomWoodtype: state.part_list.woodtypes,
   boxThickness: state.part_list.boxThickness,
@@ -243,7 +243,7 @@ const mapStateToProps = (state, props) => ({
   orderNum: state.Orders.orderNum,
 
   submitted: state.Orders.submitted,
-  initialValues: props.selectedOrder[0],
+  initialValues: props.selectedOrder,
   formState: getFormValues('DrawerOrder')(state),
   prices: linePriceSelector(state),
   subTotal: subTotalSelector(state),

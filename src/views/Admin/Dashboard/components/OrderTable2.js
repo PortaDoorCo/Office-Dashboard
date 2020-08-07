@@ -191,7 +191,7 @@ const OrderTable = (props) => {
         console.log(row)
 
         if (!modal) {
-            setSelectedOrder([row])
+            setSelectedOrder(row)
         } else {
             setSelectedOrder(null)
         }

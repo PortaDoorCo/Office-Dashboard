@@ -7,30 +7,30 @@ class SelectedOrder extends React.Component {
 
 
   render() {
-    const props = this.props;
+    const { selectedOrder } = this.props;
 
-    const order = props.selectedOrder[0]
+    const order = selectedOrder
 
     // const company = order.CompanyName;
 
- 
 
-    
+
+
     return (
       <div>
         {order ? <div>
-          {order.orderType === "Door Order" ? 
-        <DoorSelect
-          order={order}
-        />
-        : <DrawerSelect 
-            order={order} />
-      }
+          {order.orderType === "Door Order" ?
+            <DoorSelect
+              order={order}
+            />
+            : <DrawerSelect
+              order={order} />
+          }
         </div> : <div />}
-        
+
       </div>
     )
-    
+
 
   }
 }

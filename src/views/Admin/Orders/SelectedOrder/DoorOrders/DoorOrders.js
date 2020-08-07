@@ -291,8 +291,8 @@ const mapStateToProps = (state, props) => {
 
 
   return {
-    initialValues: props.selectedOrder[0],
-    order: props.selectedOrder[0],
+    initialValues: props.selectedOrder,
+    order: props.selectedOrder,
     customers: state.customers.customerDB,
     customerDBLoaded: state.customers.customerDBLoaded,
 
@@ -306,7 +306,7 @@ const mapStateToProps = (state, props) => {
     profiles: state.part_list.profiles,
     applied_moulds: state.part_list.applied_moulds,
 
-    part_list: props.selectedOrder[0].part_list,
+    part_list: props.selectedOrder.part_list,
     submitted: state.Orders.submitted,
 
     shippingMethods: state.Orders.shippingMethods,
