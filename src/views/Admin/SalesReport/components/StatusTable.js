@@ -83,7 +83,7 @@ class StatusTable extends React.Component {
             prefix: '',
             modal: false,
             edit: false,
-            selectedOrder: [],
+            selectedOrder: null,
             filteredDate: new Date(),
             filterStatus: statusFilter[0],
             allowUpdating: false,
@@ -167,13 +167,14 @@ class StatusTable extends React.Component {
 
         if (!modal) {
             const x = row.row.data;
-          
             this.setState({
-                selectedOrder: [x],
+                selectedOrder: x,
             });
-        } else {
-            return;
-        }
+            } else {
+            this.setState({
+                selectedOrder: null
+            });
+            }
     }
 
     renderButton = row => (

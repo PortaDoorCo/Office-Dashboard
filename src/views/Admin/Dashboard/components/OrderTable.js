@@ -101,7 +101,7 @@ class OrderTable extends React.Component {
             prefix: '',
             modal: false,
             edit: false,
-            selectedOrder: [],
+            selectedOrder: null,
             filteredDate: new Date(),
             filterStatus: statusFilter[0],
             allowUpdating: false,

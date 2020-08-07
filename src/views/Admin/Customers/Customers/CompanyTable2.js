@@ -57,7 +57,7 @@ class CustomerTable extends React.Component {
             endDate: new Date(),
             selectedCompanies: [],
             salesRep: [],
-            selectedOrder: [],
+            selectedOrder: null,
             locations: [],
             defaultCenter: [],
             productData: new CustomStore({

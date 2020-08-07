@@ -32,7 +32,7 @@ const CustomerOrders = (props) => {
     const [data, setData] = useState(props.orders);
     const [modal, setModal] = useState(false)
     const [orderEdit, setOrderEdit] = useState(false)
-    const [selectedOrder, setSelectedOrder] = useState([])
+    const [selectedOrder, setSelectedOrder] = useState(null)
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -61,7 +61,7 @@ const CustomerOrders = (props) => {
         if (!modal) {
             setSelectedOrder(row)
         } else {
-            return
+            setSelectedOrder(null)
         }
     }
 

@@ -30,7 +30,7 @@ const CompanyTable = (props) => {
     const [addModal, setAddModel] = useState(false)
     const [orderEdit, setOrderEdit] = useState(false)
     const [selectedCompanies, setSelectedCompanies] = useState([])
-    const [selectedOrder, setSelectedOrder] = useState([])
+    const [selectedOrder, setSelectedOrder] = useState(null)
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
     const [locations, setLocations] = useState([])
