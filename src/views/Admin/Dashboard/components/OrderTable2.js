@@ -15,6 +15,7 @@ import { Input } from 'reactstrap'
 import MenuItem from '@material-ui/core/MenuItem';
 import { updateStatus, loadOrders } from '../../../../redux/orders/actions'
 import Cookies from "js-cookie";
+import { totalDiscountSelector } from '../../../../selectors/doorPricing';
 
 
 const cookie = Cookies.get("jwt");
@@ -162,7 +163,7 @@ const OrderTable = (props) => {
             name: 'Total',
             selector: 'total',
             sortable: true,
-
+            cell: row => <div>${row.total.toFixed(2)}</div>,
         },
         {
             name: ' ',
