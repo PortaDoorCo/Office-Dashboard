@@ -28,154 +28,129 @@ class Conditionals extends Component {
       part_list
     } = this.props;
 
+    let component;
+
     if (formState && formState.part_list) {
 
-
-      //Doors
-      if (formState.part_list[index].orderType.value === "Door") {
-
-        if (formState.part_list[index].construction.value === "Cope") {
-          return (
-            <CopeDoor
-              part={part}
-              index={index}
-              isValid={isValid}
-              part_list={part_list}
-              formState={formState}
-            />
-          )
-        }
-
-        if (formState.part_list[index].construction.value === "M") {
-          return (
-            <MiterDoor
-              part={part}
-              index={index}
-              isValid={isValid}
-              part_list={part_list}
-              formState={formState}
-            />
-          )
-        }
-
-        if (formState.part_list[index].construction.value === "MT") {
-          return (
-            <MTDoor
-              part={part}
-              index={index}
-              isValid={isValid}
-              part_list={part_list}
-              formState={formState}
-            />
-          )
-        }
-
-        if (formState.part_list[index].construction.value === "Glass") {
-          return (
-            <GlassDoor
-              part={part}
-              index={index}
-              isValid={isValid}
-              part_list={part_list}
-              formState={formState}
-            />
-          )
-        }
-      }
-
-      //Drawer Fronts
-      if (formState.part_list[index].orderType.value === "DF") {
-        if (formState.part_list[index].construction.value === "Cope") {
-          return (
-            <CopeDF
-              part={part}
-              index={index}
-              isValid={isValid}
-              part_list={part_list}
-              formState={formState}
-            />
-          )
-        }
-        if (formState.part_list[index].construction.value === "M") {
-          return (
-            <MiterDF
-              part={part}
-              index={index}
-              isValid={isValid}
-              part_list={part_list}
-              formState={formState}
-            />
-          )
-        }
-        if (formState.part_list[index].construction.value === "MT") {
-          return (
-            <MT_DF
-              part={part}
-              index={index}
-              isValid={isValid}
-              part_list={part_list}
-              formState={formState}
-            />
-          )
-        }
-        if (formState.part_list[index].construction.value === "Glass") {
-          return (
-            <Glass_DF
-              part={part}
-              index={index}
-              isValid={isValid}
-              part_list={part_list}
-              formState={formState}
-            />
-          )
-        }
-      }
-
-      //Frame Only Doors
-      if (formState.part_list[index].orderType.value === "Face_Frame") {
-        return (
-          <FaceFrame
+      switch (formState.part_list[index].orderType.value) {
+        case 'Door':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <CopeDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />
+              break;
+            case 'M':
+              component = <MiterDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />
+              break;
+            case 'MT':
+              component = <MTDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />
+              break;
+            case 'Glass':
+              component = <GlassDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />
+              break;
+          }
+          break;
+        case 'DF':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <CopeDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />
+              break;
+            case 'M':
+              component = <MiterDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />
+              break;
+            case 'MT':
+              component = <MT_DF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />
+              break;
+            case 'Glass':
+              component = <Glass_DF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />
+              break;
+          }
+          break;
+        case 'Face_Frame':
+          component = <FaceFrame
             part={part}
             index={index}
             isValid={isValid}
             part_list={part_list}
             formState={formState}
           />
-        )
-      }
-
-
-      //One Piece Doors
-      if (formState.part_list[index].orderType.value === "One_Piece") {
-        return (
-          <One_Piece_Door
+          break;
+        case 'One_Piece':
+          component = <One_Piece_Door
             part={part}
             index={index}
             isValid={isValid}
             part_list={part_list}
             formState={formState}
           />
-        )
-      }
-
-
-      //Slab Doors
-      if (formState.part_list[index].orderType.value === "Slab_Door") {
-        return (
-          <Slab_Door
+          break;
+        case 'Slab_Door':
+          component = <Slab_Door
             part={part}
             index={index}
             isValid={isValid}
             part_list={part_list}
             formState={formState}
           />
-        )
+          break;
+        default:
+          component = <div />
       }
-      else {
-        return null
-      }
+
+      return (
+        <div>
+          {component}
+        </div>
+      )
     } else {
-      return null
+      return <div />
     }
   }
 }
