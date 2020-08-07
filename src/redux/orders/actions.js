@@ -127,13 +127,15 @@ export function updateStatus(orderId, key, status, cookie) {
 
   return async function (dispatch) {
     try {
-      await axios.put(`${db_url}/orders/status/${orderId}`, item, {
+      const res = await axios.put(`${db_url}/orders/status/${orderId}`, item, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
       });
+      const data = await res;
       return dispatch({
         type: UPDATE_STATUS,
+        data: data
       });
     } catch (error) {
       console.error(error);

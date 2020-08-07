@@ -86,7 +86,7 @@ class App extends Component {
               name="Login"
               component={this.state.isAuth ? DefaultLayout : Login}
             />
-              }
+              
               <Route
               path="/register"
               name="register"
