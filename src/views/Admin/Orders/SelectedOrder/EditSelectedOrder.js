@@ -12,10 +12,10 @@ class EditSelectedOrder extends React.Component {
     const { selectedOrder, editable, edit, toggle } = this.props;
 
 
-    if(selectedOrder[0]) {
+    if(selectedOrder) {
       return (
         <div>
-          {selectedOrder[0].orderType === "Door Order" ?
+          {selectedOrder.orderType === "Door Order" ?
             <DoorOrder
               selectedOrder={selectedOrder}
               editable={editable}

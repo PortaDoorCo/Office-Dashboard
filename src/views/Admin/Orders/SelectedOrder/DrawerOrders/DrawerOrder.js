@@ -403,8 +403,8 @@ class DrawerOrder extends Component {
 
 const mapStateToProps = (state, props) => ({
 
-  initialValues: props.selectedOrder[0],
-  order: props.selectedOrder[0],
+  initialValues: props.selectedOrder,
+  order: props.selectedOrder,
 
   woodtypes: state.part_list.box_woodtypes,
   boxBottomWoodtype: state.part_list.box_woodtypes,
