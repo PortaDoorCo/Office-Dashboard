@@ -27,7 +27,7 @@ class CustomerPage extends Component {
 
     this.state = {
       edit: false,
-      selectedOrder: [],
+      selectedOrder: null,
       modal: false,
       orderEdit: false,
       orders: []

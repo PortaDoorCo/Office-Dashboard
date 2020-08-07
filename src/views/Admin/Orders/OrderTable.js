@@ -118,7 +118,7 @@ class OrderTable extends React.Component {
       prefix: '',
       modal: false,
       edit: false,
-      selectedOrder: [],
+      selectedOrder: null,
       filteredDate: new Date(),
       filterStatus: statusFilter[0],
       allowUpdating: false,
@@ -191,13 +191,16 @@ class OrderTable extends React.Component {
       edit: false,
     });
 
+
     if (!modal) {
       const x = row.row.data;
       this.setState({
         selectedOrder: x,
       });
     } else {
-      return;
+      this.setState({
+        selectedOrder: null
+      });
     }
   }
 
@@ -205,7 +208,6 @@ class OrderTable extends React.Component {
     <Tooltip title="View Order" placement="top">
       <IconButton
         onClick={event => {
-
           event.preventDefault();
           this.toggle(row);
         }}
@@ -302,7 +304,7 @@ class OrderTable extends React.Component {
 
 
     if (this.state.selectedRowKeys.length > 0) {
-      this.state.selectedRowsData.map(async(i) => {
+      this.state.selectedRowsData.map(async (i) => {
         if (i.orderType === "Door Order") {
 
           const edgesPromiseArr1 = i.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
