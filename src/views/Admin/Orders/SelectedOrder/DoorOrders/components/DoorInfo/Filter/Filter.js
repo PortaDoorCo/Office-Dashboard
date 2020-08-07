@@ -1,4 +1,4 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component, Fragment } from "react";
 import {
   Row,
   Col,
@@ -6,7 +6,7 @@ import {
   Label,
 } from "reactstrap";
 import { connect } from 'react-redux';
-import { Field, change, untouch, unregisterField, autofill } from "redux-form";
+import { Field, change, untouch, autofill } from "redux-form";
 import { renderDropdownList } from '../../../../../../../../components/RenderInputs/renderInputs'
 
 const required = value => (value ? undefined : 'Required');
