@@ -24,7 +24,6 @@ class DoorFilter extends Component {
     
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
-
         if (index === i && part.dimensions) {
           this.props.dispatch(
             change(

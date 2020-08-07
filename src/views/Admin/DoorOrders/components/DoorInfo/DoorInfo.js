@@ -89,7 +89,7 @@ class DoorInfo extends Component {
       part_list,
       isValid,
       subTotal,
-      updateSubmit
+      updateSubmit,
     } = this.props;
 
 
@@ -116,6 +116,10 @@ class DoorInfo extends Component {
                 </Col>
               </Row>
             </CardSubtitle>
+
+            {console.log('part', part)}
+            {console.log('index', index)}
+            {console.log('part', part)}
 
             <DoorFilter
               formState={formState}

@@ -379,9 +379,11 @@ class OrderPage extends Component {
       ];
     }
 
+    console.log("SELECTED ORDER" , selectedOrder)
 
 
     return (
+      
       <div className="animated noPrint resize">
         <Modal
           isOpen={props.modal}
