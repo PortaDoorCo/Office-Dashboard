@@ -5,15 +5,12 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   Row,
-  Col,
-  NavbarText
+  Col
 } from 'reactstrap';
 import Selection from './Selection'
 

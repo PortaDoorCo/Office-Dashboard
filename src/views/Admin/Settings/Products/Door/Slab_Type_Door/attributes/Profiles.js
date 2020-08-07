@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap'
+import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap'
 import Cookies from "js-cookie";
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -7,7 +7,6 @@ import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getProfiles, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions'
-import { AppSwitch } from '@coreui/react'
 
 const cookie = Cookies.get("jwt");
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -17,7 +16,6 @@ const header = { 'Authorization': 'Bearer ' + cookie };
 const Profiles = (props) => {
 
   const {
-    buttonLabel,
     className,
     role
   } = props;

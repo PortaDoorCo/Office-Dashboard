@@ -85,11 +85,7 @@ import { login, getUsers } from "../../redux/users/actions";
 
 import Loader from '../../views/Admin/Loader/Loader'
 import { NotificationContainer } from 'react-notifications';
-import io from 'socket.io-client';
-import db_url from '../../redux/db_url'
 
-
-const socket = io(db_url);
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
@@ -100,7 +96,6 @@ class DefaultLayout extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
   componentDidMount = async () => {
-    const props = this.props;
     const {
       getWoodtypes,
       getAppliedMoulds,
@@ -172,7 +167,6 @@ class DefaultLayout extends Component {
       loadedMouldingsLengths,
       loaded_MT_Designs,
       loaded_MT_DF_Designs,
-      loadedOrders,
       loadedPanels,
       loaded_Plynths_Stools,
       loadedProfiles,
@@ -195,8 +189,6 @@ class DefaultLayout extends Component {
 
       loadedBreakdowns,
 
-      ordersDBLoaded,
-      customerDBLoaded,
 
       loadedPaymentTypes,
       loadedPaymentTerms,

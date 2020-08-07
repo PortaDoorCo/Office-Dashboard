@@ -3,7 +3,7 @@ import {
   SUBMIT_ORDER,
   UPDATE_ORDER,
   LOAD_DELIVERIES,
-  SOCKET_LOAD_ORDERS
+  UPDATE_STATUS
 } from './actions';
 import moment from 'moment'
 
@@ -30,6 +30,16 @@ export default function (state = initialState, action) {
         ...state,
       };
     case UPDATE_ORDER:
+      return {
+        ...state,
+        orders: state.orders.map((item, index) => {
+          if (item.id !== data.data.id) {
+            return item
+          }
+          return data.data
+        })
+      };
+    case UPDATE_STATUS:
       return {
         ...state,
         orders: state.orders.map((item, index) => {

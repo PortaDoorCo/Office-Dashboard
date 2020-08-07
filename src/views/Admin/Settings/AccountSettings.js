@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Col, Row, Input, Card, CardBody, Form, FormGroup, Label, FormText, Button, CardTitle } from 'reactstrap'
+import { Col, Row, Input, Card, CardBody, FormGroup, Label, Button, CardTitle } from 'reactstrap'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AppSwitch } from '@coreui/react'

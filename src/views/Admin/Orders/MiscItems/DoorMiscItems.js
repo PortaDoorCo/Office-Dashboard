@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, FieldArray, getFormValues, change, reset } from 'redux-form';
+import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { renderField, renderDropdownListFilter, renderPrice } from '../SelectedOrder/DoorOrders/components/RenderInputs/renderInputs';
-import { Button, Row, Col, Table, Input } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import Cookies from "js-cookie";
 import { loadOrders, updateOrder } from '../../../../redux/orders/actions'
 
-const cookie = Cookies.get("jwt");
+
 
 let Inputs = props => {
     const { fields, misc_items, edit } = props

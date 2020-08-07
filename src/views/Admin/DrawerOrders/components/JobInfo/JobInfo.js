@@ -14,64 +14,14 @@ import 'react-widgets/dist/css/react-widgets.css';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
+import { renderField, renderDropdownList, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs'
 
 momentLocaliser(moment)
 
-const renderDropdownListFilter = ({
-  input,
-  data,
-  valueField,
-  textField,
-  meta: { touched, error, warning }
-}) => (
-    <div>
-      <DropdownList
-        {...input}
-        data={data}
-        valueField={valueField}
-        textField={textField}
-        onChange={input.onChange}
-        filter
-      />
-      {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-    </div>
-  );
-
-const renderDropdownList = ({
-  input,
-  data,
-  valueField,
-  textField,
-  meta: { touched, error, warning }
-}) => (
-    <div>
-      <DropdownList
-        {...input}
-        data={data}
-        valueField={valueField}
-        textField={textField}
-        onChange={input.onChange}
-      />
-      {touched &&
-        ((error && <span style={{ color: 'red' }}>{error}</span>) ||
-          (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-    </div>
-  );
-
-const renderField = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
-  <Fragment>
-    <Input {...input} {...custom} />
-    {/* {error && <FormFeedback>{error}</FormFeedback>}
-    {!error && warning && <FormText>{warning}</FormText>} */}
-  </Fragment>
-);
 
 const status = ['Quote', 'Ordered', 'Shipped', 'RUSH']
 
 const required = value => value ? undefined : 'Required';
-
 
 
 const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>

@@ -1,6 +1,5 @@
 import React, { useState, Fragment, useEffect } from "react";
 import {
-  Label,
   Table,
   Input,
   Row,
@@ -12,10 +11,9 @@ import { Field, change } from "redux-form";
 import Ratio from "lb-ratio";
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../../../../components/RenderInputs/renderInputs'
+import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../../../../components/RenderInputs/renderInputs'
 import numQty from 'numeric-quantity'
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderPriceHolder'
 
 const required = value => (value ? undefined : 'Required');
