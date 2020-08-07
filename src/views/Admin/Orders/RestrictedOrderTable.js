@@ -102,7 +102,7 @@ class RestrictedOrderTable extends React.Component {
       prefix: '',
       modal: false,
       edit: false,
-      selectedOrder: [],
+      selectedOrder: null,
       filteredDate: new Date(),
       filterStatus: statusFilter[0],
       allowUpdating: false,
@@ -177,12 +177,13 @@ class RestrictedOrderTable extends React.Component {
 
     if (!modal) {
       const x = row.row.data;
-
       this.setState({
         selectedOrder: x,
       });
     } else {
-      return;
+      this.setState({
+        selectedOrder: null
+      });
     }
   }
 
