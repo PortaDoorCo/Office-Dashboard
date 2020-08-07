@@ -97,6 +97,8 @@ class DoorOrders extends Component {
 
     const orderType = 'Door Order';
 
+    console.log(values.part_list)
+
 
     const jobInfo = {
       jobName: values.job_info.jobName,
