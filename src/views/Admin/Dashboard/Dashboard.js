@@ -27,7 +27,7 @@ class Dashboard extends Component {
       radioSelected: 2,
       orders: [],
       modal: false,
-      selectedOrder: [],
+      selectedOrder: null,
       orderEdit: false
     };
   }
