@@ -152,20 +152,21 @@ class OrderPage extends Component {
   })
 
   deleteOrder = async () => {
-    await this.props.deleteOrder(this.props.selectedOrder[0].id, cookie)
+    const { selectedOrder } = this.props;
+    await this.props.deleteOrder(selectedOrder.id, cookie)
     await this.toggleDeleteModal()
     await this.props.toggle()
   }
 
   downloadPDF = () => {
-    const { formState, drawerState, breakdowns, box_breakdowns } = this.props;
+    const { formState, drawerState, breakdowns, box_breakdowns, selectedOrder } = this.props;
     const data = formState ? formState : drawerState ? drawerState : []
     if (data.orderType === "Door Order") {
       this.state.selectedOption.map(async option => {
         switch (option.value) {
           case 'All':
 
-            const edgesPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
+            const edgesPromiseArr1 = selectedOrder.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.edge.photo.url, (result) => {
                   resolve(result)
@@ -173,7 +174,7 @@ class OrderPage extends Component {
               })
             });
 
-            const mouldsPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
+            const mouldsPromiseArr1 = selectedOrder.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.profile.photo.url, (result) => {
                   resolve(result)
@@ -183,7 +184,7 @@ class OrderPage extends Component {
 
 
 
-            const panelsPromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
+            const panelsPromiseArr1 = selectedOrder.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.panel.photo.url, (result) => {
                   resolve(result)
@@ -191,7 +192,7 @@ class OrderPage extends Component {
               })
             });
 
-            const appliedProfilePromiseArr1 = this.props.selectedOrder[0].part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
+            const appliedProfilePromiseArr1 = selectedOrder.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.applied_profile.photo.url, (result) => {
                   resolve(result)
@@ -246,7 +247,7 @@ class OrderPage extends Component {
             break;
           case 'Profiles':
 
-            const edgesPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
+            const edgesPromiseArr = selectedOrder.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.edge.photo.url, (result) => {
                   resolve(result)
@@ -254,7 +255,7 @@ class OrderPage extends Component {
               })
             });
 
-            const mouldsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
+            const mouldsPromiseArr = selectedOrder.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.profile.photo.url, (result) => {
                   resolve(result)
@@ -262,7 +263,7 @@ class OrderPage extends Component {
               })
             });
 
-            const panelsPromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
+            const panelsPromiseArr = selectedOrder.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.panel.photo.url, (result) => {
                   resolve(result)
@@ -270,7 +271,7 @@ class OrderPage extends Component {
               })
             });
 
-            const appliedProfilePromiseArr = this.props.selectedOrder[0].part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
+            const appliedProfilePromiseArr = selectedOrder.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.applied_profile.photo.url, (result) => {
                   resolve(result)
@@ -348,14 +349,13 @@ class OrderPage extends Component {
 
   render() {
     const props = this.props;
-    const { formState, drawerState } = this.props;
 
-    // let options;
+    const { selectedOrder } = this.props
 
     let options;
-    let selectedOrder = props.selectedOrder[0] ? props.selectedOrder[0] : "Door Order"
+    let s = selectedOrder ? selectedOrder : "Door Order"
 
-    if (selectedOrder.orderType === "Door Order") {
+    if (s.orderType === "Door Order") {
       options = [
         { value: 'All', label: 'All' },
         { value: 'Assembly', label: 'Assembly List' },
@@ -368,7 +368,7 @@ class OrderPage extends Component {
         { value: 'Profiles', label: 'Profiles' },
         { value: 'QC', label: 'QC' },
       ];
-    } else if (selectedOrder.orderType === "Drawer Order") {
+    } else if (s.orderType === "Drawer Order") {
       options = [
         { value: 'All', label: 'All' },
         { value: 'Acknowledgement', label: 'Acknowledgement' },
@@ -465,7 +465,7 @@ class OrderPage extends Component {
                       </Tooltip>
 
 
-                      {(props.selectedOrder[0] && props.selectedOrder[0].files.length > 0) ?
+                      {(selectedOrder && selectedOrder.files.length > 0) ?
                         <Tooltip title="View Files" placement="top">
                           <IconButton onClick={this.toggleFiles}>
                             <Attachment style={{ width: '40', height: '40' }} />
@@ -515,7 +515,7 @@ class OrderPage extends Component {
                         <h5>Files</h5>
                         <Table striped>
                           <tbody>
-                            {props.selectedOrder[0] ? props.selectedOrder[0].files.map((i, index) => (
+                            {selectedOrder ? selectedOrder.files.map((i, index) => (
                               <tr>
                                 <th scope="row">{index + 1}</th>
                                 <td>{i.name}</td>
@@ -540,7 +540,7 @@ class OrderPage extends Component {
                         <h5>Tracking History</h5>
                         <Table striped>
                           <tbody>
-                            {(props.selectedOrder[0] && props.selectedOrder[0].tracking) ? props.selectedOrder[0].tracking.slice(0).reverse().map((i, index) => (
+                            {(selectedOrder && selectedOrder.tracking) ? selectedOrder.tracking.slice(0).reverse().map((i, index) => (
                               <tr>
                                 <th>{i.status}</th>
                                 <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
@@ -567,13 +567,13 @@ class OrderPage extends Component {
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
                             /> */}
-                        {props.selectedOrder[0] && props.selectedOrder[0].orderType === "Door Order"
+                        {selectedOrder && selectedOrder.orderType === "Door Order"
                           ?
                           <DoorBalance
                             toggleBalance={this.toggleBalance}
                             selectedOrder={props.selectedOrder}
                           /> :
-                          props.selectedOrder[0] && props.selectedOrder[0].orderType === "Drawer Order"
+                          selectedOrder && selectedOrder.orderType === "Drawer Order"
                             ?
                             <DrawerBalance
                               toggleBalance={this.toggleBalance}
@@ -590,10 +590,10 @@ class OrderPage extends Component {
                     <Card>
                       <CardBody>
                         <h5>Balance History</h5>
-                        {props.selectedOrder[0] && props.selectedOrder[0].orderType === "Door Order"
+                        {selectedOrder && selectedOrder.orderType === "Door Order"
                           ?
                           <DoorBalanceHistory /> :
-                          props.selectedOrder[0] && props.selectedOrder[0].orderType === "Drawer Order"
+                          selectedOrder && selectedOrder.orderType === "Drawer Order"
                             ?
                             <DrawerBalanceHistory /> :
                             <div />
@@ -613,9 +613,9 @@ class OrderPage extends Component {
                     <Card>
                       <CardBody>
                         <h5>Misc Items</h5>
-                        {props.selectedOrder[0] && props.selectedOrder[0].orderType === 'Door Order' ?
+                        {selectedOrder && selectedOrder.orderType === 'Door Order' ?
                           <DoorMiscItems toggle={this.toggleMiscItems} edit={!this.props.edit} /> :
-                          props.selectedOrder[0] && props.selectedOrder[0].orderType === 'Drawer Order' ?
+                          selectedOrder && selectedOrder.orderType === 'Drawer Order' ?
                             <DrawerMiscItems toggle={this.toggleMiscItems} edit={!this.props.edit} /> : null
                         }
 
