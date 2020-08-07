@@ -30,94 +30,59 @@ class SideBar extends Component {
 
     const { part, i } = this.props;
 
+    let component;
 
-    if(part.orderType.value === "Door") {
-
-      if(part.construction.value === "Cope") {
-        return (
-          <CopeDoor part={part} i={i} />
-        )
-      }
-
-      else if(part.construction.value === "M") {
-        return (
-          <MiterDoor part={part} i={i} />
-        )
-      }
-
-      else if(part.construction.value === "MT") {
-        return (
-          <MTDoor part={part} i={i} />
-        )
-      }
-
-      else if(part.construction.value === "Glass") {
-        return (
-          <GlassDoor part={part} i={i} />
-        )
-      }
-
-      else {
-        return (
-          <div />
-        )
-      }
-
-    } else if (part.orderType.value === "DF") {
-
-      if(part.construction.value === "Cope") {
-        return (
-          <CopeDF part={part} i={i} />
-        )
-      }
-
-      if(part.construction.value === "M") {
-        return (
-          <MiterDF part={part} i={i} />
-        )
-      }
-
-      if(part.construction.value === "MT") {
-        return (
-          <MTDF part={part} i={i} />
-        )
-      }
-
-      if(part.construction.value === "Glass") {
-        return (
-          <Glass_DF part={part} i={i} />
-        )
-      }
-
-      else {
-        return (
-          <div />
-        )
-      }
-
-    } else if (part.orderType.value === "Face_Frame") {
-
-      return (
-        <div />
-      )
-
-    } else if (part.orderType.value === "One_Piece") {
-
-      return (
-        <div />
-      )
-
-    } else if (part.orderType.value === "Slab") {
-
-      return (
-        <div />
-      )
-
-    } else {
-      return (
-        <div />
-      );
+    switch (part.orderType.value) {
+      case 'Door':
+        switch (part.construction.value) {
+          case 'Cope':
+            component = <CopeDoor part={part} i={i} />
+            break;
+          case 'M':
+            component = <MiterDoor part={part} i={i} />
+            break;
+          case 'MT':
+            component = <MTDoor part={part} i={i} />
+            break;
+          case 'Glass':
+            component = <GlassDoor part={part} i={i} />
+            break;
+        }
+        break;
+      case 'DF':
+        switch (part.construction.value) {
+          case 'Cope':
+            component = <CopeDF part={part} i={i} />
+            break;
+          case 'M':
+            component = <MiterDF part={part} i={i} />
+            break;
+          case 'MT':
+            component = <MTDF part={part} i={i} />
+            break;
+          case 'Glass':
+            component = <Glass_DF part={part} i={i} />
+            break;
+        }
+        break;
+      case 'Face_Frame':
+        component = <div />
+        break;
+      case 'One_Piece':
+        component = <div />
+        break;
+      case 'Slab_Door':
+        component = <div />
+        break;
+      default:
+        component = <div />
     }
+
+    return (
+      <div>
+        {component}
+      </div>
+    )
   }
 }
 
