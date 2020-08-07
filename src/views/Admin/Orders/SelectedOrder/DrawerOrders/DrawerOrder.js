@@ -165,9 +165,7 @@ class DrawerOrder extends Component {
     const orderId = values.id;
 
     await updateOrder(orderId, order, cookie);
-    await this.props.toggle();
-    await loadOrders(cookie);
-    await this.props.dispatch(reset('DrawerOrder'))
+    await this.props.editable();
   };
 
   componentDidMount() {
