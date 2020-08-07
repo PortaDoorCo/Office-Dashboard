@@ -171,7 +171,7 @@ class OrderTable extends React.Component {
 
 
             this.setState({
-                selectedOrder: [x],
+                selectedOrder: x,
             });
         } else {
             return;

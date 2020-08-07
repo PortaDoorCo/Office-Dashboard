@@ -58,13 +58,8 @@ const CustomerOrders = (props) => {
 
     const toggle = (row) => {
         setModal(!modal);
-
-
         if (!modal) {
-
-            setSelectedOrder(
-                [row]
-            )
+            setSelectedOrder(row)
         } else {
             return
         }

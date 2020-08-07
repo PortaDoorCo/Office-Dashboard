@@ -179,7 +179,7 @@ class RestrictedOrderTable extends React.Component {
       const x = row.row.data;
 
       this.setState({
-        selectedOrder: [x],
+        selectedOrder: x,
       });
     } else {
       return;
