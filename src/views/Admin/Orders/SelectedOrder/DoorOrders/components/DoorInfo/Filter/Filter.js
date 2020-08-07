@@ -1,31 +1,27 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { Component, useState, Fragment, useEffect } from "react";
 import {
   Row,
   Col,
-  CardSubtitle,
   FormGroup,
   Label,
-  Button,
-  Input
 } from "reactstrap";
-import { Field, change, untouch } from "redux-form";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { Field, change, untouch, unregisterField, clearFields } from "redux-form";
+import { renderDropdownList } from '../../../../../../../../components/RenderInputs/renderInputs'
 
 const required = value => (value ? undefined : 'Required');
 
+class DoorFilter extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-
-
-
-
-const DoorFilter = ({ formState, index, part, construction, thickness, orderType, edit, dispatch }) => {
-
-  const onChangeType = (index) => {
+  onChangeType = (index) => {
+    
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
         if (index === i && part.dimensions) {
-          dispatch(
+          this.props.dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].dimensions`,
@@ -68,7 +64,7 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
 
         if (index === i && part.mt_design) {
           this.props.dispatch(
-            change(
+              change(
               'DoorOrder',
               `part_list[${i}].mt_design`,
             )
@@ -98,14 +94,16 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
           )
         }
 
+        
+
         if (index === i && part.woodtype) {
-          dispatch(
+          this.props.dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].woodtype`,
             )
           )
-          dispatch(
+          this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].woodtype`,
@@ -114,13 +112,13 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
         }
 
         if (index === i && part.edge) {
-          dispatch(
+          this.props.dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].edge`,
             )
           )
-          dispatch(
+          this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].edge`,
@@ -129,13 +127,13 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
         }
 
         if (index === i && part.panel) {
-          dispatch(
+          this.props.dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].panel`,
             )
           )
-          dispatch(
+          this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].panel`,
@@ -144,13 +142,13 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
         }
 
         if (index === i && part.profile) {
-          dispatch(
+          this.props.dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].profile`,
             )
           )
-          dispatch(
+          this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].profile`,
@@ -159,13 +157,13 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
         }
 
         if (index === i && part.applied_profile) {
-          dispatch(
+          this.props.dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].applied_profile`,
             )
           )
-          dispatch(
+          this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].applied_profile`,
@@ -174,13 +172,13 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
         }
 
         if (index === i && part.finish) {
-          dispatch(
+          this.props.dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].finish`,
             )
           )
-          dispatch(
+          this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].finish`,
@@ -189,13 +187,13 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
         }
 
         if (index === i && part.face_frame_top_rail) {
-          dispatch(
+          this.props.dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].face_frame_top_rail`,
             )
           )
-          dispatch(
+          this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].face_frame_top_rail`,
@@ -204,13 +202,13 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
         }
 
         if (index === i && part.furniture_feet) {
-          dispatch(
+          this.props.dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].furniture_feet`,
             )
           )
-          dispatch(
+          this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].furniture_feet`,
@@ -223,125 +221,143 @@ const DoorFilter = ({ formState, index, part, construction, thickness, orderType
     }
   }
 
-  if (formState && formState.part_list) {
-    if ((formState.part_list[index].orderType.value === "Door") || (formState.part_list[index].orderType.value === "DF")) {
-      return (
-        <Fragment>
-          <Row>
-            <Col xs="4">
-              <FormGroup>
-                <Label for="orderType">Order Type</Label>
-                <Field
-                  name={`${part}.orderType`}
-                  component={renderDropdownList}
-                  data={orderType}
-                  onChange={() => onChangeType(index)}
-                  valueField="value"
-                  textField="name"
-                  validate={required}
-                  edit={edit}
-                />
-              </FormGroup>
-            </Col>
 
-            <Col xs="4">
-              <FormGroup>
-                <Label for="construction">Construction</Label>
-                <Field
-                  name={`${part}.construction`}
-                  component={renderDropdownList}
-                  data={construction}
-                  onChange={() => onChangeType(index)}
-                  valueField="value"
-                  textField="name"
-                  validate={required}
-                  edit={edit}
-                />
-              </FormGroup>
-            </Col>
+  render() {
 
-            <Col xs="4">
-              <FormGroup>
-                <Label for="construction">Thickness</Label>
-                <Field
-                  name={`${part}.thickness`}
-                  component={renderDropdownList}
-                  data={thickness}
-                  valueField="value"
-                  textField="name"
-                  validate={required}
-                  edit={edit}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-        </Fragment>
-      )
-    }
-    if (formState.part_list[index].orderType.value === "Frame_Only") {
-      return (
-        <Fragment>
-          <Row>
-            <Col xs="4">
-              <FormGroup>
-                <Label for="orderType">Order Type</Label>
-                <Field
-                  name={`${part}.orderType`}
-                  component={renderDropdownList}
-                  data={orderType}
-                  onChange={() => onChangeType(index)}
-                  valueField="value"
-                  textField="name"
-                  validate={required}
-                  edit={edit}
-                />
-              </FormGroup>
-            </Col>
+    const {
+      formState,
+      index,
+      part,
+      construction,
+      thickness,
+      orderType,
+      edit
+    } = this.props;
 
-            <Col xs="4">
-              <FormGroup>
-                <Label for="construction">Thickness</Label>
-                <Field
-                  name={`${part}.thickness`}
-                  component={renderDropdownList}
-                  data={thickness}
-                  valueField="value"
-                  textField="name"
-                  validate={required}
-                  edit={edit}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-        </Fragment>
-      )
+    console.log("EDIITT", edit)
+
+
+    if (formState && formState.part_list) {
+      if ((formState.part_list[index].orderType.value === "Door") || (formState.part_list[index].orderType.value === "DF")) {
+        return (
+          <Fragment>
+            <Row>
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="orderType">Order Type</Label>
+                  <Field
+                    name={`${part}.orderType`}
+                    component={renderDropdownList}
+                    data={orderType}
+                    onChange={() => this.onChangeType(index)}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="construction">Construction</Label>
+                  <Field
+                    name={`${part}.construction`}
+                    component={renderDropdownList}
+                    data={construction}
+                    onChange={() => this.onChangeType(index)}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="construction">Thickness</Label>
+                  <Field
+                    name={`${part}.thickness`}
+                    component={renderDropdownList}
+                    data={thickness}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+          </Fragment>
+        )
+      }
+      if (formState.part_list[index].orderType.value === "Frame_Only") {
+        return (
+          <Fragment>
+            <Row>
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="orderType">Order Type</Label>
+                  <Field
+                    name={`${part}.orderType`}
+                    component={renderDropdownList}
+                    data={orderType}
+                    onChange={() => this.onChangeType(index)}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="construction">Thickness</Label>
+                  <Field
+                    name={`${part}.thickness`}
+                    component={renderDropdownList}
+                    data={thickness}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+          </Fragment>
+        )
+      } else {
+        return (
+          <Fragment>
+            <Row>
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="orderType">Order Type</Label>
+                  <Field
+                    name={`${part}.orderType`}
+                    component={renderDropdownList}
+                    data={orderType}
+                    onChange={() => this.onChangeType(index)}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+          </Fragment>
+        )
+      }
+
     } else {
-      return (
-        <Fragment>
-          <Row>
-            <Col xs="4">
-              <FormGroup>
-                <Label for="orderType">Order Type</Label>
-                <Field
-                  name={`${part}.orderType`}
-                  component={renderDropdownList}
-                  data={orderType}
-                  onChange={() => onChangeType(index)}
-                  valueField="value"
-                  textField="name"
-                  validate={required}
-                  edit={edit}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-        </Fragment>
-      )
+      return null
     }
-
-  } else {
-    return null
   }
 }
+
 
 export default connect()(DoorFilter);

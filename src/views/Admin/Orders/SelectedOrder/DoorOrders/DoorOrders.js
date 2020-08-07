@@ -23,7 +23,8 @@ import {
   getFormValues,
   change,
   FieldArray,
-  Field
+  Field,
+  destroy,
 } from 'redux-form';
 import {
   submitOrder,
@@ -80,9 +81,8 @@ class DoorOrders extends Component {
     window.location.reload();
   };
 
-  submit = async (values, e) => {
+  submit = async (values, dispatch) => {
     const {
-      reset,
       prices,
       itemPrice,
       subTotal,
@@ -91,7 +91,8 @@ class DoorOrders extends Component {
       updateOrder,
       user,
       orders,
-      balance
+      balance,
+      reset
     } = this.props;
 
     const orderType = 'Door Order';
@@ -134,9 +135,8 @@ class DoorOrders extends Component {
     const orderId = values.id;
 
     await updateOrder(orderId, order, cookie);
-    await this.props.toggle();
-    await loadOrders(cookie);
-    await this.props.dispatch(reset('DoorOrder'))
+    await this.props.editable();
+
   };
 
   cancelOrder = async () => {
@@ -183,7 +183,7 @@ class DoorOrders extends Component {
     console.log('BALANCE TPTAL', balance)
 
     return (
-      
+
       <div className="animated fadeIn resize">
         <Row>
           <Col xs="12" sm="12" md="12" lg="12">
@@ -336,6 +336,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 // eslint-disable-next-line no-class-assign
+
+
 DoorOrders = reduxForm({
   form: 'DoorOrder',
   enableReinitialize: true,
