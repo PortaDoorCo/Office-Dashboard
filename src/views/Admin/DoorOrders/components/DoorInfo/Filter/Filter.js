@@ -2,15 +2,12 @@ import React, { Component, useState, Fragment, useEffect } from "react";
 import {
   Row,
   Col,
-  CardSubtitle,
   FormGroup,
   Label,
-  Button,
-  Input
 } from "reactstrap";
 import { connect } from 'react-redux';
-import { Field, change, reduxForm, untouch} from "redux-form";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
+import { Field, change,  untouch} from "redux-form";
+import { renderDropdownList } from '../../../../../../components/RenderInputs/renderInputs'
 
 
 const required = value => (value ? undefined : 'Required');

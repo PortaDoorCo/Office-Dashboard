@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
-import classnames from 'classnames';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders } from '../../../redux/orders/actions'
-
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
-import { DateBox } from 'devextreme-react';
 import StatusTable from './Components/Table'
 import io from 'socket.io-client';
 import db_url from '../../../redux/db_url'

@@ -1,22 +1,9 @@
 import React, { Component, useState, Fragment, useEffect } from "react";
-import {
-  Label,
-  Table,
-  Input,
-  Row,
-  Col,
-  Button
-} from "reactstrap";
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import 'semantic-ui-css/semantic.min.css';
-import { Field, change, reduxForm, untouch } from "redux-form";
-
 import CopeDoor from './Cope/Door'
 import MiterDoor from './Miter/Door'
 import MTDoor from './MT/Door'
 import GlassDoor from './Glass/Glass_Door'
-
 import CopeDF from './Cope/DF'
 import MiterDF from './Miter/DF'
 import MT_DF from './MT/DF'
