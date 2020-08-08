@@ -16,6 +16,7 @@ const store = createStore(
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
+  window.alert = () => {}; 
   ReactDOM.render(
     <Provider store={store}>
       <MemoryRouter>

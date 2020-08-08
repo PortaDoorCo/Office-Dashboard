@@ -9,7 +9,6 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import NonEdit from './components/NonEdit';
 import Edit from './components/Edit';
 import {
 

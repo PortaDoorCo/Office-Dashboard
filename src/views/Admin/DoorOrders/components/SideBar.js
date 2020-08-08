@@ -30,6 +30,8 @@ class SideBar extends Component {
 
     const { part, i } = this.props;
 
+    console.log("partt", part)
+
     let component;
 
     switch (part.orderType.value) {

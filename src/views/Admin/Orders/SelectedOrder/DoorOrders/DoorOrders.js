@@ -48,10 +48,6 @@ import {
 
 import PropTypes from 'prop-types';
 import 'react-notifications/lib/notifications.css';
-import SideBar from './components/SideBar';
-import Ratio from 'lb-ratio'
-import Sticky from 'react-stickynode';
-import moment from 'moment-business-days'
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
 import { renderField } from './components/RenderInputs/renderInputs'
