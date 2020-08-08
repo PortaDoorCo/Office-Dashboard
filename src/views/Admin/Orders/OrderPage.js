@@ -20,7 +20,7 @@ import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
 import Invoice from '../Invoice/Invoice';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateOrder, loadOrders, deleteOrder } from '../../../redux/orders/actions';
+import { updateOrder, loadOrders, deleteOrder, setSelectedOrder } from '../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
 import Print from '@material-ui/icons/Print';
 import Attachment from '@material-ui/icons/Attachment';
@@ -379,9 +379,6 @@ class OrderPage extends Component {
       ];
     }
 
-    console.log("SELECTED ORDER" , selectedOrder)
-
-
     return (
       
       <div className="animated noPrint resize">
@@ -658,7 +655,8 @@ const mapStateToProps = (state, prop) => ({
   formState: getFormValues('DoorOrder')(state),
   drawerState: getFormValues("DrawerOrder")(state),
   breakdowns: state.part_list.breakdowns,
-  box_breakdowns: state.part_list.box_breakdowns
+  box_breakdowns: state.part_list.box_breakdowns,
+  selectedOrder: state.Orders.selectedOrder
 
 });
 
@@ -667,7 +665,8 @@ const mapDispatchToProps = dispatch =>
     {
       updateOrder,
       loadOrders,
-      deleteOrder
+      deleteOrder,
+      setSelectedOrder
     },
     dispatch
   );

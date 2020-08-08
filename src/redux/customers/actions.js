@@ -5,7 +5,18 @@ import db_url from '../db_url'
 export const LOAD_CUSTOMERS = 'LOAD_CUSTOMERS';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 export const SUBMIT_CUSTOMER = 'SUBMIT_CUSTOMER'
+export const SET_SELECTED_COMPANY = 'SET_SELECTED_COMPANY'
 
+
+export function setSelectedCompanies(data) {
+    console.log("FIRE", data)
+    return async function (dispatch) {
+        return await dispatch({
+        type: SET_SELECTED_COMPANY,
+        data: data
+        });
+    };
+    }
 
 export function loadCustomers(cookie) {
     return async function (dispatch) {

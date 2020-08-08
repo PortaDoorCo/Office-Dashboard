@@ -63,7 +63,6 @@ export default (data, breakdowns) => {
       ];
 
       i.dimensions.forEach((item, index) => {
-        console.log('ITEM',item)
         tableBody.push(
           [
             { text: index + 1, style: 'fonts' },

@@ -37,6 +37,17 @@ momentLocaliser(moment);
 
 const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production']
 
+const taxable = [
+    {
+        "name": "Yes",
+        "value": true
+    },
+    {
+        "name": "No",
+        "value": false
+    },
+]
+
 
 class CustomerTable extends React.Component {
     constructor(props) {
@@ -284,6 +295,11 @@ class CustomerTable extends React.Component {
                                 <Item dataField="PMT_TERMS" />
                                 <Item dataField="sale" />
                                 <Item dataField="TaxRate" />
+                                <Item dataField="Taxable" />
+                                <Item dataField="Discount" />
+                            </Item>
+                            <Item itemType="group" caption="Notes" colCount={1} colSpan={1}>
+                                <Item dataField="Notes" />
                             </Item>
 
 
@@ -373,7 +389,17 @@ class CustomerTable extends React.Component {
                         <RequiredRule />
                         <Lookup dataSource={paymentTerms} valueExpr="NAME" displayExpr="NAME" />
                     </Column>
-                    <Column dataField="TaxRate" caption="Tax Rate" visible={false}>
+                    <Column dataField="TaxRate" caption="Tax Rate (%)" visible={false}>
+                        <RequiredRule />
+                    </Column>
+                    <Column dataField="Taxable" caption="Taxable?" visible={false}>
+                        <RequiredRule />
+                        <Lookup dataSource={taxable} valueExpr="value" displayExpr="name" />
+                    </Column>
+                    <Column dataField="Discount" caption="Discount (%)" visible={false}>
+                        <RequiredRule />
+                    </Column>
+                    <Column dataField="Notes" caption="Notes" visible={false}>
                         <RequiredRule />
                     </Column>
                 </DataGrid>
@@ -397,10 +423,10 @@ class CustomerTable extends React.Component {
 
 const mapStateToProps = (state, prop) => ({
     customerDB: state.customers.customerDB,
-    salesReps: state.Orders.salesReps,
-    shippingMethods: state.Orders.shippingMethods,
-    paymentTerms: state.Orders.paymentTerms,
-    paymentTypes: state.Orders.paymentTypes
+    salesReps: state.sales.salesReps,
+    shippingMethods: state.misc_items.shippingMethods,
+    paymentTerms: state.misc_items.paymentTerms,
+    paymentTypes: state.misc_items.paymentTypes
 });
 
 const mapDispatchToProps = dispatch =>

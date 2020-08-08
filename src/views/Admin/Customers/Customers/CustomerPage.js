@@ -77,14 +77,16 @@ class CustomerPage extends Component {
   };
 
   onEdit = () => {
+    
     this.setState({
       edit: !this.state.edit
     });
   };
 
   render() {
+
     const props = this.props;
-    const { locations, defaultCenter } = this.props;
+    const { locations, defaultCenter, selectedCompanies } = this.props;
 
     let orders;
 
@@ -139,7 +141,7 @@ class CustomerPage extends Component {
             toggle={this.toggle}
             modal={this.state.modal}
             selectedOrder={this.state.selectedOrder}
-            company={this.props.selectedCompanies.Company}
+            company={selectedCompanies && selectedCompanies.Company}
             editable={this.editable}
             edit={this.state.orderEdit}
           /> : null
@@ -153,7 +155,8 @@ class CustomerPage extends Component {
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
-  customerOrder: state.Orders.customerOrder
+  customerOrder: state.Orders.customerOrder,
+  selectedCompanies: state.customers.selectedCompanies
 });
 
 const mapDispatchToProps = dispatch =>

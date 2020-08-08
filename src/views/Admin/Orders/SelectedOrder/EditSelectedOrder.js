@@ -9,21 +9,20 @@ class EditSelectedOrder extends React.Component {
 
   render() {
     
-    const { selectedOrder, editable, edit, toggle } = this.props;
-
+    const { editable, edit, toggle, selectedOrder } = this.props;
 
     if(selectedOrder) {
       return (
         <div>
           {selectedOrder.orderType === "Door Order" ?
             <DoorOrder
-              selectedOrder={selectedOrder}
+         
               editable={editable}
               edit={edit}
               toggle={toggle}
             /> :
             <DrawerOrder
-              selectedOrder={selectedOrder}
+
               editable={editable}
               edit={edit}
               toggle={toggle}

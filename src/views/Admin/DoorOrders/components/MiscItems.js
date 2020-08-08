@@ -58,11 +58,8 @@ class MiscItems extends Component {
 
         const misc_items = formState.misc_items
 
-        // console.log("MISCCCCCC ===>", misc_items)
-
         misc_items.forEach((i, index) => {
           if(i.item){
-            console.log("MISC ITEM", i)
 
             if(i.item.Price !== 0){
               this.props.dispatch(

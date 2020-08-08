@@ -52,7 +52,7 @@ export const GET_PRICING = 'GET_PRICING'
 export const UPDATE_PRICING = 'UPDATE_PRICING'
 
 export function getWoodtypes(cookie) {
-  console.log("FIREEEEE")
+
   return async function (dispatch) {
     const res = await fetch(`${db_url}/woodtypes`,
       {
@@ -781,7 +781,7 @@ export function updateBreakdowns(id, item, cookie) {
         'Authorization': `Bearer ${cookie}`
       }
     })
-    console.log(data)
+
     NotificationManager.success(`Breakdown Updated!`, 'Breakdown Updated!', 2000);
     return dispatch({
       type: UPDATE_BREAKDOWNS,
@@ -831,7 +831,7 @@ export function updatePricing(id, item, cookie) {
         'Authorization': `Bearer ${cookie}`
       }
     })
-    console.log(data)
+
     NotificationManager.success(`Pricing Updated!`, 'Pricing Updated!', 2000);
     return dispatch({
       type: UPDATE_PRICING,

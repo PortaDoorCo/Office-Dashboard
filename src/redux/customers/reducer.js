@@ -1,12 +1,14 @@
 import {
     LOAD_CUSTOMERS,
     UPDATE_CUSTOMER,
+    SET_SELECTED_COMPANY
 } from './actions';
 
 const initialState = {
     customerDB: ['LOADING'],
     customer: [],
-    customerDBLoaded: false
+    customerDBLoaded: false,
+    selectedCompanies: null
 };
 
 export default function (state = initialState, action) {
@@ -18,6 +20,11 @@ export default function (state = initialState, action) {
                 ...state,
                 customerDB: data,
                 customerDBLoaded: true
+            };
+        case SET_SELECTED_COMPANY:
+            return {
+                ...state,
+                selectedCompanies: data
             };
         case UPDATE_CUSTOMER:
             return {

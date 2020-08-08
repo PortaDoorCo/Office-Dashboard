@@ -11,11 +11,11 @@ const middleware = [thunk];
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)));
 
 it('renders without crashing', () => {
-const div = document.createElement('div');
-ReactDOM.render(
-<Provider store={store}>
-    <CustomerPage />
-</Provider>
-, div);
-ReactDOM.unmountComponentAtNode(div);
+    const div = document.createElement('div');
+    ReactDOM.render(
+        <Provider store={store}>
+            <CustomerPage />
+        </Provider>
+        , div);
+    ReactDOM.unmountComponentAtNode(div);
 });

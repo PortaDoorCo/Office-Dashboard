@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
+import { reduxForm}  from 'redux-form';
 import { renderField, renderDropdownList, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs'
 
 momentLocaliser(moment)
@@ -91,7 +92,7 @@ class JobInfo extends Component {
           change(
             'DoorOrder',
             'discount',
-            (customer.Discount * 100)
+            customer.Discount
           )
         );
       }
@@ -110,10 +111,8 @@ class JobInfo extends Component {
 
 
     return (
-
       <div>
         <Row className="mb-3">
-
           <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
@@ -287,6 +286,11 @@ const mapStateToProps = state => ({
   formState: getFormValues('DoorOrder')(state),
   shippingMethods: state.misc_items.shippingMethods
 });
+
+JobInfo = reduxForm({
+  form: 'DoorOrder',
+  enableReinitialize: true
+})(JobInfo);
 
 
 export default connect(

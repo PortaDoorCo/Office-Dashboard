@@ -4,17 +4,17 @@ import {
   UPDATE_ORDER,
   LOAD_DELIVERIES,
   UPDATE_STATUS,
-  SOCKET_RECEIVE_UPDATE_STATUS
+  SOCKET_RECEIVE_UPDATE_STATUS,
+  SET_SELECTED_ORDER
 } from './actions';
 import moment from 'moment'
-
-import uniqid from 'uniqid';
 
 const initialState = {
   ordersDBLoaded: false,
   orders: [],
   deliveries: [],
   sortedDestinations: [],
+  selectedOrder: null
 };
 
 export default function (state = initialState, action) {
@@ -30,6 +30,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
       };
+      case SET_SELECTED_ORDER:
+        return {
+          ...state,
+          selectedOrder: data
+        };
     case UPDATE_ORDER:
       return {
         ...state,
@@ -51,7 +56,6 @@ export default function (state = initialState, action) {
         })
       };
     case SOCKET_RECEIVE_UPDATE_STATUS:
-      console.log("DATAAA", data)
       return {
         ...state,
         orders: state.orders.map((item, index) => {
