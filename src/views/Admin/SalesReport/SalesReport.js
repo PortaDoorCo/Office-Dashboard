@@ -34,7 +34,6 @@ const SalesReport = (props) => {
   useEffect(() => {
     const filteredOrders = orders.filter(item => {
       let date = new Date(item.createdAt);
-      console.log(moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf())
       return moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf();
     })
     setData(filteredOrders);

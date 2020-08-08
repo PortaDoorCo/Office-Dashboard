@@ -97,9 +97,6 @@ class DoorOrders extends Component {
 
     const orderType = 'Door Order';
 
-    console.log(values.part_list)
-
-
     const jobInfo = {
       jobName: values.job_info.jobName,
       status: values.job_info.status,
@@ -180,9 +177,6 @@ class DoorOrders extends Component {
       balance,
       balanceTotal
     } = this.props;
-
-
-    console.log('BALANCE TPTAL', balance)
 
     return (
 
@@ -293,8 +287,8 @@ const mapStateToProps = (state, props) => {
 
 
   return {
-    initialValues: props.selectedOrder,
-    order: props.selectedOrder,
+    initialValues: state.Orders.selectedOrder,
+    order: state.Orders.selectedOrder,
     customers: state.customers.customerDB,
     customerDBLoaded: state.customers.customerDBLoaded,
 
@@ -307,12 +301,8 @@ const mapStateToProps = (state, props) => {
     panels: state.part_list.panels,
     profiles: state.part_list.profiles,
     applied_moulds: state.part_list.applied_moulds,
-
-    part_list: props.selectedOrder.part_list,
     submitted: state.Orders.submitted,
-
     shippingMethods: state.Orders.shippingMethods,
-
     formState: getFormValues('DoorOrder')(state),
     prices: linePriceSelector(state),
     itemPrice: itemPriceSelector(state),

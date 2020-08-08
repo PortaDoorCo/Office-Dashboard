@@ -13,7 +13,7 @@ import db_url from '../../../../redux/db_url'
 import { Select } from 'antd';
 import { Input } from 'reactstrap'
 import MenuItem from '@material-ui/core/MenuItem';
-import { updateStatus, loadOrders } from '../../../../redux/orders/actions'
+import { updateStatus, loadOrders, setSelectedOrder } from '../../../../redux/orders/actions'
 import Cookies from "js-cookie";
 import { totalDiscountSelector } from '../../../../selectors/doorPricing';
 
@@ -86,7 +86,6 @@ const OrderTable = (props) => {
     const [selectedRows, setSelectedRows] = useState([]);
     const [toggleCleared, setToggleCleared] = useState(false);
     const [data, setData] = useState([]);
-    const [selectedOrder, setSelectedOrder] = useState(null);
     const [modal, setModal] = useState(false);
     const [edit, setEdit] = useState(false);
 
@@ -171,9 +170,11 @@ const OrderTable = (props) => {
     }, []);
 
     const toggle = (row) => {
+
+        const { setSelectedOrder } = props;
+
         setEdit(false)
         setModal(!modal)
-        console.log(row)
 
         if (!modal) {
             setSelectedOrder(row)
@@ -205,7 +206,6 @@ const OrderTable = (props) => {
                     <OrderPage
                         toggle={toggle}
                         modal={modal}
-                        selectedOrder={selectedOrder}
                         editable={editable}
                         edit={edit}
                     /> : null
@@ -227,7 +227,8 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
             updateStatus,
-            loadOrders
+            loadOrders,
+            setSelectedOrder
         },
         dispatch
     );

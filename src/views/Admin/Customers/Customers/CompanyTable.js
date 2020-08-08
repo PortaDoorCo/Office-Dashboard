@@ -1,12 +1,14 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { Row, Col, Input, Button } from 'reactstrap';
-
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import CustomerPage from './CustomerPage';
 import DataTable from 'react-data-table-component';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox'
 import differenceBy from 'lodash/differenceBy';
 import Geocode from "react-geocode";
+import { setSelectedCompanies } from '../../../../redux/customers/actions'
 
 const apiKey = 'AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE';
 
@@ -29,7 +31,7 @@ const CompanyTable = (props) => {
     const [modal, setModal] = useState(false)
     const [addModal, setAddModel] = useState(false)
     const [orderEdit, setOrderEdit] = useState(false)
-    const [selectedCompanies, setSelectedCompanies] = useState([])
+    // const [selectedCompanies, setSelectedCompanies] = useState([])
     const [selectedOrder, setSelectedOrder] = useState(null)
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
@@ -63,6 +65,9 @@ const CompanyTable = (props) => {
     }, [filterText, resetPaginationToggle]);
 
     const toggle = async (row) => {
+
+        const { setSelectedCompanies } = props;
+
         setModal(!modal);
 
         if (!modal) {
@@ -191,7 +196,6 @@ const CompanyTable = (props) => {
                 <CustomerPage
                     toggle={toggle}
                     modal={modal}
-                    selectedCompanies={selectedCompanies}
                     orders={selectedOrder}
                     locations={locations}
                     defaultCenter={defaultCenter}
@@ -202,4 +206,22 @@ const CompanyTable = (props) => {
     );
 };
 
-export default CompanyTable;
+const mapStateToProps = (state, prop) => ({
+    selectedCompanies: state.customers.selectedCompanies
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(
+        {
+            setSelectedCompanies
+        },
+        dispatch
+    );
+
+
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CompanyTable);

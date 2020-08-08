@@ -41,10 +41,6 @@ class MiterDoor extends Component {
 
       if (part.dimensions) {
         part.dimensions.forEach((info, j) => {
-
-          console.log('linnneee', `part_list[${index}].dimensions[${j}].leftStile`)
-
-
           this.props.dispatch(
             change(
               'DoorOrder',

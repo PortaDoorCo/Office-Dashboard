@@ -12,6 +12,10 @@ import DataTable from 'react-data-table-component';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox'
 import differenceBy from 'lodash/differenceBy';
+import { setSelectedOrder } from '../../../../../redux/orders/actions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+
 
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
@@ -32,7 +36,6 @@ const CustomerOrders = (props) => {
     const [data, setData] = useState(props.orders);
     const [modal, setModal] = useState(false)
     const [orderEdit, setOrderEdit] = useState(false)
-    const [selectedOrder, setSelectedOrder] = useState(null)
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -57,6 +60,7 @@ const CustomerOrders = (props) => {
     }, [filterText, resetPaginationToggle]);
 
     const toggle = (row) => {
+        const { setSelectedOrder } = props;
         setModal(!modal);
         if (!modal) {
             setSelectedOrder(row)
@@ -153,7 +157,7 @@ const CustomerOrders = (props) => {
                     <OrderPage
                         toggle={toggle}
                         modal={modal}
-                        selectedOrder={selectedOrder}
+                        selectedOrder={props.selectedOrder}
                         editable={editable}
                         edit={orderEdit}
                     /> : null
@@ -163,6 +167,23 @@ const CustomerOrders = (props) => {
     );
 };
 
-export default CustomerOrders;
+const mapStateToProps = (state, prop) => ({
 
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(
+        {
+            setSelectedOrder
+        },
+        dispatch
+    );
+
+
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CustomerOrders);
 

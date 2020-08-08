@@ -16,8 +16,6 @@ import { setLogin } from "./redux/users/actions";
 import io from 'socket.io-client';
 import db_url from './redux/db_url'
 const socket = io(db_url);
-socket.on('connect', () => console.log('conneee==>>>'))
-
 const cookie = Cookies.get("jwt");
 
 const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;

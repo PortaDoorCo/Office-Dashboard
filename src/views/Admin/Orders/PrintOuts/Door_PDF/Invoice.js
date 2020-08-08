@@ -66,9 +66,6 @@ export default data => {
 
 
       part.dimensions.forEach((item, index) => {
-
-        console.log(data)
-
         tableBody.push([
           { text: index + 1, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },

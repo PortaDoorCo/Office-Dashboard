@@ -41,8 +41,6 @@ class MiterDF extends Component {
         if (part.dimensions) {
           part.dimensions.forEach((info, j) => {
 
-            console.log(`part_list[${index}].dimensions[${j}].leftStile`)
-            
             this.props.dispatch(
               change(
                 'DoorOrder',
@@ -116,7 +114,6 @@ class MiterDF extends Component {
       subTotal
     } = this.props;
 
-    console.log(index)
     return (
       <div>
         <Row>

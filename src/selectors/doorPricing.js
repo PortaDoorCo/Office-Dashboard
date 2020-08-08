@@ -56,7 +56,11 @@ const taxRate = state => {
     if (!orders.values.job_info) {
       return [];
     } else {
-      return state.form.DoorOrder.values.job_info.customer.TaxRate;
+      if(orders.values.job_info.customer.Taxable){
+        return (state.form.DoorOrder.values.job_info.customer.TaxRate / 100);
+      } else {
+        return 0
+      }
     }
   } else {
     return [];
@@ -651,9 +655,6 @@ export const linePriceSelector = createSelector(
             const qty = parseInt(i.qty)
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
 
-            console.log('extraaaaa====> ', extraCost)
-
-
             let leftStileAdd = 0
             let rightStileAdd = 0
             let topRailAdd = 0;
@@ -1097,7 +1098,6 @@ export const taxSelector = createSelector(
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector],
   (subTotal, misc, discount) => {
-    console.log('diiiiiiiii', subTotal.reduce((acc, item) => acc + item, 0))
     return (subTotal.reduce((acc, item) => acc + item, 0) + misc) * discount
   }
 );

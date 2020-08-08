@@ -28,8 +28,19 @@ export const LOAD_PAYMENT_TERMS = 'LOAD_PAYMENT_TERMS'
 
 export const SOCKET_LOAD_ORDERS = 'SOCKET_LOAD_ORDERS'
 export const SOCKET_RECEIVE_UPDATE_STATUS = 'SOCKET_RECEIVE_UPDATE_STATUS'
+export const SET_SELECTED_ORDER = 'SET_SELECTED_ORDER'
 
 
+
+export function setSelectedOrder(data) {
+  console.log("FIRE", data)
+  return async function (dispatch) {
+    return await dispatch({
+      type: SET_SELECTED_ORDER,
+      data: data
+    });
+  };
+}
 
 export function loadOrders(cookie, amt) {
   const amount = amt ? amt : 500
@@ -103,7 +114,7 @@ export function updateOrder(orderId, order, cookie) {
         }
       });
       const data = await res;
-      console.log('updated order', data)
+    
       return dispatch({
         type: UPDATE_ORDER,
         data: data
@@ -117,7 +128,7 @@ export function updateOrder(orderId, order, cookie) {
 
 
 export function updateStatus(orderId, key, status, cookie) {
-  console.log(status)
+
   const item = {
     status: status.status,
     tracking: [
@@ -149,7 +160,6 @@ export function updateStatus(orderId, key, status, cookie) {
 
 
 export function socketReceiveUpdateStatus(res) {
-  console.log('SOCKET RES',res)
   return async function (dispatch) {
     return dispatch({
         type: SOCKET_RECEIVE_UPDATE_STATUS,

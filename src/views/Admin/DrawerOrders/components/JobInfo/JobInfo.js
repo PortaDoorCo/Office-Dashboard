@@ -14,6 +14,7 @@ import 'react-widgets/dist/css/react-widgets.css';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
+import { reduxForm}  from 'redux-form';
 import { renderField, renderDropdownList, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs'
 
 momentLocaliser(moment)
@@ -93,7 +94,7 @@ class JobInfo extends Component {
           change(
             'DrawerOrder',
             'discount',
-            (customer.Discount * 100)
+            customer.Discount
           )
         );
       }
@@ -283,6 +284,11 @@ const mapStateToProps = state => ({
   formState: getFormValues('DrawerOrder')(state),
   shippingMethods: state.misc_items.shippingMethods
 });
+
+JobInfo = reduxForm({
+  form: 'DoorOrder',
+  enableReinitialize: true
+})(JobInfo);
 
 
 export default connect(

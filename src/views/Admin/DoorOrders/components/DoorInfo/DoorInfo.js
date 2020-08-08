@@ -117,10 +117,6 @@ class DoorInfo extends Component {
               </Row>
             </CardSubtitle>
 
-            {console.log('part', part)}
-            {console.log('index', index)}
-            {console.log('part', part)}
-
             <DoorFilter
               formState={formState}
               part={part}

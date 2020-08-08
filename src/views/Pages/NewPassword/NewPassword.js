@@ -29,8 +29,6 @@ const NewPassword = props => {
   const submit = async () => {
     const { resetPassword } = props;
     const submitNewPassword = { code, password, passwordConfirmation }
-    console.log(submitNewPassword)
-
     if ((password === passwordConfirmation) && password.length > 0) {
       await resetPassword(submitNewPassword)
       await NotificationManager.success(`Password Updated!`, 'Password Updated!', 2000);
