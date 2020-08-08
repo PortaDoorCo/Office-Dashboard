@@ -108,7 +108,6 @@ class RestrictedOrderTable extends React.Component {
             startDate: new Date(),
             endDate: new Date(),
             productData: new CustomStore({
-                load: () => this.props.loadOrders(cookie),
                 update: (key, values) => (this.props.updateStatus(key.id, key, values, cookie)),
             }),
         };

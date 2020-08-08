@@ -6,7 +6,9 @@ import { Checkbox } from '@material-ui/core';
 import differenceBy from 'lodash/differenceBy';
 import io from 'socket.io-client';
 import db_url from '../../../../redux/db_url'
+import Cookies from "js-cookie";
 const socket = io(db_url);
+const cookie = Cookies.get("jwt");
 
 
 
@@ -28,10 +30,10 @@ const StatusTable = (props) => {
         setSelectedRows(state.selectedRows);
     }, []);
 
-    useEffect(() => {
-        socket.on('order_submitted', res => props.loadOrders())
-        socket.on('status_updated', res => props.loadOrders())
-    })
+    // useEffect(() => {
+    //     socket.on('order_submitted', res => props.loadOrders(cookie))
+    //     socket.on('status_updated', res => props.loadOrders(cookie))
+    // })
 
     const columns = useMemo(() => [
 

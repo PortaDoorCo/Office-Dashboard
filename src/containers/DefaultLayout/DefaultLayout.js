@@ -207,7 +207,7 @@ class DefaultLayout extends Component {
 
     if (cookie) {
 
-      await loadOrders(cookie, 100);
+      await loadOrders(cookie, 500);
       await loadCustomers(cookie);
       await login(cookie);
 

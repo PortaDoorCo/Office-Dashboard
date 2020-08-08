@@ -30,6 +30,7 @@ import { NotificationManager } from 'react-notifications';
 import io from 'socket.io-client';
 import db_url from '../../../redux/db_url'
 import Cookies from "js-cookie";
+import axios from 'axios'
 const socket = io(db_url);
 
 const cookie = Cookies.get("jwt");
@@ -109,7 +110,12 @@ class RestrictedOrderTable extends React.Component {
       startDate: new Date(),
       endDate: new Date(),
       productData: new CustomStore({
-        load: () => this.props.loadOrders(cookie, 1000),
+        load: () => axios.get(`${db_url}/orders?_limit=${2000}&_sort=orderNum:DESC`,
+        {
+          headers: {
+            'Authorization': `Bearer ${cookie}`
+          }
+        }),
         update: (key, values) =>
           this.props.updateStatus(key.id, key, values, cookie),
       }),

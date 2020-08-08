@@ -11,7 +11,10 @@ import momentLocaliser from 'react-widgets-moment'
 import { DateBox } from 'devextreme-react';
 import io from 'socket.io-client';
 import db_url from '../../../redux/db_url'
+import Cookies from "js-cookie";
 const socket = io(db_url);
+
+const cookie = Cookies.get("jwt");
 
 momentLocaliser(moment)
 
@@ -38,11 +41,11 @@ const SalesReport = (props) => {
 
   }, [startDate, endDate, orders])
 
-  useEffect(() => {
-    socket.on('order_submitted', res => props.loadOrders())
-    socket.on('status_updated', res => props.loadOrders())
-    socket.on('order_updated', res => props.loadOrders())
-  })
+  // useEffect(() => {
+  //   socket.on('order_submitted', res => props.loadOrders(cookie))
+  //   socket.on('status_updated', res => props.loadOrders(cookie))
+  //   socket.on('order_updated', res => props.loadOrders(cookie))
+  // })
 
   const minDate = new Date(orders[orders.length - 1].createdAt)
 

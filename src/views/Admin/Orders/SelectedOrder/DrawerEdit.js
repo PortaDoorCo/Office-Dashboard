@@ -71,7 +71,6 @@ class DrawerOrders extends Component {
     await updateOrder(orderId, order, cookie);
     await this.props.reset();
     await this.props.toggle();
-    await loadOrders(cookie);
   };
 
   componentDidUpdate(prevProps) {
