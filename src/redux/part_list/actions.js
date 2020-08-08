@@ -71,7 +71,7 @@ export function getWoodtypes(cookie) {
 
 export function getAppliedMoulds(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/applied-profiles`,
+    const res = await fetch(`${db_url}/applied-profiles?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -89,7 +89,7 @@ export function getAppliedMoulds(cookie) {
 
 export function getBaseCap(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/base-caps`,
+    const res = await fetch(`${db_url}/base-caps?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -106,7 +106,7 @@ export function getBaseCap(cookie) {
 
 export function getBaseboards(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/baseboards`,
+    const res = await fetch(`${db_url}/baseboards?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -123,7 +123,7 @@ export function getBaseboards(cookie) {
 
 export function getCasings(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/casings`,
+    const res = await fetch(`${db_url}/casings?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -140,7 +140,7 @@ export function getCasings(cookie) {
 
 export function getChairRails(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/chair-rails`,
+    const res = await fetch(`${db_url}/chair-rails?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -157,7 +157,7 @@ export function getChairRails(cookie) {
 
 export function getCopeDesigns(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/cope-designs`,
+    const res = await fetch(`${db_url}/cope-designs?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -174,7 +174,7 @@ export function getCopeDesigns(cookie) {
 
 export function getCrownMouldings(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/crown-mouldings`,
+    const res = await fetch(`${db_url}/crown-mouldings?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -191,7 +191,7 @@ export function getCrownMouldings(cookie) {
 
 export function getEdgeSlabs(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/edge-slabs`,
+    const res = await fetch(`${db_url}/edge-slabs?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -208,7 +208,7 @@ export function getEdgeSlabs(cookie) {
 
 export function getEdges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/edges`,
+    const res = await fetch(`${db_url}/edges?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -225,7 +225,7 @@ export function getEdges(cookie) {
 
 export function getFinish(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/finishes`,
+    const res = await fetch(`${db_url}/finishes?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -242,7 +242,7 @@ export function getFinish(cookie) {
 
 export function getLites(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/lites`,
+    const res = await fetch(`${db_url}/lites?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -260,7 +260,7 @@ export function getLites(cookie) {
 
 export function get_Miter_DF_Designs(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/miter-df-designs`,
+    const res = await fetch(`${db_url}/miter-df-designs?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -277,7 +277,7 @@ export function get_Miter_DF_Designs(cookie) {
 
 export function getMiterDesigns(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/miter-designs`,
+    const res = await fetch(`${db_url}/miter-designs?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -294,7 +294,7 @@ export function getMiterDesigns(cookie) {
 
 export function getMouldingsLengths(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/mouldings-lengths`,
+    const res = await fetch(`${db_url}/mouldings-lengths?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -311,7 +311,7 @@ export function getMouldingsLengths(cookie) {
 
 export function getMTDesigns(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/mt-designs`,
+    const res = await fetch(`${db_url}/mt-designs?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -328,7 +328,7 @@ export function getMTDesigns(cookie) {
 
 export function get_MT_DF_Designs(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/mt-df-designs`,
+    const res = await fetch(`${db_url}/mt-df-designs?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -345,7 +345,7 @@ export function get_MT_DF_Designs(cookie) {
 
 export function getPanels(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/panels`,
+    const res = await fetch(`${db_url}/panels?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -362,7 +362,7 @@ export function getPanels(cookie) {
 
 export function get_Plyths_Stools(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/plynths-stools`,
+    const res = await fetch(`${db_url}/plynths-stools?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -379,7 +379,7 @@ export function get_Plyths_Stools(cookie) {
 
 export function getProfiles(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/profiles`,
+    const res = await fetch(`${db_url}/profiles?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -396,7 +396,7 @@ export function getProfiles(cookie) {
 
 export function getSolidCrowns(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/solid-crowns`,
+    const res = await fetch(`${db_url}/solid-crowns?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -413,7 +413,7 @@ export function getSolidCrowns(cookie) {
 
 export function get_Wainscot_Beads(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/wainscot-beads`,
+    const res = await fetch(`${db_url}/wainscot-beads?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -430,7 +430,7 @@ export function get_Wainscot_Beads(cookie) {
 
 export function get_Face_Frame_Designs(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/face-frame-designs`,
+    const res = await fetch(`${db_url}/face-frame-designs?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -447,7 +447,7 @@ export function get_Face_Frame_Designs(cookie) {
 
 export function get_Face_Frame_Top_Rails(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/face-frame-top-rails`,
+    const res = await fetch(`${db_url}/face-frame-top-rails?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -465,7 +465,7 @@ export function get_Face_Frame_Top_Rails(cookie) {
 
 export function getFurnitureFeet(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/furniture-feets`,
+    const res = await fetch(`${db_url}/furniture-feets?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -482,7 +482,7 @@ export function getFurnitureFeet(cookie) {
 
 export function getOnePieceWoodtypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/woodtypes?one_piece=true`,
+    const res = await fetch(`${db_url}/woodtypes?one_piece=true?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -499,7 +499,7 @@ export function getOnePieceWoodtypes(cookie) {
 
 export function getOnePieceDesigns(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/cope-designs?one_piece=true`,
+    const res = await fetch(`${db_url}/cope-designs?one_piece=true&_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -516,7 +516,7 @@ export function getOnePieceDesigns(cookie) {
 
 export function getOnePiecePanels(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/panels?one_piece=true`,
+    const res = await fetch(`${db_url}/panels?one_piece=true&_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -533,7 +533,7 @@ export function getOnePiecePanels(cookie) {
 
 export function getOnePieceEdges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/edges?one_piece=true`,
+    const res = await fetch(`${db_url}/edges?one_piece=true&_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -551,7 +551,7 @@ export function getOnePieceEdges(cookie) {
 
 export function getBoxBottomThickness(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/box-bottom-thicknesses`,
+    const res = await fetch(`${db_url}/box-bottom-thicknesses?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -568,7 +568,7 @@ export function getBoxBottomThickness(cookie) {
 
 export function getBoxFinishes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/box-finishes`,
+    const res = await fetch(`${db_url}/box-finishes?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -585,7 +585,7 @@ export function getBoxFinishes(cookie) {
 
 export function getBoxNotches(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/box-notches`,
+    const res = await fetch(`${db_url}/box-notches?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -602,7 +602,7 @@ export function getBoxNotches(cookie) {
 
 export function getBoxThicknesses(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/box-thicknesses`,
+    const res = await fetch(`${db_url}/box-thicknesses?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -619,7 +619,7 @@ export function getBoxThicknesses(cookie) {
 
 export function getBoxWoodtypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/box-woodtypes`,
+    const res = await fetch(`${db_url}/box-woodtypes?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -636,7 +636,7 @@ export function getBoxWoodtypes(cookie) {
 
 export function getBoxBottomWoodtypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/box-bottom-woodtypes`,
+    const res = await fetch(`${db_url}/box-bottom-woodtypes?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
