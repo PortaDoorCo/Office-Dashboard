@@ -482,7 +482,7 @@ export function getFurnitureFeet(cookie) {
 
 export function getOnePieceWoodtypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/woodtypes?one_piece=true?_sort=Item:ASC`,
+    const res = await fetch(`${db_url}/woodtypes?one_piece=true&_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
