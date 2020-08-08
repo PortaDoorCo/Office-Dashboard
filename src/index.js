@@ -13,11 +13,16 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import rootReducer from "./rootReducer";
 import { save, load } from "redux-localstorage-simple"
+import Cookies from "js-cookie";
+const cookie = Cookies.get("jwt");
 
 
 
 const middleware = [thunk];
 
+if (!cookie) {
+    localStorage.removeItem('redux_localstorage_simple')
+}
 
 
 const store = createStore(
@@ -27,7 +32,8 @@ const store = createStore(
     }),
     composeWithDevTools(applyMiddleware(...middleware, save({
         ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
-    }))));
+    })))
+);
 
 
 
