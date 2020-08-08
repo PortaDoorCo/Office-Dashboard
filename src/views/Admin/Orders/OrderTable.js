@@ -125,7 +125,7 @@ class OrderTable extends React.Component {
       startDate: new Date(),
       endDate: new Date(),
       productData: new CustomStore({
-        load: () => this.props.loadOrders(cookie),
+        load: () => this.props.loadOrders(cookie, 2000),
         update: (key, values) =>
           this.props.updateStatus(key.id, key, values, cookie),
       }),
