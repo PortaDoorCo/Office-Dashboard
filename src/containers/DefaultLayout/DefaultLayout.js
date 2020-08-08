@@ -258,144 +258,41 @@ class DefaultLayout extends Component {
         await loadPaymentTerms(cookie);
       }
 
-
-      if (!loadedWoodtype) {
-        await getWoodtypes(cookie);
-      }
-
-      if (!loadedAppliedMoulds) {
-        await getAppliedMoulds(cookie);
-      }
-
-      if (!loadedBaseCaps) {
-        await getBaseCap(cookie);
-      }
-
-      if (!loadedBaseboards) {
-        await getBaseboards(cookie);
-      }
-
-      if (!loadedCasings) {
-        await getCasings(cookie);
-      }
-
-      if (!loadedChairRails) {
-        await getChairRails(cookie);
-      }
-
-      if (!loadedCopeDesigns) {
-        await getCopeDesigns(cookie);
-      }
-
-      if (!loadedCrownMouldings) {
-        await getCrownMouldings(cookie);
-      }
-
-      if (!loadedEdgeSlabs) {
-        await getEdgeSlabs(cookie);
-      }
-
-      if (!loadedEdges) {
-        await getEdges(cookie);
-      }
-
-      if (!loadedFinishes) {
-        await getFinish(cookie);
-      }
-
-      if (!loadedLites) {
-        await getLites(cookie);
-      }
-
-      if (!loadedMiter_DF_Designs) {
-        await get_Miter_DF_Designs(cookie);
-      }
-
-      if (!loadedMiterDesigns) {
-        await getMiterDesigns(cookie);
-      }
-
-      if (!loadedMouldingsLengths) {
-        await getMouldingsLengths(cookie);
-      }
-
-      if (!loaded_MT_Designs) {
-        await getMTDesigns(cookie);
-      }
-
-      if (!loaded_MT_DF_Designs) {
-        await get_MT_DF_Designs(cookie);
-      }
-
-      if (!loadedPanels) {
-        await getPanels(cookie);
-      }
-
-      if (!loaded_Plynths_Stools) {
-        await get_Plyths_Stools(cookie);
-      }
-
-      if (!loadedProfiles) {
-        await getProfiles(cookie);
-      }
-
-      if (!loadedSolidCrowns) {
-        await getSolidCrowns(cookie);
-      }
-
-      if (!loadedWainscotBeads) {
-        await get_Wainscot_Beads(cookie);
-      }
-
-      if (!loadedFaceFrameDesigns) {
-        await get_Face_Frame_Designs(cookie);
-      }
-
-      if (!loadedFaceFrameTopRails) {
-        await get_Face_Frame_Top_Rails(cookie);
-      }
-
-      if (!loadedFurnitureFeets) {
-        await getFurnitureFeet(cookie);
-      }
-
-      if (!loadedOnePieceWoodtypes) {
-        await getOnePieceWoodtypes(cookie);
-      }
-
-      if (!loadedOnePieceDesigns) {
-        await getOnePieceDesigns(cookie);
-      }
-
-      if (!loadedOnePiecePanels) {
-        await getOnePiecePanels(cookie);
-      }
-
-      if (!loadedOnePieceEdges) {
-        await getOnePieceEdges(cookie);
-      }
-
-      if (!loadedBoxBottomWoodtypes) {
-        await getBoxBottomWoodtypes(cookie);
-      }
-
-      if (!loadedBoxBottomThickness) {
-        await getBoxBottomThickness(cookie);
-      }
-
-      if (!loadedBoxFinish) {
-        await getBoxFinishes(cookie);
-      }
-
-      if (!loadedBoxNotches) {
-        await getBoxNotches(cookie);
-      }
-
-      if (!loadedBoxThickness) {
-        await getBoxThicknesses(cookie);
-      }
-
       if (!loadedBoxWoodtypes) {
+        await getWoodtypes(cookie);
+        await getAppliedMoulds(cookie);
+        await getBaseCap(cookie);
+        await getBaseboards(cookie);
+        await getCasings(cookie);
+        await getChairRails(cookie);
+        await getCopeDesigns(cookie);
+        await getCrownMouldings(cookie);
+        await getEdgeSlabs(cookie);
+        await getEdges(cookie);
+        await getFinish(cookie);
+        await getLites(cookie);
+        await get_Miter_DF_Designs(cookie);
+        await getMiterDesigns(cookie);
+        await getMouldingsLengths(cookie);
+        await getMTDesigns(cookie);
+        await get_MT_DF_Designs(cookie);
+        await getPanels(cookie);
+        await get_Plyths_Stools(cookie);
+        await getProfiles(cookie);
+        await getSolidCrowns(cookie);
+        await get_Wainscot_Beads(cookie);
+        await get_Face_Frame_Designs(cookie);
+        await get_Face_Frame_Top_Rails(cookie);
+        await getFurnitureFeet(cookie);
+        await getOnePieceWoodtypes(cookie);
+        await getOnePieceDesigns(cookie);
+        await getOnePiecePanels(cookie);
+        await getOnePieceEdges(cookie);
+        await getBoxBottomWoodtypes(cookie);
+        await getBoxBottomThickness(cookie);
+        await getBoxFinishes(cookie);
+        await getBoxNotches(cookie);
+        await getBoxThicknesses(cookie);
         await getBoxWoodtypes(cookie);
       }
 
@@ -528,9 +425,9 @@ const mapStateToProps = (state, prop) => ({
   ordersDBLoaded: state.part_list.ordersDBLoaded,
   customerDBLoaded: state.customers.customerDBLoaded,
 
-  loadedPaymentTypes: state.Orders.loadedPaymentTypes,
-  loadedPaymentTerms: state.Orders.loadedPaymentTerms,
-  loadedShippingMethods: state.Orders.loadedShippingMethods,
+  loadedPaymentTypes: state.misc_items.loadedPaymentTypes,
+  loadedPaymentTerms: state.misc_items.loadedPaymentTerms,
+  loadedShippingMethods: state.misc_items.loadedShippingMethods,
   loadedSales: state.sales.loadedSales,
 
   loadedBreakdowns: state.part_list.loadedBreakdowns,
