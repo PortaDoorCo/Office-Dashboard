@@ -27,6 +27,7 @@ import { bindActionCreators } from "redux";
 import {
   loadOrders,
   getDeliveries,
+  socketReceiveUpdateStatus
 } from "../../redux/orders/actions";
 import {
   loadMiscItems,
@@ -205,6 +206,8 @@ class DefaultLayout extends Component {
       loadMiscItems,
       loadedMiscItems,
 
+      socketReceiveUpdateStatus
+
     } = this.props;
 
     const cookie = await Cookies.get("jwt");
@@ -225,14 +228,7 @@ class DefaultLayout extends Component {
         await loadMiscItems(cookie);
       }
 
-
-
-
-
       await getDeliveries(cookie)
-
-
-
 
       if (!loadedPricing) {
         await getPricing(cookie);
@@ -404,9 +400,9 @@ class DefaultLayout extends Component {
       }
 
 
-      socket.on('order_submitted', res => (loadOrders(cookie)))
-      socket.on('order_updated', res => (loadOrders(cookie)))
-      socket.on('order_deleted', res => (loadOrders(cookie)))
+      // socket.on('order_submitted', res => (loadOrders(cookie)))
+      // socket.on('order_updated', res => (loadOrders(cookie)))
+      // socket.on('order_deleted', res => (loadOrders(cookie)))
       // socket.on('status_updated', (res, updatedStatus) => (loadOrders(cookie)))
 
 
@@ -610,7 +606,7 @@ const mapDispatchToProps = dispatch =>
       // getDoorOptions
 
 
-
+      socketReceiveUpdateStatus
 
 
 
