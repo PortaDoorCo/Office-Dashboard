@@ -85,6 +85,10 @@ import { login, getUsers } from "../../redux/users/actions";
 
 import Loader from '../../views/Admin/Loader/Loader'
 import { NotificationContainer } from 'react-notifications';
+import io from 'socket.io-client';
+import db_url from '../../redux/db_url'
+
+const socket = io(db_url);
 
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
@@ -400,9 +404,9 @@ class DefaultLayout extends Component {
       }
 
 
-      // socket.on('order_submitted', res => (loadOrders(cookie)))
-      // socket.on('order_updated', res => (loadOrders(cookie)))
-      // socket.on('order_deleted', res => (loadOrders(cookie)))
+      socket.on('order_submitted', res => (loadOrders(cookie)))
+      socket.on('order_updated', res => (loadOrders(cookie)))
+      socket.on('order_deleted', res => (loadOrders(cookie)))
       // socket.on('status_updated', (res, updatedStatus) => (loadOrders(cookie)))
 
 
