@@ -152,10 +152,10 @@ class OrderTable extends React.Component {
 
   componentDidMount() {
     const dataGrid = this.dataGrid.instance;
-    socket.on('order_submitted', res => (dataGrid.refresh()))
-    socket.on('order_deleted', res => (dataGrid.refresh()))
-    socket.on('order_updated', res => (dataGrid.refresh()))
-    socket.on('status_updated', res => dataGrid.refresh())
+    // socket.on('order_submitted', res => (dataGrid.refresh()))
+    // socket.on('order_deleted', res => (dataGrid.refresh()))
+    // socket.on('order_updated', res => (dataGrid.refresh()))
+    // socket.on('status_updated', res => dataGrid.refresh())
     let filter = [
       ['createdAt', '>=', moment().startOf('day').valueOf()],
       'and',

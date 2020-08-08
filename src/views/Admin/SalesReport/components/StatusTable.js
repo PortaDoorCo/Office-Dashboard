@@ -106,9 +106,9 @@ class StatusTable extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         const dataGrid = this.dataGrid.instance;
-        socket.on('order_submitted', res => (dataGrid.refresh()))
-        socket.on('order_deleted', res => (dataGrid.refresh()))
-        socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
+        // socket.on('order_submitted', res => (dataGrid.refresh()))
+        // socket.on('order_deleted', res => (dataGrid.refresh()))
+        // socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
         if (prevProps.orders !== this.props.orders) {
             const filteredItems = this.props.orders.filter(item => (item.sale && item.sale.fullName && item.sale.fullName.includes(this.props.status)));
           
