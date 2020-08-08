@@ -1,16 +1,16 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   FormGroup,
   Label,
-} from "reactstrap";
-import { Field, FieldArray, change } from "redux-form";
+} from 'reactstrap';
+import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import {  renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
-import Cope_Table from '../../Table/DFs/Cope_Table'
-import Ratio from 'lb-ratio'
+import {  renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
+import Cope_Table from '../../Table/DFs/Cope_Table';
+import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -25,14 +25,11 @@ const fraction = num => {
 };
 
 class CopeDF extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onChangeProfile = () => {
-    const part_list = this.props.formState.part_list
+    const part_list = this.props.formState.part_list;
     const { index } = this.props;
-    const part = part_list[index]
+    const part = part_list[index];
 
     if (part.dimensions) {
       part.dimensions.forEach((info, i) => {
@@ -103,13 +100,11 @@ class CopeDF extends Component {
       panels,
       applied_moulds,
       finishes,
-
       isValid,
       index,
       part_list,
       formState,
       prices,
-      itemPrice,
       subTotal
     } = this.props;
     return (
@@ -252,8 +247,6 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes,
-
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),

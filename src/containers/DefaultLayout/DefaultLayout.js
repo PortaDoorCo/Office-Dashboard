@@ -86,10 +86,6 @@ import { login, getUsers } from "../../redux/users/actions";
 
 import Loader from '../../views/Admin/Loader/Loader'
 import { NotificationContainer } from 'react-notifications';
-import io from 'socket.io-client';
-import db_url from '../../redux/db_url'
-
-const socket = io(db_url);
 
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
@@ -131,83 +127,34 @@ class DefaultLayout extends Component {
       getOnePieceDesigns,
       getOnePiecePanels,
       getOnePieceEdges,
-
       loadShippingMethod,
       loadPaymentTypes,
       loadPaymentTerms,
-
       getBoxBottomThickness,
       getBoxFinishes,
       getBoxNotches,
       getBoxThicknesses,
       getBoxWoodtypes,
       getBoxBottomWoodtypes,
-
       getBreakdowns,
       getBoxBreakdowns,
-
       getPricing,
-
       getUsers,
-
       login,
       loadSales,
       loadOrders,
       getDeliveries,
-
-      loadedWoodtype,
-      loadedAppliedMoulds,
-      loadedBaseCaps,
-      loadedBaseboards,
-      loadedCasings,
-      loadedChairRails,
-      loadedCopeDesigns,
-      loadedCrownMouldings,
-      loadedEdgeSlabs,
-      loadedEdges,
-      loadedFinishes,
-      loadedLites,
-      loadedMiter_DF_Designs,
-      loadedMiterDesigns,
-      loadedMouldingsLengths,
-      loaded_MT_Designs,
-      loaded_MT_DF_Designs,
-      loadedPanels,
-      loaded_Plynths_Stools,
-      loadedProfiles,
-      loadedSolidCrowns,
-      loadedWainscotBeads,
-      loadedFaceFrameDesigns,
-      loadedFaceFrameTopRails,
-      loadedFurnitureFeets,
-      loadedOnePieceWoodtypes,
-      loadedOnePieceDesigns,
-      loadedOnePiecePanels,
-      loadedOnePieceEdges,
-
-      loadedBoxBottomThickness,
-      loadedBoxFinish,
-      loadedBoxNotches,
-      loadedBoxThickness,
       loadedBoxWoodtypes,
-      loadedBoxBottomWoodtypes,
-
       loadedBreakdowns,
-
-
       loadedPaymentTypes,
       loadedPaymentTerms,
       loadedShippingMethods,
       loadedSales,
-
       loadedBoxBreakdowns,
       loadedPricing,
       loadCustomers,
       loadMiscItems,
       loadedMiscItems,
-
-      socketReceiveUpdateStatus
-
     } = this.props;
 
     const cookie = await Cookies.get("jwt");
@@ -381,41 +328,7 @@ const mapStateToProps = (state, prop) => ({
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   loggedIn: state.users.loggedIn,
 
-  loadedWoodtype: state.part_list.loadedWoodtype,
-  loadedAppliedMoulds: state.part_list.loadedAppliedMoulds,
-  loadedBaseCaps: state.part_list.loadedBaseCaps,
-  loadedBaseboards: state.part_list.loadedBaseboards,
-  loadedCasings: state.part_list.loadedCasings,
-  loadedChairRails: state.part_list.loadedChairRails,
-  loadedCopeDesigns: state.part_list.loadedCopeDesigns,
-  loadedCrownMouldings: state.part_list.loadedCrownMouldings,
-  loadedEdgeSlabs: state.part_list.loadedEdgeSlabs,
-  loadedEdges: state.part_list.loadedEdges,
-  loadedFinishes: state.part_list.loadedFinishes,
-  loadedLites: state.part_list.loadedLites,
-  loadedMiter_DF_Designs: state.part_list.loadedMiter_DF_Designs,
-  loadedMiterDesigns: state.part_list.loadedMiterDesigns,
-  loadedMouldingsLengths: state.part_list.loadedMouldingsLengths,
-  loaded_MT_Designs: state.part_list.loaded_MT_Designs,
-  loaded_MT_DF_Designs: state.part_list.loaded_MT_DF_Designs,
-  loadedOrders: state.part_list.loadedOrders,
-  loadedPanels: state.part_list.loadedPanels,
-  loaded_Plynths_Stools: state.part_list.loaded_Plynths_Stools,
-  loadedProfiles: state.part_list.loadedProfiles,
-  loadedSolidCrowns: state.part_list.loadedSolidCrowns,
-  loadedWainscotBeads: state.part_list.loadedWainscotBeads,
-  loadedFaceFrameDesigns: state.part_list.loadedFaceFrameDesigns,
-  loadedFaceFrameTopRails: state.part_list.loadedFaceFrameTopRails,
-  loadedFurnitureFeets: state.part_list.loadedFurnitureFeets,
-  loadedOnePieceWoodtypes: state.part_list.loadedOnePieceWoodtypes,
-  loadedOnePieceDesigns: state.part_list.loadedOnePieceDesigns,
-  loadedOnePiecePanels: state.part_list.loadedOnePiecePanels,
-  loadedOnePieceEdges: state.part_list.loadedOnePieceEdges,
 
-  loadedBoxBottomThickness: state.part_list.loadedBoxBottomThickness,
-  loadedBoxFinish: state.part_list.loadedBoxFinish,
-  loadedBoxNotches: state.part_list.loadedBoxNotches,
-  loadedBoxThickness: state.part_list.loadedBoxThickness,
   loadedBoxWoodtypes: state.part_list.loadedBoxWoodtypes,
   loadedBoxBottomWoodtypes: state.part_list.loadedBoxBottomWoodtypes,
 

@@ -1,26 +1,22 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   FormGroup,
   Label,
-  Input,
-
-} from "reactstrap";
+} from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
-import DropdownList from 'react-widgets/lib/DropdownList'
-import 'react-widgets/dist/css/react-widgets.css';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
-import moment from 'moment'
-import momentLocaliser from 'react-widgets-moment'
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import moment from 'moment';
+import momentLocaliser from 'react-widgets-moment';
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
 import { connect } from 'react-redux';
 
-momentLocaliser(moment)
+momentLocaliser(moment);
 
 
 
-const status = ['Quote', 'Ordered', 'Shipped', 'RUSH']
+const status = ['Quote', 'Ordered', 'Shipped', 'RUSH'];
 
 const required = value => value ? undefined : 'Required';
 
@@ -35,13 +31,13 @@ const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
       value={!value ? null : new Date(value)}
       disabled={edit}
     />
-  </div>
+  </div>;
 
 
 
 class JobInfo extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loaded: false
     };
@@ -52,7 +48,7 @@ class JobInfo extends Component {
     if (formState && formState.job_info && formState.job_info.customer) {
       if (formState.job_info.customer !== prevProps.formState.job_info.customer) {
 
-        const customer = formState.job_info.customer
+        const customer = formState.job_info.customer;
 
         this.props.dispatch(
           change(

@@ -1,30 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadOrders } from '../../../redux/orders/actions'
-import moment from 'moment'
-import momentLocaliser from 'react-widgets-moment'
-import StatusTable from './Components/Table'
-import io from 'socket.io-client';
-import db_url from '../../../redux/db_url'
-import Cookies from "js-cookie";
-const socket = io(db_url);
+import { loadOrders } from '../../../redux/orders/actions';
+import moment from 'moment';
+import momentLocaliser from 'react-widgets-moment';
+import StatusTable from './Components/Table';
 
-const cookie = Cookies.get("jwt");
-
-momentLocaliser(moment)
+momentLocaliser(moment);
 
 const SalesReport = (props) => {
-  const { orders, role } = props;
-  const [data, setData] = useState(orders)
+  const { orders } = props;
+  const [data, setData] = useState(orders);
 
   useEffect(() => {
     const filteredOrders = orders.filter(item => {
-      return item.late === true
-    })
+      return item.late === true;
+    });
     setData(filteredOrders);
 
-  }, [orders])
+  }, [orders]);
 
   // useEffect(() => {
   //   socket.on('order_submitted', res => props.loadOrders(cookie))
@@ -36,12 +30,12 @@ const SalesReport = (props) => {
   return (
 
     <div>
-        <StatusTable
-            orders={data}
-        />
+      <StatusTable
+        orders={data}
+      />
     </div>
-  ) 
-}
+  ); 
+};
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,

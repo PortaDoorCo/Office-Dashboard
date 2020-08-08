@@ -1,27 +1,20 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   FormGroup,
-  Label,
-  Button,
-  Input
-} from "reactstrap";
-import { Field, FieldArray, change } from "redux-form";
+  Label
+} from 'reactstrap';
+import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Cookies from "js-cookie";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs';
 import MT_Table from '../../Table/DFs/MT_Table';
-import Ratio from 'lb-ratio'
+import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
-  subTotalSelector,
-  taxSelector,
-  totalSelector,
-  addPriceSelector
+  subTotalSelector
 } from '../../../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
@@ -33,71 +26,68 @@ const fraction = num => {
 
 
 class MT_DF extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onChangeProfile = () => {
-    const part_list = this.props.formState.part_list
+    const part_list = this.props.formState.part_list;
 
     part_list.forEach((part, i) => {
-        if (part.dimensions) {
-          part.dimensions.forEach((info, index) => {
+      if (part.dimensions) {
+        part.dimensions.forEach((info, index) => {
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].leftStile`,
+              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+            )
+          );
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].rightStile`,
+              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+            )
+          );
+
+          if(info.full_frame) {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].leftStile`,
-                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+                `part_list[${i}].dimensions[${index}].topRail`,
+                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
               )
             );
-
+  
+  
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].rightStile`,
-                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+                `part_list[${i}].dimensions[${index}].bottomRail`,
+                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
               )
             );
-
-            if(info.full_frame) {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].topRail`,
-                  fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
-                )
-              );
+          } else {
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].topRail`,
+                fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
+              )
+            );
   
   
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].bottomRail`,
-                  fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
-                )
-              );
-            } else {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].topRail`,
-                  fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
-                )
-              );
-  
-  
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].bottomRail`,
-                  fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
-                )
-              );
-            }
-          });
-        } else {
-          return
-        }
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].bottomRail`,
+                fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
+              )
+            );
+          }
+        });
+      } else {
+        return;
+      }
     });
   }
 
@@ -108,15 +98,12 @@ class MT_DF extends Component {
       mt_designs,
       edges,
       panels,
-      applied_moulds,
       finishes,
-
       isValid,
       index,
       part_list,
       formState,
       prices,
-      itemPrice,
       subTotal,
       edit
     } = this.props;

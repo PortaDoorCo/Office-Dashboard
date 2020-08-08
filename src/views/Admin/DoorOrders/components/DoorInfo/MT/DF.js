@@ -1,16 +1,16 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   FormGroup,
   Label
-} from "reactstrap";
-import { Field, FieldArray, change } from "redux-form";
+} from 'reactstrap';
+import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
 import MT_Table from '../../Table/DFs/MT_Table';
-import Ratio from 'lb-ratio'
+import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -26,15 +26,11 @@ const fraction = num => {
 
 
 class MT_DF extends Component {
-  constructor(props) {
-    super(props);
-  }
-
 
   onChangeProfile = () => {
-    const part_list = this.props.formState.part_list
+    const part_list = this.props.formState.part_list;
     const { index } = this.props;
-    const part = part_list[index]
+    const part = part_list[index];
 
     if (part.dimensions) {
       part.dimensions.forEach((info, i) => {
@@ -101,15 +97,12 @@ class MT_DF extends Component {
       mt_designs,
       edges,
       panels,
-      applied_moulds,
       finishes,
-
       isValid,
       index,
       part_list,
       formState,
       prices,
-      itemPrice,
       subTotal
     } = this.props;
     return (

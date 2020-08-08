@@ -1,20 +1,12 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React from 'react';
 import {
-  Label,
   Table,
   Input,
   Row,
-  Col,
   Button
-} from "reactstrap";
-
+} from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from "redux-form";
-
-
-
-
-
+import { Field } from 'redux-form';
 
 const GlassTable = ({ table, index, renderField, renderFieldDisabled, required, w, i, h, formState, prices, fields, renderMultiSelect, doorOptions, renderDropdownList }) => {
 
@@ -84,11 +76,11 @@ const GlassTable = ({ table, index, renderField, renderFieldDisabled, required, 
               <Input
                 type="text"
                 className="form-control"
-                placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                placeholder={'$' + prices[i][index].toFixed(2) || 0}
               /> : <Input
                 type="text"
                 className="form-control"
-                placeholder={"$0.00"}
+                placeholder={'$0.00'}
               />
             }
 
@@ -96,7 +88,7 @@ const GlassTable = ({ table, index, renderField, renderFieldDisabled, required, 
           <td>
             <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
               X
-           </Button>
+            </Button>
           </td>
         </tr>
 
@@ -155,7 +147,7 @@ const GlassTable = ({ table, index, renderField, renderFieldDisabled, required, 
       </tbody>
 
     </Table>
-  )
-}
+  );
+};
 
 export default GlassTable;
