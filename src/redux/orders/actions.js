@@ -27,11 +27,12 @@ export const LOAD_PAYMENT_TYPES = 'LOAD_PAYMENT_TYPES'
 export const LOAD_PAYMENT_TERMS = 'LOAD_PAYMENT_TERMS'
 
 export const SOCKET_LOAD_ORDERS = 'SOCKET_LOAD_ORDERS'
+export const SOCKET_RECEIVE_UPDATE_STATUS = 'SOCKET_RECEIVE_UPDATE_STATUS'
+
+
 
 export function loadOrders(cookie, amt) {
-
   const amount = amt ? amt : 500
-
   return async function (dispatch) {
     const res = await fetch(`${db_url}/orders?_limit=${amount}&_sort=orderNum:DESC`,
       {
@@ -127,7 +128,6 @@ export function updateStatus(orderId, key, status, cookie) {
       }
     ]
   }
-
   return async function (dispatch) {
     try {
       const res = await axios.put(`${db_url}/orders/status/${orderId}`, item, {
@@ -146,6 +146,18 @@ export function updateStatus(orderId, key, status, cookie) {
     }
   };
 }
+
+
+export function socketReceiveUpdateStatus(res) {
+  console.log('SOCKET RES',res)
+  return async function (dispatch) {
+    return dispatch({
+        type: SOCKET_RECEIVE_UPDATE_STATUS,
+        data: res
+    });
+};
+}
+
 
 export function updateBalance(orderId, balance, cookie) {
 

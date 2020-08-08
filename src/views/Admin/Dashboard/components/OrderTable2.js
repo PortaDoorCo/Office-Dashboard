@@ -69,12 +69,6 @@ const status = [
     },
 ];
 
-
-const socket = io(db_url);
-
-
-const actions = <Button key="add">Add</Button>;
-
 const conditionalRowStyles = [
     {
         when: row => row.late == true,
@@ -86,8 +80,6 @@ const conditionalRowStyles = [
         },
     },
 ];
-
-
 
 
 const OrderTable = (props) => {
@@ -102,14 +94,9 @@ const OrderTable = (props) => {
 
     const handleStatusChange = async (e, row) => {
         const { updateStatus } = props;
-
-        console.log('eeee', e)
-        console.log('rowww', row)
-
         const status = {
             status: e
         }
-
         await updateStatus(row.id, row, status, cookie)
     }
 
@@ -142,15 +129,12 @@ const OrderTable = (props) => {
         },
         {
             name: 'Status',
-          
-            cell: row => <div>
-                {/* <Select options={status} value={row.status} placeholder={row.status} onChange={(e) => handleStatusChange(e, row)} /> */}
-                <Select defaultValue={row.status} style={{ width: 160 }} onChange={(e) => handleStatusChange(e, row)}>
+            grow: 1,
+            cell: row => <Select defaultValue={row.status} style={{ width: '100%' }} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
                     {status.map((i,index) => (
                         <Option key={index} value={i.value}>{i.value}</Option>
                     ))}
                 </Select>
-            </div>,
         },
         {
             name: 'Submitted By',
