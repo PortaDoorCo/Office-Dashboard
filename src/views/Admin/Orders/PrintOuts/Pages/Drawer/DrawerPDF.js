@@ -2,9 +2,9 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
 import AssemblyList from '../../Drawer_PDF/AssemblyList';
 import Sides from '../../Drawer_PDF/Sides';
-import Bottoms from '../../Drawer_PDF/Bottoms'
-import Invoice from '../../Drawer_PDF/Invoice'
-import Acknowledgement from '../../Drawer_PDF/Acknowledgement'
+import Bottoms from '../../Drawer_PDF/Bottoms';
+import Invoice from '../../Drawer_PDF/Invoice';
+import Acknowledgement from '../../Drawer_PDF/Acknowledgement';
 
 
 export default (data, breakdowns) => {

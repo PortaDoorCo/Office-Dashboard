@@ -3,7 +3,7 @@ import { Pie } from 'react-chartjs-2';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import moment from 'moment'
+import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import 'chartjs-plugin-colorschemes';
 
@@ -28,7 +28,7 @@ class Chart2 extends Component {
     const groups = [];
     filteredOrders.forEach(item => {
       item.part_list.forEach(part => {
-        if (item.orderType === "Door Order") {
+        if (item.orderType === 'Door Order') {
           switch (part.construction.value) {
             case 'Cope':
               groups.push(part.cope_design);
@@ -41,16 +41,16 @@ class Chart2 extends Component {
               break;
             default:
               // code block
-              return
+              return;
           }
 
         }
 
-      })
+      });
     });
     let groupbyName = _.groupBy(groups, 'NAME');
 
-    groupbyName = Object.entries(groupbyName).map(([k, v]) => ({ key: k, value: v })).sort((a, b) => b.value.length - a.value.length)
+    groupbyName = Object.entries(groupbyName).map(([k, v]) => ({ key: k, value: v })).sort((a, b) => b.value.length - a.value.length);
 
     const pie = {
       labels: groupbyName.map(i => i.key),
@@ -70,7 +70,7 @@ class Chart2 extends Component {
           scheme: 'brewer.Paired9'
         }
       }
-    }
+    };
 
     return (
       <div>

@@ -1,23 +1,20 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CopeDoor from './Cope/Door'
-import MiterDoor from './Miter/Door'
-import MTDoor from './MT/Door'
-import GlassDoor from './Glass/Glass_Door'
-import CopeDF from './Cope/DF'
-import MiterDF from './Miter/DF'
-import MT_DF from './MT/DF'
-import FaceFrame from './Face_Frame/FaceFrame'
-import One_Piece_Door from './One_Piece/One_Piece'
-import Slab_Door from './Slab_Door/Slab_Door'
-import Glass_DF from './Glass/Glass_DF'
+import CopeDoor from './Cope/Door';
+import MiterDoor from './Miter/Door';
+import MTDoor from './MT/Door';
+import GlassDoor from './Glass/Glass_Door';
+import CopeDF from './Cope/DF';
+import MiterDF from './Miter/DF';
+import MT_DF from './MT/DF';
+import FaceFrame from './Face_Frame/FaceFrame';
+import OnePieceDoor from './One_Piece/One_Piece';
+import SlabDoor from './Slab_Door/Slab_Door';
+import GlassDF from './Glass/Glass_DF';
 
 
 
 class Conditionals extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const {
@@ -43,7 +40,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
-              />
+              />;
               break;
             case 'M':
               component = <MiterDoor
@@ -53,7 +50,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
-              />
+              />;
               break;
             case 'MT':
               component = <MTDoor
@@ -63,7 +60,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
-              />
+              />;
               break;
             case 'Glass':
               component = <GlassDoor
@@ -73,8 +70,10 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
-              />
+              />;
               break;
+            default:
+              return;
           }
           break;
         case 'DF':
@@ -87,7 +86,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
-              />
+              />;
               break;
             case 'M':
               component = <MiterDF
@@ -97,7 +96,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
-              />
+              />;
               break;
             case 'MT':
               component = <MT_DF
@@ -107,18 +106,20 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
-              />
+              />;
               break;
             case 'Glass':
-              component = <Glass_DF
+              component = <GlassDF
                 part={part}
                 index={index}
                 isValid={isValid}
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
-              />
+              />;
               break;
+            default:
+              return;
           }
           break;
         case 'Face_Frame':
@@ -128,40 +129,40 @@ class Conditionals extends Component {
             isValid={isValid}
             part_list={part_list}
             formState={formState}
-          edit={edit}
-          />
+            edit={edit}
+          />;
           break;
         case 'One_Piece':
-          component = <One_Piece_Door
+          component = <OnePieceDoor
             part={part}
             index={index}
             isValid={isValid}
             part_list={part_list}
             formState={formState}
             edit={edit}
-          />
+          />;
           break;
         case 'Slab_Door':
-          component = <Slab_Door
+          component = <SlabDoor
             part={part}
             index={index}
             isValid={isValid}
             part_list={part_list}
             formState={formState}
             edit={edit}
-          />
+          />;
           break;
         default:
-          component = <div />
+          component = <div />;
       }
 
       return (
         <div>
           {component}
         </div>
-      )
+      );
     } else {
-      return <div />
+      return <div />;
     }
   }
 }

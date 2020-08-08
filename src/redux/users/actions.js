@@ -90,8 +90,7 @@ export function forgotPassword(email) {
 export function resetPassword(code) {
   return async function (dispatch) {
     try {
-      const res = axios.post(`${db_url}/auth/reset-password`, code);
-      const data = await res;
+      axios.post(`${db_url}/auth/reset-password`, code);
       return await dispatch({
         type: RESET_PASSWORD,
         data: true

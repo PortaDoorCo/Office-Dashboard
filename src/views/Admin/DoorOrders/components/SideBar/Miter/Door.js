@@ -37,8 +37,8 @@ class SideBar extends Component {
                   {(part.woodtype && part.woodtype.photo) ? (
                     <img src={part.woodtype.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
               <Col>
@@ -49,8 +49,8 @@ class SideBar extends Component {
                   {(part.miter_design && part.miter_design.photo) ? (
                     <img src={part.miter_design.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
 
@@ -61,7 +61,7 @@ class SideBar extends Component {
             </Row>
             <Row>
 
-            <Col>
+              <Col>
                 <h4 style={{ textAlign: 'center' }}>Panel</h4>
                 <div
                   style={{ width: '100px', height: '100px', margin: 'auto' }}
@@ -69,8 +69,8 @@ class SideBar extends Component {
                   {(part.panel && part.panel.photo) ? (
                     <img src={part.panel.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
 
@@ -82,8 +82,8 @@ class SideBar extends Component {
                   {(part.applied_profile && part.applied_profile.photo) ? (
                     <img src={part.applied_profile.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
             </Row>

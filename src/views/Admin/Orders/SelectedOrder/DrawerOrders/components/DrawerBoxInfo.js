@@ -7,12 +7,10 @@ import {
   Label,
   Button
 } from 'reactstrap';
-import "antd/dist/antd.css";
+import 'antd/dist/antd.css';
 import { Field, FieldArray } from 'redux-form';
-import DropdownList from 'react-widgets/lib/DropdownList';
-import 'react-widgets/dist/css/react-widgets.css';
 import OrderTable from './OrderTable';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from './RenderInputs/renderInputs'
+import { renderDropdownList, renderField } from './RenderInputs/renderInputs';
 
 
 const required = value => value ? undefined : 'Required';
@@ -21,7 +19,7 @@ class DrawerBoxInfo extends Component {
 
 
   render() {
-    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, assembly, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState, edit } = this.props;
+    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState, edit } = this.props;
     return (
       <div>
         {fields.map((part, index) => (
@@ -190,7 +188,7 @@ class DrawerBoxInfo extends Component {
             }
           >
             Add Item
-    </Button>
+          </Button>
           :
           <div />
         }

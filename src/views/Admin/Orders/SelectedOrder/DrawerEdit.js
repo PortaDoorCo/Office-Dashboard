@@ -28,9 +28,9 @@ import {
 import DrawerBoxInfo from './components/DrawerOrder/components/DrawerBoxInfo';
 import JobInfo from './components/DrawerOrder/components/JobInfo';
 import { updateOrder, loadOrders } from '../../../../redux/orders/actions';
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 
 class DrawerOrders extends Component {
   constructor(props) {
@@ -53,7 +53,7 @@ class DrawerOrders extends Component {
 
   submit = async (values, e) => {
 
-    const { updateOrder, loadOrders, prices, itemPrice, subTotal,tax,total } = this.props;
+    const { updateOrder, prices, itemPrice, subTotal,tax,total } = this.props;
 
     const order = {
       part_list: values.part_list,

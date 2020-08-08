@@ -5,17 +5,14 @@ import {
   Col,
   Card,
   CardBody,
-  CardFooter,
   Button,
   Input,
   InputGroup,
-  Form
 } from "reactstrap";
 import { Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { registerUser, resetPassword } from '../../../redux/users/actions';
-import { strapiRegister } from '../../../utils/auth';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 const NewPassword = props => {

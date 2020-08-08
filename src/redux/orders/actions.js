@@ -91,7 +91,6 @@ export function deleteOrder(orderId, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-      const data = await res;
       return dispatch({
         type: DELETE_ORDER,
       });
