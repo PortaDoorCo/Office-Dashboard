@@ -46,8 +46,6 @@ import {
   balanceTotalSelector
 } from '../../../../../selectors/drawerPricing';
 import moment from 'moment-business-days'
-import SideBar from './components/SideBar';
-import Sticky from 'react-stickynode';
 import Cookies from "js-cookie";
 import { FileUploader } from 'devextreme-react';
 import { renderField } from './components/RenderInputs/renderInputs'

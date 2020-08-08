@@ -8,11 +8,13 @@ import {
   Button
 } from 'reactstrap';
 import "antd/dist/antd.css";
-import { Field, FieldArray } from 'redux-form';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';
 import OrderTable from './OrderTable';
 import { renderField } from '../../../../components/RenderInputs/renderInputs'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 
 const required = value => value ? undefined : 'Required';
@@ -190,6 +192,32 @@ class DrawerBoxInfo extends Component {
   }
 }
 
-export default DrawerBoxInfo;
+
+
+const mapStateToProps = (state, prop) => ({
+  orders: state.Orders.orders,
+  ordersDBLoaded: state.Orders.ordersDBLoaded,
+  customerOrder: state.Orders.customerOrder,
+  selectedCompanies: state.customers.selectedCompanies
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+
+    },
+    dispatch
+  );
+
+  DrawerBoxInfo = reduxForm({
+    form: 'DrawerOrder',
+    enableReinitialize: true
+  })(DrawerBoxInfo);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DrawerBoxInfo);
+
 
 

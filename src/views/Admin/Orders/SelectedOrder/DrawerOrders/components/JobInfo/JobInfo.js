@@ -14,6 +14,7 @@ import 'react-widgets/dist/css/react-widgets.css';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import moment from 'moment'
 import momentLocaliser from 'react-widgets-moment'
+import { reduxForm}  from 'redux-form';
 import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
 
 momentLocaliser(moment)
@@ -292,6 +293,10 @@ const mapStateToProps = state => ({
   shippingMethods: state.misc_items.shippingMethods
 });
 
+JobInfo = reduxForm({
+  form: 'DrawerOrder',
+  enableReinitialize: true
+})(JobInfo);
 
 export default connect(
   mapStateToProps,
