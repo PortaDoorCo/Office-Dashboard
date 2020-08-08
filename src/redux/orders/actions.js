@@ -28,9 +28,9 @@ export const LOAD_PAYMENT_TERMS = 'LOAD_PAYMENT_TERMS'
 
 export const SOCKET_LOAD_ORDERS = 'SOCKET_LOAD_ORDERS'
 
-export function loadOrders(cookie) {
+export function loadOrders(cookie, amt) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/orders?_limit=500&_sort=orderNum:DESC`,
+    const res = await fetch(`${db_url}/orders?_limit=${amt}&_sort=orderNum:DESC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
