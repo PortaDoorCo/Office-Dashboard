@@ -759,7 +759,7 @@ export function getPhotoId(i, cookie) {
 
 export function getBreakdowns(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/breakdowns`,
+    const res = await fetch(`${db_url}/breakdowns?_sort=Item:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
