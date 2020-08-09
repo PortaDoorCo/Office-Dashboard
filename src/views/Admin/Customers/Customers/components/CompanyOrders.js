@@ -75,7 +75,7 @@ const CustomerOrders = (props) => {
 
 
 
-  const columns = useMemo(clickHandler => [
+  const columns = [
 
     {
       selector: 'orderNum',
@@ -122,7 +122,7 @@ const CustomerOrders = (props) => {
         </IconButton>
       </Tooltip>
     },
-  ]);
+  ];
 
   const contextActions = useMemo(() => {
     const handleDelete = () => {

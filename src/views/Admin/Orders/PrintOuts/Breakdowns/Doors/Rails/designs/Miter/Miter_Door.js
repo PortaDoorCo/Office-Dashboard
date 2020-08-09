@@ -1,5 +1,4 @@
 import Ratio from 'lb-ratio';
-import frac2dec from '../../../frac2dec';
 import numQty from 'numeric-quantity';
 
 const fraction = num => {

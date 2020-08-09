@@ -400,7 +400,7 @@ class Edit extends Component {
                     <Button type="submit" color="primary" size="lg">
                       Submit
                     </Button>
-                    <Button type="cancel" type="button" color="primary" size="lg" onClick={this.props.onEdit}>
+                    <Button type="cancel" color="primary" size="lg" onClick={this.props.onEdit}>
                       Cancel
                     </Button>
                   </div>

@@ -403,22 +403,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   );
 };
 
-const mapStateToProps = state => ({
 
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-
-
-    },
-    dispatch
-  );
-
-
-export default connect(
-  mapStateToProps,
-  null
-)(Cope_Table);
+export default connect()(Cope_Table);
 

@@ -7,16 +7,19 @@ function frac2dec(fraction) {
     fractionParts = fraction.split(' ');
   }
 
+  let decimalParts;
+  let decimal;
+
   if (fractionParts.length > 1 && fraction.indexOf('/') !== -1) {
     var integer = parseInt(fractionParts[0]);
-    var decimalParts = fractionParts[1].split('/');
-    var decimal = parseInt(decimalParts[0]) / parseInt(decimalParts[1]);
+    decimalParts = fractionParts[1].split('/');
+    decimal = parseInt(decimalParts[0]) / parseInt(decimalParts[1]);
     
     return integer + decimal;
   }
   else if (fraction.indexOf('/') !== -1) {
-    var decimalParts = fraction.split('/');
-    var decimal = parseInt(decimalParts[0]) / parseInt(decimalParts[1]);
+    decimalParts = fraction.split('/');
+    decimal = parseInt(decimalParts[0]) / parseInt(decimalParts[1]);
     return decimal;
   }
   else {
