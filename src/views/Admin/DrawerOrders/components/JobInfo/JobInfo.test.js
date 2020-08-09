@@ -6,15 +6,20 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from '../../../../../rootReducer';
+import { reduxForm } from 'redux-form'
 
 const middleware = [thunk];
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)));
+
+const Decorated = reduxForm({ 
+  form: 'DoorOrder'
+})(JobInfo);
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <Provider store={store}>
-      <JobInfo />
+      <Decorated />
     </Provider>
     , div);
   ReactDOM.unmountComponentAtNode(div);
