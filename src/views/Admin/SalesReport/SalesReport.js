@@ -32,12 +32,6 @@ const SalesReport = (props) => {
 
   }, [startDate, endDate, orders]);
 
-  // useEffect(() => {
-  //   socket.on('order_submitted', res => props.loadOrders(cookie))
-  //   socket.on('status_updated', res => props.loadOrders(cookie))
-  //   socket.on('order_updated', res => props.loadOrders(cookie))
-  // })
-
   const minDate = new Date(orders[orders.length - 1].createdAt);
 
   

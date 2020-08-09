@@ -30,6 +30,9 @@ import { NotificationManager } from 'react-notifications';
 import db_url from '../../../redux/db_url';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { setSelectedOrder } from '../../../redux/orders/actions';
+import { connect } from 'react-redux';
 
 const cookie = Cookies.get('jwt');
 
@@ -173,6 +176,7 @@ class RestrictedOrderTable extends React.Component {
 
   toggle = row => {
     const { modal } = this.state;
+    const { setSelectedOrder } = this.props;
 
     this.setState({
       modal: !modal,
@@ -181,13 +185,9 @@ class RestrictedOrderTable extends React.Component {
 
     if (!modal) {
       const x = row.row.data;
-      this.setState({
-        selectedOrder: x,
-      });
+      setSelectedOrder(x);
     } else {
-      this.setState({
-        selectedOrder: null
-      });
+      setSelectedOrder(null);
     }
   }
 
@@ -567,4 +567,23 @@ class RestrictedOrderTable extends React.Component {
   }
 }
 
-export default RestrictedOrderTable;
+const mapStateToProps = (state, prop) => ({
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+
+      setSelectedOrder
+    },
+    dispatch
+  );
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RestrictedOrderTable);
+

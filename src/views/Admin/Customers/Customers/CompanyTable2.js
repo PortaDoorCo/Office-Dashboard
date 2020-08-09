@@ -22,7 +22,7 @@ import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadCustomers, updateCustomer, submitCustomer } from '../../../../redux/customers/actions';
+import { loadCustomers, updateCustomer, submitCustomer, setSelectedCompanies } from '../../../../redux/customers/actions';
 
 import Geocode from 'react-geocode';
 import CustomerPage from './CustomerPage';
@@ -104,7 +104,7 @@ class CustomerTable extends React.Component {
 
     toggle = async row => {
       const { modal } = this.state;
-
+      const { setSelectedCompanies } = this.props;
 
       this.setState({
         modal: !modal,
@@ -113,8 +113,9 @@ class CustomerTable extends React.Component {
       if (!modal) {
         const x = row.row.data;
 
+        setSelectedCompanies(x);
+
         await this.setState({
-          selectedCompanies: x,
           selectedOrder: x.id,
           salesRep: x.sale
         });
@@ -205,8 +206,6 @@ class CustomerTable extends React.Component {
         selectedRowKeys,
       } = this.state;
       const { salesReps, shippingMethods, paymentTerms, paymentTypes } = this.props;
-
-
 
       return (
         <React.Fragment>
@@ -408,7 +407,6 @@ class CustomerTable extends React.Component {
             <CustomerPage
               toggle={this.toggle}
               modal={this.state.modal}
-              selectedCompanies={this.state.selectedCompanies}
               orders={this.state.selectedOrder}
               locations={this.state.locations}
               defaultCenter={this.state.defaultCenter}
@@ -434,7 +432,8 @@ const mapDispatchToProps = dispatch =>
     {
       loadCustomers,
       updateCustomer,
-      submitCustomer
+      submitCustomer,
+      setSelectedCompanies
     },
     dispatch
   );

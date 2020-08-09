@@ -21,7 +21,9 @@ import OrderPage from '../../Orders/OrderPage';
 import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-
+import { bindActionCreators } from 'redux';
+import { setSelectedOrder } from '../../../../redux/orders/actions';
+import { connect } from 'react-redux';
 
 
 
@@ -94,6 +96,7 @@ class StatusTable extends React.Component {
 
     toggle = row => {
       const { modal } = this.state;
+      const { setSelectedOrder } = this.props;
 
       this.setState({
         modal: !modal,
@@ -103,31 +106,9 @@ class StatusTable extends React.Component {
       if (!modal) {
         const x = row.row.data;
           
-        this.setState({
-          selectedOrder: [
-            {
-              id: x.id,
-              jobInfo: x.jobInfo,
-              jobName: x.jobInfo.jobName,
-              status: x.status,
-              poNum: x.jobInfo.poNum,
-              part_list: x.part_list,
-              dimensions: x.dimensions,
-              shippingAddress: x.jobInfo,
-              linePrice: x.linePrice,
-              total: x.total,
-              orderNum: x.orderNum,
-              orderType: x.orderType,
-              itemPrice: x.itemPrice,
-              subTotals: x.subTotals,
-              tax: x.tax,
-              files: x.files,
-              tracking: x.tracking
-            },
-          ],
-        });
+        setSelectedOrder(x);
       } else {
-        return;
+        setSelectedOrder(null);
       }
     }
 
@@ -303,7 +284,25 @@ class StatusTable extends React.Component {
     }
 }
 
-export default StatusTable;
+const mapStateToProps = (state, prop) => ({
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+
+      setSelectedOrder
+    },
+    dispatch
+  );
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StatusTable);
 
 
 
