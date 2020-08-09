@@ -131,7 +131,7 @@
     "redux-form": "^8.3.6",
     "redux-localstorage-simple": "^2.2.0",
     "redux-logger": "^3.0.6",
-    "redux-mock-store": "^1.5.3",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "reselect-map": "^1.0.4",
