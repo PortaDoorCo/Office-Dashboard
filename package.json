@@ -52,6 +52,7 @@
     "dotenv": "^8.2.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "express": "^4.17.1",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
     "formik": "^1.5.1",
@@ -147,7 +148,8 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "react-scripts --max_old_space_size=4096 start",
+    "start": "node server.js",
+    "start-dev": "react-scripts --max_old_space_size=4096 start",
     "build": "CI=false react-scripts --max_old_space_size=4096 build",
     "test": "echo hurray",
     "test-react": "react-scripts test",
