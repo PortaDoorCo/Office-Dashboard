@@ -1,27 +1,20 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   FormGroup,
   Label,
-  Button,
-  Input
-} from "reactstrap";
-import { Field, FieldArray, change } from "redux-form";
+} from 'reactstrap';
+import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Cookies from "js-cookie";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
-import MT_Table from '../../Table/Doors/MT_Table'
-import Ratio from 'lb-ratio'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs';
+import MT_Table from '../../Table/Doors/MT_Table';
+import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
-  subTotalSelector,
-  taxSelector,
-  totalSelector,
-  addPriceSelector
+  subTotalSelector
 } from '../../../../../../../../selectors/doorPricing';
 
 
@@ -33,12 +26,9 @@ const fraction = num => {
 
 
 class MT_Door extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onChangeProfile = () => {
-    const part_list = this.props.formState.part_list
+    const part_list = this.props.formState.part_list;
 
     part_list.forEach((part, i) => {
       if (part.dimensions) {
@@ -100,7 +90,7 @@ class MT_Door extends Component {
           }
         });
       } else {
-        return
+        return;
       }
     });
   }
@@ -114,14 +104,11 @@ class MT_Door extends Component {
       panels,
       applied_moulds,
       finishes,
-
       isValid,
       index,
       part_list,
       formState,
-
       prices,
-      itemPrice,
       subTotal,
       edit
     } = this.props;

@@ -12,13 +12,13 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import Selection from './Selection'
+import Selection from './Selection';
 
 
 const Settings = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selection, setSelection] = useState('index')
+  const [selection, setSelection] = useState('index');
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -34,40 +34,40 @@ const Settings = (props) => {
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Doors
-              </DropdownToggle>
+                  </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem onClick={() => setSelection('cope_door')}>
                       Cope and Stick
-                </DropdownItem>
+                    </DropdownItem>
                     <DropdownItem onClick={() => setSelection('mt_door')}>
                       MT Door
-                </DropdownItem>
-                  <DropdownItem onClick={() => setSelection('miter_door')}>
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('miter_door')}>
                       Mitre Door
-                </DropdownItem>
-                <DropdownItem onClick={() => setSelection('slab_type_door')}>
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('slab_type_door')}>
                       Slab Type Door
-                </DropdownItem>
-                <DropdownItem onClick={() => setSelection('one_piece_door')}>
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('one_piece_door')}>
                       One Piece Door
-                </DropdownItem>
+                    </DropdownItem>
                 
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Drawer Fronts
-              </DropdownToggle>
+                  </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem onClick={() => setSelection('cope_df')}>
                       Cope and Stick
-                </DropdownItem>
+                    </DropdownItem>
                     <DropdownItem onClick={() => setSelection('mt_df')}>
                       MT Design
-                </DropdownItem>
+                    </DropdownItem>
                     <DropdownItem onClick={() => setSelection('miter_df')}>
                       Mitre Design
-                </DropdownItem>
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
@@ -77,7 +77,7 @@ const Settings = (props) => {
                   <DropdownMenu right>
                     <DropdownItem onClick={() => setSelection('drawer_box')}>
                       Dovetail Drawer Box
-                  </DropdownItem>
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
@@ -87,7 +87,7 @@ const Settings = (props) => {
                   <DropdownMenu right>
                     <DropdownItem onClick={() => setSelection('face_frames')}>
                       Face Frames
-                  </DropdownItem>
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
@@ -97,10 +97,10 @@ const Settings = (props) => {
                   <DropdownMenu right>
                     <DropdownItem onClick={() => setSelection('door_pricing')}>
                       Doors
-                  </DropdownItem>
-                  <DropdownItem onClick={() => setSelection('drawer_pricing')} >
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('drawer_pricing')} >
                       Drawer Boxes
-                  </DropdownItem>
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
@@ -116,6 +116,6 @@ const Settings = (props) => {
       </Row>
     </div>
   );
-}
+};
 
-export default Settings
+export default Settings;

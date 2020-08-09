@@ -1,34 +1,19 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect } from 'react';
 import {
   Table,
   Input,
   Row,
   Col,
   Button
-} from "reactstrap";
+} from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from "redux-form";
-import Ratio from "lb-ratio";
+import { Field } from 'redux-form';
+import Ratio from 'lb-ratio';
 import Maker from '../MakerJS/Maker';
-import { renderField, renderFieldDisabled, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs'
+import { renderField, renderFieldDisabled, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
 
 
 const required = value => (value ? undefined : 'Required');
-
-
-const unevenDirection = [
-  {
-    name: 'Top to Bottom',
-    value: 'Top'
-  },
-  {
-    name: 'Bottom to Top',
-    value: "Bottom"
-  }
-];
-
-
-
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -37,40 +22,38 @@ const fraction = num => {
 
 const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
 
-  const [width, setWidth] = useState([])
-  const [height, setHeight] = useState([])
-
-
+  const [width, setWidth] = useState([]);
+  const [height, setHeight] = useState([]);
 
   useEffect(() => {
 
-    let init = []
-    setWidth(init)
-    setHeight(init)
+    let init = [];
+    setWidth(init);
+    setHeight(init);
 
-  }, [updateSubmit])
+  }, [updateSubmit]);
 
   const w = (e, v, i) => {
     e.preventDefault();
-    let newWidth = [...width]
+    let newWidth = [...width];
     if (width[i]) {
-      newWidth.splice(i, 1, v)
+      newWidth.splice(i, 1, v);
     } else {
-      newWidth = [...newWidth, v]
+      newWidth = [...newWidth, v];
     }
     setWidth(newWidth);
-  }
+  };
 
   const h = (e, v, i) => {
     e.preventDefault();
-    let newHeight = [...height]
+    let newHeight = [...height];
     if (height[i]) {
-      newHeight.splice(i, 1, v)
+      newHeight.splice(i, 1, v);
     } else {
-      newHeight = [...newHeight, v]
+      newHeight = [...newHeight, v];
     }
     setHeight(newHeight);
-  }
+  };
 
 
   return (
@@ -160,7 +143,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Input
                         type="text"
                         className="form-control"
-                        placeholder={"$0.00"}
+                        placeholder={'$0.00'}
                       />
                       {/* } */}
 
@@ -168,7 +151,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     <td>
                       <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
                         X
-</Button>
+                      </Button>
                     </td>
                   </tr>
 
@@ -293,7 +276,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         <div>
                           <Col />
                           <Col>
-                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index + 1}</strong></p>
+                            <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
@@ -301,7 +284,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           </Col>
                           <Col />
                         </div>
-                      )
+                      );
                     })}
                   </Row>
                 </div>
@@ -330,7 +313,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 className="btn-circle"
                 onClick={(e) =>
                   (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "Cope" && formState.part_list[formState.part_list.length - 1].profile) ?
+                    (formState.part_list[formState.part_list.length - 1].construction.value === 'Cope' && formState.part_list[formState.part_list.length - 1].profile) ?
                       fields.push({
                         panelsH: 1,
                         panelsW: 1,
@@ -348,14 +331,14 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,
-                        unevenSplitInput: "0",
+                        unevenSplitInput: '0',
                         showBuilder: false
                       })
                       : alert('please select a profile')
                   )}
               >
                 +
-                </Button>
+              </Button>
             </Col>
           </Row>
 
@@ -381,7 +364,7 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           </Row>
         </Fragment>
       </div> : <div />
-  )
+  );
 };
 
 export default OrderTable;

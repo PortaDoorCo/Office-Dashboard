@@ -1,205 +1,217 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { Row, Col, Input, Button } from 'reactstrap';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import CustomerPage from './CustomerPage';
 import DataTable from 'react-data-table-component';
 import { Tooltip, IconButton } from '@material-ui/core';
-import Inbox from '@material-ui/icons/Inbox'
+import Inbox from '@material-ui/icons/Inbox';
 import differenceBy from 'lodash/differenceBy';
-import Geocode from "react-geocode";
-
-const apiKey = 'AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE';
+import Geocode from 'react-geocode';
+import { setSelectedCompanies } from '../../../../redux/customers/actions';
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
-    <>
-        <div>
-            <Row>
-                <Col>
-                    <Input id="search" type="text" placeholder="Filter Orders" value={filterText} onChange={onFilter} />
-                </Col>
-            </Row>
-        </div>
-    </>
+  <>
+    <div>
+      <Row>
+        <Col>
+          <Input id="search" type="text" placeholder="Filter Orders" value={filterText} onChange={onFilter} />
+        </Col>
+      </Row>
+    </div>
+  </>
 );
 
 const CompanyTable = (props) => {
-    const [selectedRows, setSelectedRows] = useState([]);
-    const [toggleCleared, setToggleCleared] = useState(false);
-    const [data, setData] = useState(props.orders);
-    const [modal, setModal] = useState(false)
-    const [addModal, setAddModel] = useState(false)
-    const [orderEdit, setOrderEdit] = useState(false)
-    const [selectedCompanies, setSelectedCompanies] = useState([])
-    const [selectedOrder, setSelectedOrder] = useState(null)
-    const [filterText, setFilterText] = useState('');
-    const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const [locations, setLocations] = useState([])
-    const [defaultCenter, setDefaultCenter] = useState([])
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [toggleCleared, setToggleCleared] = useState(false);
+  const [data, setData] = useState(props.orders);
+  const [modal, setModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [filterText, setFilterText] = useState('');
+  const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+  const [locations, setLocations] = useState([]);
+  const [defaultCenter, setDefaultCenter] = useState([]);
 
 
 
 
-    useEffect(() => {
+  useEffect(() => {
 
-        // const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
-        // setData(filteredItems);
-    }, [filterText])
+    // const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
+    // setData(filteredItems);
+  }, [filterText]);
 
-    const handleRowSelected = useCallback(state => {
-        setSelectedRows(state.selectedRows);
-    }, []);
+  const handleRowSelected = useCallback(state => {
+    setSelectedRows(state.selectedRows);
+  }, []);
 
 
 
-    const subHeaderComponentMemo = useMemo(() => {
-        const handleClear = () => {
-            if (filterText) {
-                setResetPaginationToggle(!resetPaginationToggle);
-                setFilterText('');
-            }
-        };
+  const subHeaderComponentMemo = useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setResetPaginationToggle(!resetPaginationToggle);
+        setFilterText('');
+      }
+    };
 
-        return <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />;
-    }, [filterText, resetPaginationToggle]);
+    return <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />;
+  }, [filterText, resetPaginationToggle]);
 
-    const toggle = async (row) => {
-        setModal(!modal);
+  const toggle = async (row) => {
 
-        if (!modal) {
-            await setSelectedCompanies(row)
-            await setSelectedOrder(row.id)
-            Geocode.setApiKey("AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE");
+    const { setSelectedCompanies } = props;
 
-            let address = `${(row.Address1).replace(/\s/g, "")}${row.City}${row.State}`
+    setModal(!modal);
 
-            // set response language. Defaults to english.
-            Geocode.setLanguage("en");
+    if (!modal) {
+      await setSelectedCompanies(row);
+      await setSelectedOrder(row.id);
+      Geocode.setApiKey('AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE');
 
-            // set response region. Its optional.
-            // A Geocoding request with region=es (Spain) will return the Spanish city.
-            Geocode.setRegion("es");
+      let address = `${(row.Address1).replace(/\s/g, '')}${row.City}${row.State}`;
 
-            // Enable or disable logs. Its optional.
-            Geocode.enableDebug();
+      // set response language. Defaults to english.
+      Geocode.setLanguage('en');
 
-            // Get address from latidude & longitude.
+      // set response region. Its optional.
+      // A Geocoding request with region=es (Spain) will return the Spanish city.
+      Geocode.setRegion('es');
 
-            // Get latidude & longitude from address.
-            Geocode.fromAddress(address).then(
-                response => {
-                    const { lat, lng } = response.results[0].geometry.location;
-                    setLocations([{ lat: lat, lng: lng, label: '', draggable: false, www: '#', title: row.Company }])
-                    // this.setState({ location: [{ lat: lat, lng: lng, label: 'S', draggable: false, www: 'http://portadoor.com', title: "porta door" }] })
-                    setDefaultCenter([{ lat, lng }])
+      // Enable or disable logs. Its optional.
+      Geocode.enableDebug();
 
-                },
-                error => {
-                    console.error(error);
-                }
-            );
+      // Get address from latidude & longitude.
 
-        } else {
-            return
+      // Get latidude & longitude from address.
+      Geocode.fromAddress(address).then(
+        response => {
+          const { lat, lng } = response.results[0].geometry.location;
+          setLocations([{ lat: lat, lng: lng, label: '', draggable: false, www: '#', title: row.Company }]);
+          // this.setState({ location: [{ lat: lat, lng: lng, label: 'S', draggable: false, www: 'http://portadoor.com', title: "porta door" }] })
+          setDefaultCenter([{ lat, lng }]);
+
+        },
+        error => {
+          console.error(error);
         }
+      );
 
-
+    } else {
+      return;
     }
 
-    const editable = () => {
-        setOrderEdit(!orderEdit)
-    }
+
+  };
 
 
+  const columns = [
 
-    const columns = useMemo(clickHandler => [
+    {
+      selector: 'Company',
+      name: 'Company',
+      sortable: true
 
-        {
-            selector: 'Company',
-            name: 'Company',
-            sortable: true
-
-        },
-        // {
-        //     selector: 'sale.fullName',
-        //     name: 'Sales Person',
+    },
+    // {
+    //     selector: 'sale.fullName',
+    //     name: 'Sales Person',
 
 
-        // },
-        {
-            selector: 'Contact',
-            name: 'Contact',
+    // },
+    {
+      selector: 'Contact',
+      name: 'Contact',
 
-        },
-        {
-            selector: 'Address1',
-            name: 'Address1',
+    },
+    {
+      selector: 'Address1',
+      name: 'Address1',
 
-        },
-        {
-            selector: 'State',
-            name: 'State',
+    },
+    {
+      selector: 'State',
+      name: 'State',
 
-        },
-        {
-            selector: 'City',
-            name: 'City',
-        },
-        {
-            name: '',
-            button: true,
-            cell: row => <Tooltip title="View Company" placement="top">
-                <IconButton onClick={function (event) {
-                    event.preventDefault()
-                    toggle(row)
-                }} id={row.id}>
-                    <Inbox>Open</Inbox>
-                </IconButton>
-            </Tooltip>
-        },
-    ]);
+    },
+    {
+      selector: 'City',
+      name: 'City',
+    },
+    {
+      name: '',
+      button: true,
+      cell: row => <Tooltip title="View Company" placement="top">
+        <IconButton onClick={function (event) {
+          event.preventDefault();
+          toggle(row);
+        }} id={row.id}>
+          <Inbox>Open</Inbox>
+        </IconButton>
+      </Tooltip>
+    },
+  ];
 
-    const contextActions = useMemo(() => {
-        const handleDelete = () => {
+  const contextActions = useMemo(() => {
+    const handleDelete = () => {
 
-            if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.orderNum)}?`)) {
-                setToggleCleared(!toggleCleared);
-                setData(differenceBy(data, selectedRows, 'orderNum'));
-            }
-        };
+      if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.orderNum)}?`)) {
+        setToggleCleared(!toggleCleared);
+        setData(differenceBy(data, selectedRows, 'orderNum'));
+      }
+    };
 
-        return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon="true">Delete</Button>;
-    }, [data, selectedRows, toggleCleared]);
+    return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon="true">Delete</Button>;
+  }, [data, selectedRows, toggleCleared]);
 
-    return (
-        <div>
-            <DataTable
-                title="Customers"
-                columns={columns}
-                data={props.customerDB}
-                // selectableRows
-                highlightOnHover
-                pagination
-                contextActions={contextActions}
-                // selectableRowsComponent={Checkbox}
-                onRowSelected={handleRowSelected}
-                clearSelectedRows={toggleCleared}
-                paginationResetDefaultPage={resetPaginationToggle}
-                subHeader
-                subHeaderComponent={subHeaderComponentMemo}
-            />
-            {modal ?
-                <CustomerPage
-                    toggle={toggle}
-                    modal={modal}
-                    selectedCompanies={selectedCompanies}
-                    orders={selectedOrder}
-                    locations={locations}
-                    defaultCenter={defaultCenter}
-                /> : null
-            }
+  return (
+    <div>
+      <DataTable
+        title="Customers"
+        columns={columns}
+        data={props.customerDB}
+        // selectableRows
+        highlightOnHover
+        pagination
+        contextActions={contextActions}
+        // selectableRowsComponent={Checkbox}
+        onRowSelected={handleRowSelected}
+        clearSelectedRows={toggleCleared}
+        paginationResetDefaultPage={resetPaginationToggle}
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
+      />
+      {modal ?
+        <CustomerPage
+          toggle={toggle}
+          modal={modal}
+          orders={selectedOrder}
+          locations={locations}
+          defaultCenter={defaultCenter}
+        /> : null
+      }
 
-        </div>
-    );
+    </div>
+  );
 };
 
-export default CompanyTable;
+const mapStateToProps = (state, prop) => ({
+  selectedCompanies: state.customers.selectedCompanies
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setSelectedCompanies
+    },
+    dispatch
+  );
+
+
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CompanyTable);

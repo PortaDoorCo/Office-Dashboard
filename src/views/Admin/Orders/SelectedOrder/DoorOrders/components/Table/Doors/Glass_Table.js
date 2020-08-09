@@ -1,37 +1,21 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect } from 'react';
 import {
-  Label,
   Table,
   Input,
   Row,
   Col,
   Button
-} from "reactstrap";
+} from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from "redux-form";
-import Ratio from "lb-ratio";
+import { Field } from 'redux-form';
+import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
-import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder'
-import { connect } from 'react-redux'
+import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs';
+import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder';
+import { connect } from 'react-redux';
 
 const required = value => (value ? undefined : 'Required');
-
-
-const unevenDirection = [
-  {
-    name: 'Top to Bottom',
-    value: 'Top'
-  },
-  {
-    name: 'Bottom to Top',
-    value: "Bottom"
-  }
-];
-
-
-
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -40,63 +24,40 @@ const fraction = num => {
 
 const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
-  const [width, setWidth] = useState([])
-  const [height, setHeight] = useState([])
+  const [width, setWidth] = useState([]);
+  const [height, setHeight] = useState([]);
 
 
 
   useEffect(() => {
 
-    let init = []
-    setWidth(init)
-    setHeight(init)
+    let init = [];
+    setWidth(init);
+    setHeight(init);
 
-  }, [updateSubmit])
+  }, [updateSubmit]);
 
   const w = (e, v, i) => {
     e.preventDefault();
-    let newWidth = [...width]
+    let newWidth = [...width];
     if (width[i]) {
-      newWidth.splice(i, 1, v)
+      newWidth.splice(i, 1, v);
     } else {
-      newWidth = [...newWidth, v]
+      newWidth = [...newWidth, v];
     }
     setWidth(newWidth);
-  }
+  };
 
   const h = (e, v, i) => {
     e.preventDefault();
-    let newHeight = [...height]
+    let newHeight = [...height];
     if (height[i]) {
-      newHeight.splice(i, 1, v)
+      newHeight.splice(i, 1, v);
     } else {
-      newHeight = [...newHeight, v]
+      newHeight = [...newHeight, v];
     }
     setHeight(newHeight);
-  }
-
-  const twoHigh = (index) => {
-    const part = formState.part_list[i]
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-      ),
-    );
-  }
-
-  const twoWide = (index) => {
-    const part = formState.part_list[i]
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-        fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-      )
-    );
-  }
-
+  };
 
   return (
     formState ?
@@ -186,13 +147,13 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           type="text"
                           disabled={edit}
                           className="form-control"
-                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                          placeholder={'$' + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
                           disabled={edit}
                           className="form-control"
-                          placeholder={"$0.00"}
+                          placeholder={'$0.00'}
                         />
                       }
 
@@ -338,7 +299,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         <div>
                           <Col />
                           <Col>
-                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index + 1}</strong></p>
+                            <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
@@ -347,7 +308,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           </Col>
                           <Col />
                         </div>
-                      )
+                      );
                     })}
                   </Row>
                 </div>
@@ -355,7 +316,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               }
 
               <Row>
-              <Col xs="4">
+                <Col xs="4">
                   <strong>Notes</strong>
                   <Field
                     name={`${table}.notes`}
@@ -389,7 +350,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                   className="btn-circle"
                   onClick={(e) =>
                     (
-                      (formState.part_list[formState.part_list.length - 1].construction.value === "Glass" && formState.part_list[formState.part_list.length - 1].profile) ?
+                      (formState.part_list[formState.part_list.length - 1].construction.value === 'Glass' && formState.part_list[formState.part_list.length - 1].profile) ?
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
@@ -407,7 +368,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           ),
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,
-                          unevenSplitInput: "0",
+                          unevenSplitInput: '0',
                           unevenSplit: false,
                           unevenCheck: false,
                           showBuilder: false,
@@ -425,20 +386,20 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           </Row>
 
           <Row>
-          <Col xs="4" />
+            <Col xs="4" />
             <Col xs="5" />
             <Col xs="3">
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-              <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
+                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
                 <RenderPriceHolder input={'0.00'} edit={true} />
-                )}
+              )}
             </Col>
           </Row>
         </Fragment>
       </div> : <div />
-  )
+  );
 };
 
 export default connect() (Cope_Table);

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
 import { renderField, renderDropdownListFilter, renderPrice } from '../../../../components/RenderInputs/renderInputs';
-import { Button, Row, Col, Table, Input } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 
 
 let Inputs = props => {
-  const { fields, misc_items } = props
+  const { fields, misc_items } = props;
 
   return (
     <div>
@@ -36,7 +36,7 @@ let Inputs = props => {
                 <td style={{ width: '150px' }}><Field name={`${table}.price`} component={renderPrice} type="text" /></td>
                 <td><Button color="danger" onClick={() => fields.remove(index)}>X</Button></td>
               </tr>
-            )
+            );
           })}
         </tbody>
       </Table>
@@ -46,8 +46,8 @@ let Inputs = props => {
         price: 0
       })}>Add Item</Button>
     </div>
-  )
-}
+  );
+};
 
 class MiscItems extends Component {
 
@@ -56,13 +56,10 @@ class MiscItems extends Component {
     if (formState && formState.misc_items) {
       if (formState.misc_items !== prevProps.formState.misc_items) {
 
-        const misc_items = formState.misc_items
-
-        // console.log("MISCCCCCC ===>", misc_items)
+        const misc_items = formState.misc_items;
 
         misc_items.forEach((i, index) => {
           if(i.item){
-            console.log("MISC ITEM", i)
 
             if(i.item.Price !== 0){
               this.props.dispatch(
@@ -73,19 +70,19 @@ class MiscItems extends Component {
                 )
               );
             } else {
-              return
+              return;
             }
 
           }
           
-        })
+        });
 
       }
     }
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, misc_items } = this.props
+    const { misc_items } = this.props;
     return (
       <div>
         <h3>Misc Items</h3>
@@ -105,7 +102,7 @@ const mapStateToProps = state => ({
 MiscItems = reduxForm({
   form: 'DoorOrder',
   enableReinitialize: true
-})(MiscItems)
+})(MiscItems);
 
 
 export default connect(

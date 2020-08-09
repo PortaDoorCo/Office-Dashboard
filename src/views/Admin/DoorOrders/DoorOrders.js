@@ -38,18 +38,20 @@ import {
 import 'react-notifications/lib/notifications.css';
 import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
-import moment from 'moment-business-days'
-import Cookies from "js-cookie";
+import moment from 'moment-business-days';
+import Cookies from 'js-cookie';
 import { FileUploader } from 'devextreme-react';
-import { renderField } from '../../../components/RenderInputs/renderInputs'
-import MiscItems from './components/MiscItems'
+import { renderField } from '../../../components/RenderInputs/renderInputs';
+import MiscItems from './components/MiscItems';
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
-const dueDate = moment(new Date()).businessAdd(7)._d
+const dueDate = moment(new Date()).businessAdd(7)._d;
 
 class DoorOrders extends Component {
   constructor(props) {
@@ -81,8 +83,7 @@ class DoorOrders extends Component {
       tax,
       total,
       submitOrder,
-      user,
-      orders
+      user
     } = this.props;
 
     const orderType = 'Door Order';
@@ -106,7 +107,7 @@ class DoorOrders extends Component {
         sale: values.job_info.customer.sale.id
       },
       ShippingMethod: values.job_info.ShippingMethod
-    }
+    };
 
     const order = {
       part_list: values.part_list,
@@ -130,15 +131,15 @@ class DoorOrders extends Component {
       submittedBy: user.FirstName,
       tracking: [
         {
-          "status": values.job_info.status,
-          "date": new Date()
+          'status': values.job_info.status,
+          'date': new Date()
         }
       ],
       balance_history: [
         {
-          "balance_due": total,
-          "balance_paid": values.balance_paid,
-          "date": new Date()
+          'balance_due': total,
+          'balance_paid': values.balance_paid,
+          'date': new Date()
         }
       ],
       sale: values.job_info.customer.sale.id
@@ -146,11 +147,11 @@ class DoorOrders extends Component {
 
     if (values.part_list[0].dimensions.length > 0) {
       await submitOrder(order, cookie);
-      this.setState({ updateSubmit: !this.state.updateSubmit })
+      this.setState({ updateSubmit: !this.state.updateSubmit });
       reset();
       window.scrollTo(0, 0);
     } else {
-      return
+      return;
     }
   };
 
@@ -168,8 +169,8 @@ class DoorOrders extends Component {
   onUploaded = (e) => {
     const data = JSON.parse(e.request.response);
     const id = data[0].id;
-    const a = [...this.state.files, id]
-    this.setState({ files: a })
+    const a = [...this.state.files, id];
+    this.setState({ files: a });
   }
 
   render() {
@@ -178,15 +179,10 @@ class DoorOrders extends Component {
     const {
       submitted,
       handleSubmit,
-      prices,
-      subTotal,
-
-
       customers,
       formState,
       isValid,
       address,
-
       total,
       dispatch,
       tax
@@ -270,12 +266,12 @@ class DoorOrders extends Component {
                     <Col xs="3">
                       <Row>
                         <Col>
-                          <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
+                          <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
                         </Col>
                         <Col>
-                          <Button color="danger" onClick={this.cancelOrder} style={{ width: "100%" }}>
+                          <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
                             Cancel
-                        </Button>
+                          </Button>
                         </Col>
                       </Row>
                     </Col>
@@ -334,8 +330,8 @@ class DoorOrders extends Component {
                 );
               })
             ) : (
-                <div />
-              )}
+              <div />
+            )}
           </Col>
         </Row>
       </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CompanyTable2 from './CompanyTable2'
+import CompanyTable from './CompanyTable2';
 import {
   loadOrders,
 } from '../../../../redux/orders/actions';
@@ -14,7 +14,7 @@ class Companies extends Component {
   render() {
     return (
       <div>
-        <CompanyTable2
+        <CompanyTable
           customerDB={this.props.customerDB}
         />
       </div>

@@ -25,16 +25,16 @@ import Report1 from './PrintOuts/Reports/Report1';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF'
+import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
 import { NotificationManager } from 'react-notifications';
-import io from 'socket.io-client';
-import db_url from '../../../redux/db_url'
-import Cookies from "js-cookie";
-import { connect } from 'react-redux'
-import axios from 'axios'
-const socket = io(db_url);
+import db_url from '../../../redux/db_url';
+import Cookies from 'js-cookie';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { setSelectedOrder } from '../../../redux/orders/actions';
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 
 momentLocaliser(moment);
 
@@ -104,7 +104,7 @@ const status = [
   },
 ];
 
-const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production']
+const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production'];
 
 
 class OrderTable extends React.Component {
@@ -144,7 +144,7 @@ class OrderTable extends React.Component {
     this.onEndDate = this.onEndDate.bind(this);
     this.onToolbarPreparing = this.onToolbarPreparing.bind(this);
     this.calculateCellValue = this.calculateCellValue.bind(this);
-    this.onToolbarPreparing = this.onToolbarPreparing.bind(this)
+    this.onToolbarPreparing = this.onToolbarPreparing.bind(this);
     // this.onExportBreakdows = this.onExportBreakdows.bind(this)
     this.onFilterStatus = this.onFilterStatus.bind(this);
     this.onRowPrepared = this.onRowPrepared.bind(this);
@@ -177,7 +177,7 @@ class OrderTable extends React.Component {
   }
 
   onRowPrepared(e) {
-    if (e.rowType == 'data' && e.data.late == true) {
+    if (e.rowType === 'data' && e.data.late === true) {
       e.rowElement.style.backgroundColor = '#FEEBEB';
     }
   }
@@ -191,6 +191,7 @@ class OrderTable extends React.Component {
 
   toggle = row => {
     const { modal } = this.state;
+    const { setSelectedOrder } = this.props;
 
     this.setState({
       modal: !modal,
@@ -200,13 +201,9 @@ class OrderTable extends React.Component {
 
     if (!modal) {
       const x = row.row.data;
-      this.setState({
-        selectedOrder: x,
-      });
+      setSelectedOrder(x);
     } else {
-      this.setState({
-        selectedOrder: null
-      });
+      setSelectedOrder(null);
     }
   }
 
@@ -311,22 +308,22 @@ class OrderTable extends React.Component {
 
     if (this.state.selectedRowKeys.length > 0) {
       this.state.selectedRowsData.map(async (i) => {
-        if (i.orderType === "Door Order") {
+        if (i.orderType === 'Door Order') {
 
           const edgesPromiseArr1 = i.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
             return new Promise((resolve, reject) => {
               toDataUrl(i.edge.photo.url, (result) => {
-                resolve(result)
+                resolve(result);
               });
-            })
+            });
           });
 
           const mouldsPromiseArr1 = i.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
             return new Promise((resolve, reject) => {
               toDataUrl(i.profile.photo.url, (result) => {
-                resolve(result)
+                resolve(result);
               });
-            })
+            });
           });
 
 
@@ -334,17 +331,17 @@ class OrderTable extends React.Component {
           const panelsPromiseArr1 = i.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
             return new Promise((resolve, reject) => {
               toDataUrl(i.panel.photo.url, (result) => {
-                resolve(result)
+                resolve(result);
               });
-            })
+            });
           });
 
           const appliedProfilePromiseArr1 = i.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
             return new Promise((resolve, reject) => {
               toDataUrl(i.applied_profile.photo.url, (result) => {
-                resolve(result)
+                resolve(result);
               });
-            })
+            });
           });
 
           let edges1;
@@ -363,13 +360,13 @@ class OrderTable extends React.Component {
 
           return DoorPDF(i, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
         } else {
-          return DrawerPDF(i, box_breakdowns)
+          return DrawerPDF(i, box_breakdowns);
         }
-      })
+      });
       this.setState({
         selectedRowKeys: [],
         selectedRowsData: []
-      })
+      });
     } else {
       NotificationManager.error('Please Select an Order', 'Order Not Selected', 2000);
     }
@@ -377,17 +374,17 @@ class OrderTable extends React.Component {
   }
 
   onExportReports = e => {
-    const data = this.state.selectedRowsData
-    const startDate = this.state.startDate
-    const endDate = this.state.endDate
-    const status = this.state.filterStatus
+    const data = this.state.selectedRowsData;
+    const startDate = this.state.startDate;
+    const endDate = this.state.endDate;
+    const status = this.state.filterStatus;
     const filteredOrders = this.props.orders.filter(order => {
       if (status === 'All') {
         return (
           (new Date(order.createdAt).getTime() >= moment(startDate).startOf('day').valueOf())
           &&
           (new Date(order.createdAt).getTime() <= moment(endDate).endOf('day').valueOf())
-        )
+        );
       } else {
         return (
           (new Date(order.createdAt).getTime() >= moment(startDate).startOf('day').valueOf())
@@ -395,20 +392,20 @@ class OrderTable extends React.Component {
           (new Date(order.createdAt).getTime() <= moment(endDate).endOf('day').valueOf())
           &&
           (order.status.includes(status))
-        )
+        );
       }
 
-    })
+    });
     if (data.length > 0) {
-      Report1(data, startDate, endDate, status)
+      Report1(data, startDate, endDate, status);
     } else {
-      Report1(filteredOrders, startDate, endDate, status)
+      Report1(filteredOrders, startDate, endDate, status);
     }
 
     this.setState({
       selectedRowKeys: [],
       selectedRowsData: []
-    })
+    });
   }
   onFilterStatus({ value }) {
     const dataGrid = this.dataGrid.instance;
@@ -444,8 +441,8 @@ class OrderTable extends React.Component {
   }
 
   onToolbarPreparing(e) {
-    let onExportBreakdowns = this.onExportBreakdowns.bind(this)
-    let onExportReports = this.onExportReports.bind(this)
+    let onExportBreakdowns = this.onExportBreakdowns.bind(this);
+    let onExportReports = this.onExportReports.bind(this);
     e.toolbarOptions.items.unshift(
       {
         location: 'after',
@@ -461,7 +458,7 @@ class OrderTable extends React.Component {
           },
           onClick: function () {
 
-            onExportBreakdowns()
+            onExportBreakdowns();
           }
         }
       },
@@ -478,7 +475,7 @@ class OrderTable extends React.Component {
             'class': 'dx-datagrid-export-button'
           },
           onClick: function () {
-            onExportReports()
+            onExportReports();
           }
         }
       });
@@ -604,8 +601,9 @@ class OrderTable extends React.Component {
             dataType="datetime"
             format="M/d/yyyy"
           >
-            <HeaderFilter dataSource={this.orderHeaderFilter} />{' '}
-            allowEditing={false}><RequiredRule />
+            <HeaderFilter dataSource={this.orderHeaderFilter} allowEditing={false}>
+              <RequiredRule />
+            </HeaderFilter>
           </Column>
           <Column
             dataField="status"
@@ -676,12 +674,20 @@ class OrderTable extends React.Component {
 const mapStateToProps = (state, prop) => ({
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns
-
 });
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+
+      setSelectedOrder
+    },
+    dispatch
+  );
 
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(OrderTable);
 

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap'
-import Cookies from "js-cookie";
-import PerfectScrollbar from 'react-perfect-scrollbar'
+import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
+import Cookies from 'js-cookie';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getBoxFinishes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
+import { getBoxFinishes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
@@ -28,33 +28,33 @@ const Finish = (props) => {
     UPCHARGE: '',
     photo: null
   });
-  const [newProduct, setNewProduct] = useState(false)
+  const [newProduct, setNewProduct] = useState(false);
 
   const toggle = () => {
-    setModal(!modal)
+    setModal(!modal);
   };
 
   const toggleWarningModal = () => {
-    setWarningModal(!warningModal)
+    setWarningModal(!warningModal);
   };
 
 
   const setCard = card => {
-    setNewProduct(false)
-    setProduct(card)
-    toggle()
-  }
+    setNewProduct(false);
+    setProduct(card);
+    toggle();
+  };
 
   const addProd = () => {
     const p = {
       NAME: '',
       UPCHARGE: '',
       photo: null
-    }
-    setNewProduct(true)
-    setProduct(p)
-    toggle()
-  }
+    };
+    setNewProduct(true);
+    setProduct(p);
+    toggle();
+  };
 
   const change = (e) => {
     const value = e.target.value;
@@ -63,9 +63,9 @@ const Finish = (props) => {
       return ({
         ...prevState,
         [name]: value
-      })
-    })
-  }
+      });
+    });
+  };
 
   const onUploaded = (e) => {
     const data = JSON.parse(e.request.response);
@@ -73,56 +73,56 @@ const Finish = (props) => {
       return ({
         ...prevState,
         photo: data[0]
-      })
-    })
-    return
-  }
+      });
+    });
+    return;
+  };
 
   const updateProduct = async () => {
-    let id = product.id
-    let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "box-finish", cookie)
-    await setModal(!modal)
-    await props.getBoxFinishes(cookie)
-  }
+    let id = product.id;
+    let updatedProduct = product;
+    await props.updateProduct(id, updatedProduct, 'box-finish', cookie);
+    await setModal(!modal);
+    await props.getBoxFinishes(cookie);
+  };
 
   const deleteProduct = async () => {
-    let id = product.id
+    let id = product.id;
 
-    await props.deleteProduct(id, 'box-finish', cookie)
-    await props.getBoxFinishes(cookie)
-    await toggleWarningModal()
-    await toggle()
-  }
+    await props.deleteProduct(id, 'box-finish', cookie);
+    await props.getBoxFinishes(cookie);
+    await toggleWarningModal();
+    await toggle();
+  };
 
   const submitProduct = async () => {
-    const item = props.designs.length + 1
+    const item = props.designs.length + 1;
     const submittedProduct = {
       NAME: product.NAME,
       UPCHARGE: product.UPCHARGE,
       photo: product.photo ? product.photo.id : '',
       Item: item
-    }
-    await props.addProduct(submittedProduct, 'box-finish', cookie)
-    await setModal(!modal)
-    await props.getBoxFinishes(cookie)
-  }
+    };
+    await props.addProduct(submittedProduct, 'box-finish', cookie);
+    await setModal(!modal);
+    await props.getBoxFinishes(cookie);
+  };
 
 
   const card = props.designs.map(card => {
     return (
-      <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
-        <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
-          {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+      <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: '200px' }}>
+        <Card style={{ height: '100%' }} onClick={() => setCard(card)}>
+          {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
           <CardBody>
-          <CardTitle><strong>{card.NAME}</strong></CardTitle>
-              <CardTitle><strong>Price:</strong> ${card.UPCHARGE}</CardTitle>
+            <CardTitle><strong>{card.NAME}</strong></CardTitle>
+            <CardTitle><strong>Price:</strong> ${card.UPCHARGE}</CardTitle>
 
           </CardBody>
         </Card>
       </div>
     );
-  })
+  });
 
   if(role.type === 'management' || role.type === 'authenticated' ||  role.type === 'owner') {
     return (
@@ -135,7 +135,7 @@ const Finish = (props) => {
           </Col>
         </Row>
   
-        <Row style={{ height: "600px" }}>
+        <Row style={{ height: '600px' }}>
           <PerfectScrollbar>
             <div className="col d-flex align-content-start flex-wrap">{card}</div>
           </PerfectScrollbar>
@@ -149,7 +149,7 @@ const Finish = (props) => {
   
                 <Col>
                   <div className="col d-flex align-content-start flex-wrap">
-                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
                   </div>
   
                   <form id="form" method="post" action="" encType="multipart/form-data">
@@ -206,19 +206,19 @@ const Finish = (props) => {
           <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
           <ModalBody>
             Are you sure you want to delete this item?
-            </ModalBody>
+          </ModalBody>
           <ModalFooter>
             <Button color="danger" onClick={deleteProduct}>Yes</Button>
             <Button color="primary" onClick={warningModal}>No</Button>
           </ModalFooter>
         </Modal>
       </div>
-    )
+    );
   } else {
     return (
 
       <div>  
-        <Row style={{ height: "600px" }}>
+        <Row style={{ height: '600px' }}>
           <PerfectScrollbar>
             <div className="col d-flex align-content-start flex-wrap">{card}</div>
           </PerfectScrollbar>
@@ -232,7 +232,7 @@ const Finish = (props) => {
   
                 <Col>
                   <div className="col d-flex align-content-start flex-wrap">
-                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
                   </div>
                 </Col>
               </Row>
@@ -260,20 +260,20 @@ const Finish = (props) => {
           <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
           <ModalBody>
             Are you sure you want to delete this item?
-            </ModalBody>
+          </ModalBody>
           <ModalFooter>
             <Button color="danger" onClick={deleteProduct}>Yes</Button>
             <Button color="primary" onClick={warningModal}>No</Button>
           </ModalFooter>
         </Modal>
       </div>
-    )
+    );
   }
 
   
 
 
-}
+};
 
 const mapStateToProps = (state) => ({
   designs: state.part_list.box_finish,

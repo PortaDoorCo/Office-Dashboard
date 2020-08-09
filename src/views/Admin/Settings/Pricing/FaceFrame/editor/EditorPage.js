@@ -1,16 +1,13 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Editor from './Editor'
-import { Row, Col, Card, CardBody, CardTitle, Button } from 'reactstrap'
-import { updateBreakdowns } from '../../../../../../redux/part_list/actions'
+import Editor from './Editor';
+import { Row, Col, Card, CardBody, CardTitle, Button } from 'reactstrap';
+import { updateBreakdowns } from '../../../../../../redux/part_list/actions';
 
 const EditorPage = (props) => {
 
-  const { updateBreakdowns, pricing } = props;
-
-  const [breakdowns, setBreakdowns] = useState(props.breakdowns);
-
+  const { pricing } = props;
   const [doorPricing, setDoorPricing] = useState(false);
   const [faceFramePricing, setFaceFramePricing] = useState(false);
 
@@ -68,8 +65,8 @@ const EditorPage = (props) => {
         </Col>
       </Row>
     </div>
-  )
-}
+  );
+};
 
 
 const mapStateToProps = (state) => ({

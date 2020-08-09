@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderPrice } from './RenderInputs/renderInputs'
-import RenderPriceHolder from './RenderInputs/RenderPriceHolder'
+import { renderDropdownList, renderField, renderFieldDisabled, renderPrice } from './RenderInputs/renderInputs';
+import RenderPriceHolder from './RenderInputs/RenderPriceHolder';
 
 const required = value => value ? undefined : 'Required';
 
@@ -19,7 +19,7 @@ class OrderTable extends Component {
 
   render() {
 
-    const { fields, scoop, dividers, prices, i, subTotal, part, formState, edit } = this.props;
+    const { fields, scoop, dividers, prices, i, subTotal, formState, edit } = this.props;
 
 
     return (
@@ -117,11 +117,11 @@ class OrderTable extends Component {
                             type="text"
                             className="form-control"
                             disabled={edit}
-                            placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                            placeholder={'$' + prices[i][index].toFixed(2) || 0}
                           /> : <Input
                             type="text"
                             className="form-control"
-                            placeholder={"$0.00"}
+                            placeholder={'$0.00'}
                             disabled={edit}
                           />
                         }
@@ -187,8 +187,8 @@ class OrderTable extends Component {
                 {subTotal[i] ? (
                   <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
                 ) : (
-                    <RenderPriceHolder input={'0.00'} edit={true} />
-                  )}
+                  <RenderPriceHolder input={'0.00'} edit={true} />
+                )}
               </Col>
             </Row>
           </Fragment >
@@ -198,7 +198,7 @@ class OrderTable extends Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setMain: (table) => dispatch(change(`DrawerOrder`, `${table}.price`, 5))
+  setMain: (table) => dispatch(change('DrawerOrder', `${table}.price`, 5))
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(OrderTable);

@@ -63,15 +63,14 @@ export default (data, breakdowns) => {
       ];
 
       i.dimensions.forEach((item, index) => {
-        console.log('ITEM',item)
         tableBody.push(
           [
             { text: index + 1, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
             { text: Size(item), style: 'fonts' },
-            { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n` }), style: 'fonts' },
-            { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}` }), style: 'fonts' },
-            { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n` }), style: 'fonts' },
+            { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
+            { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
+            { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
             { text: item.notes, style: 'fonts' },
           ]
         );

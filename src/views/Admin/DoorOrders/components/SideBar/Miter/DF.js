@@ -37,8 +37,8 @@ class SideBar extends Component {
                   {(part.woodtype && part.woodtype.photo) ? (
                     <img src={part.woodtype.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
               <Col>
@@ -49,8 +49,8 @@ class SideBar extends Component {
                   {(part.miter_df_design && part.miter_df_design.photo) ? (
                     <img src={part.miter_df_design.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
             </Row>
@@ -64,8 +64,8 @@ class SideBar extends Component {
                   {(part.panel && part.panel.photo) ? (
                     <img src={part.panel.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
 

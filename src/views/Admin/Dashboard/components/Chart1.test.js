@@ -12,6 +12,7 @@ const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...mi
 
 it('renders without crashing', () => {
 const div = document.createElement('div');
+window.HTMLCanvasElement.prototype.getContext = () => {}
 ReactDOM.render(
 <Provider store={store}>
     <Chart1 />

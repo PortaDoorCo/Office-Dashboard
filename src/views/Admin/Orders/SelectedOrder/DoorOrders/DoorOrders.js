@@ -7,7 +7,6 @@ import {
   CardBody,
   Input,
   Button,
-  FormGroup,
   InputGroup,
   InputGroupText,
   InputGroupAddon
@@ -24,7 +23,6 @@ import {
   change,
   FieldArray,
   Field,
-  destroy,
 } from 'redux-form';
 import {
   submitOrder,
@@ -45,20 +43,11 @@ import {
   balanceSelector,
   balanceTotalSelector
 } from '../../../../../selectors/doorPricing';
-
-import PropTypes from 'prop-types';
 import 'react-notifications/lib/notifications.css';
-import SideBar from './components/SideBar';
-import Ratio from 'lb-ratio'
-import Sticky from 'react-stickynode';
-import moment from 'moment-business-days'
-import Cookies from "js-cookie";
-import { FileUploader } from 'devextreme-react';
-import { renderField } from './components/RenderInputs/renderInputs'
+import Cookies from 'js-cookie';
+import { renderField } from './components/RenderInputs/renderInputs';
 
-const cookie = Cookies.get("jwt");
-const header = { 'Authorization': 'Bearer ' + cookie };
-
+const cookie = Cookies.get('jwt');
 
 class DoorOrders extends Component {
   constructor(props) {
@@ -89,16 +78,8 @@ class DoorOrders extends Component {
       tax,
       total,
       updateOrder,
-      user,
-      orders,
       balance,
-      reset
     } = this.props;
-
-    const orderType = 'Door Order';
-
-    console.log(values.part_list)
-
 
     const jobInfo = {
       jobName: values.job_info.jobName,
@@ -116,7 +97,7 @@ class DoorOrders extends Component {
         TaxRate: values.job_info.customer.TaxRate,
       },
       ShippingMethod: values.job_info.ShippingMethod
-    }
+    };
 
     const order = {
       part_list: values.part_list,
@@ -156,33 +137,25 @@ class DoorOrders extends Component {
   onUploaded = (e) => {
     const data = JSON.parse(e.request.response);
     const id = data[0].id;
-    const a = [...this.state.files, id]
-    this.setState({ files: a })
+    const a = [...this.state.files, id];
+    this.setState({ files: a });
   }
 
   render() {
 
     const {
-      submitted,
       handleSubmit,
       prices,
-      subTotal,
       customers,
       formState,
       isValid,
       address,
-
       edit,
       shippingMethods,
       total,
       dispatch,
       tax,
-      balance,
-      balanceTotal
     } = this.props;
-
-
-    console.log('BALANCE TPTAL', balance)
 
     return (
 
@@ -267,10 +240,10 @@ class DoorOrders extends Component {
                       {!edit ?
                         <Row>
                           <Col>
-                            <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
+                            <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
                           </Col>
                           <Col>
-                            <Button color="danger" onClick={this.cancelOrder} style={{ width: "100%" }}>
+                            <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
                               Cancel
                             </Button>
                           </Col>
@@ -293,8 +266,8 @@ const mapStateToProps = (state, props) => {
 
 
   return {
-    initialValues: props.selectedOrder,
-    order: props.selectedOrder,
+    initialValues: state.Orders.selectedOrder,
+    order: state.Orders.selectedOrder,
     customers: state.customers.customerDB,
     customerDBLoaded: state.customers.customerDBLoaded,
 
@@ -307,12 +280,8 @@ const mapStateToProps = (state, props) => {
     panels: state.part_list.panels,
     profiles: state.part_list.profiles,
     applied_moulds: state.part_list.applied_moulds,
-
-    part_list: props.selectedOrder.part_list,
     submitted: state.Orders.submitted,
-
     shippingMethods: state.Orders.shippingMethods,
-
     formState: getFormValues('DoorOrder')(state),
     prices: linePriceSelector(state),
     itemPrice: itemPriceSelector(state),
@@ -323,7 +292,7 @@ const mapStateToProps = (state, props) => {
     miscTotalSelector: miscTotalSelector(state),
     balance: balanceSelector(state),
     balanceTotal: balanceTotalSelector(state)
-  }
+  };
 };
 
 const mapDispatchToProps = dispatch =>

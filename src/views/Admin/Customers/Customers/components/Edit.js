@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
   Card,
   CardHeader,
@@ -7,23 +7,19 @@ import {
   Row,
   Col,
   FormGroup,
-  Label,
-  Input,
-  FormFeedback,
-  FormText,
+  Label
 } from 'reactstrap';
-import toPercent from 'decimal-to-percent'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   reduxForm,
   Field,
 } from 'redux-form';
-import DropdownList from 'react-widgets/lib/DropdownList';
-import { updateCustomer } from '../../../../../redux/customers/actions'
+import { updateCustomer } from '../../../../../redux/customers/actions';
+import { renderField, renderDropdownList } from '../../../../../components/RenderInputs/renderInputs';
+import Cookies from 'js-cookie';
 
-import { renderField, renderDropdownList } from '../../../../../components/RenderInputs/renderInputs'
-
+const cookie = Cookies.get('jwt');
 const required = value => (value ? undefined : 'Required');
 
 class Edit extends Component {
@@ -41,21 +37,39 @@ class Edit extends Component {
   };
 
   submit = async (values, e) => {
-    const id = values.id
+    const id = values.id;
 
     const data = {
-      ...values,
-      Ship_Via: values.Ship_Via.Name,
-      sale: values.sale.id
-    }
-    await this.props.updateCustomer(id, data)
-    await this.props.onEdit()
+      Company: values.Company,
+      Contact: values.Contact,
+      EMAIL: values.EMAIL,
+      PaymentMethod: values.PaymentMethod,
+      Ship_Via: values.Ship_Via,
+      sale: values.sale.id,
+      TaxRate: values.TaxRate,
+      PMT_TERMS: values.PMT_TERMS,
+      Address1: values.Address1,
+      Address2: values.Address2,
+      City: values.City,
+      State: values.State,
+      Zip: values.Zip,
+      Phone1: values.Phone1,
+      Shipping_Address1: values.Shipping_Address1,
+      Shipping_Address2: values.Shipping_Address2,
+      Shipping_City: values.Shipping_City,
+      Shipping_State: values.Shipping_State,
+      Shipping_Zip: values.Shipping_Zip,
+      Shipping_Phone: values.Shipping_Phone,
+      Notes: values.Notes
+    };
+
+
+    await this.props.updateCustomer(id, data, cookie);
+    await this.props.onEdit();
   };
 
   render() {
-
-    const props = this.props
-
+    
     const {
       handleSubmit,
       salesReps,
@@ -367,28 +381,37 @@ class Edit extends Component {
                   <Col>
                     <FormGroup>
                       <h6>Extra Notes</h6>
-                      <Input disabled={edit} />
+                      <Field
+                        name={'Notes'}
+                        type="text"
+                        component={renderField}
+                        label="notes"
+                        edit={edit}
+                      />
                     </FormGroup>
                   </Col>
                 </Row>
 
-                {edit ? 
-                <div>
-                  <Button onClick={this.props.onEdit} color="primary" size="lg">
-                    Edit
-                  </Button>
-                </div> :
-                <div>
-                  <Button color="primary" size="lg">
-                    Submit
-                  </Button>
-                  <Button color="primary" size="lg" onClick={this.props.onEdit}>
-                    Cancel
-                  </Button>
-                </div>
-              }
+                {edit ?
+                  <div>
+
+                  </div> :
+                  <div>
+                    <Button type="submit" color="primary" size="lg">
+                      Submit
+                    </Button>
+                    <Button type="cancel" color="primary" size="lg" onClick={this.props.onEdit}>
+                      Cancel
+                    </Button>
+                  </div>
+                }
 
               </form>
+              {edit ?
+                <Button type="button" onClick={this.props.onEdit} color="primary" size="lg">
+                  Edit
+                </Button> : null
+              }
             </CardBody>
           </Card>
         </Row>
@@ -399,7 +422,7 @@ class Edit extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: ownProps.selectedCompanies,
-  salesReps: state.Orders.salesReps,
+  salesReps: state.sales.salesReps,
   shippingMethods: state.misc_items.shippingMethods,
   test: ownProps
 });

@@ -9,7 +9,6 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import NonEdit from './components/NonEdit';
 import Edit from './components/Edit';
 import {
 
@@ -17,8 +16,8 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OrderPage from '../../Orders/OrderPage';
-import CompanyOrders from './components/CompanyOrders'
-import Maps from './components/Maps'
+import CompanyOrders from './components/CompanyOrders';
+import Maps from './components/Maps';
 
 
 class CustomerPage extends Component {
@@ -77,21 +76,23 @@ class CustomerPage extends Component {
   };
 
   onEdit = () => {
+    
     this.setState({
       edit: !this.state.edit
     });
   };
 
   render() {
+
     const props = this.props;
-    const { locations, defaultCenter } = this.props;
+    const { locations, defaultCenter, selectedCompanies } = this.props;
 
     let orders;
 
     if (this.props.orders.length > 0) {
       orders = this.props.orders.filter(
         x => x.job_info.customer.id === this.props.selectedCompanies.id
-      )
+      );
     }
 
 
@@ -139,7 +140,7 @@ class CustomerPage extends Component {
             toggle={this.toggle}
             modal={this.state.modal}
             selectedOrder={this.state.selectedOrder}
-            company={this.props.selectedCompanies.Company}
+            company={selectedCompanies && selectedCompanies.Company}
             editable={this.editable}
             edit={this.state.orderEdit}
           /> : null
@@ -153,7 +154,8 @@ class CustomerPage extends Component {
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
-  customerOrder: state.Orders.customerOrder
+  customerOrder: state.Orders.customerOrder,
+  selectedCompanies: state.customers.selectedCompanies
 });
 
 const mapDispatchToProps = dispatch =>
