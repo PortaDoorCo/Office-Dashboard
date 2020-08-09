@@ -21,11 +21,9 @@ import OrderPage from '../../Orders/OrderPage';
 import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import io from 'socket.io-client';
-import db_url from '../../../../redux/db_url';
-
-
-const socket = io(db_url);
+import { bindActionCreators } from 'redux';
+import { setSelectedOrder } from '../../../../redux/orders/actions';
+import { connect } from 'react-redux';
 
 momentLocaliser(moment);
 
@@ -155,6 +153,7 @@ class StatusTable extends React.Component {
 
     toggle = row => {
       const { modal } = this.state;
+      const { setSelectedOrder } = this.props;
 
       this.setState({
         modal: !modal,
@@ -163,13 +162,9 @@ class StatusTable extends React.Component {
 
       if (!modal) {
         const x = row.row.data;
-        this.setState({
-          selectedOrder: x,
-        });
+        setSelectedOrder(x);
       } else {
-        this.setState({
-          selectedOrder: null
-        });
+        setSelectedOrder(null);
       }
     }
 
@@ -408,7 +403,26 @@ class StatusTable extends React.Component {
     }
 }
 
-export default StatusTable;
+const mapStateToProps = (state, prop) => ({
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+
+      setSelectedOrder
+    },
+    dispatch
+  );
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StatusTable);
+
 
 
 

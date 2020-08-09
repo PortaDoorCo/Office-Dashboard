@@ -9,7 +9,7 @@ import Chart2 from './components/Chart2';
 import Chart3 from './components/Chart3';
 import Chart4 from './components/Chart4';
 import Maps from './components/Maps';
-import OrderTable2 from './components/OrderTable2';
+import OrderTable from './components/OrderTable';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class Dashboard extends Component {
 
         <Row className="mt-3">
           <Col>
-            <OrderTable2 />
+            <OrderTable />
           </Col>
         </Row>
         <Row>
