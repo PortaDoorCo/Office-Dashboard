@@ -59,47 +59,6 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
     setHeight(newHeight);
   };
 
-  const updateFullFrame = (e, index) => {
-
-    const part = formState.part_list[i];
-
-    if (e) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
-        )
-      );
-
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
-        )
-      );
-    } else {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(part.mt_design ? (part.mt_design.DF_Reduction) : 0)
-        )
-      );
-
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(part.mt_design ? (part.mt_design.DF_Reduction) : 0)
-        )
-      );
-    }
-
-  };
-
-
   return (
     formState ?
       <div>

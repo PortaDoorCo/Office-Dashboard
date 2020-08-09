@@ -7,7 +7,7 @@ import {
   Button
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from 'redux-form';
+import { Field } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';

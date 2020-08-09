@@ -3,7 +3,7 @@ import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import { Input, Button, Row, Col, Collapse, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Row, Col, Collapse, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Parameters from './Parameters';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
@@ -15,7 +15,6 @@ const cookie = Cookies.get('jwt');
 const EditorComponent = (props) => {
 
   const {
-    buttonLabel,
     className,
     breakdowns,
     name,
@@ -79,7 +78,7 @@ const EditorComponent = (props) => {
             }}
             onKeyPress={e => {
               e.persist();
-              if (e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45 || e.charCode > 57) {
+              if ((e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45) || e.charCode > 57) {
                 e.preventDefault();
               }
             }}

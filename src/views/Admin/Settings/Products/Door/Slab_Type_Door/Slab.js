@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Woodtype from './attributes/Woodtypes';
 import Designs from './attributes/Designs';
 import Edges from './attributes/Edges';
-import Applied_Profiles from './attributes/Applied_Profiles';
+import AppliedProfiles from './attributes/Applied_Profiles';
 import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../../redux/part_list/actions';
 import classnames from 'classnames';
 import EditorPage from './editor/EditorPage';
@@ -118,7 +118,7 @@ const Cope = (props) => {
                 <Edges edges={props.edges} />
               </TabPane>
               <TabPane tabId="4">
-                <Applied_Profiles applied_profiles={props.applied_profiles} />
+                <AppliedProfiles applied_profiles={props.applied_profiles} />
               </TabPane>
             </TabContent>
           </Row>

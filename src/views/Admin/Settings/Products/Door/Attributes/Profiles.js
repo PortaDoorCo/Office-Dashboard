@@ -7,7 +7,6 @@ import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getProfiles, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import { AppSwitch } from '@coreui/react';
 
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
