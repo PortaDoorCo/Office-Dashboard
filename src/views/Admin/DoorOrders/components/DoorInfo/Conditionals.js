@@ -12,8 +12,6 @@ import OnePieceDoor from './One_Piece/One_Piece';
 import SlabDoor from './Slab_Door/Slab_Door';
 import GlassDF from './Glass/Glass_DF';
 
-
-
 class Conditionals extends Component {
 
   render() {

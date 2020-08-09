@@ -19,15 +19,10 @@ import CustomStore from 'devextreme/data/custom_store';
 import OrderPage from '../../Orders/OrderPage';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import DoorPDF from '../../Orders/PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from '../../Orders/PrintOuts/Pages/Drawer/DrawerPDF';
-import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, updateStatus } from '../../../../redux/orders/actions';
 import { loadCustomers } from '../../../../redux/customers/actions';
-import io from 'socket.io-client';
-import db_url from '../../../../redux/db_url';
 import Cookies from 'js-cookie';
 
 const cookie = Cookies.get('jwt');
@@ -136,7 +131,7 @@ class RestrictedOrderTable extends React.Component {
   }
 
   onRowPrepared(e) {
-    if (e.rowType == 'data' && e.data.late == true) {
+    if (e.rowType === 'data' && e.data.late === true) {
       e.rowElement.style.backgroundColor = '#FEEBEB';
     }
   }

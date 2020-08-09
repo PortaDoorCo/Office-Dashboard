@@ -25,70 +25,68 @@ import Report1 from './PrintOuts/Reports/Report1';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF'
+import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
 import { NotificationManager } from 'react-notifications';
-import io from 'socket.io-client';
-import db_url from '../../../redux/db_url'
-import Cookies from "js-cookie";
-import axios from 'axios'
-const socket = io(db_url);
+import db_url from '../../../redux/db_url';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 
 momentLocaliser(moment);
 
 const status = [
   {
-      name: 'Quote',
-      value: 'Quote',
+    name: 'Quote',
+    value: 'Quote',
   },
   {
-      name: 'Invoiced',
-      value: 'Invoiced',
+    name: 'Invoiced',
+    value: 'Invoiced',
   },
   {
-      name: 'Ordered',
-      value: 'Ordered',
+    name: 'Ordered',
+    value: 'Ordered',
   },
   {
-      name: 'In Production',
-      value: 'In Production',
+    name: 'In Production',
+    value: 'In Production',
   },
   {
-      name: 'Station 1',
-      value: 'Station 1',
+    name: 'Station 1',
+    value: 'Station 1',
   },
   {
-      name: 'Station 2',
-      value: 'Station 2',
+    name: 'Station 2',
+    value: 'Station 2',
   },
   {
-      name: 'Station 3',
-      value: 'Station 3',
+    name: 'Station 3',
+    value: 'Station 3',
   },
   {
-      name: 'Station 4',
-      value: 'Station 4',
+    name: 'Station 4',
+    value: 'Station 4',
   },
   {
-      name: 'Station 4',
-      value: 'Station 4',
+    name: 'Station 4',
+    value: 'Station 4',
   },
   {
-      name: 'Complete',
-      value: 'Complete',
+    name: 'Complete',
+    value: 'Complete',
   },
   {
-      name: 'Shipped',
-      value: 'Shipped',
+    name: 'Shipped',
+    value: 'Shipped',
   },
   {
-      name: 'LATE',
-      value: 'LATE',
+    name: 'LATE',
+    value: 'LATE',
   },
 ];
 
-const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production']
+const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production'];
 
 
 class RestrictedOrderTable extends React.Component {
@@ -111,11 +109,11 @@ class RestrictedOrderTable extends React.Component {
       endDate: new Date(),
       productData: new CustomStore({
         load: () => axios.get(`${db_url}/orders?_limit=${2000}&_sort=orderNum:DESC`,
-        {
-          headers: {
-            'Authorization': `Bearer ${cookie}`
-          }
-        }),
+          {
+            headers: {
+              'Authorization': `Bearer ${cookie}`
+            }
+          }),
         update: (key, values) =>
           this.props.updateStatus(key.id, key, values, cookie),
       }),
@@ -128,7 +126,7 @@ class RestrictedOrderTable extends React.Component {
     this.onEndDate = this.onEndDate.bind(this);
     this.onToolbarPreparing = this.onToolbarPreparing.bind(this);
     this.calculateCellValue = this.calculateCellValue.bind(this);
-    this.onToolbarPreparing = this.onToolbarPreparing.bind(this)
+    this.onToolbarPreparing = this.onToolbarPreparing.bind(this);
     // this.onExportBreakdows = this.onExportBreakdows.bind(this)
     this.onFilterStatus = this.onFilterStatus.bind(this);
     this.onRowPrepared = this.onRowPrepared.bind(this);
@@ -161,10 +159,10 @@ class RestrictedOrderTable extends React.Component {
   }
 
   onRowPrepared(e) {
-    if (e.rowType == 'data' && e.data.late == true) {
-        e.rowElement.style.backgroundColor = '#FEEBEB';
+    if (e.rowType === 'data' && e.data.late === true) {
+      e.rowElement.style.backgroundColor = '#FEEBEB';
     }
-}
+  }
 
   editable = () => {
     const { edit } = this.state;
@@ -292,16 +290,16 @@ class RestrictedOrderTable extends React.Component {
 
     if (this.state.selectedRowKeys.length > 0) {
       this.state.selectedRowsData.map(i => {
-        if (i.orderType === "Door Order") {
+        if (i.orderType === 'Door Order') {
           return DoorPDF(i);
         } else {
-          return DrawerPDF(i)
+          return DrawerPDF(i);
         }
-      })
+      });
       this.setState({
         selectedRowKeys: [],
         selectedRowsData: []
-      })
+      });
     } else {
       NotificationManager.error('Please Select an Order', 'Order Not Selected', 2000);
     }
@@ -309,17 +307,17 @@ class RestrictedOrderTable extends React.Component {
   }
 
   onExportReports = e => {
-    const data = this.state.selectedRowsData
-    const startDate = this.state.startDate
-    const endDate = this.state.endDate
-    const status = this.state.filterStatus
+    const data = this.state.selectedRowsData;
+    const startDate = this.state.startDate;
+    const endDate = this.state.endDate;
+    const status = this.state.filterStatus;
     const filteredOrders = this.props.orders.filter(order => {
       if (status === 'All') {
         return (
           (new Date(order.createdAt).getTime() >= moment(startDate).startOf('day').valueOf())
           &&
           (new Date(order.createdAt).getTime() <= moment(endDate).endOf('day').valueOf())
-        )
+        );
       } else {
         return (
           (new Date(order.createdAt).getTime() >= moment(startDate).startOf('day').valueOf())
@@ -327,20 +325,20 @@ class RestrictedOrderTable extends React.Component {
           (new Date(order.createdAt).getTime() <= moment(endDate).endOf('day').valueOf())
           &&
           (order.status.includes(status))
-        )
+        );
       }
 
-    })
+    });
     if (data.length > 0) {
-      Report1(data, startDate, endDate, status)
+      Report1(data, startDate, endDate, status);
     } else {
-      Report1(filteredOrders, startDate, endDate, status)
+      Report1(filteredOrders, startDate, endDate, status);
     }
 
     this.setState({
       selectedRowKeys: [],
       selectedRowsData: []
-    })
+    });
   }
   onFilterStatus({ value }) {
     const dataGrid = this.dataGrid.instance;
@@ -376,8 +374,7 @@ class RestrictedOrderTable extends React.Component {
   }
 
   onToolbarPreparing(e) {
-    let onExportBreakdowns = this.onExportBreakdowns.bind(this)
-    let onExportReports = this.onExportReports.bind(this)
+    let onExportBreakdowns = this.onExportBreakdowns.bind(this);
     e.toolbarOptions.items.unshift(
       {
         location: 'after',
@@ -393,7 +390,7 @@ class RestrictedOrderTable extends React.Component {
           },
           onClick: function () {
 
-            onExportBreakdowns()
+            onExportBreakdowns();
           }
         }
       }
@@ -520,8 +517,9 @@ class RestrictedOrderTable extends React.Component {
             dataType="datetime"
             format="M/d/yyyy"
           >
-            <HeaderFilter dataSource={this.orderHeaderFilter} />{' '}
-            allowEditing={false}><RequiredRule />
+            <HeaderFilter dataSource={this.orderHeaderFilter} allowEditing={false}>
+              <RequiredRule />
+            </HeaderFilter>
           </Column>
           <Column
             dataField="status"
@@ -555,14 +553,14 @@ class RestrictedOrderTable extends React.Component {
           </Summary>
         </DataGrid>
         {
-            this.state.modal ?
-                <OrderPage
-                    toggle={this.toggle}
-                    modal={this.state.modal}
-                    selectedOrder={this.state.selectedOrder}
-                    editable={this.editable}
-                    edit={this.state.edit}
-                /> : null
+          this.state.modal ?
+            <OrderPage
+              toggle={this.toggle}
+              modal={this.state.modal}
+              selectedOrder={this.state.selectedOrder}
+              editable={this.editable}
+              edit={this.state.edit}
+            /> : null
         }
       </React.Fragment>
     );

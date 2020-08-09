@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Container,
   Row,
@@ -8,8 +8,8 @@ import {
   Button,
   Input,
   InputGroup,
-} from "reactstrap";
-import { Redirect } from "react-router-dom";
+} from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { registerUser, resetPassword } from '../../../redux/users/actions';
@@ -25,14 +25,14 @@ const NewPassword = props => {
 
   const submit = async () => {
     const { resetPassword } = props;
-    const submitNewPassword = { code, password, passwordConfirmation }
+    const submitNewPassword = { code, password, passwordConfirmation };
     if ((password === passwordConfirmation) && password.length > 0) {
-      await resetPassword(submitNewPassword)
-      await NotificationManager.success(`Password Updated!`, 'Password Updated!', 2000);
+      await resetPassword(submitNewPassword);
+      await NotificationManager.success('Password Updated!', 'Password Updated!', 2000);
     } else {
-      alert('your password do not match')
+      alert('your password do not match');
     }
-  }
+  };
 
   if (passwordReset) {
     return (
@@ -41,7 +41,7 @@ const NewPassword = props => {
         <Redirect to='/' />
       </div>
 
-    )
+    );
   } else {
     return (
       <div className="app flex-row align-items-center">
@@ -111,7 +111,7 @@ const NewPassword = props => {
 
 
 
-}
+};
 
 const mapStateToProps = state => ({
   user: state.users.user,

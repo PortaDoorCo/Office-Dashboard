@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import Task from './task'
-import { Droppable } from 'react-beautiful-dnd'
+import React from 'react';
+import styled from 'styled-components';
+import Task from './task';
+import { Droppable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   margin: 8px;
@@ -11,10 +11,10 @@ const Container = styled.div`
 
   display: flex;
   flex-direction: column;
-`
+`;
 const Title = styled.h3`
   padding: 8px;
-`
+`;
 const TaskList = styled.div`
   padding: 8px;
   transition: background-color 0.2s ease;
@@ -22,7 +22,7 @@ const TaskList = styled.div`
     props.isDraggingOver ? 'skyblue' : 'white'}
   flex-grow: 1;
   min-height: 100px;
-`
+`;
 
 export default class Column extends React.Component {
   render() {
@@ -44,6 +44,6 @@ export default class Column extends React.Component {
           )}
         </Droppable>
       </Container>
-    )
+    );
   }
 }

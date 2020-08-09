@@ -8,7 +8,6 @@ import {
 import DoorFilter from './Filter/Filter';
 import Conditionals from './Conditionals';
 
-
 const construction = [
   {
     name: 'Cope And Stick',

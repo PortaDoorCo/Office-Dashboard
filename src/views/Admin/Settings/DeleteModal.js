@@ -9,7 +9,7 @@ import {
   Col,
   Input
 } from 'reactstrap';
-import { deleteProduct } from '../../../redux/part_list/actions'
+import { deleteProduct } from '../../../redux/part_list/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -26,16 +26,16 @@ class DeleteModal extends Component {
 
   deleteItem = async (url) => {
     if (this.state.password === this.state.matchPassword) {
-      const data = this.props.deleteKey
+      const data = this.props.deleteKey;
      
-      await this.props.deleteProduct(data.id, this.props.url)
-      alert("here")
-      await this.clearChanges()
+      await this.props.deleteProduct(data.id, this.props.url);
+      alert('here');
+      await this.clearChanges();
     }
     else {
       this.setState({
         errorMessage: true
-      })
+      });
     }
 
   }
@@ -45,17 +45,17 @@ class DeleteModal extends Component {
   }
 
   clearChanges = async () => {
-    await this.props.toggle()
+    await this.props.toggle();
     await this.setState({
       password: '',
       errorMessage: false
-    })
+    });
   }
 
 
 
   render() {
-    const props = this.props
+    const props = this.props;
     
     return (
       <div className="animated noPrint">

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import Cookies from "js-cookie";
-import db_url from '../db_url'
+import Cookies from 'js-cookie';
+import db_url from '../db_url';
 import { NotificationManager } from 'react-notifications';
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 
 
 
@@ -13,9 +13,9 @@ export const MARK_DONE = 'MARK_DONE';
 export const REMOVE_TASK = 'REMOVE_TASK';
 export const SET_LOGIN = 'SET_LOGIN';
 export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT';
-export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
-export const RESET_PASSWORD = "RESET_PASSWORD";
-export const GET_USERS = 'GET_USERS'
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const GET_USERS = 'GET_USERS';
 
 
 
@@ -68,7 +68,7 @@ export function updateAccount(token, id, userInfo) {
         Authorization: `Bearer ${token}`
       }
     });
-    NotificationManager.success(`User Updated!`, 'User Updated!', 2000);
+    NotificationManager.success('User Updated!', 'User Updated!', 2000);
     return dispatch({
       type: UPDATE_ACCOUNT,
       data: res.data
@@ -79,7 +79,7 @@ export function updateAccount(token, id, userInfo) {
 export function forgotPassword(email) {
   return async function (dispatch) {
     await axios.post(`${db_url}/auth/forgot-password`, email).then(res => {
-      console.log(res)
+      console.log(res);
     });
     return dispatch({
       type: FORGOT_PASSWORD,

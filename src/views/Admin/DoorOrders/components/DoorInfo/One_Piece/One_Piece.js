@@ -18,8 +18,6 @@ import {
 
 const required = value => (value ? undefined : 'Required');
 
-
-
 class One_Piece_Door extends Component {
 
   render() {

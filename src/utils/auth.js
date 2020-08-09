@@ -1,10 +1,10 @@
 
 /* /lib/auth.js */
 
-import jwtDecode from "jwt-decode";
-import Cookies from "js-cookie";
-import Strapi from "strapi-sdk-javascript/build/main";
-const apiUrl = 'https://portadoor-server-production.herokuapp.com/' || "http://localhost:1337";
+import jwtDecode from 'jwt-decode';
+import Cookies from 'js-cookie';
+import Strapi from 'strapi-sdk-javascript/build/main';
+const apiUrl = 'https://portadoor-server-production.herokuapp.com/' || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
 export const strapiRegister = async (username, email, password, name) => {
@@ -13,7 +13,7 @@ export const strapiRegister = async (username, email, password, name) => {
   }
   await strapi.register(username, email, password).then(res => {
     // setToken(res);
-    unsetToken()
+    unsetToken();
   });
   return Promise.resolve();
 };
@@ -34,11 +34,11 @@ export const setToken = token => {
   if (!process.browser) {
     return;
   }
-  Cookies.set("username", token.user.username);
-  Cookies.set("jwt", token.jwt, { expires: 0.8 });
+  Cookies.set('username', token.user.username);
+  Cookies.set('jwt', token.jwt, { expires: 0.8 });
 
 
-  if (Cookies.get("username")) {
+  if (Cookies.get('username')) {
     // Router.push("/");
   }
 };
@@ -47,38 +47,38 @@ export const unsetToken = async () => {
   if (!process.browser) {
     return;
   }
-  await Cookies.remove("jwt");
-  await Cookies.remove("username");
+  await Cookies.remove('jwt');
+  await Cookies.remove('username');
 
   // to support logging out from all windows
-  await window.localStorage.setItem("logout", Date.now());
+  await window.localStorage.setItem('logout', Date.now());
   //   Router.push("/");
 };
 
 export const getUserFromServerCookie = req => {
-  if (!req.headers.cookie || "") {
+  if (!req.headers.cookie || '') {
     return undefined;
   }
 
   let username = req.headers.cookie
-    .split(";")
-    .find(user => user.trim().startsWith("username="));
+    .split(';')
+    .find(user => user.trim().startsWith('username='));
   if (username) {
-    username = username.split("=")[1];
+    username = username.split('=')[1];
   }
 
   const jwtCookie = req.headers.cookie
-    .split(";")
-    .find(c => c.trim().startsWith("jwt="));
+    .split(';')
+    .find(c => c.trim().startsWith('jwt='));
   if (!jwtCookie) {
     return undefined;
   }
-  const jwt = jwtCookie.split("=")[1];
+  const jwt = jwtCookie.split('=')[1];
   return (jwtDecode(jwt), username);
 };
 
 export const getUserFromLocalCookie = () => {
-  return Cookies.get("username");
+  return Cookies.get('username');
 };
 
 //these will be used if you expand to a provider such as Auth0

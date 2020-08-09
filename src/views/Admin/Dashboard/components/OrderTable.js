@@ -19,17 +19,12 @@ import CustomStore from 'devextreme/data/custom_store';
 import OrderPage from '../../Orders/OrderPage';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import DoorPDF from '../../Orders/PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from '../../Orders/PrintOuts/Pages/Drawer/DrawerPDF';
-import { NotificationManager } from 'react-notifications';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, updateStatus } from '../../../../redux/orders/actions';
 import { loadCustomers } from '../../../../redux/customers/actions';
-import io from 'socket.io-client';
-import db_url from '../../../../redux/db_url';
 import Cookies from 'js-cookie';
-const socket = io(db_url);
+
 
 const cookie = Cookies.get('jwt');
 
@@ -125,13 +120,6 @@ class OrderTable extends React.Component {
     this.onRowPrepared = this.onRowPrepared.bind(this);
   }
 
-  componentDidMount() {
-    const dataGrid = this.dataGrid.instance;
-    // socket.on('order_submitted', res => (dataGrid.refresh()))
-    // socket.on('order_updated', res => (dataGrid.refresh()))
-    // socket.on('order_deleted', res => (dataGrid.refresh()))
-    // socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
-  }
 
   onSelectionChanged(e) {
     const { selectedRowKeys, selectedRowsData } = e;
@@ -145,7 +133,7 @@ class OrderTable extends React.Component {
   }
 
   onRowPrepared(e) {
-    if (e.rowType == 'data' && e.data.late == true) {
+    if (e.rowType === 'data' && e.data.late === true) {
       e.rowElement.style.backgroundColor = '#FEEBEB';
     }
   }
@@ -365,8 +353,7 @@ class OrderTable extends React.Component {
               dataType="datetime"
               format="M/d/yyyy"
             >
-              <HeaderFilter dataSource={this.orderHeaderFilter} /> allowEditing=
-              {false}><RequiredRule />
+              <HeaderFilter dataSource={this.orderHeaderFilter} allowEditing={false}><RequiredRule /></HeaderFilter>
             </Column>
             <Column dataField="status" caption="Status" allowEditing={true}>
               <RequiredRule />
