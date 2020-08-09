@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
@@ -24,7 +24,7 @@ const status = [
     label: 'Invoiced',
     value: 'Invoiced',
   },
-  {
+  { 
     label: 'Ordered',
     value: 'Ordered',
   },
@@ -64,7 +64,7 @@ const status = [
 
 const conditionalRowStyles = [
   {
-    when: row => row.late == true,
+    when: row => row.late === true,
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -157,9 +157,9 @@ const OrderTable = (props) => {
 
   ];
 
-  const handleRowSelected = useCallback(state => {
+  const handleRowSelected = state => {
     setSelectedRows(state.selectedRows);
-  }, []);
+  };
 
   const toggle = (row) => {
 

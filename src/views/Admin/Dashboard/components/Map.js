@@ -11,25 +11,19 @@ const socket = io(db_url);
 
 
 
-const Drivers = (props: any) => {
-  const { color, name, id } = props;
+const Drivers = () => {
   return (
     <div className="truck" title="Delivery Truck">
-      <img src={truck}></img>
+      <img alt='truck' src={truck}></img>
       <div className="pulse" />
     </div>
-  // <div className="marker"
-  //     style={{ backgroundColor: color, cursor: 'pointer' }}
-  //     title={name}
-  // />
   );
 };
 
-const Deliveries = (props: any) => {
-  const { color, name, id } = props;
+const Deliveries = () => {
   return (
     <div className="marker" title="Delivery Truck">
-      <img src={delivery}></img>
+      <img alt='truck' src={delivery}></img>
       {/* <div className="pulse" /> */}
     </div>
   );
@@ -74,9 +68,7 @@ class Map extends Component {
     };
 
     render() {
-      const { driverLocations } = this.state;
       const { deliveries } = this.props;
-       
       return (
       // Important! Always set the container height explicitly
         <div style={{ height: '100%', width: '100%' }}>

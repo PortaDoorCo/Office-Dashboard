@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import DoorSelect from './components/DoorOrder/DoorSelect'
-import DrawerSelect from './components/DrawerOrder/DrawerSelect'
+import DoorSelect from './components/DoorOrder/DoorSelect';
+import DrawerSelect from './components/DrawerOrder/DrawerSelect';
 
 class SelectedOrder extends React.Component {
 
@@ -9,17 +9,12 @@ class SelectedOrder extends React.Component {
   render() {
     const { selectedOrder } = this.props;
 
-    const order = selectedOrder
-
-    // const company = order.CompanyName;
-
-
-
+    const order = selectedOrder;
 
     return (
       <div>
         {order ? <div>
-          {order.orderType === "Door Order" ?
+          {order.orderType === 'Door Order' ?
             <DoorSelect
               order={order}
             />
@@ -29,7 +24,7 @@ class SelectedOrder extends React.Component {
         </div> : <div />}
 
       </div>
-    )
+    );
 
 
   }
@@ -37,4 +32,4 @@ class SelectedOrder extends React.Component {
 
 
 
-export default SelectedOrder
+export default SelectedOrder;

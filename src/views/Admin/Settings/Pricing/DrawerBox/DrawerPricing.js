@@ -1,14 +1,12 @@
-import React, { Component, useState } from 'react';
-import { Breadcrumb, BreadcrumbItem, Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap'
+import React, { useState } from 'react';
+import { Breadcrumb, BreadcrumbItem, Row, Col, Card, CardBody, Collapse } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions'
-import EditorPage from './editor/EditorPage'
+import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions';
+import EditorPage from './editor/EditorPage';
 
 
 const Navigation = (props) => {
-  const { actions, setCopePage } = props;
-
   return (
     <Col>
       <Breadcrumb>
@@ -16,20 +14,13 @@ const Navigation = (props) => {
         <BreadcrumbItem active>Drawer Pricing</BreadcrumbItem>
       </Breadcrumb>
     </Col>
-  )
-}
+  );
+};
 
 
 const DrawerPricing = (props) => {
-  const [product, setProduct] = useState("index");
-  const [activeTab, setActiveTab] = useState('1');
-  const [openEditor, setOpenEditor] = useState(true);
+  const [openEditor] = useState(true);
 
-  const toggle = tab => {
-    if (activeTab !== tab) setActiveTab(tab);
-  }
-
-  const toggleEditor = () => setOpenEditor(!openEditor);
 
 
   return (
@@ -54,10 +45,10 @@ const DrawerPricing = (props) => {
         </Col>
       </Row>
     </div>
-  )
+  );
 
 
-}
+};
 
 const mapStateToProps = (state) => ({
   woodtypes: state.part_list.woodtypes,

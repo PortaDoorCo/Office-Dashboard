@@ -5,7 +5,6 @@ import {
   CardSubtitle,
   FormGroup,
   Label,
-
 } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';

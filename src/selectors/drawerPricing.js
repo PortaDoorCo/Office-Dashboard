@@ -1,13 +1,13 @@
 // ((((width + depth) / (height)) / 144) x material) + design + finish + notch
 
-import { createSelector } from "reselect";
-import numQty from "numeric-quantity";
+import { createSelector } from 'reselect';
+import numQty from 'numeric-quantity';
 
 
 const pricingSelector = state => {
   const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
-  return pricing
-}
+  return pricing;
+};
 
 
 const discountSelector = state => {
@@ -22,19 +22,19 @@ const discountSelector = state => {
   } else {
     return 0;
   }
-}
+};
 
 const partListSelector = state => {
   const orders = state.form.DrawerOrder;
-    if (orders) {
-      if (!state.form.DrawerOrder && !state.form.DrawerOrder.values && !state.form.DrawerOrder.values.part_list) {
-        return [];
-      } else {
-        return state.form.DrawerOrder.values.part_list;
-      }
-    } else {
+  if (orders) {
+    if (!state.form.DrawerOrder && !state.form.DrawerOrder.values && !state.form.DrawerOrder.values.part_list) {
       return [];
+    } else {
+      return state.form.DrawerOrder.values.part_list;
     }
+  } else {
+    return [];
+  }
 };
 
 const miscItemsSelector = state => {
@@ -44,8 +44,8 @@ const miscItemsSelector = state => {
       return [];
     } else {
       return state.form.DrawerOrder.values.misc_items.map(i => {
-        return parseFloat(i.price)
-      })
+        return parseFloat(i.price);
+      });
     }
   } else {
     return [];
@@ -72,17 +72,17 @@ const taxRate = state => {
 
 const totalBalanceDue = state => {
   const orders = state.form.DrawerOrder;
-    if (orders) {
-      if (!orders.values.balance_history) {
-        return [];
-      } else {
-        return state.form.DrawerOrder.values.balance_history.map(i => {
-          return i.balance_paid
-        });
-      }
-    } else {
+  if (orders) {
+    if (!orders.values.balance_history) {
       return [];
+    } else {
+      return state.form.DrawerOrder.values.balance_history.map(i => {
+        return i.balance_paid;
+      });
     }
+  } else {
+    return [];
+  }
 };
 
 export const itemPriceSelector = createSelector(
@@ -102,9 +102,9 @@ export const itemPriceSelector = createSelector(
         const linePrice = part.dimensions.map(i => {
           const width = Math.ceil(numQty(i.width));
           const height = Math.ceil(numQty(i.height));
-          const depth = Math.ceil(numQty(i.depth))
+          const depth = Math.ceil(numQty(i.depth));
 
-          const price = eval(pricer.drawer_box_pricing)
+          const price = eval(pricer.drawer_box_pricing);
 
           if (height > -1) {
             return price;
@@ -136,11 +136,11 @@ export const linePriceSelector = createSelector(
         const linePrice = part.dimensions.map(i => {
           const width = Math.ceil(numQty(i.width));
           const height = Math.ceil(numQty(i.height));
-          const depth = Math.ceil(numQty(i.depth))
-          const qty = parseInt(i.qty) 
-          const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0
+          const depth = Math.ceil(numQty(i.depth));
+          const qty = parseInt(i.qty); 
+          const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
 
-          const price = (eval(pricer.drawer_box_pricing) + extraCost) * qty
+          const price = (eval(pricer.drawer_box_pricing) + extraCost) * qty;
 
           if (height > -1) {
             return price;
@@ -177,9 +177,9 @@ export const subTotalSelector = createSelector(
   (prices, add) =>
     prices.map((i, index) => {
       if (i) {
-        let price = parseFloat(i.reduce((acc, item) => acc + item, 0))
-        let sum = price += add[index]
-        return sum
+        let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
+        let sum = price += add[index];
+        return sum;
       } else {
         return 0;
       }
@@ -199,7 +199,7 @@ export const taxSelector = createSelector(
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector],
   (subTotal, misc, discount) => {
-    return (subTotal.reduce((acc, item) => acc + item, 0) + misc) * discount
+    return (subTotal.reduce((acc, item) => acc + item, 0) + misc) * discount;
   }
 );
 
@@ -207,7 +207,7 @@ export const totalDiscountSelector = createSelector(
 export const totalSelector = createSelector(
   [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
   (subTotal, tax, misc, discount) => {
-    return subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount
+    return subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount;
   }
 );
 

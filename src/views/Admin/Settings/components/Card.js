@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button} from 'reactstrap'
+import React from 'react';
+import { Card, CardImg} from 'reactstrap';
 
 const ProductCard = (props) => {
   return (
@@ -9,7 +9,7 @@ const ProductCard = (props) => {
       </Card>
     </div>
   );
-}
+};
 
 
 export default ProductCard;

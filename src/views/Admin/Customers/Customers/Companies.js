@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CompanyTable2 from './CompanyTable2'
+import CompanyTable2 from './CompanyTable2';
 import {
   loadOrders,
 } from '../../../../redux/orders/actions';

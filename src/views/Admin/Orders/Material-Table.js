@@ -1,45 +1,34 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
-  Input,
   Button,
-  Row,
-  Col
 } from 'reactstrap';
 import OrderPage from './OrderPage';
 import DataTable from 'react-data-table-component';
-import { Checkbox, Tooltip, IconButton } from '@material-ui/core';
-import Inbox from '@material-ui/icons/Inbox'
-import differenceBy from 'lodash/differenceBy';
-import { DateTimePicker } from 'react-widgets'
-import moment from 'moment'
-import momentLocaliser from 'react-widgets-moment'
+import { Tooltip, IconButton } from '@material-ui/core';
+import Inbox from '@material-ui/icons/Inbox';
+import moment from 'moment';
+import momentLocaliser from 'react-widgets-moment';
 
-momentLocaliser(moment)
-
-
+momentLocaliser(moment);
 
 const OrderTable = (props) => {
   const { orders } = props;
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [toggleCleared, setToggleCleared] = useState(false);
-  const [data, setData] = useState(props.orders);
-  const [modal, setModal] = useState(false)
-  const [edit, setEdit] = useState(false)
-  const [selectedOrder, setSelectedOrder] = useState([])
-  const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+  const [selectedRows] = useState([]);
+  const [toggleCleared] = useState(false);
+  const [data] = useState(props.orders);
+  const [modal, setModal] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState([]);
+  const [resetPaginationToggle] = useState(false);
 
-
-  const handleRowSelected = useCallback(state => {
-    setSelectedRows(state.selectedRows);
-  }, []);
 
   const editable = () => {
-    setEdit(!edit)
-  }
+    setEdit(!edit);
+  };
 
   const toggle = (row) => {
     setModal(!modal);
-    setEdit(false)
+    setEdit(false);
 
     if (!modal) {
       setSelectedOrder(
@@ -61,13 +50,13 @@ const OrderTable = (props) => {
             subTotals: row.subTotals
           }
         ]
-      )
+      );
     } else {
-      return
+      return;
     }
 
 
-  }
+  };
 
   const columns = useMemo(clickHandler => [
 
@@ -116,8 +105,8 @@ const OrderTable = (props) => {
       button: true,
       cell: row => <Tooltip title="View Order" placement="top">
         <IconButton onClick={function (event) {
-          event.preventDefault()
-          toggle(row)
+          event.preventDefault();
+          toggle(row);
         }} id={row.id}>
           <Inbox>Open</Inbox>
         </IconButton>
@@ -129,12 +118,12 @@ const OrderTable = (props) => {
     const handleDelete = () => {
 
       if (window.confirm(`Are you sure you want to print Order Number:\r ${selectedRows.map(r => r.orderNum)}?`)) {
-        return
+        return;
       }
     };
 
     return <Button key="delete" color="primary" onClick={handleDelete} icon>Print</Button>;
-  }, [data, selectedRows, toggleCleared]);
+  });
 
   return (
     <div>

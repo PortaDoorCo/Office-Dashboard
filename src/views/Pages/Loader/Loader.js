@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import ReactLoading from "react-loading";
+import React, { Component } from 'react';
+import ReactLoading from 'react-loading';
 import {
   Row,
   Col,
   Container
-} from "reactstrap";
+} from 'reactstrap';
 
 class Loader extends Component {
   constructor(props) {
@@ -23,8 +23,8 @@ class Loader extends Component {
             <Col>
               <center>
                 <ReactLoading
-                  type={"spinningBubbles"}
-                  color={"black"}
+                  type={'spinningBubbles'}
+                  color={'black'}
                   height={300}
                   width={300}
                 />

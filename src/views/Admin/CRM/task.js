@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Draggable } from 'react-beautiful-dnd'
+import React from 'react';
+import styled from 'styled-components';
+import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   border: 1px solid lightgrey;
@@ -14,7 +14,7 @@ const Container = styled.div`
       : props.isDragging
         ? 'lightgreen'
         : 'white'};
-`
+`;
 
 export default class Task extends React.Component {
   render() {
@@ -37,6 +37,6 @@ export default class Task extends React.Component {
           </Container>
         )}
       </Draggable>
-    )
+    );
   }
 }

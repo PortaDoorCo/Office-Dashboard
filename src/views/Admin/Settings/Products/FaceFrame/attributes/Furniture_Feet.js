@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap'
-import Cookies from "js-cookie";
-import PerfectScrollbar from 'react-perfect-scrollbar'
+import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
+import Cookies from 'js-cookie';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getFurnitureFeet, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions'
+import { getFurnitureFeet, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
@@ -17,7 +17,6 @@ const header = { 'Authorization': 'Bearer ' + cookie };
 const Furniture_Feet = (props) => {
 
   const {
-    buttonLabel,
     className,
     role
   } = props;
@@ -30,33 +29,33 @@ const Furniture_Feet = (props) => {
     UPCHARGE: '',
     photo: null
   });
-  const [newProduct, setNewProduct] = useState(false)
+  const [newProduct, setNewProduct] = useState(false);
 
   const toggle = () => {
-    setModal(!modal)
+    setModal(!modal);
   };
 
   const toggleWarningModal = () => {
-    setWarningModal(!warningModal)
+    setWarningModal(!warningModal);
   };
 
 
   const setCard = card => {
-    setNewProduct(false)
-    setProduct(card)
-    toggle()
-  }
+    setNewProduct(false);
+    setProduct(card);
+    toggle();
+  };
 
   const addProd = () => {
     const p = {
       NAME: '',
       UPCHARGE: '',
       photo: null
-    }
-    setNewProduct(true)
-    setProduct(p)
-    toggle()
-  }
+    };
+    setNewProduct(true);
+    setProduct(p);
+    toggle();
+  };
 
   const change = (e) => {
     const value = e.target.value;
@@ -65,9 +64,9 @@ const Furniture_Feet = (props) => {
       return ({
         ...prevState,
         [name]: value
-      })
-    })
-  }
+      });
+    });
+  };
 
   const onUploaded = (e) => {
     const data = JSON.parse(e.request.response);
@@ -75,47 +74,47 @@ const Furniture_Feet = (props) => {
       return ({
         ...prevState,
         photo: data[0]
-      })
-    })
-    return
-  }
+      });
+    });
+    return;
+  };
 
   const updateProduct = async () => {
-    let id = product.id
-    let updatedProduct = product
-    await props.updateProduct(id, updatedProduct, "furniture-feet", cookie)
-    await setModal(!modal)
-    await props.getFurnitureFeet(cookie)
-  }
+    let id = product.id;
+    let updatedProduct = product;
+    await props.updateProduct(id, updatedProduct, 'furniture-feet', cookie);
+    await setModal(!modal);
+    await props.getFurnitureFeet(cookie);
+  };
 
   const deleteProduct = async () => {
-    let id = product.id
+    let id = product.id;
 
-    await props.deleteProduct(id, 'furniture-feet', cookie)
-    await props.getFurnitureFeet(cookie)
-    await toggleWarningModal()
-    await toggle()
-  }
+    await props.deleteProduct(id, 'furniture-feet', cookie);
+    await props.getFurnitureFeet(cookie);
+    await toggleWarningModal();
+    await toggle();
+  };
 
   const submitProduct = async () => {
-    const item = props.applied_profiles.length + 1
+    const item = props.applied_profiles.length + 1;
     const submittedProduct = {
       NAME: product.NAME,
       UPCHARGE: product.UPCHARGE,
       photo: product.photo ? product.photo.id : '',
       Item: item
-    }
-    await props.addProduct(submittedProduct, 'furniture-feet', cookie)
-    await setModal(!modal)
-    await props.getFurnitureFeet(cookie)
-  }
+    };
+    await props.addProduct(submittedProduct, 'furniture-feet', cookie);
+    await setModal(!modal);
+    await props.getFurnitureFeet(cookie);
+  };
 
 
   const card = props.applied_profiles.map(card => {
     return (
-      <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: "200px" }}>
-        <Card style={{ height: "100%" }} onClick={() => setCard(card)}>
-          {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+      <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: '200px' }}>
+        <Card style={{ height: '100%' }} onClick={() => setCard(card)}>
+          {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>Price: </strong> {card.UPCHARGE}</CardTitle>
@@ -123,7 +122,7 @@ const Furniture_Feet = (props) => {
         </Card>
       </div>
     );
-  })
+  });
 
   if(role.type === 'management' || role.type === 'authenticated' ||  role.type === 'owner') {
     return (
@@ -136,7 +135,7 @@ const Furniture_Feet = (props) => {
           </Col>
         </Row>
   
-        <Row style={{ height: "600px" }}>
+        <Row style={{ height: '600px' }}>
           <PerfectScrollbar>
             <div className="col d-flex align-content-start flex-wrap">{card}</div>
           </PerfectScrollbar>
@@ -150,7 +149,7 @@ const Furniture_Feet = (props) => {
   
                 <Col>
                   <div className="col d-flex align-content-start flex-wrap">
-                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
                   </div>
   
                   <form id="form" method="post" action="" encType="multipart/form-data">
@@ -207,19 +206,19 @@ const Furniture_Feet = (props) => {
           <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
           <ModalBody>
             Are you sure you want to delete this item?
-            </ModalBody>
+          </ModalBody>
           <ModalFooter>
             <Button color="danger" onClick={deleteProduct}>Yes</Button>
             <Button color="primary" onClick={warningModal}>No</Button>
           </ModalFooter>
         </Modal>
       </div>
-    )
+    );
   } else {
     return (
 
       <div>
-        <Row style={{ height: "600px" }}>
+        <Row style={{ height: '600px' }}>
           <PerfectScrollbar>
             <div className="col d-flex align-content-start flex-wrap">{card}</div>
           </PerfectScrollbar>
@@ -233,7 +232,7 @@ const Furniture_Feet = (props) => {
   
                 <Col>
                   <div className="col d-flex align-content-start flex-wrap">
-                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png"} alt="Card image cap" />}
+                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
                   </div>
                 </Col>
               </Row>
@@ -262,19 +261,19 @@ const Furniture_Feet = (props) => {
           <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
           <ModalBody>
             Are you sure you want to delete this item?
-            </ModalBody>
+          </ModalBody>
           <ModalFooter>
             <Button color="danger" onClick={deleteProduct}>Yes</Button>
             <Button color="primary" onClick={warningModal}>No</Button>
           </ModalFooter>
         </Modal>
       </div>
-    )
+    );
   }
   
 
 
-}
+};
 
 const mapStateToProps = (state) => ({
   applied_profiles: state.part_list.furniture_feets,
