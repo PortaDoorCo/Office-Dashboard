@@ -86,13 +86,14 @@ export const renderDropdownList = ({
 );
 
 export const renderField = ({
-  input,
+  input: { value, onChange, ...input },
   props,
   edit,
   meta: { touched, error, warning },
   ...custom
 }) => (
   <Fragment>
+    {console.log(input)}
     <Input {...input} {...custom} disabled={edit} autoComplete="new-password" />
     {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
