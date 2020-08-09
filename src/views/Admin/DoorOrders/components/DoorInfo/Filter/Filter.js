@@ -1,24 +1,17 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component, Fragment } from 'react';
 import {
   Row,
   Col,
   FormGroup,
   Label,
-} from "reactstrap";
+} from 'reactstrap';
 import { connect } from 'react-redux';
-import { Field, change,  untouch} from "redux-form";
-import { renderDropdownList } from '../../../../../../components/RenderInputs/renderInputs'
-
+import { Field, change,  untouch} from 'redux-form';
+import { renderDropdownList } from '../../../../../../components/RenderInputs/renderInputs';
 
 const required = value => (value ? undefined : 'Required');
 
-
-
-
 class DoorFilter extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onChangeType = (index) => {
     
@@ -31,7 +24,7 @@ class DoorFilter extends Component {
               `part_list[${i}].dimensions`,
               []
             )
-          )
+          );
         }
 
         if (index === i && part.cope_design) {
@@ -40,14 +33,14 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].cope_design`,
             )
-          )
+          );
 
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].cope_design`,
             )
-          )
+          );
         }
 
         if (index === i && part.miter_design) {
@@ -56,14 +49,14 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].miter_design`,
             )
-          )
+          );
 
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].miter_design`,
             )
-          )
+          );
         }
 
         if (index === i && part.mt_design) {
@@ -72,14 +65,14 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].mt_design`,
             )
-          )
+          );
 
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].mt_design`,
             )
-          )
+          );
         }
 
         if (index === i && part.miter_df_design) {
@@ -88,14 +81,14 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].miter_df_design`,
             )
-          )
+          );
 
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].miter_df_design`,
             )
-          )
+          );
         }
 
         
@@ -106,13 +99,13 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].woodtype`,
             )
-          )
+          );
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].woodtype`,
             )
-          )
+          );
         }
 
         if (index === i && part.edge) {
@@ -121,13 +114,13 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].edge`,
             )
-          )
+          );
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].edge`,
             )
-          )
+          );
         }
 
         if (index === i && part.panel) {
@@ -136,13 +129,13 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].panel`,
             )
-          )
+          );
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].panel`,
             )
-          )
+          );
         }
 
         if (index === i && part.profile) {
@@ -151,13 +144,13 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].profile`,
             )
-          )
+          );
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].profile`,
             )
-          )
+          );
         }
 
         if (index === i && part.applied_profile) {
@@ -166,13 +159,13 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].applied_profile`,
             )
-          )
+          );
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].applied_profile`,
             )
-          )
+          );
         }
 
         if (index === i && part.finish) {
@@ -181,13 +174,13 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].finish`,
             )
-          )
+          );
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].finish`,
             )
-          )
+          );
         }
 
         if (index === i && part.face_frame_top_rail) {
@@ -196,13 +189,13 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].face_frame_top_rail`,
             )
-          )
+          );
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].face_frame_top_rail`,
             )
-          )
+          );
         }
 
         if (index === i && part.furniture_feet) {
@@ -211,13 +204,13 @@ class DoorFilter extends Component {
               'DoorOrder',
               `part_list[${i}].furniture_feet`,
             )
-          )
+          );
           this.props.dispatch(
             untouch(
               'DoorOrder',
               `part_list[${i}].furniture_feet`,
             )
-          )
+          );
         }
 
       });
@@ -240,7 +233,7 @@ class DoorFilter extends Component {
 
 
     if (formState && formState.part_list) {
-      if ((formState.part_list[index].orderType.value === "Door") || (formState.part_list[index].orderType.value === "DF")) {
+      if ((formState.part_list[index].orderType.value === 'Door') || (formState.part_list[index].orderType.value === 'DF')) {
         return (
           <Fragment>
             <Row>
@@ -289,9 +282,9 @@ class DoorFilter extends Component {
               </Col>
             </Row>
           </Fragment>
-        )
+        );
       }
-      if (formState.part_list[index].orderType.value === "Frame_Only") {
+      if (formState.part_list[index].orderType.value === 'Frame_Only') {
         return (
           <Fragment>
             <Row>
@@ -325,7 +318,7 @@ class DoorFilter extends Component {
               </Col>
             </Row>
           </Fragment>
-        )
+        );
       } else {
         return (
           <Fragment>
@@ -346,11 +339,11 @@ class DoorFilter extends Component {
               </Col>
             </Row>
           </Fragment>
-        )
+        );
       }
 
     } else {
-      return null
+      return null;
     }
   }
 }

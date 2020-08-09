@@ -42,25 +42,25 @@ export default (data,breakdowns) => {
     {
       columns: [
         {
-          text: "MATERIAL BREAKDOWN"
+          text: 'MATERIAL BREAKDOWN'
         },
       ],
       margin: [0, 10, 0, 20]
     },
     {
       columns: [
-        { text: "Total Number of Doors: 14", style: 'fonts' }
+        { text: 'Total Number of Doors: 14', style: 'fonts' }
       ]
     },
     {
       columns: [
-        { text: "Total Number of Solid DF: 0", style: 'fonts' }
+        { text: 'Total Number of Solid DF: 0', style: 'fonts' }
       ],
       margin: [0, 0, 0, 20]
     },
     {
       columns: [
-        { text: "Total SQ FT of Doors: 105.58", style: 'fonts' }
+        { text: 'Total SQ FT of Doors: 105.58', style: 'fonts' }
       ],
       margin: [0, 0, 0, 20]
     },
@@ -68,17 +68,17 @@ export default (data,breakdowns) => {
       return [
         {
           columns: [
-            { text: `Linear Feet of 2 3/8" Sapele 4/4 - 3/4" Thickness Needed: 49.19`, style: 'fonts', width: 400 },
-            { text: `Add 20 % Waster: `, style: 'fonts', width: 100 },
-            { text: `59.0`, style: 'fonts', width: 30 }
+            { text: 'Linear Feet of 2 3/8" Sapele 4/4 - 3/4" Thickness Needed: 49.19', style: 'fonts', width: 400 },
+            { text: 'Add 20 % Waster: ', style: 'fonts', width: 100 },
+            { text: '59.0', style: 'fonts', width: 30 }
           ],
 
         }
-      ]
+      ];
     }),
     {
       columns: [
-        { text: "" }
+        { text: '' }
       ],
       margin: [0, 5, 0, 5]
     },
@@ -86,17 +86,17 @@ export default (data,breakdowns) => {
       return [
         {
           columns: [
-            { text: `Board Feet of Sapele 4/4 - 3/4" Thickness Stile/Rail/Mullion Material Needed: 9.74`, style: 'fonts', width: 400 },
-            { text: `Add 20 % Waster: `, style: 'fonts', width: 100 },
-            { text: `59.0`, style: 'fonts', width: 30 }
+            { text: 'Board Feet of Sapele 4/4 - 3/4" Thickness Stile/Rail/Mullion Material Needed: 9.74', style: 'fonts', width: 400 },
+            { text: 'Add 20 % Waster: ', style: 'fonts', width: 100 },
+            { text: '59.0', style: 'fonts', width: 30 }
           ],
 
         }
-      ]
+      ];
     }),
     {
       columns: [
-        { text: "" }
+        { text: '' }
       ],
       margin: [0, 5, 0, 5]
     },
@@ -104,16 +104,16 @@ export default (data,breakdowns) => {
       return [
         {
           columns: [
-            { text: `Board Feet of Sapele 4/4 O Panel - 3/4" Thickness Panel Material Needed: 9.74`, style: 'fonts', width: 400 },
-            { text: `            `, style: 'fonts', width: 100 },
-            { text: `59.0`, style: 'fonts', width: 30 }
+            { text: 'Board Feet of Sapele 4/4 O Panel - 3/4" Thickness Panel Material Needed: 9.74', style: 'fonts', width: 400 },
+            { text: '            ', style: 'fonts', width: 100 },
+            { text: '59.0', style: 'fonts', width: 30 }
           ],
         }
-      ]
+      ];
     }),
     {
       columns: [
-        { text: "Hinges Needed", style: 'fonts', decoration: 'underline' }
+        { text: 'Hinges Needed', style: 'fonts', decoration: 'underline' }
       ],
       margin: [0, 20, 0, 0]
     },

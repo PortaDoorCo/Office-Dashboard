@@ -1,24 +1,21 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   FormGroup,
   Label
-} from "reactstrap";
-import { Field, FieldArray, change } from "redux-form";
+} from 'reactstrap';
+import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
-import Miter_Table from '../../Table/Doors/Miter_Table'
-import Ratio from 'lb-ratio'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
+import Miter_Table from '../../Table/Doors/Miter_Table';
+import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector
 } from '../../../../../../selectors/doorPricing';
-
-
 
 
 const required = value => (value ? undefined : 'Required');
@@ -29,81 +26,72 @@ const fraction = num => {
 
 
 class MiterDoor extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-
   onChangeProfile = () => {
-    const part_list = this.props.formState.part_list
+    const part_list = this.props.formState.part_list;
     const { index } = this.props;
-    const part = part_list[index]
+    const part = part_list[index];
 
-      if (part.dimensions) {
-        part.dimensions.forEach((info, j) => {
+    if (part.dimensions) {
+      part.dimensions.forEach((info, j) => {
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${j}].leftStile`,
+            fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
+          )
+        );
 
-          console.log('linnneee', `part_list[${index}].dimensions[${j}].leftStile`)
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${j}].rightStile`,
+            fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
+          )
+        );
 
 
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${j}].topRail`,
+            fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.TOP_RAIL_ADD) : 0)
+          )
+        );
+
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${j}].bottomRail`,
+            fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.BTM_RAIL_ADD) : 0)
+          )
+        );
+
+
+
+        if (parseInt(info.panelsH) > 1) {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${j}].leftStile`,
+              `part_list[${index}].dimensions[${j}].horizontalMidRailSize`,
               fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
             )
           );
+        }
 
+        if (parseInt(info.panelsW) > 1) {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${j}].rightStile`,
+              `part_list[${index}].dimensions[${j}].verticalMidRailSize`,
               fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
             )
           );
-
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${index}].dimensions[${j}].topRail`,
-              fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.TOP_RAIL_ADD) : 0)
-            )
-          );
-
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${index}].dimensions[${j}].bottomRail`,
-              fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.BTM_RAIL_ADD) : 0)
-            )
-          );
-
-
-
-          if (parseInt(info.panelsH) > 1) {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${index}].dimensions[${j}].horizontalMidRailSize`,
-                fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
-              )
-            );
-          }
-
-          if (parseInt(info.panelsW) > 1) {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${index}].dimensions[${j}].verticalMidRailSize`,
-                fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
-              )
-            );
-          }
-        });
-      } else {
-        return
-      }
+        }
+      });
+    } else {
+      return;
+    }
   }
 
   render() {
@@ -111,8 +99,6 @@ class MiterDoor extends Component {
       part,
       woodtypes,
       miter_designs,
-      edges,
-      profiles,
       panels,
       applied_moulds,
       finishes,
@@ -121,7 +107,6 @@ class MiterDoor extends Component {
       part_list,
       formState,
       prices,
-      itemPrice,
       subTotal
     } = this.props;
     return (
@@ -247,8 +232,6 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes,
-
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),

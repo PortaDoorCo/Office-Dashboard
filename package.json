@@ -75,7 +75,7 @@
     "numeral": "^2.0.6",
     "numeric-quantity": "^0.3.2",
     "pdfmake": "^0.1.60",
-    "prettier-eslint": "^9.0.0",
+    "prettier-eslint": "^11.0.0",
     "prismjs": "^1.20.0",
     "prop-types": "^15.7.2",
     "qrcode.react": "^0.9.3",
@@ -131,7 +131,7 @@
     "redux-form": "^8.3.6",
     "redux-localstorage-simple": "^2.2.0",
     "redux-logger": "^3.0.6",
-    "redux-mock-store": "^1.5.3",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "reselect-map": "^1.0.4",
@@ -151,7 +151,7 @@
   "scripts": {
     "start": "react-scripts --max_old_space_size=4096 start",
     "build": "CI=false react-scripts --max_old_space_size=4096 build",
-    "test": "echo hurray",
+    "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject"

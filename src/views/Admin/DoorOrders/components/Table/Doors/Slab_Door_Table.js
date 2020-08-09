@@ -1,78 +1,55 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect } from 'react';
 import {
   Table,
   Input,
   Row,
   Col,
   Button
-} from "reactstrap";
+} from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from "redux-form";
-import Ratio from "lb-ratio";
+import { Field } from 'redux-form';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../../../../components/RenderInputs/renderInputs'
+import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../../../../components/RenderInputs/renderInputs';
 import numQty from 'numeric-quantity';
-import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderPriceHolder'
+import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderPriceHolder';
 
 const required = value => (value ? undefined : 'Required');
 
-
-const unevenDirection = [
-  {
-    name: 'Top to Bottom',
-    value: 'Top'
-  },
-  {
-    name: 'Bottom to Top',
-    value: "Bottom"
-  }
-];
-
-
-
-
-const fraction = num => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
-
 const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions }) => {
 
-  const [width, setWidth] = useState([])
-  const [height, setHeight] = useState([])
-
-
+  const [width, setWidth] = useState([]);
+  const [height, setHeight] = useState([]);
 
   useEffect(() => {
 
-    let init = []
-    setWidth(init)
-    setHeight(init)
+    let init = [];
+    setWidth(init);
+    setHeight(init);
 
-  }, [updateSubmit])
+  }, [updateSubmit]);
 
   const w = (e, v, i) => {
     e.preventDefault();
-    let newWidth = [...width]
+    let newWidth = [...width];
     if (width[i]) {
-      newWidth.splice(i, 1, v)
+      newWidth.splice(i, 1, v);
     } else {
-      newWidth = [...newWidth, v]
+      newWidth = [...newWidth, v];
     }
     setWidth(newWidth);
-  }
+  };
 
   const h = (e, v, i) => {
     e.preventDefault();
-    let newHeight = [...height]
+    let newHeight = [...height];
     if (height[i]) {
-      newHeight.splice(i, 1, v)
+      newHeight.splice(i, 1, v);
     } else {
-      newHeight = [...newHeight, v]
+      newHeight = [...newHeight, v];
     }
     setHeight(newHeight);
-  }
+  };
 
 
   return (
@@ -139,12 +116,12 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                         <Input
                           type="text"
                           className="form-control"
-                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                          placeholder={'$' + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
                           className="form-control"
-                          placeholder={"$0.00"}
+                          placeholder={'$0.00'}
                         />
                       }
 
@@ -152,7 +129,7 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                     <td>
                       <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
                         X
-                        </Button>
+                      </Button>
                     </td>
                   </tr>
 
@@ -204,7 +181,7 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                         <div>
                           <Col />
                           <Col>
-                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index + 1}</strong></p>
+                            <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
@@ -212,7 +189,7 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                           </Col>
                           <Col />
                         </div>
-                      )
+                      );
                     })}
                   </Row>
                 </div>
@@ -256,7 +233,7 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                 }
               >
                 +
-                </Button>
+              </Button>
             </Col>
           </Row>
 
@@ -268,13 +245,13 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
               {subTotal[i] ? (
                 <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                  <RenderPriceHolder input={'0.00'} edit={true} />
-                )}
+                <RenderPriceHolder input={'0.00'} edit={true} />
+              )}
             </Col>
           </Row>
         </Fragment>
       </div> : <div />
-  )
+  );
 };
 
 export default Slab_Door_Table;

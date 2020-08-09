@@ -1,10 +1,10 @@
 export default (info, part) => {
-    return [
-      {
-        qty: '',
-        measurement: ``,
-        pattern: ""
-      }
-    ]
-  }
+  return [
+    {
+      qty: '',
+      measurement: '',
+      pattern: ''
+    }
+  ];
+};
   

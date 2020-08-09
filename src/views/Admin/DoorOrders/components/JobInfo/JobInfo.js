@@ -1,38 +1,36 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   FormGroup,
   Label
-} from "reactstrap";
+} from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
-import moment from 'moment'
-import momentLocaliser from 'react-widgets-moment'
-import { renderField, renderDropdownList, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs'
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import moment from 'moment';
+import momentLocaliser from 'react-widgets-moment';
+import { reduxForm}  from 'redux-form';
+import { renderField, renderDropdownList, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs';
 
-momentLocaliser(moment)
+momentLocaliser(moment);
 
 
-
-const status = ['Quote', 'Ordered', 'Shipped', 'RUSH']
+const status = ['Quote', 'Ordered', 'Shipped', 'RUSH'];
 
 const required = value => value ? undefined : 'Required';
-
-
 
 const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
   <DateTimePicker
     onChange={onChange}
     time={showTime}
     value={!value ? null : new Date(value)}
-  />
+  />;
 
 
 class JobInfo extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loaded: false
     };
@@ -43,7 +41,7 @@ class JobInfo extends Component {
     if (formState && formState.job_info && formState.job_info.customer) {
       if (formState.job_info.customer !== prevProps.formState.job_info.customer) {
 
-        const customer = formState.job_info.customer
+        const customer = formState.job_info.customer;
 
         this.props.dispatch(
           change(
@@ -91,7 +89,7 @@ class JobInfo extends Component {
           change(
             'DoorOrder',
             'discount',
-            (customer.Discount * 100)
+            customer.Discount
           )
         );
       }
@@ -110,14 +108,11 @@ class JobInfo extends Component {
 
 
     return (
-
       <div>
         <Row className="mb-3">
-
           <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
-
               <Field
                 name="DueDate"
                 showTime={false}
@@ -139,9 +134,6 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
         </Row>
-
-
-
         <Row>
           <Col xs="3">
             <FormGroup>
@@ -197,9 +189,6 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-
-
-
         <Row>
           <Col xs="6">
             <FormGroup>
@@ -211,11 +200,6 @@ class JobInfo extends Component {
                 label="Address1" />
             </FormGroup>
           </Col>
-
-
-
-
-
           <Col xs="6">
             <FormGroup>
               <Label htmlFor="address2">Address 2</Label>
@@ -226,10 +210,7 @@ class JobInfo extends Component {
                 label="Address2" />
             </FormGroup>
           </Col>
-
         </Row>
-
-
 
         <Row>
           <Col xs="3">
@@ -273,10 +254,7 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
         </Row>
-
         <hr />
-
-
       </div>
     );
   }
@@ -285,7 +263,7 @@ class JobInfo extends Component {
 
 const mapStateToProps = state => ({
   formState: getFormValues('DoorOrder')(state),
-  shippingMethods: state.misc_items.shippingMethods
+  shippingMethods: state.misc_items.shippingMethods,
 });
 
 

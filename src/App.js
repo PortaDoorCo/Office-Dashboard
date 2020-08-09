@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.scss';
-import Cookies from "js-cookie";
-import Login from "./views/Pages/Login/Login";
-import Register from "./views/Pages/Register/Register";
-import NewPassword from './views/Pages/NewPassword/NewPassword'
+import Cookies from 'js-cookie';
+import Login from './views/Pages/Login/Login';
+import Register from './views/Pages/Register/Register';
+import NewPassword from './views/Pages/NewPassword/NewPassword';
 import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from 'redux';
 import { NotificationManager } from 'react-notifications';
-import { loadOrders, getDeliveries } from "./redux/orders/actions";
-import { loadShippingMethod } from "./redux/misc_items/actions";
-import { loadSales} from "./redux/sales/actions";
-import { loadCustomers } from './redux/customers/actions'
-import { setLogin } from "./redux/users/actions";
+import { loadOrders, getDeliveries } from './redux/orders/actions';
+import { loadShippingMethod } from './redux/misc_items/actions';
+import { loadSales} from './redux/sales/actions';
+import { loadCustomers } from './redux/customers/actions';
+import { setLogin } from './redux/users/actions';
 import io from 'socket.io-client';
-import db_url from './redux/db_url'
+import db_url from './redux/db_url';
 const socket = io(db_url);
-socket.on('connect', () => console.log('conneee==>>>'))
-
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 
 const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -33,8 +31,8 @@ const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
       return rest.isLogged ? (
         <Component {...props} isLogged={rest.isLogged} />
       ) : (
-          <Redirect to={{ pathname: "/login" }} />
-        )
+        <Redirect to={{ pathname: '/login' }} />
+      );
     }
     }
   />
@@ -49,12 +47,12 @@ class App extends Component {
   }
 
   cookies = () => {
-    const getCookie = Cookies.get("jwt");
+    const getCookie = Cookies.get('jwt');
     if (getCookie) {
       this.setState({
         isAuth: true
       });
-      this.props.setLogin()
+      this.props.setLogin();
     }
   }
 
@@ -62,17 +60,17 @@ class App extends Component {
 
     const { loadOrders } = this.props;
     
-    this.cookies()
-    socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)))
-    socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), loadOrders(cookie)))
-    socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, `An order has been updated`, 2000), loadOrders(cookie)))
-    socket.on('order_deleted', res => (NotificationManager.success(`Order Deleted`, 'Order Deleted', 2000), loadOrders(cookie)))
-    socket.on('delivery_added', res => this.props.getDeliveries(cookie))
+    this.cookies();
+    socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
+    socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), loadOrders(cookie)));
+    socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, 'An order has been updated', 2000), loadOrders(cookie)));
+    socket.on('order_deleted', res => (NotificationManager.success('Order Deleted', 'Order Deleted', 2000), loadOrders(cookie)));
+    socket.on('delivery_added', res => this.props.getDeliveries(cookie));
   }
 
   componentDidUpdate = async (prevProps) => {
     if (this.props.loggedIn !== prevProps.loggedIn) {
-      this.cookies()
+      this.cookies();
     }
   }
 
@@ -87,7 +85,7 @@ class App extends Component {
               component={this.state.isAuth ? DefaultLayout : Login}
             />
               
-              <Route
+            <Route
               path="/register"
               name="register"
               component={this.state.isAuth ? DefaultLayout : Register}

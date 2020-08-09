@@ -14,7 +14,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { selectDateRange } from '../../../../redux/misc_items/actions'
+import { selectDateRange } from '../../../../redux/misc_items/actions';
 
 
 
@@ -55,7 +55,7 @@ class Chart1 extends Component {
             ctx = chart.chart.ctx;
 
           ctx.restore();
-          ctx.font = "16px normal 'Helvetica Nueue'";
+          ctx.font = '16px normal \'Helvetica Nueue\'';
           ctx.textBaseline = 'middle';
 
           var text = 'There is no data to display',

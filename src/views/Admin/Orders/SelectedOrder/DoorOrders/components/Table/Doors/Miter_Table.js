@@ -1,37 +1,21 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect } from 'react';
 import {
-  Label,
   Table,
   Input,
   Row,
   Col,
   Button
-} from "reactstrap";
+} from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from "redux-form";
-import Ratio from "lb-ratio";
+import { Field, change } from 'redux-form';
+import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs'
-import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder'
-import { connect } from 'react-redux'
+import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs';
+import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder';
+import { connect } from 'react-redux';
 
 const required = value => (value ? undefined : 'Required');
-
-
-const unevenDirection = [
-  {
-    name: 'Top to Bottom',
-    value: 'Top'
-  },
-  {
-    name: 'Bottom to Top',
-    value: "Bottom"
-  }
-];
-
-
-
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -40,43 +24,41 @@ const fraction = num => {
 
 const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
-  const [width, setWidth] = useState([])
-  const [height, setHeight] = useState([])
-
-
+  const [width, setWidth] = useState([]);
+  const [height, setHeight] = useState([]);
 
   useEffect(() => {
 
-    let init = []
-    setWidth(init)
-    setHeight(init)
+    let init = [];
+    setWidth(init);
+    setHeight(init);
 
-  }, [updateSubmit])
+  }, [updateSubmit]);
 
   const w = (e, v, i) => {
     e.preventDefault();
-    let newWidth = [...width]
+    let newWidth = [...width];
     if (width[i]) {
-      newWidth.splice(i, 1, v)
+      newWidth.splice(i, 1, v);
     } else {
-      newWidth = [...newWidth, v]
+      newWidth = [...newWidth, v];
     }
     setWidth(newWidth);
-  }
+  };
 
   const h = (e, v, i) => {
     e.preventDefault();
-    let newHeight = [...height]
+    let newHeight = [...height];
     if (height[i]) {
-      newHeight.splice(i, 1, v)
+      newHeight.splice(i, 1, v);
     } else {
-      newHeight = [...newHeight, v]
+      newHeight = [...newHeight, v];
     }
     setHeight(newHeight);
-  }
+  };
 
   const twoHigh = (index) => {
-    const part = formState.part_list[i]
+    const part = formState.part_list[i];
     dispatch(
       change(
         'DoorOrder',
@@ -84,10 +66,10 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
         fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
       ),
     );
-  }
+  };
 
   const twoWide = (index) => {
-    const part = formState.part_list[i]
+    const part = formState.part_list[i];
     dispatch(
       change(
         'DoorOrder',
@@ -95,7 +77,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
         fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
       )
     );
-  }
+  };
 
 
   return (
@@ -188,13 +170,13 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                           type="text"
                           disabled={edit}
                           className="form-control"
-                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                          placeholder={'$' + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
                           disabled={edit}
                           className="form-control"
-                          placeholder={"$0.00"}
+                          placeholder={'$0.00'}
                         />
                       }
 
@@ -339,7 +321,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         <div>
                           <Col />
                           <Col>
-                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index + 1}</strong></p>
+                            <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
@@ -348,7 +330,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                           </Col>
                           <Col />
                         </div>
-                      )
+                      );
                     })}
                   </Row>
                 </div>
@@ -390,7 +372,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                   className="btn-circle"
                   onClick={(e) =>
                     (
-                      (formState.part_list[formState.part_list.length - 1].construction.value === "M" && formState.part_list[formState.part_list.length - 1].miter_design) ?
+                      (formState.part_list[formState.part_list.length - 1].construction.value === 'M' && formState.part_list[formState.part_list.length - 1].miter_design) ?
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
@@ -408,7 +390,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                           ),
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,
-                          unevenSplitInput: "0",
+                          unevenSplitInput: '0',
                           unevenSplit: false,
                           unevenCheck: false,
                           showBuilder: false,
@@ -425,20 +407,20 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
           </Row>
 
           <Row>
-          <Col xs="4" />
+            <Col xs="4" />
             <Col xs="5" />
             <Col xs="3">
               <strong>Sub Total: </strong>
               {subTotal[i] ? (
-              <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
+                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
                 <RenderPriceHolder input={'0.00'} edit={true} />
-                )}
+              )}
             </Col>
           </Row>
         </Fragment>
       </div> : <div />
-  )
+  );
 };
 
 export default connect()(Miter_Table);

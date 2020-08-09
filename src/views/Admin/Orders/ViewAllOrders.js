@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { loadOrders, updateStatus } from '../../../redux/orders/actions';
 import { loadCustomers } from '../../../redux/customers/actions';
 import OrderTable from './OrderTable';
-import RestrictedOrderTable from './RestrictedOrderTable'
+import RestrictedOrderTable from './RestrictedOrderTable';
 
 class ViewAllOrders extends Component {
   constructor(props) {
@@ -16,8 +16,8 @@ class ViewAllOrders extends Component {
     const { orders, loadOrders, updateStatus, role } = this.props;
     return (
       role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ? 
-      <div>
-        {orders.length &&
+        <div>
+          {orders.length &&
           <div>
             <Row>
               <Col>
@@ -29,10 +29,10 @@ class ViewAllOrders extends Component {
               </Col>
             </Row>
           </div>
-        }
-      </div>
-      : 
-      <div>{orders.length &&
+          }
+        </div>
+        : 
+        <div>{orders.length &&
         <div>
           <Row>
             <Col>
@@ -44,7 +44,7 @@ class ViewAllOrders extends Component {
             </Col>
           </Row>
         </div>
-      }</div>
+        }</div>
     );
   }
 }
