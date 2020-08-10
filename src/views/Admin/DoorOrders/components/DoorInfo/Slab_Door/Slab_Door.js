@@ -1,4 +1,4 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from 'react';
 import {
   Row,
   Col,
@@ -6,11 +6,11 @@ import {
   FormGroup,
   Label,
 
-} from "reactstrap";
-import { Field, FieldArray, change } from "redux-form";
+} from 'reactstrap';
+import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
-import Slab_Door_Table from '../../Table/Doors/Slab_Door_Table'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
+import Slab_Door_Table from '../../Table/Doors/Slab_Door_Table';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -21,10 +21,6 @@ const required = value => (value ? undefined : 'Required');
 
 
 class Slab_Door extends Component {
-  constructor(props) {
-    super(props);
-  }
-
 
   render() {
     const {
@@ -34,13 +30,11 @@ class Slab_Door extends Component {
       edges,
       applied_moulds,
       finishes,
-
       isValid,
       index,
       part_list,
       formState,
       prices,
-      itemPrice,
       subTotal
     } = this.props;
     return (
@@ -91,7 +85,7 @@ class Slab_Door extends Component {
 
         <Row>
 
-        <Col xs="6">
+          <Col xs="6">
             <FormGroup>
               <Label htmlFor="applied_profile">Applied Profiles</Label>
               <Field

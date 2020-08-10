@@ -1,21 +1,21 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect } from 'react';
 import {
   Table,
   Input,
   Row,
   Col,
   Button
-} from "reactstrap";
+} from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from "redux-form";
-import Ratio from "lb-ratio";
+import { Field, change } from 'redux-form';
+import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../../../../components/RenderInputs/renderInputs'
+import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../../../../components/RenderInputs/renderInputs';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import numQty from 'numeric-quantity'
-import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderPriceHolder'
+import numQty from 'numeric-quantity';
+import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderPriceHolder';
 
 
 const required = value => (value ? undefined : 'Required');
@@ -28,43 +28,43 @@ const fraction = num => {
 
 const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, dispatch }) => {
 
-  const [width, setWidth] = useState([])
-  const [height, setHeight] = useState([])
+  const [width, setWidth] = useState([]);
+  const [height, setHeight] = useState([]);
 
 
 
   useEffect(() => {
 
-    let init = []
-    setWidth(init)
-    setHeight(init)
+    let init = [];
+    setWidth(init);
+    setHeight(init);
 
-  }, [updateSubmit])
+  }, [updateSubmit]);
 
   const w = (e, v, i) => {
     e.preventDefault();
-    let newWidth = [...width]
+    let newWidth = [...width];
     if (width[i]) {
-      newWidth.splice(i, 1, v)
+      newWidth.splice(i, 1, v);
     } else {
-      newWidth = [...newWidth, v]
+      newWidth = [...newWidth, v];
     }
     setWidth(newWidth);
-  }
+  };
 
   const h = (e, v, i) => {
     e.preventDefault();
-    let newHeight = [...height]
+    let newHeight = [...height];
     if (height[i]) {
-      newHeight.splice(i, 1, v)
+      newHeight.splice(i, 1, v);
     } else {
-      newHeight = [...newHeight, v]
+      newHeight = [...newHeight, v];
     }
     setHeight(newHeight);
-  }
+  };
 
   const updateFullFrame = (e, index) => {
-    const part = formState.part_list[i]
+    const part = formState.part_list[i];
 
     if (e) {
       dispatch(
@@ -100,7 +100,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
       );
     }
 
-  }
+  };
 
 
 
@@ -168,12 +168,12 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         <Input
                           type="text"
                           className="form-control"
-                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
+                          placeholder={'$' + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
                           className="form-control"
-                          placeholder={"$0.00"}
+                          placeholder={'$0.00'}
                         />
                       }
 
@@ -181,7 +181,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     <td>
                       <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
                         X
-                        </Button>
+                      </Button>
                     </td>
                   </tr>
 
@@ -291,7 +291,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         <div>
                           <Col />
                           <Col>
-                            <p style={{ textAlign: 'center', marginTop: "10px" }}><strong>Panel Opening {index + 1}</strong></p>
+                            <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderField}
@@ -299,7 +299,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           </Col>
                           <Col />
                         </div>
-                      )
+                      );
                     })}
                   </Row>
                 </div>
@@ -337,7 +337,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 className="btn-circle"
                 onClick={(e) =>
                   (
-                    (formState.part_list[formState.part_list.length - 1].construction.value === "Glass" && formState.part_list[formState.part_list.length - 1].profile) ?
+                    (formState.part_list[formState.part_list.length - 1].construction.value === 'Glass' && formState.part_list[formState.part_list.length - 1].profile) ?
                       fields.push({
                         panelsH: 1,
                         panelsW: 1,
@@ -355,7 +355,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         ),
                         horizontalMidRailSize: 0,
                         verticalMidRailSize: 0,
-                        unevenSplitInput: "0",
+                        unevenSplitInput: '0',
                         showBuilder: false,
                         full_frame: false,
                         item: fields.length + 1
@@ -364,7 +364,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                   )}
               >
                 +
-                </Button>
+              </Button>
             </Col>
           </Row>
 
@@ -376,13 +376,13 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               {subTotal[i] ? (
                 <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                  <RenderPriceHolder input={'0.00'} edit={true} />
-                )}
+                <RenderPriceHolder input={'0.00'} edit={true} />
+              )}
             </Col>
           </Row>
         </Fragment>
       </div> : <div />
-  )
+  );
 };
 
 const mapStateToProps = state => ({

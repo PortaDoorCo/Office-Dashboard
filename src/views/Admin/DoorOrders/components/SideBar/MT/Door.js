@@ -37,8 +37,8 @@ class SideBar extends Component {
                   {(part.woodtype && part.woodtype.photo) ? (
                     <img src={part.woodtype.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
               <Col>
@@ -49,8 +49,8 @@ class SideBar extends Component {
                   {(part.mt_design && part.mt_design.photo) ? (
                     <img src={part.mt_design.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
 
@@ -63,8 +63,8 @@ class SideBar extends Component {
                   {(part.edge && part.edge.photo) ? (
                     <img src={part.edge.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
 
@@ -79,8 +79,8 @@ class SideBar extends Component {
                   {(part.panel && part.panel.photo) ? (
                     <img src={part.panel.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
               <Col>
@@ -91,8 +91,8 @@ class SideBar extends Component {
                   {(part.applied_profile && part.applied_profile.photo) ? (
                     <img src={part.applied_profile.photo.url} style={style} alt="" />
                   ) : (
-                      <img src={comingSoon} style={style} alt="" />
-                    )}
+                    <img src={comingSoon} style={style} alt="" />
+                  )}
                 </div>
               </Col>
             </Row>

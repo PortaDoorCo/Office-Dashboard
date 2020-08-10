@@ -1,16 +1,15 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   FormGroup,
   Label,
-} from "reactstrap";
-import { Field, FieldArray, change } from "redux-form";
+} from 'reactstrap';
+import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
-import Frame_Only_Table from '../../Table/Doors/Frame_Only_Table'
-import Ratio from 'lb-ratio';
+import Frame_Only_Table from '../../Table/Doors/Frame_Only_Table';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -19,16 +18,7 @@ import {
 
 const required = value => (value ? undefined : 'Required');
 
-const fraction = num => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
-
 class FaceFrame extends Component {
-  constructor(props) {
-    super(props);
-  }
-
 
   render() {
     const {
@@ -38,13 +28,11 @@ class FaceFrame extends Component {
       face_frame_top_rails,
       furniture_feets,
       edges,
-
       isValid,
       index,
       part_list,
       formState,
       prices,
-      itemPrice,
       subTotal
     } = this.props;
     return (
@@ -95,7 +83,7 @@ class FaceFrame extends Component {
 
         <Row>
 
-        <Col xs="6">
+          <Col xs="6">
             <FormGroup>
               <Label htmlFor="hinges">Top Rail Design</Label>
               <Field
