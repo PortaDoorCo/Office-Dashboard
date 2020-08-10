@@ -7,12 +7,11 @@ import {
   Label,
   Button
 } from 'reactstrap';
-import "antd/dist/antd.css";
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';
 import OrderTable from './OrderTable';
-import { renderField } from '../../../../components/RenderInputs/renderInputs'
+import { renderField } from '../../../../components/RenderInputs/renderInputs';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -36,7 +35,7 @@ class DrawerBoxInfo extends Component {
 
 
   render() {
-    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, assembly, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState } = this.props;
+    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState } = this.props;
     return (
       <div>
         {fields.map((part, index) => (
@@ -54,7 +53,7 @@ class DrawerBoxInfo extends Component {
                   {fields.length > 1 ? (
                     <Button color="danger" onClick={() => fields.remove(index)}>
                       x
-                  </Button>
+                    </Button>
                   ) : null}
                 </Col>
               </Row>
@@ -100,7 +99,7 @@ class DrawerBoxInfo extends Component {
 
             </Row>
             <Row>
-            <Col xs="4">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="box-bottoms">Box Bottom Thickness</Label>
                   <Field
@@ -185,7 +184,7 @@ class DrawerBoxInfo extends Component {
           }
         >
           Add Item
-      </Button>
+        </Button>
       </div >
 
     );
@@ -209,10 +208,10 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-  DrawerBoxInfo = reduxForm({
-    form: 'DrawerOrder',
-    enableReinitialize: true
-  })(DrawerBoxInfo);
+DrawerBoxInfo = reduxForm({
+  form: 'DrawerOrder',
+  enableReinitialize: true
+})(DrawerBoxInfo);
 
 export default connect(
   mapStateToProps,

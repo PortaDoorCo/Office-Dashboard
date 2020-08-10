@@ -11,8 +11,8 @@ import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';
-import RenderPriceHolder from '../../../../components/RenderInputs/RenderPriceHolder'
-import { renderPrice } from '../../../../components/RenderInputs/renderInputs'
+import RenderPriceHolder from '../../../../components/RenderInputs/RenderPriceHolder';
+import { renderPrice } from '../../../../components/RenderInputs/renderInputs';
 
 const required = value => value ? undefined : 'Required';
 
@@ -34,7 +34,7 @@ const renderFieldDisabled = ({ input, props, meta: { touched, error, warning }, 
 );
 
 const renderDropdownList = ({ input, data, valueField, textField, meta: { touched, error, warning } }) => (
-  <div style={{ "width": "90px" }}>
+  <div style={{ 'width': '90px' }}>
     <DropdownList {...input}
       data={data}
       valueField={valueField}
@@ -50,7 +50,7 @@ class OrderTable extends Component {
 
   render() {
 
-    const { fields, scoop, dividers, prices, i, subTotal, part, formState } = this.props;
+    const { fields, scoop, dividers, prices, i, subTotal, formState } = this.props;
 
 
     return (
@@ -88,7 +88,7 @@ class OrderTable extends Component {
                           component={renderField}
                           label="qty"
                           validate={required}
-                          />
+                        />
                       </td>
                       <td>
                         <Field
@@ -97,7 +97,7 @@ class OrderTable extends Component {
                           component={renderField}
                           label="width"
                           validate={required}
-                          />
+                        />
                       </td>
                       <td>
                         <Field
@@ -106,7 +106,7 @@ class OrderTable extends Component {
                           component={renderField}
                           label="depth"
                           validate={required}
-                          />
+                        />
                       </td>
                       <td>
                         <Field
@@ -115,7 +115,7 @@ class OrderTable extends Component {
                           component={renderField}
                           label="height"
                           validate={required}
-                          />
+                        />
                       </td>
                       <td >
                         <Field
@@ -136,17 +136,17 @@ class OrderTable extends Component {
                           validate={required} />
                       </td>
                       <td style={{ width: '150px' }}>
-                      {prices[i] ?
-                        <Input
-                          type="text"
-                          className="form-control"
-                          placeholder={"$" + prices[i][index].toFixed(2) || 0}
-                        /> : <Input
-                          type="text"
-                          className="form-control"
-                          placeholder={"$0.00"}
-                        />
-                      }
+                        {prices[i] ?
+                          <Input
+                            type="text"
+                            className="form-control"
+                            placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                          /> : <Input
+                            type="text"
+                            className="form-control"
+                            placeholder={'$0.00'}
+                          />
+                        }
                       </td>
 
                       <td >
@@ -160,7 +160,7 @@ class OrderTable extends Component {
                   </tbody>
                 </Table>
                 <Row>
-                <Col xs="4">
+                  <Col xs="4">
                     <strong>Notes</strong>
                     <Field
                       name={`${table}.notes`}
@@ -196,10 +196,10 @@ class OrderTable extends Component {
               <Col xs="3">
                 <strong>Sub Total: </strong>
                 {subTotal[i] ? (
-                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
+                  <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
                 ) : (
                   <RenderPriceHolder input={'0.00'} edit={true} />
-                  )}
+                )}
               </Col>
             </Row>
           </Fragment >
@@ -209,7 +209,7 @@ class OrderTable extends Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setMain: (table) => dispatch(change(`DrawerOrder`, `${table}.price`, 5))
+  setMain: (table) => dispatch(change('DrawerOrder', `${table}.price`, 5))
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(OrderTable);
