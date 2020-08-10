@@ -3,21 +3,20 @@ import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import { Input, Button, Row, Col, Collapse, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import Parameters from './Parameters'
-import Cookies from "js-cookie";
+import { Button, Row, Col, Collapse, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Parameters from './Parameters';
+import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateBreakdowns, getBreakdowns } from '../../../../../../../redux/part_list/actions'
+import { updateBreakdowns, getBreakdowns } from '../../../../../../../redux/part_list/actions';
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 
 
 
 const EditorComponent = (props) => {
 
   const {
-    buttonLabel,
     className,
     breakdowns,
     name,
@@ -27,32 +26,32 @@ const EditorComponent = (props) => {
   const { code, edit } = props;
   const [text, setText] = useState(code);
   const editorRef = useRef(null);
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
 
-  const designs = ['top_rail_arch', 'bottom_rail_arch']
-  const edges = ['stile_add', 'rail_add', 'edge_factor']
-  const panels = ['panel_factor']
-  const profiles = ['inset']
-  const applied_profiles = ['rail_add', 'rail_factor']
+  const designs = ['top_rail_arch', 'bottom_rail_arch'];
+  const edges = ['stile_add', 'rail_add', 'edge_factor'];
+  const panels = ['panel_factor'];
+  const profiles = ['inset'];
+  const applied_profiles = ['rail_add', 'rail_factor'];
 
   const toggle = () => {
-    setModal(!modal)
+    setModal(!modal);
   };
 
 
   const submit = async () => {
 
-    const id = breakdowns.id
+    const id = breakdowns.id;
 
     const bd = {
       ...breakdowns,
       [name]: text
-    }
+    };
 
-    await props.updateBreakdowns(id, bd, cookie)
-    await setModal(!modal)
-    await toggleEdit()
-  }
+    await props.updateBreakdowns(id, bd, cookie);
+    await setModal(!modal);
+    await toggleEdit();
+  };
 
 
   const onBtnClick = (val) => {
@@ -62,7 +61,7 @@ const EditorComponent = (props) => {
     editorRef.current._input.value = newVal;
     editorRef.current._input.selectionStart = editorRef.current._input.selectionEnd = startIndex + val.length;
     editorRef.current._input.focus();
-  }
+  };
   return (
     <div>
 
@@ -82,7 +81,7 @@ const EditorComponent = (props) => {
             }}
             onKeyPress={e => {
               e.persist();
-              if (e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45 || e.charCode > 57) {
+              if ((e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45) || e.charCode > 57) {
                 e.preventDefault();
               }
             }}
@@ -96,7 +95,7 @@ const EditorComponent = (props) => {
             <Row>
               <Col>
                 Operators
-            </Col>
+              </Col>
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
@@ -116,7 +115,7 @@ const EditorComponent = (props) => {
             <Row>
               <Col>
                 Product Attributes
-            </Col>
+              </Col>
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
@@ -135,7 +134,7 @@ const EditorComponent = (props) => {
             <Row>
               <Col>
                 User Input
-            </Col>
+              </Col>
             </Row>
             <Row>
               <div className="col d-flex align-content-start flex-wrap">
@@ -171,7 +170,7 @@ const EditorComponent = (props) => {
         <ModalHeader toggle={toggle}>Are You Sure?</ModalHeader>
         <ModalBody>
           Are you sure you want to change this setting?
-          </ModalBody>
+        </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={submit}>Submit</Button>
           <Button color="danger" onClick={toggle}>Cancel</Button>
@@ -184,7 +183,7 @@ const EditorComponent = (props) => {
   );
 
 
-}
+};
 
 const mapStateToProps = (state) => ({
   breakdowns: state.part_list.breakdowns[2]

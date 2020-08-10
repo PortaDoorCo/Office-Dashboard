@@ -424,12 +424,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       submitOrder,
-      // getWoodtypes,
       loadCustomers,
-      // getBoxThickness,
-      // getBoxBottoms,
-      // getAssembly,
-      // getNotch,
       loadOrders,
       updateOrder
     },

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Button,
 } from 'reactstrap';
@@ -59,7 +59,7 @@ const OrderTable = (props) => {
 
   };
 
-  const columns = useMemo(clickHandler => [
+  const columns = [
 
     {
       selector: 'orderNum',
@@ -113,7 +113,7 @@ const OrderTable = (props) => {
         </IconButton>
       </Tooltip>
     },
-  ]);
+  ];
 
   const contextActions = useMemo(() => {
     const handleDelete = () => {

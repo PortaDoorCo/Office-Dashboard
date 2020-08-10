@@ -1,17 +1,12 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Editor from './Editor'
-import { Row, Col, Card, CardBody, CardTitle, Button } from 'reactstrap'
-import { VerticalLine } from 'devextreme-react/chart';
-import { updateBreakdowns } from '../../../../../../redux/part_list/actions'
+import Editor from './Editor';
+import { Row, Col, Card, CardBody, CardTitle, Button } from 'reactstrap';
+import { updateBreakdowns } from '../../../../../../redux/part_list/actions';
 
 const EditorPage = (props) => {
-
-  const { updateBreakdowns } = props;
-
-  const [breakdowns, setBreakdowns] = useState(props.breakdowns);
-
+  const [breakdowns] = useState(props.breakdowns);
   const [topRailWidth, setTopRailWidth] = useState(false);
   const [topRailHeight, setTopRailHeight] = useState(false);
   const [bottomRailWidth, setBottomRailWidth] = useState(false);
@@ -24,10 +19,6 @@ const EditorPage = (props) => {
   const [verticalMidRailHeight, setVerticalMidRailHeight] = useState(false);
   const [horizontalMidRailWidth, setHorizontalMidRailWidth] = useState(false);
   const [horizontalMidRailHeight, setHorizontalMidRailHeight] = useState(false);
-  const [panelWidth, setPanelWidth] = useState(false);
-  const [panelHeight, setPanelHeight] = useState(false);
-
-
 
 
   return (
@@ -290,8 +281,8 @@ const EditorPage = (props) => {
         </Col>
       </Row>
     </div>
-  )
-}
+  );
+};
 
 
 const mapStateToProps = (state) => ({

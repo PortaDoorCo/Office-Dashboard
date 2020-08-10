@@ -1,22 +1,18 @@
-import React, { Component, useState } from 'react';
-import { Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse, Breadcrumb, BreadcrumbItem } from 'reactstrap'
+import React, { useState } from 'react';
+import { Row, Col, Button, Card, CardBody, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Woodtype from './attributes/Woodtypes'
-import BoxThickness from './attributes/BoxThickness'
-import BoxBottomWoodtype from './attributes/BoxBottomWoodtype'
-import BoxBottomThickness from './attributes/BoxBottomThickness'
-
-
-import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions'
+import Woodtype from './attributes/Woodtypes';
+import BoxThickness from './attributes/BoxThickness';
+import BoxBottomWoodtype from './attributes/BoxBottomWoodtype';
+import BoxBottomThickness from './attributes/BoxBottomThickness';
+import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions';
 import classnames from 'classnames';
-
-import EditorPage from './editor/EditorPage'
+import EditorPage from './editor/EditorPage';
 import NotchDrill from './attributes/NotchDrill';
-import Finish from './attributes/Finish'
+import Finish from './attributes/Finish';
 
 const Navigation = (props) => {
-  const { actions, setCopePage } = props;
 
   return (
     <Col>
@@ -25,19 +21,18 @@ const Navigation = (props) => {
         <BreadcrumbItem active>Dovetail Drawer Box</BreadcrumbItem>
       </Breadcrumb>
     </Col>
-  )
-}
+  );
+};
 
 
 const DrawerBox = (props) => {
   const { role } = props;
-  const [product, setProduct] = useState("index");
   const [activeTab, setActiveTab] = useState('1');
   const [openEditor, setOpenEditor] = useState(false);
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
-  }
+  };
 
   const toggleEditor = () => setOpenEditor(!openEditor);
 
@@ -69,7 +64,7 @@ const DrawerBox = (props) => {
                         onClick={() => { toggle('1'); }}
                       >
                         Woodtype
-                    </NavLink>
+                      </NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink
@@ -77,7 +72,7 @@ const DrawerBox = (props) => {
                         onClick={() => { toggle('2'); }}
                       >
                         Box Thickness
-                    </NavLink>
+                      </NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink
@@ -85,7 +80,7 @@ const DrawerBox = (props) => {
                         onClick={() => { toggle('3'); }}
                       >
                         Box Bottom Woodtype
-                    </NavLink>
+                      </NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink
@@ -93,7 +88,7 @@ const DrawerBox = (props) => {
                         onClick={() => { toggle('4'); }}
                       >
                         Box Bottom Thickness
-                    </NavLink>
+                      </NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink
@@ -101,7 +96,7 @@ const DrawerBox = (props) => {
                         onClick={() => { toggle('5'); }}
                       >
                         Notch and Drill
-                    </NavLink>
+                      </NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink
@@ -109,7 +104,7 @@ const DrawerBox = (props) => {
                         onClick={() => { toggle('6'); }}
                       >
                         Finish/Assembly
-                    </NavLink>
+                      </NavLink>
                     </NavItem>
                   </Nav>
                 </Col>
@@ -173,10 +168,10 @@ const DrawerBox = (props) => {
         </Col>
       </Row>
     </div>
-  )
+  );
 
 
-}
+};
 
 const mapStateToProps = (state) => ({
   woodtypes: state.part_list.woodtypes,

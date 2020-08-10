@@ -348,7 +348,6 @@ class StatusTable extends React.Component {
               format="M/d/yyyy"
             >
               <HeaderFilter dataSource={this.orderHeaderFilter} />{' '}
-                        allowEditing={false}><RequiredRule />
             </Column>
             <Column
               dataField="status"
