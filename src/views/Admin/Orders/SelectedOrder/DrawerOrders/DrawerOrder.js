@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardBody,
   Input,
-  FormGroup,
   InputGroup,
   InputGroupAddon,
   InputGroupText
@@ -45,16 +44,10 @@ import {
   balanceSelector,
   balanceTotalSelector
 } from '../../../../../selectors/drawerPricing';
-import moment from 'moment-business-days'
-import Cookies from "js-cookie";
-import { FileUploader } from 'devextreme-react';
-import { renderField } from './components/RenderInputs/renderInputs'
+import Cookies from 'js-cookie';
+import { renderField } from './components/RenderInputs/renderInputs';
 
-const cookie = Cookies.get("jwt");
-const header = { 'Authorization': 'Bearer ' + cookie };
-
-
-const dueDate = moment(new Date()).businessAdd(7)._d
+const cookie = Cookies.get('jwt');
 
 let options = {};
 options = {
@@ -91,16 +84,12 @@ class DrawerOrder extends Component {
 
   submit = async (values, e) => {
     const {
-      reset,
       prices,
       itemPrice,
       subTotal,
       total,
-      submitOrder,
-      orderNum,
       tax,
       user,
-      loadOrders,
       updateOrder,
       balance
     } = this.props;
@@ -123,7 +112,7 @@ class DrawerOrder extends Component {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
       }
-    }
+    };
 
 
     const order = {
@@ -147,15 +136,15 @@ class DrawerOrder extends Component {
       files: this.state.files,
       tracking: [
         {
-          "status": values.job_info.status,
-          "date": new Date()
+          'status': values.job_info.status,
+          'date': new Date()
         }
       ],
       balance_history: [
         {
-          "balance_due": total,
-          "balance_paid": values.balance_paid,
-          "date": new Date()
+          'balance_due': total,
+          'balance_paid': values.balance_paid,
+          'date': new Date()
         }
       ]
     };
@@ -256,8 +245,8 @@ class DrawerOrder extends Component {
   onUploaded = (e) => {
     const data = JSON.parse(e.request.response);
     const id = data[0].id;
-    const a = [...this.state.files, id]
-    this.setState({ files: a })
+    const a = [...this.state.files, id];
+    this.setState({ files: a });
   }
 
   render() {
@@ -373,12 +362,12 @@ class DrawerOrder extends Component {
                         ?
                         <Row>
                           <Col>
-                            <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
+                            <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
                           </Col>
                           <Col>
                             <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
                               Cancel
-                          </Button>
+                            </Button>
                           </Col>
                         </Row>
                         :

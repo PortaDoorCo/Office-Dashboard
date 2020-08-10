@@ -1,31 +1,25 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   FormGroup,
-  Label,
-  Input,
-
-} from "reactstrap";
+  Label
+} from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
-import DropdownList from 'react-widgets/lib/DropdownList'
-import 'react-widgets/dist/css/react-widgets.css';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
-import moment from 'moment'
-import momentLocaliser from 'react-widgets-moment'
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import moment from 'moment';
+import momentLocaliser from 'react-widgets-moment';
 import { reduxForm}  from 'redux-form';
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
 
-momentLocaliser(moment)
+momentLocaliser(moment);
 
 
 
-const status = ['Quote', 'Ordered', 'Shipped', 'RUSH']
+const status = ['Quote', 'Ordered', 'Shipped', 'RUSH'];
 
 const required = value => value ? undefined : 'Required';
-
-
 
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
   <DateTimePicker
@@ -33,12 +27,12 @@ const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
     time={showTime}
     value={!value ? null : new Date(value)}
     disabled={edit}
-  />
+  />;
 
 
 class JobInfo extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loaded: false
     };

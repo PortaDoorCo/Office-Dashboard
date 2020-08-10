@@ -20,7 +20,7 @@ const required = value => (value ? undefined : 'Required');
 
 
 
-class One_Piece_Door extends Component {
+class OnePieceDoor extends Component {
 
   render() {
     const {
@@ -168,4 +168,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
-)(One_Piece_Door);
+)(OnePieceDoor);
