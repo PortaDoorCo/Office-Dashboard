@@ -1,8 +1,4 @@
 import { createSelector } from 'reselect';
-import { createObjectSelector } from 'reselect-map';
-import { formValueSelector } from 'redux-form';
-import * as math from 'mathjs';
-import numQty from 'numeric-quantity';
 
 const partListSelector = state => {
   const orders = state.form.Orders;

@@ -19,27 +19,27 @@ import navigation from '../../_nav';
 // routes config
 import routes from '../../routes';
 
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import {
   loadOrders,
   getDeliveries,
   socketReceiveUpdateStatus
-} from "../../redux/orders/actions";
+} from '../../redux/orders/actions';
 import {
   loadMiscItems,
   loadShippingMethod,
   loadPaymentTypes,
   loadPaymentTerms,
-} from "../../redux/misc_items/actions";
+} from '../../redux/misc_items/actions';
 import {
   loadSales,
-} from "../../redux/sales/actions";
+} from '../../redux/sales/actions';
 
-import { loadCustomers } from '../../redux/customers/actions'
+import { loadCustomers } from '../../redux/customers/actions';
 
 import {
   getWoodtypes,
@@ -81,13 +81,13 @@ import {
   getBreakdowns,
   getBoxBreakdowns,
   getPricing
-} from "../../redux/part_list/actions";
-import { login, getUsers } from "../../redux/users/actions";
+} from '../../redux/part_list/actions';
+import { login, getUsers } from '../../redux/users/actions';
 
-import Loader from '../../views/Admin/Loader/Loader'
+import Loader from '../../views/Admin/Loader/Loader';
 import { NotificationContainer } from 'react-notifications';
 import io from 'socket.io-client';
-import db_url from '../../redux/db_url'
+import db_url from '../../redux/db_url';
 
 const socket = io(db_url);
 
@@ -210,7 +210,7 @@ class DefaultLayout extends Component {
 
     } = this.props;
 
-    const cookie = await Cookies.get("jwt");
+    const cookie = await Cookies.get('jwt');
 
     if (cookie) {
 
@@ -228,7 +228,7 @@ class DefaultLayout extends Component {
         await loadMiscItems(cookie);
       }
 
-      await getDeliveries(cookie)
+      await getDeliveries(cookie);
 
       if (!loadedPricing) {
         await getPricing(cookie);
@@ -304,7 +304,7 @@ class DefaultLayout extends Component {
 
 
     } else {
-      alert('not logged in')
+      alert('not logged in');
     }
 
   }
@@ -377,10 +377,8 @@ class DefaultLayout extends Component {
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
-
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   loggedIn: state.users.loggedIn,
-
   loadedWoodtype: state.part_list.loadedWoodtype,
   loadedAppliedMoulds: state.part_list.loadedAppliedMoulds,
   loadedBaseCaps: state.part_list.loadedBaseCaps,
@@ -411,29 +409,20 @@ const mapStateToProps = (state, prop) => ({
   loadedOnePieceDesigns: state.part_list.loadedOnePieceDesigns,
   loadedOnePiecePanels: state.part_list.loadedOnePiecePanels,
   loadedOnePieceEdges: state.part_list.loadedOnePieceEdges,
-
   loadedBoxBottomThickness: state.part_list.loadedBoxBottomThickness,
   loadedBoxFinish: state.part_list.loadedBoxFinish,
   loadedBoxNotches: state.part_list.loadedBoxNotches,
   loadedBoxThickness: state.part_list.loadedBoxThickness,
   loadedBoxWoodtypes: state.part_list.loadedBoxWoodtypes,
   loadedBoxBottomWoodtypes: state.part_list.loadedBoxBottomWoodtypes,
-
   loadedBreakdowns: state.part_list.loadedBreakdowns,
   loadedBoxBreakdowns: state.part_list.loadedBoxBreakdowns,
-
-  ordersDBLoaded: state.part_list.ordersDBLoaded,
   customerDBLoaded: state.customers.customerDBLoaded,
-
   loadedPaymentTypes: state.misc_items.loadedPaymentTypes,
   loadedPaymentTerms: state.misc_items.loadedPaymentTerms,
   loadedShippingMethods: state.misc_items.loadedShippingMethods,
   loadedSales: state.sales.loadedSales,
-
-  loadedBreakdowns: state.part_list.loadedBreakdowns,
-  loadedBoxBreakdowns: state.part_list.loadedBoxBreakdowns,
   loadedPricing: state.part_list.loadedPricing,
-
   customerDB: state.customers.customerDB,
   loadedMiscItems: state.misc_items.loadedMiscItems
 });

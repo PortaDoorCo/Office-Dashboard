@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
   Card,
   CardHeader,
@@ -8,24 +8,18 @@ import {
   Col,
   FormGroup,
   Label,
-  Input,
-  FormFeedback,
-  FormText,
 } from 'reactstrap';
-import toPercent from 'decimal-to-percent'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   reduxForm,
   Field,
 } from 'redux-form';
-import DropdownList from 'react-widgets/lib/DropdownList';
-import { updateCustomer } from '../../../../../redux/customers/actions'
+import { updateCustomer } from '../../../../../redux/customers/actions';
+import { renderField, renderDropdownList } from '../../../../../components/RenderInputs/renderInputs';
+import Cookies from 'js-cookie';
 
-import { renderField, renderDropdownList } from '../../../../../components/RenderInputs/renderInputs'
-import Cookies from "js-cookie";
-
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 const required = value => (value ? undefined : 'Required');
 
 class Edit extends Component {
@@ -43,7 +37,7 @@ class Edit extends Component {
   };
 
   submit = async (values, e) => {
-    const id = values.id
+    const id = values.id;
 
     const data = {
       Company: values.Company,
@@ -67,16 +61,14 @@ class Edit extends Component {
       Shipping_Zip: values.Shipping_Zip,
       Shipping_Phone: values.Shipping_Phone,
       Notes: values.Notes
-    }
+    };
 
 
-    await this.props.updateCustomer(id, data, cookie)
-    await this.props.onEdit()
+    await this.props.updateCustomer(id, data, cookie);
+    await this.props.onEdit();
   };
 
   render() {
-
-    const props = this.props
 
     const {
       handleSubmit,
@@ -84,7 +76,6 @@ class Edit extends Component {
       shippingMethods,
       edit
     } = this.props;
-
 
     return (
       <div className="animated resize">
@@ -407,10 +398,10 @@ class Edit extends Component {
                   <div>
                     <Button type="submit" color="primary" size="lg">
                       Submit
-                  </Button>
+                    </Button>
                     <Button type="cancel" type="button" color="primary" size="lg" onClick={this.props.onEdit}>
                       Cancel
-                  </Button>
+                    </Button>
                   </div>
                 }
 
@@ -418,8 +409,8 @@ class Edit extends Component {
               {edit ?
                 <Button type="button" onClick={this.props.onEdit} color="primary" size="lg">
                   Edit
-            </Button> : null
-            }
+                </Button> : null
+              }
             </CardBody>
           </Card>
         </Row>

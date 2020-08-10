@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Progress } from 'reactstrap';
-import { unsetToken } from "../../utils/auth";
+import { unsetToken } from '../../utils/auth';
 
 const propTypes = {
   notif: PropTypes.bool,
@@ -226,10 +226,10 @@ class DefaultHeaderDropdown extends Component {
   render() {
     const { notif, accnt, tasks, mssgs } = this.props;
     return (
-        notif ? this.dropNotif() :
-          accnt ? this.dropAccnt() :
-            tasks ? this.dropTasks() :
-              mssgs ? this.dropMssgs() : null
+      notif ? this.dropNotif() :
+        accnt ? this.dropAccnt() :
+          tasks ? this.dropTasks() :
+            mssgs ? this.dropMssgs() : null
     );
   }
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
-import db_url from '../db_url'
+import db_url from '../db_url';
 
 
 export const TOGGLE = 'TOGGLE';
@@ -19,21 +19,21 @@ export const SELECT_DATE_RANGE = 'SELECT_DATE_RANGE';
 export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const LOAD_SHIPPING_METHODS = 'LOAD_SHIPPING_METHODS';
 
-export const UPDATE_ORDER_NUM = 'UPDATE_ORDER_NUM'
-export const DELETE_ORDER = 'DELETE_ORDER'
-export const UPDATE_BALANCE = 'UPDATE_BALANCE'
-export const LOAD_DELIVERIES = 'LOAD_DELIVERIES'
-export const LOAD_PAYMENT_TYPES = 'LOAD_PAYMENT_TYPES'
-export const LOAD_PAYMENT_TERMS = 'LOAD_PAYMENT_TERMS'
+export const UPDATE_ORDER_NUM = 'UPDATE_ORDER_NUM';
+export const DELETE_ORDER = 'DELETE_ORDER';
+export const UPDATE_BALANCE = 'UPDATE_BALANCE';
+export const LOAD_DELIVERIES = 'LOAD_DELIVERIES';
+export const LOAD_PAYMENT_TYPES = 'LOAD_PAYMENT_TYPES';
+export const LOAD_PAYMENT_TERMS = 'LOAD_PAYMENT_TERMS';
 
-export const SOCKET_LOAD_ORDERS = 'SOCKET_LOAD_ORDERS'
-export const SOCKET_RECEIVE_UPDATE_STATUS = 'SOCKET_RECEIVE_UPDATE_STATUS'
-export const SET_SELECTED_ORDER = 'SET_SELECTED_ORDER'
+export const SOCKET_LOAD_ORDERS = 'SOCKET_LOAD_ORDERS';
+export const SOCKET_RECEIVE_UPDATE_STATUS = 'SOCKET_RECEIVE_UPDATE_STATUS';
+export const SET_SELECTED_ORDER = 'SET_SELECTED_ORDER';
 
 
 
 export function setSelectedOrder(data) {
-  console.log("FIRE", data)
+  console.log('FIRE', data);
   return async function (dispatch) {
     return await dispatch({
       type: SET_SELECTED_ORDER,
@@ -43,7 +43,7 @@ export function setSelectedOrder(data) {
 }
 
 export function loadOrders(cookie, amt) {
-  const amount = amt ? amt : 500
+  const amount = amt ? amt : 500;
   return async function (dispatch) {
     const res = await fetch(`${db_url}/orders?_limit=${amount}&_sort=orderNum:DESC`,
       {
@@ -134,11 +134,11 @@ export function updateStatus(orderId, key, status, cookie) {
     tracking: [
       ...key.tracking,
       {
-        "status": status.status,
-        "date": new Date()
+        'status': status.status,
+        'date': new Date()
       }
     ]
-  }
+  };
   return async function (dispatch) {
     try {
       const res = await axios.put(`${db_url}/orders/status/${orderId}`, item, {
@@ -162,10 +162,10 @@ export function updateStatus(orderId, key, status, cookie) {
 export function socketReceiveUpdateStatus(res) {
   return async function (dispatch) {
     return dispatch({
-        type: SOCKET_RECEIVE_UPDATE_STATUS,
-        data: res
+      type: SOCKET_RECEIVE_UPDATE_STATUS,
+      data: res
     });
-};
+  };
 }
 
 
@@ -177,12 +177,12 @@ export function updateBalance(orderId, balance, cookie) {
     balance_history: [
       ...balance.balance_history,
       {
-        "balance_due": parseFloat(balance.balance_due),
-        "balance_paid": parseFloat(balance.balance_paid),
-        "date": new Date()
+        'balance_due': parseFloat(balance.balance_due),
+        'balance_paid': parseFloat(balance.balance_paid),
+        'date': new Date()
       }
     ]
-  }
+  };
 
   return async function (dispatch) {
     try {

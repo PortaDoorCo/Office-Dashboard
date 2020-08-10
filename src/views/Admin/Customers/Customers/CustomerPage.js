@@ -16,8 +16,8 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OrderPage from '../../Orders/OrderPage';
-import CompanyOrders from './components/CompanyOrders'
-import Maps from './components/Maps'
+import CompanyOrders from './components/CompanyOrders';
+import Maps from './components/Maps';
 
 
 class CustomerPage extends Component {
@@ -92,7 +92,7 @@ class CustomerPage extends Component {
     if (this.props.orders.length > 0) {
       orders = this.props.orders.filter(
         x => x.job_info.customer.id === this.props.selectedCompanies.id
-      )
+      );
     }
 
 
