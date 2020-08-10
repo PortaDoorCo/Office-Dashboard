@@ -14,6 +14,8 @@ import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 import { save, load } from 'redux-localstorage-simple';
 import Cookies from 'js-cookie';
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 const cookie = Cookies.get('jwt');
 
 
