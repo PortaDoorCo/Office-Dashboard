@@ -19,7 +19,7 @@ import {
 const required = value => (value ? undefined : 'Required');
 
 
-class Slab_Door extends Component {
+class SlabDoor extends Component {
 
   render() {
     const {
@@ -176,4 +176,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
-)(Slab_Door);
+)(SlabDoor);
