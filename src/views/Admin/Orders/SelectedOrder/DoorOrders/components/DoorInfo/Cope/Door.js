@@ -1,27 +1,21 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   FormGroup,
-  Label,
-  Button,
-  Input
-} from "reactstrap";
-import { Field, FieldArray, reduxForm, change, reset } from "redux-form";
+  Label
+} from 'reactstrap';
+import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Cookies from "js-cookie";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs'
-import Cope_Table from '../../Table/Doors/Cope_Table'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs';
+import Cope_Table from '../../Table/Doors/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
-  taxSelector,
   totalSelector,
-  addPriceSelector
 } from '../../../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
@@ -32,75 +26,72 @@ const fraction = num => {
 };
 
 class CopeDoor extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onChangeProfile = () => {
-    const part_list = this.props.formState.part_list
+    const part_list = this.props.formState.part_list;
 
     part_list.forEach((part, i) => {
-        if (part.dimensions) {
-          part.dimensions.forEach((info, index) => {
+      if (part.dimensions) {
+        part.dimensions.forEach((info, index) => {
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].leftStile`,
+              fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+            )
+          );
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].rightStile`,
+              fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+            )
+          );
+
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].topRail`,
+              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+            )
+          );
+
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].bottomRail`,
+              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+            )
+          );
+
+
+
+          if (parseInt(info.panelsH) > 1) {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].leftStile`,
-                fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+                `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
               )
             );
+          }
 
+          if (parseInt(info.panelsW) > 1) {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].rightStile`,
-                fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+                `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
               )
             );
-
-
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].topRail`,
-                fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
-              )
-            );
-
-
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].bottomRail`,
-                fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
-              )
-            );
-
-
-
-            if (parseInt(info.panelsH) > 1) {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                  fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                )
-              );
-            }
-
-            if (parseInt(info.panelsW) > 1) {
-              this.props.dispatch(
-                change(
-                  'DoorOrder',
-                  `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                  fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-                )
-              );
-            }
-          });
-        } else {
-          return
-        }
+          }
+        });
+      } else {
+        return;
+      }
     });
   }
 
@@ -114,17 +105,13 @@ class CopeDoor extends Component {
       panels,
       applied_moulds,
       finishes,
-
       isValid,
       index,
       part_list,
       formState,
-
       edit,
-
-
       prices,
-      itemPrice,
+
       subTotal
 
     } = this.props;
@@ -272,7 +259,6 @@ class CopeDoor extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
-            part_list={part_list}
             edit={edit}
           // updateSubmit={updateSubmit}
           />
@@ -292,8 +278,6 @@ const mapStateToProps = (state, props) => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes,
-
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
