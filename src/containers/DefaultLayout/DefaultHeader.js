@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Nav, NavItem, Button } from 'reactstrap';
-// import { Button } from 'antd';
+import { Nav, NavItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import DefaultHeaderDropdown  from './DefaultHeaderDropdown'
-import logo from '../../assets/img/brand/portadoor.png'
-import sygnet from '../../assets/img/brand/sygnet.svg'
-import { unsetToken } from "../../utils/auth";
+import DefaultHeaderDropdown  from './DefaultHeaderDropdown';
+import logo from '../../assets/img/brand/portadoor.png';
+import sygnet from '../../assets/img/brand/sygnet.svg';
+import { unsetToken } from '../../utils/auth';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Avatar from 'react-avatar';
 
 const propTypes = {
   children: PropTypes.node,
