@@ -8,7 +8,7 @@ const initialState = {
   customerDB: ['LOADING'],
   customer: [],
   customerDBLoaded: false,
-  selectedCompanies: null
+  selectedCompanies: []
 };
 
 export default function (state = initialState, action) {
