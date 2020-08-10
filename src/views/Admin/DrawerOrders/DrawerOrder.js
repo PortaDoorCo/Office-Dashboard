@@ -28,7 +28,7 @@ import {
 import {
   submitOrder
 } from '../../../redux/orders/actions';
-import { loadCustomers } from '../../../redux/customers/actions'
+import { loadCustomers } from '../../../redux/customers/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -38,27 +38,20 @@ import {
   addPriceSelector,
   miscTotalSelector
 } from '../../../selectors/drawerPricing';
-// import {
-//   getWoodtypes,
-//   getBoxThickness,
-//   getBoxBottoms,
-//   getAssembly,
-//   getNotch
-// } from '../../../../redux/part_list/actions';
-import moment from 'moment-business-days'
+import moment from 'moment-business-days';
 import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 import { FileUploader } from 'devextreme-react';
-import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolder'
-import { renderField } from '../../../components/RenderInputs/renderInputs'
-import MiscItems from './components/MiscItems'
+import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolder';
+import { renderField } from '../../../components/RenderInputs/renderInputs';
+import MiscItems from './components/MiscItems';
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
-const dueDate = moment(new Date()).businessAdd(7)._d
+const dueDate = moment(new Date()).businessAdd(7)._d;
 
 let options = {};
 options = {
@@ -127,7 +120,7 @@ class DoorOrders extends Component {
         sale: values.job_info.customer.sale.id
       },
       ShippingMethod: values.job_info.ShippingMethod
-    }
+    };
 
 
     const order = {
@@ -152,15 +145,15 @@ class DoorOrders extends Component {
       submittedBy: user.FirstName,
       tracking: [
         {
-          "status": values.job_info.status,
-          "date": new Date()
+          'status': values.job_info.status,
+          'date': new Date()
         }
       ],
       balance_history: [
         {
-          "balance_due": total,
-          "balance_paid": values.balance_paid,
-          "date": new Date()
+          'balance_due': total,
+          'balance_paid': values.balance_paid,
+          'date': new Date()
         }
       ],
       sale: values.job_info.customer.sale.id
@@ -194,8 +187,8 @@ class DoorOrders extends Component {
   onUploaded = (e) => {
     const data = JSON.parse(e.request.response);
     const id = data[0].id;
-    const a = [...this.state.files, id]
-    this.setState({ files: a })
+    const a = [...this.state.files, id];
+    this.setState({ files: a });
   }
 
   render() {
@@ -271,7 +264,7 @@ class DoorOrders extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
-                    <strong>Discount: </strong>
+                      <strong>Discount: </strong>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>%</InputGroupText>
@@ -298,7 +291,7 @@ class DoorOrders extends Component {
                     <Col xs="3">
                       <Row>
                         <Col>
-                          <Button color="primary" className="submit" style={{ width: "100%" }}>Submit</Button>
+                          <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
                         </Col>
                         <Col>
                           <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
@@ -351,8 +344,8 @@ class DoorOrders extends Component {
                 );
               })
             ) : (
-                <div />
-              )}
+              <div />
+            )}
           </Col>
         </Row>
       </div>
