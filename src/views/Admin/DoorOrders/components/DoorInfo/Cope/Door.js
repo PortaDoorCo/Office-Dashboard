@@ -1,15 +1,15 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   FormGroup,
   Label,
-} from "reactstrap";
-import { Field, FieldArray, reduxForm, change } from "redux-form";
+} from 'reactstrap';
+import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs'
-import Cope_Table from '../../Table/Doors/Cope_Table'
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
+import Cope_Table from '../../Table/Doors/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
@@ -31,9 +31,9 @@ class CopeDoor extends Component {
 
 
   onChangeProfile = () => {
-    const part_list = this.props.formState.part_list
+    const part_list = this.props.formState.part_list;
     const { index } = this.props;
-    const part = part_list[index]
+    const part = part_list[index];
 
 
     if (part.dimensions) {

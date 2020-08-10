@@ -1,21 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
   Button
 } from 'reactstrap';
-import Cookies from "js-cookie";
-import DoorFilter from './Filter/Filter'
-import Conditionals from './Conditionals'
+import DoorFilter from './Filter/Filter';
+import Conditionals from './Conditionals';
 
-
-
-const cookie = Cookies.get("jwt");
-
-const required = value => (value ? undefined : 'Required');
-
-const header = { 'Authorization': 'Bearer ' + cookie };
 
 const construction = [
   {
@@ -85,14 +77,9 @@ class DoorInfo extends Component {
     const {
       fields,
       formState,
-      prices,
       part_list,
       isValid,
-      subTotal,
-      updateSubmit,
     } = this.props;
-
-
 
     return (
       <div>
