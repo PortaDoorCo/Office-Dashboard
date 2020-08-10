@@ -3,27 +3,12 @@ import {
   Row,
   Col,
   Button,
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Card,
   CardHeader,
-  CardFooter,
-  CardTitle,
-  CardSubtitle,
   CardBody,
-  Collapse,
-  Form,
   FormGroup,
-  FormText,
   Label,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  Table,
-  Badge
+  Input
 } from 'reactstrap';
 
 class BasicForms extends Component {
@@ -115,7 +100,7 @@ class BasicForms extends Component {
 
 
       </div>
-    )
+    );
   }
 }
 

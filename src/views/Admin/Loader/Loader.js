@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import ReactLoading from "react-loading";
+import React, { Component } from 'react';
+import ReactLoading from 'react-loading';
 import {
   Row,
   Col,
@@ -7,9 +7,8 @@ import {
   Button,
   Navbar,
   NavbarBrand,
-  NavbarText
-} from "reactstrap";
-import { unsetToken } from "../../../utils/auth";
+} from 'reactstrap';
+import { unsetToken } from '../../../utils/auth';
 
 class Loader extends Component {
   constructor(props) {
@@ -26,41 +25,41 @@ class Loader extends Component {
 
     return (
       <div>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Porta Door Co. Inc.</NavbarBrand>
+        <Navbar color="light" light expand="md">
+          <NavbarBrand href="/">Porta Door Co. Inc.</NavbarBrand>
     
-        <Button color="primary" className="ml-auto" onClick={this.logOut}>Log Out</Button>
+          <Button color="primary" className="ml-auto" onClick={this.logOut}>Log Out</Button>
           
       
-      </Navbar>
+        </Navbar>
       
-      <div className="app flex-row align-items-center">
-        <Container>
-          <Row>
-            <Col lg='9' />
-            <Col>
+        <div className="app flex-row align-items-center">
+          <Container>
+            <Row>
+              <Col lg='9' />
+              <Col>
               
-            </Col>
-          </Row>
-          <Row className="justify-content-center">
-            <Col />
-            <Col>
-              <center>
-                <ReactLoading
-                  type={"spinningBubbles"}
-                  color={"black"}
-                  height={300}
-                  width={300}
-                />
-                <h5 style={{ margin: 'auto' }}>Please wait while loading..</h5>
+              </Col>
+            </Row>
+            <Row className="justify-content-center">
+              <Col />
+              <Col>
+                <center>
+                  <ReactLoading
+                    type={'spinningBubbles'}
+                    color={'black'}
+                    height={300}
+                    width={300}
+                  />
+                  <h5 style={{ margin: 'auto' }}>Please wait while loading..</h5>
 
-              </center>
-            </Col>
-            <Col />
-          </Row>
+                </center>
+              </Col>
+              <Col />
+            </Row>
 
-        </Container>
-      </div>
+          </Container>
+        </div>
       </div>
     );
   }

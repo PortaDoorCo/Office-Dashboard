@@ -113,7 +113,7 @@ class Invoice extends Component {
           </CardBody>
         </Card>
       </div>
-    )
+    );
   }
 }
 
