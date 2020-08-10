@@ -9,16 +9,8 @@ import Charts from './components/Chart';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import { DateBox } from 'devextreme-react';
-import io from 'socket.io-client';
-import db_url from '../../../redux/db_url';
-import Cookies from 'js-cookie';
-
 
 const StatusTable = React.lazy(() => import('./components/StatusTable'));
-
-const socket = io(db_url);
-
-const cookie = Cookies.get('jwt');
 
 momentLocaliser(moment);
 

@@ -1,17 +1,16 @@
-import React, { Component, useState } from 'react';
-import { Breadcrumb, BreadcrumbItem, Row, Col, Button, CardImg, CardSubtitle, Card, CardBody, CardText, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap'
+import React, { useState } from 'react';
+import { Breadcrumb, BreadcrumbItem, Row, Col, Button, Card, CardBody, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Woodtype from '../Attributes/Woodtypes'
-import Designs from './attributes/Designs'
-import Panels from '../Attributes/Panels'
-import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../../redux/part_list/actions'
+import Woodtype from '../Attributes/Woodtypes';
+import Designs from './attributes/Designs';
+import Panels from '../Attributes/Panels';
+import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../../redux/part_list/actions';
 import classnames from 'classnames';
-import EditorPage from './editor/EditorPage'
+import EditorPage from './editor/EditorPage';
 
 
 const Navigation = (props) => {
-  const { actions, setCopePage } = props;
 
   return (
     <Col>
@@ -20,19 +19,18 @@ const Navigation = (props) => {
         <BreadcrumbItem active>Mitre Design DF</BreadcrumbItem>
       </Breadcrumb>
     </Col>
-  )
-}
+  );
+};
 
 
 const Cope = (props) => {
   const { role } = props;
-  const [product, setProduct] = useState("index");
   const [activeTab, setActiveTab] = useState('1');
   const [openEditor, setOpenEditor] = useState(false);
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
-  }
+  };
 
   const toggleEditor = () => setOpenEditor(!openEditor);
 
@@ -64,7 +62,7 @@ const Cope = (props) => {
                         onClick={() => { toggle('1'); }}
                       >
                         Woodtype
-                    </NavLink>
+                      </NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink
@@ -72,7 +70,7 @@ const Cope = (props) => {
                         onClick={() => { toggle('2'); }}
                       >
                         Designs
-                    </NavLink>
+                      </NavLink>
                     </NavItem>
 
                     <NavItem>
@@ -81,7 +79,7 @@ const Cope = (props) => {
                         onClick={() => { toggle('3'); }}
                       >
                         Panels
-                    </NavLink>
+                      </NavLink>
                     </NavItem>
                   </Nav>
                 </Col>
@@ -136,10 +134,10 @@ const Cope = (props) => {
         </Col>
       </Row>
     </div>
-  )
+  );
 
 
-}
+};
 
 const mapStateToProps = (state) => ({
   woodtypes: state.part_list.woodtypes,

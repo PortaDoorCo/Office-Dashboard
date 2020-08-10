@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
-import { Col, Row, Input, Card, CardBody, FormGroup, Label, Button, CardTitle } from 'reactstrap'
+import React, { useState } from 'react';
+import { Col, Row, Input, Card, CardBody, FormGroup, Label, Button, CardTitle } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AppSwitch } from '@coreui/react'
+import { AppSwitch } from '@coreui/react';
 import Avatar from 'react-avatar';
 import { FileUploader } from 'devextreme-react';
-import Cookies from "js-cookie";
-import { updateAccount, login, forgotPassword } from '../../../redux/users/actions'
-import LogOutModal from './LogOutModal'
+import Cookies from 'js-cookie';
+import { updateAccount, login, forgotPassword } from '../../../redux/users/actions';
+import LogOutModal from './LogOutModal';
 
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 const AccountSettings = props => {
 
-  const [user, setUser] = useState(props.user)
+  const [user, setUser] = useState(props.user);
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -28,9 +28,9 @@ const AccountSettings = props => {
       return ({
         ...prevState,
         [name]: value
-      })
-    })
-  }
+      });
+    });
+  };
 
   const onUploaded = (e) => {
     const data = JSON.parse(e.request.response);
@@ -38,14 +38,14 @@ const AccountSettings = props => {
       return ({
         ...prevState,
         profile_picture: data[0]
-      })
-    })
-    return
-  }
+      });
+    });
+    return;
+  };
 
   const updateUser = async () => {
     const { updateAccount } = props;
-    const id = user.id
+    const id = user.id;
     const userInfo = {
       FirstName: user.FirstName,
       LastName: user.LastName,
@@ -53,10 +53,10 @@ const AccountSettings = props => {
       email: user.email,
       profile_picture: user.profile_picture ? user.profile_picture.id : '',
       units: user.units
-    }
-    await updateAccount(cookie, id, userInfo)
-    await login(cookie)
-  }
+    };
+    await updateAccount(cookie, id, userInfo);
+    await login(cookie);
+  };
 
 
 
@@ -126,14 +126,14 @@ const AccountSettings = props => {
                   <FormGroup>
                     <Label>Units</Label><br />
                       Fractions
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setUser((prevState) => {
+                    <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setUser((prevState) => {
                       return ({
                         ...prevState,
                         units: !prevState.units
-                      })
+                      });
                     })} checked={user.units} />
                       Decimals
-                    </FormGroup>
+                  </FormGroup>
                 </Col>
               </Row>
 
@@ -150,8 +150,8 @@ const AccountSettings = props => {
       </Row>
       <LogOutModal modal={modal} toggle={toggle} email={user.email} />
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = state => ({
   user: state.users.user
