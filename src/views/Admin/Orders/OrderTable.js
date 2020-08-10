@@ -31,6 +31,8 @@ import db_url from '../../../redux/db_url';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { setSelectedOrder } from '../../../redux/orders/actions';
+import { bindActionCreators } from 'redux';
 
 const cookie = Cookies.get('jwt');
 
@@ -189,6 +191,7 @@ class OrderTable extends React.Component {
 
   toggle = row => {
     const { modal } = this.state;
+    const { setSelectedOrder } = this.props;
 
     this.setState({
       modal: !modal,
@@ -198,13 +201,9 @@ class OrderTable extends React.Component {
 
     if (!modal) {
       const x = row.row.data;
-      this.setState({
-        selectedOrder: x,
-      });
+      setSelectedOrder(x);
     } else {
-      this.setState({
-        selectedOrder: null
-      });
+      setSelectedOrder(null);
     }
   }
 
@@ -676,9 +675,18 @@ const mapStateToProps = (state, prop) => ({
 
 });
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setSelectedOrder
+    },
+    dispatch
+  );
+
+
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(OrderTable);
 

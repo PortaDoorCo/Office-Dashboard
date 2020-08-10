@@ -11,7 +11,6 @@ import {
 } from 'reactstrap';
 import Edit from './components/Edit';
 import {
-
 } from '../../../../redux/orders/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -45,15 +44,15 @@ class CustomerPage extends Component {
     };
   }
 
-  componentDidMount() {
-    if (this.props.orders.length > 0) {
-      this.setState({
-        orders: this.props.orders.filter(
-          x => x.job_info.customer.id === this.props.selectedCompanies.id
-        )
-      });
-    }
-  }
+  // componentDidMount() {
+  //   if (this.props.orders.length > 0) {
+  //     this.setState({
+  //       orders: this.props.orders.filter(
+  //         x => x.job_info.customer.id === this.props.selectedCompanies.id
+  //       )
+  //     });
+  //   }
+  // }
 
 
 
@@ -85,12 +84,14 @@ class CustomerPage extends Component {
   render() {
 
     const props = this.props;
-    const { locations, defaultCenter, selectedCompanies } = this.props;
+    const { locations, defaultCenter, selectedCompanies, orders } = this.props;
 
-    let orders;
+    let updateOrders;
+
+    console.log('selectedCompanies', selectedCompanies);
 
     if (this.props.orders.length > 0) {
-      orders = this.props.orders.filter(
+      updateOrders = orders.filter(
         x => x.job_info.customer.id === this.props.selectedCompanies.id
       );
     }
@@ -121,7 +122,7 @@ class CustomerPage extends Component {
                       defaultCenter={defaultCenter}
                     />
                     <CompanyOrders
-                      orders={orders}
+                      orders={updateOrders}
                     />
                   </div>
                 </Card>
