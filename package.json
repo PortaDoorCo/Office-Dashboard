@@ -150,8 +150,8 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "react-scripts --max_old_space_size=4096 start",
-    "build": "CI=false react-scripts --max_old_space_size=4096 build",
+    "start": "react-scripts --max_old_space_size=8192 start",
+    "build": "CI=false react-scripts --max_old_space_size=8192 build",
     "test": "echo hurray",
     "test-react": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
