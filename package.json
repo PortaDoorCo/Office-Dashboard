@@ -156,9 +156,7 @@
   },
   "scripts": {
     "start": "react-scripts --max_old_space_size=4096 start",
-    "netlify-postbuild": "CI=false react-scripts --max_old_space_size=4096 build",
     "build": "CI=false react-scripts --max_old_space_size=4096 build",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm install terser@3.14.1 && npm run build",
     "test": "echo hurray",
     "test-react": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
