@@ -1,38 +1,14 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
   Row,
   Col,
   CardSubtitle,
-  FormGroup,
-  Label,
-  Button,
-  Input
+  Button
 } from 'reactstrap';
-import 'antd/dist/antd.css';
-import DropdownList from 'react-widgets/lib/DropdownList';
-import Multiselect from 'react-widgets/lib/Multiselect'
-import 'react-widgets/dist/css/react-widgets.css';
-import OrderTable from '../Table/OrderTable';
-import {
-  Field,
-  FieldArray,
-  change
-} from 'redux-form';
-import FieldFileInput from '../UploadComponent'
-import { FileUploader } from 'devextreme-react';
-import Cookies from "js-cookie";
-import Select from 'react-select';
-import DoorFilter from '../DoorInfo/Filter/Filter'
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs'
-import Conditionals from './Conditionals'
+import DoorFilter from '../DoorInfo/Filter/Filter';
+import Conditionals from './Conditionals';
 
 
-
-const cookie = Cookies.get("jwt");
-
-const required = value => (value ? undefined : 'Required');
-
-const header = { 'Authorization': 'Bearer ' + cookie };
 
 const construction = [
   {
@@ -101,17 +77,9 @@ class DoorInfo extends Component {
   render() {
     const {
       fields,
-
-
-
       formState,
-      prices,
-      part_list,
       isValid,
-      subTotal,
-      updateSubmit,
       edit
-
     } = this.props;
 
     return (
@@ -161,7 +129,7 @@ class DoorInfo extends Component {
               />
 
             </div>
-          )
+          );
         })}
 
         {!edit ?
@@ -181,7 +149,7 @@ class DoorInfo extends Component {
             }
           >
             Add Item
-              </Button>
+          </Button>
           :
           <div />
         }
