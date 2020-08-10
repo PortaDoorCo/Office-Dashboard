@@ -24,7 +24,6 @@ import momentLocaliser from 'react-widgets-moment';
 
 
 
-
 momentLocaliser(moment);
 
 const status = [

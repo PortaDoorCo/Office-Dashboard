@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Bar, Line} from 'react-chartjs-2';
 import {
-  Badge,
+
   Row,
   Col,
   Progress,
@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownItem,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   CardTitle,
@@ -18,15 +17,11 @@ import {
   ButtonToolbar,
   ButtonGroup,
   ButtonDropdown,
-  Label,
-  Input,
-  Table
 } from 'reactstrap';
 
 const brandPrimary = '#20a8d8';
 const brandSuccess = '#4dbd74';
 const brandInfo = '#63c2de';
-const brandWarning = '#f8cb00';
 const brandDanger = '#f86c6b';
 
 // Card Chart 1
@@ -78,7 +73,7 @@ const cardChartOpts1 = {
       hoverRadius: 4,
     },
   }
-}
+};
 
 // Card Chart 2
 const cardChartData2 = {
@@ -130,7 +125,7 @@ const cardChartOpts2 = {
       hoverRadius: 4,
     },
   }
-}
+};
 
 // Card Chart 3
 const cardChartData3 = {
@@ -168,7 +163,7 @@ const cardChartOpts3 = {
       hoverRadius: 4,
     },
   }
-}
+};
 
 // Card Chart 4
 const cardChartData4 = {
@@ -197,7 +192,7 @@ const cardChartOpts4 = {
       display: false,
     }]
   }
-}
+};
 
 // Social Box Chart
 const socialBoxData = [
@@ -378,7 +373,7 @@ const mainChart = {
       data: data3
     }
   ]
-}
+};
 
 const mainChartOpts = {
   maintainAspectRatio: false,
@@ -408,7 +403,7 @@ const mainChartOpts = {
       hoverBorderWidth: 3,
     }
   }
-}
+};
 
 
 class TimeSheet extends Component {
@@ -446,7 +441,7 @@ class TimeSheet extends Component {
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
                   <ButtonDropdown id='card1' isOpen={this.state.card1}
-                                  toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
+                    toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
                     <DropdownToggle caret className="p-0" color="transparent">
                       <i className="icon-settings"></i>
                     </DropdownToggle>
@@ -472,7 +467,7 @@ class TimeSheet extends Component {
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
                   <Dropdown id='card2' isOpen={this.state.card2}
-                            toggle={() => { this.setState({ card2: !this.state.card2 }); }}>
+                    toggle={() => { this.setState({ card2: !this.state.card2 }); }}>
                     <DropdownToggle className="p-0" color="transparent">
                       <i className="icon-location-pin"></i>
                     </DropdownToggle>
@@ -497,7 +492,7 @@ class TimeSheet extends Component {
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
                   <Dropdown id='card3' isOpen={this.state.card3}
-                            toggle={() => { this.setState({ card3: !this.state.card3 }); }}>
+                    toggle={() => { this.setState({ card3: !this.state.card3 }); }}>
                     <DropdownToggle caret className="p-0" color="transparent">
                       <i className="icon-settings"></i>
                     </DropdownToggle>
@@ -522,7 +517,7 @@ class TimeSheet extends Component {
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
                   <ButtonDropdown id='card4' isOpen={this.state.card4}
-                                  toggle={() => { this.setState({ card4: !this.state.card4 }); }}>
+                    toggle={() => { this.setState({ card4: !this.state.card4 }); }}>
                     <DropdownToggle caret className="p-0" color="transparent">
                       <i className="icon-settings"></i>
                     </DropdownToggle>
@@ -602,7 +597,7 @@ class TimeSheet extends Component {
 
 
       </div>
-    )
+    );
   }
 }
 
