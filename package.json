@@ -145,14 +145,9 @@
     "styled-components": "^4.4.1",
     "svg-blueprint": "^1.0.1",
     "svg-inline-react": "^3.2.0",
-    "terser": "^3.14.1",
-    "terser-webpack-plugin": "^4.1.0",
     "uniqid": "^5.0.3",
     "yarn": "^1.19.1",
     "yup": "^0.27.0"
-  },
-  "resolutions": {
-    "terser": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts --max_old_space_size=4096 start",
