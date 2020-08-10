@@ -7,7 +7,7 @@ import users from './redux/users/reducer';
 import todos from './views/Admin/Tasks/reducers/todos';
 import customers from './redux/customers/reducer';
 import sales from './redux/sales/reducer';
-import misc_items from './redux/misc_items/reducer'
+import misc_items from './redux/misc_items/reducer';
 
 
 const rootReducer = combineReducers({
