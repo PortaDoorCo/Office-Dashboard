@@ -139,6 +139,7 @@
     "semantic-ui-react": "^0.88.1",
     "simple-line-icons": "^2.4.1",
     "socket.io-client": "^2.3.0",
+    "source-map-explorer": "^2.4.2",
     "spinkit": "1.2.5",
     "strapi-sdk-javascript": "^0.3.3",
     "styled-components": "^4.4.1",
@@ -155,7 +156,8 @@
     "test-react": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "bugs": {
     "url": "https://github.com/coreui/coreui-pro-react-admin-template-starter/issues"

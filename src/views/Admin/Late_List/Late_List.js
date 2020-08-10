@@ -1,30 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadOrders } from '../../../redux/orders/actions'
-import moment from 'moment'
-import momentLocaliser from 'react-widgets-moment'
-import StatusTable from './Components/Table'
+import { loadOrders } from '../../../redux/orders/actions';
+import moment from 'moment';
+import momentLocaliser from 'react-widgets-moment';
+// import StatusTable from './Components/Table'
 import io from 'socket.io-client';
-import db_url from '../../../redux/db_url'
-import Cookies from "js-cookie";
+import db_url from '../../../redux/db_url';
+import Cookies from 'js-cookie';
+
+const StatusTable = React.lazy(() => import('./Components/Table'));
+
+const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+
 const socket = io(db_url);
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 
-momentLocaliser(moment)
+momentLocaliser(moment);
 
 const SalesReport = (props) => {
   const { orders, role } = props;
-  const [data, setData] = useState(orders)
+  const [data, setData] = useState(orders);
 
   useEffect(() => {
     const filteredOrders = orders.filter(item => {
-      return item.late === true
-    })
+      return item.late === true;
+    });
     setData(filteredOrders);
 
-  }, [orders])
+  }, [orders]);
 
   // useEffect(() => {
   //   socket.on('order_submitted', res => props.loadOrders(cookie))
@@ -36,12 +41,15 @@ const SalesReport = (props) => {
   return (
 
     <div>
+      <Suspense fallback={loading()}>
         <StatusTable
-            orders={data}
+          orders={data}
         />
+      </Suspense>
+
     </div>
-  ) 
-}
+  ); 
+};
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
