@@ -27,12 +27,10 @@ import momentLocaliser from 'react-widgets-moment';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
 import { NotificationManager } from 'react-notifications';
-import io from 'socket.io-client';
 import db_url from '../../../redux/db_url';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import axios from 'axios';
-const socket = io(db_url);
 
 const cookie = Cookies.get('jwt');
 
@@ -177,7 +175,7 @@ class OrderTable extends React.Component {
   }
 
   onRowPrepared(e) {
-    if (e.rowType == 'data' && e.data.late == true) {
+    if (e.rowType === 'data' && e.data.late === true) {
       e.rowElement.style.backgroundColor = '#FEEBEB';
     }
   }
@@ -605,7 +603,6 @@ class OrderTable extends React.Component {
             format="M/d/yyyy"
           >
             <HeaderFilter dataSource={this.orderHeaderFilter} />{' '}
-            allowEditing={false}><RequiredRule />
           </Column>
           <Column
             dataField="status"

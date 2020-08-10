@@ -1,55 +1,44 @@
-import React, { Component, useState, Fragment, useEffect } from "react";
+import React, { Component} from 'react';
 import {
   Row,
   Col,
-  CardSubtitle,
   FormGroup,
   Label,
   Button,
   Input
-} from "reactstrap";
-import { Field, FieldArray, reduxForm, change, reset, getFormValues } from "redux-form";
+} from 'reactstrap';
+import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Cookies from "js-cookie";
-import { renderMultiSelect, renderDropdownList, renderDropdownListFilter, renderField } from '../../SelectedOrder/DoorOrders/components/RenderInputs/renderInputs'
-
-import Ratio from 'lb-ratio';
+import Cookies from 'js-cookie';
+import { renderField } from '../../SelectedOrder/DoorOrders/components/RenderInputs/renderInputs';
 import {
   totalSelector,
   balanceSelector,
   subTotal_Total,
   balanceTotalSelector
 } from '../../../../../selectors/doorPricing';
-import { updateOrder, updateBalance, loadOrders } from '../../../../../redux/orders/actions'
+import { updateOrder, updateBalance } from '../../../../../redux/orders/actions';
 
 
-const cookie = Cookies.get("jwt");
+const cookie = Cookies.get('jwt');
 
-const required = value => (value ? undefined : 'Required');
-
-const fraction = num => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
 
 class Balance extends Component {
-  constructor(props) {
-    super(props);
-  }
+
 
   changeBalance = () => {
     this.props.dispatch(
       change(
         'DoorOrder',
         'balance_due',
-        this.props.balance.toFixed("2")
+        this.props.balance.toFixed('2')
       )
     );
   }
 
   cancel = () => {
-    this.props.toggleBalance()
+    this.props.toggleBalance();
   }
 
   submit = async (values) => {
@@ -57,13 +46,13 @@ class Balance extends Component {
 
     const { updateBalance } = this.props;
 
-    const id = values.id
+    const id = values.id;
 
     const order = {
       balance_due: parseFloat(this.props.balance) - parseFloat(values.pay_balance),
       balance_paid: values.pay_balance,
       balance_history:  values.balance_history
-    }
+    };
 
 
 
@@ -75,7 +64,7 @@ class Balance extends Component {
         'pay_balance',
         0
       )
-    )
+    );
 
     await this.props.dispatch(
       change(
@@ -84,14 +73,14 @@ class Balance extends Component {
         [
           ...values.balance_history,
           {
-            "balance_due": parseFloat(this.props.balance) - parseFloat(values.pay_balance),
-            "balance_paid": parseFloat(values.pay_balance),
-            "date": new Date()
+            'balance_due': parseFloat(this.props.balance) - parseFloat(values.pay_balance),
+            'balance_paid': parseFloat(values.pay_balance),
+            'date': new Date()
           }
         ]
 
       )
-    )
+    );
 
   }
 
@@ -99,9 +88,7 @@ class Balance extends Component {
   render() {
     const {
       formState,
-      balance,
       handleSubmit,
-      selectedOrder,
       balanceTotal
     } = this.props;
 
@@ -143,8 +130,8 @@ class Balance extends Component {
                 <FormGroup>
                   <Label htmlFor="balance_paid">Balance Paid</Label>
                   <Input
-                      disabled
-                      placeholder={`$${balanceTotal}`}
+                    disabled
+                    placeholder={`$${balanceTotal}`}
                   />
                 </FormGroup>
               </Col>
@@ -179,7 +166,7 @@ class Balance extends Component {
     } else {
       return (
         <div />
-      )
+      );
     }
 
   }

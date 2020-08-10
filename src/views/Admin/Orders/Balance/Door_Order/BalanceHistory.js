@@ -4,24 +4,20 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import moment from 'moment'
+import moment from 'moment';
 import {
   getFormValues,
-  reduxForm,
-  Field
+  reduxForm
 } from 'redux-form';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import {
   totalSelector,
   balanceSelector,
-  subTotal_Total,
   balanceTotalSelector
 } from '../../../../../selectors/doorPricing';
 
 
 class BalanceHistory extends Component {
-
-  
 
   render() {
     const { formState, balanceTotal, balance, total } = this.props;
@@ -43,7 +39,7 @@ class BalanceHistory extends Component {
               {(formState && formState.balance_history) ? formState.balance_history.slice(0).map((i, index) => (
                 <tr>
               
-                  <td>{moment(i.date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+                  <td>{moment(i.date).format('dddd, MMMM Do YYYY, h:mm:ss a')}</td>
                   <th>${i.balance_due.toFixed(2)}</th>
                   <td>-${i.balance_paid.toFixed(2)}</td>
                 </tr>
@@ -74,7 +70,7 @@ class BalanceHistory extends Component {
     } else {
       return (
         <div />
-      )
+      );
     }
 
   }
