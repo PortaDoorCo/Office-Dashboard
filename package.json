@@ -145,6 +145,7 @@
     "styled-components": "^4.4.1",
     "svg-blueprint": "^1.0.1",
     "svg-inline-react": "^3.2.0",
+    "terser": "^5.0.0",
     "uniqid": "^5.0.3",
     "yarn": "^1.19.1",
     "yup": "^0.27.0"
@@ -152,6 +153,7 @@
   "scripts": {
     "start": "react-scripts --max_old_space_size=4096 start",
     "build": "CI=false react-scripts --max_old_space_size=4096 build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "test": "echo hurray",
     "test-react": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
