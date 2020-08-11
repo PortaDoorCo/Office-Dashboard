@@ -288,12 +288,6 @@ const Panels = (props) => {
       </div>
     );
   }
-<<<<<<< HEAD
-  
-
-
-=======
->>>>>>> staging
 };
 
 const mapStateToProps = (state) => ({

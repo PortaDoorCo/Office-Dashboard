@@ -20,10 +20,7 @@ const status = ['Quote', 'Ordered', 'Shipped', 'RUSH'];
 
 const required = value => value ? undefined : 'Required';
 
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
   <DateTimePicker
     onChange={onChange}
@@ -117,6 +114,7 @@ class JobInfo extends Component {
           <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
+
               <Field
                 name="DueDate"
                 showTime={false}
@@ -138,6 +136,9 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
         </Row>
+
+
+
         <Row>
           <Col xs="3">
             <FormGroup>
@@ -193,6 +194,9 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
+
+
+
         <Row>
           <Col xs="6">
             <FormGroup>
@@ -204,6 +208,11 @@ class JobInfo extends Component {
                 label="Address1" />
             </FormGroup>
           </Col>
+
+
+
+
+
           <Col xs="6">
             <FormGroup>
               <Label htmlFor="address2">Address 2</Label>
@@ -214,7 +223,10 @@ class JobInfo extends Component {
                 label="Address2" />
             </FormGroup>
           </Col>
+
         </Row>
+
+
 
         <Row>
           <Col xs="3">
@@ -258,7 +270,10 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
         </Row>
+
         <hr />
+
+
       </div>
     );
   }
@@ -267,7 +282,7 @@ class JobInfo extends Component {
 
 const mapStateToProps = state => ({
   formState: getFormValues('DoorOrder')(state),
-  shippingMethods: state.misc_items.shippingMethods,
+  shippingMethods: state.misc_items.shippingMethods
 });
 
 

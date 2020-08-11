@@ -13,22 +13,13 @@ import Slab_Door_Table from '../../Table/Doors/Slab_Door_Table';
 import {
   linePriceSelector,
   itemPriceSelector,
-<<<<<<< HEAD
-  subTotalSelector,
-=======
   subTotalSelector
->>>>>>> staging
 } from '../../../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 
 
-<<<<<<< HEAD
-class Slab_Door extends Component {
-
-=======
 class SlabDoor extends Component {
->>>>>>> staging
 
   render() {
     const {

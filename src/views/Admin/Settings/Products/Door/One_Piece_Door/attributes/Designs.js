@@ -308,13 +308,6 @@ const Designs = (props) => {
       </div>
     );
   }
-<<<<<<< HEAD
-
- 
-
-
-=======
->>>>>>> staging
 };
 
 const mapStateToProps = (state) => ({

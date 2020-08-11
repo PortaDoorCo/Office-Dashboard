@@ -8,11 +8,6 @@ import Column from './column';
 const Container = styled.div`
   display:flex;
 `;
-<<<<<<< HEAD
-
-
-=======
->>>>>>> staging
 
 
 class Leads extends React.Component {

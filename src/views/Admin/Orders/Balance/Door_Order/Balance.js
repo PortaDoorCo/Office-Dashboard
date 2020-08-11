@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { Component } from 'react';
-=======
 import React, { Component} from 'react';
->>>>>>> staging
 import {
   Row,
   Col,
@@ -22,21 +18,14 @@ import {
   subTotal_Total,
   balanceTotalSelector
 } from '../../../../../selectors/doorPricing';
-<<<<<<< HEAD
-import { updateOrder, updateBalance} from '../../../../../redux/orders/actions';
-=======
 import { updateOrder, updateBalance } from '../../../../../redux/orders/actions';
->>>>>>> staging
 
 
 const cookie = Cookies.get('jwt');
 
 
 class Balance extends Component {
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 
   changeBalance = () => {
     this.props.dispatch(
@@ -102,6 +91,7 @@ class Balance extends Component {
       handleSubmit,
       balanceTotal
     } = this.props;
+
 
     if (formState) {
       return (

@@ -67,6 +67,33 @@ const taxRate = state => {
   }
 };
 
+const balance = state => {
+  const orders = state.form.DoorOrder;
+  if (orders) {
+    if (!orders.values.pay_balance) {
+      return 0;
+    } else {
+      return parseFloat(state.form.DoorOrder.values.pay_balance);
+    }
+  } else {
+    return 0;
+  }
+};
+
+const balanceDue = state => {
+  const orders = state.form.DoorOrder;
+  if (orders) {
+    if (!orders.values.balance_due) {
+      return 0;
+    } else {
+      return parseFloat(state.form.DoorOrder.values.balance_due);
+    }
+  } else {
+    return 0;
+  }
+};
+
+
 const totalBalanceDue = state => {
   const orders = state.form.DoorOrder;
   if (orders) {
@@ -779,7 +806,7 @@ export const linePriceSelector = createSelector(
 
             }
 
-            if (part.construction.value ==='M') {
+            if (part.construction.value == 'M') {
 
               if (part.orderType.value === 'DF') {
                 //leftStile
@@ -926,7 +953,7 @@ export const linePriceSelector = createSelector(
 
             }
 
-            if (part.construction.value === 'MT') {
+            if (part.construction.value == 'MT') {
 
 
               //leftStile
@@ -1078,10 +1105,7 @@ export const totalDiscountSelector = createSelector(
 export const totalSelector = createSelector(
   [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
   (subTotal, tax, misc, discount) => {
-<<<<<<< HEAD
-=======
     console.log('DISCOUNT', discount);
->>>>>>> staging
     return subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount;
   }
 );

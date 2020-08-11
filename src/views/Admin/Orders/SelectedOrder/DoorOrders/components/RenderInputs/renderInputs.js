@@ -10,6 +10,8 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
 
+
+
 export const renderMultiSelect = ({
   input,
   data,

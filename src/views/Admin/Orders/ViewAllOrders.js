@@ -4,16 +4,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders, updateStatus } from '../../../redux/orders/actions';
 import { loadCustomers } from '../../../redux/customers/actions';
-<<<<<<< HEAD
-import OrderTable from './OrderTable';
-import RestrictedOrderTable from './RestrictedOrderTable';
-=======
 // import OrderTable from './OrderTable';
 // import RestrictedOrderTable from './RestrictedOrderTable';
 
 const OrderTable = React.lazy(() => import('./OrderTable'));
 const RestrictedOrderTable = React.lazy(() => import('./RestrictedOrderTable'));
->>>>>>> staging
 
 class ViewAllOrders extends Component {
   constructor(props) {
@@ -25,31 +20,9 @@ class ViewAllOrders extends Component {
 
   render() {
     const { orders, loadOrders, updateStatus, role } = this.props;
-<<<<<<< HEAD
-    return (
-      role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ? 
-        <div>
-          {orders.length &&
-          <div>
-            <Row>
-              <Col>
-                <OrderTable
-                  orders={orders}
-                  loadOrders={loadOrders}
-                  updateStatus={updateStatus}
-                />
-              </Col>
-            </Row>
-          </div>
-          }
-        </div>
-        : 
-        <div>{orders.length &&
-=======
     return role.type === 'management' ||
       role.type === 'authenticated' ||
       role.type === 'owner' ? (
->>>>>>> staging
         <div>
           {orders.length && (
             <div>
@@ -67,10 +40,6 @@ class ViewAllOrders extends Component {
             </div>
           )}
         </div>
-<<<<<<< HEAD
-        }</div>
-    );
-=======
       ) : (
         <div>
           {orders.length && (
@@ -91,7 +60,6 @@ class ViewAllOrders extends Component {
           )}
         </div>
       );
->>>>>>> staging
   }
 }
 

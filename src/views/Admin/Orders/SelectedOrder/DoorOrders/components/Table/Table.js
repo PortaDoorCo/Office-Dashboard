@@ -5,10 +5,7 @@ import {
   Row,
   Button
 } from 'reactstrap';
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 import 'semantic-ui-css/semantic.min.css';
 import { Field } from 'redux-form';
 import { renderField, renderFieldDisabled } from '../RenderInputs/renderInputs';
@@ -18,7 +15,6 @@ const PanelsTable = ({ table, index, required, w, i, h, formState, prices, field
 
   return (
     <Table>
-<<<<<<< HEAD
 
       <Field
         name={`${table}.item`}
@@ -27,16 +23,6 @@ const PanelsTable = ({ table, index, required, w, i, h, formState, prices, field
         label="item"
       />
 
-=======
-
-      <Field
-        name={`${table}.item`}
-        type="text"
-        component={renderFieldDisabled}
-        label="item"
-      />
-
->>>>>>> staging
       <thead>
         <tr>
           <th>Qty</th>

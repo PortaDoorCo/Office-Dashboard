@@ -11,11 +11,8 @@ import FaceFrame from './Face_Frame/FaceFrame';
 import OnePieceDoor from './One_Piece/One_Piece';
 import SlabDoor from './Slab_Door/Slab_Door';
 import GlassDF from './Glass/Glass_DF';
-<<<<<<< HEAD
-=======
 
 
->>>>>>> staging
 
 class Conditionals extends Component {
 
@@ -70,11 +67,7 @@ class Conditionals extends Component {
                 formState={formState}
               />;
               break;
-<<<<<<< HEAD
-            default:
-=======
             default: 
->>>>>>> staging
               return;
           }
           break;

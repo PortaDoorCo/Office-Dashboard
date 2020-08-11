@@ -10,10 +10,7 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
 
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 export const renderMultiSelect = ({
   input,
   data,
@@ -90,21 +87,13 @@ export const renderDropdownList = ({
 );
 
 export const renderField = ({
-<<<<<<< HEAD
-  input: { value, onChange, ...input },
-=======
   input,
->>>>>>> staging
   props,
   edit,
   meta: { touched, error, warning },
   ...custom
 }) => (
   <Fragment>
-<<<<<<< HEAD
-    {console.log(input)}
-=======
->>>>>>> staging
     <Input {...input} {...custom} disabled={edit} autoComplete="new-password" />
     {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||

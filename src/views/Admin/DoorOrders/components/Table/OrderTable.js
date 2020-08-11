@@ -15,10 +15,7 @@ import { renderField, renderFieldDisabled, renderCheckboxToggle } from '../../..
 
 const required = value => (value ? undefined : 'Required');
 
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
@@ -28,11 +25,8 @@ const OrderTable = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
-<<<<<<< HEAD
-=======
 
 
->>>>>>> staging
 
   useEffect(() => {
 

@@ -517,7 +517,7 @@ class OrderPage extends Component {
                               <tr>
                                 <th scope="row">{index + 1}</th>
                                 <td>{i.name}</td>
-                                <td style={{ textAlign: 'right' }}><a href={i.url} target="_blank" rel="noopener noreferrer">View</a></td>
+                                <td style={{ textAlign: 'right' }}><a href={i.url} target="_blank">View</a></td>
                               </tr>
                             )) : null}
                           </tbody>

@@ -8,11 +8,7 @@ const initialState = {
   customerDB: ['LOADING'],
   customer: [],
   customerDBLoaded: false,
-<<<<<<< HEAD
-  selectedCompanies: null
-=======
   selectedCompanies: []
->>>>>>> staging
 };
 
 export default function (state = initialState, action) {

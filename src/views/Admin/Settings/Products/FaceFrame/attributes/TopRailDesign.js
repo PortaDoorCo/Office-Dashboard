@@ -12,6 +12,8 @@ import { get_Face_Frame_Top_Rails, updateProduct, addProduct, deleteProduct } fr
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
+
+
 const TopRailDesign = (props) => {
 
   const {

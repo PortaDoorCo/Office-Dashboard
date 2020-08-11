@@ -5,17 +5,10 @@ import {
   CardSubtitle,
   Button
 } from 'reactstrap';
-<<<<<<< HEAD
-import 'antd/dist/antd.css';
-import 'react-widgets/dist/css/react-widgets.css';
-import DoorFilter from '../DoorInfo/Filter/Filter';
-import Conditionals from './Conditionals';
-=======
 import DoorFilter from '../DoorInfo/Filter/Filter';
 import Conditionals from './Conditionals';
 
 
->>>>>>> staging
 
 const construction = [
   {

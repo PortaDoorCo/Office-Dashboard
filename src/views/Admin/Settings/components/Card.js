@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
-import { Card, CardImg} from 'reactstrap';
-=======
 import { Card, CardImg } from 'reactstrap';
->>>>>>> staging
 
 const ProductCard = (props) => {
   return (

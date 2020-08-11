@@ -20,6 +20,7 @@ import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderP
 
 const required = value => (value ? undefined : 'Required');
 
+
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
@@ -387,6 +388,15 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 const mapStateToProps = state => ({
 
 });
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+
+
+    },
+    dispatch
+  );
 
 
 export default connect(

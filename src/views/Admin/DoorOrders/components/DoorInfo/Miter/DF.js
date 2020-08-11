@@ -8,10 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
 import Miter_Table from '../../Table/DFs/Miter_Table';
 import Ratio from 'lb-ratio';
@@ -29,11 +26,8 @@ const fraction = num => {
 };
 
 class MiterDF extends Component {
-<<<<<<< HEAD
-=======
 
 
->>>>>>> staging
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
     const { index } = this.props;

@@ -1,14 +1,11 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
-<<<<<<< HEAD
-=======
 import AssemblyList from '../../Door_PDF/AssemblyList';
 import StilesPage from '../../Door_PDF/StilesPage';
 import RailsPage from '../../Door_PDF/RailsPage';
 import PanelsPage from '../../Door_PDF/PanelsPage';
 import MaterialsList from '../../Door_PDF/MaterialsList';
 import QC_Checklist from '../../Door_PDF/QC_Checklist';
->>>>>>> staging
 import Invoice from '../../Door_PDF/Invoice';
 
 export default (data, breakdowns) => {

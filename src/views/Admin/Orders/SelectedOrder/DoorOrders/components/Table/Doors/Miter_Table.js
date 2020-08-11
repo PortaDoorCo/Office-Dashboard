@@ -26,11 +26,8 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
-<<<<<<< HEAD
-=======
 
 
->>>>>>> staging
 
   useEffect(() => {
 

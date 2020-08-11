@@ -10,10 +10,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> staging
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -26,16 +22,17 @@ const useStyles = makeStyles({
 
 const Users = (props) => {
   const classes = useStyles();
-<<<<<<< HEAD
-
-=======
->>>>>>> staging
 
   const card = props.users.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: '200px' }}>
         <Card className={classes.root}>
           <CardActionArea>
+            {/* <CardMedia
+            className={classes.media}
+            image={card.profile_picture ? card.profile_picture.url : 'https://ombud.alaska.gov/wp-content/uploads/2018/01/no-user.jpg'}
+            title="Contemplative Reptile"
+          /> */}
             <div style={{ margin: 'auto' }}>
               <Avatar name="Foo Bar" src={card.profile_picture ? card.profile_picture.url : 'https://ombud.alaska.gov/wp-content/uploads/2018/01/no-user.jpg'} size="150" round />
             </div>
@@ -63,13 +60,10 @@ const Users = (props) => {
       </PerfectScrollbar>
     </div>
   );
-<<<<<<< HEAD
-=======
 
 
 
 
->>>>>>> staging
 
 };
 
