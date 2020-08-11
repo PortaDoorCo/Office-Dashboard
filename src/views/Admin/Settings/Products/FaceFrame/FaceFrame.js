@@ -13,6 +13,10 @@ import FurnitureFeet from './attributes/Furniture_Feet';
 
 
 const Navigation = (props) => {
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
   return (
     <Col>
       <Breadcrumb>

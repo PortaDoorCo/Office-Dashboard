@@ -13,6 +13,11 @@ class SideBar extends Component {
 
     const { part, i } = this.props;
 
+<<<<<<< HEAD
+=======
+    console.log('partt', part);
+
+>>>>>>> staging
     let component;
 
     switch (part.orderType.value) {
@@ -30,7 +35,11 @@ class SideBar extends Component {
           case 'Glass':
             component = <GlassDoor part={part} i={i} />;
             break;
+<<<<<<< HEAD
           default:
+=======
+          default: 
+>>>>>>> staging
             return;
         }
         break;

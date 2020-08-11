@@ -19,9 +19,13 @@ const Navigation = (props) => {
 
 
 const DrawerPricing = (props) => {
+<<<<<<< HEAD
   const [openEditor] = useState(true);
 
+=======
+>>>>>>> staging
 
+  const [openEditor] = useState(true);
 
   return (
     <div>

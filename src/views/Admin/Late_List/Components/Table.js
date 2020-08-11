@@ -21,10 +21,16 @@ import OrderPage from '../../Orders/OrderPage';
 import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
+<<<<<<< HEAD
 import { bindActionCreators } from 'redux';
 import { setSelectedOrder } from '../../../../redux/orders/actions';
 import { connect } from 'react-redux';
 
+=======
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setSelectedOrder } from '../../../../redux/orders/actions';
+>>>>>>> staging
 
 
 momentLocaliser(moment);
@@ -105,7 +111,10 @@ class StatusTable extends React.Component {
 
       if (!modal) {
         const x = row.row.data;
+<<<<<<< HEAD
           
+=======
+>>>>>>> staging
         setSelectedOrder(x);
       } else {
         setSelectedOrder(null);
@@ -229,10 +238,15 @@ class StatusTable extends React.Component {
               dataType="datetime"
               format="M/d/yyyy"
             >
+<<<<<<< HEAD
               <HeaderFilter dataSource={this.orderHeaderFilter} allowEditing={false}>
                 <RequiredRule />
               </HeaderFilter>{' '}
                         
+=======
+              <HeaderFilter dataSource={this.orderHeaderFilter} />{' '}
+
+>>>>>>> staging
             </Column>
             <Column
               dataField="status"
@@ -275,7 +289,10 @@ class StatusTable extends React.Component {
           <OrderPage
             toggle={this.toggle}
             modal={this.state.modal}
+<<<<<<< HEAD
             selectedOrder={this.state.selectedOrder}
+=======
+>>>>>>> staging
             editable={this.editable}
             edit={this.state.edit}
           />
@@ -285,6 +302,7 @@ class StatusTable extends React.Component {
 }
 
 const mapStateToProps = (state, prop) => ({
+<<<<<<< HEAD
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns
 });
@@ -293,12 +311,26 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
 
+=======
+
+});
+    
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+>>>>>>> staging
       setSelectedOrder
     },
     dispatch
   );
+<<<<<<< HEAD
 
 
+=======
+    
+    
+    
+>>>>>>> staging
 export default connect(
   mapStateToProps,
   mapDispatchToProps

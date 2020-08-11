@@ -30,9 +30,12 @@ import { NotificationManager } from 'react-notifications';
 import db_url from '../../../redux/db_url';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+<<<<<<< HEAD
 import { bindActionCreators } from 'redux';
 import { setSelectedOrder } from '../../../redux/orders/actions';
 import { connect } from 'react-redux';
+=======
+>>>>>>> staging
 
 const cookie = Cookies.get('jwt');
 
@@ -517,9 +520,13 @@ class RestrictedOrderTable extends React.Component {
             dataType="datetime"
             format="M/d/yyyy"
           >
+<<<<<<< HEAD
             <HeaderFilter dataSource={this.orderHeaderFilter} allowEditing={false}>
               <RequiredRule />
             </HeaderFilter>
+=======
+            <HeaderFilter dataSource={this.orderHeaderFilter} />{' '}
+>>>>>>> staging
           </Column>
           <Column
             dataField="status"

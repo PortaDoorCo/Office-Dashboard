@@ -8,6 +8,10 @@ import {
 import DoorFilter from './Filter/Filter';
 import Conditionals from './Conditionals';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
 const construction = [
   {
     name: 'Cope And Stick',

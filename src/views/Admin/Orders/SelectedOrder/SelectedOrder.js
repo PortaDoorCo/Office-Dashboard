@@ -10,6 +10,14 @@ class SelectedOrder extends React.Component {
     const { selectedOrder } = this.props;
 
     const order = selectedOrder;
+<<<<<<< HEAD
+=======
+
+    // const company = order.CompanyName;
+
+
+
+>>>>>>> staging
 
     return (
       <div>

@@ -4,7 +4,11 @@ import {
   Col,
   CardSubtitle,
   FormGroup,
+<<<<<<< HEAD
   Label,
+=======
+  Label
+>>>>>>> staging
 } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
@@ -13,7 +17,11 @@ import Frame_Only_Table from '../../Table/Doors/Frame_Only_Table';
 import {
   linePriceSelector,
   itemPriceSelector,
+<<<<<<< HEAD
   subTotalSelector,
+=======
+  subTotalSelector
+>>>>>>> staging
 } from '../../../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');

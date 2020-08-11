@@ -7,7 +7,10 @@ import {
   Label,
   Button
 } from 'reactstrap';
+<<<<<<< HEAD
 import 'antd/dist/antd.css';
+=======
+>>>>>>> staging
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import 'react-widgets/dist/css/react-widgets.css';

@@ -19,6 +19,11 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> staging
 
   useEffect(() => {
 

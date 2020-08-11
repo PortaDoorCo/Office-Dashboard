@@ -22,6 +22,10 @@ export default (data, breakdowns) => {
         { text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value :  i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
         { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} \n`; }), style: 'fonts' },
         { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.measurement} \n`; }), style: 'fonts' },
+<<<<<<< HEAD
+=======
+        // { text: '' }
+>>>>>>> staging
       ]);
     });
 

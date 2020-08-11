@@ -4,7 +4,11 @@ import {
   Col,
   CardSubtitle,
   FormGroup,
+<<<<<<< HEAD
   Label,
+=======
+  Label
+>>>>>>> staging
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 
@@ -15,7 +19,11 @@ import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
+<<<<<<< HEAD
   subTotalSelector,
+=======
+  subTotalSelector
+>>>>>>> staging
 } from '../../../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
@@ -26,6 +34,10 @@ const fraction = num => {
 };
 
 class CopeDF extends Component {
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
 

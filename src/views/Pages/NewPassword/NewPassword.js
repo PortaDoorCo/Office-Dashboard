@@ -7,7 +7,11 @@ import {
   CardBody,
   Button,
   Input,
+<<<<<<< HEAD
   InputGroup,
+=======
+  InputGroup
+>>>>>>> staging
 } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';

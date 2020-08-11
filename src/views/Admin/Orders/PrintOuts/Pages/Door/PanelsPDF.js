@@ -1,7 +1,13 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
 import PanelsPage from '../../Door_PDF/PanelsPage';
+<<<<<<< HEAD
 
+=======
+import MaterialsList from '../../Door_PDF/MaterialsList';
+import QC_Checklist from '../../Door_PDF/QC_Checklist';
+import Invoice from '../../Door_PDF/Invoice';
+>>>>>>> staging
 
 export default (data, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;

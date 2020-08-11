@@ -18,7 +18,13 @@ import {
 
 const required = value => (value ? undefined : 'Required');
 
+<<<<<<< HEAD
 class One_Piece_Door extends Component {
+=======
+
+
+class OnePieceDoor extends Component {
+>>>>>>> staging
 
   render() {
     const {
@@ -28,7 +34,10 @@ class One_Piece_Door extends Component {
       one_piece_edges,
       one_piece_panels,
       finishes,
+<<<<<<< HEAD
 
+=======
+>>>>>>> staging
       isValid,
       index,
       part_list,
@@ -167,4 +176,8 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
+<<<<<<< HEAD
 )(One_Piece_Door);
+=======
+)(OnePieceDoor);
+>>>>>>> staging

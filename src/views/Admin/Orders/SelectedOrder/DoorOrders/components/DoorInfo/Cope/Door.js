@@ -4,7 +4,11 @@ import {
   Col,
   CardSubtitle,
   FormGroup,
+<<<<<<< HEAD
   Label,
+=======
+  Label
+>>>>>>> staging
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
@@ -26,6 +30,10 @@ const fraction = num => {
 };
 
 class CopeDoor extends Component {
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
 
@@ -110,6 +118,10 @@ class CopeDoor extends Component {
       formState,
       edit,
       prices,
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
       subTotal
 
     } = this.props;

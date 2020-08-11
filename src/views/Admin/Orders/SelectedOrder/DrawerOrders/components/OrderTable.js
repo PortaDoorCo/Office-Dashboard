@@ -9,7 +9,10 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
+<<<<<<< HEAD
 import 'react-widgets/dist/css/react-widgets.css';
+=======
+>>>>>>> staging
 import { renderDropdownList, renderField, renderFieldDisabled, renderPrice } from './RenderInputs/renderInputs';
 import RenderPriceHolder from './RenderInputs/RenderPriceHolder';
 

@@ -26,6 +26,10 @@ const fraction = num => {
 
 
 class MT_Door extends Component {
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
     const { index } = this.props;

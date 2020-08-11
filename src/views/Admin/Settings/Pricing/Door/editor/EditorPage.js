@@ -8,7 +8,10 @@ import { updateBreakdowns } from '../../../../../../redux/part_list/actions';
 const EditorPage = (props) => {
 
   const { pricing, role } = props;
+<<<<<<< HEAD
 
+=======
+>>>>>>> staging
   const [doorPricing, setDoorPricing] = useState(false);
   const [faceFramePricing, setFaceFramePricing] = useState(false);
 

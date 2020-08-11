@@ -13,7 +13,11 @@ export default class FieldFileInput extends Component {
 
   render() {
     const { input: { value } } = this.props;
+<<<<<<< HEAD
     const { label, required, meta, } = this.props;  //whatever props you send to the component from redux-form Field
+=======
+    const { input, label, required, meta, } = this.props;  //whatever props you send to the component from redux-form Field
+>>>>>>> staging
     return (
       <div><label>{label}</label>
         <div>

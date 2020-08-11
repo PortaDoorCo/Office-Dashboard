@@ -8,6 +8,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getAppliedMoulds, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
