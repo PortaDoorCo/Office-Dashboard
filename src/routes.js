@@ -4,7 +4,7 @@ const Dashboard = React.lazy(() => import('./views/Admin/Dashboard'));
 const DoorOrders = React.lazy(() => import('./views/Admin/DoorOrders/DoorOrders'));
 const DrawerOrders = React.lazy(() => import('./views/Admin/DrawerOrders/DrawerOrder'));
 const Orders = React.lazy(() => import('./views/Admin/Orders/ViewAllOrders'));
-const Customers = React.lazy(() => import('./views/Admin/Customers/Customers/Companies'));
+const Customers = React.lazy(() => import('./views/Admin/Customers/Customers/CompanyTable2'));
 const Settings = React.lazy(() => import('./views/Admin/Settings/Settings'));
 const Calendar = React.lazy(() => import('./views/Admin/Calendar'));
 const Tracking = React.lazy(() => import('./views/Admin/Tracking/Tracking'));
