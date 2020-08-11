@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, {Component} from 'react';
-=======
 import React, { Component } from 'react';
->>>>>>> staging
 import {Container, Row, Col, Button, Input, InputGroup} from 'reactstrap';
 
 class Page404 extends Component {

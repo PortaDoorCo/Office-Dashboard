@@ -25,10 +25,7 @@ const fraction = num => {
 };
 
 class GlassDoor extends Component {
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
@@ -267,6 +264,8 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
+  finishes: state.part_list.finishes,
+
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),

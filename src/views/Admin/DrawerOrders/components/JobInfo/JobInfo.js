@@ -3,11 +3,7 @@ import {
   Row,
   Col,
   FormGroup,
-<<<<<<< HEAD
-  Label,
-=======
   Label
->>>>>>> staging
 } from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
@@ -286,9 +282,10 @@ const mapStateToProps = state => ({
   shippingMethods: state.misc_items.shippingMethods
 });
 
-// JobInfo = reduxForm({
-//   form: 'DoorOrder'
-// })(JobInfo);
+JobInfo = reduxForm({
+  form: 'DoorOrder',
+  enableReinitialize: true
+})(JobInfo);
 
 
 export default connect(

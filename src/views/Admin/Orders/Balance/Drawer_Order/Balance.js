@@ -12,11 +12,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from 'js-cookie';
 import { renderField } from '../../SelectedOrder/DoorOrders/components/RenderInputs/renderInputs';
-<<<<<<< HEAD
-=======
 
 import Ratio from 'lb-ratio';
->>>>>>> staging
 import {
   totalSelector,
   balanceSelector,
@@ -27,16 +24,9 @@ import { updateOrder, updateBalance } from '../../../../../redux/orders/actions'
 
 
 const cookie = Cookies.get('jwt');
-<<<<<<< HEAD
-
-
-
-class Balance extends Component {
-=======
 
 class Balance extends Component {
 
->>>>>>> staging
   changeBalance = () => {
     this.props.dispatch(
       change(
@@ -98,9 +88,13 @@ class Balance extends Component {
   render() {
     const {
       formState,
+      balance,
       handleSubmit,
+      selectedOrder,
       balanceTotal
     } = this.props;
+
+
 
     if (formState) {
       return (

@@ -9,10 +9,6 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
-<<<<<<< HEAD
-import 'react-widgets/dist/css/react-widgets.css';
-=======
->>>>>>> staging
 import { renderDropdownList, renderField, renderFieldDisabled, renderPrice } from './RenderInputs/renderInputs';
 import RenderPriceHolder from './RenderInputs/RenderPriceHolder';
 
@@ -22,7 +18,7 @@ class OrderTable extends Component {
 
   render() {
 
-    const { fields, scoop, dividers, prices, i, subTotal, formState, edit } = this.props;
+    const { fields, scoop, dividers, prices, i, subTotal, part, formState, edit } = this.props;
 
 
     return (

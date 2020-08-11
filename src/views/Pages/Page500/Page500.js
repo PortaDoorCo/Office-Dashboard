@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-<<<<<<< HEAD
-import {Container, Row, Col, Button, Input, InputGroup } from 'reactstrap';
-=======
 import { Container, Row, Col, Button, Input, InputGroup } from 'reactstrap';
->>>>>>> staging
 
 class Page500 extends Component {
   render() {

@@ -9,12 +9,6 @@ import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateBreakdowns, getBreakdowns } from '../../../../../../../redux/part_list/actions';
-<<<<<<< HEAD
-
-const cookie = Cookies.get('jwt');
-
-=======
->>>>>>> staging
 
 const cookie = Cookies.get('jwt');
 

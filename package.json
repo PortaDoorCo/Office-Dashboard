@@ -52,7 +52,7 @@
     "dotenv": "^8.2.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "express": "^4.17.1",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
     "formik": "^1.5.1",
@@ -75,6 +75,7 @@
     "numeral": "^2.0.6",
     "numeric-quantity": "^0.3.2",
     "pdfmake": "^0.1.60",
+    "prettier-eslint": "^9.0.0",
     "prismjs": "^1.20.0",
     "prop-types": "^15.7.2",
     "qrcode.react": "^0.9.3",
@@ -130,7 +131,7 @@
     "redux-form": "^8.3.6",
     "redux-localstorage-simple": "^2.2.0",
     "redux-logger": "^3.0.6",
-    "redux-mock-store": "^1.5.4",
+    "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "reselect-map": "^1.0.4",
@@ -149,14 +150,8 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-<<<<<<< HEAD
-    "start": "node server.js",
-    "start-dev": "react-scripts --max_old_space_size=4096 start",
-    "build": "CI=false react-scripts --max_old_space_size=4096 build",
-=======
     "start": "react-scripts --max_old_space_size=8192 start",
     "build": "CI=false react-scripts --max_old_space_size=8192 build",
->>>>>>> staging
     "test": "echo hurray",
     "test-react": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
@@ -166,6 +161,9 @@
   },
   "bugs": {
     "url": "https://github.com/coreui/coreui-pro-react-admin-template-starter/issues"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "browserslist": [
     ">0.2%",
@@ -186,8 +184,6 @@
     "npm": ">=6"
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "prettier-eslint": "^11.0.0"
+    "eslint-plugin-react": "^7.17.0"
   }
 }

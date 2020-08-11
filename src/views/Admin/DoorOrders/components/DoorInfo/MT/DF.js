@@ -97,12 +97,15 @@ class MT_DF extends Component {
       mt_designs,
       edges,
       panels,
+      applied_moulds,
       finishes,
+
       isValid,
       index,
       part_list,
       formState,
       prices,
+      itemPrice,
       subTotal
     } = this.props;
     return (

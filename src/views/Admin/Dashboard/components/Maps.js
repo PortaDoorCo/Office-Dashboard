@@ -13,13 +13,10 @@ const socket = io(db_url);
 // To use the Google Maps JavaScript API, you must register your app project on the Google API Console and get a Google API key which you can add to your app
 const apiKey = 'AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE';
 
-<<<<<<< HEAD
-=======
 // const defaultZoom = 13;
 // const defaultCenter = []
 // const locations = [];
 
->>>>>>> staging
 
 class DeliveryLocations extends Component {
   constructor(props) {

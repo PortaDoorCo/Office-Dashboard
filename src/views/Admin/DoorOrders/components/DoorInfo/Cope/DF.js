@@ -100,11 +100,13 @@ class CopeDF extends Component {
       panels,
       applied_moulds,
       finishes,
+
       isValid,
       index,
       part_list,
       formState,
       prices,
+      itemPrice,
       subTotal
     } = this.props;
     return (
@@ -247,6 +249,8 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
+  finishes: state.part_list.finishes,
+
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),

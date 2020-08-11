@@ -11,21 +11,6 @@ const socket = io(db_url);
 
 
 
-<<<<<<< HEAD
-const Drivers = () => {
-  return (
-    <div className="truck" title="Delivery Truck">
-      <img alt='truck' src={truck}></img>
-      <div className="pulse" />
-    </div>
-  );
-};
-
-const Deliveries = () => {
-  return (
-    <div className="marker" title="Delivery Truck">
-      <img alt='truck' src={delivery}></img>
-=======
 const Drivers = (props: any) => {
   const { color, name, id } = props;
   return (
@@ -45,7 +30,6 @@ const Deliveries = (props: any) => {
   return (
     <div className="marker" title="Delivery Truck">
       <img src={delivery}></img>
->>>>>>> staging
       {/* <div className="pulse" /> */}
     </div>
   );
@@ -90,13 +74,9 @@ class Map extends Component {
     };
 
     render() {
-<<<<<<< HEAD
-      const { deliveries } = this.props;
-=======
       const { driverLocations } = this.state;
       const { deliveries } = this.props;
        
->>>>>>> staging
       return (
       // Important! Always set the container height explicitly
         <div style={{ height: '100%', width: '100%' }}>

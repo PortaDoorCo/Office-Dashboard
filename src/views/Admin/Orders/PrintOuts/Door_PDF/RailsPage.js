@@ -18,6 +18,10 @@ export default (data, breakdowns) => {
     ];
 
     i.dimensions.forEach((item, index) => {
+
+     
+
+
       if ((item.panelsH && item.panelsW > 1) || (item.panelsH > 1 && item.panelsW)) {
         tableBody.push([
           { text: index + 1, style: 'fonts' },

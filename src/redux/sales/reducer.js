@@ -2,6 +2,7 @@ import {
   LOAD_SALES,
 } from './actions';
 
+
 const initialState = {
   salesReps: [],
   loadedSales: false

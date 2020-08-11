@@ -107,16 +107,7 @@ class CustomerTable extends React.Component {
       const { modal } = this.state;
       const { setSelectedCompanies } = this.props;
 
-      this.setState({
-        modal: !modal,
-      });
 
-<<<<<<< HEAD
-      if (!modal) {
-        const x = row.row.data;
-
-        setSelectedCompanies(x);
-=======
 
       this.setState({
         modal: !modal,
@@ -127,7 +118,6 @@ class CustomerTable extends React.Component {
         const x = row.row.data;
         await setSelectedCompanies(x);
         
->>>>>>> staging
 
         await this.setState({
           selectedOrder: x.id,
@@ -421,10 +411,6 @@ class CustomerTable extends React.Component {
             <CustomerPage
               toggle={this.toggle}
               modal={this.state.modal}
-<<<<<<< HEAD
-              orders={this.state.selectedOrder}
-=======
->>>>>>> staging
               locations={this.state.locations}
               defaultCenter={this.state.defaultCenter}
               salesRep={this.state.salesRep}
@@ -441,12 +427,8 @@ const mapStateToProps = (state, prop) => ({
   salesReps: state.sales.salesReps,
   shippingMethods: state.misc_items.shippingMethods,
   paymentTerms: state.misc_items.paymentTerms,
-<<<<<<< HEAD
-  paymentTypes: state.misc_items.paymentTypes
-=======
   paymentTypes: state.misc_items.paymentTypes,
   selectedCompanies: state.customers.selectedCompanies
->>>>>>> staging
 });
 
 const mapDispatchToProps = dispatch =>

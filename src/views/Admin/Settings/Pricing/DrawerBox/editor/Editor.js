@@ -80,11 +80,7 @@ const EditorComponent = (props) => {
             }}
             onKeyPress={e => {
               e.persist();
-<<<<<<< HEAD
-              if ((e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45 )|| e.charCode > 57) {
-=======
               if ((e.charCode < 48 && e.charCode !== 32 && e.charCode !== 40 && e.charCode !== 41 && e.charCode !== 46 && e.charCode !== 43 && e.charCode !== 45) || e.charCode > 57) {
->>>>>>> staging
                 e.preventDefault();
               }
             }}

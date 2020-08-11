@@ -21,18 +21,11 @@ import OrderPage from '../../Orders/OrderPage';
 import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-<<<<<<< HEAD
-import { bindActionCreators } from 'redux';
-import { setSelectedOrder } from '../../../../redux/orders/actions';
-import { connect } from 'react-redux';
-
-=======
 import { setSelectedOrder } from '../../../../redux/orders/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 
->>>>>>> staging
 momentLocaliser(moment);
 
 const status = [
@@ -111,12 +104,9 @@ class StatusTable extends React.Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-<<<<<<< HEAD
-=======
     // socket.on('order_submitted', res => (dataGrid.refresh()))
     // socket.on('order_deleted', res => (dataGrid.refresh()))
     // socket.on('status_updated', (res, updatedStatus) => (dataGrid.refresh()))
->>>>>>> staging
     if (prevProps.orders !== this.props.orders) {
       const filteredItems = this.props.orders.filter(item => (item.sale && item.sale.fullName && item.sale.fullName.includes(this.props.status)));
           
@@ -357,13 +347,7 @@ class StatusTable extends React.Component {
               dataType="datetime"
               format="M/d/yyyy"
             >
-<<<<<<< HEAD
-              <HeaderFilter dataSource={this.orderHeaderFilter} allowEditing={false}>
-                <RequiredRule />
-              </HeaderFilter>
-=======
               <HeaderFilter dataSource={this.orderHeaderFilter} />{' '}
->>>>>>> staging
             </Column>
             <Column
               dataField="status"
@@ -422,43 +406,23 @@ class StatusTable extends React.Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-<<<<<<< HEAD
-  breakdowns: state.part_list.breakdowns,
-  box_breakdowns: state.part_list.box_breakdowns
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-
-=======
 
 });
     
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
->>>>>>> staging
       setSelectedOrder
     },
     dispatch
   );
-<<<<<<< HEAD
-
-
-=======
     
     
     
->>>>>>> staging
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(StatusTable);
-<<<<<<< HEAD
-
-=======
->>>>>>> staging
 
 
 

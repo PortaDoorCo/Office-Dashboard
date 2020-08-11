@@ -7,10 +7,7 @@ import EditorPage from './editor/EditorPage';
 
 
 const Navigation = (props) => {
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
   return (
     <Col>
       <Breadcrumb>
@@ -24,10 +21,6 @@ const Navigation = (props) => {
 
 const DoorPricing = (props) => {
   const [openEditor] = useState(true);
-<<<<<<< HEAD
-
-=======
->>>>>>> staging
   return (
     <div>
       <Row>

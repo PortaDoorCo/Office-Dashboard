@@ -31,13 +31,8 @@ import db_url from '../../../redux/db_url';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import axios from 'axios';
-<<<<<<< HEAD
-import { bindActionCreators } from 'redux';
-import { setSelectedOrder } from '../../../redux/orders/actions';
-=======
 import { setSelectedOrder } from '../../../redux/orders/actions';
 import { bindActionCreators } from 'redux';
->>>>>>> staging
 
 const cookie = Cookies.get('jwt');
 
@@ -606,13 +601,7 @@ class OrderTable extends React.Component {
             dataType="datetime"
             format="M/d/yyyy"
           >
-<<<<<<< HEAD
-            <HeaderFilter dataSource={this.orderHeaderFilter} allowEditing={false}>
-              <RequiredRule />
-            </HeaderFilter>
-=======
             <HeaderFilter dataSource={this.orderHeaderFilter} />{' '}
->>>>>>> staging
           </Column>
           <Column
             dataField="status"
@@ -683,24 +672,18 @@ class OrderTable extends React.Component {
 const mapStateToProps = (state, prop) => ({
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns
+
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-<<<<<<< HEAD
-
-=======
->>>>>>> staging
       setSelectedOrder
     },
     dispatch
   );
 
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 
 export default connect(
   mapStateToProps,

@@ -46,14 +46,7 @@ import { FileUploader } from 'devextreme-react';
 import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolder';
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from './components/MiscItems';
-<<<<<<< HEAD
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.light.css';
 
-
-=======
-
->>>>>>> staging
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 

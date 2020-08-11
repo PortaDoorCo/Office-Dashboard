@@ -6,26 +6,15 @@ import {
   Col,
   Button
 } from 'reactstrap';
-<<<<<<< HEAD
-import 'semantic-ui-css/semantic.min.css';
-import { Field } from 'redux-form';
-import Ratio from 'lb-ratio';
-import Maker from '../MakerJS/Maker';
-import {  renderField, renderFieldDisabled, renderCheckboxToggle } from '../RenderInputs/renderInputs';
-=======
 import { Field } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../MakerJS/Maker';
 import { renderField, renderFieldDisabled, renderCheckboxToggle } from '../RenderInputs/renderInputs';
->>>>>>> staging
 
 
 const required = value => (value ? undefined : 'Required');
 
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();

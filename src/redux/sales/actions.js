@@ -1,9 +1,7 @@
 import db_url from '../db_url';
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 export const LOAD_SALES = 'LOAD_SALES';
+
 
 export function loadSales(cookie) {
   return async function (dispatch) {

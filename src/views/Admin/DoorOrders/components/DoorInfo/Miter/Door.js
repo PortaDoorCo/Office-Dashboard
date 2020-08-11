@@ -8,10 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
 import Miter_Table from '../../Table/Doors/Miter_Table';
 import Ratio from 'lb-ratio';
@@ -21,10 +18,6 @@ import {
   subTotalSelector
 } from '../../../../../../selectors/doorPricing';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> staging
 const required = value => (value ? undefined : 'Required');
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -33,10 +26,7 @@ const fraction = num => {
 
 
 class MiterDoor extends Component {
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
     const { index } = this.props;
@@ -110,6 +100,8 @@ class MiterDoor extends Component {
       part,
       woodtypes,
       miter_designs,
+      edges,
+      profiles,
       panels,
       applied_moulds,
       finishes,
@@ -118,6 +110,7 @@ class MiterDoor extends Component {
       part_list,
       formState,
       prices,
+      itemPrice,
       subTotal
     } = this.props;
     return (
@@ -243,6 +236,8 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
+  finishes: state.part_list.finishes,
+
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),

@@ -12,10 +12,7 @@ import EditorPage from './editor/EditorPage';
 
 
 const Navigation = (props) => {
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
   return (
     <Col>
       <Breadcrumb>

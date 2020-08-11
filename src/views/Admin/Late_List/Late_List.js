@@ -4,10 +4,6 @@ import { bindActionCreators } from 'redux';
 import { loadOrders } from '../../../redux/orders/actions';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-<<<<<<< HEAD
-import StatusTable from './Components/Table';
-
-=======
 
 
 const StatusTable = React.lazy(() => import('./Components/Table'));
@@ -16,7 +12,6 @@ const loading  = () => <div className="animated fadeIn pt-1 text-center"><div cl
 
 
 
->>>>>>> staging
 momentLocaliser(moment);
 
 const SalesReport = (props) => {
@@ -41,18 +36,12 @@ const SalesReport = (props) => {
   return (
 
     <div>
-<<<<<<< HEAD
-      <StatusTable
-        orders={data}
-      />
-=======
       <Suspense fallback={loading()}>
         <StatusTable
           orders={data}
         />
       </Suspense>
 
->>>>>>> staging
     </div>
   ); 
 };

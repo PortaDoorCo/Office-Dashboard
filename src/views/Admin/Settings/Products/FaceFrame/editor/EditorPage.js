@@ -7,10 +7,6 @@ import { updateBreakdowns } from '../../../../../../redux/part_list/actions';
 
 const EditorPage = (props) => {
   const [breakdowns] = useState(props.breakdowns);
-<<<<<<< HEAD
-
-=======
->>>>>>> staging
   const [topRailWidth, setTopRailWidth] = useState(false);
   const [topRailHeight, setTopRailHeight] = useState(false);
   const [bottomRailWidth, setBottomRailWidth] = useState(false);
@@ -23,10 +19,7 @@ const EditorPage = (props) => {
   const [verticalMidRailHeight, setVerticalMidRailHeight] = useState(false);
   const [horizontalMidRailWidth, setHorizontalMidRailWidth] = useState(false);
   const [horizontalMidRailHeight, setHorizontalMidRailHeight] = useState(false);
-<<<<<<< HEAD
-=======
 
->>>>>>> staging
 
   return (
     <div>

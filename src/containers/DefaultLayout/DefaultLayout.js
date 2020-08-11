@@ -86,13 +86,10 @@ import { login, getUsers } from '../../redux/users/actions';
 
 import Loader from '../../views/Admin/Loader/Loader';
 import { NotificationContainer } from 'react-notifications';
-<<<<<<< HEAD
-=======
 import io from 'socket.io-client';
 import db_url from '../../redux/db_url';
 
 const socket = io(db_url);
->>>>>>> staging
 
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
@@ -134,34 +131,83 @@ class DefaultLayout extends Component {
       getOnePieceDesigns,
       getOnePiecePanels,
       getOnePieceEdges,
+
       loadShippingMethod,
       loadPaymentTypes,
       loadPaymentTerms,
+
       getBoxBottomThickness,
       getBoxFinishes,
       getBoxNotches,
       getBoxThicknesses,
       getBoxWoodtypes,
       getBoxBottomWoodtypes,
+
       getBreakdowns,
       getBoxBreakdowns,
+
       getPricing,
+
       getUsers,
+
       login,
       loadSales,
       loadOrders,
       getDeliveries,
+
+      loadedWoodtype,
+      loadedAppliedMoulds,
+      loadedBaseCaps,
+      loadedBaseboards,
+      loadedCasings,
+      loadedChairRails,
+      loadedCopeDesigns,
+      loadedCrownMouldings,
+      loadedEdgeSlabs,
+      loadedEdges,
+      loadedFinishes,
+      loadedLites,
+      loadedMiter_DF_Designs,
+      loadedMiterDesigns,
+      loadedMouldingsLengths,
+      loaded_MT_Designs,
+      loaded_MT_DF_Designs,
+      loadedPanels,
+      loaded_Plynths_Stools,
+      loadedProfiles,
+      loadedSolidCrowns,
+      loadedWainscotBeads,
+      loadedFaceFrameDesigns,
+      loadedFaceFrameTopRails,
+      loadedFurnitureFeets,
+      loadedOnePieceWoodtypes,
+      loadedOnePieceDesigns,
+      loadedOnePiecePanels,
+      loadedOnePieceEdges,
+
+      loadedBoxBottomThickness,
+      loadedBoxFinish,
+      loadedBoxNotches,
+      loadedBoxThickness,
       loadedBoxWoodtypes,
+      loadedBoxBottomWoodtypes,
+
       loadedBreakdowns,
+
+
       loadedPaymentTypes,
       loadedPaymentTerms,
       loadedShippingMethods,
       loadedSales,
+
       loadedBoxBreakdowns,
       loadedPricing,
       loadCustomers,
       loadMiscItems,
       loadedMiscItems,
+
+      socketReceiveUpdateStatus
+
     } = this.props;
 
     const cookie = await Cookies.get('jwt');
@@ -333,10 +379,6 @@ const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   loggedIn: state.users.loggedIn,
-<<<<<<< HEAD
-
-
-=======
   loadedWoodtype: state.part_list.loadedWoodtype,
   loadedAppliedMoulds: state.part_list.loadedAppliedMoulds,
   loadedBaseCaps: state.part_list.loadedBaseCaps,
@@ -371,7 +413,6 @@ const mapStateToProps = (state, prop) => ({
   loadedBoxFinish: state.part_list.loadedBoxFinish,
   loadedBoxNotches: state.part_list.loadedBoxNotches,
   loadedBoxThickness: state.part_list.loadedBoxThickness,
->>>>>>> staging
   loadedBoxWoodtypes: state.part_list.loadedBoxWoodtypes,
   loadedBoxBottomWoodtypes: state.part_list.loadedBoxBottomWoodtypes,
   loadedBreakdowns: state.part_list.loadedBreakdowns,

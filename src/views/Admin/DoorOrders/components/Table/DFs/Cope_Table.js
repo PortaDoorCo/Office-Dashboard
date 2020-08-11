@@ -13,15 +13,14 @@ import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderField, renderFieldDisabled, renderCheckboxToggle } from '../../../../../../components/RenderInputs/renderInputs';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-=======
 import { bindActionCreators } from 'redux';
->>>>>>> staging
 import numQty from 'numeric-quantity';
 import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderPriceHolder';
 
 
 const required = value => (value ? undefined : 'Required');
+
+
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -381,8 +380,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           </Row>
         </Fragment>
       </div> : <div />
-<<<<<<< HEAD
-=======
   );
 };
 
@@ -397,9 +394,7 @@ const mapDispatchToProps = dispatch =>
 
     },
     dispatch
->>>>>>> staging
   );
-};
 
 
 export default connect()(Cope_Table);

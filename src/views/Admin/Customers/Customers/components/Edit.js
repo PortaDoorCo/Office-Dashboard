@@ -7,11 +7,7 @@ import {
   Row,
   Col,
   FormGroup,
-<<<<<<< HEAD
-  Label
-=======
   Label,
->>>>>>> staging
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -73,11 +69,7 @@ class Edit extends Component {
   };
 
   render() {
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> staging
     const {
       handleSubmit,
       salesReps,
@@ -407,11 +399,7 @@ class Edit extends Component {
                     <Button type="submit" color="primary" size="lg">
                       Submit
                     </Button>
-<<<<<<< HEAD
-                    <Button type="cancel" color="primary" size="lg" onClick={this.props.onEdit}>
-=======
                     <Button type="cancel" type="button" color="primary" size="lg" onClick={this.props.onEdit}>
->>>>>>> staging
                       Cancel
                     </Button>
                   </div>

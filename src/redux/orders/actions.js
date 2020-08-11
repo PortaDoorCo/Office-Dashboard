@@ -86,11 +86,12 @@ export function submitOrder(order, cookie) {
 export function deleteOrder(orderId, cookie) {
   return async function (dispatch) {
     try {
-      await axios.delete(`${db_url}/orders/${orderId}`, {
+      const res = await axios.delete(`${db_url}/orders/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
       });
+      const data = await res;
       return dispatch({
         type: DELETE_ORDER,
       });
