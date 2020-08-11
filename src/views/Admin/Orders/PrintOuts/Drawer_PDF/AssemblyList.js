@@ -1,9 +1,9 @@
 import moment from 'moment';
-import Size from '../Breakdowns/DrawerBoxes/Size'
+import Size from '../Breakdowns/DrawerBoxes/Size';
 import Sides from '../Breakdowns/DrawerBoxes/Sides';
 import Fronts from '../Breakdowns/DrawerBoxes/Fronts';
 import Bottoms from '../Breakdowns/DrawerBoxes/Bottoms';
-import _ from 'lodash'
+import _ from 'lodash';
 import LinearIN from '../Breakdowns/DrawerBoxes/LinearIN';
 import LinearFT from '../Breakdowns/DrawerBoxes/LinearFT';
 import SQFT from '../Breakdowns/DrawerBoxes/SQFT';
@@ -54,11 +54,11 @@ export default (data, breakdowns) => {
     },
     data.part_list.map(i => {
 
-      const info = []
+      const info = [];
 
-      const tableBody = []
+      const tableBody = [];
 
-      const materialBody = []
+      const materialBody = [];
 
       const groupedByHeight = _.groupBy(i.dimensions, 'height');
 
@@ -94,7 +94,7 @@ export default (data, breakdowns) => {
             ],
             margin: [0, 10, 0, 0]
           },
-        ]
+        ];
 
         const groupedTableBody = [
           [
@@ -105,90 +105,90 @@ export default (data, breakdowns) => {
             { text: 'Qty Box Fronts/Backs', style: 'fonts' },
             { text: 'Box Bottoms', style: 'fonts' },
           ]
-        ]
+        ];
 
-        const groupedMaterialBody = []
+        const groupedMaterialBody = [];
 
 
 
         v.forEach((item, index) => {
 
           let tb =  [
-              { text: item.item, style: 'fonts' },
-              { text: item.qty, style: 'fonts' },
-              { text: Size(item), style: 'fonts' },
-              { text: `${Sides(item, i, breakdowns).qty} - ${Sides(item, i, breakdowns).measurement}`, style: 'fonts' },
-              { text: `${Fronts(item, i, breakdowns).qty} - ${Fronts(item, i, breakdowns).measurement}`, style: 'fonts' },
-              { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement} \n Notes: ${item.notes ? item.notes : ""} `, style: 'fonts' }
-            ]
+            { text: item.item, style: 'fonts' },
+            { text: item.qty, style: 'fonts' },
+            { text: Size(item), style: 'fonts' },
+            { text: `${Sides(item, i, breakdowns).qty} - ${Sides(item, i, breakdowns).measurement}`, style: 'fonts' },
+            { text: `${Fronts(item, i, breakdowns).qty} - ${Fronts(item, i, breakdowns).measurement}`, style: 'fonts' },
+            { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement} \n Notes: ${item.notes ? item.notes : ''} `, style: 'fonts' }
+          ];
           
-            groupedTableBody.push(tb)
-      })
+          groupedTableBody.push(tb);
+        });
 
 
-      let mb = {
-        columns: [
-          { text: `${i.box_woodtype.NAME}`, style: 'fonts' },
-          { text: `${k} x ${i.box_thickness.NAME}`, style: 'fonts' },
-          { text: `${SQFT(v, i, breakdowns)} Sq FT`, style: 'fonts' },
-          { text: `${LinearFT(v, i, breakdowns)} Lin FT`, style: 'fonts' },
-          { text: `${LinearIN(v, i, breakdowns)} Lin IN`, style: 'fonts' },
-          { text: '', style: 'fonts' },
-        ]
-      }
+        let mb = {
+          columns: [
+            { text: `${i.box_woodtype.NAME}`, style: 'fonts' },
+            { text: `${k} x ${i.box_thickness.NAME}`, style: 'fonts' },
+            { text: `${SQFT(v, i, breakdowns)} Sq FT`, style: 'fonts' },
+            { text: `${LinearFT(v, i, breakdowns)} Lin FT`, style: 'fonts' },
+            { text: `${LinearIN(v, i, breakdowns)} Lin IN`, style: 'fonts' },
+            { text: '', style: 'fonts' },
+          ]
+        };
 
 
-      return (
-        info.push(groupedInfoBody),
-        tableBody.push(groupedTableBody),
-        groupedMaterialBody.push(mb),
-        materialBody.push(groupedMaterialBody)
-      )
+        return (
+          info.push(groupedInfoBody),
+          tableBody.push(groupedTableBody),
+          groupedMaterialBody.push(mb),
+          materialBody.push(groupedMaterialBody)
+        );
 
 
-    });
+      });
 
-    let table = tableBody.map((i, index) => {
-      return [
-        info[index],
-        {
-          table: {
-            headerRows: 1,
-            widths: [22, 15, '*', '*', '*', '*'],
-            body: i
+      let table = tableBody.map((i, index) => {
+        return [
+          info[index],
+          {
+            table: {
+              headerRows: 1,
+              widths: [22, 15, '*', '*', '*', '*'],
+              body: i
+            },
+            layout: 'lightHorizontalLines'
           },
-          layout: 'lightHorizontalLines'
-        },
-        {
-          canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }],
+          {
+            canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }],
 
-        }
-      ]
-    })
+          }
+        ];
+      });
 
       const materialBreakdown = materialBody.map((i, index) => {
 
-      return i
-    })
+        return i;
+      });
 
-  let body = [
-    table,
-    {
-      text: 'Box Sides / Box Fronts & Backs - Material Breakdown', style: 'fonts', margin: [0, 12, 0, 0],
-    },
-    {
-      canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
-    },
-    materialBreakdown,
-    {
-      canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }],
-      margin: [0, 20, 0, 10]
-    },
-  ]
+      let body = [
+        table,
+        {
+          text: 'Box Sides / Box Fronts & Backs - Material Breakdown', style: 'fonts', margin: [0, 12, 0, 0],
+        },
+        {
+          canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
+        },
+        materialBreakdown,
+        {
+          canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }],
+          margin: [0, 20, 0, 10]
+        },
+      ];
 
-  return body
+      return body;
 
-}),
-{ text: '', pageBreak: 'before' }
+    }),
+    { text: '', pageBreak: 'before' }
   ];
 };

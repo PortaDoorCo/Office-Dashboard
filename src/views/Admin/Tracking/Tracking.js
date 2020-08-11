@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
-import StatusTable from './components/StatusTable'
+import StatusTable from './components/StatusTable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Charts from './components/Chart'
-import { loadOrders } from '../../../redux/orders/actions'
+import Charts from './components/Chart';
+import { loadOrders } from '../../../redux/orders/actions';
 
 const Tracking = (props) => {
   const [activeTab, setActiveTab] = useState('1');
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
-  }
+  };
 
   return (
     <div>
@@ -133,7 +133,7 @@ const Tracking = (props) => {
       </TabContent>
     </div>
   );
-}
+};
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,

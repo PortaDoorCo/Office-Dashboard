@@ -8,26 +8,26 @@ class Charts extends Component {
   render() {
 
     let quotes = this.props.data.filter(item => {
-      return item.status.includes("Quote")
-    })
+      return item.status.includes('Quote');
+    });
     let inProduction = this.props.data.filter(item => {
-      return item.status.includes("In Production")
-    })
+      return item.status.includes('In Production');
+    });
     let station1 = this.props.data.filter(item => {
-      return item.status.includes("Invoiced")
-    })
+      return item.status.includes('Invoiced');
+    });
     let station2 = this.props.data.filter(item => {
-      return item.status.includes("Ordered")
-    })
+      return item.status.includes('Ordered');
+    });
     let station3 = this.props.data.filter(item => {
-      return item.status.includes("Station 1")
-    })
+      return item.status.includes('Station 1');
+    });
     let station4 = this.props.data.filter(item => {
-      return item.status.includes("Station 2")
-    })
+      return item.status.includes('Station 2');
+    });
     let shipped = this.props.data.filter(item => {
-      return item.status.includes("shipped")
-    })
+      return item.status.includes('shipped');
+    });
 
     const bar = {
       labels: ['Quotes', 'In Production', 'Invoiced', 'Ordered', 'Station 1', 'Station 2', 'Shipped'],
@@ -51,7 +51,7 @@ class Charts extends Component {
         custom: CustomTooltips
       },
       maintainAspectRatio: true
-    }
+    };
 
     return (
       <div className="animated fadeIn">

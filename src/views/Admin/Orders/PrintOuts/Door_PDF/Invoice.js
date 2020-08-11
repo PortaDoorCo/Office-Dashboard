@@ -6,11 +6,11 @@ export default data => {
 
   const qty = data.part_list.map((part, i) => {
     return part.dimensions.map((dim, index) => {
-      return parseInt(dim.qty)
-    }).reduce((acc, item) => acc + item, 0)
-  })
+      return parseInt(dim.qty);
+    }).reduce((acc, item) => acc + item, 0);
+  });
 
-  const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0)
+  const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0);
   const balanceDue = data.balance_history[data.balance_history.length - 1].balance_due;
   const balancePaid = data.balance_history.reduce(function (accumulator, balance) {
     return accumulator + balance.balance_paid;
@@ -172,7 +172,7 @@ export default data => {
     },
     {
       columns: [
-        { text: data.misc_items.map(i => { return `${i.item.NAME} - $${i.price} \n` }), style: 'fonts', width: 347 },
+        { text: data.misc_items.map(i => { return `${i.item.NAME} - $${i.price} \n`; }), style: 'fonts', width: 347 },
         { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(balancePaid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],

@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
         ...state,
         tasks: data
       };
-      case CREATE_TASK:
+    case CREATE_TASK:
       return {
         ...state,
         tasks: data
