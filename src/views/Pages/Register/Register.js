@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Container,
   Row,
@@ -10,8 +10,8 @@ import {
   Input,
   InputGroup,
   Form
-} from "reactstrap";
-import { Redirect } from "react-router-dom";
+} from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { registerUser } from '../../../redux/users/actions';
@@ -50,7 +50,7 @@ class Register extends Component {
     if (this.state.Password === this.state.confirmPassword) {
       strapiRegister(Username, Email, Password, FullName).then(() => this.setState({ signedUp: true }));
     } else {
-      alert('Passwords do no match')
+      alert('Passwords do no match');
     }
 
   };

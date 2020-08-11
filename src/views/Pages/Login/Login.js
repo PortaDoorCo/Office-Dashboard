@@ -23,7 +23,7 @@ import { loadCustomers } from '../../../redux/customers/actions';
 import PropTypes from 'prop-types';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import db_url from '../../../redux/db_url'
+import db_url from '../../../redux/db_url';
 
 class Login extends Component {
   static propTypes = {
@@ -64,16 +64,16 @@ class Login extends Component {
         Cookies.set('jwt', response.data.jwt, { expires: 0.8 });
         this.setState({ loading: true }, () => {
           this.props.login(Cookies.get('jwt'));
-        })
+        });
       })
       .catch((error) => {
-        console.log("Problem submitting New Post", error);
+        console.log('Problem submitting New Post', error);
         NotificationManager.error('Login Credentials Incorrect', 'Error', 2000);
       });
   };
 
   render() {
-    const {loading} = this.state
+    const {loading} = this.state;
     const {loggedIn} = this.props;
     let loadingActive;
     if (loading) {
@@ -83,7 +83,7 @@ class Login extends Component {
         <div className="app flex-row align-items-center">
           <Container>
             <Row className="justify-content-center">
-            <NotificationContainer />
+              <NotificationContainer />
               <Col md="8">
                 <CardGroup className="mb-4">
                   <Card className="p-4">
@@ -164,7 +164,7 @@ class Login extends Component {
 
     return <div>
       {loggedIn && <Redirect to="/" />}
-    {loadingActive}
+      {loadingActive}
     </div>;
   }
 }

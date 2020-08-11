@@ -1,5 +1,5 @@
 import moment from 'moment';
-import Stiles from '../Breakdowns/Doors/Stiles/Stiles'
+import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 
 
 export default (data, breakdowns) => {
@@ -20,8 +20,8 @@ export default (data, breakdowns) => {
       tableBody.push([
         { text: index + 1, style: 'fonts' },
         { text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value :  i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
-        { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} \n` }), style: 'fonts' },
-        { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.measurement} \n` }), style: 'fonts' },
+        { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} \n`; }), style: 'fonts' },
+        { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.measurement} \n`; }), style: 'fonts' },
         // { text: '' }
       ]);
     });
@@ -108,7 +108,7 @@ export default (data, breakdowns) => {
       { text: '', pageBreak: 'before' }
     ];
 
-  })
+  });
 
 
 };
