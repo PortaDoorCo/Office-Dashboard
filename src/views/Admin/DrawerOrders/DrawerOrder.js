@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import {
   Row,
   Col,
@@ -13,8 +13,8 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DrawerBoxInfo from './components/DrawerBoxInfo';
-import JobInfo from './components/JobInfo/JobInfo';
+// import DrawerBoxInfo from "./components/DrawerBoxInfo";
+// import JobInfo from "./components/JobInfo/JobInfo";
 import NotificationAlert from 'react-notification-alert';
 import 'react-notifications/lib/notifications.css';
 import {
@@ -25,9 +25,7 @@ import {
   FieldArray,
   Field
 } from 'redux-form';
-import {
-  submitOrder
-} from '../../../redux/orders/actions';
+import { submitOrder } from '../../../redux/orders/actions';
 import { loadCustomers } from '../../../redux/customers/actions';
 import {
   linePriceSelector,
@@ -47,9 +45,11 @@ import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolde
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from './components/MiscItems';
 
-const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
+const DrawerBoxInfo = React.lazy(() => import('./components/DrawerBoxInfo'));
+const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
 
+const cookie = Cookies.get('jwt');
+const header = { Authorization: 'Bearer ' + cookie };
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
 
@@ -98,8 +98,6 @@ class DoorOrders extends Component {
       user
     } = this.props;
 
-
-
     const orderType = 'Drawer Order';
 
     const jobInfo = {
@@ -121,7 +119,6 @@ class DoorOrders extends Component {
       },
       ShippingMethod: values.job_info.ShippingMethod
     };
-
 
     const order = {
       part_list: values.part_list,
@@ -145,15 +142,15 @@ class DoorOrders extends Component {
       submittedBy: user.FirstName,
       tracking: [
         {
-          'status': values.job_info.status,
-          'date': new Date()
+          status: values.job_info.status,
+          date: new Date()
         }
       ],
       balance_history: [
         {
-          'balance_due': total,
-          'balance_paid': values.balance_paid,
-          'date': new Date()
+          balance_due: total,
+          balance_paid: values.balance_paid,
+          date: new Date()
         }
       ],
       sale: values.job_info.customer.sale.id
@@ -172,7 +169,6 @@ class DoorOrders extends Component {
     window.scrollTo(0, 0);
   }
 
-
   cancelOrder = e => {
     e.preventDefault();
     this.props.reset();
@@ -184,12 +180,12 @@ class DoorOrders extends Component {
     }
   }
 
-  onUploaded = (e) => {
+  onUploaded = e => {
     const data = JSON.parse(e.request.response);
     const id = data[0].id;
     const a = [...this.state.files, id];
     this.setState({ files: a });
-  }
+  };
 
   render() {
     const {
@@ -213,8 +209,6 @@ class DoorOrders extends Component {
       tax
     } = this.props;
 
-
-
     return (
       <div className="animated fadeIn resize">
         <NotificationAlert ref="notify" />
@@ -225,36 +219,43 @@ class DoorOrders extends Component {
                 <strong>Door Order</strong>
               </CardHeader>
               <CardBody>
-                <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
+                <form
+                  onKeyPress={this.onKeyPress}
+                  onSubmit={handleSubmit(this.submit)}
+                >
                   {!submitted ? (
                     <FormSection name="job_info">
-                      <JobInfo
-                        customers={customers}
-                        change={change}
-                        address={address}
-                        formState={formState}
-                        loaded={this.state.loaded}
-                        handleAddress={this.handleAddress}
-                      />
+                      <Suspense>
+                        <JobInfo
+                          customers={customers}
+                          change={change}
+                          address={address}
+                          formState={formState}
+                          loaded={this.state.loaded}
+                          handleAddress={this.handleAddress}
+                        />
+                      </Suspense>
                     </FormSection>
                   ) : null}
 
-                  <FieldArray
-                    name="part_list"
-                    component={DrawerBoxInfo}
-                    woodtypes={woodtypes}
-                    boxBottomWoodtype={boxBottomWoodtype}
-                    boxThickness={boxThickness}
-                    boxBottoms={boxBottoms}
-                    assembly={assembly}
-                    notchDrill={notchDrill}
-                    drawerFinishes={drawerFinishes}
-                    scoop={scoop}
-                    dividers={dividers}
-                    formState={formState}
-                    prices={prices}
-                    subTotal={subTotal}
-                  />
+                  <Suspense>
+                    <FieldArray
+                      name="part_list"
+                      component={DrawerBoxInfo}
+                      woodtypes={woodtypes}
+                      boxBottomWoodtype={boxBottomWoodtype}
+                      boxThickness={boxThickness}
+                      boxBottoms={boxBottoms}
+                      assembly={assembly}
+                      notchDrill={notchDrill}
+                      drawerFinishes={drawerFinishes}
+                      scoop={scoop}
+                      dividers={dividers}
+                      formState={formState}
+                      prices={prices}
+                      subTotal={subTotal}
+                    />
+                  </Suspense>
 
                   <div className="mb-3" />
 
@@ -280,9 +281,11 @@ class DoorOrders extends Component {
                       <RenderPriceHolder input={tax.toFixed(2)} edit={true} />
                       <strong>Total: </strong>
                       <div className="mb-3">
-                        <RenderPriceHolder input={total.toFixed(2)} edit={true} />
+                        <RenderPriceHolder
+                          input={total.toFixed(2)}
+                          edit={true}
+                        />
                       </div>
-
                     </Col>
                   </Row>
                   <Row>
@@ -291,10 +294,20 @@ class DoorOrders extends Component {
                     <Col xs="3">
                       <Row>
                         <Col>
-                          <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
+                          <Button
+                            color="primary"
+                            className="submit"
+                            style={{ width: '100%' }}
+                          >
+                            Submit
+                          </Button>
                         </Col>
                         <Col>
-                          <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
+                          <Button
+                            color="danger"
+                            onClick={this.cancelOrder}
+                            style={{ width: '100%' }}
+                          >
                             Cancel
                           </Button>
                         </Col>
@@ -312,13 +325,25 @@ class DoorOrders extends Component {
                   <CardBody>
                     <FormGroup>
                       <h3>Upload Files</h3>
-                      <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="http://localhost:1337/upload" />
+                      <form
+                        id="form"
+                        ref={this.formElement}
+                        method="post"
+                        action=""
+                        encType="multipart/form-data"
+                      >
+                        <FileUploader
+                          name="files"
+                          uploadMode="instantly"
+                          uploadHeaders={header}
+                          multiple={true}
+                          onUploaded={this.onUploaded}
+                          uploadUrl="http://localhost:1337/upload"
+                        />
                       </form>
                     </FormGroup>
                   </CardBody>
                 </Card>
-
               </Col>
             </Row>
             <Row>
@@ -368,7 +393,6 @@ const mapStateToProps = (state, prop) => ({
 
   user: state.users.user,
 
-
   submitted: state.Orders.submitted,
   initialValues: {
     open: true,
@@ -411,7 +435,7 @@ const mapDispatchToProps = dispatch =>
     {
       submitOrder,
       // getWoodtypes,
-      loadCustomers,
+      loadCustomers
       // getBoxThickness,
       // getBoxBottoms,
       // getAssembly,
@@ -425,7 +449,4 @@ DoorOrders = reduxForm({
   enableReinitialize: true
 })(DoorOrders);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DoorOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(DoorOrders);

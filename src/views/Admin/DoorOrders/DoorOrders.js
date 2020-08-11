@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import {
   Row,
   Col,
@@ -12,8 +12,8 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DoorInfo from './components/DoorInfo/DoorInfo';
-import JobInfo from './components/JobInfo/JobInfo';
+// import DoorInfo from './components/DoorInfo/DoorInfo';
+// import JobInfo from './components/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
 import {
   reduxForm,
@@ -43,6 +43,9 @@ import Cookies from 'js-cookie';
 import { FileUploader } from 'devextreme-react';
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from './components/MiscItems';
+
+const DoorInfo = React.lazy(() => import('./components/DoorInfo/DoorInfo'));
+const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
 
 
 const cookie = Cookies.get('jwt');
@@ -200,26 +203,32 @@ class DoorOrders extends Component {
                 <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
                   {!submitted ? (
                     <FormSection name="job_info">
+                      <Suspense>
                       <JobInfo
-                        customers={customers}
-                        formState={formState}
-                        address={address}
-                        loaded={this.state.loaded}
-                        handleAddress={this.handleAddress}
-                      />
+                          customers={customers}
+                          formState={formState}
+                          address={address}
+                          loaded={this.state.loaded}
+                          handleAddress={this.handleAddress}
+                        />
+                      </Suspense>
+
                     </FormSection>
                   ) : null}
 
+                  <Suspense>
                   <FieldArray
-                    name="part_list"
-                    component={DoorInfo}
-                    // prices={prices}
-                    formState={formState}
-                    // subTotal={subTotal}
-                    dispatch={dispatch}
-                    isValid={isValid}
-                    updateSubmit={this.state.submit}
-                  />
+                      name="part_list"
+                      component={DoorInfo}
+                      // prices={prices}
+                      formState={formState}
+                      // subTotal={subTotal}
+                      dispatch={dispatch}
+                      isValid={isValid}
+                      updateSubmit={this.state.submit}
+                    />
+                  </Suspense>
+
 
                   <div className="mb-3" />
 
