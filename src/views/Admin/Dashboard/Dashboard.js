@@ -15,8 +15,6 @@ const OrderTable2 = React.lazy(() => import('./components/OrderTable2'));
 const CompanyTable = React.lazy(() => import('../Customers/Customers/CompanyTable'));
 const Maps = React.lazy(() => import('./components/Maps'));
 
-
-
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
 class Dashboard extends Component {
