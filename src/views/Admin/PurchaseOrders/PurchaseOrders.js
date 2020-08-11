@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 class PurchaseOrders extends Component {
-    render() {
-        return (
-            <div>
+  render() {
+    return (
+      <div>
                 Purchase Orders
-            </div>
-        );
-    }
+      </div>
+    );
+  }
 }
 
 export default PurchaseOrders;

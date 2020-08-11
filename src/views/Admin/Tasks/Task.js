@@ -1,25 +1,13 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Card,
   CardHeader,
   CardBody,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
   Row,
-  Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  CardSubtitle,
-  Table,
-  Badge
-} from "reactstrap";
+  Col
+} from 'reactstrap';
 
-import TodoApp from './components/ToDoApp'
+import TodoApp from './components/ToDoApp';
 
 /*
 Todo app structure
@@ -34,9 +22,9 @@ TodoApp
 	- TodoForm
 */
 var todoItems = [];
-todoItems.push({ index: 1, value: "learn react", done: false });
-todoItems.push({ index: 2, value: "saksldjaskldj", done: true });
-todoItems.push({ index: 3, value: "buy flowers", done: true });
+todoItems.push({ index: 1, value: 'learn react', done: false });
+todoItems.push({ index: 2, value: 'saksldjaskldj', done: true });
+todoItems.push({ index: 3, value: 'buy flowers', done: true });
 
 
 
