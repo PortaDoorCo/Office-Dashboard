@@ -31,7 +31,7 @@ const SalesReport = (props) => {
   //   socket.on('status_updated', res => props.loadOrders(cookie))
   //   socket.on('order_deleted', res => props.loadOrders(cookie))
   //   socket.on('order_updated', res => props.loadOrders(cookie))
-  // })
+  // })  
   
   return (
 
