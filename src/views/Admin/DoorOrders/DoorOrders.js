@@ -204,7 +204,7 @@ class DoorOrders extends Component {
                   {!submitted ? (
                     <FormSection name="job_info">
                       <Suspense>
-                      <JobInfo
+                        <JobInfo
                           customers={customers}
                           formState={formState}
                           address={address}
@@ -217,7 +217,7 @@ class DoorOrders extends Component {
                   ) : null}
 
                   <Suspense>
-                  <FieldArray
+                    <FieldArray
                       name="part_list"
                       component={DoorInfo}
                       // prices={prices}
