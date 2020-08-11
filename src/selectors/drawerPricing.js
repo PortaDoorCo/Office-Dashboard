@@ -60,7 +60,11 @@ const taxRate = state => {
       if (!orders.values.job_info) {
         return [];
       } else {
-        return state.form.DrawerOrder.values.job_info.customer.TaxRate;
+        if(orders.values.job_info.customer.Taxable){
+          return (state.form.DrawerOrder.values.job_info.customer.TaxRate / 100);
+        } else {
+          return 0;
+        }
       }
     } else {
       return [];
