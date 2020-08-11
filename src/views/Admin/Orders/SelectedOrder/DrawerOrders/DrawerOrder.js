@@ -45,7 +45,7 @@ import {
   balanceTotalSelector
 } from '../../../../../selectors/drawerPricing';
 import Cookies from 'js-cookie';
-import { renderField } from './components/RenderInputs/renderInputs';
+import { renderField } from '../../../../../components/RenderInputs/renderInputs';
 
 const cookie = Cookies.get('jwt');
 

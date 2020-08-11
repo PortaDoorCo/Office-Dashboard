@@ -9,7 +9,7 @@ import { Field, change, getFormValues } from 'redux-form';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../../components/RenderInputs/renderInputs';
 import { connect } from 'react-redux';
 
 momentLocaliser(moment);
