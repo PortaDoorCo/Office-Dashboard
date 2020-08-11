@@ -19,6 +19,7 @@ const socket = io(db_url);
 const cookie = Cookies.get('jwt');
 
 const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+ 
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
