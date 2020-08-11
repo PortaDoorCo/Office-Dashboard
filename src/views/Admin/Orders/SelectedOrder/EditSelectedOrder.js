@@ -2,6 +2,7 @@ import React from 'react';
 // import DoorEdit from './DoorEdit'
 import DoorOrder from './DoorOrders/DoorOrders';
 import DrawerOrder from './DrawerOrders/DrawerOrder';
+import { connect } from 'react-redux';
 
 
 
@@ -43,4 +44,15 @@ class EditSelectedOrder extends React.Component {
 
 
 
-export default EditSelectedOrder;
+const mapStateToProps = (state, prop) => ({
+  selectedOrder: state.Orders.selectedOrder
+
+});
+
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(EditSelectedOrder);
+

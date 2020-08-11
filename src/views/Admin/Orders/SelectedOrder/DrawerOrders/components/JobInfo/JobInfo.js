@@ -287,11 +287,6 @@ const mapStateToProps = state => ({
   shippingMethods: state.misc_items.shippingMethods
 });
 
-JobInfo = reduxForm({
-  form: 'DrawerOrder',
-  enableReinitialize: true
-})(JobInfo);
-
 export default connect(
   mapStateToProps,
   null
