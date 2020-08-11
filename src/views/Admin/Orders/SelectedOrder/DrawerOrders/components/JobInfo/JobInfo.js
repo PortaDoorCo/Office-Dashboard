@@ -10,8 +10,7 @@ import { connect } from 'react-redux';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import { reduxForm}  from 'redux-form';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../../components/RenderInputs/renderInputs';
 
 momentLocaliser(moment);
 

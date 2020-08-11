@@ -47,6 +47,8 @@ import MiscItems from './components/MiscItems';
 const DoorInfo = React.lazy(() => import('./components/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
 
+const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+
 
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -203,7 +205,7 @@ class DoorOrders extends Component {
                 <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
                   {!submitted ? (
                     <FormSection name="job_info">
-                      <Suspense>
+                      <Suspense fallback={loading()}>
                         <JobInfo
                           customers={customers}
                           formState={formState}
@@ -216,7 +218,7 @@ class DoorOrders extends Component {
                     </FormSection>
                   ) : null}
 
-                  <Suspense>
+                  <Suspense fallback={loading()}>
                     <FieldArray
                       name="part_list"
                       component={DoorInfo}

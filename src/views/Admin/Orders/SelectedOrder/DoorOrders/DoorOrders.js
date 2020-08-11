@@ -45,7 +45,7 @@ import {
 } from '../../../../../selectors/doorPricing';
 import 'react-notifications/lib/notifications.css';
 import Cookies from 'js-cookie';
-import { renderField } from './components/RenderInputs/renderInputs';
+import { renderField } from '../../../../../components/RenderInputs/renderInputs';
 
 const cookie = Cookies.get('jwt');
 
