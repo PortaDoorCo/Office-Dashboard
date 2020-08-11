@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import {
   Row,
   Col,
 } from 'reactstrap';
-import CompanyTable from '../Customers/Customers/CompanyTable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../../../redux/users/actions';
-import Chart1 from './components/Chart1';
-import Chart2 from './components/Chart2';
-import Chart3 from './components/Chart3';
-import Chart4 from './components/Chart4';
-import Maps from './components/Maps';
-import OrderTable2 from './components/OrderTable2';
+
+const Chart1 = React.lazy(() => import('./components/Chart1'));
+const Chart2 = React.lazy(() => import('./components/Chart2'));
+const Chart3 = React.lazy(() => import('./components/Chart3'));
+const Chart4 = React.lazy(() => import('./components/Chart4'));
+const OrderTable2 = React.lazy(() => import('./components/OrderTable2'));
+const CompanyTable = React.lazy(() => import('../Customers/Customers/CompanyTable'));
+const Maps = React.lazy(() => import('./components/Maps'));
+
+
+const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
 class Dashboard extends Component {
   constructor(props) {
@@ -35,48 +39,59 @@ class Dashboard extends Component {
           <div>
             <Row>
               <Col lg="4">
-                <Chart2 />
+                <Suspense>
+                  <Chart2 />
+                </Suspense>
               </Col>
               <Col lg="4">
-                <Chart3 />
+                <Suspense>
+                  <Chart3 />
+                </Suspense>
               </Col>
               <Col lg="4">
-                <Chart4 />
+                <Suspense>
+                  <Chart4 />
+                </Suspense>
               </Col>
             </Row>
             <Row>
               <Col>
-                <Chart1 />
+                <Suspense>
+                  <Chart1 />
+                </Suspense>
               </Col>
             </Row>
             <Row>
               <Col style={{ height: 600 }}>
-                <Maps />
+                <Suspense>
+                  <Maps />
+                </Suspense>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Suspense>
+                  <OrderTable2  />
+                </Suspense>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Suspense>
+                  <CompanyTable
+                    customerDB={this.props.customerDB}
+                  />
+                </Suspense>
               </Col>
             </Row>
           </div>
           :
           <div>
-            <Row>
-              <Col style={{ height: 600 }}>
-                <Maps />
-              </Col>
-            </Row>
+            {loading()}
           </div>
         }
 
-        <Row className="mt-3">
-          <Col>
-            <OrderTable2  />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <CompanyTable
-              customerDB={this.props.customerDB}
-            />
-          </Col>
-        </Row>
+
       </div>
     );
   }

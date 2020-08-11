@@ -27,8 +27,6 @@ const CompanyTable = (props) => {
   const [toggleCleared, setToggleCleared] = useState(false);
   const [data, setData] = useState(props.orders);
   const [modal, setModal] = useState(false);
-  const [orderEdit, setOrderEdit] = useState(false);
-  // const [selectedCompanies, setSelectedCompanies] = useState([])
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);

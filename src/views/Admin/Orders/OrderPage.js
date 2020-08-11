@@ -29,13 +29,14 @@ import Delete from '@material-ui/icons/Delete';
 import Dns from '@material-ui/icons/Dns';
 import Tooltip from '@material-ui/core/Tooltip';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
-import AssemblyListPDF from './PrintOuts/Pages/Door/AssemblyPDF';
-import StilesPDF from './PrintOuts/Pages/Door/StilesPDF';
-import RailsPDF from './PrintOuts/Pages/Door/RailsPDF';
-import PanelsPDF from './PrintOuts/Pages/Door/PanelsPDF';
-import MaterialsPDF from './PrintOuts/Pages/Door/MaterialsPDF';
+
+
+
+
+
+
+
+
 import QCPDF from './PrintOuts/Pages/Door/QCPDF';
 import InvoicePDF from './PrintOuts/Pages/Door/InvoicePDF';
 
@@ -60,6 +61,17 @@ import DoorMiscItems from './MiscItems/DoorMiscItems';
 import DrawerMiscItems from './MiscItems/DrawerMiscItems';
 
 import Cookies from 'js-cookie';
+
+
+const DoorPDF = React.lazy(() => import('./PrintOuts/Pages/Door/DoorPDF'));
+const DrawerPDF = React.lazy(() => import('./PrintOuts/Pages/Drawer/DrawerPDF'));
+const AssemblyListPDF = React.lazy(() => import('./PrintOuts/Pages/Door/AssemblyPDF'));
+const StilesPDF = React.lazy(() => import('./PrintOuts/Pages/Door/StilesPDF'));
+const RailsPDF = React.lazy(() => import('./PrintOuts/Pages/Door/RailsPDF'));
+const PanelsPDF = React.lazy(() => import('./PrintOuts/Pages/Door/PanelsPDF'));
+const MaterialsPDF = React.lazy(() => import('./PrintOuts/Pages/Door/MaterialsPDF'));
+
+
 
 const cookie = Cookies.get('jwt');
 
