@@ -16,7 +16,6 @@ class EditSelectedOrder extends React.Component {
         <div>
           {selectedOrder.orderType === 'Door Order' ?
             <DoorOrder
-         
               editable={editable}
               edit={edit}
               toggle={toggle}

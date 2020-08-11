@@ -11,8 +11,6 @@ import { getWoodtypes, updateProduct, addProduct, deleteProduct } from '../../..
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
-
-
 const Woodtype = (props) => {
 
   const {

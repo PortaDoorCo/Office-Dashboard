@@ -13,8 +13,7 @@ const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
-
-const Applied_Profiles = (props) => {
+const AppliedProfiles = (props) => {
 
   const {
     className, 
@@ -314,4 +313,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Applied_Profiles);
+)(AppliedProfiles);

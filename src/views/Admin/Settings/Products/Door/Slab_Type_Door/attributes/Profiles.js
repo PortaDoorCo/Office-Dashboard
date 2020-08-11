@@ -12,7 +12,6 @@ const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
-
 const Profiles = (props) => {
 
   const {
