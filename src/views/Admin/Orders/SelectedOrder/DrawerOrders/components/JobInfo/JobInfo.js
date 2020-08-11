@@ -3,7 +3,11 @@ import {
   Row,
   Col,
   FormGroup,
+<<<<<<< HEAD
   Label,
+=======
+  Label
+>>>>>>> staging
 } from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
@@ -11,7 +15,14 @@ import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import { reduxForm}  from 'redux-form';
+<<<<<<< HEAD
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../../components/RenderInputs/renderInputs';
+=======
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
+
+momentLocaliser(moment);
+
+>>>>>>> staging
 
 momentLocaliser(moment);
 

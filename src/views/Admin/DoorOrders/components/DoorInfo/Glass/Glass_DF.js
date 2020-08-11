@@ -25,6 +25,10 @@ const fraction = num => {
 };
 
 class GlassDoor extends Component {
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;

@@ -4,7 +4,11 @@ import {
   Col,
   CardSubtitle,
   FormGroup,
+<<<<<<< HEAD
   Label,
+=======
+  Label
+>>>>>>> staging
 } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
@@ -20,7 +24,12 @@ const required = value => (value ? undefined : 'Required');
 
 
 
+<<<<<<< HEAD
 class One_Piece_Door extends Component {
+=======
+class OnePieceDoor extends Component {
+
+>>>>>>> staging
 
   render() {
     const {
@@ -176,4 +185,8 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
+<<<<<<< HEAD
 )(One_Piece_Door);
+=======
+)(OnePieceDoor);
+>>>>>>> staging

@@ -13,6 +13,10 @@ import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderField, renderFieldDisabled, renderCheckboxToggle } from '../../../../../../components/RenderInputs/renderInputs';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
+=======
+import { bindActionCreators } from 'redux';
+>>>>>>> staging
 import numQty from 'numeric-quantity';
 import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderPriceHolder';
 
@@ -377,6 +381,23 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           </Row>
         </Fragment>
       </div> : <div />
+<<<<<<< HEAD
+=======
+  );
+};
+
+const mapStateToProps = state => ({
+
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+
+
+    },
+    dispatch
+>>>>>>> staging
   );
 };
 

@@ -46,6 +46,11 @@ import {
 import 'react-notifications/lib/notifications.css';
 import Cookies from 'js-cookie';
 import { renderField } from './components/RenderInputs/renderInputs';
+<<<<<<< HEAD
+=======
+
+const cookie = Cookies.get('jwt');
+>>>>>>> staging
 
 const cookie = Cookies.get('jwt');
 

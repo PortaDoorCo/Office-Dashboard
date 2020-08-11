@@ -8,6 +8,10 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
 import Miter_Table from '../../Table/Doors/Miter_Table';
 import Ratio from 'lb-ratio';
@@ -17,7 +21,10 @@ import {
   subTotalSelector
 } from '../../../../../../selectors/doorPricing';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> staging
 const required = value => (value ? undefined : 'Required');
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -26,6 +33,10 @@ const fraction = num => {
 
 
 class MiterDoor extends Component {
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
     const { index } = this.props;

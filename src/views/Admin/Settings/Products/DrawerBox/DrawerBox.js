@@ -6,16 +6,25 @@ import Woodtype from './attributes/Woodtypes';
 import BoxThickness from './attributes/BoxThickness';
 import BoxBottomWoodtype from './attributes/BoxBottomWoodtype';
 import BoxBottomThickness from './attributes/BoxBottomThickness';
+<<<<<<< HEAD
 
 
 import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions';
 import classnames from 'classnames';
 
+=======
+import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions';
+import classnames from 'classnames';
+>>>>>>> staging
 import EditorPage from './editor/EditorPage';
 import NotchDrill from './attributes/NotchDrill';
 import Finish from './attributes/Finish';
 
 const Navigation = (props) => {
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
   return (
     <Col>
       <Breadcrumb>

@@ -5,6 +5,11 @@ import { renderField, renderDropdownListFilter, renderPrice } from '../SelectedO
 import { Button, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { loadOrders, updateOrder } from '../../../../redux/orders/actions';
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> staging
 
 let Inputs = props => {
   const { fields, misc_items, edit } = props;
@@ -56,7 +61,27 @@ let Inputs = props => {
 };
 
 class MiscItems extends Component {
+  componentDidUpdate(prevProps) {
+    const { formState } = this.props;
+    if (formState && formState.misc_items) {
+      if ((formState && formState.misc_items) !== (prevProps.formState && prevProps.formState.misc_items)) {
 
+        const misc_items = formState.misc_items;
+        misc_items.forEach((i, index) => {
+          if (i.item) {
+            if (i.item.Price !== 0) {
+              this.props.dispatch(
+                change(
+                  'DoorOrder',
+                  `misc_items[${index}].price`,
+                  (i.qty ? (i.item.Price * parseInt(i.qty)) : i.item.Price)
+                )
+              );
+            } else {
+              return;
+            }
+
+<<<<<<< HEAD
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
     if (formState && formState.misc_items) {
@@ -81,6 +106,12 @@ class MiscItems extends Component {
 
         });
 
+=======
+          }
+
+        });
+
+>>>>>>> staging
       }
     }
   }

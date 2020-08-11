@@ -7,7 +7,11 @@ import {
 import moment from 'moment';
 import {
   getFormValues,
+<<<<<<< HEAD
   reduxForm,
+=======
+  reduxForm
+>>>>>>> staging
 } from 'redux-form';
 import { connect } from 'react-redux';
 import {

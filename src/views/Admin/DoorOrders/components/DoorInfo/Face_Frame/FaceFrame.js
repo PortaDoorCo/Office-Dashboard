@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { Component} from 'react';
+=======
+import React, { Component } from 'react';
+>>>>>>> staging
 import {
   Row,
   Col,
@@ -6,7 +10,11 @@ import {
   FormGroup,
   Label,
 } from 'reactstrap';
+<<<<<<< HEAD
 import { Field, FieldArray} from 'redux-form';
+=======
+import { Field, FieldArray } from 'redux-form';
+>>>>>>> staging
 import { connect } from 'react-redux';
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../components/RenderInputs/renderInputs';
 import Frame_Only_Table from '../../Table/Doors/Frame_Only_Table';
@@ -18,9 +26,13 @@ import {
 
 const required = value => (value ? undefined : 'Required');
 
+<<<<<<< HEAD
 
 class FaceFrame extends Component {
 
+=======
+class FaceFrame extends Component {
+>>>>>>> staging
 
   render() {
     const {

@@ -7,7 +7,11 @@ import {
   Button
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
+<<<<<<< HEAD
 import { Field } from 'redux-form';
+=======
+import { Field, change } from 'redux-form';
+>>>>>>> staging
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -58,6 +62,10 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
     }
     setHeight(newHeight);
   };
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
 
   return (
     formState ?

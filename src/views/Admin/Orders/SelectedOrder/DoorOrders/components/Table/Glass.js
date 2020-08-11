@@ -5,12 +5,18 @@ import {
   Row,
   Button
 } from 'reactstrap';
+<<<<<<< HEAD
 import 'semantic-ui-css/semantic.min.css';
 import { Field } from 'redux-form';
 
 
 
 
+=======
+
+import 'semantic-ui-css/semantic.min.css';
+import { Field } from 'redux-form';
+>>>>>>> staging
 
 
 const GlassTable = ({ table, index, renderField, renderFieldDisabled, required, w, i, h, formState, prices, fields, renderMultiSelect, doorOptions, renderDropdownList }) => {

@@ -3,7 +3,11 @@ import {
   Row,
   Col,
   FormGroup,
+<<<<<<< HEAD
   Label,
+=======
+  Label
+>>>>>>> staging
 } from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';

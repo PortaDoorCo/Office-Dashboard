@@ -1078,6 +1078,10 @@ export const totalDiscountSelector = createSelector(
 export const totalSelector = createSelector(
   [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
   (subTotal, tax, misc, discount) => {
+<<<<<<< HEAD
+=======
+    console.log('DISCOUNT', discount);
+>>>>>>> staging
     return subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount;
   }
 );

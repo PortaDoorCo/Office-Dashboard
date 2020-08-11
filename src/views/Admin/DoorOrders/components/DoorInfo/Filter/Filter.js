@@ -8,9 +8,17 @@ import {
 import { connect } from 'react-redux';
 import { Field, change,  untouch} from 'redux-form';
 import { renderDropdownList } from '../../../../../../components/RenderInputs/renderInputs';
+<<<<<<< HEAD
 
 const required = value => (value ? undefined : 'Required');
 
+=======
+
+
+const required = value => (value ? undefined : 'Required');
+
+
+>>>>>>> staging
 class DoorFilter extends Component {
 
   onChangeType = (index) => {

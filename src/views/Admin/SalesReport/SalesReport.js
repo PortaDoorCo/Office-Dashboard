@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
+<<<<<<< HEAD
 import StatusTable from './components/StatusTable';
+=======
+// import StatusTable from './components/StatusTable'
+>>>>>>> staging
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders } from '../../../redux/orders/actions';
@@ -10,7 +14,17 @@ import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import { DateBox } from 'devextreme-react';
 
+<<<<<<< HEAD
 momentLocaliser(moment);
+=======
+const StatusTable = React.lazy(() => import('./components/StatusTable'));
+
+momentLocaliser(moment);
+
+// moment(this.state.startDate).startOf('day').valueOf()
+>>>>>>> staging
+
+const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
 const SalesReport = (props) => {
   const { orders, role } = props;
@@ -31,6 +45,15 @@ const SalesReport = (props) => {
     setData(filteredOrders);
 
   }, [startDate, endDate, orders]);
+<<<<<<< HEAD
+=======
+
+  // useEffect(() => {
+  //   socket.on('order_submitted', res => props.loadOrders(cookie))
+  //   socket.on('status_updated', res => props.loadOrders(cookie))
+  //   socket.on('order_updated', res => props.loadOrders(cookie))
+  // })
+>>>>>>> staging
 
   const minDate = new Date(orders[orders.length - 1].createdAt);
 
@@ -121,6 +144,7 @@ const SalesReport = (props) => {
         </Nav>
         <TabContent activeTab={activeTab}>
           <TabPane tabId="1">
+<<<<<<< HEAD
             <StatusTable
               orders={data}
               status="House Account"
@@ -175,6 +199,76 @@ const SalesReport = (props) => {
               startDate={startDate}
               endDate={endDate}
             />
+=======
+            <Suspense fallback={loading()}>
+              <StatusTable
+                orders={data}
+                status="House Account"
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </Suspense>
+          </TabPane>
+          <TabPane tabId="2">
+            <Suspense fallback={loading()}>
+              <StatusTable
+                orders={data}
+                status="Harold"
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </Suspense>
+          </TabPane>
+          <TabPane tabId="3">
+            <Suspense fallback={loading()}>
+              <StatusTable
+                orders={data}
+                status="Ned"
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </Suspense>
+          </TabPane>
+          <TabPane tabId="4">
+            <Suspense fallback={loading()}>
+              <StatusTable
+                orders={data}
+                status="Joseph"
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </Suspense>
+          </TabPane>
+          <TabPane tabId="5">
+            <Suspense fallback={loading()}>
+              <StatusTable
+                orders={data}
+                status="Peter"
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </Suspense>
+          </TabPane>
+          <TabPane tabId="6">
+            <Suspense fallback={loading()}>
+              <StatusTable
+                orders={data}
+                status="Meg"
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </Suspense>
+          </TabPane>
+          <TabPane tabId="7">
+            <Suspense fallback={loading()}>
+              <StatusTable
+                orders={data}
+                status="Krista"
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </Suspense>
+>>>>>>> staging
           </TabPane>
         </TabContent>
       </div> : 

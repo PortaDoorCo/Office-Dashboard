@@ -403,6 +403,17 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   );
 };
 
+<<<<<<< HEAD
 
 export default connect()(Cope_Table);
+=======
+const mapStateToProps = state => ({
+
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(Cope_Table);
+>>>>>>> staging
 

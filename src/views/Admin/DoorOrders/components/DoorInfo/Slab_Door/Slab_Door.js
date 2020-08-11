@@ -5,6 +5,10 @@ import {
   CardSubtitle,
   FormGroup,
   Label,
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
 } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
@@ -19,7 +23,12 @@ import {
 const required = value => (value ? undefined : 'Required');
 
 
+<<<<<<< HEAD
 class Slab_Door extends Component {
+=======
+class SlabDoor extends Component {
+
+>>>>>>> staging
   render() {
     const {
       part,
@@ -167,4 +176,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
-)(Slab_Door);
+)(SlabDoor);

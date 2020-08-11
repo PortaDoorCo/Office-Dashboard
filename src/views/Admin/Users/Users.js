@@ -10,7 +10,10 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> staging
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -23,7 +26,10 @@ const useStyles = makeStyles({
 
 const Users = (props) => {
   const classes = useStyles();
+<<<<<<< HEAD
 
+=======
+>>>>>>> staging
 
   const card = props.users.map(card => {
     return (
@@ -57,6 +63,13 @@ const Users = (props) => {
       </PerfectScrollbar>
     </div>
   );
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> staging
 
 };
 

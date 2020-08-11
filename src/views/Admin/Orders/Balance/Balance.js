@@ -19,9 +19,16 @@ import {
   balanceTotalSelector
 } from '../../../../selectors/doorPricing';
 import { updateOrder, updateBalance } from '../../../../redux/orders/actions';
+<<<<<<< HEAD
 
 
 const cookie = Cookies.get('jwt');
+=======
+
+
+const cookie = Cookies.get('jwt');
+
+>>>>>>> staging
 
 class Balance extends Component {
 

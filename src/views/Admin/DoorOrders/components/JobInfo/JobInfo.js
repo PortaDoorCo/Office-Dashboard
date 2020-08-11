@@ -20,6 +20,10 @@ const status = ['Quote', 'Ordered', 'Shipped', 'RUSH'];
 
 const required = value => value ? undefined : 'Required';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
 const renderDateTimePicker = ({ input: { onChange, value }, showTime }) =>
   <DateTimePicker
     onChange={onChange}
