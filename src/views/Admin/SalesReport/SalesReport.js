@@ -44,11 +44,11 @@ const SalesReport = (props) => {
   //   socket.on('order_updated', res => props.loadOrders(cookie))
   // })
 
-  const minDate = new Date(orders[orders.length - 1].createdAt);
+  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].createdAt) : new Date();
 
   
   return (
-    role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ? 
+    role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ? 
       <div>
         <Row className="mb-3">
           <Col lg='7' />
