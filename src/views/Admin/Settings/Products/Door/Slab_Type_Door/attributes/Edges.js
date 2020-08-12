@@ -140,7 +140,7 @@ const Edges = (props) => {
   });
 
 
-  if(role.type === 'management' || role.type === 'authenticated' ||  role.type === 'owner') {
+  if(role && (role.type === 'management' || role.type === 'authenticated' ||  role.type === 'owner')) {
     return (
     
       <div>
