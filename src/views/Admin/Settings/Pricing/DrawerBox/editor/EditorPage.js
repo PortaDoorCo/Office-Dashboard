@@ -29,11 +29,11 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={pricing.drawer_box_pricing} name={'drawer_box_pricing'} toggleEdit={setDrawerBoxPricing} edit={drawerBoxPricing} />
+                  <Editor code={pricing ? pricing.drawer_box_pricing : ''} name={'drawer_box_pricing'} toggleEdit={setDrawerBoxPricing} edit={drawerBoxPricing} />
                 </Col>
               </Row>
 
-              {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
+              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
                 <div className="mt-2">
                   <Button color="primary" onClick={() => setDrawerBoxPricing(!drawerBoxPricing)}>Edit</Button>
                 </div>

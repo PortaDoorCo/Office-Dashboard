@@ -24,6 +24,7 @@ const EditorComponent = (props) => {
   } = props;
 
   const { code, edit } = props;
+  const [stateCode, setStateCode] = useState([]);
   const [text, setText] = useState(code);
   const editorRef = useRef(null);
   const [modal, setModal] = useState(false);
@@ -36,6 +37,8 @@ const EditorComponent = (props) => {
   const finish = ['finish'];
   const lites = ['lites'];
   const face_frame = ['openings', 'ff_opening_cost', 'ff_top_rail_design', 'furniture_feet'];
+
+  console.log('code==>>>',code);
 
   const toggle = () => {
     setModal(!modal);
@@ -67,6 +70,7 @@ const EditorComponent = (props) => {
     editorRef.current._input.selectionStart = editorRef.current._input.selectionEnd = startIndex + val.length;
     editorRef.current._input.focus();
   };
+  //console.log('hhh==>>>>', languages);
   return (
     <div>
 

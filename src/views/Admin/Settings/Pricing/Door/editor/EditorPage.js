@@ -31,11 +31,11 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={pricing.door_pricing} name={'door_pricing'} toggleEdit={setDoorPricing} edit={doorPricing} />
+                  <Editor code={pricing ? pricing.door_pricing : ''} name={'door_pricing'} toggleEdit={setDoorPricing} edit={doorPricing} />
                 </Col>
               </Row>
 
-              {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
+              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
                 <div className="mt-2">
                   <Button color="primary" onClick={() => setDoorPricing(!doorPricing)}>Edit</Button>
                 </div>
@@ -57,11 +57,11 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={pricing.face_frame_pricing} name={'face_frame_pricing'} toggleEdit={setFaceFramePricing} edit={faceFramePricing} />
+                  <Editor code={pricing ? pricing.face_frame_pricing : ''} name={'face_frame_pricing'} toggleEdit={setFaceFramePricing} edit={faceFramePricing} />
                 </Col>
               </Row>
 
-              {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
+              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
                 <div className="mt-2">
                   <Button color="primary" onClick={() => setFaceFramePricing(!faceFramePricing)}>Edit</Button>
                 </div>

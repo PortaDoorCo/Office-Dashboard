@@ -82,7 +82,7 @@ const AccountSettings = props => {
               </Row>
               <Row className="mb-3">
                 <Col>
-                  <p><strong>Status:</strong> {user.role.name}</p>
+                  <p><strong>Status:</strong> {user && user.role && user.role.name}</p>
                 </Col>
               </Row>
               <Row>

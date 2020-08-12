@@ -31,7 +31,7 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={pricing.door_pricing} name={'door_pricing'} toggleEdit={setDoorPricing}  edit={doorPricing} />
+                  <Editor code={pricing ? pricing.door_pricing : ''} name={'door_pricing'} toggleEdit={setDoorPricing}  edit={doorPricing} />
                 </Col>
               </Row>
 
@@ -53,7 +53,7 @@ const EditorPage = (props) => {
               </CardTitle>
               <Row>
                 <Col>
-                  <Editor code={pricing.face_frame_pricing} name={'face_frame_pricing'}  toggleEdit={setFaceFramePricing} edit={faceFramePricing} />
+                  <Editor code={pricing ? pricing.face_frame_pricing : ''} name={'face_frame_pricing'}  toggleEdit={setFaceFramePricing} edit={faceFramePricing} />
                 </Col>
               </Row>
 
