@@ -115,9 +115,7 @@ class RestrictedOrderTable extends React.Component {
     this.onToolbarPreparing = this.onToolbarPreparing.bind(this);
     this.calculateCellValue = this.calculateCellValue.bind(this);
     this.onToolbarPreparing = this.onToolbarPreparing.bind(this);
-    // this.onExportBreakdows = this.onExportBreakdows.bind(this)
     this.onFilterStatus = this.onFilterStatus.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.onRowPrepared = this.onRowPrepared.bind(this);
 
   }
