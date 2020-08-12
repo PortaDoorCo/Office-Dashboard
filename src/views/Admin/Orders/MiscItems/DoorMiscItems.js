@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { renderField, renderDropdownListFilter, renderPrice } from '../SelectedOrder/DoorOrders/components/RenderInputs/renderInputs';
+import { renderField, renderDropdownListFilter, renderPrice } from '../../../../components/RenderInputs/renderInputs';
 import { Button, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { loadOrders, updateOrder } from '../../../../redux/orders/actions';

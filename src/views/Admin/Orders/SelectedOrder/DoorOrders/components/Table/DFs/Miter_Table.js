@@ -11,8 +11,8 @@ import { Field } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs';
-import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder';
+import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../../../../../../components/RenderInputs/renderInputs';
+import RenderPriceHolder from '../../../../../../../../components/RenderInputs/RenderPriceHolder';
 
 const required = value => (value ? undefined : 'Required');
 
