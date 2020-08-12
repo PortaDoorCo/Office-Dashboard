@@ -9,8 +9,8 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
-import { renderDropdownList, renderField, renderFieldDisabled, renderPrice } from './RenderInputs/renderInputs';
-import RenderPriceHolder from './RenderInputs/RenderPriceHolder';
+import { renderDropdownList, renderField, renderFieldDisabled, renderPrice } from '../../../../../../components/RenderInputs/renderInputs';
+import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderPriceHolder';
 
 const required = value => value ? undefined : 'Required';
 
@@ -18,7 +18,7 @@ class OrderTable extends Component {
 
   render() {
 
-    const { fields, scoop, dividers, prices, i, subTotal, part, formState, edit } = this.props;
+    const { fields, scoop, dividers, prices, i, subTotal, formState, edit } = this.props;
 
 
     return (
