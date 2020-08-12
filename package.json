@@ -116,7 +116,7 @@
   "scripts": {
     "start": "react-scripts --max_old_space_size=8192 start",
     "build": "CI=false react-scripts --max_old_space_size=8192 build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --silent",
     "test-react": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
