@@ -1,7 +1,7 @@
 import { REGISTER_USER, LOGIN, CREATE_TASK, MARK_DONE, REMOVE_TASK, SET_LOGIN, UPDATE_ACCOUNT, RESET_PASSWORD, GET_USERS } from './actions';
 
 const initialState = {
-  user: [],
+  user: {},
   registeredUsers: [],
   tasks: [],
   loggedIn: false,

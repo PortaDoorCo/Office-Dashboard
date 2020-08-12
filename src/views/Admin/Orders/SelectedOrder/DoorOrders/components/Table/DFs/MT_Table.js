@@ -7,12 +7,12 @@ import {
   Button
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from 'redux-form';
+import { Field } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../RenderInputs/renderInputs';
-import RenderPriceHolder from '../../RenderInputs/RenderPriceHolder';
+import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../../../../../../components/RenderInputs/renderInputs';
+import RenderPriceHolder from '../../../../../../../../components/RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 
 const required = value => (value ? undefined : 'Required');

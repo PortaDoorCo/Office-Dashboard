@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../../../components/RenderInputs/renderInputs';
 import Frame_Only_Table from '../../Table/Doors/Frame_Only_Table';
 import {
   linePriceSelector,

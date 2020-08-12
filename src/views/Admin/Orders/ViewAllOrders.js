@@ -20,9 +20,9 @@ class ViewAllOrders extends Component {
 
   render() {
     const { orders, loadOrders, updateStatus, role } = this.props;
-    return role.type === 'management' ||
+    return role && (role.type === 'management' ||
       role.type === 'authenticated' ||
-      role.type === 'owner' ? (
+      role.type === 'owner') ? (
         <div>
           {orders.length && (
             <div>
