@@ -10,7 +10,7 @@ import {
 import 'antd/dist/antd.css';
 import { Field, FieldArray } from 'redux-form';
 import OrderTable from './OrderTable';
-import { renderDropdownList, renderField } from './RenderInputs/renderInputs';
+import { renderDropdownList, renderField } from '../../../../../../components/RenderInputs/renderInputs';
 
 
 const required = value => value ? undefined : 'Required';
