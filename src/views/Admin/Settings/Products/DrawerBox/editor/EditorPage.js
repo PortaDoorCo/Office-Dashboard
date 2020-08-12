@@ -38,7 +38,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.fronts_height} name={'fronts_height'}  toggleEdit={setFrontsHeight} edit={frontsHeight} />
+                  <Editor code={breakdowns ? breakdowns.fronts_height : ''} name={'fronts_height'}  toggleEdit={setFrontsHeight} edit={frontsHeight} />
                 </Col>
               </Row>
 
@@ -57,7 +57,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.fronts_width} name={'fronts_width'}  toggleEdit={setFrontsWidth} edit={frontsWidth} />
+                  <Editor code={breakdowns ? breakdowns.fronts_width : ''} name={'fronts_width'}  toggleEdit={setFrontsWidth} edit={frontsWidth} />
                 </Col>
               </Row>
               <div className="mt-2">
@@ -75,7 +75,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Thickness
-                  <Editor code={breakdowns.fronts_thickness} name={'fronts_thickness'}  toggleEdit={setFrontsThickness} edit={frontsThickness} />
+                  <Editor code={breakdowns ? breakdowns.fronts_thickness : ''} name={'fronts_thickness'}  toggleEdit={setFrontsThickness} edit={frontsThickness} />
                 </Col>
               </Row>
               <div className="mt-2">
@@ -96,7 +96,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Height
-                  <Editor code={breakdowns.sides_height} name={'sides_height'}  toggleEdit={setSidesHeight} edit={sidesHeight} />
+                  <Editor code={breakdowns ? breakdowns.sides_height : ''} name={'sides_height'}  toggleEdit={setSidesHeight} edit={sidesHeight} />
                 </Col>
               </Row>
               <div className="mt-2">
@@ -114,7 +114,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Depth
-                  <Editor code={breakdowns.sides_depth} name={'sides_depth'}   toggleEdit={setSidesDepth} edit={sidesDepth} />
+                  <Editor code={breakdowns ? breakdowns.sides_depth : ''} name={'sides_depth'}   toggleEdit={setSidesDepth} edit={sidesDepth} />
                 </Col>
               </Row>
               <div className="mt-2">
@@ -132,7 +132,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Thickness
-                  <Editor code={breakdowns.sides_thickness} name={'sides_thickness'}   toggleEdit={setSidesThickness} edit={sidesThickness} />
+                  <Editor code={breakdowns ? breakdowns.sides_thickness : ''} name={'sides_thickness'}   toggleEdit={setSidesThickness} edit={sidesThickness} />
                 </Col>
               </Row>
               <div className="mt-2">
@@ -153,7 +153,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Width
-                  <Editor code={breakdowns.bottoms_width} name={'bottoms_width'} toggleEdit={setBottomsWidth}  edit={bottomsWidth} />
+                  <Editor code={breakdowns ? breakdowns.bottoms_width : ''} name={'bottoms_width'} toggleEdit={setBottomsWidth}  edit={bottomsWidth} />
                 </Col>
               </Row>
 
@@ -174,7 +174,7 @@ const EditorPage = (props) => {
               <Row>
                 <Col>
                   Depth
-                  <Editor code={breakdowns.bottoms_depth} name={'bottoms_depth'} toggleEdit={setBottomsDepth}  edit={bottomsDepth} />
+                  <Editor code={breakdowns ? breakdowns.bottoms_depth : ''} name={'bottoms_depth'} toggleEdit={setBottomsDepth}  edit={bottomsDepth} />
                 </Col>
               </Row>
 
