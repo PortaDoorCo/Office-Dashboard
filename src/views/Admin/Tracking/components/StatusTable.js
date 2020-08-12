@@ -14,7 +14,12 @@ const StatusTable = (props) => {
 
   useEffect(() => {
 
-    let filteredItems = props.orders.filter(item => item.status && item.status.includes(props.status));
+    let filteredItems;
+
+    if(props.orders){
+      filteredItems = props.orders.filter(item => item.status && item.status.includes(props.status));
+    }
+    
     setData(filteredItems);
 
   }, [filterText, props.orders, props.status]);
