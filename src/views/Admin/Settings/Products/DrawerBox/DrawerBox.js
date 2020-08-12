@@ -119,7 +119,7 @@ const DrawerBox = (props) => {
 
                   <p>If you have a router, a router table, a dovetail bit, and a slot cutter, you can do it the way we show here. Begin by cutting the stiles to their final length. Lay out the rails by adding 1" to the final inside width of the frame. That measurement will allow for a 1⁄2 " stub tenon on both ends of each rail.</p>
 
-                  {role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' ?
+                  {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
                     <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
                     : <div />
                   }
