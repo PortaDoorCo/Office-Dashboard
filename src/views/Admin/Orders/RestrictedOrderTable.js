@@ -30,8 +30,25 @@ import { NotificationManager } from 'react-notifications';
 import db_url from '../../../redux/db_url';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setSelectedOrder } from '../../../redux/orders/actions';
 
 const cookie = Cookies.get('jwt');
+
+const toDataUrl = (url, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
+};
 
 momentLocaliser(moment);
 
@@ -288,12 +305,64 @@ class RestrictedOrderTable extends React.Component {
 
   onExportBreakdowns = e => {
 
+    const { breakdowns, box_breakdowns } = this.props;
+
+
     if (this.state.selectedRowKeys.length > 0) {
-      this.state.selectedRowsData.map(i => {
+      this.state.selectedRowsData.map(async (i) => {
         if (i.orderType === 'Door Order') {
-          return DoorPDF(i);
+
+          const edgesPromiseArr1 = i.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.edge.photo.url, (result) => {
+                resolve(result);
+              });
+            });
+          });
+
+          const mouldsPromiseArr1 = i.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.profile.photo.url, (result) => {
+                resolve(result);
+              });
+            });
+          });
+
+
+
+          const panelsPromiseArr1 = i.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.panel.photo.url, (result) => {
+                resolve(result);
+              });
+            });
+          });
+
+          const appliedProfilePromiseArr1 = i.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.applied_profile.photo.url, (result) => {
+                resolve(result);
+              });
+            });
+          });
+
+          let edges1;
+          let moulds1;
+          let panels1;
+          let appliedProfiles1;
+
+          try {
+            edges1 = await Promise.all(edgesPromiseArr1);
+            moulds1 = await Promise.all(mouldsPromiseArr1);
+            panels1 = await Promise.all(panelsPromiseArr1);
+            appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
+          } catch (err) {
+            console.log('errrrrrr', err);
+          }
+
+          return DoorPDF(i, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
         } else {
-          return DrawerPDF(i);
+          return DrawerPDF(i, box_breakdowns);
         }
       });
       this.setState({
@@ -565,4 +634,23 @@ class RestrictedOrderTable extends React.Component {
   }
 }
 
-export default RestrictedOrderTable;
+const mapStateToProps = (state, prop) => ({
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns
+
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setSelectedOrder
+    },
+    dispatch
+  );
+
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RestrictedOrderTable);

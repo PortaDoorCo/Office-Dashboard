@@ -113,6 +113,9 @@
     "svg-inline-react": "^3.2.0",
     "yarn": "^1.19.1"
   },
+  "resolutions": {
+    "terser": "^5.0.0"
+  },
   "scripts": {
     "start": "react-scripts --max_old_space_size=8192 start",
     "build": "CI=false react-scripts --max_old_space_size=8192 build",
