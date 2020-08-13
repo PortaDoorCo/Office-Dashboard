@@ -6,7 +6,6 @@ const DrawerOrders = React.lazy(() => import('./views/Admin/DrawerOrders/DrawerO
 const Orders = React.lazy(() => import('./views/Admin/Orders/ViewAllOrders'));
 const Customers = React.lazy(() => import('./views/Admin/Customers/Customers/CompanyTable2'));
 const Settings = React.lazy(() => import('./views/Admin/Settings/Settings'));
-const Calendar = React.lazy(() => import('./views/Admin/Calendar'));
 const Tracking = React.lazy(() => import('./views/Admin/Tracking/Tracking'));
 const PurchaseOrders = React.lazy(() => import('./views/Admin/PurchaseOrders/PurchaseOrders'));
 const SalesReport = React.lazy(() => import('./views/Admin/SalesReport/SalesReport'));
@@ -22,7 +21,6 @@ const routes = [
   { path: '/view-orders', name: 'Orders', component: Orders },
   { path: '/customers', name: 'Customers', component: Customers },
   { path: '/settings', name: 'Settings', component: Settings },
-  { path: '/calendar', name: 'Calendar', component: Calendar },
   { path: '/tracking', name: 'Tracking', component: Tracking },
   { path: '/purchase-orders', name: 'Purchase Orders', component: PurchaseOrders },
   { path: '/sales-reports', name: 'Sales Reports', component: SalesReport },
