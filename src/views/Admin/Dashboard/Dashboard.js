@@ -38,45 +38,45 @@ class Dashboard extends Component {
           <div>
             <Row>
               <Col lg="4">
-                <Suspense>
+                <Suspense fallback={loading()}>
                   <Chart2 />
                 </Suspense>
               </Col>
               <Col lg="4">
-                <Suspense>
+                <Suspense fallback={loading()}>
                   <Chart3 />
                 </Suspense>
               </Col>
               <Col lg="4">
-                <Suspense>
+                <Suspense fallback={loading()}>
                   <Chart4 />
                 </Suspense>
               </Col>
             </Row>
             <Row>
               <Col>
-                <Suspense>
+                <Suspense fallback={loading()}>
                   <Chart1 />
                 </Suspense>
               </Col>
             </Row>
             <Row>
               <Col style={{ height: 600 }}>
-                <Suspense>
+                <Suspense fallback={loading()}>
                   <Maps />
                 </Suspense>
               </Col>
             </Row>
             <Row className="mt-3">
               <Col>
-                <Suspense>
+                <Suspense fallback={loading()}>
                   <OrderTable2  />
                 </Suspense>
               </Col>
             </Row>
             <Row>
               <Col>
-                <Suspense>
+                <Suspense fallback={loading()}>
                   <CompanyTable
                     customerDB={this.props.customerDB}
                   />
@@ -86,7 +86,29 @@ class Dashboard extends Component {
           </div>
           :
           <div>
-            {loading()}
+            <Row>
+              <Col style={{ height: 600 }}>
+                <Suspense fallback={loading()}>
+                  <Maps />
+                </Suspense>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Suspense fallback={loading()}>
+                  <OrderTable2  />
+                </Suspense>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Suspense fallback={loading()}>
+                  <CompanyTable
+                    customerDB={this.props.customerDB}
+                  />
+                </Suspense>
+              </Col>
+            </Row>
           </div>
         }
 

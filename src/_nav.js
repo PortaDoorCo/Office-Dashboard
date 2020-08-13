@@ -52,10 +52,10 @@ export default {
           url: '/late-list',
         },
 
-        {
-          name: 'Purchase Orders',
-          url: '/purchase-orders',
-        },
+        // {
+        //   name: 'Purchase Orders',
+        //   url: '/purchase-orders',
+        // },
 
 
       ]
