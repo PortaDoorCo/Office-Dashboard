@@ -1,6 +1,5 @@
 {
-    "addons": [
-    ],
+    "addons": [],
     "buildpacks": [
         {
             "url": "https://buildpack-registry.s3.amazonaws.com/buildpacks/mars/create-react-app.tgz"
@@ -10,6 +9,16 @@
     "formation": {
         "web": {
             "quantity": 1
+        }
+    },
+    "environments": {
+        "test": {
+            "formation": {
+                "test": {
+                    "quantity": 3,
+                    "size": "performance-l"
+                }
+            }
         }
     },
     "name": "portadoor",

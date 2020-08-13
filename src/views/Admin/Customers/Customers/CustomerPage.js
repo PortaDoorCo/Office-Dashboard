@@ -88,8 +88,6 @@ class CustomerPage extends Component {
 
     let updateOrders;
 
-    console.log('selectedCompanies', selectedCompanies);
-
     if (this.props.orders.length > 0) {
       updateOrders = orders.filter(
         x => x.job_info.customer.id === this.props.selectedCompanies.id
