@@ -22,42 +22,41 @@ class Register extends Component {
     super(props);
 
     this.state = {
-      Email: [],
-      FullName: [],
-      Password: [],
-      confirmPassword: [],
-      Username: [],
-      Company: [],
+      Email: '',
+      FirstName: '',
+      LastName: '',
+      Password: '',
+      confirmPassword: '',
+      Username: '',
+      Company: '',
       signedUp: false
     };
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
-  }
+  };
 
   handleSubmit = e => {
     e.preventDefault();
 
-
     // Request API.
-    const { Username, Email, Password, FullName } = this.state;
-
-
+    const { Username, Email, Password, FirstName, LastName } = this.state;
 
     if (this.state.Password === this.state.confirmPassword) {
-      strapiRegister(Username, Email, Password, FullName).then(() => this.setState({ signedUp: true }));
+      strapiRegister(Username, Email, Password).then(() =>
+        this.setState({ signedUp: true })
+      );
     } else {
       alert('Passwords do no match');
     }
-
   };
 
   renderRedirect = () => {
     window.location.reload();
-  }
+  };
 
   signUp = () => {
     this.setState({ signedUp: true });
@@ -90,34 +89,6 @@ class Register extends Component {
                         name="Username"
                         onChange={this.handleChange}
                         value={this.state.Username}
-                      />
-                    </InputGroup>
-                    <InputGroup className="mb-3">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text">
-                          <i className="icon-user" />
-                        </span>
-                      </div>
-                      <Input
-                        type="text"
-                        placeholder="Full Name"
-                        name="FullName"
-                        onChange={this.handleChange}
-                        value={this.state.FullName}
-                      />
-                    </InputGroup>
-                    <InputGroup className="mb-3">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text">
-                          <i className="icon-user" />
-                        </span>
-                      </div>
-                      <Input
-                        type="text"
-                        placeholder="Company"
-                        name="Company"
-                        onChange={this.handleChange}
-                        value={this.state.Company}
                       />
                     </InputGroup>
                     <InputGroup className="mb-3">
@@ -188,12 +159,12 @@ class Register extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      registerUser
+    },
+    dispatch
+  );
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  registerUser
-}, dispatch);
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Register);
+export default connect(null, mapDispatchToProps)(Register);
