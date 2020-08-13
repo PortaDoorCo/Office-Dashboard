@@ -33,7 +33,7 @@ export const SET_SELECTED_ORDER = 'SET_SELECTED_ORDER';
 
 
 export function setSelectedOrder(data) {
-  console.log('FIRE', data);
+
   return async function (dispatch) {
     return await dispatch({
       type: SET_SELECTED_ORDER,

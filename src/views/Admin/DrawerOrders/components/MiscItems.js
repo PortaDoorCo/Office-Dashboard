@@ -60,8 +60,6 @@ class MiscItems extends Component {
 
         misc_items.forEach((i, index) => {
           if (i.item) {
-            console.log('MISC ITEM', i);
-
             if (i.item.Price !== 0) {
               this.props.dispatch(
                 change(
