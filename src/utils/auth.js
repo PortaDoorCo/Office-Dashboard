@@ -7,7 +7,7 @@ import Strapi from 'strapi-sdk-javascript/build/main';
 const apiUrl = 'https://portadoor-server-production.herokuapp.com/' || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
-export const strapiRegister = async (username, email, password, name) => {
+export const strapiRegister = async (username, email, password) => {
   if (!process.browser) {
     return undefined;
   }
