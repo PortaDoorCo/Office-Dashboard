@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { registerUser } from '../../../redux/users/actions';
 import { strapiRegister } from '../../../utils/auth';
+import Background from '../../../assets/img/register-background.jpg';
 
 class Register extends Component {
   constructor(props) {
@@ -68,7 +69,7 @@ class Register extends Component {
     }
 
     return (
-      <div className="app flex-row align-items-center">
+      <div className="app flex-row align-items-center" style={{ backgroundImage: `url(${Background})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <Container>
           <Form onSubmit={this.handleSubmit}>
             <Row className="justify-content-center">
@@ -135,20 +136,6 @@ class Register extends Component {
                       Create Account
                     </Button>
                   </CardBody>
-                  <CardFooter className="p-4">
-                    <Row>
-                      <Col xs="12" sm="6">
-                        <Button className="btn-facebook" block>
-                          <span>facebook</span>
-                        </Button>
-                      </Col>
-                      <Col xs="12" sm="6">
-                        <Button className="btn-twitter" block>
-                          <span>twitter</span>
-                        </Button>
-                      </Col>
-                    </Row>
-                  </CardFooter>
                 </Card>
               </Col>
             </Row>

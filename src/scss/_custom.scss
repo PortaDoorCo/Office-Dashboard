@@ -119,7 +119,19 @@ ul>li:hover {
   animation-duration: 1s;
 }
 
+.bg-image {
+  /* The image used */
+  background-image: url("../assets/img/login-background.jpg");
 
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .pulse {
   // background: #d6d4d4;
