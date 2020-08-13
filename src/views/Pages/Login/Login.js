@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import db_url from '../../../redux/db_url';
+import Background from '../../../assets/img/login-background.jpg';
 
 class Login extends Component {
   static propTypes = {
@@ -80,7 +81,7 @@ class Login extends Component {
       loadingActive = <Loader />;
     } else {
       loadingActive = (
-        <div className="app flex-row align-items-center">
+        <div className="app flex-row align-items-center" style={{ backgroundImage: `url(${Background})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
           <Container>
             <Row className="justify-content-center">
               <NotificationContainer />
