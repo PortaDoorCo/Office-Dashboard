@@ -21,6 +21,7 @@ import Assignment  from '@material-ui/icons/Assignment';
 import Report1 from '../../Orders/PrintOuts/Reports/Report1';
 import DoorPDF from '../../Orders/PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from '../../Orders/PrintOuts/Pages/Drawer/DrawerPDF';
+import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
 
 momentLocaliser(moment);
 
@@ -282,7 +283,7 @@ const StatusTable = (props) => {
     };
 
     const exportReports = () => {
-      Report1(selectedRows, props.startDate, props.endDate, filterStatus);
+      SalesmenReport(selectedRows, props.startDate, props.endDate, filterStatus);
       setToggleCleared(!toggleCleared); 
     };
 
