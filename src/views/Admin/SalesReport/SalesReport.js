@@ -8,9 +8,11 @@ import { loadOrders } from '../../../redux/orders/actions';
 import Charts from './components/Chart';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import { DateBox } from 'devextreme-react';
+import 'react-dates/initialize';
+import { DateRangePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 
-const StatusTable = React.lazy(() => import('./components/StatusTable2'));
+const StatusTable = React.lazy(() => import('./components/StatusTable'));
 
 momentLocaliser(moment);
 
@@ -21,9 +23,10 @@ const loading  = () => <div className="animated fadeIn pt-1 text-center"><div cl
 const SalesReport = (props) => {
   const { orders, role } = props;
   const [activeTab, setActiveTab] = useState('1');
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(moment(new Date()));
+  const [endDate, setEndDate] = useState(moment(new Date()));
   const [data, setData] = useState(orders);
+  const [focusedInput, setFocusedInput] = useState(null);
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -38,11 +41,6 @@ const SalesReport = (props) => {
 
   }, [startDate, endDate, orders]);
 
-  // useEffect(() => {
-  //   socket.on('order_submitted', res => props.loadOrders(cookie))
-  //   socket.on('status_updated', res => props.loadOrders(cookie))
-  //   socket.on('order_updated', res => props.loadOrders(cookie))
-  // })
 
   const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].createdAt) : new Date();
 
@@ -51,18 +49,28 @@ const SalesReport = (props) => {
     role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ? 
       <div>
         <Row className="mb-3">
-          <Col lg='7' />
+          <Col lg='9' />
           <Col>
             <Row>
               <Col>
-                <p>From</p>
-                <DateBox value={startDate} max={endDate}
-                  min={minDate} onValueChanged={startDate => setStartDate(new Date(startDate.value))} type="date" />
-              </Col>
-              <Col>
-                <p>To</p>
-                <DateBox value={endDate} max={new Date()}
-                  min={startDate} onValueChanged={endDate => setEndDate(new Date(endDate.value))} type="date" />
+                <DateRangePicker
+                  startDate={startDate} // momentPropTypes.momentObj or null,
+                  startDateId="startDate" // PropTypes.string.isRequired,
+                  endDate={endDate} // momentPropTypes.momentObj or null,
+                  endDateId="endDate" // PropTypes.string.isRequired,
+                  onDatesChange={({ startDate, endDate }) => (setStartDate(startDate), setEndDate(endDate))} // PropTypes.func.isRequired,
+                  focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                  onFocusChange={focusedInput => setFocusedInput(focusedInput)}
+                  isOutsideRange={(date) => {
+                    if (date > moment(new Date())) {
+                      return true; // return true if you want the particular date to be disabled
+                    } else if (date < moment(minDate)) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
               </Col>
             </Row>
           </Col>
