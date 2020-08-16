@@ -364,8 +364,16 @@ const OrderTable = (props) => {
               </Select>
             </Col>
           </Row>
-
-
+          <Row className="mt-3">
+            <Col>
+              <h3>Order Totals: ${data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}</h3> 
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              <h3># Of Orders: {data.length}</h3> 
+            </Col>
+          </Row>
         </Col>
       </Row>
 
