@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
@@ -14,14 +14,31 @@ import {
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import momentLocaliser from 'react-widgets-moment';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import Assignment  from '@material-ui/icons/Assignment';
+import Report1 from './PrintOuts/Reports/Report1';
+import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
+import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
 
 momentLocaliser(moment);
+
+const toDataUrl = (url, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
+};
 
 const cookie = Cookies.get('jwt');
 const { Option } = Select;
@@ -208,28 +225,87 @@ const OrderTable = (props) => {
   }, []);
 
   const contextActions = React.useMemo(() => {
-    const handleDelete = () => {
-      
-      if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
-        console.log(selectedRows);
-      }
+    const exportBreakdowns = () => {
+      const { breakdowns, box_breakdowns } = props;
+
+      selectedRows.map(async (i) => {
+        if (i.orderType === 'Door Order') {
+
+          const edgesPromiseArr1 = i.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.edge.photo.url, (result) => {
+                resolve(result);
+              });
+            });
+          });
+
+          const mouldsPromiseArr1 = i.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.profile.photo.url, (result) => {
+                resolve(result);
+              });
+            });
+          });
+
+
+
+          const panelsPromiseArr1 = i.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.panel.photo.url, (result) => {
+                resolve(result);
+              });
+            });
+          });
+
+          const appliedProfilePromiseArr1 = i.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.applied_profile.photo.url, (result) => {
+                resolve(result);
+              });
+            });
+          });
+
+          let edges1;
+          let moulds1;
+          let panels1;
+          let appliedProfiles1;
+
+          try {
+            edges1 = await Promise.all(edgesPromiseArr1);
+            moulds1 = await Promise.all(mouldsPromiseArr1);
+            panels1 = await Promise.all(panelsPromiseArr1);
+            appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
+          } catch (err) {
+            console.log('errrrrrr', err);
+          }
+          return DoorPDF(i, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
+        } else {
+          return DrawerPDF(i, box_breakdowns);
+        }
+      }); 
+      setToggleCleared(!toggleCleared); 
+    };
+
+    const exportReports = () => {
+      Report1(selectedRows, startDate, endDate, filterStatus);
+      setToggleCleared(!toggleCleared); 
     };
 
     return (
       <div>
-        <Tooltip title="View Reports" placement="top" className="mb-3 mt-3">
+        <Tooltip title="View Reports" onClick={exportReports} placement="top" className="mb-3 mt-3">
           <IconButton>
             <Receipt style={{ width: '40', height: '40' }} />
           </IconButton>
         </Tooltip>
-        <Tooltip title="View Breakdowns" placement="top" className="mb-3 mt-3">
+        <Tooltip title="View Breakdowns" onClick={exportBreakdowns} placement="top" className="mb-3 mt-3">
           <IconButton>
             <Assignment style={{ width: '40', height: '40' }} />
           </IconButton>
         </Tooltip>
       </div>
     );
-  }, [selectedRows]);
+  }, [selectedRows, startDate, endDate, props, filterStatus, toggleCleared]);
 
   const toggle = (row) => {
     const { setSelectedOrder } = props;
@@ -322,6 +398,8 @@ const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns
 });
 
 const mapDispatchToProps = (dispatch) =>
