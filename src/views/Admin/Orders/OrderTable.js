@@ -1,40 +1,28 @@
-import React from 'react';
-import { Row, Col } from 'reactstrap';
-import DataGrid, {
-  Column,
-  Editing,
-  Paging,
-  Lookup,
-  RequiredRule,
-  Pager,
-  HeaderFilter,
-  SearchPanel,
-  ColumnFixing,
-  Selection,
-  Summary,
-  TotalItem
-} from 'devextreme-react/data-grid';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import DataTable from 'react-data-table-component';
+import moment from 'moment';
+import OrderPage from './OrderPage';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import { SelectBox, DateBox } from 'devextreme-react';
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.material.blue.light.css';
-import CustomStore from 'devextreme/data/custom_store';
-import OrderPage from './OrderPage';
-import Report1 from './PrintOuts/Reports/Report1';
-import moment from 'moment';
+import { Select } from 'antd';
+import {
+  updateStatus,
+  loadOrders,
+  setSelectedOrder,
+} from '../../../redux/orders/actions';
+import Cookies from 'js-cookie';
 import momentLocaliser from 'react-widgets-moment';
+import { Row, Col } from 'reactstrap';
+import 'react-dates/initialize';
+import { DateRangePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import Receipt from '@material-ui/icons/Receipt';
+import Assignment  from '@material-ui/icons/Assignment';
+import Report1 from './PrintOuts/Reports/Report1';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
-import { NotificationManager } from 'react-notifications';
-import db_url from '../../../redux/db_url';
-import Cookies from 'js-cookie';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import { setSelectedOrder } from '../../../redux/orders/actions';
-import { bindActionCreators } from 'redux';
-
-const cookie = Cookies.get('jwt');
 
 momentLocaliser(moment);
 
@@ -52,262 +40,195 @@ const toDataUrl = (url, callback) => {
   xhr.send();
 };
 
+const cookie = Cookies.get('jwt');
+const { Option } = Select;
 
 const status = [
   {
-    name: 'Quote',
+    label: 'Quote',
     value: 'Quote',
   },
   {
-    name: 'Invoiced',
+    label: 'Invoiced',
     value: 'Invoiced',
   },
   {
-    name: 'Ordered',
+    label: 'Ordered',
     value: 'Ordered',
   },
   {
-    name: 'In Production',
+    label: 'In Production',
     value: 'In Production',
   },
   {
-    name: 'Station 1',
+    label: 'Station 1',
     value: 'Station 1',
   },
   {
-    name: 'Station 2',
+    label: 'Station 2',
     value: 'Station 2',
   },
   {
-    name: 'Station 3',
+    label: 'Station 3',
     value: 'Station 3',
   },
   {
-    name: 'Station 4',
+    label: 'Station 4',
     value: 'Station 4',
   },
   {
-    name: 'Station 4',
-    value: 'Station 4',
-  },
-  {
-    name: 'Complete',
+    label: 'Complete',
     value: 'Complete',
   },
   {
-    name: 'Shipped',
+    label: 'Shipped',
     value: 'Shipped',
   },
   {
-    name: 'LATE',
+    label: 'LATE',
     value: 'LATE',
   },
 ];
 
-const statusFilter = ['All', 'Quote', 'Invoiced', 'Ordered', 'In Production'];
+const conditionalRowStyles = [
+  {
+    when: (row) => row.late === true,
+    style: {
+      backgroundColor: '#FEEBEB',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+];
 
+const OrderTable = (props) => {
+  const { orders } = props;
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [toggleCleared, setToggleCleared] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [data, setData] = useState(orders);
+  const [startDate, setStartDate] = useState(moment(new Date()));
+  const [endDate, setEndDate] = useState(moment(new Date()));
+  const [focusedInput, setFocusedInput] = useState(null);
+  const [filterStatus, setFilterStatus ] = useState('All');
 
-class OrderTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showFilterRow: true,
-      showHeaderFilter: true,
-      currentFilter: 'auto',
-      selectedRowKeys: [],
-      selectedRowsData: [],
-      prefix: '',
-      modal: false,
-      edit: false,
-      selectedOrder: null,
-      filteredDate: new Date(),
-      filterStatus: statusFilter[0],
-      allowUpdating: false,
-      startDate: new Date(),
-      endDate: new Date(),
-      productData: new CustomStore({
-        load: () => axios.get(`${db_url}/orders?_limit=${2000}&_sort=orderNum:DESC`,
-          {
-            headers: {
-              'Authorization': `Bearer ${cookie}`
-            }
-          }),
-        update: (key, values) =>
-          this.props.updateStatus(key.id, key, values, cookie),
-      }),
+  const minDate = orders.length > 0 ? new Date(orders[orders.length - 1].createdAt) : new Date();
+
+  useEffect(() => {
+    const filteredOrders = orders.filter((item) => {
+      let date = new Date(item.createdAt);
+
+      if(filterStatus === 'All'){
+        return (
+          moment(date) >= moment(startDate).startOf('day').valueOf() &&
+          moment(date) <= moment(endDate).endOf('day').valueOf()
+        );
+      } else {
+        return (
+          moment(date) >= moment(startDate).startOf('day').valueOf() &&
+          moment(date) <= moment(endDate).endOf('day').valueOf() &&
+          item.status.includes(filterStatus)
+        );
+      }
+
+    });
+    setData(filteredOrders);
+  }, [startDate, endDate, orders, filterStatus]);
+
+  const handleStatusChange = async (e, row) => {
+    const { updateStatus } = props;
+    const status = {
+      status: e,
     };
-    this.onShowFilterRowChanged = this.onShowFilterRowChanged.bind(this);
-    this.onShowHeaderFilterChanged = this.onShowHeaderFilterChanged.bind(this);
-    this.onCurrentFilterChanged = this.onCurrentFilterChanged.bind(this);
-    this.onSelectionChanged = this.onSelectionChanged.bind(this);
-    this.onStartDate = this.onStartDate.bind(this);
-    this.onEndDate = this.onEndDate.bind(this);
-    this.onToolbarPreparing = this.onToolbarPreparing.bind(this);
-    this.calculateCellValue = this.calculateCellValue.bind(this);
-    this.onToolbarPreparing = this.onToolbarPreparing.bind(this);
-    // this.onExportBreakdows = this.onExportBreakdows.bind(this)
-    this.onFilterStatus = this.onFilterStatus.bind(this);
-    this.onRowPrepared = this.onRowPrepared.bind(this);
-  }
+    await updateStatus(row.id, row, status, cookie);
+  };
 
-  componentDidMount() {
-    const dataGrid = this.dataGrid.instance;
-    // socket.on('order_submitted', res => (dataGrid.refresh()))
-    // socket.on('order_deleted', res => (dataGrid.refresh()))
-    // socket.on('order_updated', res => (dataGrid.refresh()))
-    // socket.on('status_updated', res => dataGrid.refresh())
-    let filter = [
-      ['createdAt', '>=', moment().startOf('day').valueOf()],
-      'and',
-      ['createdAt', '<=', moment().endOf('day').valueOf()]
-    ];
-    dataGrid.filter(filter);
+  const columns = [
+    {
+      name: 'Order #',
+      selector: 'orderNum',
+      sortable: true,
+    },
+    {
+      name: 'Company',
+      selector: 'job_info.customer.Company',
+      sortable: true,
+      grow: 2,
+    },
+    {
+      name: 'Order Type',
+      selector: 'orderType',
+      sortable: true,
+    },
+    {
+      name: 'Date Ordered',
+      cell: (row) => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
+    },
+    {
+      name: 'Due Date',
+      cell: (row) => <div>{moment(row.dueDate).format('MMM Do YYYY')}</div>,
+    },
+    {
+      name: 'Status',
+      grow: 1,
+      cell: (row) => (
+        <Select
+          defaultValue={row.status}
+          style={{ width: '100%' }}
+          onChange={(e) => handleStatusChange(e, row)}
+          bordered={false}
+        >
+          {status.map((i, index) => (
+            <Option key={index} value={i.value}>
+              {i.value}
+            </Option>
+          ))}
+        </Select>
+      ),
+    },
+    {
+      name: 'Submitted By',
+      selector: 'user.FirstName',
+      sortable: true,
+    },
 
-  }
+    {
+      name: 'Total',
+      selector: 'total',
+      sortable: true,
+      cell: (row) => <div>${row.total.toFixed(2)}</div>,
+    },
+    {
+      name: ' ',
+      button: true,
+      grow: 2,
+      cell: (row) => (
+        <Tooltip title="View Order" placement="top">
+          <IconButton
+            onClick={function (event) {
+              event.preventDefault();
+              toggle(row);
+            }}
+            id={row.id}
+          >
+            <Inbox>Open</Inbox>
+          </IconButton>
+        </Tooltip>
+      ),
+    },
+  ];
 
-  onSelectionChanged(e) {
-    const { selectedRowKeys, selectedRowsData } = e;
+  const handleRowSelected = React.useCallback(state => {
+    setSelectedRows(state.selectedRows);
+  }, []);
 
-    this.selectionChangedBySelectBox = false;
+  const contextActions = React.useMemo(() => {
+    const exportBreakdowns = () => {
+      const { breakdowns, box_breakdowns } = props;
 
-    this.setState({
-      selectedRowKeys,
-      selectedRowsData,
-    });
-  }
-
-  onRowPrepared(e) {
-    if (e.rowType === 'data' && e.data.late === true) {
-      e.rowElement.style.backgroundColor = '#FEEBEB';
-    }
-  }
-
-  editable = () => {
-    const { edit } = this.state;
-    this.setState({
-      edit: !edit,
-    });
-  }
-
-  toggle = row => {
-    const { modal } = this.state;
-    const { setSelectedOrder } = this.props;
-
-    this.setState({
-      modal: !modal,
-      edit: false,
-    });
-
-
-    if (!modal) {
-      const x = row.row.data;
-      setSelectedOrder(x);
-    } else {
-      setSelectedOrder(null);
-    }
-  }
-
-  renderButton = row => (
-    <Tooltip title="View Order" placement="top">
-      <IconButton
-        onClick={event => {
-          event.preventDefault();
-          this.toggle(row);
-        }}
-        id={row.id}
-      >
-        <Inbox>Open</Inbox>
-      </IconButton>
-    </Tooltip>
-  )
-
-  renderDate = row => {
-    return <span>{moment(row.displayValue).format('ddd MM/D/YYYY')}</span>;
-  }
-
-  onShowFilterRowChanged(e) {
-    this.setState({
-      showFilterRow: e.value,
-    });
-    this.clearFilter();
-  }
-  onShowHeaderFilterChanged(e) {
-    this.setState({
-      showHeaderFilter: e.value,
-    });
-    this.clearFilter();
-  }
-  onCurrentFilterChanged(e) {
-    this.setState({
-      currentFilter: e.value,
-    });
-  }
-
-  onStartDate(e) {
-    const dataGrid = this.dataGrid.instance;
-    let filter;
-    if (this.state.filterStatus === 'All') {
-      filter = [
-        ['createdAt', '>=', moment(e.value).startOf('day').valueOf()],
-        'and',
-        ['createdAt', '<=', moment(this.state.endDate).endOf('day').valueOf()]
-      ];
-    } else {
-      filter = [
-        ['createdAt', '>=', moment(e.value).startOf('day').valueOf()],
-        'and',
-        ['createdAt', '<=', moment(this.state.endDate).endOf('day').valueOf()],
-        'and',
-        ['status', '=', this.state.filterStatus],
-      ];
-    }
-
-
-    dataGrid.filter(filter);
-    this.setState({
-      startDate: new Date(e.value),
-      selectedRowKeys: [],
-      selectedRowsData: []
-    });
-  }
-  onEndDate(e) {
-    const dataGrid = this.dataGrid.instance;
-    let filter;
-    if (this.state.filterStatus === 'All') {
-      filter = [
-        ['createdAt', '<=', moment(e.value).endOf('day').valueOf()],
-        'and',
-        ['createdAt', '>=', moment(this.state.startDate).startOf('day').valueOf()]
-      ];
-    } else {
-      filter = [
-        ['createdAt', '<=', moment(e.value).endOf('day').valueOf()],
-        'and',
-        ['createdAt', '>=', moment(this.state.startDate).startOf('day').valueOf()],
-        'and',
-        ['status', '=', this.state.filterStatus],
-      ];
-    }
-
-    dataGrid.filter(filter);
-    this.setState({
-      endDate: new Date(e.value),
-      selectedRowKeys: [],
-      selectedRowsData: []
-    });
-  }
-
-  calculateCellValue = data => {
-    return new Date(data.createdAt).getTime();
-  }
-
-  onExportBreakdowns = async (e) => {
-
-    const { breakdowns, box_breakdowns } = this.props;
-
-
-    if (this.state.selectedRowKeys.length > 0) {
-      this.state.selectedRowsData.map(async (i) => {
+      selectedRows.map(async (i) => {
         if (i.orderType === 'Door Order') {
 
           const edgesPromiseArr1 = i.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
@@ -357,336 +278,146 @@ class OrderTable extends React.Component {
           } catch (err) {
             console.log('errrrrrr', err);
           }
-
           return DoorPDF(i, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
         } else {
           return DrawerPDF(i, box_breakdowns);
         }
-      });
-      this.setState({
-        selectedRowKeys: [],
-        selectedRowsData: []
-      });
-    } else {
-      NotificationManager.error('Please Select an Order', 'Order Not Selected', 2000);
-    }
+      }); 
+      setToggleCleared(!toggleCleared); 
+    };
 
-  }
-
-  onExportReports = e => {
-    const data = this.state.selectedRowsData;
-    const startDate = this.state.startDate;
-    const endDate = this.state.endDate;
-    const status = this.state.filterStatus;
-    const filteredOrders = this.props.orders.filter(order => {
-      if (status === 'All') {
-        return (
-          (new Date(order.createdAt).getTime() >= moment(startDate).startOf('day').valueOf())
-          &&
-          (new Date(order.createdAt).getTime() <= moment(endDate).endOf('day').valueOf())
-        );
-      } else {
-        return (
-          (new Date(order.createdAt).getTime() >= moment(startDate).startOf('day').valueOf())
-          &&
-          (new Date(order.createdAt).getTime() <= moment(endDate).endOf('day').valueOf())
-          &&
-          (order.status.includes(status))
-        );
-      }
-
-    });
-    if (data.length > 0) {
-      Report1(data, startDate, endDate, status);
-    } else {
-      Report1(filteredOrders, startDate, endDate, status);
-    }
-
-    this.setState({
-      selectedRowKeys: [],
-      selectedRowsData: []
-    });
-  }
-  onFilterStatus({ value }) {
-    const dataGrid = this.dataGrid.instance;
-
-
-    if (value === 'All') {
-      dataGrid.clearFilter();
-      dataGrid.filter(
-        [
-          ['createdAt', '>=', moment(this.state.startDate).startOf('day').valueOf()],
-          'and',
-          ['createdAt', '<=', moment(this.state.endDate).endOf('day').valueOf()]
-        ]
-      );
-    }
-    else {
-      dataGrid.filter(
-        [
-          ['createdAt', '>=', moment(this.state.startDate).startOf('day').valueOf()],
-          'and',
-          ['createdAt', '<=', moment(this.state.endDate).endOf('day').valueOf()],
-          'and',
-          ['status', '=', value],
-        ]
-      );
-    }
-
-    this.setState({
-      filterStatus: value,
-      selectedRowKeys: [],
-      selectedRowsData: []
-    });
-  }
-
-  onToolbarPreparing(e) {
-    let onExportBreakdowns = this.onExportBreakdowns.bind(this);
-    let onExportReports = this.onExportReports.bind(this);
-    e.toolbarOptions.items.unshift(
-      {
-        location: 'after',
-        locateInMenu: 'auto',
-        sortIndex: 30,
-        widget: 'dxButton',
-        options: {
-          text: 'Breakdowns',
-          icon: 'print',
-          hint: 'Print breakdowns',
-          elementAttr: {
-            'class': 'dx-datagrid-export-button breakdown'
-          },
-          onClick: function () {
-
-            onExportBreakdowns();
-          }
-        }
-      },
-      {
-        location: 'after',
-        locateInMenu: 'auto',
-        sortIndex: 30,
-        widget: 'dxButton',
-        options: {
-          text: 'Reports',
-          icon: 'export',
-          hint: 'Export selected data',
-          elementAttr: {
-            'class': 'dx-datagrid-export-button'
-          },
-          onClick: function () {
-            onExportReports();
-          }
-        }
-      });
-  }
-
-  saleAmountFormat = { style: 'currency', currency: 'USD', useGrouping: true, minimumSignificantDigits: 3 };
-
-  customTotal(data) {
-
-    return `Total: $${data.value.toFixed(2)}`;
-  }
-
-  customCount(data) {
-
-    return `Orders: ${data.value}`;
-  }
-
-
-  render() {
-    const {
-      productData,
-      selectedRowKeys,
-    } = this.state;
-    const { startDate, endDate } = this.state;
-    const { orders } = this.props;
-    const minDate = new Date(orders[orders.length - 1].createdAt);
+    const exportReports = () => {
+      Report1(selectedRows, startDate, endDate, filterStatus);
+      setToggleCleared(!toggleCleared); 
+    };
 
     return (
-      <React.Fragment>
-        <Row>
-          <Col lg="8" />
-
-          <Col>
-            <Row>
-              <Col>
-                <p>From</p>
-                <DateBox value={this.state.startDate} max={endDate}
-                  min={minDate} onValueChanged={this.onStartDate} type="date" />
-              </Col>
-              <Col>
-                <p>To</p>
-                <DateBox value={this.state.endDate} max={new Date()}
-                  min={startDate} onValueChanged={this.onEndDate} type="date" />
-              </Col>
-              <Col>
-                <p>Status</p>
-                <SelectBox items={statusFilter} value={this.state.filterStatus}
-                  onValueChanged={this.onFilterStatus} />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-        <DataGrid
-          id="Orders"
-          dataSource={productData}
-          keyExpr="id"
-          allowColumnReordering={true}
-          showBorders={true}
-          allowColumnResizing={true}
-          columnAutoWidth={true}
-          onSelectionChanged={this.onSelectionChanged}
-          onToolbarPreparing={this.onToolbarPreparing}
-          // onExporting={this.onExporting}
-          ref={ref => (this.dataGrid = ref)}
-          selectedRowKeys={selectedRowKeys}
-          onRowPrepared={this.onRowPrepared}
-        >
-          <ColumnFixing enabled={true} />
-          <SearchPanel
-            visible={true}
-            width={240}
-            placeholder="Search..."
-          />
-          <Paging defaultPageSize={20} />
-          <Pager
-            showPageSizeSelector={true}
-            allowedPageSizes={[20, 50, 100]}
-            showInfo={true}
-          />
-
-          <Editing mode="cell" allowUpdating={true} />
-          <Selection mode="multiple" showCheckBoxesMode="always" />
-          {/* <Export enabled={true} /> */}
-          <Column
-            dataField="orderNum"
-            caption="Order #"
-            sortOrder="desc"
-            width={100}
-            allowEditing={false}
-          >
-            <RequiredRule />
-          </Column>
-          <Column
-            dataField="job_info.customer.Company"
-            caption="Company Name"
-            allowEditing={false}
-          >
-            <RequiredRule />
-          </Column>
-          <Column
-            dataField="orderType"
-            caption="OrderType"
-            allowEditing={false}
-          >
-            <RequiredRule />
-          </Column>
-
-          <Column
-            dataField="createdAt"
-            caption="Date Ordered"
-            dataType="datetime"
-            format="M/d/yyyy"
-            allowEditing={false}
-            calculateFilterExpression={this.calculateFilterExpression}
-            calculateCellValue={this.calculateCellValue}
-            cellRender={this.renderDate}
-          >
-            <RequiredRule />
-          </Column>
-          <Column
-            dataField="dueDate"
-            caption="Due Date"
-            dataType="datetime"
-            format="M/d/yyyy"
-          >
-            <HeaderFilter dataSource={this.orderHeaderFilter} />{' '}
-          </Column>
-          <Column
-            dataField="status"
-            caption="Status"
-            allowEditing={true}
-          >
-            <RequiredRule />
-            <Lookup
-              dataSource={status}
-              valueExpr="value"
-              displayExpr="name"
-            />
-          </Column>
-          <Column
-            dataField="user.FirstName"
-            caption="Submitted By"
-            allowEditing={false}
-          >
-          </Column>
-
-          <Column
-            dataField="total"
-            caption="Total"
-            format={this.saleAmountFormat}
-            allowEditing={false}
-          >
-            <RequiredRule />
-          </Column>
-          <Column
-            type="buttons"
-            buttons={[
-              {
-                hint: 'View Order',
-                icon: 'activefolder',
-                onClick: this.toggle,
-              },
-            ]}
-          />
-          <Summary>
-            <TotalItem
-              column="total"
-              summaryType="count"
-              customizeText={this.customCount}
-            />
-            <TotalItem
-              column="total"
-              summaryType="sum"
-              valueFormat={this.saleAmountFormat}
-              customizeText={this.customTotal}
-            />
-          </Summary>
-        </DataGrid>
-        {
-          this.state.modal ?
-            <OrderPage
-              toggle={this.toggle}
-              modal={this.state.modal}
-              selectedOrder={this.state.selectedOrder}
-              editable={this.editable}
-              edit={this.state.edit}
-            /> : null
-        }
-      </React.Fragment>
+      <div>
+        <Tooltip title="View Reports" onClick={exportReports} placement="top" className="mb-3 mt-3">
+          <IconButton>
+            <Receipt style={{ width: '40', height: '40' }} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="View Breakdowns" onClick={exportBreakdowns} placement="top" className="mb-3 mt-3">
+          <IconButton>
+            <Assignment style={{ width: '40', height: '40' }} />
+          </IconButton>
+        </Tooltip>
+      </div>
     );
-  }
-}
+  }, [selectedRows, startDate, endDate, props, filterStatus, toggleCleared]);
+
+  const toggle = (row) => {
+    const { setSelectedOrder } = props;
+
+    setEdit(false);
+    setModal(!modal);
+
+    if (!modal) {
+      setSelectedOrder(row);
+    } else {
+      setSelectedOrder(null);
+    }
+  };
+
+  const editable = () => {
+    setEdit(!edit);
+  };
+
+
+  return (
+    <div>
+      <Row className="mb-3">
+        <Col lg="9" />
+        <Col>
+          <Row>
+            <Col>
+              <DateRangePicker
+                startDate={startDate} // momentPropTypes.momentObj or null,
+                startDateId="startDate" // PropTypes.string.isRequired,
+                endDate={endDate} // momentPropTypes.momentObj or null,
+                endDateId="endDate" // PropTypes.string.isRequired,
+                onDatesChange={({ startDate, endDate }) => (setStartDate(startDate), setEndDate(endDate))} // PropTypes.func.isRequired,
+                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                onFocusChange={focusedInput => setFocusedInput(focusedInput)}
+                isOutsideRange={(date) => {
+                  if (date > moment(new Date())) {
+                    return true; // return true if you want the particular date to be disabled
+                  } else if (date < moment(minDate)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Select defaultValue="All" style={{ width: '69%' }} onChange={e => setFilterStatus(e)}>
+                <Option value="All">All</Option>
+                {status.map((i, index) => (
+                  <Option key={index} value={i.value}>
+                    {i.value}
+                  </Option>
+                ))}
+              </Select>
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              <h3>Order Totals: ${data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}</h3> 
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              <h3># Of Orders: {data.length}</h3> 
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+
+      <DataTable
+        title="Orders"
+        columns={columns}
+        data={data}
+        selectableRows
+        onSelectedRowsChange={handleRowSelected}
+        clearSelectedRows={toggleCleared}
+        pagination
+        progressPending={!props.ordersDBLoaded}
+        highlightOnHover
+        conditionalRowStyles={conditionalRowStyles}
+        contextActions={contextActions}
+      />
+      {modal ? (
+        <OrderPage
+          toggle={toggle}
+          modal={modal}
+          editable={editable}
+          edit={edit}
+        />
+      ) : null}
+    </div>
+  );
+};
 
 const mapStateToProps = (state, prop) => ({
+  orders: state.Orders.orders,
+  orderNum: state.Orders.orderNum,
+  ordersDBLoaded: state.Orders.ordersDBLoaded,
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns
-
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      setSelectedOrder
+      updateStatus,
+      loadOrders,
+      setSelectedOrder,
     },
     dispatch
   );
 
-
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OrderTable);
-
+export default connect(mapStateToProps, mapDispatchToProps)(OrderTable);
