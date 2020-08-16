@@ -7,7 +7,7 @@ import { loadCustomers } from '../../../redux/customers/actions';
 // import OrderTable from './OrderTable';
 // import RestrictedOrderTable from './RestrictedOrderTable';
 
-const OrderTable = React.lazy(() => import('./OrderTable'));
+const OrderTable = React.lazy(() => import('./OrderTable2'));
 const RestrictedOrderTable = React.lazy(() => import('./RestrictedOrderTable'));
 
 class ViewAllOrders extends Component {
