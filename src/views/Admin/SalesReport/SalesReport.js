@@ -10,7 +10,7 @@ import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import { DateBox } from 'devextreme-react';
 
-const StatusTable = React.lazy(() => import('./components/StatusTable'));
+const StatusTable = React.lazy(() => import('./components/StatusTable2'));
 
 momentLocaliser(moment);
 
