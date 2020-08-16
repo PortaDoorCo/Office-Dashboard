@@ -11,7 +11,7 @@ const Chart1 = React.lazy(() => import('./components/Chart1'));
 const Chart2 = React.lazy(() => import('./components/Chart2'));
 const Chart3 = React.lazy(() => import('./components/Chart3'));
 const Chart4 = React.lazy(() => import('./components/Chart4'));
-const OrderTable2 = React.lazy(() => import('./components/OrderTable2'));
+const OrderTable = React.lazy(() => import('./components/OrderTable'));
 const CompanyTable = React.lazy(() => import('../Customers/Customers/CompanyTable'));
 const Maps = React.lazy(() => import('./components/Maps'));
 
@@ -70,7 +70,7 @@ class Dashboard extends Component {
             <Row className="mt-3">
               <Col>
                 <Suspense fallback={loading()}>
-                  <OrderTable2  />
+                  <OrderTable />
                 </Suspense>
               </Col>
             </Row>
@@ -96,7 +96,7 @@ class Dashboard extends Component {
             <Row className="mt-3">
               <Col>
                 <Suspense fallback={loading()}>
-                  <OrderTable2  />
+                  <OrderTable  />
                 </Suspense>
               </Col>
             </Row>
