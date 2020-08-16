@@ -14,10 +14,12 @@ import {
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import momentLocaliser from 'react-widgets-moment';
-import { Row, Col } from 'reactstrap';
-import { DatePicker, Space } from 'antd';
-
-const { RangePicker } = DatePicker;
+import { Row, Col, Button } from 'reactstrap';
+import 'react-dates/initialize';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import Receipt from '@material-ui/icons/Receipt';
+import Assignment  from '@material-ui/icons/Assignment';
 
 momentLocaliser(moment);
 
@@ -85,28 +87,38 @@ const conditionalRowStyles = [
 
 const OrderTable = (props) => {
   const { orders } = props;
-  const [setSelectedRows] = useState([]);
-  const [toggleCleared] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
-  const [dates, setDates] = useState([moment(new Date()), moment(new Date())]);
+  const [startDate, setStartDate] = useState(moment(new Date()));
+  const [endDate, setEndDate] = useState(moment(new Date()));
+  const [focusedInput, setFocusedInput] = useState(null);
+  const [filterStatus, setFilterStatus ] = useState('All');
 
-  const minDate =
-    orders.length > 0
-      ? new Date(orders[orders.length - 1].createdAt)
-      : new Date();
+  const minDate = orders.length > 0 ? new Date(orders[orders.length - 1].createdAt) : new Date();
 
-  // useEffect(() => {
-  //   const filteredOrders = orders.filter((item) => {
-  //     let date = new Date(item.createdAt);
-  //     return (
-  //       moment(date) >= moment(startDate).startOf('day').valueOf() &&
-  //       moment(date) <= moment(endDate).endOf('day').valueOf()
-  //     );
-  //   });
-  //   setData(filteredOrders);
-  // }, [startDate, endDate, orders]);
+  useEffect(() => {
+    const filteredOrders = orders.filter((item) => {
+      let date = new Date(item.createdAt);
+
+      if(filterStatus === 'All'){
+        return (
+          moment(date) >= moment(startDate).startOf('day').valueOf() &&
+          moment(date) <= moment(endDate).endOf('day').valueOf()
+        );
+      } else {
+        return (
+          moment(date) >= moment(startDate).startOf('day').valueOf() &&
+          moment(date) <= moment(endDate).endOf('day').valueOf() &&
+          item.status.includes(filterStatus)
+        );
+      }
+
+    });
+    setData(filteredOrders);
+  }, [startDate, endDate, orders, filterStatus]);
 
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
@@ -191,12 +203,33 @@ const OrderTable = (props) => {
     },
   ];
 
-  const handleRowSelected = useCallback(
-    (state) => {
-      setSelectedRows(state.selectedRows);
-    },
-    [setSelectedRows]
-  );
+  const handleRowSelected = React.useCallback(state => {
+    setSelectedRows(state.selectedRows);
+  }, []);
+
+  const contextActions = React.useMemo(() => {
+    const handleDelete = () => {
+      
+      if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
+        console.log(selectedRows);
+      }
+    };
+
+    return (
+      <div>
+        <Tooltip title="View Reports" placement="top" className="mb-3 mt-3">
+          <IconButton>
+            <Receipt style={{ width: '40', height: '40' }} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="View Breakdowns" placement="top" className="mb-3 mt-3">
+          <IconButton>
+            <Assignment style={{ width: '40', height: '40' }} />
+          </IconButton>
+        </Tooltip>
+      </div>
+    );
+  }, [selectedRows]);
 
   const toggle = (row) => {
     const { setSelectedOrder } = props;
@@ -215,16 +248,48 @@ const OrderTable = (props) => {
     setEdit(!edit);
   };
 
-  console.log(dates);
 
   return (
     <div>
       <Row className="mb-3">
         <Col lg="9" />
         <Col>
-          <Space direction="vertical" size={12}>
-            <RangePicker onChange={e => setDates(e)} />
-          </Space>,
+          <Row>
+            <Col>
+              <DateRangePicker
+                startDate={startDate} // momentPropTypes.momentObj or null,
+                startDateId="startDate" // PropTypes.string.isRequired,
+                endDate={endDate} // momentPropTypes.momentObj or null,
+                endDateId="endDate" // PropTypes.string.isRequired,
+                onDatesChange={({ startDate, endDate }) => (setStartDate(startDate), setEndDate(endDate))} // PropTypes.func.isRequired,
+                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                onFocusChange={focusedInput => setFocusedInput(focusedInput)}
+                isOutsideRange={(date) => {
+                  if (date > moment(new Date())) {
+                    return true; // return true if you want the particular date to be disabled
+                  } else if (date < moment(minDate)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Select defaultValue="All" style={{ width: '69%' }} onChange={e => setFilterStatus(e)}>
+                <Option value="All">All</Option>
+                {status.map((i, index) => (
+                  <Option key={index} value={i.value}>
+                    {i.value}
+                  </Option>
+                ))}
+              </Select>
+            </Col>
+          </Row>
+
+
         </Col>
       </Row>
 
@@ -232,12 +297,14 @@ const OrderTable = (props) => {
         title="Orders"
         columns={columns}
         data={data}
+        selectableRows
         onSelectedRowsChange={handleRowSelected}
         clearSelectedRows={toggleCleared}
         pagination
         progressPending={!props.ordersDBLoaded}
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
+        contextActions={contextActions}
       />
       {modal ? (
         <OrderPage
