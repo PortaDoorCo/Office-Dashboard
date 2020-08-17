@@ -84,32 +84,33 @@ class Dashboard extends Component {
               </Col>
             </Row>
           </div>
-          :
-          <div>
-            <Row>
-              <Col style={{ height: 600 }}>
-                <Suspense fallback={loading()}>
-                  <Maps />
-                </Suspense>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col>
-                <Suspense fallback={loading()}>
-                  <OrderTable  />
-                </Suspense>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Suspense fallback={loading()}>
-                  <CompanyTable
-                    customerDB={this.props.customerDB}
-                  />
-                </Suspense>
-              </Col>
-            </Row>
-          </div>
+          : role && (role.type === 'office') ?
+            <div>
+              <Row>
+                <Col style={{ height: 600 }}>
+                  <Suspense fallback={loading()}>
+                    <Maps />
+                  </Suspense>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col>
+                  <Suspense fallback={loading()}>
+                    <OrderTable  />
+                  </Suspense>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Suspense fallback={loading()}>
+                    <CompanyTable
+                      customerDB={this.props.customerDB}
+                    />
+                  </Suspense>
+                </Col>
+              </Row>
+            </div>
+            : loading()
         }
 
 
