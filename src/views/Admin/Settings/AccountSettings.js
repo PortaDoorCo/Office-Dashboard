@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AppSwitch } from '@coreui/react';
 import Avatar from 'react-avatar';
-import { FileUploader } from 'devextreme-react';
 import Cookies from 'js-cookie';
 import { updateAccount, login, forgotPassword } from '../../../redux/users/actions';
 import LogOutModal from './LogOutModal';
+import FileUploader from '../../../components/FileUploader/FileUploader';
 
 
 const cookie = Cookies.get('jwt');
@@ -33,11 +33,13 @@ const AccountSettings = props => {
   };
 
   const onUploaded = (e) => {
-    const data = JSON.parse(e.request.response);
+
+    console.log(e);
+
     setUser((prevState) => {
       return ({
         ...prevState,
-        profile_picture: data[0]
+        profile_picture: e[0]
       });
     });
     return;
@@ -58,7 +60,7 @@ const AccountSettings = props => {
     await login(cookie);
   };
 
-
+  console.log(user.profile_picture);
 
   return (
     <div>
@@ -74,9 +76,7 @@ const AccountSettings = props => {
               </Row>
               <Row>
                 <Col>
-                  <form id="form" method="post" action="" encType="multipart/form-data">
-                    <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
-                  </form>
+                  <FileUploader onUploaded={onUploaded} multi={false} />
                 </Col>
                 <Col xs='8' />
               </Row>

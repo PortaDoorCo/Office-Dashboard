@@ -3,10 +3,10 @@ import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeade
 import Cookies from 'js-cookie';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import { FileUploader } from 'devextreme-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getMiterDesigns, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
+import FileUploader from '../../../../../../../components/FileUploader/FileUploader'
 
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -76,11 +76,10 @@ const Designs = (props) => {
   };
 
   const onUploaded = (e) => {
-    const data = JSON.parse(e.request.response);
     setProduct((prevState) => {
       return ({
         ...prevState,
-        photo: data[0]
+        photo: e[0]
       });
     });
     return;
@@ -167,9 +166,7 @@ const Designs = (props) => {
                     {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
                   </div>
   
-                  <form id="form" method="post" action="" encType="multipart/form-data">
-                    <FileUploader name="files" uploadMode="instantly" onUploaded={onUploaded} uploadHeaders={header} uploadUrl="https://server.portadoor.com/upload" />
-                  </form>
+                  <FileUploader onUploaded={onUploaded} multi={false} />
   
                 </Col>
               </Row>

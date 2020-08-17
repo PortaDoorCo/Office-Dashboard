@@ -1,5 +1,5 @@
-import pdfMake from 'pdfmake/build/pdfmake';
-import vfsFonts from 'pdfmake/build/vfs_fonts';
+import pdfMake from 'pdfmake-lite/build/pdfmake';
+import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import AssemblyList from '../../Door_PDF/AssemblyList';
 import StilesPage from '../../Door_PDF/StilesPage';
 import RailsPage from '../../Door_PDF/RailsPage';
