@@ -37,8 +37,7 @@ class BalanceHistory extends Component {
             </thead>
             <tbody>
               {(formState && formState.balance_history) ? formState.balance_history.slice(0).map((i, index) => (
-                <tr>
-              
+                <tr key={index}>
                   <td>{moment(i.date).format('dddd, MMMM Do YYYY, h:mm:ss a')}</td>
                   <th>${i.balance_due.toFixed(2)}</th>
                   <td>-${i.balance_paid.toFixed(2)}</td>

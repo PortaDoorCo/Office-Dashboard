@@ -40,20 +40,16 @@ import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
-// import { FileUploader } from 'devextreme-react';
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from './components/MiscItems';
-import FileUploader from './components/FileUploader';
-
+import FileUploader from '../../../components/FileUploader/FileUploader';
 
 const DoorInfo = React.lazy(() => import('./components/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
-
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
@@ -172,7 +168,6 @@ class DoorOrders extends Component {
   }
 
   onUploaded = (e) => {
-    console.log('eeeeeeeeeeeeeeeeee',e);
     const id = e.map(i => (i.id));
     const a = [...this.state.files, id];
     this.setState({ files: a });
@@ -299,7 +294,7 @@ class DoorOrders extends Component {
                   <CardBody>
                     <FormGroup>
                       <h3>Upload Files</h3>
-                      <FileUploader onUploaded={this.onUploaded} />
+                      <FileUploader onUploaded={this.onUploaded} multi={true} />
                     </FormGroup>
                   </CardBody>
                 </Card>

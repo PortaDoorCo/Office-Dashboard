@@ -40,10 +40,10 @@ import moment from 'moment-business-days';
 import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import Cookies from 'js-cookie';
-import { FileUploader } from 'devextreme-react';
 import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolder';
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from './components/MiscItems';
+import FileUploader from '../../../components/FileUploader/FileUploader';
 
 const DrawerBoxInfo = React.lazy(() => import('./components/DrawerBoxInfo'));
 const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
@@ -182,12 +182,11 @@ class DoorOrders extends Component {
     }
   }
 
-  onUploaded = e => {
-    const data = JSON.parse(e.request.response);
-    const id = data[0].id;
+  onUploaded = (e) => {
+    const id = e.map(i => (i.id));
     const a = [...this.state.files, id];
     this.setState({ files: a });
-  };
+  }
 
   render() {
     const {
@@ -327,22 +326,7 @@ class DoorOrders extends Component {
                   <CardBody>
                     <FormGroup>
                       <h3>Upload Files</h3>
-                      <form
-                        id="form"
-                        ref={this.formElement}
-                        method="post"
-                        action=""
-                        encType="multipart/form-data"
-                      >
-                        <FileUploader
-                          name="files"
-                          uploadMode="instantly"
-                          uploadHeaders={header}
-                          multiple={true}
-                          onUploaded={this.onUploaded}
-                          uploadUrl="http://localhost:1337/upload"
-                        />
-                      </form>
+                      <FileUploader onUploaded={this.onUploaded} multi={true} />
                     </FormGroup>
                   </CardBody>
                 </Card>

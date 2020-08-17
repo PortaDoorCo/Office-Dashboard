@@ -1,7 +1,6 @@
 import React, { Component, useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { Input } from 'reactstrap';
 import { Upload, message, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 const cookie = Cookies.get('jwt');
@@ -11,7 +10,7 @@ const FileUploader = (props) => {
 
   const uploadProps = {
     name: 'file',
-    multiple: true,
+    multiple: props.multi,
     action: 'https://server.portadoor.com/upload',
     customRequest: (options) => {
       console.log(options);
@@ -31,7 +30,14 @@ const FileUploader = (props) => {
       });
 			
     },
-
+    progress: {
+      strokeColor: {
+        '0%': '#108ee9',
+        '100%': '#87d068',
+      },
+      strokeWidth: 3,
+      format: percent => `${parseFloat(percent.toFixed(2))}%`,
+    },
     onChange(info) {
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList);
