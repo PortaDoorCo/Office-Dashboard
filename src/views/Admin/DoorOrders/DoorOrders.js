@@ -40,9 +40,11 @@ import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
-import { FileUploader } from 'devextreme-react';
+// import { FileUploader } from 'devextreme-react';
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from './components/MiscItems';
+import FileUploader from './components/FileUploader';
+
 
 const DoorInfo = React.lazy(() => import('./components/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
@@ -296,9 +298,7 @@ class DoorOrders extends Component {
                   <CardBody>
                     <FormGroup>
                       <h3>Upload Files</h3>
-                      <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="https://server.portadoor.com/upload" />
-                      </form>
+                      <FileUploader />
                     </FormGroup>
                   </CardBody>
                 </Card>
