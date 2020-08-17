@@ -1,5 +1,5 @@
-import pdfMake from 'pdfmake/build/pdfmake';
-import vfsFonts from 'pdfmake/build/vfs_fonts';
+import pdfMake from 'pdfmake-lite/build/pdfmake';
+import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import AssemblyList from '../../Drawer_PDF/AssemblyList';
 import Sides from '../../Drawer_PDF/Sides';
 import Bottoms from '../../Drawer_PDF/Bottoms';

@@ -40,18 +40,16 @@ import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
-import { FileUploader } from 'devextreme-react';
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from './components/MiscItems';
+import FileUploader from '../../../components/FileUploader/FileUploader';
 
 const DoorInfo = React.lazy(() => import('./components/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
-
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
@@ -170,14 +168,14 @@ class DoorOrders extends Component {
   }
 
   onUploaded = (e) => {
-    const data = JSON.parse(e.request.response);
-    const id = data[0].id;
+    const id = e.map(i => (i.id));
     const a = [...this.state.files, id];
     this.setState({ files: a });
   }
 
   render() {
 
+    console.log('fileszzzzzzz',this.state.files);
 
     const {
       submitted,
@@ -296,9 +294,7 @@ class DoorOrders extends Component {
                   <CardBody>
                     <FormGroup>
                       <h3>Upload Files</h3>
-                      <form id="form" ref={this.formElement} method="post" action="" encType="multipart/form-data">
-                        <FileUploader name="files" uploadMode="instantly" uploadHeaders={header} multiple={true} onUploaded={this.onUploaded} uploadUrl="https://server.portadoor.com/upload" />
-                      </form>
+                      <FileUploader onUploaded={this.onUploaded} multi={true} />
                     </FormGroup>
                   </CardBody>
                 </Card>
