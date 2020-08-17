@@ -172,14 +172,15 @@ class DoorOrders extends Component {
   }
 
   onUploaded = (e) => {
-    const data = JSON.parse(e.request.response);
-    const id = data[0].id;
+    console.log('eeeeeeeeeeeeeeeeee',e);
+    const id = e.map(i => (i.id));
     const a = [...this.state.files, id];
     this.setState({ files: a });
   }
 
   render() {
 
+    console.log('fileszzzzzzz',this.state.files);
 
     const {
       submitted,
@@ -298,7 +299,7 @@ class DoorOrders extends Component {
                   <CardBody>
                     <FormGroup>
                       <h3>Upload Files</h3>
-                      <FileUploader />
+                      <FileUploader onUploaded={this.onUploaded} />
                     </FormGroup>
                   </CardBody>
                 </Card>

@@ -8,28 +8,10 @@ const cookie = Cookies.get('jwt');
 const header = { Authorization: 'Bearer ' + cookie };
 
 const FileUploader = (props) => {
-  const [files, setFiles] = useState(null);
-
-  const handleChange = e => {
-    setFiles(e.target.files[0]);
-  };
-
-  const handleSubmit = async (e) => {
-    const data = new FormData();
-    data.append('files', files);
-
-    const upload_res = await axios({
-      method: 'POST',
-      url: 'https://server.portadoor.com/upload',
-      headers: { Authorization: 'Bearer ' + cookie },
-      data
-    });
-
-    console.log('headers response', upload_res);
-  };
 
   const uploadProps = {
     name: 'file',
+    multiple: true,
     action: 'https://server.portadoor.com/upload',
     customRequest: (options) => {
       console.log(options);
@@ -43,6 +25,7 @@ const FileUploader = (props) => {
       };
       axios.post(options.action, data, config).then((res) => {
         options.onSuccess(res.data, options.file);
+        props.onUploaded(res.data);
       }).catch((err) => {
         console.log(err);
       });
