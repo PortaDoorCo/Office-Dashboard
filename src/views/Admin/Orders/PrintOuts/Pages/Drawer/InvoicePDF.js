@@ -1,5 +1,5 @@
-import pdfMake from 'pdfmake/build/pdfmake';
-import vfsFonts from 'pdfmake/build/vfs_fonts';
+import pdfMake from 'pdfmake-lite/build/pdfmake';
+import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import Invoice from '../../Drawer_PDF/Invoice';
 
 export default (data, breakdowns) => {

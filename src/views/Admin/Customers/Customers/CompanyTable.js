@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Row, Col, Input, Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CustomerPage from './CustomerPage';
@@ -9,16 +9,41 @@ import Inbox from '@material-ui/icons/Inbox';
 import differenceBy from 'lodash/differenceBy';
 import Geocode from 'react-geocode';
 import { setSelectedCompanies } from '../../../../redux/customers/actions';
+import styled from 'styled-components';
+
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 34px;
+  width: 32px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
-    <div>
-      <Row>
-        <Col>
-          <Input id="search" type="text" placeholder="Filter Orders" value={filterText} onChange={onFilter} />
-        </Col>
-      </Row>
-    </div>
+    <TextField id="search" type="text" placeholder="Search Company" value={filterText} onChange={onFilter} />
+    <ClearButton type="button" onClick={onClear}>X</ClearButton>
   </>
 );
 
@@ -32,6 +57,7 @@ const CompanyTable = (props) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [locations, setLocations] = useState([]);
   const [defaultCenter, setDefaultCenter] = useState([]);
+  const filteredCompanies = props.customerDB.filter(item => item.Company && item.Company.toLowerCase().includes(filterText.toLowerCase()));
 
 
 
@@ -171,7 +197,7 @@ const CompanyTable = (props) => {
       <DataTable
         title="Customers"
         columns={columns}
-        data={props.customerDB}
+        data={filteredCompanies}
         // selectableRows
         highlightOnHover
         pagination
@@ -198,7 +224,8 @@ const CompanyTable = (props) => {
 };
 
 const mapStateToProps = (state, prop) => ({
-  selectedCompanies: state.customers.selectedCompanies
+  selectedCompanies: state.customers.selectedCompanies,
+  customerDB: state.customers.customerDB
 });
 
 const mapDispatchToProps = dispatch =>
