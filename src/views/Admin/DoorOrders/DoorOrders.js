@@ -170,6 +170,7 @@ class DoorOrders extends Component {
   onUploaded = (e) => {
     const id = e.map(i => (i.id));
     const a = [...this.state.files, id];
+    console.log(a);
     this.setState({ files: a });
   }
 

@@ -5,7 +5,8 @@ import {
   LOAD_DELIVERIES,
   UPDATE_STATUS,
   SOCKET_RECEIVE_UPDATE_STATUS,
-  SET_SELECTED_ORDER
+  SET_SELECTED_ORDER,
+  UPLOAD_FILE_TO_ORDER
 } from './actions';
 import moment from 'moment';
 
@@ -44,6 +45,20 @@ export default function (state = initialState, action) {
           }
           return data.data;
         })
+      };
+    case UPLOAD_FILE_TO_ORDER:
+
+      console.log(data);
+
+      return {
+        ...state,
+        orders: state.orders.map((item, index) => {
+          if (item.id !== data.data.id) {
+            return item;
+          }
+          return data.data;
+        }),
+        selectedOrder: data.data
       };
     case UPDATE_STATUS:
       return {

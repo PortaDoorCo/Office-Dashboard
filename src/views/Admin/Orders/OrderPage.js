@@ -18,7 +18,7 @@ import {
 import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateOrder, loadOrders, deleteOrder, setSelectedOrder } from '../../../redux/orders/actions';
+import { updateOrder, loadOrders, deleteOrder, setSelectedOrder, uploadFilesToOrder } from '../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
 import Print from '@material-ui/icons/Print';
 import Attachment from '@material-ui/icons/Attachment';
@@ -59,6 +59,8 @@ import DrawerBalance from './Balance/Drawer_Order/Balance';
 import DrawerBalanceHistory from './Balance/Drawer_Order/BalanceHistory';
 import DoorMiscItems from './MiscItems/DoorMiscItems';
 import DrawerMiscItems from './MiscItems/DrawerMiscItems';
+
+import FileUploader from '../../../components/FileUploader/FileUploader';
 
 import Cookies from 'js-cookie';
 
@@ -150,6 +152,11 @@ class OrderPage extends Component {
     deleteModal: !this.state.deleteModal
   })
 
+  onUploaded = (e) => {
+    const { uploadFilesToOrder, selectedOrder } = this.props;
+    uploadFilesToOrder(selectedOrder, e, cookie);
+  }
+
   deleteOrder = async () => {
     const { selectedOrder } = this.props;
     await this.props.deleteOrder(selectedOrder.id, cookie);
@@ -180,8 +187,6 @@ class OrderPage extends Component {
                 });
               });
             });
-
-
 
             const panelsPromiseArr1 = selectedOrder.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
               return new Promise((resolve, reject) => {
@@ -462,15 +467,12 @@ class OrderPage extends Component {
                       </IconButton>
                     </Tooltip>
 
-
-                    {(selectedOrder && selectedOrder.files.length > 0) ?
-                      <Tooltip title="View Files" placement="top">
-                        <IconButton onClick={this.toggleFiles}>
-                          <Attachment style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
-                      : null
-                    }
+                    <Tooltip title="View Files" placement="top">
+                      <IconButton onClick={this.toggleFiles}>
+                        <Attachment style={{ width: '40', height: '40' }} />
+                      </IconButton>
+                    </Tooltip>
+         
                   </Col>
 
                   <Col />
@@ -522,6 +524,7 @@ class OrderPage extends Component {
                             )) : null}
                           </tbody>
                         </Table>
+                        <FileUploader onUploaded={this.onUploaded} multi={true} />
                       </CardBody>
                     </Card>
                   </Col>
@@ -665,7 +668,8 @@ const mapDispatchToProps = dispatch =>
       updateOrder,
       loadOrders,
       deleteOrder,
-      setSelectedOrder
+      setSelectedOrder,
+      uploadFilesToOrder
     },
     dispatch
   );
