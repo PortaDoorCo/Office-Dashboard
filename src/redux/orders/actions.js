@@ -29,6 +29,7 @@ export const LOAD_PAYMENT_TERMS = 'LOAD_PAYMENT_TERMS';
 export const SOCKET_LOAD_ORDERS = 'SOCKET_LOAD_ORDERS';
 export const SOCKET_RECEIVE_UPDATE_STATUS = 'SOCKET_RECEIVE_UPDATE_STATUS';
 export const SET_SELECTED_ORDER = 'SET_SELECTED_ORDER';
+export const UPLOAD_FILE_TO_ORDER = 'UPLOAD_FILE_TO_ORDER';
 
 
 
@@ -41,6 +42,45 @@ export function setSelectedOrder(data) {
     });
   };
 }
+
+
+export function uploadFilesToOrder(order, e, cookie) {
+
+  const orderId = order.id;
+
+  const id = e.map(i => (i.id));
+  const orderIds = order.files.map(i => i.id);
+
+  const fileIds = orderIds.concat(id);
+
+
+  const files = {
+    files: fileIds
+  };
+
+  console.log(files);
+
+  return async function (dispatch) {
+
+    try {
+      const res = await axios.put(`${db_url}/orders/${orderId}`, files, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
+      const data = await res;
+    
+      return dispatch({
+        type: UPLOAD_FILE_TO_ORDER,
+        data: data
+      });
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
+  };
+}
+
 
 export function loadOrders(cookie, amt) {
   const amount = amt ? amt : 500;
