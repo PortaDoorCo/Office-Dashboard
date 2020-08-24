@@ -103,7 +103,7 @@ const conditionalRowStyles = [
 ];
 
 const OrderTable = (props) => {
-  const { orders } = props;
+  const { orders, role } = props;
   const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
@@ -366,7 +366,9 @@ const OrderTable = (props) => {
           </Row>
           <Row className="mt-3">
             <Col>
-              <h3>Order Totals: ${data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}</h3> 
+              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+                <h3>Order Totals: ${data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}</h3> 
+                : null}
             </Col>
           </Row>
           <Row className="mt-3">
@@ -407,7 +409,8 @@ const mapStateToProps = (state, prop) => ({
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   breakdowns: state.part_list.breakdowns,
-  box_breakdowns: state.part_list.box_breakdowns
+  box_breakdowns: state.part_list.box_breakdowns,
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = (dispatch) =>
