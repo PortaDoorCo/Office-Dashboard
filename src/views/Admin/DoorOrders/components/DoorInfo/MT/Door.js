@@ -113,7 +113,7 @@ class MT_Door extends Component {
     return (
       <div>
         <Row>
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -127,7 +127,7 @@ class MT_Door extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -142,7 +142,7 @@ class MT_Door extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -160,7 +160,7 @@ class MT_Door extends Component {
         <Row>
 
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
@@ -175,7 +175,7 @@ class MT_Door extends Component {
           </Col>
 
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -189,7 +189,7 @@ class MT_Door extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
@@ -206,7 +206,7 @@ class MT_Door extends Component {
         </Row>
 
         <Row className="mt-2">
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>

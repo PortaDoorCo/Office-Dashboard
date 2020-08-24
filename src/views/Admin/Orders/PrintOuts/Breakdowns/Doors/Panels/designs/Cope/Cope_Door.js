@@ -32,8 +32,12 @@ export default (info, part, breakdowns) => {
   const edge_factor = part.edge.LIP_FACTOR;
   const panel_factor = part.panel.PANEL_FACTOR;
 
+  const panelName = part.panel.NAME;
+
   const add_len = 0;
   const INSET = 0;
+
+  console.log(panelName);
 
 
 
@@ -44,6 +48,14 @@ export default (info, part, breakdowns) => {
   });
 
   const unevenSplitTotal = unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
+
+  const glassDoor = [
+    {
+      qty: '',
+      measurement: `GLASS \n ${lites}`,
+      pattern: ''
+    }
+  ];
 
   const door = [
     {
@@ -96,8 +108,11 @@ export default (info, part, breakdowns) => {
   ];
 
 
+
   if (info.unevenCheck) {
     return unevenSplit;
+  } else if (panelName === 'Glass') {
+    return glassDoor;
   } else {
     return door;
   }

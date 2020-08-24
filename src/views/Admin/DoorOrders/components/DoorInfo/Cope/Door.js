@@ -25,10 +25,6 @@ const fraction = num => {
 };
 
 class CopeDoor extends Component {
-  constructor(props) {
-    super(props);
-  }
-
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
@@ -119,7 +115,7 @@ class CopeDoor extends Component {
     return (
       <div>
         <Row>
-          <Col xs="4">
+          <Col xs="12"  md='12' lg='4'>
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -133,7 +129,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12"  md='12' lg='4'>
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -147,7 +143,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg='4'>
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -163,7 +159,7 @@ class CopeDoor extends Component {
         </Row>
         <Row>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg='3'>
             <FormGroup>
               <Label htmlFor="edge">Profile</Label>
               <Field
@@ -178,7 +174,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg='3'>
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
@@ -192,7 +188,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg='3'>
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -206,7 +202,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg='3'>
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
@@ -222,7 +218,7 @@ class CopeDoor extends Component {
         </Row>
 
         <Row className="mt-2">
-          <Col xs="4">
+          <Col xs="12" md='12' lg='4'>
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>

@@ -33,6 +33,8 @@ export default (info, part, breakdowns) => {
   const panel_factor = part.panel.PANEL_FACTOR;
   const profile_width = part.miter_design.PROFILE_WIDTH;
 
+  const panelName = part.panel.NAME;
+
   const add_len = 0;
   const INSET = 0;
 
@@ -45,6 +47,14 @@ export default (info, part, breakdowns) => {
   });
 
   const unevenSplitTotal = unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
+
+  const glassDoor = [
+    {
+      qty: '',
+      measurement: `GLASS \n ${lites}`,
+      pattern: ''
+    }
+  ];
 
   const door = [
     {
@@ -99,6 +109,8 @@ export default (info, part, breakdowns) => {
 
   if (info.unevenCheck) {
     return unevenSplit;
+  } else if (panelName === 'Glass') {
+    return glassDoor;
   } else {
     return door;
   }

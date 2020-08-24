@@ -139,7 +139,7 @@ class JobInfo extends Component {
 
 
         <Row>
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="jobName">Job Name</Label>
               <Field
@@ -149,7 +149,7 @@ class JobInfo extends Component {
                 label="JobName" />
             </FormGroup>
           </Col>
-          <Col xs="5">
+          <Col xs="12" md='12' lg="5">
             <FormGroup>
               <Label htmlFor="companyName">Customers</Label>
               <Field
@@ -162,7 +162,7 @@ class JobInfo extends Component {
 
             </FormGroup>
           </Col>
-          <Col xs="2">
+          <Col xs="12" md='12' lg="2">
             <FormGroup>
               <Label htmlFor="status">Status</Label>
               <Field
@@ -174,7 +174,7 @@ class JobInfo extends Component {
               />
             </FormGroup>
           </Col>
-          <Col xs="2">
+          <Col xs="12" md='12' lg="2">
             <FormGroup>
               <Label htmlFor="poNum">PO #</Label>
               <Field
@@ -197,7 +197,7 @@ class JobInfo extends Component {
 
 
         <Row>
-          <Col xs="6">
+          <Col xs="12" md='12' lg="6">
             <FormGroup>
               <Label htmlFor="address1">Address 1</Label>
               <Field
@@ -212,7 +212,7 @@ class JobInfo extends Component {
 
 
 
-          <Col xs="6">
+          <Col xs="12" md='12' lg="6">
             <FormGroup>
               <Label htmlFor="address2">Address 2</Label>
               <Field
@@ -228,7 +228,7 @@ class JobInfo extends Component {
 
 
         <Row>
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="city">City</Label>
               <Field
@@ -238,7 +238,7 @@ class JobInfo extends Component {
                 label="City" />
             </FormGroup>
           </Col>
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="state">State</Label>
               <Field
@@ -248,7 +248,7 @@ class JobInfo extends Component {
                 label="State" />
             </FormGroup>
           </Col>
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="zipcode">Zip Code</Label>
               <Field
@@ -258,7 +258,7 @@ class JobInfo extends Component {
                 label="Zip" />
             </FormGroup>
           </Col>
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="phone">Phone Number</Label>
               <Field
