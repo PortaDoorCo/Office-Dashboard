@@ -38,7 +38,7 @@ class FaceFrame extends Component {
     return (
       <div>
         <Row>
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -52,7 +52,7 @@ class FaceFrame extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -66,7 +66,7 @@ class FaceFrame extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -83,7 +83,7 @@ class FaceFrame extends Component {
 
         <Row>
 
-          <Col xs="6">
+          <Col xs="12" md='12' lg="6">
             <FormGroup>
               <Label htmlFor="hinges">Top Rail Design</Label>
               <Field
@@ -98,7 +98,7 @@ class FaceFrame extends Component {
           </Col>
 
 
-          <Col xs="6">
+          <Col xs="12" md='12' lg="6">
             <FormGroup>
               <Label htmlFor="hinges">Furniture Feet</Label>
               <Field
@@ -115,7 +115,7 @@ class FaceFrame extends Component {
         </Row>
 
         <Row className="mt-2">
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>

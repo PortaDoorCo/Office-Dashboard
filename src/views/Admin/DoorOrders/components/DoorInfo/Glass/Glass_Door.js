@@ -115,7 +115,7 @@ class GlassDoor extends Component {
     return (
       <div>
         <Row>
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -129,7 +129,7 @@ class GlassDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -144,7 +144,7 @@ class GlassDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="design">Lites</Label>
               <Field
@@ -161,7 +161,7 @@ class GlassDoor extends Component {
         </Row>
         <Row>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -175,7 +175,7 @@ class GlassDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="edge">Profile</Label>
               <Field
@@ -190,7 +190,7 @@ class GlassDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -204,7 +204,7 @@ class GlassDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
@@ -222,7 +222,7 @@ class GlassDoor extends Component {
 
 
         <Row className="mt-2">
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>

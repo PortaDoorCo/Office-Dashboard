@@ -239,7 +239,7 @@ class DoorFilter extends Component {
         return (
           <Fragment>
             <Row>
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label for="orderType">Order Type</Label>
                   <Field
@@ -254,7 +254,7 @@ class DoorFilter extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label for="construction">Construction</Label>
                   <Field
@@ -269,7 +269,7 @@ class DoorFilter extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label for="construction">Thickness</Label>
                   <Field
@@ -290,7 +290,7 @@ class DoorFilter extends Component {
         return (
           <Fragment>
             <Row>
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label for="orderType">Order Type</Label>
                   <Field
@@ -305,7 +305,7 @@ class DoorFilter extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label for="construction">Thickness</Label>
                   <Field
@@ -325,7 +325,7 @@ class DoorFilter extends Component {
         return (
           <Fragment>
             <Row>
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label for="orderType">Order Type</Label>
                   <Field

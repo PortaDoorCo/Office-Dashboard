@@ -97,15 +97,12 @@ class MT_DF extends Component {
       mt_designs,
       edges,
       panels,
-      applied_moulds,
       finishes,
-
       isValid,
       index,
       part_list,
       formState,
       prices,
-      itemPrice,
       subTotal
     } = this.props;
     return (
@@ -125,7 +122,7 @@ class MT_DF extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -140,7 +137,7 @@ class MT_DF extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -158,7 +155,7 @@ class MT_DF extends Component {
         <Row>
 
 
-          <Col xs="6">
+          <Col xs="12" md='12' lg="6">
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
@@ -173,7 +170,7 @@ class MT_DF extends Component {
           </Col>
 
 
-          <Col xs="6">
+          <Col xs="12" md='12' lg="6">
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
@@ -190,7 +187,7 @@ class MT_DF extends Component {
         </Row>
 
         <Row className="mt-2">
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>

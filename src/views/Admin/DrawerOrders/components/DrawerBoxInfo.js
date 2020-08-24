@@ -60,7 +60,7 @@ class DrawerBoxInfo extends Component {
             </CardSubtitle>
             <Row>
               {/* <Col xs="1" /> */}
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label htmlFor="woodtypeSelection">Woodtype</Label>
                   <Field
@@ -72,7 +72,7 @@ class DrawerBoxInfo extends Component {
                     validate={required} />
                 </FormGroup>
               </Col>
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label htmlFor="box-thickness">Box Thickness</Label>
                   <Field
@@ -84,7 +84,7 @@ class DrawerBoxInfo extends Component {
                     validate={required} />
                 </FormGroup>
               </Col>
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label htmlFor="box-bottom-woodtype">Box Bottom Woodtype</Label>
                   <Field
@@ -99,7 +99,7 @@ class DrawerBoxInfo extends Component {
 
             </Row>
             <Row>
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label htmlFor="box-bottoms">Box Bottom Thickness</Label>
                   <Field
@@ -112,7 +112,7 @@ class DrawerBoxInfo extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label htmlFor="notch-drill">Notch and Drill</Label>
                   <Field
@@ -124,7 +124,7 @@ class DrawerBoxInfo extends Component {
                     validate={required} />
                 </FormGroup>
               </Col>
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <Label htmlFor="finish">Finish/Assembly</Label>
                   <Field
@@ -139,7 +139,7 @@ class DrawerBoxInfo extends Component {
             </Row>
 
             <Row className="mt-2">
-              <Col xs="4">
+              <Col xs="12" md='12' lg="4">
                 <FormGroup>
                   <strong>
                     <Label for="jobNotes">Job Notes</Label>
