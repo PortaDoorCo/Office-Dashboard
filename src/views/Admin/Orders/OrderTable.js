@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
@@ -14,7 +14,7 @@ import {
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import momentLocaliser from 'react-widgets-moment';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -23,8 +23,38 @@ import Assignment  from '@material-ui/icons/Assignment';
 import Report1 from './PrintOuts/Reports/Report1';
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
+import styled from 'styled-components';
 
 momentLocaliser(moment);
+
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 34px;
+  width: 32px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const toDataUrl = (url, callback) => {
   const xhr = new XMLHttpRequest();
@@ -102,6 +132,13 @@ const conditionalRowStyles = [
   },
 ];
 
+const FilterComponent = ({ filterText, onFilter, onClear }) => (
+  <>
+    <TextField id="search" type="text" placeholder="Search Order Num" value={filterText} onChange={onFilter} />
+    <ClearButton type="button" onClick={onClear}>X</ClearButton>
+  </>
+);
+
 const OrderTable = (props) => {
   const { orders, role } = props;
   const [selectedRows, setSelectedRows] = useState([]);
@@ -113,29 +150,59 @@ const OrderTable = (props) => {
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [focusedInput, setFocusedInput] = useState(null);
   const [filterStatus, setFilterStatus ] = useState('All');
+  const [filterText, setFilterText] = useState('');
+  const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
   const minDate = orders.length > 0 ? new Date(orders[orders.length - 1].createdAt) : new Date();
 
   useEffect(() => {
+
+    const t = filterText;
+
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.createdAt);
 
       if(filterStatus === 'All'){
-        return (
-          moment(date) >= moment(startDate).startOf('day').valueOf() &&
-          moment(date) <= moment(endDate).endOf('day').valueOf()
-        );
+        if(filterText.length > 0){
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.orderNum.toString().includes(filterText)
+          );
+        } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+
       } else {
+        console.log('filter textttt', t);
         return (
           moment(date) >= moment(startDate).startOf('day').valueOf() &&
-          moment(date) <= moment(endDate).endOf('day').valueOf() &&
-          item.status.includes(filterStatus)
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              item.status.includes(filterStatus)
         );
+      
       }
 
     });
     setData(filteredOrders);
-  }, [startDate, endDate, orders, filterStatus]);
+  }, [startDate, endDate, orders, filterStatus, filterText]);
+
+  
+
+  const subHeaderComponentMemo = useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setResetPaginationToggle(!resetPaginationToggle);
+        setFilterText('');
+      }
+    };
+
+    return <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />;
+  }, [filterText, resetPaginationToggle]);
+
 
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
@@ -391,6 +458,8 @@ const OrderTable = (props) => {
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
         contextActions={contextActions}
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
       />
       {modal ? (
         <OrderPage

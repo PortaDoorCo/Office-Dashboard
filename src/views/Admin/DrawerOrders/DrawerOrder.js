@@ -124,7 +124,6 @@ class DoorOrders extends Component {
 
     const order = {
       part_list: values.part_list,
-      orderNum: this.props.orderNum,
       job_info: jobInfo,
       status: values.job_info.status,
       companyprofile: values.job_info.customer.id,
@@ -366,7 +365,6 @@ class DoorOrders extends Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-  orderNum: state.Orders.orders.length + 100,
   woodtypes: state.part_list.box_woodtypes,
   boxBottomWoodtype: state.part_list.box_bottom_woodtypes,
   boxThickness: state.part_list.box_thickness,
