@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import truck from '../../../../assets/icon/truck.png';
 import delivery from '../../../../assets/icon/delivery.png';
+import OrderPage from '../../Orders/OrderPage';
+import { setSelectedOrder } from '../../../../redux/orders/actions';
 
 
 // To use the Google Maps JavaScript API, you must register your app project on the Google API Console and get a Google API key which you can add to your app
@@ -25,7 +27,7 @@ class DeliveryLocations extends Component {
   }
 
   render() {
-    const { locations } = this.props;
+    const { locations, orders, setSelectedOrder } = this.props;
     return (
       <div>
         <MarkerClusterer
@@ -36,7 +38,7 @@ class DeliveryLocations extends Component {
           {locations.map((location, index) => {
                  
             return (
-              <DeliveryInfoWindow key={index} location={location} />
+              <DeliveryInfoWindow key={index} location={location} orders={orders} setSelectedOrder={setSelectedOrder} />
             );
           })}
         </MarkerClusterer>
@@ -51,7 +53,9 @@ class DeliveryInfoWindow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      modal: false,
+      edit: false
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -61,10 +65,36 @@ class DeliveryInfoWindow extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  editable = () => {
+    this.setState({ 
+      edit: !this.state.edit
+    });
+  }
+
+
+  toggleOrder = (id) => {
+    const { setSelectedOrder, orders } = this.props;
+    const { modal } = this.state;
+
+
+    const selectedOrder = orders.filter(i => i.id === id);
+
+    console.log(selectedOrder);
+
+    setSelectedOrder(selectedOrder[0]);
+
+    this.setState({
+      modal: !modal
+    });
+
+    
+
+  }
+
   render() {
     const { location } = this.props;
-
-      
+    const { modal, edit } = this.state;
 
     const loc = {
       lat: location.location.latitude,
@@ -72,21 +102,31 @@ class DeliveryInfoWindow extends Component {
     };
 
     return (
-      <Marker
-        onClick={this.toggle}
-        icon={{
-          url: delivery
-        }}
+      <div>
+        <Marker
+          onClick={this.toggle}
+          icon={{
+            url: delivery
+          }}
+          position={loc}
+          title={'Delivery'}
+          label={location.address}>
 
-        position={loc}
-        title={'Delivery'}
-        label={location.address}>
-
-        {this.state.isOpen &&
+          {this.state.isOpen &&
                     <InfoWindow onCloseClick={this.toggle}>
-                      <NavLink href={location.www} target="_blank">{location.companyprofile.Company}</NavLink>
+                      <div onClick={() => this.toggleOrder(location.order)}>{location.companyprofile.Company}</div>
                     </InfoWindow>}
-      </Marker>
+        </Marker>
+
+        {modal ? <OrderPage
+          toggle={this.toggleOrder}
+          modal={modal}
+          editable={this.editable}
+          edit={edit}        
+        /> : null}
+
+      </div>
+
 
     );
   }
@@ -171,7 +211,7 @@ const GoogleMapsComponent = withScriptjs(withGoogleMap((props) => {
 
   return (
     <GoogleMap defaultZoom={zoom} center={center}>
-      {props.locations.length>0 ? <DeliveryLocations locations={props.locations} /> : <div />}
+      {props.locations.length>0 ? <DeliveryLocations locations={props.locations} orders={props.orders} setSelectedOrder={props.setSelectedOrder} /> : <div />}
       {<DriverLocations locations={props.driverLocations} />}
     </GoogleMap>
   );
@@ -213,6 +253,8 @@ class Maps extends Component {
           locations={this.props.deliveries}
           defaultCenter={this.props.defaultCenter}
           driverLocations={this.state.driverLocations}
+          orders={this.props.orders}
+          setSelectedOrder={this.props.setSelectedOrder}
         />
 
       </div>
@@ -221,13 +263,14 @@ class Maps extends Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-  deliveries: state.Orders.deliveries
+  deliveries: state.Orders.deliveries,
+  orders: state.Orders.orders
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      
+      setSelectedOrder
     },
     dispatch
   );
