@@ -57,6 +57,7 @@ const CompanyTable = (props) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [locations, setLocations] = useState([]);
   const [defaultCenter, setDefaultCenter] = useState([]);
+  
   const filteredCompanies = props.customerDB.filter(item => item.Company && item.Company.toLowerCase().includes(filterText.toLowerCase()));
 
 

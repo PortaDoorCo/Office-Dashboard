@@ -113,7 +113,6 @@ class DoorOrders extends Component {
     const order = {
       part_list: values.part_list,
       status: values.job_info.status,
-      orderNum: this.props.orderNum,
       job_info: jobInfo,
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
@@ -345,13 +344,9 @@ class DoorOrders extends Component {
 }
 
 const mapStateToProps = state => ({
-
   customers: state.customers.customerDB,
   customerDBLoaded: state.customers.customerDBLoaded,
-
   user: state.users.user,
-  orderNum: state.Orders.orders.length + 100,
-
   submitted: state.Orders.submitted,
   initialValues: {
     misc_items: [],
