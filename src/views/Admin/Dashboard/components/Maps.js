@@ -82,13 +82,15 @@ class DeliveryInfoWindow extends Component {
 
     console.log(selectedOrder);
 
-    setSelectedOrder(selectedOrder[0]);
-
     this.setState({
       modal: !modal
     });
 
-    
+    if(!modal){
+      setSelectedOrder(selectedOrder[0]);
+    } else {
+      setSelectedOrder(null);
+    }
 
   }
 
