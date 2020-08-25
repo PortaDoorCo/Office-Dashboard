@@ -134,8 +134,8 @@ const conditionalRowStyles = [
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
-    <TextField id="search" type="text" placeholder="Search Order Num" value={filterText} onChange={onFilter} />
-    <ClearButton type="button" onClick={onClear}>X</ClearButton>
+    <TextField id="search" type="text" placeholder="Search Orders" value={filterText} onChange={onFilter} />
+    <ClearButton type="button" color="danger" onClick={onClear}>X</ClearButton>
   </>
 );
 
@@ -157,7 +157,7 @@ const OrderTable = (props) => {
 
   useEffect(() => {
 
-    const t = filterText;
+    
 
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.createdAt);
@@ -167,7 +167,7 @@ const OrderTable = (props) => {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.orderNum.toString().includes(filterText)
+            (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()))
           );
         } else {
           return (
@@ -177,12 +177,22 @@ const OrderTable = (props) => {
         }
 
       } else {
-        console.log('filter textttt', t);
-        return (
-          moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              item.status.includes(filterStatus)
-        );
+
+        if(filterText.length > 0) {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.status.includes(filterStatus) && 
+                (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.status.includes(filterStatus)
+          );
+        }
+
       
       }
 
