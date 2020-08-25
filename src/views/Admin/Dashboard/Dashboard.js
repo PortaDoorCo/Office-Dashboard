@@ -6,6 +6,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../../../redux/users/actions';
+import moment from 'moment';
 
 const Chart1 = React.lazy(() => import('./components/Chart1'));
 const Chart2 = React.lazy(() => import('./components/Chart2'));
@@ -63,7 +64,6 @@ class Dashboard extends Component {
             <Row>
               <Col style={{ height: 600 }}>
                 <Suspense fallback={loading()}>
-                  <h2 style={{ textAlign: 'right' }}>Today's Deliveries</h2>
                   <Maps />
                 </Suspense>
               </Col>
@@ -90,7 +90,6 @@ class Dashboard extends Component {
               <Row>
                 <Col>
                   <Suspense fallback={loading()}>
-                    <h2 style={{ textAlign: 'right' }}>Today's Deliveries</h2>
                     <Maps />
                   </Suspense>
                 </Col>

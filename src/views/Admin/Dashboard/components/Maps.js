@@ -8,6 +8,7 @@ import truck from '../../../../assets/icon/truck.png';
 import delivery from '../../../../assets/icon/delivery.png';
 import OrderPage from '../../Orders/OrderPage';
 import { setSelectedOrder } from '../../../../redux/orders/actions';
+import moment from 'moment';
 
 
 // To use the Google Maps JavaScript API, you must register your app project on the Google API Console and get a Google API key which you can add to your app
@@ -86,8 +87,13 @@ class DeliveryInfoWindow extends Component {
       modal: !modal
     });
 
+    this.setState({
+      isOpen: false
+    });
+
     if(!modal){
       setSelectedOrder(selectedOrder[0]);
+      
     } else {
       setSelectedOrder(null);
     }
@@ -105,6 +111,7 @@ class DeliveryInfoWindow extends Component {
 
     return (
       <div>
+
         <Marker
           onClick={this.toggle}
           icon={{
@@ -245,7 +252,8 @@ class Maps extends Component {
 
     return (
       <div className="animated fadeIn">
-
+        <h3>{moment().format('dddd, MMMM Do YYYY')}</h3>
+        <h3>Today's Deliveries</h3>
         <GoogleMapsComponent
           key="map"
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${apiKey}`}
