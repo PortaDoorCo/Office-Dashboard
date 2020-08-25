@@ -83,7 +83,7 @@ export default function (state = initialState, action) {
     case LOAD_DELIVERIES:
       const updatedDeliveries = data;
       const dateDeliveries = updatedDeliveries.filter(function (d, i) {
-        return moment(d.createdAt).isSame(new Date(), 'day');
+        return moment(d.updatedAt).isSame(new Date(), 'day');
       });
       // const sortedLocations = sortByDistance(state.current_location.coords, updatedDeliveries.map(i=>i.location), opts);
 

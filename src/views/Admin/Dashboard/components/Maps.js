@@ -6,10 +6,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import truck from '../../../../assets/icon/truck.png';
 import delivery from '../../../../assets/icon/delivery.png';
-import io from 'socket.io-client';
-import db_url from '../../../../redux/db_url';
 
-const socket = io(db_url);
+
 // To use the Google Maps JavaScript API, you must register your app project on the Google API Console and get a Google API key which you can add to your app
 const apiKey = 'AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE';
 
@@ -190,22 +188,6 @@ class Maps extends Component {
     };
   }
 
-  componentDidMount() {
-
-    // socket.emit('position', {
-    //     coords: {
-    //         latitude: 41.3705498,
-    //         longitude: -73.2105237
-    //     }
-    // })
-
-    socket.on('drivers', res =>
-      this.setState({
-        driverLocations: res
-      })
-    );
-  }
-
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
     this.setState = (state,callback)=>{
@@ -245,7 +227,7 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-
+      
     },
     dispatch
   );
