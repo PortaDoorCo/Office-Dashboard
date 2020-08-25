@@ -63,6 +63,7 @@ class Dashboard extends Component {
             <Row>
               <Col style={{ height: 600 }}>
                 <Suspense fallback={loading()}>
+                  <h2 style={{ textAlign: 'right' }}>Today's Deliveries</h2>
                   <Maps />
                 </Suspense>
               </Col>
@@ -87,8 +88,9 @@ class Dashboard extends Component {
           : role && (role.type === 'office') ?
             <div>
               <Row>
-                <Col style={{ height: 600 }}>
+                <Col>
                   <Suspense fallback={loading()}>
+                    <h2 style={{ textAlign: 'right' }}>Today's Deliveries</h2>
                     <Maps />
                   </Suspense>
                 </Col>

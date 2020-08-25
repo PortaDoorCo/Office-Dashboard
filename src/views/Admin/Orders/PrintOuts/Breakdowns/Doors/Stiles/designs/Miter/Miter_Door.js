@@ -52,7 +52,7 @@ export default (info, part, breakdowns) => {
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
-          pattern: 'VM3'
+          pattern: 'VM'
         },
       ];
     } else {
@@ -90,7 +90,7 @@ export default (info, part, breakdowns) => {
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
-          pattern: 'VM9'
+          pattern: 'VM'
         },
       ];
     }

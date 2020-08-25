@@ -89,7 +89,8 @@ class Balance extends Component {
     const {
       formState,
       handleSubmit,
-      balanceTotal
+      balanceTotal,
+      role
     } = this.props;
 
 
@@ -139,27 +140,31 @@ class Balance extends Component {
 
             <hr />
 
-            <Row>
-              <Col xs='3'>
-                <FormGroup>
-                  <Label htmlFor="design">Pay Balance</Label>
-                  <Field
-                    name='pay_balance'
-                    type="text"
-                    placeholder="0"
-                    onBlur={this.changeBalance}
-                    component={renderField}
-                    label="pay_balance" />
-                </FormGroup>
-              </Col>
-            </Row>
+            {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+              <div>
+                <Row>
+                  <Col xs='3'>
+                    <FormGroup>
+                      <Label htmlFor="design">Pay Balance</Label>
+                      <Field
+                        name='pay_balance'
+                        type="text"
+                        placeholder="0"
+                        onBlur={this.changeBalance}
+                        component={renderField}
+                        label="pay_balance" />
+                    </FormGroup>
+                  </Col>
+                </Row>
 
-            <Row>
-              <Col>
-                <Button color="primary" className="mr-1">Pay</Button>
-                <Button color="danger" onClick={this.cancel}>Cancel</Button>
-              </Col>
-            </Row>
+                <Row>
+                  <Col>
+                    <Button color="primary" className="mr-1">Pay</Button>
+                    <Button color="danger" onClick={this.cancel}>Cancel</Button>
+                  </Col>
+                </Row>
+              </div>
+              : null }
           </form>
         </div >
       );
@@ -179,7 +184,8 @@ const mapStateToProps = (state, props) => ({
   total: totalSelector(state),
   subTotal: subTotal_Total(state),
   balance: balanceSelector(state),
-  balanceTotal: balanceTotalSelector(state)
+  balanceTotal: balanceTotalSelector(state),
+  role: state.users.user.role
 
 });
 
