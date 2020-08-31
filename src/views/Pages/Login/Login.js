@@ -133,6 +133,7 @@ class Login extends Component {
                       </CardBody>
                     </Form>
                   </Card>
+                  
                   {/* <Card
                     className="text-white bg-primary py-5 d-md-down-none"
                     style={{ width: 44 + '%' }}
