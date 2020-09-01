@@ -2,11 +2,15 @@ import React, { Component, Suspense } from 'react';
 import {
   Row,
   Col,
+  Button
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../../../redux/users/actions';
+import { loadOrders } from '../../../redux/orders/actions';
 import moment from 'moment';
+import Cookies from 'js-cookie';
+const cookie = Cookies.get('jwt');
 
 const Chart1 = React.lazy(() => import('./components/Chart1'));
 const Chart2 = React.lazy(() => import('./components/Chart2'));
@@ -61,14 +65,14 @@ class Dashboard extends Component {
                 </Suspense>
               </Col>
             </Row>
-            <Row>
+            <Row className="mb-5">
               <Col style={{ height: 600 }}>
                 <Suspense fallback={loading()}>
-                  <Maps />
+                  <Maps  />
                 </Suspense>
               </Col>
             </Row>
-            <Row className="mt-3">
+            <Row className="mt-5">
               <Col>
                 <Suspense fallback={loading()}>
                   <OrderTable />
@@ -90,7 +94,7 @@ class Dashboard extends Component {
               <Row>
                 <Col>
                   <Suspense fallback={loading()}>
-                    <Maps />
+                    <Maps className="mb-5" />
                   </Suspense>
                 </Col>
               </Row>
@@ -131,7 +135,8 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      login
+      login,
+      loadOrders
     },
     dispatch
   );
