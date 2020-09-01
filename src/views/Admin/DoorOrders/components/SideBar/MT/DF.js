@@ -32,7 +32,7 @@ class SideBar extends Component {
               <Col>
                 <h4 style={{ textAlign: 'center' }}>Woodtype</h4>
                 <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
+                  style={{ width: '100px', height: '140px', margin: 'auto' }}
                 >
                   {(part.woodtype && part.woodtype.photo) ? (
                     <img src={part.woodtype.photo.url} style={style} alt="" />
@@ -44,7 +44,7 @@ class SideBar extends Component {
               <Col>
                 <h4 style={{ textAlign: 'center' }}>Design</h4>
                 <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
+                  style={{ width: '100px', height: '140px', margin: 'auto' }}
                 >
                   {(part.mt_design && part.mt_design.photo) ? (
                     <img src={part.mt_design.photo.url} style={style} alt="" />
@@ -64,7 +64,7 @@ class SideBar extends Component {
               <Col>
                 <h4 style={{ textAlign: 'center' }}>Edge</h4>
                 <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
+                  style={{ width: '100px', height: '140px', margin: 'auto' }}
                 >
                   {(part.edge && part.edge.photo) ? (
                     <img src={part.edge.photo.url} style={style} alt="" />
@@ -77,7 +77,7 @@ class SideBar extends Component {
               <Col>
                 <h4 style={{ textAlign: 'center' }}>Panel</h4>
                 <div
-                  style={{ width: '100px', height: '100px', margin: 'auto' }}
+                  style={{ width: '100px', height: '140px', margin: 'auto' }}
                 >
                   {(part.panel && part.panel.photo) ? (
                     <img src={part.panel.photo.url} style={style} alt="" />
