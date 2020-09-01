@@ -16,7 +16,7 @@ import {
   Field,
 } from 'redux-form';
 import { updateCustomer } from '../../../../../redux/customers/actions';
-import { renderField, renderDropdownList } from '../../../../../components/RenderInputs/renderInputs';
+import { renderField, renderDropdownList, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
 import Cookies from 'js-cookie';
 
 const cookie = Cookies.get('jwt');
@@ -43,8 +43,8 @@ class Edit extends Component {
       Company: values.Company,
       Contact: values.Contact,
       EMAIL: values.EMAIL,
-      PaymentMethod: values.PaymentMethod,
-      Ship_Via: values.Ship_Via,
+      PaymentMethod: values.PaymentMethod.NAME,
+      Ship_Via: values.Ship_Via.NAME,
       sale: values.sale.id,
       TaxRate: values.TaxRate,
       PMT_TERMS: values.PMT_TERMS,
@@ -60,8 +60,11 @@ class Edit extends Component {
       Shipping_State: values.Shipping_State,
       Shipping_Zip: values.Shipping_Zip,
       Shipping_Phone: values.Shipping_Phone,
-      Notes: values.Notes
+      Notes: values.Notes,
+      Taxable: values.Taxable
     };
+
+    console.log(data);
 
 
     await this.props.updateCustomer(id, data, cookie);
@@ -74,7 +77,9 @@ class Edit extends Component {
       handleSubmit,
       salesReps,
       shippingMethods,
-      edit
+      edit,
+      paymentTypes,
+      paymentTerms
     } = this.props;
 
     return (
@@ -101,6 +106,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        validate={required}
                         edit={edit}
                       />
                     </FormGroup>
@@ -113,6 +119,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                        validate={required}
                         edit={edit}
                       />
                     </FormGroup>
@@ -125,6 +132,7 @@ class Edit extends Component {
                         type="text"
                         component={renderField}
                         label="company"
+                    
                         edit={edit}
                       />
                     </FormGroup>
@@ -132,19 +140,23 @@ class Edit extends Component {
                 </Row>
 
                 <Row>
-                  <Col sm="3">
+                  <Col sm="4">
                     <FormGroup>
                       <Label htmlFor="companyName">Payment Method</Label>
                       <Field
                         name={'PaymentMethod'}
                         type="text"
-                        component={renderField}
+                        component={renderDropdownList}
+                        data={paymentTypes}
+                        valueField="NAME"
+                        textField="NAME"
                         label="company"
+                        validate={required}
                         edit={edit}
                       />
                     </FormGroup>
                   </Col>
-                  <Col sm="3">
+                  <Col sm="4">
                     <FormGroup>
                       <Label htmlFor="full-name">Shipping Method</Label>
                       <Field
@@ -158,7 +170,7 @@ class Edit extends Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col sm="3">
+                  <Col sm="4">
                     <FormGroup>
                       <Label htmlFor="full-name">Sales Rep</Label>
                       <Field
@@ -172,18 +184,6 @@ class Edit extends Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="full-name">Sales Tax</Label>
-                      <Field
-                        name={'TaxRate'}
-                        type="text"
-                        component={renderField}
-                        label="tax_rate"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
                 </Row>
                 <Row>
                   <Col sm="4">
@@ -192,8 +192,36 @@ class Edit extends Component {
                       <Field
                         name={'PMT_TERMS'}
                         type="text"
-                        component={renderField}
+                        component={renderDropdownList}
+                        data={paymentTerms}
+                        valueField="NAME"
+                        textField="NAME"
                         label="company"
+                        validate={required}
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="2">
+                    <FormGroup>
+                      <Label htmlFor="full-name">Sales Tax (%)</Label>
+                      <Field
+                        name={'TaxRate'}
+                        type="text"
+                        component={renderField}
+                        label="tax_rate"
+                        validate={required}
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="1">
+                    <FormGroup>
+                      <Label htmlFor="companyName">Taxable?</Label>
+                      <Field
+                        name={'Taxable'}
+                        type="text"
+                        component={renderCheckboxToggle}
                         edit={edit}
                       />
                     </FormGroup>
@@ -423,7 +451,9 @@ const mapStateToProps = (state, ownProps) => ({
   initialValues: ownProps.selectedCompanies,
   salesReps: state.sales.salesReps,
   shippingMethods: state.misc_items.shippingMethods,
-  test: ownProps
+  test: ownProps,
+  paymentTypes: state.misc_items.paymentTypes,
+  paymentTerms: state.misc_items.paymentTerms
 });
 
 const mapDispatchToProps = dispatch =>
