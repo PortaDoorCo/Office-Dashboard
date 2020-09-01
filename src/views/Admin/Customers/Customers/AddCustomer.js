@@ -104,6 +104,7 @@ render() {
           <NewCustomer
             onEdit={this.onEdit}
             edit={false}
+            toggle={this.props.toggle}
           />
 
         </ModalBody>
