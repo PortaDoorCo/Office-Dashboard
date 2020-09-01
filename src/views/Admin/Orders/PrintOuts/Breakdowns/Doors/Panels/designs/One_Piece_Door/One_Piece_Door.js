@@ -25,7 +25,9 @@ export default (info) => {
           height)
                     * 16) / 16
       )}`,
-      pattern: 'PR'
+      pattern: 'PR',
+      width: 0,
+      height: 0
     },
   ];
 
