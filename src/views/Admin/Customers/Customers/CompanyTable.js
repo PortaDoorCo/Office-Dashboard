@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Button } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CustomerPage from './CustomerPage';
+import AddCustomer from './AddCustomer';
 import DataTable from 'react-data-table-component';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
@@ -57,6 +58,7 @@ const CompanyTable = (props) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [locations, setLocations] = useState([]);
   const [defaultCenter, setDefaultCenter] = useState([]);
+  const [newCustomerModal, setNewCustomerModal] = useState(false);
   
   const filteredCompanies = props.customerDB.filter(item => item.Company && item.Company.toLowerCase().includes(filterText.toLowerCase()));
 
@@ -132,6 +134,10 @@ const CompanyTable = (props) => {
 
   };
 
+  const addCustomer = () => {
+    setNewCustomerModal(!newCustomerModal);
+  };
+
 
 
   const columns = [
@@ -194,32 +200,51 @@ const CompanyTable = (props) => {
   }, [data, selectedRows, toggleCleared]);
 
   return (
-    <div>
-      <DataTable
-        title="Customers"
-        columns={columns}
-        data={filteredCompanies}
-        // selectableRows
-        highlightOnHover
-        pagination
-        contextActions={contextActions}
-        // selectableRowsComponent={Checkbox}
-        onRowSelected={handleRowSelected}
-        clearSelectedRows={toggleCleared}
-        paginationResetDefaultPage={resetPaginationToggle}
-        subHeader
-        subHeaderComponent={subHeaderComponentMemo}
-      />
-      {modal ?
-        <CustomerPage
-          toggle={toggle}
-          modal={modal}
-          orders={selectedOrder}
-          locations={locations}
-          defaultCenter={defaultCenter}
+    <div className="mt-5">
+      <Row>
+        <Col lg='11' />
+        <Col>
+          <Button color="primary" onClick={addCustomer}>Add Customer</Button>
+        </Col>
+      </Row>
+      
+      <Row>
+        <Col>
+          <DataTable
+            title="Customers"
+            columns={columns}
+            data={filteredCompanies}
+            // selectableRows
+            highlightOnHover
+            pagination
+            contextActions={contextActions}
+            // selectableRowsComponent={Checkbox}
+            onRowSelected={handleRowSelected}
+            clearSelectedRows={toggleCleared}
+            paginationResetDefaultPage={resetPaginationToggle}
+            subHeader
+            subHeaderComponent={subHeaderComponentMemo}
+          />
+          {modal ?
+            <CustomerPage
+              toggle={toggle}
+              modal={modal}
+              orders={selectedOrder}
+              locations={locations}
+              defaultCenter={defaultCenter}
+            /> : null
+          }
+
+
+        </Col>
+      </Row>
+
+      {newCustomerModal ? 
+        <AddCustomer
+          toggle={addCustomer}
+          modal={newCustomerModal}
         /> : null
       }
-
     </div>
   );
 };
