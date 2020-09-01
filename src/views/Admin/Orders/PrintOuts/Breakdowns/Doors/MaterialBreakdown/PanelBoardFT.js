@@ -70,12 +70,12 @@ export default (info, part, breakdowns) => {
   const door = [
     {
       qty: `(${panelsH * panelsW * qty})`,
+      width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+      height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
       measurement: `${fraction(
         Math.round(eval(breakdowns.panel_width) * 16) / 16
       )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
       pattern: 'PR',
-      width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
-      height: Math.round(eval(breakdowns.panel_height) * 16) / 16
     },
   ];
 
@@ -87,12 +87,12 @@ export default (info, part, breakdowns) => {
           qty: `(${qty})`,
           measurement: `${fraction(
             (width +
-              add_len -
-              leftStile -
-              rightStile -
-              vertMull * (panelsW - 1)) /
-              panelsW +
-              INSET * 2
+            add_len -
+            leftStile -
+            rightStile -
+            vertMull * (panelsW - 1)) /
+            panelsW +
+            INSET * 2
           )} x ${fraction(numQty(info[`unevenSplitInput${v}`]) + INSET * 2)}`,
           pattern: 'PR',
         };
@@ -101,15 +101,15 @@ export default (info, part, breakdowns) => {
       qty: `(${qty})`,
       measurement: `${fraction(
         (width + add_len - leftStile - rightStile - vertMull * (panelsW - 1)) /
-          panelsW +
-          INSET * 2
+        panelsW +
+        INSET * 2
       )} x ${fraction(
         height -
-          unevenSplitTotal -
-          horizMull * (panelsH - 1) -
-          bottomRail -
-          topRail +
-          INSET * 2
+        unevenSplitTotal -
+        horizMull * (panelsH - 1) -
+        bottomRail -
+        topRail +
+        INSET * 2
       )}`,
       pattern: 'PR',
     },

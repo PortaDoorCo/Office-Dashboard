@@ -39,10 +39,10 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          text: `${data.job_info.jobName} - ${data.job_info.customer.Company}`,
+          text: `${data.job_info.poNum} - ${data.job_info.customer.Company}`,
           margin: [0, 10]
         },
-        { text: 'Job: None', alignment: 'right', margin: [0, 0, 80, 0] }
+        { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 0, 80, 0] }
       ]
     },
     {
@@ -114,7 +114,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 70, 95, 95, 95, 60],
+            widths: [22, 15, 65, 100, 95, 95, 60],
             body: tableBody
           },
           layout: 'lightHorizontalLines'

@@ -1,6 +1,9 @@
 import moment from 'moment';
-// import Panels from '../Breakdowns/Panels';
-
+import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
+import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
+import Panels from '../Breakdowns/Doors/Panels/Panels';
+import TotalPieces from '../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
+import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 
 export default (data,breakdowns) => {
   return [
@@ -29,10 +32,10 @@ export default (data,breakdowns) => {
     {
       columns: [
         {
-          text: `${data.job_info.jobName} - ${data.job_info.customer.Company}`,
+          text: `${data.job_info.poNum} - ${data.job_info.customer.Company}`,
           margin: [0, 10]
         },
-        { text: 'Job: None', alignment: 'right', margin: [0, 0, 80, 0] }
+        { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 0, 80, 0] }
       ]
     },
     {
@@ -49,28 +52,29 @@ export default (data,breakdowns) => {
     },
     {
       columns: [
-        { text: 'Total Number of Doors: 14', style: 'fonts' }
+        { text: `Total Number of Doors: ${TotalPieces(data)}`, style: 'fonts' }
       ]
     },
+    // {
+    //   columns: [
+    //     { text: 'Total Number of Solid DF: 0', style: 'fonts' }
+    //   ],
+    //   margin: [0, 0, 0, 20]
+    // },
     {
       columns: [
-        { text: 'Total Number of Solid DF: 0', style: 'fonts' }
-      ],
-      margin: [0, 0, 0, 20]
-    },
-    {
-      columns: [
-        { text: 'Total SQ FT of Doors: 105.58', style: 'fonts' }
+        { text: `Total SQ FT of Doors: ${SqFT(data)}`, style: 'fonts' }
       ],
       margin: [0, 0, 0, 20]
     },
     data.part_list.map((i, index) => {
+      console.log('iiiiiii', i);
       return [
         {
           columns: [
-            { text: 'Linear Feet of 2 3/8" Sapele 4/4 - 3/4" Thickness Needed: 49.19', style: 'fonts', width: 400 },
-            { text: 'Add 20 % Waster: ', style: 'fonts', width: 100 },
-            { text: '59.0', style: 'fonts', width: 30 }
+            { text: `Linear Feet of ${i.dimensions[0].leftStile}" ${i.woodtype.NAME} - ${i.thickness.name}" Thickness Needed: ${LinearFT(i.dimensions)}`, style: 'fonts', width: 400 },
+            { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+            { text: `${((parseFloat(LinearFT(i.dimensions)) * 0.2) + parseFloat(LinearFT(i.dimensions))).toFixed(2)}`, style: 'fonts', width: 30 }
           ],
 
         }
@@ -83,12 +87,22 @@ export default (data,breakdowns) => {
       margin: [0, 5, 0, 5]
     },
     data.part_list.map((i, index) => {
+
+      const bf = parseFloat(BoardFT(i.dimensions));
+      const percent = bf * 0.2;
+
+      const equation = (bf + percent).toFixed(2);
+
+      console.log('bf', bf);
+      console.log('percent',percent);
+      console.log('equation', equation);
+
       return [
         {
           columns: [
-            { text: 'Board Feet of Sapele 4/4 - 3/4" Thickness Stile/Rail/Mullion Material Needed: 9.74', style: 'fonts', width: 400 },
-            { text: 'Add 20 % Waster: ', style: 'fonts', width: 100 },
-            { text: '59.0', style: 'fonts', width: 30 }
+            { text: `Board Feet of ${i.woodtype.NAME} - ${i.thickness.name}" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT(i.dimensions)}`, style: 'fonts', width: 400 },
+            { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+            { text: equation, style: 'fonts', width: 30 }
           ],
 
         }
@@ -101,19 +115,48 @@ export default (data,breakdowns) => {
       margin: [0, 5, 0, 5]
     },
     data.part_list.map((i, index) => {
+
+      const qty = i.dimensions.map((item,index) => {
+        return parseInt(item.qty);
+      });
+
+      const width = i.dimensions.map((item,index) => {
+        console.log('itemmm',i);
+        return Panels(item, i, breakdowns).map(panel => { return panel.width; });
+      });
+
+      const height = i.dimensions.map((item,index) => {
+        console.log('itemmm',i);
+        return Panels(item, i, breakdowns).map(panel => { return panel.height; });
+      });
+
+      const widthTotal = width.map(i => {
+        return i.reduce((acc, item) => acc + item);
+      });
+      const heightTotal = height.map(i => {
+        return i.reduce((acc, item) => acc + item, 0);
+      });
+
+      const qtyTotal = qty.reduce((acc, item) => acc + item);
+
+      const equation = (((widthTotal.reduce((acc, item) => acc + item)) * (heightTotal.reduce((acc, item) => acc + item))) / 144) * qtyTotal;
+
+      console.log(equation);
+
+      
       return [
         {
           columns: [
-            { text: 'Board Feet of Sapele 4/4 O Panel - 3/4" Thickness Panel Material Needed: 9.74', style: 'fonts', width: 400 },
-            { text: '            ', style: 'fonts', width: 100 },
-            { text: '59.0', style: 'fonts', width: 30 }
+            { text: `Board Feet of ${i.woodtype.NAME} - ${i.panel.NAME} - ${i.thickness.name}" Thickness Panel Material Needed: ${equation.toFixed(2)}`, style: 'fonts', width: 400 },
+            { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+            { text: ((equation * 0.2) + equation).toFixed(2), style: 'fonts', width: 30 }
           ],
         }
       ];
     }),
     {
       columns: [
-        { text: 'Hinges Needed', style: 'fonts', decoration: 'underline' }
+        // { text: 'Hinges Needed', style: 'fonts', decoration: 'underline' }
       ],
       margin: [0, 20, 0, 0]
     },

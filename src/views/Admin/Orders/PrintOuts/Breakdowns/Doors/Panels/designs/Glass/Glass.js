@@ -10,7 +10,9 @@ export default (info, part) => {
     {
       qty: '',
       measurement: `GLASS \n ${lites}`,
-      pattern: ''
+      pattern: '',
+      width: 0,
+      height: 0
     },
   ];
   return none;
