@@ -1,2 +1,2 @@
-const db_url = 'https://portadoor-server-production.herokuapp.com';
+const db_url = 'http://server.portadoor.com;
 export default db_url;
