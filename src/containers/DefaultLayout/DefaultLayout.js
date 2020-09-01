@@ -206,43 +206,43 @@ class DefaultLayout extends Component {
         await loadPaymentTerms(cookie);
       }
 
-      if (!loadedBoxWoodtypes) {
-        await getWoodtypes(cookie);
-        await getAppliedMoulds(cookie);
-        await getBaseCap(cookie);
-        await getBaseboards(cookie);
-        await getCasings(cookie);
-        await getChairRails(cookie);
-        await getCopeDesigns(cookie);
-        await getCrownMouldings(cookie);
-        await getEdgeSlabs(cookie);
-        await getEdges(cookie);
-        await getFinish(cookie);
-        await getLites(cookie);
-        await get_Miter_DF_Designs(cookie);
-        await getMiterDesigns(cookie);
-        await getMouldingsLengths(cookie);
-        await getMTDesigns(cookie);
-        await get_MT_DF_Designs(cookie);
-        await getPanels(cookie);
-        await get_Plyths_Stools(cookie);
-        await getProfiles(cookie);
-        await getSolidCrowns(cookie);
-        await get_Wainscot_Beads(cookie);
-        await get_Face_Frame_Designs(cookie);
-        await get_Face_Frame_Top_Rails(cookie);
-        await getFurnitureFeet(cookie);
-        await getOnePieceWoodtypes(cookie);
-        await getOnePieceDesigns(cookie);
-        await getOnePiecePanels(cookie);
-        await getOnePieceEdges(cookie);
-        await getBoxBottomWoodtypes(cookie);
-        await getBoxBottomThickness(cookie);
-        await getBoxFinishes(cookie);
-        await getBoxNotches(cookie);
-        await getBoxThicknesses(cookie);
-        await getBoxWoodtypes(cookie);
-      }
+
+      await getWoodtypes(cookie);
+      await getAppliedMoulds(cookie);
+      await getBaseCap(cookie);
+      await getBaseboards(cookie);
+      await getCasings(cookie);
+      await getChairRails(cookie);
+      await getCopeDesigns(cookie);
+      await getCrownMouldings(cookie);
+      await getEdgeSlabs(cookie);
+      await getEdges(cookie);
+      await getFinish(cookie);
+      await getLites(cookie);
+      await get_Miter_DF_Designs(cookie);
+      await getMiterDesigns(cookie);
+      await getMouldingsLengths(cookie);
+      await getMTDesigns(cookie);
+      await get_MT_DF_Designs(cookie);
+      await getPanels(cookie);
+      await get_Plyths_Stools(cookie);
+      await getProfiles(cookie);
+      await getSolidCrowns(cookie);
+      await get_Wainscot_Beads(cookie);
+      await get_Face_Frame_Designs(cookie);
+      await get_Face_Frame_Top_Rails(cookie);
+      await getFurnitureFeet(cookie);
+      await getOnePieceWoodtypes(cookie);
+      await getOnePieceDesigns(cookie);
+      await getOnePiecePanels(cookie);
+      await getOnePieceEdges(cookie);
+      await getBoxBottomWoodtypes(cookie);
+      await getBoxBottomThickness(cookie);
+      await getBoxFinishes(cookie);
+      await getBoxNotches(cookie);
+      await getBoxThicknesses(cookie);
+      await getBoxWoodtypes(cookie);
+      
 
 
       // socket.on('order_submitted', res => (loadOrders(cookie)))
