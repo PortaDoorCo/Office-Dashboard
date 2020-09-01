@@ -70,6 +70,8 @@ class App extends Component {
       socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, 'An order has been updated', 2000), loadOrders(cookie)));
       socket.on('order_deleted', res => (NotificationManager.success('Order Deleted', 'Order Deleted', 2000), loadOrders(cookie)));
       socket.on('delivery_added', res => this.props.getDeliveries(cookie));
+      socket.on('customer_added', res => this.props.loadCustomers(cookie));
+      socket.on('customer_updated', res => this.props.loadCustomers(cookie));
     }
 
   }

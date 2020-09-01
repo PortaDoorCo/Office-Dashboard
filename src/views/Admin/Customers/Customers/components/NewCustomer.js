@@ -15,7 +15,7 @@ import {
   reduxForm,
   Field,
 } from 'redux-form';
-import { updateCustomer } from '../../../../../redux/customers/actions';
+import { updateCustomer, submitCustomer } from '../../../../../redux/customers/actions';
 import { renderField, renderDropdownList, renderSwitch, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
 import Cookies from 'js-cookie';
 
@@ -37,17 +37,15 @@ handleChange = e => {
 };
 
 submit = async (values, e) => {
-  const id = values.id;
-
   const data = {
     Company: values.Company,
     Contact: values.Contact,
     EMAIL: values.EMAIL,
-    PaymentMethod: values.PaymentMethod,
-    Ship_Via: values.Ship_Via,
+    PaymentMethod: values.PaymentMethod.NAME,
+    Ship_Via: values.Ship_Via.NAME,
     sale: values.sale.id,
     TaxRate: values.TaxRate,
-    PMT_TERMS: values.PMT_TERMS,
+    PMT_TERMS: values.PMT_TERMS.NAME,
     Address1: values.Address1,
     Address2: values.Address2,
     City: values.City,
@@ -60,12 +58,14 @@ submit = async (values, e) => {
     Shipping_State: values.Shipping_State,
     Shipping_Zip: values.Shipping_Zip,
     Shipping_Phone: values.Shipping_Phone,
-    Notes: values.Notes
+    Notes: values.Notes,
+    Taxable: values.Taxable
   };
 
-
-  await this.props.updateCustomer(id, data, cookie);
-  await this.props.onEdit();
+  console.log('dataaa', data);
+  await this.props.submitCustomer(data, cookie);
+  await this.props.reset();
+  await this.props.toggle();
 };
 
 render() {
@@ -103,6 +103,7 @@ render() {
                     type="text"
                     component={renderField}
                     label="company"
+                    validate={required}
                     edit={edit}
                   />
                 </FormGroup>
@@ -115,6 +116,7 @@ render() {
                     type="text"
                     component={renderField}
                     label="company"
+                    validate={required}
                     edit={edit}
                   />
                 </FormGroup>
@@ -127,6 +129,7 @@ render() {
                     type="text"
                     component={renderField}
                     label="company"
+                    
                     edit={edit}
                   />
                 </FormGroup>
@@ -142,9 +145,10 @@ render() {
                     type="text"
                     component={renderDropdownList}
                     data={paymentTypes}
-                    valueField="id"
+                    valueField="NAME"
                     textField="NAME"
                     label="company"
+                    validate={required}
                     edit={edit}
                   />
                 </FormGroup>
@@ -187,9 +191,23 @@ render() {
                     type="text"
                     component={renderDropdownList}
                     data={paymentTerms}
-                    valueField="id"
+                    valueField="NAME"
                     textField="NAME"
                     label="company"
+                    validate={required}
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+              <Col sm="2">
+                <FormGroup>
+                  <Label htmlFor="full-name">Sales Tax (%)</Label>
+                  <Field
+                    name={'TaxRate'}
+                    type="text"
+                    component={renderField}
+                    label="tax_rate"
+                    validate={required}
                     edit={edit}
                   />
                 </FormGroup>
@@ -201,18 +219,6 @@ render() {
                     name={'Taxable'}
                     type="text"
                     component={renderCheckboxToggle}
-                    edit={edit}
-                  />
-                </FormGroup>
-              </Col>
-              <Col sm="4">
-                <FormGroup>
-                  <Label htmlFor="full-name">Sales Tax (%)</Label>
-                  <Field
-                    name={'TaxRate'}
-                    type="text"
-                    component={renderField}
-                    label="tax_rate"
                     edit={edit}
                   />
                 </FormGroup>
@@ -237,6 +243,7 @@ render() {
                     component={renderField}
                     label="company"
                     edit={edit}
+                    validate={required}
                   />
                 </FormGroup>
               </Col>
@@ -265,6 +272,7 @@ render() {
                     component={renderField}
                     label="company"
                     edit={edit}
+                    validate={required}
                   />
                 </FormGroup>
               </Col>
@@ -277,6 +285,7 @@ render() {
                     component={renderField}
                     label="company"
                     edit={edit}
+                    validate={required}
                   />
                 </FormGroup>
               </Col>
@@ -289,6 +298,7 @@ render() {
                     component={renderField}
                     label="company"
                     edit={edit}
+                    validate={required}
                   />
                 </FormGroup>
               </Col>
@@ -441,7 +451,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      updateCustomer
+      updateCustomer,
+      submitCustomer
     },
     dispatch
   );
