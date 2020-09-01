@@ -3,7 +3,8 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupText
+  InputGroupText,
+  CustomInput
 } from 'reactstrap';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import Multiselect from 'react-widgets/lib/Multiselect';
@@ -94,6 +95,20 @@ export const renderField = ({
 }) => (
   <Fragment>
     <Input {...input} disabled={edit} autoComplete="new-password" />
+    {touched &&
+                ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+                    (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+  </Fragment>
+);
+
+export const renderSwitch = ({
+  input,
+  edit,
+  meta: { touched, error, warning },
+  ...custom
+}) => (
+  <Fragment>
+    <CustomInput type="switch" {...input} disabled={edit} autoComplete="new-password" />
     {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
                     (warning && <span style={{ color: 'red' }}>{warning}</span>))}
