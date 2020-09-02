@@ -56,7 +56,7 @@ export default (info, part, breakdowns) => {
   }
 
   if(part.orderType.value === 'One_Piece') {
-    return One_Piece_Door();
+    return One_Piece_Door(info,part, breakdowns[0]);
   }
 
     

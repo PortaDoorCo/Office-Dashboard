@@ -286,7 +286,7 @@ class DoorFilter extends Component {
           </Fragment>
         );
       }
-      if (formState.part_list[index].orderType.value === 'Frame_Only') {
+      if ((formState.part_list[index].orderType.value === 'Frame_Only') || (formState.part_list[index].orderType.value === 'One_Piece')) {
         return (
           <Fragment>
             <Row>
