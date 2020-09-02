@@ -52,18 +52,18 @@ const miscItemsSelector = state => {
   }
 };
 
+
 const taxRate = state => {
   const orders = state.form.DrawerOrder;
-
-  if (state.part_list.loadedBoxWoodtypes) {
-    if (orders) {
-      if (!orders.values.job_info) {
-        return [];
-      } else {
-        return state.form.DrawerOrder.values.job_info.customer.TaxRate;
-      }
-    } else {
+  if (orders) {
+    if (!orders.values.job_info) {
       return [];
+    } else {
+      if(state.form && state.form.DrawerOrder && state.form.DrawerOrder.values && state.form.DrawerOrder.values.companyprofile && state.form.DrawerOrder.values.companyprofile.Taxable){
+        return (state.form.DrawerOrder.values.job_info.customer.TaxRate / 100);
+      } else {
+        return 0;
+      }
     }
   } else {
     return [];

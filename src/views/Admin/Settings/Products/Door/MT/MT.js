@@ -105,11 +105,13 @@ const Cope = (props) => {
               <Row>
                 <Col>
                   <p>
-                    Cope-and-stick joinery produces great-looking frames for cabinet doors, but you need specialized router bits or shaper cutters to do the job the traditional way. Those items don't come cheap. So we found a low-cost, low-tech alternative, based on a simple dovetail bit.</p>
-
-                  <p>First, let's define some terms. "Stick" or "sticking" refers to the molded edge that's cut along the inside edge of the frame; pieces that meet that molding at a right angle must be "coped" to match the profile. Our technique replaces the usual round-over profile with a clean, simple bevel. It produces a subtle effect, not a dramatic one.</p>
-
-                  <p>If you have a router, a router table, a dovetail bit, and a slot cutter, you can do it the way we show here. Begin by cutting the stiles to their final length. Lay out the rails by adding 1" to the final inside width of the frame. That measurement will allow for a 1⁄2 " stub tenon on both ends of each rail.</p>
+                  The “MT” door construction is a far superior constructed door to an applied molding door.
+                  The “MT” constructed door is mitered in the moulded areas and mortised and tenoned on all
+                  straight parts. It provides more structural integrity than an applied molding door because the
+                  moulding detail is an integral part of the stiles and rails instead of a separate piece. It
+                  provides a more traditional look than a formal mitered door while still having the applied
+                  moulding look.
+                  </p>
 
                   {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
                     <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
