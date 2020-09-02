@@ -6,6 +6,7 @@ import CustomerPage from './CustomerPage';
 import AddCustomer from './AddCustomer';
 import DataTable from 'react-data-table-component';
 import { Tooltip, IconButton } from '@material-ui/core';
+import Add from '@material-ui/icons/Add';
 import Inbox from '@material-ui/icons/Inbox';
 import differenceBy from 'lodash/differenceBy';
 import Geocode from 'react-geocode';
@@ -204,7 +205,11 @@ const CompanyTable = (props) => {
       <Row>
         <Col lg='11' />
         <Col>
-          <Button color="primary" onClick={addCustomer}>Add Customer</Button>
+          <Tooltip title="Add Customer" placement="top">
+            <IconButton onClick={addCustomer}>
+              <Add style={{ width: '40', height: '40' }} />
+            </IconButton>
+          </Tooltip>
         </Col>
       </Row>
       
