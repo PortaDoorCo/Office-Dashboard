@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Breadcrumb, BreadcrumbItem, Row, Col, Card, CardBody, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Row, Col, Button, Card, CardBody, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Woodtype from './attributes/Woodtypes';
+import Woodtype from '../Attributes/Woodtypes';
 import Designs from './attributes/Designs';
-import Edges from './attributes/Edges';
-import Panels from './attributes/Panels';
+import Edges from '../Attributes/Edges';
+import Profiles from '../Attributes/Profiles';
+import Panels from '../Attributes/Panels';
+import AppliedProfiles from '../Attributes/Applied_Profiles';
 import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../../redux/part_list/actions';
 import classnames from 'classnames';
+
 import EditorPage from './editor/EditorPage';
 
 
@@ -24,13 +27,18 @@ const Navigation = (props) => {
 };
 
 
-const OnePiece = (props) => {
+const Cope = (props) => {
   const [activeTab, setActiveTab] = useState('1');
-  const [openEditor] = useState(false);
+  const [openEditor, setOpenEditor] = useState(false);
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  const toggleEditor = () => setOpenEditor(!openEditor);
+
+  const { role } = props;
+
 
   return (
     <div>
@@ -48,6 +56,7 @@ const OnePiece = (props) => {
                     <h1>One Piece Door</h1>
                   </CardTitle>
                 </Col>
+
               </Row>
 
               <Row className="mt-2 mb-3">
@@ -77,13 +86,28 @@ const OnePiece = (props) => {
                         Edges
                       </NavLink>
                     </NavItem>
-
                     <NavItem>
                       <NavLink
                         className={classnames({ active: activeTab === '4' })}
                         onClick={() => { toggle('4'); }}
                       >
+                        Profiles
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '5' })}
+                        onClick={() => { toggle('5'); }}
+                      >
                         Panels
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '6' })}
+                        onClick={() => { toggle('6'); }}
+                      >
+                        Applied Profiles
                       </NavLink>
                     </NavItem>
                   </Nav>
@@ -99,7 +123,10 @@ const OnePiece = (props) => {
 
                   <p>If you have a router, a router table, a dovetail bit, and a slot cutter, you can do it the way we show here. Begin by cutting the stiles to their final length. Lay out the rails by adding 1" to the final inside width of the frame. That measurement will allow for a 1⁄2 " stub tenon on both ends of each rail.</p>
 
-                  {/* <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button> */}
+                  {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+                    <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
+                    : <div />
+                  }
                 </Col>
               </Row>
             </CardBody>
@@ -119,7 +146,13 @@ const OnePiece = (props) => {
                 <Edges edges={props.edges} />
               </TabPane>
               <TabPane tabId="4">
+                <Profiles profiles={props.profiles} />
+              </TabPane>
+              <TabPane tabId="5">
                 <Panels panels={props.panels} />
+              </TabPane>
+              <TabPane tabId="6">
+                <AppliedProfiles applied_profiles={props.applied_profiles} />
               </TabPane>
             </TabContent>
           </Row>
@@ -150,7 +183,8 @@ const mapStateToProps = (state) => ({
   edges: state.part_list.edges,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
-  applied_profiles: state.part_list.applied_moulds
+  applied_profiles: state.part_list.applied_moulds,
+  role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
@@ -172,5 +206,5 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(OnePiece);
+)(Cope);
 

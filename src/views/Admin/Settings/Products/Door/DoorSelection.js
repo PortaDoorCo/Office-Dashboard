@@ -47,7 +47,7 @@ const Selection = (props) => {
               <ProductCard title={'Face Frame'} img={CopePNG} setPage={setSubPage} page={'face_frame'} />
             </Col>
             <Col>
-              <ProductCard title={'One Piece Door'} img={mt_PNG} setPage={setSubPage} page={'one_piece_door'} />
+              <ProductCard title={'One Piece Door'} img={CopePNG} setPage={setSubPage} page={'cope'} />
             </Col>
             <Col>
               <ProductCard title={'Slab Type Door'} img={mitre_PNG} setPage={setSubPage} page={'slab_type_door'} />
@@ -80,7 +80,7 @@ const Selection = (props) => {
       component = <Cope setHome={props.setHome} back={setSubPage} />;
       break;
     case 'one_piece_door':
-      component = <div />;
+      component = <Cope setHome={props.setHome} back={setSubPage} />;
       break;
     case 'slab_type_door':
       component = <div />;

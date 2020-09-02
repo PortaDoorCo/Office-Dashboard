@@ -484,7 +484,7 @@ export function getFurnitureFeet(cookie) {
 
 export function getOnePieceWoodtypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/woodtypes?one_piece=true&_sort=Item:ASC`,
+    const res = await fetch(`${db_url}/woodtypes`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -501,7 +501,7 @@ export function getOnePieceWoodtypes(cookie) {
 
 export function getOnePieceDesigns(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/cope-designs?one_piece=true&_sort=Item:ASC`,
+    const res = await fetch(`${db_url}/cope-designs`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -518,7 +518,7 @@ export function getOnePieceDesigns(cookie) {
 
 export function getOnePiecePanels(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/panels?one_piece=true&_sort=Item:ASC`,
+    const res = await fetch(`${db_url}/panels`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -535,7 +535,7 @@ export function getOnePiecePanels(cookie) {
 
 export function getOnePieceEdges(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/edges?one_piece=true&_sort=Item:ASC`,
+    const res = await fetch(`${db_url}/edges`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
