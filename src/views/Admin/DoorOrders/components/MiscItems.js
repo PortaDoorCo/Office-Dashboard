@@ -21,8 +21,6 @@ let Inputs = props => {
         </thead>
         <tbody>
           {fields.map((table, index) => {
-
-            console.log(formState);
             return (
               <tr key={index}>
                 <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderField} type="text" /></td>
