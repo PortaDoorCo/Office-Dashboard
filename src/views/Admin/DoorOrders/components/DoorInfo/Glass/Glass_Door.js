@@ -166,7 +166,7 @@ class GlassDoor extends Component {
               <Label htmlFor="mould">Edge</Label>
               <Field
                 name={`${part}.edge`}
-                component={renderDropdownList}
+                component={renderDropdownListFilter}
                 data={edges}
                 valueField="value"
                 textField="NAME"
