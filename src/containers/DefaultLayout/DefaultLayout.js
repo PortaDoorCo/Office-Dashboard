@@ -73,6 +73,7 @@ import {
   getOnePieceEdges,
 
   getBoxBottomThickness,
+  getBoxScoops,
   getBoxFinishes,
   getBoxNotches,
   getBoxThicknesses,
@@ -136,6 +137,7 @@ class DefaultLayout extends Component {
       getBoxThicknesses,
       getBoxWoodtypes,
       getBoxBottomWoodtypes,
+      getBoxScoops,
       getBreakdowns,
       getBoxBreakdowns,
       getPricing,
@@ -242,6 +244,7 @@ class DefaultLayout extends Component {
       await getBoxNotches(cookie);
       await getBoxThicknesses(cookie);
       await getBoxWoodtypes(cookie);
+      await getBoxScoops(cookie);
       
 
 
@@ -416,6 +419,7 @@ const mapDispatchToProps = dispatch =>
       getBoxBottomThickness,
       getBoxFinishes,
       getBoxNotches,
+      getBoxScoops,
       getBoxThicknesses,
       getBoxWoodtypes,
       getDeliveries,

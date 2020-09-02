@@ -11,6 +11,7 @@ import classnames from 'classnames';
 import EditorPage from './editor/EditorPage';
 import NotchDrill from './attributes/NotchDrill';
 import Finish from './attributes/Finish';
+import Scoops from './attributes/BoxScoopes';
 
 const Navigation = (props) => {
 
@@ -76,14 +77,6 @@ const DrawerBox = (props) => {
                     </NavItem>
                     <NavItem>
                       <NavLink
-                        className={classnames({ active: activeTab === '3' })}
-                        onClick={() => { toggle('3'); }}
-                      >
-                        Box Bottom Woodtype
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
                         className={classnames({ active: activeTab === '4' })}
                         onClick={() => { toggle('4'); }}
                       >
@@ -104,6 +97,14 @@ const DrawerBox = (props) => {
                         onClick={() => { toggle('6'); }}
                       >
                         Finish/Assembly
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '7' })}
+                        onClick={() => { toggle('7'); }}
+                      >
+                        Scoops
                       </NavLink>
                     </NavItem>
                   </Nav>
@@ -138,9 +139,6 @@ const DrawerBox = (props) => {
               <TabPane tabId="2">
                 <BoxThickness />
               </TabPane>
-              <TabPane tabId="3">
-                <BoxBottomWoodtype />
-              </TabPane>
               <TabPane tabId="4">
                 <BoxBottomThickness />
               </TabPane>
@@ -149,6 +147,9 @@ const DrawerBox = (props) => {
               </TabPane>
               <TabPane tabId="6">
                 <Finish />
+              </TabPane>
+              <TabPane tabId="7">
+                <Scoops />
               </TabPane>
             </TabContent>
           </Row>

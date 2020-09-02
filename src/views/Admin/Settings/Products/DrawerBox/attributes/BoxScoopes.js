@@ -5,15 +5,15 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getBoxFinishes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import { getBoxScoops, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
 
 
 
-const Finish = (props) => {
+const BoxScoopes = (props) => {
 
   const {
     className,
@@ -25,7 +25,7 @@ const Finish = (props) => {
   const [product, setProduct] = useState({
     id: '',
     NAME: '',
-    UPCHARGE: '',
+    PRICE: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false);
@@ -48,7 +48,7 @@ const Finish = (props) => {
   const addProd = () => {
     const p = {
       NAME: '',
-      UPCHARGE: '',
+      PRICE: '',
       photo: null
     };
     setNewProduct(true);
@@ -80,16 +80,16 @@ const Finish = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-finishes', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-scoops', cookie);
     await setModal(!modal);
-    await props.getBoxFinishes(cookie);
+    await props.getBoxScoops(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
-    await props.deleteProduct(id, 'box-finishes', cookie);
-    await props.getBoxFinishes(cookie);
+    await props.deleteProduct(id, 'box-scoops', cookie);
+    await props.getBoxScoops(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -98,13 +98,13 @@ const Finish = (props) => {
     const item = props.designs.length + 1;
     const submittedProduct = {
       NAME: product.NAME,
-      UPCHARGE: product.UPCHARGE,
+      PRICE: product.PRICE,
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-finishes', cookie);
+    await props.addProduct(submittedProduct, 'box-scoops', cookie);
     await setModal(!modal);
-    await props.getBoxFinishes(cookie);
+    await props.getBoxScoops(cookie);
   };
 
 
@@ -115,7 +115,7 @@ const Finish = (props) => {
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Price:</strong> ${card.UPCHARGE}</CardTitle>
+            <CardTitle><strong>Price:</strong> ${card.PRICE}</CardTitle>
 
           </CardBody>
         </Card>
@@ -164,10 +164,11 @@ const Finish = (props) => {
   
               <Row>
                 <Col>
-                  <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Label for="4/4_Price">Price</Label>
+                  <Input value={product.PRICE} name="PRICE" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
+  
   
               <Row className="mt-5">
                
@@ -214,7 +215,7 @@ const Finish = (props) => {
   } else {
     return (
 
-      <div>  
+      <div>
         <Row style={{ height: '600px' }}>
           <PerfectScrollbar>
             <div className="col d-flex align-content-start flex-wrap">{card}</div>
@@ -242,8 +243,8 @@ const Finish = (props) => {
   
               <Row>
                 <Col>
-                  <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Label for="4/4_Price">Price</Label>
+                  <Input value={product.PRICE} name="PRICE" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>
@@ -273,14 +274,14 @@ const Finish = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.box_finish,
+  designs: state.part_list.box_scoops,
   role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getBoxFinishes,
+      getBoxScoops,
       updateProduct,
       addProduct,
       deleteProduct
@@ -293,4 +294,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Finish);
+)(BoxScoopes);

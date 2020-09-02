@@ -6,7 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getBoxBottomThickness, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
 
@@ -76,7 +76,7 @@ const BoxBottomThickness = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-bottom-thickness', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-bottom-thicknesses', cookie);
     await setModal(!modal);
     await props.getBoxBottomThickness(cookie);
   };
@@ -84,7 +84,7 @@ const BoxBottomThickness = (props) => {
   const deleteProduct = async () => {
     let id = product.id;
 
-    await props.deleteProduct(id, 'box-bottom-thickness', cookie);
+    await props.deleteProduct(id, 'box-bottom-thicknesses', cookie);
     await props.getBoxBottomThickness(cookie);
     await toggleWarningModal();
     await toggle();
@@ -97,7 +97,7 @@ const BoxBottomThickness = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-bottom-thickness', cookie);
+    await props.addProduct(submittedProduct, 'box-bottom-thicknesses', cookie);
     await setModal(!modal);
     await props.getBoxBottomThickness(cookie);
   };

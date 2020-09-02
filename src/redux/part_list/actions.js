@@ -33,6 +33,8 @@ export const GET_ONE_PIECE_DESIGNS = 'GET_ONE_PIECE_DESIGNS';
 export const GET_ONE_PIECE_PANELS = 'GET_ONE_PIECE_PANELS';
 export const GET_ONE_PIECE_EDGES = 'GET_ONE_PIECE_EDGES';
 
+export const GET_BOX_SCOOPS = 'GET_BOX_SCOOPS';
+
 export const GET_BOX_BOTTOM_THICKNESS = 'GET_BOX_BOTTOM_THICKNESS';
 export const GET_BOX_FINISH = 'GET_BOX_FINISH';
 export const GET_BOX_NOTCHES = 'GET_BOX_NOTCHES';
@@ -595,6 +597,23 @@ export function getBoxNotches(cookie) {
     const data = await res.json();
     return dispatch({
       type: GET_BOX_NOTCHES,
+      data: data
+    });
+  };
+}
+
+export function getBoxScoops(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/box-scoops?_sort=Item:ASC`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_BOX_SCOOPS,
       data: data
     });
   };
