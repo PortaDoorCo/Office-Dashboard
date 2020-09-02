@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 
 let Inputs = props => {
-  const { fields, misc_items, edit } = props;
+  const { fields, misc_items, edit, formState } = props;
 
   return (
     <div>
@@ -25,16 +25,28 @@ let Inputs = props => {
               <tr key={index}>
                 <td style={{ width: '90px' }}><Field name={`${table}.qty`} edit={edit} component={renderField} type="text" /></td>
                 <td >
-                  <Field
-                    name={`${table}.item`}
-                    component={renderDropdownListFilter}
-                    data={misc_items}
-                    edit={edit}
-                    valueField="value"
-                    textField="NAME"
-                  />
+                  {formState &&  formState.misc_items && formState.misc_items[index] && formState.misc_items[index].category === 'preselect' ?
+                    <Field
+                      name={`${table}.item`}
+                      component={renderDropdownListFilter}
+                      data={misc_items}
+                      valueField="value"
+                      edit={edit}
+                      textField="NAME"
+                    />  : 
+                    <Field
+                      name={`${table}.item2`}
+                      component={renderField}
+                      valueField="value"
+                      edit={edit}
+                      textField="NAME"
+                    />
+                  }
                 </td>
-                <td style={{ width: '150px' }}><Field name={`${table}.price`} edit={edit} component={renderPrice} type="text" /></td>
+                {formState &&  formState.misc_items && formState.misc_items[index] && formState.misc_items[index].category === 'preselect' ?
+                  <td style={{ width: '150px' }}><Field name={`${table}.price`} component={renderPrice} edit={edit} type="text" /></td> : 
+                  <td style={{ width: '150px' }}><Field name={`${table}.price2`} component={renderPrice} edit={edit} type="text" /></td> 
+                }
                 <td> {!edit ? <Button color="danger" onClick={() => fields.remove(index)}>X</Button> : null}</td>
               </tr>
             );
@@ -43,10 +55,19 @@ let Inputs = props => {
       </Table>
 
       {!edit ?
-        <Button color="primary" className="mt-3" onClick={() => fields.push({
-          qty: 1,
-          price: 0
-        })}>Add Item</Button>
+        <div>
+          <Button color="primary" className="mt-3" onClick={() => fields.push({
+            category: 'preselect',
+            qty: 1,
+            price: 0
+          })}>Add Item </Button>
+
+          <Button color="primary" className="mt-3" onClick={() => fields.push({
+            category:'custom',
+            qty: 1,
+            price: 0
+          })}>Custom Item</Button>
+        </div>
         : null
       }
     </div>
@@ -84,11 +105,11 @@ class MiscItems extends Component {
   }
 
   render() {
-    const { misc_items, edit } = this.props;
+    const { misc_items, edit, formState } = this.props;
     return (
       <div>
         <h3>Misc Items</h3>
-        <FieldArray name="misc_items" component={Inputs} edit={edit} misc_items={misc_items} />
+        <FieldArray name="misc_items" component={Inputs} edit={edit} misc_items={misc_items} formState={formState} />
       </div>
     );
   }
