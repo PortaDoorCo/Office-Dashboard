@@ -57,7 +57,7 @@ const taxRate = state => {
       return [];
     } else {
       if(state.form && state.form.DoorOrder && state.form.DoorOrder.values && state.form.DoorOrder.values.companyprofile && state.form.DoorOrder.values.companyprofile.Taxable){
-        return (state.form.DoorOrder.values.job_info.customer.TaxRate / 100);
+        return (state.form.DoorOrder.values.companyprofile.TaxRate / 100);
       } else {
         return 0;
       }
