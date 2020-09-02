@@ -44,7 +44,15 @@ const miscItemsSelector = state => {
       return [];
     } else {
       return state.form.DrawerOrder.values.misc_items.map(i => {
-        return parseFloat(i.price);
+        if(i.price) {
+          return parseFloat(i.price);
+        }
+        if(i.price2){
+          return parseFloat(i.price2) * parseInt(i.qty);
+        }
+        else {
+          return 0;
+        }
       });
     }
   } else {
