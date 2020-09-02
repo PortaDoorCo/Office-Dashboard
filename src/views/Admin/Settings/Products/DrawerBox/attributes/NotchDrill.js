@@ -6,7 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getBoxNotches, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -80,7 +80,7 @@ const NotchDrill = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-notch', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-notches', cookie);
     await setModal(!modal);
     await props.getBoxNotches(cookie);
   };
@@ -88,7 +88,7 @@ const NotchDrill = (props) => {
   const deleteProduct = async () => {
     let id = product.id;
 
-    await props.deleteProduct(id, 'box-notch', cookie);
+    await props.deleteProduct(id, 'box-notches', cookie);
     await props.getBoxNotches(cookie);
     await toggleWarningModal();
     await toggle();
@@ -102,7 +102,7 @@ const NotchDrill = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-notch', cookie);
+    await props.addProduct(submittedProduct, 'box-notches', cookie);
     await setModal(!modal);
     await props.getBoxNotches(cookie);
   };
