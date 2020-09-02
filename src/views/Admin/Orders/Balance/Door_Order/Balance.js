@@ -44,12 +44,12 @@ class Balance extends Component {
   submit = async (values) => {
  
 
-    const { updateBalance } = this.props;
+    const { updateBalance, formState } = this.props;
 
     const id = values.id;
 
     const order = {
-      balance_due: parseFloat(this.props.balance) - parseFloat(values.pay_balance),
+      balance_due: parseFloat(formState && formState.balance_due) - parseFloat(values.pay_balance),
       balance_paid: values.pay_balance,
       balance_history:  values.balance_history
     };
@@ -73,7 +73,7 @@ class Balance extends Component {
         [
           ...values.balance_history,
           {
-            'balance_due': parseFloat(this.props.balance) - parseFloat(values.pay_balance),
+            'balance_due': parseFloat(formState && formState.balance_due) - parseFloat(values.pay_balance),
             'balance_paid': parseFloat(values.pay_balance),
             'date': new Date()
           }
