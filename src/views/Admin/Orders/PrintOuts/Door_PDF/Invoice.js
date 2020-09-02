@@ -26,7 +26,7 @@ export default data => {
     {
       columns: [
         {
-          stack: ['Acknowledgement']
+          stack: ['Invoice']
         },
         {
           stack: [
