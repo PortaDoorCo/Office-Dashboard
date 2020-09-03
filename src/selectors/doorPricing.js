@@ -14,7 +14,12 @@ const discountSelector = state => {
     if ((!state.form.DoorOrder.values && !state.form.DoorOrder.values.discount)) {
       return 0;
     } else {
-      return (numQty(state.form.DoorOrder.values.discount) / 100);
+      if(state.form.DoorOrder.values.discount.length > 0){
+        return (numQty(state.form.DoorOrder.values.discount) / 100);
+      } else {
+        return 0;
+      }
+      
     }
   } else {
     return 0;
