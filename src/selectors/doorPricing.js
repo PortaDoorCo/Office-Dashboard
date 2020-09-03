@@ -67,7 +67,6 @@ const miscItemsSelector = state => {
 const taxRate = state => {
   const orders = state.form.DoorOrder;
 
-  console.log(state.form);
   if (orders) {
     if (!orders.values.job_info) {
       return 0;
