@@ -102,7 +102,7 @@ export default data => {
           { text: index + 1, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
-          { text: `${item.notes ? item.notes : ''}`, style: 'fonts' },
+          { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'DFFF' : ''}`, style: 'fonts' },
           { text: `${(data.itemPrice[i][index]).toFixed(2)}`, style: 'fonts' },
           { text: `${(data.linePrice[i][index]).toFixed(2)}`, style: 'fonts', alignment: 'right' },
         ]);
