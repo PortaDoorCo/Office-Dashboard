@@ -374,7 +374,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         showBuilder: false,
                         item: fields.length + 1,
                         unevenCheck: false,
-                        unevenSplit: false,
+                        // unevenSplit: false,
 
                       })
                       : alert('please select a profile')
