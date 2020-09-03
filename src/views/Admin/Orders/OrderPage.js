@@ -479,7 +479,7 @@ class OrderPage extends Component {
 
                   <Col>
                     <Row>
-                      <Col lg='7'>
+                      <Col lg='9'>
                         <div className='mt-3 mb-2'>
                           <Select
                             value={this.state.selectedOption}
