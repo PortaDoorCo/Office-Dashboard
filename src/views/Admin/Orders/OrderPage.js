@@ -495,11 +495,11 @@ class OrderPage extends Component {
                             <Print style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title="Delete Order" placement="top" className="mb-3">
+                        {/* <Tooltip title="Delete Order" placement="top" className="mb-3">
                           <IconButton onClick={this.toggleDeleteModal}>
                             <Delete style={{ width: '40', height: '40' }} />
                           </IconButton>
-                        </Tooltip>
+                        </Tooltip> */}
                       </Col>
                     </Row>
                   </Col>
