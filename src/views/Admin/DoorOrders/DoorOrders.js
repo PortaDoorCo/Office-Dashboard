@@ -145,7 +145,8 @@ class DoorOrders extends Component {
           'date': new Date()
         }
       ],
-      sale: values.job_info.customer.sale.id
+      sale: values.job_info.customer.sale.id,
+      Taxable: values.Taxable
     };
 
     if (values.part_list[0].dimensions.length > 0) {

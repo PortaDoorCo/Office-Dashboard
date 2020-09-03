@@ -43,52 +43,71 @@ class JobInfo extends Component {
   }
 
 
-  onChangeCustomer = async () => {
-    const form = await this.props.formState;
-    const customer = await form.job_info.customer;
+  componentDidUpdate(prevProps){
+    const { formState } = this.props;
+    if(formState && formState.job_info && formState.job_info.customer){
+      if(formState.job_info.customer !== prevProps.formState.job_info.customer){
 
-    this.props.dispatch(
-      change(
-        'DoorOrder',
-        'job_info.Address1',
-        customer.Shipping_Address1 || customer.Address1
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DoorOrder',
-        'job_info.Address2',
-        customer.Shipping_Address2 || customer.Address2
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DoorOrder',
-        'job_info.City',
-        customer.Shipping_City || customer.City
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DoorOrder',
-        'job_info.State',
-        customer.Shipping_State || customer.State
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DoorOrder',
-        'job_info.Zip',
-        customer.Shipping_Zip || customer.Zip
-      )
-    );
-    this.props.dispatch(
-      change(
-        'DoorOrder',
-        'job_info.Phone',
-        customer.Shipping_Phone || customer.Phone1
-      )
-    );
+        const customer = formState.job_info.customer;
+
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'job_info.Address1',
+            customer.Shipping_Address1 || customer.Address1
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'job_info.Address2',
+            customer.Shipping_Address2 || customer.Address2
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'job_info.City',
+            customer.Shipping_City || customer.City
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'job_info.State',
+            customer.Shipping_State || customer.State
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'job_info.Zip',
+            customer.Shipping_Zip || customer.Zip
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'job_info.Phone',
+            customer.Shipping_Phone || customer.Phone1
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'discount',
+            customer.Discount
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'Taxable',
+            customer.Taxable
+          )
+        );
+      }
+    }
   }
 
 
@@ -282,7 +301,7 @@ class JobInfo extends Component {
 
 
 const mapStateToProps = state => ({
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('DrawerOrder')(state),
   shippingMethods: state.misc_items.shippingMethods
 });
 

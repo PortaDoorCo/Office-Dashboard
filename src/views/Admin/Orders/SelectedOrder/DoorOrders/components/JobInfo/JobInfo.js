@@ -96,7 +96,14 @@ class JobInfo extends Component {
           change(
             'DoorOrder',
             'discount',
-            (customer.Discount * 100)
+            customer.Discount
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'Taxable',
+            customer.Taxable
           )
         );
       }
