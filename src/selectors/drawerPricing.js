@@ -71,8 +71,8 @@ const taxRate = state => {
     if (!orders.values.job_info) {
       return [];
     } else {
-      if(state.form && state.form.DrawerOrder && state.form.DrawerOrder.values && state.form.DrawerOrder.values.companyprofile && state.form.DrawerOrder.values.companyprofile.Taxable){
-        return (state.form.DrawerOrder.values.companyprofile.TaxRate / 100);
+      if(state.form && state.form.DrawerOrder && state.form.DrawerOrder.values && state.form.DrawerOrder.values.Taxable){
+        return (state.form.DrawerOrder.values.job_info.customer.TaxRate / 100);
       } else {
         return 0;
       }

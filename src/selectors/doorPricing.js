@@ -66,18 +66,20 @@ const miscItemsSelector = state => {
 
 const taxRate = state => {
   const orders = state.form.DoorOrder;
+
+  console.log(state.form);
   if (orders) {
     if (!orders.values.job_info) {
-      return [];
+      return 0;
     } else {
-      if(state.form && state.form.DoorOrder && state.form.DoorOrder.values && state.form.DoorOrder.values.companyprofile && state.form.DoorOrder.values.companyprofile.Taxable){
-        return (state.form.DoorOrder.values.companyprofile.TaxRate / 100);
+      if(state.form && state.form.DoorOrder && state.form.DoorOrder.values && state.form.DoorOrder.values.Taxable){
+        return (state.form.DoorOrder.values.job_info.customer.TaxRate / 100);
       } else {
         return 0;
       }
     }
   } else {
-    return [];
+    return 0;
   }
 };
 

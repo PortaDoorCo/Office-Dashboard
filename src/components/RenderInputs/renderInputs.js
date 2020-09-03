@@ -143,11 +143,14 @@ export const renderCheckboxToggle = ({
   ...rest
 }) => (
   <div>
+    {console.log('inputtt', input)}
+    {console.log('valueeee', value)}
     <CheckboxUI
       toggle
       {...input}
       {...rest}
       defaultChecked={!!value}
+      checked={value ? true : false}
       onChange={(e, data) => onChange(data.checked)}
       type="checkbox"
       disabled={input.edit}

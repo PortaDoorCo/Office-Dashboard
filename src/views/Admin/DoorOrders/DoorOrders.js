@@ -8,7 +8,7 @@ import {
   Input,
   Button,
   FormGroup,
-  InputGroup, InputGroupAddon, InputGroupText,
+  InputGroup, InputGroupAddon, InputGroupText, Label
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,7 +20,8 @@ import {
   FormSection,
   getFormValues,
   FieldArray,
-  Field
+  Field,
+  change
 } from 'redux-form';
 import {
   submitOrder,
@@ -40,7 +41,7 @@ import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
-import { renderField } from '../../../components/RenderInputs/renderInputs';
+import { renderField, renderCheckboxToggle, renderCheckbox } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from './components/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
@@ -238,6 +239,22 @@ class DoorOrders extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
+                      <Row className='mb-0'>
+                        <Col xs='9' />
+                        <Col>
+                          <FormGroup>
+                            <Label htmlFor="companyName">Taxable?</Label>
+                            <Field
+                              name={'Taxable'}
+                              component={renderCheckboxToggle}
+                            />
+                          </FormGroup>
+                        </Col>
+
+                      </Row>
+
+
+
                       <strong>Discount: </strong>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
@@ -250,6 +267,8 @@ class DoorOrders extends Component {
                           label="discount"
                         />
                       </InputGroup>
+
+                      
                       <strong>Tax: </strong>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
@@ -257,6 +276,7 @@ class DoorOrders extends Component {
                         </InputGroupAddon>
                         <Input disabled placeholder={tax.toFixed(2)} />
                       </InputGroup>
+
 
                       <strong>Total: </strong>
                       <InputGroup className='mb-3'>
@@ -354,6 +374,7 @@ const mapStateToProps = state => ({
     balance_paid: 0,
     open: true,
     discount: state.customers.customerDB[0].Discount ? state.customers.customerDB[0].Discount : 0,
+    Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
     part_list: [
       {
         construction: {
