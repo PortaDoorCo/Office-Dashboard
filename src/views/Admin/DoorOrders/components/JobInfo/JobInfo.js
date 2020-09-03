@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import { renderField, renderDropdownList, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs';
+import { renderField, renderDropdownList, renderDropdownListFilter, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
 
 momentLocaliser(moment);
 
@@ -42,6 +42,8 @@ class JobInfo extends Component {
       if (formState.job_info.customer !== prevProps.formState.job_info.customer) {
 
         const customer = formState.job_info.customer;
+
+        console.log('customer tax', customer.Taxable);
 
         this.props.dispatch(
           change(
@@ -90,6 +92,13 @@ class JobInfo extends Component {
             'DoorOrder',
             'discount',
             customer.Discount
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'Taxable',
+            customer.Taxable
           )
         );
       }
@@ -269,7 +278,6 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
         </Row>
-
         <hr />
 
 

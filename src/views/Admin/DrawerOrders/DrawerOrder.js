@@ -9,7 +9,8 @@ import {
   FormGroup,
   InputGroup,
   InputGroupAddon,
-  InputGroupText
+  InputGroupText,
+  Label
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -41,7 +42,7 @@ import SideBar from './components/SideBar';
 import Sticky from 'react-stickynode';
 import Cookies from 'js-cookie';
 import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolder';
-import { renderField } from '../../../components/RenderInputs/renderInputs';
+import { renderField, renderCheckboxToggle } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from './components/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
@@ -266,6 +267,21 @@ class DoorOrders extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
+
+                      <Row className='mb-0'>
+                        <Col xs='9' />
+                        <Col>
+                          <FormGroup>
+                            <Label htmlFor="companyName">Taxable?</Label>
+                            <Field
+                              name={'Taxable'}
+                              component={renderCheckboxToggle}
+                            />
+                          </FormGroup>
+                        </Col>
+
+                      </Row>
+
                       <strong>Discount: </strong>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
@@ -385,6 +401,7 @@ const mapStateToProps = (state, prop) => ({
     balance_paid: 0,
     misc_items: [],
     discount: state.customers.customerDB[0].Discount,
+    Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
     part_list: [
       {
         dimensions: [],

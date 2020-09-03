@@ -94,6 +94,13 @@ class JobInfo extends Component {
             customer.Discount
           )
         );
+        this.props.dispatch(
+          change(
+            'DrawerOrder',
+            'Taxable',
+            customer.Taxable
+          )
+        );
       }
     }
   }
