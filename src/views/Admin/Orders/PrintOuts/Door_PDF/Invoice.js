@@ -54,6 +54,7 @@ export default data => {
             {text: `Customer - ${data.job_info.customer.Company}`},
             {text: `${data.companyprofile.Contact}`, style: 'fonts'},
             {text: `${data.companyprofile.Address1}`, style: 'fonts'},
+            {text: `${data.companyprofile.Address2}`, style: 'fonts'},
             {text: `${data.companyprofile.City}, ${data.job_info.State}`, style: 'fonts'},
             {text: `${data.companyprofile.Zip}`, style: 'fonts'},
             {text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts'},
@@ -67,6 +68,7 @@ export default data => {
             { text: `Job: ${data.job_info.jobName.length>0 ? data.job_info.jobName : 'None'}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
             { text: `Ship To: ${data.job_info.customer.Company}`, style: 'fonts', alignment: 'right', margin: [0, 0, 0, 0] },
             { text: `${data.job_info.Address1}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
+            { text: `${data.job_info.Address2}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
             { text: `${data.job_info.City}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
             { text: `${data.job_info.Zip}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
             { text: `${data.companyprofile.Phone1}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
@@ -118,12 +120,14 @@ export default data => {
                   text: `${part.cope_design ? part.cope_design.NAME : part.mt_design ? part.mt_design.NAME + ' ' + part.construction.value : part.miter_design ? part.miter_design.NAME + ' ' + part.construction.value : part.miter_df_design ? part.miter_df_design.NAME + ' ' + part.construction.value : part.mt_df_design ? part.mt_df_design.NAME + ' ' + part.construction.value : part.construction.name} - ${part.panel ? part.panel.NAME : 'Glass'}`,
                   style: 'fonts'
                 },
+                { text: `${part.orderType ? part.orderType.name : ''}`, style: 'fonts' },
               ]
             },
             {
               stack: [
                 { text: `IP: ${part.profile ? part.profile.NAME : ''}  Edge: ${part.edge ? part.edge.NAME : ''}`, style: 'fonts' },
-                { text: `Applied Profile: ${part.applied_profile ? part.applied_profile.NAME : 'None'}`, style: 'fonts' }
+                { text: `Applied Profile: ${part.applied_profile ? part.applied_profile.NAME : 'None'}`, style: 'fonts' },
+                { text: `Thickness: ${part.thickness ? part.thickness.name : 'None'}`, style: 'fonts' }
               ],
               alignment: 'right'
             }
