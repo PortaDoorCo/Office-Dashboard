@@ -17,7 +17,11 @@ const discountSelector = state => {
     if ((!state.form.DrawerOrder.values && !state.form.DrawerOrder.values.discount)) {
       return 0;
     } else {
-      return (numQty(state.form.DrawerOrder.values.discount) / 100);
+      if(state.form.DrawerOrder.values.discount.length > 0){
+        return (numQty(state.form.DrawerOrder.values.discount) / 100);
+      } else {
+        return 0;
+      }
     }
   } else {
     return 0;
