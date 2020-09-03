@@ -61,7 +61,8 @@ class Edit extends Component {
       Shipping_Zip: values.Shipping_Zip,
       Shipping_Phone: values.Shipping_Phone,
       Notes: values.Notes,
-      Taxable: values.Taxable
+      Taxable: values.Taxable,
+      Discount: values.Discount
     };
 
     console.log(data);
@@ -215,13 +216,26 @@ class Edit extends Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col sm="1">
+                  <Col sm="2">
                     <FormGroup>
                       <Label htmlFor="companyName">Taxable?</Label>
                       <Field
                         name={'Taxable'}
                         type="text"
                         component={renderCheckboxToggle}
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="3">
+                    <FormGroup>
+                      <Label htmlFor="full-name">Discount (%)</Label>
+                      <Field
+                        name={'Discount'}
+                        type="text"
+                        component={renderField}
+                        label="tax_rate"
+                        validate={required}
                         edit={edit}
                       />
                     </FormGroup>
