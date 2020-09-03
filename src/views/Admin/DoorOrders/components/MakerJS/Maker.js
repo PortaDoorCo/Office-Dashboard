@@ -35,7 +35,7 @@ const Maker = props => {
   let unevenInput3 = formState.part_list[i].dimensions[index].unevenSplitInput2 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput2) : 0;
   let unevenInput4 = formState.part_list[i].dimensions[index].unevenSplitInput3 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput3) : 0;
   let unevenInput5 = formState.part_list[i].dimensions[index].unevenSplitInput4 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput4) : 0;
-  let unevenCheck = formState.part_list[i].dimensions[index].unevenCheck ? numQty(formState.part_list[i].dimensions[index].unevenCheck) : false;
+  let unevenCheck = formState.part_list[i].dimensions[index].unevenCheck ? formState.part_list[i].dimensions[index].unevenCheck : false;
 
 
 

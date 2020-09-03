@@ -329,6 +329,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         <Field
                           name={`${table}.unevenSplitInput${index}`}
                           component={renderField}
+                          edit={edit}
                         />
                       </Col>
                       <Col />
