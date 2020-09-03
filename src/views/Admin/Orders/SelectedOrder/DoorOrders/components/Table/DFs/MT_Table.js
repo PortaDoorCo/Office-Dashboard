@@ -7,7 +7,7 @@ import {
   Button
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from 'redux-form';
+import { Field, change } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -57,6 +57,49 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
       newHeight = [...newHeight, v];
     }
     setHeight(newHeight);
+  };
+
+
+  const updateFullFrame = (e, index) => {
+
+    const part = formState.part_list[i];
+
+    console.log(e);
+
+    if (e) {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
+        )
+      );
+
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
+        )
+      );
+    } else {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.mt_design ? (part.mt_design.DF_Reduction) : 0)
+        )
+      );
+
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.mt_design ? (part.mt_design.DF_Reduction) : 0)
+        )
+      );
+    } 
+
   };
 
 
@@ -221,7 +264,12 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                     null}
                 </Col>
                 <Col>
-                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
+                  <Field
+                    name={`${table}.full_frame`}
+                    component={renderCheckboxToggle}
+                    edit={edit}
+                    onChange={(e) => updateFullFrame(e, index)}
+                    label="Full Frame" />
                 </Col>
               </Row>
 
@@ -314,10 +362,10 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                             formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                           ),
                           topRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
+                            formState.part_list[formState.part_list.length - 1].mt_design.DF_Reduction
                           ),
                           bottomRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
+                            formState.part_list[formState.part_list.length - 1].mt_design.DF_Reduction
                           ),
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,

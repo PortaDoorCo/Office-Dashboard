@@ -7,7 +7,7 @@ import {
   Button
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from 'redux-form';
+import { Field, change } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -58,6 +58,42 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
       newHeight = [...newHeight, v];
     }
     setHeight(newHeight);
+  };
+
+  const updateFullFrame = (e, index) => {
+    const part = formState.part_list[i];
+    if (e) {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+        )
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+        )
+      );
+    } else {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+        )
+      );
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+        )
+      );
+    }
   };
 
 
@@ -222,7 +258,11 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     null}
                 </Col>
                 <Col>
-                  {(parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null}
+                  <Field
+                    name={`${table}.full_frame`}
+                    component={renderCheckboxToggle}
+                    onChange={(e) => updateFullFrame(e, index)}
+                    label="Full Frame" />
                 </Col>
               </Row>
 
