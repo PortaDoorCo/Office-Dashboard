@@ -9,7 +9,9 @@ import {
   Button,
   InputGroup,
   InputGroupText,
-  InputGroupAddon
+  InputGroupAddon,
+  FormGroup,
+  Label
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -45,7 +47,7 @@ import {
 } from '../../../../../selectors/doorPricing';
 import 'react-notifications/lib/notifications.css';
 import Cookies from 'js-cookie';
-import { renderField } from '../../../../../components/RenderInputs/renderInputs';
+import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
 
 const cookie = Cookies.get('jwt');
 
@@ -114,6 +116,7 @@ class DoorOrders extends Component {
       misc_items: values.misc_items,
       discount: values.discount,
       dueDate: values.job_info.DueDate,
+      Taxable: values.Taxable
     };
 
     const orderId = values.id;
@@ -204,6 +207,19 @@ class DoorOrders extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
+                      <Row className='mb-0'>
+                        <Col xs='9' />
+                        <Col>
+                          <FormGroup>
+                            <Label htmlFor="companyName">Taxable?</Label>
+                            <Field
+                              name={'Taxable'}
+                              component={renderCheckboxToggle}
+                            />
+                          </FormGroup>
+                        </Col>
+
+                      </Row>
                       <strong>Discount: </strong>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">

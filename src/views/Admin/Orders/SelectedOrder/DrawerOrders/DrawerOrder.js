@@ -9,7 +9,9 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupText
+  InputGroupText,
+  FormGroup,
+  Label
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -45,7 +47,7 @@ import {
   balanceTotalSelector
 } from '../../../../../selectors/drawerPricing';
 import Cookies from 'js-cookie';
-import { renderField } from '../../../../../components/RenderInputs/renderInputs';
+import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
 
 const cookie = Cookies.get('jwt');
 
@@ -95,7 +97,6 @@ class DrawerOrder extends Component {
     } = this.props;
 
 
-    const orderType = 'Drawer Order';
 
     const jobInfo = {
       jobName: values.job_info.jobName,
@@ -111,14 +112,14 @@ class DrawerOrder extends Component {
       customer: {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
-      }
+      },
+      ShippingMethod: values.job_info.ShippingMethod
     };
 
 
     const order = {
       part_list: values.part_list,
       job_info: jobInfo,
-      status: values.job_info.status,
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
       itemPrice: itemPrice,
@@ -129,24 +130,8 @@ class DrawerOrder extends Component {
       balance_paid: values.balance_paid,
       balance_due: balance,
       misc_items: values.misc_items,
-      orderType: orderType,
       dueDate: values.job_info.DueDate,
-      user: user.id,
-      userName: user.username,
-      files: this.state.files,
-      tracking: [
-        {
-          'status': values.job_info.status,
-          'date': new Date()
-        }
-      ],
-      balance_history: [
-        {
-          'balance_due': total,
-          'balance_paid': values.balance_paid,
-          'date': new Date()
-        }
-      ]
+      Taxable: values.Taxable,
     };
 
     const orderId = values.id;
@@ -157,78 +142,6 @@ class DrawerOrder extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.formState !== prevProps.formState) {
-      if (this.props.formState) {
-        const update = async () => {
-          const form = await this.props.formState;
-          const customer = await form.job_info.customer;
-          const part_list = await form.part_list;
-
-          this.props.dispatch(
-            change(
-              'DrawerOrder',
-              'job_info.Address1',
-              customer.Shipping_Address1 || customer.Address1
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DrawerOrder',
-              'job_info.Address2',
-              customer.Shipping_Address2 || customer.Address2
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DrawerOrder',
-              'job_info.City',
-              customer.Shipping_City || customer.City
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DrawerOrder',
-              'job_info.State',
-              customer.Shipping_State || customer.State
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DrawerOrder',
-              'job_info.Zip',
-              customer.Shipping_Zip || customer.Zip
-            )
-          );
-          this.props.dispatch(
-            change(
-              'DrawerOrder',
-              'job_info.Phone',
-              customer.Shipping_Phone || customer.Phone1
-            )
-          );
-
-          part_list.forEach((part, i) => {
-            if (part.dimensions) {
-              return part.dimensions.forEach((info, index) => {
-                return this.props.dispatch(
-                  change(
-                    'DrawerOrder',
-                    `part_list[${i}].dimensions[${index}].item`,
-                    index + 1
-                  )
-                );
-              });
-            } else {
-              return null;
-            }
-          });
-        };
-        update();
-      }
-    }
   }
 
   cancelOrder = e => {
@@ -324,6 +237,21 @@ class DrawerOrder extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
+
+                      <Row className='mb-0'>
+                        <Col xs='9' />
+                        <Col>
+                          <FormGroup>
+                            <Label htmlFor="companyName">Taxable?</Label>
+                            <Field
+                              name={'Taxable'}
+                              component={renderCheckboxToggle}
+                            />
+                          </FormGroup>
+                        </Col>
+
+                      </Row>
+
                       <strong>Discount: </strong>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
