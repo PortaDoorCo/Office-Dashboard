@@ -159,6 +159,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         component={renderField}
                         label="leftStile"
                         edit={edit}
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -171,7 +172,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         component={renderField}
                         label="rightStile"
                         edit={edit}
-
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -184,7 +185,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         component={renderField}
                         label="topRail"
                         edit={edit}
-
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -197,6 +198,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         component={renderField}
                         label="bottomRail"
                         edit={edit}
+                        validate={required}
                       />
                     </td>
                   </tr>
