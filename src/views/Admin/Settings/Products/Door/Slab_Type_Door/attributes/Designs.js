@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
+import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup } from 'reactstrap';
 import Cookies from 'js-cookie';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCopeDesigns, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../../components/FileUploader/FileUploader'
+import FileUploader from '../../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const Designs = (props) => {
@@ -32,6 +30,7 @@ const Designs = (props) => {
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState(props.designs);
 
   const toggle = () => {
     setModal(!modal);
@@ -116,8 +115,11 @@ const Designs = (props) => {
     await props.getCopeDesigns(cookie);
   };
 
+  const changeFilterValue = (e) => {
+    setFilteredProducts(props.designs.filter(i => i.NAME.split(' ').join('').toLowerCase().includes(e.target.value.split(' ').join(''))));
+  };
 
-  const card = props.designs.map(card => {
+  const card = filteredProducts.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: '200px' }}>
         <Card style={{ height: '100%' }} onClick={() => setCard(card)}>
@@ -138,6 +140,16 @@ const Designs = (props) => {
     return (
 
       <div>
+
+        <Row className="mb-2">
+          <Col>
+            <FormGroup>
+              <Label htmlFor="search">Search</Label>
+              <Input onChange={(e) => changeFilterValue(e)} />
+            </FormGroup>
+          </Col>
+          <Col xs='9' />
+        </Row>
   
         <Row className="mb-2">
           <Col>
