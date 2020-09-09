@@ -41,11 +41,11 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
             {
               stack: [
                 {
-                  text: `${i.edge ? i.edge.NAME : ''}`,
+                  text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`,
                   style: 'fonts'
                 },
                 {
-                  image: e,
+                  image: i.edge ? e : blob,
                   width: 100,
                   height: 100,
                   fit: [100, 100]
@@ -56,11 +56,11 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
             {
               stack: [
                 {
-                  text: `${i.profile ? i.profile.NAME : ''}`,
+                  text: `Profile: ${i.profile ? i.profile.NAME : 'None'}`,
                   style: 'fonts'
                 },
                 {
-                  image: m,
+                  image: i.profile ? m : blob,
                   width: 100,
                   height: 100,
                   fit: [100, 100]
@@ -71,11 +71,11 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
             {
               stack: [
                 {
-                  text: `${i.panel ? i.panel.NAME : ''}`,
+                  text: `Panel: ${i.panel ? i.panel.NAME : 'None'}`,
                   style: 'fonts'
                 },
                 {
-                  image: p,
+                  image: i.panel ? p : blob,
                   width: 100,
                   height: 100,
                   fit: [100, 100]
@@ -86,11 +86,11 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
             {
               stack: [
                 {
-                  text: `${i.applied_profile ? i.applied_profile.NAME : ''}`,
+                  text: `Applied Profile: ${i.applied_profile.NAME}`,
                   style: 'fonts'
                 },
                 {
-                  image: a,
+                  image: i.applied_profile.NAME !== 'None' ? a : blob,
                   width: 100,
                   height: 100,
                   fit: [100, 100]
