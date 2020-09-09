@@ -143,16 +143,22 @@ export default (data,breakdowns) => {
 
       console.log(equation);
 
-      
-      return [
-        {
-          columns: [
-            { text: `Board Feet of ${i.woodtype.NAME} - ${i.panel.NAME} - ${i.thickness.name}" Thickness Panel Material Needed: ${equation.toFixed(2)}`, style: 'fonts', width: 400 },
-            { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-            { text: ((equation * 0.2) + equation).toFixed(2), style: 'fonts', width: 30 }
-          ],
-        }
-      ];
+      console.log('iiiiii', i);
+
+      if (i.panel){
+        return [
+          {
+            columns: [
+              { text: `Board Feet of ${i.woodtype.NAME} -  - ${i.thickness.name}" Thickness Panel Material Needed: ${equation.toFixed(2)}`, style: 'fonts', width: 400 },
+              { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+              { text: ((equation * 0.2) + equation).toFixed(2), style: 'fonts', width: 30 }
+            ],
+          }
+        ];
+      } else {
+        return [];
+      }
+
     }),
     {
       columns: [
