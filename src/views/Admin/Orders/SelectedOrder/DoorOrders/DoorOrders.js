@@ -15,8 +15,8 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DoorInfo from './components/DoorInfo/DoorInfo';
-import JobInfo from './components/JobInfo/JobInfo';
+import DoorInfo from '../../../../../components/DoorOrders/DoorInfo/DoorInfo';
+import JobInfo from '../../../../../components/DoorOrders/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
 import {
   reduxForm,
@@ -215,6 +215,7 @@ class DoorOrders extends Component {
                             <Field
                               name={'Taxable'}
                               component={renderCheckboxToggle}
+                              edit={edit}
                             />
                           </FormGroup>
                         </Col>
