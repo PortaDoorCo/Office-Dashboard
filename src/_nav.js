@@ -31,6 +31,10 @@ export default {
       url: '/drawer-order',
     },
     {
+      name: 'Misc Items',
+      url: '/door-order',
+    },
+    {
       name: 'Reports',
       icon: '',
       children: [

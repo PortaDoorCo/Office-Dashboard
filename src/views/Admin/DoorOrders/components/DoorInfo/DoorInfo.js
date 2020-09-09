@@ -21,10 +21,6 @@ const construction = [
   {
     name: 'MT Construction',
     value: 'MT'
-  },
-  {
-    name: 'Glass Door',
-    value: 'Glass'
   }
 ];
 
@@ -36,6 +32,14 @@ const orderType = [
   {
     name: 'Drawer Front',
     value: 'DF'
+  },
+  {
+    name: 'Glass Door',
+    value: 'Glass'
+  },
+  {
+    name: 'Glass DF',
+    value: 'Glass_DF'
   },
   {
     name: 'Face Frame',
