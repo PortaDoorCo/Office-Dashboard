@@ -167,7 +167,7 @@ const OrderTable = (props) => {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()))
+            (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info.poNum.toLowerCase().includes(filterText.toLowerCase()))
           );
         } else {
           return (
@@ -183,7 +183,7 @@ const OrderTable = (props) => {
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
                 moment(date) <= moment(endDate).endOf('day').valueOf() &&
                 item.status.includes(filterStatus) && 
-                (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()))
+                (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info.poNum.toLowerCase().includes(filterText.toLowerCase()))
           );
         } else {
           return (
@@ -226,6 +226,16 @@ const OrderTable = (props) => {
     {
       name: 'Order #',
       selector: 'orderNum',
+      sortable: true,
+    },
+    {
+      name: 'PO #',
+      selector: 'job_info.poNum',
+      sortable: true,
+    },
+    {
+      name: 'Job Name',
+      selector: 'job_info.jobName',
       sortable: true,
     },
     {
