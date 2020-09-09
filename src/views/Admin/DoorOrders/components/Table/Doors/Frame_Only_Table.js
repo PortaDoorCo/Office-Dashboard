@@ -176,6 +176,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="leftStile"
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -187,6 +188,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="rightStile"
+                        validate={required}
 
                       />
                     </td>
@@ -199,7 +201,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="topRail"
-
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -211,6 +213,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="bottomRail"
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -222,6 +225,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         type="text"
                         component={renderField}
                         label="horizontalMidRail"
+                        validate={required}
                       />
                     </td>
                   </tr>

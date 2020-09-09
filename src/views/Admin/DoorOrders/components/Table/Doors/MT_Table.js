@@ -194,6 +194,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="leftStile"
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -205,7 +206,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="rightStile"
-
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -217,7 +218,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="topRail"
-
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -229,6 +230,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         type="text"
                         component={renderField}
                         label="bottomRail"
+                        validate={required}
                       />
                     </td>
                     <td>
