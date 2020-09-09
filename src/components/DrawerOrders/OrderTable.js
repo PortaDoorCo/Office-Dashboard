@@ -9,8 +9,8 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
-import { renderDropdownList, renderField, renderFieldDisabled, renderPrice } from '../../../../../../components/RenderInputs/renderInputs';
-import RenderPriceHolder from '../../../../../../components/RenderInputs/RenderPriceHolder';
+import { renderDropdownList, renderField, renderFieldDisabled, renderPrice } from '../RenderInputs/renderInputs';
+import RenderPriceHolder from '../RenderInputs/RenderPriceHolder';
 
 const required = value => value ? undefined : 'Required';
 
@@ -173,7 +173,8 @@ class OrderTable extends Component {
             {!edit ?
               <Button color="primary" className="btn-circle" onClick={() => fields.push({
                 scoop: scoop[0],
-                dividers: dividers[0]
+                dividers: dividers[0],
+                item: fields.length + 1
               })}>+</Button>
               : <div />
             }

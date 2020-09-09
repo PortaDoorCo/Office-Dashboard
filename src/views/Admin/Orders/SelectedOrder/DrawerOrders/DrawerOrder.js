@@ -15,8 +15,8 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DrawerBoxInfo from './components/DrawerBoxInfo';
-import JobInfo from './components/JobInfo/JobInfo';
+import DrawerBoxInfo from '../../../../../components/DrawerOrders/DrawerBoxInfo';
+import JobInfo from '../../../../../components/JobInfo/JobInfo';
 import NotificationAlert from 'react-notification-alert';
 import 'react-notifications/lib/notifications.css';
 import {
@@ -113,7 +113,8 @@ class DrawerOrder extends Component {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
       },
-      ShippingMethod: values.job_info.ShippingMethod
+      ShippingMethod: values.job_info.ShippingMethod,
+      PaymentMethod: values.job_info.PaymentMethod
     };
 
 
@@ -246,6 +247,7 @@ class DrawerOrder extends Component {
                             <Field
                               name={'Taxable'}
                               component={renderCheckboxToggle}
+                              edit={edit}
                             />
                           </FormGroup>
                         </Col>

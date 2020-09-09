@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {
   Row,
@@ -10,7 +11,7 @@ import {
 import 'antd/dist/antd.css';
 import { Field, FieldArray } from 'redux-form';
 import OrderTable from './OrderTable';
-import { renderDropdownList, renderField } from '../../../../../../components/RenderInputs/renderInputs';
+import { renderDropdownList, renderField } from '../RenderInputs/renderInputs';
 
 
 const required = value => value ? undefined : 'Required';
@@ -200,5 +201,3 @@ class DrawerBoxInfo extends Component {
 }
 
 export default DrawerBoxInfo;
-
-

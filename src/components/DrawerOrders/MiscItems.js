@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
-import { renderField, renderDropdownListFilter, renderPrice } from '../../../../components/RenderInputs/renderInputs';
+import { renderField, renderDropdownListFilter, renderPrice } from '../RenderInputs/renderInputs';
 import { Button, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 
