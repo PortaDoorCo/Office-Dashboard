@@ -14,11 +14,15 @@ export default (v, part) => {
     const widthTotal = widths.reduce((acc, item) => acc + item);
     const heightsTotal = heights.reduce((acc, item) => acc + item);
 
-    return ((widthTotal + heightsTotal) / 12).toFixed(2);
+
+
+    return ((widthTotal + heightsTotal) / 12);
   });
 
+  console.log('calc',calc);
+
   // console.log('callllccc',calc);
-  return calc;
+  return calc.reduce((acc, item) => acc + item).toFixed(2);
   // const calc = v.map(item => {
   //   const height = ((numQty(item.height)) * 2) * parseInt(item.qty);
   //   const width = (numQty(item.width) * 2) * parseInt(item.qty);
