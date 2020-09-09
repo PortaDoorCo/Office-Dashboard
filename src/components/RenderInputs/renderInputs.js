@@ -139,12 +139,13 @@ export const renderPrice = ({
 
 export const renderCheckboxToggle = ({
   input: { value, onChange, ...input },
+  edit,
   meta: { touched, error },
   ...rest
 }) => (
   <div>
     {console.log('inputtt', input)}
-    {console.log('valueeee', value)}
+    {console.log('valueeee', edit)}
     <CheckboxUI
       toggle
       {...input}
@@ -153,7 +154,7 @@ export const renderCheckboxToggle = ({
       checked={value ? true : false}
       onChange={(e, data) => onChange(data.checked)}
       type="checkbox"
-      disabled={input.edit}
+      disabled={edit}
     />
     {touched && error && <span>{error}</span>}
   </div>

@@ -37,16 +37,16 @@ import {
   miscTotalSelector,
 } from '../../../selectors/doorPricing';
 import 'react-notifications/lib/notifications.css';
-import SideBar from './components/SideBar';
+import SideBar from '../../../components/DoorOrders/SideBar';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
 import { renderField, renderCheckboxToggle, renderCheckbox } from '../../../components/RenderInputs/renderInputs';
-import MiscItems from './components/MiscItems';
+import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
-const DoorInfo = React.lazy(() => import('./components/DoorInfo/DoorInfo'));
-const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
+const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
+const JobInfo = React.lazy(() => import('../../../components/DoorOrders/JobInfo/JobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -109,7 +109,8 @@ class DoorOrders extends Component {
         sale: values.job_info.customer.sale.id,
         Taxable: values.job_info.customer.Taxable
       },
-      ShippingMethod: values.job_info.ShippingMethod
+      ShippingMethod: values.job_info.ShippingMethod,
+      PaymentMethod: values.job_info.PaymentMethod
     };
 
     const order = {
