@@ -375,7 +375,7 @@ const mapStateToProps = state => ({
     misc_items: [],
     balance_paid: 0,
     open: true,
-    discount: state.customers.customerDB[0].Discount ? state.customers.customerDB[0].Discount : 0,
+    discount: 0,
     Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
     part_list: [
       {
