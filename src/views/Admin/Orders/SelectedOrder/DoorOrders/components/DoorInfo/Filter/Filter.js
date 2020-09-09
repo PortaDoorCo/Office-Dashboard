@@ -245,7 +245,7 @@ class DoorFilter extends Component {
     } = this.props;
 
     if (formState && formState.part_list) {
-      if ((formState.part_list[index].orderType.value === 'Door') || (formState.part_list[index].orderType.value === 'DF')) {
+      if ((formState.part_list[index].orderType.value === 'Door') || (formState.part_list[index].orderType.value === 'DF') || (formState.part_list[index].orderType.value === 'Glass') || (formState.part_list[index].orderType.value === 'Glass_DF')) {
         return (
           <Fragment>
             <Row>

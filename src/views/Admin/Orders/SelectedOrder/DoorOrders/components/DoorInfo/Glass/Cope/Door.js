@@ -4,18 +4,18 @@ import {
   Col,
   CardSubtitle,
   FormGroup,
-  Label
+  Label,
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../../../components/RenderInputs/renderInputs';
-import Glass_Table from '../../Table/DFs/Glass_Table';
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../../../../components/RenderInputs/renderInputs';
+import Cope_Table from '../../../Table/Doors/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
-  subTotalSelector
-} from '../../../../../../../../selectors/doorPricing';
+  subTotalSelector,
+} from '../../../../../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -24,8 +24,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-class GlassDoor extends Component {
-
+class CopeDoor extends Component {
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
@@ -51,45 +50,48 @@ class GlassDoor extends Component {
           )
         );
 
-        if (info.full_frame) {
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].topRail`,
+            fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+          )
+        );
+
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].bottomRail`,
+            fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+          )
+        );
+
+
+
+        if (parseInt(info.panelsH) > 1) {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${i}].topRail`,
-              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+              `part_list[${index}].dimensions[${i}].horizontalMidRailSize`,
+              fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
             )
           );
+        }
 
-
+        if (parseInt(info.panelsW) > 1) {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${i}].bottomRail`,
-              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
-            )
-          );
-        } else {
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${index}].dimensions[${i}].topRail`,
-              fraction(part.profile ? (part.profile.DF_Reduction) : 0)
-            )
-          );
-
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${index}].dimensions[${i}].bottomRail`,
-              fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+              `part_list[${index}].dimensions[${i}].verticalMidRailSize`,
+              fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
             )
           );
         }
       });
     }
   }
-
 
   render() {
     const {
@@ -98,6 +100,7 @@ class GlassDoor extends Component {
       cope_designs,
       edges,
       profiles,
+      panels,
       applied_moulds,
       finishes,
       isValid,
@@ -105,12 +108,16 @@ class GlassDoor extends Component {
       part_list,
       formState,
       prices,
-      subTotal
+      itemPrice,
+      lites,
+      subTotal,
+      edit
     } = this.props;
+
     return (
       <div>
         <Row>
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12"  md='12' lg='4'>
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -120,11 +127,12 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12"  md='12' lg='4'>
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -134,25 +142,12 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
 
-          {/* <Col xs="4">
-            <FormGroup>
-              <Label htmlFor="design">Lites</Label>
-              <Field
-                name={`${part}.lite`}
-                component={renderDropdownListFilter}
-                data={lites}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-              />
-            </FormGroup>
-          </Col> */}
-
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg='4'>
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -162,31 +157,45 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
-
         </Row>
         <Row>
 
-
-
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg='3'>
             <FormGroup>
               <Label htmlFor="edge">Profile</Label>
               <Field
                 name={`${part}.profile`}
                 component={renderDropdownListFilter}
                 data={profiles}
+                onBlur={() => this.onChangeProfile()}
                 valueField="value"
                 textField="NAME"
                 validate={required}
-                onBlur={() => this.onChangeProfile()}
+                edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg='3'>
+            <FormGroup>
+              <Label htmlFor="design">Lites</Label>
+              <Field
+                name={`${part}.lite`}
+                component={renderDropdownListFilter}
+                data={lites}
+                valueField="value"
+                textField="NAME"
+                validate={required}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
+
+          <Col xs="12" md='12' lg='3'>
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -196,11 +205,12 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg='3'>
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
@@ -210,15 +220,14 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
+                edit={edit}
               />
             </FormGroup>
           </Col>
-
         </Row>
 
-
         <Row className="mt-2">
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg='4'>
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>
@@ -226,6 +235,7 @@ class GlassDoor extends Component {
                   name={`${part}.notes`}
                   type="textarea"
                   component={renderField}
+                  edit={edit}
                 />
               </strong>
             </FormGroup>
@@ -237,7 +247,7 @@ class GlassDoor extends Component {
           <div className="mt-1" />
           <FieldArray
             name={`${part}.dimensions`}
-            component={Glass_Table}
+            component={Cope_Table}
             i={index}
             prices={prices}
             subTotal={subTotal}
@@ -245,10 +255,9 @@ class GlassDoor extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
-          // updateSubmit={updateSubmit}
+            edit={edit}
           />
         </div>
-
       </div>
     );
   }
@@ -258,13 +267,13 @@ class GlassDoor extends Component {
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
   cope_designs: state.part_list.cope_designs,
-  lites: state.part_list.lites,
   edges: state.part_list.edges,
   finishes: state.part_list.finishes,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_moulds,
   finishes: state.part_list.finishes,
+  lites: state.part_list.lites,
 
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
@@ -272,8 +281,7 @@ const mapStateToProps = state => ({
 });
 
 
-
 export default connect(
   mapStateToProps,
   null
-)(GlassDoor);
+)(CopeDoor);

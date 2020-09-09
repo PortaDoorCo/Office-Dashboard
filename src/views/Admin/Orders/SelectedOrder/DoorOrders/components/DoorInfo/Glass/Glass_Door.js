@@ -4,7 +4,7 @@ import {
   Col,
   CardSubtitle,
   FormGroup,
-  Label
+  Label,
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
@@ -28,71 +28,70 @@ class GlassDoor extends Component {
 
   onChangeProfile = () => {
     const part_list = this.props.formState.part_list;
+    const { index } = this.props;
+    const part = part_list[index];
 
-    part_list.forEach((part, i) => {
-      if (part.dimensions) {
-        part.dimensions.forEach((info, index) => {
+    if (part.dimensions) {
+      part.dimensions.forEach((info, i) => {
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].leftStile`,
+            fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+          )
+        );
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].rightStile`,
+            fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+          )
+        );
+
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].topRail`,
+            fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.cope_design.TOP_RAIL_ADD) : 0)
+          )
+        );
+
+
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${index}].dimensions[${i}].bottomRail`,
+            fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.cope_design.BTM_RAIL_ADD) : 0)
+          )
+        );
+
+
+
+        if (parseInt(info.panelsH) > 1) {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].leftStile`,
-              fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+              `part_list[${index}].dimensions[${i}].horizontalMidRailSize`,
+              fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
             )
           );
+        }
 
+        if (parseInt(info.panelsW) > 1) {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].rightStile`,
-              fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+              `part_list[${index}].dimensions[${i}].verticalMidRailSize`,
+              fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
             )
           );
-
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].topRail`,
-              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.cope_design.TOP_RAIL_ADD) : 0)
-            )
-          );
-
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].bottomRail`,
-              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH + part.cope_design.BTM_RAIL_ADD) : 0)
-            )
-          );
-
-
-
-          if (parseInt(info.panelsH) > 1) {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-              )
-            );
-          }
-
-          if (parseInt(info.panelsW) > 1) {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-              )
-            );
-          }
-        });
-      } else {
-        return;
-      }
-    });
+        }
+      });
+    }
   }
+
 
 
   render() {
@@ -110,14 +109,13 @@ class GlassDoor extends Component {
       part_list,
       formState,
       prices,
-      subTotal,
-      edit
+      subTotal
 
     } = this.props;
     return (
       <div>
         <Row>
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -127,27 +125,26 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
-                edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
                 name={`${part}.cope_design`}
                 component={renderDropdownListFilter}
                 data={cope_designs}
+                onBlur={() => this.onChangeProfile()}
                 valueField="value"
                 textField="NAME"
                 validate={required}
-                edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="design">Lites</Label>
               <Field
@@ -157,7 +154,6 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
-                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -165,7 +161,7 @@ class GlassDoor extends Component {
         </Row>
         <Row>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -175,12 +171,11 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
-                edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="edge">Profile</Label>
               <Field
@@ -189,13 +184,13 @@ class GlassDoor extends Component {
                 data={profiles}
                 valueField="value"
                 textField="NAME"
+                onBlur={() => this.onChangeProfile()}
                 validate={required}
-                edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -205,12 +200,11 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
-                edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="hinges">Finish Color</Label>
               <Field
@@ -220,7 +214,6 @@ class GlassDoor extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
-                edit={edit}
               />
             </FormGroup>
           </Col>
@@ -229,7 +222,7 @@ class GlassDoor extends Component {
 
 
         <Row className="mt-2">
-          <Col xs="4">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>
@@ -237,7 +230,6 @@ class GlassDoor extends Component {
                   name={`${part}.notes`}
                   type="textarea"
                   component={renderField}
-                  edit={edit}
                 />
               </strong>
             </FormGroup>
@@ -257,7 +249,6 @@ class GlassDoor extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
-            edit={edit}
           // updateSubmit={updateSubmit}
           />
         </div>

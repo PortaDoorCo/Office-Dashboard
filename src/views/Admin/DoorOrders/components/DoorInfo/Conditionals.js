@@ -12,6 +12,16 @@ import OnePieceDoor from './One_Piece/One_Piece';
 import SlabDoor from './Slab_Door/Slab_Door';
 import GlassDF from './Glass/Glass_DF';
 
+import GlassCopeDoor from './Glass/Cope/Door';
+import GlassCopeDF from './Glass/Cope/DF';
+
+import GlassMTDoor from './Glass/MT/Door';
+import GlassMTDF from './Glass/MT/DF';
+
+import GlassMitreDoor from './Glass/Mitre/Door';
+import GlassMitreDF from './Glass/Mitre/DF';
+
+
 
 
 class Conditionals extends Component {
@@ -102,6 +112,72 @@ class Conditionals extends Component {
               break;
             case 'Glass':
               component = <GlassDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />;
+              break;
+            default:
+              return;
+          }
+          break;
+        case 'Glass':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <GlassCopeDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />;
+              break;
+            case 'M':
+              component = <GlassMitreDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />;
+              break;
+            case 'MT':
+              component = <GlassMTDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />;
+              break;
+            default:
+              return;
+          }
+          break;
+        case 'Glass_DF':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <GlassCopeDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />;
+              break;
+            case 'M':
+              component = <GlassMitreDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+              />;
+              break;
+            case 'MT':
+              component = <GlassMTDF
                 part={part}
                 index={index}
                 isValid={isValid}
