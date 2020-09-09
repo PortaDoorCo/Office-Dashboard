@@ -316,21 +316,6 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-        <Row>
-          <Col xs='3'>
-            <FormGroup>
-              <Label htmlFor="shipping_method">Shipping Method</Label>
-              <Field
-                name="ShippingMethod"
-                component={renderDropdownList}
-                data={shippingMethods}
-                valueField="value"
-                edit={edit}
-                textField="NAME" />
-            </FormGroup>
-          </Col>
-        </Row>
-
         <hr />
 
 
