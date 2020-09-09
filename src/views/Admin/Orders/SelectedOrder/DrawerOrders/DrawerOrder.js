@@ -16,7 +16,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DrawerBoxInfo from '../../../../../components/DrawerOrders/DrawerBoxInfo';
-import JobInfo from '../../../../../components/JobInfo/JobInfo';
+import JobInfo from '../../../../../components/JobInfo/DrawerJobInfo';
 import NotificationAlert from 'react-notification-alert';
 import 'react-notifications/lib/notifications.css';
 import {
@@ -145,9 +145,10 @@ class DrawerOrder extends Component {
     window.scrollTo(0, 0);
   }
 
-  cancelOrder = e => {
+  cancelOrder = async (e) => {
     e.preventDefault();
-    this.props.reset();
+    await this.props.reset();
+    await this.props.editable();
   };
 
   onKeyPress(event) {

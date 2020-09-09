@@ -47,7 +47,7 @@ import MiscItems from '../../../components/DrawerOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
 const DrawerBoxInfo = React.lazy(() => import('../../../components/DrawerOrders/DrawerBoxInfo'));
-const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
+const JobInfo = React.lazy(() => import('../../../components/JobInfo/DrawerJobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -402,7 +402,7 @@ const mapStateToProps = (state, prop) => ({
     open: true,
     balance_paid: 0,
     misc_items: [],
-    discount: state.customers.customerDB[0].Discount,
+    discount: 0,
     Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
     part_list: [
       {
