@@ -90,7 +90,7 @@ class OrderTable extends Component {
                           edit={edit}
                         />
                       </td>
-                      <td >
+                      <td style={{ width: '150px' }}>
                         <Field
                           name={`${table}.scoop`}
                           component={renderDropdownList}
@@ -100,7 +100,7 @@ class OrderTable extends Component {
                           validate={required}
                           edit={edit} />
                       </td>
-                      <td>
+                      <td style={{ width: '150px' }}>
                         <Field
                           name={`${table}.dividers`}
                           component={renderDropdownList}
