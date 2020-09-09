@@ -180,6 +180,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         component={renderField}
                         label="leftStile"
                         edit={edit}
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -192,7 +193,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         component={renderField}
                         label="rightStile"
                         edit={edit}
-
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -205,6 +206,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         component={renderField}
                         label="topRail"
                         edit={edit}
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -217,6 +219,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         component={renderField}
                         label="bottomRail"
                         edit={edit}
+                        validate={required}
                       />
                     </td>
                     <td>
@@ -229,6 +232,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         component={renderField}
                         label="horizontalMidRail"
                         edit={edit}
+            
                       />
                     </td>
                     <td>
@@ -241,6 +245,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         component={renderField}
                         label="verticalMidRail"
                         edit={edit}
+              
                       />
                     </td>
                   </tr>
