@@ -46,7 +46,7 @@ import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
 const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
-const JobInfo = React.lazy(() => import('../../../components/DoorOrders/JobInfo/JobInfo'));
+const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 

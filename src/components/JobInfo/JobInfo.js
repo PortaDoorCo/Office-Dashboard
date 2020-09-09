@@ -3,14 +3,14 @@ import {
   Row,
   Col,
   FormGroup,
-  Label
+  Label,
 } from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
-import { connect } from 'react-redux';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../../../../components/RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
+import { connect } from 'react-redux';
 
 momentLocaliser(moment);
 
@@ -20,13 +20,19 @@ const status = ['Quote', 'Ordered', 'Shipped', 'RUSH'];
 
 const required = value => value ? undefined : 'Required';
 
+
+
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
-  <DateTimePicker
-    onChange={onChange}
-    time={showTime}
-    value={!value ? null : new Date(value)}
-    disabled={edit}
-  />;
+  <div>
+
+    <DateTimePicker
+      onChange={onChange}
+      time={showTime}
+      value={!value ? null : new Date(value)}
+      disabled={edit}
+    />
+  </div>;
+
 
 
 class JobInfo extends Component {
@@ -37,73 +43,74 @@ class JobInfo extends Component {
     };
   }
 
-
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps) {
     const { formState } = this.props;
-    if(formState && formState.job_info && formState.job_info.customer){
-      if(formState.job_info.customer !== prevProps.formState.job_info.customer){
+    if (formState && formState.job_info && formState.job_info.customer) {
+      if (formState.job_info.customer !== prevProps.formState.job_info.customer) {
 
         const customer = formState.job_info.customer;
 
         this.props.dispatch(
           change(
-            'DrawerOrder',
+            'DoorOrder',
             'job_info.Address1',
             customer.Shipping_Address1 || customer.Address1
           )
         );
         this.props.dispatch(
           change(
-            'DrawerOrder',
+            'DoorOrder',
             'job_info.Address2',
             customer.Shipping_Address2 || customer.Address2
           )
         );
         this.props.dispatch(
           change(
-            'DrawerOrder',
+            'DoorOrder',
             'job_info.City',
             customer.Shipping_City || customer.City
           )
         );
         this.props.dispatch(
           change(
-            'DrawerOrder',
+            'DoorOrder',
             'job_info.State',
             customer.Shipping_State || customer.State
           )
         );
         this.props.dispatch(
           change(
-            'DrawerOrder',
+            'DoorOrder',
             'job_info.Zip',
             customer.Shipping_Zip || customer.Zip
           )
         );
         this.props.dispatch(
           change(
-            'DrawerOrder',
+            'DoorOrder',
             'job_info.Phone',
             customer.Shipping_Phone || customer.Phone1
           )
         );
         this.props.dispatch(
           change(
-            'DrawerOrder',
+            'DoorOrder',
             'discount',
             customer.Discount
           )
         );
         this.props.dispatch(
           change(
-            'DrawerOrder',
+            'DoorOrder',
             'Taxable',
             customer.Taxable
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'job_info.PaymentMethod',
+            customer.PaymentMethod
           )
         );
       }
@@ -111,12 +118,13 @@ class JobInfo extends Component {
   }
 
 
-
-
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
 
   render() {
-    const { customers, edit, shippingMethods } = this.props;
+    const { customers, edit, shippingMethods, paymentTypes } = this.props;
 
     return (
 
@@ -125,6 +133,7 @@ class JobInfo extends Component {
           <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
+
               <Field
                 name="DueDate"
                 showTime={false}
@@ -148,6 +157,23 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
         </Row>
+
+        <Row className="mb-3">
+          <Col xs="9" />
+          <Col xs='3'>
+            <FormGroup>
+              <Label htmlFor="shipping_method">Payment Method</Label>
+              <Field
+                name="PaymentMethod"
+                component={renderDropdownList}
+                data={paymentTypes}
+                valueField="value"
+                edit={edit}
+                textField="NAME" />
+            </FormGroup>
+          </Col>
+        </Row>
+
         <Row>
           <Col xs="3">
             <FormGroup>
@@ -167,7 +193,6 @@ class JobInfo extends Component {
                 name="customer"
                 component={renderDropdownListFilter}
                 data={customers}
-                onChange={this.onChangeCustomer}
                 valueField="value"
                 textField="Company"
                 edit={edit}
@@ -183,8 +208,8 @@ class JobInfo extends Component {
                 component={renderDropdownList}
                 data={status}
                 valueField="value"
-                textField="name"
                 edit={edit}
+                textField="name"
               />
             </FormGroup>
           </Col>
@@ -291,6 +316,21 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
+        <Row>
+          <Col xs='3'>
+            <FormGroup>
+              <Label htmlFor="shipping_method">Shipping Method</Label>
+              <Field
+                name="ShippingMethod"
+                component={renderDropdownList}
+                data={shippingMethods}
+                valueField="value"
+                edit={edit}
+                textField="NAME" />
+            </FormGroup>
+          </Col>
+        </Row>
+
         <hr />
 
 
@@ -301,9 +341,11 @@ class JobInfo extends Component {
 
 
 const mapStateToProps = state => ({
-  formState: getFormValues('DrawerOrder')(state),
-  shippingMethods: state.misc_items.shippingMethods
+  formState: getFormValues('DoorOrder')(state),
+  shippingMethods: state.misc_items.shippingMethods,
+  paymentTypes: state.misc_items.paymentTypes
 });
+
 
 export default connect(
   mapStateToProps,

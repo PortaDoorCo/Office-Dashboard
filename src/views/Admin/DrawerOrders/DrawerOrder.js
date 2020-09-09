@@ -38,16 +38,16 @@ import {
   miscTotalSelector
 } from '../../../selectors/drawerPricing';
 import moment from 'moment-business-days';
-import SideBar from './components/SideBar';
+import SideBar from '../../../components/DrawerOrders/SideBar';
 import Sticky from 'react-stickynode';
 import Cookies from 'js-cookie';
 import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolder';
 import { renderField, renderCheckboxToggle } from '../../../components/RenderInputs/renderInputs';
-import MiscItems from './components/MiscItems';
+import MiscItems from '../../../components/DrawerOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
-const DrawerBoxInfo = React.lazy(() => import('./components/DrawerBoxInfo'));
-const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
+const DrawerBoxInfo = React.lazy(() => import('../../../components/DrawerOrders/DrawerBoxInfo'));
+const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 

@@ -16,7 +16,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DoorInfo from '../../../../../components/DoorOrders/DoorInfo/DoorInfo';
-import JobInfo from '../../../../../components/DoorOrders/JobInfo/JobInfo';
+import JobInfo from '../../../../../components/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
 import {
   reduxForm,
