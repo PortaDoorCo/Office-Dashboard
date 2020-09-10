@@ -27,7 +27,7 @@ const miscItemsSelector = state => {
     if(state.form && state.form.MiscItems && state.form.MiscItems.values && state.form.MiscItems.values.misc_items && state.form.MiscItems.values.misc_items.length > 0) {
       return state.form.MiscItems.values.misc_items.map(i => {
         if(i.price) {
-          return parseFloat(i.price2);
+          return parseFloat(i.price);
         }
         if(i.price2){
           return parseFloat(i.price2) * parseInt(i.qty);
