@@ -55,6 +55,9 @@ import DrawerSidesPDF from './PrintOuts/Pages/Drawer/SidesPDF';
 import DoorBalance from './Balance/Door_Order/Balance';
 import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory';
 
+import MiscItemBalance from './Balance/MiscItems/Balance';
+import MiscItemBalanceHistory from './Balance/MiscItems/BalanceHistory';
+
 import DrawerBalance from './Balance/Drawer_Order/Balance';
 import DrawerBalanceHistory from './Balance/Drawer_Order/BalanceHistory';
 import DoorMiscItems from './MiscItems/DoorMiscItems';
@@ -581,7 +584,13 @@ class OrderPage extends Component {
                               selectedOrder={props.selectedOrder}
                             />
                             :
-                            <div />
+                            selectedOrder && selectedOrder.orderType === 'Misc Items' ?
+                              <MiscItemBalance 
+                                toggleBalance={this.toggleBalance}
+                                selectedOrder={props.selectedOrder}
+                              />
+                              :
+                              <div />
                         }
 
                       </CardBody>
@@ -597,7 +606,10 @@ class OrderPage extends Component {
                           selectedOrder && selectedOrder.orderType === 'Drawer Order'
                             ?
                             <DrawerBalanceHistory /> :
-                            <div />
+                            selectedOrder && selectedOrder.orderType === 'Misc Items' ?
+                              <MiscItemBalanceHistory />
+                              :
+                              <div />
                         }
 
                       </CardBody>
