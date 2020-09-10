@@ -214,7 +214,7 @@ class DoorOrders extends Component {
     } = this.props;
 
     return (
-      <div className="animated fadeIn resize">
+      <div className="animated fadeIn">
         <NotificationAlert ref="notify" />
         <Row>
           <Col xs="12" sm="12" md="12" lg="7">
