@@ -195,7 +195,7 @@ class DoorOrders extends Component {
 
 
     return (
-      <div className="animated fadeIn resize">
+      <div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="12" md="12" lg="7">
             <Card>

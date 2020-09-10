@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change, FormSection, } from 'redux-form';
 import { renderField, renderDropdownListFilter, renderPrice, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
-import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Card, CardHeader, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import { 
   subTotalSelector,
@@ -11,6 +11,9 @@ import {
   miscLineItemSelector
 } from '../../../../selectors/miscItemPricing';
 import moment from 'moment-business-days';
+import Inputs from './Inputs';
+import FileUploader from '../../../../components/FileUploader/FileUploader';
+import Cookies from 'js-cookie';
 
 const JobInfo = React.lazy(() => import('../../../../components/JobInfo/MiscJobInfo'));
 
@@ -18,214 +21,271 @@ const loading  = () => <div className="animated fadeIn pt-1 text-center"><div cl
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
 
-const required = value => (value ? undefined : 'Required');
+const cookie = Cookies.get('jwt');
 
-let Inputs = props => {
-  const { fields, misc_items, formState } = props;
 
-  return (
-    <div>
-      <Table>
-        <thead>
-          <tr>
-            <th>QTY</th>
-            <th>Item</th>
-            <th>Price</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {fields.map((table, index) => {
-            return (
-              <tr key={index}>
-                <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderField} type="text" /></td>
-                <td>
-                  {formState &&  formState.misc_items && formState.misc_items[index] && formState.misc_items[index].category === 'preselect' ?
-                    <Field
-                      name={`${table}.item`}
-                      component={renderDropdownListFilter}
-                      data={misc_items}
-                      valueField="value"
-                      textField="NAME"
-                      validate={required}
-                    />  : 
-                    <Field
-                      name={`${table}.item2`}
-                      component={renderField}
-                      valueField="value"
-                      textField="NAME"
-                      validate={required}
-                    />
-                  }
-                </td>
-                {formState &&  formState.misc_items && formState.misc_items[index] && formState.misc_items[index].category === 'preselect' ?
-                  <td style={{ width: '150px' }}><Field name={`${table}.price`} component={renderPrice} type="text" /></td> : 
-                  <td style={{ width: '150px' }}><Field name={`${table}.price2`} component={renderPrice} validate={required} type="text" /></td> 
-                }
-                <td><Button color="danger" onClick={() => fields.remove(index)}>X</Button></td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-
-      <Button color="primary" className="mt-3" onClick={() => fields.push({
-        category: 'preselect',
-        qty: 1,
-        price: 0
-      })}>Add Item </Button>
-
-      <Button color="primary" className="mt-3" onClick={() => fields.push({
-        category:'custom',
-        qty: 1,
-        price: 0
-      })}>Custom Item</Button>
-    </div>
-  );
-};
 
 class MiscItems extends Component {
 
-  componentDidUpdate(prevProps) {
-    const { formState } = this.props;
-    if (formState && formState.misc_items) {
-      if ((formState && formState.misc_items) !== (prevProps.formState && prevProps.formState.misc_items)) {
+   state = {
+     collapse: true,
+     loaded: false,
+     customerAddress: [],
+     updateSubmit: false,
+     files: []
+   };
 
-        const misc_items = formState.misc_items;
+   componentDidUpdate(prevProps) {
+     const { formState } = this.props;
+     if (formState && formState.misc_items) {
+       if ((formState && formState.misc_items) !== (prevProps.formState && prevProps.formState.misc_items)) {
 
-        misc_items.forEach((i, index) => {
-          if(i.item){
+         const misc_items = formState.misc_items;
 
-            if(i.item.Price !== 0){
-              this.props.dispatch(
-                change(
-                  'MiscItems',
-                  `misc_items[${index}].price`,
-                  (i.qty ? (i.item.Price * parseInt(i.qty)): i.item.Price)
-                )
-              );
-            } else {
-              return;
-            }
+         misc_items.forEach((i, index) => {
+           if(i.item){
 
-          }
+             if(i.item.Price !== 0){
+               this.props.dispatch(
+                 change(
+                   'MiscItems',
+                   `misc_items[${index}].price`,
+                   (i.qty ? (i.item.Price * parseInt(i.qty)): i.item.Price)
+                 )
+               );
+             } else {
+               return;
+             }
+
+           }
           
-        });
+         });
 
-      }
+       }
+     }
+   }
+
+   onKeyPress(event) {
+     if (event.which === 13 /* Enter */) {
+       event.preventDefault();
+     }
+   }
+
+  submit = async (values, e) => {
+    const {
+      reset,
+      prices,
+      itemPrice,
+      subTotal,
+      tax,
+      total,
+      submitOrder,
+      user
+    } = this.props;
+
+    const orderType = 'Misc Items';
+
+
+    const jobInfo = {
+      jobName: values.job_info.jobName,
+      status: values.job_info.status,
+      poNum: values.job_info.poNum,
+      Address1: values.job_info.Address1,
+      Address2: values.job_info.Address2,
+      City: values.job_info.City,
+      State: values.job_info.State,
+      Zip: values.job_info.Zip,
+      Phone: values.job_info.Phone,
+      DueDate: values.job_info.DueDate,
+      customer: {
+        id: values.job_info.customer.id,
+        Company: values.job_info.customer.Company,
+        TaxRate: values.job_info.customer.TaxRate,
+        sale: values.job_info.customer.sale.id,
+        Taxable: values.job_info.customer.Taxable
+      },
+      ShippingMethod: values.job_info.ShippingMethod,
+      PaymentMethod: values.job_info.PaymentMethod
+    };
+
+    const order = {
+      status: values.job_info.status,
+      job_info: jobInfo,
+      companyprofile: values.job_info.customer.id,
+      linePrice: miscLineItemSelector,
+      subTotals: subTotal,
+      misc_items: values.misc_items,
+      tax: tax,
+      total: total,
+      discount: values.discount,
+      balance_paid: values.balance_paid,
+      balance_due: total,
+      orderType: orderType,
+      dueDate: values.job_info.DueDate,
+      user: user.id,
+      userName: user.username,
+      files: this.state.files,
+      submittedBy: user.FirstName,
+      tracking: [
+        {
+          'status': values.job_info.status,
+          'date': new Date()
+        }
+      ],
+      balance_history: [
+        {
+          'balance_due': total,
+          'balance_paid': values.balance_paid,
+          'date': new Date()
+        }
+      ],
+      sale: values.job_info.customer.sale.id,
+      Taxable: values.Taxable
+    };
+
+    if (values.part_list[0].dimensions.length > 0) {
+      await submitOrder(order, cookie);
+      this.setState({ updateSubmit: !this.state.updateSubmit });
+      reset();
+      window.scrollTo(0, 0);
+    } else {
+      return;
     }
-  }
+  };
 
-  onKeyPress(event) {
-    if (event.which === 13 /* Enter */) {
-      event.preventDefault();
-    }
-  }
+cancelOrder = e => {
+  e.preventDefault();
+  this.props.reset();
+};
 
-  submit = (values) => {
-    alert('submitted');
-    console.log(values);
-  }
+render() {
+  const { misc_items, formState, handleSubmit, subTotal, miscTotalSelector, miscLineItemSelector, customers, tax, total } = this.props;
 
-  render() {
-    const { misc_items, formState, handleSubmit, subTotal, miscTotalSelector, miscLineItemSelector, customers, tax, total } = this.props;
+  console.log('formState', miscLineItemSelector);
 
-    console.log('formState', miscLineItemSelector);
+  return (
+    <div>
+      <Row>
+        <Col xs='8'>
+          <Card>
+            <CardHeader>
+              <strong>Misc Items Order</strong>
+            </CardHeader>
+            <CardBody>
+              <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
+                <Row>
+                  <Col>
+                    <FormSection name="job_info">
+                      <Suspense fallback={loading()}>
+                        <JobInfo
+                          customers={customers}
+                          formState={formState}
+                          handleAddress={this.handleAddress}
+                        />
+                      </Suspense>
+                    </FormSection>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs="4" />
+                  <Col xs="5" />
+                  <Col xs="3">
+                    <Row className='mb-0'>
+                      <Col xs='9' />
+                      <Col>
+                        <FormGroup>
+                          <Label htmlFor="companyName">Taxable?</Label>
+                          <Field
+                            name={'Taxable'}
+                            component={renderCheckboxToggle}
+                          />
+                        </FormGroup>
+                      </Col>
 
-    return (
-      <div>
-        <h3>Misc Items</h3>
-        <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
-          <Row>
-            <Col>
-              <FormSection name="job_info">
-                <Suspense fallback={loading()}>
-                  <JobInfo
-                    customers={customers}
-                    formState={formState}
-                    handleAddress={this.handleAddress}
-                  />
-                </Suspense>
-              </FormSection>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs="4" />
-            <Col xs="5" />
-            <Col xs="3">
-              <Row className='mb-0'>
-                <Col xs='9' />
-                <Col>
-                  <FormGroup>
-                    <Label htmlFor="companyName">Taxable?</Label>
-                    <Field
-                      name={'Taxable'}
-                      component={renderCheckboxToggle}
-                    />
-                  </FormGroup>
-                </Col>
-
-              </Row>
+                    </Row>
 
 
 
-              <strong>Discount: </strong>
-              <InputGroup>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>%</InputGroupText>
-                </InputGroupAddon>
-                <Field
-                  name={'discount'}
-                  type="text"
-                  component={renderField}
-                  label="discount"
-                />
-              </InputGroup>
+                    <strong>Discount: </strong>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>%</InputGroupText>
+                      </InputGroupAddon>
+                      <Field
+                        name={'discount'}
+                        type="text"
+                        component={renderField}
+                        label="discount"
+                      />
+                    </InputGroup>
 
                       
-              <strong>Tax: </strong>
-              <InputGroup>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>$</InputGroupText>
-                </InputGroupAddon>
-                <Input disabled placeholder={tax.toFixed(2)} />
-              </InputGroup>
+                    <strong>Tax: </strong>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>$</InputGroupText>
+                      </InputGroupAddon>
+                      <Input disabled placeholder={tax.toFixed(2)} />
+                    </InputGroup>
 
 
-              <strong>Total: </strong>
-              <InputGroup className='mb-3'>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>$</InputGroupText>
-                </InputGroupAddon>
-                <Input disabled placeholder={total.toFixed(2)} />
-              </InputGroup>
-            </Col>
-          </Row>
+                    <strong>Total: </strong>
+                    <InputGroup className='mb-3'>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>$</InputGroupText>
+                      </InputGroupAddon>
+                      <Input disabled placeholder={total.toFixed(2)} />
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs="4" />
+                  <Col xs="5" />
+                  <Col xs="3">
+                    <Row>
+                      <Col>
+                        <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
+                      </Col>
+                      <Col>
+                        <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
+                                Cancel
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </form>
+            </CardBody>
+          </Card>
+        </Col>
+
+
+        <Col>
           <Row>
-            <Col xs="4" />
-            <Col xs="5" />
-            <Col xs="3">
-              <Row>
-                <Col>
-                  <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                </Col>
-                <Col>
-                  <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                        Cancel
-                  </Button>
-                </Col>
-              </Row>
+            <Col>
+              <Card>
+                <CardBody>
+                  <FormGroup>
+                    <h3>Upload Files</h3>
+                    <FileUploader onUploaded={this.onUploaded} multi={true} />
+                  </FormGroup>
+                </CardBody>
+              </Card>
+
             </Col>
           </Row>
-        </form>
-      </div>
-    );
-  }
+        </Col>
+
+      </Row>
+        
+    </div>
+  );
+}
 }
 
 
@@ -238,6 +298,7 @@ const mapStateToProps = state => ({
   tax: taxSelector(state),
   miscTotalSelector: miscTotalSelector(state),
   miscLineItemSelector: miscLineItemSelector(state),
+  user: state.users.user,
   customers: state.customers.customerDB,
   initialValues: {
     misc_items: [],
