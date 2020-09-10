@@ -17,7 +17,7 @@ import {
   balanceSelector,
   subTotal_Total,
   balanceTotalSelector
-} from '../../../../../selectors/miscItemPricing';
+} from '../../../../../selectors/doorPricing';
 import { updateOrder, updateBalance } from '../../../../../redux/orders/actions';
 
 
@@ -30,7 +30,7 @@ class Balance extends Component {
   changeBalance = () => {
     this.props.dispatch(
       change(
-        'DoorOrder',
+        'MiscItems',
         'balance_due',
         this.props.balance.toFixed('2')
       )
@@ -60,7 +60,7 @@ class Balance extends Component {
 
     await this.props.dispatch(
       change(
-        'DoorOrder',
+        'MiscItems',
         'pay_balance',
         0
       )
@@ -68,7 +68,7 @@ class Balance extends Component {
 
     await this.props.dispatch(
       change(
-        'DoorOrder',
+        'MiscItems',
         'balance_history',
         [
           ...values.balance_history,
@@ -200,7 +200,7 @@ const mapDispatchToProps = dispatch =>
   );
 
 Balance = reduxForm({
-  form: 'DoorOrder',
+  form: 'MiscItems',
 })(Balance);
 
 
