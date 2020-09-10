@@ -3,15 +3,17 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Upload, message, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import db_url from '../../redux/db_url';
 const cookie = Cookies.get('jwt');
 const header = { Authorization: 'Bearer ' + cookie };
+
 
 const FileUploader = (props) => {
 
   const uploadProps = {
     name: 'file',
     multiple: props.multi,
-    action: 'https://server.portadoor.com/upload',
+    action: `${db_url}/upload`,
     customRequest: (options) => {
       console.log(options);
       const data= new FormData();
