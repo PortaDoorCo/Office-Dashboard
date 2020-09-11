@@ -211,6 +211,5 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 15, 0, 0]
     },
-    { text: '', pageBreak: 'before' }
   ];
 };

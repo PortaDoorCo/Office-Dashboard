@@ -4,24 +4,49 @@ import Size from '../Breakdowns/DrawerBoxes/Size';
 
 export default (data, breakdowns) => {
 
-  const qty = data.part_list.map((part, i) => {
-    return part.dimensions.map((dim, index) => {
-      return parseInt(dim.qty);
-    }).reduce((acc, item) => acc + item, 0);
-  });
-
-  const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0);
+  const subTotal = data.subTotals;
 
   const balanceDue = data.balance_history[data.balance_history.length - 1].balance_due;
   const balancePaid = data.balance_history.reduce(function (accumulator, balance) {
     return accumulator + balance.balance_paid;
   }, 0);
 
+  const tableBody = [
+    [
+      { text: 'Qty', style: 'fonts' },
+      { text: 'Item', style: 'fonts' },
+      { text: 'Price', style: 'fonts' },
+    ]
+  ];
+
+  console.log('dataaaa',data);
+
+  data.misc_items.map(i  => {
+    console.log('iiiiiii', i);
+    if(i.category === 'preselect') {
+      return tableBody.push([
+        { text: i.qty, style: 'fonts' },
+        { text: i.item.NAME, style: 'fonts' },
+        { text: i.price, style: 'fonts' },
+      ]);
+    } else if (i.category === 'custom') {
+      return tableBody.push([
+        { text: i.qty, style: 'fonts' },
+        { text: i.item2, style: 'fonts' },
+        { text: i.price2, style: 'fonts' },
+      ]);
+    }
+
+  });
+
+
+
+
   return [
     {
       columns: [
         {
-          stack: ['Acknowledgement']
+          stack: ['Invoice']
         },
         {
           stack: [
@@ -76,96 +101,18 @@ export default (data, breakdowns) => {
     {
       canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
     },
-    data.part_list.map((part, i) => {
-      const tableBody = [
-        [
-          { text: 'Item', style: 'fonts' },
-          { text: 'Qty', style: 'fonts' },
-          { text: 'Actual Size WxH', style: 'fonts' },
-          { text: 'Notes', style: 'fonts' },
-          { text: 'Total 1 Unit', style: 'fonts' },
-          { text: 'Total Cost', style: 'fonts' },
-
-        ]
-      ];
-
-      let sortedDimensions = part.dimensions.sort(function (a, b) { return a.item - b.item; });
-      sortedDimensions.forEach((item, index) => {
-        tableBody.push([
-          { text: item.item, style: 'fonts' },
-          { text: `${item.qty}`, style: 'fonts' },
-          { text: `${Size(item)}`, style: 'fonts' },
-          { text: `${item.notes ? item.notes : ''}`, style: 'fonts' },
-          { text: `${(data.itemPrice[i][index]).toFixed(2)}`, style: 'fonts' },
-          { text: `${(data.linePrice[i][index]).toFixed(2)}`, style: 'fonts', alignment: 'right' },
-        ]);
-
-      });
-
-      return [
-        {
-          margin: [0, 10, 0, 0],
-          columns: [
-            {
-              stack: [
-                { text: `${part.box_woodtype.NAME}`, style: 'fonts' }
-              ]
-            }
-          ]
-        },
-        {
-          canvas: [
-            { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }
-          ],
-          margin: [0, 10, 0, 0]
-        },
-        {
-          table: {
-            headerRows: 1,
-            widths: [22, 75, 100, 100, 100, '*'],
-            body: tableBody
-          },
-          layout: 'lightHorizontalLines'
-        },
-        {
-          columns: [
-            { text: ' Total: ', width: 129, style: 'totals', alignment: 'left' },
-            { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
-            {
-              stack: [
-                {
-                  columns: [
-                    { text: 'Additional Price', style: 'totals', margin: [0, 0, 0, 0], },
-                    { text: `$${part.addPrice}`, style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' }
-                  ],
-                  width: 100
-                },
-                {
-                  columns: [
-                    { text: 'Item Subtotal', style: 'totals', margin: [0, 0, 0, 0], },
-                    { text: `$${(data.subTotals[i]).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
-                  ]
-                }
-              ]
-            }
-
-          ],
-          margin: [0, 10, 0, 5]
-        },
-        {
-          stack: [
-            { text: `Item Notes:  ${part.notes? part.notes : ''}`, style: 'fonts'},
-          ]
-        },
-        {
-          canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
-          margin: [0, 0, 0, 10]
-        }
-      ];
-    }),
+    {
+      table: {
+        headerRows: 1,
+        widths: [30, 400, '*'],
+        body: tableBody
+      },
+      layout: 'lightHorizontalLines',
+      margin: [0, 0, 0, 20]
+    },
     {
       columns: [
-        { text: `Total Number of Pieces: ${qty.reduce((acc, item) => acc + item, 0)}`, style: 'totals', width: 347 },
+        { text: '', style: 'totals', width: 347 },
         { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(subTotal).toFixed(2)}`, style: 'fonts', margin: [31, 0, 0, 0], alignment: 'right' }
       ]
@@ -188,7 +135,7 @@ export default (data, breakdowns) => {
     },
     {
       columns: [
-        { text: 'Misc Items', style: 'totals', width: 347, decoration: 'underline' },
+        { text: '', style: 'totals', width: 347 },
         { text: 'Quote Only:', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(data.total).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
@@ -196,7 +143,7 @@ export default (data, breakdowns) => {
     },
     {
       columns: [
-        { text: data.misc_items.map(i => { return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} - $${i.price ? i.price : i.price2 ? i.price2 : ''} \n`; }), style: 'fonts', width: 347 },
+        { text: '', style: 'totals', width: 347 },
         { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(balancePaid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
@@ -211,6 +158,5 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 15, 0, 0]
     },
-    { text: '', pageBreak: 'before' }
   ];
 };

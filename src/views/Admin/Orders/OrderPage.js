@@ -44,6 +44,11 @@ import Select from 'react-select';
 import ProfilesPDF from './PrintOuts/Pages/Door/ProfilesPDF';
 import moment from 'moment';
 
+import MiscItemsAcknowledgement from './PrintOuts/Pages/MiscItems/AcknowledgementPDF';
+import MiscItemsInvoice from './PrintOuts/Pages/MiscItems/InvoicePDF';
+import MiscItemsPDF from './PrintOuts/Pages/MiscItems/MiscItemsPDF';
+
+
 
 import AcknowledgementPDF from './PrintOuts/Pages/Door/AcknowledgementPDF';
 import DrawerAcnowledgementPDF from './PrintOuts/Pages/Drawer/AcknowledgementPDF';
@@ -168,8 +173,8 @@ class OrderPage extends Component {
   }
 
   downloadPDF = () => {
-    const { formState, drawerState, breakdowns, box_breakdowns, selectedOrder } = this.props;
-    const data = formState ? formState : drawerState ? drawerState : [];
+    const { formState, drawerState, miscState, breakdowns, box_breakdowns, selectedOrder } = this.props;
+    const data = formState ? formState : drawerState ? drawerState : miscState ? miscState : [];
     if (data.orderType === 'Door Order') {
       this.state.selectedOption.map(async option => {
         switch (option.value) {
@@ -313,7 +318,7 @@ class OrderPage extends Component {
         }
       });
 
-    } else {
+    } else if (data.orderType === 'Drawer Order') {
       this.state.selectedOption.map(async option => {
         switch (option.value) {
           case 'All':
@@ -338,6 +343,25 @@ class OrderPage extends Component {
             break;
           case 'Sides':
             DrawerSidesPDF(data, box_breakdowns);
+            this.setState({ selectedOption: [] });
+            break;
+          default:
+            return;
+        }
+      });
+    } else if (data.orderType === 'Misc Items') {
+      this.state.selectedOption.map(async option => {
+        switch (option.value) {
+          case 'All':
+            MiscItemsPDF(data, box_breakdowns);
+            this.setState({ selectedOption: [] });
+            break;
+          case 'Acknowledgement':
+            MiscItemsAcknowledgement(data, box_breakdowns);
+            this.setState({ selectedOption: [] });
+            break;
+          case 'Invoice':
+            MiscItemsInvoice(data, box_breakdowns);
             this.setState({ selectedOption: [] });
             break;
           default:
@@ -383,6 +407,12 @@ class OrderPage extends Component {
         { value: 'Assembly', label: 'Assembly List' },
         { value: 'Bottoms', label: 'Box Bottoms' },
         { value: 'Sides', label: 'Box Sides' },
+      ];
+    } else if (s.orderType === 'Misc Items') {
+      options = [
+        { value: 'All', label: 'All' },
+        { value: 'Acknowledgement', label: 'Acknowledgement' },
+        { value: 'Invoice', label: 'Invoice' },
       ];
     }
 
@@ -668,6 +698,7 @@ class OrderPage extends Component {
 const mapStateToProps = (state, prop) => ({
   formState: getFormValues('DoorOrder')(state),
   drawerState: getFormValues('DrawerOrder')(state),
+  miscState: getFormValues('MiscItems')(state),
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   selectedOrder: state.Orders.selectedOrder
