@@ -140,6 +140,7 @@ class DoorOrders extends Component {
       balance_due: total,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
+      Date: new Date(),
       user: user.id,
       userName: user.username,
       files: this.state.files,
