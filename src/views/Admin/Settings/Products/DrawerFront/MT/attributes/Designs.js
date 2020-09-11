@@ -273,6 +273,17 @@ const Designs = (props) => {
     return (
 
       <div>  
+
+        <Row className="mb-2">
+          <Col>
+            <FormGroup>
+              <Label htmlFor="search">Search</Label>
+              <Input onChange={(e) => changeFilterValue(e)} />
+            </FormGroup>
+          </Col>
+          <Col xs='9' />
+        </Row>
+
         <Row style={{ height: '600px' }}>
           <PerfectScrollbar>
             <div className="col d-flex align-content-start flex-wrap">{card}</div>
