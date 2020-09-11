@@ -37,16 +37,16 @@ import {
   miscTotalSelector,
 } from '../../../selectors/doorPricing';
 import 'react-notifications/lib/notifications.css';
-import SideBar from './components/SideBar';
+import SideBar from '../../../components/DoorOrders/SideBar';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
 import { renderField, renderCheckboxToggle, renderCheckbox } from '../../../components/RenderInputs/renderInputs';
-import MiscItems from './components/MiscItems';
+import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
-const DoorInfo = React.lazy(() => import('./components/DoorInfo/DoorInfo'));
-const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
+const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
+const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -109,7 +109,8 @@ class DoorOrders extends Component {
         sale: values.job_info.customer.sale.id,
         Taxable: values.job_info.customer.Taxable
       },
-      ShippingMethod: values.job_info.ShippingMethod
+      ShippingMethod: values.job_info.ShippingMethod,
+      PaymentMethod: values.job_info.PaymentMethod
     };
 
     const order = {
@@ -128,6 +129,7 @@ class DoorOrders extends Component {
       balance_due: total,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
+      Date: new Date(),
       user: user.id,
       userName: user.username,
       files: this.state.files,
@@ -194,7 +196,7 @@ class DoorOrders extends Component {
 
 
     return (
-      <div className="animated fadeIn resize">
+      <div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="12" md="12" lg="7">
             <Card>
@@ -374,7 +376,7 @@ const mapStateToProps = state => ({
     misc_items: [],
     balance_paid: 0,
     open: true,
-    discount: state.customers.customerDB[0].Discount ? state.customers.customerDB[0].Discount : 0,
+    discount: 0,
     Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
     part_list: [
       {
@@ -406,7 +408,10 @@ const mapStateToProps = state => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
-      ShippingMethod: state.misc_items.shippingMethods[0]
+      ShippingMethod: state.misc_items.shippingMethods[0],
+      PaymentMethod: {
+        NAME: state.customers.customerDB[0].PaymentMethod
+      }
     }
   },
   formState: getFormValues('DoorOrder')(state),

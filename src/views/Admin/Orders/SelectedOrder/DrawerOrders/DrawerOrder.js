@@ -15,8 +15,8 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DrawerBoxInfo from './components/DrawerBoxInfo';
-import JobInfo from './components/JobInfo/JobInfo';
+import DrawerBoxInfo from '../../../../../components/DrawerOrders/DrawerBoxInfo';
+import JobInfo from '../../../../../components/JobInfo/DrawerJobInfo';
 import NotificationAlert from 'react-notification-alert';
 import 'react-notifications/lib/notifications.css';
 import {
@@ -113,7 +113,8 @@ class DrawerOrder extends Component {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
       },
-      ShippingMethod: values.job_info.ShippingMethod
+      ShippingMethod: values.job_info.ShippingMethod,
+      PaymentMethod: values.job_info.PaymentMethod
     };
 
 
@@ -144,9 +145,10 @@ class DrawerOrder extends Component {
     window.scrollTo(0, 0);
   }
 
-  cancelOrder = e => {
+  cancelOrder = async (e) => {
     e.preventDefault();
-    this.props.reset();
+    await this.props.reset();
+    await this.props.editable();
   };
 
   onKeyPress(event) {
@@ -187,7 +189,7 @@ class DrawerOrder extends Component {
 
 
     return (
-      <div className="animated fadeIn resize">
+      <div className="animated fadeIn">
         <NotificationAlert ref="notify" />
         <Row>
           <Col xs="12" sm="12" md="12" lg="12">
@@ -246,6 +248,7 @@ class DrawerOrder extends Component {
                             <Field
                               name={'Taxable'}
                               component={renderCheckboxToggle}
+                              edit={edit}
                             />
                           </FormGroup>
                         </Col>

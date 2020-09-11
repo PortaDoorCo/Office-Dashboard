@@ -204,8 +204,8 @@ export const itemPriceSelector = createSelector(
             let topRailAdd = 0;
             let bottomRailAdd = 0;
 
-            if (part.construction.value == 'Cope' || part.construction.value === 'Glass') {
-              if (part.orderType.value === 'DF') {
+            if (part.construction.value === 'Cope') {
+              if ((part.orderType.value === 'DF') || (part.orderType.value === 'Glass_DF')) {
                 //leftStile
                 if (part.profile && part.profile.MINIMUM_STILE_WIDTH !== numQty(i.leftStile)) {
 
@@ -350,9 +350,9 @@ export const itemPriceSelector = createSelector(
 
             }
 
-            if (part.construction.value == 'M') {
+            if (part.construction.value === 'M') {
 
-              if (part.orderType.value === 'DF') {
+              if ((part.orderType.value === 'DF') || (part.orderType.value === 'Glass_DF')) {
                 //leftStile
                 if (part.miter_df_design && part.miter_df_design.PROFILE_WIDTH !== numQty(i.leftStile)) {
 
@@ -583,7 +583,7 @@ export const itemPriceSelector = createSelector(
 
             console.log(pricer.df_pricing);
 
-            if (part.orderType.value === 'DF'){
+            if ((part.orderType.value === 'DF') || (part.orderType.value === 'Glass_DF')){
               price = (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) ? (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) : 0;
             } else {
               price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) ? (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) : 0;
@@ -681,8 +681,8 @@ export const linePriceSelector = createSelector(
             let topRailAdd = 0;
             let bottomRailAdd = 0;
 
-            if (part.construction.value == 'Cope' || part.construction.value === 'Glass') {
-              if (part.orderType.value === 'DF') {
+            if (part.construction.value === 'Cope') {
+              if ((part.orderType.value === 'DF') || (part.orderType.value === 'Glass_DF')) {
                 //leftStile
                 if (part.profile && part.profile.MINIMUM_STILE_WIDTH !== numQty(i.leftStile)) {
 
@@ -827,9 +827,9 @@ export const linePriceSelector = createSelector(
 
             }
 
-            if (part.construction.value == 'M') {
+            if (part.construction.value === 'M') {
 
-              if (part.orderType.value === 'DF') {
+              if ((part.orderType.value === 'DF') || (part.orderType.value === 'Glass_DF')) {
                 //leftStile
                 if (part.miter_df_design && part.miter_df_design.PROFILE_WIDTH !== numQty(i.leftStile)) {
 
@@ -974,7 +974,7 @@ export const linePriceSelector = createSelector(
 
             }
 
-            if (part.construction.value == 'MT') {
+            if (part.construction.value === 'MT') {
 
 
               //leftStile
@@ -1057,7 +1057,7 @@ export const linePriceSelector = createSelector(
 
             let price = 0;
 
-            if (part.orderType.value === 'DF'){
+            if ((part.orderType.value === 'DF') || part.orderType.value === 'Glass_DF'){
               price = (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) ? (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) : 0;
             } else {
               price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) ? (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) : 0;

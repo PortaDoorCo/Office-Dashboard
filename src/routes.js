@@ -11,6 +11,8 @@ const PurchaseOrders = React.lazy(() => import('./views/Admin/PurchaseOrders/Pur
 const SalesReport = React.lazy(() => import('./views/Admin/SalesReport/SalesReport'));
 const LateList = React.lazy(() => import('./views/Admin/Late_List/Late_List'));
 const Users = React.lazy(() => import('./views/Admin/Users/Users'));
+const MiscItems = React.lazy(() => import('./views/Admin/MiscItems/MiscItems'));
+
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -26,6 +28,7 @@ const routes = [
   { path: '/sales-reports', name: 'Sales Reports', component: SalesReport },
   { path: '/late-list', name: 'Late List', component: LateList },
   { path: '/users', name: 'Users', component: Users },
+  { path: '/misc-items', name: 'MiscItems', component: MiscItems },
 ];
 
 
