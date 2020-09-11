@@ -27,16 +27,17 @@ export default (data, breakdowns) => {
       return tableBody.push([
         { text: i.qty, style: 'fonts' },
         { text: i.item.NAME, style: 'fonts' },
-        { text: i.price, style: 'fonts' },
+        { text: `$${i.price}`, style: 'fonts' },
       ]);
     } else if (i.category === 'custom') {
       return tableBody.push([
         { text: i.qty, style: 'fonts' },
         { text: i.item2, style: 'fonts' },
-        { text: i.price2, style: 'fonts' },
+        { text: `$${i.price2}`, style: 'fonts' },
       ]);
+    } else {
+      return [];
     }
-
   });
 
 
