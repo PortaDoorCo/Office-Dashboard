@@ -166,7 +166,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: `Total Number of Pieces: ${qty.reduce((acc, item) => acc + item, 0)}`, style: 'totals', width: 347 },
-        { text: 'Order Subtoal', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(subTotal).toFixed(2)}`, style: 'fonts', margin: [31, 0, 0, 0], alignment: 'right' }
       ]
     },

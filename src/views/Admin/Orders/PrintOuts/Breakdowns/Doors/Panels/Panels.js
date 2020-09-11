@@ -28,7 +28,30 @@ export default (info, part, breakdowns) => {
     if (part.construction.value === 'Glass') {
       return Glass_Door(info, part);
     }
+  }
 
+  if (part.orderType.value === 'Glass') {
+    if (part.construction.value === 'Cope') {
+      return Glass_Door(info, part);
+    }
+    if (part.construction.value === 'MT') {
+      return Glass_Door(info, part);
+    }
+    if (part.construction.value === 'M') {
+      return Glass_Door(info, part);
+    }
+  }
+
+  if (part.orderType.value === 'Glass_DF') {
+    if (part.construction.value === 'Cope') {
+      return Glass_Door(info, part);
+    }
+    if (part.construction.value === 'MT') {
+      return Glass_Door(info, part);
+    }
+    if (part.construction.value === 'M') {
+      return Glass_Door(info, part);
+    }
   }
 
   if (part.orderType.value === 'DF') {
@@ -44,8 +67,8 @@ export default (info, part, breakdowns) => {
     if (part.construction.value === 'Glass') {
       return Glass_Door(info, part);
     }
-
   }
+
 
   if (part.orderType.value === 'Face_Frame') {
     return Face_Frame(info, part);

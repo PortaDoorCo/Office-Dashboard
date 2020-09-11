@@ -15,8 +15,8 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DoorInfo from './components/DoorInfo/DoorInfo';
-import JobInfo from './components/JobInfo/JobInfo';
+import DoorInfo from '../../../../../components/DoorOrders/DoorInfo/DoorInfo';
+import JobInfo from '../../../../../components/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
 import {
   reduxForm,
@@ -99,7 +99,8 @@ class DoorOrders extends Component {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
       },
-      ShippingMethod: values.job_info.ShippingMethod
+      ShippingMethod: values.job_info.ShippingMethod,
+      PaymentMethod: values.job_info.PaymentMethod
     };
 
     const order = {
@@ -163,7 +164,7 @@ class DoorOrders extends Component {
 
     return (
 
-      <div className="animated fadeIn resize">
+      <div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="12" md="12" lg="12">
             <Card>
@@ -215,6 +216,7 @@ class DoorOrders extends Component {
                             <Field
                               name={'Taxable'}
                               component={renderCheckboxToggle}
+                              edit={edit}
                             />
                           </FormGroup>
                         </Col>

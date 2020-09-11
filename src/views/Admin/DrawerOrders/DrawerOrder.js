@@ -38,16 +38,16 @@ import {
   miscTotalSelector
 } from '../../../selectors/drawerPricing';
 import moment from 'moment-business-days';
-import SideBar from './components/SideBar';
+import SideBar from '../../../components/DrawerOrders/SideBar';
 import Sticky from 'react-stickynode';
 import Cookies from 'js-cookie';
 import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolder';
 import { renderField, renderCheckboxToggle } from '../../../components/RenderInputs/renderInputs';
-import MiscItems from './components/MiscItems';
+import MiscItems from '../../../components/DrawerOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
-const DrawerBoxInfo = React.lazy(() => import('./components/DrawerBoxInfo'));
-const JobInfo = React.lazy(() => import('./components/JobInfo/JobInfo'));
+const DrawerBoxInfo = React.lazy(() => import('../../../components/DrawerOrders/DrawerBoxInfo'));
+const JobInfo = React.lazy(() => import('../../../components/JobInfo/DrawerJobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -120,7 +120,8 @@ class DoorOrders extends Component {
         TaxRate: values.job_info.customer.TaxRate,
         sale: values.job_info.customer.sale.id
       },
-      ShippingMethod: values.job_info.ShippingMethod
+      ShippingMethod: values.job_info.ShippingMethod,
+      PaymentMethod: values.job_info.PaymentMethod
     };
 
     const order = {
@@ -139,6 +140,7 @@ class DoorOrders extends Component {
       balance_due: total,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
+      Date: new Date(),
       user: user.id,
       userName: user.username,
       files: this.state.files,
@@ -213,7 +215,7 @@ class DoorOrders extends Component {
     } = this.props;
 
     return (
-      <div className="animated fadeIn resize">
+      <div className="animated fadeIn">
         <NotificationAlert ref="notify" />
         <Row>
           <Col xs="12" sm="12" md="12" lg="7">
@@ -401,7 +403,7 @@ const mapStateToProps = (state, prop) => ({
     open: true,
     balance_paid: 0,
     misc_items: [],
-    discount: state.customers.customerDB[0].Discount,
+    discount: 0,
     Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
     part_list: [
       {
@@ -421,7 +423,10 @@ const mapStateToProps = (state, prop) => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
-      ShippingMethod: state.misc_items.shippingMethods[0]
+      ShippingMethod: state.misc_items.shippingMethods[0],
+      PaymentMethod: {
+        NAME: state.customers.customerDB[0].PaymentMethod
+      }
     }
   },
   formState: getFormValues('DrawerOrder')(state),
