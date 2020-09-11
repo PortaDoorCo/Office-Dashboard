@@ -17,7 +17,7 @@ import {
   balanceSelector,
   subTotal_Total,
   balanceTotalSelector
-} from '../../../../../selectors/miscItemPricing';
+} from '../../../../../selectors/doorPricing';
 import { updateOrder, updateBalance } from '../../../../../redux/orders/actions';
 
 
@@ -180,7 +180,7 @@ class Balance extends Component {
 
 const mapStateToProps = (state, props) => ({
 
-  formState: getFormValues('MiscItems')(state),
+  formState: getFormValues('DoorOrder')(state),
   total: totalSelector(state),
   subTotal: subTotal_Total(state),
   balance: balanceSelector(state),
