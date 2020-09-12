@@ -55,32 +55,39 @@ class Balance extends Component {
     };
 
 
+    if(values.pay_balance){
+      await updateBalance(id, order, cookie);
+      
+      await this.props.dispatch(
+        change(
+          'DoorOrder',
+          'pay_balance',
+          0
+        )
+      );
 
-    await updateBalance(id, order, cookie);
+      await this.props.dispatch(
+        change(
+          'DoorOrder',
+          'balance_history',
+          [
+            ...values.balance_history,
+            {
+              'balance_due': parseFloat(formState && formState.balance_due) - parseFloat(values.pay_balance),
+              'balance_paid': parseFloat(values.pay_balance),
+              'date': new Date()
+            }
+          ]
 
-    await this.props.dispatch(
-      change(
-        'DoorOrder',
-        'pay_balance',
-        0
-      )
-    );
+        )
+      );
+    } else {
+      alert('Please enter a value');
+      return null;
+    }
+    
 
-    await this.props.dispatch(
-      change(
-        'DoorOrder',
-        'balance_history',
-        [
-          ...values.balance_history,
-          {
-            'balance_due': parseFloat(formState && formState.balance_due) - parseFloat(values.pay_balance),
-            'balance_paid': parseFloat(values.pay_balance),
-            'date': new Date()
-          }
-        ]
 
-      )
-    );
 
   }
 

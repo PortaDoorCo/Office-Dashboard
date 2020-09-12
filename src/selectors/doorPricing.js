@@ -1058,9 +1058,9 @@ export const linePriceSelector = createSelector(
             let price = 0;
 
             if ((part.orderType.value === 'DF') || part.orderType.value === 'Glass_DF'){
-              price = (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) ? (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) : 0;
+              price = (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) ? (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) * qty : 0;
             } else {
-              price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) ? (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) : 0;
+              price = (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) ? (eval(pricer.door_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) * qty : 0;
             }
 
 
