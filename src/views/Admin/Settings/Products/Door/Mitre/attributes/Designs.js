@@ -274,6 +274,8 @@ const Designs = (props) => {
           </Col>
           <Col xs='9' />
         </Row>
+
+        
         <Row style={{ height: '600px' }}>
           <PerfectScrollbar>
             <div className="col d-flex align-content-start flex-wrap">{card}</div>
