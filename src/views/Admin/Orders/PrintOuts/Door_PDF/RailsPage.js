@@ -46,86 +46,92 @@ export default (data, breakdowns) => {
 
     });
 
-    return [
-      {
-        columns: [
-          {
-            stack: ['Individual - RAILS List', `Shipping Date: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`,]
-          },
-          {
-            stack: [
-              { text: 'Porta Door Co. Inc.', alignment: 'center' },
-              { text: '65 Cogwheel Lane', alignment: 'center' },
-              { text: 'Seymour, CT', alignment: 'center' },
-              { text: '203-888-6191', alignment: 'center' },
-              { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-            ]
-          },
-          {
-            stack: [
-              { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-              { text: `Est. Ship: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
-            ]
-          }
-        ]
-      },
-      {
-        columns: [
-          {
-            text: `${data.job_info.poNum} - ${data.job_info.customer.Company}`,
-            margin: [0, 10]
-          },
-          { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 0, 80, 0] }
-        ]
-      },
-      {
-        canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
-      },
-      [
+    if(i.orderType.value === 'One_Piece'){
+      return null;
+    } else {
+      return [
         {
-          margin: [0, 10, 0, 0],
           columns: [
-            { text: `${i.woodtype.NAME}`, style: 'woodtype' },
             {
-              text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
-              style: 'woodtype',
-              alignment: 'left'
+              stack: ['Individual - RAILS List', `Shipping Date: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`,]
             },
             {
-              text: '',
-              alignment: 'left'
+              stack: [
+                { text: 'Porta Door Co. Inc.', alignment: 'center' },
+                { text: '65 Cogwheel Lane', alignment: 'center' },
+                { text: 'Seymour, CT', alignment: 'center' },
+                { text: '203-888-6191', alignment: 'center' },
+                { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
+              ]
             },
             {
-              text: '',
-              alignment: 'left'
-            },
-            {
-              text: 'RAILS',
-              alignment: 'right',
-              style: 'woodtype'
+              stack: [
+                { text: `Order #: ${data.orderNum}`, alignment: 'right' },
+                { text: `Est. Ship: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
+              ]
             }
           ]
         },
         {
-          canvas: [
-            { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }
-          ],
-          margin: [0, 10, 0, 0]
-        },
-        {
-          table: {
-            headerRows: 1,
-            widths: [25, 120, 25, 100, '*', '*', 100],
-            body: tableBody
-          },
-          layout: 'lightHorizontalLines'
+          columns: [
+            {
+              text: `${data.job_info.poNum} - ${data.job_info.customer.Company}`,
+              margin: [0, 10]
+            },
+            { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 0, 80, 0] }
+          ]
         },
         {
           canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
-        }
-      ],
-      { text: '', pageBreak: 'before' }
-    ];
+        },
+        [
+          {
+            margin: [0, 10, 0, 0],
+            columns: [
+              { text: `${i.woodtype.NAME}`, style: 'woodtype' },
+              {
+                text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
+                style: 'woodtype',
+                alignment: 'left'
+              },
+              {
+                text: '',
+                alignment: 'left'
+              },
+              {
+                text: '',
+                alignment: 'left'
+              },
+              {
+                text: 'RAILS',
+                alignment: 'right',
+                style: 'woodtype'
+              }
+            ]
+          },
+          {
+            canvas: [
+              { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }
+            ],
+            margin: [0, 10, 0, 0]
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: [25, 120, 25, 100, '*', '*', 100],
+              body: tableBody
+            },
+            layout: 'lightHorizontalLines'
+          },
+          {
+            canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
+          }
+        ],
+        { text: '', pageBreak: 'before' }
+      ];
+    }
+
+
   });
 
 };

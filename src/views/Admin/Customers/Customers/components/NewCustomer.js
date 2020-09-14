@@ -52,6 +52,7 @@ submit = async (values, e) => {
     State: values.State,
     Zip: values.Zip,
     Phone1: values.Phone1,
+    Fax: values.Fax,
     Shipping_Address1: values.Shipping_Address1,
     Shipping_Address2: values.Shipping_Address2,
     Shipping_City: values.Shipping_City,
@@ -324,6 +325,21 @@ render() {
                     type="text"
                     component={renderField}
                     label="company"
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs="3">
+                <FormGroup>
+                  <Label htmlFor="phone">Fax Number</Label>
+                  <Field
+                    name={'Fax'}
+                    type="text"
+                    component={renderField}
+                    label="fax"
                     edit={edit}
                   />
                 </FormGroup>
