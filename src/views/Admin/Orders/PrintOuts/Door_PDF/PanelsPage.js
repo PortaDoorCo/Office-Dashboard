@@ -3,6 +3,9 @@ import Panels from '../Breakdowns/Doors/Panels/Panels';
 
 
 export default (data, breakdowns) => {
+
+  console.log('dataaaaa', data);
+
   return data.part_list.map((i, index) => {
 
 
@@ -31,7 +34,7 @@ export default (data, breakdowns) => {
       ]);
     });
 
-    if (!i.panel) {
+    if (!i.panel || i.orderType.value === 'One_Piece') {
       return null;
     } else {
       return [
