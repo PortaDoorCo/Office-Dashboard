@@ -196,7 +196,7 @@ export default (data, breakdowns) => {
     },
     {
       columns: [
-        { text: data.misc_items.map(i => { return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} - $${i.price ? i.price : i.price2 ? i.price2 : ''} \n`; }), style: 'fonts', width: 347 },
+        { text: data.misc_items.map(i => { return `${i.qty} - ${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} - $${i.price ? i.price : i.price2 ? i.price2 : ''} \n`; }), style: 'fonts', width: 347 },
         { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(balancePaid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
