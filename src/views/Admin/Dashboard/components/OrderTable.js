@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
@@ -10,6 +10,36 @@ import { Select } from 'antd';
 import { updateStatus, loadOrders, setSelectedOrder } from '../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import {Button} from 'reactstrap';
+import styled from 'styled-components';
+
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 34px;
+  width: 32px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 
 const cookie = Cookies.get('jwt');
@@ -75,12 +105,47 @@ const conditionalRowStyles = [
   },
 ];
 
+const FilterComponent = ({ filterText, onFilter, onClear }) => (
+  <>
+    <TextField id="search" type="text" placeholder="Search Orders" value={filterText} onChange={onFilter} />
+    <ClearButton type="button" color="danger" onClick={onClear}>X</ClearButton>
+  </>
+);
+
 
 const OrderTable = (props) => {
+  const { orders } = props;
   const [setSelectedRows] = useState([]);
   const [toggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [data, setData] = useState(orders);
+  const [filterText, setFilterText] = useState('');
+  const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+
+  useEffect(() => {
+    const filteredOrders = orders.filter((item) => {
+      if(filterText.length > 0) {
+        return (
+          (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info.poNum.toLowerCase().includes(filterText.toLowerCase()))
+        );
+      } else {
+        return item;
+      }
+    });
+    setData(filteredOrders);
+  }, [orders, filterText]);
+
+  const subHeaderComponentMemo = useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setResetPaginationToggle(!resetPaginationToggle);
+        setFilterText('');
+      }
+    };
+
+    return <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />;
+  }, [filterText, resetPaginationToggle]);
 
 
 
@@ -196,13 +261,15 @@ const OrderTable = (props) => {
       <DataTable
         title="Orders"
         columns={columns}
-        data={props.orders}
+        data={data}
         onSelectedRowsChange={handleRowSelected}
         clearSelectedRows={toggleCleared}
         pagination
         progressPending={!props.ordersDBLoaded}
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
       />
       {
         modal ?
