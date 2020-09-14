@@ -37,14 +37,18 @@ class Chart3 extends Component {
       return item === 'Drawer Order';
     });
 
+    const miscOrders = groups.filter(item => {
+      return item === 'Misc Items';
+    });
+
 
     // groupbyName = Object.entries(groupbyName).map(([k, v]) => ({key: k, value: v})).sort((a,b) => b.value.length - a.value.length)
 
     const pie = {
-      labels: ['Door Orders', 'Drawer Orders'],
+      labels: ['Door Orders', 'Drawer Orders', 'Misc Items'],
       datasets: [
         {
-          data: [doorOrders.length, drawerOrders.length]
+          data: [doorOrders.length, drawerOrders.length, miscOrders.length]
         }
       ],
     };
