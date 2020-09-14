@@ -264,6 +264,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     name={`${table}.full_frame`}
                     component={renderCheckboxToggle}
                     onChange={(e) => updateFullFrame(e, index)}
+                    edit={edit}
                     label="Full Frame" />
                 </Col>
               </Row>
