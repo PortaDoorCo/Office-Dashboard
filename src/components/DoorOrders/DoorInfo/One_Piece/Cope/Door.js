@@ -8,15 +8,15 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../RenderInputs/renderInputs';
-import Cope_Table from '../../Table/Doors/Cope_Table';
+import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../RenderInputs/renderInputs';
+import Cope_Table from '../../../Table/Doors/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
   totalSelector,
-} from '../../../../selectors/doorPricing';
+} from '../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
 

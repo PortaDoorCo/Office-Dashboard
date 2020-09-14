@@ -68,7 +68,6 @@ export default (data,breakdowns) => {
       margin: [0, 0, 0, 20]
     },
     data.part_list.map((i, index) => {
-      console.log('iiiiiii', i);
       return [
         {
           columns: [
@@ -93,20 +92,22 @@ export default (data,breakdowns) => {
 
       const equation = (bf + percent).toFixed(2);
 
-      console.log('bf', bf);
-      console.log('percent',percent);
-      console.log('equation', equation);
+      if (i.orderType.value === 'One_Piece') {
+        return [];
+      } else {
+        return [
+          {
+            columns: [
+              { text: `Board Feet of ${i.woodtype.NAME} - ${i.thickness.name}" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT(i.dimensions)}`, style: 'fonts', width: 400 },
+              { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+              { text: equation, style: 'fonts', width: 30 }
+            ],
 
-      return [
-        {
-          columns: [
-            { text: `Board Feet of ${i.woodtype.NAME} - ${i.thickness.name}" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT(i.dimensions)}`, style: 'fonts', width: 400 },
-            { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-            { text: equation, style: 'fonts', width: 30 }
-          ],
+          }
+        ];
+      }
 
-        }
-      ];
+
     }),
     {
       columns: [
@@ -121,12 +122,12 @@ export default (data,breakdowns) => {
       });
 
       const width = i.dimensions.map((item,index) => {
-        console.log('itemmm',i);
+       
         return Panels(item, i, breakdowns).map(panel => { return panel.width; });
       });
 
       const height = i.dimensions.map((item,index) => {
-        console.log('itemmm',i);
+       
         return Panels(item, i, breakdowns).map(panel => { return panel.height; });
       });
 
@@ -141,9 +142,9 @@ export default (data,breakdowns) => {
 
       const equation = (((widthTotal.reduce((acc, item) => acc + item)) * (heightTotal.reduce((acc, item) => acc + item))) / 144) * qtyTotal;
 
-      console.log(equation);
-
-      console.log('iiiiii', i);
+      if (i.orderType.value === 'One_Piece') {
+        return [];
+      }
 
       if (i.panel){
         return [
