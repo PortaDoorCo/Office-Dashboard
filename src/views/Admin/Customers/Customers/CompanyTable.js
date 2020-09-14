@@ -45,7 +45,7 @@ const ClearButton = styled(Button)`
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
     <TextField id="search" type="text" placeholder="Search Company" value={filterText} onChange={onFilter} />
-    <ClearButton type="button" onClick={onClear}>X</ClearButton>
+    <ClearButton type="button" color="danger" onClick={onClear}>X</ClearButton>
   </>
 );
 
@@ -197,7 +197,7 @@ const CompanyTable = (props) => {
       }
     };
 
-    return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon="true">Delete</Button>;
+    return <Button key="delete" color="danger" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon="true">Delete</Button>;
   }, [data, selectedRows, toggleCleared]);
 
   return (
