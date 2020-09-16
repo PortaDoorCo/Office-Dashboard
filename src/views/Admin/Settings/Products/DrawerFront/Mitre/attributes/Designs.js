@@ -348,7 +348,7 @@ const Designs = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.miter_designs,
+  designs: state.part_list.miter_DF_designs,
   role: state.users.user.role
 });
 

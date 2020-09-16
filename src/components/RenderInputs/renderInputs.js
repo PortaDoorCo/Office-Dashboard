@@ -144,8 +144,6 @@ export const renderCheckboxToggle = ({
   ...rest
 }) => (
   <div>
-    {console.log('inputtt', input)}
-    {console.log('valueeee', edit)}
     <CheckboxUI
       toggle
       {...input}
