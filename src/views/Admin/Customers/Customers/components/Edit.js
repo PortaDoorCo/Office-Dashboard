@@ -66,8 +66,6 @@ class Edit extends Component {
       Discount: values.Discount
     };
 
-    console.log(data);
-
 
     await this.props.updateCustomer(id, data, cookie);
     await this.props.onEdit();

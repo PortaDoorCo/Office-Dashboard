@@ -3,11 +3,9 @@ import numQty from 'numeric-quantity';
 export default (v, part) => {
   const calc = v.part_list.map(item => {
     const widths = item.dimensions.map(i => {
-      console.log('widthhhh',i.width);
       return (numQty(i.width)) * parseInt(i.qty);
     });
     const heights = item.dimensions.map(i => {
-      console.log('heighttsssss',numQty(i.height));
       return (numQty(i.height)) * parseInt(i.qty);
     });
 
@@ -18,8 +16,6 @@ export default (v, part) => {
 
     return ((widthTotal + heightsTotal) / 12);
   });
-
-  console.log('calc',calc);
 
   // console.log('callllccc',calc);
   return calc.reduce((acc, item) => acc + item).toFixed(2);

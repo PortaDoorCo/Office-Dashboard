@@ -58,8 +58,6 @@ export function uploadFilesToOrder(order, e, cookie) {
     files: fileIds
   };
 
-  console.log(files);
-
   return async function (dispatch) {
 
     try {

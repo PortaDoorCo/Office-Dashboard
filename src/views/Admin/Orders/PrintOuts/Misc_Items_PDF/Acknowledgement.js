@@ -19,10 +19,8 @@ export default (data, breakdowns) => {
     ]
   ];
 
-  console.log('dataaaa',data);
 
   data.misc_items.map(i  => {
-    console.log('iiiiiii', i);
     if(i.category === 'preselect') {
       return tableBody.push([
         { text: i.qty, style: 'fonts' },

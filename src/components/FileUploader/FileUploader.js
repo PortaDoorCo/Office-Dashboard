@@ -16,7 +16,6 @@ const FileUploader = (props) => {
     multiple: props.multi,
     action: `${db_url}/upload`,
     customRequest: (options) => {
-      console.log(options);
       const data= new FormData();
       data.append('files', options.file);
       const config= {

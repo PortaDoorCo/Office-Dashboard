@@ -46,8 +46,6 @@ export default (info, part, breakdowns) => {
   const add_len = 0;
   const INSET = 0;
 
-  console.log(panelName);
-
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
   const unevenSplitArray = Array.from(Array(panelsH).keys())
