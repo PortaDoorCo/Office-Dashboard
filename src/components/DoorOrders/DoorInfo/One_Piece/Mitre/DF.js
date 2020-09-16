@@ -26,16 +26,18 @@ const fraction = num => {
 
 class MiterDF extends Component {
 
-  onChangeProfile = () => {
-    const part_list = this.props.formState.part_list;
+  onChangeProfile = (p, ind) => {
+    const { formState } = this.props;
 
-    part_list.forEach((part, i) => {
-      if (part.dimensions) {
-        part.dimensions.forEach((info, index) => {
+    const part = formState.part_list[ind];
+
+    if(part.dimensions){
+      part.dimensions.forEach((info, index) => {
+        if(info){
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].leftStile`,
+              `${p}.dimensions[${index}].leftStile`,
               fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
             )
           );
@@ -43,7 +45,7 @@ class MiterDF extends Component {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].rightStile`,
+              `${p}.dimensions[${index}].rightStile`,
               fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
             )
           );
@@ -52,7 +54,7 @@ class MiterDF extends Component {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].topRail`,
+                `${p}.dimensions[${index}].topRail`,
                 fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
               )
             );
@@ -61,7 +63,7 @@ class MiterDF extends Component {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].bottomRail`,
+                `${p}.dimensions[${index}].bottomRail`,
                 fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
               )
             );
@@ -69,7 +71,7 @@ class MiterDF extends Component {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].topRail`,
+                `${p}.dimensions[${index}].topRail`,
                 fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
               )
             );
@@ -78,16 +80,18 @@ class MiterDF extends Component {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].bottomRail`,
+                `${p}.dimensions[${index}].bottomRail`,
                 fraction(part.miter_df_design ? part.miter_df_design.PROFILE_WIDTH : 0)
               )
             );
           }
-        });
-      } else {
-        return;
-      }
-    });
+        } else {
+          return null;
+        }
+      });
+    } else {
+      return null;
+    }
   }
 
   render() {
@@ -134,6 +138,7 @@ class MiterDF extends Component {
                 textField="NAME"
                 validate={required}
                 edit={edit}
+                onBlur={() => this.onChangeProfile(part, index)}
               />
             </FormGroup>
           </Col>

@@ -159,6 +159,13 @@ const OrderTable = (props) => {
 
   const columns = [
     {
+      name: 'Company',
+      selector: 'job_info.customer.Company',
+      sortable: true,
+      grow: 2
+
+    },
+    {
       name: 'Order #',
       selector: 'orderNum',
       sortable: true,
@@ -167,18 +174,6 @@ const OrderTable = (props) => {
       name: 'PO #',
       selector: 'job_info.poNum',
       sortable: true,
-    },
-    {
-      name: 'Job Name',
-      selector: 'job_info.jobName',
-      sortable: true,
-    },
-    {
-      name: 'Company',
-      selector: 'job_info.customer.Company',
-      sortable: true,
-      grow: 2
-
     },
     {
       name: 'Order Type',

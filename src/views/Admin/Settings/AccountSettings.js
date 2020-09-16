@@ -60,8 +60,6 @@ const AccountSettings = props => {
     await login(cookie);
   };
 
-  console.log(user.profile_picture);
-
   return (
     <div>
       <Row>

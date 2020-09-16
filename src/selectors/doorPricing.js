@@ -581,7 +581,7 @@ export const itemPriceSelector = createSelector(
 
             let price = 0;
 
-            console.log(pricer.df_pricing);
+      
 
             if ((part.orderType.value === 'DF') || (part.orderType.value === 'Glass_DF')){
               price = (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) ? (eval(pricer.df_pricing) + leftStileAdd + rightStileAdd + topRailAdd + bottomRailAdd + extraCost) : 0;

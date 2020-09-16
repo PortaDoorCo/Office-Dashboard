@@ -27,65 +27,72 @@ const fraction = num => {
 
 class MT_DF extends Component {
 
-  onChangeProfile = () => {
-    const part_list = this.props.formState.part_list;
-    const { index } = this.props;
-    const part = part_list[index];
+  onChangeProfile = (p, ind) => {
+    
+    const { formState } = this.props;
 
-    if (part.dimensions) {
-      part.dimensions.forEach((info, i) => {
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${index}].dimensions[${i}].leftStile`,
-            fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
-          )
-        );
+    const part = formState.part_list[ind];
 
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${index}].dimensions[${i}].rightStile`,
-            fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
-          )
-        );
-
-        if (info.full_frame) {
+    if(part.dimensions){
+      part.dimensions.forEach((info, index) => {
+        if(info){
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${i}].topRail`,
-              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+              `${p}.dimensions[${index}].leftStile`,
+              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
             )
           );
-
 
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${i}].bottomRail`,
-              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+              `${p}.dimensions[${index}].rightStile`,
+              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
             )
           );
+
+          if(info.full_frame) {
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].topRail`,
+                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+              )
+            );
+  
+  
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].bottomRail`,
+                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+              )
+            );
+          } else {
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].topRail`,
+                fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
+              )
+            );
+  
+  
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].bottomRail`,
+                fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
+              )
+            );
+          }
         } else {
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${index}].dimensions[${i}].topRail`,
-              fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
-            )
-          );
-
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${index}].dimensions[${i}].bottomRail`,
-              fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
-            )
-          );
+          return null;
         }
       });
+    } else {
+      return null;
     }
   }
 
@@ -135,7 +142,7 @@ class MT_DF extends Component {
                 valueField="value"
                 textField="NAME"
                 validate={required}
-                onBlur={() => this.onChangeProfile()}
+                onBlur={() => this.onChangeProfile(part, index)}
                 edit={edit}
               />
             </FormGroup>

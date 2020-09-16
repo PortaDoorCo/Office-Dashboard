@@ -165,17 +165,11 @@ cancelOrder = e => {
 onUploaded = (e) => {
   const id = e.map(i => (i.id));
   const a = [...this.state.files, id];
-  console.log(a);
   this.setState({ files: a });
 }
 
 render() {
   const { misc_items, formState, handleSubmit, subTotal, miscTotalSelector, miscLineItemSelector, customers, tax, total, edit } = this.props;
-
-  console.log('formState', miscLineItemSelector);
-
-  
-
 
   return (
     <div>

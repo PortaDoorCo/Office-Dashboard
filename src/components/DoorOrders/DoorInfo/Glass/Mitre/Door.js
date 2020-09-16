@@ -27,71 +27,75 @@ const fraction = num => {
 
 class MiterDoor extends Component {
 
-  onChangeProfile = () => {
-    const part_list = this.props.formState.part_list;
-    const { index } = this.props;
-    const part = part_list[index];
+  onChangeProfile = (p, ind) => {
+    const { formState } = this.props;
 
-    if (part.dimensions) {
-      part.dimensions.forEach((info, j) => {
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${index}].dimensions[${j}].leftStile`,
-            fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
-          )
-        );
+    const part = formState.part_list[ind];
 
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${index}].dimensions[${j}].rightStile`,
-            fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
-          )
-        );
-
-
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${index}].dimensions[${j}].topRail`,
-            fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.TOP_RAIL_ADD) : 0)
-          )
-        );
-
-
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${index}].dimensions[${j}].bottomRail`,
-            fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.BTM_RAIL_ADD) : 0)
-          )
-        );
-
-
-
-        if (parseInt(info.panelsH) > 1) {
+    if(part.dimensions){
+      part.dimensions.forEach((info, index) => {
+        if(info){
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${j}].horizontalMidRailSize`,
+              `${p}.dimensions[${index}].leftStile`,
               fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
             )
           );
-        }
 
-        if (parseInt(info.panelsW) > 1) {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${j}].verticalMidRailSize`,
+              `${p}.dimensions[${index}].rightStile`,
               fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
             )
           );
+
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `${p}.dimensions[${index}].topRail`,
+              fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.TOP_RAIL_ADD) : 0)
+            )
+          );
+
+
+          this.props.dispatch(
+            change(
+              'DoorOrder',
+              `${p}.dimensions[${index}].bottomRail`,
+              fraction(part.miter_design ? (part.miter_design.PROFILE_WIDTH + part.miter_design.BTM_RAIL_ADD) : 0)
+            )
+          );
+
+
+
+          if (parseInt(info.panelsH) > 1) {
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].horizontalMidRailSize`,
+                fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
+              )
+            );
+          }
+
+          if (parseInt(info.panelsW) > 1) {
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].verticalMidRailSize`,
+                fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
+              )
+            );
+          }
+        } else {
+          return null;
         }
       });
     } else {
-      return;
+      return null;
     }
   }
 
@@ -137,7 +141,7 @@ class MiterDoor extends Component {
                 name={`${part}.miter_design`}
                 component={renderDropdownListFilter}
                 data={miter_designs}
-                onBlur={() => this.onChangeProfile()}
+                onBlur={() => this.onChangeProfile(part, index)}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -147,7 +151,7 @@ class MiterDoor extends Component {
           </Col>
 
           <Col xs="12" md='12' lg="4">
-          <FormGroup>
+            <FormGroup>
               <Label htmlFor="design">Lites</Label>
               <Field
                 name={`${part}.lite`}
