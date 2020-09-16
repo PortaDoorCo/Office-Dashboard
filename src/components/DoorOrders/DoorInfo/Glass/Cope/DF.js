@@ -26,65 +26,72 @@ const fraction = num => {
 
 class CopeDF extends Component {
 
-  onChangeProfile = () => {
-    const part_list = this.props.formState.part_list;
-    const { index } = this.props;
-    const part = part_list[index];
+  onChangeProfile = (p, ind) => {
 
-    if (part.dimensions) {
-      part.dimensions.forEach((info, i) => {
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${index}].dimensions[${i}].leftStile`,
-            fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-          )
-        );
+    const { formState } = this.props;
 
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${index}].dimensions[${i}].rightStile`,
-            fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-          )
-        );
+    const part = formState.part_list[ind];
 
-        if (info.full_frame) {
+    if(part.dimensions){
+      part.dimensions.forEach((info, index) => {
+        if(info){
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${i}].topRail`,
-              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+              `${p}.dimensions[${index}].leftStile`,
+              fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
             )
           );
-
 
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${index}].dimensions[${i}].bottomRail`,
-              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+              `${p}.dimensions[${index}].rightStile`,
+              fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
             )
           );
+
+          if (info.full_frame) {
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].topRail`,
+                fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+              )
+            );
+
+
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].bottomRail`,
+                fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+              )
+            );
+          } else {
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].topRail`,
+                fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+              )
+            );
+
+
+            this.props.dispatch(
+              change(
+                'DoorOrder',
+                `${p}.dimensions[${index}].bottomRail`,
+                fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+              )
+            );
+          }
         } else {
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${index}].dimensions[${i}].topRail`,
-              fraction(part.profile ? (part.profile.DF_Reduction) : 0)
-            )
-          );
-
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${index}].dimensions[${i}].bottomRail`,
-              fraction(part.profile ? (part.profile.DF_Reduction) : 0)
-            )
-          );
+          return null;
         }
       });
+    } else {
+      return null;
     }
   }
 
@@ -170,7 +177,7 @@ class CopeDF extends Component {
                 data={profiles}
                 valueField="value"
                 textField="NAME"
-                onBlur={() => this.onChangeProfile()}
+                onBlur={() => this.onChangeProfile(part, index)}
                 validate={required}
                 edit={edit}
               />

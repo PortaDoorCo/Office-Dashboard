@@ -147,8 +147,6 @@ class MiscItems extends Component {
       Taxable: values.Taxable
     };
 
-    console.log('submit files', this.state.files);
-
 
     if (values.misc_items.length > 0) {
       await submitOrder(order, cookie);
@@ -169,16 +167,11 @@ cancelOrder = e => {
 onUploaded = (e) => {
   const id = e.map(i => (i.id));
   const a = [...this.state.files, id];
-  console.log(a);
   this.setState({ files: a });
 }
 
 render() {
   const { misc_items, formState, handleSubmit, subTotal, miscTotalSelector, miscLineItemSelector, customers, tax, total } = this.props;
-
-  console.log('formState', miscLineItemSelector);
-
-  console.log('files', this.state.files);
 
   return (
     <div>

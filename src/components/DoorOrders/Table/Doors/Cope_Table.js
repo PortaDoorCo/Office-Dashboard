@@ -61,7 +61,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   };
 
   const twoHigh = (index, e) => {
-    console.log('twohigh', e.target.value);
     const value = e.target.value;
     const part = formState.part_list[i];
     

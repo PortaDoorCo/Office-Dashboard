@@ -81,8 +81,6 @@ class DeliveryInfoWindow extends Component {
 
     const selectedOrder = orders.filter(i => i.id === id);
 
-    console.log(selectedOrder);
-
     this.setState({
       modal: !modal
     });

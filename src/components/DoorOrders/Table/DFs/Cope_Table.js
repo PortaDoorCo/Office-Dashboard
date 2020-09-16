@@ -358,10 +358,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                             formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                           ),
                           topRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                            formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
                           ),
                           bottomRail: fraction(
-                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                            formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
                           ),
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,

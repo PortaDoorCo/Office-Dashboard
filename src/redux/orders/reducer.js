@@ -47,9 +47,6 @@ export default function (state = initialState, action) {
         })
       };
     case UPLOAD_FILE_TO_ORDER:
-
-      console.log(data);
-
       return {
         ...state,
         orders: state.orders.map((item, index) => {

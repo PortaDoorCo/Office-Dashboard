@@ -27,16 +27,18 @@ const fraction = num => {
 
 class MT_Door extends Component {
 
-  onChangeProfile = () => {
-    const part_list = this.props.formState.part_list;
+  onChangeProfile = (p, ind) => {
+    const { formState } = this.props;
 
-    part_list.forEach((part, i) => {
-      if (part.dimensions) {
-        part.dimensions.forEach((info, index) => {
+    const part = formState.part_list[ind];
+
+    if(part.dimensions){
+      part.dimensions.forEach((info, index) => {
+        if(info){
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].leftStile`,
+              `${p}.dimensions[${index}].leftStile`,
               fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
             )
           );
@@ -44,7 +46,7 @@ class MT_Door extends Component {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].rightStile`,
+              `${p}.dimensions[${index}].rightStile`,
               fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
             )
           );
@@ -53,7 +55,7 @@ class MT_Door extends Component {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].topRail`,
+              `${p}.dimensions[${index}].topRail`,
               fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
             )
           );
@@ -62,7 +64,7 @@ class MT_Door extends Component {
           this.props.dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${index}].bottomRail`,
+              `${p}.dimensions[${index}].bottomRail`,
               fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
             )
           );
@@ -73,7 +75,7 @@ class MT_Door extends Component {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+                `${p}.dimensions[${index}].horizontalMidRailSize`,
                 fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
               )
             );
@@ -83,16 +85,18 @@ class MT_Door extends Component {
             this.props.dispatch(
               change(
                 'DoorOrder',
-                `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                `${p}.dimensions[${index}].verticalMidRailSize`,
                 fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
               )
             );
           }
-        });
-      } else {
-        return;
-      }
-    });
+        } else {
+          return null;
+        }
+      });
+    } else {
+      return null;
+    }
   }
 
   render() {
@@ -141,6 +145,7 @@ class MT_Door extends Component {
                 textField="NAME"
                 validate={required}
                 edit={edit}
+                onBlur={() => this.onChangeProfile(part, index)}
               />
             </FormGroup>
           </Col>
