@@ -77,7 +77,7 @@ export function addProduct(product, url, cookie) {
 
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(`${db_url}/${url}`, product, {
+      const { data } = await axios.post(`${db_url}/products-api/post/${url}`, product, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
@@ -95,10 +95,12 @@ export function addProduct(product, url, cookie) {
   };
 }
 
-export function updateProduct(productId, product, url, cookie) {
+export function updateProduct(productId, product, collection, cookie) {
+
+
   return async function (dispatch) {
     try {
-      const { data } = await axios.put(`${db_url}/products-api/${productId}`, product, {
+      const { data } = await axios.put(`${db_url}/products-api/update/${collection}/${productId}`, product, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
@@ -117,9 +119,10 @@ export function updateProduct(productId, product, url, cookie) {
 }
 
 export function deleteProduct(orderId, product, cookie) {
+
   return async function (dispatch) {
     try {
-      const { data } = await axios.delete(`${db_url}/${product}/${orderId}`, {
+      const { data } = await axios.delete(`${db_url}/products-api/delete/${product}/${orderId}`, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }

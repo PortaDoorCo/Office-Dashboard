@@ -93,9 +93,9 @@ class DefaultLayout extends Component {
 
     if (cookie) {
 
-      if(!loadedProducts){
-        await getAllProducts(cookie);
-      }
+  
+      await getAllProducts(cookie);
+      
       
 
       await loadOrders(cookie);
