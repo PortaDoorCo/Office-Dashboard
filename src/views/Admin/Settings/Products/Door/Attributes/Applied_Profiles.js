@@ -81,7 +81,7 @@ const AppliedProfiles = (props) => {
 
   const updateProduct = async () => {
     let id = product.id;
-    let updatedProduct = product;
+    let updatedProduct = product
     await props.updateProduct(id, updatedProduct, 'applied-profiles', cookie);
     await setModal(!modal);
   };
