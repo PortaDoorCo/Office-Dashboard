@@ -5,13 +5,11 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getEdges, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
 import { AppSwitch } from '@coreui/react';
 import FileUploader from '../../../../../../../components/FileUploader/FileUploader'
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const Edges = (props) => {
@@ -91,14 +89,11 @@ const Edges = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'edges', cookie);
     await setModal(!modal);
-    await props.getEdges(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'edges', cookie);
-    await props.getEdges(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -117,7 +112,6 @@ const Edges = (props) => {
     };
     await props.addProduct(submittedProduct, 'edges', cookie);
     await setModal(!modal);
-    await props.getEdges(cookie);
   };
 
 
@@ -347,7 +341,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getEdges,
       updateProduct,
       addProduct,
       deleteProduct

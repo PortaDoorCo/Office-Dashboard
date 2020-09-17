@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Woodtype from './attributes/Woodtypes';
 import BoxThickness from './attributes/BoxThickness';
-import BoxBottomWoodtype from './attributes/BoxBottomWoodtype';
 import BoxBottomThickness from './attributes/BoxBottomThickness';
-import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions';
+import { updateProduct } from '../../../../../redux/part_list/actions';
 import classnames from 'classnames';
 import EditorPage from './editor/EditorPage';
 import NotchDrill from './attributes/NotchDrill';
@@ -187,12 +186,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getCopeDesigns,
-      getEdges,
-      getProfiles,
-      getPanels,
-      getAppliedMoulds,
       updateProduct
     },
     dispatch

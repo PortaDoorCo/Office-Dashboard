@@ -5,13 +5,11 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getFurnitureFeet, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const Furniture_Feet = (props) => {
@@ -280,7 +278,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getFurnitureFeet,
       updateProduct,
       addProduct,
       deleteProduct

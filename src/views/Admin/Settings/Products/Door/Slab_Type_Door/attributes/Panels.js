@@ -5,14 +5,10 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getPanels, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../../components/FileUploader/FileUploader'
 
-
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
-
 
 const Panels = (props) => {
 
@@ -85,14 +81,11 @@ const Panels = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'panels', cookie);
     await setModal(!modal);
-    await props.getPanels(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'panels', cookie);
-    await props.getPanels(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -108,7 +101,6 @@ const Panels = (props) => {
     };
     await props.addProduct(submittedProduct, 'panels', cookie);
     await setModal(!modal);
-    await props.getPanels(cookie);
   };
 
 
@@ -300,7 +292,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getPanels,
       updateProduct,
       addProduct,
       deleteProduct
