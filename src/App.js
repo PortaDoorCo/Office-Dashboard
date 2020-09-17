@@ -72,6 +72,7 @@ class App extends Component {
       socket.on('delivery_added', res => this.props.getDeliveries(cookie));
       socket.on('customer_added', res => this.props.loadCustomers(cookie));
       socket.on('customer_updated', res => this.props.loadCustomers(cookie));
+      socket.on('product_updated', res => alert('hiiiiii'));
     }
 
   }

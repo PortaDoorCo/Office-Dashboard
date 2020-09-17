@@ -28,7 +28,8 @@ const Designs = (props) => {
     UPCHARGE_THICK: '',
     TOP_RAIL_ADD: '',
     BTM_RAIL_ADD: '',
-    photo: null
+    photo: null,
+    product: 'cope-designs'
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.designs);
@@ -83,6 +84,8 @@ const Designs = (props) => {
     return;
   };
 
+  console.log('product', product);
+
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
@@ -109,7 +112,7 @@ const Designs = (props) => {
       TOP_RAIL_ADD: product.TOP_RAIL_ADD,
       BTM_RAIL_ADD: product.BTM_RAIL_ADD,
       photo: product.photo ? product.photo.id : '',
-      Item: item
+      Item: item,
     };
     await props.addProduct(submittedProduct, 'cope-designs', cookie);
     await setModal(!modal);

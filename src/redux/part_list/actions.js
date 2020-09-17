@@ -52,6 +52,25 @@ export const UPDATE_BREAKDOWNS = 'UPDATE_BREAKDOWNS';
 export const GET_BOX_BREAKDOWNS = 'GET_BOX_BREAKDOWNS';
 export const GET_PRICING = 'GET_PRICING';
 export const UPDATE_PRICING = 'UPDATE_PRICING';
+export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
+
+export function getAllProducts(cookie) {
+
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/products-api`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return dispatch({
+      type: GET_ALL_PRODUCTS,
+      data: data
+    });
+  };
+}
 
 export function getWoodtypes(cookie) {
 
@@ -694,10 +713,10 @@ export function addProduct(product, url, cookie) {
   };
 }
 
-export function updateProduct(orderId, product, url, cookie) {
+export function updateProduct(productId, product, url, cookie) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.put(`${db_url}/${url}/${orderId}`, product, {
+      const { data } = await axios.put(`${db_url}/products-api/${productId}`, product, {
         headers: {
           'Authorization': `Bearer ${cookie}`
         }
