@@ -44,7 +44,8 @@ import {
   UPDATE_BREAKDOWNS,
   GET_BOX_BREAKDOWNS,
   GET_BOX_BOTTOM_WOODTYPES,
-  GET_BOX_SCOOPS
+  GET_BOX_SCOOPS,
+  GET_ALL_PRODUCTS
 } from './actions';
 
 const initialState = {
@@ -146,6 +147,8 @@ const initialState = {
     }
   ],
 
+  loadedProducts: false,
+
   loadedWoodtype: false,
   loadedAppliedMoulds: false,
   loadedBaseCaps: false,
@@ -201,6 +204,45 @@ const initialState = {
 export default function (state = initialState, action) {
   const { type, data } = action;
   switch (type) {
+    case GET_ALL_PRODUCTS:
+      console.log('PRODUCTS DATA', data);
+      return {
+        ...state,
+        woodtypes: data.woodtypes,
+        applied_moulds: data.applied_moulds,
+        base_caps: data.base_caps,
+        baseboards: data.baseboards,
+        casings: data.casings,
+        chair_rails: data.chair_rails,
+        cope_designs: data.cope_designs,
+        crown_mouldings: data.crown_mouldings,
+        edge_slabs: data.edge_slabs,
+        edges: data.edges,
+        finishes: data.finishes,
+        lites: data.lites,
+        miter_DF_designs: data.miter_DF_designs,
+        miter_designs: data.miter_designs,
+        mouldings_lengths: data.mouldings_lengths,
+        mt_designs: data.mt_designs,
+        mt_DF_designs: data.mt_DF_designs,
+        panels: data.panels,
+        plynths_stools: data.plynths_stools,
+        profiles: data.profiles,
+        solid_crowns: data.solid_crowns,
+        wainscot_beads: data.wainscot_beads,
+        face_frame_designs: data.face_frame_designs,
+        face_frame_top_rails: data.face_frame_top_rails,
+        furniture_feets: data.furniture_feets,
+        box_bottom_thickness: data.box_bottom_thickness,
+        box_finish: data.box_finish,
+        box_notches: data.box_notches,
+        box_thickness: data.box_thickness,
+        box_woodtypes: data.box_woodtypes,
+        box_bottom_woodtypes: data.box_bottom_woodtypes,
+        box_scoops: data.box_scoops,
+        
+        loadedProducts: true
+      };
     case GET_WOODTYPES:
       return {
         ...state,
@@ -420,19 +462,6 @@ export default function (state = initialState, action) {
         box_bottom_woodtypes: data,
         loadedBoxBottomWoodtypes: true
       };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     case ADD_PRODUCT:
       return {
