@@ -5,13 +5,11 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getAppliedMoulds, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../../components/FileUploader/FileUploader'
 
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const Applied_Profiles = (props) => {
@@ -85,14 +83,12 @@ const Applied_Profiles = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'applied-profiles', cookie);
     await setModal(!modal);
-    await props.getAppliedMoulds(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
     await props.deleteProduct(id, 'applied-profiles', cookie);
-    await props.getAppliedMoulds(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -108,7 +104,6 @@ const Applied_Profiles = (props) => {
     };
     await props.addProduct(submittedProduct, 'applied-profiles', cookie);
     await setModal(!modal);
-    await props.getAppliedMoulds(cookie);
   };
 
 
@@ -298,7 +293,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getAppliedMoulds,
       updateProduct,
       addProduct,
       deleteProduct

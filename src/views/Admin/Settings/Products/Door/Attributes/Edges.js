@@ -5,7 +5,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getEdges, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import { AppSwitch } from '@coreui/react';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
@@ -24,8 +24,6 @@ const Edges = (props) => {
     id: '',
     NAME: '',
     UPCHARGE: '',
-    STILE_ADD: '',
-    RAIL_ADD: '',
     LIP_FACTOR: '',
     one_piece: false,
     photo: null
@@ -52,8 +50,6 @@ const Edges = (props) => {
     const p = {
       NAME: '',
       UPCHARGE: '',
-      STILE_ADD: '',
-      RAIL_ADD: '',
       LIP_FACTOR: '',
       one_piece: false,
       photo: null
@@ -89,14 +85,11 @@ const Edges = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'edges', cookie);
     await setModal(!modal);
-    await props.getEdges(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'edges', cookie);
-    await props.getEdges(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -106,8 +99,6 @@ const Edges = (props) => {
     const submittedProduct = {
       NAME: product.NAME,
       UPCHARGE: product.UPCHARGE,
-      STILE_ADD: product.STILE_ADD,
-      RAIL_ADD: product.RAIL_ADD,
       LIP_FACTOR: product.LIP_FACTOR,
       one_piece: false,
       photo: product.photo ? product.photo.id : '',
@@ -115,7 +106,6 @@ const Edges = (props) => {
     };
     await props.addProduct(submittedProduct, 'edges', cookie);
     await setModal(!modal);
-    await props.getEdges(cookie);
   };
 
   const changeFilterValue = (e) => {
@@ -130,8 +120,6 @@ const Edges = (props) => {
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>Price:</strong> ${card.UPCHARGE}</CardTitle>
-            <CardTitle><strong>Stile Add:</strong> {card.STILE_ADD}</CardTitle>
-            <CardTitle><strong>Rail Add:</strong> {card.RAIL_ADD}</CardTitle>
             <CardTitle><strong>Lip Factor:</strong> {card.LIP_FACTOR}</CardTitle>
           </CardBody>
         </Card>
@@ -196,14 +184,6 @@ const Edges = (props) => {
   
               </Row>
               <Row>
-                <Col>
-                  <Label for="5/4_Price">Stile Add</Label>
-                  <Input value={product.STILE_ADD} name="STILE_ADD" onChange={(e) => change(e)}></Input>
-                </Col>
-                <Col>
-                  <Label for="4/4_Price">Rail Add</Label>
-                  <Input value={product.RAIL_ADD} name="RAIL_ADD" onChange={(e) => change(e)}></Input>
-                </Col>
                 <Col>
                   <Label for="5/4_Price">Lip Factor</Label>
                   <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
@@ -321,14 +301,6 @@ const Edges = (props) => {
               </Row>
               <Row>
                 <Col>
-                  <Label for="5/4_Price">Stile Add</Label>
-                  <Input value={product.STILE_ADD} name="STILE_ADD" onChange={(e) => change(e)}></Input>
-                </Col>
-                <Col>
-                  <Label for="4/4_Price">Rail Add</Label>
-                  <Input value={product.RAIL_ADD} name="RAIL_ADD" onChange={(e) => change(e)}></Input>
-                </Col>
-                <Col>
                   <Label for="5/4_Price">Lip Factor</Label>
                   <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
                 </Col>
@@ -367,7 +339,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getEdges,
       updateProduct,
       addProduct,
       deleteProduct

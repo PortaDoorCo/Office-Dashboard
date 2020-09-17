@@ -5,7 +5,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getCopeDesigns, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
@@ -91,14 +91,12 @@ const Designs = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'cope-designs', cookie);
     await setModal(!modal);
-    await props.getCopeDesigns(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
     await props.deleteProduct(id, 'cope-designs', cookie);
-    await props.getCopeDesigns(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -116,7 +114,6 @@ const Designs = (props) => {
     };
     await props.addProduct(submittedProduct, 'cope-designs', cookie);
     await setModal(!modal);
-    await props.getCopeDesigns(cookie);
   };
 
   const changeFilterValue = (e) => {
@@ -349,7 +346,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getCopeDesigns,
       updateProduct,
       addProduct,
       deleteProduct

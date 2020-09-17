@@ -5,7 +5,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getProfiles, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
@@ -84,14 +84,11 @@ const Profiles = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'profiles', cookie);
     await setModal(!modal);
-    await props.getProfiles(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'profiles', cookie);
-    await props.getProfiles(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -108,7 +105,6 @@ const Profiles = (props) => {
     };
     await props.addProduct(submittedProduct, 'profiles', cookie);
     await setModal(!modal);
-    await props.getProfiles(cookie);
   };
 
 
@@ -333,7 +329,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getProfiles,
       updateProduct,
       addProduct,
       deleteProduct

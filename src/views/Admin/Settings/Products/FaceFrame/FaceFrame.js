@@ -6,7 +6,7 @@ import Woodtype from '../Door/Attributes/Woodtypes';
 import Designs from './attributes/Designs';
 import Edges from '../Door/Attributes/Edges';
 import TopRailDesign from './attributes/TopRailDesign';
-import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions';
+import { updateProduct } from '../../../../../redux/part_list/actions';
 import classnames from 'classnames';
 import EditorPage from './editor/EditorPage';
 import FurnitureFeet from './attributes/Furniture_Feet';
@@ -174,12 +174,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getCopeDesigns,
-      getEdges,
-      getProfiles,
-      getPanels,
-      getAppliedMoulds,
       updateProduct
     },
     dispatch

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Breadcrumb, BreadcrumbItem, Row, Col, Card, CardBody, Collapse } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions';
+import { updateProduct } from '../../../../../redux/part_list/actions';
 import EditorPage from './editor/EditorPage';
 
 
@@ -59,12 +59,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getCopeDesigns,
-      getEdges,
-      getProfiles,
-      getPanels,
-      getAppliedMoulds,
       updateProduct
     },
     dispatch
