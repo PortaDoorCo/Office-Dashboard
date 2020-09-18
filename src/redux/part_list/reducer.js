@@ -11,14 +11,16 @@ import {
   GET_BOX_BREAKDOWNS,
   GET_ALL_PRODUCTS,
   GET_SINGLE_PRODUCT,
+  PRODUCT_ADDED,
+  PRODUCT_DELETED,
 } from './actions';
 
 import _ from 'lodash';
 
 const initialState = {
   woodtypes: ['Loading'],
-  applied_moulds: ['Loading'],
-  base_caps: ['Loading'],
+  applied_profiles: ['Loading'],
+  base_cap: ['Loading'],
   baseboards: ['Loading'],
   casings: ['Loading'],
   chair_rails: ['Loading'],
@@ -26,7 +28,7 @@ const initialState = {
   crown_mouldings: ['Loading'],
   edge_slabs: ['Loading'],
   edges: ['Loading'],
-  finishes: ['Loading'],
+  finish: ['Loading'],
   lites: ['Loading'],
   miter_df_designs: ['Loading'],
   miter_designs: ['Loading'],
@@ -134,14 +136,23 @@ export default function (state = initialState, action) {
         loadedProducts: true,
       };
     case GET_SINGLE_PRODUCT:
-
-      console.log('reducer data', data);
-      // console.log('reducer product', product);
-      console.log('product', product);
-
       return {
         ...state,
-        [_.snakeCase(product)]: state[_.snakeCase(product)].map((i) => (i.id === data.id ? data : i))
+        [_.snakeCase(product)]: state[_.snakeCase(product)].map((i) =>
+          i.id === data.id ? data : i
+        ),
+      };
+    case PRODUCT_ADDED:
+      return {
+        ...state,
+        [_.snakeCase(product)]: [...state[_.snakeCase(product)], data],
+      };
+    case PRODUCT_DELETED:
+      console.log('data',data);
+      const { product } = data;
+      return {
+        ...state,
+        [_.snakeCase(product)]: state[_.snakeCase(product)].filter(item => item.id !== data.id),
       };
     case ADD_PRODUCT:
       return {

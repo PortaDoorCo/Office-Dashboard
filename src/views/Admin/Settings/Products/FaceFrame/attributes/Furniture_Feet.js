@@ -268,7 +268,7 @@ const Furniture_Feet = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  applied_profiles: state.part_list.furniture_feets,
+  applied_profiles: state.part_list.furniture_feet,
   role: state.users.user.role
 });
 

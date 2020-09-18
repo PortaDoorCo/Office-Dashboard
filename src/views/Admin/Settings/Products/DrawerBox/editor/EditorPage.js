@@ -198,7 +198,7 @@ const mapStateToProps = (state) => ({
   edges: state.part_list.edges,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
-  applied_profiles: state.part_list.applied_moulds
+  applied_profiles: state.part_list.applied_profiles
 });
 
 const mapDispatchToProps = dispatch =>

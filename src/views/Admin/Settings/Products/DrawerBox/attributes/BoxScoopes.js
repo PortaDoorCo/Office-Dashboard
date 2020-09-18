@@ -268,7 +268,7 @@ const BoxScoopes = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.box_scoops,
+  designs: state.part_list.box_scoop,
   role: state.users.user.role
 });
 

@@ -164,8 +164,8 @@ const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
   cope_designs: state.part_list.cope_designs,
   edges: state.part_list.edges,
-  applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes,
+  applied_moulds: state.part_list.applied_profiles,
+  finishes: state.part_list.finish,
 
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),

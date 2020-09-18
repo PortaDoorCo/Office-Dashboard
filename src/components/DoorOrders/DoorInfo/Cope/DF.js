@@ -256,10 +256,10 @@ class CopeDF extends Component {
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
   edges: state.part_list.edges,
-  finishes: state.part_list.finishes,
+  finishes: state.part_list.finish,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
-  applied_moulds: state.part_list.applied_moulds,
+  applied_moulds: state.part_list.applied_profiles,
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),

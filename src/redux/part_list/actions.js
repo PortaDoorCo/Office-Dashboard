@@ -54,6 +54,8 @@ export const GET_PRICING = 'GET_PRICING';
 export const UPDATE_PRICING = 'UPDATE_PRICING';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT';
+export const PRODUCT_ADDED = 'PRODUCT_ADDED';
+export const PRODUCT_DELETED = 'PRODUCT_DELETED';
 
 export function getAllProducts(cookie) {
 
@@ -94,6 +96,37 @@ export function getSingleProduct(id, product, cookie) {
   };
 }
 
+export function productAdded(id, product, cookie) {
+
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/products-api/get/${product}/${id}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+
+    console.log(data);
+    return dispatch({
+      type: PRODUCT_ADDED,
+      data: data,
+      product: product
+    });
+  };
+}
+
+export function productDeleted(res) {
+
+  return async function (dispatch) {
+    return dispatch({
+      type: PRODUCT_DELETED,
+      data: res
+    });
+  };
+}
+
 
 export function addProduct(product, url, cookie) {
 
@@ -104,8 +137,6 @@ export function addProduct(product, url, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-
-      NotificationManager.success('Product Added', 'Product Added', 2000);
       return dispatch({
         type: ADD_PRODUCT,
         data: data
@@ -127,8 +158,6 @@ export function updateProduct(productId, product, collection, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-
-      // NotificationManager.success(`Product Updated!`, 'Order Updated!', 2000);
       return dispatch({
         type: UPDATE_PRODUCT,
         data: data
@@ -149,9 +178,6 @@ export function deleteProduct(orderId, product, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-
-
-      NotificationManager.success('Product Deleted', 'Product Deleted', 2000);
       return dispatch({
         type: DELETE_PRODUCT,
         data: data,
@@ -175,8 +201,6 @@ export function uploadFile(file, cookie) {
           'Authorization': `Bearer ${cookie}`
         }
       });
-
-      // NotificationManager.success(`Product Deleted`, 'Product Deleted', 2000);
       return dispatch({
         type: UPLOAD_FILE,
         data: data[0]
