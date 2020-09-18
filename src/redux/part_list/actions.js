@@ -53,6 +53,7 @@ export const GET_BOX_BREAKDOWNS = 'GET_BOX_BREAKDOWNS';
 export const GET_PRICING = 'GET_PRICING';
 export const UPDATE_PRICING = 'UPDATE_PRICING';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
+export const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT';
 
 export function getAllProducts(cookie) {
 
@@ -68,6 +69,27 @@ export function getAllProducts(cookie) {
     return dispatch({
       type: GET_ALL_PRODUCTS,
       data: data
+    });
+  };
+}
+
+export function getSingleProduct(id, product, cookie) {
+
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/products-api/get/${product}/${id}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+
+    console.log(data);
+    return dispatch({
+      type: GET_SINGLE_PRODUCT,
+      data: data,
+      product: product
     });
   };
 }

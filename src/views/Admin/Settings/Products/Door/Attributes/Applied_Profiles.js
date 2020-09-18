@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup } from 'reactstrap';
 import Cookies from 'js-cookie';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -30,6 +30,10 @@ const AppliedProfiles = (props) => {
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.applied_profiles);
+
+  useEffect(() => {
+    setFilteredProducts(props.applied_profiles);
+  },[props.applied_profiles]);
 
   const toggle = () => {
     setModal(!modal);
@@ -81,7 +85,7 @@ const AppliedProfiles = (props) => {
 
   const updateProduct = async () => {
     let id = product.id;
-    let updatedProduct = product
+    let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'applied-profiles', cookie);
     await setModal(!modal);
   };

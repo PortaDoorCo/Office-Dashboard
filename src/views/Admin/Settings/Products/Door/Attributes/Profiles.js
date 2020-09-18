@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup } from 'reactstrap';
 import Cookies from 'js-cookie';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -29,6 +29,10 @@ const Profiles = (props) => {
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.profiles);
+
+  useEffect(() => {
+    setFilteredProducts(props.profiles);
+  },[props.profiles]);
 
   const toggle = () => {
     setModal(!modal);
