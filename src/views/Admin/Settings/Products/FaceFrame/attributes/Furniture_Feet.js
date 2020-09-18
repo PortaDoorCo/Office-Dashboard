@@ -81,14 +81,12 @@ const Furniture_Feet = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'furniture-feet', cookie);
     await setModal(!modal);
-    await props.getFurnitureFeet(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
     await props.deleteProduct(id, 'furniture-feet', cookie);
-    await props.getFurnitureFeet(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -103,7 +101,6 @@ const Furniture_Feet = (props) => {
     };
     await props.addProduct(submittedProduct, 'furniture-feet', cookie);
     await setModal(!modal);
-    await props.getFurnitureFeet(cookie);
   };
 
 

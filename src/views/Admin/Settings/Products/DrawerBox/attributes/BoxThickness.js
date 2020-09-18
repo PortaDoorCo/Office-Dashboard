@@ -82,16 +82,14 @@ const BoxThickness = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-thicknesses', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-thickness', cookie);
     await setModal(!modal);
-    await props.getBoxThicknesses(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
-    await props.deleteProduct(id, 'box-thicknesses', cookie);
-    await props.getBoxThicknesses(cookie);
+    await props.deleteProduct(id, 'box-thickness', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -106,9 +104,8 @@ const BoxThickness = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-thicknesses', cookie);
+    await props.addProduct(submittedProduct, 'box-thickness', cookie);
     await setModal(!modal);
-    await props.getBoxThicknesses(cookie);
   };
 
 

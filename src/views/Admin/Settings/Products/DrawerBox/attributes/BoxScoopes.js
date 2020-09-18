@@ -78,16 +78,13 @@ const BoxScoopes = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-scoops', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-scoop', cookie);
     await setModal(!modal);
-    await props.getBoxScoops(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
-    await props.deleteProduct(id, 'box-scoops', cookie);
-    await props.getBoxScoops(cookie);
+    await props.deleteProduct(id, 'box-scoop', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -100,9 +97,8 @@ const BoxScoopes = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-scoops', cookie);
+    await props.addProduct(submittedProduct, 'box-scoop', cookie);
     await setModal(!modal);
-    await props.getBoxScoops(cookie);
   };
 
 
