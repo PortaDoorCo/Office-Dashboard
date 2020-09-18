@@ -77,16 +77,14 @@ const NotchDrill = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-notches', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-notch', cookie);
     await setModal(!modal);
-    await props.getBoxNotches(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
-    await props.deleteProduct(id, 'box-notches', cookie);
-    await props.getBoxNotches(cookie);
+    await props.deleteProduct(id, 'box-notch', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -99,9 +97,8 @@ const NotchDrill = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-notches', cookie);
+    await props.addProduct(submittedProduct, 'box-notch', cookie);
     await setModal(!modal);
-    await props.getBoxNotches(cookie);
   };
 
 

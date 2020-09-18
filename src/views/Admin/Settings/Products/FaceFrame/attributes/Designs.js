@@ -6,7 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
 
@@ -82,14 +82,11 @@ const Designs = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'face-frame-designs', cookie);
     await setModal(!modal);
-    await props.get_Face_Frame_Designs(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'face-frame-designs', cookie);
-    await props.get_Face_Frame_Designs(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -105,7 +102,6 @@ const Designs = (props) => {
     };
     await props.addProduct(submittedProduct, 'face-frame-designs', cookie);
     await setModal(!modal);
-    await props.get_Face_Frame_Designs(cookie);
   };
 
 

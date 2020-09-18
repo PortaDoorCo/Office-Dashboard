@@ -13,6 +13,8 @@ import {
   GET_SINGLE_PRODUCT,
 } from './actions';
 
+import _ from 'lodash';
+
 const initialState = {
   woodtypes: ['Loading'],
   applied_moulds: ['Loading'],
@@ -26,19 +28,19 @@ const initialState = {
   edges: ['Loading'],
   finishes: ['Loading'],
   lites: ['Loading'],
-  miter_DF_designs: ['Loading'],
+  miter_df_designs: ['Loading'],
   miter_designs: ['Loading'],
   mouldings_lengths: ['Loading'],
   mt_designs: ['Loading'],
-  mt_DF_designs: ['Loading'],
+  mt_df_designs: ['Loading'],
   panels: ['Loading'],
   plynths_stools: ['Loading'],
   profiles: ['Loading'],
   solid_crowns: ['Loading'],
   wainscot_beads: ['Loading'],
   face_frame_designs: ['Loading'],
-  face_frame_top_rails: ['Loading'],
-  furniture_feets: ['Loading'],
+  face_frame_top_rail: ['Loading'],
+  furniture_feet: ['Loading'],
   one_piece_woodtypes: ['Loading'],
   one_piece_designs: ['Loading'],
   one_piece_panels: ['Loading'],
@@ -46,11 +48,11 @@ const initialState = {
 
   box_bottom_thickness: ['Loading'],
   box_finish: ['Loading'],
-  box_notches: ['Loading'],
+  box_notch: ['Loading'],
   box_thickness: ['Loading'],
   box_woodtypes: ['Loading'],
   box_bottom_woodtypes: ['Loading'],
-  box_scoops: ['Loading'],
+  box_scoop: ['Loading'],
 
   breakdowns: [],
   box_breakdowns: [],
@@ -135,11 +137,11 @@ export default function (state = initialState, action) {
 
       console.log('reducer data', data);
       // console.log('reducer product', product);
-      console.log({[product]: state[product].map((i) => (i.id === data.id ? data : i))}); 
+      console.log('product', product);
 
       return {
         ...state,
-        [product]: state[product].map((i) => (i.id === data.id ? data : i))
+        [_.snakeCase(product)]: state[_.snakeCase(product)].map((i) => (i.id === data.id ? data : i))
       };
     case ADD_PRODUCT:
       return {

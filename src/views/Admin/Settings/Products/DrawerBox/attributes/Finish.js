@@ -78,16 +78,13 @@ const Finish = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-finishes', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-finish', cookie);
     await setModal(!modal);
-    await props.getBoxFinishes(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
-    await props.deleteProduct(id, 'box-finishes', cookie);
-    await props.getBoxFinishes(cookie);
+    await props.deleteProduct(id, 'box-finish', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -100,9 +97,8 @@ const Finish = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-finishes', cookie);
+    await props.addProduct(submittedProduct, 'box-finish', cookie);
     await setModal(!modal);
-    await props.getBoxFinishes(cookie);
   };
 
 

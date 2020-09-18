@@ -78,7 +78,6 @@ const Woodtype = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'box-woodtypes', cookie);
     await setModal(!modal);
-    await props.getBoxWoodtypes(cookie);
   };
 
   const deleteProduct = async () => {
@@ -99,7 +98,6 @@ const Woodtype = (props) => {
     };
     await props.addProduct(submittedProduct, 'box-woodtypes', cookie);
     await setModal(!modal);
-    await props.getBoxWoodtypes(cookie);
   };
 
 
