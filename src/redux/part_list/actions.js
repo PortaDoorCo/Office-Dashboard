@@ -61,7 +61,7 @@ export const PRODUCT_UPDATED = 'PRODUCT_UPDATED';
 export function getAllProducts(cookie) {
 
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/products-api`,
+    const res = await fetch(`${db_url}/products-api?_sort=NAME:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
