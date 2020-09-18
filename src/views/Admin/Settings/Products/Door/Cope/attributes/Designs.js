@@ -88,8 +88,6 @@ const Designs = (props) => {
     return;
   };
 
-  console.log('product', product);
-
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;

@@ -56,6 +56,7 @@ export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT';
 export const PRODUCT_ADDED = 'PRODUCT_ADDED';
 export const PRODUCT_DELETED = 'PRODUCT_DELETED';
+export const PRODUCT_UPDATED = 'PRODUCT_UPDATED';
 
 export function getAllProducts(cookie) {
 
@@ -86,8 +87,6 @@ export function getSingleProduct(id, product, cookie) {
       }
     );
     const data = await res.json();
-
-    console.log(data);
     return dispatch({
       type: GET_SINGLE_PRODUCT,
       data: data,
@@ -96,23 +95,23 @@ export function getSingleProduct(id, product, cookie) {
   };
 }
 
-export function productAdded(id, product, cookie) {
-
+export function productUpdated(res, data) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/products-api/get/${product}/${id}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
-      }
-    );
-    const data = await res.json();
 
-    console.log(data);
+    return dispatch({
+      type: PRODUCT_UPDATED,
+      data: data,
+      product: res.product
+    });
+  };
+}
+
+export function productAdded(res, data) {
+  return async function (dispatch) {
     return dispatch({
       type: PRODUCT_ADDED,
       data: data,
-      product: product
+      product: res.id
     });
   };
 }

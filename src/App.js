@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { NotificationManager } from 'react-notifications';
 import { loadOrders, getDeliveries } from './redux/orders/actions';
 import { loadShippingMethod } from './redux/misc_items/actions';
-import { getSingleProduct, productAdded, productDeleted } from './redux/part_list/actions';
+import { getSingleProduct, productAdded, productDeleted, productUpdated } from './redux/part_list/actions';
 import { loadSales} from './redux/sales/actions';
 import { loadCustomers } from './redux/customers/actions';
 import { setLogin } from './redux/users/actions';
@@ -61,7 +61,7 @@ class App extends Component {
 
   componentDidMount = async () => {
 
-    const { loadOrders, getSingleProduct, productAdded, productDeleted } = this.props;
+    const { loadOrders, getSingleProduct, productAdded, productDeleted, productUpdated } = this.props;
     
     await this.cookies();
 
@@ -73,8 +73,8 @@ class App extends Component {
       socket.on('delivery_added', res => this.props.getDeliveries(cookie));
       socket.on('customer_added', res => this.props.loadCustomers(cookie));
       socket.on('customer_updated', res => this.props.loadCustomers(cookie));
-      socket.on('product_updated', (res, entity) => (NotificationManager.success('Product Updated', 'Product Updated', 2000), getSingleProduct(res.id, res.product, cookie)));
-      socket.on('product_added', (res, entity) => (NotificationManager.success('Product Added', 'Product Added', 2000), productAdded(entity.id, res.id, cookie)));
+      socket.on('product_updated', (res, entity) => (NotificationManager.success('Product Updated', 'Product Updated', 2000), productUpdated(res, entity)));
+      socket.on('product_added', (res, entity) => (NotificationManager.success('Product Added', 'Product Added', 2000), productAdded(res, entity)));
       socket.on('product_deleted', (res, entity) => (NotificationManager.success('Product Deleted', 'Product Deleted', 2000), productDeleted(res)));
     }
 
@@ -139,7 +139,8 @@ const mapDispatchToProps = dispatch =>
       getDeliveries,
       getSingleProduct,
       productAdded,
-      productDeleted
+      productDeleted,
+      productUpdated
     },
     dispatch
   );
