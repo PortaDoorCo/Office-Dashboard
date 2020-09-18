@@ -319,7 +319,7 @@ const AppliedProfiles = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  applied_profiles: state.part_list.applied_moulds,
+  applied_profiles: state.part_list.applied_profiles,
   role: state.users.user.role
 });
 

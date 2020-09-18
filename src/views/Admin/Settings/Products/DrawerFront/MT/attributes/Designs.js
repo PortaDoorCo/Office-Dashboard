@@ -93,14 +93,12 @@ const Designs = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'mt-designs', cookie);
     await setModal(!modal);
-    await props.getMTDesigns(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
     await props.deleteProduct(id, 'mt-designs', cookie);
-    await props.getMTDesigns(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -121,7 +119,6 @@ const Designs = (props) => {
     };
     await props.addProduct(submittedProduct, 'mt-designs', cookie);
     await setModal(!modal);
-    await props.getMTDesigns(cookie);
   };
 
   const changeFilterValue = (e) => {

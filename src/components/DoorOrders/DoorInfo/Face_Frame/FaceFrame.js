@@ -163,8 +163,8 @@ class FaceFrame extends Component {
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
   face_frame_designs: state.part_list.face_frame_designs,
-  face_frame_top_rails: state.part_list.face_frame_top_rails,
-  furniture_feets: state.part_list.furniture_feets,
+  face_frame_top_rails: state.part_list.face_frame_top_rail,
+  furniture_feets: state.part_list.furniture_feet,
   edges: state.part_list.edges,
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),

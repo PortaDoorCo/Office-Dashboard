@@ -268,7 +268,7 @@ const NotchDrill = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.box_notches,
+  designs: state.part_list.box_notch,
   role: state.users.user.role
 });
 

@@ -247,8 +247,8 @@ const mapStateToProps = state => ({
   edges: state.part_list.edges,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
-  applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes,
+  applied_moulds: state.part_list.applied_profiles,
+  finishes: state.part_list.finish,
   lites: state.part_list.lites,
 
   prices: linePriceSelector(state),
