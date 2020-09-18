@@ -12,7 +12,8 @@ import {
   GET_ALL_PRODUCTS,
   GET_SINGLE_PRODUCT,
   PRODUCT_ADDED,
-  PRODUCT_DELETED,
+  PRODUCT_DELETED, 
+  PRODUCT_UPDATED
 } from './actions';
 
 import _ from 'lodash';
@@ -142,17 +143,22 @@ export default function (state = initialState, action) {
           i.id === data.id ? data : i
         ),
       };
+    case PRODUCT_UPDATED:
+      return {
+        ...state,
+        [_.snakeCase(product)]: state[_.snakeCase(product)].map((i) =>
+          i.id === data.id ? data : i
+        ),
+      };
     case PRODUCT_ADDED:
       return {
         ...state,
         [_.snakeCase(product)]: [...state[_.snakeCase(product)], data],
       };
-    case PRODUCT_DELETED:
-      console.log('data',data);
-      const { product } = data;
+    case PRODUCT_DELETED:     
       return {
         ...state,
-        [_.snakeCase(product)]: state[_.snakeCase(product)].filter(item => item.id !== data.id),
+        [_.snakeCase(data.product)]: state[_.snakeCase(data.product)].filter(item => item.id !== data.id),
       };
     case ADD_PRODUCT:
       return {

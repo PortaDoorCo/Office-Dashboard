@@ -64,7 +64,6 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
 
     const part = formState.part_list[i];
 
-    console.log(e);
 
     if (e) {
       dispatch(

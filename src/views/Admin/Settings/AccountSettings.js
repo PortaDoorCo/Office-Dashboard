@@ -34,7 +34,6 @@ const AccountSettings = props => {
 
   const onUploaded = (e) => {
 
-    console.log(e);
 
     setUser((prevState) => {
       return ({
