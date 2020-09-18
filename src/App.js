@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux';
 import { NotificationManager } from 'react-notifications';
 import { loadOrders, getDeliveries } from './redux/orders/actions';
 import { loadShippingMethod } from './redux/misc_items/actions';
+import { getSingleProduct } from './redux/part_list/actions';
 import { loadSales} from './redux/sales/actions';
 import { loadCustomers } from './redux/customers/actions';
 import { setLogin } from './redux/users/actions';
@@ -60,7 +61,7 @@ class App extends Component {
 
   componentDidMount = async () => {
 
-    const { loadOrders } = this.props;
+    const { loadOrders, getSingleProduct } = this.props;
     
     await this.cookies();
 
@@ -72,7 +73,7 @@ class App extends Component {
       socket.on('delivery_added', res => this.props.getDeliveries(cookie));
       socket.on('customer_added', res => this.props.loadCustomers(cookie));
       socket.on('customer_updated', res => this.props.loadCustomers(cookie));
-      socket.on('product_updated', res => alert('hiiiiii'));
+      socket.on('product_updated', (res, entity) => (NotificationManager.success('Product Updated', 'Product Updated', 2000), getSingleProduct(res.id, res.product, cookie)));
     }
 
   }
@@ -133,8 +134,8 @@ const mapDispatchToProps = dispatch =>
       loadSales,
       loadShippingMethod,
       setLogin,
-      getDeliveries
-
+      getDeliveries,
+      getSingleProduct
     },
     dispatch
   );

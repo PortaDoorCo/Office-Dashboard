@@ -10,6 +10,7 @@ import {
   UPDATE_BREAKDOWNS,
   GET_BOX_BREAKDOWNS,
   GET_ALL_PRODUCTS,
+  GET_SINGLE_PRODUCT,
 } from './actions';
 
 const initialState = {
@@ -122,17 +123,24 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  const { type, data } = action;
+  const { type, data, product } = action;
   switch (type) {
     case GET_ALL_PRODUCTS:
-
       return {
         ...state,
         ...data,
         loadedProducts: true,
       };
-    
+    case GET_SINGLE_PRODUCT:
 
+      console.log('reducer data', data);
+      // console.log('reducer product', product);
+      console.log({[product]: state[product].map((i) => (i.id === data.id ? data : i))}); 
+
+      return {
+        ...state,
+        [product]: state[product].map((i) => (i.id === data.id ? data : i))
+      };
     case ADD_PRODUCT:
       return {
         ...state,
