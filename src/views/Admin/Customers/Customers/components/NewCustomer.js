@@ -64,7 +64,6 @@ submit = async (values, e) => {
     Discount: values.Discount
   };
 
-  console.log('dataaa', data);
   await this.props.submitCustomer(data, cookie);
   await this.props.reset();
   await this.props.toggle();

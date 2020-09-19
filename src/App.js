@@ -8,8 +8,9 @@ import NewPassword from './views/Pages/NewPassword/NewPassword';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationManager } from 'react-notifications';
-import { loadOrders, getDeliveries } from './redux/orders/actions';
+import { loadOrders, getDeliveries, orderAdded, orderUpdated, orderDeleted } from './redux/orders/actions';
 import { loadShippingMethod } from './redux/misc_items/actions';
+import { getSingleProduct, productAdded, productDeleted, productUpdated } from './redux/part_list/actions';
 import { loadSales} from './redux/sales/actions';
 import { loadCustomers } from './redux/customers/actions';
 import { setLogin } from './redux/users/actions';
@@ -60,18 +61,26 @@ class App extends Component {
 
   componentDidMount = async () => {
 
-    const { loadOrders } = this.props;
+    const { productAdded, productDeleted, productUpdated, orderAdded, orderUpdated, orderDeleted } = this.props;
     
     await this.cookies();
 
     if(cookie) {
-      socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
-      socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), loadOrders(cookie)));
-      socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, 'An order has been updated', 2000), loadOrders(cookie)));
-      socket.on('order_deleted', res => (NotificationManager.success('Order Deleted', 'Order Deleted', 2000), loadOrders(cookie)));
+      // socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
+      socket.on('order_submitted', res => ((NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), orderAdded(res))));
+      socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), orderUpdated(res)));
+      socket.on('status_updated', (res) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, 'An order has been updated', 2000), orderUpdated(res)));
+
+      socket.on('order_deleted', res => (NotificationManager.success('Order Deleted', 'Order Deleted', 2000), orderDeleted(res)));
+
       socket.on('delivery_added', res => this.props.getDeliveries(cookie));
       socket.on('customer_added', res => this.props.loadCustomers(cookie));
       socket.on('customer_updated', res => this.props.loadCustomers(cookie));
+
+
+      socket.on('product_updated', (res, entity) => (NotificationManager.success('Product Updated', 'Product Updated', 2000), productUpdated(res, entity)));
+      socket.on('product_added', (res, entity) => (NotificationManager.success('Product Added', 'Product Added', 2000), productAdded(res, entity)));
+      socket.on('product_deleted', (res) => (NotificationManager.success('Product Deleted', 'Product Deleted', 2000), productDeleted(res)));
     }
 
   }
@@ -132,8 +141,14 @@ const mapDispatchToProps = dispatch =>
       loadSales,
       loadShippingMethod,
       setLogin,
-      getDeliveries
-
+      getDeliveries,
+      getSingleProduct,
+      productAdded,
+      productDeleted,
+      productUpdated,
+      orderAdded,
+      orderUpdated,
+      orderDeleted
     },
     dispatch
   );

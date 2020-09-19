@@ -5,7 +5,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getMiterDesigns, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
@@ -86,16 +86,14 @@ const Designs = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'miter-designs', cookie);
+    await props.updateProduct(id, updatedProduct, 'miter-df-designs', cookie);
     await setModal(!modal);
-    await props.getMiterDesigns(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
-    await props.deleteProduct(id, 'miter-designs', cookie);
-    await props.getMiterDesigns(cookie);
+    await props.deleteProduct(id, 'miter-df-designs', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -112,9 +110,8 @@ const Designs = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'miter-designs', cookie);
+    await props.addProduct(submittedProduct, 'miter-df-designs', cookie);
     await setModal(!modal);
-    await props.getMiterDesigns(cookie);
   };
 
   const changeFilterValue = (e) => {
@@ -348,14 +345,13 @@ const Designs = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.miter_DF_designs,
+  designs: state.part_list.miter_df_designs,
   role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getMiterDesigns,
       updateProduct,
       addProduct,
       deleteProduct

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup } from 'reactstrap';
 import Cookies from 'js-cookie';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getProfiles, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
@@ -29,6 +29,10 @@ const Profiles = (props) => {
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.profiles);
+
+  useEffect(() => {
+    setFilteredProducts(props.profiles);
+  },[props.profiles]);
 
   const toggle = () => {
     setModal(!modal);
@@ -84,14 +88,11 @@ const Profiles = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'profiles', cookie);
     await setModal(!modal);
-    await props.getProfiles(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'profiles', cookie);
-    await props.getProfiles(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -108,7 +109,6 @@ const Profiles = (props) => {
     };
     await props.addProduct(submittedProduct, 'profiles', cookie);
     await setModal(!modal);
-    await props.getProfiles(cookie);
   };
 
 
@@ -333,7 +333,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getProfiles,
       updateProduct,
       addProduct,
       deleteProduct

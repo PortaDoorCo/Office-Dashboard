@@ -5,13 +5,11 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getFurnitureFeet, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const Furniture_Feet = (props) => {
@@ -83,14 +81,12 @@ const Furniture_Feet = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'furniture-feet', cookie);
     await setModal(!modal);
-    await props.getFurnitureFeet(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
     await props.deleteProduct(id, 'furniture-feet', cookie);
-    await props.getFurnitureFeet(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -105,7 +101,6 @@ const Furniture_Feet = (props) => {
     };
     await props.addProduct(submittedProduct, 'furniture-feet', cookie);
     await setModal(!modal);
-    await props.getFurnitureFeet(cookie);
   };
 
 
@@ -273,14 +268,13 @@ const Furniture_Feet = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  applied_profiles: state.part_list.furniture_feets,
+  applied_profiles: state.part_list.furniture_feet,
   role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getFurnitureFeet,
       updateProduct,
       addProduct,
       deleteProduct

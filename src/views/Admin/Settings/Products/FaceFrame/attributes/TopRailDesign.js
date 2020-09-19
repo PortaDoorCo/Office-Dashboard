@@ -5,13 +5,11 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { get_Face_Frame_Top_Rails, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const TopRailDesign = (props) => {
@@ -83,14 +81,11 @@ const TopRailDesign = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'face-frame-top-rail', cookie);
     await setModal(!modal);
-    await props.get_Face_Frame_Top_Rails(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'face-frame-top-rail', cookie);
-    await props.get_Face_Frame_Top_Rails(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -105,7 +100,6 @@ const TopRailDesign = (props) => {
     };
     await props.addProduct(submittedProduct, 'face-frame-top-rail', cookie);
     await setModal(!modal);
-    await props.get_Face_Frame_Top_Rails(cookie);
   };
 
 
@@ -272,14 +266,13 @@ const TopRailDesign = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  profiles: state.part_list.face_frame_top_rails,
+  profiles: state.part_list.face_frame_top_rail,
   role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      get_Face_Frame_Top_Rails,
       updateProduct,
       addProduct,
       deleteProduct

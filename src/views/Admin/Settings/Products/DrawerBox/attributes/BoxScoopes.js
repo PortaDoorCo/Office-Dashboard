@@ -5,12 +5,10 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getBoxScoops, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const BoxScoopes = (props) => {
@@ -80,16 +78,13 @@ const BoxScoopes = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-scoops', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-scoop', cookie);
     await setModal(!modal);
-    await props.getBoxScoops(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
-    await props.deleteProduct(id, 'box-scoops', cookie);
-    await props.getBoxScoops(cookie);
+    await props.deleteProduct(id, 'box-scoop', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -102,9 +97,8 @@ const BoxScoopes = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-scoops', cookie);
+    await props.addProduct(submittedProduct, 'box-scoop', cookie);
     await setModal(!modal);
-    await props.getBoxScoops(cookie);
   };
 
 
@@ -274,14 +268,13 @@ const BoxScoopes = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.box_scoops,
+  designs: state.part_list.box_scoop,
   role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getBoxScoops,
       updateProduct,
       addProduct,
       deleteProduct

@@ -5,12 +5,10 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { get_Face_Frame_Designs, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const Designs = (props) => {
@@ -84,14 +82,11 @@ const Designs = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'face-frame-designs', cookie);
     await setModal(!modal);
-    await props.get_Face_Frame_Designs(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'face-frame-designs', cookie);
-    await props.get_Face_Frame_Designs(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -107,7 +102,6 @@ const Designs = (props) => {
     };
     await props.addProduct(submittedProduct, 'face-frame-designs', cookie);
     await setModal(!modal);
-    await props.get_Face_Frame_Designs(cookie);
   };
 
 
@@ -290,7 +284,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      get_Face_Frame_Designs,
       updateProduct,
       addProduct,
       deleteProduct

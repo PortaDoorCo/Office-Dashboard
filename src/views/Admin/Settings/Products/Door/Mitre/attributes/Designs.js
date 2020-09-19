@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup } from 'reactstrap';
 import Cookies from 'js-cookie';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getMiterDesigns, updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
@@ -33,6 +33,10 @@ const Designs = (props) => {
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.designs);
+
+  useEffect(() => {
+    setFilteredProducts(props.designs);
+  },[props.designs]);
 
   const toggle = () => {
     setModal(!modal);
@@ -90,14 +94,11 @@ const Designs = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'miter-designs', cookie);
     await setModal(!modal);
-    await props.getMiterDesigns(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'miter-designs', cookie);
-    await props.getMiterDesigns(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -116,7 +117,6 @@ const Designs = (props) => {
     };
     await props.addProduct(submittedProduct, 'miter-designs', cookie);
     await setModal(!modal);
-    await props.getMiterDesigns(cookie);
   };
 
   const changeFilterValue = (e) => {
@@ -359,7 +359,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getMiterDesigns,
       updateProduct,
       addProduct,
       deleteProduct

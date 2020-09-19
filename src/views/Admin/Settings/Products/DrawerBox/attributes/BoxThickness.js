@@ -5,12 +5,10 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getBoxThicknesses, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const BoxThickness = (props) => {
@@ -84,16 +82,14 @@ const BoxThickness = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-thicknesses', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-thickness', cookie);
     await setModal(!modal);
-    await props.getBoxThicknesses(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
-    await props.deleteProduct(id, 'box-thicknesses', cookie);
-    await props.getBoxThicknesses(cookie);
+    await props.deleteProduct(id, 'box-thickness', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -108,9 +104,8 @@ const BoxThickness = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-thicknesses', cookie);
+    await props.addProduct(submittedProduct, 'box-thickness', cookie);
     await setModal(!modal);
-    await props.getBoxThicknesses(cookie);
   };
 
 
@@ -308,7 +303,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getBoxThicknesses,
       updateProduct,
       addProduct,
       deleteProduct

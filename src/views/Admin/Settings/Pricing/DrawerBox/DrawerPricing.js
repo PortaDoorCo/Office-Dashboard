@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Breadcrumb, BreadcrumbItem, Row, Col, Card, CardBody, Collapse } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../redux/part_list/actions';
+import { updateProduct } from '../../../../../redux/part_list/actions';
 import EditorPage from './editor/EditorPage';
 
 
@@ -55,18 +55,12 @@ const mapStateToProps = (state) => ({
   edges: state.part_list.edges,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
-  applied_profiles: state.part_list.applied_moulds
+  applied_profiles: state.part_list.applied_profiles
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getCopeDesigns,
-      getEdges,
-      getProfiles,
-      getPanels,
-      getAppliedMoulds,
       updateProduct
     },
     dispatch
