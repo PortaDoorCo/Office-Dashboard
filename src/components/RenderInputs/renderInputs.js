@@ -148,7 +148,6 @@ export const renderCheckboxToggle = ({
       toggle
       {...input}
       {...rest}
-      defaultChecked={!!value}
       checked={value ? true : false}
       onChange={(e, data) => onChange(data.checked)}
       type="checkbox"
