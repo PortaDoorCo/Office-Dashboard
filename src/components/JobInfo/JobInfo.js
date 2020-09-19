@@ -106,6 +106,13 @@ class JobInfo extends Component {
             customer.PaymentMethod
           )
         );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'discount',
+            customer.Discount
+          )
+        );
       }
     }
   }
