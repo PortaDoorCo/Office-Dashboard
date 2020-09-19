@@ -8,7 +8,7 @@ import Edges from '../../Door/Attributes/Edges';
 import Profiles from '../../Door/Attributes/Profiles';
 import Panels from '../../Door/Attributes/Panels';
 import AppliedProfiles from '../../Door/Attributes/Applied_Profiles';
-import { getWoodtypes, getCopeDesigns, getEdges, getProfiles, getPanels, getAppliedMoulds, updateProduct } from '../../../../../../redux/part_list/actions';
+import { updateProduct } from '../../../../../../redux/part_list/actions';
 import classnames from 'classnames';
 import EditorPage from './editor/EditorPage';
 
@@ -172,19 +172,13 @@ const mapStateToProps = (state) => ({
   edges: state.part_list.edges,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
-  applied_profiles: state.part_list.applied_moulds,
+  applied_profiles: state.part_list.applied_profiles,
   role: state.users.user.role
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
-      getCopeDesigns,
-      getEdges,
-      getProfiles,
-      getPanels,
-      getAppliedMoulds,
       updateProduct
     },
     dispatch

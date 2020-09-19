@@ -17,7 +17,7 @@ export default (v, part) => {
     return ((widthTotal + heightsTotal) / 12);
   });
 
-  // console.log('callllccc',calc);
+
   return calc.reduce((acc, item) => acc + item).toFixed(2);
   // const calc = v.map(item => {
   //   const height = ((numQty(item.height)) * 2) * parseInt(item.qty);

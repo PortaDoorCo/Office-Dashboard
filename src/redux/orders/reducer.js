@@ -6,7 +6,10 @@ import {
   UPDATE_STATUS,
   SOCKET_RECEIVE_UPDATE_STATUS,
   SET_SELECTED_ORDER,
-  UPLOAD_FILE_TO_ORDER
+  UPLOAD_FILE_TO_ORDER,
+  ORDER_ADDED,
+  ORDER_UPDATED,
+  ORDER_DELETED
 } from './actions';
 import moment from 'moment';
 
@@ -15,7 +18,7 @@ const initialState = {
   orders: [],
   deliveries: [],
   sortedDestinations: [],
-  selectedOrder: null
+  selectedOrder: null,
 };
 
 export default function (state = initialState, action) {
@@ -25,16 +28,33 @@ export default function (state = initialState, action) {
       return {
         ...state,
         orders: data,
-        ordersDBLoaded: true
+        ordersDBLoaded: true,
       };
     case SUBMIT_ORDER:
       return {
         ...state,
       };
+    case ORDER_ADDED:
+      return {
+        ...state,
+        orders: [data, ...state.orders],
+      };
+    case ORDER_UPDATED:
+      return {
+        ...state,
+        orders: state.orders.map((i) =>
+          i.id === data.id ? data : i
+        ),
+      };
+    case ORDER_DELETED:
+      return {
+        ...state,
+        orders: state.orders.filter(item => item.id !== data.id),
+      };
     case SET_SELECTED_ORDER:
       return {
         ...state,
-        selectedOrder: data
+        selectedOrder: data,
       };
     case UPDATE_ORDER:
       return {
@@ -44,7 +64,7 @@ export default function (state = initialState, action) {
             return item;
           }
           return data.data;
-        })
+        }),
       };
     case UPLOAD_FILE_TO_ORDER:
       return {
@@ -55,7 +75,7 @@ export default function (state = initialState, action) {
           }
           return data.data;
         }),
-        selectedOrder: data.data
+        selectedOrder: data.data,
       };
     case UPDATE_STATUS:
       return {
@@ -65,7 +85,7 @@ export default function (state = initialState, action) {
             return item;
           }
           return data.data;
-        })
+        }),
       };
     case SOCKET_RECEIVE_UPDATE_STATUS:
       return {
@@ -75,7 +95,7 @@ export default function (state = initialState, action) {
             return item;
           }
           return data;
-        })
+        }),
       };
     case LOAD_DELIVERIES:
       const updatedDeliveries = data;
@@ -97,7 +117,6 @@ export default function (state = initialState, action) {
     default:
       return {
         ...state,
-
       };
   }
 }

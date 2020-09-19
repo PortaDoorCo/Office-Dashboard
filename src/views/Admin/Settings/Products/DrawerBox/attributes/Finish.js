@@ -5,12 +5,10 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getBoxFinishes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 
 const Finish = (props) => {
@@ -80,16 +78,13 @@ const Finish = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-finishes', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-finish', cookie);
     await setModal(!modal);
-    await props.getBoxFinishes(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
-    await props.deleteProduct(id, 'box-finishes', cookie);
-    await props.getBoxFinishes(cookie);
+    await props.deleteProduct(id, 'box-finish', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -102,9 +97,8 @@ const Finish = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-finishes', cookie);
+    await props.addProduct(submittedProduct, 'box-finish', cookie);
     await setModal(!modal);
-    await props.getBoxFinishes(cookie);
   };
 
 
@@ -280,7 +274,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getBoxFinishes,
       updateProduct,
       addProduct,
       deleteProduct

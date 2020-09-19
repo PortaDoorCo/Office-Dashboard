@@ -104,7 +104,7 @@ class CopeDF extends Component {
       woodtypes,
       edges,
       profiles,
-      panels,
+
       applied_moulds,
       finishes,
       lites,
@@ -113,7 +113,7 @@ class CopeDF extends Component {
       part_list,
       formState,
       prices,
-      itemPrice,
+
       subTotal,
       edit,
     } = this.props;
@@ -261,11 +261,10 @@ class CopeDF extends Component {
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
   edges: state.part_list.edges,
-  finishes: state.part_list.finishes,
+  finishes: state.part_list.finish,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
-  applied_moulds: state.part_list.applied_moulds,
-  finishes: state.part_list.finishes,
+  applied_moulds: state.part_list.applied_profiles,
   lites:state.part_list.lites,
 
   prices: linePriceSelector(state),

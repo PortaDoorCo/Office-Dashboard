@@ -102,7 +102,6 @@ class MiterDF extends Component {
       part,
       woodtypes,
       miter_designs,
-      panels,
       finishes,
       isValid,
       index,
@@ -220,9 +219,9 @@ class MiterDF extends Component {
 
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
-  miter_designs: state.part_list.miter_DF_designs,
+  miter_designs: state.part_list.miter_df_designs,
   panels: state.part_list.panels,
-  finishes: state.part_list.finishes,
+  finishes: state.part_list.finish,
   lites: state.part_list.lites,
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),

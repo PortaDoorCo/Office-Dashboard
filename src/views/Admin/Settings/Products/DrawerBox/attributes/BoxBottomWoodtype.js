@@ -5,7 +5,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getBoxWoodtypes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader'
 
 const cookie = Cookies.get('jwt');
@@ -82,14 +82,11 @@ const BoxBottomWoodtype = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'box-woodtypes', cookie);
     await setModal(!modal);
-    await props.getBoxWoodtypes(cookie);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-
     await props.deleteProduct(id, 'box-woodtypes', cookie);
-    await props.getBoxWoodtypes(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -104,7 +101,6 @@ const BoxBottomWoodtype = (props) => {
     };
     await props.addProduct(submittedProduct, 'box-woodtypes', cookie);
     await setModal(!modal);
-    await props.getBoxWoodtypes(cookie);
   };
 
 
@@ -279,7 +275,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getBoxWoodtypes,
       updateProduct,
       addProduct,
       deleteProduct

@@ -30,6 +30,38 @@ export const SOCKET_LOAD_ORDERS = 'SOCKET_LOAD_ORDERS';
 export const SOCKET_RECEIVE_UPDATE_STATUS = 'SOCKET_RECEIVE_UPDATE_STATUS';
 export const SET_SELECTED_ORDER = 'SET_SELECTED_ORDER';
 export const UPLOAD_FILE_TO_ORDER = 'UPLOAD_FILE_TO_ORDER';
+export const ORDER_ADDED = 'ORDER_ADDED';
+export const ORDER_UPDATED = 'ORDER_UPDATED';
+export const ORDER_DELETED = 'ORDER_DELETED';
+
+
+
+export function orderAdded(res) {
+  return async function (dispatch) {
+    return dispatch({
+      type: ORDER_ADDED,
+      data: res,
+    });
+  };
+}
+
+export function orderUpdated(res) {
+  return async function (dispatch) {
+    return dispatch({
+      type: ORDER_UPDATED,
+      data: res,
+    });
+  };
+}
+
+export function orderDeleted(res) {
+  return async function (dispatch) {
+    return dispatch({
+      type: ORDER_DELETED,
+      data: res,
+    });
+  };
+}
 
 
 

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup } from 'reactstrap';
 import Cookies from 'js-cookie';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getWoodtypes, updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
@@ -30,6 +30,10 @@ const Woodtype = (props) => {
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.woodtypes);
+
+  useEffect(() => {
+    setFilteredProducts(props.woodtypes);
+  },[props.woodtypes]);
 
   const toggle = () => {
     setModal(!modal);
@@ -84,7 +88,6 @@ const Woodtype = (props) => {
     let updatedProduct = product;
     await props.updateProduct(id, updatedProduct, 'woodtypes', cookie);
     await setModal(!modal);
-    await props.getWoodtypes(cookie);
   };
 
   const deleteProduct = async () => {
@@ -106,7 +109,6 @@ const Woodtype = (props) => {
     };
     await props.addProduct(submittedProduct, 'woodtypes', cookie);
     await setModal(!modal);
-    await props.getWoodtypes(cookie);
   };
 
   const changeFilterValue = (e) => {
@@ -320,7 +322,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWoodtypes,
       updateProduct,
       addProduct,
       deleteProduct
