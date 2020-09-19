@@ -69,7 +69,7 @@ class App extends Component {
       // socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
       socket.on('order_submitted', res => ((NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), orderAdded(res))));
       socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), orderUpdated(res)));
-      socket.on('status_updated', (res, updatedStatus) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, 'An order has been updated', 2000), orderUpdated(res)));
+      socket.on('status_updated', (res) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, 'An order has been updated', 2000), orderUpdated(res)));
 
       socket.on('order_deleted', res => (NotificationManager.success('Order Deleted', 'Order Deleted', 2000), orderDeleted(res)));
 
@@ -80,7 +80,7 @@ class App extends Component {
 
       socket.on('product_updated', (res, entity) => (NotificationManager.success('Product Updated', 'Product Updated', 2000), productUpdated(res, entity)));
       socket.on('product_added', (res, entity) => (NotificationManager.success('Product Added', 'Product Added', 2000), productAdded(res, entity)));
-      socket.on('product_deleted', (res, entity) => (NotificationManager.success('Product Deleted', 'Product Deleted', 2000), productDeleted(res)));
+      socket.on('product_deleted', (res) => (NotificationManager.success('Product Deleted', 'Product Deleted', 2000), productDeleted(res)));
     }
 
   }
