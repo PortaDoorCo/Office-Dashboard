@@ -401,7 +401,11 @@ export const linePriceSelector = createSelector(
         return part.dimensions.map((i, p) => {
           console.log(item[index][p]);
           if(item[index][p]){
-            return item[index][p] * parseInt(i.qty);
+            if(i.qty){
+              return item[index][p] * parseInt(i.qty);
+            } else {
+              return 0;
+            }
           } else {
             return 0;
           }
