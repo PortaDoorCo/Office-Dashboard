@@ -512,7 +512,7 @@ class OrderPage extends Component {
 
                   <Col>
                     <Row>
-                      <Col lg='9'>
+                      <Col lg='7'>
                         <div className='mt-3 mb-2'>
                           <Select
                             value={this.state.selectedOption}
@@ -528,11 +528,11 @@ class OrderPage extends Component {
                             <Print style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
-                        {/* <Tooltip title="Delete Order" placement="top" className="mb-3">
+                        <Tooltip title="Delete Order" placement="top" className="mb-3">
                           <IconButton onClick={this.toggleDeleteModal}>
                             <Delete style={{ width: '40', height: '40' }} />
                           </IconButton>
-                        </Tooltip> */}
+                        </Tooltip>
                       </Col>
                     </Row>
                   </Col>
