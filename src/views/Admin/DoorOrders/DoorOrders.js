@@ -310,7 +310,7 @@ class DoorOrders extends Component {
               </CardBody>
             </Card>
           </Col>
-          <Col lg="4">
+          <Col lg="5">
             <Row>
               <Col>
                 <Card>
