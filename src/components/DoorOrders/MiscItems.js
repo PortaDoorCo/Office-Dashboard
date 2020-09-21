@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
+import { Field, reduxForm, FieldArray, getFormValues } from 'redux-form';
 import { renderField, renderDropdownListFilter, renderPrice } from '../RenderInputs/renderInputs';
-import { Button, Table, Input, InputGroup,InputGroupAddon,InputGroupText } from 'reactstrap';
+import { Button, Table, Input, InputGroup,InputGroupAddon,InputGroupText, Row, Col, Label } from 'reactstrap';
 import { connect } from 'react-redux';
-import { miscItemPriceSelector, miscItemLinePriceSelector } from '../../selectors/doorPricing';
+import { miscItemPriceSelector, miscItemLinePriceSelector, miscTotalSelector } from '../../selectors/doorPricing';
 
 
 let Inputs = props => {
-  const { fields, misc_items, formState, prices, linePrices } = props;
-
+  const { fields, misc_items, formState, prices, linePrices, miscTotal } = props;
+  console.log(linePrices);
   return (
     <div>
       <Table>
@@ -64,8 +64,14 @@ let Inputs = props => {
                   </>
                   : 
                   <>
-                    <td style={{ width: '150px' }}><Field name={`${table}.pricePer2`} component={renderPrice} type="text" /></td> 
-                    <td style={{ width: '150px' }}><Field name={`${table}.price2`} component={renderPrice} type="text" /></td> 
+                    <td style={{ width: '150px' }}><Field name={`${table}.pricePer`} component={renderPrice} type="text" /></td> 
+                    <td style={{ width: '150px' }}>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input placeholder={linePrices[index]} />
+                      </InputGroup></td> 
                   </> 
                 }
                 <td><Button color="danger" onClick={() => fields.remove(index)}>X</Button></td>
@@ -75,17 +81,36 @@ let Inputs = props => {
         </tbody>
       </Table>
 
-      <Button color="primary" className="mt-3" onClick={() => fields.push({
-        category: 'preselect',
-        qty: 1,
-        price: 0
-      })}>Add Item </Button>
+      <Row>
+        <Col>
+          <>
+            <Button color="primary" className="mt-3" onClick={() => fields.push({
+              category: 'preselect',
+              qty: 1,
+              price: 0
+            })}>Add Item </Button>
 
-      <Button color="primary" className="mt-3" onClick={() => fields.push({
-        category:'custom',
-        qty: 1,
-        price: 0
-      })}>Custom Item</Button>
+            <Button color="primary" className="mt-3" onClick={() => fields.push({
+              category:'custom',
+              qty: 1,
+              price: 0
+            })}>Custom Item</Button>
+          </>
+        </Col>
+        <Col />
+        <Col>
+          <Label htmlFor="companyName">Added to Total</Label>
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>$</InputGroupText>
+            </InputGroupAddon>
+            <Input placeholder={miscTotal} />
+          </InputGroup>
+        </Col>
+      </Row>
+
+
+
     </div>
   );
 };
@@ -123,12 +148,12 @@ class MiscItems extends Component {
   // }
 
   render() {
-    const { misc_items, formState, prices, linePrices } = this.props;
+    const { misc_items, formState, prices, linePrices, miscTotal } = this.props;
     console.log('prices', prices);
     return (
       <div>
         <h3>Misc Items</h3>
-        <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} prices={prices} linePrices={linePrices} />
+        <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} prices={prices} linePrices={linePrices} miscTotal={miscTotal} />
       </div>
     );
   }
@@ -138,9 +163,10 @@ class MiscItems extends Component {
 
 const mapStateToProps = state => ({
   formState: getFormValues('DoorOrder')(state),
-  misc_items: state.misc_items.misc_items,
+  misc_items: state.misc_items.misc_items,  
   prices: miscItemPriceSelector(state),
-  linePrices: miscItemLinePriceSelector(state)
+  linePrices: miscItemLinePriceSelector(state),
+  miscTotal: miscTotalSelector(state)
 });
 
 MiscItems = reduxForm({

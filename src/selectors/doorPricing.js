@@ -65,8 +65,8 @@ export const miscItemPriceSelector = createSelector(
         price = 0;
       }
     }else {
-      if(i.pricePer2){
-        price = parseFloat(i.pricePer2);
+      if(i.pricePer){
+        price = parseFloat(i.pricePer);
       } else {
         price = 0;
       }
@@ -74,6 +74,8 @@ export const miscItemPriceSelector = createSelector(
     return price;
   })
 );
+
+
 
 export const miscItemLinePriceSelector = createSelector(
   [miscItemsSelector, miscItemPriceSelector],
@@ -91,14 +93,23 @@ export const miscItemLinePriceSelector = createSelector(
           price = 0;
         }
       }else {
-        if(i.pricePer2){
-          price = parseFloat(i.pricePer2);
+        if(i.pricePer){
+          if(i.qty){
+            price = pricer[index] * parseFloat(i.qty);
+          } else {
+            price = 0;
+          }
         } else {
           price = 0;
         }
       }
       return price;
     })
+);
+
+export const miscTotalSelector = createSelector(
+  [miscItemLinePriceSelector],
+  (misc) => (misc.reduce((acc, item) => acc + item, 0))
 );
 
 
@@ -466,10 +477,7 @@ export const addPriceSelector = createSelector(
     })
 );
 
-export const miscTotalSelector = createSelector(
-  [miscItemsSelector],
-  (misc) => (misc.reduce((acc, item) => acc + item, 0))
-);
+
 
 
 
@@ -500,7 +508,7 @@ export const taxSelector = createSelector(
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector],
   (subTotal, misc, discount) => {
-    return (subTotal.reduce((acc, item) => acc + item, 0) + misc) * discount;
+    return (subTotal.reduce((acc, item) => acc + item, 0)) * discount;
   }
 );
 
