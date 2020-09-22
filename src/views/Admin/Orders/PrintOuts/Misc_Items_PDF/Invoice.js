@@ -5,11 +5,12 @@ import Size from '../Breakdowns/DrawerBoxes/Size';
 export default (data, breakdowns) => {
 
   const subTotal = data.subTotals;
-
-  const balanceDue = data.balance_history[data.balance_history.length - 1].balance_due;
+  
   const balancePaid = data.balance_history.reduce(function (accumulator, balance) {
     return accumulator + balance.balance_paid;
   }, 0);
+
+  const balanceDue = data.total - balancePaid;
 
   const tableBody = [
     [
