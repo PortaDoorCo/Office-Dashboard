@@ -15,33 +15,40 @@ export default (data, breakdowns) => {
     [
       { text: 'Qty', style: 'fonts' },
       { text: 'Item', style: 'fonts' },
+      { text: 'Total 1 Unit', style: 'fonts' },
       { text: 'Price', style: 'fonts' },
     ]
   ];
+
 
   data.misc_items.map(i  => {
     if(i.category === 'preselect') {
       return tableBody.push([
         { text: i.qty, style: 'fonts' },
         { text: i.item.NAME, style: 'fonts' },
+        { text: i.item.Price, style: 'fonts' },
         { text: `$${i.price}`, style: 'fonts' },
       ]);
     } else if (i.category === 'custom') {
       return tableBody.push([
         { text: i.qty, style: 'fonts' },
         { text: i.item2, style: 'fonts' },
-        { text: `$${i.price2}`, style: 'fonts' },
+        { text: i.pricePer, style: 'fonts' },
+        { text: parseFloat(i.pricePer) * parseFloat(i.qty), style: 'fonts' },
       ]);
     } else {
       return [];
     }
   });
 
+
+
+
   return [
     {
       columns: [
         {
-          stack: ['Invoice']
+          stack: ['Invoice ']
         },
         {
           stack: [
@@ -99,7 +106,7 @@ export default (data, breakdowns) => {
     {
       table: {
         headerRows: 1,
-        widths: [30, 400, '*'],
+        widths: [30, '*', '*', '*'],
         body: tableBody
       },
       layout: 'lightHorizontalLines',
@@ -123,8 +130,8 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: '', style: 'totals', width: 347 },
-        { text: 'Discount:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `${data.discount}%`, style: 'fonts', alignment: 'right' }
+        { text: `${data.discount>0 ? 'Discount' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `${data.discount>0 ? data.discount + '%' : ''}`, style: 'fonts', alignment: 'right' }
       ],
       margin: [0, 0, 0, 0]
     },
@@ -153,5 +160,6 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 15, 0, 0]
     },
+    { text: '', pageBreak: 'before' }
   ];
 };

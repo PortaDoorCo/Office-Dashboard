@@ -8,10 +8,12 @@ import {
   taxSelector,
   totalSelector,
   miscTotalSelector,
-  miscLineItemSelector
+  miscLineItemSelector,
+  miscItemLinePriceSelector,
+  miscItemPriceSelector
 } from '../../../../../selectors/miscItemPricing';
 import moment from 'moment-business-days';
-import Inputs from './Inputs';
+import Inputs from '../../../MiscItems/components/Inputs';
 import FileUploader from '../../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
@@ -169,7 +171,7 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { misc_items, formState, handleSubmit, subTotal, miscTotalSelector, miscLineItemSelector, customers, tax, total, edit } = this.props;
+  const { misc_items, formState, handleSubmit, customers, tax, total, edit, prices, linePrices, miscTotal } = this.props;
 
   return (
     <div>
@@ -197,7 +199,7 @@ render() {
                 </Row>
                 <Row>
                   <Col>
-                    <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} edit={edit} />
+                    <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} edit={edit} prices={prices} linePrices={linePrices} miscTotal={miscTotal} />
                   </Col>
                 </Row>
                 <Row>
@@ -293,7 +295,9 @@ const mapStateToProps = state => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  miscTotalSelector: miscTotalSelector(state),
+  prices: miscItemPriceSelector(state),
+  linePrices: miscItemLinePriceSelector(state),
+  miscTotal: miscTotalSelector(state),
   miscLineItemSelector: miscLineItemSelector(state),
   user: state.users.user,
   customers: state.customers.customerDB,
