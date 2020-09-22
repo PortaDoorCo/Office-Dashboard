@@ -181,28 +181,44 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: '', style: 'totals', width: 347 },
-        { text: 'Discount:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `${data.discount}%`, style: 'fonts', alignment: 'right' }
+        { text: `${data.discount>0 ? 'Discount' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `${data.discount>0 ? data.discount + '%' : ''}`, style: 'fonts', alignment: 'right' }
       ],
       margin: [0, 0, 0, 0]
     },
     {
       columns: [
-        { text: 'Misc Items', style: 'totals', width: 347, decoration: 'underline' },
-        { text: 'Quote Only:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(data.total).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+        { text: `${data.misc_items.length > 0 ? 'Misc Items' : ''}`, style: 'totals', width: 347, decoration: 'underline' },
+        { text: `${data.misc_items.length > 0 ? 'Price Per Item' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `${data.misc_items.length > 0 ? 'Price' : ''}`, style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
-      margin: [0, 2, 0, 0]
+      margin: [0, 10, 0, 0]
     },
     {
       columns: [
-        { text: data.misc_items.map(i => { return `${i.qty ? i.qty + '-' : ''}  ${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} - $${i.price ? i.price : i.price2 ? i.price2 : ''} \n`; }), style: 'fonts', width: 347 },
+        { text: data.misc_items.map(i => { return `(${i.qty ? i.qty : ''}) ${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`; }), style: 'fonts', width: 347 },
+        { text: data.misc_items.map(i => { return `$${i.item ? i.item.Price : i.pricePer ? i.pricePer : ''} \n`; }), style: 'fonts', margin: [0, 0, 0, 0] },
+        { text: data.misc_items.map(i => { return `$${i.item ? i.item.Price * parseFloat(i.qty) : i.pricePer ? parseFloat(i.pricePer) * parseFloat(i.qty) : ''} \n`; }), style: 'fonts', alignment: 'right' },
+      ],
+      margin: [0, 2, 0, 0],
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 347, decoration: 'underline' },
+        { text: `${data.status === 'Quote' ? 'Quote Only' : 'Total'}`, style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `$${(data.total).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+      ],
+      margin: [0, 10, 0, 0]
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 347, decoration: 'underline' },
         { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
         { text: `$${(balancePaid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 2, 0, 0],
-
     },
+
     {
       columns: [
         { text: '', style: 'totals', width: 347 },

@@ -38,7 +38,7 @@ export default (data, breakdowns) => {
           text: `${data.job_info.poNum} - ${data.job_info.customer.Company}`,
           margin: [0, 10]
         },
-        { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 0, 80, 0] }
+        { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 10] }
       ]
     },
     {
@@ -123,6 +123,14 @@ export default (data, breakdowns) => {
                 {
                   text: `${i.box_thickness.NAME} Box Side`,
                   style: 'woodtype'
+                },
+                {
+                  text: `${i.box_finish.NAME}`,
+                  style: 'fonts'
+                },
+                {
+                  text: `${i.box_notch.NAME === 'Yes' ? 'Notch and Drilled' : ''}`,
+                  style: 'fonts'
                 }
               ],
               alignment: 'right'

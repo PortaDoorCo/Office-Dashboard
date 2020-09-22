@@ -20,7 +20,7 @@ export const renderMultiSelect = ({
   edit,
   meta: { touched, error, warning }
 }) => (
-  <div>
+  <Fragment>
     <Multiselect
       {...input}
       onBlur={() => input.onBlur()}
@@ -34,7 +34,7 @@ export const renderMultiSelect = ({
     {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
                     (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-  </div>
+  </Fragment>
 );
 
 export const renderDropdownListFilter = ({
@@ -45,7 +45,7 @@ export const renderDropdownListFilter = ({
   edit,
   meta: { touched, error, warning }
 }) => (
-  <div>
+  <Fragment>
     <DropdownList
       {...input}
       data={data}
@@ -59,7 +59,7 @@ export const renderDropdownListFilter = ({
     {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
                     (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-  </div>
+  </Fragment>
 );
 
 
@@ -71,7 +71,7 @@ export const renderDropdownList = ({
   edit,
   meta: { touched, error, warning }
 }) => (
-  <div>
+  <Fragment>
     <DropdownList
       {...input}
       data={data}
@@ -84,7 +84,7 @@ export const renderDropdownList = ({
     {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
                     (warning && <span style={{ color: 'red' }}>{warning}</span>))}
-  </div>
+  </Fragment>
 );
 
 export const renderField = ({
