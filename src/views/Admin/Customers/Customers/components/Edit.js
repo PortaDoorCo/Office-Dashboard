@@ -278,7 +278,7 @@ class Edit extends Component {
                 </Row>
 
                 <Row>
-                  <Col xs="3">
+                  <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="city">City</Label>
                       <Field
@@ -290,7 +290,7 @@ class Edit extends Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col xs="3">
+                  <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="state">State</Label>
                       <Field
@@ -302,7 +302,7 @@ class Edit extends Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col xs="3">
+                  <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="zipcode">Zip Code</Label>
                       <Field
@@ -314,9 +314,13 @@ class Edit extends Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col xs="3">
+
+                </Row>
+
+                <Row>
+                  <Col xs="4">
                     <FormGroup>
-                      <Label htmlFor="phone">Phone Number</Label>
+                      <Label htmlFor="phone">Office Phone</Label>
                       <Field
                         name={'Phone1'}
                         type="text"
@@ -326,10 +330,19 @@ class Edit extends Component {
                       />
                     </FormGroup>
                   </Col>
-                </Row>
-
-                <Row>
-                  <Col xs="3">
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="phone">Mobile Phone</Label>
+                      <Field
+                        name={'Phone2'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="phone">Fax Number</Label>
                       <Field
