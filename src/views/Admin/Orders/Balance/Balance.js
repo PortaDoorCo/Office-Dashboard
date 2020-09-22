@@ -38,12 +38,10 @@ class Balance extends Component {
     const id = values.id;
 
     const order = {
-      balance_due: parseFloat(this.props.balance) - parseFloat(values.pay_balance),
       balance_paid: values.pay_balance,
-      balance_history:  values.balance_history
+      balance_history:  values.balance_history,
+      payment_method: values.payment_method
     };
-
-
 
     await updateBalance(id, order, cookie);
 
