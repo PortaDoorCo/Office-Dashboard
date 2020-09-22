@@ -14,6 +14,7 @@ import 'react-widgets/dist/css/react-widgets.css';
 import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
+import numQty from 'numeric-quantity';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -26,6 +27,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
+  const [changeValue, setChangeValue] = useState('');
 
 
 
@@ -61,7 +63,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
 
   const twoHigh = (index, e) => {
     const part = formState.part_list[i];
-    const value = e.target.value
+    const value = e.target.value;
     
     if(value > 1){
       dispatch(
@@ -104,6 +106,46 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
         )
       );
     }
+
+  };
+
+  const registerChange = (index, e) => {
+    const value = e.target.value;
+    setChangeValue(value);
+  };
+
+  const changeFraming = (index, e) => {
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].leftStile`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].rightStile`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].topRail`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].bottomRail`,
+        fraction(numQty(changeValue))
+      ),
+    );
 
   };
 
@@ -232,6 +274,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         label="leftStile"
                         edit={edit}
                         validate={required}
+                        onChange={(e) => registerChange(index, e)}
                       />
                     </td>
                     <td>
@@ -245,6 +288,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         label="rightStile"
                         edit={edit}
                         validate={required}
+                        onChange={(e) => registerChange(index, e)}
                       />
                     </td>
                     <td>
@@ -258,6 +302,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         label="topRail"
                         edit={edit}
                         validate={required}
+                        onChange={(e) => registerChange(index, e)}
                       />
                     </td>
                     <td>
@@ -271,6 +316,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         label="bottomRail"
                         edit={edit}
                         validate={required}
+                        onChange={(e) => registerChange(index, e)}
                       />
                     </td>
                     <td>
@@ -300,6 +346,11 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                       />
                     </td>
                   </tr>
+                  <tr>
+                    <td>
+                      <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
+                    </td>
+                  </tr> 
                   <Row>
                     <p className="ml-3">*Finish Stile/Rail Sizes*</p>
                   </Row>
