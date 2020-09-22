@@ -11,7 +11,7 @@ import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from 'js-cookie';
-import { renderField } from '../../../../../components/RenderInputs/renderInputs';
+import { renderDropdownList, renderField } from '../../../../../components/RenderInputs/renderInputs';
 import {
   totalSelector,
   balanceSelector,
@@ -20,12 +20,11 @@ import {
 } from '../../../../../selectors/doorPricing';
 import { updateOrder, updateBalance } from '../../../../../redux/orders/actions';
 
-
 const cookie = Cookies.get('jwt');
 
+const required = value => (value ? undefined : 'Required');
 
 class Balance extends Component {
-
 
   changeBalance = () => {
     this.props.dispatch(
@@ -42,18 +41,19 @@ class Balance extends Component {
   }
 
   submit = async (values) => {
- 
 
-    const { updateBalance, formState } = this.props;
+    const { updateBalance } = this.props;
+
+
+
 
     const id = values.id;
 
     const order = {
-      balance_due: parseFloat(formState && formState.balance_due) - parseFloat(values.pay_balance),
       balance_paid: values.pay_balance,
-      balance_history:  values.balance_history
+      balance_history:  values.balance_history,
+      payment_method: values.payment_method
     };
-
 
     if(values.pay_balance){
       await updateBalance(id, order, cookie);
@@ -73,7 +73,7 @@ class Balance extends Component {
           [
             ...values.balance_history,
             {
-              'balance_due': parseFloat(formState && formState.balance_due) - parseFloat(values.pay_balance),
+              'payment_method': values.payment_method,
               'balance_paid': parseFloat(values.pay_balance),
               'date': new Date()
             }
@@ -85,21 +85,16 @@ class Balance extends Component {
       alert('Please enter a value');
       return null;
     }
-    
-
-
-
   }
-
 
   render() {
     const {
       formState,
       handleSubmit,
       balanceTotal,
-      role
+      role,
+      paymentTypes
     } = this.props;
-
 
     if (formState) {
       return (
@@ -150,6 +145,21 @@ class Balance extends Component {
             {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
               <div>
                 <Row>
+                  <Col xs='5'>
+                    <FormGroup>
+                      <Label htmlFor="design">Payment Method</Label>
+                      <Field
+                        name={'payment_method'}
+                        component={renderDropdownList}
+                        data={paymentTypes}
+                        valueField="value"
+                        textField="NAME"
+                        validate={required}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
                   <Col xs='3'>
                     <FormGroup>
                       <Label htmlFor="design">Pay Balance</Label>
@@ -192,7 +202,8 @@ const mapStateToProps = (state, props) => ({
   subTotal: subTotal_Total(state),
   balance: balanceSelector(state),
   balanceTotal: balanceTotalSelector(state),
-  role: state.users.user.role
+  role: state.users.user.role,
+  paymentTypes: state.misc_items.paymentTypes
 
 });
 

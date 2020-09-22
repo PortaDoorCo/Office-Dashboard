@@ -99,13 +99,6 @@ class JobInfo extends Component {
             customer.Taxable
           )
         );
-        this.props.dispatch(
-          change(
-            'DrawerOrder',
-            'job_info.PaymentMethod',
-            customer.PaymentMethod
-          )
-        );
       }
     }
   }
@@ -117,7 +110,7 @@ handleChange = (e) => {
 
 
 render() {
-  const { customers, edit, shippingMethods, paymentTypes } = this.props;
+  const { customers, edit, shippingMethods } = this.props;
 
   return (
 
@@ -144,22 +137,6 @@ render() {
               name="ShippingMethod"
               component={renderDropdownList}
               data={shippingMethods}
-              valueField="value"
-              edit={edit}
-              textField="NAME" />
-          </FormGroup>
-        </Col>
-      </Row>
-
-      <Row className="mb-3">
-        <Col xs="9" />
-        <Col xs='3'>
-          <FormGroup>
-            <Label htmlFor="shipping_method">Payment Method</Label>
-            <Field
-              name="PaymentMethod"
-              component={renderDropdownList}
-              data={paymentTypes}
               valueField="value"
               edit={edit}
               textField="NAME" />
@@ -321,7 +298,6 @@ render() {
 const mapStateToProps = state => ({
   formState: getFormValues('DrawerOrder')(state),
   shippingMethods: state.misc_items.shippingMethods,
-  paymentTypes: state.misc_items.paymentTypes
 });
 
 

@@ -102,13 +102,6 @@ class JobInfo extends Component {
         this.props.dispatch(
           change(
             'DoorOrder',
-            'job_info.PaymentMethod',
-            customer.PaymentMethod
-          )
-        );
-        this.props.dispatch(
-          change(
-            'DoorOrder',
             'discount',
             customer.Discount
           )
@@ -124,7 +117,7 @@ class JobInfo extends Component {
 
 
   render() {
-    const { customers, edit, shippingMethods, paymentTypes } = this.props;
+    const { customers, edit, shippingMethods } = this.props;
 
     return (
 
@@ -151,22 +144,6 @@ class JobInfo extends Component {
                 name="ShippingMethod"
                 component={renderDropdownList}
                 data={shippingMethods}
-                valueField="value"
-                edit={edit}
-                textField="NAME" />
-            </FormGroup>
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col xs="9" />
-          <Col xs='3'>
-            <FormGroup>
-              <Label htmlFor="shipping_method">Payment Method</Label>
-              <Field
-                name="PaymentMethod"
-                component={renderDropdownList}
-                data={paymentTypes}
                 valueField="value"
                 edit={edit}
                 textField="NAME" />
@@ -328,7 +305,6 @@ class JobInfo extends Component {
 const mapStateToProps = state => ({
   formState: getFormValues('DoorOrder')(state),
   shippingMethods: state.misc_items.shippingMethods,
-  paymentTypes: state.misc_items.paymentTypes
 });
 
 
