@@ -22,10 +22,21 @@ class BalanceHistory extends Component {
   render() {
     const { formState, total } = this.props;
 
+    let updated_total = total;
+
+    const balance_history_paid = formState && formState.balance_history.slice(0).map((i, index) => {
+      console.log('iiiiiiiii',i);
+      updated_total = updated_total - parseFloat(i.balance_paid);
+      return updated_total;
+    });
+ 
+    const balance_paid_history = ((formState && formState.balance_history) ? formState.balance_history.map(i => { return i.balance_paid; }) : [0]);
+    const balance_paid_total = balance_paid_history.reduce((acc, item) => acc + item, 0);
+
+
+
     if (formState) {
-      const balance_paid_history = ((formState && formState.balance_history) ? formState.balance_history.map(i => { return i.balance_paid; }) : 0);
-      const balance_paid_total = balance_paid_history.reduce((acc, item) => acc + item, 0);
-      const balance_total = total - balance_paid_total;
+
       return (
         <div>
           <Table striped>
@@ -43,7 +54,7 @@ class BalanceHistory extends Component {
                 <tr key={index}>
                   {console.log(i)}
                   <td>{moment(i.date).format('dddd, MMMM Do YYYY, h:mm:ss a')}</td>
-                  <td>${index > 0 ? (total - formState.balance_history[index-1].balance_paid - i.balance_paid).toFixed(2) : (total - i.balance_paid).toFixed(2)}</td>
+                  <th>${balance_history_paid[index].toFixed(2)}</th>
                   <td>-${i.balance_paid.toFixed(2)}</td>
                   <td>{i.payment_method ? i.payment_method.NAME : ''}</td>
                 </tr>
@@ -66,7 +77,7 @@ class BalanceHistory extends Component {
           <Row className='mt-3'>
             <Col>
               <h3>Balance Due:</h3>
-              ${balance_total.toFixed(2)}
+              ${updated_total.toFixed(2)}
             </Col>
           </Row>
         </div>

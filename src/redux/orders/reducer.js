@@ -9,7 +9,8 @@ import {
   UPLOAD_FILE_TO_ORDER,
   ORDER_ADDED,
   ORDER_UPDATED,
-  ORDER_DELETED
+  ORDER_DELETED,
+  UPDATE_SELECTED_ORDER
 } from './actions';
 import moment from 'moment';
 
@@ -65,6 +66,7 @@ export default function (state = initialState, action) {
           }
           return data.data;
         }),
+        selectedOrder: data.data
       };
     case UPLOAD_FILE_TO_ORDER:
       return {
