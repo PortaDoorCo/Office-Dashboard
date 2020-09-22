@@ -226,43 +226,64 @@ export const itemPriceSelector = createSelector(
             let topRailAdd = 0;
             let bottomRailAdd = 0;
 
-            const calcPrice = (add, part, price, w) => {
+            
+
+            const calcPrice = (add, part, price, w) => {              
               const width = w;
               const difference = numQty(part) - width;
               const calc = difference * 10 + price;
               const priceDifference = calc - price;
-              return (add = priceDifference / 4);
+
+              console.log('adddd', add);
+
+              switch(add) {
+                case 'leftStileAdd':
+                  leftStileAdd = priceDifference / 4;
+                  break;
+                case 'rightStileAdd':
+                  rightStileAdd = priceDifference / 4;
+                  break;
+                case 'topRailAdd':
+                  topRailAdd = priceDifference / 4;
+                  break;
+                case 'bottomRailAdd':
+                  bottomRailAdd = priceDifference / 4;
+                  break;
+                default:
+                  // code block
+                  break;
+              }
             };
   
-            const leftStileCalc = (p) => {
-              return calcPrice(eval('leftStileAdd'), eval('i.leftStile'), eval('price'), p);
+            const leftStileCalc = (p, price) => {
+              return calcPrice('leftStileAdd', eval('i.leftStile'), price, p);
             };
   
-            const rightStileCalc = (p) => {
-              return calcPrice(eval('rightStileAdd'), eval('i.rightStile'), eval('price'), p);
+            const rightStileCalc = (p, price) => {
+              return calcPrice('rightStileAdd', eval('i.rightStile'), price, p);
             };
   
-            const topRailCalc = (p) => {
-              return calcPrice(eval('topRailAdd'), eval('i.topRail'), eval('price'), p);
+            const topRailCalc = (p,price) => {
+              return calcPrice('topRailAdd', eval('i.topRail'), price, p);
             };
   
-            const bottomRailCalc = (p) => {
-              return calcPrice(eval('bottomRailAdd'), eval('i.bottomRail'), eval('price'), p);
+            const bottomRailCalc = (p,price) => {
+              return calcPrice('bottomRailAdd', eval('i.bottomRail'), price, p);
             };
   
-            const calc = (part, design) => {
+            const calc = (part, design, price) => {
               switch (part) {
                 case 'leftStile':
-                  leftStileCalc(design);
+                  leftStileCalc(design, price);
                   break;
                 case 'rightStile':
-                  rightStileCalc(design);
+                  rightStileCalc(design, price);
                   break;
                 case 'topRail':
-                  topRailCalc(design);
+                  topRailCalc(design, price);
                   break;
                 case 'bottomRail':
-                  bottomRailCalc(design);
+                  bottomRailCalc(design, price);
                   break;
                 default:
                   return 0;
@@ -284,20 +305,19 @@ export const itemPriceSelector = createSelector(
 
                 //leftStile
                 if (part.profile && part.profile.MINIMUM_STILE_WIDTH !== numQty(i.leftStile)) {
-                  calc('leftStile', part.profile.MINIMUM_STILE_WIDTH);
+                  calc('leftStile', part.profile.MINIMUM_STILE_WIDTH, price);
                 }
                 //rightStile
                 if (part.profile && part.profile.MINIMUM_STILE_WIDTH !== numQty(i.rightStile)) {
-                  calc('rightStile', part.profile.MINIMUM_STILE_WIDTH);
-
+                  calc('rightStile', part.profile.MINIMUM_STILE_WIDTH, price);
                 }
                 //topRail
                 if (part.profile && part.profile.MINIMUM_STILE_WIDTH !== numQty(i.topRail)) {
-                  calc('topRail', part.profile.MINIMUM_STILE_WIDTH);
+                  calc('topRail', part.profile.MINIMUM_STILE_WIDTH, price);
                 }
                 //bottomRail
                 if (part.profile &&  part.profile.MINIMUM_STILE_WIDTH !== numQty(i.bottomRail)) {
-                  calc('bottomRail', part.profile.MINIMUM_STILE_WIDTH);
+                  calc('bottomRail', part.profile.MINIMUM_STILE_WIDTH, price);
                 }
 
 
@@ -313,20 +333,20 @@ export const itemPriceSelector = createSelector(
                 }
 
                 //leftStile
-                if (part.profile && part.profile.MINIMUM_STILE_WIDTH !== numQty(i.leftStile)) {
-                  calc('leftStile', part.profile.MINIMUM_STILE_WIDTH);
+                if ((part.profile && part.profile.MINIMUM_STILE_WIDTH) !== numQty(i.leftStile)) {
+                  calc('leftStile', part.profile.MINIMUM_STILE_WIDTH, price);
                 }
                 //rightStile
-                if (part.profile && part.profile.MINIMUM_STILE_WIDTH !== numQty(i.rightStile)) {
-                  calc('rightStile', part.profile.MINIMUM_STILE_WIDTH);
+                if ((part.profile && part.profile.MINIMUM_STILE_WIDTH) !== numQty(i.rightStile)) {
+                  calc('rightStile', part.profile.MINIMUM_STILE_WIDTH, price);
                 }
                 //topRail
-                if (part.profile && part.profile.MINIMUM_STILE_WIDTH !== numQty(i.topRail)) {
-                  calc('topRail', part.profile.MINIMUM_STILE_WIDTH);
+                if ((part.profile && part.profile.MINIMUM_STILE_WIDTH) !== numQty(i.topRail)) {
+                  calc('topRail', part.profile.MINIMUM_STILE_WIDTH, price);
                 }
                 //bottomRail
-                if (part.profile && part.profile.MINIMUM_STILE_WIDTH !== numQty(i.bottomRail)) {
-                  calc('bottomRail', part.profile.MINIMUM_STILE_WIDTH);
+                if ((part.profile && part.profile.MINIMUM_STILE_WIDTH) !== numQty(i.bottomRail)) {
+                  calc('bottomRail', part.profile.MINIMUM_STILE_WIDTH, price);
                 }
               }
 
@@ -346,19 +366,19 @@ export const itemPriceSelector = createSelector(
 
                 //leftStile
                 if (part.miter_df_design && part.miter_df_design.PROFILE_WIDTH !== numQty(i.leftStile)) {
-                  calc('leftStile', part.miter_df_design.PROFILE_WIDTH);
+                  calc('leftStile', part.miter_df_design.PROFILE_WIDTH, price);
                 }
                 //rightStile
                 if (part.miter_df_design && part.miter_df_design.PROFILE_WIDTH !== numQty(i.rightStile)) {
-                  calc('rightStile', part.miter_df_design.PROFILE_WIDTH);
+                  calc('rightStile', part.miter_df_design.PROFILE_WIDTH, price);
                 }
                 //topRail
                 if (part.miter_df_design && part.miter_df_design.PROFILE_WIDTH !== numQty(i.topRail)) {
-                  calc('topRail', part.miter_df_design.PROFILE_WIDTH);
+                  calc('topRail', part.miter_df_design.PROFILE_WIDTH, price);
                 }
                 //bottomRail
                 if (part.miter_df_design && part.miter_df_design.PROFILE_WIDTH !== numQty(i.bottomRail)) {
-                  calc('bottomRail', part.miter_df_design.PROFILE_WIDTH);
+                  calc('bottomRail', part.miter_df_design.PROFILE_WIDTH, price);
                 }
               } else {
 
@@ -373,19 +393,19 @@ export const itemPriceSelector = createSelector(
 
                 //leftStile
                 if (part.miter_design && part.miter_design.PROFILE_WIDTH !== numQty(i.leftStile)) {
-                  calc('leftStile', part.miter_design.PROFILE_WIDTH);
+                  calc('leftStile', part.miter_design.PROFILE_WIDTH, price);
                 }
                 //rightStile
                 if (part.miter_design && part.miter_design.PROFILE_WIDTH !== numQty(i.rightStile)) {
-                  calc('rightStile', part.miter_design.PROFILE_WIDTH);
+                  calc('rightStile', part.miter_design.PROFILE_WIDTH, price);
                 }
                 //topRail
                 if (part.miter_design && part.miter_design.PROFILE_WIDTH !== numQty(i.topRail)) {
-                  calc('topRail', part.miter_design.PROFILE_WIDTH);
+                  calc('topRail', part.miter_design.PROFILE_WIDTH, price);
                 }
                 //bottomRail
                 if (part.miter_design && part.miter_design.PROFILE_WIDTH !== numQty(i.bottomRail)) {
-                  calc('bottomRail', part.miter_design.PROFILE_WIDTH);
+                  calc('bottomRail', part.miter_design.PROFILE_WIDTH, price);
                 } 
               }
 
@@ -404,19 +424,19 @@ export const itemPriceSelector = createSelector(
 
               //leftStile
               if (part.mt_design && part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.leftStile)) {
-                calc('leftStile', part.mt_design.MID_RAIL_MINIMUMS);
+                calc('leftStile', part.mt_design.MID_RAIL_MINIMUMS, price);
               }
               //rightStile
               if (part.mt_design &&  part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.rightStile)) {
-                calc('rightStile', part.mt_design.MID_RAIL_MINIMUMS);
+                calc('rightStile', part.mt_design.MID_RAIL_MINIMUMS, price);
               }
               //topRail
               if (part.mt_design && part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.topRail)) {
-                calc('topRail', part.mt_design.MID_RAIL_MINIMUMS);
+                calc('topRail', part.mt_design.MID_RAIL_MINIMUMS, price);
               }
               //bottomRail
               if (part.mt_design && part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.bottomRail)) {
-                calc('bottomRail', part.mt_design.MID_RAIL_MINIMUMS);
+                calc('bottomRail', part.mt_design.MID_RAIL_MINIMUMS, price);
               }
             }
 
