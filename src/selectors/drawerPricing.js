@@ -44,25 +44,74 @@ const partListSelector = state => {
 const miscItemsSelector = state => {
   const orders = state.form.DrawerOrder;
   if (orders) {
-    if ((!state.form.DrawerOrder &&!state.form.DrawerOrder.values && !state.form.DrawerOrder.values.misc_items.length > 0)) {
+    if ((!state.form.DrawerOrder.values && !state.form.DrawerOrder.values.misc_items.length > 0)) {
       return [];
     } else {
-      return state.form.DrawerOrder.values.misc_items.map(i => {
-        if(i.price) {
-          return parseFloat(i.price);
-        }
-        if(i.price2){
-          return parseFloat(i.price2) * parseInt(i.qty);
-        }
-        else {
-          return 0;
-        }
-      });
+      return state.form.DrawerOrder.values.misc_items;
     }
   } else {
     return [];
   }
 };
+
+export const miscItemPriceSelector = createSelector(
+  [miscItemsSelector],
+  (misc ) => misc.map(i => {
+    let price = 0;
+    console.log(i);
+    if(i.category === 'preselect'){
+      if(i.item) {
+        price = i.item.Price;
+      }else{
+        price = 0;
+      }
+    }else {
+      if(i.pricePer){
+        price = parseFloat(i.pricePer);
+      } else {
+        price = 0;
+      }
+    }
+    return price;
+  })
+);
+
+
+
+export const miscItemLinePriceSelector = createSelector(
+  [miscItemsSelector, miscItemPriceSelector],
+  (parts, pricer, item) =>
+    parts.map((i, index) => {
+      let price = 0;
+      if(i.category === 'preselect'){
+        if(i.item) {
+          if(i.qty){
+            price = pricer[index] * parseFloat(i.qty);
+          } else {
+            price = 0;
+          }
+        }else{
+          price = 0;
+        }
+      }else {
+        if(i.pricePer){
+          if(i.qty){
+            price = pricer[index] * parseFloat(i.qty);
+          } else {
+            price = 0;
+          }
+        } else {
+          price = 0;
+        }
+      }
+      return price;
+    })
+);
+
+export const miscTotalSelector = createSelector(
+  [miscItemLinePriceSelector],
+  (misc) => (misc.reduce((acc, item) => acc + item, 0))
+);
 
 
 const taxRate = state => {
@@ -116,6 +165,10 @@ export const itemPriceSelector = createSelector(
           const height = Math.ceil(numQty(i.height));
           const depth = Math.ceil(numQty(i.depth));
 
+          const scoop = i.scoop.PRICE;
+
+          console.log('scoop',scoop);
+
           const price = eval(pricer.drawer_box_pricing);
 
           if (height > -1) {
@@ -151,6 +204,7 @@ export const linePriceSelector = createSelector(
           const depth = Math.ceil(numQty(i.depth));
           const qty = parseInt(i.qty); 
           const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
+          const scoop = i.scoop.PRICE;
 
           const price = (eval(pricer.drawer_box_pricing) + extraCost) * qty;
 
@@ -179,10 +233,6 @@ export const addPriceSelector = createSelector(
     })
 );
 
-export const miscTotalSelector = createSelector(
-  [miscItemsSelector],
-  (misc) => misc.reduce((acc, item) => acc + item, 0)
-);
 
 export const subTotalSelector = createSelector(
   [linePriceSelector, addPriceSelector],
@@ -211,7 +261,7 @@ export const taxSelector = createSelector(
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector],
   (subTotal, misc, discount) => {
-    return (subTotal.reduce((acc, item) => acc + item, 0) + misc) * discount;
+    return (subTotal.reduce((acc, item) => acc + item, 0)) * discount;
   }
 );
 

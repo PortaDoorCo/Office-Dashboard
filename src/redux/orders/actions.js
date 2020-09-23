@@ -34,6 +34,8 @@ export const ORDER_ADDED = 'ORDER_ADDED';
 export const ORDER_UPDATED = 'ORDER_UPDATED';
 export const ORDER_DELETED = 'ORDER_DELETED';
 
+export const UPDATE_SELECTED_ORDER = 'UPDATE_SELECTED_ORDER';
+
 
 
 export function orderAdded(res) {
@@ -70,6 +72,16 @@ export function setSelectedOrder(data) {
   return async function (dispatch) {
     return await dispatch({
       type: SET_SELECTED_ORDER,
+      data: data
+    });
+  };
+}
+
+export function updateSelectedOrder(data) {
+
+  return async function (dispatch) {
+    return await dispatch({
+      type: UPDATE_SELECTED_ORDER,
       data: data
     });
   };
@@ -249,6 +261,7 @@ export function updateBalance(orderId, balance, cookie) {
       {
         'balance_due': parseFloat(balance.balance_due),
         'balance_paid': parseFloat(balance.balance_paid),
+        'payment_method': balance.payment_method,
         'date': new Date()
       }
     ]

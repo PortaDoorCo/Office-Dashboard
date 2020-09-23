@@ -8,7 +8,9 @@ import {
   taxSelector,
   totalSelector,
   miscTotalSelector,
-  miscLineItemSelector
+  miscLineItemSelector,
+  miscItemPriceSelector,
+  miscItemLinePriceSelector
 } from '../../../../selectors/miscItemPricing';
 import moment from 'moment-business-days';
 import Inputs from './Inputs';
@@ -171,7 +173,7 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { misc_items, formState, handleSubmit, subTotal, miscTotalSelector, miscLineItemSelector, customers, tax, total } = this.props;
+  const { misc_items, formState, handleSubmit, subTotal, miscTotal, miscLineItemSelector, customers, tax, total, prices, linePrices } = this.props;
 
   return (
     <div>
@@ -198,7 +200,7 @@ render() {
                 </Row>
                 <Row>
                   <Col>
-                    <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} />
+                    <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} prices={prices} linePrices={linePrices} miscTotal={miscTotal} />
                   </Col>
                 </Row>
                 <Row>
@@ -306,7 +308,9 @@ const mapStateToProps = state => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  miscTotalSelector: miscTotalSelector(state),
+  prices: miscItemPriceSelector(state),
+  linePrices: miscItemLinePriceSelector(state),
+  miscTotal: miscTotalSelector(state),
   miscLineItemSelector: miscLineItemSelector(state),
   user: state.users.user,
   customers: state.customers.customerDB,

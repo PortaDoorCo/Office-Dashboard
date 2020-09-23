@@ -7,18 +7,27 @@ import {
   Button
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from 'redux-form';
+import { Field, change } from 'redux-form';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
+import numQty from 'numeric-quantity';
+import Ratio from 'lb-ratio';
 
 const required = value => (value ? undefined : 'Required');
 
-const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit }) => {
+const fraction = num => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
+
+
+const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
+  const [changeValue, setChangeValue] = useState('');
 
   useEffect(() => {
 
@@ -48,6 +57,47 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
       newHeight = [...newHeight, v];
     }
     setHeight(newHeight);
+  };
+
+
+  const registerChange = (index, e) => {
+    const value = e.target.value;
+    setChangeValue(value);
+  };
+
+  const changeFraming = (index, e) => {
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].leftStile`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].rightStile`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].topRail`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].bottomRail`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
   };
 
 
@@ -142,6 +192,11 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                   </tr>
 
                   <tr />
+                  <tr>
+                    <td>
+                      <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
+                    </td>
+                  </tr> 
                 </tbody>
 
               </Table>

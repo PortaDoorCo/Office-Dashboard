@@ -96,7 +96,7 @@ class OrderTable extends Component {
                           component={renderDropdownList}
                           data={scoop}
                           valueField="Value"
-                          textField="Name"
+                          textField="NAME"
                           validate={required}
                           edit={edit} />
                       </td>
