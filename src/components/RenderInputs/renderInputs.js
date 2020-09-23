@@ -94,7 +94,7 @@ export const renderField = ({
   ...custom
 }) => (
   <Fragment>
-    <Input {...input} disabled={edit} autoComplete="new-password" />
+    <Input {...input} disabled={edit} autoComplete="off" />
     {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
                     (warning && <span style={{ color: 'red' }}>{warning}</span>))}
