@@ -142,7 +142,6 @@ class DoorOrders extends Component {
       ],
       balance_history: [
         {
-          'balance_due': total,
           'balance_paid': values.balance_paid,
           'date': new Date()
         }
@@ -193,6 +192,7 @@ class DoorOrders extends Component {
     } = this.props;
 
 
+    console.log(this.props.prices);
 
     return (
       <div className="animated fadeIn">
@@ -309,7 +309,7 @@ class DoorOrders extends Component {
               </CardBody>
             </Card>
           </Col>
-          <Col lg="4">
+          <Col lg="5">
             <Row>
               <Col>
                 <Card>

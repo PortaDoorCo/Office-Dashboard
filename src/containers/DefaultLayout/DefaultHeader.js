@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Nav, NavItem } from 'reactstrap';
+import { Nav, NavItem, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import DefaultHeaderDropdown  from './DefaultHeaderDropdown';
@@ -9,6 +9,35 @@ import sygnet from '../../assets/img/brand/sygnet.svg';
 import { unsetToken } from '../../utils/auth';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import {
+  loadOrders,
+  getDeliveries,
+  socketReceiveUpdateStatus
+} from '../../redux/orders/actions';
+import {
+  loadMiscItems,
+  loadShippingMethod,
+  loadPaymentTypes,
+  loadPaymentTerms,
+} from '../../redux/misc_items/actions';
+import {
+  loadSales,
+} from '../../redux/sales/actions';
+
+import { loadCustomers } from '../../redux/customers/actions';
+
+import {
+  getAllProducts,
+  getBreakdowns,
+  getBoxBreakdowns,
+  getPricing
+} from '../../redux/part_list/actions';
+import { NotificationManager } from 'react-notifications';
+
+import Cookies from 'js-cookie';
 
 const propTypes = {
   children: PropTypes.node,
@@ -21,6 +50,46 @@ class DefaultHeader extends Component {
   logOut = () => {
     unsetToken().then(() => window.location.reload());
   };
+
+  refresh = async () => {
+    const {
+      loadShippingMethod,
+      loadPaymentTypes,
+      loadPaymentTerms,
+      getBreakdowns,
+      getBoxBreakdowns,
+      getPricing,
+      getUsers,
+      login,
+      loadSales,
+      loadOrders,
+      getDeliveries,
+      loadCustomers,
+      loadMiscItems,
+      getAllProducts,
+    } = this.props;
+
+    const cookie = await Cookies.get('jwt');
+
+    if (cookie) {
+      await NotificationManager.success('Database Refresh Beginning', 'Refresh Beginning!', 2000);
+      await getAllProducts(cookie);
+      await loadOrders(cookie);
+      await loadCustomers(cookie);
+      await loadSales(cookie);
+      await loadMiscItems(cookie);
+      await getDeliveries(cookie);
+      await getPricing(cookie);
+      await getBreakdowns(cookie);
+      await getBoxBreakdowns(cookie);
+      await loadShippingMethod(cookie);
+      await loadPaymentTypes(cookie);
+      await loadPaymentTerms(cookie);
+      await NotificationManager.success('Database Refreshed', 'Database Refreshed!', 2000);
+    } else {
+      alert('not logged in');
+    }
+  }
 
 
   render() {
@@ -59,6 +128,11 @@ class DefaultHeader extends Component {
           <NavItem className="px-3">
             <NavLink to="#" className="nav-link">Justin P. Romanos</NavLink>
           </NavItem> */}
+          <Tooltip title="Refresh" placement="bottom">
+            <IconButton onClick={this.refresh}>
+              <RefreshIcon style={{ width: '40', height: '40' }} />
+            </IconButton>
+          </Tooltip>
           <DefaultHeaderDropdown className="mr-5" onLogout={this.logOut} user={this.props.user} accnt/>
           <div className="mr-5" />
           {/* <Button color="primary" className="mr-5" onClick={this.logOut}>Log Out</Button> */}
@@ -80,7 +154,27 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      loadOrders,
+      loadCustomers,
+      loadSales,
+      loadShippingMethod,
 
+      getAllProducts,
+
+      getDeliveries,
+
+      getBreakdowns,
+      getBoxBreakdowns,
+
+      getPricing,
+
+      loadPaymentTypes,
+      loadPaymentTerms,
+
+      loadMiscItems,
+
+
+      socketReceiveUpdateStatus
     },
     dispatch
   );

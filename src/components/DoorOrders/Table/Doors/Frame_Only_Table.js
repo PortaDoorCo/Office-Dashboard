@@ -14,6 +14,7 @@ import 'react-widgets/dist/css/react-widgets.css';
 import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
+import numQty from 'numeric-quantity';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -26,6 +27,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
+  const [changeValue, setChangeValue] = useState('');
 
 
 
@@ -78,6 +80,46 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
         ),
       );
     }
+
+  };
+
+  const registerChange = (index, e) => {
+    const value = e.target.value;
+    setChangeValue(value);
+  };
+
+  const changeFraming = (index, e) => {
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].leftStile`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].rightStile`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].topRail`,
+        fraction(numQty(changeValue))
+      ),
+    );
+
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].bottomRail`,
+        fraction(numQty(changeValue))
+      ),
+    );
 
   };
 
@@ -195,6 +237,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         label="leftStile"
                         edit={edit}
                         validate={required}
+                        onChange={(e) => registerChange(index, e)}
                       />
                     </td>
                     <td>
@@ -208,6 +251,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         label="rightStile"
                         edit={edit}
                         validate={required}
+                        onChange={(e) => registerChange(index, e)}
                       />
                     </td>
                     <td>
@@ -221,6 +265,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         label="topRail"
                         edit={edit}
                         validate={required}
+                        onChange={(e) => registerChange(index, e)}
                       />
                     </td>
                     <td>
@@ -234,6 +279,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         label="bottomRail"
                         edit={edit}
                         validate={required}
+                        onChange={(e) => registerChange(index, e)}
                       />
                     </td>
                     <td>
@@ -249,6 +295,11 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                       />
                     </td>
                   </tr>
+                  <tr>
+                    <td>
+                      <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
+                    </td>
+                  </tr> 
                   <Row>
                     <p className="ml-3">*Finish Stile/Rail Sizes*</p>
                   </Row>

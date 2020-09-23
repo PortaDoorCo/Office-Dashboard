@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
+import { Field, reduxForm, FieldArray, getFormValues } from 'redux-form';
 import { renderField, renderDropdownListFilter, renderPrice } from '../../../../components/RenderInputs/renderInputs';
-import { Button, Table } from 'reactstrap';
+import { Button, Table, Input, InputGroup,InputGroupAddon,InputGroupText, Row, Col, Label } from 'reactstrap';
 import { connect } from 'react-redux';
+import { miscItemPriceSelector, miscItemLinePriceSelector, miscTotalSelector } from '../../../../selectors/drawerPricing';
 
 
 let Inputs = props => {
-  const { fields, misc_items, edit, formState } = props;
-
+  const { fields, misc_items, formState, prices, linePrices, miscTotal, edit } = props;
+  console.log(linePrices);
   return (
     <div>
       <Table>
@@ -15,6 +16,7 @@ let Inputs = props => {
           <tr>
             <th>QTY</th>
             <th>Item</th>
+            <th>Price Per</th>
             <th>Price</th>
             <th></th>
           </tr>
@@ -23,93 +25,115 @@ let Inputs = props => {
           {fields.map((table, index) => {
             return (
               <tr key={index}>
-                <td style={{ width: '90px' }}><Field name={`${table}.qty`} edit={edit} component={renderField} type="text" /></td>
-                <td >
+                <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderField} type="text" edit={edit} /></td>
+                <td>
                   {formState &&  formState.misc_items && formState.misc_items[index] && formState.misc_items[index].category === 'preselect' ?
                     <Field
                       name={`${table}.item`}
                       component={renderDropdownListFilter}
                       data={misc_items}
                       valueField="value"
-                      edit={edit}
                       textField="NAME"
+                      edit={edit}
                     />  : 
                     <Field
                       name={`${table}.item2`}
                       component={renderField}
                       valueField="value"
-                      edit={edit}
                       textField="NAME"
+                      edit={edit}
                     />
                   }
                 </td>
                 {formState &&  formState.misc_items && formState.misc_items[index] && formState.misc_items[index].category === 'preselect' ?
-                  <td style={{ width: '150px' }}><Field name={`${table}.price`} component={renderPrice} edit={edit} type="text" /></td> : 
-                  <td style={{ width: '150px' }}><Field name={`${table}.price2`} component={renderPrice} edit={edit} type="text" /></td> 
+                  <>
+                    <td style={{ width: '150px' }}>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input placeholder={prices[index]} disabled={edit} />
+                      </InputGroup>
+                    </td>
+                    <td style={{ width: '150px' }}>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input placeholder={linePrices[index]} disabled={edit} />
+                      </InputGroup>
+                    </td>
+                  </>
+                  : 
+                  <>
+                    <td style={{ width: '150px' }}><Field name={`${table}.pricePer`} component={renderPrice} edit={edit} type="text" /></td> 
+                    <td style={{ width: '150px' }}>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input placeholder={linePrices[index]} disabled={edit} />
+                      </InputGroup></td> 
+                  </> 
                 }
-                <td> {!edit ? <Button color="danger" onClick={() => fields.remove(index)}>X</Button> : null}</td>
+                <td>
+                  {!edit ?
+                    <Button color="danger" onClick={() => fields.remove(index)}>X</Button>
+                    : null
+                  }
+                </td>
               </tr>
             );
           })}
         </tbody>
       </Table>
 
-      {!edit ?
-        <div>
-          <Button color="primary" className="mt-3" onClick={() => fields.push({
-            category: 'preselect',
-            qty: 1,
-            price: 0
-          })}>Add Item </Button>
+      <Row>
+        <Col>
+          {!edit ? 
+            <>
+              <Button color="primary" className="mt-3" onClick={() => fields.push({
+                category: 'preselect',
+                qty: 1,
+                price: 0
+              })}>Add Item </Button>
 
-          <Button color="primary" className="mt-3" onClick={() => fields.push({
-            category:'custom',
-            qty: 1,
-            price: 0
-          })}>Custom Item</Button>
-        </div>
-        : null
-      }
+              <Button color="primary" className="mt-3" onClick={() => fields.push({
+                category:'custom',
+                qty: 1,
+                price: 0
+              })}>Custom Item</Button>
+            </>
+            : null
+          }
+        </Col>
+        <Col />
+        <Col>
+          <Label htmlFor="companyName">Added to Total</Label>
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>$</InputGroupText>
+            </InputGroupAddon>
+            <Input placeholder={miscTotal} disabled={edit} />
+          </InputGroup>
+        </Col>
+      </Row>
+
+
+
     </div>
   );
 };
 
 class MiscItems extends Component {
 
-  componentDidUpdate(prevProps) {
-    const { formState } = this.props;
-    if (formState && formState.misc_items) {
-      if ((formState && formState.misc_items) !== (prevProps.formState && prevProps.formState.misc_items)) {
-        const misc_items = formState.misc_items;
-        misc_items.forEach((i, index) => {
-          if (i.item) {
-            if (i.item.Price !== 0) {
-              this.props.dispatch(
-                change(
-                  'DrawerOrder',
-                  `misc_items[${index}].price`,
-                  (i.qty ? (i.item.Price * parseInt(i.qty)) : i.item.Price)
-                )
-              );
-            } else {
-              return;
-            }
-          }
-        });
-      } else {
-        return;
-      }
-    } else {
-      return;
-    }
-  }
-
   render() {
-    const { misc_items, edit, formState } = this.props;
+    const { misc_items, formState, prices, linePrices, miscTotal, edit } = this.props;
+    console.log('prices', prices);
     return (
       <div>
         <h3>Misc Items</h3>
-        <FieldArray name="misc_items" component={Inputs} edit={edit} misc_items={misc_items} formState={formState} />
+        <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} prices={prices} linePrices={linePrices} miscTotal={miscTotal} edit={edit} />
       </div>
     );
   }
@@ -119,7 +143,10 @@ class MiscItems extends Component {
 
 const mapStateToProps = state => ({
   formState: getFormValues('DrawerOrder')(state),
-  misc_items: state.misc_items.misc_items
+  misc_items: state.misc_items.misc_items,  
+  prices: miscItemPriceSelector(state),
+  linePrices: miscItemLinePriceSelector(state),
+  miscTotal: miscTotalSelector(state)
 });
 
 MiscItems = reduxForm({

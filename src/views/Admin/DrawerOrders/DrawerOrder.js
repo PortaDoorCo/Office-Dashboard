@@ -153,7 +153,6 @@ class DoorOrders extends Component {
       ],
       balance_history: [
         {
-          balance_due: total,
           balance_paid: values.balance_paid,
           date: new Date()
         }
@@ -336,7 +335,7 @@ class DoorOrders extends Component {
               </CardBody>
             </Card>
           </Col>
-          <Col lg="4">
+          <Col lg="5">
             <Row>
               <Col>
                 <Card>

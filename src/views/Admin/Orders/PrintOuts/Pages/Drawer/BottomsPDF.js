@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import Bottoms from '../../Drawer_PDF/Bottoms';
+import Bottoms from '../../Drawer_PDF/Individual/Bottoms';
 
 export default (data, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;

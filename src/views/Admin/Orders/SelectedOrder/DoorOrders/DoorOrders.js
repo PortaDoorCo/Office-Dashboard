@@ -29,7 +29,8 @@ import {
 import {
   submitOrder,
   loadOrders,
-  updateOrder
+  updateOrder,
+  updateSelectedOrder
 } from '../../../../../redux/orders/actions';
 import {
   loadCustomers
@@ -82,6 +83,7 @@ class DoorOrders extends Component {
       total,
       updateOrder,
       balance,
+      updateSelectedOrder
     } = this.props;
 
     const jobInfo = {
@@ -129,7 +131,6 @@ class DoorOrders extends Component {
 
   cancelOrder = async () => {
     await this.props.reset();
-
     await this.props.editable();
   };
 
@@ -191,12 +192,9 @@ class DoorOrders extends Component {
                     component={DoorInfo}
                     prices={prices}
                     formState={formState}
-                    // subTotal={subTotal}
                     dispatch={dispatch}
                     isValid={isValid}
-
                     edit={edit}
-
                     updateSubmit={this.state.submit}
                   />
 
@@ -320,7 +318,8 @@ const mapDispatchToProps = dispatch =>
       loadCustomers,
       submitOrder,
       loadOrders,
-      updateOrder
+      updateOrder,
+      updateSelectedOrder
     },
     dispatch
   );

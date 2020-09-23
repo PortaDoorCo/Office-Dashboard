@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import StilesPage from '../../Door_PDF/StilesPage';
+import StilesPage from '../../Door_PDF/Individual/StilesPage';
 
 export default (data, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;

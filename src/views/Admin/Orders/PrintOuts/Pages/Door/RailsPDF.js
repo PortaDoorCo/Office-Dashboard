@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import RailsPage from '../../Door_PDF/RailsPage';
+import RailsPage from '../../Door_PDF/Individual/RailsPage';
 
 export default (data, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;

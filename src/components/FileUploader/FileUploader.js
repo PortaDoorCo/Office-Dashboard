@@ -1,23 +1,29 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { Upload, message, Button } from 'antd';
+import { Row, Col} from 'reactstrap';
+import { Upload, Button, Input } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import db_url from '../../redux/db_url';
 import { NotificationManager } from 'react-notifications';
 const cookie = Cookies.get('jwt');
-const header = { Authorization: 'Bearer ' + cookie };
-
 
 const FileUploader = (props) => {
 
+  const [fileName, setFileName] = useState('');
+  const [fileList, setFileList] = useState([]);
+
+  const changeName = e => {
+    setFileName(e.target.value);
+  };
+
   const uploadProps = {
-    name: 'file',
+    name: fileName,
     multiple: props.multi,
     action: `${db_url}/upload`,
     customRequest: (options) => {
       const data= new FormData();
-      data.append('files', options.file);
+      data.append('files', options.file, fileName);
       const config= {
         'headers': {
           'content-type': 'multipart/form-data',
@@ -41,25 +47,48 @@ const FileUploader = (props) => {
       strokeWidth: 3,
       format: percent => `${parseFloat(percent.toFixed(2))}%`,
     },
+    fileList: fileList,
     onChange(info) {
+      
+      info.file.name = fileName;
+      
+      setFileList(info.fileList);
+
+
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
       if (info.file.status === 'done') {
         NotificationManager.success('File Successfully Uploaded!', 'Success', 2000);
+        setFileName('');
       } else if (info.file.status === 'error') {
         NotificationManager.error('There was an problem with your upload', 'Error', 2000);
       }
     },
   };
 
+  console.log('fileList', fileList);
+
   return (
     <div>
-      <Upload {...uploadProps}>
-        <Button>
-          <UploadOutlined /> Click to Upload
-        </Button>
-      </Upload>
+
+      <Row>
+        <Col>
+          <Input placeholder={'Filename'} value={fileName} onChange={(e) => changeName(e)} />
+        </Col>
+        <Col lg='7' />
+      </Row>
+
+      <Row>
+        <Col>
+          <Upload {...uploadProps}>
+            <Button>
+              <UploadOutlined /> Click to Upload
+            </Button>
+          </Upload>
+        </Col>
+      </Row>
+
     </div>
   );
 };

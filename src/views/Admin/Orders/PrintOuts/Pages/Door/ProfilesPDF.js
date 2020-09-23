@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import Profiles from '../../Door_PDF/Profiles';
+import Profiles from '../../Door_PDF/Individual/Profiles';
 
 export default (data, edges, moulds, panels, appliedProfiles,) => {
   const { vfs } = vfsFonts.pdfMake;

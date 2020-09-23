@@ -23,26 +23,74 @@ const discountSelector = state => {
 const miscItemsSelector = state => {
   const orders = state.form.MiscItems;
   if (orders) {
-
-    if(state.form && state.form.MiscItems && state.form.MiscItems.values && state.form.MiscItems.values.misc_items && state.form.MiscItems.values.misc_items.length > 0) {
-      return state.form.MiscItems.values.misc_items.map(i => {
-        if(i.price) {
-          return parseFloat(i.price);
-        }
-        if(i.price2){
-          return parseFloat(i.price2) * parseInt(i.qty);
-        }
-        else {
-          return 0;
-        }
-      });
-    } else {
+    if ((!state.form.MiscItems.values && !state.form.MiscItems.values.misc_items.length > 0)) {
       return [];
+    } else {
+      return state.form.MiscItems.values.misc_items;
     }
   } else {
     return [];
   }
 };
+
+export const miscItemPriceSelector = createSelector(
+  [miscItemsSelector],
+  (misc ) => misc.map(i => {
+    let price = 0;
+    console.log(i);
+    if(i.category === 'preselect'){
+      if(i.item) {
+        price = i.item.Price;
+      }else{
+        price = 0;
+      }
+    }else {
+      if(i.pricePer){
+        price = parseFloat(i.pricePer);
+      } else {
+        price = 0;
+      }
+    }
+    return price;
+  })
+);
+
+
+
+export const miscItemLinePriceSelector = createSelector(
+  [miscItemsSelector, miscItemPriceSelector],
+  (parts, pricer, item) =>
+    parts.map((i, index) => {
+      let price = 0;
+      if(i.category === 'preselect'){
+        if(i.item) {
+          if(i.qty){
+            price = pricer[index] * parseFloat(i.qty);
+          } else {
+            price = 0;
+          }
+        }else{
+          price = 0;
+        }
+      }else {
+        if(i.pricePer){
+          if(i.qty){
+            price = pricer[index] * parseFloat(i.qty);
+          } else {
+            price = 0;
+          }
+        } else {
+          price = 0;
+        }
+      }
+      return price;
+    })
+);
+
+export const miscTotalSelector = createSelector(
+  [miscItemLinePriceSelector],
+  (misc) => (misc.reduce((acc, item) => acc + item, 0))
+);
 
 const taxRate = state => {
   const orders = state.form.MiscItems;
@@ -83,11 +131,6 @@ const totalBalanceDue = state => {
 export const miscLineItemSelector = createSelector(
   [miscItemsSelector],
   (misc) => misc
-);
-
-export const miscTotalSelector = createSelector(
-  [miscItemsSelector],
-  (misc) => (misc.reduce((acc, item) => acc + item, 0))
 );
 
 

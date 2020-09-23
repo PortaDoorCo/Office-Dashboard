@@ -104,6 +104,8 @@ class CopeDoor extends Component {
 
   }
 
+
+
   render() {
     const {
       part,
@@ -120,9 +122,7 @@ class CopeDoor extends Component {
       formState,
       edit,
       prices,
-
       subTotal
-
     } = this.props;
 
     return (

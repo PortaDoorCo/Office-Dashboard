@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import QC_Checklist from '../../Door_PDF/QC_Checklist';
+import QC_Checklist from '../../Door_PDF/Individual/QC_Checklist';
 
 export default (data, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;

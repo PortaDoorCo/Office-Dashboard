@@ -46,7 +46,7 @@ export default (data, breakdowns) => {
           text: `${data.job_info.poNum} - ${data.job_info.customer.Company}`,
           margin: [0, 10]
         },
-        { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 0, 80, 0] }
+        { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 10] }
       ]
     },
     {
@@ -80,7 +80,15 @@ export default (data, breakdowns) => {
               {
                 stack: [
                   {
-                    text: `Bottom: ${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`,
+                    text: `${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`,
+                    style: 'fonts'
+                  },
+                  {
+                    text: `${i.box_finish.NAME}`,
+                    style: 'fonts'
+                  },
+                  {
+                    text: `${i.box_notch.NAME === 'Yes' ? 'Notch and Drilled' : ''}`,
                     style: 'fonts'
                   }
                 ],
