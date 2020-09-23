@@ -1,20 +1,17 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { Row, Col, FormGroup} from 'reactstrap';
+import { Row, Col} from 'reactstrap';
 import { Upload, Button, Input } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import db_url from '../../redux/db_url';
 import { NotificationManager } from 'react-notifications';
 const cookie = Cookies.get('jwt');
-const header = { Authorization: 'Bearer ' + cookie };
-
 
 const FileUploader = (props) => {
 
   const [fileName, setFileName] = useState('');
   const [fileList, setFileList] = useState([]);
-  const [fileNameList, setFileNameList] = useState([]);
 
   const changeName = e => {
     setFileName(e.target.value);
