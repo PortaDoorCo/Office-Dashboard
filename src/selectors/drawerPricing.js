@@ -165,6 +165,10 @@ export const itemPriceSelector = createSelector(
           const height = Math.ceil(numQty(i.height));
           const depth = Math.ceil(numQty(i.depth));
 
+          const scoop = i.scoop.PRICE;
+
+          console.log('scoop',scoop);
+
           const price = eval(pricer.drawer_box_pricing);
 
           if (height > -1) {
@@ -200,6 +204,7 @@ export const linePriceSelector = createSelector(
           const depth = Math.ceil(numQty(i.depth));
           const qty = parseInt(i.qty); 
           const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
+          const scoop = i.scoop.PRICE;
 
           const price = (eval(pricer.drawer_box_pricing) + extraCost) * qty;
 

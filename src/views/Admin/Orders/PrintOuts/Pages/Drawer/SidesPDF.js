@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import Sides from '../../Drawer_PDF/Sides';
+import Sides from '../../Drawer_PDF/Individual/Sides';
 
 export default (data, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;

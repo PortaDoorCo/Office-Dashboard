@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import AssemblyList from '../../Door_PDF/AssemblyList';
+import AssemblyList from '../../Door_PDF/Individual/AssemblyList';
 
 export default (data,breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;

@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import Acknowledgement from '../../Door_PDF/Acknowledgement';
+import Acknowledgement from '../../Door_PDF/Individual/Acknowledgement';
 
 export default (data, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;
