@@ -198,21 +198,14 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                       />
                     </td>
                     <td>
-                      {prices[i] ?
-                        <Input
-                          type="text"
-                          disabled={edit}
-                          className="form-control"
-                          placeholder={'$' + prices[i][index].toFixed(2) || 0}
-                        /> :
-                        <Input
-                          type="text"
-                          disabled={edit}
-                          className="form-control"
-                          placeholder={'$0.00'}
-                        />
-                      }
-
+                      <Field
+                        name={`${table}.price`}
+                        type="text"
+                        component={renderField}
+                        label="price"
+                        edit={edit}
+                        validate={required}
+                      />
                     </td>
                     <td>
                       {!edit ?

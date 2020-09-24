@@ -42,7 +42,7 @@ export default data => {
         {
           stack: [
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Est. Ship: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
+            { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
             { text: `Ship Via: ${data.job_info.ShippingMethod ? data.job_info.ShippingMethod.NAME : ' '}`, alignment: 'right' },
             { text: `Salesmen: ${data.sale ? data.sale.fullName : ''}`, alignment: 'right' }
           ]

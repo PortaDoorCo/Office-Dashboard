@@ -40,7 +40,7 @@ class FaceFrame extends Component {
     return (
       <div>
         <Row>
-          <Col xs="4">
+          <Col xs="3">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -55,7 +55,7 @@ class FaceFrame extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="3">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -70,7 +70,7 @@ class FaceFrame extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col xs="3">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -84,11 +84,8 @@ class FaceFrame extends Component {
               />
             </FormGroup>
           </Col>
-        </Row>
 
-        <Row>
-
-          <Col xs="6">
+          <Col xs="3">
             <FormGroup>
               <Label htmlFor="hinges">Top Rail Design</Label>
               <Field
@@ -102,24 +99,9 @@ class FaceFrame extends Component {
               />
             </FormGroup>
           </Col>
-
-
-          <Col xs="6">
-            <FormGroup>
-              <Label htmlFor="hinges">Furniture Feet</Label>
-              <Field
-                name={`${part}.furniture_feet`}
-                component={renderDropdownList}
-                data={furniture_feets}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-
         </Row>
+
+
 
         <Row className="mt-2">
           <Col xs="4">
