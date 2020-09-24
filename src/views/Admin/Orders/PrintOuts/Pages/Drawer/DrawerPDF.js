@@ -19,8 +19,6 @@ export default (data, breakdowns) => {
       AssemblyList(data, breakdowns),
       Sides(data, breakdowns),
       Bottoms(data, breakdowns),
-      Acknowledgement(data, breakdowns),
-      Invoice(data, breakdowns)
     ],
     styles: {
       woodtype: {

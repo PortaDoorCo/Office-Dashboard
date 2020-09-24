@@ -447,16 +447,16 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
-                          leftStile: fraction(
+                          leftStile: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                           ),
-                          rightStile: fraction(
+                          rightStile: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                           ),
-                          topRail: fraction(
+                          topRail: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                           ),
-                          bottomRail: fraction(
+                          bottomRail: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
                           ),
                           horizontalMidRailSize: 0,

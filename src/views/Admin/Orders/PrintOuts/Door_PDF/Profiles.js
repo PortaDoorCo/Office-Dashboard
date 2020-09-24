@@ -112,6 +112,5 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
         }
       ];
     }),
-    { text: '', pageBreak: 'before' }
   ];
 };

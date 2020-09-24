@@ -411,16 +411,16 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
-                          leftStile: fraction(
+                          leftStile: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                           ),
-                          rightStile: fraction(
+                          rightStile: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                           ),
-                          topRail: fraction(
+                          topRail: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
                           ),
-                          bottomRail: fraction(
+                          bottomRail: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
                           ),
                           horizontalMidRailSize: 0,
