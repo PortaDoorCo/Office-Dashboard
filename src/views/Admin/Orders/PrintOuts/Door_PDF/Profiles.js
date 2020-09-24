@@ -86,11 +86,11 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
             {
               stack: [
                 {
-                  text: `Applied Profile: ${i.applied_profile.NAME}`,
+                  text: `Applied Profile: ${i.applied_profile ? i.applied_profile.NAME : 'None'}`,
                   style: 'fonts'
                 },
                 {
-                  image: i.applied_profile.NAME !== 'None' ? a : blob,
+                  image: i.applied_profile && i.applied_profile.NAME !== 'None' ? a : blob,
                   width: 100,
                   height: 100,
                   fit: [100, 100]

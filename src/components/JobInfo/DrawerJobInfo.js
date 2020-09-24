@@ -7,7 +7,7 @@ import {
 } from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-import moment from 'moment';
+import moment from 'moment-business-days';
 import momentLocaliser from 'react-widgets-moment';
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
 import { connect } from 'react-redux';
@@ -110,7 +110,9 @@ handleChange = (e) => {
 
 
 render() {
-  const { customers, edit, shippingMethods } = this.props;
+  const { customers, edit, shippingMethods, formState } = this.props;
+
+  const dateDifference = moment(new Date()).businessDiff(moment(formState && formState.job_info && formState.job_info.DueDate));
 
   return (
 
@@ -126,7 +128,7 @@ render() {
               component={renderDateTimePicker}
               edit={edit}
             />
-            <p>7 Business Day Lead Time</p>
+            <p>{dateDifference} Business Day Lead Time</p>
           </FormGroup>
         </Col>
         <Col xs="5" />

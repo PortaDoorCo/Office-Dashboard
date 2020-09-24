@@ -68,6 +68,9 @@ import DrawerBalanceHistory from './Balance/Drawer_Order/BalanceHistory';
 import DoorMiscItems from './MiscItems/DoorMiscItems';
 import DrawerMiscItems from './MiscItems/DrawerMiscItems';
 
+import CustomerCopyDoorPDF from './PrintOuts/Pages/Door/CustomerCopyPDF';
+import CustomerCopyDrawerPDF from './PrintOuts/Pages/Drawer/CustomerCopyPDF';
+
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
 import Cookies from 'js-cookie';
@@ -229,6 +232,10 @@ class OrderPage extends Component {
             DoorPDF(data, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
             this.setState({ selectedOption: [] });
             break;
+          case 'CustomerCopy':
+            CustomerCopyDoorPDF(data, breakdowns);
+            this.setState({ selectedOption: [] });
+            break;
           case 'Assembly':
             AssemblyListPDF(data, breakdowns);
             this.setState({ selectedOption: [] });
@@ -325,6 +332,10 @@ class OrderPage extends Component {
             DrawerPDF(data, box_breakdowns);
             this.setState({ selectedOption: [] });
             break;
+          case 'CustomerCopy':
+            CustomerCopyDrawerPDF(data, breakdowns);
+            this.setState({ selectedOption: [] });
+            break;
           case 'Acknowledgement':
             DrawerAcnowledgementPDF(data, box_breakdowns);
             this.setState({ selectedOption: [] });
@@ -389,6 +400,7 @@ class OrderPage extends Component {
     if (s.orderType === 'Door Order') {
       options = [
         { value: 'Breakdowns', label: 'Breakdowns' },
+        { value: 'CustomerCopy', label: 'Customer Copy' },
         { value: 'Assembly', label: 'Assembly List' },
         { value: 'Acknowledgement', label: 'Acknowledgement' },
         { value: 'Invoice', label: 'Invoice' },
@@ -402,6 +414,7 @@ class OrderPage extends Component {
     } else if (s.orderType === 'Drawer Order') {
       options = [
         { value: 'Breakdowns', label: 'Breakdowns' },
+        { value: 'CustomerCopy', label: 'Customer Copy' },
         { value: 'Acknowledgement', label: 'Acknowledgement' },
         { value: 'Invoice', label: 'Invoice' },
         { value: 'Assembly', label: 'Assembly List' },
@@ -410,7 +423,7 @@ class OrderPage extends Component {
       ];
     } else if (s.orderType === 'Misc Items') {
       options = [
-        { value: 'Breakdowns', label: 'Breakdowns' },
+        { value: 'All', label: 'All' },
         { value: 'Acknowledgement', label: 'Acknowledgement' },
         { value: 'Invoice', label: 'Invoice' },
       ];
