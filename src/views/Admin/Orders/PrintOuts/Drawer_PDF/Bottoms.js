@@ -150,6 +150,5 @@ export default (data, breakdowns) => {
 
       ];
     }),
-    { text: '', pageBreak: 'before' }
   ];
 };

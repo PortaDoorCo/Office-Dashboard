@@ -25,8 +25,6 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
       MaterialsList(data, breakdowns),
       QC_Checklist(data, breakdowns),
       Profiles(data, edges, moulds, panels, appliedProfiles, breakdowns),
-      Acknowledgement(data, breakdowns),
-      Invoice(data, breakdowns),
     ],
     styles: {
       woodtype: {

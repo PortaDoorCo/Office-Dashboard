@@ -178,7 +178,7 @@ class OrderPage extends Component {
     if (data.orderType === 'Door Order') {
       this.state.selectedOption.map(async option => {
         switch (option.value) {
-          case 'All':
+          case 'Breakdowns':
 
             const edgesPromiseArr1 = selectedOrder.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
               return new Promise((resolve, reject) => {
@@ -321,7 +321,7 @@ class OrderPage extends Component {
     } else if (data.orderType === 'Drawer Order') {
       this.state.selectedOption.map(async option => {
         switch (option.value) {
-          case 'All':
+          case 'Breakdowns':
             DrawerPDF(data, box_breakdowns);
             this.setState({ selectedOption: [] });
             break;
@@ -388,7 +388,7 @@ class OrderPage extends Component {
 
     if (s.orderType === 'Door Order') {
       options = [
-        { value: 'All', label: 'All' },
+        { value: 'Breakdowns', label: 'Breakdowns' },
         { value: 'Assembly', label: 'Assembly List' },
         { value: 'Acknowledgement', label: 'Acknowledgement' },
         { value: 'Invoice', label: 'Invoice' },
@@ -401,7 +401,7 @@ class OrderPage extends Component {
       ];
     } else if (s.orderType === 'Drawer Order') {
       options = [
-        { value: 'All', label: 'All' },
+        { value: 'Breakdowns', label: 'Breakdowns' },
         { value: 'Acknowledgement', label: 'Acknowledgement' },
         { value: 'Invoice', label: 'Invoice' },
         { value: 'Assembly', label: 'Assembly List' },
@@ -410,7 +410,7 @@ class OrderPage extends Component {
       ];
     } else if (s.orderType === 'Misc Items') {
       options = [
-        { value: 'All', label: 'All' },
+        { value: 'Breakdowns', label: 'Breakdowns' },
         { value: 'Acknowledgement', label: 'Acknowledgement' },
         { value: 'Invoice', label: 'Invoice' },
       ];

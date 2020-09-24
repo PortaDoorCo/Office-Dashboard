@@ -29,7 +29,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
   const [showButton, setShowButton] = useState(false);
-  const [changeValue, setChangeValue] = useState('');
+  const [changeValue, setChangeValue] = useState(null);
 
 
 
@@ -459,16 +459,16 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     fields.push({
                       panelsH: 1,
                       panelsW: 1,
-                      leftStile: fraction(
+                      leftStile: changeValue? fraction(numQty(changeValue)) : fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
-                      rightStile: fraction(
+                      rightStile: changeValue? fraction(numQty(changeValue)) :  fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
-                      topRail: fraction(
+                      topRail:  changeValue? fraction(numQty(changeValue)) : fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
-                      bottomRail: fraction(
+                      bottomRail: changeValue? fraction(numQty(changeValue)) : fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
                       horizontalMidRailSize: 0,

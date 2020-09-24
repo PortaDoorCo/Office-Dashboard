@@ -361,16 +361,16 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
-                          leftStile: fraction(
+                          leftStile: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                           ),
-                          rightStile: fraction(
+                          rightStile: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                           ),
-                          topRail: fraction(
+                          topRail: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                           ),
-                          bottomRail: fraction(
+                          bottomRail: changeValue ? fraction(numQty(changeValue)) : fraction(
                             formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                           ),
                           horizontalMidRailSize: 0,
