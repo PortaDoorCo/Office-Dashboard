@@ -167,8 +167,6 @@ export const itemPriceSelector = createSelector(
 
           const scoop = i.scoop.PRICE;
 
-          console.log('scoop',scoop);
-
           const price = eval(pricer.drawer_box_pricing);
 
           if (height > -1) {

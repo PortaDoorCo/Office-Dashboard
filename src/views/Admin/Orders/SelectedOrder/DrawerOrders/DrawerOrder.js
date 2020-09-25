@@ -328,7 +328,7 @@ const mapStateToProps = (state, props) => ({
   boxBottoms: state.part_list.box_bottom_thickness,
   notchDrill: state.part_list.box_notch,
   drawerFinishes: state.part_list.box_finish,
-  scoop: state.part_list.scoop,
+  scoop: state.part_list.box_scoop,
   dividers: state.part_list.dividers,
   customers: state.customers.customerDB,
   address: state.Orders.address,
