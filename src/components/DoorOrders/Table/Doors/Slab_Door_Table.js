@@ -193,18 +193,8 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                   </tr>
 
                   <tr />
-                  <tr>
-                    <td>
-                      <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
-                    </td>
-                  </tr> 
                 </tbody>
-
               </Table>
-
-
-
-
 
               <Row>
                 <Col lg='9'>
