@@ -288,11 +288,13 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                       />
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
-                    </td>
-                  </tr> 
+                  {!edit ? 
+                    <tr>
+                      <td>
+                        <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
+                      </td>
+                    </tr>  : null
+                  }
                   <Row>
                     <p className="ml-3">*Finish Stile/Rail Sizes*</p>
                   </Row>

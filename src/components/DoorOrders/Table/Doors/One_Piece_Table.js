@@ -192,11 +192,13 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                   </tr>
 
                   <tr />
-                  <tr>
-                    <td>
-                      <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
-                    </td>
-                  </tr> 
+                  {!edit ? 
+                    <tr>
+                      <td>
+                        <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
+                      </td>
+                    </tr>  : null
+                  }
                 </tbody>
 
               </Table>

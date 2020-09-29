@@ -342,11 +342,14 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 </td>
               </tr>
          
-              <tr>
-                <td>
-                  <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
-                </td>
-              </tr> 
+              {!edit ? 
+                <tr>
+                  <td>
+                    <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
+                  </td>
+                </tr>  : null
+              }
+
 
               <Row>
                 <p className="ml-3">*Finish Stile/Rail Sizes*</p>
@@ -459,16 +462,16 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     fields.push({
                       panelsH: 1,
                       panelsW: 1,
-                      leftStile: changeValue? fraction(numQty(changeValue)) : fraction(
+                      leftStile: changeValue ? fraction(numQty(changeValue)) : fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
-                      rightStile: changeValue? fraction(numQty(changeValue)) :  fraction(
+                      rightStile: changeValue ? fraction(numQty(changeValue)) :  fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
-                      topRail:  changeValue? fraction(numQty(changeValue)) : fraction(
+                      topRail:  changeValue ? fraction(numQty(changeValue)) : fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
-                      bottomRail: changeValue? fraction(numQty(changeValue)) : fraction(
+                      bottomRail: changeValue ? fraction(numQty(changeValue)) : fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
                       horizontalMidRailSize: 0,
