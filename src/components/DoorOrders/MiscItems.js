@@ -83,7 +83,7 @@ let Inputs = props => {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder={linePrices[index]} />
+                        <Input placeholder={linePrices[index]} disabled />
                       </InputGroup>
                     </td>
                   </>
@@ -95,8 +95,8 @@ let Inputs = props => {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder={linePrices[index]} />
-                      </InputGroup></td>
+                        <Input placeholder={linePrices[index]} disabled />
+                      </InputGroup></td> 
                   </>
                 }
                 <td><Button color="danger" onClick={() => fields.remove(index)}>X</Button></td>
@@ -129,7 +129,7 @@ let Inputs = props => {
             <InputGroupAddon addonType="prepend">
               <InputGroupText>$</InputGroupText>
             </InputGroupAddon>
-            <Input placeholder={miscTotal} />
+            <Input placeholder={miscTotal} disabled />
           </InputGroup>
         </Col>
       </Row>
