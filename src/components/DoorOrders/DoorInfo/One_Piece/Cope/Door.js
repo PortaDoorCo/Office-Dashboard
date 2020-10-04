@@ -172,7 +172,7 @@ class CopeDoor extends Component {
         </Row>
         <Row>
 
-          <Col xs="3">
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="edge">Profile</Label>
               <Field
@@ -188,7 +188,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
@@ -203,7 +203,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -218,20 +218,6 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
-            <FormGroup>
-              <Label htmlFor="hinges">Finish Color</Label>
-              <Field
-                name={`${part}.finish`}
-                component={renderDropdownList}
-                data={finishes}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
 
         </Row>
 

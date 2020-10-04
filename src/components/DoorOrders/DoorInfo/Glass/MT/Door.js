@@ -171,7 +171,7 @@ class MT_Door extends Component {
         <Row>
 
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg="6">
           <FormGroup>
               <Label htmlFor="design">Lites</Label>
               <Field
@@ -187,7 +187,7 @@ class MT_Door extends Component {
           </Col>
 
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg="6">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -202,20 +202,7 @@ class MT_Door extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
-            <FormGroup>
-              <Label htmlFor="hinges">Finish Color</Label>
-              <Field
-                name={`${part}.finish`}
-                component={renderDropdownList}
-                data={finishes}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
+
 
         </Row>
 

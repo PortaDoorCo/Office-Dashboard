@@ -169,7 +169,7 @@ class MT_Door extends Component {
         <Row>
 
 
-          <Col xs="4">
+          <Col xs="6">
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
@@ -185,28 +185,13 @@ class MT_Door extends Component {
           </Col>
 
 
-          <Col xs="4">
+          <Col xs="6">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
                 name={`${part}.applied_profile`}
                 component={renderDropdownListFilter}
                 data={applied_moulds}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-
-          <Col xs="4">
-            <FormGroup>
-              <Label htmlFor="hinges">Finish Color</Label>
-              <Field
-                name={`${part}.finish`}
-                component={renderDropdownList}
-                data={finishes}
                 valueField="value"
                 textField="NAME"
                 validate={required}

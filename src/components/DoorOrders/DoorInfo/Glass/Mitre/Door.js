@@ -118,7 +118,7 @@ class MiterDoor extends Component {
     return (
       <div>
         <Row>
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -133,7 +133,7 @@ class MiterDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -149,7 +149,7 @@ class MiterDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="design">Lites</Label>
               <Field
@@ -163,30 +163,14 @@ class MiterDoor extends Component {
               />
             </FormGroup>
           </Col>
-        </Row>
-        <Row>
-          <Col xs="12" md='12' lg="6">
+
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
                 name={`${part}.applied_profile`}
                 component={renderDropdownListFilter}
                 data={applied_moulds}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-
-          <Col xs="12" md='12' lg="6">
-            <FormGroup>
-              <Label htmlFor="hinges">Finish Color</Label>
-              <Field
-                name={`${part}.finish`}
-                component={renderDropdownList}
-                data={finishes}
                 valueField="value"
                 textField="NAME"
                 validate={required}
