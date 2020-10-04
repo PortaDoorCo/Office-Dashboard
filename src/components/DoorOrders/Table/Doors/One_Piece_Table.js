@@ -27,7 +27,11 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
-  const [changeValue, setChangeValue] = useState('');
+  const [changeValue, setChangeValue] = useState(null);
+  const [leftStileWidth, setLeftStileWidth] = useState(null);
+  const [rightStileWidth, setRightStileWidth] = useState(null);
+  const [topRailWidth, setTopRailWidth] = useState(null);
+  const [bottomRailWidth, setBottomRailWidth] = useState(null);
 
   useEffect(() => {
 
@@ -66,37 +70,45 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
   };
 
   const changeFraming = (index, e) => {
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].leftStile`,
-        fraction(numQty(changeValue))
-      ),
-    );
+    if(changeValue){
 
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].rightStile`,
-        fraction(numQty(changeValue))
-      ),
-    );
+      setLeftStileWidth(fraction(numQty(changeValue)))
+      setRightStileWidth(fraction(numQty(changeValue)))
+      setTopRailWidth(fraction(numQty(changeValue)))
+      setBottomRailWidth(fraction(numQty(changeValue)))
 
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].topRail`,
-        fraction(numQty(changeValue))
-      ),
-    );
-
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].bottomRail`,
-        fraction(numQty(changeValue))
-      ),
-    );
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].leftStile`,
+          fraction(numQty(changeValue))
+        ),
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].rightStile`,
+          fraction(numQty(changeValue))
+        ),
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(numQty(changeValue))
+        ),
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(numQty(changeValue))
+        ),
+      );
+    }
 
   };
 

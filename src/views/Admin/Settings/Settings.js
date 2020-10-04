@@ -43,7 +43,7 @@ const Settings = (props) => {
                       MT Door
                     </DropdownItem>
                     <DropdownItem onClick={() => setSelection('miter_door')}>
-                      Mitre Door
+                      Miter Door
                     </DropdownItem>
                     <DropdownItem onClick={() => setSelection('slab_type_door')}>
                       Slab Type Door

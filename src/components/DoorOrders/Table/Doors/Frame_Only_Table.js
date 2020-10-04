@@ -27,7 +27,11 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
-  const [changeValue, setChangeValue] = useState('');
+  const [changeValue, setChangeValue] = useState(null);
+  const [leftStileWidth, setLeftStileWidth] = useState(null);
+  const [rightStileWidth, setRightStileWidth] = useState(null);
+  const [topRailWidth, setTopRailWidth] = useState(null);
+  const [bottomRailWidth, setBottomRailWidth] = useState(null);
 
 
 
@@ -89,38 +93,45 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
   };
 
   const changeFraming = (index, e) => {
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].leftStile`,
-        fraction(numQty(changeValue))
-      ),
-    );
+    if(changeValue){
 
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].rightStile`,
-        fraction(numQty(changeValue))
-      ),
-    );
+      setLeftStileWidth(fraction(numQty(changeValue)))
+      setRightStileWidth(fraction(numQty(changeValue)))
+      setTopRailWidth(fraction(numQty(changeValue)))
+      setBottomRailWidth(fraction(numQty(changeValue)))
 
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].topRail`,
-        fraction(numQty(changeValue))
-      ),
-    );
-
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].bottomRail`,
-        fraction(numQty(changeValue))
-      ),
-    );
-
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].leftStile`,
+          fraction(numQty(changeValue))
+        ),
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].rightStile`,
+          fraction(numQty(changeValue))
+        ),
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(numQty(changeValue))
+        ),
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(numQty(changeValue))
+        ),
+      );
+    }
   };
 
 
@@ -230,7 +241,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         label="leftStile"
                         edit={edit}
                         validate={required}
-                        onChange={(e) => registerChange(index, e)}
+                        onChange={(e) => (registerChange(index, e), setLeftStileWidth(e.target.value))}
                       />
                     </td>
                     <td>
@@ -244,7 +255,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         label="rightStile"
                         edit={edit}
                         validate={required}
-                        onChange={(e) => registerChange(index, e)}
+                        onChange={(e) => (registerChange(index, e), setRightStileWidth(e.target.value))}
                       />
                     </td>
                     <td>
@@ -258,7 +269,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         label="topRail"
                         edit={edit}
                         validate={required}
-                        onChange={(e) => registerChange(index, e)}
+                        onChange={(e) => (registerChange(index, e), setTopRailWidth(e.target.value))}
                       />
                     </td>
                     <td>
@@ -272,7 +283,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         label="bottomRail"
                         edit={edit}
                         validate={required}
-                        onChange={(e) => registerChange(index, e)}
+                        onChange={(e) => (registerChange(index, e), setBottomRailWidth(e.target.value))}
                       />
                     </td>
                     <td>
@@ -402,10 +413,10 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                   onClick={(e) =>
                     fields.push({
                       openings: 1,
-                      leftStile: fraction(2.375),
-                      rightStile: fraction(2.375),
-                      topRail: fraction(2.375),
-                      bottomRail: fraction(2.375),
+                      leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(2.375),
+                      rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(2.375),
+                      topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(2.375),
+                      bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(2.375),
                       horizontalMidRailSize: 0,
                       verticalMidRailSize: 0,
                       unevenSplitInput: '0',
