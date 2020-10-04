@@ -12,10 +12,6 @@ let Inputs = props => {
 
 
   const changeMiscItem = (e, index) => {
-
-    console.log('eeeeeeeeee', e);
-    console.log('indexxxxxxx', index)
-
     props.dispatch(
       change(
         'DoorOrder',
@@ -74,7 +70,6 @@ let Inputs = props => {
                           type="text"
                           component={renderField}
                           label="price"
-
                         />
                       </InputGroup>
                     </td>
