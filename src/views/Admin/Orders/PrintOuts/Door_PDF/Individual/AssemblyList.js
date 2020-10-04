@@ -99,7 +99,6 @@ export default (data, breakdowns) => {
                 { text: `IP: ${i.profile ? i.profile.NAME : 'None'}`, style: 'fonts' },
                 { text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`, style: 'fonts' },
                 { text: `Applied Profile: ${i.applied_profile ? i.applied_profile.NAME : 'None'}`, style: 'fonts' },
-                { text: `Finish: ${i.finish? i.finish.NAME : 'None'}`, style: 'fonts' }
               ],
               alignment: 'right'
             }
