@@ -39,36 +39,6 @@ class MiscItems extends Component {
      files: []
    };
 
-   componentDidUpdate(prevProps) {
-     const { formState } = this.props;
-     if (formState && formState.misc_items) {
-       if ((formState && formState.misc_items) !== (prevProps.formState && prevProps.formState.misc_items)) {
-
-         const misc_items = formState.misc_items;
-
-         misc_items.forEach((i, index) => {
-           if(i.item){
-
-             if(i.item.Price !== 0){
-               this.props.dispatch(
-                 change(
-                   'MiscItems',
-                   `misc_items[${index}].price`,
-                   (i.qty ? (i.item.Price * parseInt(i.qty)): i.item.Price)
-                 )
-               );
-             } else {
-               return;
-             }
-
-           }
-          
-         });
-
-       }
-     }
-   }
-
    onKeyPress(event) {
      if (event.which === 13 /* Enter */) {
        event.preventDefault();
@@ -200,7 +170,7 @@ render() {
                 </Row>
                 <Row>
                   <Col>
-                    <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} prices={prices} linePrices={linePrices} miscTotal={miscTotal} />
+                    <FieldArray name="misc_items" component={Inputs} {...this.props} />
                   </Col>
                 </Row>
                 <Row>

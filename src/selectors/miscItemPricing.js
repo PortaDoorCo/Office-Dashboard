@@ -39,9 +39,9 @@ export const miscItemPriceSelector = createSelector(
     let price = 0;
     console.log(i);
     if(i.category === 'preselect'){
-      if(i.item) {
-        price = i.item.Price;
-      }else{
+      if (i.price) {
+        price = parseFloat(i.price);
+      } else {
         price = 0;
       }
     }else {

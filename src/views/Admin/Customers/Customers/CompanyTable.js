@@ -175,6 +175,11 @@ const CompanyTable = (props) => {
       name: 'City',
     },
     {
+      selector: 'PMT_TERMS',
+      name: 'Payment Terms',
+
+    },
+    {
       name: '',
       button: true,
       cell: row => <Tooltip title="View Company" placement="top">
