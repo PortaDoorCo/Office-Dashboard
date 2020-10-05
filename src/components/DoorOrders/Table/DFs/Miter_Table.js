@@ -26,7 +26,11 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
-  const [changeValue, setChangeValue] = useState('');
+  const [changeValue, setChangeValue] = useState(null);
+  const [leftStileWidth, setLeftStileWidth] = useState(null);
+  const [rightStileWidth, setRightStileWidth] = useState(null);
+  const [topRailWidth, setTopRailWidth] = useState(null);
+  const [bottomRailWidth, setBottomRailWidth] = useState(null);
 
 
 
@@ -68,37 +72,45 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
   };
 
   const changeFraming = (index, e) => {
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].leftStile`,
-        fraction(numQty(changeValue))
-      ),
-    );
+    if(changeValue){
 
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].rightStile`,
-        fraction(numQty(changeValue))
-      ),
-    );
+      setLeftStileWidth(fraction(numQty(changeValue)))
+      setRightStileWidth(fraction(numQty(changeValue)))
+      setTopRailWidth(fraction(numQty(changeValue)))
+      setBottomRailWidth(fraction(numQty(changeValue)))
 
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].topRail`,
-        fraction(numQty(changeValue))
-      ),
-    );
-
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].bottomRail`,
-        fraction(numQty(changeValue))
-      ),
-    );
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].leftStile`,
+          fraction(numQty(changeValue))
+        ),
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].rightStile`,
+          fraction(numQty(changeValue))
+        ),
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(numQty(changeValue))
+        ),
+      );
+  
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(numQty(changeValue))
+        ),
+      );
+    }
 
   };
 
@@ -204,7 +216,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         label="leftStile"
                         edit={edit}
                         validate={required}
-                        onChange={(e) => registerChange(index, e)}
+                        onChange={(e) => (registerChange(index, e), setLeftStileWidth(e.target.value))}
                       />
                     </td>
                     <td>
@@ -218,7 +230,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         label="rightStile"
                         edit={edit}
                         validate={required}
-                        onChange={(e) => registerChange(index, e)}
+                        onChange={(e) => (registerChange(index, e), setRightStileWidth(e.target.value))}
                       />
                     </td>
                     <td>
@@ -232,7 +244,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         label="topRail"
                         edit={edit}
                         validate={required}
-                        onChange={(e) => registerChange(index, e)}
+                        onChange={(e) => (registerChange(index, e), setTopRailWidth(e.target.value))}
                       />
                     </td>
                     <td>
@@ -246,7 +258,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         label="bottomRail"
                         edit={edit}
                         validate={required}
-                        onChange={(e) => registerChange(index, e)}
+                        onChange={(e) => (registerChange(index, e), setBottomRailWidth(e.target.value))}
                       />
                     </td>
                   </tr>
@@ -363,16 +375,16 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
-                          leftStile: changeValue ? fraction(numQty(changeValue)) : fraction(
+                          leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
                             formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                           ),
-                          rightStile: changeValue ? fraction(numQty(changeValue)) : fraction(
+                          rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
                             formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                           ),
-                          topRail: changeValue ? fraction(numQty(changeValue)) : fraction(
+                          topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
                             formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                           ),
-                          bottomRail: changeValue ? fraction(numQty(changeValue)) : fraction(
+                          bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
                             formState.part_list[formState.part_list.length - 1].miter_df_design.PROFILE_WIDTH
                           ),
                           horizontalMidRailSize: 0,

@@ -7,8 +7,19 @@ import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGrou
 const required = value => (value ? undefined : 'Required');
 
 let Inputs = props => {
-  const { fields, misc_items, formState, miscTotal, prices, linePrices, edit } = props;
-  console.log(prices);
+  const { fields, misc_items, formState, miscTotal, prices, linePrices, edit, change } = props;
+  const changeMiscItem = (e, index) => {
+
+    console.log('eeeeeeee', e)
+    console.log('indexxxxx', index)
+
+    props.dispatch(
+      change(
+        `misc_items[${index}].price`,
+        (e.Price)
+      )
+    );
+  }
   return (
     <div>
       <Table>
@@ -32,6 +43,7 @@ let Inputs = props => {
                       name={`${table}.item`}
                       component={renderDropdownListFilter}
                       data={misc_items}
+                      onChange={(e) => changeMiscItem(e, index)}
                       valueField="value"
                       textField="NAME"
                       edit={edit}
@@ -52,7 +64,12 @@ let Inputs = props => {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input disabled={edit} placeholder={prices[index]} />
+                        <Field
+                          name={`${table}.price`}
+                          type="text"
+                          component={renderField}
+                          label="price"
+                        />
                       </InputGroup>
                     </td>
                     <td style={{ width: '150px' }}>
@@ -60,7 +77,7 @@ let Inputs = props => {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input disabled={edit} placeholder={linePrices[index]} />
+                        <Input disabled={edit} placeholder={linePrices[index]} disabled />
                       </InputGroup>
                     </td>
                   </>
@@ -72,7 +89,7 @@ let Inputs = props => {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input disabled={edit} placeholder={linePrices[index]} />
+                        <Input disabled={edit} placeholder={linePrices[index]} disabled />
                       </InputGroup></td> 
                   </> 
                 }
