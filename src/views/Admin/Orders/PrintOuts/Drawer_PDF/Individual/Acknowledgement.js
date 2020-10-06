@@ -109,8 +109,29 @@ export default (data, breakdowns) => {
           columns: [
             {
               stack: [
-                { text: `${part.box_woodtype.NAME}`, style: 'fonts' }
+                {
+                  text: `Drawer Box ${part.box_thickness.NAME}`,
+                  style: 'fonts'
+                },
+                { text: `${part.box_woodtype.NAME}`, style: 'woodtype' }
               ]
+            },
+            {
+              stack: [
+                {
+                  text: `${part.box_bottom_thickness.NAME} ${part.box_bottom_woodtype.NAME} Bottom`,
+                  style: 'fonts'
+                },
+                {
+                  text: `${part.box_finish.NAME}`,
+                  style: 'fonts'
+                },
+                {
+                  text: `${part.box_notch.NAME === 'Yes' ? 'Notch and Drilled' : ''}`,
+                  style: 'fonts'
+                }
+              ],
+              alignment: 'right'
             }
           ]
         },
