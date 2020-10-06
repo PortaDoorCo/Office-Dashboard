@@ -96,7 +96,7 @@ class DefaultLayout extends Component {
   
       await getAllProducts(cookie);
       
-      
+      await getPricing(cookie);
 
       await loadOrders(cookie);
       await loadCustomers(cookie);
@@ -113,9 +113,9 @@ class DefaultLayout extends Component {
 
       await getDeliveries(cookie);
 
-      if (!loadedPricing) {
-        await getPricing(cookie);
-      }
+   
+  
+ 
 
 
       if (!loadedBreakdowns) {
