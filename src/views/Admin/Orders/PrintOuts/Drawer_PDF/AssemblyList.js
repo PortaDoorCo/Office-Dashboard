@@ -44,9 +44,9 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          text: `${data.job_info.poNum} - ${data.job_info.customer.Company}`,
+          text: `${data.job_info.customer.Company}`,
         },
-        { text: `Job: ${data.job_info.jobName}`, alignment: 'right' }
+        { text: `PO: ${data.job_info.poNum}`, alignment: 'right' }
       ],
       margin: [0, 10]
     },

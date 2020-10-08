@@ -64,7 +64,7 @@ export default data => {
         },
         {
           stack: [
-            { text: `Job: ${data.job_info.jobName.length>0 ? data.job_info.jobName : 'None'}`, alignment: 'right', margin: [0, 0, 0, 0] },
+            { text: `PO: ${data.job_info.poNum.length>0 ? data.job_info.poNum : 'None'}`, alignment: 'right', margin: [0, 0, 0, 0] },
             { text: `Ship To: ${data.job_info.customer.Company}`, style: 'fonts', alignment: 'right', margin: [0, 0, 0, 0] },
             { text: `${data.job_info.Address1}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
             { text: `${data.job_info.Address2}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
@@ -207,16 +207,16 @@ export default data => {
     {
       columns: [
         { text: `${data.misc_items.length > 0 ? 'Misc Items' : ''}`, style: 'totals', width: 347, decoration: 'underline' },
-        { text: `${data.misc_items.length > 0 ? 'Price Per Item' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `${data.misc_items.length > 0 ? 'Price' : ''}`, style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' }
+        { text: '', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: '', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 10, 0, 0]
     },
     {
       columns: [
         { text: data.misc_items.map(i => { return `(${i.qty ? i.qty : ''}) ${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`; }), style: 'fonts', width: 347 },
-        { text: data.misc_items.map(i => { return `$${i.item ? i.item.Price : i.pricePer ? i.pricePer : ''} \n`; }), style: 'fonts', margin: [0, 0, 0, 0] },
-        { text: data.misc_items.map(i => { return `$${i.item ? i.item.Price * parseFloat(i.qty) : i.pricePer ? parseFloat(i.pricePer) * parseFloat(i.qty) : ''} \n`; }), style: 'fonts', alignment: 'right' },
+        { text: data.misc_items.map(i => { return `$${i.price ? i.price: i.pricePer ? i.pricePer : ''} \n`; }), style: 'fonts', margin: [0, 0, 0, 0] },
+        { text: data.misc_items.map(i => { return `$${i.price ? i.price * parseFloat(i.qty) : i.pricePer ? parseFloat(i.pricePer) * parseFloat(i.qty) : ''} \n`; }), style: 'fonts', alignment: 'right' },
       ],
       margin: [0, 2, 0, 0],
     },

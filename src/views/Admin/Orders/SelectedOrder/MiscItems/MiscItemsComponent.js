@@ -17,7 +17,7 @@ import Inputs from '../../../MiscItems/components/Inputs';
 import FileUploader from '../../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
-import { submitOrder, loadOrders } from '../../../../../redux/orders/actions';
+import { submitOrder, loadOrders, updateOrder } from '../../../../../redux/orders/actions';
 
 const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MiscJobInfo'));
 
@@ -39,36 +39,6 @@ class MiscItems extends Component {
      files: []
    };
 
-   componentDidUpdate(prevProps) {
-     const { formState } = this.props;
-     if (formState && formState.misc_items) {
-       if ((formState && formState.misc_items) !== (prevProps.formState && prevProps.formState.misc_items)) {
-
-         const misc_items = formState.misc_items;
-
-         misc_items.forEach((i, index) => {
-           if(i.item){
-
-             if(i.item.Price !== 0){
-               this.props.dispatch(
-                 change(
-                   'MiscItems',
-                   `misc_items[${index}].price`,
-                   (i.qty ? (i.item.Price * parseInt(i.qty)): i.item.Price)
-                 )
-               );
-             } else {
-               return;
-             }
-
-           }
-          
-         });
-
-       }
-     }
-   }
-
    onKeyPress(event) {
      if (event.which === 13 /* Enter */) {
        event.preventDefault();
@@ -83,7 +53,7 @@ class MiscItems extends Component {
       subTotal,
       tax,
       total,
-      submitOrder,
+      updateOrder,
       user,
       miscLineItemSelector
     } = this.props;
@@ -106,16 +76,20 @@ class MiscItems extends Component {
         id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
-        sale: values.job_info.customer.sale.id,
+        sale: values.job_info.customer.sale,
         Taxable: values.job_info.customer.Taxable
       },
       ShippingMethod: values.job_info.ShippingMethod,
-      PaymentMethod: values.job_info.PaymentMethod
+      PaymentMethod: values.job_info.PaymentMethod,
+      Rush: values.job_info.Rush,
+      Sample: values.job_info.Sample,
     };
 
     const order = {
       status: values.job_info.status,
       job_info: jobInfo,
+      Rush: values.job_info.Rush,
+      Sample: values.job_info.Sample,
       companyprofile: values.job_info.customer.id,
       linePrice: miscLineItemSelector,
       subTotals: subTotal,
@@ -148,11 +122,11 @@ class MiscItems extends Component {
       Taxable: values.Taxable
     };
 
+    const orderId = values.id;
+
     if (values.misc_items.length > 0) {
-      await submitOrder(order, cookie);
-      this.setState({ updateSubmit: !this.state.updateSubmit });
-      reset();
-      window.scrollTo(0, 0);
+      await updateOrder(orderId, order, cookie);
+      await this.props.editable();
     } else {
       alert('Please Select a Miscellaneous Item');
       return;
@@ -309,6 +283,7 @@ const mapDispatchToProps = dispatch =>
     {
       submitOrder,
       loadOrders,
+      updateOrder
     },
     dispatch
   );

@@ -7,8 +7,17 @@ import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGrou
 const required = value => (value ? undefined : 'Required');
 
 let Inputs = props => {
-  const { fields, misc_items, formState, miscTotal, prices, linePrices } = props;
-  console.log(prices);
+  const { fields, misc_items, formState, miscTotal, prices, linePrices, edit } = props;
+  
+  const changeMiscItem = (e, index) => {
+    props.dispatch(
+      change(
+        `misc_items[${index}].price`,
+        (e.Price)
+      )
+    );
+  }
+
   return (
     <div>
       <Table>
@@ -32,6 +41,7 @@ let Inputs = props => {
                       name={`${table}.item`}
                       component={renderDropdownListFilter}
                       data={misc_items}
+                      onChange={(e) => changeMiscItem(e, index)}
                       valueField="value"
                       textField="NAME"
                     />  : 

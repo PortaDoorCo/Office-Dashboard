@@ -16,7 +16,7 @@ momentLocaliser(moment);
 
 
 
-const status = ['Quote', 'Ordered', 'Shipped', 'RUSH'];
+const status = ['Quote', 'Ordered'];
 
 const required = value => value ? undefined : 'Required';
 
@@ -170,18 +170,7 @@ class JobInfo extends Component {
         </Row>
 
         <Row>
-          <Col xs="3">
-            <FormGroup>
-              <Label htmlFor="jobName">Job Name</Label>
-              <Field
-                name='jobName'
-                type="text"
-                component={renderField}
-                edit={edit}
-                label="JobName" />
-            </FormGroup>
-          </Col>
-          <Col xs="5">
+        <Col xs="7">
             <FormGroup>
               <Label htmlFor="companyName">Customers</Label>
               <Field
@@ -195,6 +184,18 @@ class JobInfo extends Component {
 
             </FormGroup>
           </Col>
+          <Col xs="3">
+            <FormGroup>
+              <Label htmlFor="poNum">PO #</Label>
+              <Field
+                name="poNum"
+                component={renderField}
+                valueField="value"
+                textField="name"
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
           <Col xs="2">
             <FormGroup>
               <Label htmlFor="status">Status</Label>
@@ -205,18 +206,6 @@ class JobInfo extends Component {
                 valueField="value"
                 edit={edit}
                 textField="name"
-              />
-            </FormGroup>
-          </Col>
-          <Col xs="2">
-            <FormGroup>
-              <Label htmlFor="poNum">PO #</Label>
-              <Field
-                name="poNum"
-                component={renderField}
-                valueField="value"
-                textField="name"
-                edit={edit}
               />
             </FormGroup>
           </Col>
