@@ -207,7 +207,7 @@ const OrderTable = (props) => {
 
         <Row>
           <Col style={{ textAlign: 'center', color: 'red' }}>
-            {row.Rush && row.Sample ? 'Sample / Rush' : row.Rush ? "Rush" : row.Sample ? 'Sample' : ''}
+            {row.job_info.Rush && row.job_info.Sample ? 'Sample / Rush' : row.job_info.Rush ? "Rush" : row.job_info.Sample ? 'Sample' : ''}
           </Col>
         </Row>
 
