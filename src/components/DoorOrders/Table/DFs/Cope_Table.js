@@ -4,7 +4,9 @@ import {
   Input,
   Row,
   Col,
-  Button
+  Button,
+  FormGroup,
+  Label
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change } from 'redux-form';
@@ -78,7 +80,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
         )
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -111,7 +113,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   };
 
   const changeFraming = (index, e) => {
-    if(changeValue){
+    if (changeValue) {
 
       setLeftStileWidth(fraction(numQty(changeValue)))
       setRightStileWidth(fraction(numQty(changeValue)))
@@ -125,7 +127,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(numQty(changeValue))
         ),
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -133,7 +135,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(numQty(changeValue))
         ),
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -141,7 +143,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(numQty(changeValue))
         ),
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -161,17 +163,25 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         <Fragment>
           {fields.map((table, index) => (
             <Fragment key={index}>
+              <hr />
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
+                    <Field
+                      name={`${table}.item`}
+                      type="text"
+                      component={renderFieldDisabled}
+                      label="item"
+                      edit={true}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs='10' />
+              </Row>
 
 
               <Table>
-
-                <Field
-                  name={`${table}.item`}
-                  type="text"
-                  component={renderFieldDisabled}
-                  label="item"
-                />
-
                 <thead>
                   <tr>
                     <th>Qty</th>
@@ -302,12 +312,12 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       />
                     </td>
                   </tr>
-                  {!edit ? 
+                  {!edit ?
                     <tr>
                       <td>
                         <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
                       </td>
-                    </tr>  : null
+                    </tr> : null
                   }
                   <Row>
                     <p className="ml-3">*Finish Stile/Rail Sizes*</p>
@@ -457,8 +467,8 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               {subTotal[i] ? (
                 <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                <RenderPriceHolder input={'0.00'} edit={true} />
-              )}
+                  <RenderPriceHolder input={'0.00'} edit={true} />
+                )}
             </Col>
           </Row>
         </Fragment>

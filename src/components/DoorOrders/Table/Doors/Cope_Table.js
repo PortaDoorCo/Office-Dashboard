@@ -4,7 +4,9 @@ import {
   Input,
   Row,
   Col,
-  Button
+  Button,
+  FormGroup,
+  Label
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change } from 'redux-form';
@@ -69,8 +71,8 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   const twoHigh = (index, e) => {
     const value = e.target.value;
     const part = formState.part_list[i];
-    
-    if(value >1) {
+
+    if (value > 1) {
       dispatch(
         change(
           'DoorOrder',
@@ -87,14 +89,14 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         ),
       );
     }
-    
+
   };
 
   const twoWide = (index, e) => {
     const part = formState.part_list[i];
     const value = e.target.value;
 
-    if(value > 1){
+    if (value > 1) {
       dispatch(
         change(
           'DoorOrder',
@@ -119,7 +121,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   };
 
   const changeFraming = (index, e) => {
-    if(changeValue){
+    if (changeValue) {
 
       setLeftStileWidth(fraction(numQty(changeValue)))
       setRightStileWidth(fraction(numQty(changeValue)))
@@ -133,7 +135,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(numQty(changeValue))
         ),
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -141,7 +143,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(numQty(changeValue))
         ),
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -149,7 +151,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           fraction(numQty(changeValue))
         ),
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -165,16 +167,25 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
     <div>
 
       {fields.map((table, index) => (
+
         <Fragment key={index}>
+          <hr />
+          <Row>
+            <Col>
+            <FormGroup>
+              <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
+              <Field
+                name={`${table}.item`}
+                type="text"
+                component={renderFieldDisabled}
+                label="item"
+                edit={true}
+              />
+            </FormGroup>
+            </Col>
+            <Col xs='10' />
+          </Row>
           <Table>
-
-            <Field
-              name={`${table}.item`}
-              type="text"
-              component={renderFieldDisabled}
-              label="item"
-            />
-
             <thead>
               <tr>
                 <th>Qty</th>
@@ -352,13 +363,13 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                   />
                 </td>
               </tr>
-         
-              {!edit ? 
+
+              {!edit ?
                 <tr>
                   <td>
                     <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
                   </td>
-                </tr>  : null
+                </tr> : null
               }
 
 
@@ -473,13 +484,13 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     fields.push({
                       panelsH: 1,
                       panelsW: 1,
-                      leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) :  fraction(
+                      leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
-                      rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) :  fraction(
+                      rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
-                      topRail:  topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
+                      topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
                         formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
                       ),
                       bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
@@ -512,8 +523,8 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           {subTotal[i] ? (
             <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
           ) : (
-            <RenderPriceHolder input={'0.00'} edit={true} />
-          )}
+              <RenderPriceHolder input={'0.00'} edit={true} />
+            )}
         </Col>
       </Row>
 

@@ -4,7 +4,9 @@ import {
   Input,
   Row,
   Col,
-  Button
+  Button,
+  FormGroup,
+  Label
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change } from 'redux-form';
@@ -67,7 +69,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
 
   const twoHigh = (index, e) => {
     const value = e.target.value;
-    if(value > 1){
+    if (value > 1) {
       dispatch(
         change(
           'DoorOrder',
@@ -93,7 +95,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
   };
 
   const changeFraming = (index, e) => {
-    if(changeValue){
+    if (changeValue) {
 
       setLeftStileWidth(fraction(numQty(changeValue)))
       setRightStileWidth(fraction(numQty(changeValue)))
@@ -107,7 +109,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
           fraction(numQty(changeValue))
         ),
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -115,7 +117,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
           fraction(numQty(changeValue))
         ),
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -123,7 +125,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
           fraction(numQty(changeValue))
         ),
       );
-  
+
       dispatch(
         change(
           'DoorOrder',
@@ -141,17 +143,25 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
         <Fragment>
           {fields.map((table, index) => (
             <Fragment key={index}>
+              <hr />
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
+                    <Field
+                      name={`${table}.item`}
+                      type="text"
+                      component={renderFieldDisabled}
+                      label="item"
+                      edit={true}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs='10' />
+              </Row>
 
 
               <Table>
-
-                <Field
-                  name={`${table}.item`}
-                  type="text"
-                  component={renderFieldDisabled}
-                  label="item"
-                />
-
                 <thead>
                   <tr>
                     <th>Qty</th>
@@ -205,7 +215,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                         component={renderField}
                         label="horizontalMidRail"
                         edit={edit}
-                        onChange={(e) => twoHigh(index,e)}
+                        onChange={(e) => twoHigh(index, e)}
                       />
                     </td>
                     <td>
@@ -299,12 +309,12 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                       />
                     </td>
                   </tr>
-                  {!edit ? 
+                  {!edit ?
                     <tr>
                       <td>
                         <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
                       </td>
-                    </tr>  : null
+                    </tr> : null
                   }
                   <Row>
                     <p className="ml-3">*Finish Stile/Rail Sizes*</p>
@@ -443,8 +453,8 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
               {subTotal[i] ? (
                 <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                <RenderPriceHolder input={'0.00'} edit={true} />
-              )}
+                  <RenderPriceHolder input={'0.00'} edit={true} />
+                )}
             </Col>
           </Row>
         </Fragment>
@@ -452,4 +462,4 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
   );
 };
 
-export default connect() (Frame_Only_Table);
+export default connect()(Frame_Only_Table);
