@@ -299,7 +299,7 @@ class DoorFilter extends Component {
           </Fragment>
         );
       }
-      if (formState.part_list[index].orderType.value === 'Frame_Only') {
+      else {
         return (
           <Fragment>
             <Row>
@@ -336,30 +336,7 @@ class DoorFilter extends Component {
             </Row>
           </Fragment>
         );
-      } else {
-        return (
-          <Fragment>
-            <Row>
-              <Col xs="4">
-                <FormGroup>
-                  <Label for="orderType">Order Type</Label>
-                  <Field
-                    name={`${part}.orderType`}
-                    component={renderDropdownList}
-                    data={orderType}
-                    onChange={() => this.onChangeType(index)}
-                    valueField="value"
-                    textField="name"
-                    edit={edit}
-                    validate={required}
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-          </Fragment>
-        );
       }
-
     } else {
       return null;
     }
