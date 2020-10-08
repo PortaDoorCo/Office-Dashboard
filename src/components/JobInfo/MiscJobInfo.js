@@ -9,7 +9,7 @@ import { Field, change, getFormValues } from 'redux-form';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment-business-days';
 import momentLocaliser from 'react-widgets-moment';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderField, renderCheckboxToggle } from '../RenderInputs/renderInputs';
 import { connect } from 'react-redux';
 
 momentLocaliser(moment);
@@ -104,195 +104,218 @@ class JobInfo extends Component {
   }
 
 
-handleChange = (e) => {
-  this.setState({ [e.target.name]: e.target.value });
-}
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
 
-render() {
-  const { customers, edit, shippingMethods, formState } = this.props;
-  const dateDifference = moment(new Date()).businessDiff(moment(formState && formState.job_info && formState.job_info.DueDate));
+  render() {
+    const { customers, edit, shippingMethods, formState } = this.props;
+    const dateDifference = moment(new Date()).businessDiff(moment(formState && formState.job_info && formState.job_info.DueDate));
 
-  return (
+    return (
 
-    <div>
-      <Row className="mb-3">
-        <Col>
-          <FormGroup>
-            <Label htmlFor="dueDate">Due Date</Label>
+      <div>
+        <Row>
+          <Col lg='10' />
+          <Col lg='1'>
+            <FormGroup>
+              <Label htmlFor="dueDate">Sample</Label>
+              <Field
+                name="Sample"
+                component={renderCheckboxToggle}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
+          <Col lg='1'>
+            <FormGroup>
+              <Label htmlFor="dueDate">Rush</Label>
+              <Field
+                name="Rush"
+                component={renderCheckboxToggle}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col>
+            <FormGroup>
+              <Label htmlFor="dueDate">Due Date</Label>
 
-            <Field
-              name="DueDate"
-              showTime={false}
-              component={renderDateTimePicker}
-              edit={edit}
-            />
-            <p>{dateDifference} Business Day Lead Time</p>
-          </FormGroup>
-        </Col>
-        <Col xs="5" />
-        <Col xs='3'>
-          <FormGroup>
-            <Label htmlFor="shipping_method">Shipping Method</Label>
-            <Field
-              name="ShippingMethod"
-              component={renderDropdownList}
-              data={shippingMethods}
-              valueField="value"
-              edit={edit}
-              textField="NAME" />
-          </FormGroup>
-        </Col>
-      </Row>
+              <Field
+                name="DueDate"
+                showTime={false}
+                component={renderDateTimePicker}
+                edit={edit}
+              />
+              <p>{dateDifference} Business Day Lead Time</p>
+            </FormGroup>
+          </Col>
+          <Col xs="5" />
+          <Col xs='3'>
+            <FormGroup>
+              <Label htmlFor="shipping_method">Shipping Method</Label>
+              <Field
+                name="ShippingMethod"
+                component={renderDropdownList}
+                data={shippingMethods}
+                valueField="value"
+                edit={edit}
+                textField="NAME" />
+            </FormGroup>
+          </Col>
+        </Row>
 
-      <Row>
-        <Col xs="3">
-          <FormGroup>
-            <Label htmlFor="jobName">Job Name</Label>
-            <Field
-              name='jobName'
-              type="text"
-              component={renderField}
-              edit={edit}
-              label="JobName" />
-          </FormGroup>
-        </Col>
-        <Col xs="5">
-          <FormGroup>
-            <Label htmlFor="companyName">Customers</Label>
-            <Field
-              name="customer"
-              component={renderDropdownListFilter}
-              data={customers}
-              valueField="value"
-              textField="Company"
-              edit={edit}
-              validate={required} />
+        <Row>
+          <Col xs="3">
+            <FormGroup>
+              <Label htmlFor="jobName">Job Name</Label>
+              <Field
+                name='jobName'
+                type="text"
+                component={renderField}
+                edit={edit}
+                label="JobName" />
+            </FormGroup>
+          </Col>
+          <Col xs="5">
+            <FormGroup>
+              <Label htmlFor="companyName">Customers</Label>
+              <Field
+                name="customer"
+                component={renderDropdownListFilter}
+                data={customers}
+                valueField="value"
+                textField="Company"
+                edit={edit}
+                validate={required} />
 
-          </FormGroup>
-        </Col>
-        <Col xs="2">
-          <FormGroup>
-            <Label htmlFor="status">Status</Label>
-            <Field
-              name="status"
-              component={renderDropdownList}
-              data={status}
-              valueField="value"
-              edit={edit}
-              textField="name"
-            />
-          </FormGroup>
-        </Col>
-        <Col xs="2">
-          <FormGroup>
-            <Label htmlFor="poNum">PO #</Label>
-            <Field
-              name="poNum"
-              component={renderField}
-              valueField="value"
-              textField="name"
-              edit={edit}
-            />
-          </FormGroup>
-        </Col>
-      </Row>
+            </FormGroup>
+          </Col>
+          <Col xs="2">
+            <FormGroup>
+              <Label htmlFor="status">Status</Label>
+              <Field
+                name="status"
+                component={renderDropdownList}
+                data={status}
+                valueField="value"
+                edit={edit}
+                textField="name"
+              />
+            </FormGroup>
+          </Col>
+          <Col xs="2">
+            <FormGroup>
+              <Label htmlFor="poNum">PO #</Label>
+              <Field
+                name="poNum"
+                component={renderField}
+                valueField="value"
+                textField="name"
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
 
-      <Row>
-        <Col xs="12">
-          <h6>Shipping Address</h6>
-        </Col>
-      </Row>
-
-
-
-
-      <Row>
-        <Col xs="6">
-          <FormGroup>
-            <Label htmlFor="address1">Address 1</Label>
-            <Field
-              name='Address1'
-              type="text"
-              component={renderField}
-              edit={edit}
-              label="Address1" />
-          </FormGroup>
-        </Col>
-
-
-
-
-
-        <Col xs="6">
-          <FormGroup>
-            <Label htmlFor="address2">Address 2</Label>
-            <Field
-              name='Address2'
-              type="text"
-              component={renderField}
-              edit={edit}
-              label="Address2" />
-          </FormGroup>
-        </Col>
-
-      </Row>
+        <Row>
+          <Col xs="12">
+            <h6>Shipping Address</h6>
+          </Col>
+        </Row>
 
 
 
-      <Row>
-        <Col xs="3">
-          <FormGroup>
-            <Label htmlFor="city">City</Label>
-            <Field
-              name='City'
-              type="text"
-              component={renderField}
-              edit={edit}
-              label="City" />
-          </FormGroup>
-        </Col>
-        <Col xs="3">
-          <FormGroup>
-            <Label htmlFor="state">State</Label>
-            <Field
-              name='State'
-              type="text"
-              component={renderField}
-              edit={edit}
-              label="State" />
-          </FormGroup>
-        </Col>
-        <Col xs="3">
-          <FormGroup>
-            <Label htmlFor="zipcode">Zip Code</Label>
-            <Field
-              name='Zip'
-              type="text"
-              component={renderField}
-              edit={edit}
-              label="Zip" />
-          </FormGroup>
-        </Col>
-        <Col xs="3">
-          <FormGroup>
-            <Label htmlFor="phone">Phone Number</Label>
-            <Field
-              name='Phone'
-              type="text"
-              component={renderField}
-              edit={edit}
-              label="Phone" />
-          </FormGroup>
-        </Col>
-      </Row>
 
-      <hr />
+        <Row>
+          <Col xs="6">
+            <FormGroup>
+              <Label htmlFor="address1">Address 1</Label>
+              <Field
+                name='Address1'
+                type="text"
+                component={renderField}
+                edit={edit}
+                label="Address1" />
+            </FormGroup>
+          </Col>
 
 
-    </div>
-  );
-}
+
+
+
+          <Col xs="6">
+            <FormGroup>
+              <Label htmlFor="address2">Address 2</Label>
+              <Field
+                name='Address2'
+                type="text"
+                component={renderField}
+                edit={edit}
+                label="Address2" />
+            </FormGroup>
+          </Col>
+
+        </Row>
+
+
+
+        <Row>
+          <Col xs="3">
+            <FormGroup>
+              <Label htmlFor="city">City</Label>
+              <Field
+                name='City'
+                type="text"
+                component={renderField}
+                edit={edit}
+                label="City" />
+            </FormGroup>
+          </Col>
+          <Col xs="3">
+            <FormGroup>
+              <Label htmlFor="state">State</Label>
+              <Field
+                name='State'
+                type="text"
+                component={renderField}
+                edit={edit}
+                label="State" />
+            </FormGroup>
+          </Col>
+          <Col xs="3">
+            <FormGroup>
+              <Label htmlFor="zipcode">Zip Code</Label>
+              <Field
+                name='Zip'
+                type="text"
+                component={renderField}
+                edit={edit}
+                label="Zip" />
+            </FormGroup>
+          </Col>
+          <Col xs="3">
+            <FormGroup>
+              <Label htmlFor="phone">Phone Number</Label>
+              <Field
+                name='Phone'
+                type="text"
+                component={renderField}
+                edit={edit}
+                label="Phone" />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <hr />
+
+
+      </div>
+    );
+  }
 }
 
 

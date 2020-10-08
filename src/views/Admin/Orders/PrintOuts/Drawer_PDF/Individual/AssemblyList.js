@@ -31,6 +31,7 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
+            { text: data.job_info.Rush ? 'RUSH' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             { text: `Est. Ship: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
           ]

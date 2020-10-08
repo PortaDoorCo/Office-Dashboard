@@ -42,7 +42,12 @@ export default (data, breakdowns) => {
           text: `${data.job_info.poNum} - ${data.job_info.customer.Company}`,
           margin: [0, 10]
         },
-        { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 0, 80, 0] }
+        {
+          stack: [
+            { text: data.job_info.Rush ? 'RUSH' : '', alignment: 'right', bold: true },
+            { text: `Job: ${data.job_info.jobName}`, alignment: 'right', }
+          ]
+        },
       ]
     },
     {
