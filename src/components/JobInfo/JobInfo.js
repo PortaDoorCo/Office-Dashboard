@@ -203,6 +203,7 @@ class JobInfo extends Component {
                 valueField="value"
                 textField="name"
                 edit={edit}
+                validate={required}
               />
             </FormGroup>
           </Col>

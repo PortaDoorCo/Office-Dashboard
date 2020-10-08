@@ -18,6 +18,14 @@ export default (data, breakdowns) => {
 
   const balanceDue = data.total - balancePaid;
 
+  const miscTotal = data.misc_items.map(i => {
+    if(i.category === 'preselect'){
+      return parseFloat(i.qty) * parseFloat(i.price)
+    } else {
+      return parseFloat(i.qty) * parseFloat(i.pricePer)
+    }
+  })
+
   return [
     {
       columns: [
@@ -221,6 +229,14 @@ export default (data, breakdowns) => {
         { text: data.misc_items.map(i => { return `$${i.price ? i.price * parseFloat(i.qty) : i.pricePer ? parseFloat(i.pricePer) * parseFloat(i.qty) : ''} \n`; }), style: 'fonts', alignment: 'right' },
       ],
       margin: [0, 2, 0, 0],
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 347, decoration: 'underline' },
+        { text: miscTotal.length > 0 ? 'Style SubTotal' : '', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: miscTotal.length > 0 ? '$' + miscTotal.reduce((acc, item) => acc + item, 0) : '', style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+      ],
+      margin: [0, 10, 0, 0]
     },
     {
       columns: [
