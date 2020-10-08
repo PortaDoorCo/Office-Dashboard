@@ -9,7 +9,6 @@ export default (data, breakdowns) => {
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
-    watermark: { text: data.job_info.Sample ? 'SAMPLE' : '', opacity: 0.1, bold: true },
     content: [
       QC_Checklist(data, breakdowns),
     ],
