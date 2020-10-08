@@ -223,7 +223,7 @@ class MT_Door extends Component {
         </Row>
 
         <div>
-          <CardSubtitle className="mt-4 mb-1">Dimensions</CardSubtitle>
+          <CardSubtitle className="mt-4 mb-1"><strong>Dimensions</strong></CardSubtitle>
           <div className="mt-1" />
           <FieldArray
             name={`${part}.dimensions`}

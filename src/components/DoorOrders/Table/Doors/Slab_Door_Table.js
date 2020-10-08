@@ -4,7 +4,9 @@ import {
   Input,
   Row,
   Col,
-  Button
+  Button,
+  FormGroup,
+  Label
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change } from 'redux-form';
@@ -106,17 +108,25 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
         <Fragment>
           {fields.map((table, index) => (
             <Fragment key={index}>
+              <hr />
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
+                    <Field
+                      name={`${table}.item`}
+                      type="text"
+                      component={renderFieldDisabled}
+                      label="item"
+                      edit={true}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs='10' />
+              </Row>
 
 
               <Table>
-
-                <Field
-                  name={`${table}.item`}
-                  type="text"
-                  component={renderFieldDisabled}
-                  label="item"
-                />
-
                 <thead>
                   <tr>
                     <th>Qty</th>
@@ -307,8 +317,8 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
               {subTotal[i] ? (
                 <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                <RenderPriceHolder input={'0.00'} edit={true} />
-              )}
+                  <RenderPriceHolder input={'0.00'} edit={true} />
+                )}
             </Col>
           </Row>
         </Fragment>

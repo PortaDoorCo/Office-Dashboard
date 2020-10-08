@@ -4,7 +4,9 @@ import {
   Input,
   Row,
   Col,
-  Button
+  Button,
+  FormGroup,
+  Label
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -27,14 +29,24 @@ class OrderTable extends Component {
           <Fragment>
             {fields.map((table, index) =>
               < Fragment key={index} >
+                <hr />
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
+                      <Field
+                        name={`${table}.item`}
+                        type="text"
+                        component={renderFieldDisabled}
+                        label="item"
+                        edit={true}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col xs='10' />
+                </Row>
+
                 <Table>
-                  <Field
-                    name={`${table}.item`}
-                    type="text"
-                    component={renderFieldDisabled}
-                    label="item"
-                    edit={edit}
-                  />
                   <thead>
                     <tr>
                       <th>Qty</th>
@@ -187,8 +199,8 @@ class OrderTable extends Component {
                 {subTotal[i] ? (
                   <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
                 ) : (
-                  <RenderPriceHolder input={'0.00'} edit={true} />
-                )}
+                    <RenderPriceHolder input={'0.00'} edit={true} />
+                  )}
               </Col>
             </Row>
           </Fragment >
