@@ -22,8 +22,16 @@ export default data => {
   const balanceDue = data.total - balancePaid;
 
 
+  const miscTotal = data.misc_items.map(i => {
+    if(i.category === 'preselect'){
+      return parseFloat(i.qty) * parseFloat(i.price)
+    } else {
+      return parseFloat(i.qty) * parseFloat(i.pricePer)
+    }
+  })
 
-
+  console.log('miscTotal', miscTotal)
+  
   return [
     {
       columns: [
@@ -225,8 +233,8 @@ export default data => {
     {
       columns: [
         { text: '', style: 'totals', width: 347, decoration: 'underline' },
-        { text: 'Style Sub-Total', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(data.total).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+        { text: miscTotal.length > 0 ? 'Style SubTotal' : '', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: miscTotal.length > 0 ? '$' + miscTotal.reduce((acc, item) => acc + item, 0) : '', style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 10, 0, 0]
     },
