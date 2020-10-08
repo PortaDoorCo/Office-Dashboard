@@ -9,7 +9,7 @@ import { Field, change, getFormValues } from 'redux-form';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment-business-days';
 import momentLocaliser from 'react-widgets-moment';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
+import { renderCheckboxToggle, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
 import { connect } from 'react-redux';
 
 momentLocaliser(moment);
@@ -23,9 +23,9 @@ const required = value => value ? undefined : 'Required';
 
 
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
-  
+
   <div>
-    {console.log('valueeeeeee',value)}
+    {console.log('valueeeeeee', value)}
     <DateTimePicker
       onChange={onChange}
       time={showTime}
@@ -127,11 +127,34 @@ class JobInfo extends Component {
     return (
 
       <div>
+        <Row>
+          <Col lg='10' />
+          <Col lg='1'>
+            <FormGroup>
+              <Label htmlFor="dueDate">Sample</Label>
+              <Field
+                name="Sample"
+                component={renderCheckboxToggle}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
+          <Col lg='1'>
+            <FormGroup>
+              <Label htmlFor="dueDate">Rush</Label>
+              <Field
+                name="Rush"
+                component={renderCheckboxToggle}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+
         <Row className="mb-3">
           <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
-
               <Field
                 name="DueDate"
                 showTime={false}

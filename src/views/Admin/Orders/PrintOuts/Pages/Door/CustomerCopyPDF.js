@@ -17,6 +17,7 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
+    watermark: { text: data.job_info.Sample ? 'SAMPLE' : '', opacity: 0.1, bold: true },
     content: [
       Acknowledgement(data, breakdowns),
       Invoice(data, breakdowns),

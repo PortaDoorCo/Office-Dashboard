@@ -9,6 +9,7 @@ export default (data, breakdowns) => {
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
+    watermark: { text: data.job_info.Sample ? 'SAMPLE' : '', opacity: 0.1, bold: true },
     content: [
       Acknowledgement(data, breakdowns),
     ],
@@ -23,6 +24,11 @@ export default (data, breakdowns) => {
       fontsBold: {
         fontSize: 12,
         bold: true
+      },
+      rushFonts: {
+        fontSize: 14,
+        bold: true,
+
       },
       totals: {
         fontSize: 8,

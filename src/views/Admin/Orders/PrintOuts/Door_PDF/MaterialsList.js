@@ -23,6 +23,7 @@ export default (data,breakdowns) => {
         },
         {
           stack: [
+            { text: data.job_info.Rush ? 'RUSH' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
           ]
@@ -35,7 +36,11 @@ export default (data,breakdowns) => {
           text: `${data.job_info.poNum} - ${data.job_info.customer.Company}`,
           margin: [0, 10]
         },
-        { text: `Job: ${data.job_info.jobName}`, alignment: 'right', margin: [0, 0, 80, 0] }
+        {
+          stack: [
+            { text: `Job: ${data.job_info.jobName}`, alignment: 'right', }
+          ]
+        },
       ]
     },
     {

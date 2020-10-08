@@ -9,7 +9,7 @@ import Inbox from '@material-ui/icons/Inbox';
 import { Select } from 'antd';
 import { updateStatus, loadOrders, setSelectedOrder } from '../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import {Button} from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 import styled from 'styled-components';
 
 const TextField = styled.input`
@@ -125,7 +125,7 @@ const OrderTable = (props) => {
 
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
-      if(filterText.length > 0) {
+      if (filterText.length > 0) {
         return (
           (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info.poNum.toLowerCase().includes(filterText.toLowerCase()))
         );
@@ -179,7 +179,7 @@ const OrderTable = (props) => {
       name: 'Order Type',
       selector: 'orderType',
       sortable: true,
- 
+
     },
     {
       name: 'Date Ordered',
@@ -192,17 +192,32 @@ const OrderTable = (props) => {
     {
       name: 'Status',
       grow: 1,
-      cell: row => <Select defaultValue={row.status} style={{ width: '100%' }} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
-        {status.map((i,index) => (
-          <Option key={index} value={i.value}>{i.value}</Option>
-        ))}
-      </Select>
+      cell: row => <div>
+
+
+        <Row>
+          <Col>
+            <Select defaultValue={row.status} style={{ width: '100%' }} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
+              {status.map((i, index) => (
+                <Option key={index} value={i.value}>{i.value}</Option>
+              ))}
+            </Select>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col style={{ textAlign: 'center', color: 'red' }}>
+            {row.Rush && row.Sample ? 'Sample / Rush' : row.Rush ? "Rush" : row.Sample ? 'Sample' : ''}
+          </Col>
+        </Row>
+
+      </div>
     },
     {
       name: 'Submitted By',
       selector: 'user.FirstName',
       sortable: true,
-            
+
     },
 
     {
