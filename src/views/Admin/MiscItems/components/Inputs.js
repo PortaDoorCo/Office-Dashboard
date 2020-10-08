@@ -2,19 +2,19 @@ import React, { Component, Suspense } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change, FormSection, } from 'redux-form';
 import { renderField, renderDropdownListFilter, renderPrice, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
 import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 
 const required = value => (value ? undefined : 'Required');
 
 let Inputs = props => {
-  const { fields, misc_items, formState, miscTotal, prices, linePrices, edit, change } = props;
+  const { fields, misc_items, formState, miscTotal, prices, linePrices, edit } = props;
+
   const changeMiscItem = (e, index) => {
-
-    console.log('eeeeeeee', e)
-    console.log('indexxxxx', index)
-
     props.dispatch(
       change(
+        'MiscItems',
         `misc_items[${index}].price`,
         (e.Price)
       )
@@ -69,6 +69,7 @@ let Inputs = props => {
                           type="text"
                           component={renderField}
                           label="price"
+                          edit={edit}
                         />
                       </InputGroup>
                     </td>
@@ -132,4 +133,17 @@ let Inputs = props => {
   );
 };
 
-export default Inputs;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      dispatch
+    },
+    dispatch
+  );
+
+
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Inputs);

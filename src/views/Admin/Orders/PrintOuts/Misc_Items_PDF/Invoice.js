@@ -87,7 +87,7 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
-            { text: `Job: ${data.job_info.jobName.length>0 ? data.job_info.jobName : 'None'}`, alignment: 'right', margin: [0, 0, 0, 0] },
+            { text: `PO: ${data.job_info.poNum.length>0 ? data.job_info.poNum : 'None'}`, alignment: 'right', margin: [0, 0, 0, 0] },
             { text: `Ship To: ${data.job_info.customer.Company}`, style: 'fonts', alignment: 'right', margin: [0, 0, 0, 0] },
             { text: `${data.job_info.Address1}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
             { text: `${data.job_info.Address2}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },

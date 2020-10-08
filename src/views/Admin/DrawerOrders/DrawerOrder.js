@@ -121,12 +121,16 @@ class DoorOrders extends Component {
         sale: values.job_info.customer.sale.id
       },
       ShippingMethod: values.job_info.ShippingMethod,
-      PaymentMethod: values.job_info.PaymentMethod
+      PaymentMethod: values.job_info.PaymentMethod,
+      Rush: values.job_info.Rush,
+      Sample: values.job_info.Sample,
     };
 
     const order = {
       part_list: values.part_list,
       job_info: jobInfo,
+      Rush: values.job_info.Rush,
+      Sample: values.job_info.Sample,
       status: values.job_info.status,
       companyprofile: values.job_info.customer.id,
       misc_items: values.misc_items,

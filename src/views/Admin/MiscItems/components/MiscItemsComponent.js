@@ -80,12 +80,16 @@ class MiscItems extends Component {
         Taxable: values.job_info.customer.Taxable
       },
       ShippingMethod: values.job_info.ShippingMethod,
-      PaymentMethod: values.job_info.PaymentMethod
+      PaymentMethod: values.job_info.PaymentMethod,
+      Rush: values.job_info.Rush,
+      Sample: values.job_info.Sample,
     };
 
     const order = {
       status: values.job_info.status,
       job_info: jobInfo,
+      Rush: values.job_info.Rush,
+      Sample: values.job_info.Sample,
       companyprofile: values.job_info.customer.id,
       linePrice: miscLineItemSelector,
       subTotals: subTotal,
@@ -143,7 +147,7 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { misc_items, formState, handleSubmit, subTotal, miscTotal, miscLineItemSelector, customers, tax, total, prices, linePrices } = this.props;
+  const { misc_items, formState, handleSubmit, subTotal, miscTotal, miscLineItemSelector, customers, tax, total, prices, linePrices, dispatch } = this.props;
 
   return (
     <div>
