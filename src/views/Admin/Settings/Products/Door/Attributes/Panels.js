@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
-
+import { AppSwitch } from '@coreui/react';
 
 const cookie = Cookies.get('jwt');
 
@@ -27,6 +27,8 @@ const Panels = (props) => {
     NAME: '',
     UPCHARGE: '',
     PANEL_FACTOR: '',
+    Thickness: '',
+    Flat: false,
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false);
@@ -56,6 +58,8 @@ const Panels = (props) => {
       NAME: '',
       UPCHARGE: '',
       PANEL_FACTOR: '',
+      Thickness: '',
+      Flat: false,
       photo: null
     };
     setNewProduct(true);
@@ -104,6 +108,8 @@ const Panels = (props) => {
       NAME: product.NAME,
       UPCHARGE: product.UPCHARGE,
       PANEL_FACTOR: product.PANEL_FACTOR,
+      Thickness: product.Thickness,
+      Flat: product.Flat,
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
@@ -125,6 +131,8 @@ const Panels = (props) => {
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>Price: </strong> ${card.UPCHARGE}</CardTitle>
             <CardTitle><strong>Panel Factor: </strong> {card.PANEL_FACTOR}</CardTitle>
+            <CardTitle><strong>Thickness: </strong> {card.Thickness}</CardTitle>
+            <CardTitle><strong>Flat: </strong> {card.Flat ? 'Yes' : 'No'}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -192,6 +200,31 @@ const Panels = (props) => {
                 <Col>
                   <Label for="5/4_Price">Panel Factor</Label>
                   <Input value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">Thickness</Label>
+                  <Input value={product.Thickness} name="Thickness" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Flat</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setProduct((prevState) => {
+                        return ({
+                          ...prevState,
+                          Flat: !prevState.Flat
+                        });
+                      })} checked={product.Flat} />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
   
@@ -289,6 +322,31 @@ const Panels = (props) => {
                 <Col>
                   <Label for="5/4_Price">Panel Factor</Label>
                   <Input value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">Thickness</Label>
+                  <Input value={product.Thickness} name="Thickness" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Flat</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setProduct((prevState) => {
+                        return ({
+                          ...prevState,
+                          Flat: !prevState.Flat
+                        });
+                      })} checked={product.Flat} />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </ModalBody>

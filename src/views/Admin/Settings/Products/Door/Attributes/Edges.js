@@ -210,8 +210,6 @@ const Edges = (props) => {
                       })} checked={product.one_piece} />
                     </Col>
                   </Row>
-  
-  
                 </Col>
               </Row>
   
