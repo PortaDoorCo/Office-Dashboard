@@ -26,6 +26,10 @@ export default (data, breakdowns) => {
     }
   })
 
+  const discountTotal = (subTotal * (data.discount / 100))
+
+  const discountSubTotal = subTotal - (subTotal * (data.discount / 100))
+
   return [
     {
       columns: [
@@ -45,7 +49,7 @@ export default (data, breakdowns) => {
           stack: [
             { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? "Rush" : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Est. Ship: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
+            { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
             { text: `Ship Via: ${data.job_info.ShippingMethod ? data.job_info.ShippingMethod.NAME : ' '}`, alignment: 'right' },
             { text: `Salesmen: ${data.sale ? data.sale.fullName : ''}`, alignment: 'right' }
           ]
@@ -201,18 +205,26 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: '', style: 'totals', width: 347 },
-        { text: 'Tax:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(data.tax).toFixed(2)}`, style: 'fonts', alignment: 'right' }
+        { text: `${data.discount>0 ? data.discount + '% ' + 'Discount' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `${data.discount>0 ? '-' + '$' +  discountTotal.toFixed(2) : ''}`, style: 'fonts', alignment: 'right' }
       ],
-      margin: [0, 10, 0, 0]
+      margin: [0, 0, 0, 0]
     },
     {
       columns: [
         { text: '', style: 'totals', width: 347 },
-        { text: `${data.discount>0 ? 'Discount' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `${data.discount>0 ? data.discount + '%' : ''}`, style: 'fonts', alignment: 'right' }
+        { text: `${data.discount>0 ? 'Discount Subtotal' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `${data.discount>0 ? '$' +  discountSubTotal.toFixed(2) : ''}`, style: 'fonts', alignment: 'right' }
       ],
       margin: [0, 0, 0, 0]
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 347 },
+        { text: data.Taxable ? '$' + discountSubTotal.toFixed(2) + ' x ' + data.companyprofile.TaxRate + '%' + ' Tax:' : '', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `$${(data.tax).toFixed(2)}`, style: 'fonts', alignment: 'right' }
+      ],
+      margin: [0, 10, 0, 0]
     },
     {
       columns: [

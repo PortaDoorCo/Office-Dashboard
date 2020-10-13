@@ -26,6 +26,10 @@ export default (data, breakdowns) => {
     }
   })
 
+  const discountTotal = (subTotal * (data.discount / 100))
+
+  const discountSubTotal = subTotal - (subTotal * (data.discount / 100))
+
   return [
     {
       columns: [
@@ -201,18 +205,26 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: '', style: 'totals', width: 347 },
-        { text: 'Tax:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(data.tax).toFixed(2)}`, style: 'fonts', alignment: 'right' }
+        { text: `${data.discount>0 ? data.discount + '% ' + 'Discount' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `${data.discount>0 ? '-' + '$' +  discountTotal.toFixed(2) : ''}`, style: 'fonts', alignment: 'right' }
       ],
-      margin: [0, 10, 0, 0]
+      margin: [0, 0, 0, 0]
     },
     {
       columns: [
         { text: '', style: 'totals', width: 347 },
-        { text: `${data.discount>0 ? 'Discount' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `${data.discount>0 ? data.discount + '%' : ''}`, style: 'fonts', alignment: 'right' }
+        { text: `${data.discount>0 ? 'Discount Subtotal' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `${data.discount>0 ? '$' +  discountSubTotal.toFixed(2) : ''}`, style: 'fonts', alignment: 'right' }
       ],
       margin: [0, 0, 0, 0]
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 347 },
+        { text: data.Taxable ? '$' + discountSubTotal.toFixed(2) + ' x ' + data.companyprofile.TaxRate + '%' + ' Tax:' : '', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: `$${(data.tax).toFixed(2)}`, style: 'fonts', alignment: 'right' }
+      ],
+      margin: [0, 10, 0, 0]
     },
     {
       columns: [
