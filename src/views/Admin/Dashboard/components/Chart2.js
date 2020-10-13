@@ -40,7 +40,6 @@ class Chart2 extends Component {
               groups.push(part.miter_design);
               break;
             default:
-              // code block
               return;
           }
 
