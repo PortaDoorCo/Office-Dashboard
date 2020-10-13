@@ -121,7 +121,7 @@ class MT_Door extends Component {
     return (
       <div>
         <Row>
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -136,7 +136,7 @@ class MT_Door extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -152,7 +152,7 @@ class MT_Door extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -166,28 +166,8 @@ class MT_Door extends Component {
               />
             </FormGroup>
           </Col>
-        </Row>
 
-        <Row>
-
-
-          <Col xs="12" md='12' lg="6">
-          <FormGroup>
-              <Label htmlFor="design">Lites</Label>
-              <Field
-                name={`${part}.lite`}
-                component={renderDropdownListFilter}
-                data={lites}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-
-
-          <Col xs="12" md='12' lg="6">
+          <Col xs="12" md='12' lg="3">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -201,10 +181,9 @@ class MT_Door extends Component {
               />
             </FormGroup>
           </Col>
-
-
-
         </Row>
+
+
 
         <Row className="mt-2">
           <Col xs="12" md='12' lg="4">

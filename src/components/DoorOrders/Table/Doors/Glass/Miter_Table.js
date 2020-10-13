@@ -446,22 +446,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                 : null
               }
 
-              <Row>
-                <Col xs='4'>
-                  <FormGroup>
-                    <Label htmlFor="design">Lites</Label>
-                    <Field
-                      name={`${table}.lite`}
-                      component={renderDropdownListFilter}
-                      data={lites}
-                      valueField="value"
-                      textField="NAME"
-                      validate={required}
-                      edit={edit}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+
 
               <Row>
                 <Col xs="4">
@@ -474,7 +459,20 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                     label="notes"
                   />
                 </Col>
-                <Col xs='5' />
+                <Col xs='5'>
+                  <FormGroup>
+                    <strong>Lites</strong>
+                    <Field
+                      name={`${table}.lite`}
+                      component={renderDropdownListFilter}
+                      data={lites}
+                      valueField="value"
+                      textField="NAME"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
                 <Col xs='3'>
                   <strong>Extra Design Cost</strong>
                   <Field

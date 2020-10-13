@@ -218,7 +218,7 @@ export const itemPriceSelector = createSelector(
         ? part.applied_profile.UPCHARGE
         : 0;
       const finish = part.finish ? part.finish.UPCHARGE : 0;
-      const lites = part.lite ? part.lite.UPCHARGE : 0;
+      
       const ff_opening_cost =
         part.design && part.orderType.value === 'Face_Frame'
           ? part.design.opening_cost
@@ -259,6 +259,8 @@ export const itemPriceSelector = createSelector(
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
+
+            const lites = i.lite ? i.lite.UPCHARGE : 0;
 
             let leftStileAdd = 0;
             let rightStileAdd = 0;
