@@ -22,13 +22,14 @@ import GlassMitreDoor from './Glass/Mitre/Door';
 import GlassMitreDF from './Glass/Mitre/DF';
 
 import OnePieceCopeDoor from './One_Piece/Cope/Door';
-import OnePieceCopeDF from './One_Piece/Cope/DF';
-
 import OnePieceMTDoor from './One_Piece/MT/Door';
-import OnePieceMTDF from './One_Piece/MT/DF';
-
 import OnePieceMitreDoor from './One_Piece/Mitre/Door';
-import OnePieceMitreDF from './One_Piece/Mitre/DF';
+
+import TwoPieceCopeDoor from './Two_Piece/Cope/Door';
+import TwoPieceMTDoor from './Two_Piece/MT/Door';
+import TwoPieceMitreDoor from './Two_Piece/Mitre/Door';
+
+
 
 
 
@@ -246,6 +247,42 @@ class Conditionals extends Component {
               break;
             case 'MT':
               component = <OnePieceMTDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+              />;
+              break;
+            default:
+              return;
+          }
+          break;
+        case 'Two_Piece':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <TwoPieceCopeDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+              />;
+              break;
+            case 'M':
+              component = <TwoPieceMitreDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+              />;
+              break;
+            case 'MT':
+              component = <TwoPieceMTDoor
                 part={part}
                 index={index}
                 isValid={isValid}
