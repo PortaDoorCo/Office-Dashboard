@@ -72,6 +72,46 @@ const thickness = [
 ];
 
 
+const ff_thickness = [
+  {
+    name: '1"',
+    value: 1
+  },
+  {
+    name: '1 1/8"',
+    value: 1.125
+  },
+  {
+    name: '1 1/4"',
+    value: 1.25
+  },
+  {
+    name: '1 3/8"',
+    value: 1.375
+  },
+  {
+    name: '1 1/2"',
+    value: 1.5
+  },
+  {
+    name: '1 5/8"',
+    value: 1.625
+  },
+  {
+    name: '1 3/4"',
+    value: 1.75
+  },
+  {
+    name: '1 7/8"',
+    value: 1.875
+  },
+  {
+    name: '2"',
+    value: 2
+  },
+];
+
+
 class DoorInfo extends Component {
   constructor(props) {
     super(props);
@@ -126,6 +166,7 @@ class DoorInfo extends Component {
                 orderType={orderType}
                 construction={construction}
                 thickness={thickness}
+                ff_thickness={ff_thickness}
               />
 
               <Conditionals
