@@ -10,7 +10,7 @@ import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../RenderInputs/renderInputs';
-import Miter_Table from '../../../Table/DFs/Miter_Table';
+import Miter_Table from '../../../Table/DFs/Glass/Miter_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
