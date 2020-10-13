@@ -9,7 +9,7 @@ import {
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../RenderInputs/renderInputs';
-import MT_Table from '../../../Table/Doors/MT_Table';
+import MT_Table from '../../../Table/Doors/Glass/MT_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
