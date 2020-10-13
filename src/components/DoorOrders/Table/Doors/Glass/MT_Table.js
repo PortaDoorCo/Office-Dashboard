@@ -432,9 +432,19 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
               }
 
               <Row>
-                <Col xs='4'>
+                <Col xs="4">
+                  <strong>Notes</strong>
+                  <Field
+                    name={`${table}.notes`}
+                    type="textarea"
+                    component={renderField}
+                    edit={edit}
+                    label="notes"
+                  />
+                </Col>
+                <Col xs='5'>
                   <FormGroup>
-                    <Label htmlFor="design">Lites</Label>
+                    <strong>Lites</strong>
                     <Field
                       name={`${table}.lite`}
                       component={renderDropdownListFilter}
@@ -446,20 +456,6 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                     />
                   </FormGroup>
                 </Col>
-              </Row>
-
-              <Row>
-                <Col xs="4">
-                  <strong>Notes</strong>
-                  <Field
-                    name={`${table}.notes`}
-                    type="textarea"
-                    component={renderField}
-                    edit={edit}
-                    label="notes"
-                  />
-                </Col>
-                <Col xs='5' />
                 <Col xs='3'>
                   <strong>Extra Design Cost</strong>
                   <Field

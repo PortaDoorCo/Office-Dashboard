@@ -118,7 +118,7 @@ class MiterDoor extends Component {
     return (
       <div>
         <Row>
-          <Col xs="12" md='12' lg="3">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -133,7 +133,7 @@ class MiterDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="3">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -149,22 +149,7 @@ class MiterDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="3">
-            <FormGroup>
-              <Label htmlFor="design">Lites</Label>
-              <Field
-                name={`${part}.lite`}
-                component={renderDropdownListFilter}
-                data={lites}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-
-          <Col xs="12" md='12' lg="3">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field

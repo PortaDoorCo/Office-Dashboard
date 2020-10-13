@@ -172,16 +172,16 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           <hr />
           <Row>
             <Col>
-            <FormGroup>
-              <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
-              <Field
-                name={`${table}.item`}
-                type="text"
-                component={renderFieldDisabled}
-                label="item"
-                edit={true}
-              />
-            </FormGroup>
+              <FormGroup>
+                <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
+                <Field
+                  name={`${table}.item`}
+                  type="text"
+                  component={renderFieldDisabled}
+                  label="item"
+                  edit={true}
+                />
+              </FormGroup>
             </Col>
             <Col xs='10' />
           </Row>
@@ -375,9 +375,9 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
               <Row>
                 <Col>
-                <p className="ml-3">*Finish Stile/Rail Sizes*</p>
+                  <p className="ml-3">*Finish Stile/Rail Sizes*</p>
                 </Col>
-                
+
               </Row>
               <tr />
             </tbody>
@@ -449,23 +449,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           }
 
           <Row>
-            <Col xs='4'>
-            <FormGroup>
-              <Label htmlFor="design">Lites</Label>
-              <Field
-                name={`${table}.lite`}
-                component={renderDropdownListFilter}
-                data={lites}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-            </Col>
-          </Row>
-
-          <Row>
             <Col xs="4">
               <strong>Notes</strong>
               <Field
@@ -476,7 +459,20 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 label="notes"
               />
             </Col>
-            <Col xs='5' />
+            <Col xs='5'>
+              <FormGroup>
+                <strong>Lites</strong>
+                <Field
+                  name={`${table}.lite`}
+                  component={renderDropdownListFilter}
+                  data={lites}
+                  valueField="value"
+                  textField="NAME"
+                  validate={required}
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
             <Col xs='3'>
               <strong>Extra Design Cost</strong>
               <Field
