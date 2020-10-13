@@ -9,7 +9,7 @@ import {
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
 import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../RenderInputs/renderInputs';
-import Cope_Table from '../../../Table/Doors/Cope_Table';
+import Cope_Table from '../../../Table/Doors/Glass/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
@@ -172,7 +172,7 @@ class CopeDoor extends Component {
         </Row>
         <Row>
 
-          <Col xs="12" md='12' lg='4'>
+          <Col xs="12" md='12' lg='6'>
             <FormGroup>
               <Label htmlFor="edge">Profile</Label>
               <Field
@@ -188,22 +188,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg='4'>
-            <FormGroup>
-              <Label htmlFor="design">Lites</Label>
-              <Field
-                name={`${part}.lite`}
-                component={renderDropdownListFilter}
-                data={lites}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-
-          <Col xs="12" md='12' lg='4'>
+          <Col xs="12" md='12' lg='6'>
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
