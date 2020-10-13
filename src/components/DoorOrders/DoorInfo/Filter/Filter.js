@@ -246,7 +246,7 @@ class DoorFilter extends Component {
     } = this.props;
 
     if (formState && formState.part_list) {
-      if ((formState.part_list[index].orderType.value === 'Face_Frame') || (formState.part_list[index].orderType.value === 'Slab_Door')) {
+      if ((formState.part_list[index].orderType.value === 'Face_Frame')) {
         return (
           <Fragment>
             <Row>
@@ -273,6 +273,44 @@ class DoorFilter extends Component {
                     name={`${part}.thickness`}
                     component={renderDropdownList}
                     data={ff_thickness}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+          </Fragment>
+        );
+      }
+      if ((formState.part_list[index].orderType.value === 'Slab_Door')) {
+        return (
+          <Fragment>
+            <Row>
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="orderType">Order Type</Label>
+                  <Field
+                    name={`${part}.orderType`}
+                    component={renderDropdownList}
+                    data={orderType}
+                    onChange={() => this.onChangeType(index)}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="construction">Thickness</Label>
+                  <Field
+                    name={`${part}.thickness`}
+                    component={renderDropdownList}
+                    data={thickness}
                     valueField="value"
                     textField="name"
                     edit={edit}
