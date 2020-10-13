@@ -240,12 +240,13 @@ class DoorFilter extends Component {
       part,
       construction,
       thickness,
+      ff_thickness,
       orderType,
       edit
     } = this.props;
 
     if (formState && formState.part_list) {
-      if ((formState.part_list[index].orderType.value === 'Door') || (formState.part_list[index].orderType.value === 'DF') || (formState.part_list[index].orderType.value === 'Glass') || (formState.part_list[index].orderType.value === 'Glass_DF') || (formState.part_list[index].orderType.value === 'Glass') || (formState.part_list[index].orderType.value === 'One_Piece')) {
+      if ((formState.part_list[index].orderType.value === 'Face_Frame')) {
         return (
           <Fragment>
             <Row>
@@ -267,11 +268,33 @@ class DoorFilter extends Component {
 
               <Col xs="4">
                 <FormGroup>
-                  <Label for="construction">Construction</Label>
+                  <Label for="construction">Thickness</Label>
                   <Field
-                    name={`${part}.construction`}
+                    name={`${part}.thickness`}
                     component={renderDropdownList}
-                    data={construction}
+                    data={ff_thickness}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+          </Fragment>
+        );
+      }
+      if ((formState.part_list[index].orderType.value === 'Slab_Door')) {
+        return (
+          <Fragment>
+            <Row>
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="orderType">Order Type</Label>
+                  <Field
+                    name={`${part}.orderType`}
+                    component={renderDropdownList}
+                    data={orderType}
                     onChange={() => this.onChangeType(index)}
                     valueField="value"
                     textField="name"
@@ -310,6 +333,22 @@ class DoorFilter extends Component {
                     name={`${part}.orderType`}
                     component={renderDropdownList}
                     data={orderType}
+                    onChange={() => this.onChangeType(index)}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    validate={required}
+                  />
+                </FormGroup>
+              </Col>
+
+              <Col xs="4">
+                <FormGroup>
+                  <Label for="construction">Construction</Label>
+                  <Field
+                    name={`${part}.construction`}
+                    component={renderDropdownList}
+                    data={construction}
                     onChange={() => this.onChangeType(index)}
                     valueField="value"
                     textField="name"
