@@ -13,9 +13,10 @@ import { Field, change } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../../RenderInputs/renderInputs';
+import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice, renderDropdownListFilter } from '../../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../../RenderInputs/RenderPriceHolder';
 import numQty from 'numeric-quantity';
+import { connect } from 'react-redux';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -24,7 +25,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
+const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch, lites }) => {
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -347,6 +348,23 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
               }
 
               <Row>
+                <Col xs='4'>
+                  <FormGroup>
+                    <Label htmlFor="design">Lites</Label>
+                    <Field
+                      name={`${table}.lite`}
+                      component={renderDropdownListFilter}
+                      data={lites}
+                      valueField="value"
+                      textField="NAME"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
                 <Col xs="4">
                   <strong>Notes</strong>
                   <Field
@@ -430,4 +448,14 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
   );
 };
 
-export default Miter_Table;
+
+const mapStateToProps = state => ({
+  lites: state.part_list.lites,
+});
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(Miter_Table);
+
