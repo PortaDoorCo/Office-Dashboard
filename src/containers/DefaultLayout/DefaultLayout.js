@@ -151,7 +151,7 @@ class DefaultLayout extends Component {
     const { customerDBLoaded, ordersDBLoaded, loadedProducts } = this.props;
 
     if (
-      (((!customerDBLoaded) && (!ordersDBLoaded)) || (!loadedProducts))
+      (!customerDBLoaded)
     ) {
       return <Loader />;
     } else {
