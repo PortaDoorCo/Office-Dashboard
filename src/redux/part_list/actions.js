@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 import db_url from '../db_url';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 
 export const GET_WOODTYPES = 'GET_WOODTYPES';
@@ -61,6 +62,7 @@ export const PRODUCT_UPDATED = 'PRODUCT_UPDATED';
 export function getAllProducts(cookie) {
 
   return async function (dispatch) {
+    await dispatch(showLoading())
     const res = await fetch(`${db_url}/products-api?_sort=NAME:ASC`,
       {
         headers: {
