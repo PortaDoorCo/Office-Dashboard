@@ -13,6 +13,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 import { save, load } from 'redux-localstorage-simple';
+import { loadingBarMiddleware } from 'react-redux-loading-bar'
 import Cookies from 'js-cookie';
 const cookie = Cookies.get('jwt');
 
@@ -30,7 +31,7 @@ const store = createStore(
   load({
     ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
   }),
-  composeWithDevTools(applyMiddleware(...middleware, save({
+  composeWithDevTools(applyMiddleware(...middleware, loadingBarMiddleware(), save({
     ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
   })))
 );
