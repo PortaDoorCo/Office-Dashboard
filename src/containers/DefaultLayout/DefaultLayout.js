@@ -53,6 +53,8 @@ import Loader from '../../views/Admin/Loader/Loader';
 import { NotificationContainer } from 'react-notifications';
 
 
+
+
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -153,7 +155,10 @@ class DefaultLayout extends Component {
     if (
       (!customerDBLoaded)
     ) {
-      return <Loader />;
+      return <div>
+        
+        <Loader />
+        </div>;
     } else {
       return (
         <div className="app">

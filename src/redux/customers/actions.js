@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import db_url from '../db_url';
 
 export const LOAD_CUSTOMERS = 'LOAD_CUSTOMERS';
@@ -29,9 +30,11 @@ export function loadCustomers(cookie) {
     );
     const data = await res.json();
     return await dispatch({
+  
       type: LOAD_CUSTOMERS,
       data: data
-    });
+    }
+    );
   };
 }
 

@@ -9,6 +9,7 @@ import {
   NavbarBrand,
 } from 'reactstrap';
 import { unsetToken } from '../../../utils/auth';
+import LoadingBar from 'react-redux-loading-bar'
 
 class Loader extends Component {
   constructor(props) {
@@ -29,8 +30,7 @@ class Loader extends Component {
           <NavbarBrand href="/">Porta Door Co. Inc.</NavbarBrand>
     
           <Button color="primary" className="ml-auto" onClick={this.logOut}>Log Out</Button>
-          
-      
+        
         </Navbar>
       
         <div className="app flex-row align-items-center">
@@ -56,6 +56,11 @@ class Loader extends Component {
                 </center>
               </Col>
               <Col />
+            </Row>
+            <Row className="mt-4">
+              <Col>
+                <LoadingBar updateTime={1500} maxProgress={95} progressIncrease={10} style={{ backgroundColor: '#20a8d8', height: '20px', opacity: '0.7' }} />
+              </Col>
             </Row>
 
           </Container>
