@@ -31,7 +31,7 @@ const store = createStore(
   load({
     ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
   }),
-  composeWithDevTools(applyMiddleware(...middleware, loadingBarMiddleware(), save({
+  composeWithDevTools(applyMiddleware(...middleware, save({
     ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
   })))
 );
