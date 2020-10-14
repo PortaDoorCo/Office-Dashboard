@@ -60,7 +60,7 @@ class Loader extends Component {
             <Row className="mt-4">
               <Col>
                 {/* loading bar */}
-                <LoadingBar updateTime={1500} maxProgress={95} progressIncrease={10} style={{ backgroundColor: '#20a8d8', height: '20px', opacity: '0.7' }} />
+                <LoadingBar loading="1" updateTime={1500} maxProgress={95} progressIncrease={10} style={{ backgroundColor: '#20a8d8', height: '20px', opacity: '0.7' }} />
               </Col>
             </Row>
 
