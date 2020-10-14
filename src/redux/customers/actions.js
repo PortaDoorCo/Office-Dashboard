@@ -21,6 +21,7 @@ export function setSelectedCompanies(data) {
 
 export function loadCustomers(cookie) {
   return async function (dispatch) {
+
     const res = await fetch(`${db_url}/companyprofiles?_limit=2000&_sort=CUSTNO:ASC`,
       {
         headers: {
@@ -29,8 +30,8 @@ export function loadCustomers(cookie) {
       }
     );
     const data = await res.json();
+
     return await dispatch({
-  
       type: LOAD_CUSTOMERS,
       data: data
     }
