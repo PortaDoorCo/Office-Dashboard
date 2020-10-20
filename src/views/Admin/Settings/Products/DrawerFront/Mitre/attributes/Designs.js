@@ -25,8 +25,6 @@ const Designs = (props) => {
     UPCHARGE: '',
     UPCHARGE_THICK: '',
     PROFILE_WIDTH: '',
-    TOP_RAIL_ADD: '',
-    BTM_RAIL_ADD: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false);
@@ -53,8 +51,6 @@ const Designs = (props) => {
       UPCHARGE: '',
       UPCHARGE_THICK: '',
       PROFILE_WIDTH: '',
-      TOP_RAIL_ADD: '',
-      BTM_RAIL_ADD: '',
       photo: null
     };
     setNewProduct(true);
@@ -105,8 +101,6 @@ const Designs = (props) => {
       UPCHARGE: product.UPCHARGE,
       UPCHARGE_THICK: product.UPCHARGE_THICK,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
-      TOP_RAIL_ADD: product.TOP_RAIL_ADD,
-      BTM_RAIL_ADD: product.BTM_RAIL_ADD,
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
@@ -129,8 +123,6 @@ const Designs = (props) => {
             <CardTitle><strong>4/4 Price:</strong> ${card.UPCHARGE}</CardTitle>
             <CardTitle><strong>5/4 Price:</strong> ${card.UPCHARGE_THICK}</CardTitle>
             <CardTitle><strong>Profile Width:</strong> {card.PROFILE_WIDTH}</CardTitle>
-            <CardTitle><strong>Top Rail Arch:</strong> {card.TOP_RAIL_ADD}</CardTitle>
-            <CardTitle><strong>Bottom Rail Arch:</strong> {card.BTM_RAIL_ADD}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -200,14 +192,6 @@ const Designs = (props) => {
                 <Col>
                   <Label for="4/4_Price">Profile Width</Label>
                   <Input value={product.PROFILE_WIDTH} name="PROFILE_WIDTH" onChange={(e) => change(e)}></Input>
-                </Col>
-                <Col>
-                  <Label for="4/4_Price">Top Rail Arch</Label>
-                  <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
-                </Col>
-                <Col>
-                  <Label for="5/4_Price">Bottom Rail Arch</Label>
-                  <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -308,14 +292,6 @@ const Designs = (props) => {
                 <Col>
                   <Label for="4/4_Price">Profile Width</Label>
                   <Input value={product.PROFILE_WIDTH} name="PROFILE_WIDTH" onChange={(e) => change(e)}></Input>
-                </Col>
-                <Col>
-                  <Label for="4/4_Price">Top Rail Arch</Label>
-                  <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
-                </Col>
-                <Col>
-                  <Label for="5/4_Price">Bottom Rail Arch</Label>
-                  <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

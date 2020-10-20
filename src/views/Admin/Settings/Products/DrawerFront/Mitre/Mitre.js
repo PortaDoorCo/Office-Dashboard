@@ -16,7 +16,7 @@ const Navigation = (props) => {
     <Col>
       <Breadcrumb>
         <BreadcrumbItem>Drawer Front</BreadcrumbItem>
-        <BreadcrumbItem active>Mitre Design DF</BreadcrumbItem>
+        <BreadcrumbItem active>Miter Design DF</BreadcrumbItem>
       </Breadcrumb>
     </Col>
   );
@@ -48,7 +48,7 @@ const Cope = (props) => {
               <Row className="mt-2">
                 <Col>
                   <CardTitle>
-                    <h1>Mitre Design</h1>
+                    <h1>Miter Design</h1>
                   </CardTitle>
                 </Col>
               </Row>
