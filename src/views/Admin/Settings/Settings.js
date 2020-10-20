@@ -48,9 +48,9 @@ const Settings = (props) => {
                     <DropdownItem onClick={() => setSelection('slab_type_door')}>
                       Slab Type Door
                     </DropdownItem>
-                    <DropdownItem onClick={() => setSelection('one_piece_door')}>
+                    {/* <DropdownItem onClick={() => setSelection('one_piece_door')}>
                       One Piece Door
-                    </DropdownItem>
+                    </DropdownItem> */}
                 
                   </DropdownMenu>
                 </UncontrolledDropdown>
