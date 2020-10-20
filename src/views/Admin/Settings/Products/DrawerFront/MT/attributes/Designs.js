@@ -91,14 +91,14 @@ const Designs = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'mt-designs', cookie);
+    await props.updateProduct(id, updatedProduct, 'mt-df-designs', cookie);
     await setModal(!modal);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
-    await props.deleteProduct(id, 'mt-designs', cookie);
+    await props.deleteProduct(id, 'mt-df-designs', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -117,7 +117,7 @@ const Designs = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'mt-designs', cookie);
+    await props.addProduct(submittedProduct, 'mt-df-designs', cookie);
     await setModal(!modal);
   };
 
@@ -360,7 +360,7 @@ const Designs = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.mt_designs,
+  designs: state.part_list.mt_df_designs,
   role: state.users.user.role
 });
 
