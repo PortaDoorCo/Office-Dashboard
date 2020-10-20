@@ -26,8 +26,6 @@ const Designs = (props) => {
     NAME: '',
     UPCHARGE: '',
     UPCHARGE_THICK: '',
-    RAIL_ADD: '',
-    RAIL_FACTOR: '',
     MINIMUM_STILE_WIDTH:'',
     MID_RAIL_MINIMUMS: '',
     INSET: '',
@@ -60,8 +58,6 @@ const Designs = (props) => {
       NAME: '',
       UPCHARGE: '',
       UPCHARGE_THICK: '',
-      RAIL_ADD: '',
-      RAIL_FACTOR: '',
       MID_RAIL_MINIMUMS: '',
       INSET: '',
       photo: null
@@ -112,8 +108,6 @@ const Designs = (props) => {
       NAME: product.NAME,
       UPCHARGE: product.UPCHARGE,
       UPCHARGE_THICK: product.UPCHARGE_THICK,
-      RAIL_FACTOR: product.RAIL_FACTOR,
-      MINIMUM_STILE_WIDTH:product.MINIMUM_STILE_WIDTH,
       MID_RAIL_MINIMUMS: product.MID_RAIL_MINIMUMS,
       INSET: product.INSET,
       photo: product.photo ? product.photo.id : '',
@@ -136,7 +130,6 @@ const Designs = (props) => {
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>4/4 Price:</strong> ${card.UPCHARGE}</CardTitle>
             <CardTitle><strong>5/4 Price:</strong> ${card.UPCHARGE_THICK}</CardTitle>
-            <CardTitle><strong>Rail Factor:</strong> {card.RAIL_FACTOR}</CardTitle>
             <CardTitle><strong>Stile/Rail Width:</strong> {card.MID_RAIL_MINIMUMS}</CardTitle>
             <CardTitle><strong>Inset:</strong> {card.INSET}</CardTitle>
           </CardBody>
@@ -205,10 +198,6 @@ const Designs = (props) => {
                 </Col>
               </Row>
               <Row>
-                <Col>
-                  <Label for="4/4_Price">Rail Factor</Label>
-                  <Input value={product.RAIL_FACTOR} name="RAIL_FACTOR" onChange={(e) => change(e)}></Input>
-                </Col>
                 <Col>
                   <Label for="5/4_Price">Stile/Rail Width</Label>
                   <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
@@ -314,10 +303,6 @@ const Designs = (props) => {
                 </Col>
               </Row>
               <Row>
-                <Col>
-                  <Label for="4/4_Price">Rail Factor</Label>
-                  <Input value={product.RAIL_FACTOR} name="RAIL_FACTOR" onChange={(e) => change(e)}></Input>
-                </Col>
                 <Col>
                   <Label for="5/4_Price">Stile/Rail Width</Label>
                   <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
