@@ -66,7 +66,7 @@ const Settings = (props) => {
                       MT Design
                     </DropdownItem>
                     <DropdownItem onClick={() => setSelection('miter_df')}>
-                      Mitre Design
+                      Miter Design
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
