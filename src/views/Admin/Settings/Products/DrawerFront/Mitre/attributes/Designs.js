@@ -25,6 +25,7 @@ const Designs = (props) => {
     UPCHARGE: '',
     UPCHARGE_THICK: '',
     PROFILE_WIDTH: '',
+    INSET: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false);
@@ -51,6 +52,7 @@ const Designs = (props) => {
       UPCHARGE: '',
       UPCHARGE_THICK: '',
       PROFILE_WIDTH: '',
+      INSET: '',
       photo: null
     };
     setNewProduct(true);
@@ -101,6 +103,7 @@ const Designs = (props) => {
       UPCHARGE: product.UPCHARGE,
       UPCHARGE_THICK: product.UPCHARGE_THICK,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
+      INSET: product.INSET,
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
@@ -123,6 +126,7 @@ const Designs = (props) => {
             <CardTitle><strong>4/4 Price:</strong> ${card.UPCHARGE}</CardTitle>
             <CardTitle><strong>5/4 Price:</strong> ${card.UPCHARGE_THICK}</CardTitle>
             <CardTitle><strong>Profile Width:</strong> {card.PROFILE_WIDTH}</CardTitle>
+            <CardTitle><strong>Inset:</strong> {card.INSET}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -192,6 +196,13 @@ const Designs = (props) => {
                 <Col>
                   <Label for="4/4_Price">Profile Width</Label>
                   <Input value={product.PROFILE_WIDTH} name="PROFILE_WIDTH" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Label for="Inset">Inset</Label>
+                  <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -292,6 +303,12 @@ const Designs = (props) => {
                 <Col>
                   <Label for="4/4_Price">Profile Width</Label>
                   <Input value={product.PROFILE_WIDTH} name="PROFILE_WIDTH" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="Inset">Inset</Label>
+                  <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>
