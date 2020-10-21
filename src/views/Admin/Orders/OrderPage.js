@@ -29,6 +29,8 @@ import Delete from '@material-ui/icons/Delete';
 import Dns from '@material-ui/icons/Dns';
 import Tooltip from '@material-ui/core/Tooltip';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import Chat from '@material-ui/icons/Chat';
+
 
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
@@ -73,6 +75,10 @@ import CustomerCopyDrawerPDF from './PrintOuts/Pages/Drawer/CustomerCopyPDF';
 
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
+import Door_Conversation_Notes from './Notes/DoorOrder/Conversation_Notes'
+import Drawer_Conversation_Notes from './Notes/DrawerOrder/Conversation_Notes'
+import Misc_Conversation_Notes from './Notes/MiscItems/Conversation_Notes'
+
 import Cookies from 'js-cookie';
 
 const cookie = Cookies.get('jwt');
@@ -112,7 +118,8 @@ class OrderPage extends Component {
       filesOpen: false,
       deleteModal: false,
       balanceOpen: false,
-      miscItemsOpen: false
+      miscItemsOpen: false,
+      notesOpen: false
     };
   }
 
@@ -157,6 +164,10 @@ class OrderPage extends Component {
 
   toggleFiles = () => this.setState({
     filesOpen: !this.state.filesOpen
+  })
+
+  toggleNotes = () => this.setState({
+    notesOpen: !this.state.notesOpen
   })
 
   toggleDeleteModal = () => this.setState({
@@ -465,6 +476,12 @@ class OrderPage extends Component {
                       </IconButton>
                     </Tooltip>
 
+                    <Tooltip title="View Notes" placement="top">
+                      <IconButton onClick={this.toggleNotes}>
+                        <Chat style={{ width: '40', height: '40' }} />
+                      </IconButton>
+                    </Tooltip>
+
                   </Col>
                   <Col />
                   <Col />
@@ -513,11 +530,19 @@ class OrderPage extends Component {
                       </IconButton>
                     </Tooltip>
 
+                    <Tooltip title="View Notes" placement="top">
+                      <IconButton onClick={this.toggleNotes}>
+                        <Chat style={{ width: '40', height: '40' }} />
+                      </IconButton>
+                    </Tooltip>
+
                     <Tooltip title="View Files" placement="top">
                       <IconButton onClick={this.toggleFiles}>
                         <Attachment style={{ width: '40', height: '40' }} />
                       </IconButton>
                     </Tooltip>
+
+
          
                   </Col>
 
@@ -595,6 +620,40 @@ class OrderPage extends Component {
                             )) : null}
                           </tbody>
                         </Table>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Collapse>
+            </div>
+
+            <div>
+              <Collapse isOpen={this.state.notesOpen}>
+                <Row>
+                  <Col lg='12'>
+                    <Card>
+                      <CardBody>
+                      {selectedOrder && selectedOrder.orderType === 'Door Order'
+                          ?
+                          <Door_Conversation_Notes
+                            toggleBalance={this.toggleBalance}
+                            selectedOrder={props.selectedOrder}
+                          /> :
+                          selectedOrder && selectedOrder.orderType === 'Drawer Order'
+                            ?
+                            <Drawer_Conversation_Notes
+                              toggleBalance={this.toggleBalance}
+                              selectedOrder={props.selectedOrder}
+                            />
+                            :
+                            selectedOrder && selectedOrder.orderType === 'Misc Items' ?
+                              <Misc_Conversation_Notes
+                                toggleBalance={this.toggleBalance}
+                                selectedOrder={props.selectedOrder}
+                              />
+                              :
+                              <div />
+                        }
                       </CardBody>
                     </Card>
                   </Col>

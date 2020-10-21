@@ -10,7 +10,8 @@ import {
   ORDER_ADDED,
   ORDER_UPDATED,
   ORDER_DELETED,
-  UPDATE_SELECTED_ORDER
+  UPDATE_SELECTED_ORDER,
+  UPDATE_NOTES
 } from './actions';
 import moment from 'moment';
 

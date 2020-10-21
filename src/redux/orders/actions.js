@@ -34,6 +34,8 @@ export const ORDER_ADDED = 'ORDER_ADDED';
 export const ORDER_UPDATED = 'ORDER_UPDATED';
 export const ORDER_DELETED = 'ORDER_DELETED';
 
+export const UPDATE_NOTES = 'UPDATE_NOTES'
+
 export const UPDATE_SELECTED_ORDER = 'UPDATE_SELECTED_ORDER';
 
 
@@ -298,6 +300,37 @@ export function getDeliveries(cookie) {
       type: LOAD_DELIVERIES,
       data: data
     });
+  };
+}
+
+
+
+export function updateNotes(orderId, balance, cookie) {
+
+  const item = {
+    Conversation_Notes: [
+      ...balance.Conversation_Notes,
+      {
+        'note': balance.note,
+        'date': new Date()
+      }
+    ]
+  };
+
+  return async function (dispatch) {
+    try {
+      await axios.put(`${db_url}/orders/${orderId}`, item, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
+      return dispatch({
+        type: UPDATE_NOTES,
+      });
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
   };
 }
 
