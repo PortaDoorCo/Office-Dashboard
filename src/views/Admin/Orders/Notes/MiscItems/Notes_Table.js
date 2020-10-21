@@ -27,7 +27,7 @@ class Notes_Table extends Component {
               </tr>
             </thead>
             <tbody>
-              {(formState && formState.Conversation_Notes) ? formState.Conversation_Notes.slice(0).map((i, index) => (
+              {(formState && formState.Conversation_Notes) ? formState.Conversation_Notes.reverse().map((i, index) => (
                 <tr key={index}>
                   <td width={300}>{moment(i.date).format('MMMM Do YYYY, h:mm:ss a')}</td>
                   <td>{i.note}</td>

@@ -633,6 +633,7 @@ class OrderPage extends Component {
                   <Col lg='12'>
                     <Card>
                       <CardBody>
+                        <h2>Conversation Notes</h2>
                       {selectedOrder && selectedOrder.orderType === 'Door Order'
                           ?
                           <Door_Conversation_Notes
