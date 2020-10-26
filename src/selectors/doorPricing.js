@@ -503,41 +503,84 @@ export const itemPriceSelector = createSelector(
             if (part.construction.value === 'MT') {
               let price = 0;
 
-              if (part.thickness.value === 0.75) {
-                price = part.mt_design.UPCHARGE;
-              }
-              if (part.thickness.value === 1) {
-                price = part.mt_design.UPCHARGE_THICK;
+              if (
+                part.orderType.value === 'DF' ||
+                part.orderType.value === 'Glass_DF'
+              ) {
+                if (part.thickness.value === 0.75) {
+                  price = part.mt_df_design.UPCHARGE;
+                }
+                if (part.thickness.value === 1) {
+                  price = part.mt_df_design.UPCHARGE_THICK;
+                }
+  
+                //leftStile
+                if (
+                  part.mt_df_design &&
+                  part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.leftStile)
+                ) {
+                  calc('leftStile', part.mt_df_design.MID_RAIL_MINIMUMS, price);
+                }
+                //rightStile
+                if (
+                  part.mt_df_design &&
+                  part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.rightStile)
+                ) {
+                  calc('rightStile', part.mt_df_design.MID_RAIL_MINIMUMS, price);
+                }
+                //topRail
+                if (
+                  part.mt_df_design &&
+                  part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.topRail)
+                ) {
+                  calc('topRail', part.mt_df_design.MID_RAIL_MINIMUMS, price);
+                }
+                //bottomRail
+                if (
+                  part.mt_df_design &&
+                  part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.bottomRail)
+                ) {
+                  calc('bottomRail', part.mt_df_design.MID_RAIL_MINIMUMS, price);
+                }
+              } else {
+                if (part.thickness.value === 0.75) {
+                  price = part.mt_design.UPCHARGE;
+                }
+                if (part.thickness.value === 1) {
+                  price = part.mt_design.UPCHARGE_THICK;
+                }
+  
+                //leftStile
+                if (
+                  part.mt_design &&
+                  part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.leftStile)
+                ) {
+                  calc('leftStile', part.mt_design.MID_RAIL_MINIMUMS, price);
+                }
+                //rightStile
+                if (
+                  part.mt_design &&
+                  part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.rightStile)
+                ) {
+                  calc('rightStile', part.mt_design.MID_RAIL_MINIMUMS, price);
+                }
+                //topRail
+                if (
+                  part.mt_design &&
+                  part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.topRail)
+                ) {
+                  calc('topRail', part.mt_design.MID_RAIL_MINIMUMS, price);
+                }
+                //bottomRail
+                if (
+                  part.mt_design &&
+                  part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.bottomRail)
+                ) {
+                  calc('bottomRail', part.mt_design.MID_RAIL_MINIMUMS, price);
+                }
               }
 
-              //leftStile
-              if (
-                part.mt_design &&
-                part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.leftStile)
-              ) {
-                calc('leftStile', part.mt_design.MID_RAIL_MINIMUMS, price);
-              }
-              //rightStile
-              if (
-                part.mt_design &&
-                part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.rightStile)
-              ) {
-                calc('rightStile', part.mt_design.MID_RAIL_MINIMUMS, price);
-              }
-              //topRail
-              if (
-                part.mt_design &&
-                part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.topRail)
-              ) {
-                calc('topRail', part.mt_design.MID_RAIL_MINIMUMS, price);
-              }
-              //bottomRail
-              if (
-                part.mt_design &&
-                part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.bottomRail)
-              ) {
-                calc('bottomRail', part.mt_design.MID_RAIL_MINIMUMS, price);
-              }
+              
             }
 
             let price = 0;
