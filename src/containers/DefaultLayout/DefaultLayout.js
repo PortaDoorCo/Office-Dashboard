@@ -115,18 +115,10 @@ class DefaultLayout extends Component {
 
       await getDeliveries(cookie);
 
-   
-  
- 
-
-
-      if (!loadedBreakdowns) {
         await getBreakdowns(cookie);
-      }
 
-      if (!loadedBoxBreakdowns) {
         await getBoxBreakdowns(cookie);
-      }
+    
 
 
       if (!loadedShippingMethods) {
