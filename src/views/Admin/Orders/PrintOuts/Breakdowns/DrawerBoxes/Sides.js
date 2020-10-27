@@ -11,6 +11,7 @@ export default (item, part, breakdowns) => {
   const height = item.height;
   const depth = parseInt(item.depth);
   const sideDeduction = part.box_thickness.SIDE_DEDUCTION;
+  const bottomWidthReduction = part.box_thickness.BOTTOM_WIDTH_DEDUCTION;
   const boxThickness = part.box_thickness.NAME;
   return {
     qty: (parseInt(item.qty) * 2),
