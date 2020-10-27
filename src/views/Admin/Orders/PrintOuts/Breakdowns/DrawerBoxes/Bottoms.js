@@ -10,6 +10,7 @@ export default (item, part, breakdowns) => {
 
   const sideDeduction = part.box_thickness.SIDE_DEDUCTION;
   const lengthDeduction = part.box_thickness.BOTTOM_LENGTH_DEDUCTION;
+  const bottomWidthReduction = part.box_thickness.BOTTOM_WIDTH_REDUCTION;
   const width = parseInt(item.width);
   const height = parseInt(item.height);
   const depth = parseInt(item.depth);
