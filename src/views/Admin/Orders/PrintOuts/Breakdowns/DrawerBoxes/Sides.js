@@ -1,4 +1,5 @@
 import Ratio from 'lb-ratio';
+import numQty from 'numeric-quantity'
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -8,8 +9,9 @@ export default (item, part, breakdowns) => {
 
   const b = breakdowns[0];
 
-  const height = item.height;
-  const depth = parseInt(item.depth);
+  const width = numQty(item.width);
+  const height = numQty(item.height);
+  const depth = numQty(item.depth);
   const sideDeduction = part.box_thickness.SIDE_DEDUCTION;
   const bottomWidthReduction = part.box_thickness.BOTTOM_WIDTH_DEDUCTION;
   const boxThickness = part.box_thickness.NAME;
