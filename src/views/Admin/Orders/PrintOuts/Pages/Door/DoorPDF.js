@@ -41,6 +41,9 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
       totals: {
         fontSize: 8,
         bold: true,
+      },
+      warrantyFont: {
+        fontSize: 7,
       }
     }
   };
