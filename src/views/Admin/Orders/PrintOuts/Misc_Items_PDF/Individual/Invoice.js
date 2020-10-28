@@ -156,6 +156,12 @@ export default (data, breakdowns) => {
         { text: `$${(balanceDue).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 15, 0, 0]
-    }
+    },
+    {
+      text: `Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com an in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product`,
+      style: 'warrantyFont',
+      alignment: 'center',
+      margin: [ 0, 25, 0, 0 ] 
+    },
   ];
 };
