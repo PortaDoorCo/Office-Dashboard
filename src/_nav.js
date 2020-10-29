@@ -73,7 +73,10 @@ export default {
     {
       name: 'Settings',
       url: '/settings',
-
+    },
+    {
+      name: 'Catalog ',
+      url: '/catalog',
     },
 
 
