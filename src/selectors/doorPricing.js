@@ -373,10 +373,19 @@ export const itemPriceSelector = createSelector(
                 let price = 0;
 
                 if (part.thickness.value === 0.75) {
-                  price = part.cope_design.UPCHARGE;
+                  if(part.cope_design){
+                    price = part.cope_design.UPCHARGE;
+                  } else {
+                    price = 0
+                  }
+                  
                 }
                 if (part.thickness.value === 1) {
-                  price = part.cope_design.UPCHARGE_THICK;
+                  if(part.cope_design){
+                    price = part.cope_design.UPCHARGE_THICK;
+                  } else {
+                    price = 0
+                  }
                 }
 
                 if(part.profile){
