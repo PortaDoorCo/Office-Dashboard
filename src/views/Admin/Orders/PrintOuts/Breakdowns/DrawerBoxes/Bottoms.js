@@ -16,9 +16,6 @@ export default (item, part, breakdowns) => {
   const height = numQty(item.height);
   const depth = numQty(item.depth);
 
-  console.log('bottoms width', width)
-  console.log('bottoms width', bottomWidthReduction)
-
   return {
     qty: parseInt(item.qty),
     measurement: `${fraction(eval(b.bottoms_width))} x ${fraction(eval(b.bottoms_depth))}`,

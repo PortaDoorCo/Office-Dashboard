@@ -56,8 +56,6 @@ export default (data, breakdowns) => {
     },
     data.part_list.map((i, index) => {
 
-      console.log("partttttttttt", i)
-
       const tableBody = [
         [
           { text: 'Item', style: 'fonts' },

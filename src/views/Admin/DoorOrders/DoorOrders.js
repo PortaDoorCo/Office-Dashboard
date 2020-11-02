@@ -196,8 +196,6 @@ class DoorOrders extends Component {
     } = this.props;
 
 
-    console.log(this.props.prices);
-
     return (
       <div className="animated fadeIn">
         <Row>

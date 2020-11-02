@@ -58,7 +58,7 @@ export const miscItemPriceSelector = createSelector(
   [miscItemsSelector],
   (misc ) => misc.map(i => {
     let price = 0;
-    console.log(i);
+
     if(i.category === 'preselect'){
       if(i.item) {
         price = i.item.Price;

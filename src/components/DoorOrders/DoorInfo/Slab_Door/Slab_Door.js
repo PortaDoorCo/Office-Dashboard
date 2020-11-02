@@ -40,7 +40,7 @@ class SlabDoor extends Component {
     return (
       <div>
         <Row>
-          <Col xs="3">
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -55,22 +55,7 @@ class SlabDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
-            <FormGroup>
-              <Label htmlFor="design">Design</Label>
-              <Field
-                name={`${part}.cope_design`}
-                component={renderDropdownListFilter}
-                data={cope_designs}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-
-          <Col xs="3">
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -85,7 +70,7 @@ class SlabDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="3">
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="applied_profile">Applied Profiles</Label>
               <Field

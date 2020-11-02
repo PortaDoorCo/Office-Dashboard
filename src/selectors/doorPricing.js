@@ -61,9 +61,9 @@ export const miscItemPriceSelector = createSelector(
   [miscItemsSelector],
   (misc) =>
     misc.map((i) => {
-      console.log('iiiiiiiiiiiiiii', i)
+
       let price = 0;
-      console.log(i);
+
       if (i.category === 'preselect') {
         if (i.price) {
           price = parseFloat(i.price);
@@ -605,9 +605,7 @@ export const itemPriceSelector = createSelector(
                   : 0;
             }
             if(part.orderType.value === 'Slab_Door'){
-              price = eval(pricer.door_pricing) + extraCost
-                ? eval(pricer.door_pricing) + extraCost
-                : 0;
+              price = ((width * height) / 144) > 2 ? ((((width * height) / 144) * wood) + (6.50)) : (((2) * wood) + (6.50))
             }
             else {
               price =
@@ -645,7 +643,7 @@ export const linePriceSelector = createSelector(
     parts.map((part, index) => {
       if (part.dimensions) {
         return part.dimensions.map((i, p) => {
-          console.log(item[index][p]);
+
           if (item[index][p]) {
             if (i.qty) {
               return item[index][p] * parseInt(i.qty);
