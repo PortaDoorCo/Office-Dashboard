@@ -25,7 +25,6 @@ const required = value => value ? undefined : 'Required';
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
 
   <div>
-    {console.log('valueeeeeee', value)}
     <DateTimePicker
       onChange={onChange}
       time={showTime}
@@ -122,7 +121,6 @@ class JobInfo extends Component {
 
     const dateDifference = moment(new Date()).businessDiff(moment(formState && formState.job_info && formState.job_info.DueDate));
 
-    console.log('date difference', dateDifference);
 
     return (
 

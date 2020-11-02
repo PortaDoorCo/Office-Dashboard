@@ -103,7 +103,6 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
 
   const registerChange = (index, e) => {
     const value = e.target.value;
-    console.log('valuuueee', value);
     setChangeValue(value);
   };
 
@@ -149,8 +148,6 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
     }
 
   };
-
-  console.log('change value', changeValue);
 
   return (
     formState ?

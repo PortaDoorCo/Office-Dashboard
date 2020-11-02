@@ -8,7 +8,7 @@ import { miscItemPriceSelector, miscItemLinePriceSelector, miscTotalSelector } f
 
 let Inputs = props => {
   const { fields, misc_items, formState, prices, linePrices, miscTotal, onChange } = props;
-  console.log(linePrices);
+
 
 
   const changeMiscItem = (e, index) => {
@@ -140,7 +140,7 @@ class MiscItems extends Component {
 
   render() {
     const { misc_items, formState, prices, linePrices, miscTotal } = this.props;
-    console.log('prices', prices);
+
     return (
       <div>
         <h3>Misc Items</h3>

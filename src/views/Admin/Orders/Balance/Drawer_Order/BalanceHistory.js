@@ -25,7 +25,6 @@ class BalanceHistory extends Component {
     let updated_total = total;
 
     const balance_history_paid = formState && formState.balance_history.slice(0).map((i, index) => {
-      console.log('iiiiiiiii',i);
       updated_total = updated_total - parseFloat(i.balance_paid);
       return updated_total;
     });
@@ -52,7 +51,6 @@ class BalanceHistory extends Component {
               {(formState && formState.balance_history) ? formState.balance_history.slice(0).map((i, index) => (
                 
                 <tr key={index}>
-                  {console.log(i)}
                   <td>{moment(i.date).format('dddd, MMMM Do YYYY, h:mm:ss a')}</td>
                   <th>${balance_history_paid[index].toFixed(2)}</th>
                   <td>-${i.balance_paid.toFixed(2)}</td>
