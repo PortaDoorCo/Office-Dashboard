@@ -55,7 +55,7 @@ const orderType = [
     value: 'Two_Piece'
   },
   {
-    name: 'Slab Type Door',
+    name: 'Slab Type DF',
     value: 'Slab_Door'
   }
 ];

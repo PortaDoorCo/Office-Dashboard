@@ -73,16 +73,20 @@ export default (data,breakdowns) => {
       margin: [0, 0, 0, 20]
     },
     data.part_list.map((i, index) => {
-      return [
-        {
-          columns: [
-            { text: `Linear Feet of ${i.dimensions[0].leftStile}" ${i.woodtype.NAME} - ${i.thickness.name}" Thickness Needed: ${LinearFT(i.dimensions)}`, style: 'fonts', width: 400 },
-            { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-            { text: `${((parseFloat(LinearFT(i.dimensions)) * 0.2) + parseFloat(LinearFT(i.dimensions))).toFixed(2)}`, style: 'fonts', width: 30 }
-          ],
-
-        }
-      ];
+      if(i.dimensions[0].leftStile) {
+        return [
+          {
+            columns: [
+              { text: `Linear Feet of ${i.dimensions[0].leftStile}" ${i.woodtype.NAME} - ${i.thickness.name}" Thickness Needed: ${LinearFT(i.dimensions)}`, style: 'fonts', width: 400 },
+              { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+              { text: `${((parseFloat(LinearFT(i.dimensions)) * 0.2) + parseFloat(LinearFT(i.dimensions))).toFixed(2)}`, style: 'fonts', width: 60 }
+            ],
+  
+          }
+        ];
+      } else {
+        return []
+      }
     }),
     {
       columns: [
@@ -105,7 +109,7 @@ export default (data,breakdowns) => {
             columns: [
               { text: `Board Feet of ${i.woodtype.NAME} - ${i.thickness.name}" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT(i.dimensions)}`, style: 'fonts', width: 400 },
               { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-              { text: equation, style: 'fonts', width: 30 }
+              { text: equation, style: 'fonts', width: 60 }
             ],
 
           }
@@ -157,7 +161,7 @@ export default (data,breakdowns) => {
             columns: [
               { text: `Board Feet of ${i.woodtype.NAME} -  - ${i.thickness.name}" Thickness Panel Material Needed: ${equation.toFixed(2)}`, style: 'fonts', width: 400 },
               { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-              { text: ((equation * 0.2) + equation).toFixed(2), style: 'fonts', width: 30 }
+              { text: ((equation * 0.2) + equation).toFixed(2), style: 'fonts', width: 60 }
             ],
           }
         ];
