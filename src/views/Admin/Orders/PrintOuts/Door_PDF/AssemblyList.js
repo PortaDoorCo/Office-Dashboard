@@ -77,7 +77,7 @@ export default (data, breakdowns) => {
               { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
               { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
               { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
-              { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
+              { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
               { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
             ]
           );
@@ -111,7 +111,7 @@ export default (data, breakdowns) => {
                   style: 'fonts'
                 },
                 {
-                  text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'} ${i.lite ? '- ' + i.lite.NAME : ''}`,
+                  text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : ''} ${i.lite ? '- ' + i.lite.NAME : ''}`,
                   style: 'fonts'
                 },
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' }
