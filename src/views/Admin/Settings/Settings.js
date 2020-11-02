@@ -45,9 +45,7 @@ const Settings = (props) => {
                     <DropdownItem onClick={() => setSelection('miter_door')}>
                       Miter Door
                     </DropdownItem>
-                    <DropdownItem onClick={() => setSelection('slab_type_door')}>
-                      Slab Type Door
-                    </DropdownItem>
+
                     {/* <DropdownItem onClick={() => setSelection('one_piece_door')}>
                       One Piece Door
                     </DropdownItem> */}
@@ -68,7 +66,11 @@ const Settings = (props) => {
                     <DropdownItem onClick={() => setSelection('miter_df')}>
                       Miter Design
                     </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('slab_type_door')}>
+                      Slab Type DF
+                    </DropdownItem>
                   </DropdownMenu>
+
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>

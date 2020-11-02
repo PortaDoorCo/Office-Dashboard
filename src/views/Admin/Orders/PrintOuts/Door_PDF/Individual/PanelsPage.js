@@ -89,7 +89,7 @@ export default (data, breakdowns) => {
                 alignment: 'left'
               },
               {
-                text: 'WOOD PANELS',
+                text: `${i.woodtype.NAME} PANELS`,
                 alignment: 'right',
                 style: 'woodtype'
               }

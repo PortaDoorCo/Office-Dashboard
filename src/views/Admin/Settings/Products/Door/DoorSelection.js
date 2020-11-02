@@ -50,7 +50,7 @@ const Selection = (props) => {
               <ProductCard title={'One Piece Door'} img={CopePNG} setPage={setSubPage} page={'cope'} />
             </Col>
             <Col>
-              <ProductCard title={'Slab Type Door'} img={mitre_PNG} setPage={setSubPage} page={'slab_type_door'} />
+              <ProductCard title={'Slab Type DF'} img={mitre_PNG} setPage={setSubPage} page={'slab_type_door'} />
             </Col>
           </Row>
         </Col>

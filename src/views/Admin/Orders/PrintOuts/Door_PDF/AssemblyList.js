@@ -3,6 +3,7 @@ import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 import Rails from '../Breakdowns/Doors/Rails/Rails';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import Size from '../Breakdowns/Doors/Size';
+import SlabSize from '../Breakdowns/Doors/SlabSize'
 
 
 export default (data, breakdowns) => {
@@ -55,6 +56,8 @@ export default (data, breakdowns) => {
     },
     data.part_list.map((i, index) => {
 
+      console.log("partttttttttt", i)
+
       const tableBody = [
         [
           { text: 'Item', style: 'fonts' },
@@ -67,19 +70,37 @@ export default (data, breakdowns) => {
         ]
       ];
 
-      i.dimensions.forEach((item, index) => {
-        tableBody.push(
-          [
-            { text: index + 1, style: 'fonts' },
-            { text: item.qty, style: 'fonts' },
-            { text: Size(item), style: 'fonts' },
-            { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
-            { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
-            { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
-            { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
-          ]
-        );
-      });
+      if(i.orderType.value === 'Slab_Door') {
+        i.dimensions.forEach((item, index) => {
+          tableBody.push(
+            [
+              { text: index + 1, style: 'fonts' },
+              { text: item.qty, style: 'fonts' },
+              { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
+              { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
+              { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
+              { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
+              { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
+            ]
+          );
+        });
+      } else {
+        i.dimensions.forEach((item, index) => {
+          tableBody.push(
+            [
+              { text: index + 1, style: 'fonts' },
+              { text: item.qty, style: 'fonts' },
+              { text: Size(item), style: 'fonts' },
+              { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
+              { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
+              { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
+              { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
+            ]
+          );
+        });
+      }
+
+
 
       return [
         {
@@ -118,7 +139,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 65, 100, 95, 95, 60],
+            widths: [22, 15, 70, 100, 95, 95, 60],
             body: tableBody
           },
           layout: 'lightHorizontalLines'
