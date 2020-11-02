@@ -26,7 +26,7 @@ export default (data, breakdowns) => {
       ]);
     });
 
-    if(i.orderType.value === 'One_Piece') {
+    if(i.orderType.value === 'One_Piece' || i.orderType.value === 'Slab_Door') {
       return null;
     } else {
       return [
