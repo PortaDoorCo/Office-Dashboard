@@ -75,14 +75,15 @@ export default data => {
         },
         {
           stack: [
-            { text: `PO: ${data.job_info.poNum.length>0 ? data.job_info.poNum : 'None'}`, alignment: 'right', margin: [0, 0, 0, 0] },
-            { text: `Ship To: ${data.job_info.customer.Company}`, style: 'fonts', alignment: 'right', margin: [0, 0, 0, 0] },
-            { text: `${data.job_info.Address1}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-            { text: `${data.job_info.Address2}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-            { text: `${data.job_info.City}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-            { text: `${data.job_info.Zip}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-            { text: `${data.companyprofile.Phone1}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-          ]
+            { text: `PO: ${data.job_info.poNum.length>0 ? data.job_info.poNum : 'None'}`, alignment: 'left', margin: [0, 0, 0, 0] },
+            { text: `Ship To: ${data.job_info.customer.Company}`, style: 'fonts', alignment: 'left', margin: [0, 0, 0, 0] },
+            { text: `${data.job_info.Address1}`, alignment: 'left', style: 'fonts', margin: [0, 0, 0, 0] },
+            { text: `${data.job_info.Address2}`, alignment: 'left', style: 'fonts', margin: [0, 0, 0, 0] },
+            { text: `${data.job_info.City}`, alignment: 'left', style: 'fonts', margin: [0, 0, 0, 0] },
+            { text: `${data.job_info.Zip}`, alignment: 'left', style: 'fonts', margin: [0, 0, 0, 0] },
+            { text: `${data.companyprofile.Phone1}`, alignment: 'left', style: 'fonts', margin: [0, 0, 0, 0] },
+          ],
+          margin: [120, 0, 0, 0]
         }        
       ],
       margin: [0, 10]
@@ -234,8 +235,8 @@ export default data => {
     {
       columns: [
         { text: data.misc_items.map(i => { return `(${i.qty ? i.qty : ''}) ${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`; }), style: 'fonts', width: 347 },
-        { text: data.misc_items.map(i => { return `$${i.price ? i.price: i.pricePer ? i.pricePer : ''} \n`; }), style: 'fonts', margin: [0, 0, 0, 0] },
-        { text: data.misc_items.map(i => { return `$${i.price ? i.price * parseFloat(i.qty) : i.pricePer ? parseFloat(i.pricePer) * parseFloat(i.qty) : ''} \n`; }), style: 'fonts', alignment: 'right' },
+        { text: data.misc_items.map(i => { return `$${i.price ? (i.price).toFixed : i.pricePer ? (parseFloat(i.pricePer)).toFixed(2) : ''} \n`; }), style: 'fonts', margin: [0, 0, 0, 0] },
+        { text: data.misc_items.map(i => { return `$${i.price ? (i.price * parseFloat(i.qty)).toFixed(2) : i.pricePer ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2) : ''} \n`; }), style: 'fonts', alignment: 'right' },
       ],
       margin: [0, 2, 0, 0],
     },
