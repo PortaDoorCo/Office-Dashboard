@@ -112,7 +112,7 @@ export default data => {
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
           { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
-          { text: `${(data.itemPrice[i][index]).toFixed(2)}`, style: 'fonts' },
+          { text: `${(data.linePrice[i][index] / parseInt(item.qty)).toFixed(2)}`, style: 'fonts' },
           { text: `${(data.linePrice[i][index]).toFixed(2)}`, style: 'fonts', alignment: 'right' },
         ]);
 
