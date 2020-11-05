@@ -91,8 +91,9 @@ class DrawerBoxInfo extends Component {
               </Col>
 
             </Row>
+
             <Row>
-              <Col xs="4">
+              <Col xs="6">
                 <FormGroup>
                   <Label htmlFor="box-bottoms">Box Bottom Thickness</Label>
                   <Field
@@ -105,23 +106,9 @@ class DrawerBoxInfo extends Component {
                     validate={required} />
                 </FormGroup>
               </Col>
-
-              <Col xs="4">
+              <Col xs="6">
                 <FormGroup>
-                  <Label htmlFor="notch-drill">Notch and Drill</Label>
-                  <Field
-                    name={`${part}.box_notch`}
-                    component={renderDropdownList}
-                    data={notchDrill}
-                    valueField="value"
-                    textField="NAME"
-                    edit={edit}
-                    validate={required} />
-                </FormGroup>
-              </Col>
-              <Col xs="4">
-                <FormGroup>
-                  <Label htmlFor="finish">Finish/Assembly</Label>
+                  <Label htmlFor="finish">Assembly</Label>
                   <Field
                     name={`${part}.box_finish`}
                     component={renderDropdownList}
