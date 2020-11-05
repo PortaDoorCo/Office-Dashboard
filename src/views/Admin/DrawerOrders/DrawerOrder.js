@@ -223,7 +223,7 @@ class DoorOrders extends Component {
           <Col xs="12" sm="12" md="12" lg="7">
             <Card>
               <CardHeader>
-                <strong>Door Order</strong>
+                <strong>Drawer Order</strong>
               </CardHeader>
               <CardBody>
                 <form
