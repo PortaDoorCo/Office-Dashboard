@@ -51,6 +51,7 @@ const initialState = {
 
   box_bottom_thickness: ['Loading'],
   box_finish: ['Loading'],
+  box_assembly: ['Loading'],
   box_notch: ['Loading'],
   box_thickness: ['Loading'],
   box_woodtypes: ['Loading'],

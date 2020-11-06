@@ -210,6 +210,7 @@ class DoorOrders extends Component {
       scoop,
       dividers,
       drawerFinishes,
+      drawerAssembly,
       customers,
       formState,
       address,
@@ -260,6 +261,7 @@ class DoorOrders extends Component {
                       formState={formState}
                       prices={prices}
                       subTotal={subTotal}
+                      drawerAssembly={drawerAssembly}
                     />
                   </Suspense>
 
@@ -391,6 +393,7 @@ const mapStateToProps = (state, prop) => ({
   boxBottoms: state.part_list.box_bottom_thickness,
   notchDrill: state.part_list.box_notch,
   drawerFinishes: state.part_list.box_finish,
+  drawerAssembly: state.part_list.box_assembly,
   scoop: state.part_list.box_scoop,
   dividers: state.part_list.dividers,
   customers: state.customers.customerDB,

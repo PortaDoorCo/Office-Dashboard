@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
   Row,
@@ -20,7 +19,7 @@ class DrawerBoxInfo extends Component {
 
 
   render() {
-    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState, edit } = this.props;
+    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState, edit, drawerAssembly } = this.props;
     return (
       <div>
         {fields.map((part, index) => (
@@ -91,9 +90,8 @@ class DrawerBoxInfo extends Component {
               </Col>
 
             </Row>
-
             <Row>
-              <Col xs="6">
+              <Col xs="3">
                 <FormGroup>
                   <Label htmlFor="box-bottoms">Box Bottom Thickness</Label>
                   <Field
@@ -106,19 +104,47 @@ class DrawerBoxInfo extends Component {
                     validate={required} />
                 </FormGroup>
               </Col>
-              <Col xs="6">
+
+              <Col xs="3">
                 <FormGroup>
-                  <Label htmlFor="finish">Assembly</Label>
+                  <Label htmlFor="notch-drill">Notch and Drill</Label>
                   <Field
-                    name={`${part}.box_finish`}
+                    name={`${part}.box_notch`}
                     component={renderDropdownList}
-                    data={drawerFinishes}
+                    data={notchDrill}
                     valueField="value"
                     textField="NAME"
                     edit={edit}
                     validate={required} />
                 </FormGroup>
               </Col>
+              <Col xs="3">
+                <FormGroup>
+                  <Label htmlFor="finish">Assembly</Label>
+                  <Field
+                    name={`${part}.box_assembly`}
+                    component={renderDropdownList}
+                    data={drawerAssembly}
+                    valueField="value"
+                    textField="NAME"
+                    edit={edit}
+                    validate={required} />
+                </FormGroup>
+              </Col>
+
+                <Col xs="3">
+                  <FormGroup>
+                    <Label htmlFor="finish">Finish</Label>
+                    <Field
+                      name={`${part}.box_finish`}
+                      component={renderDropdownList}
+                      data={drawerFinishes}
+                      valueField="value"
+                      textField="NAME"
+                      edit={edit}
+                      validate={required} />
+                  </FormGroup>
+                </Col>
             </Row>
 
             <Row className="mt-2">
