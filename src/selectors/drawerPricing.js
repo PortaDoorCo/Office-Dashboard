@@ -155,6 +155,7 @@ export const itemPriceSelector = createSelector(
 
       const wood = part.box_woodtype ? part.box_woodtype.STANDARD_GRADE : 0;
       const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
+      const assembly = part.box_assembly ? part.box_assembly.UPCHARGE : 0;
       const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
 
     
@@ -191,7 +192,7 @@ export const linePriceSelector = createSelector(
 
       const wood = part.box_woodtype ? part.box_woodtype.STANDARD_GRADE : 0;
       const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
-      const assembly = part.box_finish ? part.box_assembly.UPCHARGE : 0;
+      const assembly = part.box_assembly ? part.box_assembly.UPCHARGE : 0;
       const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
 
 
