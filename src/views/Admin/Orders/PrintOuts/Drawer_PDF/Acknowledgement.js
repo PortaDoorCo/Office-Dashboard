@@ -237,8 +237,8 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: data.misc_items.map(i => { return `(${i.qty ? i.qty : ''}) ${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`; }), style: 'fonts', width: 347 },
-        { text: data.misc_items.map(i => { return `$${i.price ? (i.price).toFixed : i.pricePer ? (parseFloat(i.pricePer)).toFixed(2) : ''} \n`; }), style: 'fonts', margin: [0, 0, 0, 0] },
-        { text: data.misc_items.map(i => { return `$${i.price ? (i.price * parseFloat(i.qty)).toFixed(2) : i.pricePer ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2) : ''} \n`; }), style: 'fonts', alignment: 'right' },
+        { text: data.misc_items.map(i => { return `$${i.price ? (i.price).toFixed(2) : i.pricePer ? (parseFloat(i.pricePer)).toFixed(2) : ''} \n`; }), style: 'fonts', margin: [0, 0, 0, 0] },
+        { text: data.misc_items.map(i => { return `$${i.price ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2) : i.pricePer ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2) : ''} \n`; }), style: 'fonts', alignment: 'right' },
       ],
       margin: [0, 2, 0, 0],
     },
