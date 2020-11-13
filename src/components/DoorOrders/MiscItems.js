@@ -136,39 +136,7 @@ let Inputs = props => {
 
 class MiscItems extends Component {
 
-  // componentDidUpdate(prevProps) {
-  //   const { formState } = this.props;
-  //   if (formState && formState.misc_items) {
-  //     if (formState.misc_items !== prevProps.formState.misc_items) {
-
-  //       const misc_items = formState.misc_items;
-
-  //       misc_items.forEach((i, index) => {
-  //         if (i.item) {
-
-  //           if (i.item.Price !== 0) {
-  //             this.props.dispatch(
-  //               change(
-  //                 'DoorOrder',
-  //                 `misc_items[${index}].price`,
-  //                 (i.item.Price)
-  //               )
-  //             );
-  //           } else {
-  //             return;
-  //           }
-
-  //         }
-
-  //       });
-
-  //     }
-  //   }
-  // }
-
   render() {
-    const { misc_items, formState, prices, linePrices, miscTotal } = this.props;
-
     return (
       <div>
         <h3>Misc Items</h3>
@@ -184,7 +152,7 @@ const mapStateToProps = state => ({
   formState: getFormValues('DoorOrder')(state),
   misc_items: state.misc_items.misc_items,
   prices: miscItemPriceSelector(state),
-  linePrices: miscItemLinePriceSelector(state),
+   
   miscTotal: miscTotalSelector(state)
 });
 
