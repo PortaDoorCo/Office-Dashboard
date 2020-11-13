@@ -100,11 +100,7 @@ class CopeDoor extends Component {
     } else {
       return null;
     }
-
-
   }
-
-
 
   render() {
     const {
@@ -276,6 +272,7 @@ const mapStateToProps = (state, props) => ({
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
+  
 
 });
 

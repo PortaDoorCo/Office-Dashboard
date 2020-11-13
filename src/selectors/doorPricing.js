@@ -155,9 +155,10 @@ const totalBalanceDue = (state) => {
 };
 
 export const itemPriceSelector = createSelector(
-  [partListSelector, pricingSelector],
-  (parts, pricer) =>
+  [partListSelector, pricingSelector, discountSelector],
+  (parts, pricer, discount) =>
     parts.map((part, index) => {
+
       let design = 0;
 
       if (part.cope_design) {
@@ -238,6 +239,8 @@ export const itemPriceSelector = createSelector(
             const openings = parseInt(i.openings);
             const qty = parseInt(i.qty);
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
+            const panelsH = parseInt(i.panelsH)
+            const panelsW = parseInt(i.panelsW)
 
             const price = i.price ? parseFloat(i.price) : 0;
 
@@ -259,6 +262,8 @@ export const itemPriceSelector = createSelector(
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
+            const panelsH = parseInt(i.panelsH)
+            const panelsW = parseInt(i.panelsW)
 
             const lites = i.lite ? i.lite.UPCHARGE : 0;
 
@@ -645,6 +650,8 @@ export const itemPriceSelector = createSelector(
       }
     })
 );
+
+
 
 export const linePriceSelector = createSelector(
   [partListSelector, pricingSelector, itemPriceSelector],
