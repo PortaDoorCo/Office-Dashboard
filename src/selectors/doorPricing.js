@@ -239,8 +239,8 @@ export const itemPriceSelector = createSelector(
             const openings = parseInt(i.openings);
             const qty = parseInt(i.qty);
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
-            const panelsH = parseInt(i.panelsH)
-            const panelsW = parseInt(i.panelsW)
+            const panelsH = parseInt(i.panelsH) > 1 ? parseInt(i.panelsH) : 1
+            const panelsW = parseInt(i.panelsW) > 1 ? parseInt(i.panelsW) : 1
 
             const price = i.price ? parseFloat(i.price) : 0;
 
