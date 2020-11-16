@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem, Row, Col, Button, Card, CardBody, CardTitle
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Woodtype from '../../Door/Attributes/Woodtypes';
+import Designs from './attributes/Designs';
 import Edges from '../../Door/Attributes/Edges';
 import Profiles from '../../Door/Attributes/Profiles';
 import Panels from '../../Door/Attributes/Panels';
@@ -72,15 +73,16 @@ const Cope = (props) => {
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}
                       >
-                        Edges
+                        Designs
                       </NavLink>
                     </NavItem>
+
                     <NavItem>
                       <NavLink
                         className={classnames({ active: activeTab === '3' })}
                         onClick={() => { toggle('3'); }}
                       >
-                        Profiles
+                        Edges
                       </NavLink>
                     </NavItem>
                     <NavItem>
@@ -88,13 +90,21 @@ const Cope = (props) => {
                         className={classnames({ active: activeTab === '4' })}
                         onClick={() => { toggle('4'); }}
                       >
-                        Panels
+                        Profiles
                       </NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink
                         className={classnames({ active: activeTab === '5' })}
                         onClick={() => { toggle('5'); }}
+                      >
+                        Panels
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '6' })}
+                        onClick={() => { toggle('6'); }}
                       >
                         Applied Profiles
                       </NavLink>
@@ -129,15 +139,18 @@ const Cope = (props) => {
                 <Woodtype />
               </TabPane>
               <TabPane tabId="2">
-                <Edges edges={props.edges} />
+                <Designs />
               </TabPane>
               <TabPane tabId="3">
-                <Profiles profiles={props.profiles} />
+                <Edges edges={props.edges} />
               </TabPane>
               <TabPane tabId="4">
-                <Panels panels={props.panels} />
+                <Profiles profiles={props.profiles} />
               </TabPane>
               <TabPane tabId="5">
+                <Panels panels={props.panels} />
+              </TabPane>
+              <TabPane tabId="6">
                 <AppliedProfiles applied_profiles={props.applied_profiles} />
               </TabPane>
             </TabContent>

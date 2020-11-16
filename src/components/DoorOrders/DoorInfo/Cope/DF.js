@@ -100,6 +100,7 @@ class CopeDF extends Component {
     const {
       part,
       woodtypes,
+      designs,
       edges,
       profiles,
       panels,
@@ -133,11 +134,11 @@ class CopeDF extends Component {
 
           <Col xs="4">
             <FormGroup>
-              <Label htmlFor="panel">Panel</Label>
+              <Label htmlFor="design">Design</Label>
               <Field
-                name={`${part}.panel`}
+                name={`${part}.cope_df_design`}
                 component={renderDropdownListFilter}
-                data={panels}
+                data={designs}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -145,6 +146,8 @@ class CopeDF extends Component {
               />
             </FormGroup>
           </Col>
+
+
 
           <Col xs="4">
             <FormGroup>
@@ -164,7 +167,22 @@ class CopeDF extends Component {
         </Row>
         <Row>
 
-          <Col xs="6">
+        <Col xs="4">
+            <FormGroup>
+              <Label htmlFor="panel">Panel</Label>
+              <Field
+                name={`${part}.panel`}
+                component={renderDropdownListFilter}
+                data={panels}
+                valueField="value"
+                textField="NAME"
+                validate={required}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
+
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="edge">Profile</Label>
               <Field
@@ -182,7 +200,7 @@ class CopeDF extends Component {
 
 
 
-          <Col xs="6">
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -242,6 +260,7 @@ class CopeDF extends Component {
 
 const mapStateToProps = state => ({
   woodtypes: state.part_list.woodtypes,
+  designs: state.part_list.cope_df_designs,
   edges: state.part_list.edges,
   finishes: state.part_list.finish,
   panels: state.part_list.panels,

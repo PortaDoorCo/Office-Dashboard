@@ -170,6 +170,15 @@ export const itemPriceSelector = createSelector(
               : 0;
       }
 
+      if (part.cope_df_design) {
+        design =
+          part.cope_df_design && part.thickness.value === 0.75
+            ? part.cope_df_design.UPCHARGE
+            : part.cope_df_design && part.thickness.value === 1
+              ? part.cope_df_design.UPCHARGE_THICK
+              : 0;
+      }
+
       if (part.miter_design) {
         design =
           part.miter_design && part.thickness.value === 0.75

@@ -26,6 +26,7 @@ const initialState = {
   casings: ['Loading'],
   chair_rails: ['Loading'],
   cope_designs: ['Loading'],
+  cope_df_designs: ['Loading'],
   crown_mouldings: ['Loading'],
   edge_slabs: ['Loading'],
   edges: ['Loading'],
