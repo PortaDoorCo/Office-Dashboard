@@ -18,7 +18,7 @@ let Inputs = props => {
         (e.Price)
       )
     );
-  }
+  };
 
 
 
@@ -152,7 +152,7 @@ const mapStateToProps = state => ({
   formState: getFormValues('DoorOrder')(state),
   misc_items: state.misc_items.misc_items,
   prices: miscItemPriceSelector(state),
-   
+  linePrices: miscItemLinePriceSelector(state),
   miscTotal: miscTotalSelector(state)
 });
 

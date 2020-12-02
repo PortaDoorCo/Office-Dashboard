@@ -248,8 +248,8 @@ export const itemPriceSelector = createSelector(
             const openings = parseInt(i.openings);
             const qty = parseInt(i.qty);
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
-            const panelsH = parseInt(i.panelsH) > 1 ? parseInt(i.panelsH) : 1
-            const panelsW = parseInt(i.panelsW) > 1 ? parseInt(i.panelsW) : 1
+            const panelsH = parseInt(i.panelsH) > 1 ? parseInt(i.panelsH) : 1;
+            const panelsW = parseInt(i.panelsW) > 1 ? parseInt(i.panelsW) : 1;
 
             const price = i.price ? parseFloat(i.price) : 0;
 
@@ -271,8 +271,8 @@ export const itemPriceSelector = createSelector(
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
-            const panelsH = parseInt(i.panelsH)
-            const panelsW = parseInt(i.panelsW)
+            const panelsH = parseInt(i.panelsH);
+            const panelsW = parseInt(i.panelsW);
 
             const lites = i.lite ? i.lite.UPCHARGE : 0;
 
@@ -390,7 +390,7 @@ export const itemPriceSelector = createSelector(
                   if(part.cope_design){
                     price = part.cope_design.UPCHARGE;
                   } else {
-                    price = 0
+                    price = 0;
                   }
                   
                 }
@@ -398,7 +398,7 @@ export const itemPriceSelector = createSelector(
                   if(part.cope_design){
                     price = part.cope_design.UPCHARGE_THICK;
                   } else {
-                    price = 0
+                    price = 0;
                   }
                 }
 
@@ -628,7 +628,7 @@ export const itemPriceSelector = createSelector(
                   : 0;
             }
             if(part.orderType.value === 'Slab_Door'){
-              price = ((width * height) / 144) > 1 ? ((((width * height) / 144) * wood) + (6.50 + edge)) : (((1) * wood) + (6.50 + edge))
+              price = ((width * height) / 144) > 1 ? ((((width * height) / 144) * wood) + (6.50 + edge)) : (((1) * wood) + (6.50 + edge));
             }
             else {
               price =
@@ -726,7 +726,7 @@ export const totalDiscountSelector = createSelector(
 export const taxSelector = createSelector(
   [subTotalSelector, taxRate, totalDiscountSelector, discountSelector],
   (subTotal, tax, discount, dis) => {
-    return (subTotal.reduce((acc, item) => acc + item, 0) - discount) * tax
+    return (subTotal.reduce((acc, item) => acc + item, 0) - discount) * tax;
   }
 );
 
