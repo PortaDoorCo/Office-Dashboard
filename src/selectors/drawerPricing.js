@@ -263,9 +263,9 @@ export const totalDiscountSelector = createSelector(
 );
 
 export const taxSelector = createSelector(
-  [subTotalSelector, taxRate, totalDiscountSelector],
-  (subTotal, tax, discount) => {
-    return (subTotal.reduce((acc, item) => acc + item, 0) - discount) * tax
+  [subTotalSelector, taxRate, totalDiscountSelector, miscTotalSelector],
+  (subTotal, tax, discount, misc) => {
+    return ((subTotal.reduce((acc, item) => acc + item, 0) - discount) + misc) * tax;
   }
 );
 
