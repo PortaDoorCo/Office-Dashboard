@@ -426,21 +426,21 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                   className="btn-circle"
                   onClick={(e) =>
                     (
-                      (formState.part_list[formState.part_list.length - 1].construction.value === 'MT' && formState.part_list[formState.part_list.length - 1].mt_design) ?
+                      (formState.part_list[formState.part_list.length - 1].construction.value === 'MT' && formState.part_list[formState.part_list.length - 1].mt_df_design) ?
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
                           leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
+                            formState.part_list[formState.part_list.length - 1].mt_df_design.MID_RAIL_MINIMUMS
                           ),
                           rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].mt_design.MID_RAIL_MINIMUMS
+                            formState.part_list[formState.part_list.length - 1].mt_df_design.MID_RAIL_MINIMUMS
                           ),
                           topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].mt_design.DF_Reduction
+                            formState.part_list[formState.part_list.length - 1].mt_df_design.DF_Reduction
                           ),
                           bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].mt_design.DF_Reduction
+                            formState.part_list[formState.part_list.length - 1].mt_df_design.DF_Reduction
                           ),
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,

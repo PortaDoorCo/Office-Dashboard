@@ -40,7 +40,7 @@ class MT_DF extends Component {
             change(
               'DoorOrder',
               `${p}.dimensions[${index}].leftStile`,
-              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+              fraction(part.mt_df_design ? part.mt_df_design.MID_RAIL_MINIMUMS  : 0)
             )
           );
 
@@ -48,7 +48,7 @@ class MT_DF extends Component {
             change(
               'DoorOrder',
               `${p}.dimensions[${index}].rightStile`,
-              fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS  : 0)
+              fraction(part.mt_df_design ? part.mt_df_design.MID_RAIL_MINIMUMS  : 0)
             )
           );
 
@@ -57,7 +57,7 @@ class MT_DF extends Component {
               change(
                 'DoorOrder',
                 `${p}.dimensions[${index}].topRail`,
-                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+                fraction(part.mt_df_design ? part.mt_df_design.MID_RAIL_MINIMUMS : 0)
               )
             );
   
@@ -66,7 +66,7 @@ class MT_DF extends Component {
               change(
                 'DoorOrder',
                 `${p}.dimensions[${index}].bottomRail`,
-                fraction(part.mt_design ? part.mt_design.MID_RAIL_MINIMUMS : 0)
+                fraction(part.mt_df_design ? part.mt_df_design.MID_RAIL_MINIMUMS : 0)
               )
             );
           } else {
@@ -74,7 +74,7 @@ class MT_DF extends Component {
               change(
                 'DoorOrder',
                 `${p}.dimensions[${index}].topRail`,
-                fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
+                fraction(part.mt_df_design ? part.mt_df_design.DF_Reduction : 0)
               )
             );
   
@@ -83,7 +83,7 @@ class MT_DF extends Component {
               change(
                 'DoorOrder',
                 `${p}.dimensions[${index}].bottomRail`,
-                fraction(part.mt_design ? part.mt_design.DF_Reduction : 0)
+                fraction(part.mt_df_design ? part.mt_df_design.DF_Reduction : 0)
               )
             );
           }
