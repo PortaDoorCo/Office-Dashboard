@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Woodtype from '../../Door/Attributes/Woodtypes';
 import Designs from './attributes/Designs';
 import Edges from '../../Door/Attributes/Edges';
-import Profiles from '../../Door/Attributes/Profiles';
+import Profiles from '../Attributes/Profiles';
 import Panels from '../../Door/Attributes/Panels';
 import AppliedProfiles from '../../Door/Attributes/Applied_Profiles';
 import { updateProduct } from '../../../../../../redux/part_list/actions';
