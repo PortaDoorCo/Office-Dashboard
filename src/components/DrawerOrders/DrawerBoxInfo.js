@@ -132,19 +132,19 @@ class DrawerBoxInfo extends Component {
                 </FormGroup>
               </Col>
 
-                <Col xs="3">
-                  <FormGroup>
-                    <Label htmlFor="finish">Finish</Label>
-                    <Field
-                      name={`${part}.box_finish`}
-                      component={renderDropdownList}
-                      data={drawerFinishes}
-                      valueField="value"
-                      textField="NAME"
-                      edit={edit}
-                      validate={required} />
-                  </FormGroup>
-                </Col>
+              <Col xs="3">
+                <FormGroup>
+                  <Label htmlFor="finish">Finish</Label>
+                  <Field
+                    name={`${part}.box_finish`}
+                    component={renderDropdownList}
+                    data={drawerFinishes}
+                    valueField="value"
+                    textField="NAME"
+                    edit={edit}
+                    validate={required} />
+                </FormGroup>
+              </Col>
             </Row>
 
             <Row className="mt-2">
