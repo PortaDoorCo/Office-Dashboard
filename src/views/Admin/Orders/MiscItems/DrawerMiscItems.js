@@ -17,7 +17,7 @@ let Inputs = props => {
         (e.Price)
       )
     );
-  }
+  };
 
 
 

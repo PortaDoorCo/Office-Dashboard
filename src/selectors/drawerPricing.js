@@ -41,10 +41,13 @@ const partListSelector = state => {
   }
 };
 
-const miscItemsSelector = state => {
+const miscItemsSelector = (state) => {
   const orders = state.form.DrawerOrder;
   if (orders) {
-    if ((!state.form.DrawerOrder.values && !state.form.DrawerOrder.values.misc_items.length > 0)) {
+    if (
+      !state.form.DrawerOrder.values &&
+      !state.form.DrawerOrder.values.misc_items.length > 0
+    ) {
       return [];
     } else {
       return state.form.DrawerOrder.values.misc_items;
@@ -56,46 +59,46 @@ const miscItemsSelector = state => {
 
 export const miscItemPriceSelector = createSelector(
   [miscItemsSelector],
-  (misc ) => misc.map(i => {
-    let price = 0;
+  (misc) =>
+    misc.map((i) => {
 
-    if(i.category === 'preselect'){
-      if(i.item) {
-        price = i.item.Price;
-      }else{
-        price = 0;
-      }
-    }else {
-      if(i.pricePer){
-        price = parseFloat(i.pricePer);
+      let price = 0;
+
+      if (i.category === 'preselect') {
+        if (i.price) {
+          price = parseFloat(i.price);
+        } else {
+          price = 0;
+        }
       } else {
-        price = 0;
+        if (i.pricePer) {
+          price = parseFloat(i.pricePer);
+        } else {
+          price = 0;
+        }
       }
-    }
-    return price;
-  })
+      return price;
+    })
 );
-
-
 
 export const miscItemLinePriceSelector = createSelector(
   [miscItemsSelector, miscItemPriceSelector],
   (parts, pricer, item) =>
     parts.map((i, index) => {
       let price = 0;
-      if(i.category === 'preselect'){
-        if(i.item) {
-          if(i.qty){
+      if (i.category === 'preselect') {
+        if (i.item) {
+          if (i.qty) {
             price = pricer[index] * parseFloat(i.qty);
           } else {
             price = 0;
           }
-        }else{
+        } else {
           price = 0;
         }
-      }else {
-        if(i.pricePer){
-          if(i.qty){
+      } else {
+        if (i.pricePer) {
+          if (i.qty) {
             price = pricer[index] * parseFloat(i.qty);
           } else {
             price = 0;
@@ -110,7 +113,7 @@ export const miscItemLinePriceSelector = createSelector(
 
 export const miscTotalSelector = createSelector(
   [miscItemLinePriceSelector],
-  (misc) => (misc.reduce((acc, item) => acc + item, 0))
+  (misc) => misc.reduce((acc, item) => acc + item, 0)
 );
 
 
