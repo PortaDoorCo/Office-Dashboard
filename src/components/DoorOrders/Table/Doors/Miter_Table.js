@@ -124,10 +124,10 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
   const changeFraming = (index, e) => {
     if (changeValue) {
 
-      setLeftStileWidth(fraction(numQty(changeValue)))
-      setRightStileWidth(fraction(numQty(changeValue)))
-      setTopRailWidth(fraction(numQty(changeValue)))
-      setBottomRailWidth(fraction(numQty(changeValue)))
+      setLeftStileWidth(fraction(numQty(changeValue)));
+      setRightStileWidth(fraction(numQty(changeValue)));
+      setTopRailWidth(fraction(numQty(changeValue)));
+      setBottomRailWidth(fraction(numQty(changeValue)));
 
       dispatch(
         change(
@@ -481,21 +481,21 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                   className="btn-circle"
                   onClick={(e) =>
                     (
-                      (formState.part_list[formState.part_list.length - 1].construction.value === 'M' && formState.part_list[formState.part_list.length - 1].miter_design) ?
+                      (formState.part_list[i].construction.value === 'M' && formState.part_list[i].miter_design) ?
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
                           leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].miter_design.PROFILE_WIDTH
+                            formState.part_list[i].miter_design.PROFILE_WIDTH
                           ),
                           rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].miter_design.PROFILE_WIDTH
+                            formState.part_list[i].miter_design.PROFILE_WIDTH
                           ),
                           topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].miter_design.PROFILE_WIDTH
+                            formState.part_list[i].miter_design.PROFILE_WIDTH
                           ),
                           bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].miter_design.PROFILE_WIDTH
+                            formState.part_list[i].miter_design.PROFILE_WIDTH
                           ),
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,
@@ -523,8 +523,8 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
               {subTotal[i] ? (
                 <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                  <RenderPriceHolder input={'0.00'} edit={true} />
-                )}
+                <RenderPriceHolder input={'0.00'} edit={true} />
+              )}
             </Col>
           </Row>
         </Fragment>
