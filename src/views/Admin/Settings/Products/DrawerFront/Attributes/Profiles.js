@@ -203,7 +203,7 @@ const Profiles = (props) => {
                 </Col>
                 <Col>
                   <Label for="5/4_Price">DF Reduction</Label>
-                  <Input value={product.DF_Reduction} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                  <Input value={product.DF_Reduction} name="DF_Reduction" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -308,7 +308,7 @@ const Profiles = (props) => {
                 </Col>
                 <Col>
                   <Label for="5/4_Price">DF Reduction</Label>
-                  <Input value={product.DF_Reduction} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                  <Input value={product.DF_Reduction} name="DF_Reduction" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
