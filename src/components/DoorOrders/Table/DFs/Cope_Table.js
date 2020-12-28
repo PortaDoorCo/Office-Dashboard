@@ -426,21 +426,21 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                   className="btn-circle"
                   onClick={(e) =>
                     (
-                      (formState.part_list[formState.part_list.length - 1].construction.value === 'Cope' && formState.part_list[formState.part_list.length - 1].profile) ?
+                      (formState.part_list[i].construction.value === 'Cope' && formState.part_list[i].profile) ?
                         fields.push({
                           panelsH: 1,
                           panelsW: 1,
                           leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                            formState.part_list[i].profile.MINIMUM_STILE_WIDTH
                           ),
                           rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].profile.MINIMUM_STILE_WIDTH
+                            formState.part_list[i].profile.MINIMUM_STILE_WIDTH
                           ),
                           topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
+                            formState.part_list[i].profile.DF_Reduction
                           ),
                           bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
-                            formState.part_list[formState.part_list.length - 1].profile.DF_Reduction
+                            formState.part_list[i].profile.DF_Reduction
                           ),
                           horizontalMidRailSize: 0,
                           verticalMidRailSize: 0,
