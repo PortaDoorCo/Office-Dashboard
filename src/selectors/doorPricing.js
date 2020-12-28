@@ -349,10 +349,19 @@ export const itemPriceSelector = createSelector(
                 let price = 0;
 
                 if (part.thickness.value === 0.75) {
-                  price = 10;
+                  if(part.cope_df_design){
+                    price = part.cope_df_design.UPCHARGE;
+                  } else {
+                    price = 0;
+                  }
+                  
                 }
                 if (part.thickness.value === 1) {
-                  price = 18;
+                  if(part.cope_df_design){
+                    price = part.cope_df_design.UPCHARGE_THICK;
+                  } else {
+                    price = 0;
+                  }
                 }
 
                 //leftStile
@@ -432,10 +441,10 @@ export const itemPriceSelector = createSelector(
                     calc('bottomRail', part.profile.MINIMUM_STILE_WIDTH, price);
                   }
                 } else {
-                  calc('leftStile', 2.375, price);
-                  calc('rightStile', 2.375, price);
-                  calc('topRail', 2.375, price);
-                  calc('bottomRail', 2.375, price);
+                  calc('leftStile', 2.3125, price);
+                  calc('rightStile', 2.3125, price);
+                  calc('topRail', 2.3125, price);
+                  calc('bottomRail', 2.3125, price);
                 }
               }
             }

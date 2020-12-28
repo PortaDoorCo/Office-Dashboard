@@ -74,7 +74,7 @@ class CopeDF extends Component {
               change(
                 'DoorOrder',
                 `${p}.dimensions[${index}].topRail`,
-                fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+                fraction(part.profile && part.profile.DF_Reduction ? (part.profile.DF_Reduction) : 1.5)
               )
             );
 
@@ -83,7 +83,7 @@ class CopeDF extends Component {
               change(
                 'DoorOrder',
                 `${p}.dimensions[${index}].bottomRail`,
-                fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+                fraction(part.profile && part.profile.DF_Reduction ? (part.profile.DF_Reduction) : 1.5)
               )
             );
           }
@@ -167,7 +167,7 @@ class CopeDF extends Component {
         </Row>
         <Row>
 
-        <Col xs="4">
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field

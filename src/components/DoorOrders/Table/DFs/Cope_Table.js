@@ -115,10 +115,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   const changeFraming = (index, e) => {
     if (changeValue) {
 
-      setLeftStileWidth(fraction(numQty(changeValue)))
-      setRightStileWidth(fraction(numQty(changeValue)))
-      setTopRailWidth(fraction(numQty(changeValue)))
-      setBottomRailWidth(fraction(numQty(changeValue)))
+      setLeftStileWidth(fraction(numQty(changeValue)));
+      setRightStileWidth(fraction(numQty(changeValue)));
+      setTopRailWidth(fraction(numQty(changeValue)));
+      setBottomRailWidth(fraction(numQty(changeValue)));
 
       dispatch(
         change(
@@ -467,8 +467,8 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               {subTotal[i] ? (
                 <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                  <RenderPriceHolder input={'0.00'} edit={true} />
-                )}
+                <RenderPriceHolder input={'0.00'} edit={true} />
+              )}
             </Col>
           </Row>
         </Fragment>
