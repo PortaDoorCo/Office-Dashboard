@@ -383,14 +383,14 @@ export const itemPriceSelector = createSelector(
                   part.profile &&
                   part.profile.MINIMUM_STILE_WIDTH !== numQty(i.topRail)
                 ) {
-                  calc('topRail', part.profile.MINIMUM_STILE_WIDTH, price);
+                  calc('topRail', part.profile.DF_Reduction ? part.profile.DF_Reduction : 1.5, price);
                 }
                 //bottomRail
                 if (
                   part.profile &&
                   part.profile.MINIMUM_STILE_WIDTH !== numQty(i.bottomRail)
                 ) {
-                  calc('bottomRail', part.profile.MINIMUM_STILE_WIDTH, price);
+                  calc('bottomRail', part.profile.DF_Reduction ? part.profile.DF_Reduction : 1.5, price);
                 }
               } else {
                 let price = 0;
