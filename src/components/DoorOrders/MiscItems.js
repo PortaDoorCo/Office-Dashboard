@@ -48,12 +48,14 @@ let Inputs = props => {
                       onChange={(e) => changeMiscItem(e, index)}
                       valueField="value"
                       textField="NAME"
+                      
                     /> :
                     <Field
                       name={`${table}.item2`}
                       component={renderField}
                       valueField="value"
                       textField="NAME"
+                      
                     />
                   }
                 </td>
@@ -69,6 +71,7 @@ let Inputs = props => {
                           type="text"
                           component={renderField}
                           label="price"
+                          
                         />
                       </InputGroup>
                     </td>
@@ -83,7 +86,7 @@ let Inputs = props => {
                   </>
                   :
                   <>
-                    <td style={{ width: '150px' }}><Field name={`${table}.pricePer`} component={renderPrice} type="text" /></td>
+                    <td style={{ width: '150px' }}><Field name={`${table}.pricePer`} component={renderPrice} type="text" required /></td>
                     <td style={{ width: '150px' }}>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
