@@ -133,10 +133,6 @@ export default (data, breakdowns) => {
                   style: 'fonts'
                 },
                 {
-                  text: `${part.box_finish.NAME}`,
-                  style: 'fonts'
-                },
-                {
                   text: `${part.box_notch.NAME === 'Yes' ? 'Notch and Drilled' : ''}`,
                   style: 'fonts'
                 }
