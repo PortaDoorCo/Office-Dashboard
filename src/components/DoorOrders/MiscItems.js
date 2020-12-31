@@ -115,7 +115,8 @@ let Inputs = props => {
             <Button color="primary" className="mt-3" onClick={() => fields.push({
               category: 'custom',
               qty: 1,
-              price: 0
+              price: 0,
+              pricePer: 0
             })}>Custom Item</Button>
           </>
         </Col>
