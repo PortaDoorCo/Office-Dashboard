@@ -23,15 +23,15 @@ export default data => {
 
   const miscTotal = data.misc_items.map(i => {
     if(i.category === 'preselect'){
-      return parseFloat(i.qty) * parseFloat(i.price)
+      return parseFloat(i.qty) * parseFloat(i.price);
     } else {
-      return parseFloat(i.qty) * parseFloat(i.pricePer)
+      return i.pricePer ? parseFloat(i.qty) * parseFloat(i.pricePer) : 0;
     }
-  })
+  });
 
-  const discountTotal = (subTotal * (data.discount / 100))
+  const discountTotal = (subTotal * (data.discount / 100));
 
-  const discountSubTotal = subTotal - (subTotal * (data.discount / 100))
+  const discountSubTotal = subTotal - (subTotal * (data.discount / 100));
 
   return [
     {
@@ -50,7 +50,7 @@ export default data => {
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? "Rush" : data.job_info.Sample ? 'Sample' : '', alignment: 'right', style: 'rushFonts' },
+            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', style: 'rushFonts' },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
             { text: `Ship Via: ${data.job_info.ShippingMethod ? data.job_info.ShippingMethod.NAME : ' '}`, alignment: 'right' },
@@ -235,8 +235,8 @@ export default data => {
     {
       columns: [
         { text: data.misc_items.map(i => { return `(${i.qty ? i.qty : ''}) ${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`; }), style: 'fonts', width: 347 },
-        { text: data.misc_items.map(i => { return `$${i.price ? (parseFloat(i.price)).toFixed(2) : i.pricePer ? (parseFloat(i.pricePer)).toFixed(2) : ''} \n`; }), style: 'fonts', margin: [0, 0, 0, 0] },
-        { text: data.misc_items.map(i => { return `$${i.price ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2) : i.pricePer ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2) : ''} \n`; }), style: 'fonts', alignment: 'right' },
+        { text: data.misc_items.map(i => { return `$${i.price ? (parseFloat(i.price)).toFixed(2) : i.pricePer ? (parseFloat(i.pricePer)).toFixed(2) : 0} \n`; }), style: 'fonts', margin: [0, 0, 0, 0] },
+        { text: data.misc_items.map(i => { return `$${i.price ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2) : i.pricePer ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2) : 0} \n`; }), style: 'fonts', alignment: 'right' },
       ],
       margin: [0, 2, 0, 0],
     },
@@ -274,7 +274,7 @@ export default data => {
       margin: [0, 15, 0, 0]
     },
     {
-      text: `Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product`,
+      text: 'Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product',
       style: 'warrantyFont',
       alignment: 'center',
       margin: [ 0, 25, 0, 0 ] 
