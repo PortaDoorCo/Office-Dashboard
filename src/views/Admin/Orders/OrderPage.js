@@ -75,9 +75,9 @@ import CustomerCopyDrawerPDF from './PrintOuts/Pages/Drawer/CustomerCopyPDF';
 
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
-import Door_Conversation_Notes from './Notes/DoorOrder/Conversation_Notes'
-import Drawer_Conversation_Notes from './Notes/DrawerOrder/Conversation_Notes'
-import Misc_Conversation_Notes from './Notes/MiscItems/Conversation_Notes'
+import Door_Conversation_Notes from './Notes/DoorOrder/Conversation_Notes';
+import Drawer_Conversation_Notes from './Notes/DrawerOrder/Conversation_Notes';
+import Misc_Conversation_Notes from './Notes/MiscItems/Conversation_Notes';
 
 import Cookies from 'js-cookie';
 
@@ -210,6 +210,23 @@ class OrderPage extends Component {
               });
             });
 
+            const miterPromiseArr1 = selectedOrder.part_list.filter(i => i.miter_design && i.miter_design.photo && i.miter_design.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.miter_design.photo.url, (result) => {
+                  resolve(result);
+                });
+              });
+            });
+
+            const MT_PromiseArr1 = selectedOrder.part_list.filter(i => i.mt_design && i.mt_design.photo && i.mt_design.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.mt_design.photo.url, (result) => {
+                  resolve(result);
+                });
+              });
+            });
+
+
             const panelsPromiseArr1 = selectedOrder.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.panel.photo.url, (result) => {
@@ -228,19 +245,23 @@ class OrderPage extends Component {
 
             let edges1;
             let moulds1;
+            let miter1;
+            let mt_1;
             let panels1;
             let appliedProfiles1;
 
             try {
               edges1 = await Promise.all(edgesPromiseArr1);
               moulds1 = await Promise.all(mouldsPromiseArr1);
+              miter1 = await Promise.all(miterPromiseArr1);
+              mt_1 = await Promise.all(MT_PromiseArr1);
               panels1 = await Promise.all(panelsPromiseArr1);
               appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
             } catch (err) {
               console.log('errrrrrr', err);
             }
 
-            DoorPDF(data, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
+            DoorPDF(data, edges1, moulds1, miter1, mt_1, panels1, appliedProfiles1, breakdowns);
             this.setState({ selectedOption: [] });
             break;
           case 'CustomerCopy':
@@ -293,6 +314,22 @@ class OrderPage extends Component {
               });
             });
 
+            const miterPromiseArr = selectedOrder.part_list.filter(i => i.miter_design && i.miter_design.photo && i.miter_design.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.miter_design.photo.url, (result) => {
+                  resolve(result);
+                });
+              });
+            });
+
+            const MT_PromiseArr = selectedOrder.part_list.filter(i => i.mt_design && i.mt_design.photo && i.mt_design.photo.url).map(i => {
+              return new Promise((resolve, reject) => {
+                toDataUrl(i.mt_design.photo.url, (result) => {
+                  resolve(result);
+                });
+              });
+            });
+
             const panelsPromiseArr = selectedOrder.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
               return new Promise((resolve, reject) => {
                 toDataUrl(i.panel.photo.url, (result) => {
@@ -311,12 +348,16 @@ class OrderPage extends Component {
 
             let edges;
             let moulds;
+            let miter;
+            let mt;
             let panels;
             let appliedProfiles;
 
             try {
               edges = await Promise.all(edgesPromiseArr);
               moulds = await Promise.all(mouldsPromiseArr);
+              miter = await Promise.all(miterPromiseArr);
+              mt = await Promise.all(MT_PromiseArr);
               panels = await Promise.all(panelsPromiseArr);
               appliedProfiles = await Promise.all(appliedProfilePromiseArr);
             } catch (err) {
@@ -324,7 +365,7 @@ class OrderPage extends Component {
             }
 
 
-            ProfilesPDF(data, edges, moulds, panels, appliedProfiles, breakdowns);
+            ProfilesPDF(data, edges, moulds, miter, mt, panels, appliedProfiles, breakdowns);
             this.setState({ selectedOption: [] });
             break;
           case 'QC':
@@ -634,7 +675,7 @@ class OrderPage extends Component {
                     <Card>
                       <CardBody>
                         <h2>Conversation Notes</h2>
-                      {selectedOrder && selectedOrder.orderType === 'Door Order'
+                        {selectedOrder && selectedOrder.orderType === 'Door Order'
                           ?
                           <Door_Conversation_Notes
                             toggleBalance={this.toggleBalance}
