@@ -7,9 +7,8 @@ import {
   Label
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
-
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../RenderInputs/renderInputs';
+import { renderDropdownListFilter, renderField } from '../../../RenderInputs/renderInputs';
 import Cope_Table from '../../Table/DFs/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
@@ -105,7 +104,6 @@ class CopeDF extends Component {
       profiles,
       panels,
       applied_moulds,
-      finishes,
       isValid,
       index,
       part_list,

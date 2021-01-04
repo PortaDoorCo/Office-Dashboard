@@ -76,7 +76,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
+          fraction(numQty(leftStileWidth))
         )
       );
 
@@ -84,7 +84,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(part.mt_design ? (part.mt_design.MID_RAIL_MINIMUMS) : 0)
+          fraction(numQty(leftStileWidth))
         )
       );
     } else {
@@ -118,8 +118,6 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
 
       setLeftStileWidth(fraction(numQty(changeValue)));
       setRightStileWidth(fraction(numQty(changeValue)));
-      setTopRailWidth(fraction(numQty(changeValue)));
-      setBottomRailWidth(fraction(numQty(changeValue)));
 
       dispatch(
         change(
@@ -137,21 +135,6 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
         ),
       );
 
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(numQty(changeValue))
-        ),
-      );
-
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(numQty(changeValue))
-        ),
-      );
     }
 
   };
