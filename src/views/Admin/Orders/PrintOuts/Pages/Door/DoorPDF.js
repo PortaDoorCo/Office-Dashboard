@@ -6,11 +6,9 @@ import RailsPage from '../../Door_PDF/RailsPage';
 import PanelsPage from '../../Door_PDF/PanelsPage';
 import MaterialsList from '../../Door_PDF/MaterialsList';
 import QC_Checklist from '../../Door_PDF/QC_Checklist';
-import Invoice from '../../Door_PDF/Invoice';
-import Acknowledgement from '../../Door_PDF/Acknowledgement';
 import Profiles from '../../Door_PDF/Profiles';
 
-export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
+export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
@@ -24,7 +22,7 @@ export default (data, edges, moulds, panels, appliedProfiles, breakdowns) => {
       PanelsPage(data, breakdowns),
       MaterialsList(data, breakdowns),
       QC_Checklist(data, breakdowns),
-      Profiles(data, edges, moulds, panels, appliedProfiles, breakdowns),
+      Profiles(data, edges, moulds, miter, mt, panels, appliedProfiles, breakdowns),
     ],
     styles: {
       woodtype: {
