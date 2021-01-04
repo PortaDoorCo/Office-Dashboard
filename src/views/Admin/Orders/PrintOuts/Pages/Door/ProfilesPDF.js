@@ -2,7 +2,7 @@ import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import Profiles from '../../Door_PDF/Individual/Profiles';
 
-export default (data, edges, moulds, panels, appliedProfiles,) => {
+export default (data, edges, moulds, miter, mt, panels, appliedProfiles,) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
@@ -11,7 +11,7 @@ export default (data, edges, moulds, panels, appliedProfiles,) => {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: [
-      Profiles(data, edges, moulds, panels, appliedProfiles,),
+      Profiles(data, edges, moulds, miter, mt, panels, appliedProfiles),
     ],
     styles: {
       woodtype: {
