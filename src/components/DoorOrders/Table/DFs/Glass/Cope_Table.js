@@ -77,7 +77,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+          fraction(numQty(leftStileWidth))
         )
       );
 
@@ -85,7 +85,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+          fraction(numQty(leftStileWidth))
         )
       );
     } else {
@@ -117,8 +117,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
       setLeftStileWidth(fraction(numQty(changeValue)));
       setRightStileWidth(fraction(numQty(changeValue)));
-      setTopRailWidth(fraction(numQty(changeValue)));
-      setBottomRailWidth(fraction(numQty(changeValue)));
 
       dispatch(
         change(
@@ -132,22 +130,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].rightStile`,
-          fraction(numQty(changeValue))
-        ),
-      );
-
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(numQty(changeValue))
-        ),
-      );
-
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].bottomRail`,
           fraction(numQty(changeValue))
         ),
       );
