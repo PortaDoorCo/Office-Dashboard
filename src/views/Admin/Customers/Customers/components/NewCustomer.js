@@ -37,31 +37,11 @@ handleChange = e => {
 };
 
 submit = async (values, e) => {
+
   const data = {
-    Company: values.Company,
-    Contact: values.Contact,
-    EMAIL: values.EMAIL,
-    PaymentMethod: values.PaymentMethod.NAME,
+    ...values,
     Ship_Via: values.Ship_Via.NAME,
-    sale: values.sale.id,
-    TaxRate: values.TaxRate,
     PMT_TERMS: values.PMT_TERMS.NAME,
-    Address1: values.Address1,
-    Address2: values.Address2,
-    City: values.City,
-    State: values.State,
-    Zip: values.Zip,
-    Phone1: values.Phone1,
-    Fax: values.Fax,
-    Shipping_Address1: values.Shipping_Address1,
-    Shipping_Address2: values.Shipping_Address2,
-    Shipping_City: values.Shipping_City,
-    Shipping_State: values.Shipping_State,
-    Shipping_Zip: values.Shipping_Zip,
-    Shipping_Phone: values.Shipping_Phone,
-    Notes: values.Notes,
-    Taxable: values.Taxable,
-    Discount: values.Discount
   };
 
   await this.props.submitCustomer(data, cookie);
@@ -76,7 +56,6 @@ render() {
     salesReps,
     shippingMethods,
     edit,
-    paymentTypes,
     paymentTerms
   } = this.props;
 
@@ -96,7 +75,7 @@ render() {
             </Row>
 
             <Row>
-              <Col sm="4">
+              <Col sm="6">
                 <FormGroup>
                   <Label htmlFor="companyName">Company Name</Label>
                   <Field
@@ -109,9 +88,9 @@ render() {
                   />
                 </FormGroup>
               </Col>
-              <Col sm="4">
+              <Col sm="6">
                 <FormGroup>
-                  <Label htmlFor="full-name">Full Name</Label>
+                  <Label htmlFor="full-name">Contact Name</Label>
                   <Field
                     name={'Contact'}
                     type="text"
@@ -122,39 +101,10 @@ render() {
                   />
                 </FormGroup>
               </Col>
-              <Col sm="4">
-                <FormGroup>
-                  <Label htmlFor="full-name">Email</Label>
-                  <Field
-                    name={'EMAIL'}
-                    type="text"
-                    component={renderField}
-                    label="company"
-                    
-                    edit={edit}
-                  />
-                </FormGroup>
-              </Col>
             </Row>
 
             <Row>
-              <Col sm="4">
-                <FormGroup>
-                  <Label htmlFor="companyName">Payment Method</Label>
-                  <Field
-                    name={'PaymentMethod'}
-                    type="text"
-                    component={renderDropdownList}
-                    data={paymentTypes}
-                    valueField="NAME"
-                    textField="NAME"
-                    label="company"
-                    validate={required}
-                    edit={edit}
-                  />
-                </FormGroup>
-              </Col>
-              <Col sm="4">
+              <Col sm="6">
                 <FormGroup>
                   <Label htmlFor="full-name">Shipping Method</Label>
                   <Field
@@ -168,7 +118,7 @@ render() {
                   />
                 </FormGroup>
               </Col>
-              <Col sm="4">
+              <Col sm="6">
                 <FormGroup>
                   <Label htmlFor="full-name">Sales Rep</Label>
                   <Field
@@ -200,7 +150,7 @@ render() {
                   />
                 </FormGroup>
               </Col>
-              <Col sm="2">
+              <Col sm="3">
                 <FormGroup>
                   <Label htmlFor="full-name">Sales Tax (%)</Label>
                   <Field
@@ -213,17 +163,7 @@ render() {
                   />
                 </FormGroup>
               </Col>
-              <Col sm="2">
-                <FormGroup>
-                  <Label htmlFor="companyName">Taxable?</Label>
-                  <Field
-                    name={'Taxable'}
-                    type="text"
-                    component={renderCheckboxToggle}
-                    edit={edit}
-                  />
-                </FormGroup>
-              </Col>
+
               <Col sm="3">
                 <FormGroup>
                   <Label htmlFor="full-name">Discount (%)</Label>
@@ -237,8 +177,127 @@ render() {
                   />
                 </FormGroup>
               </Col>
+
+              <Col sm="2">
+                <FormGroup>
+                  <Label htmlFor="companyName">Taxable?</Label>
+                  <Field
+                    name={'Taxable'}
+                    type="text"
+                    component={renderCheckboxToggle}
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
             </Row>
 
+            <hr />
+
+
+            <Row>
+              <Col xs="12">
+                <h6>Phone</h6>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col sm="3">
+                <FormGroup>
+                  <Label htmlFor="phone">Office</Label>
+                  <Field
+                    name={'Phone1'}
+                    type="text"
+                    component={renderField}
+                    label="company"
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+              <Col sm="3">
+                <FormGroup>
+                  <Label htmlFor="phone">Mobile</Label>
+                  <Field
+                    name={'Phone2'}
+                    type="text"
+                    component={renderField}
+                    label="company"
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+
+              <Col sm="3">
+                <FormGroup>
+                  <Label htmlFor="phone">Fax Number</Label>
+                  <Field
+                    name={'Fax'}
+                    type="text"
+                    component={renderField}
+                    label="fax"
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+
+              <Col sm="3">
+                <FormGroup>
+                  <Label htmlFor="phone">Other</Label>
+                  <Field
+                    name={'Phone3'}
+                    type="text"
+                    component={renderField}
+                    label="company"
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs="12">
+                <h6>Email</h6>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col sm="4">
+                <FormGroup>
+                  <Label htmlFor="phone">Email 1</Label>
+                  <Field
+                    name={'EMAIL'}
+                    type="text"
+                    component={renderField}
+                    label="company"
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+              <Col sm="4">
+                <FormGroup>
+                  <Label htmlFor="phone">Email 2</Label>
+                  <Field
+                    name={'EMAIL2'}
+                    type="text"
+                    component={renderField}
+                    label="company"
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+              <Col sm="4">
+                <FormGroup>
+                  <Label htmlFor="phone">Email 3</Label>
+                  <Field
+                    name={'EMAIL3'}
+                    type="text"
+                    component={renderField}
+                    label="company"
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            
             <hr />
 
             <Row>
@@ -277,7 +336,7 @@ render() {
             </Row>
 
             <Row>
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="city">City</Label>
                   <Field
@@ -290,7 +349,7 @@ render() {
                   />
                 </FormGroup>
               </Col>
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="state">State</Label>
                   <Field
@@ -303,7 +362,7 @@ render() {
                   />
                 </FormGroup>
               </Col>
-              <Col xs="3">
+              <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="zipcode">Zip Code</Label>
                   <Field
@@ -316,34 +375,8 @@ render() {
                   />
                 </FormGroup>
               </Col>
-              <Col xs="3">
-                <FormGroup>
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Field
-                    name={'Phone1'}
-                    type="text"
-                    component={renderField}
-                    label="company"
-                    edit={edit}
-                  />
-                </FormGroup>
-              </Col>
             </Row>
 
-            <Row>
-              <Col xs="3">
-                <FormGroup>
-                  <Label htmlFor="phone">Fax Number</Label>
-                  <Field
-                    name={'Fax'}
-                    type="text"
-                    component={renderField}
-                    label="fax"
-                    edit={edit}
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
 
             <hr />
 
@@ -420,7 +453,7 @@ render() {
               </Col>
               <Col xs="3">
                 <FormGroup>
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone">Shipping Number</Label>
                   <Field
                     name={'Shipping_Phone'}
                     type="text"
