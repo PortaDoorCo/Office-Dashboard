@@ -117,6 +117,7 @@ export default (data, breakdowns) => {
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' },
               ]
             },
+            { text: `Notes: ${i.notes}`, style: 'fontsBold' },
             {
               stack: [
                 { text: `Thickness: ${i.thickness ? i.thickness.name : ''}"`, style: 'fonts' },
