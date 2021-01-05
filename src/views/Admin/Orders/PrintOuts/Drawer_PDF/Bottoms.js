@@ -26,7 +26,7 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? "Rush" : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
           ]
@@ -101,7 +101,8 @@ export default (data, breakdowns) => {
           columns: [
             {
               stack: [
-                { text: `${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`, style: 'woodtype' }
+                { text: `${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`, style: 'woodtype' },
+                { text: `Notes: ${i.notes}`, style: 'fontsBold' }
               ]
             },
             {
