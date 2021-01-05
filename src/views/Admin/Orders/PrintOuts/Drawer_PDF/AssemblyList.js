@@ -34,7 +34,7 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? "Rush" : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
           ]
@@ -75,7 +75,7 @@ export default (data, breakdowns) => {
                     text: `Drawer Box ${i.box_thickness.NAME}`,
                     style: 'fonts'
                   },
-                  { text: `${i.box_woodtype.NAME}`, style: 'woodtype' }
+                  { text: `${i.box_woodtype.NAME}`, style: 'woodtype' },
                 ]
               },
               {
@@ -97,6 +97,7 @@ export default (data, breakdowns) => {
               }
             ]
           },
+          { text: `Notes: ${i.notes}`, style: 'fontsBold' },
           {
             canvas: [
               { type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }
