@@ -120,23 +120,34 @@ class DrawerOrder extends Component {
     };
 
 
+    // const order = {
+    //   part_list: values.part_list,
+    //   job_info: jobInfo,
+    //   Rush: values.job_info.Rush,
+    //   Sample: values.job_info.Sample,
+    //   companyprofile: values.job_info.customer.id,
+    //   linePrice: prices,
+    //   itemPrice: itemPrice,
+    //   subTotals: subTotal,
+    //   tax: tax,
+    //   total: total,
+    //   discount: values.discount,
+    //   balance_paid: values.balance_paid,
+    //   balance_due: balance,
+    //   misc_items: values.misc_items,
+    //   dueDate: values.job_info.DueDate,
+    //   Taxable: values.Taxable,
+    // };
+
     const order = {
-      part_list: values.part_list,
+      ...values,
       job_info: jobInfo,
-      Rush: values.job_info.Rush,
-      Sample: values.job_info.Sample,
-      companyprofile: values.job_info.customer.id,
       linePrice: prices,
       itemPrice: itemPrice,
       subTotals: subTotal,
       tax: tax,
       total: total,
-      discount: values.discount,
-      balance_paid: values.balance_paid,
       balance_due: balance,
-      misc_items: values.misc_items,
-      dueDate: values.job_info.DueDate,
-      Taxable: values.Taxable,
     };
 
     const orderId = values.id;
@@ -327,7 +338,7 @@ const mapStateToProps = (state, props) => ({
   order: state.Orders.selectedOrder,
 
   woodtypes: state.part_list.box_woodtypes,
-  boxBottomWoodtype: state.part_list.box_woodtypes,
+  boxBottomWoodtype: state.part_list.box_bottom_woodtypes,
   boxThickness: state.part_list.box_thickness,
   boxBottoms: state.part_list.box_bottom_thickness,
   notchDrill: state.part_list.box_notch,
