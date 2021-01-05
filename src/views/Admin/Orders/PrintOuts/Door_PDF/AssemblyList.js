@@ -115,7 +115,6 @@ export default (data, breakdowns) => {
                   style: 'fonts'
                 },
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' },
-                { text: `Notes: ${i.notes}`, style: 'woodtype' }
               ]
             },
             {
