@@ -3,9 +3,6 @@
     "buildpacks": [
         {
             "url" : "https://github.com/heroku/heroku-buildpack-nodejs"
-        },
-        {
-            "url": "https://buildpack-registry.s3.amazonaws.com/buildpacks/mars/create-react-app.tgz"
         }
     ],
     "env": {},
