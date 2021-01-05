@@ -76,7 +76,6 @@ export default (data, breakdowns) => {
                     style: 'fonts'
                   },
                   { text: `${i.box_woodtype.NAME}`, style: 'woodtype' },
-                  { text: `Notes: ${i.notes}`, style: 'fontsBold' }
                 ]
               },
               {
@@ -95,6 +94,17 @@ export default (data, breakdowns) => {
                   }
                 ],
                 alignment: 'right'
+              }
+            ]
+          },
+          {
+            columns: [
+              {
+                stack: [
+                  { text: 'Notes:', style: 'fontsBold', decoration: 'underline' },
+                  { text: i.notes, style: 'fonts' },
+                ],
+                margin: [0, 0, 0, 10]
               }
             ]
           },
