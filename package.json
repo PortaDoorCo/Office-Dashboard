@@ -138,7 +138,6 @@
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
-  "bin": "./bin/bin.js",
   "bugs": {
     "url": "https://github.com/coreui/coreui-pro-react-admin-template-starter/issues"
   },
