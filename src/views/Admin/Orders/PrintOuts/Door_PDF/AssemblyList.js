@@ -3,7 +3,7 @@ import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 import Rails from '../Breakdowns/Doors/Rails/Rails';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import Size from '../Breakdowns/Doors/Size';
-import SlabSize from '../Breakdowns/Doors/SlabSize'
+import SlabSize from '../Breakdowns/Doors/SlabSize';
 
 
 export default (data, breakdowns) => {
@@ -30,7 +30,7 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? "Rush" : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
             { text: `Ship Via: ${data.job_info.ShippingMethod ? data.job_info.ShippingMethod.NAME : ''}`, alignment: 'right' }
@@ -114,9 +114,10 @@ export default (data, breakdowns) => {
                   text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : ''} ${i.lite ? '- ' + i.lite.NAME : ''}`,
                   style: 'fonts'
                 },
-                { text: `${i.woodtype.NAME}`, style: 'woodtype' }
+                { text: `${i.woodtype.NAME}`, style: 'woodtype' },
               ]
             },
+            { text: `Notes: ${i.notes}`, style: 'fontsBold' },
             {
               stack: [
                 { text: `Thickness: ${i.thickness ? i.thickness.name : ''}"`, style: 'fonts' },
