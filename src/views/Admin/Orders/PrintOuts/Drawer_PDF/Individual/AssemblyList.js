@@ -95,6 +95,7 @@ export default (data, breakdowns) => {
               }
             ]
           },
+          { text: `Notes: ${i.notes}`, style: 'fontsBold' },
           {
             canvas: [
               { type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }
