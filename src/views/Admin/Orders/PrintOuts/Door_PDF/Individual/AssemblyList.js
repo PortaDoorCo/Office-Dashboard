@@ -3,7 +3,7 @@ import Stiles from '../../Breakdowns/Doors/Stiles/Stiles';
 import Rails from '../../Breakdowns/Doors/Rails/Rails';
 import Panels from '../../Breakdowns/Doors/Panels/Panels';
 import Size from '../../Breakdowns/Doors/Size';
-import SlabSize from '../../Breakdowns/Doors/SlabSize'
+import SlabSize from '../../Breakdowns/Doors/SlabSize';
 
 
 export default (data, breakdowns) => {
@@ -30,7 +30,7 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? "Rush" : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
             { text: `Ship Via: ${data.job_info.ShippingMethod ? data.job_info.ShippingMethod.NAME : ''}`, alignment: 'right' }
@@ -65,7 +65,6 @@ export default (data, breakdowns) => {
           { text: 'Stile', style: 'fonts' },
           { text: 'Rails', style: 'fonts' },
           { text: 'Panels WxH', style: 'fonts' },
-          { text: 'Item Notes', style: 'fonts' },
         ]
       ];
 
@@ -75,11 +74,10 @@ export default (data, breakdowns) => {
             [
               { text: index + 1, style: 'fonts' },
               { text: item.qty, style: 'fonts' },
-              { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
+              { text: `${SlabSize(item, i.edge.LIP_FACTOR)} ${item.notes ? item.notes : ''}`, style: 'fonts' },
               { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
               { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
               { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
-              { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
             ]
           );
         });
@@ -89,11 +87,10 @@ export default (data, breakdowns) => {
             [
               { text: index + 1, style: 'fonts' },
               { text: item.qty, style: 'fonts' },
-              { text: Size(item), style: 'fonts' },
+              { text: `${Size(item)} \n ${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
               { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
               { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
               { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
-              { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
             ]
           );
         });
@@ -116,6 +113,7 @@ export default (data, breakdowns) => {
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' }
               ]
             },
+            { text: `Notes: ${i.notes ? i.notes : ''}`, style: 'fontsBold' },
             {
               stack: [
                 { text: `Thickness: ${i.thickness ? i.thickness.name : ''}"`, style: 'fonts' },
@@ -136,21 +134,10 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 65, 100, 95, 95, 60],
+            widths: [22, 15, 100, 110, 110, 110],
             body: tableBody
           },
           layout: 'lightHorizontalLines'
-        },
-        {
-          columns: [
-            {
-              stack: [
-                { text: 'Notes:', style: 'fontsBold', decoration: 'underline' },
-                { text: i.notes, style: 'fonts' },
-              ],
-              margin: [0, 0, 0, 10]
-            }
-          ]
         },
         {
           canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
