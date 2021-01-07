@@ -73,7 +73,7 @@ export default (data, breakdowns) => {
                     style: 'fonts'
                   },
                   { text: `${i.box_woodtype.NAME}`, style: 'woodtype' },
-                  { text: `Notes: ${i.notes}`, style: 'fontsBold' }
+                  { text: `Notes: ${i.notes ? i.notes : ''}`, style: 'fontsBold' },
                 ]
               },
               {
@@ -83,11 +83,7 @@ export default (data, breakdowns) => {
                     style: 'fonts'
                   },
                   {
-                    text: `${i.box_finish.NAME}`,
-                    style: 'fonts'
-                  },
-                  {
-                    text: `${i.box_notch.NAME === 'Yes' ? 'Notch and Drilled' : ''}`,
+                    text: `${i.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
                     style: 'fonts'
                   }
                 ],

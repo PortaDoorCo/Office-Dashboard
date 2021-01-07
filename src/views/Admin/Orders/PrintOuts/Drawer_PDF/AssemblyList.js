@@ -85,11 +85,7 @@ export default (data, breakdowns) => {
                     style: 'fonts'
                   },
                   {
-                    text: `${i.box_finish.NAME}`,
-                    style: 'fonts'
-                  },
-                  {
-                    text: `${i.box_notch.NAME === 'Yes' ? 'Notch and Drilled' : ''}`,
+                    text: `${i.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
                     style: 'fonts'
                   }
                 ],
@@ -97,7 +93,7 @@ export default (data, breakdowns) => {
               }
             ]
           },
-          { text: `Notes: ${i.notes}`, style: 'fontsBold' },
+          { text: `Notes: ${i.notes ? i.notes : ''}`, style: 'fontsBold' },
           {
             canvas: [
               { type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }
