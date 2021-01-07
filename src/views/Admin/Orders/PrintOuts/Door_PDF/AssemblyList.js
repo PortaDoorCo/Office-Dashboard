@@ -64,7 +64,6 @@ export default (data, breakdowns) => {
           { text: 'Stile', style: 'fonts' },
           { text: 'Rails', style: 'fonts' },
           { text: 'Panels WxH', style: 'fonts' },
-          { text: 'Item Notes', style: 'fonts' },
         ]
       ];
 
@@ -74,11 +73,10 @@ export default (data, breakdowns) => {
             [
               { text: index + 1, style: 'fonts' },
               { text: item.qty, style: 'fonts' },
-              { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
+              { text: `${SlabSize(item, i.edge.LIP_FACTOR)} ${item.notes ? item.notes : ''}`, style: 'fonts' },
               { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
               { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
               { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
-              { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
             ]
           );
         });
@@ -88,11 +86,10 @@ export default (data, breakdowns) => {
             [
               { text: index + 1, style: 'fonts' },
               { text: item.qty, style: 'fonts' },
-              { text: Size(item), style: 'fonts' },
-              { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
+              { text: `${Size(item)} \n ${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
+              { text: `${Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} `; })} \n`, style: 'fonts' },
               { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
               { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
-              { text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
             ]
           );
         });
@@ -117,7 +114,7 @@ export default (data, breakdowns) => {
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' },
               ]
             },
-            { text: `Notes: ${i.notes}`, style: 'fontsBold' },
+            { text: `Notes: ${i.notes ? i.notes : ''}`, style: 'fontsBold' },
             {
               stack: [
                 { text: `Thickness: ${i.thickness ? i.thickness.name : ''}"`, style: 'fonts' },
@@ -138,7 +135,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 70, 100, 95, 95, 60],
+            widths: [22, 15, 100, 110, 110, 110],
             body: tableBody
           },
           layout: 'lightHorizontalLines'

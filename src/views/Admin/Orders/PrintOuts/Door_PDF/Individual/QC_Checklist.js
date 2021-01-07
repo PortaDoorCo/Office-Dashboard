@@ -19,7 +19,7 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? "Rush" : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
           ]
@@ -62,7 +62,7 @@ export default (data, breakdowns) => {
           { text: Size(item), style: 'fonts' },
           { text: '[      ]', style: 'fonts' },
           { text: 'N/A', style: 'fonts' },
-          { text: '    ', style: 'fonts' },
+          { text: i.notes ? i.notes : '', style: 'fonts' },
         ]);
       });
 
@@ -95,7 +95,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 75, 100, 100, '*'],
+            widths: [22, 15, 110, 100, 100, '*'],
             body: tableBody
           },
           layout: 'lightHorizontalLines'
