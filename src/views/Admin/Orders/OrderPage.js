@@ -489,7 +489,7 @@ class OrderPage extends Component {
           toggle={props.toggle}
           className="modal-lg"
         >
-          <ModalHeader toggle={props.toggle}>Order</ModalHeader>
+          <ModalHeader toggle={props.toggle}>Order #{selectedOrder.orderNum}</ModalHeader>
           <ModalBody>
             {this.props.edit ? (
               <div>
