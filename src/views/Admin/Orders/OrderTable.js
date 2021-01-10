@@ -91,21 +91,46 @@ const status = [
     value: 'In Production',
   },
   {
-    label: 'Station 1',
-    value: 'Station 1',
+    label: 'Cut',
+    value: 'Cut',
   },
   {
-    label: 'Station 2',
-    value: 'Station 2',
+    label: 'Framing',
+    value: 'Framing',
   },
   {
-    label: 'Station 3',
-    value: 'Station 3',
+    label: 'Assembled',
+    value: 'Assembled',
   },
   {
-    label: 'Station 4',
-    value: 'Station 4',
+    label: 'Tenon',
+    value: 'Tenon',
   },
+  {
+    label: 'Panels',
+    value: 'Panels',
+  },
+  {
+    label: 'Assembled',
+    value: 'Assembled',
+  },
+  {
+    label: 'Sanded',
+    value: 'Sanded',
+  },
+  {
+    label: 'Lipped',
+    value: 'Lipped',
+  },
+  {
+    label: 'Inspected',
+    value: 'Inspected',
+  },
+  {
+    label: 'Paint Shop',
+    value: 'Paint Shop',
+  },
+
   {
     label: 'Complete',
     value: 'Complete',
