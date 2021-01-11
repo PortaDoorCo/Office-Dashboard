@@ -10,20 +10,25 @@ import {
   CardBody,
   Card,
   Table,
-  Collapse
+  Collapse,
 } from 'reactstrap';
-import {
-  getFormValues,
-} from 'redux-form';
+import { getFormValues } from 'redux-form';
 import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateOrder, loadOrders, deleteOrder, setSelectedOrder, uploadFilesToOrder } from '../../../redux/orders/actions';
+import {
+  updateOrder,
+  loadOrders,
+  deleteOrder,
+  setSelectedOrder,
+  uploadFilesToOrder,
+} from '../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
 import Print from '@material-ui/icons/Print';
 import Attachment from '@material-ui/icons/Attachment';
 import List from '@material-ui/icons/List';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
 import Dns from '@material-ui/icons/Dns';
@@ -31,6 +36,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import Chat from '@material-ui/icons/Chat';
 
+import { CSVLink, CSVDownload } from 'react-csv';
 
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
@@ -49,8 +55,6 @@ import moment from 'moment';
 import MiscItemsAcknowledgement from './PrintOuts/Pages/MiscItems/AcknowledgementPDF';
 import MiscItemsInvoice from './PrintOuts/Pages/MiscItems/InvoicePDF';
 import MiscItemsPDF from './PrintOuts/Pages/MiscItems/MiscItemsPDF';
-
-
 
 import AcknowledgementPDF from './PrintOuts/Pages/Door/AcknowledgementPDF';
 import DrawerAcnowledgementPDF from './PrintOuts/Pages/Drawer/AcknowledgementPDF';
@@ -79,12 +83,11 @@ import Door_Conversation_Notes from './Notes/DoorOrder/Conversation_Notes';
 import Drawer_Conversation_Notes from './Notes/DrawerOrder/Conversation_Notes';
 import Misc_Conversation_Notes from './Notes/MiscItems/Conversation_Notes';
 
+import numQty from 'numeric-quantity';
+
 import Cookies from 'js-cookie';
 
 const cookie = Cookies.get('jwt');
-
-
-
 
 const toDataUrl = (url, callback) => {
   const xhr = new XMLHttpRequest();
@@ -99,9 +102,6 @@ const toDataUrl = (url, callback) => {
   xhr.responseType = 'blob';
   xhr.send();
 };
-
-
-
 
 
 class OrderPage extends Component {
@@ -119,129 +119,172 @@ class OrderPage extends Component {
       deleteModal: false,
       balanceOpen: false,
       miscItemsOpen: false,
-      notesOpen: false
+      notesOpen: false,
     };
   }
 
-  breakdown = e => {
+  breakdown = (e) => {
     e.preventDefault();
     this.setState({ page: 'breakdowns' });
   };
 
-  invoice = e => {
+  invoice = (e) => {
     e.preventDefault();
     this.setState({ page: 'invoice' });
   };
 
-  close = e => {
+  close = (e) => {
     e.preventDefault();
     this.setState({ page: [] });
   };
 
   editable = () => {
     this.setState({
-      edit: !this.state.edit
+      edit: !this.state.edit,
     });
   };
 
   toggleTooltip = () => {
     this.setState({
-      tooltipOpen: !this.state.tooltipOpen
+      tooltipOpen: !this.state.tooltipOpen,
     });
   };
 
-  toggleTracking = () => this.setState({
-    trackingOpen: !this.state.trackingOpen
-  })
+  toggleTracking = () =>
+    this.setState({
+      trackingOpen: !this.state.trackingOpen,
+    });
 
-  toggleBalance = () => this.setState({
-    balanceOpen: !this.state.balanceOpen
-  })
+  toggleBalance = () =>
+    this.setState({
+      balanceOpen: !this.state.balanceOpen,
+    });
 
-  toggleMiscItems = () => this.setState({
-    miscItemsOpen: !this.state.miscItemsOpen
-  })
+  toggleMiscItems = () =>
+    this.setState({
+      miscItemsOpen: !this.state.miscItemsOpen,
+    });
 
-  toggleFiles = () => this.setState({
-    filesOpen: !this.state.filesOpen
-  })
+  toggleFiles = () =>
+    this.setState({
+      filesOpen: !this.state.filesOpen,
+    });
 
-  toggleNotes = () => this.setState({
-    notesOpen: !this.state.notesOpen
-  })
+  toggleNotes = () =>
+    this.setState({
+      notesOpen: !this.state.notesOpen,
+    });
 
-  toggleDeleteModal = () => this.setState({
-    deleteModal: !this.state.deleteModal
-  })
+  toggleDeleteModal = () =>
+    this.setState({
+      deleteModal: !this.state.deleteModal,
+    });
 
   onUploaded = (e) => {
     const { uploadFilesToOrder, selectedOrder } = this.props;
     uploadFilesToOrder(selectedOrder, e, cookie);
-  }
+  };
 
   deleteOrder = async () => {
     const { selectedOrder } = this.props;
     await this.props.deleteOrder(selectedOrder.id, cookie);
     await this.toggleDeleteModal();
     await this.props.toggle();
-  }
+  };
 
   downloadPDF = () => {
-    const { formState, drawerState, miscState, breakdowns, box_breakdowns, selectedOrder } = this.props;
-    const data = formState ? formState : drawerState ? drawerState : miscState ? miscState : [];
+    const {
+      formState,
+      drawerState,
+      miscState,
+      breakdowns,
+      box_breakdowns,
+      selectedOrder,
+    } = this.props;
+    const data = formState
+      ? formState
+      : drawerState
+        ? drawerState
+        : miscState
+          ? miscState
+          : [];
     if (data.orderType === 'Door Order') {
-      this.state.selectedOption.map(async option => {
+      this.state.selectedOption.map(async (option) => {
         switch (option.value) {
           case 'Breakdowns':
-
-            const edgesPromiseArr1 = selectedOrder.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.edge.photo.url, (result) => {
-                  resolve(result);
+            const edgesPromiseArr1 = selectedOrder.part_list
+              .filter((i) => i.edge && i.edge.photo && i.edge.photo.url)
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.edge.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-            const mouldsPromiseArr1 = selectedOrder.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.profile.photo.url, (result) => {
-                  resolve(result);
+            const mouldsPromiseArr1 = selectedOrder.part_list
+              .filter(
+                (i) => i.profile && i.profile.photo && i.profile.photo.url
+              )
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.profile.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-            const miterPromiseArr1 = selectedOrder.part_list.filter(i => i.miter_design && i.miter_design.photo && i.miter_design.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.miter_design.photo.url, (result) => {
-                  resolve(result);
+            const miterPromiseArr1 = selectedOrder.part_list
+              .filter(
+                (i) =>
+                  i.miter_design &&
+                  i.miter_design.photo &&
+                  i.miter_design.photo.url
+              )
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.miter_design.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-            const MT_PromiseArr1 = selectedOrder.part_list.filter(i => i.mt_design && i.mt_design.photo && i.mt_design.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.mt_design.photo.url, (result) => {
-                  resolve(result);
+            const MT_PromiseArr1 = selectedOrder.part_list
+              .filter(
+                (i) => i.mt_design && i.mt_design.photo && i.mt_design.photo.url
+              )
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.mt_design.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-
-            const panelsPromiseArr1 = selectedOrder.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.panel.photo.url, (result) => {
-                  resolve(result);
+            const panelsPromiseArr1 = selectedOrder.part_list
+              .filter((i) => i.panel && i.panel.photo && i.panel.photo.url)
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.panel.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-            const appliedProfilePromiseArr1 = selectedOrder.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.applied_profile.photo.url, (result) => {
-                  resolve(result);
+            const appliedProfilePromiseArr1 = selectedOrder.part_list
+              .filter(
+                (i) =>
+                  i.applied_profile &&
+                  i.applied_profile.photo &&
+                  i.applied_profile.photo.url
+              )
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.applied_profile.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
             let edges1;
             let moulds1;
@@ -261,7 +304,16 @@ class OrderPage extends Component {
               console.log('errrrrrr', err);
             }
 
-            DoorPDF(data, edges1, moulds1, miter1, mt_1, panels1, appliedProfiles1, breakdowns);
+            DoorPDF(
+              data,
+              edges1,
+              moulds1,
+              miter1,
+              mt_1,
+              panels1,
+              appliedProfiles1,
+              breakdowns
+            );
             this.setState({ selectedOption: [] });
             break;
           case 'CustomerCopy':
@@ -297,54 +349,79 @@ class OrderPage extends Component {
             this.setState({ selectedOption: [] });
             break;
           case 'Profiles':
-
-            const edgesPromiseArr = selectedOrder.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.edge.photo.url, (result) => {
-                  resolve(result);
+            const edgesPromiseArr = selectedOrder.part_list
+              .filter((i) => i.edge && i.edge.photo && i.edge.photo.url)
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.edge.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-            const mouldsPromiseArr = selectedOrder.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.profile.photo.url, (result) => {
-                  resolve(result);
+            const mouldsPromiseArr = selectedOrder.part_list
+              .filter(
+                (i) => i.profile && i.profile.photo && i.profile.photo.url
+              )
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.profile.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-            const miterPromiseArr = selectedOrder.part_list.filter(i => i.miter_design && i.miter_design.photo && i.miter_design.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.miter_design.photo.url, (result) => {
-                  resolve(result);
+            const miterPromiseArr = selectedOrder.part_list
+              .filter(
+                (i) =>
+                  i.miter_design &&
+                  i.miter_design.photo &&
+                  i.miter_design.photo.url
+              )
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.miter_design.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-            const MT_PromiseArr = selectedOrder.part_list.filter(i => i.mt_design && i.mt_design.photo && i.mt_design.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.mt_design.photo.url, (result) => {
-                  resolve(result);
+            const MT_PromiseArr = selectedOrder.part_list
+              .filter(
+                (i) => i.mt_design && i.mt_design.photo && i.mt_design.photo.url
+              )
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.mt_design.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-            const panelsPromiseArr = selectedOrder.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.panel.photo.url, (result) => {
-                  resolve(result);
+            const panelsPromiseArr = selectedOrder.part_list
+              .filter((i) => i.panel && i.panel.photo && i.panel.photo.url)
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.panel.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
-            const appliedProfilePromiseArr = selectedOrder.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
-              return new Promise((resolve, reject) => {
-                toDataUrl(i.applied_profile.photo.url, (result) => {
-                  resolve(result);
+            const appliedProfilePromiseArr = selectedOrder.part_list
+              .filter(
+                (i) =>
+                  i.applied_profile &&
+                  i.applied_profile.photo &&
+                  i.applied_profile.photo.url
+              )
+              .map((i) => {
+                return new Promise((resolve, reject) => {
+                  toDataUrl(i.applied_profile.photo.url, (result) => {
+                    resolve(result);
+                  });
                 });
               });
-            });
 
             let edges;
             let moulds;
@@ -364,8 +441,16 @@ class OrderPage extends Component {
               console.log('errrrrrr', err);
             }
 
-
-            ProfilesPDF(data, edges, moulds, miter, mt, panels, appliedProfiles, breakdowns);
+            ProfilesPDF(
+              data,
+              edges,
+              moulds,
+              miter,
+              mt,
+              panels,
+              appliedProfiles,
+              breakdowns
+            );
             this.setState({ selectedOption: [] });
             break;
           case 'QC':
@@ -376,9 +461,8 @@ class OrderPage extends Component {
             return;
         }
       });
-
     } else if (data.orderType === 'Drawer Order') {
-      this.state.selectedOption.map(async option => {
+      this.state.selectedOption.map(async (option) => {
         switch (option.value) {
           case 'Breakdowns':
             DrawerPDF(data, box_breakdowns);
@@ -413,7 +497,7 @@ class OrderPage extends Component {
         }
       });
     } else if (data.orderType === 'Misc Items') {
-      this.state.selectedOption.map(async option => {
+      this.state.selectedOption.map(async (option) => {
         switch (option.value) {
           case 'All':
             MiscItemsPDF(data, box_breakdowns);
@@ -434,10 +518,9 @@ class OrderPage extends Component {
     }
   };
 
-  handleChange = selectedOption => {
-    this.setState(
-      { selectedOption },
-      () => console.log('Option selected:', this.state.selectedOption)
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption }, () =>
+      console.log('Option selected:', this.state.selectedOption)
     );
   };
 
@@ -448,6 +531,16 @@ class OrderPage extends Component {
 
     let options;
     let s = selectedOrder ? selectedOrder : 'Door Order';
+
+    let exportCsv = [];
+    let a = [];
+
+    let b = a.map((i,ind) => {
+      return i;
+    });
+
+    console.log(b);
+
 
     if (s.orderType === 'Door Order') {
       options = [
@@ -463,6 +556,19 @@ class OrderPage extends Component {
         { value: 'Profiles', label: 'Profiles' },
         { value: 'QC', label: 'QC' },
       ];
+
+      exportCsv = s ? s.part_list.map((f,index) => {
+        f.dimensions.forEach((j, ind) => {
+          if(f.orderType.value === 'DF') {
+            a.push([s.orderNum, '15DF', j.qty, f.woodtype && f.woodtype.NAME, numQty(j.width), numQty(j.height), f.edge.NAME, f.thickness && f.thickness.value]);
+          } else {
+            a.push([s.orderNum, 'D', j.qty, f.woodtype && f.woodtype.NAME, numQty(j.height), numQty(j.width),  f.edge.NAME, f.thickness && f.thickness.value]);
+          }
+        });
+        return a;
+      }) : [];
+      
+
     } else if (s.orderType === 'Drawer Order') {
       options = [
         { value: 'Breakdowns', label: 'Breakdowns' },
@@ -482,14 +588,11 @@ class OrderPage extends Component {
     }
 
     return (
-      
       <div className="animated noPrint resize">
-        <Modal
-          isOpen={props.modal}
-          toggle={props.toggle}
-          className="modal-lg"
-        >
-          <ModalHeader toggle={props.toggle}>Order #{selectedOrder && selectedOrder.orderNum}</ModalHeader>
+        <Modal isOpen={props.modal} toggle={props.toggle} className="modal-lg">
+          <ModalHeader toggle={props.toggle}>
+            Order #{selectedOrder && selectedOrder.orderNum}
+          </ModalHeader>
           <ModalBody>
             {this.props.edit ? (
               <div>
@@ -507,7 +610,9 @@ class OrderPage extends Component {
 
                     <Tooltip title="Balance" placement="top">
                       <IconButton onClick={this.toggleBalance}>
-                        <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                        <AttachMoneyIcon
+                          style={{ width: '40', height: '40' }}
+                        />
                       </IconButton>
                     </Tooltip>
 
@@ -522,7 +627,6 @@ class OrderPage extends Component {
                         <Chat style={{ width: '40', height: '40' }} />
                       </IconButton>
                     </Tooltip>
-
                   </Col>
                   <Col />
                   <Col />
@@ -530,22 +634,28 @@ class OrderPage extends Component {
               </div>
             ) : (
               <div>
-
-                <Modal isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal}>
-                  <ModalHeader toggle={this.toggleDeleteModal}>Delete Order</ModalHeader>
+                <Modal
+                  isOpen={this.state.deleteModal}
+                  toggle={this.toggleDeleteModal}
+                >
+                  <ModalHeader toggle={this.toggleDeleteModal}>
+                    Delete Order
+                  </ModalHeader>
                   <ModalBody>
-                      Are You Sure You Want To Delete This Order?
+                    Are You Sure You Want To Delete This Order?
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="danger" onClick={this.deleteOrder}>Delete Order</Button>{' '}
-                    <Button color="secondary" onClick={this.toggleDeleteModal}>Cancel</Button>
+                    <Button color="danger" onClick={this.deleteOrder}>
+                      Delete Order
+                    </Button>{' '}
+                    <Button color="secondary" onClick={this.toggleDeleteModal}>
+                      Cancel
+                    </Button>
                   </ModalFooter>
                 </Modal>
 
-
                 <Row></Row>
                 <Row>
-
                   <Col>
                     <Tooltip title="Edit" placement="top">
                       <IconButton onClick={this.props.editable}>
@@ -561,7 +671,9 @@ class OrderPage extends Component {
 
                     <Tooltip title="Balance" placement="top">
                       <IconButton onClick={this.toggleBalance}>
-                        <AttachMoneyIcon style={{ width: '40', height: '40' }} />
+                        <AttachMoneyIcon
+                          style={{ width: '40', height: '40' }}
+                        />
                       </IconButton>
                     </Tooltip>
 
@@ -582,17 +694,14 @@ class OrderPage extends Component {
                         <Attachment style={{ width: '40', height: '40' }} />
                       </IconButton>
                     </Tooltip>
-
-
-         
                   </Col>
 
                   <Col />
 
                   <Col>
                     <Row>
-                      <Col lg='7'>
-                        <div className='mt-3 mb-2'>
+                      <Col lg="7">
+                        <div className="mt-3 mb-2">
                           <Select
                             value={this.state.selectedOption}
                             onChange={this.handleChange}
@@ -607,7 +716,26 @@ class OrderPage extends Component {
                             <Print style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title="Delete Order" placement="top" className="mb-3">
+
+                        <CSVLink data={a.map((i,ind) => {
+                          console.log({i});
+                          return [...i, ind + 1];
+                        })} filename={`${s && s.orderNum}.csv`} separator={','} className="mb-3">
+                          {' '}
+                          <IconButton onClick={this.toggleFiles}>
+                            <GetAppIcon
+                              style={{ width: '40', height: '40' }}
+                            />
+                          </IconButton>
+                        </CSVLink>
+
+  
+
+                        <Tooltip
+                          title="Delete Order"
+                          placement="top"
+                          className="mb-3"
+                        >
                           <IconButton onClick={this.toggleDeleteModal}>
                             <Delete style={{ width: '40', height: '40' }} />
                           </IconButton>
@@ -621,22 +749,31 @@ class OrderPage extends Component {
             <div>
               <Collapse isOpen={this.state.filesOpen}>
                 <Row>
-                  <Col lg='12'>
+                  <Col lg="12">
                     <Card>
                       <CardBody>
                         <h5>Files</h5>
                         <Table striped>
                           <tbody>
-                            {selectedOrder ? selectedOrder.files.map((i, index) => (
-                              <tr>
-                                <th scope="row">{index + 1}</th>
-                                <td>{i.name}</td>
-                                <td style={{ textAlign: 'right' }}><a href={i.url} target="_blank">View</a></td>
-                              </tr>
-                            )) : null}
+                            {selectedOrder
+                              ? selectedOrder.files.map((i, index) => (
+                                <tr>
+                                  <th scope="row">{index + 1}</th>
+                                  <td>{i.name}</td>
+                                  <td style={{ textAlign: 'right' }}>
+                                    <a href={i.url} target="_blank">
+                                        View
+                                    </a>
+                                  </td>
+                                </tr>
+                              ))
+                              : null}
                           </tbody>
                         </Table>
-                        <FileUploader onUploaded={this.onUploaded} multi={true} />
+                        <FileUploader
+                          onUploaded={this.onUploaded}
+                          multi={true}
+                        />
                       </CardBody>
                     </Card>
                   </Col>
@@ -647,18 +784,27 @@ class OrderPage extends Component {
             <div>
               <Collapse isOpen={this.state.trackingOpen}>
                 <Row>
-                  <Col lg='12'>
+                  <Col lg="12">
                     <Card>
                       <CardBody>
                         <h5>Tracking History</h5>
                         <Table striped>
                           <tbody>
-                            {(selectedOrder && selectedOrder.tracking) ? selectedOrder.tracking.slice(0).reverse().map((i, index) => (
-                              <tr key={index}>
-                                <th>{i.status}</th>
-                                <td>{moment(i.date).format('dddd, MMMM Do YYYY, h:mm:ss a')}</td>
-                              </tr>
-                            )) : null}
+                            {selectedOrder && selectedOrder.tracking
+                              ? selectedOrder.tracking
+                                .slice(0)
+                                .reverse()
+                                .map((i, index) => (
+                                  <tr key={index}>
+                                    <th>{i.status}</th>
+                                    <td>
+                                      {moment(i.date).format(
+                                        'dddd, MMMM Do YYYY, h:mm:ss a'
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))
+                              : null}
                           </tbody>
                         </Table>
                       </CardBody>
@@ -671,31 +817,31 @@ class OrderPage extends Component {
             <div>
               <Collapse isOpen={this.state.notesOpen}>
                 <Row>
-                  <Col lg='12'>
+                  <Col lg="12">
                     <Card>
                       <CardBody>
                         <h2>Conversation Notes</h2>
-                        {selectedOrder && selectedOrder.orderType === 'Door Order'
-                          ?
-                          <Door_Conversation_Notes
-                            toggleBalance={this.toggleBalance}
-                            selectedOrder={props.selectedOrder}
-                          /> :
-                          selectedOrder && selectedOrder.orderType === 'Drawer Order'
-                            ?
-                            <Drawer_Conversation_Notes
+                        {selectedOrder &&
+                        selectedOrder.orderType === 'Door Order' ? (
+                            <Door_Conversation_Notes
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
                             />
-                            :
-                            selectedOrder && selectedOrder.orderType === 'Misc Items' ?
-                              <Misc_Conversation_Notes
+                          ) : selectedOrder &&
+                          selectedOrder.orderType === 'Drawer Order' ? (
+                              <Drawer_Conversation_Notes
                                 toggleBalance={this.toggleBalance}
                                 selectedOrder={props.selectedOrder}
                               />
-                              :
-                              <div />
-                        }
+                            ) : selectedOrder &&
+                          selectedOrder.orderType === 'Misc Items' ? (
+                                <Misc_Conversation_Notes
+                                  toggleBalance={this.toggleBalance}
+                                  selectedOrder={props.selectedOrder}
+                                />
+                              ) : (
+                                <div />
+                              )}
                       </CardBody>
                     </Card>
                   </Col>
@@ -703,11 +849,10 @@ class OrderPage extends Component {
               </Collapse>
             </div>
 
-
             <div>
               <Collapse isOpen={this.state.balanceOpen}>
                 <Row>
-                  <Col lg='4'>
+                  <Col lg="4">
                     <Card>
                       <CardBody>
                         <h5>Balance</h5>
@@ -715,28 +860,27 @@ class OrderPage extends Component {
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
                             /> */}
-                        {selectedOrder && selectedOrder.orderType === 'Door Order'
-                          ?
-                          <DoorBalance
-                            toggleBalance={this.toggleBalance}
-                            selectedOrder={props.selectedOrder}
-                          /> :
-                          selectedOrder && selectedOrder.orderType === 'Drawer Order'
-                            ?
-                            <DrawerBalance
+                        {selectedOrder &&
+                        selectedOrder.orderType === 'Door Order' ? (
+                            <DoorBalance
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
                             />
-                            :
-                            selectedOrder && selectedOrder.orderType === 'Misc Items' ?
-                              <MiscItemBalance 
+                          ) : selectedOrder &&
+                          selectedOrder.orderType === 'Drawer Order' ? (
+                              <DrawerBalance
                                 toggleBalance={this.toggleBalance}
                                 selectedOrder={props.selectedOrder}
                               />
-                              :
-                              <div />
-                        }
-
+                            ) : selectedOrder &&
+                          selectedOrder.orderType === 'Misc Items' ? (
+                                <MiscItemBalance
+                                  toggleBalance={this.toggleBalance}
+                                  selectedOrder={props.selectedOrder}
+                                />
+                              ) : (
+                                <div />
+                              )}
                       </CardBody>
                     </Card>
                   </Col>
@@ -744,18 +888,18 @@ class OrderPage extends Component {
                     <Card>
                       <CardBody>
                         <h5>Balance History</h5>
-                        {selectedOrder && selectedOrder.orderType === 'Door Order'
-                          ?
-                          <DoorBalanceHistory /> :
-                          selectedOrder && selectedOrder.orderType === 'Drawer Order'
-                            ?
-                            <DrawerBalanceHistory /> :
-                            selectedOrder && selectedOrder.orderType === 'Misc Items' ?
-                              <MiscItemBalanceHistory />
-                              :
-                              <div />
-                        }
-
+                        {selectedOrder &&
+                        selectedOrder.orderType === 'Door Order' ? (
+                            <DoorBalanceHistory />
+                          ) : selectedOrder &&
+                          selectedOrder.orderType === 'Drawer Order' ? (
+                              <DrawerBalanceHistory />
+                            ) : selectedOrder &&
+                          selectedOrder.orderType === 'Misc Items' ? (
+                                <MiscItemBalanceHistory />
+                              ) : (
+                                <div />
+                              )}
                       </CardBody>
                     </Card>
                   </Col>
@@ -766,16 +910,23 @@ class OrderPage extends Component {
             <div>
               <Collapse isOpen={this.state.miscItemsOpen}>
                 <Row>
-                  <Col lg='12'>
+                  <Col lg="12">
                     <Card>
                       <CardBody>
                         <h5>Misc Items</h5>
-                        {selectedOrder && selectedOrder.orderType === 'Door Order' ?
-                          <DoorMiscItems toggle={this.toggleMiscItems} edit={!this.props.edit} /> :
-                          selectedOrder && selectedOrder.orderType === 'Drawer Order' ?
-                            <DrawerMiscItems toggle={this.toggleMiscItems} edit={!this.props.edit} /> : null
-                        }
-
+                        {selectedOrder &&
+                        selectedOrder.orderType === 'Door Order' ? (
+                            <DoorMiscItems
+                              toggle={this.toggleMiscItems}
+                              edit={!this.props.edit}
+                            />
+                          ) : selectedOrder &&
+                          selectedOrder.orderType === 'Drawer Order' ? (
+                              <DrawerMiscItems
+                                toggle={this.toggleMiscItems}
+                                edit={!this.props.edit}
+                              />
+                            ) : null}
                       </CardBody>
                     </Card>
                   </Col>
@@ -785,7 +936,6 @@ class OrderPage extends Component {
 
             <div>
               {/* order edit here */}
-
 
               <div>
                 <EditSelectedOrder
@@ -808,30 +958,25 @@ class OrderPage extends Component {
   }
 }
 
-
 const mapStateToProps = (state, prop) => ({
   formState: getFormValues('DoorOrder')(state),
   drawerState: getFormValues('DrawerOrder')(state),
   miscState: getFormValues('MiscItems')(state),
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
-  selectedOrder: state.Orders.selectedOrder
-
+  selectedOrder: state.Orders.selectedOrder,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateOrder,
       loadOrders,
       deleteOrder,
       setSelectedOrder,
-      uploadFilesToOrder
+      uploadFilesToOrder,
     },
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OrderPage);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderPage);
