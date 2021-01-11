@@ -133,7 +133,7 @@ export default (data, breakdowns) => {
                   style: 'fonts'
                 },
                 {
-                  text: `${i.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
+                  text: `${i.box_notch && i.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
                   style: 'fonts'
                 }
               ],

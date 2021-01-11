@@ -654,7 +654,7 @@ class OrderPage extends Component {
                         <Table striped>
                           <tbody>
                             {(selectedOrder && selectedOrder.tracking) ? selectedOrder.tracking.slice(0).reverse().map((i, index) => (
-                              <tr>
+                              <tr key={index}>
                                 <th>{i.status}</th>
                                 <td>{moment(i.date).format('dddd, MMMM Do YYYY, h:mm:ss a')}</td>
                               </tr>
