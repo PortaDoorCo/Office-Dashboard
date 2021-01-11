@@ -34,7 +34,7 @@ export const ORDER_ADDED = 'ORDER_ADDED';
 export const ORDER_UPDATED = 'ORDER_UPDATED';
 export const ORDER_DELETED = 'ORDER_DELETED';
 
-export const UPDATE_NOTES = 'UPDATE_NOTES'
+export const UPDATE_NOTES = 'UPDATE_NOTES';
 
 export const UPDATE_SELECTED_ORDER = 'UPDATE_SELECTED_ORDER';
 
@@ -127,7 +127,7 @@ export function uploadFilesToOrder(order, e, cookie) {
 
 
 export function loadOrders(cookie, amt) {
-  const amount = amt ? amt : 500;
+  const amount = amt ? amt : 100;
   return async function (dispatch) {
     const res = await fetch(`${db_url}/orders?_limit=${amount}&_sort=orderNum:DESC`,
       {
