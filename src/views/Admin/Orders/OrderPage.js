@@ -562,7 +562,7 @@ class OrderPage extends Component {
           if(f.orderType.value === 'DF') {
             a.push([s.orderNum, '15DF', j.qty, f.woodtype && f.woodtype.NAME, numQty(j.width), numQty(j.height), f.edge.NAME, f.thickness && f.thickness.value]);
           } else {
-            a.push([s.orderNum, 'D', j.qty, f.woodtype && f.woodtype.NAME, numQty(j.height), numQty(j.width),  f.edge.NAME, f.thickness && f.thickness.value]);
+            a.push([s.orderNum, 'D', j.qty, f.woodtype && f.woodtype.NAME,  numQty(j.width), numQty(j.height), f.edge.NAME, f.thickness && f.thickness.value]);
           }
         });
         return a;
@@ -719,7 +719,7 @@ class OrderPage extends Component {
 
                         <CSVLink data={a.map((i,ind) => {
                           console.log({i});
-                          return [...i, ind + 1];
+                          return [...i, ind + 1, `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`];
                         })} filename={`${s && s.orderNum}.csv`} separator={','} className="mb-3">
                           {' '}
                           <IconButton onClick={this.toggleFiles}>
