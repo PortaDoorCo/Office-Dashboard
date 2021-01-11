@@ -1,21 +1,15 @@
 {
-  "name": "@coreui/coreui-pro-react-admin-template-starter",
-  "version": "2.6.0",
-  "description": "CoreUI Pro React Admin Template Starter",
+  "name": "portadoor_client",
+  "version": "0.0.9",
+  "description": "Porta Door Co. Inc.",
   "author": {
-    "name": "Łukasz Holeczek",
-    "url": "http://holeczek.pl",
-    "github": "https://github.com/mrholek",
-    "twitter": "https://twitter.com/lukaszholeczek"
+    "name": "Justin Romanos",
+    "url": "https://thinkthoughtmedia.com",
+    "github": "https://github.com/heyjaypray",
+    "twitter": "https://twitter.com/jay_pray"
   },
-  "contributors": [
-    {
-      "name": "Andrzej Kopański",
-      "url": "https://github.com/xidedix"
-    }
-  ],
   "homepage": ".",
-  "copyright": "Copyright 2017-2019 creativeLabs Łukasz Holeczek",
+  "copyright": "Copyright 2021 Think Thought Media LLC.",
   "license": "https://coreui.io/pro/license/",
   "private": true,
   "repository": {
@@ -41,8 +35,11 @@
     "chart.js": "^2.9.3",
     "chartjs-plugin-colorschemes": "^0.4.0",
     "classnames": "^2.2.6",
+    "concurrently": "^5.3.0",
     "core-js": "^3.1.4",
+    "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
+    "electron-is-dev": "^1.2.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint-plugin-react-hooks": "^4.0.8",
@@ -124,13 +121,14 @@
     "styled-components": "^5.1.1",
     "svg-blueprint": "^1.0.1",
     "svg-inline-react": "^3.2.0",
+    "wait-on": "^5.2.1",
     "yarn": "^1.19.1"
   },
   "resolutions": {
     "terser": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts --max_old_space_size=8192 start",
+    "start": "set PORT=3333 && react-scripts --max_old_space_size=8192 start",
     "build": "CI=false react-scripts --max_old_space_size=8192 build",
     "build2": "react-scripts --max_old_space_size=8192 build",
     "test": "react-scripts test --silent",
@@ -138,7 +136,16 @@
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "electron-build": "electron-builder",
+    "electron-build-2": "yarn build2 && yarn electron-build",
+    "start-electron": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3333 && electron .\""
+  },
+  "main": "public/electron.js",
+  "build": {
+    "files": [
+      "build/*"
+    ]
   },
   "bugs": {
     "url": "https://github.com/coreui/coreui-pro-react-admin-template-starter/issues"
@@ -165,6 +172,8 @@
     "npm": ">=6"
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.17.0"
+    "eslint-plugin-react": "^7.17.0",
+    "electron": "^11.1.1",
+    "electron-builder": "^22.9.1"
   }
 }

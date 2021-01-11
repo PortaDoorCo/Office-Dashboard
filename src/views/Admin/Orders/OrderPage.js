@@ -722,7 +722,7 @@ class OrderPage extends Component {
                           return [...i, ind + 1, `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`];
                         })} filename={`${s && s.orderNum}.csv`} separator={','} className="mb-3">
                           {' '}
-                          <IconButton onClick={this.toggleFiles}>
+                          <IconButton>
                             <GetAppIcon
                               style={{ width: '40', height: '40' }}
                             />

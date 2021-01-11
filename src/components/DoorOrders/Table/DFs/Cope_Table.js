@@ -73,21 +73,40 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   const updateFullFrame = (e, index) => {
     const part = formState.part_list[i];
     if (e) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(numQty(leftStileWidth))
-        )
-      );
+      if(leftStileWidth){
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(numQty(leftStileWidth))
+          )
+        );
+  
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(numQty(leftStileWidth))
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+          )
+        );
+  
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
+          )
+        );
+      }
 
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(numQty(leftStileWidth))
-        )
-      );
     } else {
       dispatch(
         change(
