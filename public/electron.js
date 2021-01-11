@@ -4,17 +4,27 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const isDev = require('electron-is-dev');
 let mainWindow;
+
+const iconPath = path.join(__dirname, 'build', 'icon.ico');
+
+
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 1920, height: 1080 });
+  mainWindow = new BrowserWindow({ width: 1920, height: 1080,  icon: __dirname + '/icon.png' });
   mainWindow.loadURL(
-    isDev
-      ? 'http://localhost:3333'
-      : `file://${path.join(__dirname, '../build/index.html')}`
+    // isDev
+    //   ? 'http://localhost:3333'
+    'https://dashboard.portadoor.com'
   );
 
-  // Open the DevTools.
-  //BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
-  mainWindow.webContents.openDevTools();
+ 
+
+  mainWindow.webContents.session.cookies.get({}, (error, cookies) => {
+    if(error) throw error;
+
+    this.cookies = cookies;
+  });
+
+  //mainWindow.webContents.openDevTools();
   
   mainWindow.on('closed', () => (mainWindow = null));
 }
