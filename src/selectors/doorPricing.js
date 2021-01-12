@@ -267,6 +267,10 @@ export const itemPriceSelector = createSelector(
       } else {
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
+
+
+            console.log('extra', i.extraCost);
+
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
@@ -636,8 +640,8 @@ export const itemPriceSelector = createSelector(
                     extraCost
                   : 0;
             }
-            if(part.orderType.value === 'Slab_Door'){
-              price = ((width * height) / 144) > 1 ? ((((width * height) / 144) * wood) + (6.50 + edge)) : (((1) * wood) + (6.50 + edge));
+            if(part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF'){
+              price = ((width * height) / 144) > 1 ? ((((width * height) / 144) * wood) + (6.50 + edge)) + extraCost : (((1) * wood) + (6.50 + edge)) + extraCost ;
             }
             else {
               price =
