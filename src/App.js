@@ -14,6 +14,18 @@ import { getSingleProduct, productAdded, productDeleted, productUpdated } from '
 import { loadSales} from './redux/sales/actions';
 import { loadCustomers } from './redux/customers/actions';
 import { setLogin } from './redux/users/actions';
+import {
+  getAllProducts,
+  getBreakdowns,
+  getBoxBreakdowns,
+  getPricing,
+} from './redux/part_list/actions';
+import {
+  loadMiscItems,
+  loadPaymentTypes,
+  loadPaymentTerms,
+} from './redux/misc_items/actions';
+import { login, getUsers } from './redux/users/actions';
 import io from 'socket.io-client';
 import db_url from './redux/db_url';
 const socket = io(db_url);
@@ -61,11 +73,36 @@ class App extends Component {
 
   componentDidMount = async () => {
 
-    const { productAdded, productDeleted, productUpdated, orderAdded, orderUpdated, orderDeleted } = this.props;
+    const { productAdded, productDeleted, productUpdated, orderAdded, orderUpdated, orderDeleted, getAllProducts, getPricing, login, getUsers, loadOrders, loadCustomers, loadSales, loadMiscItems, getDeliveries, getBreakdowns, getBoxBreakdowns, loadShippingMethod, loadPaymentTypes, loadPaymentTerms } = this.props;
     
     await this.cookies();
 
     if(cookie) {
+
+      await getAllProducts(cookie);
+
+      await getPricing(cookie);
+
+      await loadOrders(cookie);
+      await loadCustomers(cookie,100);
+      await login(cookie);
+      
+      await getUsers(cookie);
+      await loadOrders(cookie, 1000);
+      await loadCustomers(cookie, 2000);
+
+  
+      await loadSales(cookie);
+      await loadMiscItems(cookie);
+      await getDeliveries(cookie);
+      await getBreakdowns(cookie);
+      await getBoxBreakdowns(cookie);
+      await loadShippingMethod(cookie);
+      await loadPaymentTypes(cookie);
+      await loadPaymentTerms(cookie);
+      
+
+
       // socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
       socket.on('order_submitted', res => ((NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), orderAdded(res))));
       socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), orderUpdated(res)));
@@ -148,7 +185,18 @@ const mapDispatchToProps = dispatch =>
       productUpdated,
       orderAdded,
       orderUpdated,
-      orderDeleted
+      orderDeleted,
+      getUsers,
+      getAllProducts, 
+      getPricing,
+      login, 
+      loadMiscItems,
+      getBreakdowns,
+      getBoxBreakdowns,
+      loadPaymentTypes,
+      loadPaymentTerms
+
+
     },
     dispatch
   );

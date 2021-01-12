@@ -24,6 +24,8 @@ import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { NotificationManager } from 'react-notifications';
+
 import {
   loadOrders,
   getDeliveries,
@@ -61,79 +63,8 @@ class DefaultLayout extends Component {
     </div>
   );
 
-  componentDidMount = async () => {
-    const {
-      loadShippingMethod,
-      loadPaymentTypes,
-      loadPaymentTerms,
-      getBreakdowns,
-      getBoxBreakdowns,
-      getPricing,
-      getUsers,
-      login,
-      loadSales,
-      loadOrders,
-      getDeliveries,
-      loadedBreakdowns,
-      loadedPaymentTypes,
-      loadedPaymentTerms,
-      loadedShippingMethods,
-      loadedSales,
-      loadedBoxBreakdowns,
-      loadedPricing,
-      loadCustomers,
-      loadMiscItems,
-      loadedMiscItems,
-      getAllProducts,
-      loadedProducts,
-    } = this.props;
-
-    const cookie = await Cookies.get('jwt');
-
-    if (cookie) {
-      await getAllProducts(cookie);
-
-      await getPricing(cookie);
-
-      await loadOrders(cookie);
-      await loadCustomers(cookie,100);
-      await login(cookie);
-      await getUsers(cookie);
-      await loadCustomers(cookie, 2000);
-      if (!loadedSales) {
-        await loadSales(cookie);
-      }
-
-      if (!loadedMiscItems) {
-        await loadMiscItems(cookie);
-      }
-
-      await getDeliveries(cookie);
-
-      await getBreakdowns(cookie);
-
-      await getBoxBreakdowns(cookie);
-
-      if (!loadedShippingMethods) {
-        await loadShippingMethod(cookie);
-      }
-
-      if (!loadedPaymentTypes) {
-        await loadPaymentTypes(cookie);
-      }
-
-      if (!loadedPaymentTerms) {
-        await loadPaymentTerms(cookie);
-      }
-
-      
-    } else {
-      alert('not logged in');
-    }
-  };
-
   render() {
-    const { customerDBLoaded, ordersDBLoaded, loadedProducts } = this.props;
+    const { customerDBLoaded } = this.props;
 
     if (!customerDBLoaded) {
       return (
