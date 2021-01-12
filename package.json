@@ -147,15 +147,15 @@
     "productName": "Porta Door Client",
     "appId": "com.experiment.portadoor",
     "directories": {
-        "buildResources": "build"
+      "buildResources": "build"
     },
     "files": [
       "build/**/*"
     ],
     "win": {
-        "asar": false,
-        "target": "nsis",
-        "icon": "build/icon.ico"
+      "asar": false,
+      "target": "nsis",
+      "icon": "build/icon.ico"
     },
     "nsis": {
       "installerIcon": "build/icon.ico",
