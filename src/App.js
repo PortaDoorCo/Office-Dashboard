@@ -74,8 +74,8 @@ class App extends Component {
       socket.on('order_deleted', res => (NotificationManager.success('Order Deleted', 'Order Deleted', 2000), orderDeleted(res)));
 
       socket.on('delivery_added', res => this.props.getDeliveries(cookie));
-      socket.on('customer_added', res => this.props.loadCustomers(cookie));
-      socket.on('customer_updated', res => this.props.loadCustomers(cookie));
+      socket.on('customer_added', res => this.props.loadCustomers(cookie, 2000));
+      socket.on('customer_updated', res => this.props.loadCustomers(cookie, 2000));
 
 
       socket.on('product_updated', (res, entity) => (NotificationManager.success('Product Updated', 'Product Updated', 2000), productUpdated(res, entity)));

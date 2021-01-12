@@ -4,12 +4,15 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const isDev = require('electron-is-dev');
 let mainWindow;
+const nativeImage = require('electron').nativeImage;
 
-const iconPath = path.join(__dirname, 'build', 'icon.ico');
+var image = nativeImage.createFromPath(__dirname + '/icon.ico'); 
+
+image.setTemplateImage(true);
 
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 1920, height: 1080,  icon: __dirname + '/icon.png' });
+  mainWindow = new BrowserWindow({ width: 1920, height: 1080,  icon: image });
   mainWindow.loadURL(
     // isDev
     //   ? 'http://localhost:3333'
