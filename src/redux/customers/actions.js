@@ -21,7 +21,7 @@ export function setSelectedCompanies(data) {
 
 export function loadCustomers(cookie, amt) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/companyprofiles?_limit=${amt ? amt : 100}&_sort=CUSTNO:ASC`,
+    const res = await fetch(`${db_url}/companyprofiles`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -30,9 +30,25 @@ export function loadCustomers(cookie, amt) {
     );
     const data = await res.json();
     await dispatch(hideLoading());
-    if(amt > 100) {
-      NotificationManager.success('Access to full database available', 'Database Loaded', 3000);
+    return await dispatch({
+      type: LOAD_CUSTOMERS,
+      data: data
     }
+    );
+  };
+}
+
+export function loadAllCustomers(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/companyprofiles/all`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    await dispatch(hideLoading());
     return await dispatch({
       type: LOAD_CUSTOMERS,
       data: data

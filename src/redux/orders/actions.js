@@ -126,13 +126,28 @@ export function uploadFilesToOrder(order, e, cookie) {
 }
 
 
-export function loadOrders(cookie, amt) {
-  const amount = amt ? amt : 100;
+export function loadOrders(cookie) {
   return async function (dispatch) {
-    if(amt > 100) {
-      NotificationManager.success('Database is loading, access may be limited..', 'Database is Loading..', 4000);
-    }
-    const res = await fetch(`${db_url}/orders?_limit=${amount}&_sort=orderNum:DESC`,
+    const res = await fetch(`${db_url}/orders`,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res.json();
+    return await dispatch({
+      type: LOAD_ORDERS,
+      data: data
+    });
+  };
+}
+
+export function loadAllOrders(cookie) {
+ 
+  return async function (dispatch) {
+
+    const res = await fetch(`${db_url}/orders/all`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
