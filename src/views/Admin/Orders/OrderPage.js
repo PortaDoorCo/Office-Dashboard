@@ -560,9 +560,9 @@ class OrderPage extends Component {
       exportCsv = s ? s.part_list.map((f,index) => {
         f.dimensions.forEach((j, ind) => {
           if(f.orderType.value === 'DF') {
-            a.push([s.orderNum, '15DF', j.qty, f.woodtype && f.woodtype.NAME, numQty(j.width), numQty(j.height), f.edge.NAME, f.thickness && f.thickness.value]);
+            a.push([s.orderNum, '15DF', j.qty, f.woodtype && f.woodtype.NAME, numQty(j.width), numQty(j.height), f.edge && f.edge.NAME, f.thickness && f.thickness.value]);
           } else {
-            a.push([s.orderNum, 'D', j.qty, f.woodtype && f.woodtype.NAME,  numQty(j.width), numQty(j.height), f.edge.NAME, f.thickness && f.thickness.value]);
+            a.push([s.orderNum, 'D', j.qty, f.woodtype && f.woodtype.NAME,  numQty(j.width), numQty(j.height), f.edge && f.edge.NAME, f.thickness && f.thickness.value]);
           }
         });
         return a;
