@@ -30,6 +30,9 @@ export function loadCustomers(cookie, amt) {
     );
     const data = await res.json();
     await dispatch(hideLoading());
+    if(amt > 100) {
+      NotificationManager.success('Access to full database available', 'Database Loaded', 3000);
+    }
     return await dispatch({
       type: LOAD_CUSTOMERS,
       data: data
