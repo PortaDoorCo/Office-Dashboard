@@ -696,9 +696,7 @@ class OrderPage extends Component {
                     </Tooltip>
                   </Col>
 
-                  <Col />
-
-                  <Col>
+                  <Col className="ml-5">
                     <Row>
                       <Col lg="7">
                         <div className="mt-3 mb-2">
@@ -722,15 +720,14 @@ class OrderPage extends Component {
                           return [...i, ind + 1, `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`];
                         })} filename={`${s && s.orderNum}.csv`} separator={','} className="mb-3">
                           {' '}
-                          <IconButton>
-                            <GetAppIcon
-                              style={{ width: '40', height: '40' }}
-                            />
-                          </IconButton>
+                          <Tooltip title="Export Edges" placement="top" className="mb-3">
+                            <IconButton>
+                              <GetAppIcon
+                                style={{ width: '40', height: '40' }}
+                              />
+                            </IconButton>
+                          </Tooltip>
                         </CSVLink>
-
-  
-
                         <Tooltip
                           title="Delete Order"
                           placement="top"

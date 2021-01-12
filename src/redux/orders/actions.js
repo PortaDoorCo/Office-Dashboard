@@ -130,7 +130,7 @@ export function loadOrders(cookie, amt) {
   const amount = amt ? amt : 100;
   return async function (dispatch) {
     if(amt > 100) {
-      NotificationManager.success('Database is loading access may be limited..', 'Database is Loading..', 4000);
+      NotificationManager.success('Database is loading, access may be limited..', 'Database is Loading..', 4000);
     }
     const res = await fetch(`${db_url}/orders?_limit=${amount}&_sort=orderNum:DESC`,
       {
