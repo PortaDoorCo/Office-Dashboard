@@ -27,7 +27,7 @@ import { bindActionCreators } from 'redux';
 import {
   loadOrders,
   getDeliveries,
-  socketReceiveUpdateStatus
+  socketReceiveUpdateStatus,
 } from '../../redux/orders/actions';
 import {
   loadMiscItems,
@@ -35,9 +35,7 @@ import {
   loadPaymentTypes,
   loadPaymentTerms,
 } from '../../redux/misc_items/actions';
-import {
-  loadSales,
-} from '../../redux/sales/actions';
+import { loadSales } from '../../redux/sales/actions';
 
 import { loadCustomers } from '../../redux/customers/actions';
 
@@ -45,23 +43,23 @@ import {
   getAllProducts,
   getBreakdowns,
   getBoxBreakdowns,
-  getPricing
+  getPricing,
 } from '../../redux/part_list/actions';
 import { login, getUsers } from '../../redux/users/actions';
 
 import Loader from '../../views/Admin/Loader/Loader';
 import { NotificationContainer } from 'react-notifications';
 
-
-
-
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 class DefaultLayout extends Component {
-
-  loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+  loading = () => (
+    <div className="animated fadeIn pt-1 text-center">
+      <div className="sk-spinner sk-spinner-pulse"></div>
+    </div>
+  );
 
   componentDidMount = async () => {
     const {
@@ -87,24 +85,21 @@ class DefaultLayout extends Component {
       loadMiscItems,
       loadedMiscItems,
       getAllProducts,
-      loadedProducts
-
+      loadedProducts,
     } = this.props;
 
     const cookie = await Cookies.get('jwt');
 
     if (cookie) {
-
-  
       await getAllProducts(cookie);
-      
+
       await getPricing(cookie);
 
       await loadOrders(cookie);
-      await loadCustomers(cookie);
+      await loadCustomers(cookie,100);
       await login(cookie);
       await getUsers(cookie);
-
+      await loadCustomers(cookie, 2000);
       if (!loadedSales) {
         await loadSales(cookie);
       }
@@ -115,42 +110,37 @@ class DefaultLayout extends Component {
 
       await getDeliveries(cookie);
 
-        await getBreakdowns(cookie);
+      await getBreakdowns(cookie);
 
-        await getBoxBreakdowns(cookie);
-    
-
+      await getBoxBreakdowns(cookie);
 
       if (!loadedShippingMethods) {
         await loadShippingMethod(cookie);
       }
 
-
       if (!loadedPaymentTypes) {
         await loadPaymentTypes(cookie);
       }
-
 
       if (!loadedPaymentTerms) {
         await loadPaymentTerms(cookie);
       }
 
+      
     } else {
       alert('not logged in');
     }
-  }
+  };
 
   render() {
-
     const { customerDBLoaded, ordersDBLoaded, loadedProducts } = this.props;
 
-    if (
-      (!customerDBLoaded)
-    ) {
-      return <div>
-        
-        <Loader />
-        </div>;
+    if (!customerDBLoaded) {
+      return (
+        <div>
+          <Loader />
+        </div>
+      );
     } else {
       return (
         <div className="app">
@@ -182,10 +172,9 @@ class DefaultLayout extends Component {
                           path={route.path}
                           exact={route.exact}
                           name={route.name}
-                          render={props => (
-                            <route.component {...props} />
-                          )} />
-                      ) : (null);
+                          render={(props) => <route.component {...props} />}
+                        />
+                      ) : null;
                     })}
                     <Redirect from="/" to="/dashboard" />
                   </Switch>
@@ -224,10 +213,10 @@ const mapStateToProps = (state, prop) => ({
   loadedPricing: state.part_list.loadedPricing,
   customerDB: state.customers.customerDB,
   loadedMiscItems: state.misc_items.loadedMiscItems,
-  loadedProducts: state.part_list.loadedProducts
+  loadedProducts: state.part_list.loadedProducts,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       loadOrders,
@@ -251,16 +240,9 @@ const mapDispatchToProps = dispatch =>
 
       login,
 
-      socketReceiveUpdateStatus
-
-
-
+      socketReceiveUpdateStatus,
     },
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DefaultLayout);
-
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout);
