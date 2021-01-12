@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import db_url from '../db_url';
 
 export const LOAD_CUSTOMERS = 'LOAD_CUSTOMERS';
@@ -19,9 +19,9 @@ export function setSelectedCompanies(data) {
   };
 }
 
-export function loadCustomers(cookie) {
+export function loadCustomers(cookie, amt) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/companyprofiles?_limit=2000&_sort=CUSTNO:ASC`,
+    const res = await fetch(`${db_url}/companyprofiles?_limit=${amt ? amt : 100}&_sort=CUSTNO:ASC`,
       {
         headers: {
           'Authorization': `Bearer ${cookie}`
@@ -29,7 +29,7 @@ export function loadCustomers(cookie) {
       }
     );
     const data = await res.json();
-    await dispatch(hideLoading())
+    await dispatch(hideLoading());
     return await dispatch({
       type: LOAD_CUSTOMERS,
       data: data

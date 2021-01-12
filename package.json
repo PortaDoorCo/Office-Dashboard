@@ -139,13 +139,29 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "electron-build": "electron-builder",
     "electron-build-2": "yarn build2 && yarn electron-build",
-    "start-electron": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3333 && electron .\""
+    "start-electron": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3333 && electron .\"",
+    "package-win": "electron-packager . — overwrite — asar=true — platform=win32 — arch=ia32 — icon=/icons/win/icon.ico — prune=true — out=release-builds — version-string.CompanyName=Porta Door Co. Inc. — version-string.FileDescription=CE — version-string.ProductName=Porta Door Client"
   },
   "main": "public/electron.js",
   "build": {
+    "productName": "Porta Door Client",
+    "appId": "com.experiment.portadoor",
+    "directories": {
+        "buildResources": "build"
+    },
     "files": [
-      "build/*"
-    ]
+      "build/**/*"
+    ],
+    "win": {
+        "asar": false,
+        "target": "nsis",
+        "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "installerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "deleteAppDataOnUninstall": true
+    }
   },
   "bugs": {
     "url": "https://github.com/coreui/coreui-pro-react-admin-template-starter/issues"
@@ -172,8 +188,9 @@
     "npm": ">=6"
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.17.0",
     "electron": "^11.1.1",
-    "electron-builder": "^22.9.1"
+    "electron-builder": "^22.9.1",
+    "electron-packager": "^15.2.0",
+    "eslint-plugin-react": "^7.17.0"
   }
 }
