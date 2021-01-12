@@ -82,24 +82,27 @@ class App extends Component {
       await getAllProducts(cookie);
 
       await getPricing(cookie);
-
+      await getBreakdowns(cookie);
+      await getBoxBreakdowns(cookie);
       await loadOrders(cookie);
       await loadCustomers(cookie,100);
       await login(cookie);
       
       await getUsers(cookie);
+
+      await loadMiscItems(cookie);
+      await getDeliveries(cookie);
+
+      await loadShippingMethod(cookie);
+      await loadPaymentTypes(cookie);
+      await loadPaymentTerms(cookie);
+
       await loadOrders(cookie, 1000);
       await loadCustomers(cookie, 2000);
 
   
       await loadSales(cookie);
-      await loadMiscItems(cookie);
-      await getDeliveries(cookie);
-      await getBreakdowns(cookie);
-      await getBoxBreakdowns(cookie);
-      await loadShippingMethod(cookie);
-      await loadPaymentTypes(cookie);
-      await loadPaymentTerms(cookie);
+
       
 
 
