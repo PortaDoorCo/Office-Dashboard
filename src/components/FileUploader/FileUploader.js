@@ -10,7 +10,7 @@ const cookie = Cookies.get('jwt');
 
 const FileUploader = (props) => {
 
-  const [fileName, setFileName] = useState('');
+  const [fileName, setFileName] = useState(null);
   const [fileList, setFileList] = useState([]);
 
   const changeName = e => {
@@ -22,14 +22,22 @@ const FileUploader = (props) => {
     multiple: props.multi,
     action: `${db_url}/upload`,
     customRequest: (options) => {
+
+      
+   
       const data= new FormData();
-      data.append('files', options.file, fileName);
+      console.log({options});
+
+      console.log({data});
+      data.append('files', options.file, fileName ? fileName : options && options.file && options.file.name );
       const config= {
         'headers': {
           'content-type': 'multipart/form-data',
           Authorization: 'Bearer ' + cookie
         }
       };
+    
+     
       axios.post(options.action, data, config).then((res) => {
         options.onSuccess(res.data, options.file);
         props.onUploaded(res.data);
@@ -37,7 +45,11 @@ const FileUploader = (props) => {
         NotificationManager.error('There was an problem with your upload', 'Error', 2000);
         console.log(err);
       });
-			
+      
+
+   
+      
+      
     },
     progress: {
       strokeColor: {
@@ -49,12 +61,14 @@ const FileUploader = (props) => {
     },
     fileList: fileList,
     onChange(info) {
-      
-      info.file.name = fileName;
+
+      console.log({info});
+
+      info.file.name = fileName ? fileName : info.file.name;
       
       setFileList(info.fileList);
-
-
+  
+  
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
@@ -64,7 +78,9 @@ const FileUploader = (props) => {
       } else if (info.file.status === 'error') {
         NotificationManager.error('There was an problem with your upload', 'Error', 2000);
       }
-    },
+    } 
+      
+    
   };
 
   console.log('fileList', fileList);
