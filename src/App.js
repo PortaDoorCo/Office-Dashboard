@@ -8,11 +8,23 @@ import NewPassword from './views/Pages/NewPassword/NewPassword';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationManager } from 'react-notifications';
-import { loadOrders, getDeliveries, orderAdded, orderUpdated, orderDeleted } from './redux/orders/actions';
+import {
+  loadOrders,
+  loadAllOrders,
+  getDeliveries,
+  orderAdded,
+  orderUpdated,
+  orderDeleted,
+} from './redux/orders/actions';
 import { loadShippingMethod } from './redux/misc_items/actions';
-import { getSingleProduct, productAdded, productDeleted, productUpdated } from './redux/part_list/actions';
-import { loadSales} from './redux/sales/actions';
-import { loadCustomers } from './redux/customers/actions';
+import {
+  getSingleProduct,
+  productAdded,
+  productDeleted,
+  productUpdated,
+} from './redux/part_list/actions';
+import { loadSales } from './redux/sales/actions';
+import { loadCustomers, loadAllCustomers } from './redux/customers/actions';
 import { setLogin } from './redux/users/actions';
 import {
   getAllProducts,
@@ -31,9 +43,11 @@ import db_url from './redux/db_url';
 const socket = io(db_url);
 const cookie = Cookies.get('jwt');
 
-const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
- 
-
+const loading = () => (
+  <div className="animated fadeIn pt-3 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+);
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
@@ -41,15 +55,13 @@ const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
 const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
   <Route
     {...rest}
-    render={props => {
-
+    render={(props) => {
       return rest.isLogged ? (
         <Component {...props} isLogged={rest.isLogged} />
       ) : (
         <Redirect to={{ pathname: '/login' }} />
       );
-    }
-    }
+    }}
   />
 );
 
@@ -57,7 +69,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuth: false
+      isAuth: false,
     };
   }
 
@@ -65,29 +77,50 @@ class App extends Component {
     const getCookie = Cookies.get('jwt');
     if (getCookie) {
       this.setState({
-        isAuth: true
+        isAuth: true,
       });
       this.props.setLogin();
     }
-  }
+  };
 
   componentDidMount = async () => {
+    const {
+      productAdded,
+      productDeleted,
+      productUpdated,
+      orderAdded,
+      orderUpdated,
+      orderDeleted,
+      getAllProducts,
+      getPricing,
+      login,
+      getUsers,
+      loadOrders,
+      loadCustomers,
+      loadSales,
+      loadMiscItems,
+      getDeliveries,
+      getBreakdowns,
+      getBoxBreakdowns,
+      loadShippingMethod,
+      loadPaymentTypes,
+      loadPaymentTerms,
+      loadAllCustomers,
+      loadAllOrders
+    } = this.props;
 
-    const { productAdded, productDeleted, productUpdated, orderAdded, orderUpdated, orderDeleted, getAllProducts, getPricing, login, getUsers, loadOrders, loadCustomers, loadSales, loadMiscItems, getDeliveries, getBreakdowns, getBoxBreakdowns, loadShippingMethod, loadPaymentTypes, loadPaymentTerms } = this.props;
-    
     await this.cookies();
 
-    if(cookie) {
-
+    if (cookie) {
       await getAllProducts(cookie);
 
       await getPricing(cookie);
       await getBreakdowns(cookie);
       await getBoxBreakdowns(cookie);
       await loadOrders(cookie);
-      await loadCustomers(cookie,100);
+      await loadCustomers(cookie);
       await login(cookie);
-      
+
       await getUsers(cookie);
 
       await loadMiscItems(cookie);
@@ -97,39 +130,99 @@ class App extends Component {
       await loadPaymentTypes(cookie);
       await loadPaymentTerms(cookie);
 
-      await loadOrders(cookie, 1000);
-      await loadCustomers(cookie, 2000);
+      await loadAllOrders(cookie);
+      await loadAllCustomers(cookie);
 
-  
       await loadSales(cookie);
 
-      
-
-
       // socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
-      socket.on('order_submitted', res => ((NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), orderAdded(res))));
-      socket.on('order_updated', res => (NotificationManager.success(`Order #${res.orderNum} updated`, 'Order Updated', 2000), orderUpdated(res)));
-      socket.on('status_updated', (res) => (NotificationManager.success(`Order #${res.orderNum} has been updated`, 'An order has been updated', 2000), orderUpdated(res)));
+      socket.on(
+        'order_submitted',
+        (res) => (
+          NotificationManager.success(
+            `Order #${res.orderNum} added`,
+            'New Order',
+            2000
+          ),
+          orderAdded(res)
+        )
+      );
+      socket.on(
+        'order_updated',
+        (res) => (
+          NotificationManager.success(
+            `Order #${res.orderNum} updated`,
+            'Order Updated',
+            2000
+          ),
+          orderUpdated(res)
+        )
+      );
+      socket.on(
+        'status_updated',
+        (res) => (
+          NotificationManager.success(
+            `Order #${res.orderNum} has been updated`,
+            'An order has been updated',
+            2000
+          ),
+          orderUpdated(res)
+        )
+      );
 
-      socket.on('order_deleted', res => (NotificationManager.success('Order Deleted', 'Order Deleted', 2000), orderDeleted(res)));
+      socket.on(
+        'order_deleted',
+        (res) => (
+          NotificationManager.success('Order Deleted', 'Order Deleted', 2000),
+          orderDeleted(res)
+        )
+      );
 
-      socket.on('delivery_added', res => this.props.getDeliveries(cookie));
-      socket.on('customer_added', res => this.props.loadCustomers(cookie, 2000));
-      socket.on('customer_updated', res => this.props.loadCustomers(cookie, 2000));
+      socket.on('delivery_added', (res) => this.props.getDeliveries(cookie));
+      socket.on('customer_added', (res) =>
+        this.props.loadCustomers(cookie, 2000)
+      );
+      socket.on('customer_updated', (res) =>
+        this.props.loadCustomers(cookie, 2000)
+      );
 
-
-      socket.on('product_updated', (res, entity) => (NotificationManager.success('Product Updated', 'Product Updated', 2000), productUpdated(res, entity)));
-      socket.on('product_added', (res, entity) => (NotificationManager.success('Product Added', 'Product Added', 2000), productAdded(res, entity)));
-      socket.on('product_deleted', (res) => (NotificationManager.success('Product Deleted', 'Product Deleted', 2000), productDeleted(res)));
+      socket.on(
+        'product_updated',
+        (res, entity) => (
+          NotificationManager.success(
+            'Product Updated',
+            'Product Updated',
+            2000
+          ),
+          productUpdated(res, entity)
+        )
+      );
+      socket.on(
+        'product_added',
+        (res, entity) => (
+          NotificationManager.success('Product Added', 'Product Added', 2000),
+          productAdded(res, entity)
+        )
+      );
+      socket.on(
+        'product_deleted',
+        (res) => (
+          NotificationManager.success(
+            'Product Deleted',
+            'Product Deleted',
+            2000
+          ),
+          productDeleted(res)
+        )
+      );
     }
-
-  }
+  };
 
   componentDidUpdate = async (prevProps) => {
     if (this.props.loggedIn !== prevProps.loggedIn) {
       this.cookies();
     }
-  }
+  };
 
   render() {
     return (
@@ -141,7 +234,7 @@ class App extends Component {
               name="Login"
               component={this.state.isAuth ? DefaultLayout : Login}
             />
-              
+
             <Route
               path="/register"
               name="register"
@@ -168,12 +261,11 @@ class App extends Component {
   }
 }
 
-
-const mapStateToProps = state => ({
-  loggedIn: state.users.loggedIn
+const mapStateToProps = (state) => ({
+  loggedIn: state.users.loggedIn,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       loadOrders,
@@ -190,22 +282,18 @@ const mapDispatchToProps = dispatch =>
       orderUpdated,
       orderDeleted,
       getUsers,
-      getAllProducts, 
+      getAllProducts,
       getPricing,
-      login, 
+      login,
       loadMiscItems,
       getBreakdowns,
       getBoxBreakdowns,
       loadPaymentTypes,
-      loadPaymentTerms
-
-
+      loadPaymentTerms,
+      loadAllCustomers,
+      loadAllOrders
     },
     dispatch
   );
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
