@@ -330,6 +330,7 @@ class DoorOrders extends Component {
                 <Card>
                   <CardBody>
                     <MiscItems />
+                    <hr />
                     <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
                       <Row>
                         <Col xs='8' />
