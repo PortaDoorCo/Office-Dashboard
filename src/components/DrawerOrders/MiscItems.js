@@ -40,7 +40,7 @@ let Inputs = props => {
             return (
               <tr key={index}>
                 <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderField} type="text" /></td>
-                <td>
+                <td style={{ width: '400px' }}>
                   {formState && formState.misc_items && formState.misc_items[index] && formState.misc_items[index].category === 'preselect' ?
                     <Field
                       name={`${table}.item`}
