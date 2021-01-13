@@ -72,47 +72,7 @@ const Maps = (props) =>  {
   const [locations, setLocations] = useState([]);
   const [defaultCenter, setDefaultCenter] = useState([]);
 
-  useEffect(() => {
 
-    const loc = props.orders.length > 0 ? [...props.orders].forEach(row => {
-      Geocode.setApiKey('AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE');
-
-      let address = '65 Cogwheel Lane';
-      if(row && row.Address1){
-        address = `${(row.Address1).replace(/\s/g, '')}${row.City}${row.State}`;
-      }
-
-      // set response language. Defaults to english.
-      Geocode.setLanguage('en');
-  
-      // set reponse region. Its optional.
-      // A Geocoding request with region=es (Spain) will return the Spanish city.
-      Geocode.setRegion('es');
-  
-      // Enable or disable logs. Its optional.
-      Geocode.enableDebug();
-  
-      // Get address from latidude & longitude.
-  
-      // Get latidude & longitude from address.
-      Geocode.fromAddress(address).then(
-        response => {
-          const { lat, lng } = response.results[0].geometry.location;
-          setDefaultCenter([{ lat, lng }]);
-          setLocations([...locations, { lat: lat, lng: lng, label: '', draggable: false, www: '#', title: row.Company }]);
-        },
-        error => {
-          console.error(error);
-        }
-      );
-
-      
-
-    }): [];
-
-    console.log(loc);
-
-  },[locations, props.orders]);
 
   return (
     <div className="animated fadeIn">
