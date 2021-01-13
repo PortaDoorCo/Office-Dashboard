@@ -118,31 +118,15 @@ const SalesReport = (props) => {
               className={classnames({ active: activeTab === '4' })}
               onClick={() => { toggle('4'); }}
             >
-              <strong>Joseph</strong>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: activeTab === '5' })}
-              onClick={() => { toggle('5'); }}
-            >
               <strong>Peter</strong>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink
-              className={classnames({ active: activeTab === '6' })}
-              onClick={() => { toggle('6'); }}
+              className={classnames({ active: activeTab === '4' })}
+              onClick={() => { toggle('5'); }}
             >
               <strong>Meg</strong>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: activeTab === '7' })}
-              onClick={() => { toggle('7'); }}
-            >
-              <strong>Krista</strong>
             </NavLink>
           </NavItem>
         </Nav>
@@ -181,7 +165,7 @@ const SalesReport = (props) => {
             <Suspense fallback={loading()}>
               <StatusTable
                 orders={data}
-                status="Joseph"
+                status="Peter"
                 startDate={startDate}
                 endDate={endDate}
               />
@@ -191,27 +175,7 @@ const SalesReport = (props) => {
             <Suspense fallback={loading()}>
               <StatusTable
                 orders={data}
-                status="Peter"
-                startDate={startDate}
-                endDate={endDate}
-              />
-            </Suspense>
-          </TabPane>
-          <TabPane tabId="6">
-            <Suspense fallback={loading()}>
-              <StatusTable
-                orders={data}
                 status="Meg"
-                startDate={startDate}
-                endDate={endDate}
-              />
-            </Suspense>
-          </TabPane>
-          <TabPane tabId="7">
-            <Suspense fallback={loading()}>
-              <StatusTable
-                orders={data}
-                status="Krista"
                 startDate={startDate}
                 endDate={endDate}
               />
