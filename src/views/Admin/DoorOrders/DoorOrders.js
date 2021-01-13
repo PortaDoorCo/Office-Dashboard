@@ -330,10 +330,79 @@ class DoorOrders extends Component {
                 <Card>
                   <CardBody>
                     <MiscItems />
+                    <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
+                      <Row>
+                        <Col xs='8' />
+                        <Col xs="4">
+                          <Row className='mb-0'>
+                            <Col xs='9' />
+                            <Col>
+                              <FormGroup>
+                                <Label htmlFor="companyName">Taxable?</Label>
+                                <Field
+                                  name={'Taxable'}
+                                  component={renderCheckboxToggle}
+                                />
+                              </FormGroup>
+                            </Col>
+
+                          </Row>
+
+
+
+                          <strong>Discount: </strong>
+                          <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>%</InputGroupText>
+                            </InputGroupAddon>
+                            <Field
+                              name={'discount'}
+                              type="text"
+                              component={renderField}
+                              label="discount"
+                            />
+                          </InputGroup>
+
+                      
+                          <strong>Tax: </strong>
+                          <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>$</InputGroupText>
+                            </InputGroupAddon>
+                            <Input disabled placeholder={tax.toFixed(2)} />
+                          </InputGroup>
+
+
+                          <strong>Total: </strong>
+                          <InputGroup className='mb-3'>
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>$</InputGroupText>
+                            </InputGroupAddon>
+                            <Input disabled placeholder={total.toFixed(2)} />
+                          </InputGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs='8' />
+                        <Col xs="4">
+                          <Row>
+                            <Col>
+                              <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
+                            </Col>
+                            <Col>
+                              <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
+                            Cancel
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </form>
                   </CardBody>
                 </Card>
               </Col>
             </Row>
+
             {(this.props.formState && this.props.formState.part_list) ? (
               this.props.formState.part_list.map((part, i) => {
                 return (

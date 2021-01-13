@@ -178,7 +178,6 @@ class DoorOrders extends Component {
               </CardHeader>
               <CardBody>
                 <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
-
                   <FormSection name="job_info">
                     <JobInfo
                       customers={customers}
