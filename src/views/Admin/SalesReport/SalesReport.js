@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadOrders } from '../../../redux/orders/actions';
 import Charts from './components/Chart';
+import Chart1 from './components/SalesCharts/Chart1';
+import Maps from './components/SalesCharts/Maps';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
@@ -44,6 +46,11 @@ const SalesReport = (props) => {
 
   const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].createdAt) : new Date();
 
+  const salesPerson = props.sale ? props.salesReps.filter(item => {
+    return item.id.includes(props.sale);
+  }) : [];
+
+  console.log({salesPerson});
   
   return (
     role && (role.type === 'authenticated' || role.type === 'owner') ? 
@@ -212,15 +219,71 @@ const SalesReport = (props) => {
           </TabPane>
         </TabContent>
       </div> : 
-      <div>
+      role && (role.type === 'sales') ? 
+        <div>
+          <Row className="mb-3">
+            <Col lg='9' />
+            <Col>
+              <Row>
+                <Col>
+                  <DateRangePicker
+                    startDate={startDate} // momentPropTypes.momentObj or null,
+                    startDateId="startDate" // PropTypes.string.isRequired,
+                    endDate={endDate} // momentPropTypes.momentObj or null,
+                    endDateId="endDate" // PropTypes.string.isRequired,
+                    onDatesChange={({ startDate, endDate }) => (setStartDate(startDate), setEndDate(endDate))} // PropTypes.func.isRequired,
+                    focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                    onFocusChange={focusedInput => setFocusedInput(focusedInput)}
+                    isOutsideRange={(date) => {
+                      if (date > moment(new Date())) {
+                        return true; // return true if you want the particular date to be disabled
+                      } else if (date < moment(minDate)) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    }}
+                  />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+
+          <Chart1
+            orders={data}
+            startDate={startDate}
+            endDate={endDate}
+            status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
+          />
+
+          {/* <Maps 
+            orders={data}
+            startDate={startDate}
+            endDate={endDate}
+            status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
+          /> */}
+
+          <Suspense fallback={loading()}>
+            <StatusTable
+              orders={data}
+              status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
+              startDate={startDate}
+              endDate={endDate}
+            />
+          </Suspense>
+           
+        </div> :
+        <div>
       Restricted Access
-      </div>
+        </div>
   ); 
 };
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
-  role: state.users.user.role
+  role: state.users.user.role,
+  sale: state.users.user.sale,
+  salesReps: state.sales.salesReps
 });
 
 const mapDispatchToProps = dispatch =>
