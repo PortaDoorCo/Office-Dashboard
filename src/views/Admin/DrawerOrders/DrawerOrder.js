@@ -359,6 +359,79 @@ class DoorOrders extends Component {
                 <Card>
                   <CardBody>
                     <MiscItems />
+                    <hr />
+                    <form
+                      onKeyPress={this.onKeyPress}
+                      onSubmit={handleSubmit(this.submit)}
+                    >
+                      <Row>
+                        <Col xs="8" />
+                        <Col xs="4">
+
+                          <Row className='mb-0'>
+                            <Col xs='9' />
+                            <Col>
+                              <FormGroup>
+                                <Label htmlFor="companyName">Taxable?</Label>
+                                <Field
+                                  name={'Taxable'}
+                                  component={renderCheckboxToggle}
+                                />
+                              </FormGroup>
+                            </Col>
+
+                          </Row>
+
+                          <strong>Discount: </strong>
+                          <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>%</InputGroupText>
+                            </InputGroupAddon>
+                            <Field
+                              name={'discount'}
+                              type="text"
+                              component={renderField}
+                              label="discount"
+                            />
+                          </InputGroup>
+                          <strong>Tax: </strong>
+                          <RenderPriceHolder input={tax.toFixed(2)} edit={true} />
+                          <strong>Total: </strong>
+                          <div className="mb-3">
+                            <RenderPriceHolder
+                              input={total.toFixed(2)}
+                              edit={true}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs="4" />
+                        <Col xs="5" />
+                        <Col xs="3">
+                          <Row>
+                            <Col>
+                              <Button
+                                color="primary"
+                                className="submit"
+                                style={{ width: '100%' }}
+                              >
+                            Submit
+                              </Button>
+                            </Col>
+                            <Col>
+                              <Button
+                                color="danger"
+                                onClick={this.cancelOrder}
+                                style={{ width: '100%' }}
+                              >
+                            Cancel
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </form>
                   </CardBody>
                 </Card>
               </Col>

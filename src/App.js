@@ -129,11 +129,11 @@ class App extends Component {
       await loadShippingMethod(cookie);
       await loadPaymentTypes(cookie);
       await loadPaymentTerms(cookie);
-
+      await loadSales(cookie);
       await loadAllOrders(cookie);
       await loadAllCustomers(cookie);
 
-      await loadSales(cookie);
+      
 
       // socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
       socket.on(
