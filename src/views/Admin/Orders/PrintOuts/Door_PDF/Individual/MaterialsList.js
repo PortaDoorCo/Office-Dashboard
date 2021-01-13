@@ -4,6 +4,7 @@ import BoardFT from '../../Breakdowns/Doors/MaterialBreakdown/BoardFT';
 import Panels from '../../Breakdowns/Doors/Panels/Panels';
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import SqFT from '../../Breakdowns/Doors/MaterialBreakdown/SqFT';
+import numQty from 'numeric-quantity';
 
 export default (data,breakdowns) => {
   return [
@@ -23,7 +24,7 @@ export default (data,breakdowns) => {
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? "Rush" : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
           ]
@@ -85,7 +86,7 @@ export default (data,breakdowns) => {
           }
         ];
       } else {
-        return []
+        return [];
       }
     }),
     {
@@ -125,31 +126,15 @@ export default (data,breakdowns) => {
       margin: [0, 5, 0, 5]
     },
     data.part_list.map((i, index) => {
-
-      const qty = i.dimensions.map((item,index) => {
-        return parseInt(item.qty);
-      });
-
       const width = i.dimensions.map((item,index) => {
-       
-        return Panels(item, i, breakdowns).map(panel => { return panel.width; });
+        const width =  Panels(item, i, breakdowns).map(panel => { return numQty(panel.width); });
+        const height = Panels(item, i, breakdowns).map(panel => { return numQty(panel.height); });
+        const q = ((width * height) / 144) * parseInt(item.qty);
+        return q;
       });
 
-      const height = i.dimensions.map((item,index) => {
-       
-        return Panels(item, i, breakdowns).map(panel => { return panel.height; });
-      });
 
-      const widthTotal = width.map(i => {
-        return i.reduce((acc, item) => acc + item);
-      });
-      const heightTotal = height.map(i => {
-        return i.reduce((acc, item) => acc + item, 0);
-      });
-
-      const qtyTotal = qty.reduce((acc, item) => acc + item);
-
-      const equation = (((widthTotal.reduce((acc, item) => acc + item)) * (heightTotal.reduce((acc, item) => acc + item))) / 144) * qtyTotal;
+      const equation = width.reduce((acc, item) => acc + item);
 
       if (i.orderType.value === 'One_Piece') {
         return [];
