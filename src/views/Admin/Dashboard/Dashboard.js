@@ -89,7 +89,7 @@ class Dashboard extends Component {
               </Col>
             </Row>
           </div>
-          : role && (role.type === 'office') ?
+          : role && (role.type === 'office' || role.type === 'sales') ?
             <div>
               <Row>
                 <Col>

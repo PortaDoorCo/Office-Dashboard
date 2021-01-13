@@ -19,21 +19,16 @@ class Charts extends Component {
     let ned = this.props.data.filter(item => {
       return item.sale && item.sale.fullName && item.sale.fullName.includes('Ned');
     });
-    let joseph = this.props.data.filter(item => {
-      return item.sale && item.sale.fullName && item.sale.fullName.includes('Joseph');
-    });
     let peter = this.props.data.filter(item => {
       return item.sale && item.sale.fullName && item.sale.fullName.includes('Peter');
     });
     let meg = this.props.data.filter(item => {
       return item.sale && item.sale.fullName && item.sale.fullName.includes('Meg');
     });
-    let krista = this.props.data.filter(item => {
-      return item.sale && item.sale.fullName && item.sale.fullName.includes('Krista');
-    });
+
 
     const bar = {
-      labels: ['House', 'Harold', 'Ned', 'Joseph', 'Peter', 'Meg', 'Krista'],
+      labels: ['House', 'Harold', 'Ned', 'Peter', 'Meg'],
       datasets: [
         {
           label: 'Sales Reps',
@@ -42,7 +37,7 @@ class Charts extends Component {
           borderWidth: 0.5,
           hoverBackgroundColor: 'rgba(194, 234, 234, 0.45)',
           hoverBorderColor: '#000000',
-          data: [house.length, harold.length, ned.length, joseph.length, peter.length, meg.length, krista.length],
+          data: [house.length, harold.length, ned.length, peter.length, meg.length],
         },
       ],
     };
