@@ -1,2 +1,2 @@
-const db_url = 'https://server.portadoor.com';
+const db_url = 'http://localhost:1338';
 export default db_url;
