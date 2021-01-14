@@ -81,6 +81,10 @@ export default (info, part, breakdowns) => {
     return Slab_Door(info);
   }
 
+  if(part.orderType.value === 'Slab_DF') {
+    return Slab_Door(info);
+  }
+
 
 
 };
