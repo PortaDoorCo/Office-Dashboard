@@ -245,7 +245,7 @@ class DoorOrders extends Component {
                     <Col xs="3">
                       <Row className='mb-0'>
                         <Col xs='9' />
-                        <Col>
+                        {/* <Col>
                           <FormGroup>
                             <Label htmlFor="companyName">Taxable?</Label>
                             <Field
@@ -253,7 +253,7 @@ class DoorOrders extends Component {
                               component={renderCheckboxToggle}
                             />
                           </FormGroup>
-                        </Col>
+                        </Col> */}
 
                       </Row>
 
@@ -267,6 +267,7 @@ class DoorOrders extends Component {
                         <Field
                           name={'discount'}
                           type="text"
+                          edit={true}
                           component={renderField}
                           label="discount"
                         />
@@ -291,7 +292,7 @@ class DoorOrders extends Component {
                       </InputGroup>
                     </Col>
                   </Row>
-                  <Row>
+                  {/* <Row>
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
@@ -306,7 +307,7 @@ class DoorOrders extends Component {
                         </Col>
                       </Row>
                     </Col>
-                  </Row>
+                  </Row> */}
                 </form>
               </CardBody>
             </Card>
