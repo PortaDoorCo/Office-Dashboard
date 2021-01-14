@@ -37,7 +37,7 @@ export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdo
         bold: true
       },
       tableBold: {
-        fontSize: 9,
+        fontSize: 10,
         bold: true
       },
       totals: {

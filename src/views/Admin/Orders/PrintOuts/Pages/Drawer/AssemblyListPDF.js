@@ -24,6 +24,10 @@ export default (data,breakdowns) => {
         fontSize: 12,
         bold: true
       },
+      tableBold: {
+        fontSize: 10,
+        bold: true
+      },
       totals: {
         fontSize: 8,
         bold: true,

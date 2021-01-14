@@ -8,6 +8,9 @@ import LinearIN from '../../Breakdowns/DrawerBoxes/LinearIN';
 import LinearFT from '../../Breakdowns/DrawerBoxes/LinearFT';
 import SQFT from '../../Breakdowns/DrawerBoxes/SQFT';
 
+
+
+
 export default (data, breakdowns) => {
 
   return [
@@ -33,7 +36,7 @@ export default (data, breakdowns) => {
           stack: [
             { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Est. Ship: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
+            { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
           ]
         }
       ]
@@ -73,7 +76,6 @@ export default (data, breakdowns) => {
                     style: 'fonts'
                   },
                   { text: `${i.box_woodtype.NAME}`, style: 'woodtype' },
-                  { text: `Notes: ${i.notes ? i.notes : ''}`, style: 'fontsBold' },
                 ]
               },
               {
@@ -91,7 +93,7 @@ export default (data, breakdowns) => {
               }
             ]
           },
-          { text: `Notes: ${i.notes}`, style: 'fontsBold' },
+          { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
           {
             canvas: [
               { type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }
@@ -120,10 +122,17 @@ export default (data, breakdowns) => {
           let tb =  [
             { text: item.item, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
-            { text: Size(item), style: 'fonts' },
+            {
+              stack: [
+                { text: Size(item), style: 'fonts' },
+                {text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'tableBold', margin: [0, 4, 0, 0]}
+              ]
+            },
             { text: `${Sides(item, i, breakdowns).qty} - ${Sides(item, i, breakdowns).measurement}`, style: 'fonts' },
             { text: `${Fronts(item, i, breakdowns).qty} - ${Fronts(item, i, breakdowns).measurement}`, style: 'fonts' },
-            { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement} \n Notes: ${item.notes ? item.notes : ''} `, style: 'fonts' }
+            { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement} \n `, style: 'fonts' },
+
+           
           ];
           
           groupedTableBody.push(tb);
@@ -192,6 +201,6 @@ export default (data, breakdowns) => {
 
       return body;
 
-    })
+    }),
   ];
 };
