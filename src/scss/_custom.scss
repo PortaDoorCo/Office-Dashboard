@@ -195,3 +195,28 @@ ul>li:hover {
   }
 }
 
+
+.orderForm{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.orderFormCol1 {
+  width: 58%;
+  margin: 0 1%;
+
+}
+
+.orderFormCol2 {
+  width: 38%;
+  margin: 0 1%
+}
+
+@media screen and (max-width: 1680px){
+
+  .orderFormCol1, .orderFormCol2 {
+    width: 98%;
+    margin-bottom: 15px;
+  }
+
+}

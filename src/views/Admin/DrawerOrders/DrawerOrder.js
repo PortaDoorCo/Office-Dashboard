@@ -220,8 +220,8 @@ class DoorOrders extends Component {
     return (
       <div className="animated fadeIn">
         <NotificationAlert ref="notify" />
-        <Row>
-          <Col xs="12" sm="12" md="12" lg="7">
+        <div className="orderForm">
+          <div className="orderFormCol1">
             <Card>
               <CardHeader>
                 <strong>Drawer Order</strong>
@@ -340,8 +340,10 @@ class DoorOrders extends Component {
                 </form>
               </CardBody>
             </Card>
-          </Col>
-          <Col lg="5">
+          </div>
+
+
+          <div className="orderFormCol2">
             <Row>
               <Col>
                 <Card>
@@ -436,7 +438,7 @@ class DoorOrders extends Component {
                 </Card>
               </Col>
             </Row>
-            {this.props.formState ? (
+            {/* {this.props.formState ? (
               this.props.formState.part_list.map((part, i) => {
                 return (
                   <Sticky
@@ -451,9 +453,9 @@ class DoorOrders extends Component {
               })
             ) : (
               <div />
-            )}
-          </Col>
-        </Row>
+            )} */}
+          </div>
+        </div>
       </div>
     );
   }
