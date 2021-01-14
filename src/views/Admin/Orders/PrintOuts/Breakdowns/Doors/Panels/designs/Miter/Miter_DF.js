@@ -52,7 +52,7 @@ export default (info, part, breakdowns) => {
       measurement: `${fraction(
         Math.round(eval(breakdowns.panel_width) * 16) / 16
       )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-      pattern: 'PR',
+      pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
       width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
       height: Math.round(eval(breakdowns.panel_height) * 16) / 16
     },
@@ -71,7 +71,7 @@ export default (info, part, breakdowns) => {
         )} x ${fraction(
           (numQty(info[`unevenSplitInput${v}`]) + (INSET * 2))
         )}`,
-        pattern: 'PR'
+        pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR'
       };
     }),
     {
@@ -88,7 +88,7 @@ export default (info, part, breakdowns) => {
                 - topRail
                 + (INSET * 2)
       )}`,
-      pattern: 'PR'
+      pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR'
     }
   ];
 
