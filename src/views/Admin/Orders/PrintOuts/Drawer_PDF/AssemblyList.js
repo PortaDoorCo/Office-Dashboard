@@ -93,7 +93,7 @@ export default (data, breakdowns) => {
               }
             ]
           },
-          { text: `Notes: ${i.notes ? i.notes : ''}`, style: 'fontsBold' },
+          { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
           {
             canvas: [
               { type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }
@@ -122,10 +122,17 @@ export default (data, breakdowns) => {
           let tb =  [
             { text: item.item, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
-            { text: Size(item), style: 'fonts' },
+            {
+              stack: [
+                { text: Size(item), style: 'fonts' },
+                {text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'tableBold', margin: [0, 4, 0, 0]}
+              ]
+            },
             { text: `${Sides(item, i, breakdowns).qty} - ${Sides(item, i, breakdowns).measurement}`, style: 'fonts' },
             { text: `${Fronts(item, i, breakdowns).qty} - ${Fronts(item, i, breakdowns).measurement}`, style: 'fonts' },
-            { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement} \n Notes: ${item.notes ? item.notes : ''} `, style: 'fonts' }
+            { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement} \n `, style: 'fonts' },
+
+           
           ];
           
           groupedTableBody.push(tb);
