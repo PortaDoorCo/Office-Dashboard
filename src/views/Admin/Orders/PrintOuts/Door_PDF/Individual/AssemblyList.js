@@ -45,7 +45,6 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
-
             { text: `PO: ${data.job_info.poNum}`, alignment: 'right', }
           ]
         },
@@ -77,7 +76,7 @@ export default (data, breakdowns) => {
               { text: `${SlabSize(item, i.edge.LIP_FACTOR)} ${item.notes ? item.notes : ''}`, style: 'fonts' },
               { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
               { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
-              { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
+              { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
             ]
           );
         });
@@ -87,14 +86,21 @@ export default (data, breakdowns) => {
             [
               { text: index + 1, style: 'fonts' },
               { text: item.qty, style: 'fonts' },
-              { text: `${Size(item)} \n ${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' },
-              { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`; }), style: 'fonts' },
+              {
+                stack: [
+                  { text: `${Size(item)} \n `, style: 'fonts' },
+                  {text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'tableBold', margin: [0, 4, 0, 0]}
+                ]
+              },
+              { text: `${Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} ${stile.measurement} - ${stile.pattern} `; })} \n`, style: 'fonts' },
               { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${item.full_frame ? '** Full Frame DF **' : ''}`; }), style: 'fonts' },
               { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`; }), style: 'fonts' },
             ]
           );
         });
       }
+
+
 
       return [
         {
@@ -107,19 +113,19 @@ export default (data, breakdowns) => {
                   style: 'fonts'
                 },
                 {
-                  text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'} ${i.lite ? '- ' + i.lite.NAME : ''}`,
+                  text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value : i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : ''} ${i.lite ? '- ' + i.lite.NAME : ''}`,
                   style: 'fonts'
                 },
-                { text: `${i.woodtype.NAME}`, style: 'woodtype' }
+                { text: `${i.woodtype.NAME}`, style: 'woodtype' },
               ]
             },
-            { text: `Notes: ${i.notes ? i.notes : ''}`, style: 'fontsBold' },
+            { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
             {
               stack: [
                 { text: `Thickness: ${i.thickness ? i.thickness.name : ''}"`, style: 'fonts' },
                 { text: `IP: ${i.profile ? i.profile.NAME : 'None'}`, style: 'fonts' },
                 { text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`, style: 'fonts' },
-                { text: `Applied Profile: ${i.applied_profile ? i.applied_profile.NAME : 'None'}`, style: 'fonts' },
+                // { text: `Applied Profile: ${i.applied_profile ? i.applied_profile.NAME : 'None'}`, style: 'fonts' },
               ],
               alignment: 'right'
             }
@@ -141,8 +147,7 @@ export default (data, breakdowns) => {
         },
         {
           canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
-        },
-
+        }
       ];
     })
   ];
