@@ -641,6 +641,9 @@ export const itemPriceSelector = createSelector(
                   : 0;
             }
             if(part.orderType.value === 'Slab_Door'){
+              price = ((width * height) / 144) > 2 ? ((((width * height) / 144) * wood) + (6.50 + edge)) + extraCost : (((2) * wood) + (6.50 + edge)) + extraCost ;
+            }
+            else if (part.orderType.value === 'Slab_DF'){
               price = ((width * height) / 144) > 1 ? ((((width * height) / 144) * wood) + (6.50 + edge)) + extraCost : (((1) * wood) + (6.50 + edge)) + extraCost ;
             }
             else {

@@ -284,7 +284,7 @@ class DoorFilter extends Component {
           </Fragment>
         );
       }
-      if ((formState.part_list[index].orderType.value === 'Slab_Door')) {
+      if ((formState.part_list[index].orderType.value === 'Slab_Door' || formState.part_list[index].orderType.value === 'Slab_DF')) {
         return (
           <Fragment>
             <Row>
