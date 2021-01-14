@@ -6,6 +6,9 @@ export default (data,breakdowns) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
+
+  console.log({data});
+
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
