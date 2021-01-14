@@ -10,6 +10,7 @@ import MT_DF from './MT/DF';
 import FaceFrame from './Face_Frame/FaceFrame';
 import OnePieceDoor from './One_Piece/One_Piece';
 import SlabDoor from './Slab_Door/Slab_Door';
+import SlabDF from './Slab_Door/Slab_DF';
 import GlassDF from './Glass/Glass_DF';
 
 import GlassCopeDoor from './Glass/Cope/Door';
@@ -297,6 +298,16 @@ class Conditionals extends Component {
           break;
         case 'Slab_Door':
           component = <SlabDoor
+            part={part}
+            index={index}
+            isValid={isValid}
+            part_list={part_list}
+            formState={formState}
+            edit={edit}
+          />;
+          break;
+        case 'Slab_DF':
+          component = <SlabDF
             part={part}
             index={index}
             isValid={isValid}
