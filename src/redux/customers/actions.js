@@ -48,6 +48,7 @@ export function loadAllCustomers(cookie) {
       }
     );
     const data = await res.json();
+    NotificationManager.success('Database has been fully loaded!', 'Database Load Complete!', 4000);
     await dispatch(hideLoading());
     return await dispatch({
       type: LOAD_CUSTOMERS,
