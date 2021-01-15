@@ -10,6 +10,9 @@ import DropdownList from 'react-widgets/lib/DropdownList';
 import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
+import CurrencyInput from 'react-currency-input';
+import NumberFormat from 'react-number-format';
 
 
 export const renderMultiSelect = ({
@@ -101,6 +104,23 @@ export const renderField = ({
   </Fragment>
 );
 
+export const renderNumber = ({
+  input,
+  edit,
+  meta: { touched, error, warning },
+  ...custom
+}) => (
+  <Fragment>
+    <AvForm>
+      <AvField {...input} errorMessage="Only Numbers Allowed" validate={{
+        pattern: {value: '^[0-9/ ]+$'},
+      }} disabled={edit} autoComplete="off" /></AvForm>
+    {touched &&
+                ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+                    (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+  </Fragment>
+);
+
 export const renderSwitch = ({
   input,
   edit,
@@ -122,13 +142,13 @@ export const renderPrice = ({
   meta: { touched, error, warning },
   ...custom
 }) => (
+
   <Fragment>
-    <InputGroup>
-      <InputGroupAddon addonType="prepend">
-        <InputGroupText>$</InputGroupText>
-      </InputGroupAddon>
-      <Input {...input} {...custom} disabled={edit} autocomplete="new-password" />
-    </InputGroup>
+    
+    <NumberFormat thousandSeparator={true} {...input} disabled={edit} customInput={Input} prefix={'$'} />
+    
+
+    
 
     {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
