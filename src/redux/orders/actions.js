@@ -146,7 +146,6 @@ export function loadOrders(cookie) {
 export function loadAllOrders(cookie) {
  
   return async function (dispatch) {
-
     const res = await fetch(`${db_url}/orders/all`,
       {
         headers: {
