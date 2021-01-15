@@ -11,10 +11,16 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
-import { renderDropdownList, renderField, renderFieldDisabled, renderPrice } from '../RenderInputs/renderInputs';
+import { renderDropdownList, renderNumber, renderField, renderFieldDisabled, renderPrice } from '../RenderInputs/renderInputs';
 import RenderPriceHolder from '../RenderInputs/RenderPriceHolder';
+import { createNumberMask } from 'redux-form-input-masks';
 
 const required = value => value ? undefined : 'Required';
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 class OrderTable extends Component {
 
@@ -66,7 +72,7 @@ class OrderTable extends Component {
                         <Field
                           name={`${table}.qty`}
                           type="text"
-                          component={renderField}
+                          component={renderNumber}
                           label="qty"
                           validate={required}
                           edit={edit}
@@ -76,7 +82,7 @@ class OrderTable extends Component {
                         <Field
                           name={`${table}.width`}
                           type="text"
-                          component={renderField}
+                          component={renderNumber}
                           label="width"
                           validate={required}
                           edit={edit}
@@ -86,7 +92,7 @@ class OrderTable extends Component {
                         <Field
                           name={`${table}.depth`}
                           type="text"
-                          component={renderField}
+                          component={renderNumber}
                           label="depth"
                           validate={required}
                           edit={edit}
@@ -96,7 +102,7 @@ class OrderTable extends Component {
                         <Field
                           name={`${table}.height`}
                           type="text"
-                          component={renderField}
+                          component={renderNumber}
                           label="height"
                           validate={required}
                           edit={edit}
@@ -127,13 +133,13 @@ class OrderTable extends Component {
                           <Input
                             type="text"
                             className="form-control"
-                            disabled={edit}
+                            disabled={true}
                             placeholder={'$' + prices[i][index].toFixed(2) || 0}
                           /> : <Input
                             type="text"
                             className="form-control"
                             placeholder={'$0.00'}
-                            disabled={edit}
+                            disabled={true}
                           />
                         }
                       </td>
@@ -174,6 +180,7 @@ class OrderTable extends Component {
                       component={renderPrice}
                       edit={edit}
                       label="extraCost"
+                      {...currencyMask}
                     />
                   </Col>
                 </Row>
@@ -184,6 +191,7 @@ class OrderTable extends Component {
             )}
             {!edit ?
               <Button color="primary" className="btn-circle" onClick={() => fields.push({
+                qty:1,
                 scoop: scoop[0],
                 dividers: dividers[0],
                 item: fields.length + 1
@@ -199,8 +207,8 @@ class OrderTable extends Component {
                 {subTotal[i] ? (
                   <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
                 ) : (
-                    <RenderPriceHolder input={'0.00'} edit={true} />
-                  )}
+                  <RenderPriceHolder input={'0.00'} edit={true} />
+                )}
               </Col>
             </Row>
           </Fragment >

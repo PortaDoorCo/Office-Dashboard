@@ -1,10 +1,15 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
-import { renderField, renderDropdownListFilter, renderPrice } from '../RenderInputs/renderInputs';
+import { renderField, renderNumber, renderDropdownListFilter, renderPrice } from '../RenderInputs/renderInputs';
 import { Button, Table, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Col, Label } from 'reactstrap';
 import { connect } from 'react-redux';
 import { miscItemPriceSelector, miscItemLinePriceSelector, miscTotalSelector } from '../../selectors/drawerPricing';
+import { createNumberMask } from 'redux-form-input-masks';
 
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 let Inputs = props => {
   const { fields, misc_items, formState, prices, linePrices, miscTotal, onChange } = props;
@@ -39,7 +44,7 @@ let Inputs = props => {
           {fields.map((table, index) => {
             return (
               <tr key={index}>
-                <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderField} type="text" /></td>
+                <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderNumber} type="text" /></td>
                 <td style={{ width: '400px' }}>
                   {formState && formState.misc_items && formState.misc_items[index] && formState.misc_items[index].category === 'preselect' ?
                     <Field
@@ -62,14 +67,12 @@ let Inputs = props => {
                   <>
                     <td style={{ width: '150px' }}>
                       <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>$</InputGroupText>
-                        </InputGroupAddon>
                         <Field
                           name={`${table}.price`}
                           type="text"
-                          component={renderField}
+                          component={renderPrice}
                           label="price"
+                          {...currencyMask}
                         />
                       </InputGroup>
                     </td>
@@ -84,7 +87,7 @@ let Inputs = props => {
                   </>
                   :
                   <>
-                    <td style={{ width: '150px' }}><Field name={`${table}.pricePer`} component={renderPrice} type="text" /></td>
+                    <td style={{ width: '150px' }}><Field name={`${table}.pricePer`} component={renderPrice} type="text" {...currencyMask} /></td>
                     <td style={{ width: '150px' }}>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
