@@ -12,7 +12,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Field, change } from 'redux-form';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
+import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
@@ -74,10 +74,10 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
   const changeFraming = (index, e) => {
     if (changeValue) {
 
-      setLeftStileWidth(fraction(numQty(changeValue)))
-      setRightStileWidth(fraction(numQty(changeValue)))
-      setTopRailWidth(fraction(numQty(changeValue)))
-      setBottomRailWidth(fraction(numQty(changeValue)))
+      setLeftStileWidth(fraction(numQty(changeValue)));
+      setRightStileWidth(fraction(numQty(changeValue)));
+      setTopRailWidth(fraction(numQty(changeValue)));
+      setBottomRailWidth(fraction(numQty(changeValue)));
 
       dispatch(
         change(
@@ -153,7 +153,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                       <Field
                         name={`${table}.qty`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="qty"
                         validate={required}
                         edit={edit}
@@ -163,7 +163,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                       <Field
                         name={`${table}.width`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
                         validate={required}
@@ -175,7 +175,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                       <Field
                         name={`${table}.height`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                         label="height"
                         validate={required}
@@ -273,7 +273,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                             <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
-                              component={renderField}
+                              component={renderNumber}
                               edit={edit}
                             />
                           </Col>
@@ -341,8 +341,8 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
               {subTotal[i] ? (
                 <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
               ) : (
-                  <RenderPriceHolder input={'0.00'} edit={true} />
-                )}
+                <RenderPriceHolder input={'0.00'} edit={true} />
+              )}
             </Col>
           </Row>
         </Fragment>

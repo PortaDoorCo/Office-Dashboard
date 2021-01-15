@@ -13,7 +13,7 @@ import { Field, change } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
+import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
@@ -190,7 +190,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.qty`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="qty"
                         validate={required}
                         edit={edit}
@@ -200,7 +200,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.width`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
                         validate={required}
@@ -212,7 +212,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.height`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                         label="height"
                         validate={required}
@@ -224,7 +224,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.panelsH`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="horizontalMidRail"
                         edit={edit}
                         onChange={(e) => twoHigh(index, e)}
@@ -234,7 +234,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.panelsW`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="verticalMidRail"
                         edit={edit}
                         onChange={(e) => twoWide(index, e)}
@@ -276,7 +276,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.leftStile`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="leftStile"
                         edit={edit}
                         validate={required}
@@ -290,7 +290,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.rightStile`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="rightStile"
                         edit={edit}
                         validate={required}
@@ -304,7 +304,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.topRail`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="topRail"
                         edit={edit}
                         validate={required}
@@ -318,7 +318,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.bottomRail`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="bottomRail"
                         edit={edit}
                         validate={required}
@@ -332,7 +332,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.horizontalMidRailSize`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="horizontalMidRail"
                         edit={edit}
                       />
@@ -344,7 +344,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       <Field
                         name={`${table}.verticalMidRailSize`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="verticalMidRail"
                         edit={edit}
                       />
@@ -415,7 +415,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                             <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
-                              component={renderField}
+                              component={renderNumber}
                               edit={edit}
                             />
                           </Col>
