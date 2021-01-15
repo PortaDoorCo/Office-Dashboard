@@ -5,6 +5,7 @@ import { Button, Table, Input, InputGroup, InputGroupAddon, InputGroupText, Row,
 import { connect } from 'react-redux';
 import { miscItemPriceSelector, miscItemLinePriceSelector, miscTotalSelector } from '../../selectors/doorPricing';
 import { createNumberMask } from 'redux-form-input-masks';
+import NumberFormat from 'react-number-format';
 
 const currencyMask = createNumberMask({
   decimalPlaces: 2,
@@ -82,7 +83,7 @@ let Inputs = props => {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder={linePrices[index]} disabled />
+                        <NumberFormat thousandSeparator={true} value={linePrices[index]} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                       </InputGroup>
                     </td>
                   </>
@@ -94,7 +95,7 @@ let Inputs = props => {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder={linePrices[index]} disabled />
+                        <NumberFormat thousandSeparator={true} value={linePrices[index]} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                       </InputGroup></td> 
                   </>
                 }
@@ -129,7 +130,7 @@ let Inputs = props => {
             <InputGroupAddon addonType="prepend">
               <InputGroupText>$</InputGroupText>
             </InputGroupAddon>
-            <Input placeholder={miscTotal} disabled />
+            <NumberFormat thousandSeparator={true} value={miscTotal} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
           </InputGroup>
         </Col>
       </Row>

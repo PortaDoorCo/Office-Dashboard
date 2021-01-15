@@ -1,12 +1,18 @@
 import React, { Component, Suspense } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change, FormSection, } from 'redux-form';
-import { renderField, renderDropdownListFilter, renderPrice, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
+import { renderField, renderNumber, renderDropdownListFilter, renderPrice, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
 import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import { createNumberMask } from 'redux-form-input-masks';
+import NumberFormat from 'react-number-format';
 
 const required = value => (value ? undefined : 'Required');
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 let Inputs = props => {
   const { fields, misc_items, formState, miscTotal, prices, linePrices, edit } = props;
@@ -19,7 +25,7 @@ let Inputs = props => {
         (e.Price)
       )
     );
-  }
+  };
   return (
     <div>
       <Table>
@@ -36,7 +42,7 @@ let Inputs = props => {
           {fields.map((table, index) => {
             return (
               <tr key={index}>
-                <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderField} edit={edit} type="text" /></td>
+                <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderNumber} edit={edit} type="text" /></td>
                 <td>
                   {formState &&  formState.misc_items && formState.misc_items[index] && formState.misc_items[index].category === 'preselect' ?
                     <Field
@@ -61,15 +67,13 @@ let Inputs = props => {
                   <>
                     <td style={{ width: '150px' }}>
                       <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>$</InputGroupText>
-                        </InputGroupAddon>
                         <Field
                           name={`${table}.price`}
                           type="text"
-                          component={renderField}
+                          component={renderPrice}
                           label="price"
                           edit={edit}
+                          {...currencyMask}
                         />
                       </InputGroup>
                     </td>
@@ -78,19 +82,20 @@ let Inputs = props => {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input disabled={edit} placeholder={linePrices[index]} disabled />
+                        <NumberFormat thousandSeparator={true} value={linePrices[index]} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
+                        {/* <Input  placeholder={linePrices[index]} {...currencyMask} disabled /> */}
                       </InputGroup>
                     </td>
                   </>
                   : 
                   <>
-                    <td style={{ width: '150px' }}><Field name={`${table}.pricePer`} component={renderPrice} edit={edit} type="text" /></td> 
+                    <td style={{ width: '150px' }}><Field name={`${table}.pricePer`} component={renderPrice} edit={edit} type="text" {...currencyMask} /></td> 
                     <td style={{ width: '150px' }}>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input disabled={edit} placeholder={linePrices[index]} disabled />
+                        <NumberFormat thousandSeparator={true} value={linePrices[index]} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                       </InputGroup></td> 
                   </> 
                 }

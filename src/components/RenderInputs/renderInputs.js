@@ -145,7 +145,7 @@ export const renderPrice = ({
 
   <Fragment>
     
-    <NumberFormat thousandSeparator={true} {...input} customInput={Input} prefix={'$'} />
+    <NumberFormat thousandSeparator={true} {...input} disabled={edit} customInput={Input} prefix={'$'} />
     
 
     
