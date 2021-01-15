@@ -16,6 +16,7 @@ import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, r
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
+import { createNumberMask } from 'redux-form-input-masks';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -23,6 +24,11 @@ const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
@@ -176,13 +182,13 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                       {prices[i] ?
                         <Input
                           type="text"
-                          disabled={edit}
+                          disabled={true}
                           className="form-control"
                           placeholder={'$' + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
-                          disabled={edit}
+                          disabled={true}
                           className="form-control"
                           placeholder={'$0.00'}
                         />
@@ -283,6 +289,7 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                     component={renderPrice}
                     edit={edit}
                     label="extraCost"
+                    {...currencyMask}
                   />
                 </Col>
 
@@ -298,6 +305,7 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                   className="btn-circle"
                   onClick={(e) =>
                     fields.push({
+                      qty:1,
                       showBuilder: false,
                       item: fields.length + 1
                     })
