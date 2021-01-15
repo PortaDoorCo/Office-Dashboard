@@ -322,10 +322,9 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
 
               <Row>
                 <Col lg='9'>
-                  {(height[index] > 0) ?
-                    <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
-                    :
-                    null}
+         
+                  <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
+                 
                 </Col>
                 <Col>
                   <Field
@@ -340,7 +339,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
               <Row>
                 <Col>
 
-                  {(height[index] > 0 && formState.part_list[i].dimensions[index].showBuilder) ?
+                  {(formState.part_list[i].dimensions[index].showBuilder) ?
                     <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
                       <Maker
                         width={width[index]}
