@@ -17,6 +17,7 @@ import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, r
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
+import { createNumberMask } from 'redux-form-input-masks';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -24,6 +25,11 @@ const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
@@ -465,6 +471,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 component={renderPrice}
                 edit={edit}
                 label="extraCost"
+                {...currencyMask}
               />
             </Col>
 
@@ -482,6 +489,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 (
                   (formState.part_list[i].construction.value === 'Cope' && formState.part_list[i].profile) ?
                     fields.push({
+                      qty:1,
                       panelsH: 1,
                       panelsW: 1,
                       leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(

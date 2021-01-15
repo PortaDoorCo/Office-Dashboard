@@ -17,6 +17,7 @@ import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, r
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
+import { createNumberMask } from 'redux-form-input-masks';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -24,6 +25,11 @@ const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
@@ -407,6 +413,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                     component={renderPrice}
                     edit={edit}
                     label="extraCost"
+                    {...currencyMask}
                   />
                 </Col>
 
@@ -422,6 +429,7 @@ const Frame_Only_Table = ({ fields, formState, i, prices, subTotal, part, update
                   className="btn-circle"
                   onClick={(e) =>
                     fields.push({
+                      qty:1,
                       openings: 1,
                       leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(2.375),
                       rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(2.375),
