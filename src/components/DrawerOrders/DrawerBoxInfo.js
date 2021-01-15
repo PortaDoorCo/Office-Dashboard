@@ -10,7 +10,7 @@ import {
 import 'antd/dist/antd.css';
 import { Field, FieldArray } from 'redux-form';
 import OrderTable from './OrderTable';
-import { renderDropdownList, renderField } from '../RenderInputs/renderInputs';
+import { renderDropdownList, renderField, renderDropdownListFilter } from '../RenderInputs/renderInputs';
 
 
 const required = value => value ? undefined : 'Required';
@@ -54,7 +54,7 @@ class DrawerBoxInfo extends Component {
                   <Label htmlFor="woodtypeSelection">Woodtype</Label>
                   <Field
                     name={`${part}.box_woodtype`}
-                    component={renderDropdownList}
+                    component={renderDropdownListFilter}
                     data={woodtypes}
                     valueField="value"
                     textField="NAME"
@@ -80,7 +80,7 @@ class DrawerBoxInfo extends Component {
                   <Label htmlFor="box-bottom-woodtype">Box Bottom Woodtype</Label>
                   <Field
                     name={`${part}.box_bottom_woodtype`}
-                    component={renderDropdownList}
+                    component={renderDropdownListFilter}
                     data={boxBottomWoodtype}
                     valueField="value"
                     textField="NAME"

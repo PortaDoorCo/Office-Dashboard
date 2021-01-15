@@ -13,10 +13,11 @@ import { Field, change } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
+import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
+import { createNumberMask } from 'redux-form-input-masks';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -24,6 +25,11 @@ const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
 
@@ -160,7 +166,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.qty`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="qty"
                         validate={required}
                         edit={edit}
@@ -170,7 +176,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.width`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
                         validate={required}
@@ -182,7 +188,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.height`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
                         label="height"
                         validate={required}
@@ -194,7 +200,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.panelsH`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="horizontalMidRail"
                         edit={edit}
                       />
@@ -203,7 +209,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.panelsW`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="verticalMidRail"
                         edit={edit}
                       />
@@ -212,13 +218,13 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       {prices[i] ?
                         <Input
                           type="text"
-                          disabled={edit}
+                          disabled={true}
                           className="form-control"
                           placeholder={'$' + prices[i][index].toFixed(2) || 0}
                         /> :
                         <Input
                           type="text"
-                          disabled={edit}
+                          disabled={true}
                           className="form-control"
                           placeholder={'$0.00'}
                         />
@@ -244,7 +250,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.leftStile`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="leftStile"
                         edit={edit}
                         validate={required}
@@ -258,7 +264,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.rightStile`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="rightStile"
                         edit={edit}
                         validate={required}
@@ -272,7 +278,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.topRail`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="topRail"
                         edit={edit}
                         validate={required}
@@ -286,7 +292,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.bottomRail`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="bottomRail"
                         edit={edit}
                         validate={required}
@@ -300,7 +306,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.horizontalMidRailSize`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="horizontalMidRail"
                         edit={edit}
 
@@ -313,7 +319,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.verticalMidRailSize`}
                         type="text"
-                        component={renderField}
+                        component={renderNumber}
                         label="verticalMidRail"
                         edit={edit}
 
@@ -385,7 +391,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                             <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
-                              component={renderField}
+                              component={renderNumber}
                               edit={edit}
                             />
                           </Col>
@@ -418,6 +424,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     component={renderPrice}
                     edit={edit}
                     label="extraCost"
+                    {...currencyMask}
                   />
                 </Col>
 
@@ -435,6 +442,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     (
                       (formState.part_list[i].construction.value === 'Glass' && formState.part_list[i].profile) ?
                         fields.push({
+                          qty:1,
                           panelsH: 1,
                           panelsW: 1,
                           leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(

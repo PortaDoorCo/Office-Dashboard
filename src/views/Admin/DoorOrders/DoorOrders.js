@@ -44,6 +44,8 @@ import Cookies from 'js-cookie';
 import { renderField, renderCheckboxToggle, renderCheckbox } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
+import NumberFormat from 'react-number-format';
+import { createNumberMask } from 'redux-form-input-masks';
 
 const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
@@ -54,6 +56,11 @@ const cookie = Cookies.get('jwt');
 
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 class DoorOrders extends Component {
   constructor(props) {
@@ -279,7 +286,7 @@ class DoorOrders extends Component {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input disabled placeholder={tax.toFixed(2)} />
+                        <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                       </InputGroup>
 
 
@@ -288,7 +295,7 @@ class DoorOrders extends Component {
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <Input disabled placeholder={total.toFixed(2)} />
+                        <NumberFormat thousandSeparator={true} value={total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                       </InputGroup>
                     </Col>
                   </Row>
@@ -371,7 +378,7 @@ class DoorOrders extends Component {
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>$</InputGroupText>
                             </InputGroupAddon>
-                            <Input disabled placeholder={tax.toFixed(2)} />
+                            <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                           </InputGroup>
 
 
@@ -380,7 +387,7 @@ class DoorOrders extends Component {
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>$</InputGroupText>
                             </InputGroupAddon>
-                            <Input disabled placeholder={total.toFixed(2)} />
+                            <NumberFormat thousandSeparator={true} value={total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                           </InputGroup>
                         </Col>
                       </Row>
