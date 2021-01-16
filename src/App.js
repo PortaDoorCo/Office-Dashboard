@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.scss';
 import Cookies from 'js-cookie';
@@ -40,6 +40,7 @@ import {
 import { login, getUsers } from './redux/users/actions';
 import io from 'socket.io-client';
 import db_url from './redux/db_url';
+
 const socket = io(db_url);
 const cookie = Cookies.get('jwt');
 
@@ -70,16 +71,19 @@ class App extends Component {
     super(props);
     this.state = {
       isAuth: false,
+      cookie: null
     };
   }
 
-  cookies = () => {
+  cookies = (cb) => {
     const getCookie = Cookies.get('jwt');
     if (getCookie) {
       this.setState({
         isAuth: true,
+      }, () => {
+        this.props.setLogin();
+        if (cb) cb();
       });
-      this.props.setLogin();
     }
   };
 
@@ -90,52 +94,15 @@ class App extends Component {
       productUpdated,
       orderAdded,
       orderUpdated,
-      orderDeleted,
-      getAllProducts,
-      getPricing,
-      login,
-      getUsers,
-      loadOrders,
-      loadCustomers,
-      loadSales,
-      loadMiscItems,
-      getDeliveries,
-      getBreakdowns,
-      getBoxBreakdowns,
-      loadShippingMethod,
-      loadPaymentTypes,
-      loadPaymentTerms,
-      loadAllCustomers,
-      loadAllOrders
+      orderDeleted
     } = this.props;
 
-    await this.cookies();
+    this.cookies();
 
+    //const cookie = Cookies.get('jwt');
     if (cookie) {
-      await getAllProducts(cookie);
-
-      await getPricing(cookie);
-      await getBreakdowns(cookie);
-      await getBoxBreakdowns(cookie);
-      await loadOrders(cookie);
-      await loadCustomers(cookie);
-      await login(cookie);
-
-      await getUsers(cookie);
-
-      await loadMiscItems(cookie);
-      await getDeliveries(cookie);
-
-      await loadShippingMethod(cookie);
-      await loadPaymentTypes(cookie);
-      await loadPaymentTerms(cookie);
-      await loadSales(cookie);
-      await loadAllOrders(cookie);
-      await loadAllCustomers(cookie);
-
-      
-
       // socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
+      
       socket.on(
         'order_submitted',
         (res) => (
@@ -219,9 +186,57 @@ class App extends Component {
   };
 
   componentDidUpdate = async (prevProps) => {
+    const {
+      getAllProducts,
+      getPricing,
+      login,
+      getUsers,
+      loadOrders,
+      loadCustomers,
+      loadSales,
+      loadMiscItems,
+      getDeliveries,
+      getBreakdowns,
+      getBoxBreakdowns,
+      loadShippingMethod,
+      loadPaymentTypes,
+      loadPaymentTerms,
+      loadAllCustomers,
+      loadAllOrders
+    } = this.props;
+    
     if (this.props.loggedIn !== prevProps.loggedIn) {
-      this.cookies();
+
+      const aFunc = async () => {
+        const newCookie = Cookies.get('jwt');
+        if(newCookie){
+          await getAllProducts(newCookie);
+  
+          await getPricing(newCookie);
+          await getBreakdowns(newCookie);
+          await getBoxBreakdowns(newCookie);
+          await loadOrders(newCookie);
+          await loadCustomers(newCookie);
+          await login(newCookie);
+  
+          await getUsers(newCookie);
+  
+          await loadMiscItems(newCookie);
+          await getDeliveries(newCookie);
+  
+          await loadShippingMethod(newCookie);
+          await loadPaymentTypes(newCookie);
+          await loadPaymentTerms(newCookie);
+          await loadSales(newCookie);
+          await loadAllOrders(newCookie);
+          await loadAllCustomers(newCookie);
+        }
+      };
+      
+      this.cookies(aFunc);      
     }
+
+
   };
 
   render() {
@@ -297,3 +312,242 @@ const mapDispatchToProps = (dispatch) =>
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
+// const App = (props) => {
+//   const [isAuth, setisAuth] = useState(false);
+
+//   const cookies = () => {
+//     const getCookie = Cookies.get('jwt');
+//     if (getCookie) {
+//       setisAuth(true);
+//       props.setLogin();
+//     }
+//   };
+
+//   useEffect(()=>{
+
+//     const {
+//       productAdded,
+//       productDeleted,
+//       productUpdated,
+//       orderAdded,
+//       orderUpdated,
+//       orderDeleted
+//     } = props;
+  
+//     cookies();
+  
+//     if (cookie) {
+//       // socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
+//       socket.on(
+//         'order_submitted',
+//         (res) => (
+//           NotificationManager.success(
+//             `Order #${res.orderNum} added`,
+//             'New Order',
+//             2000
+//           ),
+//           orderAdded(res)
+//         )
+//       );
+//       socket.on(
+//         'order_updated',
+//         (res) => (
+//           NotificationManager.success(
+//             `Order #${res.orderNum} updated`,
+//             'Order Updated',
+//             2000
+//           ),
+//           orderUpdated(res)
+//         )
+//       );
+//       socket.on(
+//         'status_updated',
+//         (res) => (
+//           NotificationManager.success(
+//             `Order #${res.orderNum} has been updated`,
+//             'An order has been updated',
+//             2000
+//           ),
+//           orderUpdated(res)
+//         )
+//       );
+  
+//       socket.on(
+//         'order_deleted',
+//         (res) => (
+//           NotificationManager.success('Order Deleted', 'Order Deleted', 2000),
+//           orderDeleted(res)
+//         )
+//       );
+  
+//       socket.on('delivery_added', (res) => this.props.getDeliveries(cookie));
+//       socket.on('customer_added', (res) =>
+//         this.props.loadCustomers(cookie, 2000)
+//       );
+//       socket.on('customer_updated', (res) =>
+//         this.props.loadCustomers(cookie, 2000)
+//       );
+  
+//       socket.on(
+//         'product_updated',
+//         (res, entity) => (
+//           NotificationManager.success(
+//             'Product Updated',
+//             'Product Updated',
+//             2000
+//           ),
+//           productUpdated(res, entity)
+//         )
+//       );
+//       socket.on(
+//         'product_added',
+//         (res, entity) => (
+//           NotificationManager.success('Product Added', 'Product Added', 2000),
+//           productAdded(res, entity)
+//         )
+//       );
+//       socket.on(
+//         'product_deleted',
+//         (res) => (
+//           NotificationManager.success(
+//             'Product Deleted',
+//             'Product Deleted',
+//             2000
+//           ),
+//           productDeleted(res)
+//         )
+//       );
+//     }
+
+//   });
+
+//   useEffect(() => {
+//     const {
+//       getAllProducts,
+//       getPricing,
+//       login,
+//       getUsers,
+//       loadOrders,
+//       loadCustomers,
+//       loadSales,
+//       loadMiscItems,
+//       getDeliveries,
+//       getBreakdowns,
+//       getBoxBreakdowns,
+//       loadShippingMethod,
+//       loadPaymentTypes,
+//       loadPaymentTerms,
+//       loadAllCustomers,
+//       loadAllOrders
+//     } = props;
+    
+      
+
+//     const getData = async() => {
+//       await getAllProducts(cookie);
+
+//       await getPricing(cookie);
+//       await getBreakdowns(cookie);
+//       await getBoxBreakdowns(cookie);
+//       await loadOrders(cookie);
+//       await loadCustomers(cookie);
+//       await login(cookie);
+  
+//       await getUsers(cookie);
+  
+//       await loadMiscItems(cookie);
+//       await getDeliveries(cookie);
+  
+//       await loadShippingMethod(cookie);
+//       await loadPaymentTypes(cookie);
+//       await loadPaymentTerms(cookie);
+//       await loadSales(cookie);
+//       await loadAllOrders(cookie);
+//       await loadAllCustomers(cookie);
+//     };
+
+//     if(cookie){
+//       getData();
+//     } else{ 
+//       cookies();
+//     }
+    
+//   },[props,props.loggedIn]);
+
+
+//   return (
+//     <BrowserRouter>
+//       <React.Suspense fallback={loading()}>
+//         <Switch>
+//           <Route
+//             path="/login"
+//             name="Login"
+//             component={isAuth ? DefaultLayout : Login}
+//           />
+
+//           <Route
+//             path="/register"
+//             name="register"
+//             component={isAuth ? DefaultLayout : Register}
+//           />
+//           <Route
+//             path="/new-password"
+//             name="new-password"
+//             component={isAuth ? DefaultLayout : NewPassword}
+//           />
+//           <PrivateRoute
+//             path="/"
+//             name="Dashboard"
+//             component={DefaultLayout}
+//             isLogged={isAuth}
+//           />
+//           {/* <AuthRoute exact path="/" component={Full} /> */}
+
+//           {/* <Route path="/" name="Home" render={props => <DefaultLayout {...props}/>} /> */}
+//         </Switch>
+//       </React.Suspense>
+//     </BrowserRouter>
+//   );
+
+// };
+
+
+// const mapStateToProps = (state) => ({
+//   loggedIn: state.users.loggedIn,
+// });
+
+
+// const mapDispatchToProps = (dispatch) =>
+//   bindActionCreators(
+//     {
+//       loadOrders,
+//       loadCustomers,
+//       loadSales,
+//       loadShippingMethod,
+//       setLogin,
+//       getDeliveries,
+//       getSingleProduct,
+//       productAdded,
+//       productDeleted,
+//       productUpdated,
+//       orderAdded,
+//       orderUpdated,
+//       orderDeleted,
+//       getUsers,
+//       getAllProducts,
+//       getPricing,
+//       login,
+//       loadMiscItems,
+//       getBreakdowns,
+//       getBoxBreakdowns,
+//       loadPaymentTypes,
+//       loadPaymentTerms,
+//       loadAllCustomers,
+//       loadAllOrders
+//     },
+//     dispatch
+//   );
+
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
