@@ -149,7 +149,7 @@ const OrderTable = (props) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
   useEffect(() => {
-    const filteredOrders = orders.filter((item) => {
+    const filteredOrders = orders.length > 0 ? orders.filter((item) => {
       if (filterText.length > 0) {
         return (
           (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info.poNum.toLowerCase().includes(filterText.toLowerCase()))
@@ -157,7 +157,7 @@ const OrderTable = (props) => {
       } else {
         return item;
       }
-    });
+    }) : [];
     setData(filteredOrders);
   }, [orders, filterText]);
 

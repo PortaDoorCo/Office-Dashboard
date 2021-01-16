@@ -13,7 +13,7 @@ class Chart4 extends Component {
   render() {
     const { orders, selectedDateRange } = this.props;
 
-    const filteredOrders = orders.filter(order => {
+    const filteredOrders = orders.length > 0 ? orders.filter(order => {
       switch (selectedDateRange) {
         case 'month':
           return moment(order.createdAt).isSame(new Date(), 'month');
@@ -22,7 +22,7 @@ class Chart4 extends Component {
         default:
           return moment(order.createdAt).isSame(new Date(), 'day');
       }
-    });
+    }) : [];
 
     const groups = [];
     filteredOrders.forEach(item => {
