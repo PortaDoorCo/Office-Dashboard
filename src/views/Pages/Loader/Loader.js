@@ -16,7 +16,7 @@ class Loader extends Component {
   render() {
 
     return (
-      <div className="app flex-row align-items-center">
+      <div className="app flex-row align-items-center" style={{backgroundColor: 'black'}}>
         <Container>
           <Row className="justify-content-center">
             <Col />
