@@ -12,8 +12,12 @@ import { bindActionCreators } from 'redux';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CloudDoneIcon from '@material-ui/icons/CloudDone';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import {
-  loadOrders,
+  loadAllOrders,
   getDeliveries,
   socketReceiveUpdateStatus
 } from '../../redux/orders/actions';
@@ -27,7 +31,7 @@ import {
   loadSales,
 } from '../../redux/sales/actions';
 
-import { loadCustomers } from '../../redux/customers/actions';
+import { loadAllCustomers, dbNotLoaded } from '../../redux/customers/actions';
 
 import {
   getAllProducts,
@@ -38,6 +42,7 @@ import {
 import { NotificationManager } from 'react-notifications';
 
 import Cookies from 'js-cookie';
+import CloudDone from '@material-ui/icons/CloudDone';
 
 const propTypes = {
   children: PropTypes.node,
@@ -62,20 +67,21 @@ class DefaultHeader extends Component {
       getUsers,
       login,
       loadSales,
-      loadOrders,
+      loadAllOrders,
       getDeliveries,
-      loadCustomers,
+      loadAllCustomers,
       loadMiscItems,
       getAllProducts,
+      dbNotLoaded
     } = this.props;
 
     const cookie = await Cookies.get('jwt');
 
     if (cookie) {
-      await NotificationManager.success('Database Refresh Beginning', 'Refresh Beginning!', 2000);
+      await dbNotLoaded(cookie);
       await getAllProducts(cookie);
-      await loadOrders(cookie);
-      await loadCustomers(cookie);
+      await loadAllOrders(cookie);
+      await loadAllCustomers(cookie);
       await loadSales(cookie);
       await loadMiscItems(cookie);
       await getDeliveries(cookie);
@@ -85,7 +91,6 @@ class DefaultHeader extends Component {
       await loadShippingMethod(cookie);
       await loadPaymentTypes(cookie);
       await loadPaymentTerms(cookie);
-      await NotificationManager.success('Database Refreshed', 'Database Refreshed!', 2000);
     } else {
       alert('not logged in');
     }
@@ -95,7 +100,8 @@ class DefaultHeader extends Component {
   render() {
 
     // eslint-disable-next-line
-    const { children, ...attributes } = this.props;
+    const { dbLoadComplete ,children, ...attributes } = this.props;
+    
 
     return (
       <React.Fragment>
@@ -129,6 +135,28 @@ class DefaultHeader extends Component {
           <NavItem className="px-3">
             <NavLink to="#" className="nav-link">Justin P. Romanos</NavLink>
           </NavItem> */}
+          <div className="mr-3">
+            {!dbLoadComplete ?
+     
+              <Tooltip title="Database loading..." placement="bottom">
+                {/* <CloudDownloadIcon  style={{ width: '40', height: '40', fill: '#ff7961' }} /> */}
+                <div className="mt-1">
+                  <CircularProgress size={25} />
+                </div>
+                
+                {/* <div class="loader"></div> */}
+              </Tooltip> 
+              :
+              <Tooltip title="Database up to date" placement="bottom">
+                <CloudDone style={{ width: '40', height: '40', fill: '#4dbd74' }} />
+              </Tooltip>
+            }
+
+
+
+          </div>
+
+
           <Tooltip title="Refresh" placement="bottom">
             <IconButton onClick={this.refresh}>
               <RefreshIcon style={{ width: '40', height: '40' }} />
@@ -149,14 +177,15 @@ DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;
 
 const mapStateToProps = (state, prop) => ({
-  user: state.users.user
+  user: state.users.user,
+  dbLoadComplete: state.customers.dbLoadComplete
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loadOrders,
-      loadCustomers,
+      loadAllOrders,
+      loadAllCustomers,
       loadSales,
       loadShippingMethod,
 
@@ -175,7 +204,8 @@ const mapDispatchToProps = dispatch =>
       loadMiscItems,
 
 
-      socketReceiveUpdateStatus
+      socketReceiveUpdateStatus,
+      dbNotLoaded
     },
     dispatch
   );
