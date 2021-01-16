@@ -91,7 +91,7 @@ class DefaultHeaderDropdown extends Component {
           <DropdownItem><i className="fa fa-tasks"></i> Tasks<Badge color="danger">42</Badge></DropdownItem>
           <DropdownItem><i className="fa fa-comments"></i> Comments<Badge color="warning">42</Badge></DropdownItem> */}
           <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem>
-          <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
+          {/* <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem> */}
 
           <DropdownItem divider />
           <DropdownItem onClick={this.logOut}><i className="fa fa-lock"></i> Logout</DropdownItem>
