@@ -11,6 +11,9 @@ import {
 import { unsetToken } from '../../../utils/auth';
 import LoadingBar from 'react-redux-loading-bar';
 import Background from '../../../assets/img/background-video.mp4';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 
 class Loader extends Component {
   constructor(props) {
@@ -32,12 +35,20 @@ class Loader extends Component {
         </video>
       
         <div>
-          {/* <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">Porta Door Co. Inc.</NavbarBrand>
+          <Navbar color="transparent" light expand="md">
+            {/* <NavbarBrand href="/">Porta Door Co. Inc.</NavbarBrand> */}
+
+            
     
-            <Button color="primary" className="ml-auto" onClick={this.logOut}>Log Out</Button>
+            {/* <Button color="primary" className="ml-auto" onClick={this.logOut}>Log Out</Button> */}
+
+            <Tooltip title="Log Out" placement="bottom" className="ml-auto">
+              <IconButton onClick={this.logOut}>
+                <ExitToAppIcon style={{ width: '40', height: '40', fill:'white' }} />
+              </IconButton>
+            </Tooltip>
         
-          </Navbar> */}
+          </Navbar>
       
           <div className="app flex-row align-items-center">
             <Container>
