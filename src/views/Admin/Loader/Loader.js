@@ -37,7 +37,7 @@ class Loader extends Component {
     return (
       <div>
         <video autoPlay muted loop id="myVideo">
-          <source src={video_bg[getRandomInt(4)]} type="video/mp4" />
+          <source src={video_bg[getRandomInt(3)]} type="video/mp4" />
         </video>
       
         <div>
