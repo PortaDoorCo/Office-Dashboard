@@ -61,7 +61,7 @@ const CompanyTable = (props) => {
   const [defaultCenter, setDefaultCenter] = useState([]);
   const [newCustomerModal, setNewCustomerModal] = useState(false);
   
-  const filteredCompanies = props.customerDB.filter(item => item.Company && item.Company.toLowerCase().includes(filterText.toLowerCase()));
+  const filteredCompanies = props.customerDB.length > 0 ? props.customerDB.filter(item => item.Company && item.Company.toLowerCase().includes(filterText.toLowerCase())) : [];
 
 
 
