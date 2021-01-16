@@ -124,7 +124,6 @@ class App extends Component {
       await getUsers(cookie);
 
       await loadMiscItems(cookie);
-      await NotificationManager.success('Database loading - access may be limited!', 'Database is loading...!', 4000);
       await getDeliveries(cookie);
 
       await loadShippingMethod(cookie);

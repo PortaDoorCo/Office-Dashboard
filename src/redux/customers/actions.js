@@ -4,9 +4,11 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import db_url from '../db_url';
 
 export const LOAD_CUSTOMERS = 'LOAD_CUSTOMERS';
+export const LOAD_ALL_CUSTOMERS = 'LOAD_ALL_CUSTOMERS';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 export const SUBMIT_CUSTOMER = 'SUBMIT_CUSTOMER';
 export const SET_SELECTED_COMPANY = 'SET_SELECTED_COMPANY';
+export const DB_NOT_LOADED = 'DB_NOT_LOADED';
 
 
 export function setSelectedCompanies(data) {
@@ -48,11 +50,19 @@ export function loadAllCustomers(cookie) {
       }
     );
     const data = await res.json();
-    NotificationManager.success('Database has been fully loaded!', 'Database Load Complete!', 4000);
     await dispatch(hideLoading());
     return await dispatch({
-      type: LOAD_CUSTOMERS,
+      type: LOAD_ALL_CUSTOMERS,
       data: data
+    }
+    );
+  };
+}
+
+export function dbNotLoaded(cookie) {
+  return async function (dispatch) {
+    return await dispatch({
+      type: DB_NOT_LOADED,
     }
     );
   };
