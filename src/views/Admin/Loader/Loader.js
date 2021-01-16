@@ -14,6 +14,8 @@ import Background from '../../../assets/img/background-video.mp4';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
+import TextLoop from 'react-text-loop';
+import Typical from 'react-typical';
 
 class Loader extends Component {
   constructor(props) {
@@ -64,6 +66,14 @@ class Loader extends Component {
                   <center>
 
                     {/* <h5 style={{ margin: 'auto', color: 'white' }}>Please wait while loading...</h5> */}
+                    <div style={{ color: 'white' }}>
+                      <Typical
+                        steps={['Loading Databases...', 5000]}
+                        loop={1}
+                        wrapper="p"
+                      
+                      />
+                    </div>
                     <ReactLoading
                       type={'bubbles'}
                       color={'white'}

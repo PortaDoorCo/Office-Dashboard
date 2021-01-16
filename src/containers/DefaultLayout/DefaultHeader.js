@@ -138,7 +138,7 @@ class DefaultHeader extends Component {
           <div className="mr-3">
             {!dbLoadComplete ?
      
-              <Tooltip title="Database loading..." placement="bottom">
+              <Tooltip title="Downloading Database..." placement="bottom">
                 {/* <CloudDownloadIcon  style={{ width: '40', height: '40', fill: '#ff7961' }} /> */}
                 <div className="mt-1">
                   <CircularProgress size={25} />
