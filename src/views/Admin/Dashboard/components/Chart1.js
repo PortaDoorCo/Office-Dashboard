@@ -82,7 +82,7 @@ class Chart1 extends Component {
 
     //REMEMBER TO CHANGE DATE TO CREATED AT
 
-    let groups = [...this.props.orders]
+    let groups = this.props.orders.length > 0 ? [...this.props.orders]
       .filter(record =>
         selectedDateRange === 'day'
           ? moment(record.createdAt).isSame(new Date(), 'day')
@@ -92,7 +92,7 @@ class Chart1 extends Component {
               ? moment(record.createdAt).isSame(new Date(), 'year')
               : true
       )
-      .sort((a, b) => moment(a.date || a.createdAt).isBefore(b.date || b.createdAt) ? -1 : 1);
+      .sort((a, b) => moment(a.date || a.createdAt).isBefore(b.date || b.createdAt) ? -1 : 1) : [];
     switch (selectedDateRange) {
       case 'month':
         groups = _.groupBy(groups, item => moment(item.createdAt).format('MMMM DD'));
@@ -105,7 +105,8 @@ class Chart1 extends Component {
           moment(item.createdAt).format('h:mm:ss a')
         );
         break;
-    }
+    } 
+
     Object.keys(groups).forEach(
       key => (groups[key] = groups[key].map(item => item.total))
     );
