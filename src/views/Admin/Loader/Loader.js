@@ -9,7 +9,8 @@ import {
   NavbarBrand,
 } from 'reactstrap';
 import { unsetToken } from '../../../utils/auth';
-import LoadingBar from 'react-redux-loading-bar'
+import LoadingBar from 'react-redux-loading-bar';
+import Background from '../../../assets/img/background-video.mp4';
 
 class Loader extends Component {
   constructor(props) {
@@ -26,45 +27,51 @@ class Loader extends Component {
 
     return (
       <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Porta Door Co. Inc.</NavbarBrand>
-    
-          <Button color="primary" className="ml-auto" onClick={this.logOut}>Log Out</Button>
-        
-        </Navbar>
+        <video autoPlay muted loop id="myVideo">
+          <source src={Background} type="video/mp4" />
+        </video>
       
-        <div className="app flex-row align-items-center">
-          <Container>
-            <Row>
-              <Col lg='9' />
-              <Col>
+        <div>
+          {/* <Navbar color="light" light expand="md">
+            <NavbarBrand href="/">Porta Door Co. Inc.</NavbarBrand>
+    
+            <Button color="primary" className="ml-auto" onClick={this.logOut}>Log Out</Button>
+        
+          </Navbar> */}
+      
+          <div className="app flex-row align-items-center">
+            <Container>
+              <Row>
+                <Col lg='9' />
+                <Col>
               
-              </Col>
-            </Row>
-            <Row className="justify-content-center">
-              <Col />
-              <Col>
-                <center>
-                  <ReactLoading
-                    type={'spinningBubbles'}
-                    color={'black'}
-                    height={300}
-                    width={300}
-                  />
-                  <h5 style={{ margin: 'auto' }}>Please wait while loading..</h5>
+                </Col>
+              </Row>
+              <Row className="justify-content-center" >
+                <Col />
+                <Col>
+                  <center>
 
-                </center>
-              </Col>
-              <Col />
-            </Row>
-            <Row className="mt-4">
-              <Col>
-                {/* loading bar */}
-                <LoadingBar loading="1" updateTime={1500} maxProgress={95} progressIncrease={10} style={{ backgroundColor: '#20a8d8', height: '20px', opacity: '0.7' }} />
-              </Col>
-            </Row>
+                    {/* <h5 style={{ margin: 'auto', color: 'white' }}>Please wait while loading...</h5> */}
+                    <ReactLoading
+                      type={'bubbles'}
+                      color={'white'}
+                      height={50}
+                      width={50}
+                    />
+                  </center>
+                </Col>
+                <Col />
+              </Row>
+              {/* <Row className="mt-4">
+                <Col>
+         
+                  <LoadingBar loading="1" updateTime={1500} maxProgress={95} progressIncrease={10} style={{ backgroundColor: 'white', height: '20px', opacity: '0.7' }} />
+                </Col>
+              </Row> */}
 
-          </Container>
+            </Container>
+          </div>
         </div>
       </div>
     );
