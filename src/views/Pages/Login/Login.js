@@ -17,7 +17,7 @@ import { bindActionCreators } from 'redux';
 import { login } from '../../../redux/users/actions';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import Loader from '../Loader/Loader';
+import Loader from '../../Admin/Loader/Loader';
 import { loadOrders } from '../../../redux/orders/actions';
 import { loadCustomers } from '../../../redux/customers/actions';
 import PropTypes from 'prop-types';
@@ -58,6 +58,7 @@ class Login extends Component {
         password: password
       })
       .then(response => {
+        console.log('pro browser==>>>', process.browser);
         if (!process.browser) {
           return;
         }
@@ -78,7 +79,7 @@ class Login extends Component {
     const {loggedIn} = this.props;
     let loadingActive;
     if (loading) {
-      loadingActive = <Loader />;
+      loadingActive = <div />;
     } else {
       loadingActive = (
         <div className="app flex-row align-items-center" style={{ backgroundImage: `url(${Background})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>

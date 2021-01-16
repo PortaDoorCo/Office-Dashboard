@@ -70,16 +70,19 @@ class App extends Component {
     super(props);
     this.state = {
       isAuth: false,
+      cookie: null
     };
   }
 
-  cookies = () => {
+  cookies = (cb) => {
     const getCookie = Cookies.get('jwt');
     if (getCookie) {
       this.setState({
         isAuth: true,
+      }, () => {
+        this.props.setLogin();
+        if (cb) cb();
       });
-      this.props.setLogin();
     }
   };
 
@@ -93,8 +96,9 @@ class App extends Component {
       orderDeleted
     } = this.props;
 
-    await this.cookies();
+    this.cookies();
 
+    //const cookie = Cookies.get('jwt');
     if (cookie) {
       // socket.on('order_submitted', res => (NotificationManager.success(`Order #${res.orderNum} added`, 'New Order', 2000), loadOrders(cookie)));
       
@@ -201,30 +205,34 @@ class App extends Component {
     } = this.props;
     
     if (this.props.loggedIn !== prevProps.loggedIn) {
-      await this.cookies();
 
-      if(cookie){
-        await getAllProducts(cookie);
+      const aFunc = async () => {
+        const newCookie = Cookies.get('jwt');
+        if(newCookie){
+          await getAllProducts(newCookie);
   
-        await getPricing(cookie);
-        await getBreakdowns(cookie);
-        await getBoxBreakdowns(cookie);
-        await loadOrders(cookie);
-        await loadCustomers(cookie);
-        await login(cookie);
+          await getPricing(newCookie);
+          await getBreakdowns(newCookie);
+          await getBoxBreakdowns(newCookie);
+          await loadOrders(newCookie);
+          await loadCustomers(newCookie);
+          await login(newCookie);
   
-        await getUsers(cookie);
+          await getUsers(newCookie);
   
-        await loadMiscItems(cookie);
-        await getDeliveries(cookie);
+          await loadMiscItems(newCookie);
+          await getDeliveries(newCookie);
   
-        await loadShippingMethod(cookie);
-        await loadPaymentTypes(cookie);
-        await loadPaymentTerms(cookie);
-        await loadSales(cookie);
-        await loadAllOrders(cookie);
-        await loadAllCustomers(cookie);
-      }
+          await loadShippingMethod(newCookie);
+          await loadPaymentTypes(newCookie);
+          await loadPaymentTerms(newCookie);
+          await loadSales(newCookie);
+          await loadAllOrders(newCookie);
+          await loadAllCustomers(newCookie);
+        }
+      };
+      
+      this.cookies(aFunc);      
     }
 
 
