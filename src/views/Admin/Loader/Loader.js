@@ -4,18 +4,20 @@ import {
   Row,
   Col,
   Container,
-  Button,
   Navbar,
   NavbarBrand,
 } from 'reactstrap';
 import { unsetToken } from '../../../utils/auth';
-import LoadingBar from 'react-redux-loading-bar';
-import Background from '../../../assets/img/background-video.mp4';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import TextLoop from 'react-text-loop';
 import Typical from 'react-typical';
+import video_bg from '../../../assets/background-videos';
+
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
 class Loader extends Component {
   constructor(props) {
@@ -30,15 +32,17 @@ class Loader extends Component {
 
   render() {
 
+
+
     return (
       <div>
         <video autoPlay muted loop id="myVideo">
-          <source src={Background} type="video/mp4" />
+          <source src={video_bg[getRandomInt(4)]} type="video/mp4" />
         </video>
       
         <div>
           <Navbar color="transparent" light expand="md">
-            {/* <NavbarBrand href="/">Porta Door Co. Inc.</NavbarBrand> */}
+            <NavbarBrand href="/" style={{color: 'white'}}>Porta Door Co. Inc.</NavbarBrand>
 
             
     
