@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
 import { renderField, renderNumber, renderDropdownListFilter, renderPrice } from '../RenderInputs/renderInputs';
 import { Button, Table, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Col, Label } from 'reactstrap';
@@ -13,7 +13,7 @@ const currencyMask = createNumberMask({
 });
 
 let Inputs = props => {
-  const { fields, misc_items, formState, prices, linePrices, miscTotal, onChange } = props;
+  const { fields, misc_items, formState, linePrices, miscTotal } = props;
 
 
   const changeMiscItem = (e, index) => {
@@ -25,8 +25,6 @@ let Inputs = props => {
       )
     );
   };
-
-
 
   return (
     <div>

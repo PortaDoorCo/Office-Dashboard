@@ -37,7 +37,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
-  const [showButton, setShowButton] = useState(false);
   const [changeValue, setChangeValue] = useState(null);
   const [leftStileWidth, setLeftStileWidth] = useState(null);
   const [rightStileWidth, setRightStileWidth] = useState(null);
