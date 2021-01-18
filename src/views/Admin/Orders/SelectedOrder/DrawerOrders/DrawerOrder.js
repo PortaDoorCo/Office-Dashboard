@@ -91,7 +91,6 @@ class DrawerOrder extends Component {
       subTotal,
       total,
       tax,
-      user,
       updateOrder,
       balance
     } = this.props;

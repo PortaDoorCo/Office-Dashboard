@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import {
   Table,
-  Input,
   Row,
   Col,
   Button,
