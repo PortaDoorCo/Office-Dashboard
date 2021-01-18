@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component} from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, change } from 'redux-form';
 import { renderField, renderDropdownListFilter, renderPrice } from '../../../../components/RenderInputs/renderInputs';
 import { Button, Table, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Col, Label } from 'reactstrap';
@@ -7,7 +7,7 @@ import { miscItemPriceSelector, miscItemLinePriceSelector, miscTotalSelector } f
 
 
 let Inputs = props => {
-  const { fields, misc_items, formState, prices, linePrices, miscTotal, onChange, edit } = props;
+  const { fields, misc_items, formState, linePrices, miscTotal, edit } = props;
 
   const changeMiscItem = (e, index) => {
     props.dispatch(
@@ -149,7 +149,6 @@ class MiscItems extends Component {
 
 
   render() {
-    const { misc_items, formState, prices, linePrices, miscTotal } = this.props;
     return (
       <div>
         <h3>Misc Items</h3>

@@ -82,8 +82,7 @@ class DoorOrders extends Component {
       tax,
       total,
       updateOrder,
-      balance,
-      updateSelectedOrder
+      balance
     } = this.props;
 
     const jobInfo = {

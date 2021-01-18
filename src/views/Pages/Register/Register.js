@@ -5,7 +5,6 @@ import {
   Col,
   Card,
   CardBody,
-  CardFooter,
   Button,
   Input,
   InputGroup,
@@ -44,7 +43,7 @@ class Register extends Component {
     e.preventDefault();
 
     // Request API.
-    const { Username, Email, Password, FirstName, LastName } = this.state;
+    const { Username, Email, Password } = this.state;
 
     if (this.state.Password === this.state.confirmPassword) {
       strapiRegister(Username, Email, Password).then(() =>

@@ -1,9 +1,6 @@
 import React, { Fragment } from 'react';
 import {
   Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   CustomInput
 } from 'reactstrap';
 import DropdownList from 'react-widgets/lib/DropdownList';
@@ -11,7 +8,6 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-import CurrencyInput from 'react-currency-input';
 import NumberFormat from 'react-number-format';
 
 

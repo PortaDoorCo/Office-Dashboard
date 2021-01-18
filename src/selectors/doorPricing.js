@@ -625,6 +625,7 @@ export const itemPriceSelector = createSelector(
               part.orderType.value === 'DF' ||
               part.orderType.value === 'Glass_DF'
             ) {
+              console.log('hereeee');
               price =
                 eval(pricer.df_pricing) +
                 leftStileAdd +
@@ -640,13 +641,14 @@ export const itemPriceSelector = createSelector(
                     extraCost
                   : 0;
             }
-            if(part.orderType.value === 'Slab_Door'){
+            else if(part.orderType.value === 'Slab_Door'){
               price = ((width * height) / 144) > 2 ? ((((width * height) / 144) * wood) + (6.50 + edge)) + extraCost : (((2) * wood) + (6.50 + edge)) + extraCost ;
             }
             else if (part.orderType.value === 'Slab_DF'){
               price = ((width * height) / 144) > 1 ? ((((width * height) / 144) * wood) + (6.50 + edge)) + extraCost : (((1) * wood) + (6.50 + edge)) + extraCost ;
             }
             else {
+              console.log('youre here instead');
               price =
                 eval(pricer.door_pricing) +
                 leftStileAdd +
@@ -662,6 +664,8 @@ export const itemPriceSelector = createSelector(
                     extraCost
                   : 0;
             }
+
+            
             if (height > -1) {
               return price;
             } else {
