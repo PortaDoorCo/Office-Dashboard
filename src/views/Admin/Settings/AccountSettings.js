@@ -9,10 +9,7 @@ import { updateAccount, login, forgotPassword } from '../../../redux/users/actio
 import LogOutModal from './LogOutModal';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
-
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
 
 const AccountSettings = props => {
 

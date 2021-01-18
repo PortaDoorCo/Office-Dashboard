@@ -16,7 +16,7 @@ import {
   Field,
 } from 'redux-form';
 import { updateCustomer, submitCustomer } from '../../../../../redux/customers/actions';
-import { renderField, renderDropdownList, renderSwitch, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
+import { renderField, renderDropdownList, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
 import Cookies from 'js-cookie';
 
 const cookie = Cookies.get('jwt');

@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import {
-  Card,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Button,
-  Row,
-  Col
 } from 'reactstrap';
 import NewCustomer from './components/NewCustomer';
 import {
 } from '../../../../redux/orders/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import OrderPage from '../../Orders/OrderPage';
-import CompanyOrders from './components/CompanyOrders';
-import Maps from './components/Maps';
 
 
 class CustomerPage extends Component {
@@ -43,19 +37,6 @@ class CustomerPage extends Component {
       withFirstAndLast: false
     };
   }
-
-  // componentDidMount() {
-  //   if (this.props.orders.length > 0) {
-  //     this.setState({
-  //       orders: this.props.orders.filter(
-  //         x => x.job_info.customer.id === this.props.selectedCompanies.id
-  //       )
-  //     });
-  //   }
-  // }
-
-
-
 
 toggle = () => {
   this.setState({
@@ -84,7 +65,7 @@ onEdit = () => {
 render() {
 
   const props = this.props;
-  const { locations, defaultCenter, selectedCompanies, orders } = this.props;
+  const { orders } = this.props;
 
   let updateOrders;
 
