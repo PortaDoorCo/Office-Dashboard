@@ -1,6 +1,5 @@
 import moment from 'moment';
 import Size from '../../Breakdowns/Doors/Size';
-import numQty from 'numeric-quantity';
 
 export default (data) => {
   const qty = data.part_list.map((part, i) => {

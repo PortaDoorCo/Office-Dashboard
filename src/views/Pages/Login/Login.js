@@ -11,13 +11,12 @@ import {
   InputGroup,
   Form
 } from 'reactstrap';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../../../redux/users/actions';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import Loader from '../../Admin/Loader/Loader';
 import { loadOrders } from '../../../redux/orders/actions';
 import { loadCustomers } from '../../../redux/customers/actions';
 import PropTypes from 'prop-types';

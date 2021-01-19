@@ -2,15 +2,11 @@ import React, { Component, Suspense } from 'react';
 import {
   Row,
   Col,
-  Button
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../../../redux/users/actions';
 import { loadOrders } from '../../../redux/orders/actions';
-import moment from 'moment';
-import Cookies from 'js-cookie';
-const cookie = Cookies.get('jwt');
 
 const Chart1 = React.lazy(() => import('./components/Chart1'));
 const Chart2 = React.lazy(() => import('./components/Chart2'));

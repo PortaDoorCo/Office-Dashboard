@@ -15,8 +15,6 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import DrawerBoxInfo from "./components/DrawerBoxInfo";
-// import JobInfo from "./components/JobInfo/JobInfo";
 import NotificationAlert from 'react-notification-alert';
 import 'react-notifications/lib/notifications.css';
 import {
@@ -39,10 +37,7 @@ import {
   miscTotalSelector
 } from '../../../selectors/drawerPricing';
 import moment from 'moment-business-days';
-import SideBar from '../../../components/DrawerOrders/SideBar';
-import Sticky from 'react-stickynode';
 import Cookies from 'js-cookie';
-import RenderPriceHolder from '../../../components/RenderInputs/RenderPriceHolder';
 import { renderField, renderCheckboxToggle } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from '../../../components/DrawerOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
@@ -55,7 +50,6 @@ const JobInfo = React.lazy(() => import('../../../components/JobInfo/DrawerJobIn
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
 const cookie = Cookies.get('jwt');
-const header = { Authorization: 'Bearer ' + cookie };
 
 const currencyMask = createNumberMask({
   decimalPlaces: 2,
