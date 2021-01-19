@@ -165,9 +165,9 @@ export const itemPriceSelector = createSelector(
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
-          const width = Math.ceil(numQty(i.width));
-          const height = Math.ceil(numQty(i.height));
-          const depth = Math.ceil(numQty(i.depth));
+          const width = (numQty(i.width));
+          const height = (numQty(i.height));
+          const depth = (numQty(i.depth));
 
           const scoop = i.scoop.PRICE;
 
@@ -202,9 +202,9 @@ export const linePriceSelector = createSelector(
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map(i => {
-          const width = Math.ceil(numQty(i.width));
-          const height = Math.ceil(numQty(i.height));
-          const depth = Math.ceil(numQty(i.depth));
+          const width = (numQty(i.width));
+          const height = (numQty(i.height));
+          const depth = (numQty(i.depth));
           const qty = parseInt(i.qty); 
           const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
           const scoop = i.scoop.PRICE;

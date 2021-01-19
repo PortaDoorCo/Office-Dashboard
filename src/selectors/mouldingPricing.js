@@ -42,18 +42,40 @@ export const miscItemPriceSelector = createSelector(
     if(i.item){
       console.log({i});
 
-      const { item } = i;
+      const { item, moulding_material, linearFT, thickness } = i;
 
+      let material_thickness = 0.75;
       let feet = (item.MOULDING_WIDTH * 12) / 144;
       let waste = feet * 1.25;
-      let thickness = item.MOULDING_THICKNESS;
+      let multiplier = item.Multiplier;
+      let wood = 0;
+      let premium = 0;
 
-      let a = waste * thickness;
+      let a = waste * multiplier;
 
-      console.log({feet});
-      console.log({waste});
-      console.log({thickness});
-      console.log({a});
+      if(thickness.value === 0.75){
+        wood = moulding_material ? moulding_material.STANDARD_GRADE : 0;
+      } else if (thickness.value === 1) {
+        wood = moulding_material ? moulding_material.STANDARD_GRADE_THICK : 0;
+      } else {
+        wood = 0;
+      }
+      
+      if(parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
+        premium = 3 + 1;
+      } else if (parseFloat(linearFT) >= 31 && parseFloat(linearFT) <= 50) {
+        premium = 2 + 1;
+      } else if (parseFloat(linearFT) >= 51 && parseFloat(linearFT) <= 100) {
+        premium = 1.75 + 1;
+      } else if(parseFloat(linearFT) > 101 && parseFloat(linearFT) <= 250) {
+        premium = 1.4 + 1;
+      } else if (parseFloat(linearFT) > 251 && parseFloat(linearFT) <= 500) {
+        premium = 1.1 + 1;
+      } else {
+        premium = 1 + 1;
+      }
+
+      price = ((a * wood) * parseFloat(linearFT)) * premium;
 
     }
     
@@ -65,32 +87,14 @@ export const miscItemPriceSelector = createSelector(
 
 
 export const miscItemLinePriceSelector = createSelector(
-  [miscItemsSelector, miscItemPriceSelector],
-  (parts, pricer, item) =>
-    parts.map((i, index) => {
-      let price = 0;
-      if(i.category === 'preselect'){
-        if(i.item) {
-          if(i.qty){
-            price = pricer[index] * parseFloat(i.qty);
-          } else {
-            price = 0;
-          }
-        }else{
-          price = 0;
-        }
-      }else {
-        if(i.pricePer){
-          if(i.qty){
-            price = pricer[index] * parseFloat(i.qty);
-          } else {
-            price = 0;
-          }
-        } else {
-          price = 0;
-        }
-      }
-      return price;
+  [miscItemPriceSelector, miscItemsSelector],
+  (pricer, parts, item) =>
+    pricer.map((i, index) => {
+    
+      const qty = parts[index].qty ? parts[index].qty : 0;
+      const price = i ? i : 0;
+
+      return price * parseInt(qty);
     })
 );
 

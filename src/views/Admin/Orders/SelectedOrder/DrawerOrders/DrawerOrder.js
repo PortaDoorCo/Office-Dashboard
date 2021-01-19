@@ -118,26 +118,6 @@ class DrawerOrder extends Component {
       Sample: values.job_info.Sample,
     };
 
-
-    // const order = {
-    //   part_list: values.part_list,
-    //   job_info: jobInfo,
-    //   Rush: values.job_info.Rush,
-    //   Sample: values.job_info.Sample,
-    //   companyprofile: values.job_info.customer.id,
-    //   linePrice: prices,
-    //   itemPrice: itemPrice,
-    //   subTotals: subTotal,
-    //   tax: tax,
-    //   total: total,
-    //   discount: values.discount,
-    //   balance_paid: values.balance_paid,
-    //   balance_due: balance,
-    //   misc_items: values.misc_items,
-    //   dueDate: values.job_info.DueDate,
-    //   Taxable: values.Taxable,
-    // };
-
     const order = {
       ...values,
       job_info: jobInfo,
@@ -198,7 +178,8 @@ class DrawerOrder extends Component {
       formState,
       address,
       tax,
-      edit
+      edit,
+      box_assembly
     } = this.props;
 
 
@@ -234,7 +215,7 @@ class DrawerOrder extends Component {
                     boxBottomWoodtype={boxBottomWoodtype}
                     boxThickness={boxThickness}
                     boxBottoms={boxBottoms}
-                    assembly={assembly}
+                    box_assembly={box_assembly}
                     notchDrill={notchDrill}
                     drawerFinishes={drawerFinishes}
                     scoop={scoop}
@@ -347,7 +328,7 @@ const mapStateToProps = (state, props) => ({
   customers: state.customers.customerDB,
   address: state.Orders.address,
   orderNum: state.Orders.orderNum,
-
+  box_assembly: state.part_list.box_assembly,
   user: state.users.user,
 
   submitted: state.Orders.submitted,
