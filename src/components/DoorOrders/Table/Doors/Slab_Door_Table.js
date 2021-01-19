@@ -67,47 +67,6 @@ const Slab_Door_Table = ({ fields, formState, i, prices, subTotal, part, updateS
   };
 
 
-  const registerChange = (index, e) => {
-    const value = e.target.value;
-    setChangeValue(value);
-  };
-
-  const changeFraming = (index, e) => {
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].leftStile`,
-        fraction(numQty(changeValue))
-      ),
-    );
-
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].rightStile`,
-        fraction(numQty(changeValue))
-      ),
-    );
-
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].topRail`,
-        fraction(numQty(changeValue))
-      ),
-    );
-
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].bottomRail`,
-        fraction(numQty(changeValue))
-      ),
-    );
-
-  };
-
-
   return (
     formState ?
       <div>

@@ -57,7 +57,6 @@ class Edit extends Component {
       salesReps,
       shippingMethods,
       edit,
-      paymentTypes,
       paymentTerms
     } = this.props;
 
@@ -490,7 +489,7 @@ class Edit extends Component {
                     <Button type="submit" color="primary" size="lg">
                       Submit
                     </Button>
-                    <Button type="cancel" type="button" color="primary" size="lg" onClick={this.props.onEdit}>
+                    <Button type="cancel" color="danger" size="lg" onClick={this.props.onEdit}>
                       Cancel
                     </Button>
                   </div>

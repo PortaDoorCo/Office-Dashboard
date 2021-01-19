@@ -1,13 +1,11 @@
-import React, { Component, Suspense } from 'react';
-import { Field, reduxForm, FieldArray, getFormValues, change, FormSection, } from 'redux-form';
-import { renderField, renderNumber, renderDropdownListFilter, renderPrice, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
-import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import React from 'react';
+import { Field, change, } from 'redux-form';
+import { renderField, renderNumber, renderDropdownListFilter, renderPrice } from '../../../../components/RenderInputs/renderInputs';
+import { Button, Table, Row, Col, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createNumberMask } from 'redux-form-input-masks';
 import NumberFormat from 'react-number-format';
-
-const required = value => (value ? undefined : 'Required');
 
 const currencyMask = createNumberMask({
   decimalPlaces: 2,
@@ -15,7 +13,7 @@ const currencyMask = createNumberMask({
 });
 
 let Inputs = props => {
-  const { fields, misc_items, formState, miscTotal, prices, linePrices, edit } = props;
+  const { fields, misc_items, formState, linePrices, edit } = props;
 
   const changeMiscItem = (e, index) => {
     props.dispatch(
