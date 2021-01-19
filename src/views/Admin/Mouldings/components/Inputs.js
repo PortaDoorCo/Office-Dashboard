@@ -13,6 +13,17 @@ const currencyMask = createNumberMask({
   locale: 'en-US',
 });
 
+const thickness = [
+  {
+    NAME: '4/4',
+    value: 0.75
+  },
+  {
+    NAME: '5/4',
+    value: 1
+  },
+];
+
 let Inputs = props => {
   const { fields, formState, linePrices, edit, part_list } = props;
   const [data, setData] = useState([]);
@@ -36,6 +47,7 @@ let Inputs = props => {
             <th>QTY</th>
             <th>Style</th>
             <th>Woodtype</th>
+            <th>Thickness</th>
             <th>Item</th>
             <th>Linear FT</th>
             <th>Price</th>
@@ -62,9 +74,21 @@ let Inputs = props => {
                 </td>
                 <td>
                   <Field
-                    name={`${table}.woodtype`}
+                    name={`${table}.moulding_material`}
                     component={renderDropdownList}
-                    data={part_list.woodtypes}
+                    data={part_list.moulding_material}
+                    // onChange={(e) => changeMiscItem(e, index)}
+                    valueField="value"
+                    textField="NAME"
+                    edit={edit}
+                    required
+                  />  
+                </td>
+                <td>
+                  <Field
+                    name={`${table}.thickness`}
+                    component={renderDropdownList}
+                    data={thickness}
                     // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="NAME"

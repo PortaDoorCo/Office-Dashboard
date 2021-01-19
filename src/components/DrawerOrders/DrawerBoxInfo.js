@@ -19,7 +19,7 @@ class DrawerBoxInfo extends Component {
 
 
   render() {
-    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState, edit, drawerAssembly } = this.props;
+    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState, edit, box_assembly } = this.props;
     return (
       <div>
         {fields.map((part, index) => (
@@ -124,7 +124,7 @@ class DrawerBoxInfo extends Component {
                   <Field
                     name={`${part}.box_assembly`}
                     component={renderDropdownList}
-                    data={drawerAssembly}
+                    data={box_assembly}
                     valueField="value"
                     textField="NAME"
                     edit={edit}
