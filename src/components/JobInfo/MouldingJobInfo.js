@@ -15,11 +15,9 @@ import { connect } from 'react-redux';
 momentLocaliser(moment);
 
 
-
 const status = ['Quote', 'Ordered'];
 
 const required = value => value ? undefined : 'Required';
-
 
 
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
@@ -112,6 +110,8 @@ class JobInfo extends Component {
   render() {
     const { customers, edit, shippingMethods, formState } = this.props;
     const dateDifference = moment(new Date()).businessDiff(moment(formState && formState.job_info && formState.job_info.DueDate));
+
+    console.log({formState});
 
     return (
 

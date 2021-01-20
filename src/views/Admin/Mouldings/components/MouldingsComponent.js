@@ -145,8 +145,8 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { formState, handleSubmit, customers, tax, total, prices, edit } = this.props;
-  console.log({prices});
+  const { formState, handleSubmit, customers, tax, total, edit } = this.props;
+
   return (
     <div>
       <div className="orderForm">
