@@ -31,6 +31,10 @@ export default {
       url: '/drawer-order',
     },
     {
+      name: 'Mouldings',
+      url: '/mouldings',
+    },
+    {
       name: 'Misc. Order',
       url: '/misc-items',
     },

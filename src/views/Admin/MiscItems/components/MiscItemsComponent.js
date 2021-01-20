@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from 'react';
-import { Field, reduxForm, FieldArray, getFormValues, change, FormSection, } from 'redux-form';
-import { renderField, renderDropdownListFilter, renderPrice, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
-import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Card, CardHeader, CardBody } from 'reactstrap';
+import { Field, reduxForm, FieldArray, getFormValues, FormSection, } from 'redux-form';
+import { renderField, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
+import { Button, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Card, CardHeader, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import { 
   subTotalSelector,
@@ -27,8 +27,6 @@ const dueDate = moment(new Date()).businessAdd(7)._d;
 
 const cookie = Cookies.get('jwt');
 
-
-
 class MiscItems extends Component {
 
    state = {
@@ -48,8 +46,6 @@ class MiscItems extends Component {
   submit = async (values, e) => {
     const {
       reset,
-      prices,
-      itemPrice,
       subTotal,
       tax,
       total,
@@ -62,16 +58,7 @@ class MiscItems extends Component {
 
 
     const jobInfo = {
-      jobName: values.job_info.jobName,
-      status: values.job_info.status,
-      poNum: values.job_info.poNum,
-      Address1: values.job_info.Address1,
-      Address2: values.job_info.Address2,
-      City: values.job_info.City,
-      State: values.job_info.State,
-      Zip: values.job_info.Zip,
-      Phone: values.job_info.Phone,
-      DueDate: values.job_info.DueDate,
+      ...values.job_info,
       customer: {
         id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
@@ -79,25 +66,19 @@ class MiscItems extends Component {
         sale: values.job_info.customer.sale.id,
         Taxable: values.job_info.customer.Taxable
       },
-      ShippingMethod: values.job_info.ShippingMethod,
-      PaymentMethod: values.job_info.PaymentMethod,
-      Rush: values.job_info.Rush,
-      Sample: values.job_info.Sample,
     };
 
     const order = {
+      ...values,
       status: values.job_info.status,
-      job_info: jobInfo,
       Rush: values.job_info.Rush,
       Sample: values.job_info.Sample,
+      job_info: jobInfo,
       companyprofile: values.job_info.customer.id,
       linePrice: miscLineItemSelector,
       subTotals: subTotal,
-      misc_items: values.misc_items,
       tax: tax,
       total: total,
-      discount: values.discount,
-      balance_paid: values.balance_paid,
       balance_due: total,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
@@ -114,13 +95,11 @@ class MiscItems extends Component {
       ],
       balance_history: [
         {
-          'balance_due': total,
           'balance_paid': values.balance_paid,
           'date': new Date()
         }
       ],
       sale: values.job_info.customer.sale.id,
-      Taxable: values.Taxable
     };
 
 
@@ -147,7 +126,7 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { misc_items, formState, handleSubmit, subTotal, miscTotal, miscLineItemSelector, customers, tax, total, prices, linePrices, dispatch } = this.props;
+  const { formState, handleSubmit, customers, tax, total } = this.props;
 
   return (
     <div>

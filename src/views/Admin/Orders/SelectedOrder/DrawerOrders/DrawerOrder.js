@@ -98,56 +98,31 @@ class DrawerOrder extends Component {
 
 
     const jobInfo = {
-      jobName: values.job_info.jobName,
-      status: values.job_info.status,
-      poNum: values.job_info.poNum,
-      Address1: values.job_info.Address1,
-      Address2: values.job_info.Address2,
-      City: values.job_info.City,
-      State: values.job_info.State,
-      Zip: values.job_info.Zip,
-      Phone: values.job_info.Phone,
-      DueDate: values.job_info.DueDate,
+      ...values.job_info,
       customer: {
+        id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
+        sale: values.job_info.customer.sale.id,
+        Taxable: values.job_info.customer.Taxable
       },
-      ShippingMethod: values.job_info.ShippingMethod,
-      PaymentMethod: values.job_info.PaymentMethod,
-      Rush: values.job_info.Rush,
-      Sample: values.job_info.Sample,
     };
-
-
-    // const order = {
-    //   part_list: values.part_list,
-    //   job_info: jobInfo,
-    //   Rush: values.job_info.Rush,
-    //   Sample: values.job_info.Sample,
-    //   companyprofile: values.job_info.customer.id,
-    //   linePrice: prices,
-    //   itemPrice: itemPrice,
-    //   subTotals: subTotal,
-    //   tax: tax,
-    //   total: total,
-    //   discount: values.discount,
-    //   balance_paid: values.balance_paid,
-    //   balance_due: balance,
-    //   misc_items: values.misc_items,
-    //   dueDate: values.job_info.DueDate,
-    //   Taxable: values.Taxable,
-    // };
 
     const order = {
       ...values,
       job_info: jobInfo,
+      Rush: values.job_info.Rush,
+      Sample: values.job_info.Sample,
+      companyprofile: values.job_info.customer.id,
       linePrice: prices,
       itemPrice: itemPrice,
       subTotals: subTotal,
       tax: tax,
       total: total,
       balance_due: balance,
+      dueDate: values.job_info.DueDate,
     };
+
 
     const orderId = values.id;
 
@@ -198,7 +173,8 @@ class DrawerOrder extends Component {
       formState,
       address,
       tax,
-      edit
+      edit,
+      box_assembly
     } = this.props;
 
 
@@ -234,7 +210,7 @@ class DrawerOrder extends Component {
                     boxBottomWoodtype={boxBottomWoodtype}
                     boxThickness={boxThickness}
                     boxBottoms={boxBottoms}
-                    assembly={assembly}
+                    box_assembly={box_assembly}
                     notchDrill={notchDrill}
                     drawerFinishes={drawerFinishes}
                     scoop={scoop}
@@ -347,7 +323,7 @@ const mapStateToProps = (state, props) => ({
   customers: state.customers.customerDB,
   address: state.Orders.address,
   orderNum: state.Orders.orderNum,
-
+  box_assembly: state.part_list.box_assembly,
   user: state.users.user,
 
   submitted: state.Orders.submitted,

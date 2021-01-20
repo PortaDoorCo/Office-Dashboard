@@ -35,6 +35,7 @@ const initialState = {
   miter_df_designs: ['Loading'],
   miter_designs: ['Loading'],
   mouldings_lengths: ['Loading'],
+  moulding_material: ['Loading'],
   mt_designs: ['Loading'],
   mt_df_designs: ['Loading'],
   panels: ['Loading'],
