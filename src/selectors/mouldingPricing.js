@@ -44,7 +44,6 @@ export const miscItemPriceSelector = createSelector(
 
       const { item, moulding_material, linearFT, thickness } = i;
 
-      let material_thickness = 0.75;
       let feet = (item.MOULDING_WIDTH * 12) / 144;
       let waste = feet * 1.25;
       let multiplier = item.Multiplier;

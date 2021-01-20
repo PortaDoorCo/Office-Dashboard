@@ -56,6 +56,11 @@ import MiscItemsAcknowledgement from './PrintOuts/Pages/MiscItems/Acknowledgemen
 import MiscItemsInvoice from './PrintOuts/Pages/MiscItems/InvoicePDF';
 import MiscItemsPDF from './PrintOuts/Pages/MiscItems/MiscItemsPDF';
 
+import MouldingsAcknowledgement from './PrintOuts/Pages/Mouldings/AcknowledgementPDF';
+import MouldingsInvoice from './PrintOuts/Pages/Mouldings/InvoicePDF';
+import MouldingsPDF from './PrintOuts/Pages/Mouldings/MouldingsPDF';
+
+
 import AcknowledgementPDF from './PrintOuts/Pages/Door/AcknowledgementPDF';
 import DrawerAcnowledgementPDF from './PrintOuts/Pages/Drawer/AcknowledgementPDF';
 import DrawerInvoicePDF from './PrintOuts/Pages/Drawer/InvoicePDF';
@@ -69,10 +74,15 @@ import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory';
 import MiscItemBalance from './Balance/MiscItems/Balance';
 import MiscItemBalanceHistory from './Balance/MiscItems/BalanceHistory';
 
+import MouldingsBalance from './Balance/Mouldings/Balance';
+import MouldingsBalanceHistory from './Balance/Mouldings/BalanceHistory';
+
 import DrawerBalance from './Balance/Drawer_Order/Balance';
 import DrawerBalanceHistory from './Balance/Drawer_Order/BalanceHistory';
 import DoorMiscItems from './MiscItems/DoorMiscItems';
 import DrawerMiscItems from './MiscItems/DrawerMiscItems';
+
+import MouldingsMiscItems from './MiscItems/MouldingsMiscItems';
 
 import CustomerCopyDoorPDF from './PrintOuts/Pages/Door/CustomerCopyPDF';
 import CustomerCopyDrawerPDF from './PrintOuts/Pages/Drawer/CustomerCopyPDF';
@@ -82,6 +92,7 @@ import FileUploader from '../../../components/FileUploader/FileUploader';
 import Door_Conversation_Notes from './Notes/DoorOrder/Conversation_Notes';
 import Drawer_Conversation_Notes from './Notes/DrawerOrder/Conversation_Notes';
 import Misc_Conversation_Notes from './Notes/MiscItems/Conversation_Notes';
+import Mouldings_Conversation_Notes from './Notes/Mouldings/Conversation_Notes';
 
 import numQty from 'numeric-quantity';
 
@@ -197,6 +208,7 @@ class OrderPage extends Component {
       formState,
       drawerState,
       miscState,
+      mouldingsState,
       breakdowns,
       box_breakdowns,
       selectedOrder,
@@ -207,7 +219,9 @@ class OrderPage extends Component {
         ? drawerState
         : miscState
           ? miscState
-          : [];
+          : mouldingsState ?
+            mouldingsState
+            : [];
     if (data.orderType === 'Door Order') {
       this.state.selectedOption.map(async (option) => {
         switch (option.value) {
@@ -516,6 +530,26 @@ class OrderPage extends Component {
         }
       });
     }
+    else if (data.orderType === 'Mouldings') {
+      this.state.selectedOption.map(async (option) => {
+        switch (option.value) {
+          case 'All':
+            MouldingsPDF(data, box_breakdowns);
+            this.setState({ selectedOption: [] });
+            break;
+          case 'Acknowledgement':
+            MouldingsAcknowledgement(data, box_breakdowns);
+            this.setState({ selectedOption: [] });
+            break;
+          case 'Invoice':
+            MouldingsInvoice(data, box_breakdowns);
+            this.setState({ selectedOption: [] });
+            break;
+          default:
+            return;
+        }
+      });
+    }
   };
 
   handleChange = (selectedOption) => {
@@ -579,7 +613,7 @@ class OrderPage extends Component {
         { value: 'Bottoms', label: 'Box Bottoms' },
         { value: 'Sides', label: 'Box Sides' },
       ];
-    } else if (s.orderType === 'Misc Items') {
+    } else if (s.orderType === 'Misc Items' || s.orderType === 'Mouldings') {
       options = [
         { value: 'All', label: 'All' },
         { value: 'Acknowledgement', label: 'Acknowledgement' },
@@ -836,9 +870,17 @@ class OrderPage extends Component {
                                   toggleBalance={this.toggleBalance}
                                   selectedOrder={props.selectedOrder}
                                 />
-                              ) : (
-                                <div />
-                              )}
+                              ) :
+                              selectedOrder.orderType === 'Mouldings' ? (
+                                <Mouldings_Conversation_Notes
+                                  toggleBalance={this.toggleBalance}
+                                  selectedOrder={props.selectedOrder}
+                                />
+                              )
+                                :
+                                (
+                                  <div />
+                                )}
                       </CardBody>
                     </Card>
                   </Col>
@@ -875,9 +917,17 @@ class OrderPage extends Component {
                                   toggleBalance={this.toggleBalance}
                                   selectedOrder={props.selectedOrder}
                                 />
-                              ) : (
-                                <div />
-                              )}
+                              ) :
+                              selectedOrder.orderType === 'Mouldings' ? (
+                                <MouldingsBalance
+                                  toggleBalance={this.toggleBalance}
+                                  selectedOrder={props.selectedOrder}
+                                />
+                              )
+                                :
+                                (
+                                  <div />
+                                )}
                       </CardBody>
                     </Card>
                   </Col>
@@ -894,9 +944,14 @@ class OrderPage extends Component {
                             ) : selectedOrder &&
                           selectedOrder.orderType === 'Misc Items' ? (
                                 <MiscItemBalanceHistory />
-                              ) : (
-                                <div />
-                              )}
+                              ) :
+                              selectedOrder.orderType === 'Mouldings' ? (
+                                <MouldingsBalanceHistory />
+                              )
+                                :
+                                (
+                                  <div />
+                                )}
                       </CardBody>
                     </Card>
                   </Col>
@@ -923,7 +978,16 @@ class OrderPage extends Component {
                                 toggle={this.toggleMiscItems}
                                 edit={!this.props.edit}
                               />
-                            ) : null}
+                            ) : 
+                            selectedOrder &&
+                            selectedOrder.orderType === 'Mouldings' ? (
+                                <MouldingsMiscItems
+                                  toggle={this.toggleMiscItems}
+                                  edit={!this.props.edit}
+                                />
+                              )
+                              :
+                              null}
                       </CardBody>
                     </Card>
                   </Col>
@@ -959,6 +1023,7 @@ const mapStateToProps = (state, prop) => ({
   formState: getFormValues('DoorOrder')(state),
   drawerState: getFormValues('DrawerOrder')(state),
   miscState: getFormValues('MiscItems')(state),
+  mouldingsState: getFormValues('Mouldings')(state),
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   selectedOrder: state.Orders.selectedOrder,
