@@ -33,7 +33,7 @@ const Product = (props) => {
                   <CardTitle>
                     <h1>Solid Crowns</h1>
                   </CardTitle>
-                  <Products product_type="solid_crowns" />
+                  <Products product_type="solid-crowns" />
                 </Col>
               </Row>
             </CardBody>

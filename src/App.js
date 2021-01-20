@@ -36,6 +36,9 @@ import {
   loadMiscItems,
   loadPaymentTypes,
   loadPaymentTerms,
+  miscItemAdded,
+  miscItemDeleted,
+  miscItemUpdated
 } from './redux/misc_items/actions';
 import { login, getUsers } from './redux/users/actions';
 import io from 'socket.io-client';
@@ -94,7 +97,10 @@ class App extends Component {
       productUpdated,
       orderAdded,
       orderUpdated,
-      orderDeleted
+      orderDeleted,
+      miscItemAdded,
+      miscItemDeleted,
+      miscItemUpdated
     } = this.props;
 
     this.cookies();
@@ -177,6 +183,35 @@ class App extends Component {
             2000
           ),
           productDeleted(res)
+        )
+      );
+      socket.on(
+        'misc_item_added',
+        (res, entity) => (
+          NotificationManager.success('Misc Item Added', 'Misc Item Added', 2000),
+          miscItemAdded(res, entity)
+        )
+      );
+      socket.on(
+        'misc_item_updated',
+        (res, entity) => (
+          NotificationManager.success(
+            'Misc Item Updated',
+            'Misc Item Updated',
+            2000
+          ),
+          miscItemUpdated(res)
+        )
+      );
+      socket.on(
+        'misc_item_deleted',
+        (res) => (
+          NotificationManager.success(
+            'Misc Item Deleted',
+            'Misc Item Deleted',
+            2000
+          ),
+          miscItemDeleted(res)
         )
       );
     }
@@ -293,7 +328,10 @@ const mapDispatchToProps = (dispatch) =>
       loadPaymentTypes,
       loadPaymentTerms,
       loadAllCustomers,
-      loadAllOrders
+      loadAllOrders,
+      miscItemAdded,
+      miscItemDeleted,
+      miscItemUpdated
     },
     dispatch
   );

@@ -6,6 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import { updateMiscItem, addMiscItem, deleteMiscItem } from '../../../../../../redux/misc_items/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
@@ -84,14 +85,14 @@ const Designs = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, product_type, cookie);
+    await props.updateMiscItem(id, updatedProduct, cookie);
     await setModal(!modal);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
 
-    await props.deleteProduct(id, product_type, cookie);
+    await props.deleteMiscItem(id, cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -104,7 +105,7 @@ const Designs = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item,
     };
-    await props.addProduct(submittedProduct, product_type, cookie);
+    await props.addMiscItem(submittedProduct, cookie);
     await setModal(!modal);
   };
 
@@ -303,9 +304,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      updateProduct,
-      addProduct,
-      deleteProduct
+      updateMiscItem,
+      addMiscItem,
+      deleteMiscItem
     },
     dispatch
   );
