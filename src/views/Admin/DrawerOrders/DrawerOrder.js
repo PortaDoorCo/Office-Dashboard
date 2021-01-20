@@ -106,43 +106,28 @@ class DoorOrders extends Component {
     const orderType = 'Drawer Order';
 
     const jobInfo = {
-      jobName: values.job_info.jobName,
-      status: values.job_info.status,
-      poNum: values.job_info.poNum,
-      Address1: values.job_info.Address1,
-      Address2: values.job_info.Address2,
-      City: values.job_info.City,
-      State: values.job_info.State,
-      Zip: values.job_info.Zip,
-      Phone: values.job_info.Phone,
-      DueDate: values.job_info.DueDate,
+      ...values.job_info,
       customer: {
         id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
-        sale: values.job_info.customer.sale.id
+        sale: values.job_info.customer.sale.id,
+        Taxable: values.job_info.customer.Taxable
       },
-      ShippingMethod: values.job_info.ShippingMethod,
-      PaymentMethod: values.job_info.PaymentMethod,
-      Rush: values.job_info.Rush,
-      Sample: values.job_info.Sample,
     };
 
     const order = {
-      part_list: values.part_list,
-      job_info: jobInfo,
+      ...values,
+      status: values.job_info.status,
       Rush: values.job_info.Rush,
       Sample: values.job_info.Sample,
-      status: values.job_info.status,
+      job_info: jobInfo,
       companyprofile: values.job_info.customer.id,
-      misc_items: values.misc_items,
       linePrice: prices,
       itemPrice: itemPrice,
       subTotals: subTotal,
       tax: tax,
-      discount: values.discount,
       total: total,
-      balance_paid: 0,
       balance_due: total,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
@@ -153,18 +138,17 @@ class DoorOrders extends Component {
       submittedBy: user.FirstName,
       tracking: [
         {
-          status: values.job_info.status,
-          date: new Date()
+          'status': values.job_info.status,
+          'date': new Date()
         }
       ],
       balance_history: [
         {
-          balance_paid: values.balance_paid,
-          date: new Date()
+          'balance_paid': values.balance_paid,
+          'date': new Date()
         }
       ],
       sale: values.job_info.customer.sale.id,
-      Taxable: values.Taxable
     };
 
     if (values.part_list[0].dimensions.length > 0) {
@@ -212,7 +196,7 @@ class DoorOrders extends Component {
       scoop,
       dividers,
       drawerFinishes,
-      drawerAssembly,
+      box_assembly,
       customers,
       formState,
       address,
@@ -263,7 +247,7 @@ class DoorOrders extends Component {
                       formState={formState}
                       prices={prices}
                       subTotal={subTotal}
-                      drawerAssembly={drawerAssembly}
+                      box_assembly={box_assembly}
                     />
                   </Suspense>
 
@@ -485,7 +469,7 @@ const mapStateToProps = (state, prop) => ({
   boxBottoms: state.part_list.box_bottom_thickness,
   notchDrill: state.part_list.box_notch,
   drawerFinishes: state.part_list.box_finish,
-  drawerAssembly: state.part_list.box_assembly,
+  box_assembly: state.part_list.box_assembly,
   scoop: state.part_list.box_scoop,
   dividers: state.part_list.dividers,
   customers: state.customers.customerDB,

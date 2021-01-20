@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from 'react';
-import { Field, reduxForm, FieldArray, getFormValues, change, FormSection, } from 'redux-form';
-import { renderField, renderDropdownListFilter, renderPrice, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
-import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Card, CardHeader, CardBody } from 'reactstrap';
+import { Field, reduxForm, FieldArray, getFormValues, FormSection, } from 'redux-form';
+import { renderField, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
+import { Button, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Card, CardHeader, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import { 
   subTotalSelector,
@@ -9,17 +9,17 @@ import {
   totalSelector,
   miscTotalSelector,
   miscLineItemSelector,
-  miscItemLinePriceSelector,
-  miscItemPriceSelector
-} from '../../../../../selectors/miscItemPricing';
+  miscItemPriceSelector,
+  miscItemLinePriceSelector
+} from '../../../../selectors/mouldingPricing';
 import moment from 'moment-business-days';
-import Inputs from '../../../MiscItems/components/Inputs';
-import FileUploader from '../../../../../components/FileUploader/FileUploader';
+import Inputs from './Inputs';
+import FileUploader from '../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
-import { submitOrder, loadOrders, updateOrder } from '../../../../../redux/orders/actions';
+import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
 
-const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MiscJobInfo'));
+const JobInfo = React.lazy(() => import('../../../../components/JobInfo/MouldingJobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -48,17 +48,15 @@ class MiscItems extends Component {
   submit = async (values, e) => {
     const {
       reset,
-      prices,
-      itemPrice,
       subTotal,
       tax,
       total,
-      updateOrder,
+      submitOrder,
       user,
       miscLineItemSelector
     } = this.props;
 
-    const orderType = 'Misc Items';
+    const orderType = 'Mouldings';
 
 
     const jobInfo = {
@@ -67,28 +65,51 @@ class MiscItems extends Component {
         id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
+        sale: values.job_info.customer.sale.id,
         Taxable: values.job_info.customer.Taxable
       },
     };
 
     const order = {
       ...values,
-      job_info: jobInfo,
+      status: values.job_info.status,
       Rush: values.job_info.Rush,
       Sample: values.job_info.Sample,
+      job_info: jobInfo,
       companyprofile: values.job_info.customer.id,
       linePrice: miscLineItemSelector,
       subTotals: subTotal,
       tax: tax,
       total: total,
+      balance_due: total,
+      orderType: orderType,
       dueDate: values.job_info.DueDate,
+      Date: new Date(),
+      user: user.id,
+      userName: user.username,
+      files: this.state.files,
+      submittedBy: user.FirstName,
+      tracking: [
+        {
+          'status': values.job_info.status,
+          'date': new Date()
+        }
+      ],
+      balance_history: [
+        {
+          'balance_paid': values.balance_paid,
+          'date': new Date()
+        }
+      ],
+      sale: values.job_info.customer.sale.id,
     };
 
-    const orderId = values.id;
 
-    if (values.misc_items.length > 0) {
-      await updateOrder(orderId, order, cookie);
-      await this.props.editable();
+    if (values.mouldings.length > 0) {
+      await submitOrder(order, cookie);
+      this.setState({ updateSubmit: !this.state.updateSubmit });
+      reset();
+      window.scrollTo(0, 0);
     } else {
       alert('Please Select a Miscellaneous Item');
       return;
@@ -107,15 +128,15 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { misc_items, formState, handleSubmit, customers, tax, total, edit, prices, linePrices, miscTotal } = this.props;
+  const { formState, handleSubmit, customers, tax, total, edit } = this.props;
 
   return (
     <div>
-      <Row>
-        <Col>
+      <div className="orderForm">
+        <div className="mouldingFormCol1">
           <Card>
             <CardHeader>
-              <strong>Misc Items Order</strong>
+              <strong>Mouldings</strong>
             </CardHeader>
             <CardBody>
               <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
@@ -135,7 +156,7 @@ render() {
                 </Row>
                 <Row>
                   <Col>
-                    <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} edit={edit} prices={prices} linePrices={linePrices} miscTotal={miscTotal} />
+                    <FieldArray name="mouldings" component={Inputs} {...this.props} />
                   </Col>
                 </Row>
                 <Row>
@@ -150,7 +171,6 @@ render() {
                           <Field
                             name={'Taxable'}
                             component={renderCheckboxToggle}
-                            edit={edit}
                           />
                         </FormGroup>
                       </Col>
@@ -169,7 +189,6 @@ render() {
                         type="text"
                         component={renderField}
                         label="discount"
-                        edit={edit}
                       />
                     </InputGroup>
 
@@ -196,27 +215,41 @@ render() {
                   <Col xs="4" />
                   <Col xs="5" />
                   <Col xs="3">
-                    {!edit ?
-                      <Row>
-                        <Col>
-                          <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                        </Col>
-                        <Col>
-                          <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
+                    <Row>
+                      <Col>
+                        <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
+                      </Col>
+                      <Col>
+                        <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
                                 Cancel
-                          </Button>
-                        </Col>
-                      </Row>
-                      :
-                      <div />
-                    }
+                        </Button>
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
               </form>
             </CardBody>
           </Card>
-        </Col>
-      </Row>
+        </div>
+
+
+        <div className="mouldingFormCol2">
+          <Row>
+            <Col>
+              <Card>
+                <CardBody>
+                  <FormGroup>
+                    <h3>Upload Files</h3>
+                    <FileUploader onUploaded={this.onUploaded} multi={true} />
+                  </FormGroup>
+                </CardBody>
+              </Card>
+
+            </Col>
+          </Row>
+        </div>
+
+      </div>
         
     </div>
   );
@@ -226,7 +259,7 @@ render() {
 
 
 const mapStateToProps = state => ({
-  formState: getFormValues('MiscItems')(state),
+  formState: getFormValues('Mouldings')(state),
   misc_items: state.misc_items.misc_items,
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
@@ -237,7 +270,31 @@ const mapStateToProps = state => ({
   miscLineItemSelector: miscLineItemSelector(state),
   user: state.users.user,
   customers: state.customers.customerDB,
-  initialValues: state.Orders.selectedOrder,
+  initialValues: {
+    misc_items: [],
+    mouldings: [],
+    balance_paid: 0,
+    open: true,
+    discount: 0,
+    Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
+    job_info: {
+      customer: state.customers.customerDB[0],
+      jobName: '',
+      status: 'Quote',
+      poNum: '',
+      Address1: state.customers.customerDB[0].Address1,
+      Address2: state.customers.customerDB[0].Address2,
+      City: state.customers.customerDB[0].City,
+      State: state.customers.customerDB[0].State,
+      Zip: state.customers.customerDB[0].Zip,
+      Phone: state.customers.customerDB[0].Phone,
+      DueDate: dueDate,
+      ShippingMethod: state.misc_items.shippingMethods[0],
+      PaymentMethod: {
+        NAME: state.customers.customerDB[0].PaymentMethod
+      }
+    }
+  },
 });
 
 const mapDispatchToProps = dispatch =>
@@ -245,13 +302,12 @@ const mapDispatchToProps = dispatch =>
     {
       submitOrder,
       loadOrders,
-      updateOrder
     },
     dispatch
   );
 
 MiscItems = reduxForm({
-  form: 'MiscItems',
+  form: 'Mouldings',
   enableReinitialize: true
 })(MiscItems);
 

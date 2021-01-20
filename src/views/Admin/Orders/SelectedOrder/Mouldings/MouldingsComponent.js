@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from 'react';
-import { Field, reduxForm, FieldArray, getFormValues, change, FormSection, } from 'redux-form';
-import { renderField, renderDropdownListFilter, renderPrice, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
-import { Button, Table, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Card, CardHeader, CardBody } from 'reactstrap';
+import { Field, reduxForm, FieldArray, getFormValues, FormSection, } from 'redux-form';
+import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
+import { Button, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Card, CardHeader, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import { 
   subTotalSelector,
@@ -9,25 +9,21 @@ import {
   totalSelector,
   miscTotalSelector,
   miscLineItemSelector,
-  miscItemLinePriceSelector,
-  miscItemPriceSelector
-} from '../../../../../selectors/miscItemPricing';
+  miscItemPriceSelector,
+  miscItemLinePriceSelector
+} from '../../../../../selectors/mouldingPricing';
 import moment from 'moment-business-days';
-import Inputs from '../../../MiscItems/components/Inputs';
+import Inputs from './Inputs';
 import FileUploader from '../../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders, updateOrder } from '../../../../../redux/orders/actions';
 
-const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MiscJobInfo'));
+const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MouldingJobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
-const dueDate = moment(new Date()).businessAdd(7)._d;
-
 const cookie = Cookies.get('jwt');
-
-
 
 class MiscItems extends Component {
 
@@ -47,18 +43,12 @@ class MiscItems extends Component {
 
   submit = async (values, e) => {
     const {
-      reset,
-      prices,
-      itemPrice,
       subTotal,
       tax,
       total,
-      updateOrder,
-      user,
-      miscLineItemSelector
+      miscLineItemSelector,
+      updateOrder
     } = this.props;
-
-    const orderType = 'Misc Items';
 
 
     const jobInfo = {
@@ -86,7 +76,7 @@ class MiscItems extends Component {
 
     const orderId = values.id;
 
-    if (values.misc_items.length > 0) {
+    if (values.mouldings.length > 0) {
       await updateOrder(orderId, order, cookie);
       await this.props.editable();
     } else {
@@ -107,15 +97,15 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { misc_items, formState, handleSubmit, customers, tax, total, edit, prices, linePrices, miscTotal } = this.props;
-
+  const { formState, handleSubmit, customers, tax, total, prices, edit } = this.props;
+  console.log({prices});
   return (
     <div>
       <Row>
-        <Col>
+        <Col xs='12'>
           <Card>
             <CardHeader>
-              <strong>Misc Items Order</strong>
+              <strong>Mouldings</strong>
             </CardHeader>
             <CardBody>
               <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
@@ -135,7 +125,7 @@ render() {
                 </Row>
                 <Row>
                   <Col>
-                    <FieldArray name="misc_items" component={Inputs} misc_items={misc_items} formState={formState} edit={edit} prices={prices} linePrices={linePrices} miscTotal={miscTotal} />
+                    <FieldArray name="mouldings" component={Inputs} {...this.props} />
                   </Col>
                 </Row>
                 <Row>
@@ -226,7 +216,7 @@ render() {
 
 
 const mapStateToProps = state => ({
-  formState: getFormValues('MiscItems')(state),
+  formState: getFormValues('Mouldings')(state),
   misc_items: state.misc_items.misc_items,
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
@@ -251,7 +241,7 @@ const mapDispatchToProps = dispatch =>
   );
 
 MiscItems = reduxForm({
-  form: 'MiscItems',
+  form: 'Mouldings',
   enableReinitialize: true
 })(MiscItems);
 

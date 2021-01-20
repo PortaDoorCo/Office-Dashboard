@@ -1,6 +1,4 @@
 import moment from 'moment';
-import Size from '../Breakdowns/DrawerBoxes/Size';
-
 
 export default (data, breakdowns) => {
 
@@ -15,31 +13,58 @@ export default (data, breakdowns) => {
   const tableBody = [
     [
       { text: 'Qty', style: 'fonts' },
+      { text: 'Style', style: 'fonts' },
+      { text: 'Material', style: 'fonts' },
+      { text: 'Thickness', style: 'fonts' },
       { text: 'Item', style: 'fonts' },
-      { text: 'Total 1 Unit', style: 'fonts' },
+      { text: 'Linear FT', style: 'fonts' },
       { text: 'Price', style: 'fonts' },
     ]
   ];
 
 
-  data.misc_items.map(i  => {
-    if(i.category === 'preselect') {
-      return tableBody.push([
-        { text: i.qty, style: 'fonts' },
-        { text: i.item.NAME, style: 'fonts' },
-        { text: i.item.Price, style: 'fonts' },
-        { text: `$${i.price}`, style: 'fonts' },
-      ]);
-    } else if (i.category === 'custom') {
-      return tableBody.push([
-        { text: i.qty, style: 'fonts' },
-        { text: i.item2, style: 'fonts' },
-        { text: i.pricePer, style: 'fonts' },
-        { text: parseFloat(i.pricePer) * parseFloat(i.qty), style: 'fonts' },
-      ]);
+  data.mouldings.map(i  => {
+    let feet = (i.item.MOULDING_WIDTH * 12) / 144;
+    let waste = feet * 1.25;
+    let multiplier = i.item.Multiplier;
+    let wood = 0;
+    let premium = 0;
+
+    let a = waste * multiplier;
+
+    if(i.thickness.value === 0.75){
+      wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE : 0;
+    } else if (i.thickness.value === 1) {
+      wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE_THICK : 0;
     } else {
-      return [];
+      wood = 0;
     }
+      
+    if(parseFloat(i.linearFT) > 0 && parseFloat(i.linearFT) <= 30) {
+      premium = 3 + 1;
+    } else if (parseFloat(i.linearFT) >= 31 && parseFloat(i.linearFT) <= 50) {
+      premium = 2 + 1;
+    } else if (parseFloat(i.linearFT) >= 51 && parseFloat(i.linearFT) <= 100) {
+      premium = 1.75 + 1;
+    } else if(parseFloat(i.linearFT) > 101 && parseFloat(i.linearFT) <= 250) {
+      premium = 1.4 + 1;
+    } else if (parseFloat(i.linearFT) > 251 && parseFloat(i.linearFT) <= 500) {
+      premium = 1.1 + 1;
+    } else {
+      premium = 1 + 1;
+    }
+
+    let price = ((a * wood) * parseFloat(i.linearFT)) * premium;
+
+    tableBody.push([
+      { text: i.qty, style: 'fonts' },
+      { text: i.style.name, style: 'fonts' },
+      { text: i.moulding_material.NAME, style: 'fonts' },
+      { text: i.thickness.NAME, style: 'fonts' },
+      { text: i.item.NAME, style: 'fonts' },
+      { text: i.linearFT, style: 'fonts' },
+      { text: `$${(price * parseInt(i.qty)).toFixed(2)}`, style: 'fonts' },
+    ]);
   });
 
 
@@ -49,7 +74,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack: ['Invoice ']
+          stack: ['Acknowledgement']
         },
         {
           stack: [
@@ -105,7 +130,7 @@ export default (data, breakdowns) => {
     {
       table: {
         headerRows: 1,
-        widths: [30, '*', '*', '*'],
+        widths: [30, '*', '*', '*', '*', '*', '*'],
         body: tableBody
       },
       layout: 'lightHorizontalLines',
@@ -164,6 +189,6 @@ export default (data, breakdowns) => {
       style: 'warrantyFont',
       alignment: 'center',
       margin: [ 0, 25, 0, 0 ] 
-    },
+    }
   ];
 };
