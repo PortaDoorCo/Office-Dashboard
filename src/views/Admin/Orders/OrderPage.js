@@ -870,13 +870,13 @@ class OrderPage extends Component {
                                   toggleBalance={this.toggleBalance}
                                   selectedOrder={props.selectedOrder}
                                 />
-                              ) :
+                              ) : selectedOrder &&
                               selectedOrder.orderType === 'Mouldings' ? (
-                                <Mouldings_Conversation_Notes
-                                  toggleBalance={this.toggleBalance}
-                                  selectedOrder={props.selectedOrder}
-                                />
-                              )
+                                  <Mouldings_Conversation_Notes
+                                    toggleBalance={this.toggleBalance}
+                                    selectedOrder={props.selectedOrder}
+                                  />
+                                )
                                 :
                                 (
                                   <div />
@@ -917,13 +917,13 @@ class OrderPage extends Component {
                                   toggleBalance={this.toggleBalance}
                                   selectedOrder={props.selectedOrder}
                                 />
-                              ) :
+                              ) : selectedOrder &&
                               selectedOrder.orderType === 'Mouldings' ? (
-                                <MouldingsBalance
-                                  toggleBalance={this.toggleBalance}
-                                  selectedOrder={props.selectedOrder}
-                                />
-                              )
+                                  <MouldingsBalance
+                                    toggleBalance={this.toggleBalance}
+                                    selectedOrder={props.selectedOrder}
+                                  />
+                                )
                                 :
                                 (
                                   <div />
@@ -944,10 +944,10 @@ class OrderPage extends Component {
                             ) : selectedOrder &&
                           selectedOrder.orderType === 'Misc Items' ? (
                                 <MiscItemBalanceHistory />
-                              ) :
+                              ) : selectedOrder &&
                               selectedOrder.orderType === 'Mouldings' ? (
-                                <MouldingsBalanceHistory />
-                              )
+                                  <MouldingsBalanceHistory />
+                                )
                                 :
                                 (
                                   <div />

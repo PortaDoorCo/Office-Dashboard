@@ -60,16 +60,7 @@ class MiscItems extends Component {
 
 
     const jobInfo = {
-      jobName: values.job_info.jobName,
-      status: values.job_info.status,
-      poNum: values.job_info.poNum,
-      Address1: values.job_info.Address1,
-      Address2: values.job_info.Address2,
-      City: values.job_info.City,
-      State: values.job_info.State,
-      Zip: values.job_info.Zip,
-      Phone: values.job_info.Phone,
-      DueDate: values.job_info.DueDate,
+      ...values.job_info,
       customer: {
         id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
@@ -77,25 +68,19 @@ class MiscItems extends Component {
         sale: values.job_info.customer.sale.id,
         Taxable: values.job_info.customer.Taxable
       },
-      ShippingMethod: values.job_info.ShippingMethod,
-      PaymentMethod: values.job_info.PaymentMethod,
-      Rush: values.job_info.Rush,
-      Sample: values.job_info.Sample,
     };
 
     const order = {
+      ...values,
       status: values.job_info.status,
-      job_info: jobInfo,
       Rush: values.job_info.Rush,
       Sample: values.job_info.Sample,
+      job_info: jobInfo,
       companyprofile: values.job_info.customer.id,
       linePrice: miscLineItemSelector,
       subTotals: subTotal,
-      mouldings: values.mouldings,
       tax: tax,
       total: total,
-      discount: values.discount,
-      balance_paid: values.balance_paid,
       balance_due: total,
       orderType: orderType,
       dueDate: values.job_info.DueDate,
@@ -112,13 +97,11 @@ class MiscItems extends Component {
       ],
       balance_history: [
         {
-          'balance_due': total,
           'balance_paid': values.balance_paid,
           'date': new Date()
         }
       ],
       sale: values.job_info.customer.sale.id,
-      Taxable: values.Taxable
     };
 
 
