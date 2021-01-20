@@ -179,21 +179,21 @@ const AppliedProfiles = (props) => {
               <Row className="mb-2">
                 <Col>
                   <Label for="Name">Name</Label>
-                  <Input  value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
+                  <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
   
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Rail Factor</Label>
-                  <Input value={product.RAIL_FACTOR} name="RAIL_FACTOR" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.RAIL_FACTOR} name="RAIL_FACTOR" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -282,14 +282,14 @@ const AppliedProfiles = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
   
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Rail Factor</Label>
-                  <Input value={product.RAIL_FACTOR} name="RAIL_FACTOR" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.RAIL_FACTOR} name="RAIL_FACTOR" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

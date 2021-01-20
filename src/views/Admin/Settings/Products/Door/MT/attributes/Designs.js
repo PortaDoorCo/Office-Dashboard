@@ -190,21 +190,21 @@ const Designs = (props) => {
               <Row className="mb-2">
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Stile/Rail Width</Label>
-                  <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Inset</Label>
-                  <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -295,21 +295,21 @@ const Designs = (props) => {
               <Row className="mb-2">
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Stile/Rail Width</Label>
-                  <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Inset</Label>
-                  <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

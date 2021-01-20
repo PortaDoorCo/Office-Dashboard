@@ -184,18 +184,18 @@ const Profiles = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Inset</Label>
-                  <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
                 </Col>
   
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Stile/Rail Width</Label>
-                  <Input value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Mid Rail Width</Label>
-                  <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -285,18 +285,18 @@ const Profiles = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Inset</Label>
-                  <Input value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
                 </Col>
   
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Stile/Rail Width</Label>
-                  <Input value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Mid Rail Width</Label>
-                  <Input value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
