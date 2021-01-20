@@ -19,7 +19,7 @@ import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders, updateOrder } from '../../../../../redux/orders/actions';
 
-const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MiscJobInfo'));
+const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MouldingJobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 

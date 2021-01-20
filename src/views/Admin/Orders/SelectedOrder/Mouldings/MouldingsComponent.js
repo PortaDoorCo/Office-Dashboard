@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import { Field, reduxForm, FieldArray, getFormValues, FormSection, } from 'redux-form';
-import { renderField, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
+import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
 import { Button, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Card, CardHeader, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import { 
@@ -11,15 +11,15 @@ import {
   miscLineItemSelector,
   miscItemPriceSelector,
   miscItemLinePriceSelector
-} from '../../../../selectors/mouldingPricing';
+} from '../../../../../selectors/mouldingPricing';
 import moment from 'moment-business-days';
 import Inputs from './Inputs';
-import FileUploader from '../../../../components/FileUploader/FileUploader';
+import FileUploader from '../../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
-import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
+import { submitOrder, loadOrders } from '../../../../../redux/orders/actions';
 
-const JobInfo = React.lazy(() => import('../../../../components/JobInfo/MouldingJobInfo'));
+const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MiscJobInfo'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -149,8 +149,8 @@ render() {
   console.log({prices});
   return (
     <div>
-      <div className="orderForm">
-        <div className="mouldingFormCol1">
+      <Row>
+        <Col xs='12'>
           <Card>
             <CardHeader>
               <strong>Mouldings</strong>
@@ -188,6 +188,7 @@ render() {
                           <Field
                             name={'Taxable'}
                             component={renderCheckboxToggle}
+                            edit={edit}
                           />
                         </FormGroup>
                       </Col>
@@ -206,6 +207,7 @@ render() {
                         type="text"
                         component={renderField}
                         label="discount"
+                        edit={edit}
                       />
                     </InputGroup>
 
@@ -232,41 +234,27 @@ render() {
                   <Col xs="4" />
                   <Col xs="5" />
                   <Col xs="3">
-                    <Row>
-                      <Col>
-                        <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                      </Col>
-                      <Col>
-                        <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
+                    {!edit ?
+                      <Row>
+                        <Col>
+                          <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
+                        </Col>
+                        <Col>
+                          <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
                                 Cancel
-                        </Button>
-                      </Col>
-                    </Row>
+                          </Button>
+                        </Col>
+                      </Row>
+                      :
+                      <div />
+                    }
                   </Col>
                 </Row>
               </form>
             </CardBody>
           </Card>
-        </div>
-
-
-        <div className="mouldingFormCol2">
-          <Row>
-            <Col>
-              <Card>
-                <CardBody>
-                  <FormGroup>
-                    <h3>Upload Files</h3>
-                    <FileUploader onUploaded={this.onUploaded} multi={true} />
-                  </FormGroup>
-                </CardBody>
-              </Card>
-
-            </Col>
-          </Row>
-        </div>
-
-      </div>
+        </Col>
+      </Row>
         
     </div>
   );
@@ -287,31 +275,7 @@ const mapStateToProps = state => ({
   miscLineItemSelector: miscLineItemSelector(state),
   user: state.users.user,
   customers: state.customers.customerDB,
-  initialValues: {
-    misc_items: [],
-    mouldings: [],
-    balance_paid: 0,
-    open: true,
-    discount: 0,
-    Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
-    job_info: {
-      customer: state.customers.customerDB[0],
-      jobName: '',
-      status: 'Quote',
-      poNum: '',
-      Address1: state.customers.customerDB[0].Address1,
-      Address2: state.customers.customerDB[0].Address2,
-      City: state.customers.customerDB[0].City,
-      State: state.customers.customerDB[0].State,
-      Zip: state.customers.customerDB[0].Zip,
-      Phone: state.customers.customerDB[0].Phone,
-      DueDate: dueDate,
-      ShippingMethod: state.misc_items.shippingMethods[0],
-      PaymentMethod: {
-        NAME: state.customers.customerDB[0].PaymentMethod
-      }
-    }
-  },
+  initialValues: state.Orders.selectedOrder,
 });
 
 const mapDispatchToProps = dispatch =>
