@@ -192,20 +192,20 @@ const Panels = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
   
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Panel Factor</Label>
-                  <Input value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Thickness</Label>
-                  <Input value={product.Thickness} name="Thickness" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.Thickness} name="Thickness" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
@@ -314,20 +314,20 @@ const Panels = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
   
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Panel Factor</Label>
-                  <Input value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.PANEL_FACTOR} name="PANEL_FACTOR" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Thickness</Label>
-                  <Input value={product.Thickness} name="Thickness" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.Thickness} name="Thickness" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>

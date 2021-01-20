@@ -191,15 +191,15 @@ const Designs = (props) => {
               <Row>
                 <Col>
                   <Label for="Moulding_Width">Moulding Width</Label>
-                  <Input value={product.MOULDING_WIDTH} name="MOULDING_WIDTH" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MOULDING_WIDTH} name="MOULDING_WIDTH" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="moulding_thickness">Moulding Thickness</Label>
-                  <Input value={product.MOULDING_THICKNESS} name="MOULDING_THICKNESS" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MOULDING_THICKNESS} name="MOULDING_THICKNESS" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="multiplier">Multiplier</Label>
-                  <Input value={product.Multiplier} name="Multiplier" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.Multiplier} name="Multiplier" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               
@@ -288,11 +288,15 @@ const Designs = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Moulding Width</Label>
-                  <Input value={product.MOULDING_WIDTH} name="MOULDING_WIDTH" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MOULDING_WIDTH} name="MOULDING_WIDTH" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Moulding Thickness</Label>
-                  <Input value={product.MOULDING_THICKNESS} name="MOULDING_THICKNESS" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MOULDING_THICKNESS} name="MOULDING_THICKNESS" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="multiplier">Multiplier</Label>
+                  <Input type="number" value={product.Multiplier} name="Multiplier" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

@@ -181,7 +181,7 @@ const Designs = (props) => {
                 </Col>
                 <Col>
                   <Label for="Moulding_Width">Price</Label>
-                  <Input value={product.Price} name="Price" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.Price} name="Price" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
              
@@ -267,7 +267,7 @@ const Designs = (props) => {
                 </Col>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.Price} name="Price" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.Price} name="Price" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>
