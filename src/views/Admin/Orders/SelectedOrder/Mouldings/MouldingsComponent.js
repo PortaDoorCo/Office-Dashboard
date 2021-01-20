@@ -17,7 +17,7 @@ import Inputs from './Inputs';
 import FileUploader from '../../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
-import { submitOrder, loadOrders } from '../../../../../redux/orders/actions';
+import { submitOrder, loadOrders, updateOrder } from '../../../../../redux/orders/actions';
 
 const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MouldingJobInfo'));
 
@@ -43,86 +43,42 @@ class MiscItems extends Component {
 
   submit = async (values, e) => {
     const {
-      reset,
       subTotal,
       tax,
       total,
-      submitOrder,
-      user,
-      miscLineItemSelector
+      miscLineItemSelector,
+      updateOrder
     } = this.props;
-
-    const orderType = 'Mouldings';
 
 
     const jobInfo = {
-      jobName: values.job_info.jobName,
-      status: values.job_info.status,
-      poNum: values.job_info.poNum,
-      Address1: values.job_info.Address1,
-      Address2: values.job_info.Address2,
-      City: values.job_info.City,
-      State: values.job_info.State,
-      Zip: values.job_info.Zip,
-      Phone: values.job_info.Phone,
-      DueDate: values.job_info.DueDate,
+      ...values.job_info,
       customer: {
         id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
-        sale: values.job_info.customer.sale.id,
         Taxable: values.job_info.customer.Taxable
       },
-      ShippingMethod: values.job_info.ShippingMethod,
-      PaymentMethod: values.job_info.PaymentMethod,
-      Rush: values.job_info.Rush,
-      Sample: values.job_info.Sample,
     };
 
     const order = {
-      status: values.job_info.status,
+      ...values,
       job_info: jobInfo,
       Rush: values.job_info.Rush,
       Sample: values.job_info.Sample,
       companyprofile: values.job_info.customer.id,
       linePrice: miscLineItemSelector,
       subTotals: subTotal,
-      mouldings: values.mouldings,
       tax: tax,
       total: total,
-      discount: values.discount,
-      balance_paid: values.balance_paid,
-      balance_due: total,
-      orderType: orderType,
       dueDate: values.job_info.DueDate,
-      Date: new Date(),
-      user: user.id,
-      userName: user.username,
-      files: this.state.files,
-      submittedBy: user.FirstName,
-      tracking: [
-        {
-          'status': values.job_info.status,
-          'date': new Date()
-        }
-      ],
-      balance_history: [
-        {
-          'balance_due': total,
-          'balance_paid': values.balance_paid,
-          'date': new Date()
-        }
-      ],
-      sale: values.job_info.customer.sale.id,
-      Taxable: values.Taxable
     };
 
+    const orderId = values.id;
 
     if (values.mouldings.length > 0) {
-      await submitOrder(order, cookie);
-      this.setState({ updateSubmit: !this.state.updateSubmit });
-      reset();
-      window.scrollTo(0, 0);
+      await updateOrder(orderId, order, cookie);
+      await this.props.editable();
     } else {
       alert('Please Select a Miscellaneous Item');
       return;
@@ -279,6 +235,7 @@ const mapDispatchToProps = dispatch =>
     {
       submitOrder,
       loadOrders,
+      updateOrder
     },
     dispatch
   );
