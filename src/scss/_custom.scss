@@ -212,9 +212,28 @@ ul>li:hover {
   margin: 0 1%
 }
 
+.mouldingFormCol1 {
+  width: 58%;
+  margin: 0 1%;
+}
+
+.mouldingFormCol2 {
+  width: 38%;
+  margin: 0 1%
+}
+
 @media screen and (max-width: 1680px){
 
   .orderFormCol1, .orderFormCol2 {
+    width: 98%;
+    margin-bottom: 15px;
+  }
+
+}
+
+@media screen and (max-width: 1920px){
+
+  .mouldingFormCol1, .mouldingFormCol2 {
     width: 98%;
     margin-bottom: 15px;
   }

@@ -3,6 +3,7 @@ import React from 'react';
 import DoorOrder from './DoorOrders/DoorOrders';
 import DrawerOrder from './DrawerOrders/DrawerOrder';
 import MiscItems from './MiscItems/MiscItemsComponent';
+import Mouldings from './Mouldings/MouldingsComponent';
 import { connect } from 'react-redux';
 
 
@@ -30,12 +31,19 @@ class EditSelectedOrder extends React.Component {
                 toggle={toggle}
               />
               :
-              <DrawerOrder
+              selectedOrder.orderType === 'Mouldings' ?
+                <Mouldings
+                  editable={editable}
+                  edit={edit}
+                  toggle={toggle}
+                />
+                :
+                <DrawerOrder
 
-                editable={editable}
-                edit={edit}
-                toggle={toggle}
-              />
+                  editable={editable}
+                  edit={edit}
+                  toggle={toggle}
+                />
           }
         </div>
   
