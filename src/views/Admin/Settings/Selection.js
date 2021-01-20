@@ -12,6 +12,13 @@ import FaceFrame from './Products/FaceFrame/FaceFrame';
 import DrawerBox from './Products/DrawerBox/DrawerBox';
 import DoorPricing from './Pricing/Door/DoorPricing';
 import DrawerPricing from './Pricing/DrawerBox/DrawerPricing';
+import BaseCap from './Products/Mouldings/Base_Cap/Base_Cap';
+import Baseboard from './Products/Mouldings/Baseboard/Baseboard';
+import Casings from './Products/Mouldings/Casings/Casings';
+import ChairRails from './Products/Mouldings/Chair_Rails/Chair_Rails';
+import CrownMouldings from './Products/Mouldings/Crown_Mouldings/Crown_Mouldings';
+import SolidCrowns from './Products/Mouldings/Solid_Crowns/Solid_Crowns';
+import MiscItems from './Products/MiscItems/Misc_Items';
 
 const Selection = props => {
 
@@ -43,6 +50,20 @@ const Selection = props => {
       return <DoorPricing />;
     case 'drawer_pricing':
       return <DrawerPricing />;
+    case 'base_cap':
+      return <BaseCap />;
+    case 'baseboards':
+      return <Baseboard />;
+    case 'casings':
+      return <Casings />;
+    case 'chair_rails':
+      return <ChairRails />;
+    case 'crown_mouldings':
+      return <CrownMouldings />;
+    case 'solid_crowns':
+      return <SolidCrowns />;
+    case 'misc_items':
+      return <MiscItems />;
     default:
       return <AccountSettings />;
   }
