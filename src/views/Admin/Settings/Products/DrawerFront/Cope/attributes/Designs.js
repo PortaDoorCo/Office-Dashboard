@@ -126,7 +126,6 @@ const Designs = (props) => {
   const card = filteredProducts.map(card => {
     return (
       <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: '200px' }}>
-          {console.log('CARD', card)}
         <Card style={{ height: '100%' }} onClick={() => setCard(card)}>
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
           <CardBody>
@@ -197,21 +196,21 @@ const Designs = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="4/4_Price">Top Rail Arch</Label>
-                  <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Bottom Rail Arch</Label>
-                  <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -300,21 +299,21 @@ const Designs = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="4/4_Price">Top Rail Arch</Label>
-                  <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Bottom Rail Arch</Label>
-                  <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

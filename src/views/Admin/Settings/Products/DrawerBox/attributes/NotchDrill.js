@@ -159,7 +159,7 @@ const NotchDrill = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.PRICE} name="PRICE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.PRICE} name="PRICE" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -238,7 +238,7 @@ const NotchDrill = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.PRICE} name="PRICE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.PRICE} name="PRICE" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

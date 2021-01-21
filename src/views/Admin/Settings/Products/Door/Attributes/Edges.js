@@ -183,14 +183,14 @@ const Edges = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
   
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Lip Factor</Label>
-                  <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
@@ -297,14 +297,14 @@ const Edges = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
   
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Lip Factor</Label>
-                  <Input value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.LIP_FACTOR} name="LIP_FACTOR" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

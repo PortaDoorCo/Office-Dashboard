@@ -6,7 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import FileUploader from '../../../../../../components/FileUploader/FileUploader'
+import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
 const header = { 'Authorization': 'Bearer ' + cookie };
@@ -160,7 +160,7 @@ const BoxBottomWoodtype = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -238,7 +238,7 @@ const BoxBottomWoodtype = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

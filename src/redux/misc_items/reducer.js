@@ -3,7 +3,13 @@ import {
   LOAD_SHIPPING_METHODS,
   LOAD_PAYMENT_TERMS,
   LOAD_PAYMENT_TYPES,
-  LOAD_MISC_ITEMS
+  LOAD_MISC_ITEMS,
+  UPDATE_MISC_ITEMS,
+  DELETE_MISC_ITEM,
+  ADD_MISC_ITEM,
+  MISC_ITEM_ADDED,
+  MISC_ITEM_DELETED,
+  MISC_ITEM_UPDATED
 } from './actions';
 
 const initialState = {
@@ -44,11 +50,44 @@ export default function (state = initialState, action) {
         ...state,
         selectedDateRange: date
       };
+    case ADD_MISC_ITEM:
+      return {
+        ...state,
+      };
+    case UPDATE_MISC_ITEMS:
+      return {
+        ...state,
+      };
+    case DELETE_MISC_ITEM:
+      return {
+        ...state,
+      };
     case LOAD_SHIPPING_METHODS:
       return {
         ...state,
         shippingMethods: data,
         loadedShippingMethods: true
+      };
+    case MISC_ITEM_UPDATED:
+      return {
+        ...state,
+        misc_items: state.misc_items.map((i) => {
+          console.log({i});
+          console.log({data});
+          return i.id === data.id ? data : i;
+        }
+
+        ),
+      };
+    case MISC_ITEM_ADDED:
+      return {
+        ...state,
+        misc_items: [...state.misc_items, data],
+      };
+    case MISC_ITEM_DELETED:     
+      return {
+        ...state,
+        misc_items: state.misc_items.filter(item => item.id !== data.id),
       };
     default:
       return {
