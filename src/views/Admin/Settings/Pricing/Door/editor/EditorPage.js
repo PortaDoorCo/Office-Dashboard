@@ -9,6 +9,7 @@ const EditorPage = (props) => {
 
   const { pricing, role } = props;
   const [doorPricing, setDoorPricing] = useState(false);
+  const [dfPricing, setDFPricing] = useState(false);
   const [faceFramePricing, setFaceFramePricing] = useState(false);
 
 
@@ -42,7 +43,31 @@ const EditorPage = (props) => {
                 :
                 <div />
               }
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
 
+      <Row className="mt-2">
+        <Col>
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <h4 style={{ textDecoration: 'underline' }}>Drawer Front Pricing</h4>
+              </CardTitle>
+              <Row>
+                <Col>
+                  <Editor code={pricing ? pricing.df_pricing : ''} name={'df_pricing'} toggleEdit={setDFPricing} edit={dfPricing} />
+                </Col>
+              </Row>
+
+              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+                <div className="mt-2">
+                  <Button color="primary" onClick={() => setDFPricing(!dfPricing)}>Edit</Button>
+                </div>
+                :
+                <div />
+              }
             </CardBody>
           </Card>
         </Col>

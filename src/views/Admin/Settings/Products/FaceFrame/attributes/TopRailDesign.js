@@ -159,7 +159,7 @@ const TopRailDesign = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -237,7 +237,7 @@ const TopRailDesign = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

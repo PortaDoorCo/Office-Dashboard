@@ -167,17 +167,17 @@ const BoxThickness = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Side Deduction</Label>
-                  <Input value={product.SIDE_DEDUCTION} name="SIDE_DEDUCTION" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.SIDE_DEDUCTION} name="SIDE_DEDUCTION" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Bottom Width Reduction</Label>
-                  <Input value={product.BOTTOM_WIDTH_REDUCTION} name="BOTTOM_WIDTH_REDUCTION" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.BOTTOM_WIDTH_REDUCTION} name="BOTTOM_WIDTH_REDUCTION" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="4/4_Price">Bottom Length Deduction</Label>
-                  <Input value={product.BOTTOM_LENGTH_DEDUCTION} name="BOTTOM_LENGTH_DEDUCTION" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.BOTTOM_LENGTH_DEDUCTION} name="BOTTOM_LENGTH_DEDUCTION" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -256,17 +256,17 @@ const BoxThickness = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">Side Deduction</Label>
-                  <Input value={product.SIDE_DEDUCTION} name="SIDE_DEDUCTION" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.SIDE_DEDUCTION} name="SIDE_DEDUCTION" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Bottom Width Reduction</Label>
-                  <Input value={product.BOTTOM_WIDTH_REDUCTION} name="BOTTOM_WIDTH_REDUCTION" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.BOTTOM_WIDTH_REDUCTION} name="BOTTOM_WIDTH_REDUCTION" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="4/4_Price">Bottom Length Deduction</Label>
-                  <Input value={product.BOTTOM_LENGTH_DEDUCTION} name="BOTTOM_LENGTH_DEDUCTION" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.BOTTOM_LENGTH_DEDUCTION} name="BOTTOM_LENGTH_DEDUCTION" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

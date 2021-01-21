@@ -184,11 +184,11 @@ const Woodtype = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row className="mt-5">
@@ -280,11 +280,11 @@ const Woodtype = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

@@ -189,21 +189,21 @@ const Designs = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="4/4_Price">Top Rail Arch</Label>
-                  <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Bottom Rail Arch</Label>
-                  <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -292,21 +292,21 @@ const Designs = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE} name="UPCHARGE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.UPCHARGE_THICK} name="UPCHARGE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Label for="4/4_Price">Top Rail Arch</Label>
-                  <Input value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.TOP_RAIL_ADD} name="TOP_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Bottom Rail Arch</Label>
-                  <Input value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.BTM_RAIL_ADD} name="BTM_RAIL_ADD" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

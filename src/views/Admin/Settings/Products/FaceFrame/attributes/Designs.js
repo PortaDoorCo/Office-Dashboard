@@ -162,11 +162,11 @@ const Designs = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.opening_cost} name="opening_cost" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.opening_cost} name="opening_cost" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.opening_5_4_cost} name="opening_5_4_cost" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.opening_5_4_cost} name="opening_5_4_cost" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
   
@@ -244,11 +244,11 @@ const Designs = (props) => {
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
-                  <Input value={product.opening_cost} name="opening_cost" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.opening_cost} name="opening_cost" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
-                  <Input value={product.opening_5_4_cost} name="opening_5_4_cost" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.opening_5_4_cost} name="opening_5_4_cost" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

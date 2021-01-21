@@ -94,6 +94,41 @@ const Settings = (props) => {
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
+                    Mouldings
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem onClick={() => setSelection('base_cap')}>
+                      Base Caps
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('baseboards')}>
+                      Baseboards
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('casings')}>
+                      Casings
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('chair_rails')}>
+                      Chair Rails
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('crown_mouldings')}>
+                      Crown Mouldings
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('solid_crowns')}>
+                      Solid Crowns
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Misc. Items
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem onClick={() => setSelection('misc_items')}>
+                      Misc Items.
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
                     Pricing
                   </DropdownToggle>
                   <DropdownMenu right>
