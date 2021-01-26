@@ -14,7 +14,7 @@ const WarningModal = (props) => {
   
 
   const toggleAction = () => {
-    const { value, tag, i, index } = warningType;
+    const { value, tag, index } = warningType;
     switch(tag) {
       case 'height':
         if(value > 48) {
@@ -35,10 +35,7 @@ const WarningModal = (props) => {
   };
 
   const toggleCancel = () => {
-    const { value, tag, i, index } = warningType;
-    const basePrice = prices[i][index];
-    const add = basePrice * 0.2;
-
+    const { value, tag, i, index, part } = warningType;
     switch(tag) {
       case 'height':
         // code block
@@ -47,7 +44,7 @@ const WarningModal = (props) => {
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              'NO GUARANTEE'
+              'OVERSIZE - NO GUARANTEE'
             )
           );
         }
@@ -59,7 +56,7 @@ const WarningModal = (props) => {
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              'NO GUARANTEE'
+              'OVERSIZE - NO GUARANTEE'
             )
           );
         }
