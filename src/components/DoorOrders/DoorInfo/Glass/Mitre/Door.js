@@ -15,7 +15,8 @@ import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
-  subTotalSelector
+  subTotalSelector,
+  addPriceSelector
 } from '../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
@@ -105,7 +106,7 @@ class MiterDoor extends Component {
       woodtypes,
       miter_designs,
       applied_moulds,
-      finishes,
+      addPrice,
       isValid,
       index,
       part_list,
@@ -196,6 +197,7 @@ class MiterDoor extends Component {
             isValid={isValid}
             part={part}
             edit={edit}
+            addPrice={addPrice}
           // updateSubmit={updateSubmit}
           />
         </div>
@@ -219,6 +221,7 @@ const mapStateToProps = state => ({
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
+  addPrice: addPriceSelector(state),
 });
 
 

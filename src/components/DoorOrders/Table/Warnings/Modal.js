@@ -9,7 +9,9 @@ import {
 
 const WarningModal = (props) => {
 
-  const { className, toggle, modal, warningType, twoWide, twoHigh, dispatch, change, } = props;
+  const { className, toggle, modal, warningType, twoWide, twoHigh, dispatch, change, prices } = props;
+
+  
 
   const toggleAction = () => {
     const { value, tag, i, index } = warningType;
@@ -34,6 +36,9 @@ const WarningModal = (props) => {
 
   const toggleCancel = () => {
     const { value, tag, i, index } = warningType;
+    const basePrice = prices[i][index];
+    const add = basePrice * 0.2;
+
     switch(tag) {
       case 'height':
         // code block
@@ -43,7 +48,7 @@ const WarningModal = (props) => {
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
               'NO GUARANTEE'
-            ),
+            )
           );
         }
         toggle();
@@ -55,7 +60,7 @@ const WarningModal = (props) => {
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
               'NO GUARANTEE'
-            ),
+            )
           );
         }
         toggle();

@@ -14,7 +14,8 @@ import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
-  subTotalSelector
+  subTotalSelector,
+  addPriceSelector
 } from '../../../../selectors/doorPricing';
 
 
@@ -107,7 +108,7 @@ class MT_Door extends Component {
       edges,
       panels,
       applied_moulds,
-      finishes,
+      addPrice,
       isValid,
       index,
       part_list,
@@ -232,6 +233,7 @@ class MT_Door extends Component {
             isValid={isValid}
             part={part}
             edit={edit}
+            addPrice={addPrice}
           // updateSubmit={updateSubmit}
           />
         </div>
@@ -255,6 +257,7 @@ const mapStateToProps = state => ({
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
+  addPrice: addPriceSelector(state),
 });
 
 
