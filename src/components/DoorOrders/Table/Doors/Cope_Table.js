@@ -18,12 +18,10 @@ import {
   renderNumber,
   renderFieldDisabled,
   renderCheckboxToggle,
-  renderPrice,
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
-import { createNumberMask } from 'redux-form-input-masks';
 import WarningModal from '../Warnings/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
@@ -32,11 +30,6 @@ const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
-
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 const Cope_Table = ({
   fields,
@@ -78,11 +71,12 @@ const Cope_Table = ({
     }
 
 
-    if (parseFloat(v) < 6 && (part.panel && !part.panel.Flat)) {
+    if (numQty(v) < 6 && (part.panel && !part.panel.Flat)) {
       setWarningType({
         value: v,
         index: index,
         i: i,
+        part: part,
         tag: 'width',
         sub_tag: 'width_less_than',
         title: 'Width less Than 6 Inches',
@@ -104,11 +98,12 @@ const Cope_Table = ({
       toggle();
     }
 
-    if (parseFloat(v) > 24) {
+    if (numQty(v) > 24) {
       setWarningType({
         value: v,
         index: index,
         i: i,
+        part: part,
         tag: 'width',
         sub_tag: 'width_greater_than',
         title: 'Width Greater Than 24 Inches',
@@ -124,6 +119,7 @@ const Cope_Table = ({
 
   const h = (e, v, index) => {
     e.preventDefault();
+    const part = formState.part_list[i];
     let newHeight = [...height];
     if (height[index]) {
       newHeight.splice(index, 1, v);
@@ -131,11 +127,12 @@ const Cope_Table = ({
       newHeight = [...newHeight, v];
     }
 
-    if (parseFloat(v) > 48) {
+    if (numQty(v) > 48) {
       setWarningType({
         value: v,
         index: index,
         i: i,
+        part: part,
         tag: 'height',
         sub_tag: 'height_greater_than',
         title: 'Height Greater Than 48 Inches',
@@ -154,15 +151,49 @@ const Cope_Table = ({
 
     if(e){
       value = e.target.value;
+      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsW) > 1) && (parseInt(e.target.value) > 1) ){
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            ''
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            'OVERSIZE - NO GUARANTEE'
+          )
+        );
+      }
     } else {
       value = v;
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].panelsH`,
-          v
-        )
-      );
+      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsW) > 1) && (parseInt(v) > 1) ){
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            ''
+          )
+        );
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].panelsH`,
+            v
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].panelsH`,
+            v
+          )
+        );
+      }
     }
 
     if (value > 1) {
@@ -189,15 +220,49 @@ const Cope_Table = ({
     let value;
     if(e){
       value = e.target.value;
+      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(e.target.value) > 1) ){
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            ''
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            'OVERSIZE - NO GUARANTEE'
+          )
+        );
+      }
     } else {
       value = v;
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].panelsW`,
-          v
-        )
-      );
+      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(v) > 1) ){
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            ''
+          )
+        );
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].panelsW`,
+            v
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].panelsW`,
+            v
+          )
+        );
+      }
     }
     
 
