@@ -265,9 +265,7 @@ const Cope_Table = ({
       );
     }
   };
-
-  console.log(addPrice);
-
+  
   return (
     <div>
       {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} twoHigh={twoHigh} twoWide={twoWide} dispatch={dispatch} change={change} prices={prices} /> : null}
