@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import { createNumberMask } from 'redux-form-input-masks';
 
+
 const required = value => (value ? undefined : 'Required');
 
 const fraction = num => {

@@ -8,13 +8,14 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../RenderInputs/renderInputs';
+import { renderDropdownListFilter, renderField } from '../../../../RenderInputs/renderInputs';
 import Miter_Table from '../../../Table/Doors/Miter_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
-  subTotalSelector
+  subTotalSelector,
+  addPriceSelector
 } from '../../../../../selectors/doorPricing';
 
 
@@ -108,7 +109,7 @@ class MiterDoor extends Component {
       miter_designs,
       panels,
       applied_moulds,
-      finishes,
+      addPrice,
       isValid,
       index,
       part_list,
@@ -214,6 +215,7 @@ class MiterDoor extends Component {
             isValid={isValid}
             part={part}
             edit={edit}
+            addPrice={addPrice}
           // updateSubmit={updateSubmit}
           />
         </div>
@@ -235,6 +237,7 @@ const mapStateToProps = state => ({
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
+  addPrice: addPriceSelector(state),
 });
 
 

@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../RenderInputs/renderInputs';
+import { renderDropdownListFilter, renderField } from '../../../RenderInputs/renderInputs';
 import Cope_Table from '../../Table/Doors/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
@@ -16,6 +16,7 @@ import {
   itemPriceSelector,
   subTotalSelector,
   totalSelector,
+  addPriceSelector
 } from '../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
@@ -111,14 +112,14 @@ class CopeDoor extends Component {
       profiles,
       panels,
       applied_moulds,
-      finishes,
       isValid,
       index,
       part_list,
       formState,
       edit,
       prices,
-      subTotal
+      subTotal,
+      addPrice
     } = this.props;
 
     return (
@@ -250,6 +251,7 @@ class CopeDoor extends Component {
             isValid={isValid}
             part={part}
             edit={edit}
+            addPrice={addPrice}
           // updateSubmit={updateSubmit}
           />
         </div>
@@ -272,7 +274,7 @@ const mapStateToProps = (state, props) => ({
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
-  
+  addPrice: addPriceSelector(state),
 
 });
 

@@ -9,7 +9,7 @@ import {
   Label
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from 'redux-form';
+import { Field, change, untouch } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -18,6 +18,7 @@ import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import { createNumberMask } from 'redux-form-input-masks';
+import WarningModal from '../Warnings/Modal';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -31,7 +32,7 @@ const currencyMask = createNumberMask({
   locale: 'en-US',
 });
 
-const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
+const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch, addPrice }) => {
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -41,7 +42,9 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
   const [topRailWidth, setTopRailWidth] = useState(null);
   const [bottomRailWidth, setBottomRailWidth] = useState(null);
 
-
+  const [modal, setModal] = useState(false);
+  const [warningType, setWarningType] = useState(null);
+  const toggle = () => setModal(!modal);
 
 
   useEffect(() => {
@@ -52,31 +55,103 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
 
   }, [updateSubmit]);
 
-  const w = (e, v, i) => {
+  const w = (e, v, index) => {
     e.preventDefault();
+    const part = formState.part_list[i];
     let newWidth = [...width];
-    if (width[i]) {
-      newWidth.splice(i, 1, v);
+    if (width[index]) {
+      newWidth.splice(index, 1, v);
     } else {
       newWidth = [...newWidth, v];
     }
+
+
+    if (parseFloat(v) < 6 && (part.panel && !part.panel.Flat)) {
+      setWarningType({
+        value: v,
+        index: index,
+        i: i,
+        tag: 'width',
+        sub_tag: 'width_less_than',
+        title: 'Width less Than 6 Inches',
+        message: 'Your Width is less than 6 inches. Please Select a Greater Width',
+        action: 'Close',
+        deny: 'Close'
+      });
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].width`,
+          ''
+        ),
+        untouch(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].width`,
+        )
+      );
+      toggle();
+    }
+
+    if (parseFloat(v) > 24) {
+      setWarningType({
+        value: v,
+        index: index,
+        i: i,
+        tag: 'width',
+        sub_tag: 'width_greater_than',
+        title: 'Width Greater Than 24 Inches',
+        message: 'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
+        action: 'Add Panel',
+        deny: 'No Thanks'
+      });
+      toggle();
+    }
+
     setWidth(newWidth);
   };
 
-  const h = (e, v, i) => {
+  const h = (e, v, index) => {
     e.preventDefault();
     let newHeight = [...height];
-    if (height[i]) {
-      newHeight.splice(i, 1, v);
+    if (height[index]) {
+      newHeight.splice(index, 1, v);
     } else {
       newHeight = [...newHeight, v];
+    }
+
+    if (parseFloat(v) > 48) {
+      setWarningType({
+        value: v,
+        index: index,
+        i: i,
+        tag: 'height',
+        sub_tag: 'height_greater_than',
+        title: 'Height Greater Than 48 Inches',
+        message: 'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
+        action: 'Add Panel',
+        deny: 'No Thanks'
+      });
+      toggle();
     }
     setHeight(newHeight);
   };
 
-  const twoHigh = (index, e) => {
+  const twoHigh = (index, e, v) => {
+    let value;
     const part = formState.part_list[i];
-    const value = e.target.value;
+
+    if(e){
+      value = e.target.value;
+    } else {
+      value = v;
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].panelsH`,
+          v
+        )
+      );
+    }
 
     if (value > 1) {
       dispatch(
@@ -84,7 +159,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
           fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
-        ),
+        )
       );
     } else {
       dispatch(
@@ -92,15 +167,27 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
           0
-        ),
+        )
       );
     }
-
   };
 
-  const twoWide = (index, e) => {
+  const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
-    const value = e.target.value;
+    let value;
+    if(e){
+      value = e.target.value;
+    } else {
+      value = v;
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].panelsW`,
+          v
+        )
+      );
+    }
+    
 
     if (value > 1) {
       dispatch(
@@ -119,7 +206,6 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
         )
       );
     }
-
   };
 
   const registerChange = (index, e) => {
@@ -174,6 +260,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
   return (
     formState ?
       <div>
+        {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} twoHigh={twoHigh} twoWide={twoWide} dispatch={dispatch} change={change} prices={prices} /> : null}
         <Fragment>
           {fields.map((table, index) => (
             <Fragment key={index}>
@@ -464,14 +551,20 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                 <Col xs='5' />
                 <Col xs='3'>
                   <strong>Extra Design Cost</strong>
-                  <Field
-                    name={`${table}.extraCost`}
-                    type="text"
-                    component={renderPrice}
-                    edit={edit}
-                    label="extraCost"
-                    {...currencyMask}
-                  />
+                  {addPrice[i] ? 
+                    <Input
+                      type="text"
+                      className="form-control"
+                      disabled={true}
+                      placeholder={'$' + addPrice[i][index].toFixed(2) || 0}
+                    /> : 
+                    <Input
+                      type="text"
+                      className="form-control"
+                      disabled={true}
+                      placeholder={'$0.00'}
+                    />
+                  } 
                 </Col>
 
               </Row>

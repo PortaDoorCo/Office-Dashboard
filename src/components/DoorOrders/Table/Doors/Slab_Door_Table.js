@@ -9,7 +9,7 @@ import {
   Label
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from 'redux-form';
+import { Field, change, untouch } from 'redux-form';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
@@ -17,6 +17,7 @@ import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
 import { createNumberMask } from 'redux-form-input-masks';
+import WarningModal from '../Warnings/Modal';
 
 const required = value => (value ? undefined : 'Required');
 

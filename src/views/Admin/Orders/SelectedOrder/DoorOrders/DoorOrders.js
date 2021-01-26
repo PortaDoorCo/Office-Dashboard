@@ -41,7 +41,6 @@ import {
   subTotalSelector,
   taxSelector,
   totalSelector,
-  addPriceSelector,
   miscTotalSelector,
   balanceSelector,
   balanceTotalSelector
@@ -311,7 +310,6 @@ const mapStateToProps = (state, props) => {
     subTotal: subTotalSelector(state),
     total: totalSelector(state),
     tax: taxSelector(state),
-    addPriceSelector: addPriceSelector(state),
     miscTotalSelector: miscTotalSelector(state),
     balance: balanceSelector(state),
     balanceTotal: balanceTotalSelector(state)

@@ -49,8 +49,6 @@ const SalesReport = (props) => {
   const salesPerson = props.sale ? props.salesReps.filter(item => {
     return item.id.includes(props.sale);
   }) : [];
-
-  console.log({salesPerson});
   
   return (
     role && (role.type === 'authenticated' || role.type === 'owner') ? 
