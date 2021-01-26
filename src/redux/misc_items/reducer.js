@@ -72,8 +72,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         misc_items: state.misc_items.map((i) => {
-          console.log({i});
-          console.log({data});
           return i.id === data.id ? data : i;
         }
 

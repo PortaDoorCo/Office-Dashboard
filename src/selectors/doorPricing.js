@@ -268,9 +268,6 @@ export const itemPriceSelector = createSelector(
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
 
-
-            console.log('extra', i.extraCost);
-
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
@@ -625,7 +622,6 @@ export const itemPriceSelector = createSelector(
               part.orderType.value === 'DF' ||
               part.orderType.value === 'Glass_DF'
             ) {
-              console.log('hereeee');
               price =
                 eval(pricer.df_pricing) +
                 leftStileAdd +

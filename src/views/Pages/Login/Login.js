@@ -58,7 +58,6 @@ class Login extends Component {
         password: password
       })
       .then(response => {
-        console.log('pro browser==>>>', process.browser);
         if (!process.browser) {
           return;
         }
@@ -69,7 +68,6 @@ class Login extends Component {
         });
       })
       .catch((error) => {
-        console.log('Problem submitting New Post', error);
         NotificationManager.error('Login Credentials Incorrect', 'Error', 2000);
       });
   };
