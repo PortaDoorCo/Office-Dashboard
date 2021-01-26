@@ -181,8 +181,11 @@ class DoorOrders extends Component {
       address,
       total,
       dispatch,
-      tax
+      tax,
+      addPriceSelector
     } = this.props;
+
+    console.log({addPriceSelector});
 
 
     return (
@@ -217,6 +220,7 @@ class DoorOrders extends Component {
                       // prices={prices}
                       formState={formState}
                       // subTotal={subTotal}
+                      addPriceSelector={addPriceSelector}
                       dispatch={dispatch}
                       isValid={isValid}
                       updateSubmit={this.state.submit}

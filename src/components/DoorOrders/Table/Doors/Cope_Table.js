@@ -46,7 +46,8 @@ const Cope_Table = ({
   subTotal,
   updateSubmit,
   edit,
-  dispatch
+  dispatch,
+  addPrice
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -103,15 +104,15 @@ const Cope_Table = ({
       toggle();
     }
 
-    if (parseFloat(v) > 48) {
+    if (parseFloat(v) > 24) {
       setWarningType({
         value: v,
         index: index,
         i: i,
         tag: 'width',
         sub_tag: 'width_greater_than',
-        title: 'Width Greater Than 48 Inches',
-        message: 'Your Width is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 48 inches',
+        title: 'Width Greater Than 24 Inches',
+        message: 'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
         action: 'Add Panel',
         deny: 'No Thanks'
       });
@@ -265,9 +266,11 @@ const Cope_Table = ({
     }
   };
 
+  console.log(addPrice);
+
   return (
     <div>
-      {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} twoHigh={twoHigh} twoWide={twoWide} dispatch={dispatch} change={change} /> : null}
+      {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} twoHigh={twoHigh} twoWide={twoWide} dispatch={dispatch} change={change} prices={prices} /> : null}
       {fields.map((table, index) => (
         <Fragment key={index}>
           <hr />
@@ -604,14 +607,20 @@ const Cope_Table = ({
             <Col xs="5" />
             <Col xs="3">
               <strong>Extra Design Cost</strong>
-              <Field
-                name={`${table}.extraCost`}
-                type="text"
-                component={renderPrice}
-                edit={edit}
-                label="extraCost"
-                {...currencyMask}
-              />
+              {addPrice[i] ? 
+                <Input
+                  type="text"
+                  className="form-control"
+                  disabled={true}
+                  placeholder={'$' + addPrice[i][index].toFixed(2) || 0}
+                /> : 
+                <Input
+                  type="text"
+                  className="form-control"
+                  disabled={true}
+                  placeholder={'$0.00'}
+                />
+              } 
             </Col>
           </Row>
           <br />

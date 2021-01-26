@@ -1,28 +1,27 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import {
-  Table,
-  Input,
-  Row,
-  Col,
-  Button,
-  FormGroup,
-  Label
-} from 'reactstrap';
+import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change, untouch } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, renderPrice, renderDropdownListFilter } from '../../../../RenderInputs/renderInputs';
+import {
+  renderField,
+  renderNumber,
+  renderFieldDisabled,
+  renderCheckboxToggle,
+  renderPrice,
+  renderDropdownListFilter,
+} from '../../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import { createNumberMask } from 'redux-form-input-masks';
 import WarningModal from '../../Warnings/Modal';
 
-const required = value => (value ? undefined : 'Required');
+const required = (value) => (value ? undefined : 'Required');
 
-const fraction = num => {
+const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
@@ -32,10 +31,20 @@ const currencyMask = createNumberMask({
   locale: 'en-US',
 });
 
-
-const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch, lites }) => {
-
-
+const Cope_Table = ({
+  fields,
+  formState,
+  i,
+  prices,
+  subTotal,
+  part,
+  updateSubmit,
+  doorOptions,
+  edit,
+  dispatch,
+  lites,
+  addPrice
+}) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
   const [changeValue, setChangeValue] = useState(null);
@@ -48,12 +57,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   const [warningType, setWarningType] = useState(null);
   const toggle = () => setModal(!modal);
 
-
   useEffect(() => {
     let init = [];
     setWidth(init);
     setHeight(init);
-
   }, [updateSubmit]);
 
   const w = (e, v, index) => {
@@ -66,8 +73,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
       newWidth = [...newWidth, v];
     }
 
-
-    if (parseFloat(v) < 6 && (part.panel && !part.panel.Flat)) {
+    if (parseFloat(v) < 6 && part.panel && !part.panel.Flat) {
       setWarningType({
         value: v,
         index: index,
@@ -75,25 +81,19 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         tag: 'width',
         sub_tag: 'width_less_than',
         title: 'Width less Than 6 Inches',
-        message: 'Your Width is less than 6 inches. Please Select a Greater Width',
+        message:
+          'Your Width is less than 6 inches. Please Select a Greater Width',
         action: 'Close',
-        deny: 'Close'
+        deny: 'Close',
       });
       dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].width`,
-          ''
-        ),
-        untouch(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].width`,
-        )
+        change('DoorOrder', `part_list[${i}].dimensions[${index}].width`, ''),
+        untouch('DoorOrder', `part_list[${i}].dimensions[${index}].width`)
       );
       toggle();
     }
 
-    if (parseFloat(v) > 48) {
+    if (parseFloat(v) > 24) {
       setWarningType({
         value: v,
         index: index,
@@ -101,9 +101,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         tag: 'width',
         sub_tag: 'width_greater_than',
         title: 'Width Greater Than 48 Inches',
-        message: 'Your Width is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 48 inches',
+        message:
+          'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
         action: 'Add Panel',
-        deny: 'No Thanks'
+        deny: 'No Thanks',
       });
       toggle();
     }
@@ -128,9 +129,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
         tag: 'height',
         sub_tag: 'height_greater_than',
         title: 'Height Greater Than 48 Inches',
-        message: 'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
+        message:
+          'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
         action: 'Add Panel',
-        deny: 'No Thanks'
+        deny: 'No Thanks',
       });
       toggle();
     }
@@ -141,16 +143,12 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
     let value;
     const part = formState.part_list[i];
 
-    if(e){
+    if (e) {
       value = e.target.value;
     } else {
       value = v;
       dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].panelsH`,
-          v
-        )
+        change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
       );
     }
 
@@ -176,19 +174,14 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
     let value;
-    if(e){
+    if (e) {
       value = e.target.value;
     } else {
       value = v;
       dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].panelsW`,
-          v
-        )
+        change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
       );
     }
-    
 
     if (value > 1) {
       dispatch(
@@ -216,7 +209,6 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
 
   const changeFraming = (index, e) => {
     if (changeValue) {
-
       setLeftStileWidth(fraction(numQty(changeValue)));
       setRightStileWidth(fraction(numQty(changeValue)));
       setTopRailWidth(fraction(numQty(changeValue)));
@@ -227,7 +219,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].leftStile`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
 
       dispatch(
@@ -235,7 +227,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].rightStile`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
 
       dispatch(
@@ -243,7 +235,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].topRail`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
 
       dispatch(
@@ -251,23 +243,34 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].bottomRail`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
     }
   };
 
   return (
-
     <div>
-      {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} twoHigh={twoHigh} twoWide={twoWide} dispatch={dispatch} change={change} /> : null}
+      {modal ? (
+        <WarningModal
+          toggle={toggle}
+          modal={modal}
+          warningType={warningType}
+          twoHigh={twoHigh}
+          twoWide={twoWide}
+          dispatch={dispatch}
+          change={change}
+          prices={prices}
+        />
+      ) : null}
       {fields.map((table, index) => (
-
         <Fragment key={index}>
           <hr />
           <Row>
             <Col>
               <FormGroup>
-                <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
+                <Label htmlFor="panel">
+                  <strong>Line # {index + 1}</strong>
+                </Label>
                 <Field
                   name={`${table}.item`}
                   type="text"
@@ -277,7 +280,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 />
               </FormGroup>
             </Col>
-            <Col xs='10' />
+            <Col xs="10" />
           </Row>
           <Table>
             <thead>
@@ -308,7 +311,13 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     name={`${table}.width`}
                     type="text"
                     component={renderNumber}
-                    onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
+                    onBlur={(e) =>
+                      w(
+                        e,
+                        formState.part_list[i].dimensions[index].width,
+                        index
+                      )
+                    }
                     label="width"
                     validate={required}
                     edit={edit}
@@ -320,7 +329,13 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     name={`${table}.height`}
                     type="text"
                     component={renderNumber}
-                    onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
+                    onBlur={(e) =>
+                      h(
+                        e,
+                        formState.part_list[i].dimensions[index].height,
+                        index
+                      )
+                    }
                     label="height"
                     validate={required}
                     edit={edit}
@@ -348,30 +363,34 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                   />
                 </td>
                 <td>
-                  {prices[i] ?
+                  {prices[i] ? (
                     <Input
                       type="text"
                       className="form-control"
                       disabled={edit}
                       placeholder={'$' + prices[i][index].toFixed(2) || 0}
-                    /> :
+                    />
+                  ) : (
                     <Input
                       type="text"
                       className="form-control"
                       disabled={edit}
                       placeholder={'$0.00'}
                     />
-                  }
+                  )}
                 </td>
                 <td>
-                  {!edit ?
-                    <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
+                  {!edit ? (
+                    <Button
+                      color="danger"
+                      className="btn-circle"
+                      onClick={() => fields.remove(index)}
+                    >
                       X
                     </Button>
-                    :
+                  ) : (
                     <div />
-                  }
-
+                  )}
                 </td>
               </tr>
 
@@ -387,7 +406,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     label="leftStile"
                     edit={edit}
                     validate={required}
-                    onChange={(e) => (registerChange(index, e), setLeftStileWidth(e.target.value))}
+                    onChange={(e) => (
+                      registerChange(index, e),
+                      setLeftStileWidth(e.target.value)
+                    )}
                   />
                 </td>
                 <td>
@@ -401,7 +423,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     label="rightStile"
                     edit={edit}
                     validate={required}
-                    onChange={(e) => (registerChange(index, e), setRightStileWidth(e.target.value))}
+                    onChange={(e) => (
+                      registerChange(index, e),
+                      setRightStileWidth(e.target.value)
+                    )}
                   />
                 </td>
                 <td>
@@ -415,7 +440,9 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     label="topRail"
                     edit={edit}
                     validate={required}
-                    onChange={(e) => (registerChange(index, e), setTopRailWidth(e.target.value))}
+                    onChange={(e) => (
+                      registerChange(index, e), setTopRailWidth(e.target.value)
+                    )}
                   />
                 </td>
                 <td>
@@ -429,7 +456,10 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     label="bottomRail"
                     edit={edit}
                     validate={required}
-                    onChange={(e) => (registerChange(index, e), setBottomRailWidth(e.target.value))}
+                    onChange={(e) => (
+                      registerChange(index, e),
+                      setBottomRailWidth(e.target.value)
+                    )}
                   />
                 </td>
                 <td>
@@ -458,51 +488,59 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 </td>
               </tr>
 
-              {!edit ?
+              {!edit ? (
                 <tr>
                   <td>
-                    <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
+                    <Button
+                      onClick={() => changeFraming(index)}
+                      color="primary"
+                    >
+                      Update Framing
+                    </Button>
                   </td>
-                </tr> : null
-              }
-
+                </tr>
+              ) : null}
 
               <Row>
                 <Col>
                   <p className="ml-3">*Finish Stile/Rail Sizes*</p>
                 </Col>
-
               </Row>
               <tr />
             </tbody>
-
           </Table>
 
-
-
-
-
           <Row>
-            <Col lg='9'>
-        
-              <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
-
+            <Col lg="9">
+              <Field
+                name={`${table}.showBuilder`}
+                component={renderCheckboxToggle}
+                label="Show Builder"
+              />
             </Col>
             <Col>
-              {!edit ?
-                (parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null
-                :
-                null
-              }
-
+              {!edit ? (
+                parseInt(formState.part_list[i].dimensions[index].panelsH) >
+                  1 &&
+                parseInt(formState.part_list[i].dimensions[index].panelsW) ===
+                  1 ? (
+                    <Field
+                      name={`${table}.unevenCheck`}
+                      component={renderCheckboxToggle}
+                      label="Uneven Split"
+                    />
+                  ) : null
+              ) : null}
             </Col>
           </Row>
 
           <Row>
             <Col>
-
-              {(formState.part_list[i].dimensions[index].showBuilder) ?
-                <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
+              {formState.part_list[i].dimensions[index].showBuilder ? (
+                <div
+                  id={`makerJS${index}`}
+                  style={{ width: '100%', height: '300px' }}
+                >
                   <Maker
                     width={width[index]}
                     height={height[index]}
@@ -510,36 +548,43 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                     index={index}
                     style={{ width: '100%', height: '300px' }}
                   />
-                </div> : <div />
-              }
-
-
+                </div>
+              ) : (
+                <div />
+              )}
             </Col>
           </Row>
 
-          {formState.part_list[i].dimensions[index].unevenCheck ?
-            <div className='mb-3'>
+          {formState.part_list[i].dimensions[index].unevenCheck ? (
+            <div className="mb-3">
               <Row>
-                {Array.from(Array(parseInt(formState.part_list[i].dimensions[index].panelsH)).keys()).slice(1).map((i, index) => {
-                  return (
-                    <div>
-                      <Col />
-                      <Col>
-                        <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
-                        <Field
-                          name={`${table}.unevenSplitInput${index}`}
-                          component={renderField}
-                          edit={edit}
-                        />
-                      </Col>
-                      <Col />
-                    </div>
-                  );
-                })}
+                {Array.from(
+                  Array(
+                    parseInt(formState.part_list[i].dimensions[index].panelsH)
+                  ).keys()
+                )
+                  .slice(1)
+                  .map((i, index) => {
+                    return (
+                      <div>
+                        <Col />
+                        <Col>
+                          <p style={{ textAlign: 'center', marginTop: '10px' }}>
+                            <strong>Panel Opening {index + 1}</strong>
+                          </p>
+                          <Field
+                            name={`${table}.unevenSplitInput${index}`}
+                            component={renderField}
+                            edit={edit}
+                          />
+                        </Col>
+                        <Col />
+                      </div>
+                    );
+                  })}
               </Row>
             </div>
-            : null
-          }
+          ) : null}
 
           <Row>
             <Col xs="4">
@@ -552,7 +597,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 label="notes"
               />
             </Col>
-            <Col xs='5'>
+            <Col xs="5">
               <FormGroup>
                 <strong>Lites</strong>
                 <Field
@@ -566,63 +611,76 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 />
               </FormGroup>
             </Col>
-            <Col xs='3'>
+            <Col xs="3">
               <strong>Extra Design Cost</strong>
-              <Field
-                name={`${table}.extraCost`}
-                type="text"
-                component={renderPrice}
-                edit={edit}
-                label="extraCost"
-                {...currencyMask}
-              />
+              {addPrice[i] ? 
+                <Input
+                  type="text"
+                  className="form-control"
+                  disabled={true}
+                  placeholder={'$' + addPrice[i][index].toFixed(2) || 0}
+                /> : 
+                <Input
+                  type="text"
+                  className="form-control"
+                  disabled={true}
+                  placeholder={'$0.00'}
+                />
+              } 
             </Col>
-
           </Row>
           <br />
         </Fragment>
       ))}
       <Row>
         <Col>
-          {!edit ?
+          {!edit ? (
             <Button
               color="primary"
               className="btn-circle"
               onClick={(e) =>
-                (
-                  (formState.part_list[i].construction.value === 'Cope' && formState.part_list[i].profile) ?
-                    fields.push({
-                      qty:1,
-                      panelsH: 1,
-                      panelsW: 1,
-                      leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
+                formState.part_list[i].construction.value === 'Cope' &&
+                formState.part_list[i].profile
+                  ? fields.push({
+                    qty: 1,
+                    panelsH: 1,
+                    panelsW: 1,
+                    leftStile: leftStileWidth
+                      ? fraction(numQty(leftStileWidth))
+                      : fraction(
                         formState.part_list[i].profile.MINIMUM_STILE_WIDTH
                       ),
-                      rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
+                    rightStile: rightStileWidth
+                      ? fraction(numQty(rightStileWidth))
+                      : fraction(
                         formState.part_list[i].profile.MINIMUM_STILE_WIDTH
                       ),
-                      topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
+                    topRail: topRailWidth
+                      ? fraction(numQty(topRailWidth))
+                      : fraction(
                         formState.part_list[i].profile.MINIMUM_STILE_WIDTH
                       ),
-                      bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
+                    bottomRail: bottomRailWidth
+                      ? fraction(numQty(bottomRailWidth))
+                      : fraction(
                         formState.part_list[i].profile.MINIMUM_STILE_WIDTH
                       ),
-                      horizontalMidRailSize: 0,
-                      verticalMidRailSize: 0,
-                      unevenSplitInput: '0',
-                      showBuilder: false,
-                      item: fields.length + 1,
-                      unevenCheck: false,
-                      unevenSplit: false,
-                    })
-                    : alert('please select a profile')
-                )}
+                    horizontalMidRailSize: 0,
+                    verticalMidRailSize: 0,
+                    unevenSplitInput: '0',
+                    showBuilder: false,
+                    item: fields.length + 1,
+                    unevenCheck: false,
+                    unevenSplit: false,
+                  })
+                  : alert('please select a profile')
+              }
             >
               +
-            </Button> :
+            </Button>
+          ) : (
             <div />
-          }
-
+          )}
         </Col>
       </Row>
 
@@ -638,17 +696,12 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
           )}
         </Col>
       </Row>
-
     </div>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
 });
 
-
-export default connect(
-  mapStateToProps,
-  null
-)(Cope_Table);
+export default connect(mapStateToProps, null)(Cope_Table);

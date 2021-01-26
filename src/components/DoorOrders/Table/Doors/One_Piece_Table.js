@@ -91,15 +91,15 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
       toggle();
     }
 
-    if (parseFloat(v) > 48) {
+    if (parseFloat(v) > 24) {
       setWarningType({
         value: v,
         index: index,
         i: i,
         tag: 'width',
         sub_tag: 'width_greater_than',
-        title: 'Width Greater Than 48 Inches',
-        message: 'Your Width is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 48 inches',
+        title: 'Width Greater Than 24 Inches',
+        message: 'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
         action: 'Add Panel',
         deny: 'No Thanks'
       });
