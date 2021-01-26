@@ -111,8 +111,6 @@ class JobInfo extends Component {
     const { customers, edit, shippingMethods, formState } = this.props;
     const dateDifference = moment(new Date()).businessDiff(moment(formState && formState.job_info && formState.job_info.DueDate));
 
-    console.log({formState});
-
     return (
 
       <div>

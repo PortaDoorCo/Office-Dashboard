@@ -15,6 +15,7 @@ import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
+  addPriceSelector
 } from '../../../../../selectors/doorPricing';
 
 const required = value => (value ? undefined : 'Required');
@@ -111,7 +112,7 @@ class CopeDoor extends Component {
       edges,
       profiles,
       applied_moulds,
-      finishes,
+      addPrice,
       isValid,
       index,
       part_list,
@@ -234,6 +235,7 @@ class CopeDoor extends Component {
             isValid={isValid}
             part={part}
             edit={edit}
+            addPrice={addPrice}
           />
         </div>
       </div>
@@ -255,6 +257,7 @@ const mapStateToProps = state => ({
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
+  addPrice: addPriceSelector(state),
 });
 
 

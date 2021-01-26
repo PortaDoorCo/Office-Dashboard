@@ -268,9 +268,6 @@ export const itemPriceSelector = createSelector(
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
 
-
-            console.log('extra', i.extraCost);
-
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
@@ -625,7 +622,6 @@ export const itemPriceSelector = createSelector(
               part.orderType.value === 'DF' ||
               part.orderType.value === 'Glass_DF'
             ) {
-              console.log('hereeee');
               price =
                 eval(pricer.df_pricing) +
                 leftStileAdd +
@@ -648,21 +644,19 @@ export const itemPriceSelector = createSelector(
               price = ((width * height) / 144) > 1 ? ((((width * height) / 144) * wood) + (6.50 + edge)) + extraCost : (((1) * wood) + (6.50 + edge)) + extraCost ;
             }
             else {
-              console.log('youre here instead');
-              price =
-                eval(pricer.door_pricing) +
+              price =  eval(pricer.door_pricing) +
                 leftStileAdd +
                 rightStileAdd +
                 topRailAdd +
                 bottomRailAdd +
                 extraCost
-                  ? eval(pricer.door_pricing) +
+                ? eval(pricer.door_pricing) +
                     leftStileAdd +
                     rightStileAdd +
                     topRailAdd +
                     bottomRailAdd +
                     extraCost
-                  : 0;
+                : 0;
             }
 
             
@@ -691,7 +685,14 @@ export const linePriceSelector = createSelector(
 
           if (item[index][p]) {
             if (i.qty) {
-              return item[index][p] * parseInt(i.qty);
+              if((parseInt(i.panelsH) === 1 && (numQty(i.height) > 48)) || (parseInt(i.panelsW) === 1 && (numQty(i.width) > 24))){
+                const base = item[index][p] * parseInt(i.qty);
+                const add = base * 0.2;
+                const price = base + add;
+                return price;
+              } else {
+                return item[index][p] * parseInt(i.qty);
+              }
             } else {
               return 0;
             }
@@ -705,23 +706,42 @@ export const linePriceSelector = createSelector(
     })
 );
 
-export const addPriceSelector = createSelector([partListSelector], (parts) =>
-  parts.map((part, index) => {
-    if (part.addPrice) {
-      return parseFloat(part.addPrice);
-    } else {
-      return 0;
-    }
-  })
+export const addPriceSelector = createSelector(
+  [partListSelector, pricingSelector, itemPriceSelector],
+  (parts, pricer, item) =>
+    parts.map((part, index) => {
+      if (part.dimensions) {
+        return part.dimensions.map((i, p) => {
+          if (item[index][p]) {
+            if (i.qty) {
+              if((parseInt(i.panelsH) === 1 && (numQty(i.height) > 48)) || (parseInt(i.panelsW) === 1 && (numQty(i.width) > 24))){
+                const base = item[index][p] * parseInt(i.qty);
+                const add = base * 0.2;
+                return add;
+              } else {
+                return 0;
+              }
+            } else {
+              return 0;
+            }
+          } else {
+            return 0;
+          }
+        });
+      } else {
+        return 0;
+      }
+    })
 );
 
+
 export const subTotalSelector = createSelector(
-  [linePriceSelector, addPriceSelector, miscTotalSelector],
-  (prices, add, misc) =>
+  [linePriceSelector, miscTotalSelector],
+  (prices, misc) =>
     prices.map((i, index) => {
       if (i) {
         let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
-        let sum = (price += add[index]);
+        let sum = price;
         return sum;
       } else {
         return 0;
