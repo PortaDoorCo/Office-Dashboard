@@ -73,11 +73,12 @@ const MT_Table = ({
       newWidth = [...newWidth, v];
     }
 
-    if (parseFloat(v) < 6 && part.panel && !part.panel.Flat) {
+    if (numQty(v) < 6 && part.panel && !part.panel.Flat) {
       setWarningType({
         value: v,
         index: index,
         i: i,
+        part: part,
         tag: 'width',
         sub_tag: 'width_less_than',
         title: 'Width less Than 6 Inches',
@@ -93,11 +94,12 @@ const MT_Table = ({
       toggle();
     }
 
-    if (parseFloat(v) > 24) {
+    if (numQty(v) > 24) {
       setWarningType({
         value: v,
         index: index,
         i: i,
+        part: part,
         tag: 'width',
         sub_tag: 'width_greater_than',
         title: 'Width Greater Than 24 Inches',
@@ -114,6 +116,7 @@ const MT_Table = ({
 
   const h = (e, v, index) => {
     e.preventDefault();
+    const part = formState.part_list[i];
     let newHeight = [...height];
     if (height[index]) {
       newHeight.splice(index, 1, v);
@@ -121,11 +124,12 @@ const MT_Table = ({
       newHeight = [...newHeight, v];
     }
 
-    if (parseFloat(v) > 48) {
+    if (numQty(v) > 48) {
       setWarningType({
         value: v,
         index: index,
         i: i,
+        part: part,
         tag: 'height',
         sub_tag: 'height_greater_than',
         title: 'Height Greater Than 48 Inches',
