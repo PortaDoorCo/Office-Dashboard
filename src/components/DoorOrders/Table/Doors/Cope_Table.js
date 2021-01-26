@@ -9,7 +9,7 @@ import {
   Label,
 } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from 'redux-form';
+import { Field, change, untouch } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -46,7 +46,7 @@ const Cope_Table = ({
   subTotal,
   updateSubmit,
   edit,
-  dispatch,
+  dispatch
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -67,32 +67,48 @@ const Cope_Table = ({
     setHeight(init);
   }, [updateSubmit]);
 
-  const w = (e, v, i) => {
+  const w = (e, v, index) => {
     e.preventDefault();
+    const part = formState.part_list[i];
     let newWidth = [...width];
-    if (width[i]) {
-      newWidth.splice(i, 1, v);
+    if (width[index]) {
+      newWidth.splice(index, 1, v);
     } else {
       newWidth = [...newWidth, v];
     }
 
-    if (parseFloat(v) < 6) {
+    console.log('panelll', part.panel);
+
+    if (parseFloat(v) < 6 && (part.panel && !part.panel.Flat)) {
       setWarningType({
         value: v,
-        index: i,
+        index: index,
+        i: i,
         tag: 'width',
         title: 'Width less Than 6 Inches',
-        message: 'Your Width is less than 6 inches. We cannot guarantee your products warranty if width is less than 6 inches',
-        action: 'Increase Width',
-        deny: 'No Thanks'
+        message: 'Your Width is less than 6 inches. Please Select a Greater Width',
+        action: 'Close',
+        deny: 'Close'
       });
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].width`,
+          ''
+        ),
+        untouch(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].width`,
+        )
+      );
       toggle();
     }
 
     if (parseFloat(v) > 48) {
       setWarningType({
         value: v,
-        index: i,
+        index: index,
+        i: i,
         tag: 'width',
         title: 'Width Greater Than 48 Inches',
         message: 'Your Width is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 48 inches',
@@ -105,11 +121,11 @@ const Cope_Table = ({
     setWidth(newWidth);
   };
 
-  const h = (e, v, i) => {
+  const h = (e, v, index) => {
     e.preventDefault();
     let newHeight = [...height];
-    if (height[i]) {
-      newHeight.splice(i, 1, v);
+    if (height[index]) {
+      newHeight.splice(index, 1, v);
     } else {
       newHeight = [...newHeight, v];
     }
@@ -117,7 +133,8 @@ const Cope_Table = ({
     if (parseFloat(v) > 48) {
       setWarningType({
         value: v,
-        index: i,
+        index: index,
+        i: i,
         tag: 'height',
         title: 'Height Greater Than 48 Inches',
         message: 'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
@@ -249,7 +266,7 @@ const Cope_Table = ({
 
   return (
     <div>
-      {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} twoHigh={twoHigh} twoWide={twoWide} /> : null}
+      {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} twoHigh={twoHigh} twoWide={twoWide} dispatch={dispatch} change={change} /> : null}
       {fields.map((table, index) => (
         <Fragment key={index}>
           <hr />

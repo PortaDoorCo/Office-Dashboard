@@ -9,10 +9,10 @@ import {
 
 const WarningModal = (props) => {
 
-  const { className, toggle, modal, warningType, twoWide, twoHigh } = props;
+  const { className, toggle, modal, warningType, twoWide, twoHigh, dispatch, change, } = props;
 
   const toggleAction = () => {
-    const { value, tag, index } = warningType;
+    const { value, tag, i, index } = warningType;
     switch(tag) {
       case 'height':
         // code block
@@ -35,6 +35,40 @@ const WarningModal = (props) => {
     }
   };
 
+  const toggleCancel = () => {
+    const { value, tag, i, index } = warningType;
+    switch(tag) {
+      case 'height':
+        // code block
+        if(value > 48) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              'NO GUARANTEE'
+            ),
+          );
+        }
+        toggle();
+        break;
+      case 'width':
+        if(value > 48) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              'NO GUARANTEE'
+            ),
+          );
+        }
+        toggle();
+        break;
+      default:
+        toggle();
+        return;
+    }
+  };
+
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} className={className}>
@@ -42,10 +76,17 @@ const WarningModal = (props) => {
         <ModalBody>
           {warningType.message}
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggleAction}>{warningType.action}</Button>{' '}
-          <Button color="danger" onClick={toggle}>{warningType.deny}</Button>
-        </ModalFooter>
+        {warningType.sub_tag === 'width_less_than' ?
+          <ModalFooter>
+            <Button color="danger" onClick={toggle}>{warningType.deny}</Button>
+          </ModalFooter>
+          : 
+          <ModalFooter>
+            <Button color="primary" onClick={toggleAction}>{warningType.action}</Button>{' '}
+            <Button color="danger" onClick={toggleCancel}>{warningType.deny}</Button>
+          </ModalFooter>
+        }
+
       </Modal>
     </div>
   );
