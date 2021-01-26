@@ -58,7 +58,6 @@ const Cope_Table = ({
 
   const [modal, setModal] = useState(false);
   const [warningType, setWarningType] = useState(null);
-
   const toggle = () => setModal(!modal);
 
   useEffect(() => {
@@ -77,7 +76,6 @@ const Cope_Table = ({
       newWidth = [...newWidth, v];
     }
 
-    console.log('panelll', part.panel);
 
     if (parseFloat(v) < 6 && (part.panel && !part.panel.Flat)) {
       setWarningType({
@@ -85,6 +83,7 @@ const Cope_Table = ({
         index: index,
         i: i,
         tag: 'width',
+        sub_tag: 'width_less_than',
         title: 'Width less Than 6 Inches',
         message: 'Your Width is less than 6 inches. Please Select a Greater Width',
         action: 'Close',
@@ -110,6 +109,7 @@ const Cope_Table = ({
         index: index,
         i: i,
         tag: 'width',
+        sub_tag: 'width_greater_than',
         title: 'Width Greater Than 48 Inches',
         message: 'Your Width is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 48 inches',
         action: 'Add Panel',
@@ -136,6 +136,7 @@ const Cope_Table = ({
         index: index,
         i: i,
         tag: 'height',
+        sub_tag: 'height_greater_than',
         title: 'Height Greater Than 48 Inches',
         message: 'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
         action: 'Add Panel',

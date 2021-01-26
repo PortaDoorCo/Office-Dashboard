@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Button,
   Modal,
@@ -15,21 +15,18 @@ const WarningModal = (props) => {
     const { value, tag, i, index } = warningType;
     switch(tag) {
       case 'height':
-        // code block
         if(value > 48) {
           twoHigh(index, null, 2);
         }
         toggle();
         break;
       case 'width':
-        // code block
         if(value > 48) {
           twoWide(index, null, 2);
         }
         toggle();
         break;
       default:
-        // code block
         toggle();
         return;
     }
