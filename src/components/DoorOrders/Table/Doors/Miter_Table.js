@@ -75,17 +75,6 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
         action: 'Close',
         deny: 'Close'
       });
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].width`,
-          ''
-        ),
-        untouch(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].width`,
-        )
-      );
       toggle();
     }
 
