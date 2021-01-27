@@ -24,6 +24,7 @@ const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/Mould
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
 const cookie = Cookies.get('jwt');
+const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 class MiscItems extends Component {
 
@@ -159,6 +160,7 @@ render() {
                         component={renderField}
                         label="discount"
                         edit={edit}
+                        validate={maxValue(100)}
                       />
                     </InputGroup>
 

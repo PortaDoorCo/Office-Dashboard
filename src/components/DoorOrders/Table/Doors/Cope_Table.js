@@ -25,6 +25,8 @@ import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
+const minValue = min => value => value && numQty(value) < min ? `Must be at least ${min} Inches` : undefined;
+const minValue6 = minValue(6);
 
 const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -84,17 +86,6 @@ const Cope_Table = ({
         action: 'Close',
         deny: 'Close'
       });
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].width`,
-          ''
-        ),
-        untouch(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].width`,
-        )
-      );
       toggle();
     }
 
@@ -391,7 +382,8 @@ const Cope_Table = ({
                       )
                     }
                     label="width"
-                    validate={required}
+                    validate={[ required, minValue6 ]}
+                    warn={minValue6}
                     edit={edit}
                   />
                 </td>
