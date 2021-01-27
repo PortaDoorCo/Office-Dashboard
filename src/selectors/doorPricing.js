@@ -10,14 +10,14 @@ const discountSelector = (state) => {
   const orders = state.form.DoorOrder;
 
   if (orders) {
-    if (!state.form.DoorOrder.values && !state.form.DoorOrder.values.discount) {
-      return 0;
-    } else {
+    if (state.form.DoorOrder.values && state.form.DoorOrder.values.discount) {
       if (state.form.DoorOrder.values.discount > 0) {
         return numQty(state.form.DoorOrder.values.discount) / 100;
       } else {
         return 0;
       }
+    } else {
+      return 0;
     }
   } else {
     return 0;
@@ -28,13 +28,10 @@ const partListSelector = (state) => {
   const orders = state.form.DoorOrder;
 
   if (orders) {
-    if (
-      !state.form.DoorOrder.values &&
-      !state.form.DoorOrder.values.part_list
-    ) {
-      return [];
-    } else {
+    if (orders && orders.values && orders.values.part_list) {
       return state.form.DoorOrder.values.part_list;
+    } else {
+      return [];
     }
   } else {
     return [];
@@ -45,12 +42,12 @@ const miscItemsSelector = (state) => {
   const orders = state.form.DoorOrder;
   if (orders) {
     if (
-      !state.form.DoorOrder.values &&
-      !state.form.DoorOrder.values.misc_items.length > 0
+      state.form.DoorOrder.values &&
+      state.form.DoorOrder.values.misc_items.length > 0
     ) {
-      return [];
-    } else {
       return state.form.DoorOrder.values.misc_items;
+    } else {
+      return [];
     }
   } else {
     return [];
@@ -120,9 +117,7 @@ const taxRate = (state) => {
   const orders = state.form.DoorOrder;
 
   if (orders) {
-    if (!orders.values.job_info) {
-      return 0;
-    } else {
+    if (orders.values && orders.values.job_info) {
       if (
         state.form &&
         state.form.DoorOrder &&
@@ -133,6 +128,8 @@ const taxRate = (state) => {
       } else {
         return 0;
       }
+    } else {
+      return 0;
     }
   } else {
     return 0;
@@ -142,12 +139,12 @@ const taxRate = (state) => {
 const totalBalanceDue = (state) => {
   const orders = state.form.DoorOrder;
   if (orders) {
-    if (!orders && !orders.values && !orders.values.balance_history) {
-      return [];
-    } else {
+    if (orders && orders.values && orders.values.balance_history) {
       return state.form.DoorOrder.values.balance_history.map((i) => {
         return i.balance_paid;
       });
+    } else {
+      return [];
     }
   } else {
     return [];

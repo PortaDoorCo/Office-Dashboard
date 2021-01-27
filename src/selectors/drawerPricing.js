@@ -14,14 +14,14 @@ const discountSelector = state => {
   const orders = state.form.DrawerOrder;
 
   if (orders) {
-    if ((!state.form.DrawerOrder.values && !state.form.DrawerOrder.values.discount)) {
-      return 0;
-    } else {
+    if ((state.form.DrawerOrder.values && state.form.DrawerOrder.values.discount)) {
       if(state.form.DrawerOrder.values.discount.length > 0){
         return (numQty(state.form.DrawerOrder.values.discount) / 100);
       } else {
         return 0;
       }
+    } else {
+      return 0;
     }
   } else {
     return 0;
@@ -31,10 +31,10 @@ const discountSelector = state => {
 const partListSelector = state => {
   const orders = state.form.DrawerOrder;
   if (orders) {
-    if (!state.form.DrawerOrder && !state.form.DrawerOrder.values && !state.form.DrawerOrder.values.part_list) {
-      return [];
-    } else {
+    if (state.form.DrawerOrder && state.form.DrawerOrder.values && state.form.DrawerOrder.values.part_list) {
       return state.form.DrawerOrder.values.part_list;
+    } else {
+      return [];
     }
   } else {
     return [];
@@ -45,12 +45,12 @@ const miscItemsSelector = (state) => {
   const orders = state.form.DrawerOrder;
   if (orders) {
     if (
-      !state.form.DrawerOrder.values &&
-      !state.form.DrawerOrder.values.misc_items.length > 0
+      state.form.DrawerOrder.values &&
+      state.form.DrawerOrder.values.misc_items.length > 0
     ) {
-      return [];
-    } else {
       return state.form.DrawerOrder.values.misc_items;
+    } else {
+      return [];
     }
   } else {
     return [];
@@ -120,14 +120,14 @@ export const miscTotalSelector = createSelector(
 const taxRate = state => {
   const orders = state.form.DrawerOrder;
   if (orders) {
-    if (!orders.values.job_info) {
-      return [];
-    } else {
+    if (orders.values && orders.values.job_info) {
       if(state.form && state.form.DrawerOrder && state.form.DrawerOrder.values && state.form.DrawerOrder.values.Taxable){
         return (state.form.DrawerOrder.values.job_info.customer.TaxRate / 100);
       } else {
         return 0;
       }
+    } else {
+      return [];
     }
   } else {
     return [];
@@ -137,12 +137,12 @@ const taxRate = state => {
 const totalBalanceDue = state => {
   const orders = state.form.DrawerOrder;
   if (orders) {
-    if (!orders.values.balance_history) {
-      return [];
-    } else {
+    if (orders.values && orders.values.balance_history) {
       return state.form.DrawerOrder.values.balance_history.map(i => {
         return i.balance_paid;
       });
+    } else {
+      return [];
     }
   } else {
     return [];
