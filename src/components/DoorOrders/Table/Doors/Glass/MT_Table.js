@@ -89,10 +89,7 @@ const MT_Table = ({
         action: 'Close',
         deny: 'Close',
       });
-      dispatch(
-        change('DoorOrder', `part_list[${i}].dimensions[${index}].width`, ''),
-        untouch('DoorOrder', `part_list[${i}].dimensions[${index}].width`)
-      );
+
       toggle();
     }
 
