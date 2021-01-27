@@ -51,7 +51,7 @@ const WarningModal = (props) => {
         toggle();
         break;
       case 'width':
-        if(value > 48) {
+        if(value > 24) {
           dispatch(
             change(
               'DoorOrder',

@@ -47,7 +47,7 @@ let Inputs = props => {
             <th>QTY</th>
             <th>Style</th>
             <th>Woodtype</th>
-            <th>Thickness</th>
+            {/* <th>Thickness</th> */}
             <th>Item</th>
             <th>Linear FT</th>
             <th>Price</th>
@@ -84,7 +84,7 @@ let Inputs = props => {
                     required
                   />  
                 </td>
-                <td>
+                {/* <td>
                   <Field
                     name={`${table}.thickness`}
                     component={renderDropdownList}
@@ -95,7 +95,7 @@ let Inputs = props => {
                     edit={edit}
                     required
                   />  
-                </td>
+                </td> */}
                 <td>
                   <Field
                     name={`${table}.item`}
