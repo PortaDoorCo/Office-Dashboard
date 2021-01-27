@@ -50,6 +50,7 @@ import Cookies from 'js-cookie';
 import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
 
 const cookie = Cookies.get('jwt');
+const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 let options = {};
 options = {
@@ -256,6 +257,7 @@ class DrawerOrder extends Component {
                           component={renderField}
                           edit={edit}
                           label="discount"
+                          validate={maxValue(100)}
                         />
                       </InputGroup>
                       <strong>Tax: </strong>

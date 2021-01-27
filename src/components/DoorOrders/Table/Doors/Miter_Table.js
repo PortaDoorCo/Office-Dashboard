@@ -20,6 +20,8 @@ import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 
 const required = value => (value ? undefined : 'Required');
+const minValue = min => value => value && numQty(value) < min ? `Must be at least ${min} Inches` : undefined;
+const minValue6 = minValue(6);
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -378,8 +380,9 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         component={renderNumber}
                         onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
                         label="width"
-                        validate={required}
                         edit={edit}
+                        validate={[ required, minValue6 ]}
+                        warn={minValue6}
                       />
                     </td>
 
