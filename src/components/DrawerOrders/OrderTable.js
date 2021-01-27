@@ -68,7 +68,7 @@ class OrderTable extends Component {
                   <tbody>
                     <tr>
 
-                      <td>
+                      <td style={{ width: '14%' }}>
                         <Field
                           name={`${table}.qty`}
                           type="text"
@@ -78,7 +78,7 @@ class OrderTable extends Component {
                           edit={edit}
                         />
                       </td>
-                      <td>
+                      <td style={{ width: '14%' }}>
                         <Field
                           name={`${table}.width`}
                           type="text"
@@ -88,7 +88,7 @@ class OrderTable extends Component {
                           edit={edit}
                         />
                       </td>
-                      <td>
+                      <td style={{ width: '14%' }}>
                         <Field
                           name={`${table}.depth`}
                           type="text"
@@ -98,7 +98,7 @@ class OrderTable extends Component {
                           edit={edit}
                         />
                       </td>
-                      <td>
+                      <td style={{ width: '14%' }}>
                         <Field
                           name={`${table}.height`}
                           type="text"
@@ -108,7 +108,7 @@ class OrderTable extends Component {
                           edit={edit}
                         />
                       </td>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '14%' }}>
                         <Field
                           name={`${table}.scoop`}
                           component={renderDropdownList}
@@ -118,7 +118,7 @@ class OrderTable extends Component {
                           validate={required}
                           edit={edit} />
                       </td>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '14%' }}>
                         <Field
                           name={`${table}.dividers`}
                           component={renderDropdownList}
@@ -128,7 +128,7 @@ class OrderTable extends Component {
                           validate={required}
                           edit={edit} />
                       </td>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '14%' }}>
                         {prices[i] ?
                           <Input
                             type="text"
@@ -192,7 +192,7 @@ class OrderTable extends Component {
             {!edit ?
               <Button color="primary" className="btn-circle" onClick={() => fields.push({
                 qty:1,
-                scoop: scoop[0],
+                scoop: scoop[1],
                 dividers: dividers[0],
                 item: fields.length + 1
               })}>+</Button>
