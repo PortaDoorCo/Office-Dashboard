@@ -47,18 +47,18 @@ export const miscItemPriceSelector = createSelector(
       let feet = (item.MOULDING_WIDTH * 12) / 144;
       let waste = feet * 1.25;
       let multiplier = item.Multiplier;
-      let wood = 0;
+      let wood = moulding_material ? moulding_material.STANDARD_GRADE : 0;
       let premium = 0;
 
       let a = waste * multiplier;
 
-      if(thickness.value === 0.75){
-        wood = moulding_material ? moulding_material.STANDARD_GRADE : 0;
-      } else if (thickness.value === 1) {
-        wood = moulding_material ? moulding_material.STANDARD_GRADE_THICK : 0;
-      } else {
-        wood = 0;
-      }
+      // if(thickness.value === 0.75){
+      //   wood = moulding_material ? moulding_material.STANDARD_GRADE : 0;
+      // } else if (thickness.value === 1) {
+      //   wood = moulding_material ? moulding_material.STANDARD_GRADE_THICK : 0;
+      // } else {
+      //   wood = 0;
+      // }
       
       if(parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
         premium = 3 + 1;
