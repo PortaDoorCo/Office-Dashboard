@@ -439,22 +439,6 @@ class DoorOrders extends Component {
                 </Card>
               </Col>
             </Row>
-            {/* {this.props.formState ? (
-              this.props.formState.part_list.map((part, i) => {
-                return (
-                  <Sticky
-                    top={100}
-                    bottomBoundary={`#item-${i}`}
-                    enabled={true}
-                    key={i}
-                  >
-                    <SideBar key={i} i={i} part={part} />
-                  </Sticky>
-                );
-              })
-            ) : (
-              <div />
-            )} */}
           </div>
         </div>
       </div>
@@ -486,6 +470,7 @@ const mapStateToProps = (state, prop) => ({
     Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
     part_list: [
       {
+        box_assembly: state.part_list.box_assembly[0],
         dimensions: [],
         addPrice: 0
       }
