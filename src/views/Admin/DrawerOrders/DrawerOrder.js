@@ -50,6 +50,7 @@ const JobInfo = React.lazy(() => import('../../../components/JobInfo/DrawerJobIn
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
 const cookie = Cookies.get('jwt');
+const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 const currencyMask = createNumberMask({
   decimalPlaces: 2,
@@ -388,6 +389,7 @@ class DoorOrders extends Component {
                               type="text"
                               component={renderField}
                               label="discount"
+                              validate={maxValue(100)}
                             />
                           </InputGroup>
                           <strong>Tax: </strong>

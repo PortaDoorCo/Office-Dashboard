@@ -51,6 +51,7 @@ import { renderField, renderCheckboxToggle } from '../../../../../components/Ren
 
 const cookie = Cookies.get('jwt');
 
+const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 class DoorOrders extends Component {
   constructor(props) {
@@ -94,24 +95,6 @@ class DoorOrders extends Component {
         Taxable: values.job_info.customer.Taxable
       },
     };
-    // const order = {
-    //   part_list: values.part_list,
-    //   job_info: jobInfo,
-    //   Rush: values.job_info.Rush,
-    //   Sample: values.job_info.Sample,
-    //   companyprofile: values.job_info.customer.id,
-    //   linePrice: prices,
-    //   itemPrice: itemPrice,
-    //   subTotals: subTotal,
-    //   tax: tax,
-    //   total: total,
-    //   balance_paid: values.balance_paid,
-    //   balance_due: balance,
-    //   misc_items: values.misc_items,
-    //   discount: values.discount,
-    //   dueDate: values.job_info.DueDate,
-    //   Taxable: values.Taxable
-    // };
 
     const order = {
       ...values,
@@ -236,6 +219,7 @@ class DoorOrders extends Component {
                           component={renderField}
                           edit={edit}
                           label="discount"
+                          validate={maxValue(100)}
                         />
                       </InputGroup>
                       <strong>Tax: </strong>

@@ -27,7 +27,7 @@ const dueDate = moment(new Date()).businessAdd(7)._d;
 
 const cookie = Cookies.get('jwt');
 
-
+const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 class MiscItems extends Component {
 
@@ -170,6 +170,7 @@ render() {
                         component={renderField}
                         label="discount"
                         edit={edit}
+                        validate={maxValue(100)}
                       />
                     </InputGroup>
 
