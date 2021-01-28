@@ -99,7 +99,7 @@ const status = [
     value: 'Framing',
   },
   {
-    label: 'Assembled',
+    label: 'Assembly',
     value: 'Assembled',
   },
   {
@@ -111,20 +111,16 @@ const status = [
     value: 'Panels',
   },
   {
-    label: 'Assembled',
-    value: 'Assembled',
+    label: 'Sanding',
+    value: 'Sanding',
   },
   {
-    label: 'Sanded',
-    value: 'Sanded',
+    label: 'Lipping',
+    value: 'Lipping',
   },
   {
-    label: 'Lipped',
-    value: 'Lipped',
-  },
-  {
-    label: 'Inspected',
-    value: 'Inspected',
+    label: 'Inspecting',
+    value: 'Inspecting',
   },
   {
     label: 'Paint Shop',
