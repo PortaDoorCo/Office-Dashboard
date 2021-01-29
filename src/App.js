@@ -234,16 +234,7 @@ class App extends Component {
       loadPaymentTypes,
       loadPaymentTerms,
       loadAllCustomers,
-      loadAllOrders,
-      productAdded,
-      productDeleted,
-      productUpdated,
-      orderAdded,
-      orderUpdated,
-      orderDeleted,
-      miscItemAdded,
-      miscItemDeleted,
-      miscItemUpdated
+      loadAllOrders
     } = this.props;
     
     if (this.props.loggedIn !== prevProps.loggedIn) {
