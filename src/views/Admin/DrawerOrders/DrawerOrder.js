@@ -112,7 +112,7 @@ class DoorOrders extends Component {
         id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
-        sale: values.job_info.customer.sale.id,
+        sale: values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
         Taxable: values.job_info.customer.Taxable
       },
     };
