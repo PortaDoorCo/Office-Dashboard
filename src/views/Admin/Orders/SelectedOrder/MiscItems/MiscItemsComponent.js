@@ -67,7 +67,8 @@ class MiscItems extends Component {
         id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
-        Taxable: values.job_info.customer.Taxable
+        Taxable: values.job_info.customer.Taxable,
+        sale: values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
       },
     };
 
