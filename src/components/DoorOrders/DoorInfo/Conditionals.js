@@ -26,9 +26,17 @@ import OnePieceCopeDoor from './One_Piece/Cope/Door';
 import OnePieceMTDoor from './One_Piece/MT/Door';
 import OnePieceMitreDoor from './One_Piece/Mitre/Door';
 
+import OnePieceCopeDF from './One_Piece/Cope/DF';
+import OnePieceMTDF from './One_Piece/MT/DF';
+import OnePieceMitreDF from './One_Piece/Mitre/DF';
+
 import TwoPieceCopeDoor from './Two_Piece/Cope/Door';
 import TwoPieceMTDoor from './Two_Piece/MT/Door';
 import TwoPieceMitreDoor from './Two_Piece/Mitre/Door';
+
+import TwoPieceCopeDF from './Two_Piece/Cope/DF';
+import TwoPieceMTDF from './Two_Piece/MT/DF';
+import TwoPieceMitreDF from './Two_Piece/Mitre/DF';
 
 
 
@@ -260,6 +268,42 @@ class Conditionals extends Component {
               return;
           }
           break;
+        case 'One_Piece_DF':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <OnePieceCopeDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+              />;
+              break;
+            case 'M':
+              component = <OnePieceMitreDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+              />;
+              break;
+            case 'MT':
+              component = <OnePieceMTDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+              />;
+              break;
+            default:
+              return;
+          }
+          break;
         case 'Two_Piece':
           switch (formState.part_list[index].construction.value) {
             case 'Cope':
@@ -284,6 +328,42 @@ class Conditionals extends Component {
               break;
             case 'MT':
               component = <TwoPieceMTDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+              />;
+              break;
+            default:
+              return;
+          }
+          break;
+        case 'Two_Piece_DF':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <TwoPieceCopeDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+              />;
+              break;
+            case 'M':
+              component = <TwoPieceMitreDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+              />;
+              break;
+            case 'MT':
+              component = <TwoPieceMTDF
                 part={part}
                 index={index}
                 isValid={isValid}
