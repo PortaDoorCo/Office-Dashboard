@@ -42,9 +42,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
   const [topRailWidth, setTopRailWidth] = useState(null);
   const [bottomRailWidth, setBottomRailWidth] = useState(null);
 
-  const [modal, setModal] = useState(false);
-  const [warningType, setWarningType] = useState(null);
-  const toggle = () => setModal(!modal);
+
 
   useEffect(() => {
 
@@ -65,47 +63,6 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
     }
 
 
-    if (parseFloat(v) < 6 && (part.panel && !part.panel.Flat)) {
-      setWarningType({
-        value: v,
-        index: index,
-        i: i,
-        tag: 'width',
-        sub_tag: 'width_less_than',
-        title: 'Width less Than 6 Inches',
-        message: 'Your Width is less than 6 inches. Please Select a Greater Width',
-        action: 'Close',
-        deny: 'Close'
-      });
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].width`,
-          ''
-        ),
-        untouch(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].width`,
-        )
-      );
-      toggle();
-    }
-
-    if (parseFloat(v) > 24) {
-      setWarningType({
-        value: v,
-        index: index,
-        i: i,
-        tag: 'width',
-        sub_tag: 'width_greater_than',
-        title: 'Width Greater Than 24 Inches',
-        message: 'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
-        action: 'Add Panel',
-        deny: 'No Thanks'
-      });
-      toggle();
-    }
-
     setWidth(newWidth);
   };
 
@@ -116,21 +73,6 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
       newHeight.splice(index, 1, v);
     } else {
       newHeight = [...newHeight, v];
-    }
-
-    if (parseFloat(v) > 48) {
-      setWarningType({
-        value: v,
-        index: index,
-        i: i,
-        tag: 'height',
-        sub_tag: 'height_greater_than',
-        title: 'Height Greater Than 48 Inches',
-        message: 'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
-        action: 'Add Panel',
-        deny: 'No Thanks'
-      });
-      toggle();
     }
     setHeight(newHeight);
   };
@@ -188,7 +130,6 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
   return (
     formState ?
       <div>
-        {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} dispatch={dispatch} change={change} /> : null}
         <Fragment>
           {fields.map((table, index) => (
             <Fragment key={index}>
