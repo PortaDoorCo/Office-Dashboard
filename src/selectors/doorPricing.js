@@ -342,6 +342,8 @@ export const itemPriceSelector = createSelector(
             if (part.construction.value === 'Cope') {
               if (
                 part.orderType.value === 'DF' ||
+                part.orderType.value === 'One_Piece_DF' ||
+                part.orderType.value === 'Two_Piece_DF' ||
                 part.orderType.value === 'Glass_DF'
               ) {
                 let price = 0;
@@ -450,6 +452,8 @@ export const itemPriceSelector = createSelector(
             if (part.construction.value === 'M') {
               if (
                 part.orderType.value === 'DF' ||
+                part.orderType.value === 'One_Piece_DF' ||
+                part.orderType.value === 'Two_Piece_DF' ||
                 part.orderType.value === 'Glass_DF'
               ) {
                 let price = 0;
@@ -535,6 +539,8 @@ export const itemPriceSelector = createSelector(
 
               if (
                 part.orderType.value === 'DF' ||
+                part.orderType.value === 'One_Piece_DF' ||
+                part.orderType.value === 'Two_Piece_DF' ||
                 part.orderType.value === 'Glass_DF'
               ) {
                 if (part.thickness.value === 0.75) {
@@ -617,6 +623,8 @@ export const itemPriceSelector = createSelector(
 
             if (
               part.orderType.value === 'DF' ||
+              part.orderType.value === 'One_Piece_DF' ||
+              part.orderType.value === 'Two_Piece_DF' ||
               part.orderType.value === 'Glass_DF'
             ) {
               price =
