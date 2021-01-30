@@ -2,9 +2,7 @@ import moment from 'moment';
 import Rails from '../Breakdowns/Doors/Rails/Rails';
 
 export default (data, breakdowns) => {
-
   return data.part_list.map((i, index) => {
-
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -13,47 +11,129 @@ export default (data, breakdowns) => {
         { text: 'Width x Length', style: 'fonts' },
         { text: 'Pat', style: 'fonts' },
         { text: 'Arch', style: 'fonts' },
-        { text: '' }
-      ]
+        { text: '' },
+      ],
     ];
 
     i.dimensions.forEach((item, index) => {
-
-     
-
-
-      if ((item.panelsH && item.panelsW > 1) || (item.panelsH > 1 && item.panelsW)) {
+      if (
+        (item.panelsH && item.panelsW > 1) ||
+        (item.panelsH > 1 && item.panelsW)
+      ) {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
-          { text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value :  i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
-          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} \n`; }), style: 'fonts' },
-          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.measurement} \n`; }), style: 'fonts' },
-          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.pattern} \n`; }), style: 'fonts' },
-          { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
-          { text: '' }
+          {
+            text: `${
+              i.cope_design
+                ? i.cope_design.NAME
+                : i.mt_design
+                  ? i.mt_design.NAME + ' ' + i.construction.value
+                  : i.miter_design
+                    ? i.miter_design.NAME + ' ' + i.construction.value
+                    : i.miter_df_design
+                      ? i.miter_df_design.NAME + ' ' + i.construction.value
+                      : i.mt_df_design
+                        ? i.mt_df_design.NAME + ' ' + i.construction.value
+                        : i.construction.name
+            } - ${i.panel ? i.panel.NAME : 'Glass'}`,
+            style: 'fonts',
+          },
+          {
+            text: Rails(item, i, breakdowns).map((rail) => {
+              return `${rail.qty} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: Rails(item, i, breakdowns).map((rail) => {
+              return `${rail.measurement} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: Rails(item, i, breakdowns).map((rail) => {
+              return `${rail.pattern} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text:
+              i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
+                ? i.cope_design.NAME
+                : '',
+            style: 'fonts',
+          },
+          { text: '' },
         ]);
       } else {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
-          { text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value :  i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
-          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.qty} \n`; }), style: 'fonts' },
-          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.measurement} \n`; }), style: 'fonts' },
-          { text: Rails(item, i, breakdowns).map(rail => { return `${rail.pattern} \n`; }), style: 'fonts' },
-          { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
-          { text: '' }
+          {
+            text: `${
+              i.cope_design
+                ? i.cope_design.NAME
+                : i.mt_design
+                  ? i.mt_design.NAME + ' ' + i.construction.value
+                  : i.miter_design
+                    ? i.miter_design.NAME + ' ' + i.construction.value
+                    : i.miter_df_design
+                      ? i.miter_df_design.NAME + ' ' + i.construction.value
+                      : i.mt_df_design
+                        ? i.mt_df_design.NAME + ' ' + i.construction.value
+                        : i.construction.name
+            } - ${i.panel ? i.panel.NAME : 'Glass'}`,
+            style: 'fonts',
+          },
+          {
+            text: Rails(item, i, breakdowns).map((rail) => {
+              return `${rail.qty} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: Rails(item, i, breakdowns).map((rail) => {
+              return `${rail.measurement} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: Rails(item, i, breakdowns).map((rail) => {
+              return `${rail.pattern} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text:
+              i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
+                ? i.cope_design.NAME
+                : '',
+            style: 'fonts',
+          },
+          { text: '' },
         ]);
       }
-
     });
 
-    if(i.orderType.value === 'One_Piece' || i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'){
+    if (
+      i.orderType.value === 'One_Piece' ||
+      i.orderType.value === 'One_Piece_DF' ||
+      i.orderType.value === 'Two_Piece' ||
+      i.orderType.value === 'Two_Piece_DF' ||
+      i.orderType.value === 'Slab_Door' ||
+      i.orderType.value === 'Slab_DF'
+    ) {
       return null;
     } else {
       return [
         {
           columns: [
             {
-              stack: ['Individual - RAILS List', `Shipping Date: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`,]
+              stack: [
+                'Individual - RAILS List',
+                `Shipping Date: ${moment(data.job_info.DueDate).format(
+                  'MM/DD/YYYY'
+                )}`,
+              ],
             },
             {
               stack: [
@@ -61,17 +141,33 @@ export default (data, breakdowns) => {
                 { text: '65 Cogwheel Lane', alignment: 'center' },
                 { text: 'Seymour, CT', alignment: 'center' },
                 { text: '203-888-6191', alignment: 'center' },
-                { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-              ]
+                { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+              ],
             },
             {
               stack: [
-                { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+                {
+                  text:
+                    data.job_info.Rush && data.job_info.Sample
+                      ? 'Sample / Rush'
+                      : data.job_info.Rush
+                        ? 'Rush'
+                        : data.job_info.Sample
+                          ? 'Sample'
+                          : '',
+                  alignment: 'right',
+                  bold: true,
+                },
                 { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-                { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
-              ]
-            }
-          ]
+                {
+                  text: `Est. Completion: ${moment(
+                    data.job_info.DueDate
+                  ).format('MM/DD/YYYY')}`,
+                  alignment: 'right',
+                },
+              ],
+            },
+          ],
         },
         {
           columns: [
@@ -80,14 +176,16 @@ export default (data, breakdowns) => {
             },
             {
               stack: [
-                { text: `PO: ${data.job_info.poNum}`, alignment: 'right', }
-              ]
+                { text: `PO: ${data.job_info.poNum}`, alignment: 'right' },
+              ],
             },
           ],
-          margin: [0, 10]
+          margin: [0, 10],
         },
         {
-          canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
+          canvas: [
+            { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 },
+          ],
         },
         [
           {
@@ -97,46 +195,45 @@ export default (data, breakdowns) => {
               {
                 text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
                 style: 'woodtype',
-                alignment: 'left'
+                alignment: 'left',
               },
               {
                 text: '',
-                alignment: 'left'
+                alignment: 'left',
               },
               {
                 text: '',
-                alignment: 'left'
+                alignment: 'left',
               },
               {
                 text: 'RAILS',
                 alignment: 'right',
-                style: 'woodtype'
-              }
-            ]
+                style: 'woodtype',
+              },
+            ],
           },
           {
             canvas: [
-              { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }
+              { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 },
             ],
-            margin: [0, 10, 0, 0]
+            margin: [0, 10, 0, 0],
           },
           {
             table: {
               headerRows: 1,
               widths: [25, 120, 25, 100, '*', '*', 100],
-              body: tableBody
+              body: tableBody,
             },
-            layout: 'lightHorizontalLines'
+            layout: 'lightHorizontalLines',
           },
           {
-            canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
-          }
+            canvas: [
+              { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 },
+            ],
+          },
         ],
-        { text: '', pageBreak: 'before' }
+        { text: '', pageBreak: 'before' },
       ];
     }
-
-
   });
-
 };
