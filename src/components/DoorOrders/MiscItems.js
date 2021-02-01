@@ -54,7 +54,7 @@ let Inputs = (props) => {
     if(e.count_items){
       const categories = e.categories.map(i => i.value);
       if(categories.includes('Door')){
-        const matched_orders = formState.part_list.filter(i => i.orderType.value.includes('Door'));
+        const matched_orders = formState.part_list.filter(i => ['Door', 'DF'].includes(i.orderType.value));
         const quantities = matched_orders.map(i => {
           const qty = i.dimensions.map(j => {
             return parseInt(j.qty);
