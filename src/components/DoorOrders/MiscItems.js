@@ -47,14 +47,37 @@ let Inputs = (props) => {
     console.log({e});
     console.log({formState});
 
+    let total_qty = 0;
+
     props.dispatch(change('DoorOrder', `misc_items[${index}].price`, e.Price));
 
     if(e.count_items){
-      
       const categories = e.categories.map(i => i.value);
-      const orderType = formState.part_list.map(i => i.orderType.value.includes('Door'));
-      console.log({orderType});
-      console.log({categories});
+      if(categories.includes('Door')){
+        const matched_orders = formState.part_list.filter(i => i.orderType.value.includes('Door'));
+        const quantities = matched_orders.map(i => {
+          const qty = i.dimensions.map(j => {
+            return parseInt(j.qty);
+          });
+          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          return sub_total_qty;
+        });
+        const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
+        total_qty = total_qty+sub_quantity;
+      }
+      if(categories.includes('DF')){
+        const matched_orders = formState.part_list.filter(i => i.orderType.value.includes('DF'));
+        const quantities = matched_orders.map(i => {
+          const qty = i.dimensions.map(j => {
+            return parseInt(j.qty);
+          });
+          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          return sub_total_qty;
+        });
+        const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
+        total_qty = total_qty+sub_quantity;
+      }
+      props.dispatch(change('DoorOrder', `misc_items[${index}].qty`, total_qty));
     }
   };
 
