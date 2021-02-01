@@ -117,6 +117,23 @@ export const renderNumber = ({
   </Fragment>
 );
 
+export const renderInt = ({
+  input,
+  edit,
+  meta: { touched, error, warning },
+  ...custom
+}) => (
+  <Fragment>
+    <AvForm>
+      <AvField {...input} errorMessage="Only Integers Allowed" validate={{
+        pattern: {value: '^[0-9]+$'},
+      }} disabled={edit} autoComplete="off" /></AvForm>
+    {touched &&
+                ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+                    (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+  </Fragment>
+);
+
 export const renderSwitch = ({
   input,
   edit,

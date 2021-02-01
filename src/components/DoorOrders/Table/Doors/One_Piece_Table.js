@@ -1,27 +1,26 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import {
-  Table,
-  Input,
-  Row,
-  Col,
-  Button,
-  FormGroup,
-  Label
-} from 'reactstrap';
+import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change, untouch } from 'redux-form';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
+import {
+  renderField,
+  renderNumber,
+  renderFieldDisabled,
+  renderCheckboxToggle,
+  renderPrice,
+  renderInt
+} from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
 import { createNumberMask } from 'redux-form-input-masks';
 import WarningModal from '../Warnings/Modal';
 
-const required = value => (value ? undefined : 'Required');
+const required = (value) => (value ? undefined : 'Required');
 
-const fraction = num => {
+const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
@@ -31,9 +30,18 @@ const currencyMask = createNumberMask({
   locale: 'en-US',
 });
 
-
-const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
-
+const One_Piece_Table = ({
+  fields,
+  formState,
+  i,
+  prices,
+  subTotal,
+  part,
+  updateSubmit,
+  doorOptions,
+  edit,
+  dispatch,
+}) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
   const [changeValue, setChangeValue] = useState(null);
@@ -42,14 +50,10 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
   const [topRailWidth, setTopRailWidth] = useState(null);
   const [bottomRailWidth, setBottomRailWidth] = useState(null);
 
-
-
   useEffect(() => {
-
     let init = [];
     setWidth(init);
     setHeight(init);
-
   }, [updateSubmit]);
 
   const w = (e, v, index) => {
@@ -61,7 +65,6 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
     } else {
       newWidth = [...newWidth, v];
     }
-
 
     setWidth(newWidth);
   };
@@ -77,7 +80,6 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
     setHeight(newHeight);
   };
 
-
   const registerChange = (index, e) => {
     const value = e.target.value;
     setChangeValue(value);
@@ -85,7 +87,6 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
 
   const changeFraming = (index, e) => {
     if (changeValue) {
-
       setLeftStileWidth(fraction(numQty(changeValue)));
       setRightStileWidth(fraction(numQty(changeValue)));
       setTopRailWidth(fraction(numQty(changeValue)));
@@ -96,7 +97,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].leftStile`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
 
       dispatch(
@@ -104,7 +105,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].rightStile`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
 
       dispatch(
@@ -112,7 +113,7 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].topRail`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
 
       dispatch(
@@ -120,168 +121,204 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].bottomRail`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
     }
-
   };
 
-
-  return (
-    formState ?
-      <div>
-        <Fragment>
-          {fields.map((table, index) => (
-            <Fragment key={index}>
-              <hr />
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
+  return formState ? (
+    <div>
+      <Fragment>
+        {fields.map((table, index) => (
+          <Fragment key={index}>
+            <hr />
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="panel">
+                    <strong>Line # {index + 1}</strong>
+                  </Label>
+                  <Field
+                    name={`${table}.item`}
+                    type="text"
+                    component={renderFieldDisabled}
+                    label="item"
+                    edit={true}
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="10" />
+            </Row>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Qty</th>
+                  <th>Width</th>
+                  <th>Height</th>
+                  <th>Price</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
                     <Field
-                      name={`${table}.item`}
+                      name={`${table}.qty`}
                       type="text"
-                      component={renderFieldDisabled}
-                      label="item"
-                      edit={true}
+                      component={renderInt}
+                      label="qty"
+                      validate={required}
+                      edit={edit}
                     />
-                  </FormGroup>
-                </Col>
-                <Col xs='10' />
-              </Row>
-              <Table>
-                <thead>
-                  <tr>
-                    <th>Qty</th>
-                    <th>Width</th>
-                    <th>Height</th>
-                    <th>Price</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <Field
-                        name={`${table}.qty`}
-                        type="text"
-                        component={renderNumber}
-                        label="qty"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </td>
-                    <td>
-                      <Field
-                        name={`${table}.width`}
-                        type="text"
-                        component={renderNumber}
-                        onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
-                        label="width"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </td>
-
-                    <td>
-                      <Field
-                        name={`${table}.height`}
-                        type="text"
-                        component={renderNumber}
-                        onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
-                        label="height"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </td>
-
-                    <td>
-                      {prices[i] ?
-                        <Input
-                          type="text"
-                          disabled={true}
-                          className="form-control"
-                          placeholder={'$' + prices[i][index].toFixed(2) || 0}
-                        /> :
-                        <Input
-                          type="text"
-                          disabled={true}
-                          className="form-control"
-                          placeholder={'$0.00'}
-                        />
+                  </td>
+                  <td>
+                    <Field
+                      name={`${table}.width`}
+                      type="text"
+                      component={renderNumber}
+                      onBlur={(e) =>
+                        w(
+                          e,
+                          formState.part_list[i].dimensions[index].width,
+                          index
+                        )
                       }
+                      label="width"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </td>
 
-                    </td>
-                    <td>
-                      {!edit ?
-                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
-                          X
-                        </Button>
-                        :
-                        <div />
+                  <td>
+                    <Field
+                      name={`${table}.height`}
+                      type="text"
+                      component={renderNumber}
+                      onBlur={(e) =>
+                        h(
+                          e,
+                          formState.part_list[i].dimensions[index].height,
+                          index
+                        )
                       }
+                      label="height"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </td>
+
+                  <td>
+                    {prices[i] ? (
+                      <Input
+                        type="text"
+                        disabled={true}
+                        className="form-control"
+                        placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                      />
+                    ) : (
+                      <Input
+                        type="text"
+                        disabled={true}
+                        className="form-control"
+                        placeholder={'$0.00'}
+                      />
+                    )}
+                  </td>
+                  <td>
+                    {!edit ? (
+                      <Button
+                        color="danger"
+                        className="btn-circle"
+                        onClick={() => fields.remove(index)}
+                      >
+                        X
+                      </Button>
+                    ) : (
+                      <div />
+                    )}
+                  </td>
+                </tr>
+
+                <tr />
+                {!edit ? (
+                  <tr>
+                    <td>
+                      <Button
+                        onClick={() => changeFraming(index)}
+                        color="primary"
+                      >
+                        Update Framing
+                      </Button>
                     </td>
                   </tr>
+                ) : null}
+              </tbody>
+            </Table>
 
-                  <tr />
-                  {!edit ?
-                    <tr>
-                      <td>
-                        <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
-                      </td>
-                    </tr> : null
-                  }
-                </tbody>
-
-              </Table>
-
-
-
-
-
-              <Row>
-                <Col lg='9'>
-                
-                  <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
-  
-                </Col>
-                <Col>
-                  {!edit ?
-                    (parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null
-                    :
-                    null
-                  }
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
-
-                  {(formState.part_list[i].dimensions[index].showBuilder) ?
-                    <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
-                      <Maker
-                        width={width[index]}
-                        height={height[index]}
-                        i={i}
-                        index={index}
-                        style={{ width: '100%', height: '300px' }}
+            <Row>
+              <Col lg="9">
+                <Field
+                  name={`${table}.showBuilder`}
+                  component={renderCheckboxToggle}
+                  label="Show Builder"
+                />
+              </Col>
+              <Col>
+                {!edit ? (
+                  parseInt(formState.part_list[i].dimensions[index].panelsH) >
+                    1 &&
+                  parseInt(formState.part_list[i].dimensions[index].panelsW) ===
+                    1 ? (
+                      <Field
+                        name={`${table}.unevenCheck`}
+                        component={renderCheckboxToggle}
+                        label="Uneven Split"
                       />
-                    </div> : <div />
-                  }
+                    ) : null
+                ) : null}
+              </Col>
+            </Row>
 
+            <Row>
+              <Col>
+                {formState.part_list[i].dimensions[index].showBuilder ? (
+                  <div
+                    id={`makerJS${index}`}
+                    style={{ width: '100%', height: '300px' }}
+                  >
+                    <Maker
+                      width={width[index]}
+                      height={height[index]}
+                      i={i}
+                      index={index}
+                      style={{ width: '100%', height: '300px' }}
+                    />
+                  </div>
+                ) : (
+                  <div />
+                )}
+              </Col>
+            </Row>
 
-                </Col>
-              </Row>
-
-              {formState.part_list[i].dimensions[index].unevenCheck ?
-                <div className='mb-3'>
-                  <Row>
-                    {Array.from(Array(parseInt(formState.part_list[i].dimensions[index].panelsH)).keys()).slice(1).map((i, index) => {
+            {formState.part_list[i].dimensions[index].unevenCheck ? (
+              <div className="mb-3">
+                <Row>
+                  {Array.from(
+                    Array(
+                      parseInt(formState.part_list[i].dimensions[index].panelsH)
+                    ).keys()
+                  )
+                    .slice(1)
+                    .map((i, index) => {
                       return (
                         <div>
                           <Col />
                           <Col>
-                            <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
+                            <p
+                              style={{ textAlign: 'center', marginTop: '10px' }}
+                            >
+                              <strong>Panel Opening {index + 1}</strong>
+                            </p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderNumber}
@@ -292,74 +329,75 @@ const One_Piece_Table = ({ fields, formState, i, prices, subTotal, part, updateS
                         </div>
                       );
                     })}
-                  </Row>
-                </div>
-                : null
-              }
+                </Row>
+              </div>
+            ) : null}
 
-              <Row>
-                <Col xs="4">
-                  <strong>Notes</strong>
-                  <Field
-                    name={`${table}.notes`}
-                    type="textarea"
-                    component={renderField}
-                    edit={edit}
-                    label="notes"
-                  />
-                </Col>
-                <Col xs='5' />
-                <Col xs='3'>
-                  <strong>Extra Design Cost</strong>
-                  <Field
-                    name={`${table}.extraCost`}
-                    type="text"
-                    component={renderPrice}
-                    edit={edit}
-                    label="extraCost"
-                    {...currencyMask}
-                  />
-                </Col>
+            <Row>
+              <Col xs="4">
+                <strong>Notes</strong>
+                <Field
+                  name={`${table}.notes`}
+                  type="textarea"
+                  component={renderField}
+                  edit={edit}
+                  label="notes"
+                />
+              </Col>
+              <Col xs="5" />
+              <Col xs="3">
+                <strong>Extra Design Cost</strong>
+                <Field
+                  name={`${table}.extraCost`}
+                  type="text"
+                  component={renderPrice}
+                  edit={edit}
+                  label="extraCost"
+                  {...currencyMask}
+                />
+              </Col>
+            </Row>
+            <br />
+          </Fragment>
+        ))}
+        <Row>
+          <Col>
+            {!edit ? (
+              <Button
+                color="primary"
+                className="btn-circle"
+                onClick={(e) =>
+                  fields.push({
+                    qty: 1,
+                    showBuilder: false,
+                    item: fields.length + 1,
+                  })
+                }
+              >
+                +
+              </Button>
+            ) : (
+              <div />
+            )}
+          </Col>
+        </Row>
 
-              </Row>
-              <br />
-            </Fragment>
-          ))}
-          <Row>
-            <Col>
-              {!edit ?
-                <Button
-                  color="primary"
-                  className="btn-circle"
-                  onClick={(e) =>
-                    fields.push({
-                      qty:1,
-                      showBuilder: false,
-                      item: fields.length + 1
-                    })
-                  }
-                >
-                  +
-                </Button> : <div />
-              }
-
-            </Col>
-          </Row>
-
-          <Row>
-            <Col xs="4" />
-            <Col xs="5" />
-            <Col xs="3">
-              <strong>Sub Total: </strong>
-              {subTotal[i] ? (
-                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
-              ) : (
-                <RenderPriceHolder input={'0.00'} edit={true} />
-              )}
-            </Col>
-          </Row>
-        </Fragment>
-      </div> : <div />
+        <Row>
+          <Col xs="4" />
+          <Col xs="5" />
+          <Col xs="3">
+            <strong>Sub Total: </strong>
+            {subTotal[i] ? (
+              <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
+            ) : (
+              <RenderPriceHolder input={'0.00'} edit={true} />
+            )}
+          </Col>
+        </Row>
+      </Fragment>
+    </div>
+  ) : (
+    <div />
   );
 };
 

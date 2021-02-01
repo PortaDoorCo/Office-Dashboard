@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change, untouch } from 'redux-form';
+import { Field, change } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -10,6 +10,7 @@ import {
   renderNumber,
   renderFieldDisabled,
   renderCheckboxToggle,
+  renderInt
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
@@ -17,7 +18,8 @@ import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
-const minValue = min => value => value && numQty(value) < min ? `Must be at least ${min} Inches` : undefined;
+const minValue = (min) => (value) =>
+  value && numQty(value) < min ? `Must be at least ${min} Inches` : undefined;
 const minValue6 = minValue(6);
 
 const fraction = (num) => {
@@ -36,7 +38,7 @@ const MT_Table = ({
   doorOptions,
   edit,
   dispatch,
-  addPrice
+  addPrice,
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -118,7 +120,7 @@ const MT_Table = ({
         value: v,
         index: index,
         i: i,
-        part:part,
+        part: part,
         tag: 'height',
         sub_tag: 'height_greater_than',
         title: 'Height Greater Than 48 Inches',
@@ -136,15 +138,15 @@ const MT_Table = ({
     let value;
     const part = formState.part_list[i];
 
-    if(e){
+    if (e) {
       value = e.target.value;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsW) > 1) && (parseInt(e.target.value) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsW) > 1 &&
+        parseInt(e.target.value) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
       } else {
         dispatch(
@@ -157,28 +159,20 @@ const MT_Table = ({
       }
     } else {
       value = v;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsW) > 1) && (parseInt(v) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsW) > 1 &&
+        parseInt(v) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsH`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
         );
       } else {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsH`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
         );
       }
     }
@@ -205,15 +199,15 @@ const MT_Table = ({
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
     let value;
-    if(e){
+    if (e) {
       value = e.target.value;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(e.target.value) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsH) > 1 &&
+        parseInt(e.target.value) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
       } else {
         dispatch(
@@ -226,32 +220,23 @@ const MT_Table = ({
       }
     } else {
       value = v;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(v) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsH) > 1 &&
+        parseInt(v) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsW`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
         );
       } else {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsW`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
         );
       }
     }
-    
 
     if (value > 1) {
       dispatch(
@@ -371,7 +356,7 @@ const MT_Table = ({
                     <Field
                       name={`${table}.qty`}
                       type="text"
-                      component={renderNumber}
+                      component={renderInt}
                       label="qty"
                       validate={required}
                       edit={edit}
@@ -390,7 +375,7 @@ const MT_Table = ({
                         )
                       }
                       label="width"
-                      validate={[ required, minValue6 ]}
+                      validate={[required, minValue6]}
                       warn={minValue6}
                       edit={edit}
                     />
@@ -671,20 +656,21 @@ const MT_Table = ({
               <Col xs="5" />
               <Col xs="3">
                 <strong>Extra Design Cost</strong>
-                {addPrice[i] ? 
+                {addPrice[i] ? (
                   <Input
                     type="text"
                     className="form-control"
                     disabled={true}
                     placeholder={'$' + addPrice[i][index].toFixed(2) || 0}
-                  /> : 
+                  />
+                ) : (
                   <Input
                     type="text"
                     className="form-control"
                     disabled={true}
                     placeholder={'$0.00'}
                   />
-                } 
+                )}
               </Col>
             </Row>
             <br />
