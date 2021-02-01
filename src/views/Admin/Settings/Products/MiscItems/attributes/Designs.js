@@ -5,9 +5,10 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import { updateMiscItem, addMiscItem, deleteMiscItem } from '../../../../../../redux/misc_items/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
+import { AppSwitch } from '@coreui/react';
+import Select from 'react-select';
 
 const cookie = Cookies.get('jwt');
 
@@ -16,7 +17,8 @@ const Designs = (props) => {
   const {
     className,
     role,
-    product_type
+    product_type,
+    categories
   } = props;
 
   const [modal, setModal] = useState(false);
@@ -25,11 +27,23 @@ const Designs = (props) => {
     id: '',
     NAME: '',
     Price: '',
+    count_items: false,
+    categories: [],
     photo: null,
     product: product_type
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.designs);
+
+  const handleChange = (selectedOption) => {
+    setProduct((prevState) => {
+      return ({
+        ...prevState,
+        categories: selectedOption
+      });
+    });
+  };
+
 
   useEffect(() => {
     setFilteredProducts(props.designs);
@@ -45,6 +59,7 @@ const Designs = (props) => {
 
 
   const setCard = card => {
+    console.log({card });
     setNewProduct(false);
     setProduct(card);
     toggle();
@@ -54,6 +69,8 @@ const Designs = (props) => {
     const p = {
       NAME: '',
       Price: '',
+      count_items: false,
+      categories: [],
       photo: null
     };
     setNewProduct(true);
@@ -102,6 +119,8 @@ const Designs = (props) => {
     const submittedProduct = {
       NAME: product.NAME,
       Price: product.Price,
+      count_items: product.count_items,
+      categories: product.categories.map(i => i),
       photo: product.photo ? product.photo.id : '',
       Item: item,
     };
@@ -122,6 +141,8 @@ const Designs = (props) => {
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>Price:</strong> ${card.Price}</CardTitle>
+            <CardTitle><strong>Count Items:</strong> {card.count_items ? 'True' : 'False'}</CardTitle>
+            <CardTitle><strong>Categories:</strong> {card.categories.map(i => <li>{i.NAME}</li>)}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -182,6 +203,36 @@ const Designs = (props) => {
                 <Col>
                   <Label for="Moulding_Width">Price</Label>
                   <Input type="number" value={product.Price} name="Price" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="categories">Categories</Label>
+                  <Select
+                    value={product.categories}
+                    onChange={handleChange}
+                    options={categories}
+                    isMulti={true}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Count Items</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setProduct((prevState) => {
+                        return ({
+                          ...prevState,
+                          count_items: !prevState.count_items
+                        });
+                      })} checked={product.count_items} />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
              
@@ -269,6 +320,34 @@ const Designs = (props) => {
                   <Label for="4/4_Price">Price</Label>
                   <Input type="number" value={product.Price} name="Price" onChange={(e) => change(e)}></Input>
                 </Col>
+                <Col>
+                  <Label for="Moulding_Width">Categories</Label>
+                  <Select
+                    value={product.categories}
+                    onChange={handleChange}
+                    options={categories}
+                    isMulti={true}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Count Items</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setProduct((prevState) => {
+                        return ({
+                          ...prevState,
+                          count_items: !prevState.count_items
+                        });
+                      })} checked={product.count_items} />
+                    </Col>
+                  </Row>
+                </Col>
               </Row>
             </ModalBody>
             <ModalFooter>  
@@ -298,6 +377,7 @@ const Designs = (props) => {
 
 const mapStateToProps = (state) => ({
   designs: state.misc_items.misc_items,
+  categories: state.misc_items.categories,
   role: state.users.user.role
 });
 

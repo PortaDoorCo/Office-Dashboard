@@ -1,7 +1,20 @@
-import React, {useState} from 'react';
-import { Field, change, } from 'redux-form';
-import { renderField, renderNumber, renderDropdownList, renderDropdownListFilter, renderPrice } from '../../../../../components/RenderInputs/renderInputs';
-import { Button, Table, Row, Col, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import React, { useState } from 'react';
+import { Field } from 'redux-form';
+import {
+  renderNumber,
+  renderDropdownList,
+  renderInt
+} from '../../../../../components/RenderInputs/renderInputs';
+import {
+  Button,
+  Table,
+  Row,
+  Col,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+} from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createNumberMask } from 'redux-form-input-masks';
@@ -16,29 +29,27 @@ const currencyMask = createNumberMask({
 const thickness = [
   {
     NAME: '4/4',
-    value: 0.75
+    value: 0.75,
   },
   {
     NAME: '5/4',
-    value: 1
+    value: 1,
   },
 ];
 
-let Inputs = props => {
-  const { fields, formState, linePrices, edit, part_list } = props;
+let Inputs = (props) => {
+  const { fields, linePrices, edit, part_list } = props;
   const [data, setData] = useState([]);
 
   const changeMiscItem = (e, index) => {
-
-    console.log({e});
+    console.log({ e });
 
     console.log(eval(`part_list.${e.value}`));
 
     setData(eval(`part_list.${e.value}`));
   };
 
-
-  console.log({data});
+  console.log({ data });
   return (
     <div>
       <Table>
@@ -58,9 +69,15 @@ let Inputs = props => {
           {fields.map((table, index) => {
             return (
               <tr key={index}>
-                <td style={{ width: '90px' }}><Field name={`${table}.qty`} component={renderNumber} edit={edit} type="text" /></td>
+                <td style={{ width: '90px' }}>
+                  <Field
+                    name={`${table}.qty`}
+                    component={renderInt}
+                    edit={edit}
+                    type="text"
+                  />
+                </td>
                 <td>
-
                   <Field
                     name={`${table}.style`}
                     component={renderDropdownList}
@@ -70,7 +87,7 @@ let Inputs = props => {
                     textField="name"
                     edit={edit}
                     required
-                  />  
+                  />
                 </td>
                 <td>
                   <Field
@@ -82,7 +99,7 @@ let Inputs = props => {
                     textField="NAME"
                     edit={edit}
                     required
-                  />  
+                  />
                 </td>
                 {/* <td>
                   <Field
@@ -106,7 +123,7 @@ let Inputs = props => {
                     textField="NAME"
                     edit={edit}
                     required
-                  />  
+                  />
                 </td>
 
                 <>
@@ -127,17 +144,26 @@ let Inputs = props => {
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>$</InputGroupText>
                       </InputGroupAddon>
-                      <NumberFormat thousandSeparator={true} value={linePrices[index]} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
+                      <NumberFormat
+                        thousandSeparator={true}
+                        value={linePrices[index]}
+                        disabled={true}
+                        customInput={Input}
+                        {...currencyMask}
+                        prefix={'$'}
+                      />
                       {/* <Input  placeholder={linePrices[index]} {...currencyMask} disabled /> */}
                     </InputGroup>
                   </td>
                 </>
-                 
-                {!edit ?
-                  <td><Button color="danger" onClick={() => fields.remove(index)}>X</Button></td> 
-                  : null
-                }
-                
+
+                {!edit ? (
+                  <td>
+                    <Button color="danger" onClick={() => fields.remove(index)}>
+                      X
+                    </Button>
+                  </td>
+                ) : null}
               </tr>
             );
           })}
@@ -146,41 +172,39 @@ let Inputs = props => {
 
       <Row>
         <Col>
-          {!edit ?
+          {!edit ? (
             <>
-              <Button color="primary" className="mt-3" onClick={() => fields.push({
-                qty: 1,
-                linearFT: '0',
-                price: 0
-              })}>Add Item </Button>
+              <Button
+                color="primary"
+                className="mt-3"
+                onClick={() =>
+                  fields.push({
+                    qty: 1,
+                    linearFT: '0',
+                    price: 0,
+                  })
+                }
+              >
+                Add Item{' '}
+              </Button>
             </>
-            : null
-          }
-
+          ) : null}
         </Col>
       </Row>
-
-
-
     </div>
   );
 };
 
-const mapStateToProps = state => ({
-  part_list: state.part_list
+const mapStateToProps = (state) => ({
+  part_list: state.part_list,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      dispatch
+      dispatch,
     },
     dispatch
   );
 
-
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Inputs);
+export default connect(mapStateToProps, mapDispatchToProps)(Inputs);
