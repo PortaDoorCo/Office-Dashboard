@@ -38,7 +38,8 @@ import {
   loadPaymentTerms,
   miscItemAdded,
   miscItemDeleted,
-  miscItemUpdated
+  miscItemUpdated,
+  loadCategories
 } from './redux/misc_items/actions';
 import { login, getUsers } from './redux/users/actions';
 import io from 'socket.io-client';
@@ -234,7 +235,8 @@ class App extends Component {
       loadPaymentTypes,
       loadPaymentTerms,
       loadAllCustomers,
-      loadAllOrders
+      loadAllOrders,
+      loadCategories
     } = this.props;
     
     if (this.props.loggedIn !== prevProps.loggedIn) {
@@ -243,6 +245,7 @@ class App extends Component {
         if(newCookie){
           await getAllProducts(newCookie);
           await getPricing(newCookie);
+          await loadCategories(newCookie);
           await getBreakdowns(newCookie);
           await getBoxBreakdowns(newCookie);
           await loadOrders(newCookie);
@@ -257,6 +260,7 @@ class App extends Component {
           await loadSales(newCookie);
           await loadAllOrders(newCookie);
           await loadAllCustomers(newCookie);
+          
         }
       };
       this.cookies(getData);      
@@ -331,7 +335,8 @@ const mapDispatchToProps = (dispatch) =>
       loadAllOrders,
       miscItemAdded,
       miscItemDeleted,
-      miscItemUpdated
+      miscItemUpdated,
+      loadCategories
     },
     dispatch
   );

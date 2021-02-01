@@ -9,6 +9,7 @@ import { updateProduct, addProduct, deleteProduct } from '../../../../../../redu
 import { updateMiscItem, addMiscItem, deleteMiscItem } from '../../../../../../redux/misc_items/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 import { AppSwitch } from '@coreui/react';
+import Select from 'react-select';
 
 const cookie = Cookies.get('jwt');
 
@@ -17,7 +18,8 @@ const Designs = (props) => {
   const {
     className,
     role,
-    product_type
+    product_type,
+    categories
   } = props;
 
   const [modal, setModal] = useState(false);
@@ -33,6 +35,18 @@ const Designs = (props) => {
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.designs);
+  const [selectedOption, setSelectedOption] = useState([]);
+
+
+  const handleChange = (selectedOption) => {
+    setProduct((prevState) => {
+      return ({
+        ...prevState,
+        categories: selectedOption
+      });
+    });
+  };
+
 
   useEffect(() => {
     setFilteredProducts(props.designs);
@@ -48,8 +62,10 @@ const Designs = (props) => {
 
 
   const setCard = card => {
+    console.log({card });
     setNewProduct(false);
     setProduct(card);
+    setSelectedOption(card.categories);
     toggle();
   };
 
@@ -192,11 +208,17 @@ const Designs = (props) => {
                   <Label for="Moulding_Width">Price</Label>
                   <Input type="number" value={product.Price} name="Price" onChange={(e) => change(e)}></Input>
                 </Col>
+              </Row>
+              <Row>
                 <Col>
-                  <Label for="Moulding_Width">Categories</Label>
-                  <Input type="boolean" value={product.categories} name="count_items" onChange={(e) => change(e)}></Input>
+                  <Label for="categories">Categories</Label>
+                  <Select
+                    value={product.categories}
+                    onChange={handleChange}
+                    options={categories}
+                    isMulti={true}
+                  />
                 </Col>
-               
               </Row>
               <Row>
                 <Col>
@@ -304,7 +326,12 @@ const Designs = (props) => {
                 </Col>
                 <Col>
                   <Label for="Moulding_Width">Categories</Label>
-                  <Input type="boolean" value={product.categories} name="count_items" onChange={(e) => change(e)}></Input>
+                  <Select
+                    value={product.categories}
+                    onChange={handleChange}
+                    options={categories}
+                    isMulti={true}
+                  />
                 </Col>
               </Row>
               <Row>
@@ -354,6 +381,7 @@ const Designs = (props) => {
 
 const mapStateToProps = (state) => ({
   designs: state.misc_items.misc_items,
+  categories: state.misc_items.categories,
   role: state.users.user.role
 });
 
