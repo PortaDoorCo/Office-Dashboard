@@ -32,6 +32,7 @@ import {
 } from '../../selectors/doorPricing';
 import { createNumberMask } from 'redux-form-input-masks';
 import NumberFormat from 'react-number-format';
+import _ from 'lodash';
 
 const currencyMask = createNumberMask({
   decimalPlaces: 2,
@@ -42,7 +43,21 @@ let Inputs = (props) => {
   const { fields, misc_items, formState, linePrices, miscTotal } = props;
 
   const changeMiscItem = (e, index) => {
+
+    console.log({e});
+    console.log({formState});
+
     props.dispatch(change('DoorOrder', `misc_items[${index}].price`, e.Price));
+
+    if(e.count_items){
+      
+      const categories = e.categories.map(i => i.value);
+      const orderType = formState.part_list.map(i => i.orderType.value);
+      console.log({orderType});
+      console.log({categories});
+
+      console.log(_.filter(orderType, categories));
+    }
   };
 
   return (

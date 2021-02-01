@@ -5,7 +5,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import { updateMiscItem, addMiscItem, deleteMiscItem } from '../../../../../../redux/misc_items/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 import { AppSwitch } from '@coreui/react';
@@ -35,8 +34,6 @@ const Designs = (props) => {
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.designs);
-  const [selectedOption, setSelectedOption] = useState([]);
-
 
   const handleChange = (selectedOption) => {
     setProduct((prevState) => {
@@ -65,7 +62,6 @@ const Designs = (props) => {
     console.log({card });
     setNewProduct(false);
     setProduct(card);
-    setSelectedOption(card.categories);
     toggle();
   };
 
