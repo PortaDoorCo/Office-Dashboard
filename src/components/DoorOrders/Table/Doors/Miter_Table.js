@@ -1,35 +1,46 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import {
-  Table,
-  Input,
-  Row,
-  Col,
-  Button,
-  FormGroup,
-  Label
-} from 'reactstrap';
+import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change, untouch } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
+import {
+  renderField,
+  renderNumber,
+  renderFieldDisabled,
+  renderCheckboxToggle,
+  renderPrice,
+  renderInt
+} from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 
-const required = value => (value ? undefined : 'Required');
-const minValue = min => value => value && numQty(value) < min ? `Must be at least ${min} Inches` : undefined;
+const required = (value) => (value ? undefined : 'Required');
+const minValue = (min) => (value) =>
+  value && numQty(value) < min ? `Must be at least ${min} Inches` : undefined;
 const minValue6 = minValue(6);
 
-const fraction = num => {
+const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
 
-const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch, addPrice }) => {
-
+const Miter_Table = ({
+  fields,
+  formState,
+  i,
+  prices,
+  subTotal,
+  part,
+  updateSubmit,
+  doorOptions,
+  edit,
+  dispatch,
+  addPrice,
+}) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
   const [changeValue, setChangeValue] = useState(null);
@@ -42,13 +53,10 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
   const [warningType, setWarningType] = useState(null);
   const toggle = () => setModal(!modal);
 
-
   useEffect(() => {
-
     let init = [];
     setWidth(init);
     setHeight(init);
-
   }, [updateSubmit]);
 
   const w = (e, v, index) => {
@@ -61,8 +69,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
       newWidth = [...newWidth, v];
     }
 
-
-    if (numQty(v) < 6 && (part.panel && !part.panel.Flat)) {
+    if (numQty(v) < 6 && part.panel && !part.panel.Flat) {
       setWarningType({
         value: v,
         index: index,
@@ -71,9 +78,10 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
         tag: 'width',
         sub_tag: 'width_less_than',
         title: 'Width less Than 6 Inches',
-        message: 'Your Width is less than 6 inches. Please Select a Greater Width',
+        message:
+          'Your Width is less than 6 inches. Please Select a Greater Width',
         action: 'Close',
-        deny: 'Close'
+        deny: 'Close',
       });
       toggle();
     }
@@ -87,9 +95,10 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
         tag: 'width',
         sub_tag: 'width_greater_than',
         title: 'Width Greater Than 24 Inches',
-        message: 'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
+        message:
+          'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
         action: 'Add Panel',
-        deny: 'No Thanks'
+        deny: 'No Thanks',
       });
       toggle();
     }
@@ -116,9 +125,10 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
         tag: 'height',
         sub_tag: 'height_greater_than',
         title: 'Height Greater Than 48 Inches',
-        message: 'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
+        message:
+          'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
         action: 'Add Panel',
-        deny: 'No Thanks'
+        deny: 'No Thanks',
       });
       toggle();
     }
@@ -129,15 +139,15 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
     let value;
     const part = formState.part_list[i];
 
-    if(e){
+    if (e) {
       value = e.target.value;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsW) > 1) && (parseInt(e.target.value) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsW) > 1 &&
+        parseInt(e.target.value) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
       } else {
         dispatch(
@@ -150,28 +160,20 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
       }
     } else {
       value = v;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsW) > 1) && (parseInt(v) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsW) > 1 &&
+        parseInt(v) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsH`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
         );
       } else {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsH`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
         );
       }
     }
@@ -198,15 +200,15 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
     let value;
-    if(e){
+    if (e) {
       value = e.target.value;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(e.target.value) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsH) > 1 &&
+        parseInt(e.target.value) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
       } else {
         dispatch(
@@ -219,32 +221,23 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
       }
     } else {
       value = v;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(v) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsH) > 1 &&
+        parseInt(v) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsW`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
         );
       } else {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsW`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
         );
       }
     }
-    
 
     if (value > 1) {
       dispatch(
@@ -272,7 +265,6 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
 
   const changeFraming = (index, e) => {
     if (changeValue) {
-
       setLeftStileWidth(fraction(numQty(changeValue)));
       setRightStileWidth(fraction(numQty(changeValue)));
       setTopRailWidth(fraction(numQty(changeValue)));
@@ -283,7 +275,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].leftStile`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
 
       dispatch(
@@ -291,7 +283,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].rightStile`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
 
       dispatch(
@@ -299,7 +291,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].topRail`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
 
       dispatch(
@@ -307,279 +299,336 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].bottomRail`,
           fraction(numQty(changeValue))
-        ),
+        )
       );
     }
-
   };
 
-
-  return (
-    formState ?
-      <div>
-        {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} twoHigh={twoHigh} twoWide={twoWide} dispatch={dispatch} change={change} prices={prices} /> : null}
-        <Fragment>
-          {fields.map((table, index) => (
-            <Fragment key={index}>
-              <hr />
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Label htmlFor="panel"><strong>Line # {index + 1}</strong></Label>
+  return formState ? (
+    <div>
+      {modal ? (
+        <WarningModal
+          toggle={toggle}
+          modal={modal}
+          warningType={warningType}
+          twoHigh={twoHigh}
+          twoWide={twoWide}
+          dispatch={dispatch}
+          change={change}
+          prices={prices}
+        />
+      ) : null}
+      <Fragment>
+        {fields.map((table, index) => (
+          <Fragment key={index}>
+            <hr />
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="panel">
+                    <strong>Line # {index + 1}</strong>
+                  </Label>
+                  <Field
+                    name={`${table}.item`}
+                    type="text"
+                    component={renderFieldDisabled}
+                    label="item"
+                    edit={true}
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="10" />
+            </Row>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Qty</th>
+                  <th>Width</th>
+                  <th>Height</th>
+                  <th>Panel High</th>
+                  <th>Panels Wide</th>
+                  <th>Price</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
                     <Field
-                      name={`${table}.item`}
+                      name={`${table}.qty`}
                       type="text"
-                      component={renderFieldDisabled}
-                      label="item"
-                      edit={true}
+                      component={renderInt}
+                      label="qty"
+                      validate={required}
+                      edit={edit}
                     />
-                  </FormGroup>
-                </Col>
-                <Col xs='10' />
-              </Row>
-              <Table>
-
-                <thead>
-                  <tr>
-                    <th>Qty</th>
-                    <th>Width</th>
-                    <th>Height</th>
-                    <th>Panel High</th>
-                    <th>Panels Wide</th>
-                    <th>Price</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <Field
-                        name={`${table}.qty`}
-                        type="text"
-                        component={renderNumber}
-                        label="qty"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </td>
-                    <td>
-                      <Field
-                        name={`${table}.width`}
-                        type="text"
-                        component={renderNumber}
-                        onBlur={e => w(e, formState.part_list[i].dimensions[index].width, index)}
-                        label="width"
-                        edit={edit}
-                        validate={[ required, minValue6 ]}
-                        warn={minValue6}
-                      />
-                    </td>
-
-                    <td>
-                      <Field
-                        name={`${table}.height`}
-                        type="text"
-                        component={renderNumber}
-                        onBlur={e => h(e, formState.part_list[i].dimensions[index].height, index)}
-                        label="height"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </td>
-
-                    <td>
-                      <Field
-                        name={`${table}.panelsH`}
-                        type="text"
-                        component={renderNumber}
-                        label="horizontalMidRail"
-                        edit={edit}
-                        onChange={(e) => twoHigh(index, e)}
-                      />
-                    </td>
-                    <td>
-                      <Field
-                        name={`${table}.panelsW`}
-                        type="text"
-                        component={renderNumber}
-                        label="verticalMidRail"
-                        edit={edit}
-                        onChange={(e) => twoWide(index, e)}
-                      />
-                    </td>
-                    <td>
-                      {prices[i] ?
-                        <Input
-                          type="text"
-                          disabled={true}
-                          className="form-control"
-                          placeholder={'$' + prices[i][index].toFixed(2) || 0}
-                        /> :
-                        <Input
-                          type="text"
-                          disabled={true}
-                          className="form-control"
-                          placeholder={'$0.00'}
-                        />
+                  </td>
+                  <td>
+                    <Field
+                      name={`${table}.width`}
+                      type="text"
+                      component={renderNumber}
+                      onBlur={(e) =>
+                        w(
+                          e,
+                          formState.part_list[i].dimensions[index].width,
+                          index
+                        )
                       }
+                      label="width"
+                      edit={edit}
+                      validate={[required, minValue6]}
+                      warn={minValue6}
+                    />
+                  </td>
 
-                    </td>
-                    <td>
-                      {!edit ?
-                        <Button color="danger" className="btn-circle" onClick={() => fields.remove(index)}>
-                          X
-                        </Button>
-                        :
-                        <div />
+                  <td>
+                    <Field
+                      name={`${table}.height`}
+                      type="text"
+                      component={renderNumber}
+                      onBlur={(e) =>
+                        h(
+                          e,
+                          formState.part_list[i].dimensions[index].height,
+                          index
+                        )
                       }
-                    </td>
-                  </tr>
+                      label="height"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </td>
 
+                  <td>
+                    <Field
+                      name={`${table}.panelsH`}
+                      type="text"
+                      component={renderNumber}
+                      label="horizontalMidRail"
+                      edit={edit}
+                      onChange={(e) => twoHigh(index, e)}
+                    />
+                  </td>
+                  <td>
+                    <Field
+                      name={`${table}.panelsW`}
+                      type="text"
+                      component={renderNumber}
+                      label="verticalMidRail"
+                      edit={edit}
+                      onChange={(e) => twoWide(index, e)}
+                    />
+                  </td>
+                  <td>
+                    {prices[i] ? (
+                      <Input
+                        type="text"
+                        disabled={true}
+                        className="form-control"
+                        placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                      />
+                    ) : (
+                      <Input
+                        type="text"
+                        disabled={true}
+                        className="form-control"
+                        placeholder={'$0.00'}
+                      />
+                    )}
+                  </td>
+                  <td>
+                    {!edit ? (
+                      <Button
+                        color="danger"
+                        className="btn-circle"
+                        onClick={() => fields.remove(index)}
+                      >
+                        X
+                      </Button>
+                    ) : (
+                      <div />
+                    )}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>
+                      <p>Left Stile</p>
+                    </strong>
+                    <Field
+                      name={`${table}.leftStile`}
+                      type="text"
+                      component={renderNumber}
+                      label="leftStile"
+                      edit={edit}
+                      validate={required}
+                      onChange={(e) => (
+                        registerChange(index, e),
+                        setLeftStileWidth(e.target.value)
+                      )}
+                    />
+                  </td>
+                  <td>
+                    <strong>
+                      <p>Right Stile</p>
+                    </strong>
+                    <Field
+                      name={`${table}.rightStile`}
+                      type="text"
+                      component={renderNumber}
+                      label="rightStile"
+                      edit={edit}
+                      validate={required}
+                      onChange={(e) => (
+                        registerChange(index, e),
+                        setRightStileWidth(e.target.value)
+                      )}
+                    />
+                  </td>
+                  <td>
+                    <strong>
+                      <p>Top Rail</p>
+                    </strong>
+                    <Field
+                      name={`${table}.topRail`}
+                      type="text"
+                      component={renderNumber}
+                      label="topRail"
+                      edit={edit}
+                      validate={required}
+                      onChange={(e) => (
+                        registerChange(index, e),
+                        setTopRailWidth(e.target.value)
+                      )}
+                    />
+                  </td>
+                  <td>
+                    <strong>
+                      <p>Bottom Rail</p>
+                    </strong>
+                    <Field
+                      name={`${table}.bottomRail`}
+                      type="text"
+                      component={renderNumber}
+                      label="bottomRail"
+                      edit={edit}
+                      validate={required}
+                      onChange={(e) => (
+                        registerChange(index, e),
+                        setBottomRailWidth(e.target.value)
+                      )}
+                    />
+                  </td>
+                  <td>
+                    <strong>
+                      <p>Hori. Mid Rail</p>
+                    </strong>
+                    <Field
+                      name={`${table}.horizontalMidRailSize`}
+                      type="text"
+                      component={renderNumber}
+                      label="horizontalMidRail"
+                      edit={edit}
+                    />
+                  </td>
+                  <td>
+                    <strong>
+                      <p>Vert. Mid Rail</p>
+                    </strong>
+                    <Field
+                      name={`${table}.verticalMidRailSize`}
+                      type="text"
+                      component={renderNumber}
+                      label="verticalMidRail"
+                      edit={edit}
+                    />
+                  </td>
+                </tr>
+                {!edit ? (
                   <tr>
                     <td>
-                      <strong>
-                        <p>Left Stile</p>
-                      </strong>
-                      <Field
-                        name={`${table}.leftStile`}
-                        type="text"
-                        component={renderNumber}
-                        label="leftStile"
-                        edit={edit}
-                        validate={required}
-                        onChange={(e) => (registerChange(index, e), setLeftStileWidth(e.target.value))}
-                      />
-                    </td>
-                    <td>
-                      <strong>
-                        <p>Right Stile</p>
-                      </strong>
-                      <Field
-                        name={`${table}.rightStile`}
-                        type="text"
-                        component={renderNumber}
-                        label="rightStile"
-                        edit={edit}
-                        validate={required}
-                        onChange={(e) => (registerChange(index, e), setRightStileWidth(e.target.value))}
-                      />
-                    </td>
-                    <td>
-                      <strong>
-                        <p>Top Rail</p>
-                      </strong>
-                      <Field
-                        name={`${table}.topRail`}
-                        type="text"
-                        component={renderNumber}
-                        label="topRail"
-                        edit={edit}
-                        validate={required}
-                        onChange={(e) => (registerChange(index, e), setTopRailWidth(e.target.value))}
-                      />
-                    </td>
-                    <td>
-                      <strong>
-                        <p>Bottom Rail</p>
-                      </strong>
-                      <Field
-                        name={`${table}.bottomRail`}
-                        type="text"
-                        component={renderNumber}
-                        label="bottomRail"
-                        edit={edit}
-                        validate={required}
-                        onChange={(e) => (registerChange(index, e), setBottomRailWidth(e.target.value))}
-                      />
-                    </td>
-                    <td>
-                      <strong>
-                        <p>Hori. Mid Rail</p>
-                      </strong>
-                      <Field
-                        name={`${table}.horizontalMidRailSize`}
-                        type="text"
-                        component={renderNumber}
-                        label="horizontalMidRail"
-                        edit={edit}
-
-                      />
-                    </td>
-                    <td>
-                      <strong>
-                        <p>Vert. Mid Rail</p>
-                      </strong>
-                      <Field
-                        name={`${table}.verticalMidRailSize`}
-                        type="text"
-                        component={renderNumber}
-                        label="verticalMidRail"
-                        edit={edit}
-
-                      />
+                      <Button
+                        onClick={() => changeFraming(index)}
+                        color="primary"
+                      >
+                        Update Framing
+                      </Button>
                     </td>
                   </tr>
-                  {!edit ?
-                    <tr>
-                      <td>
-                        <Button onClick={() => changeFraming(index)} color='primary'>Update Framing</Button>
-                      </td>
-                    </tr> : null
-                  }
-                  <Row>
-                    <p className="ml-3">*Finish Stile/Rail Sizes*</p>
-                  </Row>
-                  <tr />
-                </tbody>
+                ) : null}
+                <Row>
+                  <p className="ml-3">*Finish Stile/Rail Sizes*</p>
+                </Row>
+                <tr />
+              </tbody>
+            </Table>
 
-              </Table>
-
-
-
-
-
-              <Row>
-                <Col lg='9'>
-
-                  <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
-                </Col>
-                <Col>
-                  {!edit ?
-                    (parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 && parseInt(formState.part_list[i].dimensions[index].panelsW) === 1) ? <Field name={`${table}.unevenCheck`} component={renderCheckboxToggle} label="Uneven Split" /> : null
-                    :
-                    null
-                  }
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
-
-                  {(formState.part_list[i].dimensions[index].showBuilder) ?
-                    <div id={`makerJS${index}`} style={{ width: '100%', height: '300px' }}>
-                      <Maker
-                        width={width[index]}
-                        height={height[index]}
-                        i={i}
-                        index={index}
-                        style={{ width: '100%', height: '300px' }}
+            <Row>
+              <Col lg="9">
+                <Field
+                  name={`${table}.showBuilder`}
+                  component={renderCheckboxToggle}
+                  label="Show Builder"
+                />
+              </Col>
+              <Col>
+                {!edit ? (
+                  parseInt(formState.part_list[i].dimensions[index].panelsH) >
+                    1 &&
+                  parseInt(formState.part_list[i].dimensions[index].panelsW) ===
+                    1 ? (
+                      <Field
+                        name={`${table}.unevenCheck`}
+                        component={renderCheckboxToggle}
+                        label="Uneven Split"
                       />
-                    </div> : <div />
-                  }
+                    ) : null
+                ) : null}
+              </Col>
+            </Row>
 
+            <Row>
+              <Col>
+                {formState.part_list[i].dimensions[index].showBuilder ? (
+                  <div
+                    id={`makerJS${index}`}
+                    style={{ width: '100%', height: '300px' }}
+                  >
+                    <Maker
+                      width={width[index]}
+                      height={height[index]}
+                      i={i}
+                      index={index}
+                      style={{ width: '100%', height: '300px' }}
+                    />
+                  </div>
+                ) : (
+                  <div />
+                )}
+              </Col>
+            </Row>
 
-                </Col>
-              </Row>
-
-              {formState.part_list[i].dimensions[index].unevenCheck ?
-                <div className='mb-3'>
-                  <Row>
-                    {Array.from(Array(parseInt(formState.part_list[i].dimensions[index].panelsH)).keys()).slice(1).map((i, index) => {
+            {formState.part_list[i].dimensions[index].unevenCheck ? (
+              <div className="mb-3">
+                <Row>
+                  {Array.from(
+                    Array(
+                      parseInt(formState.part_list[i].dimensions[index].panelsH)
+                    ).keys()
+                  )
+                    .slice(1)
+                    .map((i, index) => {
                       return (
                         <div>
                           <Col />
                           <Col>
-                            <p style={{ textAlign: 'center', marginTop: '10px' }}><strong>Panel Opening {index + 1}</strong></p>
+                            <p
+                              style={{ textAlign: 'center', marginTop: '10px' }}
+                            >
+                              <strong>Panel Opening {index + 1}</strong>
+                            </p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
                               component={renderNumber}
@@ -590,102 +639,112 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                         </div>
                       );
                     })}
-                  </Row>
-                </div>
-                : null
-              }
+                </Row>
+              </div>
+            ) : null}
 
-              <Row>
-                <Col xs="4">
-                  <strong>Notes</strong>
-                  <Field
-                    name={`${table}.notes`}
-                    type="textarea"
-                    component={renderField}
-                    edit={edit}
-                    label="notes"
+            <Row>
+              <Col xs="4">
+                <strong>Notes</strong>
+                <Field
+                  name={`${table}.notes`}
+                  type="textarea"
+                  component={renderField}
+                  edit={edit}
+                  label="notes"
+                />
+              </Col>
+              <Col xs="5" />
+              <Col xs="3">
+                <strong>Extra Design Cost</strong>
+                {addPrice[i] ? (
+                  <Input
+                    type="text"
+                    className="form-control"
+                    disabled={true}
+                    placeholder={'$' + addPrice[i][index].toFixed(2) || 0}
                   />
-                </Col>
-                <Col xs='5' />
-                <Col xs='3'>
-                  <strong>Extra Design Cost</strong>
-                  {addPrice[i] ? 
-                    <Input
-                      type="text"
-                      className="form-control"
-                      disabled={true}
-                      placeholder={'$' + addPrice[i][index].toFixed(2) || 0}
-                    /> : 
-                    <Input
-                      type="text"
-                      className="form-control"
-                      disabled={true}
-                      placeholder={'$0.00'}
-                    />
-                  } 
-                </Col>
+                ) : (
+                  <Input
+                    type="text"
+                    className="form-control"
+                    disabled={true}
+                    placeholder={'$0.00'}
+                  />
+                )}
+              </Col>
+            </Row>
+            <br />
+          </Fragment>
+        ))}
+        <Row>
+          <Col>
+            {!edit ? (
+              <Button
+                color="primary"
+                className="btn-circle"
+                onClick={(e) =>
+                  formState.part_list[i].construction.value === 'M' &&
+                  formState.part_list[i].miter_design
+                    ? fields.push({
+                      qty: 1,
+                      panelsH: 1,
+                      panelsW: 1,
+                      leftStile: leftStileWidth
+                        ? fraction(numQty(leftStileWidth))
+                        : fraction(
+                          formState.part_list[i].miter_design.PROFILE_WIDTH
+                        ),
+                      rightStile: rightStileWidth
+                        ? fraction(numQty(rightStileWidth))
+                        : fraction(
+                          formState.part_list[i].miter_design.PROFILE_WIDTH
+                        ),
+                      topRail: topRailWidth
+                        ? fraction(numQty(topRailWidth))
+                        : fraction(
+                          formState.part_list[i].miter_design.PROFILE_WIDTH
+                        ),
+                      bottomRail: bottomRailWidth
+                        ? fraction(numQty(bottomRailWidth))
+                        : fraction(
+                          formState.part_list[i].miter_design.PROFILE_WIDTH
+                        ),
+                      horizontalMidRailSize: 0,
+                      verticalMidRailSize: 0,
+                      unevenSplitInput: '0',
+                      unevenSplit: false,
+                      unevenCheck: false,
+                      showBuilder: false,
+                      item: fields.length + 1,
+                    })
+                    : alert('please select a profile')
+                }
+              >
+                +
+              </Button>
+            ) : (
+              <div />
+            )}
+          </Col>
+        </Row>
 
-              </Row>
-              <br />
-            </Fragment>
-          ))}
-          <Row>
-            <Col>
-              {!edit ?
-                <Button
-                  color="primary"
-                  className="btn-circle"
-                  onClick={(e) =>
-                    (
-                      (formState.part_list[i].construction.value === 'M' && formState.part_list[i].miter_design) ?
-                        fields.push({
-                          qty:1,
-                          panelsH: 1,
-                          panelsW: 1,
-                          leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
-                            formState.part_list[i].miter_design.PROFILE_WIDTH
-                          ),
-                          rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
-                            formState.part_list[i].miter_design.PROFILE_WIDTH
-                          ),
-                          topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
-                            formState.part_list[i].miter_design.PROFILE_WIDTH
-                          ),
-                          bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
-                            formState.part_list[i].miter_design.PROFILE_WIDTH
-                          ),
-                          horizontalMidRailSize: 0,
-                          verticalMidRailSize: 0,
-                          unevenSplitInput: '0',
-                          unevenSplit: false,
-                          unevenCheck: false,
-                          showBuilder: false,
-                          item: fields.length + 1
-                        })
-                        : alert('please select a profile')
-                    )}
-                >
-                  +
-                </Button> : <div />
-              }
-
-            </Col>
-          </Row>
-
-          <Row>
-            <Col xs="4" />
-            <Col xs="5" />
-            <Col xs="3">
-              <strong>Sub Total: </strong>
-              {subTotal[i] ? (
-                <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
-              ) : (
-                <RenderPriceHolder input={'0.00'} edit={true} />
-              )}
-            </Col>
-          </Row>
-        </Fragment>
-      </div> : <div />
+        <Row>
+          <Col xs="4" />
+          <Col xs="5" />
+          <Col xs="3">
+            <strong>Sub Total: </strong>
+            {subTotal[i] ? (
+              <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
+            ) : (
+              <RenderPriceHolder input={'0.00'} edit={true} />
+            )}
+          </Col>
+        </Row>
+      </Fragment>
+    </div>
+  ) : (
+    <div />
   );
 };
 
