@@ -9,7 +9,8 @@ import {
   ADD_MISC_ITEM,
   MISC_ITEM_ADDED,
   MISC_ITEM_DELETED,
-  MISC_ITEM_UPDATED
+  MISC_ITEM_UPDATED,
+  LOAD_CATEGORIES
 } from './actions';
 
 const initialState = {
@@ -21,7 +22,9 @@ const initialState = {
   loadedPaymentTypes: false,
   loadedPaymentTerms: false,
   loadedShippingMethods: false,
-  loadedMiscItems: false
+  loadedMiscItems: false,
+  categories: [],
+  loadedCategories: false,
 };
 
 export default function (state = initialState, action) {
@@ -67,6 +70,12 @@ export default function (state = initialState, action) {
         ...state,
         shippingMethods: data,
         loadedShippingMethods: true
+      };
+    case LOAD_CATEGORIES:
+      return {
+        ...state,
+        categories: data,
+        loadedCategories: true
       };
     case MISC_ITEM_UPDATED:
       return {

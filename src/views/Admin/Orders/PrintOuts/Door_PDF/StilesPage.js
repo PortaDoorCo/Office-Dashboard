@@ -1,10 +1,8 @@
 import moment from 'moment';
 import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 
-
 export default (data, breakdowns) => {
   return data.part_list.map((i, index) => {
-
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -12,28 +10,63 @@ export default (data, breakdowns) => {
         { text: 'Qty', style: 'fonts' },
         { text: 'Width x Length', style: 'fonts' },
         // { text: '' }
-      ]
+      ],
     ];
     i.dimensions.forEach((item, index) => {
-    
-
       tableBody.push([
         { text: index + 1, style: 'fonts' },
-        { text: `${i.cope_design ? i.cope_design.NAME : i.mt_design ? i.mt_design.NAME + ' ' + i.construction.value : i.miter_design ? i.miter_design.NAME + ' ' + i.construction.value :  i.miter_df_design ? i.miter_df_design.NAME + ' ' + i.construction.value : i.mt_df_design ? i.mt_df_design.NAME + ' ' + i.construction.value : i.construction.name} - ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
-        { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.qty} \n`; }), style: 'fonts' },
-        { text: Stiles(item, i, breakdowns).map(stile => { return `${stile.measurement} \n`; }), style: 'fonts' },
+        {
+          text: `${
+            i.cope_design
+              ? i.cope_design.NAME
+              : i.mt_design
+                ? i.mt_design.NAME + ' ' + i.construction.value
+                : i.miter_design
+                  ? i.miter_design.NAME + ' ' + i.construction.value
+                  : i.miter_df_design
+                    ? i.miter_df_design.NAME + ' ' + i.construction.value
+                    : i.mt_df_design
+                      ? i.mt_df_design.NAME + ' ' + i.construction.value
+                      : i.construction.name
+          } - ${i.panel ? i.panel.NAME : 'Glass'}`,
+          style: 'fonts',
+        },
+        {
+          text: Stiles(item, i, breakdowns).map((stile) => {
+            return `${stile.qty} \n`;
+          }),
+          style: 'fonts',
+        },
+        {
+          text: Stiles(item, i, breakdowns).map((stile) => {
+            return `${stile.measurement} \n`;
+          }),
+          style: 'fonts',
+        },
         // { text: '' }
       ]);
     });
 
-    if(i.orderType.value === 'One_Piece' || i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF') {
+    if (
+      i.orderType.value === 'One_Piece' ||
+      i.orderType.value === 'One_Piece_DF' ||
+      i.orderType.value === 'Two_Piece' ||
+      i.orderType.value === 'Two_Piece_DF' ||
+      i.orderType.value === 'Slab_Door' ||
+      i.orderType.value === 'Slab_DF'
+    ) {
       return null;
     } else {
       return [
         {
           columns: [
             {
-              stack: ['Individual - STILES List', `Shipping Date: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`,]
+              stack: [
+                'Individual - STILES List',
+                `Shipping Date: ${moment(data.job_info.DueDate).format(
+                  'MM/DD/YYYY'
+                )}`,
+              ],
             },
             {
               stack: [
@@ -41,17 +74,33 @@ export default (data, breakdowns) => {
                 { text: '65 Cogwheel Lane', alignment: 'center' },
                 { text: 'Seymour, CT', alignment: 'center' },
                 { text: '203-888-6191', alignment: 'center' },
-                { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-              ]
+                { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+              ],
             },
             {
               stack: [
-                { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+                {
+                  text:
+                    data.job_info.Rush && data.job_info.Sample
+                      ? 'Sample / Rush'
+                      : data.job_info.Rush
+                        ? 'Rush'
+                        : data.job_info.Sample
+                          ? 'Sample'
+                          : '',
+                  alignment: 'right',
+                  bold: true,
+                },
                 { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-                { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
-              ]
-            }
-          ]
+                {
+                  text: `Est. Completion: ${moment(
+                    data.job_info.DueDate
+                  ).format('MM/DD/YYYY')}`,
+                  alignment: 'right',
+                },
+              ],
+            },
+          ],
         },
         {
           columns: [
@@ -60,14 +109,16 @@ export default (data, breakdowns) => {
             },
             {
               stack: [
-                { text: `PO: ${data.job_info.poNum}`, alignment: 'right', }
-              ]
+                { text: `PO: ${data.job_info.poNum}`, alignment: 'right' },
+              ],
             },
           ],
-          margin: [0, 10]
+          margin: [0, 10],
         },
         {
-          canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
+          canvas: [
+            { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 },
+          ],
         },
         [
           {
@@ -77,46 +128,46 @@ export default (data, breakdowns) => {
               {
                 text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
                 style: 'woodtype',
-                alignment: 'left'
+                alignment: 'left',
               },
               {
                 text: '',
-                alignment: 'left'
+                alignment: 'left',
               },
               {
                 text: '',
-                alignment: 'left'
+                alignment: 'left',
               },
               {
                 text: 'STILES',
                 alignment: 'right',
-                style: 'woodtype'
-              }
-            ]
+                style: 'woodtype',
+              },
+            ],
           },
           {
             canvas: [
-              { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }
+              { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 },
             ],
-            margin: [0, 10, 0, 0]
+            margin: [0, 10, 0, 0],
           },
           {
             table: {
               headerRows: 1,
               widths: [22, 130, '*', '*'],
-              body: tableBody
+              body: tableBody,
             },
-            layout: 'lightHorizontalLines'
+            layout: 'lightHorizontalLines',
           },
           {
-            canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
-          }
+            canvas: [
+              { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 },
+            ],
+          },
         ],
 
-        { text: '', pageBreak: 'before' }
+        { text: '', pageBreak: 'before' },
       ];
     }
   });
-
-
 };

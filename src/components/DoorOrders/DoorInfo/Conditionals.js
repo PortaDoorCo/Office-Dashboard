@@ -8,7 +8,6 @@ import CopeDF from './Cope/DF';
 import MiterDF from './Miter/DF';
 import MT_DF from './MT/DF';
 import FaceFrame from './Face_Frame/FaceFrame';
-import OnePieceDoor from './One_Piece/One_Piece';
 import SlabDoor from './Slab_Door/Slab_Door';
 import SlabDF from './Slab_Door/Slab_DF';
 import GlassDF from './Glass/Glass_DF';
@@ -21,14 +20,6 @@ import GlassMTDF from './Glass/MT/DF';
 
 import GlassMitreDoor from './Glass/Mitre/Door';
 import GlassMitreDF from './Glass/Mitre/DF';
-
-import OnePieceCopeDoor from './One_Piece/Cope/Door';
-import OnePieceMTDoor from './One_Piece/MT/Door';
-import OnePieceMitreDoor from './One_Piece/Mitre/Door';
-
-import TwoPieceCopeDoor from './Two_Piece/Cope/Door';
-import TwoPieceMTDoor from './Two_Piece/MT/Door';
-import TwoPieceMitreDoor from './Two_Piece/Mitre/Door';
 
 
 
@@ -60,6 +51,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'M':
@@ -70,6 +62,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'MT':
@@ -80,6 +73,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'Glass':
@@ -90,6 +84,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             default:
@@ -106,6 +101,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'M':
@@ -116,6 +112,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'MT':
@@ -126,6 +123,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'Glass':
@@ -136,6 +134,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             default:
@@ -152,6 +151,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'M':
@@ -162,6 +162,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'MT':
@@ -172,6 +173,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             default:
@@ -188,6 +190,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'M':
@@ -198,6 +201,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             case 'MT':
@@ -208,6 +212,7 @@ class Conditionals extends Component {
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={false}
               />;
               break;
             default:
@@ -222,38 +227,81 @@ class Conditionals extends Component {
             part_list={part_list}
             formState={formState}
             edit={edit}
+            one_piece={false}
           />;
           break;
         case 'One_Piece':
           switch (formState.part_list[index].construction.value) {
             case 'Cope':
-              component = <OnePieceCopeDoor
+              component = <CopeDoor
                 part={part}
                 index={index}
                 isValid={isValid}
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={true}
               />;
               break;
             case 'M':
-              component = <OnePieceMitreDoor
+              component = <MiterDoor
                 part={part}
                 index={index}
                 isValid={isValid}
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={true}
               />;
               break;
             case 'MT':
-              component = <OnePieceMTDoor
+              component = <MTDoor
                 part={part}
                 index={index}
                 isValid={isValid}
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={true}
+              />;
+              break;
+            default:
+              return;
+          }
+          break;
+        case 'One_Piece_DF':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <CopeDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={true}
+              />;
+              break;
+            case 'M':
+              component = <MiterDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={true}
+              />;
+              break;
+            case 'MT':
+              component = <MT_DF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={true}
               />;
               break;
             default:
@@ -263,33 +311,75 @@ class Conditionals extends Component {
         case 'Two_Piece':
           switch (formState.part_list[index].construction.value) {
             case 'Cope':
-              component = <TwoPieceCopeDoor
+              component = <CopeDoor
                 part={part}
                 index={index}
                 isValid={isValid}
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={true}
               />;
               break;
             case 'M':
-              component = <TwoPieceMitreDoor
+              component = <MiterDoor
                 part={part}
                 index={index}
                 isValid={isValid}
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={true}
               />;
               break;
             case 'MT':
-              component = <TwoPieceMTDoor
+              component = <MTDoor
                 part={part}
                 index={index}
                 isValid={isValid}
                 part_list={part_list}
                 formState={formState}
                 edit={edit}
+                one_piece={true}
+              />;
+              break;
+            default:
+              return;
+          }
+          break;
+        case 'Two_Piece_DF':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <CopeDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={true}
+              />;
+              break;
+            case 'M':
+              component = <MiterDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={true}
+              />;
+              break;
+            case 'MT':
+              component = <MT_DF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={true}
               />;
               break;
             default:
@@ -304,6 +394,7 @@ class Conditionals extends Component {
             part_list={part_list}
             formState={formState}
             edit={edit}
+            one_piece={false}
           />;
           break;
         case 'Slab_DF':
@@ -314,6 +405,7 @@ class Conditionals extends Component {
             part_list={part_list}
             formState={formState}
             edit={edit}
+            one_piece={false}
           />;
           break;
         default:

@@ -78,7 +78,16 @@ export default (info, part, breakdowns) => {
     return One_Piece_Door(info,part, breakdowns[0]);
   }
 
+  if (part.orderType.value === 'One_Piece_DF') {
+    return One_Piece_Door(info,part, breakdowns[0]);
+  }
+
+
   if (part.orderType.value === 'Two_Piece') {
+    return One_Piece_Door(info,part, breakdowns[0]);
+  }
+
+  if (part.orderType.value === 'Two_Piece_DF') {
     return One_Piece_Door(info,part, breakdowns[0]);
   }
 

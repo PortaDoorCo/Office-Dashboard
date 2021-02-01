@@ -113,8 +113,11 @@ class MiterDoor extends Component {
       formState,
       prices,
       subTotal,
-      edit
+      edit,
+      one_piece
     } = this.props;
+
+    const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
     return (
       <div>
         <Row>
@@ -124,7 +127,7 @@ class MiterDoor extends Component {
               <Field
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
-                data={woodtypes}
+                data={one_piece ? one_piece_wood : woodtypes}
                 valueField="value"
                 textField="NAME"
                 validate={required}

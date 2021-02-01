@@ -12,6 +12,7 @@ export const ADD_MISC_ITEM = 'ADD_MISC_ITEM';
 export const MISC_ITEM_DELETED = 'MISC_ITEM_DELETED';
 export const MISC_ITEM_ADDED = 'MISC_ITEM_ADDED';
 export const MISC_ITEM_UPDATED = 'MISC_ITEM_UPDATED';
+export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 
 export function loadShippingMethod(cookie) {
   return async function (dispatch) {
@@ -23,6 +24,21 @@ export function loadShippingMethod(cookie) {
     const data = await res.json();
     return dispatch({
       type: LOAD_SHIPPING_METHODS,
+      data: data
+    });
+  };
+}
+
+export function loadCategories(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/category`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
+    const data = await res.json();
+    return dispatch({
+      type: LOAD_CATEGORIES,
       data: data
     });
   };
