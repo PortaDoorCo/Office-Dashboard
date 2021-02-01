@@ -52,11 +52,9 @@ let Inputs = (props) => {
     if(e.count_items){
       
       const categories = e.categories.map(i => i.value);
-      const orderType = formState.part_list.map(i => i.orderType.value);
+      const orderType = formState.part_list.map(i => i.orderType.value.includes('Door'));
       console.log({orderType});
       console.log({categories});
-
-      console.log(_.filter(orderType, categories));
     }
   };
 
