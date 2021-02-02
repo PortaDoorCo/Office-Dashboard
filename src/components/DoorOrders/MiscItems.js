@@ -42,6 +42,12 @@ const currencyMask = createNumberMask({
 let Inputs = (props) => {
   const { fields, misc_items, formState, linePrices, miscTotal } = props;
 
+  let misc_items_category = ['Accessories'];
+
+  let sorted_misc_items = misc_items.filter(i => i.categories.filter(j => misc_items_category.includes(j.value) > 0));
+
+  console.log({sorted_misc_items});
+
   const changeMiscItem = (e, index) => {
 
     let total_qty = 0;
@@ -52,6 +58,7 @@ let Inputs = (props) => {
       const categories = e.categories.map(i => i.value);
       if(categories.includes('Door')){
         const matched_orders = formState.part_list.filter(i => ['Door', 'Glass', 'One_Piece', 'Two_Piece', 'Slab_Door', 'Face_Frame'].includes(i.orderType.value));
+        misc_items_category = matched_orders;
         const quantities = matched_orders.map(i => {
           const qty = i.dimensions.map(j => {
             return parseInt(j.qty);
@@ -64,6 +71,7 @@ let Inputs = (props) => {
       }
       if(categories.includes('DF')){
         const matched_orders = formState.part_list.filter(i => ['DF', 'Glass_DF', 'One_Piece_DF', 'Two_Piece_DF', 'Slab_DF'].includes(i.orderType.value));
+        misc_items_category = ['DF', 'Accessories'];
         const quantities = matched_orders.map(i => {
           const qty = i.dimensions.map(j => {
             return parseInt(j.qty);
@@ -74,7 +82,7 @@ let Inputs = (props) => {
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
         total_qty = total_qty+sub_quantity;
       }
-      props.dispatch(change('DoorOrder', `misc_items[${index}].qty`, total_qty));
+      props.dispatch(change('DoorOrder', `misc_items[${index}].qty`, total_qty > 0 ? total_qty : 1));
     }
   };
 
