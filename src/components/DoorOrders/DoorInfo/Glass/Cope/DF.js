@@ -104,10 +104,8 @@ class CopeDF extends Component {
       woodtypes,
       edges,
       profiles,
-
+      cope_designs,
       applied_moulds,
-      finishes,
-      lites,
       isValid,
       index,
       part_list,
@@ -135,13 +133,13 @@ class CopeDF extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="12"  md='12' lg='4'>
             <FormGroup>
-              <Label htmlFor="design">Lites</Label>
+              <Label htmlFor="design">Design</Label>
               <Field
-                name={`${part}.lite`}
+                name={`${part}.cope_design`}
                 component={renderDropdownListFilter}
-                data={lites}
+                data={cope_designs}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -149,6 +147,7 @@ class CopeDF extends Component {
               />
             </FormGroup>
           </Col>
+
 
           <Col xs="12" md='12' lg="4">
             <FormGroup>
@@ -251,6 +250,8 @@ const mapStateToProps = state => ({
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_profiles,
   lites:state.part_list.lites,
+
+  cope_designs: state.part_list.cope_designs,
 
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
