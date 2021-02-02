@@ -44,19 +44,37 @@ let Inputs = (props) => {
 
   const changeMiscItem = (e, index) => {
 
-    console.log({e});
-    console.log({formState});
+    let total_qty = 0;
 
     props.dispatch(change('DoorOrder', `misc_items[${index}].price`, e.Price));
 
     if(e.count_items){
-      
       const categories = e.categories.map(i => i.value);
-      const orderType = formState.part_list.map(i => i.orderType.value);
-      console.log({orderType});
-      console.log({categories});
-
-      console.log(_.filter(orderType, categories));
+      if(categories.includes('Door')){
+        const matched_orders = formState.part_list.filter(i => ['Door', 'Glass', 'One_Piece', 'Two_Piece', 'Slab_Door', 'Face_Frame'].includes(i.orderType.value));
+        const quantities = matched_orders.map(i => {
+          const qty = i.dimensions.map(j => {
+            return parseInt(j.qty);
+          });
+          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          return sub_total_qty;
+        });
+        const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
+        total_qty = total_qty + sub_quantity;
+      }
+      if(categories.includes('DF')){
+        const matched_orders = formState.part_list.filter(i => ['DF', 'Glass_DF', 'One_Piece_DF', 'Two_Piece_DF', 'Slab_DF'].includes(i.orderType.value));
+        const quantities = matched_orders.map(i => {
+          const qty = i.dimensions.map(j => {
+            return parseInt(j.qty);
+          });
+          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          return sub_total_qty;
+        });
+        const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
+        total_qty = total_qty+sub_quantity;
+      }
+      props.dispatch(change('DoorOrder', `misc_items[${index}].qty`, total_qty));
     }
   };
 
@@ -76,14 +94,14 @@ let Inputs = (props) => {
           {fields.map((table, index) => {
             return (
               <tr key={index}>
-                <td style={{ width: '90px' }}>
+                <td style={{ width: '10%' }}>
                   <Field
                     name={`${table}.qty`}
                     component={renderInt}
                     type="text"
                   />
                 </td>
-                <td style={{ width: '400px' }}>
+                <td style={{ width: '40%' }}>
                   {formState &&
                   formState.misc_items &&
                   formState.misc_items[index] &&
@@ -110,7 +128,7 @@ let Inputs = (props) => {
                 formState.misc_items[index] &&
                 formState.misc_items[index].category === 'preselect' ? (
                     <>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '25%' }}>
                         <InputGroup>
                           <Field
                             name={`${table}.price`}
@@ -121,7 +139,7 @@ let Inputs = (props) => {
                           />
                         </InputGroup>
                       </td>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '25%' }}>
                         <InputGroup>
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>$</InputGroupText>
@@ -139,7 +157,7 @@ let Inputs = (props) => {
                     </>
                   ) : (
                     <>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '25%' }}>
                         <Field
                           name={`${table}.pricePer`}
                           component={renderPrice}
@@ -148,7 +166,7 @@ let Inputs = (props) => {
                           {...currencyMask}
                         />
                       </td>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '25%' }}>
                         <InputGroup>
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>$</InputGroupText>
