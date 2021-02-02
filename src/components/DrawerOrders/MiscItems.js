@@ -47,6 +47,10 @@ let Inputs = (props) => {
     miscTotal,
   } = props;
 
+  let misc_items_category = ['Accessories', 'Drawer_Box'];
+
+  let sorted_misc_items = misc_items.filter(e => e.categories.some(c => misc_items_category.includes(c.value)));
+
   const changeMiscItem = (e, index) => {
 
     console.log({e});
@@ -105,7 +109,7 @@ let Inputs = (props) => {
                       <Field
                         name={`${table}.item`}
                         component={renderDropdownListFilter}
-                        data={misc_items}
+                        data={sorted_misc_items}
                         onChange={(e) => changeMiscItem(e, index)}
                         valueField="value"
                         textField="NAME"
