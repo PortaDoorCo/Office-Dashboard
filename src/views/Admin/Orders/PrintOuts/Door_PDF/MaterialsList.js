@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { flattenDeep, uniq, uniqBy } from 'lodash';
+import { flattenDeep, uniq, uniqBy, flatten } from 'lodash';
 import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
 import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
@@ -11,9 +11,31 @@ export default (data, breakdowns) => {
   console.log(
     'heydceddd==>>>',
     uniq(
-      flattenDeep(data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile])))
+      (data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.width, j.height])))
     )
   );
+
+  const uniques = uniq(
+    flattenDeep(data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile])))
+  );
+
+  const flattenedItems= flatten(data.part_list.map(i => i.dimensions));
+  console.log('finallll==>>', uniques.map(i => {
+    return {
+      [i]: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile].includes(i))
+    };
+  }));
+
+  console.log(
+    'hesssydceddd==>>>',
+    flatten(data.part_list.map(i => i.dimensions))//.filter((e) => uniques.some(f => [e.topRail, e.bottomRail, e.leftStile, e.rightStile].includes(f))), 'item')
+    
+  );
+
+  /*uniq(
+    flattenDeep(data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile])))
+  )
+  */
 
   return [
     {
