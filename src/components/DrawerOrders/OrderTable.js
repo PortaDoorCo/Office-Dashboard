@@ -32,7 +32,18 @@ class OrderTable extends Component {
       subTotal,
       formState,
       edit,
+      dispatch
     } = this.props;
+
+    const clearNotes = (index, e) => {
+      dispatch(
+        change(
+          'DrawerOrder',
+          `part_list[${i}].dimensions[${index}].notes`,
+          ''
+        )
+      );
+    };
 
     return formState ? (
       <div>
@@ -174,13 +185,21 @@ class OrderTable extends Component {
               <Row>
                 <Col xs="4">
                   <strong>Notes</strong>
-                  <Field
-                    name={`${table}.notes`}
-                    type="textarea"
-                    component={renderField}
-                    edit={edit}
-                    label="notes"
-                  />
+                  <Row>
+                    <Col lg='11'>
+                      <Field
+                        name={`${table}.notes`}
+                        type="textarea"
+                        component={renderField}
+                        edit={edit}
+                        label="notes"
+                      />
+                    </Col>
+                    <Col lg='1'>
+                      <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
+                    </Col>
+                  </Row>
+
                 </Col>
                 <Col xs="5" />
                 <Col xs="3">
@@ -237,12 +256,4 @@ class OrderTable extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      setMain: (table) => dispatch(change('DrawerOrder', `${table}.price`, 5)),
-    },
-    dispatch
-  );
-
-export default connect(null, mapDispatchToProps)(OrderTable);
+export default connect()(OrderTable);

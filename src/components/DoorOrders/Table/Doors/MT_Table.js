@@ -257,6 +257,16 @@ const MT_Table = ({
     }
   };
 
+  const clearNotes = (index, e) => {
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].notes`,
+        ''
+      )
+    );
+  };
+
   const registerChange = (index, e) => {
     const value = e.target.value;
     setChangeValue(value);
@@ -645,13 +655,20 @@ const MT_Table = ({
             <Row>
               <Col xs="4">
                 <strong>Notes</strong>
-                <Field
-                  name={`${table}.notes`}
-                  type="textarea"
-                  component={renderField}
-                  edit={edit}
-                  label="notes"
-                />
+                <Row>
+                  <Col lg='11'>
+                    <Field
+                      name={`${table}.notes`}
+                      type="textarea"
+                      component={renderField}
+                      edit={edit}
+                      label="notes"
+                    />
+                  </Col>
+                  <Col lg='1'>
+                    <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
+                  </Col>
+                </Row>
               </Col>
               <Col xs="5" />
               <Col xs="3">
