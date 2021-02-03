@@ -143,7 +143,10 @@ const Cope_Table = ({
 
     if(e){
       value = e.target.value;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsW) > 1) && (parseInt(e.target.value) > 1) ){
+
+      console.log({ aaa: part.dimensions[index]});
+
+      if((part.dimensions[index].notes !== '') && (parseInt(e.target.value) > 1) ){
         dispatch(
           change(
             'DoorOrder',
@@ -205,6 +208,16 @@ const Cope_Table = ({
         )
       );
     }
+  };
+
+  const clearNotes = (index, e) => {
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].notes`,
+        ''
+      )
+    );
   };
 
   const twoWide = (index, e, v) => {
@@ -652,13 +665,22 @@ const Cope_Table = ({
           <Row>
             <Col xs="4">
               <strong>Notes</strong>
-              <Field
-                name={`${table}.notes`}
-                type="textarea"
-                component={renderField}
-                edit={edit}
-                label="notes"
-              />
+              <Row>
+                <Col lg='11'>
+                  <Field
+                    name={`${table}.notes`}
+                    type="textarea"
+                    component={renderField}
+                    edit={edit}
+                    label="notes"
+                  />
+                </Col>
+                <Col lg='1'>
+                  <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
+                </Col>
+              </Row>
+
+              
             </Col>
             <Col xs="5" />
             <Col xs="3">
