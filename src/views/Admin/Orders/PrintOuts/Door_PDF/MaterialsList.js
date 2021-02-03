@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { flattenDeep, uniq, uniqBy } from 'lodash';
 import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
 import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
@@ -7,6 +8,13 @@ import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 import numQty from 'numeric-quantity';
 
 export default (data, breakdowns) => {
+  console.log(
+    'heydceddd==>>>',
+    uniq(
+      flattenDeep(data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile])))
+    )
+  );
+
   return [
     {
       columns: [
@@ -87,7 +95,42 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 0, 0, 20],
     },
+
+    // map thru the part listen
+    // map thru the dimensions
+    // check the leftStile with rightStile
+    // check the topRail with bottomRail
+
+    // if its all the same = pick out width = 2 5/16
+
+    // then go next line item
+    // check the leftStile with rightStile
+    // check the topRail with bottomRail
+    // if its all the same = pick out width = 1 1/2
+
+    // [2 5/16 , 1 1/2]
+
+    // display
+
+   
+
     data.part_list.map((i, index) => {
+      // i.dimensions.map(j => {
+      //   console.log({j});
+      // });
+
+      
+      /*(e) =>
+      [e.leftStile === e.rightStile].join() &&
+      [e.leftStile === e.topRail].join() &&
+      [e.leftStile === e.bottomRail].join() &&
+      //[e.rightStile === e.leftStile].join() &&
+      [e.rightStile === e.topRail].join() &&
+      [e.rightStile === e.bottomRail].join() &&
+      [e.topRail === e.bottomRail].join() 
+      //[e.topRail === e.leftStile].join()&&
+      //[e.topRail === e.rightStile].join()*/
+
       if (i.dimensions[0].leftStile) {
         return [
           {
