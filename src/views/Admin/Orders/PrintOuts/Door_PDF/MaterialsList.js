@@ -8,31 +8,35 @@ import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 import numQty from 'numeric-quantity';
 
 export default (data, breakdowns) => {
-  console.log(
-    'heydceddd==>>>',
-    uniq(
-      (data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.width, j.height])))
-    )
-  );
+
+  const flattenedParts= flatten(data.part_list);
 
   const uniques_items = uniq(
     flattenDeep(data.part_list.map(i => i.woodtype.NAME))
   );
 
-  const flattenedParts= flatten(data.part_list);
+  const uniques_thickness = uniq(
+    flattenDeep(data.part_list.map(i => i.thickness.NAME))
+  );
+
+
+  // const a = 
+
+  // console.log({a});
 
   console.log({flattenedParts});
 
   const b = uniques_items.map(i => {
+
     return {
       parts:flattenedParts.filter(j => [j.woodtype.NAME].includes(i)),
       woodtype: i
     };
+
+    
   });
 
-  console.log({b});
 
-  console.log({uniques_items});
 
   const uniques = uniq(
     flattenDeep(data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile])))
@@ -40,7 +44,24 @@ export default (data, breakdowns) => {
 
   const flattenedItems= flatten(data.part_list.map(i => i.dimensions));
 
+  const c = b.map(i => {
+    return {
+      woodtype: i.woodtype,
+      parts: uniques.map(k => {
+        return {
+          width: k,
+          woodtype: i.woodtype,
+          parts: i.parts,
+          items: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile].includes(k))
+        };
+      })
+    };
+  });
 
+  console.log({b});
+  console.log({c});
+
+  console.log({uniques_items});
   console.log({flattenedItems});
 
   const stile_rails = uniques.map(i => {
@@ -48,8 +69,6 @@ export default (data, breakdowns) => {
       name: i,
       items: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile].includes(i))
     };
-    
-
   });
 
   console.log('finallll==>>', 
@@ -148,40 +167,43 @@ export default (data, breakdowns) => {
       margin: [0, 0, 0, 20],
     },
 
-    stile_rails.map((i, index) => {
+    c.map((i, index) => {
 
       console.log({i});
 
+      i.parts.map(j => {
+
+        console.log({j});
+        // return [
+        //   {
+        //     columns: [
+        //       {
+        //         text: `Linear Feet of ${i && i.width}" ${
+        //           i.woodtype
+        //         } - ${i.thickness.name}" Thickness Needed: ${LinearFT(
+        //           i.items
+        //         )}`,
+        //         style: 'fonts',
+        //         width: 400,
+        //       },
+        //       { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+        //       {
+        //         text: `${(
+        //           parseFloat(LinearFT(i.items)) * 0.2 +
+        //             parseFloat(LinearFT(i.items))
+        //         ).toFixed(2)}`,
+        //         style: 'fonts',
+        //         width: 60,
+        //       },
+        //     ],
+        //   },
+        // ];
+        
+      });
+
       return [];
 
-      // if(i){
-      //   return [
-      //     {
-      //       columns: [
-      //         {
-      //           text: `Linear Feet of ${i && i.name}" ${
-      //             i.items[0].woodtype.NAME
-      //           } - ${i.thickness.name}" Thickness Needed: ${LinearFT(
-      //             i.items
-      //           )}`,
-      //           style: 'fonts',
-      //           width: 400,
-      //         },
-      //         { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-      //         {
-      //           text: `${(
-      //             parseFloat(LinearFT(i.items)) * 0.2 +
-      //             parseFloat(LinearFT(i.items))
-      //           ).toFixed(2)}`,
-      //           style: 'fonts',
-      //           width: 60,
-      //         },
-      //       ],
-      //     },
-      //   ];
-      // } else {
-      //   return [];
-      // }
+
 
      
 
