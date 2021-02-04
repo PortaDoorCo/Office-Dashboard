@@ -15,16 +15,50 @@ export default (data, breakdowns) => {
     )
   );
 
+  const uniques_items = uniq(
+    flattenDeep(data.part_list.map(i => i.woodtype.NAME))
+  );
+
+  const flattenedParts= flatten(data.part_list);
+
+  console.log({flattenedParts});
+
+  const b = uniques_items.map(i => {
+    return {
+      parts:flattenedParts.filter(j => [j.woodtype.NAME].includes(i)),
+      woodtype: i
+    };
+  });
+
+  console.log({b});
+
+  console.log({uniques_items});
+
   const uniques = uniq(
     flattenDeep(data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile])))
   );
 
   const flattenedItems= flatten(data.part_list.map(i => i.dimensions));
-  console.log('finallll==>>', uniques.map(i => {
+
+
+  console.log({flattenedItems});
+
+  const stile_rails = uniques.map(i => {
     return {
-      [i]: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile].includes(i))
+      name: i,
+      items: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile].includes(i))
     };
-  }));
+    
+
+  });
+
+  console.log('finallll==>>', 
+    uniques.map(i => {
+      return {
+        name: i,
+        items: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile].includes(i))
+      };
+    }));
 
   console.log(
     'hesssydceddd==>>>',
@@ -32,10 +66,6 @@ export default (data, breakdowns) => {
     
   );
 
-  /*uniq(
-    flattenDeep(data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile])))
-  )
-  */
 
   return [
     {
@@ -118,69 +148,71 @@ export default (data, breakdowns) => {
       margin: [0, 0, 0, 20],
     },
 
-    // map thru the part listen
-    // map thru the dimensions
-    // check the leftStile with rightStile
-    // check the topRail with bottomRail
+    stile_rails.map((i, index) => {
 
-    // if its all the same = pick out width = 2 5/16
+      console.log({i});
 
-    // then go next line item
-    // check the leftStile with rightStile
-    // check the topRail with bottomRail
-    // if its all the same = pick out width = 1 1/2
+      return [];
 
-    // [2 5/16 , 1 1/2]
+      // if(i){
+      //   return [
+      //     {
+      //       columns: [
+      //         {
+      //           text: `Linear Feet of ${i && i.name}" ${
+      //             i.items[0].woodtype.NAME
+      //           } - ${i.thickness.name}" Thickness Needed: ${LinearFT(
+      //             i.items
+      //           )}`,
+      //           style: 'fonts',
+      //           width: 400,
+      //         },
+      //         { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+      //         {
+      //           text: `${(
+      //             parseFloat(LinearFT(i.items)) * 0.2 +
+      //             parseFloat(LinearFT(i.items))
+      //           ).toFixed(2)}`,
+      //           style: 'fonts',
+      //           width: 60,
+      //         },
+      //       ],
+      //     },
+      //   ];
+      // } else {
+      //   return [];
+      // }
 
-    // display
+     
 
-   
-
-    data.part_list.map((i, index) => {
-      // i.dimensions.map(j => {
-      //   console.log({j});
-      // });
-
-      
-      /*(e) =>
-      [e.leftStile === e.rightStile].join() &&
-      [e.leftStile === e.topRail].join() &&
-      [e.leftStile === e.bottomRail].join() &&
-      //[e.rightStile === e.leftStile].join() &&
-      [e.rightStile === e.topRail].join() &&
-      [e.rightStile === e.bottomRail].join() &&
-      [e.topRail === e.bottomRail].join() 
-      //[e.topRail === e.leftStile].join()&&
-      //[e.topRail === e.rightStile].join()*/
-
-      if (i.dimensions[0].leftStile) {
-        return [
-          {
-            columns: [
-              {
-                text: `Linear Feet of ${i.dimensions[0].leftStile}" ${
-                  i.woodtype.NAME
-                } - ${i.thickness.name}" Thickness Needed: ${LinearFT(
-                  i.dimensions
-                )}`,
-                style: 'fonts',
-                width: 400,
-              },
-              { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-              {
-                text: `${(
-                  parseFloat(LinearFT(i.dimensions)) * 0.2 +
-                  parseFloat(LinearFT(i.dimensions))
-                ).toFixed(2)}`,
-                style: 'fonts',
-                width: 60,
-              },
-            ],
-          },
-        ];
-      } else {
-        return [];
-      }
+      // if (i.dimensions[0].leftStile) {
+      //   return [
+      //     {
+      //       columns: [
+      //         {
+      //           text: `Linear Feet of ${i.dimensions[0].leftStile}" ${
+      //             i.woodtype.NAME
+      //           } - ${i.thickness.name}" Thickness Needed: ${LinearFT(
+      //             i.dimensions
+      //           )}`,
+      //           style: 'fonts',
+      //           width: 400,
+      //         },
+      //         { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+      //         {
+      //           text: `${(
+      //             parseFloat(LinearFT(i.dimensions)) * 0.2 +
+      //             parseFloat(LinearFT(i.dimensions))
+      //           ).toFixed(2)}`,
+      //           style: 'fonts',
+      //           width: 60,
+      //         },
+      //       ],
+      //     },
+      //   ];
+      // } else {
+      //   return [];
+      // }
     }),
     {
       columns: [{ text: '' }],
