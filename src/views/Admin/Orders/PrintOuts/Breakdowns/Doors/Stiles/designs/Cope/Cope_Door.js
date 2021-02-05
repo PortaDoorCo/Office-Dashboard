@@ -37,7 +37,9 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
-          pattern: 'LR'
+          pattern: 'LR',
+          width: eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_width)
         },
         {
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
@@ -45,6 +47,8 @@ export default (info, part, breakdowns) => {
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
+          width: eval(breakdowns.vertical_mid_rail_width),
+          height: eval(breakdowns.vertical_mid_rail_height),
           pattern: 'VM'
         },
       ];
@@ -55,7 +59,9 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
-          pattern: 'LR'
+          pattern: 'LR',
+          width: eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_height)
         }
       ];
     }
@@ -68,14 +74,18 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
-          pattern: 'L'
+          pattern: 'L',
+          width:eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_height)
         },
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
             eval(breakdowns.rightStile_width)
           )} x ${fraction(eval(breakdowns.rightStile_height))}`,
-          pattern: 'R'
+          pattern: 'R',
+          width:eval(breakdowns.rightStile_width),
+          height: eval(breakdowns.rightStile_height)
         },
         {
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
@@ -83,7 +93,9 @@ export default (info, part, breakdowns) => {
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
-          pattern: 'VM'
+          pattern: 'VM',
+          width: eval(breakdowns.vertical_mid_rail_width),
+          height: eval(breakdowns.vertical_mid_rail_height),
         },
       ];
     }
@@ -94,14 +106,18 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
-          pattern: 'L'
+          pattern: 'L',
+          width: eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_height)
         },
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
             eval(breakdowns.rightStile_width)
           )} x ${fraction(eval(breakdowns.rightStile_height))}`,
-          pattern: 'R'
+          pattern: 'R',
+          width: eval(breakdowns.rightStile_width),
+          height: eval(breakdowns.rightStile_height)
         }
 
       ];

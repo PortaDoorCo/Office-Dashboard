@@ -119,7 +119,6 @@ export default (data, breakdowns) => {
           tableBody.push([
             { text: index + 1, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
-
             {
               stack: [
                 { text: `${Size(item)} \n `, style: 'fonts' },

@@ -6,6 +6,7 @@ import Panels from '../Breakdowns/Doors/Panels/Panels';
 import TotalPieces from '../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 import numQty from 'numeric-quantity';
+import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 
 export default (data, breakdowns) => {
 
@@ -43,13 +44,24 @@ export default (data, breakdowns) => {
             width: k,
             thickness: j.thickness,
             woodtype: j.woodtype,
-            parts: j.parts,
-            items: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))
+            parts: j.parts.map(f => {
+              return {
+                width: k,
+                thickness: j.thickness,
+                woodtype: j.woodtype,
+                part: f,
+                items: flatten(f.dimensions).filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))
+              };
+            }),
+            // items: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))
           };
         })
       };
     });
   });
+
+
+  console.log({c});
 
 
 
@@ -137,6 +149,7 @@ export default (data, breakdowns) => {
     c.map((i, index) => {
       return i.map(j => {
         return j.parts.map(n => {
+          console.log({n});
           return [
             {
               columns: [
@@ -144,7 +157,7 @@ export default (data, breakdowns) => {
                   text: `Linear Feet of ${n.width}" ${
                     n.woodtype
                   } - ${n.thickness}" Thickness Needed: ${LinearFT(
-                    n.items
+                    n.parts, breakdowns, n.width
                   )}`,
                   style: 'fonts',
                   width: 400,
@@ -152,8 +165,8 @@ export default (data, breakdowns) => {
                 { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
                 {
                   text: `${(
-                    parseFloat(LinearFT(n.items)) * 0.2 +
-                    parseFloat(LinearFT(n.items))
+                    parseFloat(LinearFT(n.parts, breakdowns, n.width)) * 0.2 +
+                    parseFloat(LinearFT(n.parts, breakdowns, n.width))
                   ).toFixed(2)}`,
                   style: 'fonts',
                   width: 60,
