@@ -1,5 +1,5 @@
 import numQty from 'numeric-quantity';
-import { flatten, values, filterBy, _ } from 'lodash';
+import { flatten, values } from 'lodash';
 import Stiles from '../Stiles/Stiles';
 
 
@@ -9,7 +9,7 @@ export default (parts, breakdowns,thickness) => {
 
   const calc = parts.map((part, i) => {
     return part.items.map(j => {
-      console.log(_.filter(j, { [filterBy]: thickness }));
+      console.log(values(j).filter(a => a === thickness));
       console.log({j});
       console.log({thickness});
 
