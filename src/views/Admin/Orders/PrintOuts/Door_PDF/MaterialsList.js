@@ -7,6 +7,12 @@ import TotalPieces from '../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 import numQty from 'numeric-quantity';
 import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
+import Ratio from 'lb-ratio';
+
+const fraction = num => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
 
 export default (data, breakdowns) => {
 
@@ -41,7 +47,7 @@ export default (data, breakdowns) => {
           const flattenedItems= flatten(j.parts.map(i => i.dimensions));
           console.log({k});
           return {
-            width: k,
+            width: numQty(k) + 0.0625,
             thickness: j.thickness,
             woodtype: j.woodtype,
             parts: j.parts.map(f => {
@@ -154,7 +160,7 @@ export default (data, breakdowns) => {
             {
               columns: [
                 {
-                  text: `Linear Feet of ${n.width}" ${
+                  text: `Linear Feet of ${fraction(numQty(n.width))}" ${
                     n.woodtype
                   } - ${n.thickness}" Thickness Needed: ${LinearFT(
                     n.parts, breakdowns, n.width
