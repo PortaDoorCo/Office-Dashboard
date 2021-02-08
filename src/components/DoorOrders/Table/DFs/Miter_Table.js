@@ -374,7 +374,9 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                       />
                     </Col>
                     <Col lg='1'>
-                      <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
+                      {!edit ?
+                        <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
+                        : null }
                     </Col>
                   </Row>
 
