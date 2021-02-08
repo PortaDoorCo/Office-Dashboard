@@ -69,7 +69,7 @@ const status = [
   },
   {
     label: 'Assembly',
-    value: 'Assembled',
+    value: 'Assembly',
   },
   {
     label: 'Tenon',
