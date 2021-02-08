@@ -115,6 +115,9 @@ const Settings = (props) => {
                     <DropdownItem onClick={() => setSelection('solid_crowns')}>
                       Solid Crowns
                     </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('flat_stock')}>
+                      Flat Stock
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
