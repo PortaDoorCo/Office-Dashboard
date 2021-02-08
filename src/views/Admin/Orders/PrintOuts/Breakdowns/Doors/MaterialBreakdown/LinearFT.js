@@ -70,8 +70,7 @@ export default (parts, breakdowns,thickness) => {
           const width = numQty(stile.width);
           const height = ((numQty(stile.height)) * stile.multiplier) * parseInt(j.qty);
           const sum = height / 12;
-          return sum;
-          
+          return sum; 
         } else {
           return 0;
         }

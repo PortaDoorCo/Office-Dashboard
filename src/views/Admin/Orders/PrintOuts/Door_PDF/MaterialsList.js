@@ -47,7 +47,7 @@ export default (data, breakdowns) => {
           const flattenedItems= flatten(j.parts.map(i => i.dimensions));
           console.log({k});
           return {
-            width: numQty(k) + 0.0625,
+            width: k,
             thickness: j.thickness,
             woodtype: j.woodtype,
             parts: j.parts.map(f => {
