@@ -22,6 +22,7 @@ const initialState = {
   woodtypes: ['Loading'],
   applied_profiles: ['Loading'],
   base_cap: ['Loading'],
+  flat_stock: ['Loading'],
   baseboards: ['Loading'],
   casings: ['Loading'],
   chair_rails: ['Loading'],

@@ -15,7 +15,7 @@ export default (data, breakdowns) => {
       { text: 'Qty', style: 'fonts' },
       { text: 'Style', style: 'fonts' },
       { text: 'Material', style: 'fonts' },
-      { text: 'Thickness', style: 'fonts' },
+      // { text: 'Thickness', style: 'fonts' },
       { text: 'Item', style: 'fonts' },
       { text: 'Linear FT', style: 'fonts' },
       { text: 'Price', style: 'fonts' },
@@ -27,18 +27,18 @@ export default (data, breakdowns) => {
     let feet = (i.item.MOULDING_WIDTH * 12) / 144;
     let waste = feet * 1.25;
     let multiplier = i.item.Multiplier;
-    let wood = 0;
+    let wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE : 0;
     let premium = 0;
 
     let a = waste * multiplier;
 
-    if(i.thickness.value === 0.75){
-      wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE : 0;
-    } else if (i.thickness.value === 1) {
-      wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE_THICK : 0;
-    } else {
-      wood = 0;
-    }
+    // if(i.thickness.value === 0.75){
+    //   wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE : 0;
+    // } else if (i.thickness.value === 1) {
+    //   wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE_THICK : 0;
+    // } else {
+    //   wood = 0;
+    // }
       
     if(parseFloat(i.linearFT) > 0 && parseFloat(i.linearFT) <= 30) {
       premium = 3 + 1;
@@ -60,7 +60,7 @@ export default (data, breakdowns) => {
       { text: i.qty, style: 'fonts' },
       { text: i.style.name, style: 'fonts' },
       { text: i.moulding_material.NAME, style: 'fonts' },
-      { text: i.thickness.NAME, style: 'fonts' },
+      // { text: i.thickness.NAME, style: 'fonts' },
       { text: i.item.NAME, style: 'fonts' },
       { text: i.linearFT, style: 'fonts' },
       { text: `$${(price * parseInt(i.qty)).toFixed(2)}`, style: 'fonts' },
@@ -130,7 +130,7 @@ export default (data, breakdowns) => {
     {
       table: {
         headerRows: 1,
-        widths: [30, '*', '*', '*', '*', '*', '*'],
+        widths: [30, '*', '*', '*', '*', '*'],
         body: tableBody
       },
       layout: 'lightHorizontalLines',
