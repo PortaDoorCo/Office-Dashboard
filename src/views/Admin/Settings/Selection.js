@@ -19,6 +19,7 @@ import ChairRails from './Products/Mouldings/Chair_Rails/Chair_Rails';
 import CrownMouldings from './Products/Mouldings/Crown_Mouldings/Crown_Mouldings';
 import SolidCrowns from './Products/Mouldings/Solid_Crowns/Solid_Crowns';
 import MiscItems from './Products/MiscItems/Misc_Items';
+import FlatStock from './Products/Mouldings/Flat_Stock/Flat_Stock';
 
 const Selection = props => {
 
@@ -64,6 +65,8 @@ const Selection = props => {
       return <SolidCrowns />;
     case 'misc_items':
       return <MiscItems />;
+    case 'flat_stock':
+      return <FlatStock />;
     default:
       return <AccountSettings />;
   }

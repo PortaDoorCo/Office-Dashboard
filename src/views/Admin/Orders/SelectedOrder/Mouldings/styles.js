@@ -21,7 +21,11 @@ const styles = [
   },
   {
     name: 'Solid Crowns',
-    value: 'solid_crownd'
+    value: 'solid_crowns'
+  },
+  {
+    name: 'Flat Stock',
+    value: 'flat_stock'
   },
 ];
 
