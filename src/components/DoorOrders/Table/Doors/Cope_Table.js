@@ -676,7 +676,9 @@ const Cope_Table = ({
                   />
                 </Col>
                 <Col lg='1'>
-                  <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
+                  {!edit ?
+                    <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
+                    : null }
                 </Col>
               </Row>
 
