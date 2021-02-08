@@ -1,5 +1,5 @@
 import numQty from 'numeric-quantity';
-import { flatten, values } from 'lodash';
+import { flatten, values, uniq } from 'lodash';
 import Stiles from '../Stiles/Stiles';
 import Rails from '../Rails/Rails';
 
@@ -70,9 +70,15 @@ export default (parts, breakdowns,thickness) => {
           const width = numQty(stile.width);
           const height = ((numQty(stile.height)) * stile.multiplier) * parseInt(j.qty);
           const sum = height / 12;
-          return sum; 
+          return {
+            sum,
+            width
+          }; 
         } else {
-          return 0;
+          return {
+            sum:0,
+            width: 0
+          };
         }
 
       });
@@ -80,36 +86,71 @@ export default (parts, breakdowns,thickness) => {
       const rails = Rails(rail, part.part, breakdowns).map((stile) => {
         console.log({stile});
         if((stile.width > 0) && (stile.height > 0)){
+          const width = numQty(stile.width);
           const height = ((numQty(stile.height)) * stile.multiplier) * parseInt(j.qty);
           const sum = height / 12;
-          return sum;
+          return {
+            sum,
+            width
+          };
         } else {
-          return 0;
+          return {
+            sum:0,
+            width: 0
+          };
         }
 
       });
 
-      const stiles_total = stiles.reduce((acc, item) => acc + item, 0);
-      const rails_total = rails.reduce((acc, item) => acc + item, 0);
+      const stiles_total = stiles.reduce((acc, item) => acc + item.sum, 0);
+      const rails_total = rails.reduce((acc, item) => acc + item.sum, 0);
 
+      const stile_widths = stiles.map(i => i.width);
+      const rail_widths = rails.map(i => i.width);
+
+      console.log({stile_widths});
       console.log({stiles_total});
       console.log({rails_total});
 
-      return stiles_total + rails_total;
+      return {
+        sum: stiles_total + rails_total,
+        widths: stile_widths.concat(rail_widths)
+      };
     });
   });
 
   console.log({calc});
 
   const sub_sum = calc.map(i => {
-    return i.reduce((acc, item) => acc + item, 0);
+    return i.reduce((acc, item) => acc + item.sum, 0);
   });
+
+  const sub_widths = calc.map(i => {
+    return i.map(j => {
+      return j.widths;
+    });
+  });
+
+  console.log({sub_widths});
+
+
+  const sub_unique_width = uniq(flatten(sub_widths));
+  console.log({sub_unique_width});
+
+  const sub_final = uniq(flatten(sub_unique_width));
+
+  const final = sub_final.filter(i => i > 0);
+
+  console.log({final});
 
   const sum = sub_sum.reduce((acc, item) => acc + item, 0);
 
   console.log(sum);
 
-  return sum.toFixed(2);
+  return {
+    sum : sum.toFixed(2),
+    width: final[0] > 0 ? final[0] : null
+  };
 };
 
 

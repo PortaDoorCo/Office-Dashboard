@@ -160,19 +160,19 @@ export default (data, breakdowns) => {
             {
               columns: [
                 {
-                  text: `Linear Feet of ${fraction(numQty(n.width))}" ${
+                  text: `Linear Feet of ${fraction(parseFloat(LinearFT(n.parts, breakdowns, n.width).width))}" ${
                     n.woodtype
                   } - ${n.thickness}" Thickness Needed: ${LinearFT(
                     n.parts, breakdowns, n.width
-                  )}`,
+                  ).sum}`,
                   style: 'fonts',
                   width: 400,
                 },
                 { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
                 {
                   text: `${(
-                    parseFloat(LinearFT(n.parts, breakdowns, n.width)) * 0.2 +
-                    parseFloat(LinearFT(n.parts, breakdowns, n.width))
+                    parseFloat(LinearFT(n.parts, breakdowns, n.width).sum) * 0.2 +
+                    parseFloat(LinearFT(n.parts, breakdowns, n.width).sum)
                   ).toFixed(2)}`,
                   style: 'fonts',
                   width: 60,
