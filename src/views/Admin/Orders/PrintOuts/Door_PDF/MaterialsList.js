@@ -1,12 +1,76 @@
 import moment from 'moment';
+import { flattenDeep, uniq, uniqBy, flatten } from 'lodash';
 import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
 import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import TotalPieces from '../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 import numQty from 'numeric-quantity';
+import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
+import Ratio from 'lb-ratio';
+
+const fraction = num => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
 
 export default (data, breakdowns) => {
+
+  const flattenedParts= flatten(data.part_list);
+
+  const uniques_items = uniq(
+    flattenDeep(data.part_list.map(i => i.woodtype.NAME))
+  );
+
+  const uniques_thickness = uniq(
+    flattenDeep(data.part_list.map(i => i.thickness.name))
+  );
+
+  const b = uniques_items.map(i => {
+    return uniques_thickness.map(h => {
+      return {
+        parts: flattenedParts.filter(j => [j.woodtype.NAME].includes(i)).filter(g => [g.thickness.name].includes(h)),
+        woodtype: i,
+        thickness: h,
+        widths: uniq(
+          flattenDeep(data.part_list.map(i => i.dimensions.map(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize])))
+        )
+      };
+    });
+  });
+
+
+  const c = b.map(i => {
+    return i.map(j => {
+      return {
+        parts: j.widths.filter(n => n !== 0).map(k => {
+          const flattenedItems= flatten(j.parts.map(i => i.dimensions));
+          console.log({k});
+          return {
+            width: k,
+            thickness: j.thickness,
+            woodtype: j.woodtype,
+            parts: j.parts.map(f => {
+              return {
+                width: k,
+                thickness: j.thickness,
+                woodtype: j.woodtype,
+                part: f,
+                items: flatten(f.dimensions).filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))
+              };
+            }),
+            // items: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))
+          };
+        })
+      };
+    });
+  });
+
+
+  console.log({c});
+
+
+
   return [
     {
       columns: [
@@ -87,35 +151,37 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 0, 0, 20],
     },
-    data.part_list.map((i, index) => {
-      if (i.dimensions[0].leftStile) {
-        return [
-          {
-            columns: [
-              {
-                text: `Linear Feet of ${i.dimensions[0].leftStile}" ${
-                  i.woodtype.NAME
-                } - ${i.thickness.name}" Thickness Needed: ${LinearFT(
-                  i.dimensions
-                )}`,
-                style: 'fonts',
-                width: 400,
-              },
-              { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-              {
-                text: `${(
-                  parseFloat(LinearFT(i.dimensions)) * 0.2 +
-                  parseFloat(LinearFT(i.dimensions))
-                ).toFixed(2)}`,
-                style: 'fonts',
-                width: 60,
-              },
-            ],
-          },
-        ];
-      } else {
-        return [];
-      }
+
+    c.map((i, index) => {
+      return i.map(j => {
+        return j.parts.map(n => {
+          console.log({n});
+          return [
+            {
+              columns: [
+                {
+                  text: `Linear Feet of ${fraction(parseFloat(LinearFT(n.parts, breakdowns, n.width).width))}" ${
+                    n.woodtype
+                  } - ${n.thickness}" Thickness Needed: ${LinearFT(
+                    n.parts, breakdowns, n.width
+                  ).sum}`,
+                  style: 'fonts',
+                  width: 400,
+                },
+                { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+                {
+                  text: `${(
+                    parseFloat(LinearFT(n.parts, breakdowns, n.width).sum) * 0.2 +
+                    parseFloat(LinearFT(n.parts, breakdowns, n.width).sum)
+                  ).toFixed(2)}`,
+                  style: 'fonts',
+                  width: 60,
+                },
+              ],
+            },
+          ];
+        });
+      });
     }),
     {
       columns: [{ text: '' }],
