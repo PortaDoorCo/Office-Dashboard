@@ -403,7 +403,9 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       />
                     </Col>
                     <Col lg='1'>
-                      <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
+                      {!edit ?
+                        <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
+                        : null }
                     </Col>
                   </Row>
 
