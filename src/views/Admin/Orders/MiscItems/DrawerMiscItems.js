@@ -8,6 +8,7 @@ import {
 } from 'redux-form';
 import {
   renderField,
+  renderNumber,
   renderDropdownListFilter,
   renderPrice,
   renderInt
@@ -29,14 +30,53 @@ import {
   miscItemLinePriceSelector,
   miscTotalSelector,
 } from '../../../../selectors/drawerPricing';
+import { createNumberMask } from 'redux-form-input-masks';
+import NumberFormat from 'react-number-format';
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 let Inputs = (props) => {
-  const { fields, misc_items, formState, linePrices, miscTotal, edit } = props;
+  const {
+    fields,
+    misc_items,
+    formState,
+    linePrices,
+    miscTotal,
+    edit
+  } = props;
+
+  let misc_items_category = ['Accessories', 'Drawer_Box'];
+
+  let sorted_misc_items = misc_items.filter(e => e.categories.some(c => misc_items_category.includes(c.value)));
 
   const changeMiscItem = (e, index) => {
-    props.dispatch(
-      change('DrawerOrder', `misc_items[${index}].price`, e.Price)
-    );
+
+    console.log({e});
+    console.log({formState});
+
+    let total_qty = 0;
+
+    props.dispatch(change('DrawerOrder', `misc_items[${index}].price`, e.Price));
+
+    if(e.count_items){
+      console.log({e});
+      const categories = e.categories.map(i => i.value);
+      if(categories.includes('Drawer_Box')){
+        const quantities = formState && formState.part_list.map(i => {
+          const qty = i.dimensions.map(j => {
+            return parseInt(j.qty);
+          });
+          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          return sub_total_qty;
+        });
+        const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
+        total_qty = total_qty+sub_quantity;
+      }
+      props.dispatch(change('DrawerOrder', `misc_items[${index}].qty`, total_qty));
+    }
   };
 
   return (
@@ -55,15 +95,15 @@ let Inputs = (props) => {
           {fields.map((table, index) => {
             return (
               <tr key={index}>
-                <td style={{ width: '90px' }}>
+                <td style={{ width: '10%' }}>
                   <Field
                     name={`${table}.qty`}
                     component={renderInt}
-                    edit={edit}
                     type="text"
+                    edit={edit}
                   />
                 </td>
-                <td>
+                <td style={{ width: '40%' }}>
                   {formState &&
                   formState.misc_items &&
                   formState.misc_items[index] &&
@@ -71,7 +111,7 @@ let Inputs = (props) => {
                       <Field
                         name={`${table}.item`}
                         component={renderDropdownListFilter}
-                        data={misc_items}
+                        data={sorted_misc_items}
                         onChange={(e) => changeMiscItem(e, index)}
                         valueField="value"
                         textField="NAME"
@@ -92,66 +132,78 @@ let Inputs = (props) => {
                 formState.misc_items[index] &&
                 formState.misc_items[index].category === 'preselect' ? (
                     <>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '25%' }}>
                         <InputGroup>
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>$</InputGroupText>
-                          </InputGroupAddon>
                           <Field
                             name={`${table}.price`}
                             type="text"
-                            component={renderField}
+                            component={renderPrice}
                             label="price"
+                            {...currencyMask}
                             edit={edit}
                           />
                         </InputGroup>
                       </td>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '25%' }}>
                         <InputGroup>
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>$</InputGroupText>
                           </InputGroupAddon>
-                          <Input placeholder={linePrices[index]} disabled />
+                          <NumberFormat
+                            thousandSeparator={true}
+                            value={linePrices[index]}
+                            disabled={true}
+                            customInput={Input}
+                            {...currencyMask}
+                            prefix={'$'}
+                          />
                         </InputGroup>
                       </td>
                     </>
                   ) : (
                     <>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '25%' }}>
                         <Field
                           name={`${table}.pricePer`}
                           component={renderPrice}
-                          edit={edit}
-                          required
                           type="text"
+                          {...currencyMask}
+                          edit={edit}
                         />
                       </td>
-                      <td style={{ width: '150px' }}>
+                      <td style={{ width: '25%' }}>
                         <InputGroup>
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>$</InputGroupText>
                           </InputGroupAddon>
-                          <Input placeholder={linePrices[index]} disabled />
+                          <NumberFormat
+                            thousandSeparator={true}
+                            value={linePrices[index]}
+                            disabled={true}
+                            customInput={Input}
+                            {...currencyMask}
+                            prefix={'$'}
+                          />
                         </InputGroup>
                       </td>
                     </>
                   )}
-                {!edit ? (
-                  <td>
+                <td>
+                  {!edit ? 
                     <Button color="danger" onClick={() => fields.remove(index)}>
-                      X
+                    X
                     </Button>
-                  </td>
-                ) : null}
+                    : null }
+                </td>
               </tr>
             );
           })}
         </tbody>
       </Table>
 
-      {!edit ? (
-        <Row>
-          <Col>
+      <Row>
+        <Col>
+          {!edit ? 
             <>
               <Button
                 color="primary"
@@ -164,7 +216,7 @@ let Inputs = (props) => {
                   })
                 }
               >
-                Add Item{' '}
+              Add Item{' '}
               </Button>
 
               <Button
@@ -179,28 +231,37 @@ let Inputs = (props) => {
                   })
                 }
               >
-                Custom Item
+              Custom Item
               </Button>
             </>
-          </Col>
-          <Col />
-          <Col>
-            <Label htmlFor="companyName">Added to Total</Label>
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>$</InputGroupText>
-              </InputGroupAddon>
-              <Input placeholder={miscTotal} disabled />
-            </InputGroup>
-          </Col>
-        </Row>
-      ) : null}
+            : null }
+        </Col>
+        <Col />
+        <Col>
+          <Label htmlFor="companyName">Added to Total</Label>
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>$</InputGroupText>
+            </InputGroupAddon>
+            <NumberFormat
+              thousandSeparator={true}
+              value={miscTotal}
+              disabled={true}
+              customInput={Input}
+              {...currencyMask}
+              prefix={'$'}
+            />
+          </InputGroup>
+        </Col>
+      </Row>
     </div>
   );
 };
 
 class MiscItems extends Component {
   render() {
+    const { misc_items, formState, prices, linePrices, miscTotal } = this.props;
+
     return (
       <div>
         <h3>Misc Items</h3>
