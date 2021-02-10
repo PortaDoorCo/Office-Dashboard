@@ -212,6 +212,7 @@ const AccountSettings = (props) => {
                             <Input
                               value={user.assembly_list}
                               name="assembly_list"
+                              type="number"
                               onChange={(e) => change(e)}
                             />
                           </Col>
@@ -220,6 +221,7 @@ const AccountSettings = (props) => {
                             <Input
                               value={user.stiles}
                               name="stiles"
+                              type="number"
                               onChange={(e) => change(e)}
                             />
                           </Col>
@@ -228,6 +230,7 @@ const AccountSettings = (props) => {
                             <Input
                               value={user.rails}
                               name="rails"
+                              type="number"
                               onChange={(e) => change(e)}
                             />
                           </Col>
@@ -238,6 +241,7 @@ const AccountSettings = (props) => {
                             <Input
                               value={user.panels}
                               name="panels"
+                              type="number"
                               onChange={(e) => change(e)}
                             />
                           </Col>
@@ -246,6 +250,7 @@ const AccountSettings = (props) => {
                             <Input
                               value={user.profiles}
                               name="profiles"
+                              type="number"
                               onChange={(e) => change(e)}
                             />
                           </Col>
@@ -254,6 +259,7 @@ const AccountSettings = (props) => {
                             <Input
                               value={user.materials}
                               name="materials"
+                              type="number"
                               onChange={(e) => change(e)}
                             />
                           </Col>
@@ -264,6 +270,7 @@ const AccountSettings = (props) => {
                             <Input
                               value={user.qc}
                               name="qc"
+                              type="number"
                               onChange={(e) => change(e)}
                             />
                           </Col>
