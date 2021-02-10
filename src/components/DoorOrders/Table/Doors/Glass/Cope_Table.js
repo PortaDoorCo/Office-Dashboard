@@ -616,20 +616,14 @@ const Cope_Table = ({
             </Col>
             <Col xs="3">
               <strong>Extra Design Cost</strong>
-              {addPrice[i] ? 
-                <Input
-                  type="text"
-                  className="form-control"
-                  disabled={true}
-                  placeholder={'$' + addPrice[i][index].toFixed(2) || 0}
-                /> : 
-                <Input
-                  type="text"
-                  className="form-control"
-                  disabled={true}
-                  placeholder={'$0.00'}
-                />
-              } 
+              <Field
+                name={`${table}.extraCost`}
+                type="text"
+                component={renderPrice}
+                edit={edit}
+                label="extraCost"
+                {...currencyMask}
+              />
             </Col>
           </Row>
           <br />
