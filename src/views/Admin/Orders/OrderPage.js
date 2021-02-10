@@ -89,10 +89,10 @@ import CustomerCopyDrawerPDF from './PrintOuts/Pages/Drawer/CustomerCopyPDF';
 
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
-import Door_Conversation_Notes from './Notes/DoorOrder/Conversation_Notes';
-import Drawer_Conversation_Notes from './Notes/DrawerOrder/Conversation_Notes';
-import Misc_Conversation_Notes from './Notes/MiscItems/Conversation_Notes';
-import Mouldings_Conversation_Notes from './Notes/Mouldings/Conversation_Notes';
+import DoorConversationNotes from './Notes/DoorOrder/Conversation_Notes';
+import DrawerConversationNotes from './Notes/DrawerOrder/Conversation_Notes';
+import MiscConversationNotes from './Notes/MiscItems/Conversation_Notes';
+import MouldingsConversationNotes from './Notes/Mouldings/Conversation_Notes';
 
 import numQty from 'numeric-quantity';
 
@@ -212,6 +212,7 @@ class OrderPage extends Component {
       breakdowns,
       box_breakdowns,
       selectedOrder,
+      user
     } = this.props;
     const data = formState
       ? formState
@@ -222,6 +223,21 @@ class OrderPage extends Component {
           : mouldingsState ?
             mouldingsState
             : [];
+
+    const printerSettings = {
+      assembly_list: user.assembly_list,
+      stiles: user.stiles,
+      rails: user.rails,
+      panels: user.panels,
+      profiles: user.profiles,
+      materials: user.materials,
+      qc: user.qc
+    };
+
+
+    console.log({printerSettings});
+
+
     if (data.orderType === 'Door Order') {
       this.state.selectedOption.map(async (option) => {
         switch (option.value) {
@@ -326,7 +342,8 @@ class OrderPage extends Component {
               mt_1,
               panels1,
               appliedProfiles1,
-              breakdowns
+              breakdowns,
+              printerSettings
             );
             this.setState({ selectedOption: [] });
             break;
@@ -792,7 +809,7 @@ class OrderPage extends Component {
                                   <th scope="row">{index + 1}</th>
                                   <td>{i.name}</td>
                                   <td style={{ textAlign: 'right' }}>
-                                    <a href={i.url} target="_blank">
+                                    <a href={i.url} rel="noopener noreferrer" target="_blank">
                                         View
                                     </a>
                                   </td>
@@ -854,25 +871,25 @@ class OrderPage extends Component {
                         <h2>Conversation Notes</h2>
                         {selectedOrder &&
                         selectedOrder.orderType === 'Door Order' ? (
-                            <Door_Conversation_Notes
+                            <DoorConversationNotes
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
                             />
                           ) : selectedOrder &&
                           selectedOrder.orderType === 'Drawer Order' ? (
-                              <Drawer_Conversation_Notes
+                              <DrawerConversationNotes
                                 toggleBalance={this.toggleBalance}
                                 selectedOrder={props.selectedOrder}
                               />
                             ) : selectedOrder &&
                           selectedOrder.orderType === 'Misc Items' ? (
-                                <Misc_Conversation_Notes
+                                <MiscConversationNotes
                                   toggleBalance={this.toggleBalance}
                                   selectedOrder={props.selectedOrder}
                                 />
                               ) : selectedOrder &&
                               selectedOrder.orderType === 'Mouldings' ? (
-                                  <Mouldings_Conversation_Notes
+                                  <MouldingsConversationNotes
                                     toggleBalance={this.toggleBalance}
                                     selectedOrder={props.selectedOrder}
                                   />
@@ -1027,6 +1044,7 @@ const mapStateToProps = (state, prop) => ({
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   selectedOrder: state.Orders.selectedOrder,
+  user: state.users.user
 });
 
 const mapDispatchToProps = (dispatch) =>
