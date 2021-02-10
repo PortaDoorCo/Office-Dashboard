@@ -17,6 +17,7 @@ import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
+import { createNumberMask } from 'redux-form-input-masks';
 
 const required = (value) => (value ? undefined : 'Required');
 const minValue = (min) => (value) =>
@@ -27,6 +28,11 @@ const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
 const Miter_Table = ({
   fields,
@@ -676,21 +682,14 @@ const Miter_Table = ({
               <Col xs="5" />
               <Col xs="3">
                 <strong>Extra Design Cost</strong>
-                {addPrice[i] ? (
-                  <Input
-                    type="text"
-                    className="form-control"
-                    disabled={true}
-                    placeholder={'$' + addPrice[i][index].toFixed(2) || 0}
-                  />
-                ) : (
-                  <Input
-                    type="text"
-                    className="form-control"
-                    disabled={true}
-                    placeholder={'$0.00'}
-                  />
-                )}
+                <Field
+                  name={`${table}.extraCost`}
+                  type="text"
+                  component={renderPrice}
+                  edit={edit}
+                  label="extraCost"
+                  {...currencyMask}
+                />
               </Col>
             </Row>
             <br />
