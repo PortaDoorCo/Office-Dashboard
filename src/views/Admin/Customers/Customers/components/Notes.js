@@ -53,6 +53,13 @@ class Customer_Notes extends Component {
   
           )
         );
+        await this.props.dispatch(
+          change(
+            'CustomerEdit',
+            'note',
+            ''
+          )
+        );
       } else {
         await this.props.dispatch(
           change(
@@ -65,6 +72,13 @@ class Customer_Notes extends Component {
               }
             ]
   
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'CustomerEdit',
+            'note',
+            ''
           )
         );
       }
