@@ -125,7 +125,6 @@
     "socket.io-client": "^2.3.0",
     "source-map-explorer": "^2.4.2",
     "spinkit": "1.2.5",
-    "strapi-sdk-javascript": "^0.3.3",
     "styled-components": "^5.1.1",
     "svg-blueprint": "^1.0.1",
     "svg-inline-react": "^3.2.0",
