@@ -16,6 +16,8 @@ import { bindActionCreators } from 'redux';
 import { registerUser } from '../../../redux/users/actions';
 import { strapiRegister } from '../../../utils/auth';
 import Background from '../../../assets/img/register-background.jpg';
+import axios from 'axios';
+import db_url from '../../../redux/db_url';
 
 class Register extends Component {
   constructor(props) {
@@ -46,9 +48,22 @@ class Register extends Component {
     const { Username, Email, Password } = this.state;
 
     if (this.state.Password === this.state.confirmPassword) {
-      strapiRegister(Username, Email, Password).then(() =>
-        this.setState({ signedUp: true })
-      );
+      axios
+        .post(`${db_url}/auth/local/register`, {
+          username: Username,
+          email: Email,
+          password: Password,
+        })
+        .then(response => {
+        // Handle success.
+          console.log('Well done!');
+          console.log('User profile', response.data.user);
+          console.log('User token', response.data.jwt);
+        })
+        .catch(error => {
+        // Handle error.
+          console.log('An error occurred:', error.response);
+        });
     } else {
       alert('Passwords do no match');
     }
