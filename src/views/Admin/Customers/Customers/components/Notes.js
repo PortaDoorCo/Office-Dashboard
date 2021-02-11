@@ -106,7 +106,7 @@ class Customer_Notes extends Component {
           <Row>
             <Col xs='6'>
               <FormGroup>
-                <Label for="exampleText">Conversation Notes</Label>
+                <Label for="exampleText">Customer Notes</Label>
                 <Field
                   name='note'
                   type="textarea"
