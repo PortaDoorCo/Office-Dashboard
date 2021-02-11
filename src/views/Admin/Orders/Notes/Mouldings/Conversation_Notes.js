@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Col, Input, FormGroup, Label, Button } from 'reactstrap';
+import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
 import { updateNotes } from '../../../../../redux/orders/actions';
 import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Notes_Table from './Notes_Table';
+import NotesTable from './Notes_Table';
 import { renderField } from '../../../../../components/RenderInputs/renderInputs';
 import Cookies from 'js-cookie';
 
@@ -51,7 +51,13 @@ class Conversation_Notes extends Component {
                 'date': new Date()
               }
             ]
-  
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'Mouldings',
+            'note',
+            ''
           )
         );
       } else {
@@ -65,7 +71,13 @@ class Conversation_Notes extends Component {
                 'date': new Date()
               }
             ]
-  
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'Mouldings',
+            'note',
+            ''
           )
         );
       }
@@ -86,7 +98,7 @@ class Conversation_Notes extends Component {
         <form onSubmit={handleSubmit(this.submit)}>
           <Row>
             <Col>
-              <Notes_Table />
+              <NotesTable />
             </Col>
           </Row>
           <Row>
