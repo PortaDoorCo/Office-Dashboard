@@ -62,448 +62,448 @@ class Edit extends Component {
 
     return (
       <div className="animated resize">
-        <Row>
-          <Card>
-            <CardHeader>
-              <strong>Customer Profile</strong>
-            </CardHeader>
-            <CardBody>
-              <form onSubmit={handleSubmit(this.submit)}>
-                <Row>
-                  <Col xs="12">
-                    <h6>Company Info</h6>
-                  </Col>
-                </Row>
+  
+        <Card>
+          <CardHeader>
+            <strong>Customer Profile</strong>
+          </CardHeader>
+          <CardBody>
+            <form onSubmit={handleSubmit(this.submit)}>
+              <Row>
+                <Col xs="12">
+                  <h6>Company Info</h6>
+                </Col>
+              </Row>
 
-                <Row>
-                  <Col sm="6">
-                    <FormGroup>
-                      <Label htmlFor="companyName">Company Name</Label>
-                      <Field
-                        name={'Company'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="6">
-                    <FormGroup>
-                      <Label htmlFor="full-name">Contact Name</Label>
-                      <Field
-                        name={'Contact'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
+              <Row>
+                <Col sm="6">
+                  <FormGroup>
+                    <Label htmlFor="companyName">Company Name</Label>
+                    <Field
+                      name={'Company'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col sm="6">
+                  <FormGroup>
+                    <Label htmlFor="full-name">Contact Name</Label>
+                    <Field
+                      name={'Contact'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-                <Row>
-                  <Col sm="6">
-                    <FormGroup>
-                      <Label htmlFor="full-name">Shipping Method</Label>
-                      <Field
-                        name={'Ship_Via'}
-                        component={renderDropdownList}
-                        data={shippingMethods}
-                        valueField="NAME"
-                        textField="NAME"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="6">
-                    <FormGroup>
-                      <Label htmlFor="full-name">Sales Rep</Label>
-                      <Field
-                        name={'sale'}
-                        component={renderDropdownList}
-                        data={salesReps}
-                        valueField="id"
-                        textField="fullName"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col sm="4">
-                    <FormGroup>
-                      <Label htmlFor="companyName">Payment Terms</Label>
-                      <Field
-                        name={'PMT_TERMS'}
-                        type="text"
-                        component={renderDropdownList}
-                        data={paymentTerms}
-                        valueField="NAME"
-                        textField="NAME"
-                        label="company"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="full-name">Sales Tax (%)</Label>
-                      <Field
-                        name={'TaxRate'}
-                        type="text"
-                        component={renderField}
-                        label="tax_rate"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
+              <Row>
+                <Col sm="6">
+                  <FormGroup>
+                    <Label htmlFor="full-name">Shipping Method</Label>
+                    <Field
+                      name={'Ship_Via'}
+                      component={renderDropdownList}
+                      data={shippingMethods}
+                      valueField="NAME"
+                      textField="NAME"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col sm="6">
+                  <FormGroup>
+                    <Label htmlFor="full-name">Sales Rep</Label>
+                    <Field
+                      name={'sale'}
+                      component={renderDropdownList}
+                      data={salesReps}
+                      valueField="id"
+                      textField="fullName"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm="4">
+                  <FormGroup>
+                    <Label htmlFor="companyName">Payment Terms</Label>
+                    <Field
+                      name={'PMT_TERMS'}
+                      type="text"
+                      component={renderDropdownList}
+                      data={paymentTerms}
+                      valueField="NAME"
+                      textField="NAME"
+                      label="company"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col sm="3">
+                  <FormGroup>
+                    <Label htmlFor="full-name">Sales Tax (%)</Label>
+                    <Field
+                      name={'TaxRate'}
+                      type="text"
+                      component={renderField}
+                      label="tax_rate"
+                      validate={required}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
 
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="full-name">Discount (%)</Label>
-                      <Field
-                        name={'Discount'}
-                        type="text"
-                        component={renderField}
-                        label="tax_rate"
-                        validate={required}
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
+                <Col sm="3">
+                  <FormGroup>
+                    <Label htmlFor="full-name">Discount (%)</Label>
+                    <Field
+                      name={'Discount'}
+                      type="text"
+                      component={renderField}
+                      label="tax_rate"
+                      // validate={required}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
 
-                  <Col sm="2">
-                    <FormGroup>
-                      <Label htmlFor="companyName">Taxable?</Label>
-                      <Field
-                        name={'Taxable'}
-                        type="text"
-                        component={renderCheckboxToggle}
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
+                <Col sm="2">
+                  <FormGroup>
+                    <Label htmlFor="companyName">Taxable?</Label>
+                    <Field
+                      name={'Taxable'}
+                      type="text"
+                      component={renderCheckboxToggle}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-                <hr />
-
-
-                <Row>
-                  <Col xs="12">
-                    <h6>Phone</h6>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="phone">Office</Label>
-                      <Field
-                        name={'Phone1'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="phone">Mobile</Label>
-                      <Field
-                        name={'Phone2'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="phone">Fax Number</Label>
-                      <Field
-                        name={'Fax'}
-                        type="text"
-                        component={renderField}
-                        label="fax"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="phone">Other</Label>
-                      <Field
-                        name={'Phone3'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs="12">
-                    <h6>Email</h6>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col sm="4">
-                    <FormGroup>
-                      <Label htmlFor="phone">Email 1</Label>
-                      <Field
-                        name={'EMAIL'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="4">
-                    <FormGroup>
-                      <Label htmlFor="phone">Email 2</Label>
-                      <Field
-                        name={'EMAIL2'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="4">
-                    <FormGroup>
-                      <Label htmlFor="phone">Email 3</Label>
-                      <Field
-                        name={'EMAIL3'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                <hr />
-
-                <Row>
-                  <Col xs="12">
-                    <h6>Billing Address</h6>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs="6">
-                    <FormGroup>
-                      <Label htmlFor="address1">Address 1</Label>
-                      <Field
-                        name={'Address1'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                        validate={required}
-                      />
-                    </FormGroup>
-                  </Col>
-
-                  <Col xs="6">
-                    <FormGroup>
-                      <Label htmlFor="address2">Address 2</Label>
-                      <Field
-                        name={'Address2'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="city">City</Label>
-                      <Field
-                        name={'City'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                        validate={required}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="state">State</Label>
-                      <Field
-                        name={'State'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                        validate={required}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="zipcode">Zip Code</Label>
-                      <Field
-                        name={'Zip'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                        validate={required}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
+              <hr />
 
 
-                <hr />
+              <Row>
+                <Col xs="12">
+                  <h6>Phone</h6>
+                </Col>
+              </Row>
 
-                <Row>
-                  <Col xs="12">
-                    <h6>Shipping Address</h6>
-                  </Col>
-                </Row>
+              <Row>
+                <Col sm="3">
+                  <FormGroup>
+                    <Label htmlFor="phone">Office</Label>
+                    <Field
+                      name={'Phone1'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col sm="3">
+                  <FormGroup>
+                    <Label htmlFor="phone">Mobile</Label>
+                    <Field
+                      name={'Phone2'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col sm="3">
+                  <FormGroup>
+                    <Label htmlFor="phone">Fax Number</Label>
+                    <Field
+                      name={'Fax'}
+                      type="text"
+                      component={renderField}
+                      label="fax"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col sm="3">
+                  <FormGroup>
+                    <Label htmlFor="phone">Other</Label>
+                    <Field
+                      name={'Phone3'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-                <Row>
-                  <Col xs="6">
-                    <FormGroup>
-                      <Label htmlFor="address1">Address 1</Label>
-                      <Field
-                        name={'Shipping_Address1'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
+              <Row>
+                <Col xs="12">
+                  <h6>Email</h6>
+                </Col>
+              </Row>
 
-                  <Col xs="6">
-                    <FormGroup>
-                      <Label htmlFor="address2">Address 2</Label>
-                      <Field
-                        name={'Shipping_Address2'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
+              <Row>
+                <Col sm="4">
+                  <FormGroup>
+                    <Label htmlFor="phone">Email 1</Label>
+                    <Field
+                      name={'EMAIL'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col sm="4">
+                  <FormGroup>
+                    <Label htmlFor="phone">Email 2</Label>
+                    <Field
+                      name={'EMAIL2'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col sm="4">
+                  <FormGroup>
+                    <Label htmlFor="phone">Email 3</Label>
+                    <Field
+                      name={'EMAIL3'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-                <Row>
-                  <Col xs="3">
-                    <FormGroup>
-                      <Label htmlFor="city">City</Label>
-                      <Field
-                        name={'Shipping_City'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="3">
-                    <FormGroup>
-                      <Label htmlFor="state">State</Label>
-                      <Field
-                        name={'Shipping_State'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="3">
-                    <FormGroup>
-                      <Label htmlFor="zipcode">Zip Code</Label>
-                      <Field
-                        name={'Shipping_Zip'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="3">
-                    <FormGroup>
-                      <Label htmlFor="phone">Shipping Number</Label>
-                      <Field
-                        name={'Shipping_Phone'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
+              <hr />
 
-                <hr />
+              <Row>
+                <Col xs="12">
+                  <h6>Billing Address</h6>
+                </Col>
+              </Row>
 
-                <Row>
-                  <Col>
-                    <FormGroup>
-                      <h6>Extra Notes</h6>
-                      <Field
-                        name={'Notes'}
-                        type="text"
-                        component={renderField}
-                        label="notes"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
+              <Row>
+                <Col xs="6">
+                  <FormGroup>
+                    <Label htmlFor="address1">Address 1</Label>
+                    <Field
+                      name={'Address1'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
 
-                {edit ?
-                  <div>
+                <Col xs="6">
+                  <FormGroup>
+                    <Label htmlFor="address2">Address 2</Label>
+                    <Field
+                      name={'Address2'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-                  </div> :
-                  <div>
-                    <Button type="submit" color="primary" size="lg">
-                      Submit
-                    </Button>
-                    <Button type="cancel" color="danger" size="lg" onClick={this.props.onEdit}>
-                      Cancel
-                    </Button>
-                  </div>
-                }
+              <Row>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label htmlFor="city">City</Label>
+                    <Field
+                      name={'City'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label htmlFor="state">State</Label>
+                    <Field
+                      name={'State'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label htmlFor="zipcode">Zip Code</Label>
+                    <Field
+                      name={'Zip'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-              </form>
+
+              <hr />
+
+              <Row>
+                <Col xs="12">
+                  <h6>Shipping Address</h6>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs="6">
+                  <FormGroup>
+                    <Label htmlFor="address1">Address 1</Label>
+                    <Field
+                      name={'Shipping_Address1'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+
+                <Col xs="6">
+                  <FormGroup>
+                    <Label htmlFor="address2">Address 2</Label>
+                    <Field
+                      name={'Shipping_Address2'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs="3">
+                  <FormGroup>
+                    <Label htmlFor="city">City</Label>
+                    <Field
+                      name={'Shipping_City'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="3">
+                  <FormGroup>
+                    <Label htmlFor="state">State</Label>
+                    <Field
+                      name={'Shipping_State'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="3">
+                  <FormGroup>
+                    <Label htmlFor="zipcode">Zip Code</Label>
+                    <Field
+                      name={'Shipping_Zip'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="3">
+                  <FormGroup>
+                    <Label htmlFor="phone">Shipping Number</Label>
+                    <Field
+                      name={'Shipping_Phone'}
+                      type="text"
+                      component={renderField}
+                      label="company"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <hr />
+
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <h6>Extra Notes</h6>
+                    <Field
+                      name={'Notes'}
+                      type="text"
+                      component={renderField}
+                      label="notes"
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
               {edit ?
-                <Button type="button" onClick={this.props.onEdit} color="primary" size="lg">
-                  Edit
-                </Button> : null
+                <div>
+
+                </div> :
+                <div>
+                  <Button type="submit" color="primary" size="lg">
+                      Submit
+                  </Button>
+                  <Button type="cancel" color="danger" size="lg" onClick={this.props.onEdit}>
+                      Cancel
+                  </Button>
+                </div>
               }
-            </CardBody>
-          </Card>
-        </Row>
+
+            </form>
+            {edit ?
+              <Button type="button" onClick={this.props.onEdit} color="primary" size="lg">
+                  Edit
+              </Button> : null
+            }
+          </CardBody>
+        </Card>
+ 
       </div>
     );
   }

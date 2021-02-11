@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { hideLoading } from 'react-redux-loading-bar';
 import db_url from '../db_url';
 
 export const LOAD_CUSTOMERS = 'LOAD_CUSTOMERS';
@@ -9,6 +9,7 @@ export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 export const SUBMIT_CUSTOMER = 'SUBMIT_CUSTOMER';
 export const SET_SELECTED_COMPANY = 'SET_SELECTED_COMPANY';
 export const DB_NOT_LOADED = 'DB_NOT_LOADED';
+export const UPDATE_NOTES = 'UPDATE_NOTES';
 
 
 export function setSelectedCompanies(data) {
@@ -106,6 +107,36 @@ export function submitCustomer(customer, cookie) {
       return dispatch({
         type: SUBMIT_CUSTOMER,
         data: res
+      });
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
+  };
+}
+
+
+export function updateNotes(orderId, data, cookie) {
+
+  const item = {
+    Customer_Notes: [
+      ...data.Customer_Notes,
+      {
+        'note': data.note,
+        'date': new Date()
+      }
+    ]
+  };
+
+  return async function (dispatch) {
+    try {
+      await axios.put(`${db_url}/companyprofiles/${orderId}`, item, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
+      return dispatch({
+        type: UPDATE_NOTES,
       });
     } catch (error) {
       console.error(error);
