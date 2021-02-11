@@ -54,6 +54,13 @@ class Conversation_Notes extends Component {
   
           )
         );
+        await this.props.dispatch(
+          change(
+            'DoorOrder',
+            'note',
+            ''
+          )
+        );
       } else {
         await this.props.dispatch(
           change(
@@ -65,7 +72,13 @@ class Conversation_Notes extends Component {
                 'date': new Date()
               }
             ]
-  
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'DoorOrder',
+            'note',
+            ''
           )
         );
       }
