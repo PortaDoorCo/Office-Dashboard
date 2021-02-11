@@ -17,6 +17,7 @@ import { bindActionCreators } from 'redux';
 import OrderPage from '../../Orders/OrderPage';
 import CompanyOrders from './components/CompanyOrders';
 import Maps from './components/Maps';
+import Notes from './components/Notes';
 
 
 class CustomerPage extends Component {
@@ -43,18 +44,6 @@ class CustomerPage extends Component {
       withFirstAndLast: false
     };
   }
-
-  // componentDidMount() {
-  //   if (this.props.orders.length > 0) {
-  //     this.setState({
-  //       orders: this.props.orders.filter(
-  //         x => x.job_info.customer.id === this.props.selectedCompanies.id
-  //       )
-  //     });
-  //   }
-  // }
-
-
 
 
   toggle = () => {
@@ -101,15 +90,18 @@ class CustomerPage extends Component {
           <ModalHeader toggle={props.toggle}>Companies</ModalHeader>
           <ModalBody>
             <Row>
+   
               <Col>
-                <Col>
-                  <Edit
-                    onEdit={this.onEdit}
-                    selectedCompanies={props.selectedCompanies}
-                    edit={!this.state.edit}
-                  />
-                </Col>
+        
+                <Edit
+                  onEdit={this.onEdit}
+                  selectedCompanies={props.selectedCompanies}
+                  edit={!this.state.edit}
+                />
+    
               </Col>
+       
+
 
               <Col>
                 <Card>
@@ -125,6 +117,12 @@ class CustomerPage extends Component {
                   </div>
                 </Card>
               </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Notes />
+              </Col>
+              <Col />
             </Row>
           </ModalBody>
           <ModalFooter>
