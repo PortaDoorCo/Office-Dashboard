@@ -35,11 +35,6 @@ class Customer_Notes extends Component {
       };
     }
 
-    console.log({values});
-    console.log({order});
-    console.log({id});
-
-
     if(values.note){
       await updateNotes(id, order, cookie);
 
