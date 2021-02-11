@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Row, Col, Input, FormGroup, Label, Button } from 'reactstrap'
+import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
 import { updateNotes } from '../../../../../redux/orders/actions';
 import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Notes_Table from './Notes_Table'
-import { renderField } from '../../../../../components/RenderInputs/renderInputs'
+import NotesTable from './Notes_Table';
+import { renderField } from '../../../../../components/RenderInputs/renderInputs';
 import Cookies from 'js-cookie';
 
 const cookie = Cookies.get('jwt');
@@ -51,7 +51,13 @@ class Conversation_Notes extends Component {
                 'date': new Date()
               }
             ]
-  
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'MiscItems',
+            'note',
+            ''
           )
         );
       } else {
@@ -66,6 +72,13 @@ class Conversation_Notes extends Component {
               }
             ]
   
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'MiscItems',
+            'note',
+            ''
           )
         );
       }
@@ -86,7 +99,7 @@ class Conversation_Notes extends Component {
         <form onSubmit={handleSubmit(this.submit)}>
           <Row>
             <Col>
-              <Notes_Table />
+              <NotesTable />
             </Col>
           </Row>
           <Row>
@@ -94,19 +107,19 @@ class Conversation_Notes extends Component {
               <FormGroup>
                 <Label for="exampleText">Conversation Notes</Label>
                 <Field
-                    name='note'
-                    type="textarea"
-                    component={renderField}
-                    label="Notes" />
+                  name='note'
+                  type="textarea"
+                  component={renderField}
+                  label="Notes" />
               </FormGroup>
 
               <div className="mt-3">
-                  <Button color='primary'>Submit</Button>
-                </div>
+                <Button color='primary'>Submit</Button>
+              </div>
 
             </Col>
           </Row>
-          </form>
+        </form>
       </div>
     );
   }
