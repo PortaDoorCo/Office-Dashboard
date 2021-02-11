@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
-import { updateNotes } from '../../../../../redux/orders/actions';
+import { updateNotes } from '../../../../../redux/customers/actions';
 import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -12,7 +12,7 @@ const cookie = Cookies.get('jwt');
 
 
 
-class Conversation_Notes extends Component {
+class Customer_Notes extends Component {
 
 
   submit = async (values) => {
@@ -23,29 +23,28 @@ class Conversation_Notes extends Component {
 
     let order;
 
-    if(values.Conversation_Notes){
+    if(values.Customer_Notes){
       order = {
-        Conversation_Notes: values.Conversation_Notes,
+        Customer_Notes: values.Customer_Notes,
         note: values.note,
       };
     } else {
       order = {
-        Conversation_Notes: [],
+        Customer_Notes: [],
         note: values.note,
       };
     }
 
-
     if(values.note){
       await updateNotes(id, order, cookie);
 
-      if(values.Conversation_Notes){
+      if(values.Customer_Notes){
         await this.props.dispatch(
           change(
-            'DoorOrder',
-            'Conversation_Notes',
+            'CustomerEdit',
+            'Customer_Notes',
             [
-              ...values.Conversation_Notes,
+              ...values.Customer_Notes,
               {
                 'note': values.note,
                 'date': new Date()
@@ -57,8 +56,8 @@ class Conversation_Notes extends Component {
       } else {
         await this.props.dispatch(
           change(
-            'DoorOrder',
-            'Conversation_Notes',
+            'CustomerEdit',
+            'Customer_Notes',
             [
               {
                 'note': values.note,
@@ -116,7 +115,7 @@ class Conversation_Notes extends Component {
 
 const mapStateToProps = (state, props) => ({
 
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('CustomerEdit')(state),
 
 
 });
@@ -130,12 +129,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-Conversation_Notes = reduxForm({
-  form: 'DoorOrder',
-})(Conversation_Notes);
+Customer_Notes = reduxForm({
+  form: 'CustomerEdit',
+})(Customer_Notes);
 
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Conversation_Notes);
+)(Customer_Notes);

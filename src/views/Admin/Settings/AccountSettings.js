@@ -23,7 +23,6 @@ import {
 } from '../../../redux/users/actions';
 import LogOutModal from './LogOutModal';
 import FileUploader from '../../../components/FileUploader/FileUploader';
-import PrinterSettings from './Printing/Printer_Settings';
 
 const cookie = Cookies.get('jwt');
 
@@ -205,7 +204,7 @@ const AccountSettings = (props) => {
                     <Card>
                       <CardBody>
                         <h3>Printer Settings</h3>
-                        <p>Default Pages Printed</p>
+                        <p>Default Breakdown Pages Printed</p>
                         <Row>
                           <Col>
                             Assembly List:
