@@ -78,7 +78,6 @@ class DeliveryInfoWindow extends Component {
     const { setSelectedOrder, orders } = this.props;
     const { modal } = this.state;
 
-
     const selectedOrder = orders.filter(i => i.id === id);
 
     this.setState({
@@ -88,6 +87,8 @@ class DeliveryInfoWindow extends Component {
     this.setState({
       isOpen: false
     });
+
+    console.log({selectedOrder});
 
     if(!modal){
       setSelectedOrder(selectedOrder[0]);
@@ -101,6 +102,8 @@ class DeliveryInfoWindow extends Component {
   render() {
     const { location } = this.props;
     const { modal, edit } = this.state;
+
+
 
     const loc = {
       lat: location.location.latitude,
@@ -117,11 +120,11 @@ class DeliveryInfoWindow extends Component {
           }}
           position={loc}
           title={'Delivery'}
-          label={location.address}>
+        >
 
           {this.state.isOpen &&
                     <InfoWindow onCloseClick={this.toggle}>
-                      <div onClick={() => this.toggleOrder(location.order)}>{location.companyprofile.Company}</div>
+                      <div onClick={() => this.toggleOrder(location.order && location.order.id)}>{location && location.company}</div>
                     </InfoWindow>}
         </Marker>
 
