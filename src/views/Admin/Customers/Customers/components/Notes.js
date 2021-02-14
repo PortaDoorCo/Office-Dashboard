@@ -17,21 +17,27 @@ class Customer_Notes extends Component {
 
   submit = async (values) => {
 
-    const { updateNotes } = this.props;
+    const { updateNotes, user } = this.props;
 
     const id = values.id;
 
     let order;
 
+    let noteId = Math.floor(Math.random() * 10000000);
+
     if(values.Customer_Notes){
       order = {
+        id: noteId,
         Customer_Notes: values.Customer_Notes,
         note: values.note,
+        Name: user && user.FirstName
       };
     } else {
       order = {
+        id: noteId,
         Customer_Notes: [],
         note: values.note,
+        Name: user && user.FirstName
       };
     }
 
@@ -46,8 +52,10 @@ class Customer_Notes extends Component {
             [
               ...values.Customer_Notes,
               {
+                'id': noteId,
                 'note': values.note,
-                'date': new Date()
+                'date': new Date(),
+                'Name': user && user.FirstName
               }
             ]
   
@@ -67,8 +75,10 @@ class Customer_Notes extends Component {
             'Customer_Notes',
             [
               {
+                'id': noteId,
                 'note': values.note,
-                'date': new Date()
+                'date': new Date(),
+                'Name': user && user.FirstName
               }
             ]
   
@@ -93,7 +103,9 @@ class Customer_Notes extends Component {
 
   render() {
 
-    const { handleSubmit } = this.props;
+    const { handleSubmit, user } = this.props;
+
+    console.log({user});
 
     return (
       <div>
@@ -130,6 +142,7 @@ class Customer_Notes extends Component {
 const mapStateToProps = (state, props) => ({
 
   formState: getFormValues('CustomerEdit')(state),
+  user: state.users.user
 
 
 });
