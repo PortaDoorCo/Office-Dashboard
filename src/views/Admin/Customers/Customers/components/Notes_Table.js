@@ -23,6 +23,7 @@ class Notes_Table extends Component {
               <tr>
                 <th>Date</th>
                 <th>Notes</th>
+                <th>Submitted By:</th>
 
               </tr>
             </thead>
@@ -31,6 +32,7 @@ class Notes_Table extends Component {
                 <tr key={index}>
                   <td width={250}>{moment(i.date).format('MMMM Do YYYY, h:mm:ss a')}</td>
                   <td>{i.note}</td>
+                  <td>{i.Name}</td>
                 </tr>
               )) : null}
             </tbody>
