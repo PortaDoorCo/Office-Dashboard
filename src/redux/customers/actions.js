@@ -123,7 +123,8 @@ export function updateNotes(orderId, data, cookie) {
       ...data.Customer_Notes,
       {
         'note': data.note,
-        'date': new Date()
+        'date': new Date(),
+        'Name': data.Name
       }
     ]
   };
