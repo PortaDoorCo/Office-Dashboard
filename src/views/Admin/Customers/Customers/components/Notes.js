@@ -23,14 +23,18 @@ class Customer_Notes extends Component {
 
     let order;
 
+    let noteId = Math.floor(Math.random() * 10000000);
+
     if(values.Customer_Notes){
       order = {
+        id: noteId,
         Customer_Notes: values.Customer_Notes,
         note: values.note,
         Name: user && user.FirstName
       };
     } else {
       order = {
+        id: noteId,
         Customer_Notes: [],
         note: values.note,
         Name: user && user.FirstName
@@ -48,6 +52,7 @@ class Customer_Notes extends Component {
             [
               ...values.Customer_Notes,
               {
+                'id': noteId,
                 'note': values.note,
                 'date': new Date(),
                 'Name': user && user.FirstName
@@ -70,6 +75,7 @@ class Customer_Notes extends Component {
             'Customer_Notes',
             [
               {
+                'id': noteId,
                 'note': values.note,
                 'date': new Date(),
                 'Name': user && user.FirstName
