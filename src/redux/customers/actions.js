@@ -148,3 +148,35 @@ export function updateNotes(orderId, data, cookie) {
 }
 
 
+export function deleteNote(id, data, cookie) {
+
+  const orderId = data.id;
+
+  const item = {
+    Customer_Notes: data.Customer_Notes.filter(x => {
+      return x.id !== id;
+    })
+  };
+
+  console.log({item});
+
+  console.log({id});
+
+  return async function (dispatch) {
+    try {
+      await axios.put(`${db_url}/companyprofiles/${orderId}`, item, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
+      return dispatch({
+        type: UPDATE_NOTES,
+      });
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
+  };
+}
+
+
