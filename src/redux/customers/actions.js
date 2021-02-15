@@ -10,6 +10,9 @@ export const SUBMIT_CUSTOMER = 'SUBMIT_CUSTOMER';
 export const SET_SELECTED_COMPANY = 'SET_SELECTED_COMPANY';
 export const DB_NOT_LOADED = 'DB_NOT_LOADED';
 export const UPDATE_NOTES = 'UPDATE_NOTES';
+export const CUSTOMER_ADDED = 'CUSTOMER_ADDED';
+export const CUSTOMER_UPDATED = 'CUSTOMER_UPDATED';
+export const CUSTOMER_DELETED = 'CUSTOMER_DELETED';
 
 
 export function setSelectedCompanies(data) {
@@ -178,5 +181,33 @@ export function deleteNote(id, data, cookie) {
     }
   };
 }
+
+export function customerAdded(res) {
+  return async function (dispatch) {
+    return dispatch({
+      type: CUSTOMER_ADDED,
+      data: res,
+    });
+  };
+}
+
+export function customerUpdated(res) {
+  return async function (dispatch) {
+    return dispatch({
+      type: CUSTOMER_UPDATED,
+      data: res,
+    });
+  };
+}
+
+export function customerDeleted(res) {
+  return async function (dispatch) {
+    return dispatch({
+      type: CUSTOMER_DELETED,
+      data: res,
+    });
+  };
+}
+
 
 
