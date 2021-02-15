@@ -24,7 +24,7 @@ import {
   productUpdated,
 } from './redux/part_list/actions';
 import { loadSales } from './redux/sales/actions';
-import { loadCustomers, loadAllCustomers } from './redux/customers/actions';
+import { loadCustomers, loadAllCustomers, customerAdded, customerUpdated, customerDeleted } from './redux/customers/actions';
 import { setLogin } from './redux/users/actions';
 import {
   getAllProducts,
@@ -101,7 +101,10 @@ class App extends Component {
       orderDeleted,
       miscItemAdded,
       miscItemDeleted,
-      miscItemUpdated
+      miscItemUpdated,
+      customerAdded,
+      customerUpdated,
+      customerDeleted
     } = this.props;
 
     this.cookies();
@@ -150,12 +153,10 @@ class App extends Component {
     );
 
     socket.on('delivery_added', (res) => this.props.getDeliveries(cookie));
-    socket.on('customer_added', (res) =>
-      this.props.loadCustomers(cookie, 2000)
-    );
-    socket.on('customer_updated', (res) =>
-      this.props.loadCustomers(cookie, 2000)
-    );
+    socket.on('customer_added', (res) => customerAdded(res));
+    socket.on('customer_updated', (res) => customerUpdated(res));
+    socket.on('customer_deleted', (res) => customerDeleted(res));
+
 
     socket.on(
       'product_updated',
@@ -336,7 +337,10 @@ const mapDispatchToProps = (dispatch) =>
       miscItemAdded,
       miscItemDeleted,
       miscItemUpdated,
-      loadCategories
+      loadCategories,
+      customerAdded, 
+      customerUpdated,
+      customerDeleted
     },
     dispatch
   );
