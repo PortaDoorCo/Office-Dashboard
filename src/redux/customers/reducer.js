@@ -3,7 +3,10 @@ import {
   LOAD_ALL_CUSTOMERS,
   UPDATE_CUSTOMER,
   SET_SELECTED_COMPANY,
-  DB_NOT_LOADED
+  DB_NOT_LOADED,
+  CUSTOMER_ADDED,
+  CUSTOMER_UPDATED,
+  CUSTOMER_DELETED
 } from './actions';
 
 const initialState = {
@@ -17,7 +20,23 @@ const initialState = {
 export default function (state = initialState, action) {
   const { type, data } = action;
   switch (type) {
-
+    case CUSTOMER_ADDED:
+      return {
+        ...state,
+        customerDB: [data, ...state.customerDB],
+      };
+    case CUSTOMER_UPDATED:
+      return {
+        ...state,
+        orders: state.customerDB.map((i) =>
+          i.id === data.id ? data : i
+        ),
+      };
+    case CUSTOMER_DELETED:
+      return {
+        ...state,
+        orders: state.customerDB.filter(item => item.id !== data.id),
+      };
     case LOAD_CUSTOMERS:
       return {
         ...state,

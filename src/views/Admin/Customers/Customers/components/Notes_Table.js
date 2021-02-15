@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import { Row, Col, Input, FormGroup, Label, Button, Table } from 'reactstrap';
-import { updateNotes } from '../../../../../redux/orders/actions';
-import { Field, reduxForm, change, getFormValues } from 'redux-form';
+import {  Button, Table } from 'reactstrap';
+import { updateNotes, deleteNote } from '../../../../../redux/customers/actions';
+import { reduxForm, change, getFormValues, arrayRemove } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
+import Cookies from 'js-cookie';
 
-
-
+const cookie = Cookies.get('jwt');
 
 class Notes_Table extends Component {
   render() {
 
-    const { formState, total } = this.props;
+    const { formState, deleteNote } = this.props;
 
     if (formState) {
 
@@ -34,7 +34,7 @@ class Notes_Table extends Component {
                   <td width={250}>{moment(i.date).format('MMMM Do YYYY, h:mm:ss a')}</td>
                   <td>{i.note}</td>
                   <td>{i.Name}</td>
-                  <td><Button color="danger" onClick={() => alert('Feature Coming Soon')}>X</Button></td>
+                  <td><Button color="danger" onClick={() => (this.props.dispatch(arrayRemove('CustomerEdit', 'Customer_Notes', index)),deleteNote(i.id,formState, cookie))}>X</Button></td>
                 </tr>
               )) : null}
             </tbody>
@@ -52,17 +52,15 @@ class Notes_Table extends Component {
 
 
 const mapStateToProps = (state, props) => ({
-
   formState: getFormValues('CustomerEdit')(state),
-
-
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       change,
-      updateNotes
+      updateNotes,
+      deleteNote
     },
     dispatch
   );

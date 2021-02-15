@@ -10,6 +10,9 @@ export const SUBMIT_CUSTOMER = 'SUBMIT_CUSTOMER';
 export const SET_SELECTED_COMPANY = 'SET_SELECTED_COMPANY';
 export const DB_NOT_LOADED = 'DB_NOT_LOADED';
 export const UPDATE_NOTES = 'UPDATE_NOTES';
+export const CUSTOMER_ADDED = 'CUSTOMER_ADDED';
+export const CUSTOMER_UPDATED = 'CUSTOMER_UPDATED';
+export const CUSTOMER_DELETED = 'CUSTOMER_DELETED';
 
 
 export function setSelectedCompanies(data) {
@@ -146,5 +149,65 @@ export function updateNotes(orderId, data, cookie) {
     }
   };
 }
+
+
+export function deleteNote(id, data, cookie) {
+
+  const orderId = data.id;
+
+  const item = {
+    Customer_Notes: data.Customer_Notes.filter(x => {
+      return x.id !== id;
+    })
+  };
+
+  console.log({item});
+
+  console.log({id});
+
+  return async function (dispatch) {
+    try {
+      await axios.put(`${db_url}/companyprofiles/${orderId}`, item, {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      });
+      return dispatch({
+        type: UPDATE_NOTES,
+      });
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
+  };
+}
+
+export function customerAdded(res) {
+  return async function (dispatch) {
+    return dispatch({
+      type: CUSTOMER_ADDED,
+      data: res,
+    });
+  };
+}
+
+export function customerUpdated(res) {
+  return async function (dispatch) {
+    return dispatch({
+      type: CUSTOMER_UPDATED,
+      data: res,
+    });
+  };
+}
+
+export function customerDeleted(res) {
+  return async function (dispatch) {
+    return dispatch({
+      type: CUSTOMER_DELETED,
+      data: res,
+    });
+  };
+}
+
 
 
