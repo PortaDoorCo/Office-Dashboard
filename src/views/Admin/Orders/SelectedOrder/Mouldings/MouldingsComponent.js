@@ -90,6 +90,7 @@ class MiscItems extends Component {
 cancelOrder = e => {
   e.preventDefault();
   this.props.reset();
+  this.props.editable();
 };
 
 onUploaded = (e) => {

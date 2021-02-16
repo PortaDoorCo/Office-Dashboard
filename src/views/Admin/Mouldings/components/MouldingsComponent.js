@@ -210,7 +210,10 @@ render() {
                 <CardBody>
                   <FormGroup>
                     <h3>Upload Files</h3>
-                    <MiscItems />
+                    <Suspense fallback={loading()}>
+                      <MiscItems />
+                    </Suspense>
+                    
                     <hr />
                     <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
                       <Row>
@@ -227,10 +230,7 @@ render() {
                                 />
                               </FormGroup>
                             </Col>
-
                           </Row>
-
-
 
                           <strong>Discount: </strong>
                           <InputGroup>
