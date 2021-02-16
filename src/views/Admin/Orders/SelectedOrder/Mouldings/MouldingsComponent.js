@@ -7,10 +7,10 @@ import {
   subTotalSelector,
   taxSelector,
   totalSelector,
-  miscTotalSelector,
-  miscLineItemSelector,
-  miscItemPriceSelector,
-  miscItemLinePriceSelector
+  mouldingTotalSelector,
+  mouldingLineItemSelector,
+  mouldingPriceSelector,
+  mouldingLinePriceSelector
 } from '../../../../../selectors/mouldingPricing';
 import moment from 'moment-business-days';
 import Inputs from './Inputs';
@@ -223,10 +223,10 @@ const mapStateToProps = state => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  prices: miscItemPriceSelector(state),
-  linePrices: miscItemLinePriceSelector(state),
-  miscTotal: miscTotalSelector(state),
-  miscLineItemSelector: miscLineItemSelector(state),
+  prices: mouldingPriceSelector(state),
+  linePrices: mouldingLinePriceSelector(state),
+  miscTotal: mouldingTotalSelector(state),
+  miscLineItemSelector: mouldingLineItemSelector(state),
   user: state.users.user,
   customers: state.customers.customerDB,
   initialValues: state.Orders.selectedOrder,

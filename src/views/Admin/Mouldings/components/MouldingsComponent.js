@@ -7,10 +7,10 @@ import {
   subTotalSelector,
   taxSelector,
   totalSelector,
-  miscTotalSelector,
-  miscLineItemSelector,
-  miscItemPriceSelector,
-  miscItemLinePriceSelector
+  mouldingTotalSelector,
+  mouldingLineItemSelector,
+  mouldingPriceSelector,
+  mouldingLinePriceSelector
 } from '../../../../selectors/mouldingPricing';
 import moment from 'moment-business-days';
 import Inputs from './Inputs';
@@ -18,8 +18,11 @@ import FileUploader from '../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
+import { createNumberMask } from 'redux-form-input-masks';
+import NumberFormat from 'react-number-format';
 
 const JobInfo = React.lazy(() => import('../../../../components/JobInfo/MouldingJobInfo'));
+const MiscItems = React.lazy(() => import('./MiscItems'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -29,8 +32,13 @@ const cookie = Cookies.get('jwt');
 
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
 
-class MiscItems extends Component {
+
+class Mouldings extends Component {
 
    state = {
      collapse: true,
@@ -54,7 +62,7 @@ class MiscItems extends Component {
       total,
       submitOrder,
       user,
-      miscLineItemSelector
+      miscLineItemSelector,
     } = this.props;
 
     const orderType = 'Mouldings';
@@ -129,7 +137,7 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { formState, handleSubmit, customers, tax, total, edit } = this.props;
+  const { formState, handleSubmit, customers, tax, total, edit, mouldingTotal } = this.props;
 
   return (
     <div>
@@ -140,102 +148,48 @@ render() {
               <strong>Mouldings</strong>
             </CardHeader>
             <CardBody>
-              <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
-                <Row>
-                  <Col>
-                    <FormSection name="job_info">
-                      <Suspense fallback={loading()}>
-                        <JobInfo
-                          customers={customers}
-                          formState={formState}
-                          handleAddress={this.handleAddress}
-                          edit={edit}
-                        />
-                      </Suspense>
-                    </FormSection>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <FieldArray name="mouldings" component={Inputs} {...this.props} />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs="4" />
-                  <Col xs="5" />
-                  <Col xs="3">
-                    <Row className='mb-0'>
-                      <Col xs='9' />
-                      <Col>
-                        <FormGroup>
-                          <Label htmlFor="companyName">Taxable?</Label>
-                          <Field
-                            name={'Taxable'}
-                            component={renderCheckboxToggle}
-                          />
-                        </FormGroup>
-                      </Col>
 
-                    </Row>
-
-
-
-                    <strong>Discount: </strong>
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>%</InputGroupText>
-                      </InputGroupAddon>
-                      <Field
-                        name={'discount'}
-                        type="text"
-                        component={renderField}
-                        label="discount"
-                        validate={maxValue(100)}
+              <Row>
+                <Col>
+                  <FormSection name="job_info">
+                    <Suspense fallback={loading()}>
+                      <JobInfo
+                        customers={customers}
+                        formState={formState}
+                        handleAddress={this.handleAddress}
+                        edit={edit}
                       />
-                    </InputGroup>
-
-                      
-                    <strong>Tax: </strong>
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>$</InputGroupText>
-                      </InputGroupAddon>
-                      <Input disabled placeholder={tax.toFixed(2)} />
-                    </InputGroup>
-
-
-                    <strong>Total: </strong>
-                    <InputGroup className='mb-3'>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>$</InputGroupText>
-                      </InputGroupAddon>
-                      <Input disabled placeholder={total.toFixed(2)} />
-                    </InputGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs="4" />
-                  <Col xs="5" />
-                  <Col xs="3">
-                    <Row>
-                      <Col>
-                        <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                      </Col>
-                      <Col>
-                        <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                                Cancel
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              </form>
+                    </Suspense>
+                  </FormSection>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FieldArray name="mouldings" component={Inputs} {...this.props} />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs="4" />
+                <Col xs="5" />
+                <Col xs="3">
+                  <strong>Sub Total: </strong>
+                  <InputGroup className='mb-3'>
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>$</InputGroupText>
+                    </InputGroupAddon>
+                    <Input disabled placeholder={mouldingTotal.toFixed(2)} />
+                  </InputGroup>
+                </Col>
+              </Row>
+               
+   
             </CardBody>
           </Card>
         </div>
 
 
         <div className="mouldingFormCol2">
+
           <Row>
             <Col>
               <Card>
@@ -243,6 +197,90 @@ render() {
                   <FormGroup>
                     <h3>Upload Files</h3>
                     <FileUploader onUploaded={this.onUploaded} multi={true} />
+                  </FormGroup>
+                </CardBody>
+              </Card>
+
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Card>
+                <CardBody>
+                  <FormGroup>
+                    <h3>Upload Files</h3>
+                    <MiscItems />
+                    <hr />
+                    <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
+                      <Row>
+                        <Col xs='8' />
+                        <Col xs="4">
+                          <Row className='mb-0'>
+                            <Col xs='9' />
+                            <Col>
+                              <FormGroup>
+                                <Label htmlFor="companyName">Taxable?</Label>
+                                <Field
+                                  name={'Taxable'}
+                                  component={renderCheckboxToggle}
+                                />
+                              </FormGroup>
+                            </Col>
+
+                          </Row>
+
+
+
+                          <strong>Discount: </strong>
+                          <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>%</InputGroupText>
+                            </InputGroupAddon>
+                            <Field
+                              name={'discount'}
+                              type="text"
+                              component={renderField}
+                              label="discount"
+                              validate={maxValue(100)}
+                            />
+                          </InputGroup>
+
+                      
+                          <strong>Tax: </strong>
+                          <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>$</InputGroupText>
+                            </InputGroupAddon>
+                            <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
+                          </InputGroup>
+
+
+                          <strong>Total: </strong>
+                          <InputGroup className='mb-3'>
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>$</InputGroupText>
+                            </InputGroupAddon>
+                            <NumberFormat thousandSeparator={true} value={total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
+                          </InputGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs='8' />
+                        <Col xs="4">
+                          <Row>
+                            <Col>
+                              <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
+                            </Col>
+                            <Col>
+                              <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
+                            Cancel
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </form>
                   </FormGroup>
                 </CardBody>
               </Card>
@@ -266,10 +304,10 @@ const mapStateToProps = state => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  prices: miscItemPriceSelector(state),
-  linePrices: miscItemLinePriceSelector(state),
-  miscTotal: miscTotalSelector(state),
-  miscLineItemSelector: miscLineItemSelector(state),
+  prices: mouldingPriceSelector(state),
+  linePrices: mouldingLinePriceSelector(state),
+  mouldingTotal: mouldingTotalSelector(state),
+  miscLineItemSelector: mouldingLineItemSelector(state),
   user: state.users.user,
   customers: state.customers.customerDB,
   initialValues: {
@@ -308,13 +346,13 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-MiscItems = reduxForm({
+Mouldings = reduxForm({
   form: 'Mouldings',
   enableReinitialize: true
-})(MiscItems);
+})(Mouldings);
 
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MiscItems);
+)(Mouldings);
