@@ -20,7 +20,83 @@ const discountSelector = state => {
   }
 };
 
-const miscItemsSelector = state => {
+const miscItemsSelector = (state) => {
+  const orders = state.form.Mouldings;
+  if (orders) {
+    if (
+      state.form.Mouldings.values &&
+      state.form.Mouldings.values.misc_items.length > 0
+    ) {
+      return state.form.Mouldings.values.misc_items;
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
+};
+
+export const miscItemPriceSelector = createSelector(
+  [miscItemsSelector],
+  (misc) =>
+    misc.map((i) => {
+
+      let price = 0;
+
+      if (i.category === 'preselect') {
+        if (i.price) {
+          price = parseFloat(i.price);
+        } else {
+          price = 0;
+        }
+      } else {
+        if (i.pricePer) {
+          price = parseFloat(i.pricePer);
+        } else {
+          price = 0;
+        }
+      }
+      return price;
+    })
+);
+
+export const miscItemLinePriceSelector = createSelector(
+  [miscItemsSelector, miscItemPriceSelector],
+  (parts, pricer, item) =>
+    parts.map((i, index) => {
+      let price = 0;
+      if (i.category === 'preselect') {
+        if (i.item) {
+          if (i.qty) {
+            price = pricer[index] * parseFloat(i.qty);
+          } else {
+            price = 0;
+          }
+        } else {
+          price = 0;
+        }
+      } else {
+        if (i.pricePer) {
+          if (i.qty) {
+            price = pricer[index] * parseFloat(i.qty);
+          } else {
+            price = 0;
+          }
+        } else {
+          price = 0;
+        }
+      }
+      return price;
+    })
+);
+
+export const miscTotalSelector = createSelector(
+  [miscItemLinePriceSelector],
+  (misc) => misc.reduce((acc, item) => acc + item, 0)
+);
+
+
+const mouldingsSelector = state => {
   const orders = state.form.Mouldings;
 
   if (orders) {
@@ -34,15 +110,15 @@ const miscItemsSelector = state => {
   }
 };
 
-export const miscItemPriceSelector = createSelector(
-  [miscItemsSelector],
+export const mouldingPriceSelector = createSelector(
+  [mouldingsSelector],
   (misc) => misc.map(i => {
     let price = 0;
 
     if(i.item){
       console.log({i});
 
-      const { item, moulding_material, linearFT, thickness } = i;
+      const { item, moulding_material, linearFT } = i;
 
       let feet = (item.MOULDING_WIDTH * 12) / 144;
       let waste = feet * 1.25;
@@ -85,8 +161,8 @@ export const miscItemPriceSelector = createSelector(
 
 
 
-export const miscItemLinePriceSelector = createSelector(
-  [miscItemPriceSelector, miscItemsSelector],
+export const mouldingLinePriceSelector = createSelector(
+  [mouldingPriceSelector, mouldingsSelector],
   (pricer, parts, item) =>
     pricer.map((i, index) => {
     
@@ -97,8 +173,8 @@ export const miscItemLinePriceSelector = createSelector(
     })
 );
 
-export const miscTotalSelector = createSelector(
-  [miscItemLinePriceSelector],
+export const mouldingTotalSelector = createSelector(
+  [mouldingLinePriceSelector],
   (misc) => (misc.reduce((acc, item) => acc + item, 0))
 );
 
@@ -138,40 +214,42 @@ const totalBalanceDue = state => {
   }
 };
 
-export const miscLineItemSelector = createSelector(
-  [miscItemsSelector],
+export const mouldingLineItemSelector = createSelector(
+  [mouldingsSelector],
   (misc) => misc
 );
 
 
 
 export const subTotalSelector = createSelector(
-  [miscTotalSelector],
+  [mouldingTotalSelector],
   (misc) =>
     misc
 );
 
 export const subTotal_Total = createSelector(
-  [subTotalSelector, miscTotalSelector],
-  (subTotal, misc) => subTotal.reduce((acc, item) => acc + item, 0)
+  [mouldingTotalSelector],
+  (subTotal) => subTotal.reduce((acc, item) => acc + item, 0)
 );
 
 export const taxSelector = createSelector(
-  [subTotalSelector, taxRate],
+  [mouldingTotalSelector, taxRate],
   (subTotal, tax) => (subTotal * tax)
 );
 
 export const totalDiscountSelector = createSelector(
-  [subTotalSelector, miscTotalSelector, discountSelector],
+  [mouldingTotalSelector, miscTotalSelector, discountSelector],
   (subTotal, misc, discount) => {
     return (subTotal + misc) * discount;
   }
 );
 
 export const totalSelector = createSelector(
-  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
+  [mouldingTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
   (subTotal, tax, misc, discount) => {
-    return tax + misc - discount;
+    return (
+      subTotal + tax + misc - discount
+    );
   }
 );
 
