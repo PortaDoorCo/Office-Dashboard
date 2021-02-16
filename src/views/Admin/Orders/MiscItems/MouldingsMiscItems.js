@@ -25,9 +25,10 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import {
-  miscItemPriceSelector,
-  miscItemLinePriceSelector,
-  miscTotalSelector,
+  mouldingTotalSelector,
+  mouldingLineItemSelector,
+  mouldingPriceSelector,
+  mouldingLinePriceSelector
 } from '../../../../selectors/mouldingPricing';
 
 let Inputs = (props) => {
@@ -221,9 +222,9 @@ class MiscItems extends Component {
 const mapStateToProps = (state) => ({
   formState: getFormValues('Mouldings')(state),
   misc_items: state.misc_items.misc_items,
-  prices: miscItemPriceSelector(state),
-  linePrices: miscItemLinePriceSelector(state),
-  miscTotal: miscTotalSelector(state),
+  prices: mouldingPriceSelector(state),
+  linePrices: mouldingLinePriceSelector(state),
+  miscTotal: mouldingTotalSelector(state),
 });
 
 MiscItems = reduxForm({
