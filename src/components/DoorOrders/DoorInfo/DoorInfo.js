@@ -139,7 +139,8 @@ class DoorInfo extends Component {
       fields,
       formState,
       isValid,
-      edit
+      edit,
+      updateSubmit
     } = this.props;
 
     return (
@@ -179,6 +180,7 @@ class DoorInfo extends Component {
                 construction={construction}
                 thickness={thickness}
                 ff_thickness={ff_thickness}
+                updateSubmit={updateSubmit}
               />
 
               <Conditionals
@@ -187,6 +189,7 @@ class DoorInfo extends Component {
                 index={index}
                 edit={edit}
                 isValid={isValid}
+                updateSubmit={updateSubmit}
               />
 
             </div>

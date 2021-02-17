@@ -110,7 +110,8 @@ class MiterDF extends Component {
       prices,
       subTotal,
       lites,
-      edit
+      edit,
+      updateSubmit
     } = this.props;
 
     return (
@@ -193,7 +194,7 @@ class MiterDF extends Component {
             isValid={isValid}
             part={part}
             edit={edit}
-          // updateSubmit={updateSubmit}
+            updateSubmit={updateSubmit}
           />
         </div>
       </div>
