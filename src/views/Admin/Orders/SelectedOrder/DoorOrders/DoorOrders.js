@@ -112,14 +112,15 @@ class DoorOrders extends Component {
     };
 
     const orderId = values.id;
-
     await updateOrder(orderId, order, cookie);
+    this.setState({ updateSubmit: !this.state.updateSubmit });
     await this.props.editable();
 
   };
 
   cancelOrder = async () => {
     await this.props.reset();
+    this.setState({ updateSubmit: false });
     await this.props.editable();
   };
 

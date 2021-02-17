@@ -35,7 +35,8 @@ class FaceFrame extends Component {
       formState,
       prices,
       subTotal,
-      edit
+      edit,
+      updateSubmit
     } = this.props;
     return (
       <div>
@@ -133,7 +134,7 @@ class FaceFrame extends Component {
             isValid={isValid}
             part={part}
             edit={edit}
-          // updateSubmit={updateSubmit}
+            updateSubmit={updateSubmit}
           />
         </div>
       </div>

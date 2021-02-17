@@ -114,7 +114,8 @@ class MiterDoor extends Component {
       prices,
       subTotal,
       lites,
-      edit
+      edit,
+      updateSubmit
     } = this.props;
     return (
       <div>
@@ -198,7 +199,7 @@ class MiterDoor extends Component {
             part={part}
             edit={edit}
             addPrice={addPrice}
-          // updateSubmit={updateSubmit}
+            updateSubmit={updateSubmit}
           />
         </div>
 

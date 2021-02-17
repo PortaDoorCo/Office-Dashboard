@@ -42,18 +42,17 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   const [topRailWidth, setTopRailWidth] = useState(null);
   const [bottomRailWidth, setBottomRailWidth] = useState(null);
 
-
-
-
-
   useEffect(() => {
-
-    let init = [];
-    setWidth(init);
-    setHeight(init);
-
+    setWidth([]);
+    setHeight([]);
+    setChangeValue(null);
+    setLeftStileWidth(null);
+    setRightStileWidth(null);
+    setTopRailWidth(null);
+    setBottomRailWidth(null);
   }, [updateSubmit]);
 
+  
   const w = (e, v, i) => {
     e.preventDefault();
     let newWidth = [...width];
