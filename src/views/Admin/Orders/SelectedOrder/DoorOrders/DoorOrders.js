@@ -183,7 +183,7 @@ class DoorOrders extends Component {
                     dispatch={dispatch}
                     isValid={isValid}
                     edit={edit}
-                    updateSubmit={this.state.submit}
+                    updateSubmit={this.state.updateSubmit}
                   />
 
                   <div className="mb-3" />
