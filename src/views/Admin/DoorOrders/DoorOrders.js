@@ -155,6 +155,7 @@ class DoorOrders extends Component {
 
   cancelOrder = e => {
     e.preventDefault();
+    this.setState({ updateSubmit: false });
     this.props.reset();
   };
 

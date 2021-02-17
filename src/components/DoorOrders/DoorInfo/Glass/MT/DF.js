@@ -112,7 +112,8 @@ class MT_DF extends Component {
       prices,
       subTotal,
       lites,
-      edit
+      edit,
+      updateSubmit
     } = this.props;
     return (
       <div>
@@ -213,7 +214,7 @@ class MT_DF extends Component {
             part={part}
             dispatch={this.props.dispatch}
             edit={edit}
-          // updateSubmit={updateSubmit}
+            updateSubmit={updateSubmit}
           />
         </div>
 

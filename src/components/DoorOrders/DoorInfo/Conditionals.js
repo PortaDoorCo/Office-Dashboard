@@ -34,7 +34,8 @@ class Conditionals extends Component {
       index,
       isValid,
       part_list,
-      edit
+      edit,
+      updateSubmit
     } = this.props;
 
     let component;
@@ -52,6 +53,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'M':
@@ -63,6 +65,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'MT':
@@ -74,6 +77,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'Glass':
@@ -85,6 +89,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             default:
@@ -102,6 +107,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'M':
@@ -113,6 +119,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'MT':
@@ -124,6 +131,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'Glass':
@@ -135,6 +143,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             default:
@@ -152,6 +161,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'M':
@@ -163,6 +173,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'MT':
@@ -174,6 +185,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             default:
@@ -191,6 +203,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'M':
@@ -202,6 +215,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'MT':
@@ -213,6 +227,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={false}
+                updateSubmit={updateSubmit}
               />;
               break;
             default:
@@ -228,6 +243,7 @@ class Conditionals extends Component {
             formState={formState}
             edit={edit}
             one_piece={false}
+            updateSubmit={updateSubmit}
           />;
           break;
         case 'One_Piece':
@@ -241,6 +257,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'M':
@@ -252,6 +269,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'MT':
@@ -263,6 +281,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             default:
@@ -280,6 +299,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'M':
@@ -291,6 +311,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'MT':
@@ -302,6 +323,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             default:
@@ -319,6 +341,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'M':
@@ -330,6 +353,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'MT':
@@ -341,6 +365,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             default:
@@ -358,6 +383,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'M':
@@ -369,6 +395,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             case 'MT':
@@ -380,6 +407,7 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
               />;
               break;
             default:
@@ -395,6 +423,7 @@ class Conditionals extends Component {
             formState={formState}
             edit={edit}
             one_piece={false}
+            updateSubmit={updateSubmit}
           />;
           break;
         case 'Slab_DF':
@@ -406,6 +435,7 @@ class Conditionals extends Component {
             formState={formState}
             edit={edit}
             one_piece={false}
+            updateSubmit={updateSubmit}
           />;
           break;
         default:

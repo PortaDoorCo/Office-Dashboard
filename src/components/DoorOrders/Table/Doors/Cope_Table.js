@@ -65,9 +65,13 @@ const Cope_Table = ({
   const toggle = () => setModal(!modal);
 
   useEffect(() => {
-    let init = [];
-    setWidth(init);
-    setHeight(init);
+    setWidth([]);
+    setHeight([]);
+    setChangeValue(null);
+    setLeftStileWidth(null);
+    setRightStileWidth(null);
+    setTopRailWidth(null);
+    setBottomRailWidth(null);
   }, [updateSubmit]);
 
   const w = (e, v, index) => {

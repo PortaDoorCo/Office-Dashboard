@@ -111,7 +111,8 @@ class CopeDF extends Component {
       prices,
       subTotal,
       edit,
-      one_piece
+      one_piece,
+      updateSubmit
     } = this.props;
 
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
@@ -251,7 +252,7 @@ class CopeDF extends Component {
             isValid={isValid}
             part={part}
             edit={edit}
-          // updateSubmit={updateSubmit}
+            updateSubmit={updateSubmit}
           />
         </div>
       </div>
