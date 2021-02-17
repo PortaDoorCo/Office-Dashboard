@@ -20,8 +20,7 @@ import {
   FormSection,
   getFormValues,
   FieldArray,
-  Field,
-  change
+  Field
 } from 'redux-form';
 import {
   submitOrder,
@@ -41,7 +40,7 @@ import SideBar from '../../../components/DoorOrders/SideBar';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
-import { renderField, renderCheckboxToggle, renderCheckbox } from '../../../components/RenderInputs/renderInputs';
+import { renderField, renderCheckboxToggle } from '../../../components/RenderInputs/renderInputs';
 import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
@@ -222,7 +221,7 @@ class DoorOrders extends Component {
                       addPriceSelector={addPriceSelector}
                       dispatch={dispatch}
                       isValid={isValid}
-                      updateSubmit={this.state.submit}
+                      updateSubmit={this.state.updateSubmit}
                     />
                   </Suspense>
 
