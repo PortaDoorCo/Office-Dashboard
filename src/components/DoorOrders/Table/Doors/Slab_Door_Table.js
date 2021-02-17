@@ -47,9 +47,9 @@ const Slab_Door_Table = ({
   const [changeValue, setChangeValue] = useState(null);
 
   useEffect(() => {
-    let init = [];
-    setWidth(init);
-    setHeight(init);
+    setWidth([]);
+    setHeight([]);
+    setChangeValue(null);
   }, [updateSubmit]);
 
   const w = (e, v, i) => {

@@ -109,8 +109,8 @@ class GlassDoor extends Component {
       part_list,
       formState,
       prices,
-      subTotal
-
+      subTotal,
+      updateSubmit
     } = this.props;
     return (
       <div>
@@ -249,7 +249,7 @@ class GlassDoor extends Component {
             formState={formState}
             isValid={isValid}
             part={part}
-          // updateSubmit={updateSubmit}
+            updateSubmit={updateSubmit}
           />
         </div>
 

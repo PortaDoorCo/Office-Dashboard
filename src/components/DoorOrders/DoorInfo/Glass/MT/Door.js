@@ -117,7 +117,8 @@ class MT_Door extends Component {
       prices,
       subTotal,
       lites,
-      edit
+      edit,
+      updateSubmit
     } = this.props;
     return (
       <div>
@@ -217,7 +218,7 @@ class MT_Door extends Component {
             part={part}
             edit={edit}
             addPrice={addPrice}
-          // updateSubmit={updateSubmit}
+            updateSubmit={updateSubmit}
           />
         </div>
 

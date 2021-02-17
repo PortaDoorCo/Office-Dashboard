@@ -120,7 +120,8 @@ class CopeDoor extends Component {
       prices,
       lites,
       subTotal,
-      edit
+      edit,
+      updateSubmit
     } = this.props;
 
     return (
@@ -236,6 +237,7 @@ class CopeDoor extends Component {
             part={part}
             edit={edit}
             addPrice={addPrice}
+            updateSubmit={updateSubmit}
           />
         </div>
       </div>

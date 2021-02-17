@@ -114,7 +114,8 @@ class MiterDoor extends Component {
       prices,
       subTotal,
       edit,
-      one_piece
+      one_piece,
+      updateSubmit
     } = this.props;
 
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
@@ -215,7 +216,7 @@ class MiterDoor extends Component {
             part={part}
             edit={edit}
             addPrice={addPrice}
-          // updateSubmit={updateSubmit}
+            updateSubmit={updateSubmit}
           />
         </div>
 
