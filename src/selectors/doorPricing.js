@@ -690,7 +690,7 @@ export const linePriceSelector = createSelector(
 
           if (item[index][p]) {
             if (i.qty) {
-              if((parseInt(i.panelsH) === 1 && (numQty(i.height) > 48)) || (parseInt(i.panelsW) === 1 && (numQty(i.width) > 24))){
+              if((parseInt(i.panelsH) === 1 && (numQty(i.height) >= 48)) || (parseInt(i.panelsW) === 1 && (numQty(i.width) >= 24))){
                 const base = item[index][p] * parseInt(i.qty);
                 const add = base * 0.2;
                 const price = base + add;
@@ -719,7 +719,7 @@ export const addPriceSelector = createSelector(
         return part.dimensions.map((i, p) => {
           if (item[index][p]) {
             if (i.qty) {
-              if((parseInt(i.panelsH) === 1 && (numQty(i.height) > 48)) || (parseInt(i.panelsW) === 1 && (numQty(i.width) > 24))){
+              if((parseInt(i.panelsH) === 1 && (numQty(i.height) >= 48)) || (parseInt(i.panelsW) === 1 && (numQty(i.width) >= 24))){
                 const base = item[index][p] * parseInt(i.qty);
                 const add = base * 0.2;
                 return add;
