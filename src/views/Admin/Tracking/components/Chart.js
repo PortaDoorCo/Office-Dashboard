@@ -10,27 +10,55 @@ class Charts extends Component {
     let quotes = this.props.data.filter(item => {
       return item.status.includes('Quote');
     });
+    let invoiced = this.props.data.filter(item => {
+      return item.status.includes('Invoiced');
+    });
+    let ordered = this.props.data.filter(item => {
+      return item.status.includes('Ordered');
+    });
     let inProduction = this.props.data.filter(item => {
       return item.status.includes('In Production');
     });
-    let station1 = this.props.data.filter(item => {
-      return item.status.includes('Invoiced');
+    let cut = this.props.data.filter(item => {
+      return item.status.includes('Cut');
     });
-    let station2 = this.props.data.filter(item => {
-      return item.status.includes('Ordered');
+    let framing = this.props.data.filter(item => {
+      return item.status.includes('Framing');
     });
-    let station3 = this.props.data.filter(item => {
-      return item.status.includes('Station 1');
+    let assembly = this.props.data.filter(item => {
+      return item.status.includes('Assembly');
     });
-    let station4 = this.props.data.filter(item => {
-      return item.status.includes('Station 2');
+    let tenon = this.props.data.filter(item => {
+      return item.status.includes('Tenon');
     });
+    let panels = this.props.data.filter(item => {
+      return item.status.includes('Panels');
+    });
+    let sanding = this.props.data.filter(item => {
+      return item.status.includes('Sanding');
+    });
+    let lipping = this.props.data.filter(item => {
+      return item.status.includes('Lipping');
+    });
+
+    let inspecting = this.props.data.filter(item => {
+      return item.status.includes('Inspecting');
+    });
+
+    let paint_shop = this.props.data.filter(item => {
+      return item.status.includes('Paint Shop');
+    });
+
+    let complete = this.props.data.filter(item => {
+      return item.status.includes('Complete');
+    });
+
     let shipped = this.props.data.filter(item => {
-      return item.status.includes('shipped');
+      return item.status.includes('Shipped');
     });
 
     const bar = {
-      labels: ['Quotes', 'In Production', 'Invoiced', 'Ordered', 'Station 1', 'Station 2', 'Shipped'],
+      labels: ['Quote', 'Invoiced', 'Ordered', 'In Production', 'Cut', 'Framing', 'Assembly', 'Tenon', 'Panels', 'Sanding', 'Lipping', 'Inspecting', 'Paint Shop', 'Complete', 'Shipped'],
       datasets: [
         {
           label: 'Stations',
@@ -39,7 +67,7 @@ class Charts extends Component {
           borderWidth: 0.5,
           hoverBackgroundColor: 'rgba(194, 234, 234, 0.45)',
           hoverBorderColor: '#000000',
-          data: [quotes.length, inProduction.length, station1.length, station2.length, station3.length, station4.length, shipped.length],
+          data: [quotes.length, invoiced.length, ordered.length, inProduction.length, cut.length, framing.length, assembly.length, tenon.length, panels.length, sanding.length, lipping.length, inspecting.length, paint_shop.length, complete.length, shipped.length],
         },
       ],
     };
