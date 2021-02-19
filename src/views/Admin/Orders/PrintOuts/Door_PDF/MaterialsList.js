@@ -1,10 +1,10 @@
 import moment from 'moment';
 import { flattenDeep, uniq, flatten } from 'lodash';
-import LinearFT from '../../Breakdowns/Doors/MaterialBreakdown/LinearFT';
-import BoardFT from '../../Breakdowns/Doors/MaterialBreakdown/BoardFT';
-import Panels from '../../Breakdowns/Doors/Panels/Panels';
-import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
-import SqFT from '../../Breakdowns/Doors/MaterialBreakdown/SqFT';
+import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
+import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
+import Panels from '../Breakdowns/Doors/Panels/Panels';
+import TotalPieces from '../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
+import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
 
