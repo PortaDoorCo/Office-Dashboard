@@ -15,16 +15,20 @@ const fraction = num => {
 
 export default (data, breakdowns) => {
 
+  //flatten part list
   const flattenedParts= flatten(data.part_list);
 
+  //unique items
   const uniques_items = uniq(
     flattenDeep(data.part_list.map(i => i.woodtype.NAME))
   );
 
+  //unique thickness
   const uniques_thickness = uniq(
     flattenDeep(data.part_list.map(i => i.thickness.name))
   );
 
+  //map items -> map thickness -> return object
   const b = uniques_items.map(i => {
     return uniques_thickness.map(h => {
       return {
@@ -38,7 +42,7 @@ export default (data, breakdowns) => {
     });
   });
 
-
+  //map b -> final array of objects
   const c = b.map(i => {
     return i.map(j => {
       return {
@@ -64,11 +68,6 @@ export default (data, breakdowns) => {
       };
     });
   });
-
-
-  console.log({c});
-
-
 
   return [
     {
@@ -150,7 +149,7 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 0, 0, 20],
     },
-
+    //map C -> map i -> map j -> return array
     c.map((i, index) => {
       return i.map(j => {
         return j.parts.map(n => {
@@ -159,6 +158,7 @@ export default (data, breakdowns) => {
             {
               columns: [
                 {
+                  //linear FT
                   text: `Linear Feet of ${fraction(parseFloat(LinearFT(n.parts, breakdowns, n.width).width))}" ${
                     n.woodtype
                   } - ${n.thickness}" Thickness Needed: ${LinearFT(
@@ -241,14 +241,16 @@ export default (data, breakdowns) => {
         return [];
       }
 
-      if (i.panel) {
+      console.log({i});
+
+      if (i && i.panel) {
         return [
           {
             columns: [
               {
-                text: `Board Feet of ${i.woodtype.NAME} -  - ${
+                text: `Board Feet of ${i.woodtype.NAME} - ${
                   i.thickness.name
-                }" Thickness Panel Material Needed: ${equation.toFixed(2)}`,
+                }" Thickness ${i.panel.NAME} Material Needed: ${equation.toFixed(2)}`,
                 style: 'fonts',
                 width: 400,
               },
@@ -271,6 +273,6 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 20, 0, 0],
     },
-    { text: '', pageBreak: 'before' },
+    // { text: '', pageBreak: 'before' },
   ];
 };
