@@ -1,12 +1,11 @@
 import moment from 'moment';
-import { flattenDeep, uniq, uniqBy, flatten } from 'lodash';
+import { flattenDeep, uniq, flatten } from 'lodash';
 import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
 import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import TotalPieces from '../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 import numQty from 'numeric-quantity';
-import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 import Ratio from 'lb-ratio';
 
 const fraction = num => {
@@ -44,7 +43,7 @@ export default (data, breakdowns) => {
     return i.map(j => {
       return {
         parts: j.widths.filter(n => n !== 0).map(k => {
-          const flattenedItems= flatten(j.parts.map(i => i.dimensions));
+          // const flattenedItems= flatten(j.parts.map(i => i.dimensions));
           console.log({k});
           return {
             width: k,
