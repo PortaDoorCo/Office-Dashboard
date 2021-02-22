@@ -16,6 +16,7 @@ export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT';
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const GET_USERS = 'GET_USERS';
+export const UPDATE_APP_TOUR = 'UPDATE_APP_TOUR'
 
 
 
@@ -62,6 +63,7 @@ export function login(token) {
 
 
 export function updateAccount(token, id, userInfo) {
+  
   return async function (dispatch) {
     const res = await axios.put(`${db_url}/users/${id}`, userInfo, {
       headers: {
@@ -72,6 +74,24 @@ export function updateAccount(token, id, userInfo) {
     return dispatch({
       type: UPDATE_ACCOUNT,
       data: res.data
+    });
+  };
+}
+
+export function updateAppTour(token, id) {
+
+  const userInfo = {
+    app_tour: false
+  }
+
+  return async function (dispatch) {
+    const res = await axios.put(`${db_url}/users/${id}`, userInfo, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return dispatch({
+      type: UPDATE_APP_TOUR
     });
   };
 }
