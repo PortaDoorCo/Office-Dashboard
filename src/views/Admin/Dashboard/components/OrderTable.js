@@ -291,6 +291,7 @@ const OrderTable = (props) => {
     <div>
       <DataTable
         title="Orders"
+        className="order-table3"
         columns={columns}
         data={data}
         onSelectedRowsChange={handleRowSelected}

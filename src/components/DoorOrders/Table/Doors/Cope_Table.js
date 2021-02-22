@@ -716,7 +716,7 @@ const Cope_Table = ({
           {!edit ? (
             <Button
               color="primary"
-              className="btn-circle"
+              className="btn-circle add-item-tour"
               onClick={(e) =>
                 formState.part_list[i].construction.value === 'Cope' &&
                 formState.part_list[i].profile
