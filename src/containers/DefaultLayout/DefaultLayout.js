@@ -1,6 +1,6 @@
 import React, { useState, Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Container, Button } from 'reactstrap';
 import Tour from 'reactour'
 
 import {
@@ -61,61 +61,102 @@ const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 
-const steps = [
-  {
-    selector: '[data-tour="order-table"]',
-    content: 'Welcome to the Porta Door Dashboard',
-  },
-  {
-    selector: '.side-bar-tour',
-    content: 'Here you will be able to navigate to different parts of the app.  Click Door Order to create your first order.',
-  },
-  {
-    selector: '.job-info-tour',
-    content: 'Here is where you will select your customer, shipping method, due date and shipping address.',
-  },
-  {
-    selector: '.order-tour',
-    content: 'Here is where you enter the door info.  Select between a variety of options from woodtypes, designs, edges, etc.',
-  },
-  {
-    selector: '.misc-item-tour',
-    content: 'Here is where you will add Miscellaneous Items and submit your order.',
-  },
-  {
-    selector: '.side-bar-tour',
-    content: 'Click on Settings to view more settings',
-  },
-  {
-    selector: '.account-tour',
-    content: 'Here is where your account settings are.  Edit your name, email, and password.  It is generally good practice to change your password a few times a year.',
-  },
-  {
-    selector: '.account-tour',
-    content: 'Click on Doors in the Settings Navigation bar at the top and then Cope and Stick',
-    position: 'top'
-  },
-  {
-    selector: '.account-tour',
-    content: 'Here you can see all the attributes to the doors.  With elevated credentials you will be able to edit things such as pricing, breakdowns, and other attributes',
-    position: 'top'
-  },
-  {
-    selector: '.app',
-    content: 'Now please enjoy :) -  Feel free to contact me on slack or by email Justin@portadoor.com',
-    position: 'top'
-  },
-
-  // ...
-];
 
 
-let DefaultLayout = (props) => {
+
+let DefaultLayout = (props, context) => {
   let loading = () => (
     <div className="animated fadeIn pt-1 text-center">
       <div className="sk-spinner sk-spinner-pulse"></div>
     </div>
   );
+
+  let history = useHistory();
+
+  const steps = [
+    {
+      selector: '[data-tour="order-table"]',
+      content: () => (
+        <div>
+          <p>Welcome to the Porta Door Dashboard!</p>
+          <p>Let take a quick tour!</p>
+        </div>
+      ),
+    },
+    {
+      selector: '.side-bar-tour',
+      content: ({ goTo }) => (
+        <div>
+          <p>Here you will be able to navigate to different parts of the app.  Click Door Order to create your first order.</p>
+          <Button color="primary" onClick={async (e) => {
+            e.preventDefault();
+            await history.push('/door-order')
+            await goTo(2)
+          }}>Create Your First Order</Button>
+        </div>
+      ),
+
+    },
+    {
+      selector: '',
+      content: 'Welcome To Your First Order - Click Next to Proceed',
+    },
+    {
+      selector: '.job-info-tour',
+      content: 'Here is where you will select your customer, shipping method, due date and shipping address.',
+    },
+    {
+      selector: '.order-tour',
+      content: 'Here is where you enter the door info.  Select between a variety of options from woodtypes, designs, edges, etc.',
+    },
+    {
+      selector: '.misc-item-tour',
+      content: 'Here is where you will add Miscellaneous Items and submit your order.',
+    },
+    {
+      selector: '.side-bar-tour',
+      content: ({ goTo }) => (
+        <div>
+          <p>As you can see there a few other options for order types.  You can also view reports and customers.  For now lets view the settings.  Click Settings To Continue</p>
+          <Button color="primary" onClick={async (e) => {
+            e.preventDefault();
+            await history.push('/settings')
+            await goTo(7)
+          }}>Go To Settings</Button>
+        </div>
+      ),
+    },
+    {
+      selector: '.account-tour',
+      content: 'Here is where your account settings are.  Edit your name, email, and password.  It is generally good practice to change your password a few times a year.',
+    },
+    {
+      selector: '.account-tour',
+      content: 'Click on Doors in the Settings Navigation bar at the top and then Cope and Stick - Then click next to proceed',
+      position: 'top'
+    },
+    {
+      selector: '.account-tour',
+      content: 'Here you can see all the attributes to the doors.  With elevated credentials you will be able to edit things such as pricing, breakdowns, and other attributes',
+      position: 'top'
+    },
+    {
+      selector: '.app',
+      content: () => (
+        <div>
+          <center>
+            <p>Now please enjoy :)</p>
+            <p>Feel free to contact me on <a href="https://portadoor.slack.com">Slack</a></p>
+            <p>or by email <a href="mailto: justin@portadoor.com">justin@portadoor.com</a></p>
+            <p>❤️</p>
+          </center>
+        </div>
+      ),
+      position: 'top'
+    },
+
+    // ...
+  ];
 
   const [isTourOpen, setIsTourOpen] = useState(true);
 
@@ -134,8 +175,12 @@ let DefaultLayout = (props) => {
         <Tour
           steps={steps}
           isOpen={app_tour}
-          onRequestClose={() => updateAppTour(cookie, userId)}
-          updateDelay={5}
+          onRequestClose={async (e) => {
+            e.preventDefault()
+            await history.push('/')
+            await updateAppTour(cookie, userId)
+          }}
+          updateDelay={1}
         />
         <NotificationContainer />
         <AppHeader fixed>
