@@ -23,10 +23,10 @@ const Settings = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div>
+    <div className="account-tour">
       <Row>
         <Col>
-          <Navbar color="light" light expand="md">
+          <Navbar color="light" light expand="md" className="settings-nav-tour">
             <NavbarBrand onClick={() => setSelection('index')}>Settings</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
@@ -35,8 +35,8 @@ const Settings = (props) => {
                   <DropdownToggle nav caret>
                     Doors
                   </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem onClick={() => setSelection('cope_door')}>
+                  <DropdownMenu right >
+                    <DropdownItem onClick={() => setSelection('cope_door')} >
                       Cope and Stick
                     </DropdownItem>
                     <DropdownItem onClick={() => setSelection('mt_door')}>

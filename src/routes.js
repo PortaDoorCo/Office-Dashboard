@@ -25,7 +25,7 @@ const routes = [
   { path: '/drawer-order', name: 'Drawer Order', component: DrawerOrders },
   { path: '/view-orders', name: 'Orders', component: Orders },
   { path: '/customers', name: 'Customers', component: Customers },
-  { path: '/settings', name: 'Settings', component: Settings },
+  { path: '/settings', name: 'Settings', component: Settings, className: 'settings-tour' },
   { path: '/tracking', name: 'Tracking', component: Tracking },
   { path: '/purchase-orders', name: 'Purchase Orders', component: PurchaseOrders },
   { path: '/sales-reports', name: 'Sales Reports', component: SalesReport },

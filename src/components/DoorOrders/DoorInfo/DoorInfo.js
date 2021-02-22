@@ -144,7 +144,7 @@ class DoorInfo extends Component {
     } = this.props;
 
     return (
-      <div>
+      <div className="order-tour">
         {fields.map((part, index) => {
           return (
             <div id={`item-${index}`} key={index}>

@@ -124,7 +124,7 @@ class JobInfo extends Component {
 
     return (
 
-      <div>
+      <div className='job-info-tour'>
         <Row>
           <Col lg='10' />
           <Col lg='1'>
