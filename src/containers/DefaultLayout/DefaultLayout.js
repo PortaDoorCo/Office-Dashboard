@@ -48,10 +48,13 @@ import {
   getBoxBreakdowns,
   getPricing,
 } from '../../redux/part_list/actions';
-import { login, getUsers } from '../../redux/users/actions';
+import { login, getUsers, updateAppTour } from '../../redux/users/actions';
 
 import Loader from '../../views/Admin/Loader/Loader';
 import { NotificationContainer } from 'react-notifications';
+
+
+const cookie = Cookies.get('jwt');
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
@@ -117,7 +120,7 @@ let DefaultLayout = (props) => {
   const [isTourOpen, setIsTourOpen] = useState(true);
 
 
-  const { customerDBLoaded } = props;
+  const { customerDBLoaded, app_tour, userId, updateAppTour } = props;
 
   if (!customerDBLoaded) {
     return (
@@ -130,8 +133,8 @@ let DefaultLayout = (props) => {
       <div className="app">
         <Tour
           steps={steps}
-          isOpen={isTourOpen}
-          onRequestClose={() => setIsTourOpen(false)}
+          isOpen={app_tour}
+          onRequestClose={() => updateAppTour(cookie, userId)}
           updateDelay={5}
         />
         <NotificationContainer />
@@ -191,6 +194,8 @@ let DefaultLayout = (props) => {
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
+  app_tour: state.users.app_tour,
+  userId: state.users.user.id,
   loggedIn: state.users.loggedIn,
   loadedOrders: state.part_list.loadedOrders,
   loadedBreakdowns: state.part_list.loadedBreakdowns,
@@ -229,6 +234,7 @@ const mapDispatchToProps = (dispatch) =>
       loadMiscItems,
 
       login,
+      updateAppTour,
 
       socketReceiveUpdateStatus,
     },
