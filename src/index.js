@@ -26,8 +26,10 @@ if (!cookie) {
   localStorage.removeItem('redux_localstorage_simple');
 }
 
+const dsn = process.env.SENTRY_DSN
+
 Sentry.init({
-  dsn: "https://22a78fbe9ebe42b4b8f268675c35bf48@o529535.ingest.sentry.io/5648047",
+  dsn: dsn,
   integrations: [new Integrations.BrowserTracing()],
 
   // We recommend adjusting this value in production, or using tracesSampler
