@@ -14,10 +14,11 @@ import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 import { save, load } from 'redux-localstorage-simple';
 import { loadingBarMiddleware } from 'react-redux-loading-bar'
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
+
 import Cookies from 'js-cookie';
 const cookie = Cookies.get('jwt');
-
-
 
 const middleware = [thunk];
 
@@ -25,6 +26,18 @@ if (!cookie) {
   localStorage.removeItem('redux_localstorage_simple');
 }
 
+Sentry.init({
+  dsn: "https://22a78fbe9ebe42b4b8f268675c35bf48@o529535.ingest.sentry.io/5648047",
+  integrations: [new Integrations.BrowserTracing()],
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
+
+const sentryReduxEnhancer = Sentry.createReduxEnhancer({
+  // Optionally pass options
+});
 
 const store = createStore(
   rootReducer,
@@ -33,7 +46,8 @@ const store = createStore(
   }),
   composeWithDevTools(applyMiddleware(...middleware, loadingBarMiddleware(), save({
     ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
-  })))
+  })), sentryReduxEnhancer),
+
 );
 
 
