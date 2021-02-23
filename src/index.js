@@ -15,6 +15,8 @@ import rootReducer from './rootReducer';
 import { save, load } from 'redux-localstorage-simple';
 import { loadingBarMiddleware } from 'react-redux-loading-bar'
 import Cookies from 'js-cookie';
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
 const cookie = Cookies.get('jwt');
 
 
@@ -25,6 +27,20 @@ if (!cookie) {
   localStorage.removeItem('redux_localstorage_simple');
 }
 
+const dsn = process.env.SENTRY_DSN
+
+Sentry.init({
+  dsn: dsn,
+  integrations: [new Integrations.BrowserTracing()],
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
+
+const sentryReduxEnhancer = Sentry.createReduxEnhancer({
+  // Optionally pass options
+});
+
 
 const store = createStore(
   rootReducer,
@@ -33,7 +49,7 @@ const store = createStore(
   }),
   composeWithDevTools(applyMiddleware(...middleware, loadingBarMiddleware(), save({
     ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
-  })))
+  })), sentryReduxEnhancer)
 );
 
 
