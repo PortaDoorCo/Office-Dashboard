@@ -25,4 +25,5 @@ yarn-error.log*
 *.exe
 
 index.js
+.env
 
