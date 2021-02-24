@@ -9,7 +9,7 @@ const discountSelector = state => {
     if ((!state.form.Mouldings.values && !state.form.Mouldings.values.discount)) {
       return 0;
     } else {
-      if(state.form.Mouldings.values.discount.length > 0){
+      if(state.form.Mouldings.values.discount > 0){
         return (numQty(state.form.Mouldings.values.discount) / 100);
       } else {
         return 0;

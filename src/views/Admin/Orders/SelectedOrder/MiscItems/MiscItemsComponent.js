@@ -10,7 +10,7 @@ import {
   miscTotalSelector,
   miscLineItemSelector,
   miscItemLinePriceSelector,
-  miscItemPriceSelector
+  miscItemPriceSelector,
 } from '../../../../../selectors/miscItemPricing';
 import moment from 'moment-business-days';
 import Inputs from '../../../MiscItems/components/Inputs';
