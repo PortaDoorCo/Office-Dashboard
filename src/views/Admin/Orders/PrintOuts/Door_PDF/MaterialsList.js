@@ -154,31 +154,33 @@ export default (data, breakdowns) => {
       return i.map(j => {
         return j.parts.map(n => {
           console.log({n});
-          return [
-            {
-              columns: [
-                {
-                  //linear FT
-                  text: `Linear Feet of ${fraction(parseFloat(LinearFT(n.parts, breakdowns, n.width).width))}" ${
-                    n.woodtype
-                  } - ${n.thickness}" Thickness Needed: ${LinearFT(
-                    n.parts, breakdowns, n.width
-                  ).sum}`,
-                  style: 'fonts',
-                  width: 400,
-                },
-                { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-                {
-                  text: `${(
-                    parseFloat(LinearFT(n.parts, breakdowns, n.width).sum) * 0.2 +
-                    parseFloat(LinearFT(n.parts, breakdowns, n.width).sum)
-                  ).toFixed(2)}`,
-                  style: 'fonts',
-                  width: 60,
-                },
-              ],
-            },
-          ];
+          console.log(LinearFT(n.parts,breakdowns,n.width))
+          return LinearFT(n.parts,breakdowns,n.width).map( b => {
+            return [
+              {
+                columns: [
+                  {
+                    //linear FT
+                    text: `Linear Feet of ${fraction(parseFloat(b.width))}" ${
+                      n.woodtype
+                    } - ${n.thickness}" Thickness Needed: ${b.sum}`,
+                    style: 'fonts',
+                    width: 400,
+                  },
+                  { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+                  {
+                    text: `${(
+                      parseFloat(b.sum) * 0.2 +
+                      parseFloat(b.sum)
+                    ).toFixed(2)}`,
+                    style: 'fonts',
+                    width: 60,
+                  },
+                ],
+              },
+            ];
+          })
+         
         });
       });
     }),
