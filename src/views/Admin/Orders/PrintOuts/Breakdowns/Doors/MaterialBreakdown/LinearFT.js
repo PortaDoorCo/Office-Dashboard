@@ -159,10 +159,15 @@ export default (parts, breakdowns,thickness) => {
   console.log({sum});
 
 
-  return {
-    sum : sum.toFixed(2),
-    width:  null
-  };
+  return newObj.map(i => {
+    return {
+      sum : i.sum.toFixed(2),
+      width:  i.width ? i.width : null
+    };
+  })
+
+
+
 };
 
 
