@@ -102,50 +102,57 @@ export default (parts, breakdowns,thickness) => {
 
       });
 
+      console.log({stiles})
+      console.log({rails})
+
+      
+
       const stiles_total = stiles.reduce((acc, item) => acc + item.sum, 0);
       const rails_total = rails.reduce((acc, item) => acc + item.sum, 0);
 
       const stile_widths = stiles.map(i => i.width);
       const rail_widths = rails.map(i => i.width);
 
+      console.log(stiles.concat(rails))
+
       console.log({stile_widths});
       console.log({stiles_total});
       console.log({rails_total});
 
-      return {
-        sum: stiles_total + rails_total,
-        widths: stile_widths.concat(rail_widths)
-      };
+      return stiles.concat(rails)
     });
   });
 
   console.log({calc});
 
+  console.log(uniq(flatten(calc)))
+
+  const first_obj = flatten(calc)
+
+  const flatten_obj = flatten(first_obj)
+
+
+  const sub_widths = flatten_obj.map(i => {
+    return i.width
+  });
+
   const sub_sum = calc.map(i => {
     return i.reduce((acc, item) => acc + item.sum, 0);
   });
 
-  const sub_widths = calc.map(i => {
-    return i.map(j => {
-      return j.widths;
-    });
-  });
+
 
   console.log({sub_widths});
 
+  const sub_final = uniq(flatten(sub_widths));
+  console.log({sub_final})
 
-  const sub_unique_width = uniq(flatten(sub_widths));
-  console.log({sub_unique_width});
-
-  const sub_final = uniq(flatten(sub_unique_width));
 
   const final = sub_final.filter(i => i > 0);
-
   console.log({final});
 
   const sum = sub_sum.reduce((acc, item) => acc + item, 0);
-
-  console.log(sum);
+  console.log({sum});
 
   return {
     sum : sum.toFixed(2),
