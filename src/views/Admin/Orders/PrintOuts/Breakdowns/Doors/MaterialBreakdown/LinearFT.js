@@ -1,5 +1,5 @@
 import numQty from 'numeric-quantity';
-import { flatten, values, uniq } from 'lodash';
+import { flatten, values, uniq, groupBy } from 'lodash';
 import Stiles from '../Stiles/Stiles';
 import Rails from '../Rails/Rails';
 
@@ -102,8 +102,8 @@ export default (parts, breakdowns,thickness) => {
 
       });
 
-      console.log({stiles})
-      console.log({rails})
+      console.log({stiles});
+      console.log({rails});
 
       
 
@@ -113,27 +113,30 @@ export default (parts, breakdowns,thickness) => {
       const stile_widths = stiles.map(i => i.width);
       const rail_widths = rails.map(i => i.width);
 
-      console.log(stiles.concat(rails))
+      console.log(stiles.concat(rails));
 
       console.log({stile_widths});
       console.log({stiles_total});
       console.log({rails_total});
 
-      return stiles.concat(rails)
+      return stiles.concat(rails);
     });
   });
 
-  console.log({calc});
+  const first_obj = flatten(calc);
 
-  console.log(uniq(flatten(calc)))
+  const flatten_obj = flatten(first_obj);
+  const groupedObj = groupBy(flatten_obj, 'width');
+  const newObj = Object.entries(groupedObj).map(([k, v]) => {
+    //console.log('new objjvvv==>>', v);
 
-  const first_obj = flatten(calc)
+    return {width: k, sum: v.reduce((a,b) => a + b.sum, 0)};
+  });
+  console.log('new objj==>>', newObj);
 
-  const flatten_obj = flatten(first_obj)
-
-
+  
   const sub_widths = flatten_obj.map(i => {
-    return i.width
+    return i.width;
   });
 
   const sub_sum = calc.map(i => {
@@ -145,18 +148,20 @@ export default (parts, breakdowns,thickness) => {
   console.log({sub_widths});
 
   const sub_final = uniq(flatten(sub_widths));
-  console.log({sub_final})
+  console.log({sub_final});
 
 
-  const final = sub_final.filter(i => i > 0);
-  console.log({final});
+
+  // const final = sub_final.filter(i => flatten_obj.includes(i));
+  // console.log({final});
 
   const sum = sub_sum.reduce((acc, item) => acc + item, 0);
   console.log({sum});
 
+
   return {
     sum : sum.toFixed(2),
-    width: final[0] > 0 ? final[0] : null
+    width:  null
   };
 };
 
