@@ -9,7 +9,7 @@ const discountSelector = state => {
     if ((!state.form.MiscItems.values && !state.form.MiscItems.values.discount)) {
       return 0;
     } else {
-      if(state.form.MiscItems.values.discount.length > 0){
+      if(state.form.MiscItems.values.discount > 0){
         return (numQty(state.form.MiscItems.values.discount) / 100);
       } else {
         return 0;
@@ -159,9 +159,10 @@ export const totalDiscountSelector = createSelector(
 );
 
 export const totalSelector = createSelector(
-  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
-  (subTotal, tax, misc, discount) => {
-    return tax + misc - discount;
+  [taxSelector, miscTotalSelector, totalDiscountSelector],
+  (tax, misc, discount) => {
+    console.log({discount})
+    return  (misc + tax) - discount;
   }
 );
 
