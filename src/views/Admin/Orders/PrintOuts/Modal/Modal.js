@@ -58,14 +58,14 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">Acknowledgement</Label>
-                  <Input type="select" name="select" id="exampleSelect">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </Input>
+                  <DropdownList filter
+                    data={printer_options}
+                    value={printer_option && printer_option.acknowledgement}
+                    allowCreate={true}
+                    onCreate={name => handleCreate(name)}
+                    onChange={value => setValue(value)}
+                    textField="acknowledgement"
+                  />
                 </FormGroup>
               </Form>
             </Col>
@@ -73,14 +73,14 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">Invoice</Label>
-                  <Input type="select" name="select" id="exampleSelect">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </Input>
+                  <DropdownList filter
+                    data={printer_options}
+                    value={printer_option && printer_option.invoice}
+                    allowCreate={true}
+                    onCreate={name => handleCreate(name)}
+                    onChange={value => setValue(value)}
+                    textField="invoice"
+                  />
                 </FormGroup>
               </Form>
             </Col>
@@ -91,14 +91,14 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">Assembly List</Label>
-                  <Input type="select" name="select" id="exampleSelect">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </Input>
+                  <DropdownList filter
+                    data={printer_options}
+                    value={printer_option && printer_option.assembly_list}
+                    allowCreate={true}
+                    onCreate={name => handleCreate(name)}
+                    onChange={value => setValue(value)}
+                    textField="assembly_list"
+                  />
                 </FormGroup>
               </Form>
             </Col>
@@ -106,14 +106,14 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">Panels</Label>
-                  <Input type="select" name="select" id="exampleSelect">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </Input>
+                  <DropdownList filter
+                    data={printer_options}
+                    value={printer_option && printer_option.panels}
+                    allowCreate={true}
+                    onCreate={name => handleCreate(name)}
+                    onChange={value => setValue(value)}
+                    textField="panels"
+                  />
                 </FormGroup>
               </Form>
             </Col>
@@ -124,14 +124,14 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">Stiles</Label>
-                  <Input type="select" name="select" id="exampleSelect">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </Input>
+                  <DropdownList filter
+                    data={printer_options}
+                    value={printer_option && printer_option.stiles}
+                    allowCreate={true}
+                    onCreate={name => handleCreate(name)}
+                    onChange={value => setValue(value)}
+                    textField="stiles"
+                  />
                 </FormGroup>
               </Form>
             </Col>
@@ -139,14 +139,14 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">Rails</Label>
-                  <Input type="select" name="select" id="exampleSelect">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </Input>
+                  <DropdownList filter
+                    data={printer_options}
+                    value={printer_option && printer_option.rails}
+                    allowCreate={true}
+                    onCreate={name => handleCreate(name)}
+                    onChange={value => setValue(value)}
+                    textField="rails"
+                  />
                 </FormGroup>
               </Form>
             </Col>
@@ -157,14 +157,14 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">Material List</Label>
-                  <Input type="select" name="select" id="exampleSelect">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </Input>
+                  <DropdownList filter
+                    data={printer_options}
+                    value={printer_option && printer_option.materials}
+                    allowCreate={true}
+                    onCreate={name => handleCreate(name)}
+                    onChange={value => setValue(value)}
+                    textField="materials"
+                  />
                 </FormGroup>
               </Form>
             </Col>
@@ -172,14 +172,14 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">Packing Slip</Label>
-                  <Input type="select" name="select" id="exampleSelect">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </Input>
+                  <DropdownList filter
+                    data={printer_options}
+                    value={printer_option && printer_option.packing_slip}
+                    allowCreate={true}
+                    onCreate={name => handleCreate(name)}
+                    onChange={value => setValue(value)}
+                    textField="packing_slip"
+                  />
                 </FormGroup>
               </Form>
             </Col>
@@ -190,14 +190,14 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">QC</Label>
-                  <Input type="select" name="select" id="exampleSelect">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </Input>
+                  <DropdownList filter
+                    data={printer_options}
+                    value={printer_option && printer_option.qc}
+                    allowCreate={true}
+                    onCreate={name => handleCreate(name)}
+                    onChange={value => setValue(value)}
+                    textField="qc"
+                  />
                 </FormGroup>
               </Form>
             </Col>
