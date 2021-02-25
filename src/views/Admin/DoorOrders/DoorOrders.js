@@ -93,7 +93,8 @@ class DoorOrders extends Component {
       tax,
       total,
       submitOrder,
-      user
+      user,
+      
     } = this.props;
 
     const orderType = 'Door Order';
@@ -184,9 +185,8 @@ class DoorOrders extends Component {
       total,
       dispatch,
       tax,
-      addPriceSelector
+      addPriceSelector,
     } = this.props;
-
 
     return (
       <div className="animated fadeIn">

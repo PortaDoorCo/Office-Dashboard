@@ -42,6 +42,7 @@ const currencyMask = createNumberMask({
 });
 
 const Cope_Table = ({
+  props,
   fields,
   formState,
   i,
@@ -348,7 +349,8 @@ const Cope_Table = ({
     }
   };
 
-  console.log({error});
+  console.log(props.meta);
+  console.log({submitFailed});
   
   return (
     <div>
@@ -723,7 +725,7 @@ const Cope_Table = ({
                 className="btn-circle add-item-tour"
                 onClick={(e) =>
                   formState.part_list[i].construction.value === 'Cope' &&
-                formState.part_list[i].profile
+                  formState.part_list[i].profile
                     ? fields.push({
                       qty: 1,
                       panelsH: 1,

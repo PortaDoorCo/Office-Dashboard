@@ -122,9 +122,12 @@ class CopeDoor extends Component {
       addPrice,
       one_piece,
       updateSubmit,
+
     } = this.props;
 
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
+
+
 
     return (
       <div>
