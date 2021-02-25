@@ -11,20 +11,30 @@ const PrintModal = (props) => {
     printer_options
   } = props;
 
+  const number_select = [0,1,2,3,4,5];
+
   const [value, setValue] = useState(null);
+  const [new_printer_option, set_new_printer_option] = useState(printer_options);
   const [printer_option, set_printer_option] = useState(printer_options[0]);
  
   const handleCreate = (name) => {
 
-    // let newOption = {
-    //   name,
-    //   id: printerOption.length + 1
-    // };
+    let newOption = {
+      NAME: name,
+      id: new_printer_option.length + 1,
+      acknowledgement: 1,
+      invoice: 1,
+      assembly_list: 1,
+      panels: 1,
+      stiles: 1,
+      rails: 1,
+      materials: 1,
+      packing_slip: 1,
+      qc: 1
+    };
 
-    // this.setState({
-    //   value: newOption,  // select new option
-    //   printerOption: [...printerOption, newOption] // add new option to our dataset
-    // });
+    set_new_printer_option([...new_printer_option, newOption]);
+
   };
 
 
@@ -41,11 +51,11 @@ const PrintModal = (props) => {
                 <FormGroup>
                   <Label for="printer_settings">Settings</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={new_printer_option}
                     value={printer_option}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
-                    onChange={value => setValue(value)}
+                    onChange={value => set_printer_option(value)}
                     textField="NAME"
                   />
                 </FormGroup>
@@ -57,14 +67,15 @@ const PrintModal = (props) => {
             <Col>
               <Form>
                 <FormGroup>
-                  <Label for="exampleSelect">Acknowledgement</Label>
+                  <Label for="acknowledgement">Acknowledgement</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={number_select}
                     value={printer_option && printer_option.acknowledgement}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
                     onChange={value => setValue(value)}
                     textField="acknowledgement"
+                    name="acknowledgement"
                   />
                 </FormGroup>
               </Form>
@@ -72,14 +83,15 @@ const PrintModal = (props) => {
             <Col>
               <Form>
                 <FormGroup>
-                  <Label for="exampleSelect">Invoice</Label>
+                  <Label for="invoice">Invoice</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={number_select}
                     value={printer_option && printer_option.invoice}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
                     onChange={value => setValue(value)}
                     textField="invoice"
+                    name="invoice"
                   />
                 </FormGroup>
               </Form>
@@ -90,14 +102,15 @@ const PrintModal = (props) => {
             <Col>
               <Form>
                 <FormGroup>
-                  <Label for="exampleSelect">Assembly List</Label>
+                  <Label for="assembly_list">Assembly List</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={number_select}
                     value={printer_option && printer_option.assembly_list}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
                     onChange={value => setValue(value)}
                     textField="assembly_list"
+                    name="assembly_list"
                   />
                 </FormGroup>
               </Form>
@@ -105,14 +118,15 @@ const PrintModal = (props) => {
             <Col>
               <Form>
                 <FormGroup>
-                  <Label for="exampleSelect">Panels</Label>
+                  <Label for="panels">Panels</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={number_select}
                     value={printer_option && printer_option.panels}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
                     onChange={value => setValue(value)}
                     textField="panels"
+                    name="panels"
                   />
                 </FormGroup>
               </Form>
@@ -123,14 +137,15 @@ const PrintModal = (props) => {
             <Col>
               <Form>
                 <FormGroup>
-                  <Label for="exampleSelect">Stiles</Label>
+                  <Label for="stiles">Stiles</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={number_select}
                     value={printer_option && printer_option.stiles}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
                     onChange={value => setValue(value)}
                     textField="stiles"
+                    name="stiles"
                   />
                 </FormGroup>
               </Form>
@@ -138,14 +153,15 @@ const PrintModal = (props) => {
             <Col>
               <Form>
                 <FormGroup>
-                  <Label for="exampleSelect">Rails</Label>
+                  <Label for="rails">Rails</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={number_select}
                     value={printer_option && printer_option.rails}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
                     onChange={value => setValue(value)}
                     textField="rails"
+                    name="rails"
                   />
                 </FormGroup>
               </Form>
@@ -156,14 +172,15 @@ const PrintModal = (props) => {
             <Col>
               <Form>
                 <FormGroup>
-                  <Label for="exampleSelect">Material List</Label>
+                  <Label for="material_list">Material List</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={number_select}
                     value={printer_option && printer_option.materials}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
                     onChange={value => setValue(value)}
                     textField="materials"
+                    name="materials"
                   />
                 </FormGroup>
               </Form>
@@ -171,14 +188,15 @@ const PrintModal = (props) => {
             <Col>
               <Form>
                 <FormGroup>
-                  <Label for="exampleSelect">Packing Slip</Label>
+                  <Label for="packing_slip">Packing Slip</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={number_select}
                     value={printer_option && printer_option.packing_slip}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
                     onChange={value => setValue(value)}
                     textField="packing_slip"
+                    name="packing_slip"
                   />
                 </FormGroup>
               </Form>
@@ -189,14 +207,15 @@ const PrintModal = (props) => {
             <Col>
               <Form>
                 <FormGroup>
-                  <Label for="exampleSelect">QC</Label>
+                  <Label for="qc">QC</Label>
                   <DropdownList filter
-                    data={printer_options}
+                    data={number_select}
                     value={printer_option && printer_option.qc}
                     allowCreate={true}
                     onCreate={name => handleCreate(name)}
                     onChange={value => setValue(value)}
                     textField="qc"
+                    name="qc"
                   />
                 </FormGroup>
               </Form>
