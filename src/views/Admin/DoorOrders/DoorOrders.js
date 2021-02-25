@@ -20,8 +20,7 @@ import {
   FormSection,
   getFormValues,
   FieldArray,
-  Field,
-  hasSubmitFailed
+  Field
 } from 'redux-form';
 import {
   submitOrder,
@@ -95,7 +94,6 @@ class DoorOrders extends Component {
       total,
       submitOrder,
       user,
-      submitFailed
       
     } = this.props;
 
@@ -147,18 +145,23 @@ class DoorOrders extends Component {
       sale: values.job_info.customer.sale.id,
     };
 
-    console.log({submitFailed});
+
+    let canSubmit = false;
+
+    values.part_list.map(v => {
+      return v.dimensions.length > 0 ? canSubmit = true : canSubmit = false;
+    });
 
 
-    // if(submitFailed){
-    //   alert('Please double check your order');
-    //   return;
-    // } else {
-    //   await submitOrder(order, cookie);
-    //   this.setState({ updateSubmit: !this.state.updateSubmit });
-    //   reset();
-    //   window.scrollTo(0, 0);
-    // }
+    if(canSubmit){
+      await submitOrder(order, cookie);
+      this.setState({ updateSubmit: !this.state.updateSubmit });
+      reset();
+      window.scrollTo(0, 0);
+    } else {
+      alert('Submission Error: Please double check your order');
+      return;
+    }
   };
 
   cancelOrder = e => {
@@ -494,7 +497,6 @@ const mapStateToProps = state => ({
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
   miscTotalSelector: miscTotalSelector(state),
-  submitFailed: hasSubmitFailed('DoorOrder')(state)
 });
 
 const mapDispatchToProps = dispatch =>
