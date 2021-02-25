@@ -10,7 +10,8 @@ import {
   MISC_ITEM_ADDED,
   MISC_ITEM_DELETED,
   MISC_ITEM_UPDATED,
-  LOAD_CATEGORIES
+  LOAD_CATEGORIES,
+  LOAD_PRINTER_OPTIONS
 } from './actions';
 
 const initialState = {
@@ -25,6 +26,8 @@ const initialState = {
   loadedMiscItems: false,
   categories: [],
   loadedCategories: false,
+  printer_options: [],
+  loadedPrinterOptions: false
 };
 
 export default function (state = initialState, action) {
@@ -41,6 +44,12 @@ export default function (state = initialState, action) {
         ...state,
         paymentTerms: data,
         loadedPaymentTerms: true
+      };
+    case LOAD_PRINTER_OPTIONS:
+      return {
+        ...state,
+        printer_options: data,
+        loadedPrinterOptions: true
       };
     case LOAD_PAYMENT_TYPES:
       return {

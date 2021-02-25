@@ -221,7 +221,7 @@ class OrderPage extends Component {
   render() {
     const props = this.props;
 
-    const { selectedOrder } = this.props;
+    const { selectedOrder, printer_options } = this.props;
 
     let options;
     let s = selectedOrder ? selectedOrder : 'Door Order';
@@ -393,14 +393,14 @@ class OrderPage extends Component {
                   <Col className="ml-5">
                     <Row>
                       <Col lg="7">
-                        <div className="mt-3 mb-2">
+                        {/* <div className="mt-3 mb-2">
                           <Select
                             value={this.state.selectedOption}
                             onChange={this.handleChange}
                             options={options}
                             isMulti={true}
                           />
-                        </div>
+                        </div> */}
                       </Col>
                       <Col>
                         <Tooltip title="Print" placement="top" className="mb-3">
@@ -677,6 +677,7 @@ class OrderPage extends Component {
         <PrintModal
           toggle={this.downloadPDF}
           modal={this.state.printModal}
+          printer_options={printer_options}
         />
       </div>
     );
@@ -691,6 +692,7 @@ const mapStateToProps = (state, prop) => ({
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   selectedOrder: state.Orders.selectedOrder,
+  printer_options: state.misc_items.printer_options,
   user: state.users.user
 });
 

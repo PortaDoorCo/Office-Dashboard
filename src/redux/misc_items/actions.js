@@ -13,6 +13,22 @@ export const MISC_ITEM_DELETED = 'MISC_ITEM_DELETED';
 export const MISC_ITEM_ADDED = 'MISC_ITEM_ADDED';
 export const MISC_ITEM_UPDATED = 'MISC_ITEM_UPDATED';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const LOAD_PRINTER_OPTIONS = 'LOAD_PRINTER_OPTIONS';
+
+export function loadPrinterOptions(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/printer-options`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
+    const data = await res.json();
+    return dispatch({
+      type: LOAD_PRINTER_OPTIONS,
+      data: data
+    });
+  };
+}
 
 export function loadShippingMethod(cookie) {
   return async function (dispatch) {
