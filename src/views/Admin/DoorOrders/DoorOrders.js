@@ -45,6 +45,7 @@ import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import { createNumberMask } from 'redux-form-input-masks';
+import validate from './validate';
 
 const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
@@ -92,7 +93,8 @@ class DoorOrders extends Component {
       tax,
       total,
       submitOrder,
-      user
+      user,
+      
     } = this.props;
 
     const orderType = 'Door Order';
@@ -143,12 +145,21 @@ class DoorOrders extends Component {
       sale: values.job_info.customer.sale.id,
     };
 
-    if (values.part_list[0].dimensions.length > 0) {
+
+    let canSubmit = false;
+
+    values.part_list.map(v => {
+      return v.dimensions.length > 0 ? canSubmit = true : canSubmit = false;
+    });
+
+
+    if(canSubmit){
       await submitOrder(order, cookie);
       this.setState({ updateSubmit: !this.state.updateSubmit });
       reset();
       window.scrollTo(0, 0);
     } else {
+      alert('Submission Error: Please double check your order');
       return;
     }
   };
@@ -183,9 +194,8 @@ class DoorOrders extends Component {
       total,
       dispatch,
       tax,
-      addPriceSelector
+      addPriceSelector,
     } = this.props;
-
 
     return (
       <div className="animated fadeIn">
@@ -501,7 +511,8 @@ const mapDispatchToProps = dispatch =>
 // eslint-disable-next-line no-class-assign
 DoorOrders = reduxForm({
   form: 'DoorOrder',
-  enableReinitialize: true
+  enableReinitialize: true,
+  validate
 })(DoorOrders);
 
 export default connect(

@@ -35,7 +35,9 @@ class Conditionals extends Component {
       isValid,
       part_list,
       edit,
-      updateSubmit
+      updateSubmit,
+      error,
+      submitFailed
     } = this.props;
 
     let component;

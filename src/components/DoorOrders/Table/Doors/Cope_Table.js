@@ -42,6 +42,7 @@ const currencyMask = createNumberMask({
 });
 
 const Cope_Table = ({
+  props,
   fields,
   formState,
   i,
@@ -50,7 +51,7 @@ const Cope_Table = ({
   updateSubmit,
   edit,
   dispatch,
-  addPrice
+  addPrice,
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -714,52 +715,55 @@ const Cope_Table = ({
       <Row>
         <Col>
           {!edit ? (
-            <Button
-              color="primary"
-              className="btn-circle add-item-tour"
-              onClick={(e) =>
-                formState.part_list[i].construction.value === 'Cope' &&
-                formState.part_list[i].profile
-                  ? fields.push({
-                    qty: 1,
-                    panelsH: 1,
-                    panelsW: 1,
-                    leftStile: leftStileWidth
-                      ? fraction(numQty(leftStileWidth))
-                      : fraction(
-                        formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                      ),
-                    rightStile: rightStileWidth
-                      ? fraction(numQty(rightStileWidth))
-                      : fraction(
-                        formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                      ),
-                    topRail: topRailWidth
-                      ? fraction(numQty(topRailWidth))
-                      : fraction(
-                        formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                      ),
-                    bottomRail: bottomRailWidth
-                      ? fraction(numQty(bottomRailWidth))
-                      : fraction(
-                        formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                      ),
-                    horizontalMidRailSize: 0,
-                    verticalMidRailSize: 0,
-                    unevenSplitInput: '0',
-                    showBuilder: false,
-                    item: fields.length + 1,
-                    unevenCheck: false,
-                    unevenSplit: false,
-                  })
-                  : alert('please select a profile')
-              }
-            >
+            <div>
+              <Button
+                color="primary"
+                className="btn-circle add-item-tour"
+                onClick={(e) =>
+                  formState.part_list[i].construction.value === 'Cope' &&
+                  formState.part_list[i].profile
+                    ? fields.push({
+                      qty: 1,
+                      panelsH: 1,
+                      panelsW: 1,
+                      leftStile: leftStileWidth
+                        ? fraction(numQty(leftStileWidth))
+                        : fraction(
+                          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+                        ),
+                      rightStile: rightStileWidth
+                        ? fraction(numQty(rightStileWidth))
+                        : fraction(
+                          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+                        ),
+                      topRail: topRailWidth
+                        ? fraction(numQty(topRailWidth))
+                        : fraction(
+                          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+                        ),
+                      bottomRail: bottomRailWidth
+                        ? fraction(numQty(bottomRailWidth))
+                        : fraction(
+                          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+                        ),
+                      horizontalMidRailSize: 0,
+                      verticalMidRailSize: 0,
+                      unevenSplitInput: '0',
+                      showBuilder: false,
+                      item: fields.length + 1,
+                      unevenCheck: false,
+                      unevenSplit: false,
+                    })
+                    : alert('please select a profile')
+                }
+              >
               +
-            </Button>
+              </Button>
+            </div>
           ) : (
             <div />
           )}
+          
         </Col>
       </Row>
 
