@@ -1,21 +1,23 @@
 const validate = values => {
   const errors = {};
-  if (!values.part_list || !values.part_list.length > 0) {
-    errors.part_list = { _error: 'At least one item must be entered' };
-  } else {
-    const part_list_errors = [];
-    values.part_list.forEach((part, index) => {
-      const partErrors = {};
-      if(!part && !part.dimensions && !part.dimensions.length > 0){
-        partErrors.dimensions = { _error: 'At least one item must be entered' };
-        part_list_errors[index] = partErrors;
-      }
-    });
-    if (part_list_errors.length) {
-      errors.part_list = part_list_errors;
+
+  const partArrayErrors = [];
+  values && values.part_list && values.part_list.forEach((part, memberIndex) => {
+    const partListErrors = {};
+    if (!part && !part.dimensions && !part.dimensions.length < 1) {
+      partListErrors.dimensions = 'Required';
+      partArrayErrors[memberIndex] = partListErrors;
     }
+  });
+  if (partArrayErrors.length) {
+    errors.part_list = partArrayErrors;
   }
+
+  console.log({partArrayErrors});
+  
+
+  console.log({errors});
   return errors;
 };
-  
+
 export default validate;

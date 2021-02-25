@@ -121,7 +121,7 @@ class CopeDoor extends Component {
       subTotal,
       addPrice,
       one_piece,
-      updateSubmit
+      updateSubmit,
     } = this.props;
 
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
