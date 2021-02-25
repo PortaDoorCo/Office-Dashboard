@@ -52,7 +52,6 @@ const Cope_Table = ({
   edit,
   dispatch,
   addPrice,
-  meta: { error, submitFailed }
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -760,7 +759,6 @@ const Cope_Table = ({
               >
               +
               </Button>
-              {submitFailed && error && <span>{error}</span>}
             </div>
           ) : (
             <div />
