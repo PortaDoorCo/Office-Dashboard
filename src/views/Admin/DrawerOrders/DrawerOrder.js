@@ -152,13 +152,21 @@ class DoorOrders extends Component {
       sale: values.job_info.customer.sale.id,
     };
 
-    if (values.part_list[0].dimensions.length > 0) {
+    let canSubmit = false;
+
+    values.part_list.map(v => {
+      return v.dimensions.length > 0 ? canSubmit = true : canSubmit = false;
+    });
+
+    if(canSubmit){
       submitOrder(order, cookie);
       reset();
       window.scrollTo(0, 0);
     } else {
-      e.preventDefault();
+      alert('Submission Error: Please double check your order');
+      return;
     }
+
   };
 
   componentDidMount() {

@@ -214,10 +214,10 @@ class DoorInfo extends Component {
           >
             Add Item
           </Button>
+          
           :
           <div />
         }
-
       </div>
     );
   }
