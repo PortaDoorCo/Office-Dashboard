@@ -1,20 +1,26 @@
+  
 import numQty from 'numeric-quantity';
 
 export default (v, part) => {
   const calc = v.part_list.map(item => {
-    const widths = item.dimensions.map(i => {
-      return (numQty(i.width)) * parseInt(i.qty);
+    const calc2 = item.dimensions.map(i => {
+
+      console.log(numQty(i.width));
+      console.log(numQty(i.height));
+      console.log(numQty(i.qty));
+
+      return ((numQty(i.width) * numQty(i.height)) * parseFloat(i.qty)) / 12;
     });
-    const heights = item.dimensions.map(i => {
-      return (numQty(i.height)) * parseInt(i.qty);
-    });
-
-    const widthTotal = widths.reduce((acc, item) => acc + item);
-    const heightsTotal = heights.reduce((acc, item) => acc + item);
 
 
+    console.log({calc2});
 
-    return ((widthTotal + heightsTotal) / 12);
+    const calc_total = calc2.reduce((acc, item) => acc + item);
+
+
+
+
+    return calc_total / 12;
   });
 
 
