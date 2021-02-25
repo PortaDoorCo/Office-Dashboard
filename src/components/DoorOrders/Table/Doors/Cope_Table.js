@@ -348,9 +348,6 @@ const Cope_Table = ({
       );
     }
   };
-
-  console.log(props.meta);
-  console.log({submitFailed});
   
   return (
     <div>
