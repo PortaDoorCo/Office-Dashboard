@@ -154,32 +154,36 @@ export default (data, breakdowns) => {
       return i.map(j => {
         return j.parts.map(n => {
           console.log({n});
-          console.log(LinearFT(n.parts,breakdowns,n.width))
-          return LinearFT(n.parts,breakdowns,n.width).map( b => {
-            return [
-              {
-                columns: [
-                  {
-                    //linear FT
-                    text: `Linear Feet of ${fraction(parseFloat(b.width))}" ${
-                      n.woodtype
-                    } - ${n.thickness}" Thickness Needed: ${b.sum}`,
-                    style: 'fonts',
-                    width: 400,
-                  },
-                  { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-                  {
-                    text: `${(
-                      parseFloat(b.sum) * 0.2 +
-                      parseFloat(b.sum)
-                    ).toFixed(2)}`,
-                    style: 'fonts',
-                    width: 60,
-                  },
-                ],
-              },
-            ];
-          })
+          console.log(LinearFT(n.parts,breakdowns,n.width));
+          return LinearFT(n.parts,breakdowns,n.width).map(b => {
+            if(parseFloat(b.width) > 0) {
+              return [
+                {
+                  columns: [
+                    {
+                      //linear FT
+                      text: `Linear Feet of ${fraction(parseFloat(b.width))}" ${
+                        n.woodtype
+                      } - ${n.thickness}" Thickness Needed: ${b.sum}`,
+                      style: 'fonts',
+                      width: 400,
+                    },
+                    { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+                    {
+                      text: `${(
+                        parseFloat(b.sum) * 0.2 +
+                        parseFloat(b.sum)
+                      ).toFixed(2)}`,
+                      style: 'fonts',
+                      width: 60,
+                    },
+                  ],
+                },
+              ];
+            } else {
+              return [];
+            }
+          });
          
         });
       });
@@ -202,7 +206,7 @@ export default (data, breakdowns) => {
             columns: [
               {
                 text: `Board Feet of ${i.woodtype.NAME} - ${
-                  i.thickness.name
+                  i.thickness.value === 0.75 ? '3/4' : i.thickness.value === 1 ? '4/4' : null
                 }" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT(
                   i.dimensions
                 )}`,
@@ -251,7 +255,7 @@ export default (data, breakdowns) => {
             columns: [
               {
                 text: `Board Feet of ${i.woodtype.NAME} - ${
-                  i.thickness.name
+                  i.thickness.value === 0.75 ? '3/4' : i.thickness.value === 1 ? '4/4' : null
                 }" Thickness ${i.panel.NAME} Material Needed: ${equation.toFixed(2)}`,
                 style: 'fonts',
                 width: 400,
