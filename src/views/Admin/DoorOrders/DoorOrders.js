@@ -45,6 +45,7 @@ import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import { createNumberMask } from 'redux-form-input-masks';
+import validate from './validate';
 
 const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
@@ -501,7 +502,8 @@ const mapDispatchToProps = dispatch =>
 // eslint-disable-next-line no-class-assign
 DoorOrders = reduxForm({
   form: 'DoorOrder',
-  enableReinitialize: true
+  enableReinitialize: true,
+  validate
 })(DoorOrders);
 
 export default connect(

@@ -137,6 +137,7 @@ class DoorInfo extends Component {
   render() {
     const {
       fields,
+      meta: { error, submitFailed },
       formState,
       isValid,
       edit,
@@ -214,10 +215,11 @@ class DoorInfo extends Component {
           >
             Add Item
           </Button>
+          
           :
           <div />
         }
-
+        {submitFailed && error && <span>{error}</span>}
       </div>
     );
   }
