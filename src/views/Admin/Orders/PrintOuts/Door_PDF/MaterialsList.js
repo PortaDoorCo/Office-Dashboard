@@ -18,10 +18,12 @@ export default (data, breakdowns) => {
   //flatten part list
   const flattenedParts= flatten(data.part_list);
 
-  //unique items
+  //unique woodtype
   const uniques_items = uniq(
     flattenDeep(data.part_list.map(i => i.woodtype.NAME))
   );
+
+  console.log({uniques_items});
 
   //unique thickness
   const uniques_thickness = uniq(
@@ -68,6 +70,100 @@ export default (data, breakdowns) => {
       };
     });
   });
+
+  console.log({b});
+  console.log({c});
+
+  const d = c.map((i, index) => {
+    return i.map(j => {
+      return j.parts.map(n => {
+        console.log({n});
+        console.log(LinearFT(n.parts,breakdowns,n.width));
+        return LinearFT(n.parts,breakdowns,n.width).map(b => {
+          if(parseFloat(b.width) > 0) {
+            return {
+              width: numQty(b.width),
+              woodtype: n.woodtype,
+              thickness: n.thickness,
+              linearFT: parseFloat(b.sum),
+              waste: parseFloat(b.sum) * 0.2 + parseFloat(b.sum)
+            };
+
+
+          } else {
+            return [];
+          }            
+        });
+       
+      });
+    });
+  });
+
+
+  const flattenD = flattenDeep(d);
+
+  console.log({flattenD});
+
+
+  const LinearFTDisplay = flattenD.forEach((i, index) => {
+
+    return [
+      {
+        columns: [
+          {
+            //linear FT
+            text: `Linear Feet of ${fraction(i.width)}" ${
+              i.woodtype
+            } - ${i.thickness}" Thickness Needed: ${i.linearFT}`,
+            style: 'fonts',
+            width: 400,
+          },
+          { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+          {
+            text: `${(i.waste).toFixed(2)}`,
+            style: 'fonts',
+            width: 60,
+          },
+        ],
+      },
+    ];
+
+  });
+
+
+  const BoardFTArr = flattenD.map((i, index) => {
+    return {
+      BoardFT: ((i.width / 12) * i.linearFT),
+      woodtype: i.woodtype,
+      thickness: i.thickness,
+      waste: (((i.width / 12) * i.linearFT) * 0.2) + ((i.width / 12) * i.linearFT)
+    };
+  });
+
+  // const BoardFT_Total = BoardFTArr.reduce((acc, item) => acc + item, 0);
+
+  console.log({Board: flatten(BoardFTArr)});
+  // console.log({BoardFT_Total});
+
+  // const BoardFTDisplay = BoardFT_Total.forEach(i => {
+  //   return [
+  //     {
+  //       columns: [
+  //         {
+  //           text: `Board Feet of ${i.woodtype.NAME} - ${
+  //             i.thickness.value === 0.75 ? '3/4' : i.thickness.value === 1 ? '4/4' : null
+  //           }" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT(
+  //             i.dimensions
+  //           )}`,
+  //           style: 'fonts',
+  //           width: 400,
+  //         },
+  //         { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+  //         { text: equation, style: 'fonts', width: 60 },
+  //       ],
+  //     },
+  //   ];
+  // })
 
   return [
     {
@@ -149,45 +245,13 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 0, 0, 20],
     },
-    //map C -> map i -> map j -> return array
-    c.map((i, index) => {
-      return i.map(j => {
-        return j.parts.map(n => {
-          console.log({n});
-          console.log(LinearFT(n.parts,breakdowns,n.width));
-          return LinearFT(n.parts,breakdowns,n.width).map(b => {
-            if(parseFloat(b.width) > 0) {
-              return [
-                {
-                  columns: [
-                    {
-                      //linear FT
-                      text: `Linear Feet of ${fraction(parseFloat(b.width))}" ${
-                        n.woodtype
-                      } - ${n.thickness}" Thickness Needed: ${b.sum}`,
-                      style: 'fonts',
-                      width: 400,
-                    },
-                    { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-                    {
-                      text: `${(
-                        parseFloat(b.sum) * 0.2 +
-                        parseFloat(b.sum)
-                      ).toFixed(2)}`,
-                      style: 'fonts',
-                      width: 60,
-                    },
-                  ],
-                },
-              ];
-            } else {
-              return [];
-            }            
-          });
-         
-        });
-      });
-    }),
+
+    //Linear FT Here
+    LinearFTDisplay,
+
+
+
+
     {
       columns: [{ text: '' }],
       margin: [0, 5, 0, 5],
