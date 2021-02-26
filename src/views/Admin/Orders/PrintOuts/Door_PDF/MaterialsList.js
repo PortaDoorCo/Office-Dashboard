@@ -105,7 +105,7 @@ export default (data, breakdowns) => {
   console.log({flattenD});
 
 
-  const LinearFTDisplay = flattenD.forEach((i, index) => {
+  const LinearFTDisplay = flattenD.map((i, index) => {
 
     return [
       {
@@ -140,30 +140,52 @@ export default (data, breakdowns) => {
     };
   });
 
-  // const BoardFT_Total = BoardFTArr.reduce((acc, item) => acc + item, 0);
+  const BoardFT_Total = BoardFTArr.reduce((acc, item) => acc + item.BoardFT, 0);
+
+
+  console.log({BoardFT_Total});
 
   console.log({Board: flatten(BoardFTArr)});
   // console.log({BoardFT_Total});
 
-  // const BoardFTDisplay = BoardFT_Total.forEach(i => {
-  //   return [
-  //     {
-  //       columns: [
-  //         {
-  //           text: `Board Feet of ${i.woodtype.NAME} - ${
-  //             i.thickness.value === 0.75 ? '3/4' : i.thickness.value === 1 ? '4/4' : null
-  //           }" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT(
-  //             i.dimensions
-  //           )}`,
-  //           style: 'fonts',
-  //           width: 400,
-  //         },
-  //         { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-  //         { text: equation, style: 'fonts', width: 60 },
-  //       ],
-  //     },
-  //   ];
-  // })
+  const BoardInfo = BoardFTArr[0];
+
+  const BoardFTDisplay = [
+    {
+      columns: [
+        {
+          text: `Board Feet of ${BoardInfo.woodtype} - ${
+            BoardInfo.thickness === '4/4' ? '3/4' : BoardInfo.thickness === '5/4' ? '4/4' : null
+          }" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT_Total}`,
+          style: 'fonts',
+          width: 400,
+        },
+        { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+        { text: BoardInfo.waste, style: 'fonts', width: 60 },
+      ],
+    },
+  ];;
+
+  // const BoardFTDisplay =  {
+
+  //   const a = BoardFTArr[0];
+
+  // return [
+  //   {
+  //     columns: [
+  //       {
+  //         text: `Board Feet of ${a.woodtype.NAME} - ${
+  //           a.thickness.value === 0.75 ? '3/4' : a.thickness.value === 1 ? '4/4' : null
+  //         }" Thickness - Stile/Rail/Mullion Material Needed: ${i.BoardFT}`,
+  //         style: 'fonts',
+  //         width: 400,
+  //       },
+  //       { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+  //       { text: i.waste, style: 'fonts', width: 60 },
+  //     ],
+  //   },
+  // ];
+  // };
 
   return [
     {
@@ -256,34 +278,10 @@ export default (data, breakdowns) => {
       columns: [{ text: '' }],
       margin: [0, 5, 0, 5],
     },
-    data.part_list.map((i, index) => {
-      const bf = parseFloat(BoardFT(i.dimensions));
-      const percent = bf * 0.2;
+    
+    BoardFTDisplay,
 
-      const equation = (bf + percent).toFixed(2);
 
-      if (i.orderType.value === 'One_Piece') {
-        return [];
-      } else {
-        return [
-          {
-            columns: [
-              {
-                text: `Board Feet of ${i.woodtype.NAME} - ${
-                  i.thickness.value === 0.75 ? '3/4' : i.thickness.value === 1 ? '4/4' : null
-                }" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT(
-                  i.dimensions
-                )}`,
-                style: 'fonts',
-                width: 400,
-              },
-              { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-              { text: equation, style: 'fonts', width: 60 },
-            ],
-          },
-        ];
-      }
-    }),
     {
       columns: [{ text: '' }],
       margin: [0, 5, 0, 5],
