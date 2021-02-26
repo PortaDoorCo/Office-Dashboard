@@ -111,6 +111,7 @@ let Inputs = (props) => {
                     name={`${table}.qty`}
                     component={renderInt}
                     type="text"
+                    edit={edit}
                   />
                 </td>
                 <td style={{ width: '40%' }}>
