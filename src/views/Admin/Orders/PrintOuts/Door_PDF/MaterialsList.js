@@ -155,7 +155,7 @@ export default (data, breakdowns) => {
             width: 400,
           },
           { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-          { text: i.waste.toFixed(2), style: 'fonts', width: 60 },
+          { text: ((i.BoardFT * 0.2) + i.BoardFT).toFixed(2), style: 'fonts', width: 60 },
         ],
       },
     ];
@@ -218,7 +218,7 @@ export default (data, breakdowns) => {
             },
             { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
             {
-              text: i.waste.toFixed(2),
+              text: ((i.BoardFT * 0.2) + i.BoardFT).toFixed(2),
               style: 'fonts',
               width: 60,
             },
