@@ -195,7 +195,6 @@ export default (data, breakdowns) => {
     data.part_list.map((i, index) => {
       const bf = parseFloat(BoardFT(i.dimensions));
       const percent = bf * 0.2;
-
       const equation = (bf + percent).toFixed(2);
 
       if (i.orderType.value === 'One_Piece') {
