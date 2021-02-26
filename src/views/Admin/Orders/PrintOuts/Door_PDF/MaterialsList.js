@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { flattenDeep, uniq, flatten } from 'lodash';
+import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
 import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
@@ -140,52 +140,98 @@ export default (data, breakdowns) => {
     };
   });
 
-  const BoardFT_Total = BoardFTArr.reduce((acc, item) => acc + item.BoardFT, 0);
+  const BoardFT_Total = Object.entries(groupBy(BoardFTArr, 'woodtype')).map(([k,v]) => ({...v[0], BoardFT: v.reduce((a,b) => a + b.BoardFT, 0)}));
 
 
-  console.log({BoardFT_Total});
+  const BoardFTDisplay = BoardFT_Total.map(i => {
+    return [
+      {
+        columns: [
+          {
+            text: `Board Feet of ${i.woodtype} - ${
+              i.thickness === '4/4' ? '3/4' : i.thickness === '5/4' ? '4/4' : null
+            }" Thickness - Stile/Rail/Mullion Material Needed: ${i.BoardFT.toFixed(2)}`,
+            style: 'fonts',
+            width: 400,
+          },
+          { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+          { text: i.waste.toFixed(2), style: 'fonts', width: 60 },
+        ],
+      },
+    ];
+  });
 
-  console.log({Board: flatten(BoardFTArr)});
-  // console.log({BoardFT_Total});
+  
+  const PanelBoardFTCalc = data.part_list.map((i, index) => {
+    const calc = i.dimensions.map((item, index) => {
+      const width = Panels(item, i, breakdowns).map((panel) => {
+        return numQty(panel.width);
+      });
+      const height = Panels(item, i, breakdowns).map((panel) => {
+        return numQty(panel.height);
+      });
+      const q = ((width * height) / 144) * parseInt(item.qty);
+      return q;
+    });
 
-  const BoardInfo = BoardFTArr[0];
+    const equation = calc.reduce((acc, item) => acc + item);
 
-  const BoardFTDisplay = [
-    {
-      columns: [
+    if (
+      i.orderType.value === 'One_Piece' ||
+      i.orderType.value === 'One_Piece_DF' ||
+      i.orderType.value === 'Two_Piece' ||
+      i.orderType.value === 'Two_Piece_DF'
+    ) {
+      return null;
+    } else {
+      return {
+        orderType: i.orderType.value,
+        BoardFT: equation,
+        waste: (equation * 0.2 + equation),
+        woodtype: i.woodtype.NAME,
+        thickness: i.thickness.value,
+        panel: i.panel
+      };
+    }
+
+
+  });
+
+  console.log({flatt: flatten(PanelBoardFTCalc)});
+
+  const PanelBoardFT_Total = Object.entries(groupBy(flatten(PanelBoardFTCalc), 'woodtype')).map(([k,v]) => ({...v[0], BoardFT: v.reduce((a,b) => a + b.BoardFT, 0)}));
+
+  console.log({PanelBoardFT_Total});
+
+
+  const PanelBoardFTDisplay = PanelBoardFT_Total.map((i, index) => {
+    if (i && i.panel) {
+      return [
         {
-          text: `Board Feet of ${BoardInfo.woodtype} - ${
-            BoardInfo.thickness === '4/4' ? '3/4' : BoardInfo.thickness === '5/4' ? '4/4' : null
-          }" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT_Total}`,
-          style: 'fonts',
-          width: 400,
+          columns: [
+            {
+              text: `Board Feet of ${i.woodtype} - ${
+                i.thickness === 0.75 ? '3/4' : i.thickness === 1 ? '4/4' : null
+              }" Thickness ${i.panel.NAME} Material Needed: ${i.BoardFT.toFixed(2)}`,
+              style: 'fonts',
+              width: 400,
+            },
+            { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+            {
+              text: i.waste.toFixed(2),
+              style: 'fonts',
+              width: 60,
+            },
+          ],
         },
-        { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-        { text: BoardInfo.waste, style: 'fonts', width: 60 },
-      ],
-    },
-  ];;
+      ];
+    } else {
+      return [];
+    }
+  });
+  
+  
 
-  // const BoardFTDisplay =  {
-
-  //   const a = BoardFTArr[0];
-
-  // return [
-  //   {
-  //     columns: [
-  //       {
-  //         text: `Board Feet of ${a.woodtype.NAME} - ${
-  //           a.thickness.value === 0.75 ? '3/4' : a.thickness.value === 1 ? '4/4' : null
-  //         }" Thickness - Stile/Rail/Mullion Material Needed: ${i.BoardFT}`,
-  //         style: 'fonts',
-  //         width: 400,
-  //       },
-  //       { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-  //       { text: i.waste, style: 'fonts', width: 60 },
-  //     ],
-  //   },
-  // ];
-  // };
 
   return [
     {
@@ -286,55 +332,10 @@ export default (data, breakdowns) => {
       columns: [{ text: '' }],
       margin: [0, 5, 0, 5],
     },
-    data.part_list.map((i, index) => {
-      const width = i.dimensions.map((item, index) => {
-        const width = Panels(item, i, breakdowns).map((panel) => {
-          return numQty(panel.width);
-        });
-        const height = Panels(item, i, breakdowns).map((panel) => {
-          return numQty(panel.height);
-        });
-        const q = ((width * height) / 144) * parseInt(item.qty);
-        return q;
-      });
 
-      const equation = width.reduce((acc, item) => acc + item);
+    PanelBoardFTDisplay,
 
-      if (
-        i.orderType.value === 'One_Piece' ||
-        i.orderType.value === 'One_Piece_DF' ||
-        i.orderType.value === 'Two_Piece' ||
-        i.orderType.value === 'Two_Piece_DF'
-      ) {
-        return [];
-      }
 
-      console.log({i});
-
-      if (i && i.panel) {
-        return [
-          {
-            columns: [
-              {
-                text: `Board Feet of ${i.woodtype.NAME} - ${
-                  i.thickness.value === 0.75 ? '3/4' : i.thickness.value === 1 ? '4/4' : null
-                }" Thickness ${i.panel.NAME} Material Needed: ${equation.toFixed(2)}`,
-                style: 'fonts',
-                width: 400,
-              },
-              { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-              {
-                text: (equation * 0.2 + equation).toFixed(2),
-                style: 'fonts',
-                width: 60,
-              },
-            ],
-          },
-        ];
-      } else {
-        return [];
-      }
-    }),
     {
       columns: [
         // { text: 'Hinges Needed', style: 'fonts', decoration: 'underline' }
