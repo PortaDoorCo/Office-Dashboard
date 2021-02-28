@@ -1,9 +1,4 @@
 downloadPDF = () => {
-
-
-    
-
-
   const {
     formState,
     drawerState,

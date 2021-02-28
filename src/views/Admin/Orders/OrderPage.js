@@ -206,7 +206,7 @@ class OrderPage extends Component {
     await this.props.toggle();
   };
 
-  downloadPDF = () => {
+  togglePrinter = () => {
     this.setState({
       printModal: !this.state.printModal
     });
@@ -217,6 +217,158 @@ class OrderPage extends Component {
       console.log('Option selected:', this.state.selectedOption)
     );
   };
+
+
+  downloadPDF = async (printerSettings) => {
+    const {
+      formState,
+      drawerState,
+      miscState,
+      mouldingsState,
+      breakdowns,
+      box_breakdowns,
+      selectedOrder,
+      user
+    } = this.props;
+    const data = formState
+      ? formState
+      : drawerState
+        ? drawerState
+        : miscState
+          ? miscState
+          : mouldingsState ?
+            mouldingsState
+            : [];
+  
+    // const printerSettings = {
+    //   assembly_list: user.assembly_list,
+    //   stiles: user.stiles,
+    //   rails: user.rails,
+    //   panels: user.panels,
+    //   profiles: user.profiles,
+    //   materials: user.materials,
+    //   qc: user.qc
+    // };
+  
+  
+    console.log({printerSettings});
+  
+  
+    if (data.orderType === 'Door Order') {
+
+      const edgesPromiseArr1 = selectedOrder.part_list
+        .filter((i) => i.edge && i.edge.photo && i.edge.photo.url)
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.edge.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const mouldsPromiseArr1 = selectedOrder.part_list
+        .filter(
+          (i) => i.profile && i.profile.photo && i.profile.photo.url
+        )
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.profile.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const miterPromiseArr1 = selectedOrder.part_list
+        .filter(
+          (i) =>
+            i.miter_design &&
+                    i.miter_design.photo &&
+                    i.miter_design.photo.url
+        )
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.miter_design.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const MT_PromiseArr1 = selectedOrder.part_list
+        .filter(
+          (i) => i.mt_design && i.mt_design.photo && i.mt_design.photo.url
+        )
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.mt_design.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const panelsPromiseArr1 = selectedOrder.part_list
+        .filter((i) => i.panel && i.panel.photo && i.panel.photo.url)
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.panel.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const appliedProfilePromiseArr1 = selectedOrder.part_list
+        .filter(
+          (i) =>
+            i.applied_profile &&
+                    i.applied_profile.photo &&
+                    i.applied_profile.photo.url
+        )
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.applied_profile.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      let edges1;
+      let moulds1;
+      let miter1;
+      let mt_1;
+      let panels1;
+      let appliedProfiles1;
+  
+      try {
+        edges1 = await Promise.all(edgesPromiseArr1);
+        moulds1 = await Promise.all(mouldsPromiseArr1);
+        miter1 = await Promise.all(miterPromiseArr1);
+        mt_1 = await Promise.all(MT_PromiseArr1);
+        panels1 = await Promise.all(panelsPromiseArr1);
+        appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
+      } catch (err) {
+        console.log('errrrrrr', err);
+      }
+  
+      DoorPDF(
+        data,
+        edges1,
+        moulds1,
+        miter1,
+        mt_1,
+        panels1,
+        appliedProfiles1,
+        breakdowns,
+        printerSettings
+      );
+    } else if (data.orderType === 'Drawer Order') {
+      DrawerPDF(data, box_breakdowns);
+    } else if (data.orderType === 'Misc Items') {
+      MiscItemsPDF(data, box_breakdowns);
+    }
+    else if (data.orderType === 'Mouldings') {
+      MouldingsPDF(data, box_breakdowns);
+    }
+  };
+
 
   render() {
     const props = this.props;
@@ -404,7 +556,7 @@ class OrderPage extends Component {
                       </Col>
                       <Col>
                         <Tooltip title="Print" placement="top" className="mb-3">
-                          <IconButton onClick={this.downloadPDF}>
+                          <IconButton onClick={this.togglePrinter}>
                             <Print style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
@@ -675,9 +827,17 @@ class OrderPage extends Component {
           </ModalFooter>
         </Modal>
         <PrintModal
-          toggle={this.downloadPDF}
+          toggle={this.togglePrinter}
           modal={this.state.printModal}
           printer_options={printer_options}
+          selectedOrder={props.selectedOrder}
+          downloadPDF={this.downloadPDF}
+          formState
+          drawerState
+          miscState
+          mouldingsState
+          breakdowns
+          box_breakdowns
         />
       </div>
     );

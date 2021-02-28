@@ -8,7 +8,8 @@ const PrintModal = (props) => {
     className,
     modal,
     toggle,
-    printer_options
+    printer_options,
+    downloadPDF
   } = props;
 
   const number_select = [0,1,2,3,4,5];
@@ -232,7 +233,9 @@ const PrintModal = (props) => {
 
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>
+          <Button color="primary" onClick={(e) => {
+            downloadPDF(printer_option);
+          }}>
             Print
           </Button>{' '}
           <Button color="secondary" onClick={toggle}>
