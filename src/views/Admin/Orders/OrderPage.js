@@ -40,33 +40,18 @@ import { CSVLink, CSVDownload } from 'react-csv';
 
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
-import AssemblyListPDF from './PrintOuts/Pages/Door/AssemblyPDF';
-import StilesPDF from './PrintOuts/Pages/Door/StilesPDF';
-import RailsPDF from './PrintOuts/Pages/Door/RailsPDF';
-import PanelsPDF from './PrintOuts/Pages/Door/PanelsPDF';
-import MaterialsPDF from './PrintOuts/Pages/Door/MaterialsPDF';
-import QCPDF from './PrintOuts/Pages/Door/QCPDF';
-import InvoicePDF from './PrintOuts/Pages/Door/InvoicePDF';
 
-import Select from 'react-select';
-import ProfilesPDF from './PrintOuts/Pages/Door/ProfilesPDF';
+
 import moment from 'moment';
 
-import MiscItemsAcknowledgement from './PrintOuts/Pages/MiscItems/AcknowledgementPDF';
-import MiscItemsInvoice from './PrintOuts/Pages/MiscItems/InvoicePDF';
+
 import MiscItemsPDF from './PrintOuts/Pages/MiscItems/MiscItemsPDF';
 
-import MouldingsAcknowledgement from './PrintOuts/Pages/Mouldings/AcknowledgementPDF';
-import MouldingsInvoice from './PrintOuts/Pages/Mouldings/InvoicePDF';
+
 import MouldingsPDF from './PrintOuts/Pages/Mouldings/MouldingsPDF';
 
 
-import AcknowledgementPDF from './PrintOuts/Pages/Door/AcknowledgementPDF';
-import DrawerAcnowledgementPDF from './PrintOuts/Pages/Drawer/AcknowledgementPDF';
-import DrawerInvoicePDF from './PrintOuts/Pages/Drawer/InvoicePDF';
-import DrawerAssemblyListPDF from './PrintOuts/Pages/Drawer/AssemblyListPDF';
-import DrawerBottomsPDF from './PrintOuts/Pages/Drawer/BottomsPDF';
-import DrawerSidesPDF from './PrintOuts/Pages/Drawer/SidesPDF';
+
 
 import DoorBalance from './Balance/Door_Order/Balance';
 import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory';
@@ -83,9 +68,6 @@ import DoorMiscItems from './MiscItems/DoorMiscItems';
 import DrawerMiscItems from './MiscItems/DrawerMiscItems';
 
 import MouldingsMiscItems from './MiscItems/MouldingsMiscItems';
-
-import CustomerCopyDoorPDF from './PrintOuts/Pages/Door/CustomerCopyPDF';
-import CustomerCopyDrawerPDF from './PrintOuts/Pages/Drawer/CustomerCopyPDF';
 
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
@@ -360,12 +342,12 @@ class OrderPage extends Component {
         printerSettings
       );
     } else if (data.orderType === 'Drawer Order') {
-      DrawerPDF(data, box_breakdowns);
+      DrawerPDF(data, box_breakdowns, printerSettings);
     } else if (data.orderType === 'Misc Items') {
-      MiscItemsPDF(data, box_breakdowns);
+      MiscItemsPDF(data, box_breakdowns, printerSettings);
     }
     else if (data.orderType === 'Mouldings') {
-      MouldingsPDF(data, box_breakdowns);
+      MouldingsPDF(data, box_breakdowns, printerSettings);
     }
   };
 

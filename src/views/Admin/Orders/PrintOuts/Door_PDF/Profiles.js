@@ -114,5 +114,6 @@ export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdo
         }
       ];
     }),
+    { text: '', pageBreak: 'before' }
   ];
 };

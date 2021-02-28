@@ -531,6 +531,6 @@ export default (data) => {
       alignment: 'center',
       margin: [0, 25, 0, 0],
     },
-    { text: '', pageBreak: 'before' },
+    { text: '', pageBreak: 'before' }
   ];
 };

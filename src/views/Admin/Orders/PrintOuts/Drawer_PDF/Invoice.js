@@ -115,6 +115,7 @@ export default (data, breakdowns) => {
 
       return [
         {
+          headlineLevel: 1,
           margin: [0, 10, 0, 0],
           columns: [
             {
@@ -277,5 +278,6 @@ export default (data, breakdowns) => {
       alignment: 'center',
       margin: [ 0, 25, 0, 0 ] 
     },
+    // { text: '', pageBreak: 'before' }
   ];
 };

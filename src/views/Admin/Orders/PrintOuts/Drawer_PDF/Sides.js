@@ -112,6 +112,7 @@ export default (data, breakdowns) => {
 
       return [
         {
+          headlineLevel: 1,
           margin: [0, 10, 0, 0],
           columns: [
             {
@@ -172,9 +173,8 @@ export default (data, breakdowns) => {
           canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }],
           margin: [0, 20, 0, 10]
         },
-
+        { text: '', pageBreak: 'before' }
       ];
-    }),
-    { text: '', pageBreak: 'before' }
+    })
   ];
 };
