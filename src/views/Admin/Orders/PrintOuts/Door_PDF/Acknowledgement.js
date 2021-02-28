@@ -94,14 +94,14 @@ export default (data) => {
             { text: `Customer - ${data.job_info.customer.Company}` },
             { text: `${data.companyprofile.Contact}`, style: 'fonts' },
             { text: `${data.companyprofile.Address1}`, style: 'fonts' },
-            { text: `${data.companyprofile.Address2}`, style: 'fonts' },
+            { text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`, style: 'fonts' },
             {
               text: `${data.companyprofile.City}, ${data.job_info.State}`,
               style: 'fonts',
             },
             { text: `${data.companyprofile.Zip}`, style: 'fonts' },
             { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-            { text: `Fax: ${data.companyprofile.Fax}`, style: 'fonts' },
+            { text: `Fax: ${data.job_info.Fax ? data.job_info.Fax : ''}`, style: 'fonts' },
           ],
         },
         {
@@ -126,7 +126,7 @@ export default (data) => {
               margin: [0, 0, 0, 0],
             },
             {
-              text: `${data.job_info.Address2}`,
+              text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`,
               alignment: 'left',
               style: 'fonts',
               margin: [0, 0, 0, 0],

@@ -19,9 +19,9 @@ const Modal = (props) => {
         <DrawerModal {...props} />
       );
 
-    case 'Moulding':
+    case 'Mouldings':
       return(
-        <div />
+        <MiscModal {...props} />
       );
 
     case 'Misc Items':
