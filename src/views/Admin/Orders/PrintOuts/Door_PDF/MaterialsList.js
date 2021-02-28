@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { flattenDeep, uniq, flatten } from 'lodash';
+import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
 import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
@@ -18,10 +18,12 @@ export default (data, breakdowns) => {
   //flatten part list
   const flattenedParts= flatten(data.part_list);
 
-  //unique items
+  //unique woodtype
   const uniques_items = uniq(
     flattenDeep(data.part_list.map(i => i.woodtype.NAME))
   );
+
+  console.log({uniques_items});
 
   //unique thickness
   const uniques_thickness = uniq(
@@ -68,6 +70,168 @@ export default (data, breakdowns) => {
       };
     });
   });
+
+  console.log({b});
+  console.log({c});
+
+  const d = c.map((i, index) => {
+    return i.map(j => {
+      return j.parts.map(n => {
+        console.log({n});
+        console.log(LinearFT(n.parts,breakdowns,n.width));
+        return LinearFT(n.parts,breakdowns,n.width).map(b => {
+          if(parseFloat(b.width) > 0) {
+            return {
+              width: numQty(b.width),
+              woodtype: n.woodtype,
+              thickness: n.thickness,
+              linearFT: parseFloat(b.sum),
+              waste: parseFloat(b.sum) * 0.2 + parseFloat(b.sum)
+            };
+
+
+          } else {
+            return [];
+          }            
+        });
+       
+      });
+    });
+  });
+
+
+  const flattenD = flattenDeep(d);
+
+  console.log({flattenD});
+
+
+  const LinearFTDisplay = flattenD.map((i, index) => {
+
+    return [
+      {
+        columns: [
+          {
+            //linear FT
+            text: `Linear Feet of ${fraction(i.width)}" ${
+              i.woodtype
+            } - ${i.thickness}" Thickness Needed: ${i.linearFT}`,
+            style: 'fonts',
+            width: 400,
+          },
+          { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+          {
+            text: `${(i.waste).toFixed(2)}`,
+            style: 'fonts',
+            width: 60,
+          },
+        ],
+      },
+    ];
+
+  });
+
+
+  const BoardFTArr = flattenD.map((i, index) => {
+    return {
+      BoardFT: ((i.width / 12) * i.linearFT),
+      woodtype: i.woodtype,
+      thickness: i.thickness,
+      waste: (((i.width / 12) * i.linearFT) * 0.2) + ((i.width / 12) * i.linearFT)
+    };
+  });
+
+  const BoardFT_Total = Object.entries(groupBy(BoardFTArr, 'woodtype')).map(([k,v]) => ({...v[0], BoardFT: v.reduce((a,b) => a + b.BoardFT, 0)}));
+
+
+  const BoardFTDisplay = BoardFT_Total.map(i => {
+    return [
+      {
+        columns: [
+          {
+            text: `Board Feet of ${i.woodtype} - ${
+              i.thickness === '4/4' ? '3/4' : i.thickness === '5/4' ? '4/4' : null
+            }" Thickness - Stile/Rail/Mullion Material Needed: ${i.BoardFT.toFixed(2)}`,
+            style: 'fonts',
+            width: 400,
+          },
+          { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+          { text: ((i.BoardFT * 0.2) + i.BoardFT).toFixed(2), style: 'fonts', width: 60 },
+        ],
+      },
+    ];
+  });
+
+  
+  const PanelBoardFTCalc = data.part_list.map((i, index) => {
+    const calc = i.dimensions.map((item, index) => {
+      const width = Panels(item, i, breakdowns).map((panel) => {
+        return numQty(panel.width);
+      });
+      const height = Panels(item, i, breakdowns).map((panel) => {
+        return numQty(panel.height);
+      });
+      const q = ((width * height) / 144) * parseInt(item.qty);
+      return q;
+    });
+
+    const equation = calc.reduce((acc, item) => acc + item);
+
+    if (
+      i.orderType.value === 'One_Piece' ||
+      i.orderType.value === 'One_Piece_DF' ||
+      i.orderType.value === 'Two_Piece' ||
+      i.orderType.value === 'Two_Piece_DF'
+    ) {
+      return null;
+    } else {
+      return {
+        orderType: i.orderType.value,
+        BoardFT: equation,
+        waste: (equation * 0.2 + equation),
+        woodtype: i.woodtype.NAME,
+        thickness: i.thickness.value,
+        panel: i.panel
+      };
+    }
+
+
+  });
+
+  console.log({flatt: flatten(PanelBoardFTCalc)});
+
+  const PanelBoardFT_Total = Object.entries(groupBy(flatten(PanelBoardFTCalc), 'woodtype')).map(([k,v]) => ({...v[0], BoardFT: v.reduce((a,b) => a + b.BoardFT, 0)}));
+
+  console.log({PanelBoardFT_Total});
+
+
+  const PanelBoardFTDisplay = PanelBoardFT_Total.map((i, index) => {
+    if (i && i.panel) {
+      return [
+        {
+          columns: [
+            {
+              text: `Board Feet of ${i.woodtype} - ${
+                i.thickness === 0.75 ? '3/4' : i.thickness === 1 ? '4/4' : null
+              }" Thickness ${i.panel.NAME} Material Needed: ${i.BoardFT.toFixed(2)}`,
+              style: 'fonts',
+              width: 400,
+            },
+            { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
+            {
+              text: ((i.BoardFT * 0.2) + i.BoardFT).toFixed(2),
+              style: 'fonts',
+              width: 60,
+            },
+          ],
+        },
+      ];
+    } else {
+      return [];
+    }
+  });
+  
+  
+
 
   return [
     {
@@ -149,130 +313,29 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 0, 0, 20],
     },
-    //map C -> map i -> map j -> return array
-    c.map((i, index) => {
-      return i.map(j => {
-        return j.parts.map(n => {
-          console.log({n});
-          console.log(LinearFT(n.parts,breakdowns,n.width));
-          return LinearFT(n.parts,breakdowns,n.width).map(b => {
-            if(parseFloat(b.width) > 0) {
-              return [
-                {
-                  columns: [
-                    {
-                      //linear FT
-                      text: `Linear Feet of ${fraction(parseFloat(b.width))}" ${
-                        n.woodtype
-                      } - ${n.thickness}" Thickness Needed: ${b.sum}`,
-                      style: 'fonts',
-                      width: 400,
-                    },
-                    { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-                    {
-                      text: `${(
-                        parseFloat(b.sum) * 0.2 +
-                        parseFloat(b.sum)
-                      ).toFixed(2)}`,
-                      style: 'fonts',
-                      width: 60,
-                    },
-                  ],
-                },
-              ];
-            } else {
-              return [];
-            }            
-          });
-         
-        });
-      });
-    }),
+
+    //Linear FT Here
+    LinearFTDisplay,
+
+
+
+
     {
       columns: [{ text: '' }],
       margin: [0, 5, 0, 5],
     },
-    data.part_list.map((i, index) => {
-      const bf = parseFloat(BoardFT(i.dimensions));
-      const percent = bf * 0.2;
+    
+    BoardFTDisplay,
 
-      const equation = (bf + percent).toFixed(2);
 
-      if (i.orderType.value === 'One_Piece') {
-        return [];
-      } else {
-        return [
-          {
-            columns: [
-              {
-                text: `Board Feet of ${i.woodtype.NAME} - ${
-                  i.thickness.value === 0.75 ? '3/4' : i.thickness.value === 1 ? '4/4' : null
-                }" Thickness - Stile/Rail/Mullion Material Needed: ${BoardFT(
-                  i.dimensions
-                )}`,
-                style: 'fonts',
-                width: 400,
-              },
-              { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-              { text: equation, style: 'fonts', width: 60 },
-            ],
-          },
-        ];
-      }
-    }),
     {
       columns: [{ text: '' }],
       margin: [0, 5, 0, 5],
     },
-    data.part_list.map((i, index) => {
-      const width = i.dimensions.map((item, index) => {
-        const width = Panels(item, i, breakdowns).map((panel) => {
-          return numQty(panel.width);
-        });
-        const height = Panels(item, i, breakdowns).map((panel) => {
-          return numQty(panel.height);
-        });
-        const q = ((width * height) / 144) * parseInt(item.qty);
-        return q;
-      });
 
-      const equation = width.reduce((acc, item) => acc + item);
+    PanelBoardFTDisplay,
 
-      if (
-        i.orderType.value === 'One_Piece' ||
-        i.orderType.value === 'One_Piece_DF' ||
-        i.orderType.value === 'Two_Piece' ||
-        i.orderType.value === 'Two_Piece_DF'
-      ) {
-        return [];
-      }
 
-      console.log({i});
-
-      if (i && i.panel) {
-        return [
-          {
-            columns: [
-              {
-                text: `Board Feet of ${i.woodtype.NAME} - ${
-                  i.thickness.value === 0.75 ? '3/4' : i.thickness.value === 1 ? '4/4' : null
-                }" Thickness ${i.panel.NAME} Material Needed: ${equation.toFixed(2)}`,
-                style: 'fonts',
-                width: 400,
-              },
-              { text: 'Add 20 % Waste: ', style: 'fonts', width: 100 },
-              {
-                text: (equation * 0.2 + equation).toFixed(2),
-                style: 'fonts',
-                width: 60,
-              },
-            ],
-          },
-        ];
-      } else {
-        return [];
-      }
-    }),
     {
       columns: [
         // { text: 'Hinges Needed', style: 'fonts', decoration: 'underline' }

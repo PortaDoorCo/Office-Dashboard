@@ -13,10 +13,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 import { save, load } from 'redux-localstorage-simple';
-import { loadingBarMiddleware } from 'react-redux-loading-bar'
+import { loadingBarMiddleware } from 'react-redux-loading-bar';
 import Cookies from 'js-cookie';
-import * as Sentry from "@sentry/react";
-import { Integrations } from "@sentry/tracing";
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 const cookie = Cookies.get('jwt');
 
 
@@ -27,7 +27,7 @@ if (!cookie) {
   localStorage.removeItem('redux_localstorage_simple');
 }
 
-const dsn = process.env.SENTRY_DSN
+const dsn = process.env.SENTRY_DSN;
 
 Sentry.init({
   dsn: dsn,
