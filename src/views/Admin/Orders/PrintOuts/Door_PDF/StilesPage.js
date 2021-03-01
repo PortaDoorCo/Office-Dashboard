@@ -165,7 +165,7 @@ export default (data, breakdowns) => {
             ],
           },
         ],
-        { text: '', pageBreak: 'before' }
+        // { text: '', pageBreak: 'before' }
       ];
     }
   });
