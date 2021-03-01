@@ -164,7 +164,7 @@ export default (parts, breakdowns,thickness) => {
       sum : i.sum.toFixed(2),
       width:  i.width ? i.width : null
     };
-  })
+  });
 
 
 
