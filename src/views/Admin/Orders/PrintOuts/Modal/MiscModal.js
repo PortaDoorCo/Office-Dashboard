@@ -62,8 +62,8 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={new_printer_option}
                     value={printer_option}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
+                    // allowCreate={true}
+                    // onCreate={name => handleCreate(name)}
                     onChange={value => set_printer_option(value)}
                     textField="NAME"
                   />
@@ -93,7 +93,7 @@ const PrintModal = (props) => {
                   <Label for="invoice">Invoice</Label>
                   <DropdownList filter
                     data={number_select}
-                    value={printer_option.invoice}
+                    value={printer_option.invoice} 
                     onChange={(e) => change(e, 'invoice')}
                     textField="invoice"
                     name="invoice"
