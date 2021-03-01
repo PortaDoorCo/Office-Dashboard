@@ -11,7 +11,9 @@ import {
   MISC_ITEM_DELETED,
   MISC_ITEM_UPDATED,
   LOAD_CATEGORIES,
-  LOAD_PRINTER_OPTIONS
+  LOAD_PRINTER_OPTIONS,
+  ADD_PRINTER_OPTION,
+  SAVE_PRINTER_OPTION
 } from './actions';
 
 const initialState = {
@@ -50,6 +52,18 @@ export default function (state = initialState, action) {
         ...state,
         printer_options: data,
         loadedPrinterOptions: true
+      };
+    case ADD_PRINTER_OPTION:
+      return {
+        ...state,
+        printer_options: [...state.printer_options, data],
+      };
+    case SAVE_PRINTER_OPTION:
+      return {
+        ...state,
+        printer_options: state.printer_options.map((i) =>
+          i.id === data.id ? data : i
+        ),
       };
     case LOAD_PAYMENT_TYPES:
       return {
