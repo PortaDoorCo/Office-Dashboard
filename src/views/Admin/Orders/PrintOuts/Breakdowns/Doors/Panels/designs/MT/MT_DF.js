@@ -12,8 +12,8 @@ export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 
-  const top_rail_add = part.mt_design.TOP_RAIL_ADD;
-  const btm_rail_add = part.mt_design.BTM_RAIL_ADD;
+  const top_rail_add = part && part.mt_df_design && part.mt_df_design.TOP_RAIL_ADD;
+  const btm_rail_add = part && part.mt_df_design && part.mt_df_design.BTM_RAIL_ADD;
 
   const topRail = numQty(info.topRail) + (part.edge.LIP_FACTOR / 2);
   const bottomRail = numQty(info.bottomRail) + (part.edge.LIP_FACTOR / 2);
