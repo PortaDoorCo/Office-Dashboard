@@ -11,11 +11,21 @@ import QC_Checklist from '../../Door_PDF/QC_Checklist';
 import Profiles from '../../Door_PDF/Profiles';
 import Packing_Slip from '../../Door_PDF/Packing_Slip';
 
-export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdowns, p) => {
+export default (
+  data,
+  edges,
+  moulds,
+  miter,
+  mt,
+  panels,
+  appliedProfiles,
+  breakdowns,
+  p
+) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
-  console.log({p});
+  console.log({ p });
 
   let Content = [];
 
@@ -35,7 +45,6 @@ export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdo
     Content.push(PanelsPage(data, breakdowns));
   }
 
-
   for (let i = 0; i < p.materials; i++) {
     Content.push(MaterialsList(data, breakdowns));
   }
@@ -44,9 +53,19 @@ export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdo
     Content.push(QC_Checklist(data, breakdowns));
   }
 
-  
   for (let i = 0; i < p.profiles; i++) {
-    Content.push(Profiles(data, edges, moulds, miter, mt, panels, appliedProfiles, breakdowns));
+    Content.push(
+      Profiles(
+        data,
+        edges,
+        moulds,
+        miter,
+        mt,
+        panels,
+        appliedProfiles,
+        breakdowns
+      )
+    );
   }
 
   for (let i = 0; i < p.acknowledgement; i++) {
@@ -60,45 +79,62 @@ export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdo
     Content.push(Packing_Slip(data, breakdowns));
   }
 
-
-
   const rowLen = Content.length;
-  const ContentSorted = Content.map((i,index) => {
+  const ContentSorted = Content.map((i, index) => {
     if (rowLen === index + 1) {
       return [i];
     } else {
-      return [
-        i,
-        { text: '', pageBreak: 'before' }
-      ];
+      return [i, { text: '', pageBreak: 'before' }];
     }
   });
-
-
-
 
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: ContentSorted,
-    pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
-      return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
+    pageMargins: [40, 40, 40, 60],
+    footer: function (currentPage, pageCount) {
+      return {
+        table: {
+          widths: ['*'],
+          body: [
+            [
+              {
+                text: 'Page ' + currentPage,
+                alignment: 'center',
+                style: { fontSize: 9 },
+              },
+            ],
+          ],
+        },
+        layout: 'noBorders',
+      };
+    },
+    pageBreakBefore: function (
+      currentNode,
+      followingNodesOnPage,
+      nodesOnNextPage,
+      previousNodesOnPage
+    ) {
+      return (
+        currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0
+      );
     },
     styles: {
       woodtype: {
         fontSize: 18,
-        bold: true
+        bold: true,
       },
       fonts: {
-        fontSize: 9
+        fontSize: 9,
       },
       fontsBold: {
         fontSize: 12,
-        bold: true
+        bold: true,
       },
       tableBold: {
         fontSize: 10,
-        bold: true
+        bold: true,
       },
       totals: {
         fontSize: 8,
@@ -106,10 +142,9 @@ export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdo
       },
       warrantyFont: {
         fontSize: 7,
-      }
-    }
+      },
+    },
   };
   // const fileName = `Order_${data.orderNum}`
   pdfMake.createPdf(documentDefinition).open();
-
 };
