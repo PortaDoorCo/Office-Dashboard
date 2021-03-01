@@ -80,8 +80,6 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={number_select}
                     value={printer_option.acknowledgement}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
                     onChange={(e) => change(e, 'acknowledgement')}
                     textField="acknowledgement"
                     name="acknowledgement"
@@ -96,8 +94,6 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={number_select}
                     value={printer_option.invoice}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
                     onChange={(e) => change(e, 'invoice')}
                     textField="invoice"
                     name="invoice"

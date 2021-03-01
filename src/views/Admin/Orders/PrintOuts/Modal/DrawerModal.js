@@ -90,8 +90,6 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={number_select}
                     value={printer_option.acknowledgement}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
                     onChange={(e) => change(e, 'acknowledgement')}
                     textField="acknowledgement"
                     name="acknowledgement"
@@ -106,8 +104,6 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={number_select}
                     value={printer_option.invoice}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
                     onChange={(e) => change(e, 'invoice')}
                     textField="invoice"
                     name="invoice"
@@ -125,8 +121,6 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={number_select}
                     value={printer_option.assembly_list}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
                     onChange={(e) => change(e, 'assembly_list')}
                     textField="assembly_list"
                     name="assembly_list"
@@ -141,8 +135,6 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={number_select}
                     value={printer_option.box_sides}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
                     onChange={(e) => change(e, 'box_sides')}
                     textField="box_sides"
                     name="box_sides"
@@ -158,8 +150,6 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={number_select}
                     value={printer_option.box_bottoms}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
                     onChange={(e) => change(e, 'box_bottoms')}
                     textField="box_bottoms"
                     name="box_bottoms"
@@ -178,8 +168,6 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={number_select}
                     value={printer_option.packing_slip}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
                     onChange={(e) => change(e, 'packing_slip')}
                     textField="packing_slip"
                     name="packing_slip"
@@ -194,8 +182,6 @@ const PrintModal = (props) => {
                   <DropdownList filter
                     data={number_select}
                     value={printer_option && printer_option.qc}
-                    allowCreate={true}
-                    onCreate={name => handleCreate(name)}
                     onChange={(e) => change(e, 'qc')}
                     textField="qc"
                     name="qc"
