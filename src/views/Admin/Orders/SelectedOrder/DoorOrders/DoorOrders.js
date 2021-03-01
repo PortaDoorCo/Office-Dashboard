@@ -92,7 +92,14 @@ class DoorOrders extends Component {
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
         sale: values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
-        Taxable: values.job_info.customer.Taxable
+        Taxable: values.job_info.customer.Taxable,
+        Address1: values.job_info.customer.Address1,
+        Address2: values.job_info.customer.Address2,
+        City: values.job_info.customer.City,
+        Zip: values.job_info.customer.Zip,
+        Phone1: values.job_info.customer.Phone1,
+        Fax: values.job_info.customer.Fax,
+        Email: values.job_info.customer.Email,
       },
     };
 
