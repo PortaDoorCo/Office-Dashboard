@@ -39,7 +39,8 @@ import {
   miscItemAdded,
   miscItemDeleted,
   miscItemUpdated,
-  loadCategories
+  loadCategories,
+  loadPrinterOptions
 } from './redux/misc_items/actions';
 import { login, getUsers } from './redux/users/actions';
 import io from 'socket.io-client';
@@ -104,7 +105,7 @@ class App extends Component {
       miscItemUpdated,
       customerAdded,
       customerUpdated,
-      customerDeleted
+      customerDeleted,
     } = this.props;
 
     this.cookies();
@@ -237,7 +238,8 @@ class App extends Component {
       loadPaymentTerms,
       loadAllCustomers,
       loadAllOrders,
-      loadCategories
+      loadCategories,
+      loadPrinterOptions
     } = this.props;
     
     if (this.props.loggedIn !== prevProps.loggedIn) {
@@ -246,6 +248,7 @@ class App extends Component {
         if(newCookie){
           await getAllProducts(newCookie);
           await getPricing(newCookie);
+          await loadPrinterOptions(newCookie);
           await loadCategories(newCookie);
           await getBreakdowns(newCookie);
           await getBoxBreakdowns(newCookie);
@@ -340,7 +343,8 @@ const mapDispatchToProps = (dispatch) =>
       loadCategories,
       customerAdded, 
       customerUpdated,
-      customerDeleted
+      customerDeleted,
+      loadPrinterOptions
     },
     dispatch
   );

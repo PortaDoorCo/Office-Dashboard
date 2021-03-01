@@ -1,5 +1,7 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
+import Acknowledgement from '../../Door_PDF/Acknowledgement';
+import Invoice from '../../Door_PDF/Invoice';
 import AssemblyList from '../../Door_PDF/AssemblyList';
 import StilesPage from '../../Door_PDF/StilesPage';
 import RailsPage from '../../Door_PDF/RailsPage';
@@ -46,22 +48,22 @@ export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdo
     Content.push(Profiles(data, edges, moulds, miter, mt, panels, appliedProfiles, breakdowns));
   }
 
+  for (let i = 0; i < p.acknowledgement; i++) {
+    Content.push(Acknowledgement(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.invoice; i++) {
+    Content.push(Invoice(data, breakdowns));
+  }
 
 
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: Content,
-    // [
-      
-    //   AssemblyList(data, breakdowns),
-    //   StilesPage(data, breakdowns),
-    //   RailsPage(data, breakdowns),
-    //   PanelsPage(data, breakdowns),
-    //   MaterialsList(data, breakdowns),
-    //   QC_Checklist(data, breakdowns),
-    //   Profiles(data, edges, moulds, miter, mt, panels, appliedProfiles, breakdowns),
-    // ],
+    pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
+      return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
+    },
     styles: {
       woodtype: {
         fontSize: 18,

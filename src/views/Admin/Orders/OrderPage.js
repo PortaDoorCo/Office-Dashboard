@@ -40,33 +40,18 @@ import { CSVLink, CSVDownload } from 'react-csv';
 
 import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
-import AssemblyListPDF from './PrintOuts/Pages/Door/AssemblyPDF';
-import StilesPDF from './PrintOuts/Pages/Door/StilesPDF';
-import RailsPDF from './PrintOuts/Pages/Door/RailsPDF';
-import PanelsPDF from './PrintOuts/Pages/Door/PanelsPDF';
-import MaterialsPDF from './PrintOuts/Pages/Door/MaterialsPDF';
-import QCPDF from './PrintOuts/Pages/Door/QCPDF';
-import InvoicePDF from './PrintOuts/Pages/Door/InvoicePDF';
 
-import Select from 'react-select';
-import ProfilesPDF from './PrintOuts/Pages/Door/ProfilesPDF';
+
 import moment from 'moment';
 
-import MiscItemsAcknowledgement from './PrintOuts/Pages/MiscItems/AcknowledgementPDF';
-import MiscItemsInvoice from './PrintOuts/Pages/MiscItems/InvoicePDF';
+
 import MiscItemsPDF from './PrintOuts/Pages/MiscItems/MiscItemsPDF';
 
-import MouldingsAcknowledgement from './PrintOuts/Pages/Mouldings/AcknowledgementPDF';
-import MouldingsInvoice from './PrintOuts/Pages/Mouldings/InvoicePDF';
+
 import MouldingsPDF from './PrintOuts/Pages/Mouldings/MouldingsPDF';
 
 
-import AcknowledgementPDF from './PrintOuts/Pages/Door/AcknowledgementPDF';
-import DrawerAcnowledgementPDF from './PrintOuts/Pages/Drawer/AcknowledgementPDF';
-import DrawerInvoicePDF from './PrintOuts/Pages/Drawer/InvoicePDF';
-import DrawerAssemblyListPDF from './PrintOuts/Pages/Drawer/AssemblyListPDF';
-import DrawerBottomsPDF from './PrintOuts/Pages/Drawer/BottomsPDF';
-import DrawerSidesPDF from './PrintOuts/Pages/Drawer/SidesPDF';
+
 
 import DoorBalance from './Balance/Door_Order/Balance';
 import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory';
@@ -84,15 +69,14 @@ import DrawerMiscItems from './MiscItems/DrawerMiscItems';
 
 import MouldingsMiscItems from './MiscItems/MouldingsMiscItems';
 
-import CustomerCopyDoorPDF from './PrintOuts/Pages/Door/CustomerCopyPDF';
-import CustomerCopyDrawerPDF from './PrintOuts/Pages/Drawer/CustomerCopyPDF';
-
 import FileUploader from '../../../components/FileUploader/FileUploader';
 
 import DoorConversationNotes from './Notes/DoorOrder/Conversation_Notes';
 import DrawerConversationNotes from './Notes/DrawerOrder/Conversation_Notes';
 import MiscConversationNotes from './Notes/MiscItems/Conversation_Notes';
 import MouldingsConversationNotes from './Notes/Mouldings/Conversation_Notes';
+
+import PrintModal from './PrintOuts/Modal/Modal';
 
 import numQty from 'numeric-quantity';
 
@@ -131,6 +115,7 @@ class OrderPage extends Component {
       balanceOpen: false,
       miscItemsOpen: false,
       notesOpen: false,
+      printModal: false
     };
   }
 
@@ -203,7 +188,20 @@ class OrderPage extends Component {
     await this.props.toggle();
   };
 
-  downloadPDF = () => {
+  togglePrinter = () => {
+    this.setState({
+      printModal: !this.state.printModal
+    });
+  }
+
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption }, () =>
+      console.log('Option selected:', this.state.selectedOption)
+    );
+  };
+
+
+  downloadPDF = async (printerSettings) => {
     const {
       formState,
       drawerState,
@@ -223,362 +221,141 @@ class OrderPage extends Component {
           : mouldingsState ?
             mouldingsState
             : [];
-
-    const printerSettings = {
-      assembly_list: user.assembly_list,
-      stiles: user.stiles,
-      rails: user.rails,
-      panels: user.panels,
-      profiles: user.profiles,
-      materials: user.materials,
-      qc: user.qc
-    };
-
-
+  
+    // const printerSettings = {
+    //   assembly_list: user.assembly_list,
+    //   stiles: user.stiles,
+    //   rails: user.rails,
+    //   panels: user.panels,
+    //   profiles: user.profiles,
+    //   materials: user.materials,
+    //   qc: user.qc
+    // };
+  
+  
     console.log({printerSettings});
-
-
+  
+  
     if (data.orderType === 'Door Order') {
-      this.state.selectedOption.map(async (option) => {
-        switch (option.value) {
-          case 'Breakdowns':
-            const edgesPromiseArr1 = selectedOrder.part_list
-              .filter((i) => i.edge && i.edge.photo && i.edge.photo.url)
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.edge.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
 
-            const mouldsPromiseArr1 = selectedOrder.part_list
-              .filter(
-                (i) => i.profile && i.profile.photo && i.profile.photo.url
-              )
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.profile.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            const miterPromiseArr1 = selectedOrder.part_list
-              .filter(
-                (i) =>
-                  i.miter_design &&
-                  i.miter_design.photo &&
-                  i.miter_design.photo.url
-              )
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.miter_design.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            const MT_PromiseArr1 = selectedOrder.part_list
-              .filter(
-                (i) => i.mt_design && i.mt_design.photo && i.mt_design.photo.url
-              )
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.mt_design.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            const panelsPromiseArr1 = selectedOrder.part_list
-              .filter((i) => i.panel && i.panel.photo && i.panel.photo.url)
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.panel.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            const appliedProfilePromiseArr1 = selectedOrder.part_list
-              .filter(
-                (i) =>
-                  i.applied_profile &&
-                  i.applied_profile.photo &&
-                  i.applied_profile.photo.url
-              )
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.applied_profile.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            let edges1;
-            let moulds1;
-            let miter1;
-            let mt_1;
-            let panels1;
-            let appliedProfiles1;
-
-            try {
-              edges1 = await Promise.all(edgesPromiseArr1);
-              moulds1 = await Promise.all(mouldsPromiseArr1);
-              miter1 = await Promise.all(miterPromiseArr1);
-              mt_1 = await Promise.all(MT_PromiseArr1);
-              panels1 = await Promise.all(panelsPromiseArr1);
-              appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
-            } catch (err) {
-              console.log('errrrrrr', err);
-            }
-
-            DoorPDF(
-              data,
-              edges1,
-              moulds1,
-              miter1,
-              mt_1,
-              panels1,
-              appliedProfiles1,
-              breakdowns,
-              printerSettings
-            );
-            this.setState({ selectedOption: [] });
-            break;
-          case 'CustomerCopy':
-            CustomerCopyDoorPDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Assembly':
-            AssemblyListPDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Acknowledgement':
-            AcknowledgementPDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Invoice':
-            InvoicePDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Stiles':
-            StilesPDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Rails':
-            RailsPDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Panels':
-            PanelsPDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Materials':
-            MaterialsPDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Profiles':
-            const edgesPromiseArr = selectedOrder.part_list
-              .filter((i) => i.edge && i.edge.photo && i.edge.photo.url)
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.edge.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            const mouldsPromiseArr = selectedOrder.part_list
-              .filter(
-                (i) => i.profile && i.profile.photo && i.profile.photo.url
-              )
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.profile.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            const miterPromiseArr = selectedOrder.part_list
-              .filter(
-                (i) =>
-                  i.miter_design &&
-                  i.miter_design.photo &&
-                  i.miter_design.photo.url
-              )
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.miter_design.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            const MT_PromiseArr = selectedOrder.part_list
-              .filter(
-                (i) => i.mt_design && i.mt_design.photo && i.mt_design.photo.url
-              )
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.mt_design.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            const panelsPromiseArr = selectedOrder.part_list
-              .filter((i) => i.panel && i.panel.photo && i.panel.photo.url)
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.panel.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            const appliedProfilePromiseArr = selectedOrder.part_list
-              .filter(
-                (i) =>
-                  i.applied_profile &&
-                  i.applied_profile.photo &&
-                  i.applied_profile.photo.url
-              )
-              .map((i) => {
-                return new Promise((resolve, reject) => {
-                  toDataUrl(i.applied_profile.photo.url, (result) => {
-                    resolve(result);
-                  });
-                });
-              });
-
-            let edges;
-            let moulds;
-            let miter;
-            let mt;
-            let panels;
-            let appliedProfiles;
-
-            try {
-              edges = await Promise.all(edgesPromiseArr);
-              moulds = await Promise.all(mouldsPromiseArr);
-              miter = await Promise.all(miterPromiseArr);
-              mt = await Promise.all(MT_PromiseArr);
-              panels = await Promise.all(panelsPromiseArr);
-              appliedProfiles = await Promise.all(appliedProfilePromiseArr);
-            } catch (err) {
-              console.log('errrrrrr', err);
-            }
-
-            ProfilesPDF(
-              data,
-              edges,
-              moulds,
-              miter,
-              mt,
-              panels,
-              appliedProfiles,
-              breakdowns
-            );
-            this.setState({ selectedOption: [] });
-            break;
-          case 'QC':
-            QCPDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          default:
-            return;
-        }
-      });
+      const edgesPromiseArr1 = selectedOrder.part_list
+        .filter((i) => i.edge && i.edge.photo && i.edge.photo.url)
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.edge.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const mouldsPromiseArr1 = selectedOrder.part_list
+        .filter(
+          (i) => i.profile && i.profile.photo && i.profile.photo.url
+        )
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.profile.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const miterPromiseArr1 = selectedOrder.part_list
+        .filter(
+          (i) =>
+            i.miter_design &&
+                    i.miter_design.photo &&
+                    i.miter_design.photo.url
+        )
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.miter_design.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const MT_PromiseArr1 = selectedOrder.part_list
+        .filter(
+          (i) => i.mt_design && i.mt_design.photo && i.mt_design.photo.url
+        )
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.mt_design.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const panelsPromiseArr1 = selectedOrder.part_list
+        .filter((i) => i.panel && i.panel.photo && i.panel.photo.url)
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.panel.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      const appliedProfilePromiseArr1 = selectedOrder.part_list
+        .filter(
+          (i) =>
+            i.applied_profile &&
+                    i.applied_profile.photo &&
+                    i.applied_profile.photo.url
+        )
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.applied_profile.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+  
+      let edges1;
+      let moulds1;
+      let miter1;
+      let mt_1;
+      let panels1;
+      let appliedProfiles1;
+  
+      try {
+        edges1 = await Promise.all(edgesPromiseArr1);
+        moulds1 = await Promise.all(mouldsPromiseArr1);
+        miter1 = await Promise.all(miterPromiseArr1);
+        mt_1 = await Promise.all(MT_PromiseArr1);
+        panels1 = await Promise.all(panelsPromiseArr1);
+        appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
+      } catch (err) {
+        console.log('errrrrrr', err);
+      }
+  
+      DoorPDF(
+        data,
+        edges1,
+        moulds1,
+        miter1,
+        mt_1,
+        panels1,
+        appliedProfiles1,
+        breakdowns,
+        printerSettings
+      );
     } else if (data.orderType === 'Drawer Order') {
-      this.state.selectedOption.map(async (option) => {
-        switch (option.value) {
-          case 'Breakdowns':
-            DrawerPDF(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'CustomerCopy':
-            CustomerCopyDrawerPDF(data, breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Acknowledgement':
-            DrawerAcnowledgementPDF(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Invoice':
-            DrawerInvoicePDF(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Assembly':
-            DrawerAssemblyListPDF(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Bottoms':
-            DrawerBottomsPDF(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Sides':
-            DrawerSidesPDF(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          default:
-            return;
-        }
-      });
+      DrawerPDF(data, box_breakdowns, printerSettings);
     } else if (data.orderType === 'Misc Items') {
-      this.state.selectedOption.map(async (option) => {
-        switch (option.value) {
-          case 'All':
-            MiscItemsPDF(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Acknowledgement':
-            MiscItemsAcknowledgement(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Invoice':
-            MiscItemsInvoice(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          default:
-            return;
-        }
-      });
+      MiscItemsPDF(data, box_breakdowns, printerSettings);
     }
     else if (data.orderType === 'Mouldings') {
-      this.state.selectedOption.map(async (option) => {
-        switch (option.value) {
-          case 'All':
-            MouldingsPDF(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Acknowledgement':
-            MouldingsAcknowledgement(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          case 'Invoice':
-            MouldingsInvoice(data, box_breakdowns);
-            this.setState({ selectedOption: [] });
-            break;
-          default:
-            return;
-        }
-      });
+      MouldingsPDF(data, box_breakdowns, printerSettings);
     }
   };
 
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption }, () =>
-      console.log('Option selected:', this.state.selectedOption)
-    );
-  };
 
   render() {
     const props = this.props;
 
-    const { selectedOrder } = this.props;
+    const { selectedOrder, printer_options } = this.props;
 
     let options;
     let s = selectedOrder ? selectedOrder : 'Door Order';
@@ -750,18 +527,18 @@ class OrderPage extends Component {
                   <Col className="ml-5">
                     <Row>
                       <Col lg="7">
-                        <div className="mt-3 mb-2">
+                        {/* <div className="mt-3 mb-2">
                           <Select
                             value={this.state.selectedOption}
                             onChange={this.handleChange}
                             options={options}
                             isMulti={true}
                           />
-                        </div>
+                        </div> */}
                       </Col>
                       <Col>
                         <Tooltip title="Print" placement="top" className="mb-3">
-                          <IconButton onClick={this.downloadPDF}>
+                          <IconButton onClick={this.togglePrinter}>
                             <Print style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
@@ -1031,6 +808,19 @@ class OrderPage extends Component {
             </Button>
           </ModalFooter>
         </Modal>
+        <PrintModal
+          toggle={this.togglePrinter}
+          modal={this.state.printModal}
+          printer_options={printer_options}
+          selectedOrder={props.selectedOrder}
+          downloadPDF={this.downloadPDF}
+          formState
+          drawerState
+          miscState
+          mouldingsState
+          breakdowns
+          box_breakdowns
+        />
       </div>
     );
   }
@@ -1044,6 +834,7 @@ const mapStateToProps = (state, prop) => ({
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   selectedOrder: state.Orders.selectedOrder,
+  printer_options: state.misc_items.printer_options,
   user: state.users.user
 });
 

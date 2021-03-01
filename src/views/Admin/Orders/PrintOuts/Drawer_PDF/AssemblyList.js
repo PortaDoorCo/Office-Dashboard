@@ -14,7 +14,9 @@ import SQFT from '../Breakdowns/DrawerBoxes/SQFT';
 export default (data, breakdowns) => {
 
   return [
+    
     {
+      headlineLevel: 1,
       columns: [
         {
           stack: [
@@ -204,4 +206,5 @@ export default (data, breakdowns) => {
     }),
     { text: '', pageBreak: 'before' }
   ];
+  
 };

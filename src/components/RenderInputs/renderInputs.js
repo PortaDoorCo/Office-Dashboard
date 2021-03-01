@@ -45,6 +45,7 @@ export const renderDropdownListFilter = ({
   meta: { touched, error, warning }
 }) => (
   <Fragment>
+    {console.log({input})}
     <DropdownList
       {...input}
       data={data}
@@ -52,6 +53,7 @@ export const renderDropdownListFilter = ({
       textField={textField}
       placeholder="Select"
       onChange={input.onChange}
+      allowCreate={false}
       filter
       disabled={edit}
     />

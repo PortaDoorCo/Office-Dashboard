@@ -13,6 +13,47 @@ export const MISC_ITEM_DELETED = 'MISC_ITEM_DELETED';
 export const MISC_ITEM_ADDED = 'MISC_ITEM_ADDED';
 export const MISC_ITEM_UPDATED = 'MISC_ITEM_UPDATED';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const LOAD_PRINTER_OPTIONS = 'LOAD_PRINTER_OPTIONS';
+export const ADD_PRINTER_OPTION = 'ADD_PRINTER_OPTION';
+
+export function loadPrinterOptions(cookie) {
+  return async function (dispatch) {
+    const res = await fetch(`${db_url}/printer-options`, {
+      headers: {
+        'Authorization': `Bearer ${cookie}`
+      }
+    });
+    const data = await res.json();
+    return dispatch({
+      type: LOAD_PRINTER_OPTIONS,
+      data: data
+    });
+  };
+}
+
+export function addPrinterOption(id, item, cookie) {
+  return async function (dispatch) {
+    try {
+      const res = await axios.post(`${db_url}/printer-options`, item,
+        {
+          headers: {
+            'Authorization': `Bearer ${cookie}`
+          }
+        }
+      );
+      const data = await res;
+
+      // NotificationManager.success('Customer has been update!', 'Customer Updated!', 2000);
+      return dispatch({
+        type: ADD_PRINTER_OPTION,
+        data: data.data
+      });
+    } catch (error) {
+      console.error(error);
+      // NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
+  };
+}
 
 export function loadShippingMethod(cookie) {
   return async function (dispatch) {

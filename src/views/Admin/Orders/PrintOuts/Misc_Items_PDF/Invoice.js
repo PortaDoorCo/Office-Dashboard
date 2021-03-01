@@ -27,8 +27,8 @@ export default (data, breakdowns) => {
       return tableBody.push([
         { text: i.qty, style: 'fonts' },
         { text: i.item.NAME, style: 'fonts' },
-        { text: i.item.Price, style: 'fonts' },
         { text: `$${i.price}`, style: 'fonts' },
+        { text: `$${i.price * i.qty}`, style: 'fonts' },
       ]);
     } else if (i.category === 'custom') {
       return tableBody.push([
@@ -74,30 +74,70 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack : [
-            {text: `Customer - ${data.job_info.customer.Company}`},
-            {text: `${data.companyprofile.Contact}`, style: 'fonts'},
-            {text: `${data.companyprofile.Address1}`, style: 'fonts'},
-            {text: `${data.companyprofile.Address2}`, style: 'fonts'},
-            {text: `${data.companyprofile.City}, ${data.job_info.State}`, style: 'fonts'},
-            {text: `${data.companyprofile.Zip}`, style: 'fonts'},
-            {text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts'},
-            {text: `Fax: ${data.companyprofile.Fax}`, style: 'fonts'},
+          stack: [
+            { text: `Customer - ${data.job_info.customer.Company}` },
+            { text: `${data.companyprofile.Contact}`, style: 'fonts' },
+            { text: `${data.companyprofile.Address1}`, style: 'fonts' },
+            { text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`, style: 'fonts' },
+            {
+              text: `${data.companyprofile.City}, ${data.job_info.State}`,
+              style: 'fonts',
+            },
+            { text: `${data.companyprofile.Zip}`, style: 'fonts' },
+            { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
+            { text: `Fax: ${data.job_info.Fax ? data.job_info.Fax : ''}`, style: 'fonts' },
           ],
         },
         {
           stack: [
-            { text: `PO: ${data.job_info.poNum.length>0 ? data.job_info.poNum : 'None'}`, alignment: 'right', margin: [0, 0, 0, 0] },
-            { text: `Ship To: ${data.job_info.customer.Company}`, style: 'fonts', alignment: 'right', margin: [0, 0, 0, 0] },
-            { text: `${data.job_info.Address1}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-            { text: `${data.job_info.Address2}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-            { text: `${data.job_info.City}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-            { text: `${data.job_info.Zip}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-            { text: `${data.companyprofile.Phone1}`, alignment: 'right', style: 'fonts', margin: [0, 0, 0, 0] },
-          ]
-        }
+            {
+              text: `PO: ${
+                data.job_info.poNum.length > 0 ? data.job_info.poNum : 'None'
+              }`,
+              alignment: 'left',
+              margin: [0, 0, 0, 0],
+            },
+            {
+              text: `Ship To: ${data.job_info.customer.Company}`,
+              style: 'fonts',
+              alignment: 'left',
+              margin: [0, 0, 0, 0],
+            },
+            {
+              text: `${data.job_info.Address1}`,
+              alignment: 'left',
+              style: 'fonts',
+              margin: [0, 0, 0, 0],
+            },
+            {
+              text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`,
+              alignment: 'left',
+              style: 'fonts',
+              margin: [0, 0, 0, 0],
+            },
+            {
+              text: `${data.job_info.City}`,
+              alignment: 'left',
+              style: 'fonts',
+              margin: [0, 0, 0, 0],
+            },
+            {
+              text: `${data.job_info.Zip}`,
+              alignment: 'left',
+              style: 'fonts',
+              margin: [0, 0, 0, 0],
+            },
+            {
+              text: `${data.companyprofile.Phone1}`,
+              alignment: 'left',
+              style: 'fonts',
+              margin: [0, 0, 0, 0],
+            },
+          ],
+          margin: [120, 0, 0, 0],
+        },
       ],
-      margin: [0, 10]
+      margin: [0, 10],
     },
     {
       canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
