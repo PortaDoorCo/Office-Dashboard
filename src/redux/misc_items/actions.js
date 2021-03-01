@@ -1,5 +1,6 @@
 import db_url from '../db_url';
 import axios from 'axios';
+import { NotificationManager } from 'react-notifications';
 
 export const SELECT_DATE_RANGE = 'SELECT_DATE_RANGE';
 export const LOAD_SHIPPING_METHODS = 'LOAD_SHIPPING_METHODS';
@@ -16,6 +17,8 @@ export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const LOAD_PRINTER_OPTIONS = 'LOAD_PRINTER_OPTIONS';
 export const ADD_PRINTER_OPTION = 'ADD_PRINTER_OPTION';
 export const SAVE_PRINTER_OPTION = 'SAVE_PRINTER_OPTION';
+export const PRINTER_OPTION_ADDED = 'PRINTER_OPTION_ADDED';
+export const PRINTER_OPTION_UPDATED = 'PRINTER_OPTION_UPDATED';
 
 export function loadPrinterOptions(cookie) {
   return async function (dispatch) {
@@ -54,10 +57,9 @@ export function savePrinterOption(id, item, cookie) {
       );
       const data = await res;
 
-      // NotificationManager.success('Customer has been update!', 'Customer Updated!', 2000);
+      NotificationManager.success('Printing Option Saved!', 'Saved', 2000);
       return dispatch({
         type: SAVE_PRINTER_OPTION,
-        data: data.data
       });
     } catch (error) {
       console.error(error);
@@ -232,6 +234,26 @@ export function miscItemDeleted(res) {
     return dispatch({
       type: MISC_ITEM_DELETED,
       data: res
+    });
+  };
+}
+
+export function printerOptionAdded(data) {
+
+  return async function (dispatch) {
+    return dispatch({
+      type: PRINTER_OPTION_ADDED,
+      data: data,
+    });
+  };
+}
+
+export function printerOptionUpdated(data, entity) {
+  console.log({entity});
+  return async function (dispatch) {
+    return dispatch({
+      type: PRINTER_OPTION_UPDATED,
+      data: entity,
     });
   };
 }

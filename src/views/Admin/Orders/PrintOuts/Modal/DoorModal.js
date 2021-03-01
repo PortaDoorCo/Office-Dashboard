@@ -8,11 +8,12 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import db_url from '../../../../../redux/db_url';
 
+
 const cookie = Cookies.get('jwt');
 
 const PrintModal = (props) => {
   const {
-    buttonLabel,
+
     className,
     modal,
     toggle,
@@ -24,8 +25,6 @@ const PrintModal = (props) => {
 
   const number_select = [0,1,2,3,4,5];
 
-  const [value, setValue] = useState(null);
-  const [new_printer_option, set_new_printer_option] = useState(printer_options);
   const [printer_option, set_printer_option] = useState({
     id: '',
     NAME: printer_options[0].NAME,
@@ -82,9 +81,9 @@ const PrintModal = (props) => {
     await set_printer_option(data.data);
   };
 
-  const saveOption = () => {
+  const saveOption = async () => {
     const id = printer_option.id;
-    savePrinterOption(id, printer_option, cookie);
+    await savePrinterOption(id, printer_option, cookie);
   };
 
 

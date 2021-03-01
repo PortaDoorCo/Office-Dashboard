@@ -40,7 +40,9 @@ import {
   miscItemDeleted,
   miscItemUpdated,
   loadCategories,
-  loadPrinterOptions
+  loadPrinterOptions,
+  printerOptionAdded,
+  printerOptionUpdated
 } from './redux/misc_items/actions';
 import { login, getUsers } from './redux/users/actions';
 import io from 'socket.io-client';
@@ -106,6 +108,8 @@ class App extends Component {
       customerAdded,
       customerUpdated,
       customerDeleted,
+      printerOptionAdded,
+      printerOptionUpdated
     } = this.props;
 
     this.cookies();
@@ -215,6 +219,19 @@ class App extends Component {
           2000
         ),
         miscItemDeleted(res)
+      )
+    );
+    socket.on(
+      'printer_option_added',
+      (res, data) => (
+        printerOptionAdded(res, data)
+      )
+    );
+
+    socket.on(
+      'printer_option_updated',
+      (res,data) => (
+        printerOptionUpdated(res, data)
       )
     );
     
@@ -344,7 +361,9 @@ const mapDispatchToProps = (dispatch) =>
       customerAdded, 
       customerUpdated,
       customerDeleted,
-      loadPrinterOptions
+      loadPrinterOptions,
+      printerOptionAdded,
+      printerOptionUpdated
     },
     dispatch
   );

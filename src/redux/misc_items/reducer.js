@@ -13,7 +13,9 @@ import {
   LOAD_CATEGORIES,
   LOAD_PRINTER_OPTIONS,
   ADD_PRINTER_OPTION,
-  SAVE_PRINTER_OPTION
+  SAVE_PRINTER_OPTION,
+  PRINTER_OPTION_ADDED,
+  PRINTER_OPTION_UPDATED,
 } from './actions';
 
 const initialState = {
@@ -29,52 +31,40 @@ const initialState = {
   categories: [],
   loadedCategories: false,
   printer_options: [],
-  loadedPrinterOptions: false
+  loadedPrinterOptions: false,
 };
 
 export default function (state = initialState, action) {
-  const { type, data, date } = action;
+  const { type, data, date, entity } = action;
   switch (type) {
     case LOAD_MISC_ITEMS:
       return {
         ...state,
         misc_items: data,
-        loadedMiscItems: true
+        loadedMiscItems: true,
       };
     case LOAD_PAYMENT_TERMS:
       return {
         ...state,
         paymentTerms: data,
-        loadedPaymentTerms: true
+        loadedPaymentTerms: true,
       };
     case LOAD_PRINTER_OPTIONS:
       return {
         ...state,
         printer_options: data,
-        loadedPrinterOptions: true
-      };
-    case ADD_PRINTER_OPTION:
-      return {
-        ...state,
-        printer_options: [...state.printer_options, data],
-      };
-    case SAVE_PRINTER_OPTION:
-      return {
-        ...state,
-        printer_options: state.printer_options.map((i) =>
-          i.id === data.id ? data : i
-        ),
+        loadedPrinterOptions: true,
       };
     case LOAD_PAYMENT_TYPES:
       return {
         ...state,
         paymentTypes: data,
-        loadedPaymentTypes: true
+        loadedPaymentTypes: true,
       };
     case SELECT_DATE_RANGE:
       return {
         ...state,
-        selectedDateRange: date
+        selectedDateRange: date,
       };
     case ADD_MISC_ITEM:
       return {
@@ -92,32 +82,43 @@ export default function (state = initialState, action) {
       return {
         ...state,
         shippingMethods: data,
-        loadedShippingMethods: true
+        loadedShippingMethods: true,
       };
     case LOAD_CATEGORIES:
       return {
         ...state,
         categories: data,
-        loadedCategories: true
+        loadedCategories: true,
       };
     case MISC_ITEM_UPDATED:
       return {
         ...state,
         misc_items: state.misc_items.map((i) => {
           return i.id === data.id ? data : i;
-        }
-
-        ),
+        }),
       };
     case MISC_ITEM_ADDED:
       return {
         ...state,
         misc_items: [...state.misc_items, data],
       };
-    case MISC_ITEM_DELETED:     
+    case MISC_ITEM_DELETED:
       return {
         ...state,
-        misc_items: state.misc_items.filter(item => item.id !== data.id),
+        misc_items: state.misc_items.filter((item) => item.id !== data.id),
+      };
+
+    case PRINTER_OPTION_ADDED:
+      return {
+        ...state,
+        printer_options: [...state.printer_options, data],
+      };
+    case PRINTER_OPTION_UPDATED:
+      return {
+        ...state,
+        printer_options: state.printer_options.map((i) => {
+          return i.id === data.id ? data : i;
+        }),
       };
     default:
       return {
