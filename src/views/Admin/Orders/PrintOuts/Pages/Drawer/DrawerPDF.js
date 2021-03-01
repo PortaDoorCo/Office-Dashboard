@@ -58,6 +58,9 @@ export default (data, breakdowns, p) => {
       totals: {
         fontSize: 8,
         bold: true,
+      },
+      warrantyFont: {
+        fontSize: 7,
       }
     }
   };
