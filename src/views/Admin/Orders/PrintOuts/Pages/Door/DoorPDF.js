@@ -93,23 +93,23 @@ export default (
     pageOrientation: 'portrait',
     content: ContentSorted,
     pageMargins: [40, 40, 40, 60],
-    footer: function (currentPage, pageCount) {
-      return {
-        table: {
-          widths: ['*'],
-          body: [
-            [
-              {
-                text: 'Page ' + currentPage,
-                alignment: 'center',
-                style: { fontSize: 9 },
-              },
-            ],
-          ],
-        },
-        layout: 'noBorders',
-      };
-    },
+    // footer: function (currentPage, pageCount) {
+    //   return {
+    //     table: {
+    //       widths: ['*'],
+    //       body: [
+    //         [
+    //           {
+    //             text: 'Page ' + currentPage,
+    //             alignment: 'center',
+    //             style: { fontSize: 9 },
+    //           },
+    //         ],
+    //       ],
+    //     },
+    //     layout: 'noBorders',
+    //   };
+    // },
     pageBreakBefore: function (
       currentNode,
       followingNodesOnPage,
