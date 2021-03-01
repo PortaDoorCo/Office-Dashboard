@@ -4,18 +4,36 @@ import Invoice from '../../Mouldings_PDF/Invoice';
 import Acknowledgement from '../../Mouldings_PDF/Acknowledgement';
 
 
-export default (data, breakdowns) => {
+export default (data, breakdowns, p) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
+  let Content = [];
+
+  for (let i = 0; i < p.acknowledgement; i++) {
+    Content.push(Acknowledgement(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.invoice; i++) {
+    Content.push(Invoice(data, breakdowns));
+  }
+
+  const rowLen = Content.length;
+  const ContentSorted = Content.map((i,index) => {
+    if (rowLen === index + 1) {
+      return [i];
+    } else {
+      return [
+        i,
+        { text: '', pageBreak: 'before' }
+      ];
+    }
+  });
 
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
-    content: [
-      Acknowledgement(data, breakdowns),
-      Invoice(data, breakdowns)
-    ],
+    content: ContentSorted,
     styles: {
       woodtype: {
         fontSize: 18,

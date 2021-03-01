@@ -32,10 +32,22 @@ export default (data, breakdowns, p) => {
     Content.push(Invoice(data, breakdowns));
   }
 
+  const rowLen = Content.length;
+  const ContentSorted = Content.map((i,index) => {
+    if (rowLen === index + 1) {
+      return [i];
+    } else {
+      return [
+        i,
+        { text: '', pageBreak: 'before' }
+      ];
+    }
+  });
+
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
-    content: Content,
+    content: ContentSorted,
     pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
       return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
     },
