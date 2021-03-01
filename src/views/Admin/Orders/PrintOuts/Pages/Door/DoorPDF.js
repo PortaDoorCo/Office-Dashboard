@@ -9,6 +9,7 @@ import PanelsPage from '../../Door_PDF/PanelsPage';
 import MaterialsList from '../../Door_PDF/MaterialsList';
 import QC_Checklist from '../../Door_PDF/QC_Checklist';
 import Profiles from '../../Door_PDF/Profiles';
+import Packing_Slip from '../../Door_PDF/Packing_Slip';
 
 export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdowns, p) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -54,6 +55,9 @@ export default (data, edges, moulds, miter, mt, panels, appliedProfiles, breakdo
 
   for (let i = 0; i < p.invoice; i++) {
     Content.push(Invoice(data, breakdowns));
+  }
+  for (let i = 0; i < p.packing_slip; i++) {
+    Content.push(Packing_Slip(data, breakdowns));
   }
 
 

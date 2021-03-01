@@ -5,6 +5,7 @@ import Invoice from '../../Drawer_PDF/Invoice';
 import AssemblyList from '../../Drawer_PDF/AssemblyList';
 import Sides from '../../Drawer_PDF/Sides';
 import Bottoms from '../../Drawer_PDF/Bottoms';
+import Packing_Slip from '../../Drawer_PDF/Packing_Slip';
 
 export default (data, breakdowns, p) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -30,6 +31,10 @@ export default (data, breakdowns, p) => {
 
   for (let i = 0; i < p.invoice; i++) {
     Content.push(Invoice(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.packing_slip; i++) {
+    Content.push(Packing_Slip(data, breakdowns));
   }
 
   const rowLen = Content.length;
