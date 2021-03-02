@@ -18,17 +18,29 @@ export default (data, breakdowns) => {
         {
           text: `${
             i.cope_design
-              ? i.cope_design.NAME
-              : i.mt_design
-                ? i.mt_design.NAME + ' ' + i.construction.value
-                : i.miter_design
-                  ? i.miter_design.NAME + ' ' + i.construction.value
-                  : i.miter_df_design
-                    ? i.miter_df_design.NAME + ' ' + i.construction.value
-                    : i.mt_df_design
-                      ? i.mt_df_design.NAME + ' ' + i.construction.value
-                      : i.construction.name
-          } - ${i.panel ? i.panel.NAME : 'Glass'}`,
+              ? i.cope_design.NAME :
+              i.cope_df_design
+                ? i.cope_df_design.NAME + ' DF'
+                : i.mt_design
+                  ? i.mt_design.NAME + ' ' + i.construction.value
+                  : i.miter_design
+                    ? i.miter_design.NAME + ' ' + i.construction.value
+                    : i.miter_df_design
+                      ? i.miter_df_design.NAME +
+              ' ' +
+              i.construction.value
+                      : i.mt_df_design
+                        ? i.mt_df_design.NAME + ' ' + i.construction.value :
+                        i.face_frame_design
+                          ? i.face_frame_design.NAME  :
+                          (i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF') ? '' : ''
+          } - ${
+            i.panel
+              ? i.panel.NAME
+              : (i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF')
+                ? ''
+                : 'Glass'
+          } ${i.lite ? '- ' + i.lite.NAME : ''}`,
           style: 'fonts',
         },
         {
