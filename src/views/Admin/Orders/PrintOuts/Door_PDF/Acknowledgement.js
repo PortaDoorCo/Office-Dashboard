@@ -468,7 +468,7 @@ export default (data) => {
       columns: [
         { text: '', style: 'totals', width: 347, decoration: 'underline' },
         {
-          text: miscTotal.length > 0 ? 'Style Subtotal' : '',
+          text: miscTotal.length > 0 ? 'Subtotal' : '',
           style: 'totals',
           margin: [0, 0, 0, 0],
         },

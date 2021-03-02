@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
+import { AppSwitch } from '@coreui/react';
 
 const cookie = Cookies.get('jwt');
 
@@ -26,7 +27,8 @@ const Woodtype = (props) => {
     id: '',
     NAME: '',
     STANDARD_GRADE: '',
-    STANDARD_GRADE_THICK: ''
+    STANDARD_GRADE_THICK: '',
+    VERTICAL_GRAIN: false
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.woodtypes);
@@ -55,6 +57,7 @@ const Woodtype = (props) => {
       NAME: '',
       STANDARD_GRADE: '',
       STANDARD_GRADE_THICK: '',
+      VERTICAL_GRAIN: false
     };
     setNewProduct(true);
     setProduct(p);
@@ -104,6 +107,7 @@ const Woodtype = (props) => {
       NAME: product.NAME,
       STANDARD_GRADE: product.STANDARD_GRADE,
       STANDARD_GRADE_THICK: product.STANDARD_GRADE_THICK,
+      VERTICAL_GRAIN: product.VERTICAL_GRAIN,
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
@@ -126,6 +130,7 @@ const Woodtype = (props) => {
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>4/4 Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
             <CardTitle><strong>5/4 Price:</strong> ${card.STANDARD_GRADE_THICK}</CardTitle>
+            <CardTitle><strong>Vertical Grain: </strong>{card.VERTICAL_GRAIN ? 'True' : 'False'}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -189,6 +194,25 @@ const Woodtype = (props) => {
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
                   <Input type="number" value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Vertical Grain</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setProduct((prevState) => {
+                        return ({
+                          ...prevState,
+                          VERTICAL_GRAIN: !prevState.VERTICAL_GRAIN
+                        });
+                      })} checked={product.VERTICAL_GRAIN} />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
               <Row className="mt-5">
@@ -285,6 +309,25 @@ const Woodtype = (props) => {
                 <Col>
                   <Label for="5/4_Price">5/4 Price</Label>
                   <Input type="number" value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Vertical Grain</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} onChange={() => setProduct((prevState) => {
+                        return ({
+                          ...prevState,
+                          VERTICAL_GRAIN: !prevState.VERTICAL_GRAIN
+                        });
+                      })} checked={product.VERTICAL_GRAIN} />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </ModalBody>

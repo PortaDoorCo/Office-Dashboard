@@ -79,7 +79,7 @@ const Miter_Table = ({
       newWidth = [...newWidth, v];
     }
 
-    if (numQty(v) <= 6 && part.panel && !part.panel.Flat) {
+    if (numQty(v) <= 3.75 && part.panel && !part.panel.Flat) {
       setWarningType({
         value: v,
         index: index,
