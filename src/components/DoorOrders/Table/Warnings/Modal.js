@@ -6,6 +6,7 @@ import {
   ModalBody,
   ModalFooter
 } from 'reactstrap';
+import numQty from 'numeric-quantity';
 
 const WarningModal = (props) => {
 
@@ -39,7 +40,7 @@ const WarningModal = (props) => {
     switch(tag) {
       case 'height':
         // code block
-        if(value >= 48) {
+        if(numQty(value) >= 48) {
           dispatch(
             change(
               'DoorOrder',
@@ -51,7 +52,7 @@ const WarningModal = (props) => {
         toggle();
         break;
       case 'width':
-        if(value >= 24) {
+        if(numQty(value) >= 24) {
           dispatch(
             change(
               'DoorOrder',

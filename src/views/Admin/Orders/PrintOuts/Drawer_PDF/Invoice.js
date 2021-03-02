@@ -167,6 +167,7 @@ export default (data, breakdowns) => {
                 { text: `${part.box_woodtype.NAME}`, style: 'woodtype' }
               ]
             },
+            { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold' },
             {
               stack: [
                 {
