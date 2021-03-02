@@ -31,6 +31,8 @@ export default (info, part, breakdowns) => {
   const panel_factor = part.panel.PANEL_FACTOR;
   const profile_width = part.miter_df_design.PROFILE_WIDTH;
 
+  const VERTICAL_GRAIN = part.woodtype.VERTICAL_GRAIN;
+
   const add_len = 0;
   const INSET = 0;
 
@@ -45,17 +47,33 @@ export default (info, part, breakdowns) => {
   const unevenSplitTotal =
     unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
 
-  const door = [
-    {
-      qty: `(${panelsH * panelsW * qty})`,
-      measurement: `${fraction(
-        Math.round(eval(breakdowns.panel_height) * 16) / 16
-      )} x ${fraction(Math.round(eval(breakdowns.panel_width) * 16) / 16)}`,
-      pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
-      width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
-      height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-    },
-  ];
+  let door;
+
+  if(VERTICAL_GRAIN){
+    door = [
+      {
+        qty: `(${panelsH * panelsW * qty})`,
+        measurement: `${fraction(Math.round(eval(breakdowns.panel_width) * 16) / 16)} x ${fraction(
+          Math.round(eval(breakdowns.panel_height) * 16) / 16
+        )}`,
+        pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+        width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+        height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+      },
+    ];
+  } else {
+    door = [
+      {
+        qty: `(${panelsH * panelsW * qty})`,
+        measurement: `${fraction(
+          Math.round(eval(breakdowns.panel_height) * 16) / 16
+        )} x ${fraction(Math.round(eval(breakdowns.panel_width) * 16) / 16)}`,
+        pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+        width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+        height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+      },
+    ];
+  }
 
   const unevenSplit = [
     ...Array.from(Array(panelsH).keys())
