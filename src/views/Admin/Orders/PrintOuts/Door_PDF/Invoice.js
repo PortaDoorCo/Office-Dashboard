@@ -233,6 +233,7 @@ export default (data) => {
                 },
               ],
             },
+            { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold' },
             {
               stack: [
                 {

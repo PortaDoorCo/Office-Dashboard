@@ -77,8 +77,6 @@ const FileUploader = (props) => {
     
   };
 
-  console.log('fileList', fileList);
-
   return (
     <div>
 
