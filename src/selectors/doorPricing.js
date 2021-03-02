@@ -356,6 +356,7 @@ export const itemPriceSelector = createSelector(
                   }
                   
                 }
+
                 if (part.thickness.value === 1) {
                   if(part.cope_df_design){
                     price = part.cope_df_design.UPCHARGE_THICK;
