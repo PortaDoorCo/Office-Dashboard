@@ -218,7 +218,9 @@ export default (data) => {
                       part.construction.value
                               : part.mt_df_design
                                 ? part.mt_df_design.NAME + ' ' + part.construction.value :
-                                (part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF') ? '' : ''
+                                part.face_frame_design
+                                  ? part.face_frame_design.NAME :
+                                  (part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF') ? '' : ''
                   } - ${
                     part.panel
                       ? part.panel.NAME
