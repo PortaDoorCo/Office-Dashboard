@@ -58,8 +58,6 @@ sameShipping = () => {
   
   const { formState, dispatch } = this.props;
 
-  console.log({formState});
-
   dispatch(
     change(
       'NewCustomer',

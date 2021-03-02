@@ -44,13 +44,7 @@ let Inputs = (props) => {
 
   let misc_items_category = ['Accessories', 'Door', 'DF'];
 
- 
-
-  let sorted_misc_items_start = misc_items.filter(i => i.categories.filter(j => misc_items_category.includes(j.value)));
-
   let sorted_misc_items = misc_items.filter(e => e.categories.some(c => misc_items_category.includes(c.value)));
-
-  console.log({sorted_misc_items_start});
 
   const changeMiscItem = (e, index) => {
 

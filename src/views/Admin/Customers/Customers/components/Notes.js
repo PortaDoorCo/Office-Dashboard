@@ -105,8 +105,6 @@ class Customer_Notes extends Component {
 
     const { handleSubmit, user } = this.props;
 
-    console.log({user});
-
     return (
       <div>
         <form onSubmit={handleSubmit(this.submit)}>

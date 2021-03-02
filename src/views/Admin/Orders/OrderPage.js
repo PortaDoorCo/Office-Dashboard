@@ -222,19 +222,6 @@ class OrderPage extends Component {
             mouldingsState
             : [];
   
-    // const printerSettings = {
-    //   assembly_list: user.assembly_list,
-    //   stiles: user.stiles,
-    //   rails: user.rails,
-    //   panels: user.panels,
-    //   profiles: user.profiles,
-    //   materials: user.materials,
-    //   qc: user.qc
-    // };
-  
-  
-    console.log({printerSettings});
-  
   
     if (data.orderType === 'Door Order') {
 
@@ -366,8 +353,6 @@ class OrderPage extends Component {
     let b = a.map((i,ind) => {
       return i;
     });
-
-    console.log(b);
 
 
     if (s.orderType === 'Door Order') {
@@ -544,7 +529,6 @@ class OrderPage extends Component {
                         </Tooltip>
 
                         <CSVLink data={a.map((i,ind) => {
-                          console.log({i});
                           return [...i, ind + 1, `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`];
                         })} filename={`${s && s.orderNum}.csv`} separator={','} className="mb-3">
                           {' '}

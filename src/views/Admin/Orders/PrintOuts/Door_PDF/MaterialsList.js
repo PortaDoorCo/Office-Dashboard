@@ -23,8 +23,6 @@ export default (data, breakdowns) => {
     flattenDeep(data.part_list.map(i => i.woodtype.NAME))
   );
 
-  console.log({uniques_items});
-
   //unique thickness
   const uniques_thickness = uniq(
     flattenDeep(data.part_list.map(i => i.thickness.name))
@@ -43,16 +41,9 @@ export default (data, breakdowns) => {
       };
     });
   });
-
-  //map b -> final array of objects
-
-  console.log({b_flattened: flattenDeep(b)});
-
   const c = flattenDeep(b).map(j => {
     return {
       parts: j.widths.filter(n => n !== 0).map(k => {
-        // const flattenedItems= flatten(j.parts.map(i => i.dimensions));
-        console.log({k});
         return {
           width: k,
           thickness: j.thickness,
@@ -71,16 +62,9 @@ export default (data, breakdowns) => {
     };
   });
 
-  console.log({b});
-  console.log({c});
-
-  console.log();
-
   const d = flattenDeep(c).map((j, index) => {
 
     return j.parts.map(n => {
-      console.log({n});
-      console.log(LinearFT(n.parts,breakdowns,n.width));
       return LinearFT(n.parts,breakdowns,n.width).map(b => {
         if(parseFloat(b.width) > 0) {
           return {
@@ -101,9 +85,6 @@ export default (data, breakdowns) => {
 
 
   const flattenD = flattenDeep(d);
-
-  console.log({flattenD});
-
 
   const LinearFTDisplay = flattenD.map((i, index) => {
 
@@ -196,14 +177,7 @@ export default (data, breakdowns) => {
 
 
   });
-
-  console.log({flatt: flatten(PanelBoardFTCalc)});
-
   const PanelBoardFT_Total = Object.entries(groupBy(flatten(PanelBoardFTCalc), 'woodtype')).map(([k,v]) => ({...v[0], BoardFT: v.reduce((a,b) => a + b.BoardFT, 0)}));
-
-  console.log({PanelBoardFT_Total});
-
-
   const PanelBoardFTDisplay = PanelBoardFT_Total.map((i, index) => {
     if (i && i.panel) {
       return [

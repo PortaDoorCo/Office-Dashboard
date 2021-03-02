@@ -25,8 +25,6 @@ export default (
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
-  console.log({ p });
-
   let Content = [];
 
   for (let i = 0; i < p.assembly_list; i++) {

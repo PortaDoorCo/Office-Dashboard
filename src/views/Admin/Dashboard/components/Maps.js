@@ -88,8 +88,6 @@ class DeliveryInfoWindow extends Component {
       isOpen: false
     });
 
-    console.log({selectedOrder});
-
     if(!modal){
       setSelectedOrder(selectedOrder[0]);
       

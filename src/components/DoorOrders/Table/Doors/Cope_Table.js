@@ -155,9 +155,6 @@ const Cope_Table = ({
 
     if(e){
       value = e.target.value;
-
-      console.log({ aaa: part.dimensions[index]});
-
       if((part.dimensions[index].notes !== '') && (parseInt(e.target.value) > 1) ){
         dispatch(
           change(

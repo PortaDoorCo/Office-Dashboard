@@ -9,11 +9,6 @@ const fraction = num => {
 };
 
 export default (info, part, breakdowns) => {
-
-  console.log({info});
-
-  console.log({part});
-
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 

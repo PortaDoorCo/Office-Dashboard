@@ -4,7 +4,6 @@ import DrawerModal from './DrawerModal';
 import MiscModal from './MiscModal';
 
 const Modal = (props) => {
-  console.log({props});
   const { selectedOrder } = props;
 
   const orderType = selectedOrder && selectedOrder.orderType;
