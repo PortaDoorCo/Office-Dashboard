@@ -45,58 +45,58 @@ export default (data, breakdowns) => {
   });
 
   //map b -> final array of objects
-  const c = b.map(i => {
-    return i.map(j => {
-      return {
-        parts: j.widths.filter(n => n !== 0).map(k => {
-          // const flattenedItems= flatten(j.parts.map(i => i.dimensions));
-          console.log({k});
-          return {
-            width: k,
-            thickness: j.thickness,
-            woodtype: j.woodtype,
-            parts: j.parts.map(f => {
-              return {
-                width: k,
-                thickness: j.thickness,
-                woodtype: j.woodtype,
-                part: f,
-                items: flatten(f.dimensions).filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))
-              };
-            }),
-            // items: flattenedItems.filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))
-          };
-        })
-      };
-    });
+
+  console.log({b_flattened: flattenDeep(b)});
+
+  const c = flattenDeep(b).map(j => {
+    return {
+      parts: j.widths.filter(n => n !== 0).map(k => {
+        // const flattenedItems= flatten(j.parts.map(i => i.dimensions));
+        console.log({k});
+        return {
+          width: k,
+          thickness: j.thickness,
+          woodtype: j.woodtype,
+          parts: j.parts.map(f => {
+            return {
+              width: k,
+              thickness: j.thickness,
+              woodtype: j.woodtype,
+              part: f,
+              items: flatten(f.dimensions).filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))
+            };
+          }),
+        };
+      })
+    };
   });
 
   console.log({b});
   console.log({c});
 
-  const d = c.map((i, index) => {
-    return i.map(j => {
-      return j.parts.map(n => {
-        console.log({n});
-        console.log(LinearFT(n.parts,breakdowns,n.width));
-        return LinearFT(n.parts,breakdowns,n.width).map(b => {
-          if(parseFloat(b.width) > 0) {
-            return {
-              width: numQty(b.width),
-              woodtype: n.woodtype,
-              thickness: n.thickness,
-              linearFT: parseFloat(b.sum),
-              waste: parseFloat(b.sum) * 0.2 + parseFloat(b.sum)
-            };
+  console.log();
 
+  const d = flattenDeep(c).map((j, index) => {
 
-          } else {
-            return [];
-          }            
-        });
-       
+    return j.parts.map(n => {
+      console.log({n});
+      console.log(LinearFT(n.parts,breakdowns,n.width));
+      return LinearFT(n.parts,breakdowns,n.width).map(b => {
+        if(parseFloat(b.width) > 0) {
+          return {
+            width: numQty(b.width),
+            woodtype: n.woodtype,
+            thickness: n.thickness,
+            linearFT: parseFloat(b.sum),
+            waste: parseFloat(b.sum) * 0.2 + parseFloat(b.sum)
+          };
+        } else {
+          return [];
+        }            
       });
+       
     });
+
   });
 
 
