@@ -66,7 +66,7 @@ export default (data, breakdowns) => {
 
     return j.parts.map(n => {
       return LinearFT(n.parts,breakdowns,n.width).map(b => {
-        if(parseFloat(b.width) > 0) {
+        if(numQty(b.width) > 0) {
           return {
             width: numQty(b.width),
             woodtype: n.woodtype,
