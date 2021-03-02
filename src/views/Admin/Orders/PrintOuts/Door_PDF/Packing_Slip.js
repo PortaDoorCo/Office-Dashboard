@@ -165,11 +165,13 @@ export default (data) => {
                     ? part.miter_design.NAME + ' ' + part.construction.value
                     : part.miter_df_design
                       ? part.miter_df_design.NAME +
-                ' ' +
-                part.construction.value
+            ' ' +
+            part.construction.value
                       : part.mt_df_design
                         ? part.mt_df_design.NAME + ' ' + part.construction.value :
-                        (part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF') ? '' : ''
+                        part.face_frame_design
+                          ? part.face_frame_design.NAME  :
+                          (part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF') ? '' : ''
                           
           }`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
