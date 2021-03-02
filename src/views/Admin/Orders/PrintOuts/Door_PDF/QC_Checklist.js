@@ -62,7 +62,7 @@ export default (data, breakdowns) => {
           { text: Size(item), style: 'fonts' },
           { text: '[      ]', style: 'fonts' },
           { text: 'N/A', style: 'fonts' },
-          { text: i.notes ? i.notes : '', style: 'fonts' },
+          { text: item.notes ? item.notes : '', style: 'fonts' },
         ]);
       });
 
@@ -75,12 +75,12 @@ export default (data, breakdowns) => {
                 { text: `${i.woodtype.NAME}`, style: 'fontsBold' }
               ]
             },
+            { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
             {
               stack: [
                 { text: `Panel: ${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
                 { text: `IP: ${i.profile ? i.profile.NAME : 'None'}`, style: 'fonts' },
                 { text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`, style: 'fonts' },
-                { text: 'No Hinge', style: 'fonts' },
               ],
               alignment: 'right'
             }
