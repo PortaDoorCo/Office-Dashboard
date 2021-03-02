@@ -72,7 +72,36 @@ export default (data, breakdowns) => {
           columns: [
             {
               stack: [
-                { text: `${i.woodtype.NAME}`, style: 'fontsBold' }
+                { text: `${i.woodtype.NAME}`, style: 'fonts' },
+                {
+                  text: `${
+                    i.cope_design
+                      ? i.cope_design.NAME
+                      : i.mt_design
+                        ? i.mt_design.NAME + ' ' + i.construction.value
+                        : i.miter_design
+                          ? i.miter_design.NAME + ' ' + i.construction.value
+                          : i.miter_df_design
+                            ? i.miter_df_design.NAME +
+                        ' ' +
+                        i.construction.value
+                            : i.mt_df_design
+                              ? i.mt_df_design.NAME + ' ' + i.construction.value :
+                              (i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF') ? '' :
+                                i.construction.name
+                  } - ${
+                    i.panel
+                      ? i.panel.NAME
+                      : (i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF')
+                        ? ''
+                        : 'Glass'
+                  } ${i.lite ? '- ' + i.lite.NAME : ''}`,
+                  style: 'fonts',
+                },
+                {
+                  text: `${i.orderType ? i.orderType.name : ''}`,
+                  style: 'fonts',
+                },
               ]
             },
             { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
