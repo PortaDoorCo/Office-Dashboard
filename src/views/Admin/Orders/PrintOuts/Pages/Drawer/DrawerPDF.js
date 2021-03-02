@@ -13,6 +13,14 @@ export default (data, breakdowns, p) => {
 
   let Content = [];
 
+  for (let i = 0; i < p.acknowledgement; i++) {
+    Content.push(Acknowledgement(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.invoice; i++) {
+    Content.push(Invoice(data, breakdowns));
+  }
+
   for (let i = 0; i < p.assembly_list; i++) {
     Content.push(AssemblyList(data, breakdowns));
   }
@@ -23,14 +31,6 @@ export default (data, breakdowns, p) => {
 
   for (let i = 0; i < p.box_bottoms; i++) {
     Content.push(Bottoms(data, breakdowns));
-  }
-
-  for (let i = 0; i < p.acknowledgement; i++) {
-    Content.push(Acknowledgement(data, breakdowns));
-  }
-
-  for (let i = 0; i < p.invoice; i++) {
-    Content.push(Invoice(data, breakdowns));
   }
 
   for (let i = 0; i < p.packing_slip; i++) {
@@ -54,23 +54,6 @@ export default (data, breakdowns, p) => {
     pageOrientation: 'portrait',
     content: ContentSorted,
     pageMargins: [ 40, 40, 40, 60 ],
-    // footer: function (currentPage, pageCount) {
-    //   return {
-    //     table: {
-    //       widths: ['*'],
-    //       body: [
-    //         [
-    //           {
-    //             text: 'Page ' + currentPage,
-    //             alignment: 'center',
-    //             style: { fontSize: 9 },
-    //           },
-    //         ],
-    //       ],
-    //     },
-    //     layout: 'noBorders',
-    //   };
-    // },
     pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
       return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
     },
