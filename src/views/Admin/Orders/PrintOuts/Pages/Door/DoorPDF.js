@@ -27,8 +27,20 @@ export default (
 
   let Content = [];
 
+  for (let i = 0; i < p.acknowledgement; i++) {
+    Content.push(Acknowledgement(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.invoice; i++) {
+    Content.push(Invoice(data, breakdowns));
+  }
+
   for (let i = 0; i < p.assembly_list; i++) {
     Content.push(AssemblyList(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.panels; i++) {
+    Content.push(PanelsPage(data, breakdowns));
   }
 
   for (let i = 0; i < p.stiles; i++) {
@@ -37,18 +49,6 @@ export default (
 
   for (let i = 0; i < p.rails; i++) {
     Content.push(RailsPage(data, breakdowns));
-  }
-
-  for (let i = 0; i < p.panels; i++) {
-    Content.push(PanelsPage(data, breakdowns));
-  }
-
-  for (let i = 0; i < p.materials; i++) {
-    Content.push(MaterialsList(data, breakdowns));
-  }
-
-  for (let i = 0; i < p.qc; i++) {
-    Content.push(QC_Checklist(data, breakdowns));
   }
 
   for (let i = 0; i < p.profiles; i++) {
@@ -66,15 +66,18 @@ export default (
     );
   }
 
-  for (let i = 0; i < p.acknowledgement; i++) {
-    Content.push(Acknowledgement(data, breakdowns));
+
+  for (let i = 0; i < p.materials; i++) {
+    Content.push(MaterialsList(data, breakdowns));
   }
 
-  for (let i = 0; i < p.invoice; i++) {
-    Content.push(Invoice(data, breakdowns));
-  }
+  
   for (let i = 0; i < p.packing_slip; i++) {
     Content.push(Packing_Slip(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.qc; i++) {
+    Content.push(QC_Checklist(data, breakdowns));
   }
 
   const rowLen = Content.length;
@@ -91,23 +94,6 @@ export default (
     pageOrientation: 'portrait',
     content: ContentSorted,
     pageMargins: [40, 40, 40, 60],
-    // footer: function (currentPage, pageCount) {
-    //   return {
-    //     table: {
-    //       widths: ['*'],
-    //       body: [
-    //         [
-    //           {
-    //             text: 'Page ' + currentPage,
-    //             alignment: 'center',
-    //             style: { fontSize: 9 },
-    //           },
-    //         ],
-    //       ],
-    //     },
-    //     layout: 'noBorders',
-    //   };
-    // },
     pageBreakBefore: function (
       currentNode,
       followingNodesOnPage,
