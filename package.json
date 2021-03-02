@@ -96,6 +96,8 @@
     "react-notifications-component": "^2.0.6",
     "react-number-format": "^4.4.4",
     "react-perfect-scrollbar": "^1.5.8",
+    "react-phone-input-2": "^2.13.9",
+    "react-phone-number-input": "^3.1.16",
     "react-redux": "^7.2.1",
     "react-redux-loading-bar": "^5.0.0",
     "react-router-config": "^5.0.1",

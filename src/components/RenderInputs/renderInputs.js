@@ -9,7 +9,9 @@ import 'react-widgets/dist/css/react-widgets.css';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import NumberFormat from 'react-number-format';
-
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import { formatPhoneNumber } from 'react-phone-number-input';
 
 export const renderMultiSelect = ({
   input,
@@ -213,6 +215,16 @@ export const renderCheckbox = ({
 export const renderFieldDisabled = ({ input, props, meta: { touched, error, warning }, ...custom }) => (
   <Fragment>
     <Input {...input} {...custom} disabled style={{ display: 'none' }} />
+    {touched &&
+            ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+                (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+  </Fragment>
+);
+
+export const renderPhone = ({ input, edit, props, meta: { touched, error, warning }, ...custom }) => (
+  <Fragment>
+    {console.log({input})}
+    <Input {...input} {...custom} />
     {touched &&
             ((error && <span style={{ color: 'red' }}>{error}</span>) ||
                 (warning && <span style={{ color: 'red' }}>{warning}</span>))}

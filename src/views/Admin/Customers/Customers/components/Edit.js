@@ -16,8 +16,9 @@ import {
   Field,
 } from 'redux-form';
 import { updateCustomer } from '../../../../../redux/customers/actions';
-import { renderField, renderDropdownList, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
+import { renderField, renderDropdownList, renderCheckboxToggle, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs';
 import Cookies from 'js-cookie';
+import states from '../../AddCustomer/states';
 
 const cookie = Cookies.get('jwt');
 const required = value => (value ? undefined : 'Required');
@@ -354,7 +355,10 @@ class Edit extends Component {
                     <Field
                       name={'State'}
                       type="text"
-                      component={renderField}
+                      data={states}
+                      component={renderDropdownListFilter}
+                      valueField="abbreviation"
+                      textField="abbreviation"
                       label="company"
                       edit={edit}
                       validate={required}
@@ -432,9 +436,13 @@ class Edit extends Component {
                     <Field
                       name={'Shipping_State'}
                       type="text"
-                      component={renderField}
+                      data={states}
+                      component={renderDropdownListFilter}
+                      valueField="abbreviation"
+                      textField="abbreviation"
                       label="company"
                       edit={edit}
+                      validate={required}
                     />
                   </FormGroup>
                 </Col>
@@ -469,7 +477,7 @@ class Edit extends Component {
               <Row>
                 <Col>
                   <FormGroup>
-                    <h6>Extra Notes</h6>
+                    <h6>Notes</h6>
                     <Field
                       name={'Notes'}
                       type="text"
