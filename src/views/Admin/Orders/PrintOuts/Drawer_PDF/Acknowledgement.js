@@ -282,7 +282,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: '', style: 'totals', width: 347, decoration: 'underline' },
-        { text: miscTotal.length > 0 ? 'Style Subtotal' : '', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: miscTotal.length > 0 ? 'Subtotal' : '', style: 'totals', margin: [0, 0, 0, 0] },
         { text: miscTotal.length > 0 ? '$' + miscTotal.reduce((acc, item) => acc + item, 0) : '', style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
       ],
       margin: [0, 10, 0, 0]
