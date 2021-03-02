@@ -45,7 +45,10 @@ export default (info, part, breakdowns) => {
               eval(breakdowns.topRail_height)
               * 16) / 16
           )}`,
-          pattern: 'TB'
+          pattern: 'TB',
+          width: eval(breakdowns.topRail_width),
+          height: eval(breakdowns.topRail_height),
+          multiplier: 2
         },
         {
           qty: `(${(((panelsH) - 1) * qty)})`,
@@ -54,7 +57,10 @@ export default (info, part, breakdowns) => {
               eval(breakdowns.horizontal_mid_rail_height)
               * 16) / 16
           )}`,
-          pattern: 'HM'
+          pattern: 'HM',
+          width: eval(breakdowns.horizontal_mid_rail_width),
+          height: eval(breakdowns.horizontal_mid_rail_height),
+          multiplier: ((panelsH) - 1)
         }
       ];
     } else {
@@ -68,7 +74,10 @@ export default (info, part, breakdowns) => {
               eval(breakdowns.topRail_height)
               * 16) / 16
           )}`,
-          pattern: 'TB'
+          pattern: 'TB',
+          width: eval(breakdowns.topRail_width),
+          height: eval(breakdowns.topRail_height),
+          multiplier: 2
         }
       ];
     }
@@ -84,7 +93,10 @@ export default (info, part, breakdowns) => {
               eval(breakdowns.topRail_height)
                 * 16) / 16
           )}`,
-          pattern: 'T'
+          pattern: 'T',
+          width: eval(breakdowns.topRail_width),
+          height: eval(breakdowns.topRail_height),
+          multiplier: 1
         },
         {
           qty: `(${(qty)})`,
@@ -95,7 +107,10 @@ export default (info, part, breakdowns) => {
               eval(breakdowns.bottomRail_height)
                 * 16) / 16
           )}`,
-          pattern: 'B'
+          pattern: 'B',
+          width: eval(breakdowns.bottomRail_width),
+          height: eval(breakdowns.bottomRail_height),
+          multiplier: 1
         },
         {
           qty: `(${(((panelsH) - 1) * qty)})`,
@@ -104,7 +119,10 @@ export default (info, part, breakdowns) => {
               eval(breakdowns.horizontal_mid_rail_height)
                 * 16) / 16
           )}`,
-          pattern: 'HM'
+          pattern: 'HM',
+          width: eval(breakdowns.horizontal_mid_rail_width),
+          height: eval(breakdowns.horizontal_mid_rail_height),
+          multiplier: ((panelsH) - 1)
         }
       ];
     } else {
@@ -118,7 +136,10 @@ export default (info, part, breakdowns) => {
               eval(breakdowns.topRail_height)
               * 16) / 16
           )}`,
-          pattern: 'T'
+          pattern: 'T',
+          width: eval(breakdowns.topRail_width),
+          height: eval(breakdowns.topRail_height),
+          multiplier: 1
         },
         {
           qty: `(${(qty)})`,
@@ -129,7 +150,10 @@ export default (info, part, breakdowns) => {
               eval(breakdowns.bottomRail_height)
               * 16) / 16
           )}`,
-          pattern: 'B'
+          pattern: 'B',
+          width: eval(breakdowns.bottomRail_width),
+          height: eval(breakdowns.bottomRail_height),
+          multiplier: 1
         },
       ];
     }

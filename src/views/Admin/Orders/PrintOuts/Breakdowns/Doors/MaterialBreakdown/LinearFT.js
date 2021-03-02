@@ -7,6 +7,7 @@ import Rails from '../Rails/Rails';
 export default (parts, breakdowns,thickness) => {
 
   console.log({parts});
+  console.log({thickness});
 
   const calc = parts.map((part, i) => {
     return part.items.map(j => {
@@ -61,12 +62,12 @@ export default (parts, breakdowns,thickness) => {
       }, {});
 
 
-      console.log({stile_map});
+      console.log({stile});
 
       const stiles = Stiles(stile, part.part, breakdowns).map((stile) => {
         console.log({stile});
         console.log(j.qty);
-        if((stile.width > 0) && (stile.height > 0)){
+        if((stile.width > 1) && (stile.height > 1)){
           const width = numQty(stile.width);
           const height = ((numQty(stile.height)) * stile.multiplier) * parseInt(j.qty);
           const sum = height / 12;
@@ -85,7 +86,7 @@ export default (parts, breakdowns,thickness) => {
 
       const rails = Rails(rail, part.part, breakdowns).map((stile) => {
         console.log({stile});
-        if((stile.width > 0) && (stile.height > 0)){
+        if((stile.width > 1) && (stile.height > 1)){
           const width = numQty(stile.width);
           const height = ((numQty(stile.height)) * stile.multiplier) * parseInt(j.qty);
           const sum = height / 12;

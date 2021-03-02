@@ -30,6 +30,9 @@ export default (info, part, breakdowns) => {
 
   // const inset = part.profile.INSET
 
+  const woodtype = part.woodtype.NAME;
+
+
 
   const add_len = 0;
   const tenon_factor = 0;
@@ -42,7 +45,11 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
-          pattern: 'LR'
+          pattern: 'LR',
+          width: eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_width),
+          multiplier: 2,
+          woodtype
         },
         {
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
@@ -50,7 +57,11 @@ export default (info, part, breakdowns) => {
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
-          pattern: 'VM3'
+          pattern: 'VM3',
+          width: eval(breakdowns.vertical_mid_rail_width),
+          height: eval(breakdowns.vertical_mid_rail_height),
+          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
+          woodtype
         },
       ];
     } else {
@@ -60,7 +71,11 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
-          pattern: 'LR'
+          pattern: 'LR',
+          width: eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_height),
+          multiplier: 2,
+          woodtype
         }
       ];
     }
@@ -73,14 +88,22 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
-          pattern: 'L'
+          pattern: 'L',
+          width:eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_height),
+          multiplier: 1,
+          woodtype
         },
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
             eval(breakdowns.rightStile_width)
           )} x ${fraction(eval(breakdowns.rightStile_height))}`,
-          pattern: 'R'
+          pattern: 'R',
+          width:eval(breakdowns.rightStile_width),
+          height: eval(breakdowns.rightStile_height),
+          multiplier: 1,
+          woodtype
         },
         {
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
@@ -88,7 +111,11 @@ export default (info, part, breakdowns) => {
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
-          pattern: 'VM9'
+          pattern: 'VM9',
+          width: eval(breakdowns.vertical_mid_rail_width),
+          height: eval(breakdowns.vertical_mid_rail_height),
+          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
+          woodtype
         },
       ];
     }
@@ -99,14 +126,22 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
-          pattern: 'L'
+          pattern: 'L',
+          width: eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_height),
+          multiplier: 1,
+          woodtype
         },
         {
           qty: `(${(qty)})`,
           measurement: `${fraction(
             eval(breakdowns.rightStile_width)
           )} x ${fraction(eval(breakdowns.rightStile_height))}`,
-          pattern: 'R'
+          pattern: 'R',
+          width: eval(breakdowns.rightStile_width),
+          height: eval(breakdowns.rightStile_height),
+          multiplier: 1,
+          woodtype
         }
 
       ];
