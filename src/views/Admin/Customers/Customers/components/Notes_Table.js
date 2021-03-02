@@ -26,20 +26,12 @@ let Notes_Table = props =>  {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
 
-  console.log({selectedItemId});
-  console.log({selectedItemIndex});
-
 
   const toggle = () => {
     setModal(!modal);
   };
 
   const del = (id, index) => {
-
-    console.log({id});
-    console.log({index});
-
-
     props.dispatch(
       arrayRemove(
         'CustomerEdit',

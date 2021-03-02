@@ -161,10 +161,6 @@ export function deleteNote(id, data, cookie) {
     })
   };
 
-  console.log({item});
-
-  console.log({id});
-
   return async function (dispatch) {
     try {
       await axios.put(`${db_url}/companyprofiles/${orderId}`, item, {

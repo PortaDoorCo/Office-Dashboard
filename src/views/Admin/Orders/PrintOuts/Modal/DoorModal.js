@@ -74,9 +74,6 @@ const PrintModal = (props) => {
       }
     );
     const data = await res;
-
-    console.log({data});
-
     await addPrinterOption(data.data);
     await set_printer_option(data.data);
   };

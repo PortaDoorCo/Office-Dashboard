@@ -47,7 +47,6 @@ export const renderDropdownListFilter = ({
   meta: { touched, error, warning }
 }) => (
   <Fragment>
-    {console.log({input})}
     <DropdownList
       {...input}
       data={data}
@@ -223,7 +222,6 @@ export const renderFieldDisabled = ({ input, props, meta: { touched, error, warn
 
 export const renderPhone = ({ input, edit, props, meta: { touched, error, warning }, ...custom }) => (
   <Fragment>
-    {console.log({input})}
     <Input {...input} {...custom} />
     {touched &&
             ((error && <span style={{ color: 'red' }}>{error}</span>) ||

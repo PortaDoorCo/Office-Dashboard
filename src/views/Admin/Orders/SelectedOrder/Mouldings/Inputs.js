@@ -42,14 +42,8 @@ let Inputs = (props) => {
   const [data, setData] = useState([]);
 
   const changeMiscItem = (e, index) => {
-    console.log({ e });
-
-    console.log(eval(`part_list.${e.value}`));
-
     setData(eval(`part_list.${e.value}`));
   };
-
-  console.log({ data });
   return (
     <div>
       <Table>

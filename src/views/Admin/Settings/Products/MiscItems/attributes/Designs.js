@@ -59,7 +59,6 @@ const Designs = (props) => {
 
 
   const setCard = card => {
-    console.log({card });
     setNewProduct(false);
     setProduct(card);
     toggle();

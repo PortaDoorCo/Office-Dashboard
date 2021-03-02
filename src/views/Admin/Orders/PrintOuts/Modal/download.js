@@ -29,10 +29,6 @@ downloadPDF = () => {
     qc: user.qc
   };
 
-
-  console.log({printerSettings});
-
-
   if (data.orderType === 'Door Order') {
     this.state.selectedOption.map(async (option) => {
       switch (option.value) {

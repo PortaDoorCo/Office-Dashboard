@@ -22,13 +22,7 @@ const FileUploader = (props) => {
     multiple: props.multi,
     action: `${db_url}/upload`,
     customRequest: (options) => {
-
-      
-   
       const data= new FormData();
-      console.log({options});
-
-      console.log({data});
       data.append('files', options.file, fileName ? fileName : options && options.file && options.file.name );
       const config= {
         'headers': {

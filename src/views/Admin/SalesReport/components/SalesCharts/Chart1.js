@@ -95,8 +95,6 @@ class Chart1 extends Component {
 
     }).sort((a, b) => moment(a.date || a.createdAt).isBefore(b.date || b.createdAt) ? -1 : 1);
 
-    console.log({groups});
-
     groups = _.groupBy(groups, item =>
       moment(item.createdAt).format('MMM DD h:mm a')
     );

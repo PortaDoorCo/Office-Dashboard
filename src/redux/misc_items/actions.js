@@ -249,7 +249,6 @@ export function printerOptionAdded(data) {
 }
 
 export function printerOptionUpdated(data, entity) {
-  console.log({entity});
   return async function (dispatch) {
     return dispatch({
       type: PRINTER_OPTION_UPDATED,

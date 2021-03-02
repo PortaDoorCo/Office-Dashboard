@@ -116,8 +116,6 @@ export const mouldingPriceSelector = createSelector(
     let price = 0;
 
     if(i.item){
-      console.log({i});
-
       const { item, moulding_material, linearFT } = i;
 
       let feet = (item.MOULDING_WIDTH * 12) / 144;
