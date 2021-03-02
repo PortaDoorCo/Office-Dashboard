@@ -205,19 +205,20 @@ export default (data) => {
                 {
                   text: `${
                     part.cope_design
-                      ? part.cope_design.NAME
-                      : part.mt_design
-                        ? part.mt_design.NAME + ' ' + part.construction.value
-                        : part.miter_design
-                          ? part.miter_design.NAME + ' ' + part.construction.value
-                          : part.miter_df_design
-                            ? part.miter_df_design.NAME +
-                        ' ' +
-                        part.construction.value
-                            : part.mt_df_design
-                              ? part.mt_df_design.NAME + ' ' + part.construction.value :
-                              (part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF') ? '' :
-                                part.construction.name
+                      ? part.cope_design.NAME :
+                      part.cope_df_design
+                        ? part.cope_df_design.NAME + ' DF'
+                        : part.mt_design
+                          ? part.mt_design.NAME + ' ' + part.construction.value
+                          : part.miter_design
+                            ? part.miter_design.NAME + ' ' + part.construction.value
+                            : part.miter_df_design
+                              ? part.miter_df_design.NAME +
+                      ' ' +
+                      part.construction.value
+                              : part.mt_df_design
+                                ? part.mt_df_design.NAME + ' ' + part.construction.value :
+                                (part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF') ? '' : ''
                   } - ${
                     part.panel
                       ? part.panel.NAME
