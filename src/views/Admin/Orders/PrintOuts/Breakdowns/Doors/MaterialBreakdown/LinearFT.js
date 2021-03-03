@@ -94,6 +94,9 @@ export default (parts, breakdowns,thickness) => {
 
       });      
 
+      console.log({stiles});
+      console.log({rails});
+
       return stiles.concat(rails);
     });
   });

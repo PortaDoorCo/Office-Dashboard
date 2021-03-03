@@ -78,13 +78,14 @@ class OrderTable extends Component {
                     <th>Height</th>
                     <th>Scoop</th>
                     <th>Divider</th>
+                    <th>Cab #</th>
                     <th>Price</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td style={{ width: '14%' }}>
+                    <td style={{ width: '7%' }}>
                       <Field
                         name={`${table}.qty`}
                         type="text"
@@ -143,6 +144,13 @@ class OrderTable extends Component {
                         valueField="Value"
                         textField="Name"
                         validate={required}
+                        edit={edit}
+                      />
+                    </td>
+                    <td style={{ width: '10%' }}>
+                      <Field
+                        name={`${table}.cab_number`}
+                        component={renderField}
                         edit={edit}
                       />
                     </td>
