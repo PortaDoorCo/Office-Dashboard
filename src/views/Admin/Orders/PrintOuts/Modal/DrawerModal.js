@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, Button, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 import { DropdownList } from 'react-widgets';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addPrinterOption, savePrinterOption } from '../../../../../redux/misc_items/actions';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import db_url from '../../../../../redux/db_url';
+
+
+const cookie = Cookies.get('jwt');
 
 const PrintModal = (props) => {
   const {
@@ -25,7 +34,8 @@ const PrintModal = (props) => {
     box_sides: printer_options[0].box_sides,
     box_bottoms: printer_options[0].box_bottoms,
     packing_slip: printer_options[0].packing_slip,
-    qc: printer_options[0].qc
+    qc: printer_options[0].qc,
+    box_labels: printer_options[0].box_labels
   });
 
   const change = (e, name) => {
@@ -37,23 +47,36 @@ const PrintModal = (props) => {
       });
     });
   };
- 
-  const handleCreate = (name) => {
 
+  const handleCreate = async (name) => {
     let newOption = {
       NAME: name,
-      id: new_printer_option.length + 1,
-      acknowledgement: 1,
-      invoice: 1,
-      assembly_list: 1,
-      box_sides: 1,
-      box_bottoms: 1,
-      packing_slip: 1,
-      qc: 1
+      acknowledgement: 0,
+      invoice: 0,
+      assembly_list: 0,
+      box_sides: 0,
+      box_bottoms: 0,
+      packing_slip: 0,
+      qc: 0,
+      box_labels: 0
     };
 
-    set_new_printer_option([...new_printer_option, newOption]);
 
+    const res = await axios.post(`${db_url}/printer-options`, newOption,
+      {
+        headers: {
+          'Authorization': `Bearer ${cookie}`
+        }
+      }
+    );
+    const data = await res;
+    await addPrinterOption(data.data);
+    await set_printer_option(data.data);
+  };
+ 
+  const saveOption = async () => {
+    const id = printer_option.id;
+    await savePrinterOption(id, printer_option, cookie);
   };
 
 
@@ -189,11 +212,26 @@ const PrintModal = (props) => {
                 </FormGroup>
               </Form>
             </Col>
+            <Col>
+              <Form>
+                <FormGroup>
+                  <Label for="qc">Box Labels</Label>
+                  <DropdownList filter
+                    data={number_select}
+                    value={printer_option && printer_option.box_labels}
+                    onChange={(e) => change(e, 'box_labels')}
+                    textField="box_labels"
+                    name="box_labels"
+                  />
+                </FormGroup>
+              </Form>
+            </Col>
           </Row>
+        
 
           <Row className="mt-3">
             <Col>
-              <Button color="primary">Save</Button>
+              <Button color="primary" onClick={saveOption}>Save</Button>
             </Col>
             <Col />
           </Row>
@@ -214,4 +252,18 @@ const PrintModal = (props) => {
   );
 };
 
-export default PrintModal;
+
+const mapStateToProps = (state, prop) => ({
+
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addPrinterOption,
+      savePrinterOption
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(PrintModal);
