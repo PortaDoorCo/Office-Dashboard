@@ -400,6 +400,8 @@ class OrderPage extends Component {
       ];
     }
 
+    console.log(this.props.user);
+
     return (
       <div className="animated noPrint resize">
         <Modal isOpen={props.modal} toggle={props.toggle} className="modal-lg">
@@ -540,15 +542,18 @@ class OrderPage extends Component {
                             </IconButton>
                           </Tooltip>
                         </CSVLink>
-                        <Tooltip
-                          title="Delete Order"
-                          placement="top"
-                          className="mb-3"
-                        >
-                          <IconButton onClick={this.toggleDeleteModal}>
-                            <Delete style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
+                        {(this.props.user && this.props.user.role && this.props.user.role && this.props.user.role.name === 'Administrator') || (this.props.user && this.props.user.role && this.props.user.role && this.props.user.role.name === 'Management') ? 
+                          <Tooltip
+                            title="Delete Order"
+                            placement="top"
+                            className="mb-3"
+                          >
+                            <IconButton onClick={this.toggleDeleteModal}>
+                              <Delete style={{ width: '40', height: '40' }} />
+                            </IconButton>
+                          </Tooltip> : null
+                        }
+
                       </Col>
                     </Row>
                   </Col>
