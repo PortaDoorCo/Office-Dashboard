@@ -125,12 +125,15 @@ export default (data, breakdowns) => {
 
 
   const BoardFTDisplay = BoardFT_Total.map(i => {
+
+    console.log({i});
+
     return [
       {
         columns: [
           {
             text: `Board Feet of ${i.woodtype} - ${
-              i.thickness === '4/4' ? '3/4' : i.thickness === '5/4' ? '4/4' : null
+              i.thickness === '4/4' ? '4/4' : i.thickness === '5/4' ? '5/4' : null
             }" Thickness - Stile/Rail/Mullion Material Needed: ${i.BoardFT.toFixed(2)}`,
             style: 'fonts',
             width: 400,
@@ -185,7 +188,7 @@ export default (data, breakdowns) => {
           columns: [
             {
               text: `Board Feet of ${i.woodtype} - ${
-                i.thickness === 0.75 ? '3/4' : i.thickness === 1 ? '4/4' : null
+                i.thickness === 0.75 ? '4/4' : i.thickness === 1 ? '5/4' : null
               }" Thickness ${i.panel.NAME} Material Needed: ${i.BoardFT.toFixed(2)}`,
               style: 'fonts',
               width: 400,

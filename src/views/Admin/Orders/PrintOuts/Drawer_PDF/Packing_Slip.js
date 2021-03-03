@@ -34,7 +34,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack: ['Acknowledgement']
+          stack: ['Packing Slip']
         },
         {
           stack: [
@@ -163,6 +163,11 @@ export default (data, breakdowns) => {
               ]
             },
             {
+              text: `${part.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
+              style: 'fontsBold',
+              alignment: 'center'
+            },
+            {
               stack: [
                 {
                   text: `${part.box_bottom_thickness.NAME} ${part.box_bottom_woodtype.NAME} Bottom`,
@@ -274,7 +279,39 @@ export default (data, breakdowns) => {
           width: 347,
         },
         {
-          text: 'Total #: __________________________________________',
+          text: 'Total #: ___________________________________________',
+          style: 'totals',
+          width: 347,
+        },
+  
+      ],
+      margin: [0, 0, 0, 10],
+    },
+    {
+      columns: [
+        {
+          text: '',
+          style: 'totals',
+          width: 347,
+        },
+        {
+          text: 'Ship Date: ________________________________________',
+          style: 'totals',
+          width: 347,
+        },
+  
+      ],
+      margin: [0, 0, 0, 10],
+    },
+    {
+      columns: [
+        {
+          text: '',
+          style: 'totals',
+          width: 347,
+        },
+        {
+          text: 'Production Date: __________________________________',
           style: 'totals',
           width: 347,
         },

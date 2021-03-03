@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import {  renderDropdownList, renderDropdownListFilter, renderField } from '../../../../RenderInputs/renderInputs';
+import {  renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../../../../RenderInputs/renderInputs';
 import Cope_Table from '../../../Table/DFs/Glass/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
@@ -210,7 +210,7 @@ class CopeDF extends Component {
                 <Field
                   name={`${part}.notes`}
                   type="textarea"
-                  component={renderField}
+                  component={renderTextField}
                   edit={edit}
                 />
               </strong>

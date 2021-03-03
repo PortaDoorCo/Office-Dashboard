@@ -167,7 +167,6 @@ export default (data, breakdowns) => {
                 { text: `${part.box_woodtype.NAME}`, style: 'woodtype' }
               ]
             },
-            { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold' },
             {
               stack: [
                 {
@@ -221,11 +220,6 @@ export default (data, breakdowns) => {
 
           ],
           margin: [0, 10, 0, 5]
-        },
-        {
-          stack: [
-            { text: `Item Notes:  ${part.notes ? part.notes : ''}`, style: 'fonts'},
-          ]
         },
         {
           canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],

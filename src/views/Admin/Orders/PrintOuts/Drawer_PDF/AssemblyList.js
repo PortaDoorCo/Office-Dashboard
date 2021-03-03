@@ -81,6 +81,11 @@ export default (data, breakdowns) => {
                 ]
               },
               {
+                text: `${i.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
+                style: 'fontsBold',
+                alignment: 'center'
+              },
+              {
                 stack: [
                   {
                     text: `${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`,

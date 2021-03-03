@@ -203,7 +203,7 @@ export default (data, breakdowns) => {
           {
             margin: [0, 10, 0, 0],
             columns: [
-              { text: `${i.woodtype.NAME}`, style: 'woodtype' },
+              { text: `${i.woodtype.NAME} - ${i.thickness.value === 0.75 ? '4/4 - 3/4"' : i.thickness.value === 1 ? '5/4 - 1"' : ''}`, style: 'woodtype' },
               {
                 text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
                 style: 'woodtype',

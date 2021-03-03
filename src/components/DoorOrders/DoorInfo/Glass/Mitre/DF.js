@@ -9,7 +9,7 @@ import {
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../../../../RenderInputs/renderInputs';
 import Miter_Table from '../../../Table/DFs/Glass/Miter_Table';
 import Ratio from 'lb-ratio';
 import {
@@ -172,7 +172,7 @@ class MiterDF extends Component {
                 <Field
                   name={`${part}.notes`}
                   type="textarea"
-                  component={renderField}
+                  component={renderTextField}
                   edit={edit}
                 />
               </strong>
