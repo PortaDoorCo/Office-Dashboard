@@ -45,7 +45,8 @@ submit = async (values, e) => {
 
   const data = {
     ...values,
-    Ship_Via: values.Ship_Via.NAME,
+    State: values.State && values.State.abbreviation,
+    Shipping_State: values.Shipping_State && values.Shipping_State.abbreviation,
     PMT_TERMS: values.PMT_TERMS.NAME,
   };
 
