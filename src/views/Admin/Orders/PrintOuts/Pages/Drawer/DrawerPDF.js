@@ -6,6 +6,7 @@ import AssemblyList from '../../Drawer_PDF/AssemblyList';
 import Sides from '../../Drawer_PDF/Sides';
 import Bottoms from '../../Drawer_PDF/Bottoms';
 import Packing_Slip from '../../Drawer_PDF/Packing_Slip';
+import Box_Labels from '../../Drawer_PDF/Box_Labels';
 
 export default (data, breakdowns, p) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -37,6 +38,10 @@ export default (data, breakdowns, p) => {
     Content.push(Packing_Slip(data, breakdowns));
   }
 
+  for (let i = 0; i < p.box_labels; i++) {
+    Content.push(Box_Labels(data, breakdowns));
+  }
+
   const rowLen = Content.length;
   const ContentSorted = Content.map((i,index) => {
     if (rowLen === index + 1) {
@@ -53,6 +58,7 @@ export default (data, breakdowns, p) => {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: ContentSorted,
+    
     pageMargins: [ 40, 40, 40, 60 ],
     pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
       return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;

@@ -108,20 +108,6 @@ class Edit extends Component {
               <Row>
                 <Col sm="6">
                   <FormGroup>
-                    <Label htmlFor="full-name">Shipping Method</Label>
-                    <Field
-                      name={'Ship_Via'}
-                      component={renderDropdownList}
-                      data={shippingMethods}
-                      valueField="NAME"
-                      textField="NAME"
-                      validate={required}
-                      edit={edit}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col sm="6">
-                  <FormGroup>
                     <Label htmlFor="full-name">Sales Rep</Label>
                     <Field
                       name={'sale'}
@@ -134,9 +120,7 @@ class Edit extends Component {
                     />
                   </FormGroup>
                 </Col>
-              </Row>
-              <Row>
-                <Col sm="4">
+                <Col sm="6">
                   <FormGroup>
                     <Label htmlFor="companyName">Payment Terms</Label>
                     <Field
@@ -152,7 +136,9 @@ class Edit extends Component {
                     />
                   </FormGroup>
                 </Col>
-                <Col sm="3">
+              </Row>
+              <Row>
+                <Col sm="4">
                   <FormGroup>
                     <Label htmlFor="full-name">Sales Tax (%)</Label>
                     <Field
@@ -166,7 +152,7 @@ class Edit extends Component {
                   </FormGroup>
                 </Col>
 
-                <Col sm="3">
+                <Col sm="4">
                   <FormGroup>
                     <Label htmlFor="full-name">Discount (%)</Label>
                     <Field

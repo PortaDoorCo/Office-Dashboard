@@ -138,9 +138,9 @@ render() {
   const { formState, handleSubmit, customers, tax, total } = this.props;
 
   return (
-    <div>
-      <Row>
-        <Col xs='8'>
+    <div className="animated fadeIn">
+      <div className="orderForm">
+        <div className="orderFormCol1">
           <Card>
             <CardHeader>
               <strong>Misc Items Order</strong>
@@ -237,10 +237,10 @@ render() {
               </form>
             </CardBody>
           </Card>
-        </Col>
+        </div>
 
 
-        <Col>
+        <div className="orderFormCol2">
           <Row>
             <Col>
               <Card>
@@ -254,10 +254,8 @@ render() {
 
             </Col>
           </Row>
-        </Col>
-
-      </Row>
-        
+        </div>
+      </div>
     </div>
   );
 }
