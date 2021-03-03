@@ -11,11 +11,12 @@ import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from 'js-cookie';
-import { renderDropdownList, renderField } from '../../../../../components/RenderInputs/renderInputs';
+import { renderDropdownList, renderField, renderNumber } from '../../../../../components/RenderInputs/renderInputs';
 import {
   totalSelector,
   balanceSelector,
   subTotal_Total,
+  taxSelector,
   balanceTotalSelector
 } from '../../../../../selectors/doorPricing';
 import { updateOrder, updateBalance } from '../../../../../redux/orders/actions';
@@ -93,7 +94,8 @@ class Balance extends Component {
       handleSubmit,
       balanceTotal,
       role,
-      paymentTypes
+      paymentTypes,
+      tax
     } = this.props;
 
     if (formState) {
@@ -118,12 +120,7 @@ class Balance extends Component {
               <Col>
                 <FormGroup>
                   <Label htmlFor="Total">Sales Tax</Label>
-                  <Field
-                    name='tax'
-                    type="text"
-                    component={renderField}
-                    edit={true}
-                    label="total" />
+                  <Input disabled placeholder={`$${formState && formState.tax.toFixed(2)}`} />
                 </FormGroup>
               </Col>
             </Row>
@@ -199,6 +196,7 @@ const mapStateToProps = (state, props) => ({
 
   formState: getFormValues('DoorOrder')(state),
   total: totalSelector(state),
+  tax: taxSelector(state),
   subTotal: subTotal_Total(state),
   balance: balanceSelector(state),
   balanceTotal: balanceTotalSelector(state),

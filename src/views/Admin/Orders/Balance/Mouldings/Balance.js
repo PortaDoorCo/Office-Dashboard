@@ -118,12 +118,7 @@ class Balance extends Component {
               <Col>
                 <FormGroup>
                   <Label htmlFor="Total">Sales Tax</Label>
-                  <Field
-                    name='tax'
-                    type="text"
-                    component={renderField}
-                    edit={true}
-                    label="total" />
+                  <Input disabled placeholder={`$${formState && formState.tax.toFixed(2)}`} />
                 </FormGroup>
               </Col>
             </Row>

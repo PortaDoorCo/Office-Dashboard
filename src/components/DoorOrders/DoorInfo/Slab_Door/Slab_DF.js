@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField } from '../../../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../../../RenderInputs/renderInputs';
 import Slab_Door_Table from '../../Table/Doors/Slab_Door_Table';
 import {
   linePriceSelector,
@@ -96,7 +96,7 @@ class SlabDoor extends Component {
                 <Field
                   name={`${part}.notes`}
                   type="textarea"
-                  component={renderField}
+                  component={renderTextField}
                   edit={edit}
                 />
               </strong>

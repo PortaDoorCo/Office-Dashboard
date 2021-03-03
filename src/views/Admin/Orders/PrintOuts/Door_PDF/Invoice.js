@@ -236,7 +236,6 @@ export default (data) => {
                 },
               ],
             },
-            { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold' },
             {
               stack: [
                 {
@@ -322,14 +321,6 @@ export default (data) => {
             },
           ],
           margin: [0, 10, 0, 5],
-        },
-        {
-          stack: [
-            {
-              text: `Item Notes:  ${part.notes ? part.notes : ''}`,
-              style: 'fonts',
-            },
-          ],
         },
         {
           canvas: [

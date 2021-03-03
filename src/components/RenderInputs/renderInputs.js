@@ -103,6 +103,20 @@ export const renderField = ({
   </Fragment>
 );
 
+export const renderTextField = ({
+  input,
+  edit,
+  meta: { touched, error, warning },
+  ...custom
+}) => (
+  <Fragment>
+    <Input {...input} disabled={edit} type="textarea" autoComplete="off" />
+    {touched &&
+                ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+                    (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+  </Fragment>
+);
+
 export const renderNumber = ({
   input,
   edit,
