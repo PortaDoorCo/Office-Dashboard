@@ -9,7 +9,7 @@ import { Field, change, getFormValues } from 'redux-form';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment-business-days';
 import momentLocaliser from 'react-widgets-moment';
-import { renderDropdownList, renderDropdownListFilter, renderField, renderCheckboxToggle } from '../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderField, renderCheckboxToggle, renderTextField } from '../RenderInputs/renderInputs';
 import { connect } from 'react-redux';
 
 momentLocaliser(moment);
@@ -99,6 +99,13 @@ class JobInfo extends Component {
             customer.Taxable
           )
         );
+        this.props.dispatch(
+          change(
+            'MiscItems',
+            'job_info.Notes',
+            customer.Notes
+          )
+        );
       }
     }
   }
@@ -169,7 +176,7 @@ class JobInfo extends Component {
         </Row>
 
         <Row>
-        <Col xs="7">
+          <Col xs="7">
             <FormGroup>
               <Label htmlFor="companyName">Customers</Label>
               <Field
@@ -296,6 +303,19 @@ class JobInfo extends Component {
                 component={renderField}
                 edit={edit}
                 label="Phone" />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="6">
+            <FormGroup>
+              <Label htmlFor="phone">Customer Note</Label>
+              <Field
+                name={'Notes'}
+                type="text"
+                component={renderTextField}
+                edit={true}
+                label="Notes" />
             </FormGroup>
           </Col>
         </Row>

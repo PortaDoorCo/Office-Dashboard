@@ -9,7 +9,7 @@ import { Field, change, getFormValues } from 'redux-form';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment-business-days';
 import momentLocaliser from 'react-widgets-moment';
-import { renderCheckboxToggle, renderDropdownList, renderDropdownListFilter, renderField } from '../RenderInputs/renderInputs';
+import { renderCheckboxToggle, renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../RenderInputs/renderInputs';
 import { connect } from 'react-redux';
 
 momentLocaliser(moment);
@@ -104,6 +104,13 @@ class JobInfo extends Component {
             'DoorOrder',
             'discount',
             customer.Discount
+          )
+        );
+        this.props.dispatch(
+          change(
+            'DoorOrder',
+            'job_info.Notes',
+            customer.Notes
           )
         );
       }
@@ -305,6 +312,20 @@ class JobInfo extends Component {
                 component={renderField}
                 edit={edit}
                 label="Phone" />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col xs="6">
+            <FormGroup>
+              <Label htmlFor="phone">Customer Note</Label>
+              <Field
+                name={'Notes'}
+                type="text"
+                component={renderTextField}
+                edit={true}
+                label="Notes" />
             </FormGroup>
           </Col>
         </Row>
