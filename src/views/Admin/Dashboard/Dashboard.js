@@ -2,6 +2,8 @@ import React, { Component, Suspense } from 'react';
 import {
   Row,
   Col,
+  Button,
+  Collapse
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -27,8 +29,15 @@ class Dashboard extends Component {
       orders: [],
       modal: false,
       selectedOrder: null,
-      orderEdit: false
+      orderEdit: false,
+      maps: false
     };
+  }
+
+  toggleMap = () => {
+    this.setState({
+      maps: !this.state.maps
+    });
   }
 
   render() {
@@ -61,13 +70,22 @@ class Dashboard extends Component {
                 </Suspense>
               </Col>
             </Row>
-            <Row className="mb-5">
-              <Col style={{ height: 600 }}>
-                <Suspense fallback={loading()}>
-                  <Maps  />
-                </Suspense>
+
+            <Row>
+              <Col>
+                <Button color="primary" onClick={this.toggleMap}>Delivery Map</Button>
               </Col>
             </Row>
+
+            <Collapse isOpen={this.state.maps}>
+              <Row className="mb-5">
+                <Col style={{ height: 600 }}>
+                  <Suspense fallback={loading()}>
+                    <Maps  />
+                  </Suspense>
+                </Col>
+              </Row>
+            </Collapse>
             <Row className="mt-5">
               <Col>
                 <Suspense fallback={loading()}>
