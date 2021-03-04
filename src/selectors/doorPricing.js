@@ -24,6 +24,21 @@ const discountSelector = (state) => {
   }
 };
 
+const stateSelector = (state) => {
+  const orders = state.form.DoorOrder;
+
+  if (orders) {
+    console.log({orders});
+    if (state.form.DoorOrder.values && state.form.DoorOrder.values.job_info && state.form.DoorOrder.values.job_info.State) {
+      return state.form.DoorOrder.values.job_info.State;
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+};
+
 const partListSelector = (state) => {
   const orders = state.form.DoorOrder;
 
@@ -776,8 +791,8 @@ export const totalDiscountSelector = createSelector(
 );
 
 export const taxSelector = createSelector(
-  [subTotalSelector, taxRate, totalDiscountSelector, discountSelector, miscTotalSelector],
-  (subTotal, tax, discount, dis, misc) => {
+  [subTotalSelector, taxRate, totalDiscountSelector, discountSelector, miscTotalSelector, stateSelector],
+  (subTotal, tax, discount, dis, misc, state) => {
     return ((subTotal.reduce((acc, item) => acc + item, 0) - discount) + misc)  * tax;
   }
 );

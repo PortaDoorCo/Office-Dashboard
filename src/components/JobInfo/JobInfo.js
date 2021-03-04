@@ -113,6 +113,7 @@ class JobInfo extends Component {
             customer.Notes
           )
         );
+
       }
     }
   }
