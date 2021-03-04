@@ -81,6 +81,7 @@ class MiscItems extends Component {
       tax: tax,
       total: total,
       dueDate: values.job_info.DueDate,
+      sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
     };
 
     const orderId = values.id;
