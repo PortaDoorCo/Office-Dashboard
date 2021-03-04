@@ -245,7 +245,7 @@ const OrderTable = (props) => {
       name: 'Total',
       selector: 'total',
       sortable: true,
-      cell: row => <div>${row.total.toFixed(2)}</div>,
+      cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
     },
     {
       name: 'Balance Paid',
