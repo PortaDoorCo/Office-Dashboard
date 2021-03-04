@@ -504,10 +504,10 @@ const mapStateToProps = (state, prop) => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
-      ShippingMethod: state.misc_items.shippingMethods[0],
-      PaymentMethod: {
-        NAME: state.customers.customerDB[0].PaymentMethod
-      }
+      // ShippingMethod: state.misc_items.shippingMethods[0],
+      // PaymentMethod: {
+      //   NAME: state.customers.customerDB[0].PaymentMethod
+      // }
     }
   },
   formState: getFormValues('DrawerOrder')(state),

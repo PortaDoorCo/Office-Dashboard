@@ -114,6 +114,7 @@ class DoorOrders extends Component {
         Phone1: values.job_info.customer.Phone1,
         Fax: values.job_info.customer.Fax,
         Email: values.job_info.customer.Email,
+        PMT_TERMS: values.job_info.customer.PMT_TERMS,
       },
     };
 
@@ -490,10 +491,9 @@ const mapStateToProps = state => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
-      ShippingMethod: state.misc_items.shippingMethods[0],
-      PaymentMethod: {
-        NAME: state.customers.customerDB[0].PaymentMethod
-      }
+      // PaymentMethod: {
+      //   NAME: state.customers.customerDB[0].PaymentMethod
+      // }
     }
   },
   formState: getFormValues('DoorOrder')(state),

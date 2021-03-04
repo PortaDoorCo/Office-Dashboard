@@ -195,6 +195,9 @@ export default (data) => {
         ]);
       });
 
+
+      console.log({data});
+
       return [
         {
           margin: [0, 10, 0, 0],
@@ -399,7 +402,7 @@ export default (data) => {
           style: 'totals',
           margin: [0, 0, 0, 0],
         },
-        { text: `$${data.tax.toFixed(2)}`, style: 'fonts', alignment: 'right' },
+        { text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`, style: 'fonts', alignment: 'right' },
       ],
       margin: [0, 10, 0, 0],
     },

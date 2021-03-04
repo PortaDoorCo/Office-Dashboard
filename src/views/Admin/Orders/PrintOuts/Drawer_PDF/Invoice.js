@@ -253,8 +253,19 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: '', style: 'totals', width: 347 },
-        { text: data.Taxable ? '$' + discountSubTotal.toFixed(2) + ' x ' + data.companyprofile.TaxRate + '%' + ' Tax:' : '', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(data.tax).toFixed(2)}`, style: 'fonts', alignment: 'right' }
+        {
+          text: data.Taxable
+            ? '$' +
+              discountSubTotal.toFixed(2) +
+              ' x ' +
+              data.companyprofile.TaxRate +
+              '%' +
+              ' Tax:'
+            : '',
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+        },
+        { text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`, style: 'fonts', alignment: 'right' },
       ],
       margin: [0, 10, 0, 0]
     },

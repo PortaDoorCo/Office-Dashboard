@@ -248,6 +248,16 @@ const OrderTable = (props) => {
       cell: row => <div>${row.total.toFixed(2)}</div>,
     },
     {
+      name: 'Balance Paid',
+      sortable: true,
+      cell: row => <div>${row.balance_history && row.balance_history[row.balance_history.length - 1] && row.balance_history[row.balance_history.length - 1].balance_paid}</div>,
+    },
+    {
+      name: 'Terms',
+      selector: 'companyprofile.PMT_TERMS',
+      sortable: true,
+    },
+    {
       name: ' ',
       button: true,
       grow: 2,

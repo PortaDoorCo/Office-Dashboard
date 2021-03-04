@@ -179,6 +179,7 @@ class JobInfo extends Component {
                 data={shippingMethods}
                 valueField="value"
                 edit={edit}
+                validate={required}
                 textField="NAME" />
             </FormGroup>
           </Col>
