@@ -16,7 +16,7 @@ import Cookies from 'js-cookie';
 import momentLocaliser from 'react-widgets-moment';
 import { Row, Col, Button } from 'reactstrap';
 import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
+import { DateRangePicker, SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import Assignment  from '@material-ui/icons/Assignment';
@@ -169,7 +169,8 @@ const OrderTable = (props) => {
   const [data, setData] = useState(orders);
   const [startDate, setStartDate] = useState(moment(new Date()));
   const [endDate, setEndDate] = useState(moment(new Date()));
-  const [focusedInput, setFocusedInput] = useState(null);
+  const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
+  const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
   const [filterStatus, setFilterStatus ] = useState('All');
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
@@ -440,11 +441,49 @@ const OrderTable = (props) => {
         <Col>
           <Row>
             <Col>
-              <DateRangePicker
+
+
+              <SingleDatePicker
+                date={startDate} // momentPropTypes.momentObj or null
+                onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
+                focused={startDateFocusedInput} // PropTypes.bool
+                onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
+                id="startDate" // PropTypes.string.isRequired,
+                isOutsideRange={(date) => {
+                  if (date > moment(new Date())) {
+                    return true; // return true if you want the particular date to be disabled
+                  } else if (date < moment(minDate)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
+              />
+
+              <SingleDatePicker
+                date={endDate} // momentPropTypes.momentObj or null
+                onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
+                focused={endDateFocusedInput} // PropTypes.bool
+                onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
+                id="endDate" // PropTypes.string.isRequired,
+                isOutsideRange={(date) => {
+                  if (date > moment(new Date())) {
+                    return true; // return true if you want the particular date to be disabled
+                  } else if (date < moment(minDate)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
+              />
+
+
+              {/* <DateRangePicker
                 startDate={startDate} // momentPropTypes.momentObj or null,
                 startDateId="startDate" // PropTypes.string.isRequired,
                 endDate={endDate} // momentPropTypes.momentObj or null,
                 endDateId="endDate" // PropTypes.string.isRequired,
+                singleDateRange={true}
                 onDatesChange={({ startDate, endDate }) => (setStartDate(startDate), setEndDate(endDate))} // PropTypes.func.isRequired,
                 focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={focusedInput => setFocusedInput(focusedInput)}
@@ -457,7 +496,7 @@ const OrderTable = (props) => {
                     return false;
                   }
                 }}
-              />
+              /> */}
             </Col>
           </Row>
           <Row>

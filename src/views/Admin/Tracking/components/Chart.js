@@ -6,16 +6,6 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 class Charts extends Component {
   render() {
-
-    let quotes = this.props.data.filter(item => {
-      return item.status.includes('Quote');
-    });
-    let invoiced = this.props.data.filter(item => {
-      return item.status.includes('Invoiced');
-    });
-    let ordered = this.props.data.filter(item => {
-      return item.status.includes('Ordered');
-    });
     let inProduction = this.props.data.filter(item => {
       return item.status.includes('In Production');
     });
@@ -58,7 +48,7 @@ class Charts extends Component {
     });
 
     const bar = {
-      labels: ['Quote', 'Invoiced', 'Ordered', 'In Production', 'Cut', 'Framing', 'Assembly', 'Tenon', 'Panels', 'Sanding', 'Lipping', 'Inspecting', 'Paint Shop', 'Complete', 'Shipped'],
+      labels: ['In Production', 'Cut', 'Framing', 'Assembly', 'Tenon', 'Panels', 'Sanding', 'Lipping', 'Inspecting', 'Paint Shop', 'Complete', 'Shipped'],
       datasets: [
         {
           label: 'Stations',
@@ -67,7 +57,7 @@ class Charts extends Component {
           borderWidth: 0.5,
           hoverBackgroundColor: 'rgba(194, 234, 234, 0.45)',
           hoverBorderColor: '#000000',
-          data: [quotes.length, invoiced.length, ordered.length, inProduction.length, cut.length, framing.length, assembly.length, tenon.length, panels.length, sanding.length, lipping.length, inspecting.length, paint_shop.length, complete.length, shipped.length],
+          data: [inProduction.length, cut.length, framing.length, assembly.length, tenon.length, panels.length, sanding.length, lipping.length, inspecting.length, paint_shop.length, complete.length, shipped.length],
         },
       ],
     };
