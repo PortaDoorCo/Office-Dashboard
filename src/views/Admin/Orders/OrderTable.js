@@ -246,6 +246,13 @@ const OrderTable = (props) => {
 
   const columns = [
     {
+      name: 'Company',
+      selector: 'job_info.customer.Company',
+      sortable: true,
+      grow: 2
+
+    },
+    {
       name: 'Order #',
       selector: 'orderNum',
       sortable: true,
@@ -256,77 +263,81 @@ const OrderTable = (props) => {
       sortable: true,
     },
     {
-      name: 'Job Name',
-      selector: 'job_info.jobName',
-      sortable: true,
-    },
-    {
-      name: 'Company',
-      selector: 'job_info.customer.Company',
-      sortable: true,
-      grow: 2,
-    },
-    {
       name: 'Order Type',
       selector: 'orderType',
       sortable: true,
+
     },
     {
       name: 'Date Ordered',
-      cell: (row) => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',
-      cell: (row) => <div>{moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{moment(row.dueDate).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Status',
       grow: 1,
-      cell: (row) => (
-        <Select
-          defaultValue={row.status}
-          style={{ width: '100%' }}
-          onChange={(e) => handleStatusChange(e, row)}
-          bordered={false}
-        >
-          {status.map((i, index) => (
-            <Option key={index} value={i.value}>
-              {i.value}
-            </Option>
-          ))}
-        </Select>
-      ),
+      cell: row => <div>
+
+
+        <Row>
+          <Col>
+            <Select defaultValue={row.status} style={{ width: '100%' }} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
+              {status.map((i, index) => (
+                <Option key={index} value={i.value}>{i.value}</Option>
+              ))}
+            </Select>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col style={{ textAlign: 'center', color: 'red' }}>
+            {row.job_info.Rush && row.job_info.Sample ? 'Sample / Rush' : row.job_info.Rush ? 'Rush' : row.job_info.Sample ? 'Sample' : ''}
+          </Col>
+        </Row>
+
+      </div>
     },
     {
       name: 'Submitted By',
       selector: 'user.FirstName',
       sortable: true,
+
     },
 
     {
       name: 'Total',
       selector: 'total',
       sortable: true,
-      cell: (row) => <div>${row.total.toFixed(2)}</div>,
+      cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
+    },
+    {
+      name: 'Balance Paid',
+      sortable: true,
+      cell: row => <div>${row.balance_history && row.balance_history[row.balance_history.length - 1] && row.balance_history[row.balance_history.length - 1].balance_paid}</div>,
+    },
+    {
+      name: 'Terms',
+      selector: 'companyprofile.PMT_TERMS',
+      sortable: true,
     },
     {
       name: ' ',
       button: true,
       grow: 2,
-      cell: (row) => (
-        <Tooltip title="View Order" placement="top">
-          <IconButton
-            onClick={function (event) {
-              event.preventDefault();
-              toggle(row);
-            }}
-            id={row.id}
-          >
-            <Inbox>Open</Inbox>
-          </IconButton>
-        </Tooltip>
-      ),
+      cell: (row) => <Tooltip title="View Order" placement="top">
+        <IconButton onClick={function (event) {
+          event.preventDefault();
+          toggle(row);
+        }} id={row.id}>
+          <Inbox>Open</Inbox>
+        </IconButton>
+      </Tooltip>,
     },
+
+
   ];
 
   const handleRowSelected = React.useCallback(state => {
