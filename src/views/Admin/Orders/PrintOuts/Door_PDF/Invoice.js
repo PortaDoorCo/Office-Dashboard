@@ -102,6 +102,7 @@ export default (data) => {
             { text: `${data.companyprofile.Zip}`, style: 'fonts' },
             { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
             { text: `Fax: ${data.job_info.Fax ? data.job_info.Fax : ''}`, style: 'fonts' },
+            { text: `Terms: ${data.job_info && data.job_info.customer &&  data.job_info.customer.PMT_TERMS ? data.job_info.customer.PMT_TERMS : ''}`, style: 'fonts' },
           ],
         },
         {
