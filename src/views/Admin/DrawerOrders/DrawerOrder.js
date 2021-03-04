@@ -156,7 +156,7 @@ class DoorOrders extends Component {
           'date': new Date()
         }
       ],
-      sale: values.job_info.customer.sale.id,
+      sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
     };
 
     let canSubmit = false;

@@ -84,6 +84,9 @@ class CustomerPage extends Component {
     }
 
 
+    console.log({updateOrders});
+    console.log({selectedCompanies});
+
     return (
       <div className="animated resize">
         <Modal isOpen={props.modal} toggle={props.toggle} className="modal-lg">

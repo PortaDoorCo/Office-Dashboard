@@ -8,6 +8,7 @@ import {
   Col,
   FormGroup,
   Label,
+  Collapse
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -33,13 +34,21 @@ class Edit extends Component {
 
     this.state = {
       Company: [],
-      Contact: []
+      Contact: [],
+      contactInfo: false
     };
   }
 
 handleChange = e => {
   this.setState({ [e.target.name]: e.target.value });
 };
+
+toggleInfo = () => {
+  this.setState({
+    contactInfo: !this.state.contactInfo
+  });
+}
+
 
 submit = async (values, e) => {
 
@@ -168,7 +177,7 @@ render() {
                         type="text"
                         component={renderField}
                         label="company"
-                        validate={required}
+                        // validate={required}
                         edit={edit}
                       />
                     </FormGroup>
@@ -255,70 +264,239 @@ render() {
                 <hr />
 
 
-                <Row>
-                  <Col xs="12">
-                    <h6>Phone</h6>
-                  </Col>
-                </Row>
+                <Button color='primary' onClick={this.toggleInfo} className="mb-3">More Info</Button>
+                <Collapse isOpen={this.state.contactInfo}>
 
-                <Row>
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="phone">Office</Label>
-                      <Field
-                        name={'Phone1'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                        normalize={normalizePhone}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="phone">Mobile</Label>
-                      <Field
-                        name={'Phone2'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                        normalize={normalizePhone}
-                      />
-                    </FormGroup>
-                  </Col>
+                  <Row>
+                    <Col xs="12">
+                      <h6>Contact Info</h6>
+                    </Col>
+                  </Row>
 
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="phone">Fax Number</Label>
-                      <Field
-                        name={'Fax'}
-                        type="text"
-                        component={renderField}
-                        label="fax"
-                        edit={edit}
-                        normalize={normalizePhone}
-                      />
-                    </FormGroup>
-                  </Col>
+                  <Row>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Name</Label>
+                        <Field
+                          name={'Contact1'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Phone</Label>
+                        <Field
+                          name={'Phone1'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                          normalize={normalizePhone}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Email</Label>
+                        <Field
+                          name={'EMAIL'}
+                          type="text"
+                          component={renderField}
+                          label="fax"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Note</Label>
+                        <Field
+                          name={'Note1'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Name</Label>
+                        <Field
+                          name={'Contact2'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Phone</Label>
+                        <Field
+                          name={'Phone2'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                          normalize={normalizePhone}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Email</Label>
+                        <Field
+                          name={'Email2'}
+                          type="text"
+                          component={renderField}
+                          label="fax"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Note</Label>
+                        <Field
+                          name={'Note2'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
 
-                  <Col sm="3">
-                    <FormGroup>
-                      <Label htmlFor="phone">Other</Label>
-                      <Field
-                        name={'Phone3'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                        normalize={normalizePhone}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
+                  <Row>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Name</Label>
+                        <Field
+                          name={'Contact3'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Phone</Label>
+                        <Field
+                          name={'Phone3'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                          normalize={normalizePhone}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Email</Label>
+                        <Field
+                          name={'Email3'}
+                          type="text"
+                          component={renderField}
+                          label="fax"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Note</Label>
+                        <Field
+                          name={'Note3'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
 
-                <Row>
+                  <Row>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Name</Label>
+                        <Field
+                          name={'Contact4'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Phone</Label>
+                        <Field
+                          name={'Phone4'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                          normalize={normalizePhone}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Email</Label>
+                        <Field
+                          name={'Email4'}
+                          type="text"
+                          component={renderField}
+                          label="fax"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Note</Label>
+                        <Field
+                          name={'Note4'}
+                          type="text"
+                          component={renderField}
+                          label="company"
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col sm="3">
+                      <FormGroup>
+                        <Label htmlFor="phone">Fax Number</Label>
+                        <Field
+                          name={'Fax'}
+                          type="text"
+                          component={renderField}
+                          label="fax"
+                          edit={edit}
+                          normalize={normalizePhone}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  {/* <Row>
                   <Col xs="12">
                     <h6>Email</h6>
                   </Col>
@@ -361,7 +539,9 @@ render() {
                       />
                     </FormGroup>
                   </Col>
-                </Row>
+                </Row> */}
+                </Collapse>
+
             
                 <hr />
 

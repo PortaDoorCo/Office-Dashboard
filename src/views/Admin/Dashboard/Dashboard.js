@@ -119,13 +119,15 @@ class Dashboard extends Component {
           </div>
           : role && (role.type === 'office' || role.type === 'sales') ?
             <div>
-              <Row>
-                <Col>
-                  <Suspense fallback={loading()}>
-                    <Maps className="mb-5" />
-                  </Suspense>
-                </Col>
-              </Row>
+              <Collapse isOpen={this.state.maps}>
+                <Row>
+                  <Col>
+                    <Suspense fallback={loading()}>
+                      <Maps className="mb-5" />
+                    </Suspense>
+                  </Col>
+                </Row>
+              </Collapse>
               <Row className="mt-3">
                 <Col>
                   <Suspense fallback={loading()}>
