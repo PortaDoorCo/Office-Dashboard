@@ -280,7 +280,7 @@ export default (data) => {
           columns: [
             {
               text: ' Total: ',
-              width: 129,
+              width: 174,
               style: 'totals',
               alignment: 'left',
             },

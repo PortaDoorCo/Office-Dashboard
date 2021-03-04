@@ -199,7 +199,7 @@ export default (data, breakdowns) => {
         },
         {
           columns: [
-            { text: ' Total: ', width: 129, style: 'totals', alignment: 'left' },
+            { text: ' Total: ', width: 38, style: 'totals', alignment: 'left' },
             { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
             {
               stack: [
