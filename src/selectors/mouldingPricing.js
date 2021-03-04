@@ -238,6 +238,7 @@ export const taxSelector = createSelector(
 export const totalDiscountSelector = createSelector(
   [mouldingTotalSelector, miscTotalSelector, discountSelector],
   (subTotal, misc, discount) => {
+    console.log({discount});
     return (subTotal + misc) * discount;
   }
 );

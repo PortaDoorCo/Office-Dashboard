@@ -28,7 +28,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '1' })}
             onClick={() => { toggle('1'); }}
           >
-            <strong>Quotes</strong>
+            <strong>In Production</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -36,7 +36,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '2' })}
             onClick={() => { toggle('2'); }}
           >
-            <strong>Invoiced</strong>
+            <strong>Cutting</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -44,7 +44,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '3' })}
             onClick={() => { toggle('3'); }}
           >
-            <strong>Ordered</strong>
+            <strong>Framing</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -52,7 +52,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '4' })}
             onClick={() => { toggle('4'); }}
           >
-            <strong>In Production</strong>
+            <strong>Assembly</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -60,7 +60,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '5' })}
             onClick={() => { toggle('5'); }}
           >
-            <strong>Cutting</strong>
+            <strong>Tenon</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -68,7 +68,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '6' })}
             onClick={() => { toggle('6'); }}
           >
-            <strong>Framing</strong>
+            <strong>Panels</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -76,7 +76,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '7' })}
             onClick={() => { toggle('7'); }}
           >
-            <strong>Assembly</strong>
+            <strong>Sanding</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -84,7 +84,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '8' })}
             onClick={() => { toggle('8'); }}
           >
-            <strong>Tenon</strong>
+            <strong>Lipping</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -92,7 +92,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '9' })}
             onClick={() => { toggle('9'); }}
           >
-            <strong>Panels</strong>
+            <strong>Inspecting</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -100,7 +100,7 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '10' })}
             onClick={() => { toggle('10'); }}
           >
-            <strong>Sanding</strong>
+            <strong>Paint Shop</strong>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -108,37 +108,13 @@ const Tracking = (props) => {
             className={classnames({ active: activeTab === '11' })}
             onClick={() => { toggle('11'); }}
           >
-            <strong>Lipping</strong>
+            <strong>Complete</strong>
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '12' })}
             onClick={() => { toggle('12'); }}
-          >
-            <strong>Inspecting</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '13' })}
-            onClick={() => { toggle('13'); }}
-          >
-            <strong>Paint Shop</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '14' })}
-            onClick={() => { toggle('14'); }}
-          >
-            <strong>Complete</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '15' })}
-            onClick={() => { toggle('15'); }}
           >
             <strong>Shipped</strong>
           </NavLink>
@@ -149,101 +125,80 @@ const Tracking = (props) => {
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Quote"
+            status="In Production"
           />
         </TabPane>
         <TabPane tabId="2">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Invoiced"
+            status="Cut"
           />
         </TabPane>
         <TabPane tabId="3">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Ordered"
+            status="Framing"
           />
         </TabPane>
         <TabPane tabId="4">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="In Production"
+            status="Assembly"
           />
         </TabPane>
         <TabPane tabId="5">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Cut"
+            status="Tenon"
           />
         </TabPane>
         <TabPane tabId="6">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Framing"
+            status="Panels"
           />
         </TabPane>
         <TabPane tabId="7">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Assembly"
+            status="Sanding"
           />
         </TabPane>
         <TabPane tabId="8">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Tenon"
+            status="Lipping"
           />
         </TabPane>
         <TabPane tabId="9">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Panels"
+            status="Inspecting"
           />
         </TabPane>
         <TabPane tabId="10">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Sanding"
+            status="Paint Shop"
           />
         </TabPane>
         <TabPane tabId="11">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}
-            status="Lipping"
-          />
-        </TabPane>
-        <TabPane tabId="12">
-          <StatusTable
-            orders={props.orders}
-            loadOrders={props.loadOrders}
-            status="Inspecting"
-          />
-        </TabPane>
-        <TabPane tabId="13">
-          <StatusTable
-            orders={props.orders}
-            loadOrders={props.loadOrders}
-            status="Paint Shop"
-          />
-        </TabPane>
-        <TabPane tabId="14">
-          <StatusTable
-            orders={props.orders}
-            loadOrders={props.loadOrders}
             status="Complete"
           />
         </TabPane>
-        <TabPane tabId="15">
+        <TabPane tabId="12">
           <StatusTable
             orders={props.orders}
             loadOrders={props.loadOrders}

@@ -11,7 +11,7 @@ import Maps from './components/SalesCharts/Maps';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
+import { DateRangePicker, SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
 const StatusTable = React.lazy(() => import('./components/StatusTable'));
@@ -28,7 +28,8 @@ const SalesReport = (props) => {
   const [startDate, setStartDate] = useState(moment(new Date()));
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [data, setData] = useState(orders);
-  const [focusedInput, setFocusedInput] = useState(null);
+  const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
+  const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -58,14 +59,30 @@ const SalesReport = (props) => {
           <Col>
             <Row>
               <Col>
-                <DateRangePicker
-                  startDate={startDate} // momentPropTypes.momentObj or null,
-                  startDateId="startDate" // PropTypes.string.isRequired,
-                  endDate={endDate} // momentPropTypes.momentObj or null,
-                  endDateId="endDate" // PropTypes.string.isRequired,
-                  onDatesChange={({ startDate, endDate }) => (setStartDate(startDate), setEndDate(endDate))} // PropTypes.func.isRequired,
-                  focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                  onFocusChange={focusedInput => setFocusedInput(focusedInput)}
+
+                <SingleDatePicker
+                  date={startDate} // momentPropTypes.momentObj or null
+                  onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
+                  focused={startDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
+                  id="startDate" // PropTypes.string.isRequired,
+                  isOutsideRange={(date) => {
+                    if (date > moment(new Date())) {
+                      return true; // return true if you want the particular date to be disabled
+                    } else if (date < moment(minDate)) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
+
+                <SingleDatePicker
+                  date={endDate} // momentPropTypes.momentObj or null
+                  onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
+                  focused={endDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
+                  id="endDate" // PropTypes.string.isRequired,
                   isOutsideRange={(date) => {
                     if (date > moment(new Date())) {
                       return true; // return true if you want the particular date to be disabled
@@ -188,14 +205,29 @@ const SalesReport = (props) => {
             <Col>
               <Row>
                 <Col>
-                  <DateRangePicker
-                    startDate={startDate} // momentPropTypes.momentObj or null,
-                    startDateId="startDate" // PropTypes.string.isRequired,
-                    endDate={endDate} // momentPropTypes.momentObj or null,
-                    endDateId="endDate" // PropTypes.string.isRequired,
-                    onDatesChange={({ startDate, endDate }) => (setStartDate(startDate), setEndDate(endDate))} // PropTypes.func.isRequired,
-                    focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                    onFocusChange={focusedInput => setFocusedInput(focusedInput)}
+                  <SingleDatePicker
+                    date={startDate} // momentPropTypes.momentObj or null
+                    onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
+                    focused={startDateFocusedInput} // PropTypes.bool
+                    onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
+                    id="startDate" // PropTypes.string.isRequired,
+                    isOutsideRange={(date) => {
+                      if (date > moment(new Date())) {
+                        return true; // return true if you want the particular date to be disabled
+                      } else if (date < moment(minDate)) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    }}
+                  />
+
+                  <SingleDatePicker
+                    date={endDate} // momentPropTypes.momentObj or null
+                    onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
+                    focused={endDateFocusedInput} // PropTypes.bool
+                    onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
+                    id="endDate" // PropTypes.string.isRequired,
                     isOutsideRange={(date) => {
                       if (date > moment(new Date())) {
                         return true; // return true if you want the particular date to be disabled
