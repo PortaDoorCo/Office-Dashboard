@@ -191,7 +191,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 75, 100, 100, 100, '*'],
+            widths: [22, 22, 100, 200, '*', '*'],
             body: tableBody
           },
           layout: 'lightHorizontalLines'

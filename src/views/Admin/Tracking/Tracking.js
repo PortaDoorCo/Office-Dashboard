@@ -1,24 +1,84 @@
-import React, { useState } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import StatusTable from './components/StatusTable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Charts from './components/Chart';
 import { loadOrders } from '../../../redux/orders/actions';
+import { SingleDatePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import 'react-dates/initialize';
+import moment from 'moment';
 
 const Tracking = (props) => {
+  const { orders } = props;
   const [activeTab, setActiveTab] = useState('1');
+  const [startDate, setStartDate] = useState(moment(new Date()));
+  const [endDate, setEndDate] = useState(moment(new Date()));
+  const [data, setData] = useState(orders);
+  const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
+  const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
+  useEffect(() => {
+    const filteredOrders = orders.filter(item => {
+      let date = new Date(item.createdAt);
+      return moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf();
+    });
+    setData(filteredOrders);
+
+  }, [startDate, endDate, orders]);
+
+  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].createdAt) : new Date();
+
   return (
     <div>
 
+      <Row>
+        <Col sm='9' />
+        <Col>
+          <SingleDatePicker
+            date={startDate} // momentPropTypes.momentObj or null
+            onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
+            focused={startDateFocusedInput} // PropTypes.bool
+            onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
+            id="startDate" // PropTypes.string.isRequired,
+            isOutsideRange={(date) => {
+              if (date > moment(new Date())) {
+                return true; // return true if you want the particular date to be disabled
+              } else if (date < moment(minDate)) {
+                return true;
+              } else {
+                return false;
+              }
+            }}
+          />
+
+          <SingleDatePicker
+            date={endDate} // momentPropTypes.momentObj or null
+            onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
+            focused={endDateFocusedInput} // PropTypes.bool
+            onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
+            id="endDate" // PropTypes.string.isRequired,
+            isOutsideRange={(date) => {
+              if (date > moment(new Date())) {
+                return true; // return true if you want the particular date to be disabled
+              } else if (date < moment(minDate)) {
+                return true;
+              } else {
+                return false;
+              }
+            }}
+          />
+        </Col>
+      </Row>
+
       <Charts
-        data={props.orders}
+        data={data}
       />
 
 
@@ -123,84 +183,84 @@ const Tracking = (props) => {
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="In Production"
           />
         </TabPane>
         <TabPane tabId="2">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Cut"
           />
         </TabPane>
         <TabPane tabId="3">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Framing"
           />
         </TabPane>
         <TabPane tabId="4">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Assembly"
           />
         </TabPane>
         <TabPane tabId="5">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Tenon"
           />
         </TabPane>
         <TabPane tabId="6">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Panels"
           />
         </TabPane>
         <TabPane tabId="7">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Sanding"
           />
         </TabPane>
         <TabPane tabId="8">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Lipping"
           />
         </TabPane>
         <TabPane tabId="9">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Inspecting"
           />
         </TabPane>
         <TabPane tabId="10">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Paint Shop"
           />
         </TabPane>
         <TabPane tabId="11">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Complete"
           />
         </TabPane>
         <TabPane tabId="12">
           <StatusTable
-            orders={props.orders}
+            orders={data}
             loadOrders={props.loadOrders}
             status="Shipped"
           />

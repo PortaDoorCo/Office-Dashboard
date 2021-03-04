@@ -274,7 +274,7 @@ export default (data) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 75, 25, 175, 100, '*'],
+            widths: [22, 120, 25, 175, '*', '*'],
             body: tableBody,
           },
           layout: 'lightHorizontalLines',
