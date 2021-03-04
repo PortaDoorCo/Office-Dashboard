@@ -332,6 +332,12 @@ const StatusTable = (props) => {
       <Row>
         <Col sm='9' />
         <Col>
+          <h3>Filter Due Date</h3>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm='9' />
+        <Col>
           <SingleDatePicker
             date={startDate} // momentPropTypes.momentObj or null
             onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
