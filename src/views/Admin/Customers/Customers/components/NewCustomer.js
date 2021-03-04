@@ -548,7 +548,7 @@ render() {
                 <Row>
                   <Col>
                     <FormGroup>
-                      <h6>Extra Notes</h6>
+                      <h6>Reminder</h6>
                       <Field
                         name={'Notes'}
                         type="text"

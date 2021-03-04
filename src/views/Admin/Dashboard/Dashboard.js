@@ -30,7 +30,8 @@ class Dashboard extends Component {
       modal: false,
       selectedOrder: null,
       orderEdit: false,
-      maps: false
+      maps: false,
+      charts: false
     };
   }
 
@@ -40,42 +41,55 @@ class Dashboard extends Component {
     });
   }
 
+  toggleCharts = () => {
+    this.setState({
+      charts: !this.state.charts
+    });
+  }
+
   render() {
     const { role } = this.props;
     return (
       <div className="animated fadeIn">
         {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
           <div>
-            <Row>
-              <Col lg="4">
-                <Suspense fallback={loading()}>
-                  <Chart2 />
-                </Suspense>
-              </Col>
-              <Col lg="4">
-                <Suspense fallback={loading()}>
-                  <Chart3 />
-                </Suspense>
-              </Col>
-              <Col lg="4">
-                <Suspense fallback={loading()}>
-                  <Chart4 />
-                </Suspense>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Suspense fallback={loading()}>
-                  <Chart1 />
-                </Suspense>
-              </Col>
-            </Row>
 
             <Row>
               <Col>
                 <Button color="primary" onClick={this.toggleMap}>Delivery Map</Button>
+                <Button color="primary" onClick={this.toggleCharts}>Charts</Button>
               </Col>
             </Row>
+
+            <Collapse isOpen={this.state.charts}>
+              <Row>
+                <Col lg="4">
+                  <Suspense fallback={loading()}>
+                    <Chart2 />
+                  </Suspense>
+                </Col>
+                <Col lg="4">
+                  <Suspense fallback={loading()}>
+                    <Chart3 />
+                  </Suspense>
+                </Col>
+                <Col lg="4">
+                  <Suspense fallback={loading()}>
+                    <Chart4 />
+                  </Suspense>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Suspense fallback={loading()}>
+                    <Chart1 />
+                  </Suspense>
+                </Col>
+              </Row>
+
+            </Collapse>
+
+
 
             <Collapse isOpen={this.state.maps}>
               <Row className="mb-5">
@@ -93,7 +107,7 @@ class Dashboard extends Component {
                 </Suspense>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col>
                 <Suspense fallback={loading()}>
                   <CompanyTable
@@ -101,7 +115,7 @@ class Dashboard extends Component {
                   />
                 </Suspense>
               </Col>
-            </Row>
+            </Row> */}
           </div>
           : role && (role.type === 'office' || role.type === 'sales') ?
             <div>
@@ -119,7 +133,7 @@ class Dashboard extends Component {
                   </Suspense>
                 </Col>
               </Row>
-              <Row>
+              {/* <Row>
                 <Col>
                   <Suspense fallback={loading()}>
                     <CompanyTable
@@ -127,7 +141,7 @@ class Dashboard extends Component {
                     />
                   </Suspense>
                 </Col>
-              </Row>
+              </Row> */}
             </div>
             : loading()
         }

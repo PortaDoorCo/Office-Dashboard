@@ -464,7 +464,7 @@ class Edit extends Component {
               <Row>
                 <Col>
                   <FormGroup>
-                    <h6>Notes</h6>
+                    <h6>Reminder</h6>
                     <Field
                       name={'Notes'}
                       type="text"
