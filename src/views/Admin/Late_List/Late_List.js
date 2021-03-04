@@ -21,6 +21,8 @@ import Assignment  from '@material-ui/icons/Assignment';
 import Report1 from '../Orders/PrintOuts/Reports/Report1';
 import DoorPDF from '../Orders/PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from '../Orders/PrintOuts/Pages/Drawer/DrawerPDF';
+import { SingleDatePicker } from 'react-dates';
+import { Row, Col } from 'reactstrap';
 
 momentLocaliser(moment);
 
@@ -127,16 +129,23 @@ const StatusTable = (props) => {
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [data, setData] = useState(orders);
   const [filterStatus] = useState(props.status);
+  const [activeTab, setActiveTab] = useState('1');
+  const [startDate, setStartDate] = useState(moment(new Date()));
+  const [endDate, setEndDate] = useState(moment(new Date()));
+  const [data, setData] = useState(orders);
+  const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
+  const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
+
 
   useEffect(() => {
     const filteredOrders = orders.filter(item => {
-      return item.late === true;
+      let date = new Date(item.dueDate);
+      return moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf() && item.late === true;
     });
     setData(filteredOrders);
 
-  }, [orders]);
+  }, [startDate, endDate, orders]);
 
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
@@ -315,9 +324,49 @@ const StatusTable = (props) => {
     setEdit(!edit);
   };
 
+  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].createdAt) : new Date();
+
 
   return (
     <div>
+      <Row>
+        <Col sm='9' />
+        <Col>
+          <SingleDatePicker
+            date={startDate} // momentPropTypes.momentObj or null
+            onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
+            focused={startDateFocusedInput} // PropTypes.bool
+            onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
+            id="startDate" // PropTypes.string.isRequired,
+            isOutsideRange={(date) => {
+              if (date > moment(new Date())) {
+                return true; // return true if you want the particular date to be disabled
+              } else if (date < moment(minDate)) {
+                return true;
+              } else {
+                return false;
+              }
+            }}
+          />
+
+          <SingleDatePicker
+            date={endDate} // momentPropTypes.momentObj or null
+            onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
+            focused={endDateFocusedInput} // PropTypes.bool
+            onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
+            id="endDate" // PropTypes.string.isRequired,
+            isOutsideRange={(date) => {
+              if (date > moment(new Date())) {
+                return true; // return true if you want the particular date to be disabled
+              } else if (date < moment(minDate)) {
+                return true;
+              } else {
+                return false;
+              }
+            }}
+          />
+        </Col>
+      </Row>
       <DataTable
         title="Orders"
         columns={columns}
