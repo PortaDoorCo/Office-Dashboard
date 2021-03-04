@@ -130,7 +130,7 @@ const Woodtype = (props) => {
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>4/4 Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
             <CardTitle><strong>5/4 Price:</strong> ${card.STANDARD_GRADE_THICK}</CardTitle>
-            <CardTitle><strong>Vertical Grain: </strong>{card.VERTICAL_GRAIN ? 'True' : 'False'}</CardTitle>
+            <CardTitle><strong>{card.VERTICAL_GRAIN ? 'Vertical Grain' : 'Horizontal Grain'}</strong></CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -196,7 +196,7 @@ const Woodtype = (props) => {
                   <Input type="number" value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
-              <Row>
+              <Row className="mt-3">
                 <Col>
                   <Row>
                     <Col>
@@ -311,7 +311,7 @@ const Woodtype = (props) => {
                   <Input type="number" value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
-              <Row>
+              <Row className="mt-3">
                 <Col>
                   <Row>
                     <Col>
