@@ -234,6 +234,17 @@ class App extends Component {
         printerOptionUpdated(res, data)
       )
     );
+
+    socket.on(
+      'message',
+      (res,data) => (
+        NotificationManager.warning(
+          res && res.message,
+          'Message from Admin',
+          10000
+        )
+      )
+    );
     
   };
 
