@@ -68,9 +68,9 @@ export default (data) => {
             },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             {
-              text: `Est. Completion: ${moment(data.job_info.DueDate).format(
+              text: `${data.status === 'Quote' ? '' : `Est. Completion: ${moment(data.job_info.DueDate).format(
                 'MM/DD/YYYY'
-              )}`,
+              )}`}` ,
               alignment: 'right',
             },
             {
