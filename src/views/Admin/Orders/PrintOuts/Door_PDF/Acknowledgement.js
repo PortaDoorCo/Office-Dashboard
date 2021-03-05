@@ -242,7 +242,7 @@ export default (data) => {
                 },
               ],
             },
-            { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold' },
+            { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold', alignment: 'center' },
             {
               stack: [
                 {
