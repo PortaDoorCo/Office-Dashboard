@@ -49,7 +49,9 @@ export default (data, breakdowns) => {
           stack: [
             { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
+            { text: `${data.status === 'Quote' ? '' : `Est. Completion: ${moment(data.job_info.DueDate).format(
+              'MM/DD/YYYY'
+            )}`}`, alignment: 'right' },
             { text: `Ship Via: ${data.job_info.ShippingMethod ? data.job_info.ShippingMethod.NAME : ' '}`, alignment: 'right' },
             { text: `Salesmen: ${data.sale ? data.sale.fullName : ''}`, alignment: 'right' }
           ]

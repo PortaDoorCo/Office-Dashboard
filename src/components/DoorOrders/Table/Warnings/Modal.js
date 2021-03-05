@@ -18,13 +18,13 @@ const WarningModal = (props) => {
     const { value, tag, index } = warningType;
     switch(tag) {
       case 'height':
-        if(value >= 48) {
+        if(numQty(value) >= 48) {
           twoHigh(index, null, 2);
         }
         toggle();
         break;
       case 'width':
-        if(value >= 24) {
+        if(numQty(value) >= 24) {
           twoWide(index, null, 2);
         }
         toggle();
