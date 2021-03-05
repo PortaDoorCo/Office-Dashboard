@@ -23,6 +23,7 @@ import {
 } from '../../../redux/users/actions';
 import LogOutModal from './LogOutModal';
 import FileUploader from '../../../components/FileUploader/FileUploader';
+import Message from './components/Message';
 
 const cookie = Cookies.get('jwt');
 
@@ -30,9 +31,11 @@ const AccountSettings = (props) => {
   const [user, setUser] = useState(props.user);
   const [modal, setModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [messageOpen, setMessageOpen] = useState(false);
 
   const toggle = () => setModal(!modal);
   const toggle_printing = () => setIsOpen(!isOpen);
+  const toggle_message = () => setMessageOpen(!messageOpen);
 
   const change = (e) => {
     const value = e.target.value;
@@ -281,6 +284,26 @@ const AccountSettings = (props) => {
                   </Collapse>
                 </Col>
               </Row>
+
+              {user && user.role && user.role.name === 'Administrator' ?
+                <Row>
+                  <Col>
+                    <Button
+                      color="primary"
+                      onClick={toggle_message}
+                      style={{ marginBottom: '1rem' }}
+                    >
+                                Message Center
+                    </Button>
+                    <Collapse isOpen={messageOpen}>
+                      <Message />
+                    </Collapse>
+                  </Col>
+                </Row> : null
+              }
+
+              
+              
 
               <Row className="mt-5">
                 <Col>
