@@ -3,7 +3,8 @@ import {
   Row,
   Col,
   Button,
-  Collapse
+  Collapse,
+  ButtonGroup
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -54,10 +55,12 @@ class Dashboard extends Component {
         {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
           <div>
 
-            <Row>
+            <Row className="mb-3">
               <Col>
-                <Button color="primary" onClick={this.toggleMap}>Delivery Map</Button>
-                <Button color="primary" onClick={this.toggleCharts}>Charts</Button>
+                <ButtonGroup>
+                  <Button color="success" onClick={this.toggleCharts}>Charts</Button>
+                  <Button color="success" onClick={this.toggleMap}>Delivery Map</Button>
+                </ButtonGroup>
               </Col>
             </Row>
 
