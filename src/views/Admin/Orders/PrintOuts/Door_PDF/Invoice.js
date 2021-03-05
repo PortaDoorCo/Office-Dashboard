@@ -94,14 +94,14 @@ export default (data) => {
             { text: `Customer - ${data.job_info.customer.Company}` },
             { text: `${data.companyprofile.Contact}`, style: 'fonts' },
             { text: `${data.companyprofile.Address1}`, style: 'fonts' },
-            { text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`, style: 'fonts' },
+            { text: `${data.companyprofile.Address1 ? data.companyprofile.Address1 : ''}`, style: 'fonts' },
             {
-              text: `${data.companyprofile.City}, ${data.job_info.State}`,
+              text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
               style: 'fonts',
             },
             { text: `${data.companyprofile.Zip}`, style: 'fonts' },
             { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-            { text: `Fax: ${data.job_info.Fax ? data.job_info.Fax : ''}`, style: 'fonts' },
+            { text: `Fax: ${data.companyprofile.Fax ? data.companyprofile.Fax : ''}`, style: 'fonts' },
             { text: `Terms: ${data.job_info && data.job_info.customer &&  data.job_info.customer.PMT_TERMS ? data.job_info.customer.PMT_TERMS : ''}`, style: 'fonts' },
           ],
         },
@@ -133,17 +133,17 @@ export default (data) => {
               margin: [0, 0, 0, 0],
             },
             {
-              text: `${data.job_info.City}`,
+              text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
               alignment: 'left',
               style: 'fonts',
               margin: [0, 0, 0, 0],
             },
-            {
-              text: `${data.job_info.Zip}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
+            // {
+            //   text: `${data.job_info.Zip}`,
+            //   alignment: 'left',
+            //   style: 'fonts',
+            //   margin: [0, 0, 0, 0],
+            // },
             {
               text: `${data.companyprofile.Phone1}`,
               alignment: 'left',
@@ -274,7 +274,26 @@ export default (data) => {
             widths: [22, 120, 25, 175, '*', '*'],
             body: tableBody,
           },
-          layout: 'lightHorizontalLines',
+          layout: {
+            hLineWidth: function (i, node) {
+              if (i === 0 || i === node.table.body.length) {
+                return 0;
+              }
+              return (i === node.table.headerRows) ? 1: 1;
+            },
+            vLineWidth: function (i) {
+              return 0;
+            },
+            hLineColor: function (i) {
+              return i === 1 ? 'black' : '#aaa';
+            },
+            paddingLeft: function (i) {
+              return i === 0 ? 0 : 8;
+            },
+            paddingRight: function (i, node) {
+              return (i === node.table.widths.length - 1) ? 0 : 8;
+            }
+          }
         },
         {
           columns: [
