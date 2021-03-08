@@ -1,7 +1,6 @@
 import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
 
-
 export default (data) => {
   const qty = data.part_list.map((part, i) => {
     return part.dimensions
@@ -35,39 +34,71 @@ export default (data) => {
 
   const discountSubTotal = subTotal - subTotal * (data.discount / 100);
 
-  console.log({data});
+  console.log({ data });
 
   return [
     {
       columns: [
         {
-          stack: ['Acknowledgement', 
+          stack: [
+            'Acknowledgement',
             {
               stack: [
                 { text: `Customer - ${data.job_info.customer.Company}` },
-                { text: `${data.companyprofile.Contact ? data.companyprofile.Contact : ''}`, style: 'fonts' },
-                { text: `${data.companyprofile.Address1 ? data.companyprofile.Address1 : ''}`, style: 'fonts' },
+                {
+                  text: `${
+                    data.companyprofile.Contact
+                      ? data.companyprofile.Contact
+                      : ''
+                  }`,
+                  style: 'fonts',
+                },
+                {
+                  text: `${
+                    data.companyprofile.Address1
+                      ? data.companyprofile.Address1
+                      : ''
+                  }`,
+                  style: 'fonts',
+                },
                 {
                   text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
                   style: 'fonts',
                 },
                 { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-                { text: `Fax: ${data.companyprofile.Fax ? data.companyprofile.Fax : ''}`, style: 'fonts' },
-                { text: `Terms: ${data.companyprofile.PMT_TERMS ? data.companyprofile.PMT_TERMS : ''}`, style: 'fonts' },
+                {
+                  text: `Fax: ${
+                    data.companyprofile.Fax ? data.companyprofile.Fax : ''
+                  }`,
+                  style: 'fonts',
+                  margin: [0, 0, 0, 10],
+                },
+                {
+                  text: `Terms: ${
+                    data.companyprofile.PMT_TERMS
+                      ? data.companyprofile.PMT_TERMS
+                      : ''
+                  }`,
+                  style: 'fonts',
+                },
               ],
               style: 'fontsBold',
-              margin: [0, 10, 0, 0]
+              margin: [0, 40, 0, 0],
             },
           ],
-          style: 'fontsBold'
+          style: 'headerFont',
         },
-        
+
         {
           stack: [
             { text: 'Porta Door Co. Inc.', alignment: 'center' },
             { text: '65 Cogwheel Lane', alignment: 'center' },
             { text: 'Seymour, CT', alignment: 'center' },
-            { text: '203-888-6191', alignment: 'center' },
+            {
+              text: '203-888-6191',
+              alignment: 'center',
+              margin: [0, 0, 0, 10],
+            },
             { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
           ],
         },
@@ -85,12 +116,21 @@ export default (data) => {
               alignment: 'right',
               style: 'rushFonts',
             },
-            { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             {
-              text: `${data.status === 'Quote' ? '' : `Est. Completion: ${moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              )}`}` ,
+              text: `Order #: ${data.orderNum}`,
               alignment: 'right',
+              style: 'headerFont',
+            },
+            {
+              text: `${
+                data.status === 'Quote'
+                  ? ''
+                  : `Est. Completion: ${moment(data.job_info.DueDate).format(
+                    'MM/DD/YYYY'
+                  )}`
+              }`,
+              alignment: 'right',
+              style: 'headerFont',
             },
             {
               text: `Ship Via: ${
@@ -99,22 +139,25 @@ export default (data) => {
                   : ' '
               }`,
               alignment: 'right',
+              style: 'headerFont',
             },
             {
               text: `Salesmen: ${data.sale ? data.sale.fullName : ''}`,
               alignment: 'right',
+              style: 'headerFont',
             },
-
 
             {
               stack: [
                 {
                   text: `Job: ${
-                    data.job_info.poNum.length > 0 ? data.job_info.poNum : 'None'
+                    data.job_info.poNum.length > 0
+                      ? data.job_info.poNum
+                      : 'None'
                   }`,
                   alignment: 'right',
                   margin: [0, 0, 0, 0],
-                  style: 'fonts'
+                  style: 'fonts',
                 },
                 {
                   text: `Ship To: ${data.job_info.customer.Company}`,
@@ -129,7 +172,9 @@ export default (data) => {
                   margin: [0, 0, 0, 0],
                 },
                 {
-                  text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`,
+                  text: `${
+                    data.job_info.Address2 ? data.job_info.Address2 : ''
+                  }`,
                   alignment: 'right',
                   style: 'fonts',
                   margin: [0, 0, 0, 0],
@@ -155,15 +200,14 @@ export default (data) => {
               ],
               margin: [0, 10, 0, 0],
             },
-
-
           ],
         },
       ],
     },
     {
-      text: '==============================================================================',
-      alignment: 'center'
+      text:
+        '==============================================================================',
+      alignment: 'center',
     },
     data.part_list.map((part, i) => {
       const tableBody = [
@@ -205,8 +249,7 @@ export default (data) => {
         ]);
       });
 
-
-      console.log({data});
+      console.log({ data });
 
       return [
         {
@@ -214,27 +257,45 @@ export default (data) => {
           columns: [
             {
               stack: [
-                { 
+                {
                   text: `${part.woodtype.NAME} - ${
-                    part.thickness && part.thickness.value === 0.75 ? '4/4' : part.thickness && part.thickness.value === 1 ? '5/4' : ''
-                  }`, style: 'fonts' },
+                    part.thickness && part.thickness.value === 0.75
+                      ? '4/4'
+                      : part.thickness && part.thickness.value === 1
+                        ? '5/4'
+                        : ''
+                  }`,
+                  style: 'fonts',
+                },
                 // {
                 //   text: `${part.orderType ? part.orderType.value : ''}`,
                 //   style: 'fonts',
                 // },
               ],
-              width: 260,
             },
-            
-            // { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold', alignment: 'center' },
+
             {
               stack: [
                 {
-                  text: `IP: ${part.profile ? part.profile.NAME : 'None'}  Edge: ${
+                  text: `${part.notes ? part.notes : ''}`,
+                  style: 'headerFont',
+                  alignment: 'center',
+                },
+                part.applied_profile?.NAME !== 'None' ? {
+                  text: `${part.applied_profile ? part.applied_profile.NAME : ''}`,
+                  style: 'fontsBold',
+                  alignment: 'center'
+                } : null
+              ],
+            },
+            {
+              stack: [
+                {
+                  text: `IP: ${
+                    part.profile ? part.profile.NAME : 'None'
+                  }  Edge: ${
                     part.edge ? part.edge.NAME : 'None'
-                  }  Applied Profile: ${
-                    part.applied_profile ? part.applied_profile.NAME : 'None'
-                  } `,
+                  }`,
                   style: 'fonts',
                 },
                 // {
@@ -255,19 +316,20 @@ export default (data) => {
           ],
         },
         {
-          text: '==============================================================================',
-          alignment: 'center'
+          text:
+            '==============================================================================',
+          alignment: 'center',
         },
         {
           margin: [0, 10, 0, 0],
           columns: [
             {
               stack: [
-                { 
+                {
                   text: `${
                     part.cope_design
-                      ? part.cope_design.NAME :
-                      part.cope_df_design
+                      ? part.cope_design.NAME
+                      : part.cope_df_design
                         ? part.cope_df_design.NAME + ' DF'
                         : part.mt_design
                           ? part.mt_design.NAME + ' ' + part.construction.value
@@ -275,24 +337,29 @@ export default (data) => {
                             ? part.miter_design.NAME + ' ' + part.construction.value
                             : part.miter_df_design
                               ? part.miter_df_design.NAME +
-                    ' ' +
-                    part.construction.value
+                        ' ' +
+                        part.construction.value
                               : part.mt_df_design
-                                ? part.mt_df_design.NAME + ' ' + part.construction.value :
-                                part.face_frame_design
-                                  ? part.face_frame_design.NAME  :
-                                  (part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF') ? '' : ''
+                                ? part.mt_df_design.NAME + ' ' + part.construction.value
+                                : part.face_frame_design
+                                  ? part.face_frame_design.NAME
+                                  : part.orderType.value === 'Slab_Door' ||
+                        part.orderType.value === 'Slab_DF'
+                                    ? ''
+                                    : ''
                   } - ${
                     part.panel
                       ? part.panel.NAME
-                      : (part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF')
+                      : part.orderType.value === 'Slab_Door' ||
+                        part.orderType.value === 'Slab_DF'
                         ? ''
                         : 'Glass'
-                  } ${i.lite ? '- ' + i.lite.NAME : ''}`, style: 'fonts' },
-
+                  } ${i.lite ? '- ' + i.lite.NAME : ''}`,
+                  style: 'fonts',
+                },
               ],
               width: 260,
-            }
+            },
           ],
         },
         {
@@ -304,8 +371,7 @@ export default (data) => {
 
           layout: {
             hLineWidth: function (i, node) {
-              console.log(i, node);
-              return (i === 1 ) ? 1 : 0;
+              return i === 1 ? 1 : 0;
             },
             vLineWidth: function (i, node) {
               return 0;
@@ -314,83 +380,106 @@ export default (data) => {
               if (i === 0 || i === node.table.body.length) {
                 return null;
               }
-              return {dash: {length: 1, space: 1}};
+              return { dash: { length: 1, space: 1 } };
             },
-    				paddingLeft: function (i) {
-    					return i === 0 ? 0 : 8;
-    				},
-    				paddingRight: function (i, node) {
-    					return (i === node.table.widths.length - 1) ? 0 : 8;
-    				},
-          }
-   
-          
+            paddingLeft: function (i) {
+              return i === 0 ? 0 : 8;
+            },
+            paddingRight: function (i, node) {
+              return i === node.table.widths.length - 1 ? 0 : 8;
+            },
+          },
         },
         {
-          columns: [
+          stack: [
             {
-              text: '',
-              width: 100,
-            },
-            {
-              text: ' Total: ',
-              width: 82,
-              style: 'fonts',
-              alignment: 'left',
-            },
-            { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
-            {
-              stack: [
+              columns: [
                 {
-                  columns: [
-                    // {
-                    //   text: 'Additional Price',
-                    //   style: 'totals',
-                    //   margin: [0, 0, 0, 0],
-                    // },
-                    // {
-                    //   text: `$${part.addPrice}`,
-                    //   style: 'totals',
-                    //   margin: [0, 0, 0, 0],
-                    //   alignment: 'right',
-                    // },
-                    {
-                      text: '',
-                      style: 'totals',
-                      margin: [0, 0, 0, 0],
-                    },
-                    {
-                      text: '',
-                      style: 'totals',
-                      margin: [0, 0, 0, 0],
-                      alignment: 'right',
-                    },
-                  ],
-                  // width: 100,
+                  text: '-------',
+                  margin: [175, 0, 0, 0],
+                },
+              ],
+              margin: [0, 0, 0, -10],
+            },
+            {
+              columns: [
+                {
+                  text: '------------',
+                  margin: [0, 0, 0, 0],
+                  alignment: 'right',
+                },
+              ],
+              margin: [0, 0, 0, -10],
+            },
+            {
+              columns: [
+                {
+                  text: '',
+                  width: 100,
                 },
                 {
-                  columns: [
+                  text: ' Total: ',
+                  width: 82,
+                  style: 'fonts',
+                  alignment: 'left',
+                },
+                { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
+                {
+                  stack: [
                     {
-                      text: 'Item Subtotal',
-                      style: 'fonts',
-                      margin: [0, 0, 0, 0],
+                      columns: [
+                        // {
+                        //   text: 'Additional Price',
+                        //   style: 'totals',
+                        //   margin: [0, 0, 0, 0],
+                        // },
+                        // {
+                        //   text: `$${part.addPrice}`,
+                        //   style: 'totals',
+                        //   margin: [0, 0, 0, 0],
+                        //   alignment: 'right',
+                        // },
+                        {
+                          text: '',
+                          style: 'totals',
+                          margin: [0, 0, 0, 0],
+                        },
+                        {
+                          text: '',
+                          style: 'totals',
+                          margin: [0, 0, 0, 0],
+                          alignment: 'right',
+                        },
+                      ],
+                      // width: 100,
                     },
                     {
-                      text: `$${data.subTotals[i].toFixed(2)}`,
-                      style: 'fonts',
-                      margin: [0, 0, 0, 0],
-                      alignment: 'right',
+                      columns: [
+                        {
+                          text: 'Item Subtotal',
+                          style: 'fonts',
+                          margin: [0, 0, 0, 0],
+                        },
+                        {
+                          text: `$${data.subTotals[i].toFixed(2)}`,
+                          style: 'fonts',
+                          margin: [0, 0, 0, 0],
+                          alignment: 'right',
+                        },
+                      ],
                     },
                   ],
                 },
               ],
+              margin: [0, 10, 0, 5],
             },
           ],
-          margin: [0, 10, 0, 5],
         },
+
         {
-          text: '==============================================================================',
-          alignment: 'center'
+          text:
+            '==============================================================================',
+          alignment: 'center',
         },
       ];
     }),
@@ -432,13 +521,18 @@ export default (data) => {
       margin: [0, 0, 0, 0],
     },
     {
+      text: '------------',
+      margin: [0, 0, 0, 0],
+      alignment: 'right',
+    },
+    {
       columns: [
         { text: '', style: 'totals', width: 347 },
         {
           text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
-          width: 100
+          width: 100,
         },
         {
           text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,
@@ -462,8 +556,13 @@ export default (data) => {
             : '',
           style: 'totals',
           margin: [0, 0, 0, 0],
+          width: 100
         },
-        { text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`, style: 'fonts', alignment: 'right' },
+        {
+          text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
+        },
       ],
       margin: [0, 10, 0, 0],
     },
@@ -544,7 +643,7 @@ export default (data) => {
       columns: [
         { text: '', style: 'totals', width: 347, decoration: 'underline' },
         {
-          text: `${data.status === 'Quote' ? 'Quote Only' : 'Total'}`,
+          text: `${data.status === 'Quote' ? 'QUOTE ONLY' : 'TOTAL'}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
         },
@@ -560,7 +659,7 @@ export default (data) => {
     {
       columns: [
         { text: '', style: 'totals', width: 347, decoration: 'underline' },
-        { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 100 },
         {
           text: `$${balancePaid.toFixed(2)}`,
           style: 'fonts',
@@ -574,7 +673,7 @@ export default (data) => {
     {
       columns: [
         { text: '', style: 'totals', width: 347 },
-        { text: 'Balance Due:', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0] },
         {
           text: `$${balanceDue.toFixed(2)}`,
           style: 'fonts',

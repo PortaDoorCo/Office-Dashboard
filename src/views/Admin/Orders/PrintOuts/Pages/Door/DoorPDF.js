@@ -116,6 +116,10 @@ export default (
         fontSize: 10,
         bold: true,
       },
+      headerFont: {
+        fontSize: 12,
+        bold: true,
+      },
       tableBold: {
         fontSize: 10,
         bold: true,
