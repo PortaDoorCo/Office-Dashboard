@@ -104,8 +104,7 @@ export default (data, breakdowns) => {
         {
           stack: [
             { text: `Customer - ${data.job_info.customer.Company}` },
-            { text: `${data.companyprofile.Contact}`, style: 'fonts' },
-            { text: `${data.companyprofile.Address1}`, style: 'fonts' },
+            { text: `${data.companyprofile.Contact ? data.companyprofile.Contact : ''}`, style: 'fonts' },
             { text: `${data.companyprofile.Address1 ? data.companyprofile.Address1 : ''}`, style: 'fonts' },
             {
               text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
