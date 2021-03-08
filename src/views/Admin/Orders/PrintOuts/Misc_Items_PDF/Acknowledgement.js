@@ -92,7 +92,7 @@ export default (data, breakdowns) => {
             { text: `${data.companyprofile.Zip}`, style: 'fonts' },
             { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
             { text: `Fax: ${data.companyprofile.Fax ? data.companyprofile.Fax : ''}`, style: 'fonts' },
-            { text: `Terms: ${data.job_info && data.job_info.customer &&  data.job_info.customer.PMT_TERMS ? data.job_info.customer.PMT_TERMS : ''}`, style: 'fonts' },
+            { text: `Terms: ${data.companyprofile.PMT_TERMS ? data.companyprofile.PMT_TERMS : ''}`, style: 'fonts' },
           ],
         },
         {
