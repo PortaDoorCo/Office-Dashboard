@@ -166,7 +166,7 @@ export default (data) => {
           { text: 'Item', style: 'fonts' },
           { text: 'Actual Size WxH', style: 'fonts' },
           { text: 'Qty', style: 'fonts' },
-          { text: 'Notes', style: 'fonts' },
+          { text: '', style: 'fonts' },
           { text: 'Total 1 Unit', style: 'fonts' },
           { text: 'Total Cost', style: 'fonts' },
         ],
@@ -177,11 +177,14 @@ export default (data) => {
           { text: index + 1, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
+          // {
+          //   text: `${item.notes ? item.notes : ''} ${
+          //     item.full_frame ? 'Full Frame DF' : ''
+          //   } ${item.lite ? item.lite.NAME : ''}`,
+          //   style: 'fonts',
+          // },
           {
-            text: `${item.notes ? item.notes : ''} ${
-              item.full_frame ? 'Full Frame DF' : ''
-            } ${item.lite ? item.lite.NAME : ''}`,
-            style: 'fonts',
+            text: ''
           },
           {
             text: `${(data.linePrice[i][index] / parseInt(item.qty)).toFixed(
@@ -276,7 +279,7 @@ export default (data) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 120, 25, 175, '*', '*'],
+            widths: [30, 120, 25, 133, '*', '*'],
             body: tableBody,
           },
 
@@ -306,8 +309,12 @@ export default (data) => {
         {
           columns: [
             {
+              text: '',
+              width: 100,
+            },
+            {
               text: ' Total: ',
-              width: 174,
+              width: 90,
               style: 'totals',
               alignment: 'left',
             },
@@ -316,19 +323,30 @@ export default (data) => {
               stack: [
                 {
                   columns: [
+                    // {
+                    //   text: 'Additional Price',
+                    //   style: 'totals',
+                    //   margin: [0, 0, 0, 0],
+                    // },
+                    // {
+                    //   text: `$${part.addPrice}`,
+                    //   style: 'totals',
+                    //   margin: [0, 0, 0, 0],
+                    //   alignment: 'right',
+                    // },
                     {
-                      text: 'Additional Price',
+                      text: '',
                       style: 'totals',
                       margin: [0, 0, 0, 0],
                     },
                     {
-                      text: `$${part.addPrice}`,
+                      text: '',
                       style: 'totals',
                       margin: [0, 0, 0, 0],
                       alignment: 'right',
                     },
                   ],
-                  width: 100,
+                  // width: 100,
                 },
                 {
                   columns: [

@@ -110,18 +110,18 @@ export default (
         bold: true,
       },
       fonts: {
-        fontSize: 9,
+        fontSize: 11,
       },
       fontsBold: {
-        fontSize: 12,
+        fontSize: 11,
         bold: true,
       },
       tableBold: {
-        fontSize: 10,
+        fontSize: 11,
         bold: true,
       },
       totals: {
-        fontSize: 8,
+        fontSize: 11,
         bold: true,
       },
       warrantyFont: {
