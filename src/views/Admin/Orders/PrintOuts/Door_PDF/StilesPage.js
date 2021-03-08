@@ -60,7 +60,12 @@ export default (data, breakdowns) => {
           }),
           style: 'fonts',
         },
-        { text: '' },
+        {
+          text: Stiles(item, i, breakdowns).map((stile) => {
+            return `${stile.pattern} \n`;
+          }),
+          style: 'fonts',
+        },
       ]);
     });
 
