@@ -41,8 +41,27 @@ export default (data) => {
     {
       columns: [
         {
-          stack: ['Acknowledgement'],
+          stack: ['Acknowledgement', 
+            {
+              stack: [
+                { text: `Customer - ${data.job_info.customer.Company}` },
+                { text: `${data.companyprofile.Contact ? data.companyprofile.Contact : ''}`, style: 'fonts' },
+                { text: `${data.companyprofile.Address1 ? data.companyprofile.Address1 : ''}`, style: 'fonts' },
+                {
+                  text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                  style: 'fonts',
+                },
+                { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
+                { text: `Fax: ${data.companyprofile.Fax ? data.companyprofile.Fax : ''}`, style: 'fonts' },
+                { text: `Terms: ${data.companyprofile.PMT_TERMS ? data.companyprofile.PMT_TERMS : ''}`, style: 'fonts' },
+              ],
+              style: 'fontsBold',
+              margin: [0, 10, 0, 0]
+            },
+          ],
+          style: 'fontsBold'
         },
+        
         {
           stack: [
             { text: 'Porta Door Co. Inc.', alignment: 'center' },
@@ -85,79 +104,66 @@ export default (data) => {
               text: `Salesmen: ${data.sale ? data.sale.fullName : ''}`,
               alignment: 'right',
             },
+
+
+            {
+              stack: [
+                {
+                  text: `Job: ${
+                    data.job_info.poNum.length > 0 ? data.job_info.poNum : 'None'
+                  }`,
+                  alignment: 'right',
+                  margin: [0, 0, 0, 0],
+                  style: 'fonts'
+                },
+                {
+                  text: `Ship To: ${data.job_info.customer.Company}`,
+                  style: 'fonts',
+                  alignment: 'right',
+                  margin: [0, 0, 0, 0],
+                },
+                {
+                  text: `${data.job_info.Address1}`,
+                  alignment: 'right',
+                  style: 'fonts',
+                  margin: [0, 0, 0, 0],
+                },
+                {
+                  text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`,
+                  alignment: 'right',
+                  style: 'fonts',
+                  margin: [0, 0, 0, 0],
+                },
+                {
+                  text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                  alignment: 'right',
+                  style: 'fonts',
+                  margin: [0, 0, 0, 0],
+                },
+                // {
+                //   text: `${data.job_info.Zip}`,
+                //   alignment: 'left',
+                //   style: 'fonts',
+                //   margin: [0, 0, 0, 0],
+                // },
+                {
+                  text: `${data.companyprofile.Phone1}`,
+                  alignment: 'right',
+                  style: 'fonts',
+                  margin: [0, 0, 0, 0],
+                },
+              ],
+              margin: [0, 10, 0, 0],
+            },
+
+
           ],
         },
       ],
     },
     {
-      columns: [
-        {
-          stack: [
-            { text: `Customer - ${data.job_info.customer.Company}` },
-            { text: `${data.companyprofile.Contact ? data.companyprofile.Contact : ''}`, style: 'fonts' },
-            { text: `${data.companyprofile.Address1 ? data.companyprofile.Address1 : ''}`, style: 'fonts' },
-            {
-              text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-              style: 'fonts',
-            },
-            { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-            { text: `Fax: ${data.companyprofile.Fax ? data.companyprofile.Fax : ''}`, style: 'fonts' },
-            { text: `Terms: ${data.companyprofile.PMT_TERMS ? data.companyprofile.PMT_TERMS : ''}`, style: 'fonts' },
-          ],
-        },
-        {
-          stack: [
-            {
-              text: `PO: ${
-                data.job_info.poNum.length > 0 ? data.job_info.poNum : 'None'
-              }`,
-              alignment: 'left',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `Ship To: ${data.job_info.customer.Company}`,
-              style: 'fonts',
-              alignment: 'left',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.Address1}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            // {
-            //   text: `${data.job_info.Zip}`,
-            //   alignment: 'left',
-            //   style: 'fonts',
-            //   margin: [0, 0, 0, 0],
-            // },
-            {
-              text: `${data.companyprofile.Phone1}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-          ],
-          margin: [120, 0, 0, 0],
-        },
-      ],
-      margin: [0, 10],
-    },
-    {
-      canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
+      text: '==============================================================================',
+      alignment: 'center'
     },
     data.part_list.map((part, i) => {
       const tableBody = [
@@ -165,7 +171,7 @@ export default (data) => {
           { text: 'Item', style: 'fonts' },
           { text: 'Actual Size WxH', style: 'fonts' },
           { text: 'Qty', style: 'fonts' },
-          { text: '', style: 'fonts' },
+          { text: 'Notes', style: 'fonts' },
           { text: 'Total 1 Unit', style: 'fonts' },
           { text: 'Total Cost', style: 'fonts' },
         ],
@@ -176,15 +182,15 @@ export default (data) => {
           { text: index + 1, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
-          // {
-          //   text: `${item.notes ? item.notes : ''} ${
-          //     item.full_frame ? 'Full Frame DF' : ''
-          //   } ${item.lite ? item.lite.NAME : ''}`,
-          //   style: 'fonts',
-          // },
           {
-            text: ''
+            text: `${item.notes ? item.notes : ''} ${
+              item.full_frame ? 'Full Frame DF' : ''
+            } ${item.lite ? item.lite.NAME : ''}`,
+            style: 'fonts',
           },
+          // {
+          //   text: ''
+          // },
           {
             text: `${(data.linePrice[i][index] / parseInt(item.qty)).toFixed(
               2
@@ -208,8 +214,56 @@ export default (data) => {
           columns: [
             {
               stack: [
-                { text: `${part.woodtype.NAME}`, style: 'fonts' },
+                { 
+                  text: `${part.woodtype.NAME} - ${
+                    part.thickness && part.thickness.value === 0.75 ? '4/4' : part.thickness && part.thickness.value === 1 ? '5/4' : ''
+                  }`, style: 'fonts' },
+                // {
+                //   text: `${part.orderType ? part.orderType.value : ''}`,
+                //   style: 'fonts',
+                // },
+              ],
+              width: 260,
+            },
+            
+            // { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold', alignment: 'center' },
+            {
+              stack: [
                 {
+                  text: `IP: ${part.profile ? part.profile.NAME : 'None'}  Edge: ${
+                    part.edge ? part.edge.NAME : 'None'
+                  }  Applied Profile: ${
+                    part.applied_profile ? part.applied_profile.NAME : 'None'
+                  } `,
+                  style: 'fonts',
+                },
+                // {
+                //   text: `Applied Profile: ${
+                //     part.applied_profile ? part.applied_profile.NAME : 'None'
+                //   }`,
+                //   style: 'fonts',
+                // },
+                // {
+                //   text: `Thickness: ${
+                //     part.thickness ? part.thickness.name : 'None'
+                //   }`,
+                //   style: 'fonts',
+                // },
+              ],
+              alignment: 'right',
+            },
+          ],
+        },
+        {
+          text: '==============================================================================',
+          alignment: 'center'
+        },
+        {
+          margin: [0, 10, 0, 0],
+          columns: [
+            {
+              stack: [
+                { 
                   text: `${
                     part.cope_design
                       ? part.cope_design.NAME :
@@ -221,8 +275,8 @@ export default (data) => {
                             ? part.miter_design.NAME + ' ' + part.construction.value
                             : part.miter_df_design
                               ? part.miter_df_design.NAME +
-                      ' ' +
-                      part.construction.value
+                    ' ' +
+                    part.construction.value
                               : part.mt_df_design
                                 ? part.mt_df_design.NAME + ' ' + part.construction.value :
                                 part.face_frame_design
@@ -234,46 +288,12 @@ export default (data) => {
                       : (part.orderType.value === 'Slab_Door' || part.orderType.value === 'Slab_DF')
                         ? ''
                         : 'Glass'
-                  } ${i.lite ? '- ' + i.lite.NAME : ''}`,
-                  style: 'fonts',
-                },
-                {
-                  text: `${part.orderType ? part.orderType.name : ''}`,
-                  style: 'fonts',
-                },
+                  } ${i.lite ? '- ' + i.lite.NAME : ''}`, style: 'fonts' },
+
               ],
-            },
-            { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold', alignment: 'center' },
-            {
-              stack: [
-                {
-                  text: `IP: ${part.profile ? part.profile.NAME : ''}  Edge: ${
-                    part.edge ? part.edge.NAME : ''
-                  }`,
-                  style: 'fonts',
-                },
-                {
-                  text: `Applied Profile: ${
-                    part.applied_profile ? part.applied_profile.NAME : 'None'
-                  }`,
-                  style: 'fonts',
-                },
-                {
-                  text: `Thickness: ${
-                    part.thickness ? part.thickness.name : 'None'
-                  }`,
-                  style: 'fonts',
-                },
-              ],
-              alignment: 'right',
-            },
+              width: 260,
+            }
           ],
-        },
-        {
-          canvas: [
-            { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 },
-          ],
-          margin: [0, 10, 0, 0],
         },
         {
           table: {
@@ -283,18 +303,19 @@ export default (data) => {
           },
 
           layout: {
-    				hLineWidth: function (i, node) {
-    					if (i === 0 || i === node.table.body.length) {
-    						return 0;
-    					}
-    					return (i === node.table.headerRows) ? 1: 1;
-    				},
-    				vLineWidth: function (i) {
-    					return 0;
-    				},
-    				hLineColor: function (i) {
-    					return i === 1 ? 'black' : '#aaa';
-    				},
+            hLineWidth: function (i, node) {
+              console.log(i, node);
+              return (i === 1 ) ? 1 : 0;
+            },
+            vLineWidth: function (i, node) {
+              return 0;
+            },
+            hLineStyle: function (i, node) {
+              if (i === 0 || i === node.table.body.length) {
+                return null;
+              }
+              return {dash: {length: 1, space: 1}};
+            },
     				paddingLeft: function (i) {
     					return i === 0 ? 0 : 8;
     				},
@@ -313,8 +334,8 @@ export default (data) => {
             },
             {
               text: ' Total: ',
-              width: 90,
-              style: 'totals',
+              width: 82,
+              style: 'fonts',
               alignment: 'left',
             },
             { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
@@ -351,7 +372,7 @@ export default (data) => {
                   columns: [
                     {
                       text: 'Item Subtotal',
-                      style: 'totals',
+                      style: 'fonts',
                       margin: [0, 0, 0, 0],
                     },
                     {
@@ -368,10 +389,8 @@ export default (data) => {
           margin: [0, 10, 0, 5],
         },
         {
-          canvas: [
-            { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 2 },
-          ],
-          margin: [0, 0, 0, 10],
+          text: '==============================================================================',
+          alignment: 'center'
         },
       ];
     }),
@@ -382,7 +401,7 @@ export default (data) => {
             (acc, item) => acc + item,
             0
           )}`,
-          style: 'totals',
+          style: 'fonts',
           width: 347,
         },
         { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0] },
@@ -419,6 +438,7 @@ export default (data) => {
           text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
+          width: 100
         },
         {
           text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,

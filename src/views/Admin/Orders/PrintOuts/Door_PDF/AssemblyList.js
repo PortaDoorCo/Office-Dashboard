@@ -64,15 +64,18 @@ export default (data, breakdowns) => {
       columns: [
         {
           text: `${data.job_info.customer.Company}`,
+          style: 'fonts'
         },
         {
           stack: [{ text: `PO: ${data.job_info.poNum}`, alignment: 'right' }],
+          style: 'fonts'
         },
       ],
       margin: [0, 10],
     },
     {
-      canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
+      text: '==============================================================================',
+      alignment: 'center'
     },
     data.part_list.map((i, index) => {
       const tableBody = [
@@ -83,7 +86,7 @@ export default (data, breakdowns) => {
           { text: 'Stile', style: 'fonts' },
           { text: 'Rails', style: 'fonts' },
           { text: 'Panels WxH', style: 'fonts' },
-        ],
+        ]
       ];
 
       if (i.orderType.value === 'Slab_Door') {
@@ -122,13 +125,13 @@ export default (data, breakdowns) => {
             {
               stack: [
                 { text: `${Size(item)} \n `, style: 'fonts' },
-                {
-                  text: `${item.notes ? item.notes : ''} ${
-                    item.full_frame ? 'Full Frame DF' : ''
-                  } ${item.lite ? item.lite.NAME : ''}`,
-                  style: 'tableBold',
-                  margin: [0, 4, 0, 0],
-                },
+                item.notes || item.full_frame || item.lite ? 
+                  {
+                    text: `${item.notes ? item.notes : ''} ${
+                      item.full_frame ? 'Full Frame DF' : ''
+                    } ${item.lite ? item.lite.NAME : ''}`,
+                    style: 'tableBold',
+                  } : null,
               ],
             },
             {
@@ -157,14 +160,10 @@ export default (data, breakdowns) => {
 
       return [
         {
-          margin: [0, 10, 0, 0],
+          margin: [0, 0, 0, 0],
           columns: [
             {
               stack: [
-                {
-                  text: `${i.orderType.name}`,
-                  style: 'fonts',
-                },
                 {
                   text: `${
                     i.cope_design
@@ -200,11 +199,7 @@ export default (data, breakdowns) => {
                   style: 'fonts',
                 },
                 {
-                  text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
-                  style: 'fonts',
-                },
-                {
-                  text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`,
+                  text: `IP: ${i.profile ? i.profile.NAME : 'None'}  Edge: ${i.edge ? i.edge.NAME : 'None'}`,
                   style: 'fonts',
                 },
                 // { text: `Applied Profile: ${i.applied_profile ? i.applied_profile.NAME : 'None'}`, style: 'fonts' },
@@ -214,23 +209,41 @@ export default (data, breakdowns) => {
           ],
         },
         {
-          canvas: [
-            { type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 },
-          ],
-          margin: [0, 10, 0, 0],
+          text: '==============================================================================',
+          alignment: 'center',
+          margin: [0,0,0,0]
         },
         {
           table: {
             headerRows: 1,
-            widths: [22, 15, 100, 110, 110, 110],
+            widths: [21, 16, 94, 100, 100, 110],
             body: tableBody,
           },
-          layout: 'lightHorizontalLines',
+          layout: {
+            hLineWidth: function (i, node) {
+              console.log(i, node);
+              return (i === 1 ) ? 1 : 0;
+            },
+            vLineWidth: function (i, node) {
+              return 0;
+            },
+            hLineStyle: function (i, node) {
+              if (i === 0 || i === node.table.body.length) {
+                return null;
+              }
+              return {dash: {length: 1, space: 1}};
+            },
+    				paddingLeft: function (i) {
+    					return i === 0 ? 0 : 8;
+    				},
+    				paddingRight: function (i, node) {
+    					return (i === node.table.widths.length - 1) ? 0 : 8;
+    				},
+          }
         },
         {
-          canvas: [
-            { type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 },
-          ],
+          text: '==============================================================================',
+          alignment: 'center'
         },
       ];
     }),
