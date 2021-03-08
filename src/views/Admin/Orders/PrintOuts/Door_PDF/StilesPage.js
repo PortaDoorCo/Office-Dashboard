@@ -4,7 +4,6 @@ import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 
 export default (data, breakdowns) => {
   const getName = i => {
-    console.log('iiiiii==>>>', i);
     return `${
       i.cope_design
         ? i.cope_design.NAME
