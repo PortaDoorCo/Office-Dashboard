@@ -22,7 +22,7 @@ export default (data) => {
 
   const balanceDue = data.total - balancePaid;
 
-  const miscTotal = data.misc_items.map((i) => {
+  const misc_prices = data.misc_items.map((i) => {
     if (i.category === 'preselect') {
       return parseFloat(i.qty) * parseFloat(i.price);
     } else {
@@ -30,9 +30,22 @@ export default (data) => {
     }
   });
 
+  const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
+
+
+
+
+
   const discountTotal = subTotal * (data.discount / 100);
 
-  const discountSubTotal = subTotal - subTotal * (data.discount / 100);
+  const discountSubTotal = subTotal - discountTotal;
+
+  
+  const order_sub_total = misc_total + discountSubTotal;
+
+
+
+
 
   console.log({ data });
 
@@ -544,37 +557,19 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
         {
-          text: data.Taxable
-            ? '$' +
-              discountSubTotal.toFixed(2) +
-              ' x ' +
-              data.companyprofile.TaxRate +
-              '%' +
-              ' Tax:'
-            : '',
+          text: `${data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''}`,
           style: 'totals',
-          margin: [0, 0, 0, 0],
-          width: 100
-        },
-        {
-          text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 10, 0, 0],
-    },
-    {
-      columns: [
-        {
-          text: `${data.misc_items.length > 0 ? 'Misc Items' : ''}`,
-          style: 'totals',
-          width: 347,
           decoration: 'underline',
+          width: 150
         },
-        { text: '', style: 'totals', margin: [0, 0, 0, 0] },
+        {
+          text: 'Qty',
+          style: 'totals',
+          decoration: 'underline',
+          width: 30
+        },
+        { text: 'Cost Per', style: 'totals', margin: [0, 0, 0, 0], decoration: 'underline', },
         { text: '', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' },
       ],
       margin: [0, 10, 0, 0],
@@ -583,12 +578,18 @@ export default (data) => {
       columns: [
         {
           text: data.misc_items.map((i) => {
-            return `(${i.qty ? i.qty : ''}) ${
+            return `${
               i.item ? i.item.NAME : i.item2 ? i.item2 : ''
             } \n`;
           }),
           style: 'fonts',
-          width: 347,
+          width: 150
+        },
+        {
+          text: data.misc_items.map((i) => {
+            return i.qty ? i.qty : '';
+          }),
+          width: 30
         },
         {
           text: data.misc_items.map((i) => {
@@ -621,17 +622,17 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347, decoration: 'underline' },
+        { text: '', style: 'totals', decoration: 'underline', width: 347 },
         {
-          text: miscTotal.length > 0 ? 'Subtotal' : '',
+          text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
           style: 'totals',
-          margin: [0, 0, 0, 0],
+          width: 100
         },
         {
           text:
-            miscTotal.length > 0
-              ? '$' + miscTotal.reduce((acc, item) => acc + item, 0)
-              : '',
+          data.misc_items.length > 0
+            ? '$' + order_sub_total.toFixed(2)
+            : '',
           style: 'fonts',
           margin: [0, 0, 0, 0],
           alignment: 'right',
@@ -639,6 +640,32 @@ export default (data) => {
       ],
       margin: [0, 10, 0, 0],
     },
+
+    {
+      columns: [
+        { text: '', style: 'totals', width: 347 },
+        {
+          text: data.Taxable
+            ? '$' +
+              order_sub_total.toFixed(2) +
+              ' x ' +
+              data.companyprofile.TaxRate +
+              '%' +
+              ' Tax:'
+            : '',
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 100
+        },
+        {
+          text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
+        },
+      ],
+      margin: [0, 10, 0, 0],
+    },
+
     {
       columns: [
         { text: '', style: 'totals', width: 347, decoration: 'underline' },
