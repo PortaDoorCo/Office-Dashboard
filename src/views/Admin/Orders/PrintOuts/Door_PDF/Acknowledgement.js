@@ -173,57 +173,79 @@ export default (data) => {
             },
 
             {
-              margin:[0,10,0,0],
-              stack: [
-                {
-                  text: `Job: ${
-                    data.job_info.poNum.length > 0
-                      ? data.job_info.poNum
-                      : 'None'
-                  }`,
-                  // alignment: 'right',
-                  margin: [30, 0, 0, 0],
-                  style: 'fonts',
+              margin:[10,10,0,0],
+              columns: [
+                { 
+                  width: 40,
+                  stack: [
+                    {
+                      text: 'Job: ',
+                      alignment: 'left',
+                      margin: [0, 0, 0, 0],
+                      style: 'fonts',
+                    },
+                    {
+                      text: 'Ship To: ',
+                      style: 'fonts',
+                      alignment: 'left',
+                      margin: [0, 0, 0, 0],
+                    },
+                  ],
                 },
                 {
-                  text: `Ship To: ${data.job_info.customer.Company}`,
-                  style: 'fonts',
-                  // alignment: 'right',
-                  margin: [30, 0, 0, 0],
-                },
-                {
-                  text: `${data.job_info.Address1}`,
-                  // alignment: 'right',
-                  style: 'fonts',
-                  margin: [30, 0, 0, 0],
-                },
-                {
-                  text: `${
-                    data.job_info.Address2 ? data.job_info.Address2 : ''
-                  }`,
-                  // alignment: 'right',
-                  style: 'fonts',
-                  margin: [30, 0, 0, 0],
-                },
-                {
-                  text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                  // alignment: 'right',
-                  style: 'fonts',
-                  margin: [30, 0, 0, 0],
-                },
-                // {
-                //   text: `${data.job_info.Zip}`,
-                //   alignment: 'left',
-                //   style: 'fonts',
-                //   margin: [0, 0, 0, 0],
-                // },
-                {
-                  text: `${data.companyprofile.Phone1}`,
-                  // alignment: 'right',
-                  style: 'fonts',
-                  margin: [30, 0, 0, 0],
-                },
-              ],
+                  stack: [
+                    {
+                      text: `${
+                        data.job_info.poNum.length > 0
+                          ? data.job_info.poNum
+                          : 'None'
+                      }`,
+                      alignment: 'left',
+                      margin: [0, 0, 0, 0],
+                      style: 'fonts',
+                    },
+                    {
+                      text: `${data.job_info.customer.Company}`,
+                      style: 'fonts',
+                      // alignment: 'right',
+                      margin: [0, 0, 0, 0],
+                    },
+                    {
+                      text: `${data.job_info.Address1}`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                    {
+                      text: `${
+                        data.job_info.Address2 ? data.job_info.Address2 : ''
+                      }`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                    {
+                      text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                    // {
+                    //   text: `${data.job_info.Zip}`,
+                    //   alignment: 'left',
+                    //   style: 'fonts',
+                    //   margin: [0, 0, 0, 0],
+                    // },
+                    {
+                      text: `${data.companyprofile.Phone1}`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                  ],
+                }
+              ]
+  
             },
           ],
         },
@@ -334,11 +356,13 @@ export default (data) => {
             },
 
             {
+              width: 200,
               stack: [
                 {
                   text: `${part.notes ? part.notes : ''}`,
                   style: 'headerFont',
                   alignment: 'center',
+                  
                 },
                 part.applied_profile?.NAME !== 'None' ? {
                   text: `${part.applied_profile ? part.applied_profile.NAME : ''}`,
@@ -393,7 +417,7 @@ export default (data) => {
         {
           table: {
             headerRows: 1,
-            widths: [30, 110, 25, 133, '*', '*'],
+            widths: [30, 80, 30, 155, '*', '*'],
             body: tableBody,
             heights: [10]
           },
@@ -425,7 +449,7 @@ export default (data) => {
               columns: [
                 {
                   text: '-------',
-                  margin: [175, 0, 0, 0],
+                  margin: [147, 0, 0, 0],
                 },
               ],
               margin: [0, 0, 0, -10],
@@ -448,7 +472,7 @@ export default (data) => {
                 },
                 {
                   text: ' Total: ',
-                  width: 82,
+                  width: 55,
                   style: 'fonts',
                   alignment: 'left',
                 },
