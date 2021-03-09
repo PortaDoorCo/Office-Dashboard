@@ -54,7 +54,7 @@ export default (data) => {
       columns: [
         {
           stack: [
-            'Acknowledgement',
+            'ACKNOWLEDGEMENT',
             {
               stack: [
                 { text: `Customer - ${data.job_info.customer.Company}` },
@@ -243,7 +243,7 @@ export default (data) => {
             text: `${item.notes ? item.notes : ''} ${
               item.full_frame ? 'Full Frame DF' : ''
             } ${item.lite ? item.lite.NAME : ''}`,
-            style: 'fonts',
+            style: 'fontsBold',
           },
           // {
           //   text: ''
@@ -284,6 +284,38 @@ export default (data) => {
                 //   text: `${part.orderType ? part.orderType.value : ''}`,
                 //   style: 'fonts',
                 // },
+                {
+                  text: `${
+                    part.cope_design
+                      ? part.cope_design.NAME
+                      : part.cope_df_design
+                        ? part.cope_df_design.NAME + ' DF'
+                        : part.mt_design
+                          ? part.mt_design.NAME + ' ' + part.construction.value
+                          : part.miter_design
+                            ? part.miter_design.NAME + ' ' + part.construction.value
+                            : part.miter_df_design
+                              ? part.miter_df_design.NAME +
+                        ' ' +
+                        part.construction.value
+                              : part.mt_df_design
+                                ? part.mt_df_design.NAME + ' ' + part.construction.value
+                                : part.face_frame_design
+                                  ? part.face_frame_design.NAME
+                                  : part.orderType.value === 'Slab_Door' ||
+                        part.orderType.value === 'Slab_DF'
+                                    ? ''
+                                    : ''
+                  } - ${
+                    part.panel
+                      ? part.panel.NAME
+                      : part.orderType.value === 'Slab_Door' ||
+                        part.orderType.value === 'Slab_DF'
+                        ? ''
+                        : 'Glass'
+                  } ${i.lite ? '- ' + i.lite.NAME : ''}`,
+                  style: 'fonts',
+                },
               ],
             },
 
@@ -333,48 +365,17 @@ export default (data) => {
             '==============================================================================',
           alignment: 'center',
         },
-        {
-          margin: [0, 10, 0, 0],
-          columns: [
-            {
-              stack: [
-                {
-                  text: `${
-                    part.cope_design
-                      ? part.cope_design.NAME
-                      : part.cope_df_design
-                        ? part.cope_df_design.NAME + ' DF'
-                        : part.mt_design
-                          ? part.mt_design.NAME + ' ' + part.construction.value
-                          : part.miter_design
-                            ? part.miter_design.NAME + ' ' + part.construction.value
-                            : part.miter_df_design
-                              ? part.miter_df_design.NAME +
-                        ' ' +
-                        part.construction.value
-                              : part.mt_df_design
-                                ? part.mt_df_design.NAME + ' ' + part.construction.value
-                                : part.face_frame_design
-                                  ? part.face_frame_design.NAME
-                                  : part.orderType.value === 'Slab_Door' ||
-                        part.orderType.value === 'Slab_DF'
-                                    ? ''
-                                    : ''
-                  } - ${
-                    part.panel
-                      ? part.panel.NAME
-                      : part.orderType.value === 'Slab_Door' ||
-                        part.orderType.value === 'Slab_DF'
-                        ? ''
-                        : 'Glass'
-                  } ${i.lite ? '- ' + i.lite.NAME : ''}`,
-                  style: 'fonts',
-                },
-              ],
-              width: 260,
-            },
-          ],
-        },
+        // {
+        //   margin: [0, 10, 0, 0],
+        //   columns: [
+        //     {
+        //       stack: [
+               
+        //       ],
+        //       width: 260,
+        //     },
+        //   ],
+        // },
         {
           table: {
             headerRows: 1,
@@ -506,11 +507,11 @@ export default (data) => {
           style: 'fonts',
           width: 347,
         },
-        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' },
         {
           text: `$${subTotal.toFixed(2)}`,
           style: 'fonts',
-          margin: [31, 0, 0, 0],
+          margin: [31, 0, 0, 10],
           alignment: 'right',
         },
       ],
@@ -522,6 +523,7 @@ export default (data) => {
           text: `${data.discount > 0 ? data.discount + '% ' + 'Discount' : ''}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
+          alignment: 'right'
         },
         {
           text: `${
@@ -545,7 +547,8 @@ export default (data) => {
           text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
-          width: 100,
+          // width: 100,
+          alignment: 'right'
         },
         {
           text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,
@@ -559,17 +562,17 @@ export default (data) => {
       columns: [
         {
           text: `${data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''}`,
-          style: 'totals',
+          style: 'fonts',
           decoration: 'underline',
           width: 150
         },
         {
           text: 'Qty',
-          style: 'totals',
+          style: 'fonts',
           decoration: 'underline',
           width: 30
         },
-        { text: 'Cost Per', style: 'totals', margin: [0, 0, 0, 0], decoration: 'underline', },
+        { text: 'Cost Per', style: 'fonts', margin: [0, 0, 0, 0], decoration: 'underline', },
         { text: '', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' },
       ],
       margin: [0, 10, 0, 0],
@@ -621,12 +624,18 @@ export default (data) => {
       margin: [0, 2, 0, 0],
     },
     {
+      text: '------------',
+      margin: [0, 0, 0, 0],
+      alignment: 'right',
+    },
+    {
       columns: [
         { text: '', style: 'totals', decoration: 'underline', width: 347 },
         {
           text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
           style: 'totals',
-          width: 100
+          // width: 100,
+          alignment: 'right'
         },
         {
           text:
@@ -643,7 +652,7 @@ export default (data) => {
 
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
+        { text: '', style: 'totals', width: 345 },
         {
           text: data.Taxable
             ? '$' +
@@ -654,8 +663,9 @@ export default (data) => {
               ' Tax:'
             : '',
           style: 'totals',
-          margin: [0, 0, 0, 0],
-          width: 100
+          margin: [0, 0, 0, 4],
+          width: 95,
+          alignment: 'right'
         },
         {
           text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
@@ -663,9 +673,13 @@ export default (data) => {
           alignment: 'right',
         },
       ],
-      margin: [0, 10, 0, 0],
+      margin: [0, 0, 0, 0],
     },
-
+    {
+      text: '======',
+      margin: [0, 0, 0, 0],
+      alignment: 'right',
+    },
     {
       columns: [
         { text: '', style: 'totals', width: 347, decoration: 'underline' },
@@ -673,6 +687,7 @@ export default (data) => {
           text: `${data.status === 'Quote' ? 'QUOTE ONLY' : 'TOTAL'}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
+          alignment: 'right'
         },
         {
           text: `$${data.total.toFixed(2)}`,
@@ -685,8 +700,8 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347, decoration: 'underline' },
-        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 100 },
+        { text: '', style: 'totals', width: 340, decoration: 'underline' },
+        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 95,  alignment: 'right' },
         {
           text: `$${balancePaid.toFixed(2)}`,
           style: 'fonts',
@@ -696,11 +711,15 @@ export default (data) => {
       ],
       margin: [0, 2, 0, 0],
     },
-
+    {
+      text: '======',
+      margin: [0, 0, 0, 0],
+      alignment: 'right',
+    },
     {
       columns: [
         { text: '', style: 'totals', width: 347 },
-        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0] },
+        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' },
         {
           text: `$${balanceDue.toFixed(2)}`,
           style: 'fonts',
