@@ -239,10 +239,10 @@ export default (data) => {
         [
           { text: 'Item', style: 'fonts' },
           { text: 'Actual Size WxH', style: 'fonts' },
-          { text: 'Qty', style: 'fonts' },
+          { text: 'Qty', style: 'fonts', alignment: 'center' },
           { text: 'Notes', style: 'fonts' },
-          { text: 'Total 1 Unit', style: 'fonts' },
-          { text: 'Total Cost', style: 'fonts' },
+          { text: 'Total 1 Unit', style: 'fonts', alignment: 'right' },
+          { text: 'Total Cost', style: 'fonts', alignment: 'right' },
         ],
       ];
 
@@ -250,7 +250,7 @@ export default (data) => {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
-          { text: `${item.qty}`, style: 'fonts' },
+          { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
           {
             text: `${item.notes ? item.notes : ''} ${
               item.full_frame ? 'Full Frame DF' : ''
@@ -265,11 +265,13 @@ export default (data) => {
               2
             )}`,
             style: 'fonts',
+            alignment: 'right'
           },
           {
             text: `${data.linePrice[i][index].toFixed(2)}`,
             style: 'fonts',
             alignment: 'right',
+            width: 210
           },
         ]);
       });
@@ -391,8 +393,9 @@ export default (data) => {
         {
           table: {
             headerRows: 1,
-            widths: [30, 120, 25, 133, '*', '*'],
+            widths: [30, 110, 25, 133, '*', '*'],
             body: tableBody,
+            heights: [10]
           },
 
           layout: {
@@ -470,12 +473,6 @@ export default (data) => {
                           style: 'totals',
                           margin: [0, 0, 0, 0],
                         },
-                        {
-                          text: '',
-                          style: 'totals',
-                          margin: [0, 0, 0, 0],
-                          alignment: 'right',
-                        },
                       ],
                       // width: 100,
                     },
@@ -485,12 +482,14 @@ export default (data) => {
                           text: 'Item Subtotal',
                           style: 'fonts',
                           margin: [0, 0, 0, 0],
+                          alignment: 'right'
                         },
                         {
                           text: `$${data.subTotals[i].toFixed(2)}`,
                           style: 'fonts',
                           margin: [0, 0, 0, 0],
                           alignment: 'right',
+                          width: 83
                         },
                       ],
                     },
@@ -517,9 +516,9 @@ export default (data) => {
             0
           )}`,
           style: 'fonts',
-          width: 340,
+          width: 312,
         },
-        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0], width: 115, alignment: 'right' },
+        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0], width: 120, alignment: 'right' },
         {
           text: `$${subTotal.toFixed(2)}`,
           style: 'fonts',
@@ -527,16 +526,17 @@ export default (data) => {
           alignment: 'right',
         },
       ],
+      margin:[0,0,0,10]
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 340 },
+        { text: '', style: 'totals', width: 312 },
         {
           text: `${data.discount > 0 ? data.discount + '% ' + 'Discount' : ''}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
           alignment: 'right',
-          width: 115
+          width: 120
         },
         {
           text: `${
@@ -555,12 +555,12 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 340 },
+        { text: '', style: 'totals', width: 312 },
         {
           text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
-          width: 115,
+          width: 120,
           alignment: 'right'
         },
         {
@@ -643,11 +643,11 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', decoration: 'underline', width: 340 },
+        { text: '', style: 'totals', decoration: 'underline', width: 312 },
         {
           text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
           style: 'totals',
-          width: 115,
+          width: 120,
           alignment: 'right'
         },
         {
@@ -665,7 +665,7 @@ export default (data) => {
 
     {
       columns: [
-        { text: '', style: 'totals', width: 340 },
+        { text: '', style: 'totals', width: 312 },
         {
           text: data.Taxable
             ? '$' +
@@ -677,7 +677,7 @@ export default (data) => {
             : '',
           style: 'totals',
           margin: [0, 0, 0, 4],
-          width: 115,
+          width: 120,
           alignment: 'right'
         },
         {
@@ -695,13 +695,13 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 340, decoration: 'underline' },
+        { text: '', style: 'totals', width: 312, decoration: 'underline' },
         {
           text: `${data.status === 'Quote' ? 'QUOTE ONLY' : 'TOTAL'}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
           alignment: 'right',
-          width: 115
+          width: 120
         },
         {
           text: `$${data.total.toFixed(2)}`,
@@ -714,8 +714,8 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 340, decoration: 'underline' },
-        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 115,  alignment: 'right' },
+        { text: '', style: 'totals', width: 312, decoration: 'underline' },
+        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 120,  alignment: 'right' },
         {
           text: `$${balancePaid.toFixed(2)}`,
           style: 'fonts',
@@ -732,8 +732,8 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 350 },
-        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0], width:100, alignment: 'right' },
+        { text: '', style: 'totals', width: 324 },
+        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0], width:105, alignment: 'right' },
         {
           text: `$${balanceDue.toFixed(2)}`,
           style: 'fonts',
