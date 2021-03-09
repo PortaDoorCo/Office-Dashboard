@@ -52,51 +52,61 @@ export default (data) => {
   return [
     {
       columns: [
-        {
+        { 
+          width: 200,
           stack: [
-            'ACKNOWLEDGEMENT',
-            {
-              stack: [
-                { text: `Customer - ${data.job_info.customer.Company}` },
-                {
-                  text: `${
-                    data.companyprofile.Contact
-                      ? data.companyprofile.Contact
-                      : ''
-                  }`,
-                  style: 'fonts',
-                },
-                {
-                  text: `${
-                    data.companyprofile.Address1
-                      ? data.companyprofile.Address1
-                      : ''
-                  }`,
-                  style: 'fonts',
-                },
-                {
-                  text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                  style: 'fonts',
-                },
-                { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-                {
-                  text: `Fax: ${
-                    data.companyprofile.Fax ? data.companyprofile.Fax : ''
-                  }`,
-                  style: 'fonts',
-                  margin: [0, 0, 0, 10],
-                },
-                {
-                  text: `Terms: ${
-                    data.companyprofile.PMT_TERMS
-                      ? data.companyprofile.PMT_TERMS
-                      : ''
-                  }`,
-                  style: 'fonts',
-                },
-              ],
-              style: 'fontsBold',
-              margin: [0, 40, 0, 0],
+            {text: 'ACKNOWLEDGEMENT', margin:[0,0,0,-10]},
+            { columns: [
+              {
+                text: 'Customer - ',
+                width: 60
+              },
+              { 
+                
+                stack: [
+                  { text: `${data.job_info.customer.Company}` },
+                  {
+                    text: `${
+                      data.companyprofile.Contact
+                        ? data.companyprofile.Contact
+                        : ''
+                    }`,
+                    style: 'fonts',
+                  },
+                  {
+                    text: `${
+                      data.companyprofile.Address1
+                        ? data.companyprofile.Address1
+                        : ''
+                    }`,
+                    style: 'fonts',
+                  },
+                  {
+                    text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                    style: 'fonts',
+                  },
+                  { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
+                  {
+                    text: `Fax: ${
+                      data.companyprofile.Fax ? data.companyprofile.Fax : ''
+                    }`,
+                    style: 'fonts',
+                    margin: [0, 0, 0, 10],
+                  },
+                  {
+                    text: `Terms: ${
+                      data.companyprofile.PMT_TERMS
+                        ? data.companyprofile.PMT_TERMS
+                        : ''
+                    }`,
+                    style: 'fonts',
+                  },
+                ],
+              }
+            ],
+
+            style: 'fontsBold',
+            margin: [0, 40, 0, 0],
             },
           ],
           style: 'headerFont',
@@ -114,6 +124,8 @@ export default (data) => {
             },
             { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
           ],
+          // width: 200,
+          alignment: 'center'
         },
         {
           stack: [
@@ -161,6 +173,7 @@ export default (data) => {
             },
 
             {
+              margin:[0,10,0,0],
               stack: [
                 {
                   text: `Job: ${
@@ -168,35 +181,35 @@ export default (data) => {
                       ? data.job_info.poNum
                       : 'None'
                   }`,
-                  alignment: 'right',
-                  margin: [0, 0, 0, 0],
+                  // alignment: 'right',
+                  margin: [30, 0, 0, 0],
                   style: 'fonts',
                 },
                 {
                   text: `Ship To: ${data.job_info.customer.Company}`,
                   style: 'fonts',
-                  alignment: 'right',
-                  margin: [0, 0, 0, 0],
+                  // alignment: 'right',
+                  margin: [30, 0, 0, 0],
                 },
                 {
                   text: `${data.job_info.Address1}`,
-                  alignment: 'right',
+                  // alignment: 'right',
                   style: 'fonts',
-                  margin: [0, 0, 0, 0],
+                  margin: [30, 0, 0, 0],
                 },
                 {
                   text: `${
                     data.job_info.Address2 ? data.job_info.Address2 : ''
                   }`,
-                  alignment: 'right',
+                  // alignment: 'right',
                   style: 'fonts',
-                  margin: [0, 0, 0, 0],
+                  margin: [30, 0, 0, 0],
                 },
                 {
                   text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                  alignment: 'right',
+                  // alignment: 'right',
                   style: 'fonts',
-                  margin: [0, 0, 0, 0],
+                  margin: [30, 0, 0, 0],
                 },
                 // {
                 //   text: `${data.job_info.Zip}`,
@@ -206,12 +219,11 @@ export default (data) => {
                 // },
                 {
                   text: `${data.companyprofile.Phone1}`,
-                  alignment: 'right',
+                  // alignment: 'right',
                   style: 'fonts',
-                  margin: [0, 0, 0, 0],
+                  margin: [30, 0, 0, 0],
                 },
               ],
-              margin: [0, 10, 0, 0],
             },
           ],
         },
@@ -505,25 +517,26 @@ export default (data) => {
             0
           )}`,
           style: 'fonts',
-          width: 347,
+          width: 340,
         },
-        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' },
+        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0], width: 115, alignment: 'right' },
         {
           text: `$${subTotal.toFixed(2)}`,
           style: 'fonts',
-          margin: [31, 0, 0, 10],
+          margin: [0, 0, 0, 0],
           alignment: 'right',
         },
       ],
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
+        { text: '', style: 'totals', width: 340 },
         {
           text: `${data.discount > 0 ? data.discount + '% ' + 'Discount' : ''}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
-          alignment: 'right'
+          alignment: 'right',
+          width: 115
         },
         {
           text: `${
@@ -542,12 +555,12 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
+        { text: '', style: 'totals', width: 340 },
         {
           text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
-          // width: 100,
+          width: 115,
           alignment: 'right'
         },
         {
@@ -630,11 +643,11 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', decoration: 'underline', width: 347 },
+        { text: '', style: 'totals', decoration: 'underline', width: 340 },
         {
           text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
           style: 'totals',
-          // width: 100,
+          width: 115,
           alignment: 'right'
         },
         {
@@ -652,7 +665,7 @@ export default (data) => {
 
     {
       columns: [
-        { text: '', style: 'totals', width: 345 },
+        { text: '', style: 'totals', width: 340 },
         {
           text: data.Taxable
             ? '$' +
@@ -664,7 +677,7 @@ export default (data) => {
             : '',
           style: 'totals',
           margin: [0, 0, 0, 4],
-          width: 95,
+          width: 115,
           alignment: 'right'
         },
         {
@@ -682,12 +695,13 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347, decoration: 'underline' },
+        { text: '', style: 'totals', width: 340, decoration: 'underline' },
         {
           text: `${data.status === 'Quote' ? 'QUOTE ONLY' : 'TOTAL'}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
-          alignment: 'right'
+          alignment: 'right',
+          width: 115
         },
         {
           text: `$${data.total.toFixed(2)}`,
@@ -701,7 +715,7 @@ export default (data) => {
     {
       columns: [
         { text: '', style: 'totals', width: 340, decoration: 'underline' },
-        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 95,  alignment: 'right' },
+        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 115,  alignment: 'right' },
         {
           text: `$${balancePaid.toFixed(2)}`,
           style: 'fonts',
@@ -718,13 +732,14 @@ export default (data) => {
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
-        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' },
+        { text: '', style: 'totals', width: 350 },
+        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0], width:100, alignment: 'right' },
         {
           text: `$${balanceDue.toFixed(2)}`,
           style: 'fonts',
           margin: [0, 0, 0, 0],
           alignment: 'right',
+          
         },
       ],
       margin: [0, 15, 0, 0],
