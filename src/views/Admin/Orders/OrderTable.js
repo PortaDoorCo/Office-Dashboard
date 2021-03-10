@@ -316,7 +316,7 @@ const OrderTable = (props) => {
     {
       name: 'Balance Paid',
       sortable: true,
-      cell: row => <div>${row.balance_history && row.balance_history[row.balance_history.length - 1] && row.balance_history[row.balance_history.length - 1].balance_paid}</div>,
+      cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
     },
     {
       name: 'Terms',
