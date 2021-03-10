@@ -595,98 +595,101 @@ export default (data) => {
       ],
       margin: [0, 0, 0, 0],
     },
-    {
-      columns: [
-        {
-          text: `${data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''}`,
-          style: 'fonts',
-          decoration: 'underline',
-          width: 150
-        },
-        {
-          text: 'Qty',
-          style: 'fonts',
-          decoration: 'underline',
-          width: 30
-        },
-        { text: 'Cost Per', style: 'fonts', margin: [0, 0, 0, 0], decoration: 'underline', },
-        { text: '', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' },
-      ],
-      margin: [0, 10, 0, 0],
-    },
-    {
-      columns: [
-        {
-          text: data.misc_items.map((i) => {
-            return `${
-              i.item ? i.item.NAME : i.item2 ? i.item2 : ''
-            } \n`;
-          }),
-          style: 'fonts',
-          width: 150
-        },
-        {
-          text: data.misc_items.map((i) => {
-            return i.qty ? i.qty : '';
-          }),
-          width: 30
-        },
-        {
-          text: data.misc_items.map((i) => {
-            return `$${
-              i.price
-                ? parseFloat(i.price).toFixed(2)
-                : i.pricePer
-                  ? parseFloat(i.pricePer).toFixed(2)
-                  : 0
-            } \n`;
-          }),
-          style: 'fonts',
-          margin: [0, 0, 0, 0],
-        },
-        {
-          text: data.misc_items.map((i) => {
-            return `$${
-              i.price
-                ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2)
-                : i.pricePer
-                  ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2)
-                  : 0
-            } \n`;
-          }),
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 2, 0, 0],
-    },
-    {
-      text: '------------',
-      margin: [0, 0, 0, 0],
-      alignment: 'right',
-    },
-    {
-      columns: [
-        { text: '', style: 'totals', decoration: 'underline', width: 312 },
-        {
-          text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
-          style: 'totals',
-          width: 120,
-          alignment: 'right'
-        },
-        {
-          text:
+    data.misc_items.length>0 ?
+      {
+        columns: [
+          {
+            text: `${data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''}`,
+            style: 'fonts',
+            decoration: 'underline',
+            width: 150
+          },
+          {
+            text: 'Qty',
+            style: 'fonts',
+            decoration: 'underline',
+            width: 30
+          },
+          { text: 'Cost Per', style: 'fonts', margin: [0, 0, 0, 0], decoration: 'underline', },
+          { text: '', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' },
+        ],
+        margin: [0, 10, 0, 0],
+      } : null,
+    data.misc_items.length>0 ?
+      {
+        columns: [
+          {
+            text: data.misc_items.map((i) => {
+              return `${
+                i.item ? i.item.NAME : i.item2 ? i.item2 : ''
+              } \n`;
+            }),
+            style: 'fonts',
+            width: 150
+          },
+          {
+            text: data.misc_items.map((i) => {
+              return i.qty ? i.qty : '';
+            }),
+            width: 30
+          },
+          {
+            text: data.misc_items.map((i) => {
+              return `$${
+                i.price
+                  ? parseFloat(i.price).toFixed(2)
+                  : i.pricePer
+                    ? parseFloat(i.pricePer).toFixed(2)
+                    : 0
+              } \n`;
+            }),
+            style: 'fonts',
+            margin: [0, 0, 0, 0],
+          },
+          {
+            text: data.misc_items.map((i) => {
+              return `$${
+                i.price
+                  ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2)
+                  : i.pricePer
+                    ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2)
+                    : 0
+              } \n`;
+            }),
+            style: 'fonts',
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 2, 0, 0],
+      } : null,
+    data.misc_items.length>0 ?
+      {
+        text: '------------',
+        margin: [0, 0, 0, 0],
+        alignment: 'right',
+      } : null,
+    data.misc_items.length>0 ?
+      {
+        columns: [
+          { text: '', style: 'totals', decoration: 'underline', width: 312 },
+          {
+            text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
+            style: 'totals',
+            width: 120,
+            alignment: 'right'
+          },
+          {
+            text:
           data.misc_items.length > 0
             ? '$' + order_sub_total.toFixed(2)
             : '',
-          style: 'fonts',
-          margin: [0, 0, 0, 0],
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 10, 0, 0],
-    },
-
+            style: 'fonts',
+            margin: [0, 0, 0, 0],
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 10, 0, 0],
+      } : null,
     {
       columns: [
         { text: '', style: 'totals', width: 312 },
