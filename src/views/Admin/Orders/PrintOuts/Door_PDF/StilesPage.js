@@ -26,7 +26,7 @@ export default (data, breakdowns) => {
     }`;
   };
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
-  const b = a.map(woodtype => woodtype.map((v, i) => ({...v, dimensions: flattenDeep( v.dimensions.map(d => ({...d, name: getName(v)}))  ) }))).map((t, x) => ({...t[x], dimensions: flattenDeep(t.map(c => c.dimensions))}));
+  const b = a.map(woodtype => woodtype.map((v, i) => ({...v, dimensions: flattenDeep( v.dimensions.map(d => ({...d, name: getName(v)}))  ) }))).map((t, x) => ({...t[0], dimensions: flattenDeep(t.map(c => c.dimensions))}));
   
 
   console.log({ partttt: b, adtttt: data.part_list, aaaaaaaa: a });

@@ -155,7 +155,7 @@ export default (data, breakdowns) => {
               alignment: 'left',
             },
             {
-              text: 'STILES',
+              text: 'RAILS',
               alignment: 'right',
               style: 'woodtype',
             },
@@ -169,7 +169,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 95, 30, '*', 200],
+            // widths: [22, 95, 30, '*', 200],
             body: tableBody,
           },
           layout: {
@@ -212,7 +212,7 @@ export default (data, breakdowns) => {
       columns: [
         {
           stack: [
-            'Individual - STILES List',
+            'Individual - RAILS List',
             `Shipping Date: ${moment(data.job_info.DueDate).format(
               'MM/DD/YYYY'
             )}`,
