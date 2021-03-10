@@ -15,9 +15,10 @@ import Glass_Door from './designs/Glass/Glass';
 
 export default (info, part, breakdowns) => {
 
+  console.log({part});
 
 
-  if(part.orderType.value === 'Door') {
+  if(part.orderType?.value === 'Door') {
     if (part.construction.value === 'Cope') {
       return Cope_Door(info, part, breakdowns[0]);
     }
@@ -33,7 +34,7 @@ export default (info, part, breakdowns) => {
     }
   }
 
-  if(part.orderType.value === 'Glass') {
+  if(part.orderType?.value === 'Glass') {
     if (part.construction.value === 'Cope') {
       return Cope_Door(info, part, breakdowns[0]);
     }
@@ -45,7 +46,7 @@ export default (info, part, breakdowns) => {
     }
   }
 
-  if(part.orderType.value === 'DF') {
+  if(part.orderType?.value === 'DF') {
     if (part.construction.value === 'Cope') {
       return Cope_DF(info, part, breakdowns[3]);
     }
@@ -57,7 +58,7 @@ export default (info, part, breakdowns) => {
     }
   }
 
-  if(part.orderType.value === 'Glass_DF') {
+  if(part.orderType?.value === 'Glass_DF') {
     if (part.construction.value === 'Cope') {
       return Cope_DF(info, part, breakdowns[3]);
     }
@@ -69,33 +70,33 @@ export default (info, part, breakdowns) => {
     }
   }
 
-  if(part.orderType.value === 'Face_Frame') {
+  if(part.orderType?.value === 'Face_Frame') {
     return Face_Frame(info,part, breakdowns[6]);
   }
 
-  if(part.orderType.value === 'One_Piece') {
+  if(part.orderType?.value === 'One_Piece') {
     return One_Piece_Door(info,part, breakdowns[0]);
   }
 
-  if(part.orderType.value === 'One_Piece_DF') {
+  if(part.orderType?.value === 'One_Piece_DF') {
     return One_Piece_Door(info,part, breakdowns[0]);
   }
 
-  if(part.orderType.value === 'Two_Piece') {
+  if(part.orderType?.value === 'Two_Piece') {
     return One_Piece_Door(info,part, breakdowns[0]);
   }
 
-  if(part.orderType.value === 'Two_Piece_DF') {
+  if(part.orderType?.value === 'Two_Piece_DF') {
     return One_Piece_Door(info,part, breakdowns[0]);
   }
 
 
     
-  if(part.orderType.value === 'Slab_Door') {
+  if(part.orderType?.value === 'Slab_Door') {
     return Slab_Door(info);
   }
 
-  if(part.orderType.value === 'Slab_DF') {
+  if(part.orderType?.value === 'Slab_DF') {
     return Slab_Door(info);
   }
 
