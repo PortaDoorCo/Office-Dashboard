@@ -6,6 +6,8 @@ import Size from '../Breakdowns/Doors/Size';
 import SlabSize from '../Breakdowns/Doors/SlabSize';
 
 export default (data, breakdowns) => {
+
+  console.log({data});
   return [
     {
       columns: [
