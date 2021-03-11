@@ -148,6 +148,7 @@ export default (data, breakdowns) => {
                     : ''
               }`,
               style: 'woodtype',
+              width: 200
             },
             {
               text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,

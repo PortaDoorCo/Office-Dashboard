@@ -92,6 +92,7 @@ export default (data, breakdowns) => {
                     : ''
               }`,
               style: 'woodtype',
+              width: 200
             },
             {
               text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
@@ -113,7 +114,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 95, 30, '*', 200],
+            // widths: [22, 95, 30, '*', 200],
             body: tableBody,
           },
           layout: {

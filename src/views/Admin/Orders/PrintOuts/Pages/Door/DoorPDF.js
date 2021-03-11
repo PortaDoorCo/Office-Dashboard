@@ -121,7 +121,7 @@ export default (
         bold: true,
       },
       tableBold: {
-        fontSize: 10,
+        fontSize: 9,
         bold: true,
       },
       totals: {

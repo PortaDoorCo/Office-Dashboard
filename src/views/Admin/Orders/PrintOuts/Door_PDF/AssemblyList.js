@@ -132,7 +132,7 @@ export default (data, breakdowns) => {
                     text: `${item.notes ? item.notes : ''} ${
                       item.full_frame ? 'Full Frame DF' : ''
                     } ${item.lite ? item.lite.NAME : ''}`,
-                    style: 'tableBold',
+                    style: 'tableBold', alignment: 'center'
                   } : null,
               ],
             },
@@ -192,8 +192,9 @@ export default (data, breakdowns) => {
                 },
                 { text: `${i.woodtype.NAME} - ${i.thickness.value === 0.75 ? '4/4 - 3/4"' : i.thickness.value === 1 ? '5/4 - 1"' : ''}`, style: 'woodtype' },
               ],
+              width: 200
             },
-            { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
+            { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold', alignment: 'center' },
             {
               stack: [
                 {
