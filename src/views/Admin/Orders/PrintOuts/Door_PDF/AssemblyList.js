@@ -219,7 +219,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [21, 16, 94, 100, 100, 110],
+            widths: [21, 15, 94, 105, 105, 115],
             body: tableBody,
           },
           layout: {

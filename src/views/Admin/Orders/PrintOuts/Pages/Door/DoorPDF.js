@@ -110,14 +110,14 @@ export default (
         bold: true,
       },
       fonts: {
-        fontSize: 10,
+        fontSize: 9,
       },
       fontsBold: {
-        fontSize: 10,
+        fontSize: 9,
         bold: true,
       },
       headerFont: {
-        fontSize: 12,
+        fontSize: 11,
         bold: true,
       },
       tableBold: {
@@ -125,7 +125,7 @@ export default (
         bold: true,
       },
       totals: {
-        fontSize: 10,
+        fontSize: 9,
         bold: true,
       },
       warrantyFont: {
