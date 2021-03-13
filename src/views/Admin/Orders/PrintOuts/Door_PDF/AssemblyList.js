@@ -132,7 +132,7 @@ export default (data, breakdowns) => {
                     text: `${item.notes ? item.notes : ''} ${
                       item.full_frame ? 'Full Frame DF' : ''
                     } ${item.lite ? item.lite.NAME : ''}`,
-                    style: 'tableBold', alignment: 'center'
+                    style: 'tableBold', alignment: 'left'
                   } : null,
               ],
             },
