@@ -60,7 +60,8 @@ export default (data, breakdowns) => {
         { text: 'Style', style: 'fonts' },
         { text: 'Qty', style: 'fonts' },
         { text: 'Actual Size', style: 'fonts' },
-        { text: 'Panel', style: 'fonts' },
+        { text: 'Panel', style: 'fonts', alignment: 'right' },
+        { text: 'IP', style: 'fonts', alignment: 'right' },
       ],
     ];
     i.dimensions.forEach((item, index) => {
@@ -75,6 +76,12 @@ export default (data, breakdowns) => {
         {
           text: i.panel ? i.panel.NAME : '',
           style: 'fonts',
+          alignment: 'right'
+        },
+        {
+          text: i.profile ? i.profile.NAME : '',
+          style: 'fonts',
+          alignment: 'right'
         },
       ]);
     });
