@@ -98,18 +98,19 @@ export default (data, breakdowns) => {
                   ? '5/4'
                   : ''
             }`,
-            style: 'fontsBold',
+            style: 'woodtype',
             width: 370,
           },
           {
-            text: 'No Hinge',
-            alignment: 'right',
+            text: '',
+            alignment: 'left',
             style: 'fontsBold',
+            width: 80
           },
           {
             text: `Edge: ${i.edge && i.edge.NAME}`,
-            alignment: 'right',
-            style: 'fontsBold',
+            alignment: 'left',
+            style: 'fonts',
           },
         ],
       },
@@ -322,6 +323,43 @@ export default (data, breakdowns) => {
       alignment: 'center',
     },
     table_body,
+    {
+      columns: [
+        {
+          text: 'OTHER ITEMS',
+          style: 'woodtype',
+          decoration: 'underline',
+          width: 160
+        },
+        {
+          text: 'QTY',
+          style: 'woodtype',
+          decoration: 'underline'
+        }
+      ]
+    },
+    data.misc_items.length>0 ?
+      {
+        columns: [
+          {
+            text: data.misc_items.map((i) => {
+              return `${
+                i.item ? i.item.NAME : i.item2 ? i.item2 : ''
+              } \n`;
+            }),
+            style: 'fonts',
+            width: 170
+          },
+          {
+            style: 'fonts',
+            text: data.misc_items.map((i) => {
+              return i.qty ? i.qty : '';
+            }),
+            width: 30
+          },
+        ],
+        margin: [0, 2, 0, 0],
+      } : null,
     {
       margin:[0,10,0,10],
       columns: [
