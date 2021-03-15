@@ -53,7 +53,9 @@ export default (data, breakdowns) => {
       margin: [0, 10]
     },
     {
-      canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }]
+      text:
+        '==============================================================================',
+      alignment: 'center',
     },
     data.part_list.map(i => {
 
@@ -102,10 +104,9 @@ export default (data, breakdowns) => {
           },
           { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
           {
-            canvas: [
-              { type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }
-            ],
-            margin: [0, 10, 0, 0]
+            text:
+              '==============================================================================',
+            alignment: 'center',
           },
         ];
 
@@ -174,15 +175,35 @@ export default (data, breakdowns) => {
           {
             table: {
               headerRows: 1,
-              widths: [22, 15, '*', '*', '*', '*'],
+              widths: [22, 15, '*', '*', 110, '*'],
               body: i
             },
-            layout: 'lightHorizontalLines'
+            layout: {
+              hLineWidth: function (i, node) {
+                return i === 1 ? 1 : 0;
+              },
+              vLineWidth: function (i, node) {
+                return 0;
+              },
+              hLineStyle: function (i, node) {
+                if (i === 0 || i === node.table.body.length) {
+                  return null;
+                }
+                return { dash: { length: 1, space: 1 } };
+              },
+              paddingLeft: function (i) {
+                return i === 0 ? 0 : 8;
+              },
+              paddingRight: function (i, node) {
+                return i === node.table.widths.length - 1 ? 0 : 8;
+              },
+            },
           },
           {
-            canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }],
-
-          }
+            text:
+              '==============================================================================',
+            alignment: 'center',
+          },
         ];
       });
 
@@ -197,12 +218,15 @@ export default (data, breakdowns) => {
           text: 'Box Sides / Box Fronts & Backs - Material Breakdown', style: 'fonts', margin: [0, 12, 0, 0],
         },
         {
-          canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
+          text:
+            '==============================================================================',
+          alignment: 'center',
         },
         materialBreakdown,
         {
-          canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }],
-          margin: [0, 20, 0, 10]
+          text:
+            '==============================================================================',
+          alignment: 'center',
         },
       ];
 

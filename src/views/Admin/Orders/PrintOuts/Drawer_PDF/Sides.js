@@ -43,7 +43,9 @@ export default (data, breakdowns) => {
       margin: [0, 10]
     },
     {
-      canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }]
+      text:
+        '==============================================================================',
+      alignment: 'center',
     },
     data.part_list.map((i, index) => {
       let sortedDimensions = i.dimensions.sort(function (a, b) { return a.height - b.height; });
@@ -137,10 +139,9 @@ export default (data, breakdowns) => {
           ]
         },
         {
-          canvas: [
-            { type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }
-          ],
-          margin: [0, 10, 0, 0]
+          text:
+            '==============================================================================',
+          alignment: 'center',
         },
         {
           table: {
@@ -148,7 +149,26 @@ export default (data, breakdowns) => {
             widths: ['*', '*', '*', '*',],
             body: fronts
           },
-          layout: 'lightHorizontalLines',
+          layout: {
+            hLineWidth: function (i, node) {
+              return i === 1 ? 1 : 0;
+            },
+            vLineWidth: function (i, node) {
+              return 0;
+            },
+            hLineStyle: function (i, node) {
+              if (i === 0 || i === node.table.body.length) {
+                return null;
+              }
+              return { dash: { length: 1, space: 1 } };
+            },
+            paddingLeft: function (i) {
+              return i === 0 ? 0 : 8;
+            },
+            paddingRight: function (i, node) {
+              return i === node.table.widths.length - 1 ? 0 : 8;
+            },
+          },
           margin: [0, 0, 0, 10]
         },
         {
@@ -157,10 +177,31 @@ export default (data, breakdowns) => {
             widths: ['*', '*', '*', '*',],
             body: sides
           },
-          layout: 'lightHorizontalLines'
+          layout: {
+            hLineWidth: function (i, node) {
+              return i === 1 ? 1 : 0;
+            },
+            vLineWidth: function (i, node) {
+              return 0;
+            },
+            hLineStyle: function (i, node) {
+              if (i === 0 || i === node.table.body.length) {
+                return null;
+              }
+              return { dash: { length: 1, space: 1 } };
+            },
+            paddingLeft: function (i) {
+              return i === 0 ? 0 : 8;
+            },
+            paddingRight: function (i, node) {
+              return i === node.table.widths.length - 1 ? 0 : 8;
+            },
+          },
         },
         {
-          canvas: [{ type: 'line', x1: 0, y1: 0, x2: 540, y2: 0, lineWidth: 1 }]
+          text:
+            '==============================================================================',
+          alignment: 'center',
         },
         {
           text: 'Box Sides / Box Fronts & Backs - Linear Inch Material Breakdown - "Width x Thickness"', style: 'fonts', margin: [0, 12, 0, 0],
@@ -170,8 +211,9 @@ export default (data, breakdowns) => {
         },
         materialBody,
         {
-          canvas: [{ type: 'line', x1: -100, y1: 0, x2: 1000, y2: 0, lineWidth: 1 }],
-          margin: [0, 20, 0, 10]
+          text:
+            '==============================================================================',
+          alignment: 'center',
         },
         // { text: '', pageBreak: 'before' }
       ];

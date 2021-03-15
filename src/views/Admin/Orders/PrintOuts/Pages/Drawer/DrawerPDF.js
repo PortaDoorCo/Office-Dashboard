@@ -58,10 +58,16 @@ export default (data, breakdowns, p) => {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: ContentSorted,
-    
-    pageMargins: [ 40, 40, 40, 60 ],
-    pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
-      return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
+    pageMargins: [40, 40, 40, 60],
+    pageBreakBefore: function (
+      currentNode,
+      followingNodesOnPage,
+      nodesOnNextPage,
+      previousNodesOnPage
+    ) {
+      return (
+        currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0
+      );
     },
     styles: {
       woodtype: {

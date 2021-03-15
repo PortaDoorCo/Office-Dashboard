@@ -125,7 +125,9 @@ export default (data, breakdowns) => {
       margin: [0, 10],
     },
     {
-      canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
+      text:
+        '==============================================================================',
+      alignment: 'center',
     },
     data.part_list.map((part, i) => {
       const tableBody = [
@@ -183,10 +185,9 @@ export default (data, breakdowns) => {
           ]
         },
         {
-          canvas: [
-            { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }
-          ],
-          margin: [0, 10, 0, 0]
+          text:
+            '==============================================================================',
+          alignment: 'center',
         },
         {
           table: {
@@ -194,13 +195,31 @@ export default (data, breakdowns) => {
             widths: [22, '*', '*', '*'],
             body: tableBody,
           },
-          layout: 'lightHorizontalLines',
+          layout: {
+            hLineWidth: function (i, node) {
+              return i === 1 ? 1 : 0;
+            },
+            vLineWidth: function (i, node) {
+              return 0;
+            },
+            hLineStyle: function (i, node) {
+              if (i === 0 || i === node.table.body.length) {
+                return null;
+              }
+              return { dash: { length: 1, space: 1 } };
+            },
+            paddingLeft: function (i) {
+              return i === 0 ? 0 : 8;
+            },
+            paddingRight: function (i, node) {
+              return i === node.table.widths.length - 1 ? 0 : 8;
+            },
+          },
         },
         {
-          canvas: [
-            { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 },
-          ],
-          margin: [0, 0, 0, 10],
+          text:
+            '==============================================================================',
+          alignment: 'center',
         },
       ];
     }),
