@@ -393,7 +393,7 @@ export default (data, breakdowns) => {
           width: 200,
         },
         {
-          text: 'Packed By:  ______________',
+          text: 'Packed By:  _______________',
           style: 'totals',
           width: 347,
         },
@@ -412,7 +412,7 @@ export default (data, breakdowns) => {
         },
 
         {
-          text: 'Total Weight: ______________',
+          text: 'Total Weight: _____________',
           style: 'totals',
           width: 347,
         },
@@ -434,7 +434,7 @@ export default (data, breakdowns) => {
           width: 200,
         },
         {
-          text: 'Total # Inv\'s: ______________________',
+          text: 'Total # Inv\'s: ______________',
           style: 'totals',
           width: 347,
         },
