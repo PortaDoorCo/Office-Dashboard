@@ -47,7 +47,6 @@ export default (data, breakdowns) => {
         { text: 'Width x Length', style: 'fonts' },
         { text: 'Pat', style: 'fonts' },
         { text: 'Arch', style: 'fonts' },
-        { text: '' },
       ],
     ];
     i.dimensions.forEach((item, index) => {
@@ -86,7 +85,6 @@ export default (data, breakdowns) => {
                 : '',
             style: 'fonts',
           },
-          { text: '' },
         ]);
       } else {
         tableBody.push([
@@ -120,7 +118,6 @@ export default (data, breakdowns) => {
                 : '',
             style: 'fonts',
           },
-          { text: '' },
         ]);
       }
     });
@@ -171,6 +168,7 @@ export default (data, breakdowns) => {
           table: {
             headerRows: 1,
             // widths: [22, 95, 30, '*', 200],
+            widths: [22, 60, 30, 100, 30, 80],
             body: tableBody,
           },
           layout: {
@@ -214,9 +212,6 @@ export default (data, breakdowns) => {
         {
           stack: [
             'Individual - RAILS List',
-            `Shipping Date: ${moment(data.job_info.DueDate).format(
-              'MM/DD/YYYY'
-            )}`,
           ],
         },
         {
@@ -244,7 +239,7 @@ export default (data, breakdowns) => {
             },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             {
-              text: `Est. Completion: ${moment(data.job_info.DueDate).format(
+              text: `Estimated Ship: ${moment(data.job_info.DueDate).format(
                 'MM/DD/YYYY'
               )}`,
               alignment: 'right',
@@ -257,9 +252,10 @@ export default (data, breakdowns) => {
       columns: [
         {
           text: `${data.job_info.customer.Company}`,
+          style: 'fonts'
         },
         {
-          stack: [{ text: `PO: ${data.job_info.poNum}`, alignment: 'right' }],
+          stack: [{ text: `PO: ${data.job_info.poNum}`, alignment: 'right', style: 'fonts' }],
         },
       ],
       margin: [0, 10],

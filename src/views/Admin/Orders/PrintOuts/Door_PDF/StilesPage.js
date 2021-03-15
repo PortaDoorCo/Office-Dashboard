@@ -114,7 +114,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            // widths: [22, 95, 30, '*', 200],
+            widths: [22, 80, 30, 120, 30],
             body: tableBody,
           },
           layout: {
@@ -158,9 +158,6 @@ export default (data, breakdowns) => {
         {
           stack: [
             'Individual - STILES List',
-            `Shipping Date: ${moment(data.job_info.DueDate).format(
-              'MM/DD/YYYY'
-            )}`,
           ],
         },
         {
@@ -188,7 +185,7 @@ export default (data, breakdowns) => {
             },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             {
-              text: `Est. Completion: ${moment(data.job_info.DueDate).format(
+              text: `Estimated Ship: ${moment(data.job_info.DueDate).format(
                 'MM/DD/YYYY'
               )}`,
               alignment: 'right',
@@ -201,9 +198,10 @@ export default (data, breakdowns) => {
       columns: [
         {
           text: `${data.job_info.customer.Company}`,
+          style: 'fonts'
         },
         {
-          stack: [{ text: `PO: ${data.job_info.poNum}`, alignment: 'right' }],
+          stack: [{ text: `Job: ${data.job_info.poNum}`, alignment: 'right', style: 'fonts' }],
         },
       ],
       margin: [0, 10],

@@ -106,7 +106,7 @@ export default (
     },
     styles: {
       woodtype: {
-        fontSize: 18,
+        fontSize: 15,
         bold: true,
       },
       fonts: {

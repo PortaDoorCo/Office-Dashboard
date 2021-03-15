@@ -60,8 +60,8 @@ export default (data, breakdowns) => {
         { text: 'Style', style: 'fonts' },
         { text: 'Qty', style: 'fonts' },
         { text: 'Actual Size', style: 'fonts' },
-        { text: 'Panel', style: 'fonts', alignment: 'right' },
-        { text: 'IP', style: 'fonts', alignment: 'right' },
+        { text: 'Panel', style: 'fonts', alignment: 'left' },
+        { text: 'IP', style: 'fonts', alignment: 'left' },
       ],
     ];
     i.dimensions.forEach((item, index) => {
@@ -76,12 +76,12 @@ export default (data, breakdowns) => {
         {
           text: i.panel ? i.panel.NAME : '',
           style: 'fonts',
-          alignment: 'right'
+          alignment: 'left'
         },
         {
           text: i.profile ? i.profile.NAME : '',
           style: 'fonts',
-          alignment: 'right'
+          alignment: 'left'
         },
       ]);
     });
@@ -107,7 +107,7 @@ export default (data, breakdowns) => {
             style: 'fontsBold',
           },
           {
-            text: 'Edge: M Lip',
+            text: `Edge: ${i.edge && i.edge.NAME}`,
             alignment: 'right',
             style: 'fontsBold',
           },
@@ -121,7 +121,7 @@ export default (data, breakdowns) => {
       {
         table: {
           headerRows: 1,
-          // widths: [22, 95, 30, '*', 200],
+          widths: [22, 95, 30, 160, '*', '*'],
           body: tableBody,
         },
         layout: {
@@ -163,14 +163,14 @@ export default (data, breakdowns) => {
       columns: [
         {
           stack: [
-            { text: 'Our Order: 234342', style: 'fonts' },
-            { text: 'Job: QUOTE - sdkfjsdfsdkfj', style: 'fonts' },
+            { text: `Our Order: ${data.orderNum}`, style: 'fonts' },
+            { text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${data.job_info?.poNum}`, style: 'fonts' },
           ],
         },
         {
           stack: [
             { text: 'PACKING SLIP', alignment: 'right', style: 'woodtype', decoration: 'underline' },
-            { text: 'Ship Via: Our Truck', alignment: 'right', style: 'fonts' },
+            { text: `Ship Via: ${data.job_info?.ShippingMethod?.NAME}`, alignment: 'right', style: 'fonts' },
           ],
         },
       ],
