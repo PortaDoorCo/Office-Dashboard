@@ -6,6 +6,8 @@ import Size from '../Breakdowns/Doors/Size';
 import SlabSize from '../Breakdowns/Doors/SlabSize';
 
 export default (data, breakdowns) => {
+
+  console.log({data});
   return [
     {
       columns: [
@@ -130,7 +132,7 @@ export default (data, breakdowns) => {
                     text: `${item.notes ? item.notes : ''} ${
                       item.full_frame ? 'Full Frame DF' : ''
                     } ${item.lite ? item.lite.NAME : ''}`,
-                    style: 'tableBold',
+                    style: 'tableBold', alignment: 'left'
                   } : null,
               ],
             },
@@ -190,8 +192,9 @@ export default (data, breakdowns) => {
                 },
                 { text: `${i.woodtype.NAME} - ${i.thickness.value === 0.75 ? '4/4 - 3/4"' : i.thickness.value === 1 ? '5/4 - 1"' : ''}`, style: 'woodtype' },
               ],
+              width: 200
             },
-            { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
+            { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold', alignment: 'center' },
             {
               stack: [
                 {
@@ -216,7 +219,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [21, 16, 94, 100, 100, 110],
+            widths: [21, 15, 94, 105, 105, 115],
             body: tableBody,
           },
           layout: {

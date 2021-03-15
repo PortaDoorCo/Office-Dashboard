@@ -241,7 +241,7 @@ export default (data, breakdowns) => {
             },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             {
-              text: `Est. Completion: ${moment(data.job_info.DueDate).format(
+              text: `Estimated Ship: ${moment(data.job_info.DueDate).format(
                 'MM/DD/YYYY'
               )}`,
               alignment: 'right',
@@ -254,9 +254,10 @@ export default (data, breakdowns) => {
       columns: [
         {
           text: `${data.job_info.customer.Company}`,
+          style: 'fonts'
         },
         {
-          stack: [{ text: `PO: ${data.job_info.poNum}`, alignment: 'right' }],
+          stack: [{ text: `PO: ${data.job_info.poNum}`, alignment: 'right', style: 'fonts' }],
         },
       ],
       margin: [0, 10],
@@ -276,6 +277,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: `Total Number of Doors: ${TotalPieces(data)}`, style: 'fonts' },
+        { text: 'Total Number of Solid DF: Still Need To Be Calculated', style: 'fonts' },
       ],
     },
     // {

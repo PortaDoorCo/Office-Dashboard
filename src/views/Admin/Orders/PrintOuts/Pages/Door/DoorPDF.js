@@ -106,26 +106,26 @@ export default (
     },
     styles: {
       woodtype: {
-        fontSize: 18,
+        fontSize: 15,
         bold: true,
       },
       fonts: {
-        fontSize: 10,
+        fontSize: 9,
       },
       fontsBold: {
-        fontSize: 10,
+        fontSize: 9,
         bold: true,
       },
       headerFont: {
-        fontSize: 12,
+        fontSize: 11,
         bold: true,
       },
       tableBold: {
-        fontSize: 10,
+        fontSize: 9,
         bold: true,
       },
       totals: {
-        fontSize: 10,
+        fontSize: 9,
         bold: true,
       },
       warrantyFont: {
