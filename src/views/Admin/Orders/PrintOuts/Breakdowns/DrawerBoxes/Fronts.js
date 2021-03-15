@@ -1,3 +1,11 @@
+import Ratio from 'lb-ratio';
+import numQty from 'numeric-quantity';
+
+
+const fraction = num => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
 
 export default (item, part, breakdowns) => {
 
@@ -9,7 +17,7 @@ export default (item, part, breakdowns) => {
 
   return {
     qty: (parseInt(item.qty) * 2),
-    measurement: `${eval(b.fronts_height)} x ${eval(b.fronts_width)} x ${eval(b.fronts_thickness)}`,
+    measurement: `${fraction(numQty(eval(b.fronts_height)))} x ${fraction(numQty(eval(b.fronts_width)))} x ${fraction(numQty(eval(b.fronts_thickness)))}`,
     pattern: 'Fronts/Backs'
   };
 };

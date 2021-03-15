@@ -25,7 +25,7 @@ export default (item, part, breakdowns) => {
   } else {
     return {
       qty: parseInt(item.qty),
-      measurement: `${fraction(eval(b.bottoms_width))} x ${fraction(eval(b.bottoms_depth))}`,
+      measurement: `${fraction(numQty(eval(b.bottoms_width)))} x ${fraction(numQty(eval(b.bottoms_depth)))}`,
       pattern: 'Bottoms'
     };
   }

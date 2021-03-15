@@ -1,5 +1,5 @@
 import Ratio from 'lb-ratio';
-import numQty from 'numeric-quantity'
+import numQty from 'numeric-quantity';
 
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -18,7 +18,7 @@ export default (item, part, breakdowns) => {
   return {
     qty: (parseInt(item.qty) * 2),
     depth: depth,
-    measurement: `${eval(b.sides_height)} x ${fraction(eval(b.sides_depth))} x ${eval(b.sides_thickness)}`,
+    measurement: `${fraction(numQty(eval(b.sides_height)))} x ${fraction(numQty(eval(b.sides_depth)))} x ${fraction(numQty(eval(b.sides_thickness)))}`,
     pattern: 'Sides'
   };
 
