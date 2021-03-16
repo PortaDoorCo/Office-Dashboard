@@ -28,14 +28,14 @@ export default (data, breakdowns) => {
         { text: i.qty, style: 'fonts' },
         { text: i.item.NAME, style: 'fonts' },
         { text: `$${i.price}`, style: 'fonts' },
-        { text: `$${i.price * i.qty}`, style: 'fonts' },
+        { text: `$${(i.price * i.qty).toFixed(2)}`, style: 'fonts' },
       ]);
     } else if (i.category === 'custom') {
       return tableBody.push([
         { text: i.qty, style: 'fonts' },
         { text: i.item2, style: 'fonts' },
         { text: i.pricePer, style: 'fonts' },
-        { text: parseFloat(i.pricePer) * parseFloat(i.qty), style: 'fonts' },
+        { text: `$${(parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2)}`, style: 'fonts' },
       ]);
     } else {
       return [];
@@ -43,25 +43,38 @@ export default (data, breakdowns) => {
   });
 
 
-  const discountTotal = (subTotal * (data.discount / 100));
+  const discountTotal = subTotal * (data.discount / 100);
 
-  const discountSubTotal = subTotal - (subTotal * (data.discount / 100));
+  const discountSubTotal = subTotal - discountTotal;
+
+  
+  const order_sub_total =  discountSubTotal;
+
+  const limitedLiability = 'Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product';
+
+
 
 
   return [
     {
       columns: [
         {
-          stack: ['Invoice ']
+          stack: ['INVOICE ']
         },
         {
           stack: [
             { text: 'Porta Door Co. Inc.', alignment: 'center' },
             { text: '65 Cogwheel Lane', alignment: 'center' },
             { text: 'Seymour, CT', alignment: 'center' },
-            { text: '203-888-6191', alignment: 'center' },
-            { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-          ]
+            {
+              text: '203-888-6191',
+              alignment: 'center',
+              margin: [0, 0, 0, 10],
+            },
+            { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+          ],
+          // width: 200,
+          alignment: 'center'
         },
         {
           stack: [
@@ -142,7 +155,9 @@ export default (data, breakdowns) => {
       margin: [0, 10],
     },
     {
-      canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }]
+      text:
+        '==============================================================================',
+      alignment: 'center',
     },
     {
       table: {
@@ -152,90 +167,205 @@ export default (data, breakdowns) => {
       },
       layout: {
         hLineWidth: function (i, node) {
-          if (i === 0 || i === node.table.body.length) {
-            return 0;
-          }
-          return (i === node.table.headerRows) ? 1: 1;
+          return i === 1 ? 1 : 0;
         },
-        vLineWidth: function (i) {
+        vLineWidth: function (i, node) {
           return 0;
         },
-        hLineColor: function (i) {
-          return i === 1 ? 'black' : '#aaa';
+        hLineStyle: function (i, node) {
+          if (i === 0 || i === node.table.body.length) {
+            return null;
+          }
+          return { dash: { length: 1, space: 1 } };
         },
         paddingLeft: function (i) {
           return i === 0 ? 0 : 8;
         },
         paddingRight: function (i, node) {
-          return (i === node.table.widths.length - 1) ? 0 : 8;
+          return i === node.table.widths.length - 1 ? 0 : 8;
         },
       },
       margin: [0, 0, 0, 20]
     },
     {
-      columns: [
-        { text: '', style: 'totals', width: 347 },
-        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(subTotal).toFixed(2)}`, style: 'fonts', margin: [31, 0, 0, 0], alignment: 'right' }
-      ]
+      text:
+        '==============================================================================',
+      alignment: 'center',
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
+        {
+          text: ' ',
+          style: 'fonts',
+          width: 317,
+        },
+        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0], width: 120, alignment: 'right' },
+        {
+          text: `$${subTotal.toFixed(2)}`,
+          style: 'fonts',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+        },
+      ],
+      margin:[0,0,0,10]
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 317 },
+        {
+          text: `${data.discount > 0 ? data.discount + '% ' + 'Discount' : ''}`,
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+          width: 120
+        },
+        {
+          text: `${
+            data.discount > 0 ? '-' + '$' + discountTotal.toFixed(2) : ''
+          }`,
+          style: 'fonts',
+          alignment: 'right',
+        },
+      ],
+      margin: [0, 0, 0, 0],
+    },
+    {
+      text: '------------',
+      margin: [0, 0, 0, 0],
+      alignment: 'right',
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 317 },
+        {
+          text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 120,
+          alignment: 'right'
+        },
+        {
+          text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
+        },
+      ],
+      margin: [0, 0, 0, 0],
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 317 },
         {
           text: data.Taxable
             ? '$' +
-              discountSubTotal.toFixed(2) +
+              order_sub_total.toFixed(2) +
               ' x ' +
               data.companyprofile.TaxRate +
               '%' +
               ' Tax:'
             : '',
           style: 'totals',
-          margin: [0, 0, 0, 0],
+          margin: [0, 0, 0, 4],
+          width: 120,
+          alignment: 'right'
         },
-        { text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`, style: 'fonts', alignment: 'right' },
+        {
+          text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
+        },
       ],
-      margin: [0, 10, 0, 0]
+      margin: [0, 0, 0, 0],
+    },
+    {
+      text: '======',
+      margin: [0, 0, 0, 0],
+      alignment: 'right',
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
-        { text: `${data.discount>0 ? 'Discount' : ''}`, style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `${data.discount>0 ? data.discount + '%' : ''}`, style: 'fonts', alignment: 'right' }
+        { text: '', style: 'totals', width: 317, decoration: 'underline' },
+        {
+          text: `${data.status === 'Quote' ? 'QUOTE ONLY' : 'TOTAL'}`,
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+          width: 120
+        },
+        {
+          text: `$${data.total.toFixed(2)}`,
+          style: 'fonts',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+        },
       ],
-      margin: [0, 0, 0, 0]
+      margin: [0, 10, 0, 0],
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
-        { text: 'Quote Only:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(data.total).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
-      ],
-      margin: [0, 2, 0, 0]
-    },
-    {
-      columns: [
-        { text: '', style: 'totals', width: 347 },
-        { text: 'Balance Paid:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(balancePaid).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+        { text: '', style: 'totals', width: 317, decoration: 'underline' },
+        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 120,  alignment: 'right' },
+        {
+          text: `$${balancePaid.toFixed(2)}`,
+          style: 'fonts',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+        },
       ],
       margin: [0, 2, 0, 0],
-
+    },
+    {
+      text: '======',
+      margin: [0, 0, 0, 0],
+      alignment: 'right',
     },
     {
       columns: [
-        { text: '', style: 'totals', width: 347 },
-        { text: 'Balance Due:', style: 'totals', margin: [0, 0, 0, 0] },
-        { text: `$${(balanceDue).toFixed(2)}`, style: 'fonts', margin: [0, 0, 0, 0], alignment: 'right' }
+        { text: '', style: 'totals', width: 330 },
+        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0], width:105, alignment: 'right' },
+        {
+          text: `$${balanceDue.toFixed(2)}`,
+          style: 'fonts',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+          
+        },
       ],
-      margin: [0, 15, 0, 0]
+      margin: [0, 15, 0, 0],
     },
     {
-      text: 'Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product',
-      style: 'warrantyFont',
-      alignment: 'center',
-      margin: [ 0, 25, 0, 0 ] 
+      stack: [
+        {
+          text: 'LIMITED WARRANTY',
+          decoration: 'underline',
+          style: 'fontsBold',
+          margin: [0,0,0,10]
+        },
+        { 
+          text:
+          limitedLiability.toUpperCase(),
+          style: 'warrantyFont',
+          alignment: 'left',
+          margin: [0, 0, 0, 5],
+        }
+      ]
+    },
+    {
+      columns: [
+        {
+          text: moment().format('MM-D-YYYY'),
+          style: 'fonts',
+          alignment: 'left',
+          margin: [0, 0, 0, 0],
+        },
+        {
+          text: ' ',
+          style: 'fonts',
+          alignment: 'right',
+          margin: [0, 0, 0, 0],
+        }
+      ]
+
     },
   ];
 };
