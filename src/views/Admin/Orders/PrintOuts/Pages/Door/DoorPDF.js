@@ -10,6 +10,7 @@ import MaterialsList from '../../Door_PDF/MaterialsList';
 import QC_Checklist from '../../Door_PDF/QC_Checklist';
 import Profiles from '../../Door_PDF/Profiles';
 import Packing_Slip from '../../Door_PDF/Packing_Slip';
+import moment from 'moment';
 
 export default (
   data,
@@ -89,11 +90,43 @@ export default (
     }
   });
 
+
+  const fileName = `Order #${data.orderNum}`;
+
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: ContentSorted,
     pageMargins: [40, 40, 40, 60],
+    footer: function(currentPage, pageCount) { 
+      return {
+        columns: [
+          {
+            stack: [
+              {
+                text: moment().format('MM-D-YYYY'),
+                style: 'warrantyFont'
+              },
+              {
+                text: currentPage.toString() + ' of ' + pageCount, style: 'warrantyFont'
+              }
+            ],
+            width: 250
+          },
+          {
+            stack: [
+              {
+                text: ' ', style: 'warrantyFont',
+              },
+              {
+                text: fileName, style: 'warrantyFont', alignment: 'right'
+              }
+            ]  
+          }
+        ],
+        margin: [40,10,40,0]
+      };
+    },
     pageBreakBefore: function (
       currentNode,
       followingNodesOnPage,
@@ -137,6 +170,6 @@ export default (
       },
     },
   };
-  // const fileName = `Order_${data.orderNum}`
-  pdfMake.createPdf(documentDefinition).download();
+
+  pdfMake.createPdf(documentDefinition).open();
 };
