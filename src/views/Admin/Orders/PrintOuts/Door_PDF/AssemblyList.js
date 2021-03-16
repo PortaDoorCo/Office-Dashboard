@@ -137,9 +137,9 @@ export default (data, breakdowns) => {
               ],
             },
             {
-              text: `${Stiles(item, i, breakdowns).map((stile) => {
+              text: Stiles(item, i, breakdowns).map((stile) => {
                 return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`;
-              })}`,
+              }),
               style: 'fonts',
             },
             {
