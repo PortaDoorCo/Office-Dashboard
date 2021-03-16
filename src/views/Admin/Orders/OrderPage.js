@@ -78,6 +78,17 @@ import MouldingsConversationNotes from './Notes/Mouldings/Conversation_Notes';
 
 import PrintModal from './PrintOuts/Modal/Modal';
 
+import DoorAcknowledgement from './PrintOuts/Pages/Door/Acknowledgement';
+import DoorInvoice from './PrintOuts/Pages/Door/Invoice';
+import DoorAssembly from './PrintOuts/Pages/Door/AssemblyList';
+import Stiles from './PrintOuts/Pages/Door/Stiles';
+import Rails from './PrintOuts/Pages/Door/Rails';
+import Panels from './PrintOuts/Pages/Door/Panels';
+import Profiles from './PrintOuts/Pages/Door/Profiles';
+import MaterialList from './PrintOuts/Pages/Door/MaterialList';
+import DoorPackingSlip from './PrintOuts/Pages/Door/PackingSlip';
+import DoorQC from './PrintOuts/Pages/Door/QC';
+
 import numQty from 'numeric-quantity';
 
 import Cookies from 'js-cookie';
@@ -316,18 +327,115 @@ class OrderPage extends Component {
       } catch (err) {
         console.log('errrrrrr', err);
       }
+
+      console.log({printerSettings});
+
+      if(printerSettings.acknowledgement > 0) {
+        DoorAcknowledgement(
+          data,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+      if(printerSettings.invoice > 0) {
+        DoorInvoice(
+          data,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+      if(printerSettings.assembly_list > 0) {
+        DoorAssembly(
+          data,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+      if(printerSettings.stiles > 0) {
+        Stiles(
+          data,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+      if(printerSettings.rails > 0) {
+        Rails(
+          data,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+      if(printerSettings.panels > 0) {
+        Panels(
+          data,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+
+      if(printerSettings.materials > 0) {
+        MaterialList(
+          data,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+
+      if(printerSettings.packing_slip > 0) {
+        DoorPackingSlip(
+          data,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+      if(printerSettings.qc > 0) {
+        DoorQC(
+          data,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+      if(printerSettings.profiles > 0) {
+        Profiles(
+          data,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          printerSettings
+        );
+      }
+
+
+
+      
+      // printerSettings.acknowledgement.forEach(i => {
+
+      // });
   
-      DoorPDF(
-        data,
-        edges1,
-        moulds1,
-        miter1,
-        mt_1,
-        panels1,
-        appliedProfiles1,
-        breakdowns,
-        printerSettings
-      );
+      // DoorPDF(
+      //   data,
+      //   edges1,
+      //   moulds1,
+      //   miter1,
+      //   mt_1,
+      //   panels1,
+      //   appliedProfiles1,
+      //   breakdowns,
+      //   printerSettings
+      // );
     } else if (data.orderType === 'Drawer Order') {
       DrawerPDF(data, box_breakdowns, printerSettings);
     } else if (data.orderType === 'Misc Items') {

@@ -60,6 +60,7 @@ export default (data) => {
             {text: 'ACKNOWLEDGEMENT', margin:[0,0,0,-10]},
           ],
           style: 'headerFont',
+          id: 'header1'
         },
 
         {
@@ -786,17 +787,25 @@ export default (data) => {
           style: 'warrantyFont',
           alignment: 'left',
           margin: [0, 0, 0, 5],
+          id: 'liability'
         }
       ]
     },
     {
       columns: [
         {
-          text: moment().format('MM-D-YYYY'),
+          text: ' ',
+          // pageReference: 'liability',
           style: 'fonts',
           alignment: 'left',
           margin: [0, 0, 0, 0],
         },
+        // {
+        //   pageReference: 'liability',
+        //   style: 'fonts',
+        //   alignment: 'left',
+        //   margin: [0, 0, 0, 0],
+        // },
         {
           text:
           `Units: ${qty.reduce(
