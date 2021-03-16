@@ -2,7 +2,7 @@ import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import Invoice from '../../Mouldings_PDF/Invoice';
 import Acknowledgement from '../../Mouldings_PDF/Acknowledgement';
-
+import moment from 'moment';
 
 export default (data, breakdowns, p) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -30,28 +30,43 @@ export default (data, breakdowns, p) => {
     }
   });
 
+  const fileName = `Order #${data.orderNum}`;
+
+
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: ContentSorted,
+    footer: function(currentPage, pageCount) { 
+      return {
+        columns: [
+          {
+            stack: [
+              {
+                text: moment().format('MM-D-YYYY'),
+                style: 'warrantyFont'
+              },
+              {
+                text: currentPage.toString() + ' of ' + pageCount, style: 'warrantyFont'
+              }
+            ],
+            width: 250
+          },
+          {
+            stack: [
+              {
+                text: ' ', style: 'warrantyFont',
+              },
+              {
+                text: fileName, style: 'warrantyFont', alignment: 'right'
+              }
+            ]  
+          }
+        ],
+        margin: [40,10,40,0]
+      };
+    },
     pageMargins: [ 40, 40, 40, 60 ],
-    // footer: function (currentPage, pageCount) {
-    //   return {
-    //     table: {
-    //       widths: ['*'],
-    //       body: [
-    //         [
-    //           {
-    //             text: 'Page ' + currentPage,
-    //             alignment: 'center',
-    //             style: { fontSize: 9 },
-    //           },
-    //         ],
-    //       ],
-    //     },
-    //     layout: 'noBorders',
-    //   };
-    // },
     styles: {
       woodtype: {
         fontSize: 18,
