@@ -34,8 +34,8 @@ export default (data, breakdowns) => {
       return tableBody.push([
         { text: i.qty, style: 'fonts' },
         { text: i.item2, style: 'fonts' },
-        { text: i.pricePer, style: 'fonts' },
-        { text: `$${(parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2)}`, style: 'fonts' },
+        { text: i.pricePer ? i.pricePer : i.price, style: 'fonts' },
+        { text: `$${(parseFloat(i.pricePer ? i.pricePer : i.price) * parseFloat(i.qty)).toFixed(2)}`, style: 'fonts' },
       ]);
     } else {
       return [];
@@ -58,9 +58,15 @@ export default (data, breakdowns) => {
   return [
     {
       columns: [
-        {
-          stack: ['ACKNOWLEDGEMENT ']
+        { 
+          width: 200,
+          stack: [
+            {text: 'ACKNOWLEDGEMENT', margin:[0,0,0,-10]},
+          ],
+          style: 'headerFont',
+          id: 'header1'
         },
+
         {
           stack: [
             { text: 'Porta Door Co. Inc.', alignment: 'center' },
@@ -78,81 +84,199 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
-            { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
-            { text: `Ship Via: ${data.job_info.ShippingMethod ? data.job_info.ShippingMethod.NAME : ' '}`, alignment: 'right' },
-            { text: `Salesmen: ${data.sale ? data.sale.fullName : ''}`, alignment: 'right' }
-          ]
-        }
-      ]
+            {
+              text:
+                data.job_info.Rush && data.job_info.Sample
+                  ? 'Sample / Rush'
+                  : data.job_info.Rush
+                    ? 'Rush'
+                    : data.job_info.Sample
+                      ? 'Sample'
+                      : '',
+              alignment: 'right',
+              style: 'rushFonts',
+            },
+            {
+              text: `Order #: ${data.orderNum}`,
+              alignment: 'right',
+              style: 'headerFont',
+            },
+            {
+              text: `${
+                data.status === 'Quote'
+                  ? ''
+                  : `Estimated Ship: ${moment(data.job_info.DueDate).format(
+                    'MM/DD/YYYY'
+                  )}`
+              }`,
+              alignment: 'right',
+              style: 'headerFont',
+            },
+            {
+              text: `Ship Via: ${
+                data.job_info.ShippingMethod
+                  ? data.job_info.ShippingMethod.NAME
+                  : ' '
+              }`,
+              alignment: 'right',
+              style: 'headerFont',
+            },
+            {
+              text: `Salesmen: ${data.sale ? data.sale.fullName : ''}`,
+              alignment: 'right',
+              style: 'headerFont',
+            },
+          ],
+        },
+      ],
     },
     {
       columns: [
-        {
+        { 
+          width: 200,
           stack: [
-            { text: `Customer - ${data.job_info.customer.Company}` },
-            { text: `${data.companyprofile.Contact ? data.companyprofile.Contact : ''}`, style: 'fonts' },
-            { text: `${data.companyprofile.Address1 ? data.companyprofile.Address1 : ''}`, style: 'fonts' },
-            {
-              text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-              style: 'fonts',
+            { columns: [
+              {
+                text: 'Customer - ',
+                width: 60
+              },
+              { 
+                
+                stack: [
+                  { text: `${data.job_info.customer.Company}` },
+                  // {
+                  //   text: `${
+                  //     data.companyprofile.Contact
+                  //       ? data.companyprofile.Contact
+                  //       : ''
+                  //   }`,
+                  //   style: 'fonts',
+                  // },
+                  {
+                    text: `${
+                      data.companyprofile.Address1
+                        ? data.companyprofile.Address1
+                        : ''
+                    }`,
+                    style: 'fonts',
+                  },
+                  {
+                    text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                    style: 'fonts',
+                  },
+                  { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
+                  data.companyprofile.Fax ? 
+                    {
+                      text: `Fax: ${
+                        data.companyprofile.Fax ? data.companyprofile.Fax : ''
+                      }`,
+                      style: 'fonts',
+                      margin: [0, 0, 0, 10],
+                    } : null,
+                  {
+                    text: `Terms: ${
+                      data.companyprofile.PMT_TERMS
+                        ? data.companyprofile.PMT_TERMS
+                        : ''
+                    }`,
+                    style: 'fonts',
+                  },
+                ],
+              }
+            ],
+
+            style: 'fontsBold',
+            margin: [0, 0, 0, 0],
             },
-            { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-            { text: `Fax: ${data.companyprofile.Fax ? data.companyprofile.Fax : ''}`, style: 'fonts' },
-            { text: `Terms: ${data.companyprofile.PMT_TERMS ? data.companyprofile.PMT_TERMS : ''}`, style: 'fonts' },
           ],
+          style: 'headerFont',
+        },
+
+        {
+          text: '',
+          // width: 200,
+          alignment: 'center'
         },
         {
           stack: [
             {
-              text: `PO: ${
-                data.job_info.poNum.length > 0 ? data.job_info.poNum : 'None'
-              }`,
-              alignment: 'left',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `Ship To: ${data.job_info.customer.Company}`,
-              style: 'fonts',
-              alignment: 'left',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.Address1}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            // {
-            //   text: `${data.job_info.Zip}`,
-            //   alignment: 'left',
-            //   style: 'fonts',
-            //   margin: [0, 0, 0, 0],
-            // },
-            {
-              text: `${data.companyprofile.Phone1}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
+              margin:[10,0,0,0],
+              columns: [
+                { 
+                  width: 40,
+                  stack: [
+                    {
+                      text: 'Job: ',
+                      alignment: 'left',
+                      margin: [0, 0, 0, 0],
+                      style: 'fonts',
+                    },
+                    {
+                      text: 'Ship To: ',
+                      style: 'fonts',
+                      alignment: 'left',
+                      margin: [0, 0, 0, 0],
+                    },
+                  ],
+                },
+                {
+                  stack: [
+                    {
+                      text: `${
+                        data.job_info.poNum.length > 0
+                          ? data.job_info.poNum
+                          : 'None'
+                      }`,
+                      alignment: 'left',
+                      margin: [0, 0, 0, 0],
+                      style: 'fonts',
+                    },
+                    {
+                      text: `${data.job_info.customer.Company}`,
+                      style: 'fonts',
+                      // alignment: 'right',
+                      margin: [0, 0, 0, 0],
+                    },
+                    {
+                      text: `${data.job_info.Address1}`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                    {
+                      text: `${
+                        data.job_info.Address2 ? data.job_info.Address2 : ''
+                      }`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                    {
+                      text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                    // {
+                    //   text: `${data.job_info.Zip}`,
+                    //   alignment: 'left',
+                    //   style: 'fonts',
+                    //   margin: [0, 0, 0, 0],
+                    // },
+                    {
+                      text: `${data.companyprofile.Phone1}`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                  ],
+                }
+              ]
+  
             },
           ],
-          margin: [120, 0, 0, 0],
         },
       ],
-      margin: [0, 10],
     },
     {
       text:

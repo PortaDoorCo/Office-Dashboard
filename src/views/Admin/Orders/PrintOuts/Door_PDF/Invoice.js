@@ -100,7 +100,7 @@ export default (data) => {
               text: `${
                 data.status === 'Quote'
                   ? ''
-                  : `Est. Completion: ${moment(data.job_info.DueDate).format(
+                  : `Estimated Ship: ${moment(data.job_info.DueDate).format(
                     'MM/DD/YYYY'
                   )}`
               }`,
