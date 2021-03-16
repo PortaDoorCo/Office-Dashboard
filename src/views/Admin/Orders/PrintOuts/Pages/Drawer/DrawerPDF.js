@@ -103,27 +103,31 @@ export default (data, breakdowns, p) => {
     },
     styles: {
       woodtype: {
-        fontSize: 18,
-        bold: true
+        fontSize: 15,
+        bold: true,
       },
       fonts: {
-        fontSize: 9
+        fontSize: 9,
       },
       fontsBold: {
-        fontSize: 12,
-        bold: true
+        fontSize: 9,
+        bold: true,
+      },
+      headerFont: {
+        fontSize: 11,
+        bold: true,
       },
       tableBold: {
-        fontSize: 10,
-        bold: true
+        fontSize: 9,
+        bold: true,
       },
       totals: {
-        fontSize: 8,
+        fontSize: 9,
         bold: true,
       },
       warrantyFont: {
         fontSize: 7,
-      }
+      },
     }
   };
 
