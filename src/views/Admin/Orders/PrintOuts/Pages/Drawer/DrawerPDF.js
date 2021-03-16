@@ -7,6 +7,7 @@ import Sides from '../../Drawer_PDF/Sides';
 import Bottoms from '../../Drawer_PDF/Bottoms';
 import Packing_Slip from '../../Drawer_PDF/Packing_Slip';
 import Box_Labels from '../../Drawer_PDF/Box_Labels';
+import moment from 'moment';
 
 export default (data, breakdowns, p) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -54,11 +55,42 @@ export default (data, breakdowns, p) => {
     }
   });
 
+  const fileName = `Order #${data.orderNum}`;
+
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     content: ContentSorted,
     pageMargins: [40, 40, 40, 60],
+    footer: function(currentPage, pageCount) { 
+      return {
+        columns: [
+          {
+            stack: [
+              {
+                text: moment().format('MM-D-YYYY'),
+                style: 'warrantyFont'
+              },
+              {
+                text: currentPage.toString() + ' of ' + pageCount, style: 'warrantyFont'
+              }
+            ],
+            width: 250
+          },
+          {
+            stack: [
+              {
+                text: ' ', style: 'warrantyFont',
+              },
+              {
+                text: fileName, style: 'warrantyFont', alignment: 'right'
+              }
+            ]  
+          }
+        ],
+        margin: [40,10,40,0]
+      };
+    },
     pageBreakBefore: function (
       currentNode,
       followingNodesOnPage,
