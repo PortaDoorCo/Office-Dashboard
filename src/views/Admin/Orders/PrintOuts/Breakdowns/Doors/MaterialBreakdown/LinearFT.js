@@ -1,8 +1,13 @@
 import numQty from 'numeric-quantity';
-import { flatten, values, uniq, groupBy } from 'lodash';
+import { flatten, values, uniq, uniqBy, groupBy } from 'lodash';
 import Stiles from '../Stiles/Stiles';
 import Rails from '../Rails/Rails';
+import Ratio from 'lb-ratio';
 
+const fraction = num => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
 
 export default (parts, breakdowns,thickness) => {
 
@@ -18,6 +23,10 @@ export default (parts, breakdowns,thickness) => {
       let rail = {};
 
       const stile_map = Object.keys(j).map(a => {
+
+        console.log({stile_mappppp: j[a]});
+        console.log({stile_thickness: thickness});
+
         if(a === 'leftStile'){
           return j[a] === thickness ? stile[a] = j[a] : stile[a] = 0;
         }
@@ -59,13 +68,13 @@ export default (parts, breakdowns,thickness) => {
       }, {});
 
       const stiles = Stiles(stile, part.part, breakdowns).map((stile) => {
-        if((stile.width > 1) && (stile.height > 1)){
-          const width = numQty(stile.width);
+        if((numQty(stile.width) > 1) && (numQty(stile.height) > 1)){
+          const width = numQty(stile.width) === 2.376 ? 2.375 : numQty(stile.width);
           const height = ((numQty(stile.height)) * stile.multiplier) * parseInt(j.qty);
           const sum = height / 12;
           return {
             sum,
-            width
+            width,
           }; 
         } else {
           return {
@@ -78,7 +87,7 @@ export default (parts, breakdowns,thickness) => {
 
       const rails = Rails(rail, part.part, breakdowns).map((stile) => {
         if((stile.width > 1) && (stile.height > 1)){
-          const width = numQty(stile.width);
+          const width = numQty(stile.width) === 2.376 ? 2.375 : numQty(stile.width);
           const height = ((numQty(stile.height)) * stile.multiplier) * parseInt(j.qty);
           const sum = height / 12;
           return {
@@ -92,29 +101,43 @@ export default (parts, breakdowns,thickness) => {
           };
         }
 
-      });      
+      }); 
+      
+      console.log({stileeeee: uniqBy(stiles, 'width')});
 
-      console.log({stiles});
-      console.log({rails});
+      const s = uniqBy(stiles, 'width');
+      const r = uniqBy(rails, 'width');
 
-      return stiles.concat(rails);
+      return s.concat(r);
     });
   });
 
   const first_obj = flatten(calc);
 
+  console.log({first_obj});
+
   const flatten_obj = flatten(first_obj);
   const groupedObj = groupBy(flatten_obj, 'width');
+
+  
+
   const newObj = Object.entries(groupedObj).map(([k, v]) => {
     return {width: k, sum: v.reduce((a,b) => a + b.sum, 0)};
   });
 
-  return newObj.map(i => {
+  console.log({newObj});
+
+  const newObj3 = newObj.map(i => {
+
+    console.log({ check: i});
+
     return {
       sum : i.sum.toFixed(2),
-      width:  i.width ? i.width : null
+      width:  i.width ? i.width : 0
     };
   });
+
+  return newObj3;
 
 
 

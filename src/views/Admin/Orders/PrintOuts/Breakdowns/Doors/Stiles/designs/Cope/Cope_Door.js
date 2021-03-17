@@ -8,9 +8,20 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
+
 export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
+
+
+  console.log({ top: info.topRail });
+  console.log({ top: numQty(info.topRail) });
+  console.log({ bottom: info.bottomRail });
+  console.log({ bottom: numQty(info.bottomRail) });
+  console.log({ left: info.leftStile });
+  console.log({ left: numQty(info.leftStile) });
+  console.log({ right: info.rightStile });
+  console.log({ right: numQty(info.rightStile) });
 
   const topRail = info.topRail ? numQty(info.topRail) + (part.edge.LIP_FACTOR / 2) : 0;
   const bottomRail = info.bottomRail ? numQty(info.bottomRail) + (part.edge.LIP_FACTOR / 2) : 0;
@@ -26,6 +37,7 @@ export default (info, part, breakdowns) => {
 
   const inset = part.profile.INSET;
   const edge_factor = part.edge.LIP_FACTOR;
+
 
 
   if (eval(breakdowns.leftStile_width) === eval(breakdowns.rightStile_width)) {

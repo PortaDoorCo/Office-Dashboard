@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
+import { flattenDeep, uniq, flatten, groupBy, uniqBy, _ } from 'lodash';
 import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
 import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
@@ -28,6 +28,8 @@ export default (data, breakdowns) => {
     flattenDeep(data.part_list.map(i => i.thickness.name))
   );
 
+  console.log({uniques_thickness});
+
   //map items -> map thickness -> return object
   const b = uniques_items.map(i => {
     return uniques_thickness.map(h => {
@@ -44,11 +46,18 @@ export default (data, breakdowns) => {
   const c = flattenDeep(b).map(j => {
     return {
       parts: j.widths.filter(n => n !== 0).map(k => {
+        console.log({k});
+
+
+
         return {
           width: k,
           thickness: j.thickness,
           woodtype: j.woodtype,
           parts: j.parts.map(f => {
+
+            console.log({aaaa: flatten(f.dimensions).filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))});
+
             return {
               width: k,
               thickness: j.thickness,
@@ -64,11 +73,16 @@ export default (data, breakdowns) => {
 
   const d = flattenDeep(c).map((j, index) => {
 
+
+
     return j.parts.map(n => {
+
+      console.log({n});
+
       return LinearFT(n.parts,breakdowns,n.width).map(b => {
         if(numQty(b.width) > 0) {
           return {
-            width: numQty(b.width),
+            width: numQty(b.width) === 2.376 ? 2.375 : numQty(b.width),
             woodtype: n.woodtype,
             thickness: n.thickness,
             linearFT: parseFloat(b.sum),
@@ -86,7 +100,42 @@ export default (data, breakdowns) => {
 
   const flattenD = flattenDeep(d);
 
-  const LinearFTDisplay = flattenD.map((i, index) => {
+  console.log({flattenD: flattenD});
+  console.log({testtttt: uniq(flattenD)});
+
+  const flattenD2 = flattenD.filter(i => i.width === 2.375);
+  const flattenD3 = groupBy(flattenD2, 'woodtype');
+
+
+  console.log({flattenD3});
+  
+
+  const flattenD4 = Object.entries(flattenD3).map(([k, v]) => {
+
+    console.log({k});
+
+    console.log({v});
+
+    return {...v[0], width: v[0].width, linearFT: v.reduce((a,b) => a + b.linearFT, 0), waste: v.reduce((a,b) => a + b.waste, 0), woodtype: v[0].woodtype,  };
+  });
+
+  console.log({flattenD4});
+
+  const flattenD5 = flattenD.filter(item => item.width !== 2.375);
+
+
+  console.log({flattenD5});
+
+
+
+  const flattenD6 = flattenD4.concat(flattenD5);
+
+  console.log({flattenD6});
+
+  const flattenD7 = flattenD6.sort((a, b) => (a.waste > b.waste) ? -1 : 1);
+
+
+  const LinearFTDisplay = flattenD7.map((i, index) => {
 
     return [
       {
@@ -187,7 +236,7 @@ export default (data, breakdowns) => {
         {
           columns: [
             {
-              text: `Board Feet of ${i.woodtype} - ${
+              text: `${i.panel.Flat ? 'Square' : 'Board'} Feet of ${i.woodtype} - ${
                 i.thickness === 0.75 ? '4/4' : i.thickness === 1 ? '5/4' : null
               }" Thickness ${i.panel.NAME} Material Needed: ${i.BoardFT.toFixed(2)}`,
               style: 'fonts',
