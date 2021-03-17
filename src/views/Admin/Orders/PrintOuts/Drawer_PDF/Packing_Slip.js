@@ -5,9 +5,11 @@ import Size from '../Breakdowns/DrawerBoxes/Size';
 export default (data, breakdowns) => {
 
   const qty = data.part_list.map((part, i) => {
-    return part.dimensions.map((dim, index) => {
-      return parseInt(dim.qty);
-    }).reduce((acc, item) => acc + item, 0);
+    return part.dimensions
+      .map((dim, index) => {
+        return parseInt(dim.qty);
+      })
+      .reduce((acc, item) => acc + item, 0);
   });
 
   const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0);
@@ -34,95 +36,159 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack: ['Packing Slip']
+          stack: [
+            { text: `Our Order: ${data.orderNum}`, style: 'fonts' },
+            { text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${data.job_info?.poNum}`, style: 'fonts' },
+          ],
         },
         {
           stack: [
-            { text: 'Porta Door Co. Inc.', alignment: 'center' },
-            { text: '65 Cogwheel Lane', alignment: 'center' },
-            { text: 'Seymour, CT', alignment: 'center' },
-            { text: '203-888-6191', alignment: 'center' },
-            { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-          ]
+            { text: 'PACKING SLIP', alignment: 'right', style: 'woodtype', decoration: 'underline' },
+            { text: `Ship Via: ${data.job_info?.ShippingMethod?.NAME}`, alignment: 'right', style: 'fonts' },
+          ],
         },
-        {
-          stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
-            { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' },
-            { text: `Ship Via: ${data.job_info.ShippingMethod ? data.job_info.ShippingMethod.NAME : ' '}`, alignment: 'right' },
-            { text: `Salesmen: ${data.sale ? data.sale.fullName : ''}`, alignment: 'right' }
-          ]
-        }
-      ]
+      ],
     },
     {
       columns: [
         {
+          text: ''
+        },
+        {
           stack: [
-            { text: `Customer - ${data.job_info.customer.Company}` },
-            { text: `${data.companyprofile.Contact}`, style: 'fonts' },
-            { text: `${data.companyprofile.Address1}`, style: 'fonts' },
-            { text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`, style: 'fonts' },
-            {
-              text: `${data.companyprofile.City}, ${data.job_info.State}`,
-              style: 'fonts',
-            },
-            { text: `${data.companyprofile.Zip}`, style: 'fonts' },
-            { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-            { text: `Fax: ${data.job_info.Fax ? data.job_info.Fax : ''}`, style: 'fonts' },
+            { text: 'Porta Door Co, INC.', alignment: 'center', style: 'fonts' },
+            { text: 'Phone: 203-888-6191  Fax: 203-888-5803', alignment: 'center', style: 'fonts' },
+            { text: 'Email: Info@portadoor.com', alignment: 'center', style: 'fonts' },
           ],
+        },
+        {
+          text: ''
+        }
+      ],
+    },
+    {
+      columns: [
+        { 
+          width: 200,
+          stack: [
+            { columns: [
+              {
+                text: 'Sold To: ',
+                width: 60
+              },
+              { 
+                
+                stack: [
+                  { text: `${data.job_info.customer.Company}` },
+                  // {
+                  //   text: `${
+                  //     data.companyprofile.Contact
+                  //       ? data.companyprofile.Contact
+                  //       : ''
+                  //   }`,
+                  //   style: 'fonts',
+                  // },
+                  {
+                    text: `${
+                      data.companyprofile.Address1
+                        ? data.companyprofile.Address1
+                        : ''
+                    }`,
+                    style: 'fonts',
+                  },
+                  {
+                    text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                    style: 'fonts',
+                  },
+                  { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
+                  data.companyprofile.Fax ? 
+                    {
+                      text: `Fax: ${
+                        data.companyprofile.Fax ? data.companyprofile.Fax : ''
+                      }`,
+                      style: 'fonts',
+                      margin: [0, 0, 0, 10],
+                    } : null,
+                ],
+              }
+            ],
+
+            style: 'fonts',
+            margin: [0, 0, 0, 0],
+            },
+          ],
+          style: 'fonts',
+        },
+
+        {
+          text: '',
+          // width: 200,
+          alignment: 'center'
         },
         {
           stack: [
             {
-              text: `PO: ${
-                data.job_info.poNum.length > 0 ? data.job_info.poNum : 'None'
-              }`,
-              alignment: 'left',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `Ship To: ${data.job_info.customer.Company}`,
-              style: 'fonts',
-              alignment: 'left',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.Address1}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.Address2 ? data.job_info.Address2 : ''}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.City}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.job_info.Zip}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: `${data.companyprofile.Phone1}`,
-              alignment: 'left',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
+              margin:[10,0,0,0],
+              columns: [
+                { 
+                  width: 40,
+                  stack: [
+                    {
+                      text: 'Ship To: ',
+                      style: 'fonts',
+                      alignment: 'left',
+                      margin: [0, 0, 0, 0],
+                    },
+                  ],
+                },
+                {
+                  stack: [
+                    {
+                      text: `${data.job_info.customer.Company}`,
+                      style: 'fonts',
+                      // alignment: 'right',
+                      margin: [0, 0, 0, 0],
+                    },
+                    {
+                      text: `${data.job_info.Address1}`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                    {
+                      text: `${
+                        data.job_info.Address2 ? data.job_info.Address2 : ''
+                      }`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                    {
+                      text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                    // {
+                    //   text: `${data.job_info.Zip}`,
+                    //   alignment: 'left',
+                    //   style: 'fonts',
+                    //   margin: [0, 0, 0, 0],
+                    // },
+                    {
+                      text: `${data.companyprofile.Phone1}`,
+                      // alignment: 'right',
+                      style: 'fonts',
+                      margin: [0, 0, 0, 0],
+                    },
+                  ],
+                }
+              ]
+  
             },
           ],
-          margin: [120, 0, 0, 0],
         },
       ],
-      margin: [0, 10],
     },
     {
       text:
@@ -225,50 +291,116 @@ export default (data, breakdowns) => {
     }),
     {
       columns: [
-  
         {
-          text: `Payment Method: ${data.job_info && data.job_info.PaymentMethod && data.job_info.PaymentMethod.NAME}`,
-          style: 'totals',
-          width: 347,
+          text: 'OTHER ITEMS',
+          style: 'woodtype',
+          decoration: 'underline',
+          width: 160
         },
         {
-          text: 'Checked By: ______________________________________',
-          style: 'totals',
-          width: 347,
-        },
-      ],
-      margin: [0, 0, 0, 10],
+          text: 'QTY',
+          style: 'woodtype',
+          decoration: 'underline'
+        }
+      ]
     },
+    data.misc_items.length>0 ?
+      {
+        columns: [
+          {
+            text: data.misc_items.map((i) => {
+              return `${
+                i.item ? i.item.NAME : i.item2 ? i.item2 : ''
+              } \n`;
+            }),
+            style: 'fonts',
+            width: 170
+          },
+          {
+            style: 'fonts',
+            stack: data.misc_items.map((i) => {
+              return { text:  i.qty ? parseInt(i.qty) : ''} ;
+            }),
+            width: 30
+          },
+        ],
+        margin: [0, 2, 0, 0],
+      } : null,
     {
-        
+      margin:[0,10,0,10],
       columns: [
         {
-          text: `Ship Via: ${data.job_info && data.job_info.ShippingMethod && data.job_info.ShippingMethod.NAME}`,
-          style: 'totals',
-          width: 347,
+          text: '',
+          width: 200
         },
-  
         {
-          text: 'Packed By:  ______________________________________',
+          text: 'Checked By: ______________',
           style: 'totals',
-          width: 347,
+          width: 160,
+        },
+        {
+          text: `Payment Method: ${
+            data.companyprofile &&
+            data.companyprofile.PMT_TERMS
+          }`,
+          style: 'totals',
+          width: 200,
         },
       ],
-      margin: [0, 0, 0, 10],
     },
     {
       columns: [
         {
-          text: `Total Number of Pieces: ${qty.reduce(
+          text: `Drawer Boxes: ${qty.reduce(
             (acc, item) => acc + item,
             0
           )}`,
           style: 'totals',
+          width: 200,
+        },
+        {
+          text: 'Packed By:  _______________',
+          style: 'totals',
           width: 347,
         },
-  
         {
-          text: 'Total Weight: _____________________________________',
+          text: ''
+        }
+      ],
+      margin: [0, 0, 0, 10],
+    },
+    {
+      columns: [
+        {
+          text: '',
+          style: 'totals',
+          width: 200,
+        },
+
+        {
+          text: 'Total Weight: _____________',
+          style: 'totals',
+          width: 347,
+        },
+        {
+          text: ''
+        }
+      ],
+      margin: [0, 0, 0, 10],
+    },
+    {
+      columns: [
+        {
+          text: `Ship Via: ${
+            data.job_info &&
+            data.job_info.ShippingMethod &&
+            data.job_info.ShippingMethod.NAME
+          }`,
+          style: 'totals',
+          width: 200,
+        },
+        {
+          text: 'Total # Inv\'s: ______________',
           style: 'totals',
           width: 347,
         },
@@ -280,61 +412,13 @@ export default (data, breakdowns) => {
         {
           text: '',
           style: 'totals',
-          width: 347,
+          width: 200,
         },
         {
-          text: 'Received In Good Condition: ______________________',
+          text: 'Received In Good Condition: ___________________________',
           style: 'totals',
           width: 347,
         },
-      ],
-      margin: [0, 0, 0, 10],
-    },
-    {
-      columns: [
-        {
-          text: '',
-          style: 'totals',
-          width: 347,
-        },
-        {
-          text: 'Total #: ___________________________________________',
-          style: 'totals',
-          width: 347,
-        },
-  
-      ],
-      margin: [0, 0, 0, 10],
-    },
-    {
-      columns: [
-        {
-          text: '',
-          style: 'totals',
-          width: 347,
-        },
-        {
-          text: 'Ship Date: ________________________________________',
-          style: 'totals',
-          width: 347,
-        },
-  
-      ],
-      margin: [0, 0, 0, 10],
-    },
-    {
-      columns: [
-        {
-          text: '',
-          style: 'totals',
-          width: 347,
-        },
-        {
-          text: 'Production Date: __________________________________',
-          style: 'totals',
-          width: 347,
-        },
-  
       ],
       margin: [0, 0, 0, 10],
     },

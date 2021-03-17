@@ -121,6 +121,7 @@ class DoorOrders extends Component {
         Phone1: values.job_info.customer.Phone1,
         Fax: values.job_info.customer.Fax,
         Email: values.job_info.customer.Email,
+        PMT_TERMS: values.job_info.customer.PMT_TERMS,
       },
     };
 
