@@ -80,6 +80,7 @@ class MiscItems extends Component {
       subTotals: subTotal,
       tax: tax,
       total: total,
+      status: values.job_info.status,
       dueDate: values.job_info.DueDate,
       sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
     };
@@ -239,10 +240,10 @@ const mapStateToProps = state => ({
   user: state.users.user,
   customers: state.customers.customerDB,
   initialValues: {
-    ...state.Orders.selectedOrder,
+    ...state.Orders && state.Orders.selectedOrder,
     job_info: {
-      ...state.Orders.selectedOrder.job_info,
-      status: state.Orders.selectedOrder.status,
+      ...state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.job_info,
+      status: state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.status,
     }
   },
 });

@@ -23,10 +23,10 @@ const discountSelector = state => {
 const miscItemsSelector = state => {
   const orders = state.form.MiscItems;
   if (orders) {
-    if ((!state.form.MiscItems.values && !state.form.MiscItems.values.misc_items.length > 0)) {
-      return [];
-    } else {
+    if ((state.form.MiscItems.values && state.form.MiscItems.values.misc_items && state.form.MiscItems.values.misc_items.length > 0)) {
       return state.form.MiscItems.values.misc_items;
+    } else {
+      return [];
     }
   } else {
     return [];

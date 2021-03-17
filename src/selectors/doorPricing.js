@@ -58,6 +58,7 @@ const miscItemsSelector = (state) => {
   if (orders) {
     if (
       state.form.DoorOrder.values &&
+      state.form.DoorOrder.values.misc_items &&
       state.form.DoorOrder.values.misc_items.length > 0
     ) {
       return state.form.DoorOrder.values.misc_items;

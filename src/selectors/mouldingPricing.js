@@ -25,6 +25,7 @@ const miscItemsSelector = (state) => {
   if (orders) {
     if (
       state.form.Mouldings.values &&
+      state.form.Mouldings.values.misc_items &&
       state.form.Mouldings.values.misc_items.length > 0
     ) {
       return state.form.Mouldings.values.misc_items;
@@ -100,10 +101,10 @@ const mouldingsSelector = state => {
   const orders = state.form.Mouldings;
 
   if (orders) {
-    if ((!orders.values && !orders.values.mouldings && !orders.values.mouldings.length > 0)) {
-      return [];
+    if ((orders && orders.values && orders.values.mouldings && orders.values.mouldings.length > 0)) {
+      return state.form.Mouldings && state.form.Mouldings.values && state.form.Mouldings.values.mouldings;
     } else {
-      return state.form.Mouldings.values.mouldings;
+      return [];
     }
   } else {
     return [];
