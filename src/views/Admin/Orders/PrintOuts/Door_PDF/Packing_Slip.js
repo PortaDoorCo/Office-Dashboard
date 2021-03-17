@@ -352,8 +352,8 @@ export default (data, breakdowns) => {
           },
           {
             style: 'fonts',
-            text: data.misc_items.map((i) => {
-              return i.qty ? i.qty : '';
+            stack: data.misc_items.map((i) => {
+              return { text:  i.qty ? parseInt(i.qty) : ''} ;
             }),
             width: 30
           },
