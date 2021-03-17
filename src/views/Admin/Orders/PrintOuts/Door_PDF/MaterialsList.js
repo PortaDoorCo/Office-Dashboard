@@ -132,9 +132,10 @@ export default (data, breakdowns) => {
 
   console.log({flattenD6});
 
+  const flattenD7 = flattenD6.sort((a, b) => (a.waste > b.waste) ? -1 : 1);
 
 
-  const LinearFTDisplay = flattenD6.map((i, index) => {
+  const LinearFTDisplay = flattenD7.map((i, index) => {
 
     return [
       {
@@ -235,7 +236,7 @@ export default (data, breakdowns) => {
         {
           columns: [
             {
-              text: `Board Feet of ${i.woodtype} - ${
+              text: `${i.panel.Flat ? 'Square' : 'Board'} Feet of ${i.woodtype} - ${
                 i.thickness === 0.75 ? '4/4' : i.thickness === 1 ? '5/4' : null
               }" Thickness ${i.panel.NAME} Material Needed: ${i.BoardFT.toFixed(2)}`,
               style: 'fonts',
