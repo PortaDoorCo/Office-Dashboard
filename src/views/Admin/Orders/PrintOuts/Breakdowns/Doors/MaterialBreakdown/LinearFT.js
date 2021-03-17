@@ -2,7 +2,12 @@ import numQty from 'numeric-quantity';
 import { flatten, values, uniq, groupBy } from 'lodash';
 import Stiles from '../Stiles/Stiles';
 import Rails from '../Rails/Rails';
+import Ratio from 'lb-ratio';
 
+const fraction = num => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
 
 export default (parts, breakdowns,thickness) => {
 
@@ -59,7 +64,7 @@ export default (parts, breakdowns,thickness) => {
       }, {});
 
       const stiles = Stiles(stile, part.part, breakdowns).map((stile) => {
-        if((stile.width > 1) && (stile.height > 1)){
+        if((numQty(stile.width) > 1) && (numQty(stile.height) > 1)){
           const width = numQty(stile.width);
           const height = ((numQty(stile.height)) * stile.multiplier) * parseInt(j.qty);
           const sum = height / 12;
@@ -103,16 +108,27 @@ export default (parts, breakdowns,thickness) => {
 
   const first_obj = flatten(calc);
 
+  console.log({first_obj});
+
   const flatten_obj = flatten(first_obj);
   const groupedObj = groupBy(flatten_obj, 'width');
+
+  console.log({groupedObj});
+
   const newObj = Object.entries(groupedObj).map(([k, v]) => {
+
+    console.log({k});
+
     return {width: k, sum: v.reduce((a,b) => a + b.sum, 0)};
   });
 
   return newObj.map(i => {
+
+    console.log({ check: i.width});
+
     return {
       sum : i.sum.toFixed(2),
-      width:  i.width ? i.width : null
+      width:  i.width ? i.width : 0
     };
   });
 
