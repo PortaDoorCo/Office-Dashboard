@@ -247,7 +247,13 @@ const mapStateToProps = state => ({
   miscLineItemSelector: miscLineItemSelector(state),
   user: state.users.user,
   customers: state.customers.customerDB,
-  initialValues: state.Orders.selectedOrder,
+  initialValues: {
+    ...state.Orders.selectedOrder,
+    job_info: {
+      ...state.Orders.selectedOrder.job_info,
+      status: state.Orders.selectedOrder.status,
+    }
+  },
 });
 
 const mapDispatchToProps = dispatch =>

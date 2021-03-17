@@ -319,7 +319,13 @@ class DrawerOrder extends Component {
 
 const mapStateToProps = (state, props) => ({
 
-  initialValues: state.Orders.selectedOrder,
+  initialValues: {
+    ...state.Orders.selectedOrder,
+    job_info: {
+      ...state.Orders.selectedOrder.job_info,
+      status: state.Orders.selectedOrder.status,
+    }
+  },
   order: state.Orders.selectedOrder,
 
   woodtypes: state.part_list.box_woodtypes,
