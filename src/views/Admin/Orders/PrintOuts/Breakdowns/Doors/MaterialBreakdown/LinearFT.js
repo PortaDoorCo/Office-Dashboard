@@ -124,7 +124,7 @@ export default (parts, breakdowns,thickness) => {
 
   return newObj.map(i => {
 
-    console.log({ check: i.width});
+    console.log({ check: numQty(i.width)});
 
     return {
       sum : i.sum.toFixed(2),
