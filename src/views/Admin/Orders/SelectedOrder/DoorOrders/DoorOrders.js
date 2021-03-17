@@ -115,6 +115,7 @@ class DoorOrders extends Component {
       tax: tax,
       total: total,
       balance_due: balance,
+      status: values.job_info.status,
       dueDate: values.job_info.DueDate,
       sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
     };
@@ -281,7 +282,13 @@ const mapStateToProps = (state, props) => {
 
 
   return {
-    initialValues: state.Orders.selectedOrder,
+    initialValues: {
+      ...state.Orders && state.Orders.selectedOrder,
+      job_info: {
+        ...state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.job_info,
+        status: state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.status,
+      }
+    },
     order: state.Orders.selectedOrder,
     customers: state.customers.customerDB,
     customerDBLoaded: state.customers.customerDBLoaded,

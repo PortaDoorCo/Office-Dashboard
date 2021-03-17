@@ -46,6 +46,7 @@ const miscItemsSelector = (state) => {
   if (orders) {
     if (
       state.form.DrawerOrder.values &&
+      state.form.DrawerOrder.values.misc_items &&
       state.form.DrawerOrder.values.misc_items.length > 0
     ) {
       return state.form.DrawerOrder.values.misc_items;
