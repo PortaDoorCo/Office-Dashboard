@@ -11,6 +11,7 @@ import {
   reduxForm,
   FieldArray
 } from 'redux-form';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
   totalSelector,
@@ -20,6 +21,13 @@ import {
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import { Field, change } from 'redux-form';
 import { renderDatePicker, renderField, renderDropdownList } from '../../../../../components/RenderInputs/renderInputs';
+import { updateOrder } from '../../../../../redux/orders/actions';
+import Cookies from 'js-cookie';
+
+const cookie = Cookies.get('jwt');
+
+
+
 
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
 
@@ -90,7 +98,7 @@ const renderBalances = ({ fields, balance_history_paid, paymentTypes, edit, meta
 class BalanceHistory extends Component {
 
   render() {
-    const { formState, total, fields, dispatch, isValid, edit, paymentTypes, handleSubmit } = this.props;
+    const { formState, total, fields, dispatch, isValid, edit, paymentTypes, handleSubmit, editable } = this.props;
 
     let updated_total = total;
 
@@ -103,14 +111,39 @@ class BalanceHistory extends Component {
     const balance_paid_history = ((formState && formState.balance_history) ? formState.balance_history.map(i => { return i.balance_paid; }) : [0]);
     const balance_paid_total = balance_paid_history.reduce((acc, item) => acc + item, 0);
 
-    const submit = async (values, e) => {
-      console.log({values});
-    };
+    // const submit = async (values, e) => {
+    //   console.log({values});
+    // };
 
     const onKeyPress = (event) => {
       if (event.which === 13 /* Enter */) {
         event.preventDefault();
       }
+    };
+
+    const submit = async (values, dispatch) => {
+      const {
+        prices,
+        itemPrice,
+        subTotal,
+        tax,
+        total,
+        updateOrder,
+        balance
+      } = this.props;
+  
+      console.log({values});
+
+      const order = {
+        balance_history: values.balance_history
+      };
+
+      console.log({order});
+  
+      const orderId = values.id;
+      await updateOrder(orderId, order, cookie);
+      await this.props.editable();
+  
     };
 
 
@@ -136,7 +169,11 @@ class BalanceHistory extends Component {
               </tbody>
             </Table>
             {!edit ? 
-              <Button color="primary">Save</Button> : null
+              <div>
+                <Button color="primary">Save</Button>
+                <Button color="danger" onClick={() => editable()}>Cancel</Button>
+              </div>
+              : null
             }
             <Row className='mt-3'>
               <Col>
@@ -177,6 +214,14 @@ const mapStateToProps = (state, prop) => ({
   paymentTypes: state.misc_items.paymentTypes
 });
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateOrder,
+    },
+    dispatch
+  );
+
 BalanceHistory = reduxForm({
   form: 'DoorOrder',
 })(BalanceHistory);
@@ -184,5 +229,5 @@ BalanceHistory = reduxForm({
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(BalanceHistory);
