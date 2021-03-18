@@ -828,16 +828,24 @@ class OrderPage extends Component {
                         <h5>Balance History</h5>
                         {selectedOrder &&
                         selectedOrder.orderType === 'Door Order' ? (
-                            <DoorBalanceHistory />
+                            <DoorBalanceHistory
+                              edit={!this.props.edit}
+                            />
                           ) : selectedOrder &&
                           selectedOrder.orderType === 'Drawer Order' ? (
-                              <DrawerBalanceHistory />
+                              <DrawerBalanceHistory
+                                edit={!this.props.edit}
+                              />
                             ) : selectedOrder &&
                           selectedOrder.orderType === 'Misc Items' ? (
-                                <MiscItemBalanceHistory />
+                                <MiscItemBalanceHistory
+                                  edit={!this.props.edit}
+                                />
                               ) : selectedOrder &&
                               selectedOrder.orderType === 'Mouldings' ? (
-                                  <MouldingsBalanceHistory />
+                                  <MouldingsBalanceHistory
+                                    edit={!this.props.edit}
+                                  />
                                 )
                                 :
                                 (

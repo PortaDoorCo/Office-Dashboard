@@ -5,6 +5,7 @@ import {
 } from 'reactstrap';
 import DropdownList from 'react-widgets/lib/DropdownList';
 import Multiselect from 'react-widgets/lib/Multiselect';
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import 'react-widgets/dist/css/react-widgets.css';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
@@ -80,6 +81,30 @@ export const renderDropdownList = ({
       valueField={valueField}
       textField={textField}
       placeholder="Select"
+      onChange={input.onChange}
+      disabled={edit}
+    />
+    {touched &&
+                ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+                    (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+  </Fragment>
+);
+
+
+export const renderDatePicker = ({
+  input,
+  data,
+  valueField,
+  textField,
+  edit,
+  meta: { touched, error, warning }
+}) => (
+  <Fragment>
+    <DateTimePicker
+      {...input}
+      data={data}
+      valueField={valueField}
+      textField={textField}
       onChange={input.onChange}
       disabled={edit}
     />
