@@ -3,7 +3,8 @@ import {
   Table,
   Row,
   Col,
-  Button
+  Button,
+  Input
 } from 'reactstrap';
 import moment from 'moment';
 import {
@@ -20,12 +21,20 @@ import {
 } from '../../../../../selectors/doorPricing';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import { Field, change } from 'redux-form';
-import { renderDatePicker, renderField, renderDropdownList } from '../../../../../components/RenderInputs/renderInputs';
+import { renderDatePicker, renderField, renderDropdownList, renderPrice } from '../../../../../components/RenderInputs/renderInputs';
 import { updateOrder } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
+import 'react-widgets/dist/css/react-widgets.css';
+
+import { createNumberMask } from 'redux-form-input-masks';
+
+const currencyMask = createNumberMask({
+  decimalPlaces: 2,
+  locale: 'en-US',
+});
+
 
 const cookie = Cookies.get('jwt');
-
 
 
 
@@ -43,40 +52,50 @@ const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
 
 const renderBalances = ({ fields, balance_history_paid, paymentTypes, edit, meta: { error } }) => (
 
-    
-  fields.map((i, index) => (
-    <tr key={index}>
-      {console.log({i})}
-      <td>
-        <Field
-          name={`${i}.date`}
-          showTime={false}
-          edit={edit}
-          component={renderDateTimePicker} />
-      </td>
-      <th>
-      ${balance_history_paid[index].toFixed(2)}
-      </th>
-      <td>
-        <Field
-          name={`${i}.balance_paid`}
-          type="text"
-          component={renderField}
-          edit={true}
-          label="balance_paid" />
-      </td>
-      <td>
+  <Table>
+    <thead>
+      <tr>
+        <th>Payment Date</th>
+        <th>Balance Due</th>
+        <th>Balance Paid</th>
+        <th>Payment Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      {fields.map((i, index) => (
+        <tr key={index}>
+          {console.log({i})}
+          <td>
+            <Field
+              name={`${i}.date`}
+              showTime={false}
+              edit={edit}
+              component={renderDateTimePicker} />
+          </td>
+          <th>
+            <Input placeholder={`$${balance_history_paid[index].toFixed(2)}`} disabled />
+          </th>
+          <td>
+            <Field
+              name={`${i}.balance_paid`}
+              type="text"
+              component={renderPrice}
+              edit={true}
+              {...currencyMask}
+              label="balance_paid" />
+          </td>
+          <td>
 
-        <Field
-          name={`${i}.payment_method`}
-          component={renderDropdownList}
-          data={paymentTypes}
-          valueField="value"
-          edit={edit}
-          // validate={required}
-          textField="NAME" />
+            <Field
+              name={`${i}.payment_method`}
+              component={renderDropdownList}
+              data={paymentTypes}
+              valueField="value"
+              edit={edit}
+              // validate={required}
+              textField="NAME" />
 
-        {/* <Field
+            {/* <Field
           name={`${i}.payment_method`}
           type="text"
           component={renderField}
@@ -84,9 +103,13 @@ const renderBalances = ({ fields, balance_history_paid, paymentTypes, edit, meta
           textField="NAME"
           // edit={edit}
           label="payment_method" /> */}
-      </td>
-    </tr>
-  )).reverse()
+          </td>
+        </tr>
+      )).reverse()}
+    </tbody>
+  </Table>
+    
+  
     
 
 );
@@ -152,22 +175,8 @@ class BalanceHistory extends Component {
 
       return (
         <div>
-          <form onKeyPress={onKeyPress} onSubmit={handleSubmit(submit)}>
-            <Table striped>
-              <thead>
-                <tr>
-                  <th>Payment Date</th>
-                  <th>Balance Due</th>
-                  <th>Balance Paid</th>
-                  <th>Payment Method</th>
-                </tr>
-              </thead>
-              <tbody>
-              
-                <FieldArray name="balance_history" component={renderBalances} balance_paid_history={balance_paid_history} balance_history_paid={balance_history_paid} balance_paid_total={balance_paid_total} paymentTypes={paymentTypes} edit={edit} />
-              
-              </tbody>
-            </Table>
+          <form onKeyPress={onKeyPress} onSubmit={handleSubmit(submit)}> 
+            <FieldArray name="balance_history" component={renderBalances} balance_paid_history={balance_paid_history} balance_history_paid={balance_history_paid} balance_paid_total={balance_paid_total} paymentTypes={paymentTypes} edit={edit} />
             {!edit ? 
               <div>
                 <Button color="primary">Save</Button>
