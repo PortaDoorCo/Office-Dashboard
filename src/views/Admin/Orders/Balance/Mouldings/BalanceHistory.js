@@ -83,15 +83,14 @@ const renderBalances = ({ fields, balance_history_paid, paymentTypes, edit, meta
           edit={edit}
           // validate={required}
           textField="NAME" />
-
-        {/* <Field
-          name={`${i}.payment_method`}
-          type="text"
-          component={renderField}
-          valueField="value"
-          textField="NAME"
-          // edit={edit}
-          label="payment_method" /> */}
+      </td>
+      <td>
+        {!edit ? 
+          <Button
+            onClick={() => fields.remove(index)}
+            color="danger"
+          >X</Button> : null
+        }
       </td>
     </tr>
   )).reverse()
@@ -168,6 +167,7 @@ class BalanceHistory extends Component {
                   <th>Balance Due</th>
                   <th>Balance Paid</th>
                   <th>Payment Method</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
