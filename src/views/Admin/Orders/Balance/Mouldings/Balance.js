@@ -11,18 +11,33 @@ import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from 'js-cookie';
-import { renderDropdownList, renderField } from '../../../../../components/RenderInputs/renderInputs';
+import { renderDropdownList, renderField, renderNumber } from '../../../../../components/RenderInputs/renderInputs';
 import {
   totalSelector,
   balanceSelector,
   subTotal_Total,
+  taxSelector,
   balanceTotalSelector
 } from '../../../../../selectors/mouldingPricing';
-import { updateOrder, updateBalance } from '../../../../../redux/orders/actions';
+import { updateOrder, updateBalance, updateStatus } from '../../../../../redux/orders/actions';
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import 'react-widgets/dist/css/react-widgets.css';
+
 
 const cookie = Cookies.get('jwt');
 
 const required = value => (value ? undefined : 'Required');
+
+const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
+
+  <div>
+    <DateTimePicker
+      onChange={onChange}
+      time={showTime}
+      value={!value ? new Date() : new Date(value)}
+      disabled={edit}
+    />
+  </div>;
 
 class Balance extends Component {
 
@@ -42,7 +57,7 @@ class Balance extends Component {
 
   submit = async (values) => {
 
-    const { updateBalance } = this.props;
+    const { updateBalance, updateStatus } = this.props;
 
 
 
@@ -53,7 +68,8 @@ class Balance extends Component {
       ...values,
       balance_paid: values.pay_balance,
       balance_history:  values.balance_history,
-      payment_method: values.payment_method
+      payment_method: values.payment_method,
+      payment_date: values.payment_date ? values.payment_date : new Date()
     };
 
     if(values.pay_balance){
@@ -75,7 +91,8 @@ class Balance extends Component {
           )
         );
       }
-      
+
+
       await this.props.dispatch(
         change(
           'Mouldings',
@@ -93,7 +110,7 @@ class Balance extends Component {
             {
               'payment_method': values.payment_method,
               'balance_paid': parseFloat(values.pay_balance),
-              'date': new Date()
+              'date': values.payment_date ? values.payment_date : new Date()
             }
           ]
 
@@ -111,7 +128,8 @@ class Balance extends Component {
       handleSubmit,
       balanceTotal,
       role,
-      paymentTypes
+      paymentTypes,
+      tax
     } = this.props;
 
     if (formState) {
@@ -157,6 +175,18 @@ class Balance extends Component {
 
             {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
               <div>
+                <Row>
+                  <Col xs='5'>
+                    <FormGroup>
+                      <Label htmlFor="design">Payment Date</Label>
+                      <Field
+                        name={'payment_date'}
+                        component={renderDateTimePicker}
+                        showTime={false}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
                 <Row>
                   <Col xs='5'>
                     <FormGroup>
@@ -212,7 +242,8 @@ const mapStateToProps = (state, props) => ({
 
   formState: getFormValues('Mouldings')(state),
   total: totalSelector(state),
-  // subTotal: subTotal_Total(state),
+  tax: taxSelector(state),
+  subTotal: subTotal_Total(state),
   balance: balanceSelector(state),
   balanceTotal: balanceTotalSelector(state),
   role: state.users.user.role,
@@ -225,7 +256,8 @@ const mapDispatchToProps = dispatch =>
     {
       change,
       updateOrder,
-      updateBalance
+      updateBalance,
+      updateStatus
     },
     dispatch
   );

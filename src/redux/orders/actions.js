@@ -288,7 +288,7 @@ export function updateBalance(orderId, balance, cookie) {
           'balance_due': parseFloat(balance.balance_due),
           'balance_paid': parseFloat(balance.balance_paid),
           'payment_method': balance.payment_method,
-          'date': new Date()
+          'date': balance.payment_date
         }
       ],
       status: 'Ordered',
@@ -310,7 +310,7 @@ export function updateBalance(orderId, balance, cookie) {
           'balance_due': parseFloat(balance.balance_due),
           'balance_paid': parseFloat(balance.balance_paid),
           'payment_method': balance.payment_method,
-          'date': new Date()
+          'date': balance.payment_date
         }
       ],
     };
