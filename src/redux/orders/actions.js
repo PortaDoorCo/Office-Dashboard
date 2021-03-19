@@ -272,19 +272,52 @@ export function socketReceiveUpdateStatus(res) {
 
 export function updateBalance(orderId, balance, cookie) {
 
-  const item = {
-    balance_due: balance.balance_due,
-    balance_paid: balance.balance_paid,
-    balance_history: [
-      ...balance.balance_history,
-      {
-        'balance_due': parseFloat(balance.balance_due),
-        'balance_paid': parseFloat(balance.balance_paid),
-        'payment_method': balance.payment_method,
-        'date': new Date()
-      }
-    ]
-  };
+
+  console.log({balance});
+
+  let item;
+  
+
+  if(balance.status === 'Quote'){
+    item = {
+      balance_due: balance.balance_due,
+      balance_paid: balance.balance_paid,
+      balance_history: [
+        ...balance.balance_history,
+        {
+          'balance_due': parseFloat(balance.balance_due),
+          'balance_paid': parseFloat(balance.balance_paid),
+          'payment_method': balance.payment_method,
+          'date': new Date()
+        }
+      ],
+      status: 'Ordered',
+      tracking: [
+        ...balance.tracking,
+        {
+          'status': 'Ordered',
+          'date': new Date()
+        }
+      ]
+    };
+  }else {
+    item = {
+      balance_due: balance.balance_due,
+      balance_paid: balance.balance_paid,
+      balance_history: [
+        ...balance.balance_history,
+        {
+          'balance_due': parseFloat(balance.balance_due),
+          'balance_paid': parseFloat(balance.balance_paid),
+          'payment_method': balance.payment_method,
+          'date': new Date()
+        }
+      ],
+    };
+  }
+
+
+  console.log({item});
 
   return async function (dispatch) {
     try {

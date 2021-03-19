@@ -50,6 +50,7 @@ class Balance extends Component {
     const id = values.id;
 
     const order = {
+      ...values,
       balance_paid: values.pay_balance,
       balance_history:  values.balance_history,
       payment_method: values.payment_method
@@ -57,6 +58,23 @@ class Balance extends Component {
 
     if(values.pay_balance){
       await updateBalance(id, order, cookie);
+
+      if(values.status === 'Quote'){
+        await this.props.dispatch(
+          change(
+            'Mouldings',
+            'job_info.status',
+            'Ordered'
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'Mouldings',
+            'status',
+            'Ordered'
+          )
+        );
+      }
       
       await this.props.dispatch(
         change(
