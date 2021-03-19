@@ -126,8 +126,8 @@ const Designs = (props) => {
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Moulding Width:</strong> ${card.MOULDING_WIDTH}</CardTitle>
-            <CardTitle><strong>Moulding Thickness:</strong> ${card.MOULDING_THICKNESS}</CardTitle>
+            <CardTitle><strong>Moulding Width:</strong> {card.MOULDING_WIDTH}</CardTitle>
+            <CardTitle><strong>Moulding Thickness:</strong> {card.MOULDING_THICKNESS}</CardTitle>
             <CardTitle><strong>Multiplier:</strong> {card.Multiplier}</CardTitle>
           </CardBody>
         </Card>
