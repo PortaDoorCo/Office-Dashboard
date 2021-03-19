@@ -19,7 +19,7 @@ import {
   taxSelector,
   balanceTotalSelector
 } from '../../../../../selectors/doorPricing';
-import { updateOrder, updateBalance } from '../../../../../redux/orders/actions';
+import { updateOrder, updateBalance, updateStatus } from '../../../../../redux/orders/actions';
 
 const cookie = Cookies.get('jwt');
 
@@ -43,7 +43,7 @@ class Balance extends Component {
 
   submit = async (values) => {
 
-    const { updateBalance } = this.props;
+    const { updateBalance, updateStatus } = this.props;
 
 
 
@@ -51,14 +51,33 @@ class Balance extends Component {
     const id = values.id;
 
     const order = {
+      ...values,
       balance_paid: values.pay_balance,
       balance_history:  values.balance_history,
       payment_method: values.payment_method
     };
-
+    
     if(values.pay_balance){
       await updateBalance(id, order, cookie);
-      
+
+      if(values.status === 'Quote'){
+        await this.props.dispatch(
+          change(
+            'DoorOrder',
+            'job_info.status',
+            'Ordered'
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'DoorOrder',
+            'status',
+            'Ordered'
+          )
+        );
+      }
+
+
       await this.props.dispatch(
         change(
           'DoorOrder',
@@ -210,7 +229,8 @@ const mapDispatchToProps = dispatch =>
     {
       change,
       updateOrder,
-      updateBalance
+      updateBalance,
+      updateStatus
     },
     dispatch
   );
