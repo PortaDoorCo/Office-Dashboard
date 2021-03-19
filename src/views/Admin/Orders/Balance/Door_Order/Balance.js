@@ -20,10 +20,24 @@ import {
   balanceTotalSelector
 } from '../../../../../selectors/doorPricing';
 import { updateOrder, updateBalance, updateStatus } from '../../../../../redux/orders/actions';
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import 'react-widgets/dist/css/react-widgets.css';
+
 
 const cookie = Cookies.get('jwt');
 
 const required = value => (value ? undefined : 'Required');
+
+const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
+
+  <div>
+    <DateTimePicker
+      onChange={onChange}
+      time={showTime}
+      value={!value ? new Date() : new Date(value)}
+      disabled={edit}
+    />
+  </div>;
 
 class Balance extends Component {
 
@@ -54,9 +68,10 @@ class Balance extends Component {
       ...values,
       balance_paid: values.pay_balance,
       balance_history:  values.balance_history,
-      payment_method: values.payment_method
+      payment_method: values.payment_method,
+      payment_date: values.payment_date ? values.payment_date : new Date()
     };
-    
+
     if(values.pay_balance){
       await updateBalance(id, order, cookie);
 
@@ -95,7 +110,7 @@ class Balance extends Component {
             {
               'payment_method': values.payment_method,
               'balance_paid': parseFloat(values.pay_balance),
-              'date': new Date()
+              'date': values.payment_date ? values.payment_date : new Date()
             }
           ]
 
@@ -160,6 +175,18 @@ class Balance extends Component {
 
             {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
               <div>
+                <Row>
+                  <Col xs='5'>
+                    <FormGroup>
+                      <Label htmlFor="design">Payment Date</Label>
+                      <Field
+                        name={'payment_date'}
+                        component={renderDateTimePicker}
+                        showTime={false}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
                 <Row>
                   <Col xs='5'>
                     <FormGroup>
