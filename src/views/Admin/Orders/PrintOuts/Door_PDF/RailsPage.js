@@ -86,6 +86,10 @@ export default (data, breakdowns) => {
                 : '',
             style: 'fonts',
           },
+          {
+            text: item.notes ? item.notes : '',
+            style: 'fonts'
+          }
         ]);
       } else {
         tableBody.push([
