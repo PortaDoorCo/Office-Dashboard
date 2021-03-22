@@ -313,6 +313,21 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                       />
                     </td>
                   </tr>
+                  <tr>
+                    <td>
+                      <strong>
+                        <p>Cab#</p>
+                      </strong>
+                      <Field
+                        name={`${table}.cab_number`}
+                        type="text"
+                        component={renderNumber}
+                        label="cab"
+                        edit={edit}
+                      />
+                    </td>
+                  </tr>
+
                   {!edit ?
                     <tr>
                       <td>

@@ -194,7 +194,7 @@ const Slab_Door_Table = ({
                       <p>Cab#</p>
                     </strong>
                     <Field
-                      name={`${table}.cab`}
+                      name={`${table}.cab_number`}
                       type="text"
                       component={renderNumber}
                       label="cab"

@@ -3,7 +3,7 @@ import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 
 export default (data, breakdowns) => {
-  const getName = i => {
+  const getName = (i) => {
     return `${
       i.cope_design
         ? i.cope_design.NAME
@@ -19,15 +19,25 @@ export default (data, breakdowns) => {
                   ? i.mt_df_design.NAME + ' ' + i.construction.value
                   : i.face_frame_design
                     ? i.face_frame_design.NAME
-                    : i.orderType.value === 'Slab_Door' ||
-        i.orderType.value === 'Slab_DF'
+                    : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
                       ? ''
                       : ''
     }`;
   };
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
-  const b = a.map(woodtype => woodtype.map((v, i) => ({...v, dimensions: flattenDeep( v.dimensions.map(d => ({...d, name: getName(v)}))  ) }))).map((t, x) => ({...t[0], dimensions: flattenDeep(t.map(c => c.dimensions))}));
-  
+  const b = a
+    .map((woodtype) =>
+      woodtype.map((v, i) => ({
+        ...v,
+        dimensions: flattenDeep(
+          v.dimensions.map((d) => ({ ...d, name: getName(v) }))
+        ),
+      }))
+    )
+    .map((t, x) => ({
+      ...t[0],
+      dimensions: flattenDeep(t.map((c) => c.dimensions)),
+    }));
 
   console.log({ partttt: b, adtttt: data.part_list, aaaaaaaa: a });
 
@@ -38,7 +48,8 @@ export default (data, breakdowns) => {
         { text: 'Style', style: 'fonts' },
         { text: 'Qty', style: 'fonts' },
         { text: 'Width x Length', style: 'fonts' },
-        { text: '' },
+        { text: 'Pat', style: 'fonts' },
+        { text: 'Note', style: 'fonts' },
       ],
     ];
     i.dimensions.forEach((item, index) => {
@@ -64,6 +75,10 @@ export default (data, breakdowns) => {
           text: Stiles(item, i, breakdowns).map((stile) => {
             return `${stile.pattern} \n`;
           }),
+          style: 'fonts',
+        },
+        {
+          text: item.notes ? item.notes : '',
           style: 'fonts',
         },
       ]);
@@ -92,7 +107,7 @@ export default (data, breakdowns) => {
                     : ''
               }`,
               style: 'woodtype',
-              width: 200
+              width: 200,
             },
             {
               text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
@@ -114,7 +129,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 80, 30, 120, 30],
+            widths: [22, 80, 30, 120, 30, '*'],
             body: tableBody,
           },
           layout: {
@@ -156,9 +171,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack: [
-            'Individual - STILES List',
-          ],
+          stack: ['Individual - STILES List'],
         },
         {
           stack: [
@@ -198,10 +211,16 @@ export default (data, breakdowns) => {
       columns: [
         {
           text: `${data.job_info.customer.Company}`,
-          style: 'fonts'
+          style: 'fonts',
         },
         {
-          stack: [{ text: `Job: ${data.job_info.poNum}`, alignment: 'right', style: 'fonts' }],
+          stack: [
+            {
+              text: `Job: ${data.job_info.poNum}`,
+              alignment: 'right',
+              style: 'fonts',
+            },
+          ],
         },
       ],
       margin: [0, 10],
