@@ -129,7 +129,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, 80, 30, 120, 30, '*'],
+            widths: [22, 80, 30, 120, 50, '*'],
             body: tableBody,
           },
           layout: {
