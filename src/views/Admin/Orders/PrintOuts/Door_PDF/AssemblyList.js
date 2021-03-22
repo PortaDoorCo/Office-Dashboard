@@ -151,10 +151,16 @@ export default (data, breakdowns) => {
               style: 'fonts',
             },
             {
-              text: Panels(item, i, breakdowns).map((panel) => {
-                return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`;
-              }),
-              style: 'fonts',
+              stack: [
+                { text: Panels(item, i, breakdowns).map((panel) => {
+                  return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n `;
+                }), style: 'fonts' },
+                item.cab_number ? 
+                  {
+                    text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
+                    style: 'tableBold', alignment: 'left'
+                  } : null,
+              ],
             },
           ]);
         });

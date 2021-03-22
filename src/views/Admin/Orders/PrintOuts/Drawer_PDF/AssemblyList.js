@@ -138,9 +138,16 @@ export default (data, breakdowns) => {
             },
             { text: `${Sides(item, i, breakdowns).qty} - ${Sides(item, i, breakdowns).measurement}`, style: 'fonts' },
             { text: `${Fronts(item, i, breakdowns).qty} - ${Fronts(item, i, breakdowns).measurement}`, style: 'fonts' },
-            { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement} \n `, style: 'fonts' },
-
-           
+            {
+              stack: [
+                { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement} \n `, style: 'fonts' },
+                item.cab_number ? 
+                  {
+                    text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
+                    style: 'tableBold', alignment: 'left'
+                  } : null,
+              ],
+            },           
           ];
           
           groupedTableBody.push(tb);

@@ -47,6 +47,7 @@ export default (data, breakdowns) => {
         { text: 'Width x Length', style: 'fonts' },
         { text: 'Pat', style: 'fonts' },
         { text: 'Arch', style: 'fonts' },
+        { text: 'Note', style: 'fonts' },
       ],
     ];
     i.dimensions.forEach((item, index) => {
@@ -118,6 +119,10 @@ export default (data, breakdowns) => {
                 : '',
             style: 'fonts',
           },
+          {
+            text: item.notes ? item.notes : '',
+            style: 'fonts'
+          }
         ]);
       }
     });
@@ -168,7 +173,7 @@ export default (data, breakdowns) => {
           table: {
             headerRows: 1,
             // widths: [22, 95, 30, '*', 200],
-            widths: [22, 60, 30, 100, 30, 80],
+            widths: [22, 60, 30, 100, 30, 60, '*'],
             body: tableBody,
           },
           layout: {

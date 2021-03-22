@@ -62,6 +62,7 @@ export default (data, breakdowns) => {
         { text: 'Actual Size', style: 'fonts' },
         { text: 'Panel', style: 'fonts', alignment: 'left' },
         { text: 'IP', style: 'fonts', alignment: 'left' },
+        { text: 'Note', style: 'fonts' },
       ],
     ];
     i.dimensions.forEach((item, index) => {
@@ -83,6 +84,10 @@ export default (data, breakdowns) => {
           style: 'fonts',
           alignment: 'left'
         },
+        {
+          text: item.notes ? item.notes : '',
+          style: 'fonts'
+        }
       ]);
     });
 
@@ -122,7 +127,7 @@ export default (data, breakdowns) => {
       {
         table: {
           headerRows: 1,
-          widths: [22, 95, 30, 160, '*', '*'],
+          widths: [22, 50, 30, 110, 60, '*', '*'],
           body: tableBody,
         },
         layout: {

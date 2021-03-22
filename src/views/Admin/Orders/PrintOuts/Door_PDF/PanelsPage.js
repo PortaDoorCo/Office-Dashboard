@@ -40,7 +40,8 @@ export default (data, breakdowns) => {
         { text: 'Width x Height', style: 'fonts' },
         { text: 'Pat', style: 'fonts' },
         { text: 'Arch', style: 'fonts' },
-        { text: 'Panel' }
+        { text: 'Panel' },
+        { text: 'Note', style: 'fonts' }
       ]
     ];
     i.dimensions.forEach((item, index) => {
@@ -51,7 +52,8 @@ export default (data, breakdowns) => {
         { text: Panels(item, i, breakdowns).map(panel => { return `${panel.measurement} \n`; }), style: 'fonts' },
         { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n`; }), style: 'fonts' },
         { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
-        { text: `${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' }
+        { text: `${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
+        { text: `${item.notes ? item.notes : ''}`, style: 'fonts' }
       ]);
     });
 
@@ -101,7 +103,7 @@ export default (data, breakdowns) => {
           table: {
             headerRows: 1,
             // widths: [22, 95, 30, '*', 200],
-            widths: [22, 60, 30, 100, 30, 80, '*'],
+            widths: [22, 40, 30, 100, 25, 40, 40, 120],
             body: tableBody,
           },
           layout: {

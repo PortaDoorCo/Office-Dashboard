@@ -65,7 +65,7 @@ export default (data, breakdowns) => {
           { text: Size(item), style: 'fonts' },
           { text: '[      ]', style: 'fonts' },
           { text: 'N/A', style: 'fonts' },
-          { text: '', style: 'fonts' },
+          { text: item.notes ? item.notes : '', style: 'fonts' },
         ]);
       });
 
