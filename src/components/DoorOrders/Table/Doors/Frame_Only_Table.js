@@ -349,6 +349,22 @@ const Frame_Only_Table = ({
                     />
                   </td>
                 </tr>
+                <tr>
+                  <td>
+                    <strong>
+                      <p>Cab#</p>
+                    </strong>
+                    <Field
+                      name={`${table}.cab`}
+                      type="text"
+                      component={renderNumber}
+                      label="cab"
+                      edit={edit}
+                    />
+                  </td>
+                </tr>
+
+
                 {!edit ? (
                   <tr>
                     <td>
