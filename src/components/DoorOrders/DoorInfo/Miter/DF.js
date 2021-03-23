@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../../../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderCheckboxToggle, renderTextField } from '../../../RenderInputs/renderInputs';
 import Miter_Table from '../../Table/DFs/Miter_Table';
 import Ratio from 'lb-ratio';
 import {
@@ -95,6 +95,28 @@ class MiterDF extends Component {
     }
   }
 
+  onChangeWoodtype = (p, ind) => {
+    const { formState } = this.props;
+    const part = formState.part_list[ind];
+    if(part.woodtype && part.woodtype.VERTICAL_GRAIN){
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.VERTICAL_GRAIN`,
+          true
+        )
+      );
+    } else {
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.VERTICAL_GRAIN`,
+          false
+        )
+      );
+    }
+  }
+
   render() {
     const {
       part,
@@ -126,6 +148,7 @@ class MiterDF extends Component {
                 data={one_piece ? one_piece_wood : woodtypes}
                 valueField="value"
                 textField="NAME"
+                onBlur={() => this.onChangeWoodtype(part, index)}
                 validate={required}
                 edit={edit}
               />
@@ -164,6 +187,30 @@ class MiterDF extends Component {
           </Col>
 
         </Row>
+
+        <Row>
+          <Col xs='4' lg='2'>
+            <FormGroup>
+              <Label htmlFor="arches"><strong>Grain Direction</strong></Label>
+              <Row>
+                <Col>
+                Horiz
+                </Col>
+                <Col>
+                  <Field
+                    name={`${part}.VERTICAL_GRAIN`}
+                    component={renderCheckboxToggle}
+                  />
+                </Col>
+                <Col>
+                Vertical
+                </Col>
+              </Row>
+
+            </FormGroup>
+          </Col>
+        </Row>
+
 
         <Row className="mt-2">
           <Col xs="4">

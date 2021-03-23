@@ -90,6 +90,28 @@ class GlassDoor extends Component {
     }
   }
 
+  onChangeWoodtype = (p, ind) => {
+    const { formState } = this.props;
+    const part = formState.part_list[ind];
+    if(part.woodtype && part.woodtype.VERTICAL_GRAIN){
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.VERTICAL_GRAIN`,
+          true
+        )
+      );
+    } else {
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.VERTICAL_GRAIN`,
+          false
+        )
+      );
+    }
+  }
+
 
   render() {
     const {

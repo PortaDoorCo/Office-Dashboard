@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownListFilter, renderField, renderTextField } from '../../../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField, renderCheckboxToggle } from '../../../RenderInputs/renderInputs';
 import Cope_Table from '../../Table/DFs/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
@@ -23,6 +23,7 @@ const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
+
 
 class CopeDF extends Component {
 
@@ -95,6 +96,28 @@ class CopeDF extends Component {
     }
   }
 
+  onChangeWoodtype = (p, ind) => {
+    const { formState } = this.props;
+    const part = formState.part_list[ind];
+    if(part.woodtype && part.woodtype.VERTICAL_GRAIN){
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.VERTICAL_GRAIN`,
+          true
+        )
+      );
+    } else {
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.VERTICAL_GRAIN`,
+          false
+        )
+      );
+    }
+  }
+
   render() {
     const {
       part,
@@ -129,6 +152,7 @@ class CopeDF extends Component {
                 data={one_piece ? one_piece_wood : woodtypes}
                 valueField="value"
                 textField="NAME"
+                onBlur={() => this.onChangeWoodtype(part, index)}
                 validate={required}
                 edit={edit}
               />
@@ -172,21 +196,6 @@ class CopeDF extends Component {
 
           <Col xs="4">
             <FormGroup>
-              <Label htmlFor="panel">Panel</Label>
-              <Field
-                name={`${part}.panel`}
-                component={renderDropdownListFilter}
-                data={panels}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-
-          <Col xs="4">
-            <FormGroup>
               <Label htmlFor="edge">Profile</Label>
               <Field
                 name={`${part}.profile`}
@@ -200,6 +209,23 @@ class CopeDF extends Component {
               />
             </FormGroup>
           </Col>
+
+          <Col xs="4">
+            <FormGroup>
+              <Label htmlFor="panel">Panel</Label>
+              <Field
+                name={`${part}.panel`}
+                component={renderDropdownListFilter}
+                data={panels}
+                valueField="value"
+                textField="NAME"
+                validate={required}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
+
+
 
 
 
@@ -220,6 +246,29 @@ class CopeDF extends Component {
 
 
 
+        </Row>
+
+        <Row>
+          <Col xs='4' lg='2'>
+            <FormGroup>
+              <Label htmlFor="arches"><strong>Grain Direction</strong></Label>
+              <Row>
+                <Col>
+                Horiz
+                </Col>
+                <Col>
+                  <Field
+                    name={`${part}.VERTICAL_GRAIN`}
+                    component={renderCheckboxToggle}
+                  />
+                </Col>
+                <Col>
+                Vertical
+                </Col>
+              </Row>
+
+            </FormGroup>
+          </Col>
         </Row>
 
         <Row className="mt-2">

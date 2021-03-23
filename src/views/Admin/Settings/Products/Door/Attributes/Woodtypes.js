@@ -130,7 +130,7 @@ const Woodtype = (props) => {
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>4/4 Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
             <CardTitle><strong>5/4 Price:</strong> ${card.STANDARD_GRADE_THICK}</CardTitle>
-            <CardTitle><strong>{card.VERTICAL_GRAIN ? 'Vertical Grain' : 'Horizontal Grain'}</strong></CardTitle>
+            <CardTitle><strong>DF Grain Direction:</strong> {card.VERTICAL_GRAIN ? <div>Vertical</div>  : <div>Horizontal</div>}</CardTitle>
           </CardBody>
         </Card>
       </div>
