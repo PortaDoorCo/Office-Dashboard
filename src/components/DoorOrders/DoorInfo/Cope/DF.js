@@ -260,6 +260,7 @@ class CopeDF extends Component {
                   <Field
                     name={`${part}.VERTICAL_GRAIN`}
                     component={renderCheckboxToggle}
+                    edit={edit}
                   />
                 </Col>
                 <Col>
