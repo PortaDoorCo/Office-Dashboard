@@ -10,7 +10,6 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap';
-import moment from 'moment';
 import { getFormValues, reduxForm, FieldArray } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,10 +19,8 @@ import {
   balanceTotalSelector,
 } from '../../../../../selectors/doorPricing';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-import { Field, change } from 'redux-form';
+import { Field } from 'redux-form';
 import {
-  renderDatePicker,
-  renderField,
   renderDropdownList,
   renderPrice,
 } from '../../../../../components/RenderInputs/renderInputs';
@@ -181,9 +178,6 @@ class BalanceHistory extends Component {
     const {
       formState,
       total,
-      fields,
-      dispatch,
-      isValid,
       edit,
       paymentTypes,
       handleSubmit,
@@ -223,15 +217,7 @@ class BalanceHistory extends Component {
 
     const submit = async (values, dispatch) => {
       const {
-        prices,
-        itemPrice,
-        subTotal,
-        tax,
-        total,
         updateOrder,
-        balance,
-        buttonLabel,
-        className,
       } = this.props;
 
       console.log({ values });

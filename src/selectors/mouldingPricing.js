@@ -228,7 +228,7 @@ export const subTotalSelector = createSelector(
 
 export const subTotal_Total = createSelector(
   [mouldingTotalSelector],
-  (subTotal) => subTotal.reduce((acc, item) => acc + item, 0)
+  (subTotal, misc) => subTotal.length > 0 ? subTotal.reduce((acc, item) => acc + item, 0) : 0
 );
 
 export const taxSelector = createSelector(
