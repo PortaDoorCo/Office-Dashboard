@@ -33,7 +33,7 @@ export default (info, part, breakdowns) => {
   const edge_factor = part.edge.LIP_FACTOR;
   const panel_factor = part.panel.PANEL_FACTOR;
 
-  const VERTICAL_GRAIN = part.woodtype.VERTICAL_GRAIN;
+  const VERTICAL_GRAIN = part.VERTICAL_GRAIN;
 
   const add_len = 0;
   const INSET = 0;

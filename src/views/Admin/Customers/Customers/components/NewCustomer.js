@@ -54,10 +54,13 @@ submit = async (values, e) => {
 
   const data = {
     ...values,
+    Company: values.Company.toUpperCase(),
     State: values.State && values.State.abbreviation,
     Shipping_State: values.Shipping_State && values.Shipping_State.abbreviation,
     PMT_TERMS: values.PMT_TERMS.NAME,
   };
+
+  console.log({data});
 
   await this.props.submitCustomer(data, cookie);
   await this.props.reset();

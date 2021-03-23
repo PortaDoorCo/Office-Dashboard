@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../../../../RenderInputs/renderInputs';
+import { renderDropdownList, renderDropdownListFilter, renderCheckboxToggle, renderTextField } from '../../../../RenderInputs/renderInputs';
 import MT_Table from '../../../Table/DFs/Glass/MT_Table';
 import Ratio from 'lb-ratio';
 import {
@@ -96,6 +96,28 @@ class MT_DF extends Component {
     }
   }
 
+  onChangeWoodtype = (p, ind) => {
+    const { formState } = this.props;
+    const part = formState.part_list[ind];
+    if(part.woodtype && part.woodtype.VERTICAL_GRAIN){
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.VERTICAL_GRAIN`,
+          true
+        )
+      );
+    } else {
+      this.props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.VERTICAL_GRAIN`,
+          false
+        )
+      );
+    }
+  }
+
 
   render() {
     const {
@@ -118,7 +140,7 @@ class MT_DF extends Component {
     return (
       <div>
         <Row>
-          <Col xs="12" md='12' lg='3'>
+          <Col xs="12" md='12' lg='4'>
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -127,13 +149,14 @@ class MT_DF extends Component {
                 data={woodtypes}
                 valueField="value"
                 textField="NAME"
+                onBlur={() => this.onChangeWoodtype(part, index)}
                 validate={required}
                 edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="3">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -149,7 +172,7 @@ class MT_DF extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="3">
+          <Col xs="12" md='12' lg="4">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -163,23 +186,30 @@ class MT_DF extends Component {
               />
             </FormGroup>
           </Col>
+        </Row>
 
-          <Col xs="12" md='12' lg="3">
+        <Row>
+          <Col xs='4' lg='2'>
             <FormGroup>
-              <Label htmlFor="design">Lites</Label>
-              <Field
-                name={`${part}.lite`}
-                component={renderDropdownListFilter}
-                data={lites}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
+              <Label htmlFor="arches"><strong>Grain Direction</strong></Label>
+              <Row>
+                <Col>
+                Horiz
+                </Col>
+                <Col>
+                  <Field
+                    name={`${part}.VERTICAL_GRAIN`}
+                    component={renderCheckboxToggle}
+                    edit={edit}
+                  />
+                </Col>
+                <Col>
+                Vertical
+                </Col>
+              </Row>
+
             </FormGroup>
           </Col>
-
-
         </Row>
 
 

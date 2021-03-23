@@ -31,7 +31,7 @@ export default (info, part, breakdowns) => {
   const panel_factor = part.panel.PANEL_FACTOR;
   const profile_width = part.miter_df_design.PROFILE_WIDTH;
 
-  const VERTICAL_GRAIN = part.woodtype.VERTICAL_GRAIN;
+  const VERTICAL_GRAIN = part.VERTICAL_GRAIN;
 
   const add_len = 0;
   const INSET = 0;
