@@ -11,7 +11,7 @@ import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from 'js-cookie';
-import { renderDropdownList, renderField, renderNumber } from '../../../../../components/RenderInputs/renderInputs';
+import { renderDropdownList, renderField } from '../../../../../components/RenderInputs/renderInputs';
 import {
   totalSelector,
   balanceSelector,
