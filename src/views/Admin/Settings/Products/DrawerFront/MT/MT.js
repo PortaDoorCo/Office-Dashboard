@@ -8,6 +8,7 @@ import Edges from '../../Door/Attributes/Edges';
 import Profiles from '../../Door/Attributes/Profiles';
 import Panels from '../../Door/Attributes/Panels';
 import AppliedProfiles from '../../Door/Attributes/Applied_Profiles';
+import GlassOptions from '../../Door/Attributes/Glass_Options';
 import { updateProduct } from '../../../../../../redux/part_list/actions';
 import classnames from 'classnames';
 import EditorPage from './editor/EditorPage';
@@ -99,6 +100,14 @@ const Cope = (props) => {
                         Applied Profiles
                       </NavLink>
                     </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '7' })}
+                        onClick={() => { toggle('7'); }}
+                      >
+                        Glass Options
+                      </NavLink>
+                    </NavItem>
                   </Nav>
                 </Col>
               </Row>
@@ -142,6 +151,9 @@ const Cope = (props) => {
               </TabPane>
               <TabPane tabId="6">
                 <AppliedProfiles applied_profiles={props.applied_profiles} />
+              </TabPane>
+              <TabPane tabId="7">
+                <GlassOptions />
               </TabPane>
             </TabContent>
           </Row>

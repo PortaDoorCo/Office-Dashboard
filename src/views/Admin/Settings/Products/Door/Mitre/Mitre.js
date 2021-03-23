@@ -6,6 +6,7 @@ import Woodtype from '../Attributes/Woodtypes';
 import Designs from './attributes/Designs';
 import Panels from '../Attributes/Panels';
 import AppliedProfiles from '../Attributes/Applied_Profiles';
+import GlassOptions from '../Attributes/Glass_Options';
 import { updateProduct } from '../../../../../../redux/part_list/actions';
 import classnames from 'classnames';
 import EditorPage from './editor/EditorPage';
@@ -92,6 +93,14 @@ const Cope = (props) => {
                         Applied Profiles
                       </NavLink>
                     </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '5' })}
+                        onClick={() => { toggle('5'); }}
+                      >
+                        Glass Options
+                      </NavLink>
+                    </NavItem>
                   </Nav>
                 </Col>
 
@@ -137,6 +146,9 @@ const Cope = (props) => {
               </TabPane>
               <TabPane tabId="4">
                 <AppliedProfiles applied_profiles={props.applied_profiles} />
+              </TabPane>
+              <TabPane tabId="5">
+                <GlassOptions />
               </TabPane>
             </TabContent>
           </Row>
