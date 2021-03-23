@@ -189,7 +189,7 @@ class MT_DF extends Component {
         </Row>
 
         <Row>
-          <Col xs='4' lg='2'>
+          <Col xs='12' sm='4' md='4' lg='4'>
             <FormGroup>
               <Label htmlFor="arches"><strong>Grain Direction</strong></Label>
               <Row>
