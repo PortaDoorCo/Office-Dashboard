@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Woodtype from '../../Door/Attributes/Woodtypes';
 import Designs from './attributes/Designs';
 import Panels from '../../Door/Attributes/Panels';
+import GlassOptions from '../../Door/Attributes/Glass_Options';
 import { updateProduct } from '../../../../../../redux/part_list/actions';
 import classnames from 'classnames';
 import EditorPage from './editor/EditorPage';
@@ -81,6 +82,14 @@ const Cope = (props) => {
                         Panels
                       </NavLink>
                     </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '4' })}
+                        onClick={() => { toggle('4'); }}
+                      >
+                        Glass Options
+                      </NavLink>
+                    </NavItem>
                   </Nav>
                 </Col>
               </Row>
@@ -115,6 +124,9 @@ const Cope = (props) => {
               </TabPane>
               <TabPane tabId="3">
                 <Panels panels={props.panels} />
+              </TabPane>
+              <TabPane tabId="4">
+                <GlassOptions />
               </TabPane>
             </TabContent>
           </Row>

@@ -8,6 +8,7 @@ import Edges from '../Attributes/Edges';
 import Profiles from '../Attributes/Profiles';
 import Panels from '../Attributes/Panels';
 import AppliedProfiles from '../Attributes/Applied_Profiles';
+import GlassOptions from '../Attributes/Glass_Options';
 import { updateProduct } from '../../../../../../redux/part_list/actions';
 import classnames from 'classnames';
 
@@ -110,6 +111,14 @@ const Cope = (props) => {
                         Applied Profiles
                       </NavLink>
                     </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '7' })}
+                        onClick={() => { toggle('7'); }}
+                      >
+                        Glass Options
+                      </NavLink>
+                    </NavItem>
                   </Nav>
                 </Col>
               </Row>
@@ -165,6 +174,9 @@ const Cope = (props) => {
               </TabPane>
               <TabPane tabId="6">
                 <AppliedProfiles applied_profiles={props.applied_profiles} />
+              </TabPane>
+              <TabPane tabId="7">
+                <GlassOptions />
               </TabPane>
             </TabContent>
           </Row>
