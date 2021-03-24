@@ -85,7 +85,7 @@ export default (data, breakdowns) => {
           alignment: 'left'
         },
         {
-          text: item.notes ? item.notes : '',
+          text: `${item.notes ? item.notes : ''} ${item.lite ? item.lite.NAME : null}`,
           style: 'fonts'
         }
       ]);

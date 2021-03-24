@@ -23,7 +23,7 @@ export default (info, part, breakdowns) => {
   const width = numQty(info.width);
   const qty = parseInt(info.qty);
 
-  const lites = part.lite ? part.lite.NAME : '';
+  const lites = info.lite ? info.lite.NAME : '';
 
   const inset = part.profile.INSET;
   const edge_factor = part.edge.LIP_FACTOR;
@@ -48,7 +48,7 @@ export default (info, part, breakdowns) => {
   const glassDoor = [
     {
       qty: '',
-      measurement: `GLASS \n ${lites ? lites : ''}`,
+      measurement: 'GLASS',
       pattern: '',
     },
   ];

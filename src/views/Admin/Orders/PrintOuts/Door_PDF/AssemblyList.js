@@ -126,7 +126,7 @@ export default (data, breakdowns) => {
             { text: item.qty, style: 'fonts' },
             {
               stack: [
-                { text: `${Size(item)} \n `, style: 'fonts' },
+                { text: `${Size(item)}`, style: 'fonts' },
                 item.notes || item.full_frame || item.lite ? 
                   {
                     text: `${item.notes ? item.notes : ''} ${
