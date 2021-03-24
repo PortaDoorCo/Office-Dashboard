@@ -80,7 +80,7 @@ export default (info, part, breakdowns) => {
   const none = [
     {
       qty: '',
-      measurement: `GLASS \n ${lites}`,
+      measurement: 'GLASS',
       pattern: '',
     },
   ];

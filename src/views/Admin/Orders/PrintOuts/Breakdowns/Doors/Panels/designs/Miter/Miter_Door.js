@@ -51,7 +51,7 @@ export default (info, part, breakdowns) => {
   const glassDoor = [
     {
       qty: '',
-      measurement: `GLASS \n ${lites}`,
+      measurement: 'GLASS',
       pattern: ''
     }
   ];

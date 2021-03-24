@@ -9,7 +9,7 @@ export default (info, part) => {
   const none = [
     {
       qty: '',
-      measurement: `GLASS \n ${lites}`,
+      measurement: 'GLASS',
       pattern: '',
       width: 0,
       height: 0
