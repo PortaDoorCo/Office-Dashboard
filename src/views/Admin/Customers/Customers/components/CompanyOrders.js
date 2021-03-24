@@ -76,52 +76,61 @@ const CustomerOrders = (props) => {
 
 
   const columns = [
-
     {
+      name: 'Order #',
       selector: 'orderNum',
-      name: 'Order Number',
-      sortable: true
-
+      sortable: true,
     },
     {
-      selector: 'job_info.customer.Company',
-      name: 'Company Name',
-
-
+      name: 'PO #',
+      selector: 'job_info.poNum',
+      sortable: true,
     },
     {
-      selector: 'orderType',
       name: 'Order Type',
+      selector: 'orderType',
+      sortable: true,
 
     },
     {
-      selector: 'total',
-      name: 'Order Total',
-
-    },
-    {
-      selector: 'status',
-      name: 'Status',
-
-    },
-    {
-      selector: 'createdAt',
       name: 'Date Ordered',
-      cell: row => <span>{moment(row.createdAt).format('MM/DD/YYYY')}</span>
-
+      cell: row => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
     },
     {
-      name: '',
+      name: 'Due Date',
+      cell: row => <div>{moment(row.dueDate).format('MMM Do YYYY')}</div>,
+    },
+    {
+      name: 'Total',
+      selector: 'total',
+      sortable: true,
+      cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
+    },
+    {
+      name: 'Balance Paid',
+      sortable: true,
+      cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
+    },
+    // {
+    //   name: 'Terms',
+    //   selector: 'companyprofile.PMT_TERMS',
+    //   sortable: true,
+    // },
+    {
+      name: ' ',
       button: true,
-      cell: row => <Tooltip title="View Order" placement="top">
+      grow: 2,
+      cell: (row) => <Tooltip title="View Order" placement="top">
         <IconButton onClick={function (event) {
           event.preventDefault();
           toggle(row);
         }} id={row.id}>
           <Inbox>Open</Inbox>
         </IconButton>
-      </Tooltip>
+      </Tooltip>,
     },
+
+
   ];
 
   const contextActions = useMemo(() => {
