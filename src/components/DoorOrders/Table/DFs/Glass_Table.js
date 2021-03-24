@@ -326,7 +326,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                       <Field
                         name={`${table}.cab_number`}
                         type="text"
-                        component={renderNumber}
+                        component={renderField}
                         label="cab"
                         edit={edit}
                       />
