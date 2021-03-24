@@ -442,25 +442,14 @@ class DoorOrders extends Component {
                         </Col>
                       </Row>
                       <Row>
-                        <Col xs="4" />
-                        <Col xs="5" />
-                        <Col xs="3">
+                        <Col xs='8' />
+                        <Col xs="4">
                           <Row>
                             <Col>
-                              <Button
-                                color="primary"
-                                className="submit"
-                                style={{ width: '100%' }}
-                              >
-                            Submit
-                              </Button>
+                              <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
                             </Col>
                             <Col>
-                              <Button
-                                color="danger"
-                                onClick={this.cancelOrder}
-                                style={{ width: '100%' }}
-                              >
+                              <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
                             Cancel
                               </Button>
                             </Col>
