@@ -45,6 +45,7 @@ class Edit extends Component {
 
     const data = {
       ...values,
+      Company: values.Company.toUpperCase(),
       State: values.State && values.State.abbreviation,
       Shipping_State: values.Shipping_State && values.Shipping_State.abbreviation,
       PMT_TERMS: values.PMT_TERMS.NAME,
