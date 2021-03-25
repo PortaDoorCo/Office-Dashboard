@@ -84,10 +84,13 @@ export default (data, breakdowns) => {
           style: 'fonts',
           alignment: 'left'
         },
-        {
-          text: `${item.notes ? item.notes : ''} ${item.lite ? item.lite.NAME : null}`,
-          style: 'fonts'
-        }
+        item.notes || item.full_frame || item.lite ? 
+          {
+            text: `${item.notes ? item.notes : ''} ${
+              item.full_frame ? 'Full Frame DF' : ''
+            } ${item.lite ? item.lite.NAME : ''}`,
+            style: 'tableBold', alignment: 'left'
+          } : null,
       ]);
     });
 
@@ -127,7 +130,7 @@ export default (data, breakdowns) => {
       {
         table: {
           headerRows: 1,
-          widths: [22, 50, 30, 110, 60, '*', '*'],
+          widths: [22, 50, 30, 110, 60, 50, 110],
           body: tableBody,
         },
         layout: {

@@ -30,10 +30,36 @@ export default (
 
   for (let i = 0; i < p.acknowledgement; i++) {
     Content.push(Acknowledgement(data, breakdowns));
+
+    Content.push(
+      Profiles(
+        data,
+        edges,
+        moulds,
+        miter,
+        mt,
+        panels,
+        appliedProfiles,
+        breakdowns
+      )
+    );
   }
 
   for (let i = 0; i < p.invoice; i++) {
     Content.push(Invoice(data, breakdowns));
+
+    Content.push(
+      Profiles(
+        data,
+        edges,
+        moulds,
+        miter,
+        mt,
+        panels,
+        appliedProfiles,
+        breakdowns
+      )
+    );
   }
 
   for (let i = 0; i < p.assembly_list; i++) {

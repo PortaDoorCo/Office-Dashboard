@@ -65,7 +65,13 @@ export default (data, breakdowns) => {
           { text: Size(item), style: 'fonts' },
           { text: '[      ]', style: 'fonts' },
           { text: 'N/A', style: 'fonts' },
-          { text: item.notes ? item.notes : '', style: 'fonts' },
+          item.notes || item.full_frame || item.lite ? 
+            {
+              text: `${item.notes ? item.notes : ''} ${
+                item.full_frame ? 'Full Frame DF' : ''
+              } ${item.lite ? item.lite.NAME : ''}`,
+              style: 'tableBold', alignment: 'left'
+            } : null,
         ]);
       });
 
