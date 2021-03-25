@@ -32,34 +32,22 @@ export default (data) => {
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
-
-
-
-
   const discountTotal = subTotal * (data.discount / 100);
 
   const discountSubTotal = subTotal - discountTotal;
 
-  
   const order_sub_total = misc_total + discountSubTotal;
-
-  const limitedLiability = 'Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product';
-
-
-
-
 
   console.log({ data });
 
   return [
     {
       columns: [
-        { 
+        {
           width: 200,
-          stack: [
-            {text: 'INVOICE', margin:[0,0,0,-10]},
-          ],
+          stack: [{ text: 'INVOICE', margin: [0, 0, 0, -10] }],
           style: 'headerFont',
+          id: 'header1',
         },
 
         {
@@ -75,7 +63,7 @@ export default (data) => {
             { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
           ],
           // width: 200,
-          alignment: 'center'
+          alignment: 'center',
         },
         {
           stack: [
@@ -127,61 +115,67 @@ export default (data) => {
     },
     {
       columns: [
-        { 
+        {
           width: 200,
           stack: [
-            { columns: [
-              {
-                text: 'Customer - ',
-                width: 60
-              },
-              { 
-                
-                stack: [
-                  { text: `${data.job_info.customer.Company}` },
-                  // {
-                  //   text: `${
-                  //     data.companyprofile.Contact
-                  //       ? data.companyprofile.Contact
-                  //       : ''
-                  //   }`,
-                  //   style: 'fonts',
-                  // },
-                  {
-                    text: `${
-                      data.companyprofile.Address1
-                        ? data.companyprofile.Address1
-                        : ''
-                    }`,
-                    style: 'fonts',
-                  },
-                  {
-                    text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                    style: 'fonts',
-                  },
-                  { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-                  data.companyprofile.Fax ? 
+            {
+              columns: [
+                {
+                  text: 'Customer - ',
+                  width: 60,
+                },
+                {
+                  stack: [
+                    { text: `${data.job_info.customer.Company}` },
+                    // {
+                    //   text: `${
+                    //     data.companyprofile.Contact
+                    //       ? data.companyprofile.Contact
+                    //       : ''
+                    //   }`,
+                    //   style: 'fonts',
+                    // },
                     {
-                      text: `Fax: ${
-                        data.companyprofile.Fax ? data.companyprofile.Fax : ''
+                      text: `${
+                        data.companyprofile.Address1
+                          ? data.companyprofile.Address1
+                          : ''
                       }`,
                       style: 'fonts',
-                      margin: [0, 0, 0, 10],
-                    } : null,
-                  {
-                    text: `Terms: ${
-                      data.companyprofile.PMT_TERMS
-                        ? data.companyprofile.PMT_TERMS
-                        : ''
-                    }`,
-                    style: 'fonts',
-                  },
-                ],
-              }
-            ],
+                    },
+                    {
+                      text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                      style: 'fonts',
+                    },
+                    {
+                      text: `Ph: ${data.companyprofile.Phone1}`,
+                      style: 'fonts',
+                    },
+                    data.companyprofile.Fax
+                      ? {
+                        text: `Fax: ${
+                          data.companyprofile.Fax
+                            ? data.companyprofile.Fax
+                            : ''
+                        }`,
+                        style: 'fonts',
+                        margin: [0, 0, 0, 10],
+                      }
+                      : null,
+                    {
+                      text: `Terms: ${
+                        data.companyprofile.PMT_TERMS
+                          ? data.companyprofile.PMT_TERMS
+                          : ''
+                      }`,
+                      style: 'fonts',
+                    },
+                  ],
+                },
+              ],
 
-            style: 'fontsBold',
-            margin: [0, 0, 0, 0],
+              style: 'fontsBold',
+              margin: [0, 0, 0, 0],
             },
           ],
           style: 'headerFont',
@@ -190,14 +184,14 @@ export default (data) => {
         {
           text: '',
           // width: 200,
-          alignment: 'center'
+          alignment: 'center',
         },
         {
           stack: [
             {
-              margin:[10,0,0,0],
+              margin: [10, 0, 0, 0],
               columns: [
-                { 
+                {
                   width: 40,
                   stack: [
                     {
@@ -265,9 +259,8 @@ export default (data) => {
                       margin: [0, 0, 0, 0],
                     },
                   ],
-                }
-              ]
-  
+                },
+              ],
             },
           ],
         },
@@ -277,7 +270,7 @@ export default (data) => {
       text:
         '==============================================================================',
       alignment: 'center',
-      margin: [0,5,0,0]
+      margin: [0, 5, 0, 0],
     },
     data.part_list.map((part, i) => {
       const tableBody = [
@@ -310,13 +303,13 @@ export default (data) => {
               2
             )}`,
             style: 'fonts',
-            alignment: 'right'
+            alignment: 'right',
           },
           {
             text: `${data.linePrice[i][index].toFixed(2)}`,
             style: 'fonts',
             alignment: 'right',
-            width: 210
+            width: 210,
           },
         ]);
       });
@@ -386,13 +379,16 @@ export default (data) => {
                   text: `${part.notes ? part.notes : ''}`,
                   style: 'headerFont',
                   alignment: 'center',
-                  
                 },
-                part.applied_profile?.NAME !== 'None' ? {
-                  text: `${part.applied_profile ? part.applied_profile.NAME : ''}`,
-                  style: 'fontsBold',
-                  alignment: 'center'
-                } : null
+                part.applied_profile?.NAME !== 'None'
+                  ? {
+                    text: `${
+                      part.applied_profile ? part.applied_profile.NAME : ''
+                    }`,
+                    style: 'fontsBold',
+                    alignment: 'center',
+                  }
+                  : null,
               ],
             },
             {
@@ -400,9 +396,7 @@ export default (data) => {
                 {
                   text: `IP: ${
                     part.profile ? part.profile.NAME : 'None'
-                  }  Edge: ${
-                    part.edge ? part.edge.NAME : 'None'
-                  }`,
+                  }  Edge: ${part.edge ? part.edge.NAME : 'None'}`,
                   style: 'fonts',
                 },
                 // {
@@ -432,7 +426,7 @@ export default (data) => {
         //   columns: [
         //     {
         //       stack: [
-               
+
         //       ],
         //       width: 260,
         //     },
@@ -501,21 +495,21 @@ export default (data) => {
                 },
                 { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
                 {
-                  margin: [14,0,0,0],
+                  margin: [14, 0, 0, 0],
                   columns: [
                     {
                       text: 'Item Subtotal',
                       style: 'fonts',
                       margin: [0, 0, 0, 0],
                       alignment: 'right',
-                      width: 79
+                      width: 79,
                     },
                     {
                       text: `$${data.subTotals[i].toFixed(2)}`,
                       style: 'fonts',
                       margin: [0, 0, 0, 0],
                       alignment: 'right',
-                      width: 77
+                      width: 77,
                     },
                   ],
                 },
@@ -542,7 +536,13 @@ export default (data) => {
           style: 'fonts',
           width: 317,
         },
-        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0], width: 120, alignment: 'right' },
+        {
+          text: 'Order Subtotal',
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 120,
+          alignment: 'right',
+        },
         {
           text: `$${subTotal.toFixed(2)}`,
           style: 'fonts',
@@ -550,7 +550,7 @@ export default (data) => {
           alignment: 'right',
         },
       ],
-      margin:[0,0,0,10]
+      margin: [0, 0, 0, 10],
     },
     {
       columns: [
@@ -560,7 +560,7 @@ export default (data) => {
           style: 'totals',
           margin: [0, 0, 0, 0],
           alignment: 'right',
-          width: 120
+          width: 120,
         },
         {
           text: `${
@@ -585,7 +585,7 @@ export default (data) => {
           style: 'totals',
           margin: [0, 0, 0, 0],
           width: 120,
-          alignment: 'right'
+          alignment: 'right',
         },
         {
           text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,
@@ -595,44 +595,55 @@ export default (data) => {
       ],
       margin: [0, 0, 0, 0],
     },
-    data.misc_items.length>0 ?
-      {
+    data.misc_items.length > 0
+      ? {
         columns: [
           {
-            text: `${data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''}`,
+            text: `${
+              data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''
+            }`,
             style: 'fonts',
             decoration: 'underline',
-            width: 168
+            width: 168,
           },
           {
             text: 'Qty',
             style: 'fonts',
             decoration: 'underline',
-            width: 33
+            width: 33,
           },
-          { text: 'Cost Per', style: 'fonts', margin: [0, 0, 0, 0], decoration: 'underline', },
-          { text: '', style: 'totals', margin: [0, 0, 0, 0], alignment: 'right' },
+          {
+            text: 'Cost Per',
+            style: 'fonts',
+            margin: [0, 0, 0, 0],
+            decoration: 'underline',
+          },
+          {
+            text: '',
+            style: 'totals',
+            margin: [0, 0, 0, 0],
+            alignment: 'right',
+          },
         ],
         margin: [0, 10, 0, 0],
-      } : null,
-    data.misc_items.length>0 ?
-      {
+      }
+      : null,
+    data.misc_items.length > 0
+      ? {
         columns: [
           {
             text: data.misc_items.map((i) => {
-              return `${
-                i.item ? i.item.NAME : i.item2 ? i.item2 : ''
-              } \n`;
+              return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
             }),
             style: 'fonts',
-            width: 170
+            width: 170,
           },
           {
             style: 'fonts',
             stack: data.misc_items.map((i) => {
-              return { text:  i.qty ? parseInt(i.qty) : ''} ;
+              return { text: i.qty ? parseInt(i.qty) : '' };
             }),
-            width: 30
+            width: 30,
           },
           {
             text: data.misc_items.map((i) => {
@@ -662,35 +673,38 @@ export default (data) => {
           },
         ],
         margin: [0, 2, 0, 0],
-      } : null,
-    data.misc_items.length>0 ?
-      {
+      }
+      : null,
+    data.misc_items.length > 0
+      ? {
         text: '------------',
         margin: [0, 0, 0, 0],
         alignment: 'right',
-      } : null,
-    data.misc_items.length>0 ?
-      {
+      }
+      : null,
+    data.misc_items.length > 0
+      ? {
         columns: [
           { text: '', style: 'totals', decoration: 'underline', width: 317 },
           {
             text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
             style: 'totals',
             width: 120,
-            alignment: 'right'
+            alignment: 'right',
           },
           {
             text:
-          data.misc_items.length > 0
-            ? '$' + order_sub_total.toFixed(2)
-            : '',
+                data.misc_items.length > 0
+                  ? '$' + order_sub_total.toFixed(2)
+                  : '',
             style: 'fonts',
             margin: [0, 0, 0, 0],
             alignment: 'right',
           },
         ],
         margin: [0, 10, 0, 0],
-      } : null,
+      }
+      : null,
     {
       columns: [
         { text: '', style: 'totals', width: 317 },
@@ -706,7 +720,7 @@ export default (data) => {
           style: 'totals',
           margin: [0, 0, 0, 4],
           width: 120,
-          alignment: 'right'
+          alignment: 'right',
         },
         {
           text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
@@ -729,7 +743,7 @@ export default (data) => {
           style: 'totals',
           margin: [0, 0, 0, 0],
           alignment: 'right',
-          width: 120
+          width: 120,
         },
         {
           text: `$${data.total.toFixed(2)}`,
@@ -743,7 +757,13 @@ export default (data) => {
     {
       columns: [
         { text: '', style: 'totals', width: 317, decoration: 'underline' },
-        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 120,  alignment: 'right' },
+        {
+          text: 'Minus Balance Paid:',
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 120,
+          alignment: 'right',
+        },
         {
           text: `$${balancePaid.toFixed(2)}`,
           style: 'fonts',
@@ -761,56 +781,62 @@ export default (data) => {
     {
       columns: [
         { text: '', style: 'totals', width: 330 },
-        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0], width:105, alignment: 'right' },
+        {
+          text: 'BALANCE DUE:',
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 105,
+          alignment: 'right',
+        },
         {
           text: `$${balanceDue.toFixed(2)}`,
           style: 'fonts',
           margin: [0, 0, 0, 0],
           alignment: 'right',
-          
         },
       ],
-      margin: [0, 15, 0, 0],
+      margin: [0, 10, 0, 5],
     },
+
     {
       stack: [
         {
-          text: 'LIMITED WARRANTY',
-          decoration: 'underline',
-          style: 'fontsBold',
-          margin: [0,0,0,10]
+          columns: [
+            {
+              text: 'LIMITED WARRANTY',
+              decoration: 'underline',
+              style: 'fontsBold',
+              margin: [0, 0, 0, 10],
+            },
+            {
+              text: `Units: ${qty.reduce((acc, item) => acc + item, 0)}`,
+              style: 'fonts',
+              alignment: 'right',
+              margin: [0, 0, 0, 0],
+            },
+          ],
         },
-        { 
-          text:
-          limitedLiability.toUpperCase(),
+
+        {
+          text: 'OUR PRODUCTS ARE WARRANTED FOR 1 YEAR FROM DATE OF SHIPMENT, WARRANTY DETAILS CAN FOUND AT \n HTTPS://PORTADOOR.COM AND IN OUR 2020 CATALOG \n \n LIABILITY UNDER THIS WARRANTY SHALL BE LIMITED TO THE ORIGINAL INVOICE PRICE OF THE PRODUCT',
           style: 'warrantyFont',
           alignment: 'left',
           margin: [0, 0, 0, 5],
-        }
-      ]
+          id: 'liability-invoice',
+        },
+      ],
     },
     {
       columns: [
-        {
-          text: moment().format('MM-D-YYYY'),
-          style: 'fonts',
-          alignment: 'left',
-          margin: [0, 0, 0, 0],
-        },
-        {
-          text:
-          `Units: ${qty.reduce(
-            (acc, item) => acc + item,
-            0
-          )}`,
-          style: 'fonts',
-          alignment: 'right',
-          margin: [0, 0, 0, 0],
-        }
-      ]
-
+        // {
+        //   pageReference: 'liability',
+        //   style: 'fonts',
+        //   alignment: 'left',
+        //   margin: [0, 0, 0, 0],
+        // },
+      ],
     },
-    
+
     // { text: '', pageBreak: 'before' }
   ];
 };

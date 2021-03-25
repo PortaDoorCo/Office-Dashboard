@@ -15,8 +15,80 @@ import differenceBy from 'lodash/differenceBy';
 import { setSelectedOrder } from '../../../../../redux/orders/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Select } from 'antd';
+import Cookies from 'js-cookie';
 
+const cookie = Cookies.get('jwt');
 
+const { Option } = Select;
+
+const status = [
+  {
+    label: 'Quote',
+    value: 'Quote',
+  },
+  {
+    label: 'Invoiced',
+    value: 'Invoiced',
+  },
+  {
+    label: 'Ordered',
+    value: 'Ordered',
+  },
+  {
+    label: 'In Production',
+    value: 'In Production',
+  },
+  {
+    label: 'Cut',
+    value: 'Cut',
+  },
+  {
+    label: 'Framing',
+    value: 'Framing',
+  },
+  {
+    label: 'Assembly',
+    value: 'Assembly',
+  },
+  {
+    label: 'Tenon',
+    value: 'Tenon',
+  },
+  {
+    label: 'Panels',
+    value: 'Panels',
+  },
+  {
+    label: 'Sanding',
+    value: 'Sanding',
+  },
+  {
+    label: 'Lipping',
+    value: 'Lipping',
+  },
+  {
+    label: 'Inspecting',
+    value: 'Inspecting',
+  },
+  {
+    label: 'Paint Shop',
+    value: 'Paint Shop',
+  },
+
+  {
+    label: 'Complete',
+    value: 'Complete',
+  },
+  {
+    label: 'Shipped',
+    value: 'Shipped',
+  },
+  {
+    label: 'LATE',
+    value: 'LATE',
+  },
+];
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
@@ -73,6 +145,13 @@ const CustomerOrders = (props) => {
     setOrderEdit(!orderEdit);
   };
 
+  const handleStatusChange = async (e, row) => {
+    const { updateStatus } = props;
+    const status = {
+      status: e
+    };
+    await updateStatus(row.id, row, status, cookie);
+  };
 
 
   const columns = [
@@ -99,6 +178,30 @@ const CustomerOrders = (props) => {
     {
       name: 'Due Date',
       cell: row => <div>{moment(row.dueDate).format('MMM Do YYYY')}</div>,
+    },
+    {
+      name: 'Status',
+      grow: 1,
+      cell: row => <div>
+
+
+        <Row>
+          <Col>
+            <Select defaultValue={row.status} style={{ width: '100%' }} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
+              {status.map((i, index) => (
+                <Option key={index} value={i.value}>{i.value}</Option>
+              ))}
+            </Select>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col style={{ textAlign: 'center', color: 'red' }}>
+            {row.job_info.Rush && row.job_info.Sample ? 'Sample / Rush' : row.job_info.Rush ? 'Rush' : row.job_info.Sample ? 'Sample' : ''}
+          </Col>
+        </Row>
+
+      </div>
     },
     {
       name: 'Total',

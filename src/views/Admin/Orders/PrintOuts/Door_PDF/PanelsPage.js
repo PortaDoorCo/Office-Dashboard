@@ -53,7 +53,13 @@ export default (data, breakdowns) => {
         { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n`; }), style: 'fonts' },
         { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
         { text: `${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
-        { text: `${item.notes ? item.notes : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' }
+        item.notes || item.full_frame || item.lite ? 
+          {
+            text: `${item.notes ? item.notes : ''} ${
+              item.full_frame ? 'Full Frame DF' : ''
+            } ${item.lite ? item.lite.NAME : ''}`,
+            style: 'tableBold', alignment: 'left'
+          } : null,
       ]);
     });
 
@@ -103,7 +109,7 @@ export default (data, breakdowns) => {
           table: {
             headerRows: 1,
             // widths: [22, 95, 30, '*', 200],
-            widths: [22, 40, 30, 100, 25, 40, 40, 120],
+            widths: [22, 50, 30, 100, 25, 40, 40, 120],
             body: tableBody,
           },
           layout: {
