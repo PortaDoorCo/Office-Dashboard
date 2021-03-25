@@ -140,7 +140,7 @@ export default (data, breakdowns) => {
             { text: `${Fronts(item, i, breakdowns).qty} - ${Fronts(item, i, breakdowns).measurement}`, style: 'fonts' },
             {
               stack: [
-                { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement} \n `, style: 'fonts' },
+                { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement}`, style: 'fonts' },
                 item.cab_number ? 
                   {
                     text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
