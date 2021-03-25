@@ -53,7 +53,7 @@ export default (data, breakdowns) => {
         { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n`; }), style: 'fonts' },
         { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
         { text: `${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
-        { text: `${item.notes ? item.notes : ''} ${item.lite ? item.lite.NAME : null}`, style: 'fonts' }
+        { text: `${item.notes ? item.notes : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'fonts' }
       ]);
     });
 
