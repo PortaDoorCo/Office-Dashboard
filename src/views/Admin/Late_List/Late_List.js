@@ -178,7 +178,7 @@ const StatusTable = (props) => {
     },
     {
       name: 'Due Date',
-      cell: (row) => <div>{moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{row.status === 'Quote' ? 'TBA' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Status',
