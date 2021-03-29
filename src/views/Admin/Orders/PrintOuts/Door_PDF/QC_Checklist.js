@@ -54,6 +54,7 @@ export default (data, breakdowns) => {
           { text: 'CHK', style: 'fonts' },
           { text: 'L/R', style: 'fonts' },
           { text: 'Build Instruction', style: 'fonts' },
+          { text: 'Cab#', style: 'fonts' },
         ]
       ];
 
@@ -72,6 +73,9 @@ export default (data, breakdowns) => {
               } ${item.lite ? item.lite.NAME : ''}`,
               style: 'tableBold', alignment: 'left'
             } : null,
+          item.cab_number ? {
+            text: `${item.cab_number}`, style: 'fonts', alignment: 'left'
+          } : null
         ]);
       });
 
@@ -143,7 +147,7 @@ export default (data, breakdowns) => {
           margin: [0,0,0,10],
           table: {
             headerRows: 1,
-            widths: [22, 15, 110, 40, 40, '*' ],
+            widths: [22, 15, 110, 40, 40, 155, '*' ],
             body: tableBody,
           },
           layout: {

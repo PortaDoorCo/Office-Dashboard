@@ -90,7 +90,7 @@ class Edit extends Component {
               <Row>
                 <Col sm="6">
                   <FormGroup>
-                    <Label htmlFor="companyName">Company Name</Label>
+                    <Label htmlFor="companyName">Company Name (enter CAPS ONLY)</Label>
                     <Field
                       name={'Company'}
                       type="text"

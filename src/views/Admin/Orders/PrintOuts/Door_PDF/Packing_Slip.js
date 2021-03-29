@@ -63,6 +63,7 @@ export default (data, breakdowns) => {
         { text: 'Panel', style: 'fonts', alignment: 'left' },
         { text: 'IP', style: 'fonts', alignment: 'left' },
         { text: 'Note', style: 'fonts' },
+        { text: 'Cab#', style: 'fonts' },
       ],
     ];
     i.dimensions.forEach((item, index) => {
@@ -91,6 +92,9 @@ export default (data, breakdowns) => {
             } ${item.lite ? item.lite.NAME : ''}`,
             style: 'tableBold', alignment: 'left'
           } : null,
+        item.cab_number ? {
+          text: `${item.cab_number}`, style: 'fonts', alignment: 'left'
+        } : null
       ]);
     });
 
@@ -130,7 +134,7 @@ export default (data, breakdowns) => {
       {
         table: {
           headerRows: 1,
-          widths: [22, 50, 30, 110, 60, 50, 110],
+          widths: [22, 50, 20, 100, 60, 50, 90, 22],
           body: tableBody,
         },
         layout: {
