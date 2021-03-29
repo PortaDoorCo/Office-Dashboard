@@ -326,7 +326,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         { text: `Total Number of Doors: ${TotalPieces(data)}`, style: 'fonts' },
-        { text: 'Total Number of Solid DF: Still Need To Be Calculated', style: 'fonts' },
+        // { text: 'Total Number of Solid DF: Still Need To Be Calculated', style: 'fonts' },
       ],
     },
     // {
