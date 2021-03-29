@@ -160,7 +160,7 @@ class JobInfo extends Component {
         <Row className="mb-3">
           <Col>
             <FormGroup>
-              <Label htmlFor="dueDate">Due Date</Label>
+              <Label htmlFor="dueDate">Estimated Shipping</Label>
               <Field
                 name="DueDate"
                 showTime={false}
