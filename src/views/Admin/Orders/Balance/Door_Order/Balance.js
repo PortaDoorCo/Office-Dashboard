@@ -28,7 +28,7 @@ const cookie = Cookies.get('jwt');
 
 const required = value => (value ? undefined : 'Required');
 
-const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
+const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit, meta: { touched, error, warning }, }) =>
 
   <div>
     <DateTimePicker
@@ -37,6 +37,9 @@ const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
       value={!value ? new Date() : new Date(value)}
       disabled={edit}
     />
+    {touched &&
+                ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+                    (warning && <span style={{ color: 'red' }}>{warning}</span>))}
   </div>;
 
 class Balance extends Component {
@@ -57,7 +60,7 @@ class Balance extends Component {
 
   submit = async (values) => {
 
-    const { updateBalance, updateStatus } = this.props;
+    const { updateBalance } = this.props;
 
 
 
@@ -67,6 +70,7 @@ class Balance extends Component {
     const order = {
       ...values,
       balance_paid: values.pay_balance,
+      DueDate: values.DueDate,
       balance_history:  values.balance_history,
       payment_method: values.payment_method,
       payment_date: values.payment_date ? values.payment_date : new Date()
@@ -216,6 +220,8 @@ class Balance extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
+
+
 
                 <Row>
                   <Col>
