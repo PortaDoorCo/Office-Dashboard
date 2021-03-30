@@ -79,23 +79,6 @@ const Cope_Table = ({
       newWidth = [...newWidth, v];
     }
 
-    if (numQty(v) <= 6 && part.panel && !part.panel.Flat) {
-      setWarningType({
-        value: v,
-        index: index,
-        i: i,
-        part: part,
-        tag: 'width',
-        sub_tag: 'width_less_than',
-        title: 'Width less Than 6 Inches',
-        message:
-          'Your Width is less than 6 inches. Please Select a Greater Width',
-        action: 'Close',
-        deny: 'Close',
-      });
-      toggle();
-    }
-
     if (numQty(v) >= 24) {
       setWarningType({
         value: v,
