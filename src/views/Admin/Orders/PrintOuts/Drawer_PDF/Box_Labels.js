@@ -1,4 +1,4 @@
-import { flatten, flattenDeep, groupBy, toArray } from 'lodash';
+import { chunk, flatten, flattenDeep, groupBy, toArray } from 'lodash';
 
 
 export default (data, breakdowns) => {
@@ -16,7 +16,7 @@ export default (data, breakdowns) => {
   const arr = [];
   const a = flatten(flatten_d.map(i => {
     return [
-      {text: `${i.width} x ${i.height}`, alignment: 'center', margin: [0,25,0,0]}
+      
     ];
   }));
   let chunk;
@@ -26,6 +26,22 @@ export default (data, breakdowns) => {
     arr.push(chunk);
   }
 
+  const lastArr = (3 - chunk.length);
+
+  if(lastArr>0){
+    arr.splice(-Math.abs(chunk.length));
+
+    // let el = [];
+
+    // for(let i = 0; i<lastArr; i++){
+    //   el.push({text: `${i.width} x ${i.height}`, alignment: 'center', margin: [0,25,0,0]});
+    // }
+
+    // console.log({el});
+
+    // const elem = [...chunk, ];
+  }
+  
 
   return [
     {
