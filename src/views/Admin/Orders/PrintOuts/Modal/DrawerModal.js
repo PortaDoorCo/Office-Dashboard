@@ -34,7 +34,6 @@ const PrintModal = (props) => {
     box_sides: printer_options[0].box_sides,
     box_bottoms: printer_options[0].box_bottoms,
     packing_slip: printer_options[0].packing_slip,
-    qc: printer_options[0].qc,
     box_labels: printer_options[0].box_labels
   });
 
@@ -57,7 +56,6 @@ const PrintModal = (props) => {
       box_sides: 0,
       box_bottoms: 0,
       packing_slip: 0,
-      qc: 0,
       box_labels: 0
     };
 
@@ -194,20 +192,6 @@ const PrintModal = (props) => {
                     onChange={(e) => change(e, 'packing_slip')}
                     textField="packing_slip"
                     name="packing_slip"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="qc">QC</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option && printer_option.qc}
-                    onChange={(e) => change(e, 'qc')}
-                    textField="qc"
-                    name="qc"
                   />
                 </FormGroup>
               </Form>

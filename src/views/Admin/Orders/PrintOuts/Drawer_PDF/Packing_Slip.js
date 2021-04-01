@@ -202,7 +202,7 @@ export default (data, breakdowns) => {
           { text: 'Style', style: 'fonts' },
           { text: 'Qty', style: 'fonts' },
           { text: 'Actual Size', style: 'fonts' },
-
+          { text: 'Cab#', style: 'fonts' },
         ]
       ];
 
@@ -213,6 +213,9 @@ export default (data, breakdowns) => {
           { text: `Drawer Box ${part.box_thickness.NAME}`, style: 'fonts'},
           { text: `${item.qty}`, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
+          item.cab_number ? {
+            text: `${item.cab_number}`, style: 'fonts', alignment: 'left'
+          } : null
         ]);
 
       });
@@ -258,7 +261,7 @@ export default (data, breakdowns) => {
         {
           table: {
             headerRows: 1,
-            widths: [22, '*', '*', '*'],
+            widths: [22, '*', '*', '*', '*'],
             body: tableBody,
           },
           layout: {

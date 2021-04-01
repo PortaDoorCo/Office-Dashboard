@@ -1,8 +1,19 @@
 import moment from 'moment';
 import Size from '../Breakdowns/DrawerBoxes/Size';
+import { flatten, flattenDeep } from 'lodash';
 
 
 export default (data, breakdowns) => {
+
+
+  console.log({dataaaaa: flatten(data.part_list)});
+
+  const dim = data.part_list.map(i => {
+    return i.dimensions;
+  });
+
+
+  console.log({ddddd: flatten(dim)});
 
   return [
     {
