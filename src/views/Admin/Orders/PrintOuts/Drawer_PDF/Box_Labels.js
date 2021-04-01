@@ -13,7 +13,7 @@ export default (data, breakdowns) => {
   });
 
 
-  console.log({ddddd: flatten(dim)});
+  const flatten_d = flatten(dim);
 
   return [
     {
@@ -22,18 +22,28 @@ export default (data, breakdowns) => {
         alignment: 'center',
         widths: [170, 170, 170],
         heights: [60, 60,60, 60, 60, 60, 60, 60, 60, 60],
-        body: [
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-          [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        ]
+        body: flatten_d.map(i => {
+          return [
+            {text: `${i.width} x ${i.height}`, alignment: 'center', margin: [0,25,0,0]}
+          ];
+        })
+        
+        
+        // [
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
+        // ]
+
+
+
       },
       layout: {
         //hLineWidth: function(i, node) {
