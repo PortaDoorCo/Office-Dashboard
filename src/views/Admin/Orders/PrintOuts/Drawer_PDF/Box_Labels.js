@@ -1,7 +1,4 @@
-import moment from 'moment';
-import Size from '../Breakdowns/DrawerBoxes/Size';
 import { flatten, flattenDeep, groupBy, toArray } from 'lodash';
-import { _ } from 'core-js';
 
 
 export default (data, breakdowns) => {
@@ -25,23 +22,10 @@ export default (data, breakdowns) => {
   let chunk;
 
   while (a.length > 0) {
-
     chunk = a.splice(0,3);
-
-    console.log('heyeerey==>>>', chunk);
     arr.push(chunk);
-
   }
 
-  console.log({chunk});
-  console.log({arr});
-
-  // console.log('heyrey==>>>', toArray(groupBy(flatten(flatten_d.map(i => {
-  //   return [
-  //     {text: `${i.width} x ${i.height}`, alignment: 'center', margin: [0,25,0,0]}
-  //   ];
-  // })), (e, x)  => Math.floor(x/3)))
-  // );
 
   return [
     {
@@ -50,30 +34,7 @@ export default (data, breakdowns) => {
         alignment: 'center',
         // widths: [170, 170, 170],
         // heights: [60, 60,60, 60, 60, 60, 60, 60, 60, 60],
-        body: //groupBy(
-          flatten_d.map(i => {
-            return [
-              {text: `${i.width} x ${i.height}`, alignment: 'center', margin: [0,25,0,0]}
-            ];
-          })
-        //, (e, x)  => Math.floor(x/3))
-        
-        
-        // [
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        //   [{text : 'mylabel1', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel2', alignment:'center', margin: [0,25,0,0]}, {text : 'mylabel3', alignment:'center', margin: [0,25,0,0]}],
-        // ]
-
-
-
+        body: arr
       },
       layout: {
         //hLineWidth: function(i, node) {
