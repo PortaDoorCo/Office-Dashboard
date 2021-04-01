@@ -16,7 +16,7 @@ export default (data, breakdowns) => {
   const arr = [];
   const a = flatten(flatten_d.map(i => {
     return [
-      
+      {text: `${i.width} x ${i.height}`, alignment: 'center', margin: [0,25,0,0]}
     ];
   }));
   let chunk;
@@ -31,15 +31,20 @@ export default (data, breakdowns) => {
   if(lastArr>0){
     arr.splice(-Math.abs(chunk.length));
 
-    // let el = [];
+    let el = [];
 
-    // for(let i = 0; i<lastArr; i++){
-    //   el.push({text: `${i.width} x ${i.height}`, alignment: 'center', margin: [0,25,0,0]});
-    // }
+    for(let i = 0; i<lastArr; i++){
+      el.push({text: '', alignment: 'center', margin: [0,25,0,0]});
+    }
 
-    // console.log({el});
+    console.log({el});
 
-    // const elem = [...chunk, ];
+    const elem = [...chunk, el];
+
+    console.log({aaaaa: flatten(elem)});
+
+    arr.push(flatten(elem));
+
   }
   
 
@@ -48,8 +53,8 @@ export default (data, breakdowns) => {
       margin: [-21,8, -11,8],
       table: {
         alignment: 'center',
-        // widths: [170, 170, 170],
-        // heights: [60, 60,60, 60, 60, 60, 60, 60, 60, 60],
+        widths: [170, 170, 170],
+        heights: [60, 60,60, 60, 60, 60, 60, 60, 60, 60],
         body: arr
       },
       layout: {
