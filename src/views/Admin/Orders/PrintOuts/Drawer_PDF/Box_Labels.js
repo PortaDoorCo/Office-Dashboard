@@ -1,8 +1,9 @@
-import { chunk, flatten, flattenDeep, groupBy, toArray } from 'lodash';
+import { flatten } from 'lodash';
 
 
 export default (data, breakdowns) => {
 
+  console.log({data});
 
   console.log({dataaaaa: flatten(data.part_list)});
 
@@ -16,9 +17,21 @@ export default (data, breakdowns) => {
   const arr = [];
   const a = flatten(flatten_d.map(i => {
     return [
-      {text: `${i.width} x ${i.height}`, alignment: 'center', margin: [0,25,0,0]}
+      {
+        stack: [
+          {text: `${data.job_info && data.job_info.customer && data.job_info.customer.Company}`, alignment: 'center', style: 'fonts'},
+          {text: `${data.job_info && data.job_info.poNum}`, alignment: 'center', style: 'fonts'},
+          {text: `Order#: ${data.orderNum}`, alignment: 'center', style: 'fonts'},
+          {text: `${i.width} x ${i.height} x ${i.depth}`, alignment: 'center', style: 'fonts'},
+          {text: `Cab#: ${i.cab_number}`, alignment: 'center', style: 'fonts'}
+        ],
+        margin: [0,5,0,0]
+      }
+
     ];
   }));
+
+
   let chunk;
 
   while (a.length > 0) {
@@ -34,7 +47,7 @@ export default (data, breakdowns) => {
     let el = [];
 
     for(let i = 0; i<lastArr; i++){
-      el.push({text: '', alignment: 'center', margin: [0,25,0,0]});
+      el.push({text: '', alignment: 'center', margin: [0,5,0,0]});
     }
 
     console.log({el});
@@ -50,11 +63,11 @@ export default (data, breakdowns) => {
 
   return [
     {
-      margin: [-21,8, -11,8],
+      margin: [-21,0, -11,8],
       table: {
         alignment: 'center',
         widths: [170, 170, 170],
-        heights: [60, 60,60, 60, 60, 60, 60, 60, 60, 60],
+        heights: [57, 57,57, 57, 57, 57, 57, 57, 57, 57],
         body: arr
       },
       layout: {
