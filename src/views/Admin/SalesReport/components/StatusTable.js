@@ -241,7 +241,7 @@ const StatusTable = (props) => {
     <div>
       <div>
         <Row>
-          <Col lg='11' />
+          {/* <Col lg='11' /> */}
           <Col>
             <Tooltip title="View Reports" onClick={exportReports} placement="top" className="mb-3 mt-3">
               <IconButton>
