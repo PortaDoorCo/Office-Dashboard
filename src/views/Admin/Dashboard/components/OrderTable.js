@@ -11,6 +11,7 @@ import { updateStatus, loadOrders, setSelectedOrder } from '../../../../redux/or
 import Cookies from 'js-cookie';
 import { Button, Row, Col } from 'reactstrap';
 import styled from 'styled-components';
+import status from '../../../../utils/status';
 
 const TextField = styled.input`
   height: 32px;
@@ -44,75 +45,6 @@ const ClearButton = styled(Button)`
 
 const cookie = Cookies.get('jwt');
 const { Option } = Select;
-
-
-const status = [
-  {
-    label: 'Quote',
-    value: 'Quote',
-  },
-  {
-    label: 'Invoiced',
-    value: 'Invoiced',
-  },
-  {
-    label: 'Ordered',
-    value: 'Ordered',
-  },
-  {
-    label: 'In Production',
-    value: 'In Production',
-  },
-  {
-    label: 'Cut',
-    value: 'Cut',
-  },
-  {
-    label: 'Framing',
-    value: 'Framing',
-  },
-  {
-    label: 'Assembly',
-    value: 'Assembly',
-  },
-  {
-    label: 'Tenon',
-    value: 'Tenon',
-  },
-  {
-    label: 'Panels',
-    value: 'Panels',
-  },
-  {
-    label: 'Sanding',
-    value: 'Sanding',
-  },
-  {
-    label: 'Lipping',
-    value: 'Lipping',
-  },
-  {
-    label: 'Inspecting',
-    value: 'Inspecting',
-  },
-  {
-    label: 'Paint Shop',
-    value: 'Paint Shop',
-  },
-
-  {
-    label: 'Complete',
-    value: 'Complete',
-  },
-  {
-    label: 'Shipped',
-    value: 'Shipped',
-  },
-  {
-    label: 'LATE',
-    value: 'LATE',
-  },
-];
 
 const conditionalRowStyles = [
   {

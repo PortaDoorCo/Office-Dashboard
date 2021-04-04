@@ -19,80 +19,13 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
+import status from '../../../../utils/status';
 
 momentLocaliser(moment);
 
 
 const cookie = Cookies.get('jwt');
 const { Option } = Select;
-
-const status = [
-  {
-    label: 'Quote',
-    value: 'Quote',
-  },
-  {
-    label: 'Invoiced',
-    value: 'Invoiced',
-  },
-  {
-    label: 'Ordered',
-    value: 'Ordered',
-  },
-  {
-    label: 'In Production',
-    value: 'In Production',
-  },
-  {
-    label: 'Cut',
-    value: 'Cut',
-  },
-  {
-    label: 'Framing',
-    value: 'Framing',
-  },
-  {
-    label: 'Assembly',
-    value: 'Assembly',
-  },
-  {
-    label: 'Tenon',
-    value: 'Tenon',
-  },
-  {
-    label: 'Panels',
-    value: 'Panels',
-  },
-  {
-    label: 'Sanding',
-    value: 'Sanding',
-  },
-  {
-    label: 'Lipping',
-    value: 'Lipping',
-  },
-  {
-    label: 'Inspecting',
-    value: 'Inspecting',
-  },
-  {
-    label: 'Paint Shop',
-    value: 'Paint Shop',
-  },
-
-  {
-    label: 'Complete',
-    value: 'Complete',
-  },
-  {
-    label: 'Shipped',
-    value: 'Shipped',
-  },
-  {
-    label: 'LATE',
-    value: 'LATE',
-  },
-];
 
 const conditionalRowStyles = [
   {
