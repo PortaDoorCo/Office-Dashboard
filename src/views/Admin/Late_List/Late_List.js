@@ -16,13 +16,12 @@ import Cookies from 'js-cookie';
 import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
-import Receipt from '@material-ui/icons/Receipt';
 import Assignment  from '@material-ui/icons/Assignment';
-import Report1 from '../Orders/PrintOuts/Reports/Report1';
 import DoorPDF from '../Orders/PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from '../Orders/PrintOuts/Pages/Drawer/DrawerPDF';
 import { SingleDatePicker } from 'react-dates';
 import { Row, Col } from 'reactstrap';
+import status from '../../../utils/status';
 
 momentLocaliser(moment);
 
@@ -42,74 +41,6 @@ const toDataUrl = (url, callback) => {
 
 const cookie = Cookies.get('jwt');
 const { Option } = Select;
-
-const status = [
-  {
-    label: 'Quote',
-    value: 'Quote',
-  },
-  {
-    label: 'Invoiced',
-    value: 'Invoiced',
-  },
-  {
-    label: 'Ordered',
-    value: 'Ordered',
-  },
-  {
-    label: 'In Production',
-    value: 'In Production',
-  },
-  {
-    label: 'Cut',
-    value: 'Cut',
-  },
-  {
-    label: 'Framing',
-    value: 'Framing',
-  },
-  {
-    label: 'Assembly',
-    value: 'Assembled',
-  },
-  {
-    label: 'Tenon',
-    value: 'Tenon',
-  },
-  {
-    label: 'Panels',
-    value: 'Panels',
-  },
-  {
-    label: 'Sanding',
-    value: 'Sanding',
-  },
-  {
-    label: 'Lipping',
-    value: 'Lipping',
-  },
-  {
-    label: 'Inspecting',
-    value: 'Inspecting',
-  },
-  {
-    label: 'Paint Shop',
-    value: 'Paint Shop',
-  },
-
-  {
-    label: 'Complete',
-    value: 'Complete',
-  },
-  {
-    label: 'Shipped',
-    value: 'Shipped',
-  },
-  {
-    label: 'LATE',
-    value: 'LATE',
-  },
-];
 
 const conditionalRowStyles = [
   {

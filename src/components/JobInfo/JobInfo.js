@@ -11,12 +11,10 @@ import moment from 'moment-business-days';
 import momentLocaliser from 'react-widgets-moment';
 import { renderCheckboxToggle, renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../RenderInputs/renderInputs';
 import { connect } from 'react-redux';
+import status from '../../utils/status';
 
 momentLocaliser(moment);
 
-
-
-const status = ['Quote', 'Ordered'];
 
 const required = value => value ? undefined : 'Required';
 
