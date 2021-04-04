@@ -16,13 +16,10 @@ import Cookies from 'js-cookie';
 import momentLocaliser from 'react-widgets-moment';
 import { Row, Col, Button } from 'reactstrap';
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker } from 'react-dates';
+import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
-import Assignment  from '@material-ui/icons/Assignment';
 import Report1 from './PrintOuts/Reports/Report1';
-import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
 import styled from 'styled-components';
 
 momentLocaliser(moment);
@@ -55,20 +52,6 @@ const ClearButton = styled(Button)`
   align-items: center;
   justify-content: center;
 `;
-
-const toDataUrl = (url, callback) => {
-  const xhr = new XMLHttpRequest();
-  xhr.onload = () => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      callback(reader.result);
-    };
-    reader.readAsDataURL(xhr.response);
-  };
-  xhr.open('GET', url);
-  xhr.responseType = 'blob';
-  xhr.send();
-};
 
 const cookie = Cookies.get('jwt');
 const { Option } = Select;
@@ -162,7 +145,6 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 
 const OrderTable = (props) => {
   const { orders, role } = props;
-  const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -333,88 +315,6 @@ const OrderTable = (props) => {
 
   ];
 
-  const handleRowSelected = React.useCallback(state => {
-    setSelectedRows(state.selectedRows);
-  }, []);
-
-  const contextActions = React.useMemo(() => {
-    const exportBreakdowns = () => {
-      const { breakdowns, box_breakdowns } = props;
-
-      selectedRows.map(async (i) => {
-        if (i.orderType === 'Door Order') {
-
-          const edgesPromiseArr1 = i.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.edge.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-          const mouldsPromiseArr1 = i.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.profile.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-
-
-          const panelsPromiseArr1 = i.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.panel.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-          const appliedProfilePromiseArr1 = i.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.applied_profile.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-          let edges1;
-          let moulds1;
-          let panels1;
-          let appliedProfiles1;
-
-          try {
-            edges1 = await Promise.all(edgesPromiseArr1);
-            moulds1 = await Promise.all(mouldsPromiseArr1);
-            panels1 = await Promise.all(panelsPromiseArr1);
-            appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
-          } catch (err) {
-            console.log('errrrrrr', err);
-          }
-          return DoorPDF(i, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
-        } else {
-          return DrawerPDF(i, box_breakdowns);
-        }
-      }); 
-      setToggleCleared(!toggleCleared); 
-    };
-
-    const exportReports = () => {
-      Report1(selectedRows, startDate, endDate, filterStatus);
-      setToggleCleared(!toggleCleared); 
-    };
-
-    return (
-      <div>
-        <Tooltip title="View Reports" onClick={exportReports} placement="top" className="mb-3 mt-3">
-          <IconButton>
-            <Receipt style={{ width: '40', height: '40' }} />
-          </IconButton>
-        </Tooltip>
-      </div>
-    );
-  }, [selectedRows, startDate, endDate, props, filterStatus, toggleCleared]);
-
   const toggle = (row) => {
     const { setSelectedOrder } = props;
 
@@ -481,26 +381,6 @@ const OrderTable = (props) => {
                 }}
               />
 
-
-              {/* <DateRangePicker
-                startDate={startDate} // momentPropTypes.momentObj or null,
-                startDateId="startDate" // PropTypes.string.isRequired,
-                endDate={endDate} // momentPropTypes.momentObj or null,
-                endDateId="endDate" // PropTypes.string.isRequired,
-                singleDateRange={true}
-                onDatesChange={({ startDate, endDate }) => (setStartDate(startDate), setEndDate(endDate))} // PropTypes.func.isRequired,
-                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                onFocusChange={focusedInput => setFocusedInput(focusedInput)}
-                isOutsideRange={(date) => {
-                  if (date > moment(new Date())) {
-                    return true; // return true if you want the particular date to be disabled
-                  } else if (date < moment(minDate)) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                }}
-              /> */}
             </Col>
           </Row>
           <Row>
@@ -545,14 +425,10 @@ const OrderTable = (props) => {
         title="Orders"
         columns={columns}
         data={data}
-        selectableRows
-        onSelectedRowsChange={handleRowSelected}
-        clearSelectedRows={toggleCleared}
         pagination
         progressPending={!props.ordersDBLoaded}
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
-        contextActions={contextActions}
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
       />

@@ -18,27 +18,10 @@ import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
-import Assignment  from '@material-ui/icons/Assignment';
-import Report1 from '../../Orders/PrintOuts/Reports/Report1';
-import DoorPDF from '../../Orders/PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from '../../Orders/PrintOuts/Pages/Drawer/DrawerPDF';
 import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
 
 momentLocaliser(moment);
 
-const toDataUrl = (url, callback) => {
-  const xhr = new XMLHttpRequest();
-  xhr.onload = () => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      callback(reader.result);
-    };
-    reader.readAsDataURL(xhr.response);
-  };
-  xhr.open('GET', url);
-  xhr.responseType = 'blob';
-  xhr.send();
-};
 
 const cookie = Cookies.get('jwt');
 const { Option } = Select;
@@ -125,12 +108,10 @@ const conditionalRowStyles = [
 
 const StatusTable = (props) => {
   const { orders } = props;
-  const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
-  const [focusedInput, setFocusedInput] = useState(null);
 
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
@@ -232,87 +213,6 @@ const StatusTable = (props) => {
     },
   ];
 
-  const handleRowSelected = React.useCallback(state => {
-    setSelectedRows(state.selectedRows);
-  }, []);
-
-  const contextActions = React.useMemo(() => {
-    const exportBreakdowns = () => {
-      const { breakdowns, box_breakdowns } = props;
-
-      selectedRows.map(async (i) => {
-        if (i.orderType === 'Door Order') {
-
-          const edgesPromiseArr1 = i.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.edge.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-          const mouldsPromiseArr1 = i.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.profile.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-
-
-          const panelsPromiseArr1 = i.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.panel.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-          const appliedProfilePromiseArr1 = i.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.applied_profile.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-          let edges1;
-          let moulds1;
-          let panels1;
-          let appliedProfiles1;
-
-          try {
-            edges1 = await Promise.all(edgesPromiseArr1);
-            moulds1 = await Promise.all(mouldsPromiseArr1);
-            panels1 = await Promise.all(panelsPromiseArr1);
-            appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
-          } catch (err) {
-            console.log('errrrrrr', err);
-          }
-          return DoorPDF(i, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
-        } else {
-          return DrawerPDF(i, box_breakdowns);
-        }
-      }); 
-      setToggleCleared(!toggleCleared); 
-    };
-
-    const exportReports = () => {
-      SalesmenReport(selectedRows, props.startDate, props.endDate, props.filterStatus);
-      setToggleCleared(!toggleCleared); 
-    };
-
-    return (
-      <div>
-        <Tooltip title="View Reports" onClick={exportReports} placement="top" className="mb-3 mt-3">
-          <IconButton>
-            <Receipt style={{ width: '40', height: '40' }} />
-          </IconButton>
-        </Tooltip>
-      </div>
-    );
-  }, [selectedRows, props, toggleCleared]);
 
   const toggle = (row) => {
     const { setSelectedOrder } = props;
@@ -356,14 +256,10 @@ const StatusTable = (props) => {
         title="Orders"
         columns={columns}
         data={data}
-        selectableRows
-        onSelectedRowsChange={handleRowSelected}
-        clearSelectedRows={toggleCleared}
         pagination
         progressPending={!props.ordersDBLoaded}
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
-        contextActions={contextActions}
       />
       {modal ? (
         <OrderPage
