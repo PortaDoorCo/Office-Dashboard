@@ -178,9 +178,6 @@ const OrderTable = (props) => {
   const minDate = orders.length > 0 ? new Date(orders[orders.length - 1].createdAt) : new Date();
 
   useEffect(() => {
-
-    
-
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.createdAt);
 
@@ -197,7 +194,6 @@ const OrderTable = (props) => {
             moment(date) <= moment(endDate).endOf('day').valueOf()
           );
         }
-
       } else {
 
         if(filterText.length > 0) {
@@ -214,10 +210,7 @@ const OrderTable = (props) => {
                 item.status.includes(filterStatus)
           );
         }
-
-      
       }
-
     });
     setData(filteredOrders);
   }, [startDate, endDate, orders, filterStatus, filterText]);
@@ -274,7 +267,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBA' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Status',
@@ -418,11 +411,6 @@ const OrderTable = (props) => {
             <Receipt style={{ width: '40', height: '40' }} />
           </IconButton>
         </Tooltip>
-        <Tooltip title="View Breakdowns" onClick={exportBreakdowns} placement="top" className="mb-3 mt-3">
-          <IconButton>
-            <Assignment style={{ width: '40', height: '40' }} />
-          </IconButton>
-        </Tooltip>
       </div>
     );
   }, [selectedRows, startDate, endDate, props, filterStatus, toggleCleared]);
@@ -442,6 +430,11 @@ const OrderTable = (props) => {
 
   const editable = () => {
     setEdit(!edit);
+  };
+
+  const exportReports = () => {
+    Report1(data, startDate, endDate, filterStatus);
+    setToggleCleared(!toggleCleared); 
   };
 
 
@@ -534,6 +527,17 @@ const OrderTable = (props) => {
               <h3># Of Orders: {data.length}</h3> 
             </Col>
           </Row>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col lg='11' />
+        <Col>
+          <Tooltip title="View Reports" onClick={exportReports} placement="top" className="mb-3 mt-3">
+            <IconButton>
+              <Receipt style={{ width: '40', height: '40' }} />
+            </IconButton>
+          </Tooltip>
         </Col>
       </Row>
 

@@ -8,10 +8,7 @@ export default (data, breakdowns, p) => {
   pdfMake.vfs = vfs;
 
   const documentDefinition = {
-    pageSize: {
-      width: 816,
-      height: 1056
-    },
+    pageSize: 'A4',
     pageOrientation: 'portrait',
     content: Box_Labels(data, breakdowns),
     // pageMargins: [40, 40, 40, 60],

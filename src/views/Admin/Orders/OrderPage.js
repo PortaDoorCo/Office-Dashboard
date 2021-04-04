@@ -542,11 +542,15 @@ class OrderPage extends Component {
                       </Col>
                       <Col>
 
-                        <Tooltip title="Box Labels" placement="top" className="mb-3">
-                          <IconButton onClick={this.downloadBoxLabel}>
-                            <LabelIcon style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
+                        {(s.orderType === 'Drawer Order') ? 
+                          <Tooltip title="Box Labels" placement="top" className="mb-3">
+                            <IconButton onClick={this.downloadBoxLabel}>
+                              <LabelIcon style={{ width: '40', height: '40' }} />
+                            </IconButton>
+                          </Tooltip> : null
+                        }
+
+
 
                         <Tooltip title="Print" placement="top" className="mb-3">
                           <IconButton onClick={this.togglePrinter}>

@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
 import moment from 'moment';
 import OrderPage from '../../Orders/OrderPage';
+import { Row, Col } from 'reactstrap';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import { Select } from 'antd';
+import { Select, } from 'antd';
 import {
   updateStatus,
   loadOrders,
@@ -130,29 +131,29 @@ const StatusTable = (props) => {
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
   const [focusedInput, setFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus ] = useState(props.status);
 
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.createdAt);
 
-      if(filterStatus === 'All'){
+      if(props.filterStatus === 'All'){
         return (
           moment(date) >= moment(props.startDate).startOf('day').valueOf() &&
             moment(date) <= moment(props.endDate).endOf('day').valueOf() &&
-          item.sale && item.sale.fullName && item.sale.fullName.includes(props.status)
+          item.sale && item.sale.fullName && item.sale.fullName.includes(props.accountName)
         );
       } else {
         return (
           moment(date) >= moment(props.startDate).startOf('day').valueOf() &&
             moment(date) <= moment(props.endDate).endOf('day').valueOf() &&
-          item.sale && item.sale.fullName && item.sale.fullName.includes(props.status)
+          item.sale && item.sale.fullName && item.sale.fullName.includes(props.accountName) &&
+          item.status.includes(props.filterStatus)
         );
       }
 
     });
     setData(filteredOrders);
-  }, [orders, filterStatus, props.status, props.startDate, props.endDate]);
+  }, [orders, props.filterStatus, props.accountName, props.startDate, props.endDate]);
 
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
@@ -185,7 +186,7 @@ const StatusTable = (props) => {
     },
     {
       name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBA' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Status',
@@ -205,12 +206,6 @@ const StatusTable = (props) => {
         </Select>
       ),
     },
-    {
-      name: 'Submitted By',
-      selector: 'user.FirstName',
-      sortable: true,
-    },
-
     {
       name: 'Total',
       selector: 'total',
@@ -304,7 +299,7 @@ const StatusTable = (props) => {
     };
 
     const exportReports = () => {
-      SalesmenReport(selectedRows, props.startDate, props.endDate, filterStatus);
+      SalesmenReport(selectedRows, props.startDate, props.endDate, props.filterStatus);
       setToggleCleared(!toggleCleared); 
     };
 
@@ -315,14 +310,9 @@ const StatusTable = (props) => {
             <Receipt style={{ width: '40', height: '40' }} />
           </IconButton>
         </Tooltip>
-        <Tooltip title="View Breakdowns" onClick={exportBreakdowns} placement="top" className="mb-3 mt-3">
-          <IconButton>
-            <Assignment style={{ width: '40', height: '40' }} />
-          </IconButton>
-        </Tooltip>
       </div>
     );
-  }, [selectedRows, props, filterStatus, toggleCleared]);
+  }, [selectedRows, props, toggleCleared]);
 
   const toggle = (row) => {
     const { setSelectedOrder } = props;
@@ -341,9 +331,27 @@ const StatusTable = (props) => {
     setEdit(!edit);
   };
 
+  const exportReports = () => {
+    SalesmenReport(data, props.startDate, props.endDate, props.accountName);
+    setToggleCleared(!toggleCleared); 
+  };
+
 
   return (
     <div>
+      <div>
+        <Row>
+          <Col lg='11' />
+          <Col>
+            <Tooltip title="View Reports" onClick={exportReports} placement="top" className="mb-3 mt-3">
+              <IconButton>
+                <Receipt style={{ width: '40', height: '40' }} />
+              </IconButton>
+            </Tooltip>
+          </Col>
+        </Row>
+
+      </div>
       <DataTable
         title="Orders"
         columns={columns}

@@ -2,6 +2,8 @@ import moment from 'moment';
 
 export default (data, startDate, endDate, status) => {
 
+  console.log({status});
+
   const tableBody = [
     [
       { text: 'Date' },
@@ -64,7 +66,8 @@ export default (data, startDate, endDate, status) => {
       columns: [
         {
           stack: [
-            'SALESMEN REPORT'
+            'SALESMEN REPORT',
+
           ]
         }, {
           stack: [

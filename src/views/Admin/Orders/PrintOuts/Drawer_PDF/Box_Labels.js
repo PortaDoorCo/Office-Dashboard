@@ -22,8 +22,8 @@ export default (data, breakdowns) => {
           {text: `${data.job_info && data.job_info.customer && data.job_info.customer.Company}`, alignment: 'center', style: 'fonts'},
           {text: `${data.job_info && data.job_info.poNum}`, alignment: 'center', style: 'fonts'},
           {text: `Order#: ${data.orderNum}`, alignment: 'center', style: 'fonts'},
-          {text: `${i.width} x ${i.height} x ${i.depth}`, alignment: 'center', style: 'fonts'},
-          {text: `Cab#: ${i.cab_number}`, alignment: 'center', style: 'fonts'}
+          {text: `${i.width} x ${i.depth} x ${i.height}`, alignment: 'center', style: 'fonts'},
+          {text: `Cab#: ${i.cab_number ? i.cab_number : ''}`, alignment: 'center', style: 'fonts'}
         ],
         margin: [0,5,0,0]
       }
