@@ -31,7 +31,7 @@ class Charts extends Component {
       labels: ['House', 'Harold', 'Ned', 'Peter', 'Meg'],
       datasets: [
         {
-          label: 'Sales Reps',
+          label: '# of Orders',
           backgroundColor: 'rgba(43, 160, 125, 0.24)',
           borderColor: '#000000',
           borderWidth: 0.5,

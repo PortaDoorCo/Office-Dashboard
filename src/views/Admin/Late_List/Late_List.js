@@ -377,14 +377,14 @@ const StatusTable = (props) => {
         title="Orders"
         columns={columns}
         data={data}
-        selectableRows
-        onSelectedRowsChange={handleRowSelected}
+        // selectableRows
+        // onSelectedRowsChange={handleRowSelected}
         clearSelectedRows={toggleCleared}
         pagination
         progressPending={!props.ordersDBLoaded}
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
-        contextActions={contextActions}
+        // contextActions={contextActions}
       />
       {modal ? (
         <OrderPage

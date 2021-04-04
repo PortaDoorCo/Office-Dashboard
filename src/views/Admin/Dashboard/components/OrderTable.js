@@ -208,7 +208,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBA' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Status',

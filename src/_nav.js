@@ -47,7 +47,7 @@ export default {
           url: '/view-orders',
         },
         {
-          name: 'Sales Reports',
+          name: 'Salesmen Reports',
           url: '/sales-reports',
         },
         {

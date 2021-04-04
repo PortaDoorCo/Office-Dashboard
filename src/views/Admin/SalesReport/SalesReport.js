@@ -13,8 +13,12 @@ import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
 import { DateRangePicker, SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+import { Select } from 'antd';
+import status from '../../../utils/status';
 
 const StatusTable = React.lazy(() => import('./components/StatusTable'));
+
+const { Option } = Select;
 
 momentLocaliser(moment);
 
@@ -30,19 +34,37 @@ const SalesReport = (props) => {
   const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
+  const [filterStatus, setFilterStatus ] = useState('All');
+  const [filterText, setFilterText] = useState('');
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
   useEffect(() => {
-    const filteredOrders = orders.filter(item => {
+    const filteredOrders = orders.filter((item) => {
       let date = new Date(item.createdAt);
-      return moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf();
+
+      if(filterStatus === 'All'){
+
+        return (
+          moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf()
+        );
+        
+      } else {
+
+
+        return (
+          moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.status.includes(filterStatus)
+        );
+        
+      }
     });
     setData(filteredOrders);
-
-  }, [startDate, endDate, orders]);
+  }, [startDate, endDate, orders, filterStatus, filterText]);
 
 
   const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].createdAt) : new Date();
@@ -95,6 +117,18 @@ const SalesReport = (props) => {
                 />
               </Col>
             </Row>
+            <Row>
+              <Col>
+                <Select defaultValue="All" style={{ width: '69%' }} onChange={e => setFilterStatus(e)}>
+                  <Option value="All">All</Option>
+                  {status.map((i, index) => (
+                    <Option key={index} value={i.value}>
+                      {i.value}
+                    </Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
           </Col>
         </Row>
 
@@ -138,7 +172,7 @@ const SalesReport = (props) => {
           </NavItem>
           <NavItem>
             <NavLink
-              className={classnames({ active: activeTab === '4' })}
+              className={classnames({ active: activeTab === '5' })}
               onClick={() => { toggle('5'); }}
             >
               <strong>Meg</strong>
@@ -150,9 +184,10 @@ const SalesReport = (props) => {
             <Suspense fallback={loading()}>
               <StatusTable
                 orders={data}
-                status="House Account"
+                accountName="House Account"
                 startDate={startDate}
                 endDate={endDate}
+                filterStatus={filterStatus}
               />
             </Suspense>
           </TabPane>
@@ -160,9 +195,10 @@ const SalesReport = (props) => {
             <Suspense fallback={loading()}>
               <StatusTable
                 orders={data}
-                status="Harold"
+                accountName="Harold"
                 startDate={startDate}
                 endDate={endDate}
+                filterStatus={filterStatus}
               />
             </Suspense>
           </TabPane>
@@ -170,9 +206,10 @@ const SalesReport = (props) => {
             <Suspense fallback={loading()}>
               <StatusTable
                 orders={data}
-                status="Ned"
+                accountName="Ned"
                 startDate={startDate}
                 endDate={endDate}
+                filterStatus={filterStatus}
               />
             </Suspense>
           </TabPane>
@@ -180,9 +217,10 @@ const SalesReport = (props) => {
             <Suspense fallback={loading()}>
               <StatusTable
                 orders={data}
-                status="Peter"
+                accountName="Peter"
                 startDate={startDate}
                 endDate={endDate}
+                filterStatus={filterStatus}
               />
             </Suspense>
           </TabPane>
@@ -190,9 +228,10 @@ const SalesReport = (props) => {
             <Suspense fallback={loading()}>
               <StatusTable
                 orders={data}
-                status="Meg"
+                accountName="Meg"
                 startDate={startDate}
                 endDate={endDate}
+                filterStatus={filterStatus}
               />
             </Suspense>
           </TabPane>
