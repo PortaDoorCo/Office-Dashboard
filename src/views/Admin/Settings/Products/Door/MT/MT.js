@@ -113,6 +113,7 @@ const Cope = (props) => {
 
               <Row>
                 <Col>
+                  <img src="https://res.cloudinary.com/porta-door/image/upload/v1617574450/MT_cca8a9532e.png" alt="MT" className="mb-3 mt-3"/>
                   <p>
                   The “MT” door construction is a far superior constructed door to an applied molding door.
                   The “MT” constructed door is mitered in the moulded areas and mortised and tenoned on all

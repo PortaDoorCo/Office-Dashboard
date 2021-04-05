@@ -125,6 +125,7 @@ const Cope = (props) => {
 
               <Row>
                 <Col>
+                  <img src="https://res.cloudinary.com/porta-door/image/upload/v1597778539/cope_6ecb2b1744.png" alt="cope" className="mb-3 mt-3"/>
                   <p>
                   Cope and stick is a construction technique that is used to join pieces of wood in cabinetry
                   construction. It may also be referred to as stile-and-rail. The cope and the stick are the

@@ -124,13 +124,25 @@ const Cope = (props) => {
 
               <Row>
                 <Col>
+                  <img src="https://res.cloudinary.com/porta-door/image/upload/v1597778539/cope_6ecb2b1744.png" alt="cope" className="mb-3 mt-3"/>
                   <p>
-                    Cope-and-stick joinery produces great-looking frames for cabinet doors, but you need specialized router bits or shaper cutters to do the job the traditional way. Those items don't come cheap. So we found a low-cost, low-tech alternative, based on a simple dovetail bit.</p>
-
-                  <p>First, let's define some terms. "Stick" or "sticking" refers to the molded edge that's cut along the inside edge of the frame; pieces that meet that molding at a right angle must be "coped" to match the profile. Our technique replaces the usual round-over profile with a clean, simple bevel. It produces a subtle effect, not a dramatic one.</p>
-
-                  <p>If you have a router, a router table, a dovetail bit, and a slot cutter, you can do it the way we show here. Begin by cutting the stiles to their final length. Lay out the rails by adding 1" to the final inside width of the frame. That measurement will allow for a 1⁄2 " stub tenon on both ends of each rail.</p>
-
+                  Cope and stick is a construction technique that is used to join pieces of wood in cabinetry
+                  construction. It may also be referred to as stile-and-rail. The cope and the stick are the
+                  names assigned to the two pieces of wood that are cut using a machinery so that a
+                  smooth joint is created. This technique is most commonly used in making large frames
+                  for wood or glass panels. When used in cabinetry, this technique can be applied to
+                  intricate glass doors that exhibit a pattern. This is an advanced technique of construction
+                  that can require the application of advanced skills like executing a climb cut against the
+                  grain, so only journeyman woodworkers will undertake this type of work. When done
+                  well, this can make a project much stronger than other construction methods </p>
+                  
+                  <p>The stick is a term used by woodworkers to refer to the molded edge that is along the
+                  inside of a door or window frame. This type of edge is much more appealing than a
+                  square edge, but it creates a technical problem that requires joining molded profiles at
+                  the corners. This is where the cope comes into play. The cope is the recessed mirror cut
+                  that is put into the opposite edge so the stick can be seamlessly joined. The result is a
+                  much more ornate design, but the greatest advantage is the strength and tight-fitting
+                  durability that this technique achieves. </p>
                   {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
                     <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
                     : <div />
