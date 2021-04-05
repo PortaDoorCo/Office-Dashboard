@@ -96,13 +96,20 @@ const Cope = (props) => {
 
               <Row>
                 <Col>
+                  <img src="https://res.cloudinary.com/porta-door/image/upload/v1617574451/miter_b999484459.png" alt="miter" className="mb-3 mt-3"/>
                   <p>
-                    Cope-and-stick joinery produces great-looking frames for cabinet doors, but you need specialized router bits or shaper cutters to do the job the traditional way. Those items don't come cheap. So we found a low-cost, low-tech alternative, based on a simple dovetail bit.</p>
-
-                  <p>First, let's define some terms. "Stick" or "sticking" refers to the molded edge that's cut along the inside edge of the frame; pieces that meet that molding at a right angle must be "coped" to match the profile. Our technique replaces the usual round-over profile with a clean, simple bevel. It produces a subtle effect, not a dramatic one.</p>
-
-                  <p>If you have a router, a router table, a dovetail bit, and a slot cutter, you can do it the way we show here. Begin by cutting the stiles to their final length. Lay out the rails by adding 1" to the final inside width of the frame. That measurement will allow for a 1⁄2 " stub tenon on both ends of each rail.</p>
-
+                  The Mitre joint,often miter, is a joint made by cutting each of two parts to be joined, across
+                  the main surface, usually at a 45° angle, to form a corner, usually a 90° angle. It is
+                  called beveling when the angled cut is done on the side, although the resulting joint is still a
+                  mitre joint. [1]
+                  </p>
+                  <p>
+                  For woodworking, a disadvantage of a mitre joint is its weakness, but it can be strengthened
+                  with a tenon joint, usually arranged with the long grain of the tenon across the short grain of
+                  the frame timber). [2]  There are two common variations of a tenoned mitre joint, one where
+                  the tenon is long and runs the length of the mating surfaces and another where the slot is
+                  perpendicular to the joined edges.
+                  </p>
                   {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
                     <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
                     : <div />

@@ -108,6 +108,7 @@ const Cope = (props) => {
 
               <Row>
                 <Col>
+                  <img src="https://res.cloudinary.com/porta-door/image/upload/v1617574451/miter_b999484459.png" alt="miter" className="mb-3 mt-3"/>
                   <p>
                   The Mitre joint,often miter, is a joint made by cutting each of two parts to be joined, across
                   the main surface, usually at a 45° angle, to form a corner, usually a 90° angle. It is
