@@ -29,7 +29,7 @@ export default (info, part, breakdowns) => {
   const qty = parseInt(info.qty);
 
   const inset = 0;
-  const edge_factor = part.edge.LIP_FACTOR;
+  const edge_factor = part.edge ? part.edge.LIP_FACTOR : 0;
 
 
 
