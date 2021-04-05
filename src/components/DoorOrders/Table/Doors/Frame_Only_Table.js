@@ -246,7 +246,7 @@ const Frame_Only_Table = ({
                     <Field
                       name={`${table}.price`}
                       type="text"
-                      component={renderNumber}
+                      component={renderField}
                       label="price"
                       edit={edit}
                       validate={required}
