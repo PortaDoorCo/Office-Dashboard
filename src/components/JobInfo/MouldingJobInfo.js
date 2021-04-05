@@ -217,7 +217,7 @@ class JobInfo extends Component {
                 data={status}
                 valueField="value"
                 edit={edit}
-                textField="name"
+                textField="value"
               />
             </FormGroup>
           </Col>
