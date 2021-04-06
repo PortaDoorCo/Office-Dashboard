@@ -11,6 +11,7 @@ import EditorPage from './editor/EditorPage';
 import NotchDrill from './attributes/NotchDrill';
 import Finish from './attributes/Finish';
 import Scoops from './attributes/BoxScoopes';
+import BoxBottomWoodtypes from './attributes/BoxBottomWoodtype';
 
 const Navigation = (props) => {
 
@@ -70,6 +71,14 @@ const DrawerBox = (props) => {
                       <NavLink
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}
+                      >
+                        Box Bottom Woodtypes
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({ active: activeTab === '3' })}
+                        onClick={() => { toggle('3'); }}
                       >
                         Box Thickness
                       </NavLink>
@@ -132,6 +141,9 @@ const DrawerBox = (props) => {
                 <Woodtype />
               </TabPane>
               <TabPane tabId="2">
+                <BoxBottomWoodtypes />
+              </TabPane>
+              <TabPane tabId="3">
                 <BoxThickness />
               </TabPane>
               <TabPane tabId="4">
