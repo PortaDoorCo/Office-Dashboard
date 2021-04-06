@@ -16,7 +16,7 @@ import {
 import RenderPriceHolder from '../../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
-import { createNumberMask } from 'redux-form-input-masks';
+import currencyMask from '../../../../../utils/currencyMask';
 import WarningModal from '../../Warnings/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
@@ -28,10 +28,6 @@ const fraction = (num) => {
   return fraction.toLocaleString();
 };
 
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 const Cope_Table = ({
   fields,

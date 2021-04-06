@@ -25,7 +25,8 @@ import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
-import { createNumberMask } from 'redux-form-input-masks';
+import currencyMask from '../../../../utils/currencyMask';
+
 
 const required = (value) => (value ? undefined : 'Required');
 const minValue = min => value => value && numQty(value) < min ? `Must be at least ${min} Inches` : undefined;
@@ -36,10 +37,6 @@ const fraction = (num) => {
   return fraction.toLocaleString();
 };
 
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 const Cope_Table = ({
   props,
@@ -696,7 +693,7 @@ const Cope_Table = ({
               <Field
                 name={`${table}.extraCost`}
                 type="text"
-                component={renderPrice}
+                component={renderField}
                 edit={edit}
                 label="extraCost"
                 {...currencyMask}

@@ -19,13 +19,10 @@ import {
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createNumberMask } from 'redux-form-input-masks';
 import NumberFormat from 'react-number-format';
+import currencyMask from '../../../../utils/currencyMask';
 
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
+
 
 let Inputs = (props) => {
   const { fields, misc_items, formState, linePrices, edit } = props;

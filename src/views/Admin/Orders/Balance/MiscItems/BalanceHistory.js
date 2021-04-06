@@ -27,13 +27,8 @@ import {
 import { updateOrder } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import 'react-widgets/dist/css/react-widgets.css';
+import currencyMask from '../../../../../utils/currencyMask';
 
-import { createNumberMask } from 'redux-form-input-masks';
-
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 const cookie = Cookies.get('jwt');
 

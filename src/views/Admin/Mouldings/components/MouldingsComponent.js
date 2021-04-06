@@ -18,8 +18,8 @@ import FileUploader from '../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
-import { createNumberMask } from 'redux-form-input-masks';
 import NumberFormat from 'react-number-format';
+import currencyMask from '../../../../utils/currencyMask';
 
 const JobInfo = React.lazy(() => import('../../../../components/JobInfo/MouldingJobInfo'));
 const MiscItems = React.lazy(() => import('./MiscItems'));
@@ -31,11 +31,6 @@ const dueDate = moment(new Date()).businessAdd(7)._d;
 const cookie = Cookies.get('jwt');
 
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
-
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 
 class Mouldings extends Component {
