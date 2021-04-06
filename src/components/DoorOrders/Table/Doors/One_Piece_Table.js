@@ -15,7 +15,7 @@ import {
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
-import { createNumberMask } from 'redux-form-input-masks';
+import currencyMask from '../currencyMask';
 import WarningModal from '../Warnings/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
@@ -24,11 +24,6 @@ const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
-
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 const One_Piece_Table = ({
   fields,

@@ -294,16 +294,6 @@ class DoorOrders extends Component {
 
                       <Row className='mb-0'>
                         <Col xs='9' />
-                        {/* <Col>
-                          <FormGroup>
-                            <Label htmlFor="companyName">Taxable?</Label>
-                            <Field
-                              name={'Taxable'}
-                              component={renderCheckboxToggle}
-                            />
-                          </FormGroup>
-                        </Col> */}
-
                       </Row>
 
                       <strong>Discount: </strong>
@@ -337,32 +327,6 @@ class DoorOrders extends Component {
                       </InputGroup>
                     </Col>
                   </Row>
-                  {/* <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
-                    <Col xs="3">
-                      <Row>
-                        <Col>
-                          <Button
-                            color="primary"
-                            className="submit"
-                            style={{ width: '100%' }}
-                          >
-                            Submit
-                          </Button>
-                        </Col>
-                        <Col>
-                          <Button
-                            color="danger"
-                            onClick={this.cancelOrder}
-                            style={{ width: '100%' }}
-                          >
-                            Cancel
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row> */}
                 </form>
               </CardBody>
             </Card>
@@ -509,10 +473,6 @@ const mapStateToProps = (state, prop) => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
-      // ShippingMethod: state.misc_items.shippingMethods[0],
-      // PaymentMethod: {
-      //   NAME: state.customers.customerDB[0].PaymentMethod
-      // }
     }
   },
   formState: getFormValues('DrawerOrder')(state),
@@ -529,12 +489,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       submitOrder,
-      // getWoodtypes,
       loadCustomers
-      // getBoxThickness,
-      // getBoxBottoms,
-      // getAssembly,
-      // getNotch
     },
     dispatch
   );
