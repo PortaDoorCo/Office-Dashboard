@@ -17,7 +17,7 @@ import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
-import currencyMask from '../currencyMask';
+import currencyMask from '../../../../utils/currencyMask';
 
 const required = (value) => (value ? undefined : 'Required');
 const minValue = (min) => (value) =>

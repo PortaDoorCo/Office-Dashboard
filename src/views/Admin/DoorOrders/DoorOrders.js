@@ -44,8 +44,8 @@ import { renderField, renderCheckboxToggle } from '../../../components/RenderInp
 import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
-import { createNumberMask } from 'redux-form-input-masks';
 import validate from './validate';
+import currencyMask from '../../../utils/currencyMask';
 
 const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
@@ -57,11 +57,6 @@ const cookie = Cookies.get('jwt');
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
-
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 class DoorOrders extends Component {
   constructor(props) {

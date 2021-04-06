@@ -42,7 +42,7 @@ import { renderField, renderCheckboxToggle } from '../../../components/RenderInp
 import MiscItems from '../../../components/DrawerOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
-import { createNumberMask } from 'redux-form-input-masks';
+import currencyMask from '../../../utils/currencyMask';
 
 const DrawerBoxInfo = React.lazy(() => import('../../../components/DrawerOrders/DrawerBoxInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/DrawerJobInfo'));
@@ -51,11 +51,6 @@ const loading  = () => <div className="animated fadeIn pt-1 text-center"><div cl
 
 const cookie = Cookies.get('jwt');
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
-
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
 

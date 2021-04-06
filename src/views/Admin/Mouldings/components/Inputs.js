@@ -17,25 +17,11 @@ import {
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createNumberMask } from 'redux-form-input-masks';
 import NumberFormat from 'react-number-format';
 import styles from '../styles';
+import currencyMask from '../../../../utils/currencyMask';
 
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
-const thickness = [
-  {
-    NAME: '4/4',
-    value: 0.75,
-  },
-  {
-    NAME: '5/4',
-    value: 1,
-  },
-];
 
 let Inputs = (props) => {
   const { fields, formState, linePrices, edit, part_list } = props;

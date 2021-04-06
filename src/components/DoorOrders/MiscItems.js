@@ -30,14 +30,10 @@ import {
   miscItemLinePriceSelector,
   miscTotalSelector,
 } from '../../selectors/doorPricing';
-import { createNumberMask } from 'redux-form-input-masks';
 import NumberFormat from 'react-number-format';
-import _ from 'lodash';
+import currencyMask from '../../utils/currencyMask';
 
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
+
 
 let Inputs = (props) => {
   const { fields, misc_items, formState, linePrices, miscTotal } = props;

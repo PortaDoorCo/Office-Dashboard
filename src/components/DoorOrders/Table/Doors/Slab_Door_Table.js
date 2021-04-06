@@ -15,7 +15,7 @@ import {
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
-import currencyMask from '../currencyMask';
+import currencyMask from '../../../../utils/currencyMask';
 import WarningModal from '../Warnings/Modal';
 
 const required = (value) => (value ? undefined : 'Required');

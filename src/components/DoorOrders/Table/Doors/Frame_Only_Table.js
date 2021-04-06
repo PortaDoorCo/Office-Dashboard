@@ -16,7 +16,7 @@ import {
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
-import currencyMask from '../currencyMask';
+import currencyMask from '../../../../utils/currencyMask';
 
 const required = (value) => (value ? undefined : 'Required');
 

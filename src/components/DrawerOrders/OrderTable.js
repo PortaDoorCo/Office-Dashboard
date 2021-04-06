@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Field, change } from 'redux-form';
 import {
   renderDropdownList,
@@ -12,14 +11,9 @@ import {
   renderInt
 } from '../RenderInputs/renderInputs';
 import RenderPriceHolder from '../RenderInputs/RenderPriceHolder';
-import { createNumberMask } from 'redux-form-input-masks';
+import currencyMask from '../../utils/currencyMask';
 
 const required = (value) => (value ? undefined : 'Required');
-
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 class OrderTable extends Component {
   render() {

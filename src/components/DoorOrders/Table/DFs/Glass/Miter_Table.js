@@ -17,7 +17,7 @@ import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, r
 import RenderPriceHolder from '../../../../RenderInputs/RenderPriceHolder';
 import numQty from 'numeric-quantity';
 import { connect } from 'react-redux';
-import { createNumberMask } from 'redux-form-input-masks';
+import currencyMask from '../../../../../utils/currencyMask';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -25,11 +25,6 @@ const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
 };
-
-const currencyMask = createNumberMask({
-  decimalPlaces: 2,
-  locale: 'en-US',
-});
 
 const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch, lites }) => {
 
