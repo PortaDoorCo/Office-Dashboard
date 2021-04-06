@@ -80,13 +80,13 @@ const BoxBottomWoodtype = (props) => {
   const updateProduct = async () => {
     let id = product.id;
     let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'box-woodtypes', cookie);
+    await props.updateProduct(id, updatedProduct, 'box-bottom-woodtypes', cookie);
     await setModal(!modal);
   };
 
   const deleteProduct = async () => {
     let id = product.id;
-    await props.deleteProduct(id, 'box-woodtypes', cookie);
+    await props.deleteProduct(id, 'box-bottom-woodtypes', cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -99,7 +99,7 @@ const BoxBottomWoodtype = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
-    await props.addProduct(submittedProduct, 'box-woodtypes', cookie);
+    await props.addProduct(submittedProduct, 'box-bottom-woodtypes', cookie);
     await setModal(!modal);
   };
 
@@ -268,7 +268,7 @@ const BoxBottomWoodtype = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  designs: state.part_list.box_woodtypes,
+  designs: state.part_list.box_bottom_woodtypes,
   role: state.users.user.role
 });
 
