@@ -626,7 +626,7 @@ const Cope_Table = ({
       ))}
       <Row>
         <Col>
-          {!edit ? (
+          {!edit  ? (
             <Button
               color="primary"
               className="btn-circle"
