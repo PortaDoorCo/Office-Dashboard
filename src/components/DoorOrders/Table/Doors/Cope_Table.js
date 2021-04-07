@@ -29,8 +29,6 @@ import currencyMask from '../../../../utils/currencyMask';
 
 
 const required = (value) => (value ? undefined : 'Required');
-const minValue = min => value => value && numQty(value) < min ? `Must be at least ${min} Inches` : undefined;
-const minValue6 = minValue(6);
 
 const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -385,8 +383,7 @@ const Cope_Table = ({
                       )
                     }
                     label="width"
-                    validate={[ required, minValue6 ]}
-                    warn={minValue6}
+                    validate={[ required ]}
                     edit={edit}
                   />
                 </td>

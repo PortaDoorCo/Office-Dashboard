@@ -8,7 +8,7 @@ export const setToken = token => {
     return;
   }
   Cookies.set('username', token.user.username);
-  Cookies.set('jwt', token.jwt, { expires: 0.8 });
+  Cookies.set('jwt', token.jwt, { expires: 0.5 });
 
 
   if (Cookies.get('username')) {
