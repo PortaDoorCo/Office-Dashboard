@@ -28,8 +28,12 @@ const stateSelector = (state) => {
   const orders = state.form.DoorOrder;
 
   if (orders) {
-    console.log({orders});
-    if (state.form.DoorOrder.values && state.form.DoorOrder.values.job_info && state.form.DoorOrder.values.job_info.State) {
+    console.log({ orders });
+    if (
+      state.form.DoorOrder.values &&
+      state.form.DoorOrder.values.job_info &&
+      state.form.DoorOrder.values.job_info.State
+    ) {
       return state.form.DoorOrder.values.job_info.State;
     } else {
       return null;
@@ -74,7 +78,6 @@ export const miscItemPriceSelector = createSelector(
   [miscItemsSelector],
   (misc) =>
     misc.map((i) => {
-
       let price = 0;
 
       if (i.category === 'preselect') {
@@ -171,7 +174,6 @@ export const itemPriceSelector = createSelector(
   [partListSelector, pricingSelector, discountSelector],
   (parts, pricer, discount) =>
     parts.map((part, index) => {
-
       let design = 0;
 
       if (part.cope_design) {
@@ -241,7 +243,7 @@ export const itemPriceSelector = createSelector(
         ? part.applied_profile.UPCHARGE
         : 0;
       const finish = part.finish ? part.finish.UPCHARGE : 0;
-      
+
       const ff_opening_cost =
         part.design && part.orderType.value === 'Face_Frame'
           ? part.design.opening_cost
@@ -280,7 +282,6 @@ export const itemPriceSelector = createSelector(
       } else {
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
-
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
@@ -365,16 +366,15 @@ export const itemPriceSelector = createSelector(
                 let price = 0;
 
                 if (part.thickness.value === 0.75) {
-                  if(part.cope_df_design){
+                  if (part.cope_df_design) {
                     price = part.cope_df_design.UPCHARGE;
                   } else {
                     price = 0;
                   }
-                  
                 }
 
                 if (part.thickness.value === 1) {
-                  if(part.cope_df_design){
+                  if (part.cope_df_design) {
                     price = part.cope_df_design.UPCHARGE_THICK;
                   } else {
                     price = 0;
@@ -400,35 +400,42 @@ export const itemPriceSelector = createSelector(
                   part.profile &&
                   part.profile.MINIMUM_STILE_WIDTH !== numQty(i.topRail)
                 ) {
-                  calc('topRail', part.profile.DF_Reduction ? part.profile.DF_Reduction : 1.5, price);
+                  calc(
+                    'topRail',
+                    part.profile.DF_Reduction ? part.profile.DF_Reduction : 1.5,
+                    price
+                  );
                 }
                 //bottomRail
                 if (
                   part.profile &&
                   part.profile.MINIMUM_STILE_WIDTH !== numQty(i.bottomRail)
                 ) {
-                  calc('bottomRail', part.profile.DF_Reduction ? part.profile.DF_Reduction : 1.5, price);
+                  calc(
+                    'bottomRail',
+                    part.profile.DF_Reduction ? part.profile.DF_Reduction : 1.5,
+                    price
+                  );
                 }
               } else {
                 let price = 0;
 
                 if (part.thickness.value === 0.75) {
-                  if(part.cope_design){
+                  if (part.cope_design) {
                     price = part.cope_design.UPCHARGE;
                   } else {
                     price = 0;
                   }
-                  
                 }
                 if (part.thickness.value === 1) {
-                  if(part.cope_design){
+                  if (part.cope_design) {
                     price = part.cope_design.UPCHARGE_THICK;
                   } else {
                     price = 0;
                   }
                 }
 
-                if(part.profile){
+                if (part.profile) {
                   //leftStile
                   if (
                     (part.profile && part.profile.MINIMUM_STILE_WIDTH) !==
@@ -566,7 +573,7 @@ export const itemPriceSelector = createSelector(
                 if (part.thickness.value === 1) {
                   price = part.mt_df_design.UPCHARGE_THICK;
                 }
-  
+
                 //leftStile
                 if (
                   part.mt_df_design &&
@@ -579,7 +586,11 @@ export const itemPriceSelector = createSelector(
                   part.mt_df_design &&
                   part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.rightStile)
                 ) {
-                  calc('rightStile', part.mt_df_design.MID_RAIL_MINIMUMS, price);
+                  calc(
+                    'rightStile',
+                    part.mt_df_design.MID_RAIL_MINIMUMS,
+                    price
+                  );
                 }
                 //topRail
                 if (
@@ -593,7 +604,11 @@ export const itemPriceSelector = createSelector(
                   part.mt_df_design &&
                   part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.bottomRail)
                 ) {
-                  calc('bottomRail', part.mt_df_design.MID_RAIL_MINIMUMS, price);
+                  calc(
+                    'bottomRail',
+                    part.mt_df_design.MID_RAIL_MINIMUMS,
+                    price
+                  );
                 }
               } else {
                 if (part.thickness.value === 0.75) {
@@ -602,7 +617,7 @@ export const itemPriceSelector = createSelector(
                 if (part.thickness.value === 1) {
                   price = part.mt_design.UPCHARGE_THICK;
                 }
-  
+
                 //leftStile
                 if (
                   part.mt_design &&
@@ -632,8 +647,6 @@ export const itemPriceSelector = createSelector(
                   calc('bottomRail', part.mt_design.MID_RAIL_MINIMUMS, price);
                 }
               }
-
-              
             }
 
             let price = 0;
@@ -658,30 +671,33 @@ export const itemPriceSelector = createSelector(
                     bottomRailAdd +
                     extraCost
                   : 0;
-            }
-            else if(part.orderType.value === 'Slab_Door'){
-              price = ((width * height) / 144) > 2 ? ((((width * height) / 144) * wood) + (6.50 + edge)) + extraCost : (((2) * wood) + (6.50 + edge)) + extraCost ;
-            }
-            else if (part.orderType.value === 'Slab_DF'){
-              price = ((width * height) / 144) > 1 ? ((((width * height) / 144) * wood) + (6.50 + edge)) + extraCost : (((1) * wood) + (6.50 + edge)) + extraCost ;
-            }
-            else {
-              price =  eval(pricer.door_pricing) +
+            } else if (part.orderType.value === 'Slab_Door') {
+              price =
+                (width * height) / 144 > 2
+                  ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
+                  : 2 * wood + (6.5 + edge) + extraCost;
+            } else if (part.orderType.value === 'Slab_DF') {
+              price =
+                (width * height) / 144 > 1
+                  ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
+                  : 1 * wood + (6.5 + edge) + extraCost;
+            } else {
+              price =
+                eval(pricer.door_pricing) +
                 leftStileAdd +
                 rightStileAdd +
                 topRailAdd +
                 bottomRailAdd +
                 extraCost
-                ? eval(pricer.door_pricing) +
+                  ? eval(pricer.door_pricing) +
                     leftStileAdd +
                     rightStileAdd +
                     topRailAdd +
                     bottomRailAdd +
                     extraCost
-                : 0;
+                  : 0;
             }
 
-            
             if (height > -1) {
               return price;
             } else {
@@ -696,27 +712,31 @@ export const itemPriceSelector = createSelector(
     })
 );
 
-
-
 export const linePriceSelector = createSelector(
   [partListSelector, pricingSelector, itemPriceSelector],
   (parts, pricer, item) =>
     parts.map((part, index) => {
-
-      console.log({part});
+      console.log({ part });
 
       if (part.dimensions) {
         return part.dimensions.map((i, p) => {
-
           if (item[index][p]) {
             if (i.qty) {
-              if( part.orderType.value === 'Door' && ((parseInt(i.panelsH) === 1 && (numQty(i.height) >= 48)) || (parseInt(i.panelsW) === 1 && (numQty(i.width) >= 24))) ){
+              if (
+                (part.orderType.value === 'Door' ||
+                  part.orderType.value === 'Glass' ||
+                  part.orderType.value === 'One_Piece' ||
+                  part.orderType.value === 'Two_Piece' ||
+                  part.orderType.value === 'Slab_Door') &&
+                ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
+                  (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
+              ) {
                 console.log('hereeeeee');
-                
+
                 const base = item[index][p] * parseInt(i.qty);
                 const add = base * 0.2;
                 const price = base + add;
-                console.log({base});
+                console.log({ base });
                 return price;
               } else {
                 return item[index][p] * parseInt(i.qty);
@@ -742,7 +762,10 @@ export const addPriceSelector = createSelector(
         return part.dimensions.map((i, p) => {
           if (item[index][p]) {
             if (i.qty) {
-              if((parseInt(i.panelsH) === 1 && (numQty(i.height) >= 48)) || (parseInt(i.panelsW) === 1 && (numQty(i.width) >= 24))){
+              if (
+                (parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
+                (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24)
+              ) {
                 const base = item[index][p] * parseInt(i.qty);
                 const add = base * 0.2;
                 return add;
@@ -761,7 +784,6 @@ export const addPriceSelector = createSelector(
       }
     })
 );
-
 
 export const subTotalSelector = createSelector(
   [linePriceSelector, miscTotalSelector],
@@ -782,8 +804,6 @@ export const subTotal_Total = createSelector(
   (subTotal, misc) => subTotal.reduce((acc, item) => acc + item, 0)
 );
 
-
-
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector],
   (subTotal, misc, discount) => {
@@ -792,9 +812,18 @@ export const totalDiscountSelector = createSelector(
 );
 
 export const taxSelector = createSelector(
-  [subTotalSelector, taxRate, totalDiscountSelector, discountSelector, miscTotalSelector, stateSelector],
+  [
+    subTotalSelector,
+    taxRate,
+    totalDiscountSelector,
+    discountSelector,
+    miscTotalSelector,
+    stateSelector,
+  ],
   (subTotal, tax, discount, dis, misc, state) => {
-    return ((subTotal.reduce((acc, item) => acc + item, 0) - discount) + misc)  * tax;
+    return (
+      (subTotal.reduce((acc, item) => acc + item, 0) - discount + misc) * tax
+    );
   }
 );
 
