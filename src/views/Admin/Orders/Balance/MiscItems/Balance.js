@@ -57,7 +57,7 @@ class Balance extends Component {
 
   submit = async (values) => {
 
-    const { updateBalance, updateStatus } = this.props;
+    const { updateBalance } = this.props;
 
 
 
@@ -129,7 +129,6 @@ class Balance extends Component {
       balanceTotal,
       role,
       paymentTypes,
-      tax
     } = this.props;
 
     if (formState) {

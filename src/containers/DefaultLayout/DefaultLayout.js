@@ -1,7 +1,7 @@
-import React, { useState, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Container, Button } from 'reactstrap';
-import Tour from 'reactour'
+import Tour from 'reactour';
 
 import {
   AppAside,
@@ -24,9 +24,6 @@ import Cookies from 'js-cookie';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import { NotificationManager } from 'react-notifications';
-
 import {
   loadOrders,
   getDeliveries,
@@ -90,8 +87,8 @@ let DefaultLayout = (props, context) => {
           <p>Here you will be able to navigate to different parts of the app.  Click Door Order to create your first order.</p>
           <Button color="primary" onClick={async (e) => {
             e.preventDefault();
-            await history.push('/door-order')
-            await goTo(2)
+            await history.push('/door-order');
+            await goTo(2);
           }}>Create Your First Order</Button>
         </div>
       ),
@@ -120,8 +117,8 @@ let DefaultLayout = (props, context) => {
           <p>As you can see there a few other options for order types.  You can also view reports and customers.  For now lets view the settings.  Click Settings To Continue</p>
           <Button color="primary" onClick={async (e) => {
             e.preventDefault();
-            await history.push('/settings')
-            await goTo(7)
+            await history.push('/settings');
+            await goTo(7);
           }}>Go To Settings</Button>
         </div>
       ),
@@ -158,8 +155,6 @@ let DefaultLayout = (props, context) => {
     // ...
   ];
 
-  const [isTourOpen, setIsTourOpen] = useState(true);
-
 
   const { customerDBLoaded, app_tour, userId, updateAppTour } = props;
 
@@ -176,9 +171,9 @@ let DefaultLayout = (props, context) => {
           steps={steps}
           isOpen={app_tour}
           onRequestClose={async (e) => {
-            e.preventDefault()
-            await history.push('/')
-            await updateAppTour(cookie, userId)
+            e.preventDefault();
+            await history.push('/');
+            await updateAppTour(cookie, userId);
           }}
           updateDelay={1}
         />
@@ -234,7 +229,7 @@ let DefaultLayout = (props, context) => {
       </div>
     );
   }
-}
+};
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,

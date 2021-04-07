@@ -2,7 +2,6 @@ import React from 'react';
 import { Field, change } from 'redux-form';
 import {
   renderField,
-  renderNumber,
   renderDropdownListFilter,
   renderPrice,
   renderInt

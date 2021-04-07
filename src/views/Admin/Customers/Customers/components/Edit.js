@@ -67,7 +67,6 @@ class Edit extends Component {
     const {
       handleSubmit,
       salesReps,
-      shippingMethods,
       edit,
       paymentTerms
     } = this.props;

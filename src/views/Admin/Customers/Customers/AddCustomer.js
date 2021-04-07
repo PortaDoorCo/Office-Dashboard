@@ -65,15 +65,15 @@ onEdit = () => {
 render() {
 
   const props = this.props;
-  const { orders } = this.props;
+  // const { orders } = this.props;
 
-  let updateOrders;
+  // let updateOrders;
 
-  if (this.props.orders.length > 0) {
-    updateOrders = orders.filter(
-      x => x.job_info.customer.id === this.props.selectedCompanies.id
-    );
-  }
+  // if (this.props.orders.length > 0) {
+  //   updateOrders = orders.filter(
+  //     x => x.job_info.customer.id === this.props.selectedCompanies.id
+  //   );
+  // }
 
 
   return (

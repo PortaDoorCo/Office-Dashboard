@@ -69,8 +69,8 @@ const GoogleMapsComponent = withScriptjs(withGoogleMap((props) => {
 
 const Maps = (props) =>  {
 
-  const [locations, setLocations] = useState([]);
-  const [defaultCenter, setDefaultCenter] = useState([]);
+  const [locations] = useState([]);
+  const [defaultCenter] = useState([]);
 
 
 

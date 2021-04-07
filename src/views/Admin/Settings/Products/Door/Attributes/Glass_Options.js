@@ -6,7 +6,6 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import { AppSwitch } from '@coreui/react';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');

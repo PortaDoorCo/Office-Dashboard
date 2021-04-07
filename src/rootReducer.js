@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { loadingBarReducer } from 'react-redux-loading-bar'
+import { loadingBarReducer } from 'react-redux-loading-bar';
 
 import part_list from './redux/part_list/reducer';
 import Orders from './redux/orders/reducer';

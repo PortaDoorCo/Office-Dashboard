@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardBody,
 } from 'reactstrap';
-import MiscItems from '../../MiscItems';
 
 const style = {
   margin: 'auto',
