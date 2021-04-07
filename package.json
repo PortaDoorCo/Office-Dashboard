@@ -138,6 +138,7 @@
     "svg-blueprint": "^1.0.1",
     "svg-inline-react": "^3.2.0",
     "wait-on": "^5.2.1",
+    "xmldom": ">=0.5.0",
     "yarn": "^1.19.1"
   },
   "resolutions": {
