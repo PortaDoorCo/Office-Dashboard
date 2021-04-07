@@ -25,7 +25,7 @@ export default (data, breakdowns) => {
           {text: `${i.width} x ${i.depth} x ${i.height}`, alignment: 'center', style: 'fonts'},
           {text: `Cab#: ${i.cab_number ? i.cab_number : ''}`, alignment: 'center', style: 'fonts'}
         ],
-        margin: [0,5,0,0]
+        margin: [0,4,0,0]
       }
 
     ];
@@ -63,28 +63,34 @@ export default (data, breakdowns) => {
 
   return [
     {
-      margin: [-21,0, -11,8],
+      margin: [-21,-7, -5,8],
       table: {
         alignment: 'center',
-        widths: [170, 170, 170],
-        heights: [57, 57,57, 57, 57, 57, 57, 57, 57, 57],
+        widths: [175, 182, 180],
+        heights: [57, 57,57, 58, 58, 58, 58, 57, 57, 57],
         body: arr
       },
       layout: {
-        //hLineWidth: function(i, node) {
-        //  return (i === 0 || i === node.table.body.length) ? 2 : 1;
-        //},
-        //vLineWidth: function(i, node) {
-        //  return (i === 0 || i === node.table.widths.length) ? 2 : 1;
-        //},
-        hLineColor: function(i, node) {
-          return (i === 0 || i === node.table.body.length) ? 'red' : 'blue';
+        hLineWidth: function (i, node) {
+          return i === 1 ? 0 : 0;
         },
-        vLineColor: function(i, node) {
-          return (i === 0 || i === node.table.widths.length) ? 'red' : 'blue';
+        vLineWidth: function (i, node) {
+          return 0;
         },
-        paddingLeft: function(i, node) { return 10; },
-        paddingRight: function(i, node) { return 5; },
+        hLineStyle: function (i, node) {
+          if (i === 0 || i === node.table.body.length) {
+            return null;
+          }
+          return { dash: { length: 1, space: 1 } };
+        },
+        paddingLeft: function (i) {
+          return i === 0 ? 0 : 8;
+        },
+        paddingRight: function (i, node) {
+          return i === node.table.widths.length - 1 ? 0 : 8;
+        },
+        // paddingLeft: function(i, node) { return 10; },
+        // paddingRight: function(i, node) { return 5; },
         paddingTop: function(i, node) { return 7; },
         paddingBottom: function(i, node) { return 7; }
       }
