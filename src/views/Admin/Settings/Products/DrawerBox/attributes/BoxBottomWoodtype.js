@@ -9,9 +9,6 @@ import { updateProduct, addProduct, deleteProduct } from '../../../../../../redu
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
-const header = { 'Authorization': 'Bearer ' + cookie };
-
-
 
 const BoxBottomWoodtype = (props) => {
 
@@ -25,7 +22,6 @@ const BoxBottomWoodtype = (props) => {
   const [product, setProduct] = useState({
     id: '',
     NAME: '',
-    STANDARD_GRADE: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false);
@@ -48,7 +44,6 @@ const BoxBottomWoodtype = (props) => {
   const addProd = () => {
     const p = {
       NAME: '',
-      STANDARD_GRADE: '',
       photo: null
     };
     setNewProduct(true);
@@ -95,7 +90,6 @@ const BoxBottomWoodtype = (props) => {
     const item = props.designs.length + 1;
     const submittedProduct = {
       NAME: product.NAME,
-      STANDARD_GRADE: product.STANDARD_GRADE,
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
@@ -111,7 +105,7 @@ const BoxBottomWoodtype = (props) => {
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
+            {/* <CardTitle><strong>Price:</strong> ${card.STANDARD_GRADE}</CardTitle> */}
           </CardBody>
         </Card>
       </div>
@@ -155,15 +149,7 @@ const BoxBottomWoodtype = (props) => {
                   <Label for="Name">Name</Label>
                   <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
                 </Col>
-              </Row>
-  
-              <Row>
-                <Col>
-                  <Label for="4/4_Price">Price</Label>
-                  <Input type="number" value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
-                </Col>
-              </Row>
-  
+              </Row>  
               <Row className="mt-5">
                
                 <Col>
@@ -232,13 +218,6 @@ const BoxBottomWoodtype = (props) => {
                 <Col>
                   <Label for="Name">Name</Label>
                   <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
-                </Col>
-              </Row>
-  
-              <Row>
-                <Col>
-                  <Label for="4/4_Price">Price</Label>
-                  <Input type="number" value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
             </ModalBody>

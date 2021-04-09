@@ -229,6 +229,56 @@ const Miter_Table = ({
     }
   };
 
+
+  const addFields = i => {
+    fields.push({
+      qty: 1,
+      panelsH: 1,
+      panelsW: 1,
+      leftStile: leftStileWidth
+        ? fraction(numQty(leftStileWidth))
+        : fraction(
+          formState.part_list[i].miter_design.PROFILE_WIDTH
+        ),
+      rightStile: rightStileWidth
+        ? fraction(numQty(rightStileWidth))
+        : fraction(
+          formState.part_list[i].miter_design.PROFILE_WIDTH
+        ),
+      topRail: topRailWidth
+        ? fraction(numQty(topRailWidth))
+        : fraction(
+          formState.part_list[i].miter_design.PROFILE_WIDTH
+        ),
+      bottomRail: bottomRailWidth
+        ? fraction(numQty(bottomRailWidth))
+        : fraction(
+          formState.part_list[i].miter_design.PROFILE_WIDTH
+        ),
+      horizontalMidRailSize: 0,
+      verticalMidRailSize: 0,
+      unevenSplitInput: '0',
+      unevenSplit: false,
+      unevenCheck: false,
+      showBuilder: false,
+      item: fields.length + 1,
+    });
+  };
+
+  const addTable = (i) => {
+    if(formState.part_list[i].construction.value === 'M' && formState.part_list[i].miter_design) {
+      if((formState.part_list[i].dimensions.length < 1)){
+        addFields(i);
+      } else if((formState.part_list[i].dimensions.length > 0) && (formState.part_list[i].dimensions[formState.part_list[i].dimensions.length - 1].lite)) {
+        addFields(i);
+      } else {
+        alert('Your missing a Lite');
+      }  
+    } else {
+      alert('please select a profile');
+    } 
+  };
+
   return formState ? (
     <div>
       {modal ? (
@@ -629,43 +679,7 @@ const Miter_Table = ({
               <Button
                 color="primary"
                 className="btn-circle"
-                onClick={(e) =>
-                  formState.part_list[i].construction.value === 'M' &&
-                  formState.part_list[i].miter_design
-                    ? fields.push({
-                      qty: 1,
-                      panelsH: 1,
-                      panelsW: 1,
-                      leftStile: leftStileWidth
-                        ? fraction(numQty(leftStileWidth))
-                        : fraction(
-                          formState.part_list[i].miter_design.PROFILE_WIDTH
-                        ),
-                      rightStile: rightStileWidth
-                        ? fraction(numQty(rightStileWidth))
-                        : fraction(
-                          formState.part_list[i].miter_design.PROFILE_WIDTH
-                        ),
-                      topRail: topRailWidth
-                        ? fraction(numQty(topRailWidth))
-                        : fraction(
-                          formState.part_list[i].miter_design.PROFILE_WIDTH
-                        ),
-                      bottomRail: bottomRailWidth
-                        ? fraction(numQty(bottomRailWidth))
-                        : fraction(
-                          formState.part_list[i].miter_design.PROFILE_WIDTH
-                        ),
-                      horizontalMidRailSize: 0,
-                      verticalMidRailSize: 0,
-                      unevenSplitInput: '0',
-                      unevenSplit: false,
-                      unevenCheck: false,
-                      showBuilder: false,
-                      item: fields.length + 1,
-                    })
-                    : alert('please select a profile')
-                }
+                onClick={(e) => addTable(i) }
               >
                 +
               </Button>
