@@ -21,7 +21,6 @@ import currencyMask from '../../../../../utils/currencyMask';
 
 const required = value => (value ? undefined : 'Required');
 
-
 const fraction = num => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
   return fraction.toLocaleString();
@@ -137,6 +136,48 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
     }
 
   };
+
+
+  const addFields = i => {
+    fields.push({
+      qty:1,
+      panelsH: 1,
+      panelsW: 1,
+      leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
+        formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+      ),
+      rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
+        formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+      ),
+      topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
+        formState.part_list[i].profile.DF_Reduction
+      ),
+      bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
+        formState.part_list[i].profile.DF_Reduction
+      ),
+      horizontalMidRailSize: 0,
+      verticalMidRailSize: 0,
+      unevenSplitInput: '0',
+      showBuilder: false,
+      full_frame: false,
+      item: fields.length + 1
+    });
+  };
+
+  const addTable = (i) => {
+    if(formState.part_list[i].construction.value === 'Cope' && formState.part_list[i].profile) {
+      if((formState.part_list[i].dimensions.length < 1)){
+        addFields(i);
+      } else if((formState.part_list[i].dimensions.length > 0) && (formState.part_list[i].dimensions[formState.part_list[i].dimensions.length - 1].lite)) {
+        addFields(i);
+      } else {
+        alert('Your missing a Lite');
+      }  
+    } else {
+      alert('please select a profile');
+    } 
+  };
+  
 
 
 
@@ -392,7 +433,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
               <Row>
                 <Col xs='4'>
                   <FormGroup>
-                    <Label htmlFor="design">Lites</Label>
+                    <Label htmlFor="design"><strong>Lites</strong></Label>
                     <Field
                       name={`${table}.lite`}
                       component={renderDropdownListFilter}
@@ -440,34 +481,7 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 <Button
                   color="primary"
                   className="btn-circle"
-                  onClick={(e) =>
-                    (
-                      (formState.part_list[i].construction.value === 'Cope' && formState.part_list[i].profile) ?
-                        fields.push({
-                          qty:1,
-                          panelsH: 1,
-                          panelsW: 1,
-                          leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
-                            formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                          ),
-                          rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
-                            formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                          ),
-                          topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
-                            formState.part_list[i].profile.DF_Reduction
-                          ),
-                          bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
-                            formState.part_list[i].profile.DF_Reduction
-                          ),
-                          horizontalMidRailSize: 0,
-                          verticalMidRailSize: 0,
-                          unevenSplitInput: '0',
-                          showBuilder: false,
-                          full_frame: false,
-                          item: fields.length + 1
-                        })
-                        : alert('please select a profile')
-                    )}
+                  onClick={(e) => addTable(i)}
                 >
                   +
                 </Button> : <div />

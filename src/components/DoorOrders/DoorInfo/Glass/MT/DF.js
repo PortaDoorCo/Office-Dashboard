@@ -160,7 +160,7 @@ class MT_DF extends Component {
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
-                name={`${part}.mt_design`}
+                name={`${part}.mt_df_design`}
                 component={renderDropdownListFilter}
                 data={mt_designs}
                 valueField="value"

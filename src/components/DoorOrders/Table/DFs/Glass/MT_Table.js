@@ -141,6 +141,46 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
   };
 
 
+  const addFields = i => {
+    fields.push({
+      qty:1,
+      panelsH: 1,
+      panelsW: 1,
+      leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
+        formState.part_list[i].mt_df_design.MID_RAIL_MINIMUMS
+      ),
+      rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
+        formState.part_list[i].mt_df_design.MID_RAIL_MINIMUMS
+      ),
+      topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
+        formState.part_list[i].mt_df_design.DF_Reduction
+      ),
+      bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
+        formState.part_list[i].mt_df_design.DF_Reduction
+      ),
+      horizontalMidRailSize: 0,
+      verticalMidRailSize: 0,
+      unevenSplitInput: '0',
+      showBuilder: false,
+      item: fields.length + 1
+    });
+  };
+
+  const addTable = (i) => {
+    if(formState.part_list[i].construction.value === 'MT' && formState.part_list[i].mt_df_design) {
+      if((formState.part_list[i].dimensions.length < 1)){
+        addFields(i);
+      } else if((formState.part_list[i].dimensions.length > 0) && (formState.part_list[i].dimensions[formState.part_list[i].dimensions.length - 1].lite)) {
+        addFields(i);
+      } else {
+        alert('Your missing a Lite');
+      }  
+    } else {
+      alert('please select a profile');
+    } 
+  };
+
+
   return (
     formState ?
       <div>
@@ -393,7 +433,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
               <Row>
                 <Col xs='4'>
                   <FormGroup>
-                    <Label htmlFor="design">Lites</Label>
+                    <Label htmlFor="design"><strong>Lites</strong></Label>
                     <Field
                       name={`${table}.lite`}
                       component={renderDropdownListFilter}
@@ -441,33 +481,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                 <Button
                   color="primary"
                   className="btn-circle"
-                  onClick={(e) =>
-                    (
-                      (formState.part_list[i].construction.value === 'MT' && formState.part_list[i].mt_design) ?
-                        fields.push({
-                          qty:1,
-                          panelsH: 1,
-                          panelsW: 1,
-                          leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : fraction(
-                            formState.part_list[i].mt_design.MID_RAIL_MINIMUMS
-                          ),
-                          rightStile: rightStileWidth ? fraction(numQty(rightStileWidth)) : fraction(
-                            formState.part_list[i].mt_design.MID_RAIL_MINIMUMS
-                          ),
-                          topRail: topRailWidth ? fraction(numQty(topRailWidth)) : fraction(
-                            formState.part_list[i].mt_design.DF_Reduction
-                          ),
-                          bottomRail: bottomRailWidth ? fraction(numQty(bottomRailWidth)) : fraction(
-                            formState.part_list[i].mt_design.DF_Reduction
-                          ),
-                          horizontalMidRailSize: 0,
-                          verticalMidRailSize: 0,
-                          unevenSplitInput: '0',
-                          showBuilder: false,
-                          item: fields.length + 1
-                        })
-                        : alert('please select a design')
-                    )}
+                  onClick={(e) => addTable(i)}
                 >
                   +
                 </Button> : <div />
