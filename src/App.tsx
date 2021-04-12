@@ -76,39 +76,42 @@ const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
 
 type PropTypes = {
   productAdded: (res: {}, entity: {}) => null,
-  productDeleted: any,
-  productUpdated: any,
-  orderAdded: any,
-  orderUpdated:any,
-  orderDeleted:any,
-  miscItemAdded:any,
-  miscItemDeleted:any,
-  miscItemUpdated:any,
-  customerAdded:any,
-  customerUpdated:any,
-  customerDeleted:any,
-  printerOptionAdded:any,
-  printerOptionUpdated:any
-  setLogin: any,
-  getDeliveries: any,
-  getBreakdowns: any,
-  getBoxBreakdowns: any,
-  loadShippingMethod: any,
-  loadPaymentTypes: any,
-  loadPaymentTerms: any,
-  loadAllCustomers: any,
-  loadAllOrders: any,
-  loadCategories: any,
-  loadPrinterOptions: any,
-  getAllProducts: any,
-  getPricing: any,
-  login: any,
-  getUsers: any,
-  loadOrders: any,
-  loadCustomers: any,
-  loadSales: any,
-  loadMiscItems: any,
+  productDeleted: (res: {}) => null,
+  productUpdated: (res: {}, entity: {}) => null,
+  orderAdded: (res: {}) => null,
+  orderUpdated:(res: {}) => null,
+  orderDeleted:(res: {}) => null,
+  miscItemAdded:(res: {}, entity: {}) => null,
+  miscItemDeleted:(res: {}) => null,
+  miscItemUpdated:(res: {}) => null,
+  customerAdded:(res: {}) => null,
+  customerUpdated:(res: {}) => null,
+  customerDeleted:(res: {}) => null,
+  printerOptionAdded:(res: {}, data: {}) => null,
+  printerOptionUpdated:(res: {}, data: {}) => null,
+  setLogin: () => null,
+  getDeliveries: (cookie: {}) => null,
+  getBreakdowns: (data: {}) => null,
+  getBoxBreakdowns: (data: {}) => null,
+  loadShippingMethod: (data: {}) => null,
+  loadPaymentTypes: (data: {}) => null,
+  loadPaymentTerms: (data: {}) => null,
+  loadAllCustomers: (data: {}) => null,
+  loadAllOrders: (data: {}) => null,
+  loadCategories: (data: {}) => null,
+  loadPrinterOptions: (data: {}) => null,
+  getAllProducts: (data: {}) => null,
+  getPricing: (data: {}) => null,
+  login: (data: {}) => null,
+  getUsers: (data: {}) => null,
+  loadOrders: (data: {}) => null,
+  loadCustomers: (data: {}) => null,
+  loadSales: (data: {}) => null,
+  loadMiscItems: (data: {}) => null,
   loggedIn: boolean,
+  users: {
+    loggedIn: boolean
+  }
 }
 
 type StateTypes = {
@@ -378,7 +381,7 @@ class App extends Component<PropTypes, StateTypes> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: PropTypes) => ({
   loggedIn: state.users.loggedIn,
 });
 
@@ -423,5 +426,5 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect<{loggedIn: boolean}>(mapStateToProps, mapDispatchToProps)(App);
 
