@@ -94,7 +94,6 @@ const AppliedProfiles = (props) => {
     let id = product.id;
 
     await props.deleteProduct(id, 'applied-profiles', cookie);
-    await props.getAppliedMoulds(cookie);
     await toggleWarningModal();
     await toggle();
   };
@@ -110,7 +109,6 @@ const AppliedProfiles = (props) => {
     };
     await props.addProduct(submittedProduct, 'applied-profiles', cookie);
     await setModal(!modal);
-    await props.getAppliedMoulds(cookie);
   };
 
   const changeFilterValue = (e) => {
