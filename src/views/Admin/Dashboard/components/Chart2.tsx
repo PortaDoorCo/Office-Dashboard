@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import 'chartjs-plugin-colorschemes';
 
+type PropTypes = {
+  orders: Array<any>,
+  selectedDateRange: string
+}
 
 
-class Chart4 extends Component {
+class Chart2 extends Component<PropTypes> {
 
   render() {
     const { orders, selectedDateRange } = this.props;
@@ -26,48 +31,35 @@ class Chart4 extends Component {
 
     const groups = [];
     filteredOrders.forEach(item => {
- 
-      groups.push(item.status);
-    });
+      item.part_list.forEach(part => {
+        if (item.orderType === 'Door Order') {
+          switch (part.construction.value) {
+            case 'Cope':
+              groups.push(part.cope_design);
+              break;
+            case 'MT':
+              groups.push(part.mt_design);
+              break;
+            case 'M':
+              groups.push(part.miter_design);
+              break;
+            default:
+              return;
+          }
 
-    const quote = groups.filter(item => {
-      return item === 'Quote';
-    });
+        }
 
-    const production = groups.filter(item => {
-      return item === 'In Production';
+      });
     });
+    let groupbyName = _.groupBy(groups, 'NAME');
 
-    const invoiced = groups.filter(item => {
-      return item.includes('Invoiced');
-    });
-
-    const ordered = groups.filter(item => {
-      return item.includes('Ordered');
-    });
-
-    const station1 = groups.filter(item => {
-      return item.includes('Station 1');
-    });
-
-    const station2 = groups.filter(item => {
-      return item.includes('Station 2');
-    });
-
-    const station3 = groups.filter(item => {
-      return item.includes('Station 3');
-    });
-
-    const station4 = groups.filter(item => {
-      return item.includes('Station 4');
-    });
-
+    groupbyName = Object.entries(groupbyName).map(([k, v]) => ({ key: k, value: v })).sort((a:any, b:any) => b.value.length - a.value.length);
 
     const pie = {
-      labels: ['Quote', 'In Production', 'Invoiced', 'Ordered', 'Station 1 - Building', 'Station 2 - Lipping', 'Station 3 - Inspection', 'Station 4 - Paint Shop'],
+      labels: groupbyName.map(i => i.key),
       datasets: [
         {
-          data: [quote.length, production.length, invoiced.length, ordered.length, station1.length, station2.length, station3.length, station4.length]
+          data: groupbyName.map(v => v.value.length),
         }
       ],
     };
@@ -87,7 +79,7 @@ class Chart4 extends Component {
       <div>
         <Card>
           <CardBody>
-            <CardTitle className="mb-0">Status</CardTitle>
+            <CardTitle className="mb-0">Door Designs</CardTitle>
             <div className="chart-wrapper">
               <Pie data={pie} options={options} />
             </div>
@@ -115,4 +107,5 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Chart4);
+)(Chart2);
+

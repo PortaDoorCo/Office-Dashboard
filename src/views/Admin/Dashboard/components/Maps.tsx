@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'reactstrap';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
-import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer';
+import MarkerClusterer  from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import truck from '../../../../assets/icon/truck.png';
@@ -14,12 +14,17 @@ import moment from 'moment';
 // To use the Google Maps JavaScript API, you must register your app project on the Google API Console and get a Google API key which you can add to your app
 const apiKey = 'AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE';
 
-// const defaultZoom = 13;
-// const defaultCenter = []
-// const locations = [];
+type DeliveryTypes = {
+  locations: any,
+  orders: Array<any>,
+  setSelectedOrder: () => null,
+}
 
+type DeliveryStateTypes = {
+  location: any,
+}
 
-class DeliveryLocations extends Component {
+class DeliveryLocations extends Component<DeliveryTypes, DeliveryStateTypes> {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +33,7 @@ class DeliveryLocations extends Component {
   }
 
   render() {
-    const { locations, orders, setSelectedOrder } = this.props;
+    const { locations } = this.props;
     return (
       <div>
         <MarkerClusterer
@@ -39,7 +44,7 @@ class DeliveryLocations extends Component {
           {locations.map((location, index) => {
                  
             return (
-              <DeliveryInfoWindow key={index} location={location} orders={orders} setSelectedOrder={setSelectedOrder} />
+              <DeliveryInfoWindow key={index} {...this.props} />
             );
           })}
         </MarkerClusterer>
@@ -50,7 +55,22 @@ class DeliveryLocations extends Component {
   }
 }
 
-class DeliveryInfoWindow extends Component {
+type DeliveryInfoPropTypes = {
+  setSelectedOrder: (string) => null,
+  orders: Array<any>,
+  // locations: Array<any>,
+  location?
+}
+
+type DeliveryInfoTypes = {
+  isOpen: boolean,
+  modal: boolean,
+  edit: boolean
+}
+
+
+
+class DeliveryInfoWindow extends Component<DeliveryInfoPropTypes, DeliveryInfoTypes> {
   constructor(props) {
     super(props);
     this.state = {
@@ -140,7 +160,16 @@ class DeliveryInfoWindow extends Component {
   }
 }
 
-class DriverLocations extends Component {
+
+type DriverLocationProps = {
+  locations: Array<any>
+}
+
+type DriverLocationState = {
+  location: any,
+}
+
+class DriverLocations extends Component<DriverLocationProps, DriverLocationState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -150,7 +179,7 @@ class DriverLocations extends Component {
 
   render() {
     const { locations } = this.props;
-    return locations.map((location, index) => {
+    return locations.map((location: any, index) => {
        
       return (
         <DriverInfoWindow key={index} location={location} />
@@ -160,7 +189,15 @@ class DriverLocations extends Component {
   }
 }
 
-class DriverInfoWindow extends Component {
+type DriverInfoPropTypes = {
+  location: any
+}
+
+type DriverInfoStateTypes = {
+  isOpen: boolean
+}
+
+class DriverInfoWindow extends Component<DriverInfoPropTypes,DriverInfoStateTypes> {
   constructor(props) {
     super(props);
     this.state = {
@@ -206,8 +243,15 @@ class DriverInfoWindow extends Component {
 }
 
 
+type GoogleMapsPropTypes = {
+  locations: any
+  driverLocations: any,
+  orders: Array<any>,
+  setSelectedOrder: any
+}
 
-const GoogleMapsComponent = withScriptjs(withGoogleMap((props) => {
+
+const GoogleMapsComponent = withScriptjs(withGoogleMap((props: GoogleMapsPropTypes)=> {
 
 
 
@@ -226,7 +270,20 @@ const GoogleMapsComponent = withScriptjs(withGoogleMap((props) => {
 }
 ));
 
-class Maps extends Component {
+type MapsPropTypes = {
+  deliveries: Array<any>,
+  defaultCenter?,
+  orders: Array<any>,
+  setSelectedOrder: (string) => null,
+}
+
+type MapsStateTypes = {
+  driverLocations: Array<any>,
+  locations: Array<any>,
+  defaultCenter: Array<any>,
+}
+
+class Maps extends Component<MapsPropTypes,MapsStateTypes> {
   constructor(props) {
     super(props);
     this.state = {
@@ -260,7 +317,7 @@ class Maps extends Component {
           containerElement={<div style={{ height: '600px' }} />}
           mapElement={<div style={{ height: '100%' }} />}
           locations={this.props.deliveries}
-          defaultCenter={this.props.defaultCenter}
+          // defaultCenter={this.props.defaultCenter}
           driverLocations={this.state.driverLocations}
           orders={this.props.orders}
           setSelectedOrder={this.props.setSelectedOrder}

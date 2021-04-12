@@ -6,9 +6,12 @@ import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import 'chartjs-plugin-colorschemes';
 
+type PropTypes = {
+  orders: Array<any>,
+  selectedDateRange: string
+}
 
-
-class Chart3 extends Component {
+class Chart3 extends Component<PropTypes> {
 
   render() {
     const { orders, selectedDateRange } = this.props;

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
@@ -66,10 +66,23 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 
-const OrderTable = (props) => {
+type TablePropTypes = {
+  setSelectedOrder: (any) => null,
+  orders: Array<any>,
+  updateStatus: any,
+  ordersDBLoaded: boolean
+}
+
+type TableStateTypes = {
+  setSelectedOrder: (any) => null,
+  orders: Array<any>,
+  updateStatus: any,
+  ordersDBLoaded: boolean
+}
+
+
+const OrderTable = (props: TablePropTypes) => {
   const { orders } = props;
-  const [setSelectedRows] = useState([]);
-  const [toggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
@@ -206,10 +219,6 @@ const OrderTable = (props) => {
 
   ];
 
-  const handleRowSelected = useCallback(state => {
-    setSelectedRows(state.selectedRows);
-  }, [setSelectedRows]);
-
   const toggle = (row) => {
 
     const { setSelectedOrder } = props;
@@ -236,8 +245,6 @@ const OrderTable = (props) => {
         className="order-table3"
         columns={columns}
         data={data}
-        onSelectedRowsChange={handleRowSelected}
-        clearSelectedRows={toggleCleared}
         pagination
         progressPending={!props.ordersDBLoaded}
         highlightOnHover
@@ -276,9 +283,6 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
-
-
-
 
 export default connect(
   mapStateToProps,

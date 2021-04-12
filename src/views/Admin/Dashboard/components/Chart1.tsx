@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { Line, Chart } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
+import { Chart } from 'chart.js';
 import {
   Row,
   Col,
@@ -16,6 +17,12 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { selectDateRange } from '../../../../redux/misc_items/actions';
 
+
+type PropTypes ={
+  selectedDateRange: {},
+  selectDateRange: (string) => void,
+  orders: Array<any>
+}
 
 
 const brandInfo = '#63c2de';
@@ -34,7 +41,7 @@ function convertHex(hex, opacity) {
   return result;
 }
 
-class Chart1 extends Component {
+class Chart1 extends Component<PropTypes> {
   constructor(props) {
     super(props);
 

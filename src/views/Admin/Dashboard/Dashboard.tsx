@@ -21,7 +21,24 @@ const Maps = React.lazy(() => import('./components/Maps'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
-class Dashboard extends Component {
+type PropTypes = {
+  role: {
+    type: string
+  }
+}
+
+type StateTypes = {
+  maps: any,
+  dropdownOpen: boolean,
+  radioSelected: number,
+  orders: Array<any>,
+  modal: boolean,
+  selectedOrder: {},
+  orderEdit: boolean,
+  charts: boolean
+}
+
+class Dashboard extends Component<PropTypes, StateTypes> {
   constructor(props) {
     super(props);
     this.state = {
