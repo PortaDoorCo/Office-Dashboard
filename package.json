@@ -28,6 +28,10 @@
     "@material-ui/pickers": "3.3.10",
     "@sentry/react": "^6.2.0",
     "@sentry/tracing": "^6.2.0",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.37",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "@wojtekmaj/react-daterange-picker": "^3.0.0",
     "antd": "^4.5.2",
     "availity-reactstrap-validation": "^2.7.0",
@@ -137,6 +141,7 @@
     "styled-components": "^5.1.1",
     "svg-blueprint": "^1.0.1",
     "svg-inline-react": "^3.2.0",
+    "typescript": "^4.2.4",
     "wait-on": "^5.2.1",
     "yarn": "^1.19.1"
   },

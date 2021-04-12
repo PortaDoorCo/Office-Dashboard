@@ -58,7 +58,8 @@ const loading = () => (
 );
 
 // Containers
-const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
+const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout/DefaultLayout'));
+
 
 const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
   <Route
@@ -73,7 +74,49 @@ const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
   />
 );
 
-class App extends Component {
+type PropTypes = {
+  productAdded: any,
+  productDeleted: any,
+  productUpdated: any,
+  orderAdded: any,
+  orderUpdated:any,
+  orderDeleted:any,
+  miscItemAdded:any,
+  miscItemDeleted:any,
+  miscItemUpdated:any,
+  customerAdded:any,
+  customerUpdated:any,
+  customerDeleted:any,
+  printerOptionAdded:any,
+  printerOptionUpdated:any
+  setLogin: any,
+  getDeliveries: any,
+  getBreakdowns: any,
+  getBoxBreakdowns: any,
+  loadShippingMethod: any,
+  loadPaymentTypes: any,
+  loadPaymentTerms: any,
+  loadAllCustomers: any,
+  loadAllOrders: any,
+  loadCategories: any,
+  loadPrinterOptions: any,
+  getAllProducts: any,
+  getPricing: any,
+  login: any,
+  getUsers: any,
+  loadOrders: any,
+  loadCustomers: any,
+  loadSales: any,
+  loadMiscItems: any,
+  loggedIn: boolean,
+}
+
+type StateTypes = {
+  isAuth: boolean,
+  cookie: any
+}
+
+class App extends Component<PropTypes, StateTypes> {
   constructor(props) {
     super(props);
     this.state = {
@@ -112,7 +155,7 @@ class App extends Component {
       printerOptionUpdated
     } = this.props;
 
-    this.cookies();
+    this.cookies(null);
 
    
     socket.on(
