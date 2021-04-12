@@ -75,7 +75,7 @@ const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
 );
 
 type PropTypes = {
-  productAdded: any,
+  productAdded: (res: {}, entity: {}) => null,
   productDeleted: any,
   productUpdated: any,
   orderAdded: any,
@@ -345,6 +345,7 @@ class App extends Component<PropTypes, StateTypes> {
   };
 
   render() {
+    console.log({test_this: this.props.productAdded});
     return (
       <BrowserRouter>
         <React.Suspense fallback={loading()}>
