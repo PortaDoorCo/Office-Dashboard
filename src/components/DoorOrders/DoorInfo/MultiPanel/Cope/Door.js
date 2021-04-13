@@ -9,7 +9,7 @@ import {
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
 import { renderDropdownListFilter, renderTextField } from '../../../../RenderInputs/renderInputs';
-import Cope_Table from '../../../Table/Doors/Cope_Table';
+import Cope_Table from '../../../Table/Doors/MultiPanel/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
