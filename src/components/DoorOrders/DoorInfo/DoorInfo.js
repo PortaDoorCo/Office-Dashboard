@@ -69,6 +69,10 @@ const orderType = [
   {
     name: 'Slab Type DF',
     value: 'Slab_DF'
+  },
+  {
+    name: 'Multi-Panel Doors w/ Glass Lites',
+    value: 'MultiPanel'
   }
 ];
 

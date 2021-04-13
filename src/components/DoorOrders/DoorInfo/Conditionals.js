@@ -36,8 +36,6 @@ class Conditionals extends Component {
       part_list,
       edit,
       updateSubmit,
-      error,
-      submitFailed
     } = this.props;
 
     let component;
@@ -409,6 +407,48 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
+                updateSubmit={updateSubmit}
+              />;
+              break;
+            default:
+              return;
+          }
+          break;
+        case 'MultiPanel':
+          switch (formState.part_list[index].construction.value) {
+            case 'Cope':
+              component = <GlassCopeDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={false}
+                updateSubmit={updateSubmit}
+              />;
+              break;
+            case 'M':
+              component = <GlassMitreDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={false}
+                updateSubmit={updateSubmit}
+              />;
+              break;
+            case 'MT':
+              component = <GlassMTDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={false}
                 updateSubmit={updateSubmit}
               />;
               break;
