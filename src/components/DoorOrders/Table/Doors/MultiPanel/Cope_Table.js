@@ -670,13 +670,12 @@ const Cope_Table = ({
               )
                 .map((l, k) => {
                   return (
-                   
                     eval(`formState.part_list[i].dimensions[index].glass_check${k}`) ? 
-                      <Col lg='1'>
+                      <Col lg='2'>
                         <FormGroup>
                           <strong>Lites</strong>
                           <Field
-                            name={`${table}.lite${index}`}
+                            name={`${table}.lite${k}`}
                             component={renderDropdownListFilter}
                             data={lites}
                             valueField="value"
@@ -686,17 +685,10 @@ const Cope_Table = ({
                           />
                         </FormGroup>
                       </Col> : null
-                      
-            
                   );
                 })}
             </Row>
           </div>
-
-          
-  
-
-        
 
           <Row>
             <Col xs="4">
