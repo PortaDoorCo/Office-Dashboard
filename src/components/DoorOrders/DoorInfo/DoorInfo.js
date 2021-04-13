@@ -34,14 +34,14 @@ const orderType = [
     name: 'Drawer Front',
     value: 'DF'
   },
-  {
-    name: 'Glass Door',
-    value: 'Glass'
-  },
-  {
-    name: 'Glass DF',
-    value: 'Glass_DF'
-  },
+  // {
+  //   name: 'Glass Door',
+  //   value: 'Glass'
+  // },
+  // {
+  //   name: 'Glass DF',
+  //   value: 'Glass_DF'
+  // },
   {
     name: 'Face Frame',
     value: 'Face_Frame'
@@ -70,10 +70,10 @@ const orderType = [
     name: 'Slab Type DF',
     value: 'Slab_DF'
   },
-  {
-    name: 'Multi-Panel Doors w/ Glass Lites',
-    value: 'MultiPanel'
-  }
+  // {
+  //   name: 'Multi-Panel Doors w/ Glass Lites',
+  //   value: 'MultiPanel'
+  // }
 ];
 
 const thickness = [

@@ -18,6 +18,7 @@ import {
   renderNumber,
   renderInt,
   renderFieldDisabled,
+  renderDropdownListFilter,
   renderCheckboxToggle,
   renderPrice
 } from '../../../RenderInputs/renderInputs';
@@ -47,6 +48,7 @@ const Cope_Table = ({
   edit,
   dispatch,
   addPrice,
+  lites
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -322,6 +324,50 @@ const Cope_Table = ({
       );
     }
   };
+
+  const addFields = i => {
+    fields.push({
+      qty: 1,
+      panelsH: 1,
+      panelsW: 1,
+      leftStile: leftStileWidth
+        ? fraction(numQty(leftStileWidth))
+        : fraction(
+          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+        ),
+      rightStile: rightStileWidth
+        ? fraction(numQty(rightStileWidth))
+        : fraction(
+          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+        ),
+      topRail: topRailWidth
+        ? fraction(numQty(topRailWidth))
+        : fraction(
+          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+        ),
+      bottomRail: bottomRailWidth
+        ? fraction(numQty(bottomRailWidth))
+        : fraction(
+          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
+        ),
+      horizontalMidRailSize: 0,
+      verticalMidRailSize: 0,
+      unevenSplitInput: '0',
+      showBuilder: false,
+      item: fields.length + 1,
+      unevenCheck: false,
+      unevenSplit: false,
+      glass_check0: formState.part_list[i].panel.NAME === 'Glass' ? true : false
+    });
+  };
+
+  const addTable = (i) => {
+    if(formState.part_list[i].construction.value === 'Cope' && formState.part_list[i].profile) {
+      addFields(i);
+    } else {
+      alert('please select a profile');
+    } 
+  };
   
   return (
     <div>
@@ -587,12 +633,14 @@ const Cope_Table = ({
           </Table>
 
           <Row>
-            <Col lg="9">
-              <Field
-                name={`${table}.showBuilder`}
-                component={renderCheckboxToggle}
-                label="Show Builder"
-              />
+            <Col lg='1'>
+              <FormGroup>
+                <strong>Show Builder</strong>
+                <Field
+                  name={`${table}.showBuilder`}
+                  component={renderCheckboxToggle}
+                />
+              </FormGroup>
             </Col>
             <Col>
               {!edit ? (
@@ -600,11 +648,14 @@ const Cope_Table = ({
                   1 &&
                 parseInt(formState.part_list[i].dimensions[index].panelsW) ===
                   1 ? (
-                    <Field
-                      name={`${table}.unevenCheck`}
-                      component={renderCheckboxToggle}
-                      label="Uneven Split"
-                    />
+                    <FormGroup>
+                      <strong>Uneven Split</strong>
+                      <Field
+                        name={`${table}.unevenCheck`}
+                        component={renderCheckboxToggle}
+                      />
+                    </FormGroup>
+
                   ) : null
               ) : null}
             </Col>
@@ -650,7 +701,7 @@ const Cope_Table = ({
                           </p>
                           <Field
                             name={`${table}.unevenSplitInput${index}`}
-                            component={renderNumber}
+                            component={renderField}
                             edit={edit}
                           />
                         </Col>
@@ -662,35 +713,74 @@ const Cope_Table = ({
             </div>
           ) : null}
 
+          <div>
+            <Row>
+              {Array.from(
+                formState.part_list[i].dimensions[index].panelsH ? Array(
+                  parseInt(formState.part_list[i].dimensions[index].panelsH)
+                ).keys() : 0
+              )
+                .map((i, index) => {
+                  return (
+                    <Col lg='1'>
+                      <FormGroup>
+                        <strong>Glass Opening {index+1}</strong>
+                        <Field
+                          name={`${table}.glass_check${index}`}
+                          component={renderCheckboxToggle}
+                        />
+                      </FormGroup>
+                    </Col>
+                  );
+                })}
+            </Row>
+            <Row>
+              {Array.from(
+                formState.part_list[i].dimensions[index].panelsH ? Array(
+                  parseInt(formState.part_list[i].dimensions[index].panelsH)
+                ).keys() : 0
+              )
+                .map((l, k) => {
+                  return (
+                    eval(`formState.part_list[i].dimensions[index].glass_check${k}`) ? 
+                      <Col lg='2'>
+                        <FormGroup>
+                          <strong>Opening {k + 1} Options</strong>
+                          <Field
+                            name={`${table}.lite${k}`}
+                            component={renderDropdownListFilter}
+                            data={lites}
+                            valueField="value"
+                            textField="NAME"
+                            validate={required}
+                            edit={edit}
+                          />
+                        </FormGroup>
+                      </Col> : null
+                  );
+                })}
+            </Row>
+          </div>
+
           <Row>
             <Col xs="4">
               <strong>Notes</strong>
-              <Row>
-                <Col lg='11'>
-                  <Field
-                    name={`${table}.notes`}
-                    type="textarea"
-                    component={renderField}
-                    edit={edit}
-                    label="notes"
-                  />
-                </Col>
-                <Col lg='1'>
-                  {!edit ?
-                    <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
-                    : null }
-                </Col>
-              </Row>
-
-              
+              <Field
+                name={`${table}.notes`}
+                type="textarea"
+                component={renderField}
+                edit={edit}
+                label="notes"
+              />
             </Col>
-            <Col xs="5" />
+            <Col xs="5">
+            </Col>
             <Col xs="3">
               <strong>Extra Design Cost</strong>
               <Field
                 name={`${table}.extraCost`}
                 type="text"
-                component={renderField}
+                component={renderPrice}
                 edit={edit}
                 label="extraCost"
                 {...currencyMask}
@@ -707,43 +797,7 @@ const Cope_Table = ({
               <Button
                 color="primary"
                 className="btn-circle add-item-tour"
-                onClick={(e) =>
-                  formState.part_list[i].construction.value === 'Cope' &&
-                  formState.part_list[i].profile
-                    ? fields.push({
-                      qty: 1,
-                      panelsH: 1,
-                      panelsW: 1,
-                      leftStile: leftStileWidth
-                        ? fraction(numQty(leftStileWidth))
-                        : fraction(
-                          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                        ),
-                      rightStile: rightStileWidth
-                        ? fraction(numQty(rightStileWidth))
-                        : fraction(
-                          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                        ),
-                      topRail: topRailWidth
-                        ? fraction(numQty(topRailWidth))
-                        : fraction(
-                          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                        ),
-                      bottomRail: bottomRailWidth
-                        ? fraction(numQty(bottomRailWidth))
-                        : fraction(
-                          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-                        ),
-                      horizontalMidRailSize: 0,
-                      verticalMidRailSize: 0,
-                      unevenSplitInput: '0',
-                      showBuilder: false,
-                      item: fields.length + 1,
-                      unevenCheck: false,
-                      unevenSplit: false,
-                    })
-                    : alert('please select a profile')
-                }
+                onClick={(e) => addTable(i)}
               >
               +
               </Button>
@@ -771,4 +825,8 @@ const Cope_Table = ({
   );
 };
 
-export default connect()(Cope_Table);
+const mapStateToProps = (state) => ({
+  lites: state.part_list.lites,
+});
+
+export default connect(mapStateToProps, null)(Cope_Table);
