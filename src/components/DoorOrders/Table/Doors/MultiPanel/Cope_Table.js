@@ -644,9 +644,9 @@ const Cope_Table = ({
           <div>
             <Row>
               {Array.from(
-                Array(
+                formState.part_list[i].dimensions[index].panelsH ? Array(
                   parseInt(formState.part_list[i].dimensions[index].panelsH)
-                ).keys()
+                ).keys() : 0
               )
                 .map((i, index) => {
                   return (
@@ -664,16 +664,16 @@ const Cope_Table = ({
             </Row>
             <Row>
               {Array.from(
-                Array(
+                formState.part_list[i].dimensions[index].panelsH ? Array(
                   parseInt(formState.part_list[i].dimensions[index].panelsH)
-                ).keys()
+                ).keys() : 0
               )
                 .map((l, k) => {
                   return (
                     eval(`formState.part_list[i].dimensions[index].glass_check${k}`) ? 
                       <Col lg='2'>
                         <FormGroup>
-                          <strong>Lites</strong>
+                          <strong>Opening {k + 1} Options</strong>
                           <Field
                             name={`${table}.lite${k}`}
                             component={renderDropdownListFilter}
