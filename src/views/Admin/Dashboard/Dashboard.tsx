@@ -16,7 +16,6 @@ const Chart2 = React.lazy(() => import('./components/Chart2'));
 const Chart3 = React.lazy(() => import('./components/Chart3'));
 const Chart4 = React.lazy(() => import('./components/Chart4'));
 const OrderTable = React.lazy(() => import('./components/OrderTable'));
-const CompanyTable = React.lazy(() => import('../Customers/Customers/CompanyTable'));
 const Maps = React.lazy(() => import('./components/Maps'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
@@ -106,11 +105,8 @@ class Dashboard extends Component<PropTypes, StateTypes> {
                   </Suspense>
                 </Col>
               </Row>
-
             </Collapse>
-
-
-
+            
             <Collapse isOpen={this.state.maps}>
               <Row className="mb-5">
                 <Col style={{ height: 600 }}>
@@ -127,15 +123,6 @@ class Dashboard extends Component<PropTypes, StateTypes> {
                 </Suspense>
               </Col>
             </Row>
-            {/* <Row>
-              <Col>
-                <Suspense fallback={loading()}>
-                  <CompanyTable
-                    customerDB={this.props.customerDB}
-                  />
-                </Suspense>
-              </Col>
-            </Row> */}
           </div>
           : role && (role.type === 'office' || role.type === 'sales') ?
             <div>
@@ -143,7 +130,7 @@ class Dashboard extends Component<PropTypes, StateTypes> {
                 <Row>
                   <Col>
                     <Suspense fallback={loading()}>
-                      <Maps className="mb-5" />
+                      <Maps />
                     </Suspense>
                   </Col>
                 </Row>
@@ -155,20 +142,9 @@ class Dashboard extends Component<PropTypes, StateTypes> {
                   </Suspense>
                 </Col>
               </Row>
-              {/* <Row>
-                <Col>
-                  <Suspense fallback={loading()}>
-                    <CompanyTable
-                      customerDB={this.props.customerDB}
-                    />
-                  </Suspense>
-                </Col>
-              </Row> */}
             </div>
             : loading()
         }
-
-
       </div>
     );
   }

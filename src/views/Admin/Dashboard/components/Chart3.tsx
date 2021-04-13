@@ -27,7 +27,7 @@ class Chart3 extends Component<PropTypes> {
       }
     }) : [];
 
-    const groups = [];
+    const groups: Array<any> = [];
     filteredOrders.forEach(item => {
       groups.push(item.orderType);
     });
@@ -43,10 +43,7 @@ class Chart3 extends Component<PropTypes> {
     const miscOrders = groups.filter(item => {
       return item === 'Misc Items';
     });
-
-
-    // groupbyName = Object.entries(groupbyName).map(([k, v]) => ({key: k, value: v})).sort((a,b) => b.value.length - a.value.length)
-
+    
     const pie = {
       labels: ['Door Orders', 'Drawer Orders', 'Misc Items'],
       datasets: [
@@ -82,16 +79,14 @@ class Chart3 extends Component<PropTypes> {
   }
 }
 
-const mapStateToProps = (state, prop) => ({
+const mapStateToProps = (state: any) => ({
   orders: state.Orders.orders,
   selectedDateRange: state.misc_items.selectedDateRange
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
-    {
-
-    },
+    {},
     dispatch
   );
 

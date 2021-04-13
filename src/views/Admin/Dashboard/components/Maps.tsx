@@ -25,7 +25,7 @@ type DeliveryStateTypes = {
 }
 
 class DeliveryLocations extends Component<DeliveryTypes, DeliveryStateTypes> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       location: []
@@ -41,10 +41,10 @@ class DeliveryLocations extends Component<DeliveryTypes, DeliveryStateTypes> {
           enableRetinaIcons
           gridSize={60}
         >
-          {locations.map((location, index) => {
+          {locations.map((location: any, index: number) => {
                  
             return (
-              <DeliveryInfoWindow key={index} {...this.props} />
+              <DeliveryInfoWindow key={index} location={location} {...this.props} />
             );
           })}
         </MarkerClusterer>
@@ -56,9 +56,9 @@ class DeliveryLocations extends Component<DeliveryTypes, DeliveryStateTypes> {
 }
 
 type DeliveryInfoPropTypes = {
-  setSelectedOrder: (string) => null,
+  setSelectedOrder: (date: string | null) => null,
   orders: Array<any>,
-  // locations: Array<any>,
+  locations: Array<any>,
   location?
 }
 
@@ -71,7 +71,7 @@ type DeliveryInfoTypes = {
 
 
 class DeliveryInfoWindow extends Component<DeliveryInfoPropTypes, DeliveryInfoTypes> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       isOpen: false,
@@ -170,7 +170,7 @@ type DriverLocationState = {
 }
 
 class DriverLocations extends Component<DriverLocationProps, DriverLocationState> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       location: []
@@ -198,7 +198,7 @@ type DriverInfoStateTypes = {
 }
 
 class DriverInfoWindow extends Component<DriverInfoPropTypes,DriverInfoStateTypes> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       isOpen: false
@@ -272,9 +272,8 @@ const GoogleMapsComponent = withScriptjs(withGoogleMap((props: GoogleMapsPropTyp
 
 type MapsPropTypes = {
   deliveries: Array<any>,
-  defaultCenter?,
   orders: Array<any>,
-  setSelectedOrder: (string) => null,
+  setSelectedOrder: (data: string | null) => null,
 }
 
 type MapsStateTypes = {
@@ -284,7 +283,7 @@ type MapsStateTypes = {
 }
 
 class Maps extends Component<MapsPropTypes,MapsStateTypes> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       locations: [],
@@ -328,12 +327,12 @@ class Maps extends Component<MapsPropTypes,MapsStateTypes> {
   }
 }
 
-const mapStateToProps = (state, prop) => ({
+const mapStateToProps = (state: any) => ({
   deliveries: state.Orders.deliveries,
   orders: state.Orders.orders
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       setSelectedOrder

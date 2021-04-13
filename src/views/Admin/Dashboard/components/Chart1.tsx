@@ -17,21 +17,15 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { selectDateRange } from '../../../../redux/misc_items/actions';
 
-
 type PropTypes ={
   selectedDateRange: {},
-  selectDateRange: (string) => void,
+  selectDateRange: (date: string) => void,
   orders: Array<any>
 }
 
-
 const brandInfo = '#63c2de';
 
-
-// Main Chart
-
-// convert Hex to RGBA
-function convertHex(hex, opacity) {
+function convertHex(hex: string, opacity: number) {
   hex = hex.replace('#', '');
   var r = parseInt(hex.substring(0, 2), 16);
   var g = parseInt(hex.substring(2, 4), 16);
@@ -42,7 +36,7 @@ function convertHex(hex, opacity) {
 }
 
 class Chart1 extends Component<PropTypes> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
 
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
@@ -55,7 +49,7 @@ class Chart1 extends Component<PropTypes> {
 
   componentDidMount() {
     Chart.pluginService.register({
-      beforeDraw: function (chart) {
+      beforeDraw: function (chart: any) {
         if (chart.chart.config.data.labels.length === 0) {
           var width = chart.chart.width,
             height = chart.chart.height,
@@ -68,16 +62,14 @@ class Chart1 extends Component<PropTypes> {
           var text = 'There is no data to display',
             textX = Math.round((width - ctx.measureText(text).width) / 2),
             textY = height / 2 - 20;
-
           ctx.fillText(text, textX, textY);
           ctx.save();
-
         }
       }
     });
   }
 
-  onRadioBtnClick(radioSelected) {
+  onRadioBtnClick(radioSelected: number) {
     this.setState({
       radioSelected: radioSelected
     });
@@ -85,10 +77,6 @@ class Chart1 extends Component<PropTypes> {
 
   render() {
     const { selectDateRange, selectedDateRange } = this.props;
-
-
-    //REMEMBER TO CHANGE DATE TO CREATED AT
-
     let groups = this.props.orders.length > 0 ? [...this.props.orders]
       .filter(record =>
         selectedDateRange === 'day'
@@ -118,22 +106,19 @@ class Chart1 extends Component<PropTypes> {
       key => (groups[key] = groups[key].map(item => item.total))
     );
 
-    let prices = [];
-    let dates = [];
+    let prices: Array<any> = [];
+    let dates: Array<any> = [];
 
 
 
-    function avg(list) {
+    function avg(list: Array<any>) {
       return list.reduce((sum, value) => sum + value) / list.length;
     }
     Object.keys(groups)
-      ///.sort((a, b) => moment(b).isBefore(a))
       .forEach(key => {
         prices.push(avg(groups[key]));
         dates.push(key);
       });
-
-
 
     const mainChart = {
       labels: dates,
@@ -177,7 +162,6 @@ class Chart1 extends Component<PropTypes> {
           hoverBorderWidth: 3
         }
       },
-
     };
 
     return (
@@ -190,9 +174,6 @@ class Chart1 extends Component<PropTypes> {
                 <div className="small text-muted">{moment().format('YYYY')}</div>
               </Col>
               <Col sm="7" className="d-none d-sm-inline-block">
-                {/* <Button color="primary" className="float-right">
-                  <i className="icon-cloud-download" />
-                </Button> */}
                 <ButtonToolbar
                   className="float-right"
                   aria-label="Toolbar with button groups"
@@ -236,13 +217,13 @@ class Chart1 extends Component<PropTypes> {
   }
 }
 
-const mapStateToProps = (state, prop) => ({
+const mapStateToProps = (state: any) => ({
   orders: state.Orders.orders,
   customerDB: state.customers.customerDB,
   selectedDateRange: state.misc_items.selectedDateRange
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({
   selectDateRange
 }, dispatch);
 

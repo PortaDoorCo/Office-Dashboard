@@ -61,7 +61,7 @@ const loading = () => (
 const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout/DefaultLayout'));
 
 
-const PrivateRoute = ({ component: Component, ...rest }, isLogged) => (
+const PrivateRoute = ({ component: Component, ...rest }, isLogged: boolean) => (
   <Route
     {...rest}
     render={(props) => {
@@ -120,7 +120,7 @@ type StateTypes = {
 }
 
 class App extends Component<PropTypes, StateTypes> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       isAuth: false,
@@ -128,7 +128,7 @@ class App extends Component<PropTypes, StateTypes> {
     };
   }
 
-  cookies = (cb) => {
+  cookies = (cb: any) => {
     const getCookie = Cookies.get('jwt');
     if (getCookie) {
       this.setState({
@@ -163,7 +163,7 @@ class App extends Component<PropTypes, StateTypes> {
    
     socket.on(
       'order_submitted',
-      (res) => (
+      (res: any) => (
         NotificationManager.success(
           `Order #${res.orderNum} added`,
           'New Order',
@@ -174,7 +174,9 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'order_updated',
-      (res) => (
+      (res: {
+        orderNum: number
+      }) => (
         NotificationManager.success(
           `Order #${res.orderNum} updated`,
           'Order Updated',
@@ -185,7 +187,9 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'status_updated',
-      (res) => (
+      (res: {
+        orderNum: number
+      }) => (
         NotificationManager.success(
           `Order #${res.orderNum} has been updated`,
           'An order has been updated',
@@ -197,21 +201,21 @@ class App extends Component<PropTypes, StateTypes> {
 
     socket.on(
       'order_deleted',
-      (res) => (
+      (res: {}) => (
         NotificationManager.success('Order Deleted', 'Order Deleted', 2000),
         orderDeleted(res)
       )
     );
 
-    socket.on('delivery_added', (res) => this.props.getDeliveries(cookie));
-    socket.on('customer_added', (res) => customerAdded(res));
-    socket.on('customer_updated', (res) => customerUpdated(res));
-    socket.on('customer_deleted', (res) => customerDeleted(res));
+    socket.on('delivery_added', () => this.props.getDeliveries(cookie));
+    socket.on('customer_added', (res: {}) => customerAdded(res));
+    socket.on('customer_updated', (res: {}) => customerUpdated(res));
+    socket.on('customer_deleted', (res: {}) => customerDeleted(res));
 
 
     socket.on(
       'product_updated',
-      (res, entity) => (
+      (res: {}, entity: {}) => (
         NotificationManager.success(
           'Product Updated',
           'Product Updated',
@@ -222,14 +226,14 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'product_added',
-      (res, entity) => (
+      (res: {}, entity: {}) => (
         NotificationManager.success('Product Added', 'Product Added', 2000),
         productAdded(res, entity)
       )
     );
     socket.on(
       'product_deleted',
-      (res) => (
+      (res: {}) => (
         NotificationManager.success(
           'Product Deleted',
           'Product Deleted',
@@ -240,14 +244,14 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'misc_item_added',
-      (res, entity) => (
+      (res: {}, entity: {}) => (
         NotificationManager.success('Misc Item Added', 'Misc Item Added', 2000),
         miscItemAdded(res, entity)
       )
     );
     socket.on(
       'misc_item_updated',
-      (res, entity) => (
+      (res: {}) => (
         NotificationManager.success(
           'Misc Item Updated',
           'Misc Item Updated',
@@ -258,7 +262,7 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'misc_item_deleted',
-      (res) => (
+      (res: {}) => (
         NotificationManager.success(
           'Misc Item Deleted',
           'Misc Item Deleted',
@@ -269,21 +273,23 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'printer_option_added',
-      (res, data) => (
+      (res: {}, data: {}) => (
         printerOptionAdded(res, data)
       )
     );
 
     socket.on(
       'printer_option_updated',
-      (res,data) => (
+      (res: {},data: {}) => (
         printerOptionUpdated(res, data)
       )
     );
 
     socket.on(
       'message',
-      (res,data) => (
+      (res: {
+        message: string
+      }) => (
         NotificationManager.warning(
           res && res.message,
           'Message from Admin',
@@ -294,7 +300,7 @@ class App extends Component<PropTypes, StateTypes> {
     
   };
 
-  componentDidUpdate = async (prevProps) => {
+  componentDidUpdate = async (prevProps: any) => {
     const {
       getAllProducts,
       getPricing,
@@ -355,17 +361,14 @@ class App extends Component<PropTypes, StateTypes> {
           <Switch>
             <Route
               path="/login"
-              name="Login"
               component={this.state.isAuth ? DefaultLayout : Login}
             />
             <Route
               path="/register"
-              name="register"
               component={this.state.isAuth ? DefaultLayout : Register}
             />
             <Route
               path="/new-password"
-              name="new-password"
               component={this.state.isAuth ? DefaultLayout : NewPassword}
             />
             <PrivateRoute
@@ -385,7 +388,7 @@ const mapStateToProps = (state: PropTypes) => ({
   loggedIn: state.users.loggedIn,
 });
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       loadOrders,

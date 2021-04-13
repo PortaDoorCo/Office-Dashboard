@@ -48,7 +48,7 @@ const { Option } = Select;
 
 const conditionalRowStyles = [
   {
-    when: row => row.late === true,
+    when: (row: { late: any }) => row.late === true,
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -67,14 +67,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 
 
 type TablePropTypes = {
-  setSelectedOrder: (any) => null,
-  orders: Array<any>,
-  updateStatus: any,
-  ordersDBLoaded: boolean
-}
-
-type TableStateTypes = {
-  setSelectedOrder: (any) => null,
+  setSelectedOrder: (date: any) => null,
   orders: Array<any>,
   updateStatus: any,
   ordersDBLoaded: boolean
@@ -115,7 +108,7 @@ const OrderTable = (props: TablePropTypes) => {
 
 
 
-  const handleStatusChange = async (e, row) => {
+  const handleStatusChange = async (e: any, row: { id: string }) => {
     const { updateStatus } = props;
     const status = {
       status: e
@@ -149,16 +142,16 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'Date Ordered',
-      cell: row => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
+      cell: (row: { createdAt: any }) => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      cell: (row: { status: string, dueDate: any }) => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Status',
       grow: 1,
-      cell: row => <div>
+      cell: (row: any) => <div>
 
 
         <Row>
@@ -190,12 +183,12 @@ const OrderTable = (props: TablePropTypes) => {
       name: 'Total',
       selector: 'total',
       sortable: true,
-      cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
+      cell: (row: { total: number }) => <div>${row.total && row.total.toFixed(2)}</div>,
     },
     {
       name: 'Balance Paid',
       sortable: true,
-      cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
+      cell: (row: { balance_history: Array<any> }) => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
     },
     {
       name: 'Terms',
@@ -206,7 +199,7 @@ const OrderTable = (props: TablePropTypes) => {
       name: ' ',
       button: true,
       grow: 2,
-      cell: (row) => <Tooltip title="View Order" placement="top">
+      cell: (row: { id: string }) => <Tooltip title="View Order" placement="top">
         <IconButton onClick={function (event) {
           event.preventDefault();
           toggle(row);
@@ -219,7 +212,7 @@ const OrderTable = (props: TablePropTypes) => {
 
   ];
 
-  const toggle = (row) => {
+  const toggle = (row: {}) => {
 
     const { setSelectedOrder } = props;
 
@@ -268,13 +261,13 @@ const OrderTable = (props: TablePropTypes) => {
 
 };
 
-const mapStateToProps = (state, prop) => ({
+const mapStateToProps = (state: any) => ({
   orders: state.Orders.orders,
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       updateStatus,

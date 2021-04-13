@@ -14,10 +14,8 @@ type PropTypes = {
 
 
 class Chart2 extends Component<PropTypes> {
-
   render() {
     const { orders, selectedDateRange } = this.props;
-
     const filteredOrders = orders.length > 0 ? orders.filter(order => {
       switch (selectedDateRange) {
         case 'month':
@@ -29,7 +27,7 @@ class Chart2 extends Component<PropTypes> {
       }
     }) : [];
 
-    const groups = [];
+    const groups: Array<any> = [];
     filteredOrders.forEach(item => {
       item.part_list.forEach(part => {
         if (item.orderType === 'Door Order') {
@@ -46,9 +44,7 @@ class Chart2 extends Component<PropTypes> {
             default:
               return;
           }
-
         }
-
       });
     });
     let groupbyName = _.groupBy(groups, 'NAME');
@@ -90,16 +86,14 @@ class Chart2 extends Component<PropTypes> {
   }
 }
 
-const mapStateToProps = (state, prop) => ({
+const mapStateToProps = (state: any) => ({
   orders: state.Orders.orders,
   selectedDateRange: state.misc_items.selectedDateRange
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
-    {
-
-    },
+    {},
     dispatch
   );
 

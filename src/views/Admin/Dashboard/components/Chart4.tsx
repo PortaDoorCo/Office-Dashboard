@@ -15,7 +15,6 @@ class Chart4 extends Component<PropTypes> {
 
   render() {
     const { orders, selectedDateRange } = this.props;
-
     const filteredOrders = orders.length > 0 ? orders.filter(order => {
       switch (selectedDateRange) {
         case 'month':
@@ -27,7 +26,7 @@ class Chart4 extends Component<PropTypes> {
       }
     }) : [];
 
-    const groups = [];
+    const groups: Array<any> = [];
     filteredOrders.forEach(item => {
  
       groups.push(item.status);
@@ -65,7 +64,6 @@ class Chart4 extends Component<PropTypes> {
       return item.includes('Station 4');
     });
 
-
     const pie = {
       labels: ['Quote', 'In Production', 'Invoiced', 'Ordered', 'Station 1 - Building', 'Station 2 - Lipping', 'Station 3 - Inspection', 'Station 4 - Paint Shop'],
       datasets: [
@@ -101,16 +99,14 @@ class Chart4 extends Component<PropTypes> {
   }
 }
 
-const mapStateToProps = (state, prop) => ({
+const mapStateToProps = (state: any) => ({
   orders: state.Orders.orders,
   selectedDateRange: state.misc_items.selectedDateRange
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
-    {
-
-    },
+    {},
     dispatch
   );
 
