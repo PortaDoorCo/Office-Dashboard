@@ -4,17 +4,18 @@ import {
   Col,
   CardSubtitle,
   FormGroup,
-  Label,
+  Label
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../../../../RenderInputs/renderInputs';
-import Cope_Table from '../../../Table/Doors/Glass/Cope_Table';
+import { renderDropdownListFilter, renderTextField } from '../../../../RenderInputs/renderInputs';
+import Cope_Table from '../../../Table/Doors/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
+  totalSelector,
   addPriceSelector
 } from '../../../../../selectors/doorPricing';
 
@@ -100,8 +101,6 @@ class CopeDoor extends Component {
     } else {
       return null;
     }
-
-
   }
 
   render() {
@@ -111,29 +110,35 @@ class CopeDoor extends Component {
       cope_designs,
       edges,
       profiles,
+      panels,
       applied_moulds,
-      addPrice,
       isValid,
       index,
       part_list,
       formState,
-      prices,
-      lites,
-      subTotal,
       edit,
-      updateSubmit
+      prices,
+      subTotal,
+      addPrice,
+      one_piece,
+      updateSubmit,
+
     } = this.props;
+
+    const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
+
+
 
     return (
       <div>
         <Row>
-          <Col xs="12"  md='12' lg='4'>
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
-                data={woodtypes}
+                data={one_piece ? one_piece_wood : woodtypes}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -142,7 +147,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12"  md='12' lg='4'>
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -157,7 +162,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg='4'>
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="mould">Edge</Label>
               <Field
@@ -174,14 +179,29 @@ class CopeDoor extends Component {
         </Row>
         <Row>
 
-          <Col xs="12" md='12' lg='6'>
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="edge">Profile</Label>
               <Field
                 name={`${part}.profile`}
                 component={renderDropdownListFilter}
                 data={profiles}
+                valueField="value"
+                textField="NAME"
+                validate={required}
+                edit={edit}
                 onBlur={() => this.onChangeProfile(part, index)}
+              />
+            </FormGroup>
+          </Col>
+
+          <Col xs="4">
+            <FormGroup>
+              <Label htmlFor="panel">Panel</Label>
+              <Field
+                name={`${part}.panel`}
+                component={renderDropdownListFilter}
+                data={panels}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -190,7 +210,7 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg='6'>
+          <Col xs="4">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -204,10 +224,12 @@ class CopeDoor extends Component {
               />
             </FormGroup>
           </Col>
+
         </Row>
 
+
         <Row className="mt-2">
-          <Col xs="12" md='12' lg='4'>
+          <Col xs="4">
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>
@@ -240,13 +262,14 @@ class CopeDoor extends Component {
             updateSubmit={updateSubmit}
           />
         </div>
+
       </div>
     );
   }
 }
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
   woodtypes: state.part_list.woodtypes,
   cope_designs: state.part_list.cope_designs,
   edges: state.part_list.edges,
@@ -254,12 +277,12 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_profiles,
-  lites: state.part_list.lites,
-
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
+  total: totalSelector(state),
   addPrice: addPriceSelector(state),
+
 });
 
 

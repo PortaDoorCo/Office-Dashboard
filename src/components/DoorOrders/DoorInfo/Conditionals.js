@@ -21,6 +21,10 @@ import GlassMTDF from './Glass/MT/DF';
 import GlassMitreDoor from './Glass/Mitre/Door';
 import GlassMitreDF from './Glass/Mitre/DF';
 
+import MultiPanelCopeDoor from './MultiPanel/Cope/Door';
+import MultiPanelMiterDoor from './MultiPanel/Mitre/Door';
+import MultiPanelMTDoor from './MultiPanel/MT/Door';
+
 
 
 
@@ -417,7 +421,7 @@ class Conditionals extends Component {
         case 'MultiPanel':
           switch (formState.part_list[index].construction.value) {
             case 'Cope':
-              component = <GlassCopeDoor
+              component = <MultiPanelCopeDoor
                 part={part}
                 index={index}
                 isValid={isValid}
@@ -429,7 +433,7 @@ class Conditionals extends Component {
               />;
               break;
             case 'M':
-              component = <GlassMitreDoor
+              component = <MultiPanelMiterDoor
                 part={part}
                 index={index}
                 isValid={isValid}
@@ -441,7 +445,7 @@ class Conditionals extends Component {
               />;
               break;
             case 'MT':
-              component = <GlassMTDoor
+              component = <MultiPanelMTDoor
                 part={part}
                 index={index}
                 isValid={isValid}

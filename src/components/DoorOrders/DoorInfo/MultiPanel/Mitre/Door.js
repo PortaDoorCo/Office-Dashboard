@@ -8,9 +8,8 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-
-import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../../../../RenderInputs/renderInputs';
-import Miter_Table from '../../../Table/Doors/Glass/Miter_Table';
+import { renderDropdownListFilter, renderTextField } from '../../../../RenderInputs/renderInputs';
+import Miter_Table from '../../../Table/Doors/Miter_Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
@@ -105,6 +104,7 @@ class MiterDoor extends Component {
       part,
       woodtypes,
       miter_designs,
+      panels,
       applied_moulds,
       addPrice,
       isValid,
@@ -113,20 +113,22 @@ class MiterDoor extends Component {
       formState,
       prices,
       subTotal,
-      lites,
       edit,
+      one_piece,
       updateSubmit
     } = this.props;
+
+    const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
     return (
       <div>
         <Row>
-          <Col xs="12" md='12' lg="4">
+          <Col xs="3">
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
-                data={woodtypes}
+                data={one_piece ? one_piece_wood : woodtypes}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -135,14 +137,29 @@ class MiterDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="3">
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
                 name={`${part}.miter_design`}
                 component={renderDropdownListFilter}
                 data={miter_designs}
+                valueField="value"
+                textField="NAME"
+                validate={required}
+                edit={edit}
                 onBlur={() => this.onChangeProfile(part, index)}
+              />
+            </FormGroup>
+          </Col>
+
+          <Col xs="3">
+            <FormGroup>
+              <Label htmlFor="panel">Panel</Label>
+              <Field
+                name={`${part}.panel`}
+                component={renderDropdownListFilter}
+                data={panels}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -151,7 +168,7 @@ class MiterDoor extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="12" md='12' lg="4">
+          <Col xs="3">
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -165,11 +182,11 @@ class MiterDoor extends Component {
               />
             </FormGroup>
           </Col>
-
         </Row>
 
+
         <Row className="mt-2">
-          <Col xs="12" md='12' lg="4">
+          <Col xs="4">
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>
@@ -217,8 +234,6 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_profiles,
-  lites: state.part_list.lites,
-
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
