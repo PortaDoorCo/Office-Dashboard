@@ -148,7 +148,7 @@ class DoorInfo extends Component {
   copy = (type) => {
     const { fields, formState } = this.props;
     const lastItem = formState.part_list[formState?.part_list?.length - 1];
-
+    
     switch(type) {
       case 'Door':
         fields.push({
