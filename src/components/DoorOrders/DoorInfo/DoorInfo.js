@@ -1,42 +1,36 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  CardSubtitle,
-  Button,
-  ButtonGroup
-} from 'reactstrap';
+import { Row, Col, CardSubtitle, Button, ButtonGroup } from 'reactstrap';
 import DoorFilter from '../DoorInfo/Filter/Filter';
 import Conditionals from './Conditionals';
-
+import CopyModal from './CopyModal';
 
 const construction = [
   {
     name: 'Cope And Stick',
-    value: 'Cope'
+    value: 'Cope',
   },
   {
     name: 'Mitered Construction',
-    value: 'M'
+    value: 'M',
   },
   {
     name: 'MT Construction',
-    value: 'MT'
+    value: 'MT',
   },
   {
     name: 'Slab',
-    value: 'Slab'
+    value: 'Slab',
   },
 ];
 
 const orderType = [
   {
     name: 'Door Order',
-    value: 'Door'
+    value: 'Door',
   },
   {
     name: 'Drawer Front',
-    value: 'DF'
+    value: 'DF',
   },
   // {
   //   name: 'Glass Door',
@@ -83,54 +77,52 @@ const orderType = [
 const thickness = [
   {
     name: '4/4',
-    value: 0.75
+    value: 0.75,
   },
   {
     name: '5/4',
-    value: 1
-  }
+    value: 1,
+  },
 ];
-
 
 const ff_thickness = [
   {
     name: '1"',
-    value: 1
+    value: 1,
   },
   {
     name: '1 1/8"',
-    value: 1.125
+    value: 1.125,
   },
   {
     name: '1 1/4"',
-    value: 1.25
+    value: 1.25,
   },
   {
     name: '1 3/8"',
-    value: 1.375
+    value: 1.375,
   },
   {
     name: '1 1/2"',
-    value: 1.5
+    value: 1.5,
   },
   {
     name: '1 5/8"',
-    value: 1.625
+    value: 1.625,
   },
   {
     name: '1 3/4"',
-    value: 1.75
+    value: 1.75,
   },
   {
     name: '1 7/8"',
-    value: 1.875
+    value: 1.875,
   },
   {
     name: '2"',
-    value: 2
+    value: 2,
   },
 ];
-
 
 class DoorInfo extends Component {
   constructor(props) {
@@ -138,45 +130,85 @@ class DoorInfo extends Component {
     this.state = {
       designFilter: [],
       mouldFilter: [],
-      test: []
+      test: [],
+      modal: false,
     };
   }
 
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
+
+  copy = (type, construction) => {
+    const { fields, formState } = this.props;
+    const lastItem = formState.part_list[formState?.part_list?.length - 1];
+    fields.push({
+      orderType: orderType[0],
+      construction: lastItem.construction,
+      thickness: lastItem.thickness,
+      dimensions: [],
+      addPrice: 0,
+      files: [],
+    });
+    this.toggle();
+  };
+
+  newItem = () => {
+    const { fields } = this.props;
+    fields.push({
+      orderType: orderType[0],
+      construction: construction[0],
+      thickness: thickness[0],
+      dimensions: [],
+      addPrice: 0,
+      files: [],
+    });
+    this.toggle();
+  };
+
   render() {
-    const {
-      fields,
-      formState,
-      isValid,
-      edit,
-      updateSubmit
-    } = this.props;
-    
+    const { fields, formState, isValid, edit, updateSubmit } = this.props;
+
+    console.log({ formState });
 
     return (
       <div className="order-tour">
+        <div>
+          <CopyModal
+            modal={this.state.modal}
+            toggle={this.toggle}
+            copy={this.copy}
+            newItem={this.newItem}
+          />
+        </div>
         {fields.map((part, index) => {
           return (
             <div id={`item-${index}`} key={index}>
               <hr />
               <CardSubtitle className="mt-4">
-                {console.log({part111111: part})}
+                {console.log({ part111111: part })}
                 <Row>
                   <Col lg="11">
                     <div>
-                      <h2>Item #{index + 1} - {formState.part_list[index].orderType.name}</h2>
+                      <h2>
+                        Item #{index + 1} -{' '}
+                        {formState.part_list[index].orderType.name}
+                      </h2>
                     </div>
-
                   </Col>
                   <Col>
-                    {!edit ?
+                    {!edit ? (
                       fields.length > 1 ? (
-                        <Button color="danger" onClick={() => fields.remove(index)}>
+                        <Button
+                          color="danger"
+                          onClick={() => fields.remove(index)}
+                        >
                           x
                         </Button>
                       ) : null
-                      : null
-                    }
-
+                    ) : null}
                   </Col>
                 </Row>
               </CardSubtitle>
@@ -201,54 +233,38 @@ class DoorInfo extends Component {
                 isValid={isValid}
                 updateSubmit={updateSubmit}
               />
-
             </div>
           );
         })}
 
-        {!edit ?
+        {!edit ? (
           <div>
             <ButtonGroup>
               <Button
                 color="primary"
-                onClick={() =>
-
-                  fields.push({
-                    orderType: orderType[0],
-                    construction: construction[0],
-                    thickness: thickness[0],
-                    dimensions: [],
-                    addPrice: 0,
-                    files: []
-                  })
-
-                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.toggle();
+                  e.target.blur();
+                }}
               >
-            Add Door
+                Add Door
               </Button>
               <Button
                 color="primary"
-                onClick={() =>
-
-                  fields.push({
-                    orderType: orderType[1],
-                    construction: construction[0],
-                    thickness: thickness[0],
-                    dimensions: [],
-                    addPrice: 0,
-                    files: []
-                  })
-
-                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.toggle();
+                  e.target.blur();
+                }}
               >
-              Add Drawer Front
+                Add Drawer Front
               </Button>
             </ButtonGroup>
           </div>
-          
-          :
+        ) : (
           <div />
-        }
+        )}
       </div>
     );
   }
