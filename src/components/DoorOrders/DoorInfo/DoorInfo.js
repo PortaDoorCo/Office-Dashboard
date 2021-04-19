@@ -150,6 +150,7 @@ class DoorInfo extends Component {
       edit,
       updateSubmit
     } = this.props;
+    
 
     return (
       <div className="order-tour">
@@ -158,10 +159,11 @@ class DoorInfo extends Component {
             <div id={`item-${index}`} key={index}>
               <hr />
               <CardSubtitle className="mt-4">
+                {console.log({part111111: part})}
                 <Row>
                   <Col lg="11">
                     <div>
-                      <h2>Item #{index + 1}</h2>
+                      <h2>Item #{index + 1} - {formState.part_list[index].orderType.name}</h2>
                     </div>
 
                   </Col>
@@ -212,23 +214,6 @@ class DoorInfo extends Component {
                 onClick={() =>
 
                   fields.push({
-                    orderType: orderType[1],
-                    construction: construction[0],
-                    thickness: thickness[0],
-                    dimensions: [],
-                    addPrice: 0,
-                    files: []
-                  })
-
-                }
-              >
-            Add Drawer Front
-              </Button>
-              <Button
-                color="primary"
-                onClick={() =>
-
-                  fields.push({
                     orderType: orderType[0],
                     construction: construction[0],
                     thickness: thickness[0],
@@ -239,7 +224,24 @@ class DoorInfo extends Component {
 
                 }
               >
-              Add New Item
+            Add Door
+              </Button>
+              <Button
+                color="primary"
+                onClick={() =>
+
+                  fields.push({
+                    orderType: orderType[1],
+                    construction: construction[0],
+                    thickness: thickness[0],
+                    dimensions: [],
+                    addPrice: 0,
+                    files: []
+                  })
+
+                }
+              >
+              Add Drawer Front
               </Button>
             </ButtonGroup>
           </div>
