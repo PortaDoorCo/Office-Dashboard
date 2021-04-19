@@ -7,7 +7,7 @@ const CopyModal = (props) => {
     toggle,
     modal,
     copy,
-    newItem
+    type
   } = props;
 
   return (
@@ -18,8 +18,8 @@ const CopyModal = (props) => {
           Do you want to copy attributes?
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={copy}>Yes</Button>{' '}
-          <Button color="danger" onClick={newItem}>No</Button>
+          <Button color="primary" onClick={() => copy(type)}>Yes</Button>{' '}
+          <Button color="danger" onClick={() => copy(null)}>No</Button>
         </ModalFooter>
       </Modal>
     </div>

@@ -132,39 +132,55 @@ class DoorInfo extends Component {
       mouldFilter: [],
       test: [],
       modal: false,
+      type: null
     };
   }
 
-  toggle = () => {
+  toggle = (type) => {
     this.setState({
       modal: !this.state.modal,
     });
+    this.setState({
+      type: type
+    });
   };
 
-  copy = (type, construction) => {
+  copy = (type) => {
     const { fields, formState } = this.props;
     const lastItem = formState.part_list[formState?.part_list?.length - 1];
-    fields.push({
-      orderType: orderType[0],
-      construction: lastItem.construction,
-      thickness: lastItem.thickness,
-      dimensions: [],
-      addPrice: 0,
-      files: [],
-    });
-    this.toggle();
-  };
 
-  newItem = () => {
-    const { fields } = this.props;
-    fields.push({
-      orderType: orderType[0],
-      construction: construction[0],
-      thickness: thickness[0],
-      dimensions: [],
-      addPrice: 0,
-      files: [],
-    });
+    switch(type) {
+      case 'Door':
+        fields.push({
+          orderType: orderType[0],
+          construction: lastItem.construction,
+          thickness: lastItem.thickness,
+          dimensions: [],
+          addPrice: 0,
+          files: [],
+        });
+        break;
+      case 'DF':
+        fields.push({
+          orderType: orderType[1],
+          construction: lastItem.construction,
+          thickness: lastItem.thickness,
+          dimensions: [],
+          addPrice: 0,
+          files: [],
+        });
+        break;
+      default:
+        fields.push({
+          orderType: orderType[0],
+          construction: construction[0],
+          thickness: thickness[0],
+          dimensions: [],
+          addPrice: 0,
+          files: [],
+        });
+    }
+
     this.toggle();
   };
 
@@ -180,7 +196,7 @@ class DoorInfo extends Component {
             modal={this.state.modal}
             toggle={this.toggle}
             copy={this.copy}
-            newItem={this.newItem}
+            type={this.state.type}
           />
         </div>
         {fields.map((part, index) => {
@@ -244,7 +260,7 @@ class DoorInfo extends Component {
                 color="primary"
                 onClick={(e) => {
                   e.preventDefault();
-                  this.toggle();
+                  this.toggle('Door');
                   e.target.blur();
                 }}
               >
@@ -254,7 +270,7 @@ class DoorInfo extends Component {
                 color="primary"
                 onClick={(e) => {
                   e.preventDefault();
-                  this.toggle();
+                  this.toggle('DF');
                   e.target.blur();
                 }}
               >
