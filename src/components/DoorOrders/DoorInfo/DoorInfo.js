@@ -148,7 +148,7 @@ class DoorInfo extends Component {
   copy = (type) => {
     const { fields, formState } = this.props;
     const lastItem = formState.part_list[formState?.part_list?.length - 1];
-    
+
     switch(type) {
       case 'Door':
         fields.push({
@@ -210,7 +210,7 @@ class DoorInfo extends Component {
                     <div>
                       <h2>
                         Item #{index + 1} -{' '}
-                        {formState.part_list[index].orderType.name}
+                        {formState && formState.part_list && formState.part_list[index] && formState.part_list[index].orderType && formState.part_list[index].orderType.name}
                       </h2>
                     </div>
                   </Col>
