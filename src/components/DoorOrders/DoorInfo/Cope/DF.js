@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField, renderCheckboxToggle } from '../../../RenderInputs/renderInputs';
+import { renderDropdownListFilter, renderTextField, renderCheckboxToggle } from '../../../RenderInputs/renderInputs';
 import Cope_Table from '../../Table/DFs/Cope_Table';
 import Ratio from 'lb-ratio';
 import {
@@ -135,7 +135,8 @@ class CopeDF extends Component {
       subTotal,
       edit,
       one_piece,
-      updateSubmit
+      updateSubmit,
+      special_instructions
     } = this.props;
 
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
@@ -243,9 +244,23 @@ class CopeDF extends Component {
               />
             </FormGroup>
           </Col>
+        </Row>
 
-
-
+        <Row>
+          <Col xs="4">
+            <FormGroup>
+              <Label htmlFor="arches">Special Instructions</Label>
+              <Field
+                name={`${part}.special_instructions`}
+                component={renderDropdownListFilter}
+                data={special_instructions}
+                valueField="value"
+                textField="name"
+                validate={required}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
         </Row>
 
         <Row>
@@ -319,6 +334,7 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_profiles,
+  special_instructions: state.part_list.special_instructions,
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),

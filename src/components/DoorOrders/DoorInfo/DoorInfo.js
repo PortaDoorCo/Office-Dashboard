@@ -3,11 +3,11 @@ import {
   Row,
   Col,
   CardSubtitle,
-  Button
+  Button,
+  ButtonGroup
 } from 'reactstrap';
 import DoorFilter from '../DoorInfo/Filter/Filter';
 import Conditionals from './Conditionals';
-
 
 
 const construction = [
@@ -22,7 +22,11 @@ const construction = [
   {
     name: 'MT Construction',
     value: 'MT'
-  }
+  },
+  {
+    name: 'Slab',
+    value: 'Slab'
+  },
 ];
 
 const orderType = [
@@ -42,34 +46,34 @@ const orderType = [
   //   name: 'Glass DF',
   //   value: 'Glass_DF'
   // },
-  {
-    name: 'Face Frame',
-    value: 'Face_Frame'
-  },
-  {
-    name: 'One Piece Door',
-    value: 'One_Piece'
-  },
-  {
-    name: 'One Piece DF',
-    value: 'One_Piece_DF'
-  },
-  {
-    name: 'Two Piece Door',
-    value: 'Two_Piece'
-  },
-  {
-    name: 'Two Piece DF',
-    value: 'Two_Piece_DF'
-  },
-  {
-    name: 'Slab Type Door',
-    value: 'Slab_Door'
-  },
-  {
-    name: 'Slab Type DF',
-    value: 'Slab_DF'
-  },
+  // {
+  //   name: 'Face Frame',
+  //   value: 'Face_Frame'
+  // },
+  // {
+  //   name: 'One Piece Door',
+  //   value: 'One_Piece'
+  // },
+  // {
+  //   name: 'One Piece DF',
+  //   value: 'One_Piece_DF'
+  // },
+  // {
+  //   name: 'Two Piece Door',
+  //   value: 'Two_Piece'
+  // },
+  // {
+  //   name: 'Two Piece DF',
+  //   value: 'Two_Piece_DF'
+  // },
+  // {
+  //   name: 'Slab Type Door',
+  //   value: 'Slab_Door'
+  // },
+  // {
+  //   name: 'Slab Type DF',
+  //   value: 'Slab_DF'
+  // },
   // {
   //   name: 'Multi-Panel Doors w/ Glass Lites',
   //   value: 'MultiPanel'
@@ -201,23 +205,44 @@ class DoorInfo extends Component {
         })}
 
         {!edit ?
-          <Button
-            color="primary"
-            onClick={() =>
+          <div>
+            <ButtonGroup>
+              <Button
+                color="primary"
+                onClick={() =>
 
-              fields.push({
-                orderType: orderType[0],
-                construction: construction[0],
-                thickness: thickness[0],
-                dimensions: [],
-                addPrice: 0,
-                files: []
-              })
+                  fields.push({
+                    orderType: orderType[1],
+                    construction: construction[0],
+                    thickness: thickness[0],
+                    dimensions: [],
+                    addPrice: 0,
+                    files: []
+                  })
 
-            }
-          >
-            Add Item
-          </Button>
+                }
+              >
+            Add Drawer Front
+              </Button>
+              <Button
+                color="primary"
+                onClick={() =>
+
+                  fields.push({
+                    orderType: orderType[0],
+                    construction: construction[0],
+                    thickness: thickness[0],
+                    dimensions: [],
+                    addPrice: 0,
+                    files: []
+                  })
+
+                }
+              >
+              Add New Item
+              </Button>
+            </ButtonGroup>
+          </div>
           
           :
           <div />

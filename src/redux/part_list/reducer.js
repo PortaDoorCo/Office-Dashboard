@@ -120,7 +120,20 @@ const initialState = {
       value: 1,
     },
   ],
-
+  special_instructions: [
+    {
+      name: 'None',
+      value: 'None'
+    },
+    {
+      name: 'One Piece',
+      value: 'One_Piece'
+    },
+    {
+      name: 'Two Piece',
+      value: 'Two_Piece'
+    }
+  ],
   loadedProducts: false,
   loadedBreakdowns: false,
   loadedBoxBreakdowns: false,

@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderCheckboxToggle, renderTextField } from '../../../RenderInputs/renderInputs';
+import { renderDropdownListFilter, renderCheckboxToggle, renderTextField } from '../../../RenderInputs/renderInputs';
 import MT_Table from '../../Table/DFs/MT_Table';
 import Ratio from 'lb-ratio';
 import {
@@ -125,7 +125,6 @@ class MT_DF extends Component {
       mt_designs,
       edges,
       panels,
-      finishes,
       isValid,
       index,
       part_list,
@@ -134,7 +133,8 @@ class MT_DF extends Component {
       subTotal,
       edit,
       one_piece,
-      updateSubmit
+      updateSubmit,
+      special_instructions
     } = this.props;
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
     return (
@@ -202,6 +202,23 @@ class MT_DF extends Component {
             </FormGroup>
           </Col>
 
+        </Row>
+
+        <Row>
+          <Col xs="4">
+            <FormGroup>
+              <Label htmlFor="arches">Special Instructions</Label>
+              <Field
+                name={`${part}.special_instructions`}
+                component={renderDropdownListFilter}
+                data={special_instructions}
+                valueField="value"
+                textField="name"
+                validate={required}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
         </Row>
 
         <Row>
@@ -278,7 +295,7 @@ const mapStateToProps = state => ({
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_profiles,
   finishes: state.part_list.finish,
-
+  special_instructions: state.part_list.special_instructions,
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),

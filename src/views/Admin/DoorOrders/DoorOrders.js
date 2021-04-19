@@ -265,16 +265,6 @@ class DoorOrders extends Component {
                     <Col xs="3">
                       <Row className='mb-0'>
                         <Col xs='9' />
-                        {/* <Col>
-                          <FormGroup>
-                            <Label htmlFor="companyName">Taxable?</Label>
-                            <Field
-                              name={'Taxable'}
-                              component={renderCheckboxToggle}
-                            />
-                          </FormGroup>
-                        </Col> */}
-
                       </Row>
 
 
@@ -312,22 +302,6 @@ class DoorOrders extends Component {
                       </InputGroup>
                     </Col>
                   </Row>
-                  {/* <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
-                    <Col xs="3">
-                      <Row>
-                        <Col>
-                          <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                        </Col>
-                        <Col>
-                          <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                            Cancel
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row> */}
                 </form>
               </CardBody>
             </Card>
@@ -484,6 +458,10 @@ const mapStateToProps = state => ({
         thickness: {
           name: '4/4',
           value: 0.75
+        },
+        special_instructions: {
+          name: 'None',
+          value: 'None'
         },
         dimensions: [],
         addPrice: 0,
