@@ -148,27 +148,106 @@ class DoorInfo extends Component {
   copy = (type) => {
     const { fields, formState } = this.props;
     const lastItem = formState.part_list[formState?.part_list?.length - 1];
-
     switch(type) {
       case 'Door':
-        fields.push({
-          orderType: orderType[0],
-          construction: lastItem.construction,
-          thickness: lastItem.thickness,
-          dimensions: [],
-          addPrice: 0,
-          files: [],
-        });
+        switch(lastItem.construction.value){
+          case 'Cope':
+            fields.push({
+              orderType: orderType[0],
+              construction: lastItem.construction,
+              thickness: lastItem.thickness,
+              woodtype: lastItem.woodtype,
+              cope_design: lastItem.cope_design,
+              panel: lastItem.panel,
+              edge: lastItem.edge,
+              profile: lastItem.profile,
+              applied_profile: lastItem.applied_profile,
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
+          case 'M':
+            fields.push({
+              orderType: orderType[0],
+              construction: lastItem.construction,
+              thickness: lastItem.thickness,
+              woodtype: lastItem.woodtype,
+              miter_design: lastItem.miter_design,
+              panel: lastItem.panel,
+              applied_profile: lastItem.applied_profile,
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
+          case 'MT':
+            fields.push({
+              orderType: orderType[0],
+              construction: lastItem.construction,
+              thickness: lastItem.thickness,
+              woodtype: lastItem.woodtype,
+              mt_design: lastItem.mt_design,
+              panel: lastItem.panel,
+              edge: lastItem.edge,
+              applied_profile: lastItem.applied_profile,
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
+          default:
+            return;
+        }
         break;
       case 'DF':
-        fields.push({
-          orderType: orderType[1],
-          construction: lastItem.construction,
-          thickness: lastItem.thickness,
-          dimensions: [],
-          addPrice: 0,
-          files: [],
-        });
+        switch(lastItem.construction.value){
+          case 'Cope':
+            fields.push({
+              orderType: orderType[1],
+              construction: lastItem.construction,
+              thickness: lastItem.thickness,
+              woodtype: lastItem.woodtype,
+              cope_df_design: lastItem.cope_df_design,
+              panel: lastItem.panel,
+              edge: lastItem.edge,
+              profile: lastItem.profile,
+              applied_profile: lastItem.applied_profile,
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
+          case 'M':
+            fields.push({
+              orderType: orderType[1],
+              construction: lastItem.construction,
+              thickness: lastItem.thickness,
+              woodtype: lastItem.woodtype,
+              miter_df_design: lastItem.miter_df_design,
+              panel: lastItem.panel,
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
+          case 'MT':
+            fields.push({
+              orderType: orderType[1],
+              construction: lastItem.construction,
+              thickness: lastItem.thickness,
+              woodtype: lastItem.woodtype,
+              mt_df_design: lastItem.mt_df_design,
+              panel: lastItem.panel,
+              edge: lastItem.edge,
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
+          default:
+            return;
+        }
         break;
       default:
         switch(this.state.type) {
@@ -202,9 +281,7 @@ class DoorInfo extends Component {
               files: [],
             });
         }
-
     }
-
     this.toggle();
   };
 
