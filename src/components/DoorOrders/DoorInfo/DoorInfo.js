@@ -31,47 +31,7 @@ const orderType = [
   {
     name: 'Drawer Front',
     value: 'DF',
-  },
-  // {
-  //   name: 'Glass Door',
-  //   value: 'Glass'
-  // },
-  // {
-  //   name: 'Glass DF',
-  //   value: 'Glass_DF'
-  // },
-  // {
-  //   name: 'Face Frame',
-  //   value: 'Face_Frame'
-  // },
-  // {
-  //   name: 'One Piece Door',
-  //   value: 'One_Piece'
-  // },
-  // {
-  //   name: 'One Piece DF',
-  //   value: 'One_Piece_DF'
-  // },
-  // {
-  //   name: 'Two Piece Door',
-  //   value: 'Two_Piece'
-  // },
-  // {
-  //   name: 'Two Piece DF',
-  //   value: 'Two_Piece_DF'
-  // },
-  // {
-  //   name: 'Slab Type Door',
-  //   value: 'Slab_Door'
-  // },
-  // {
-  //   name: 'Slab Type DF',
-  //   value: 'Slab_DF'
-  // },
-  // {
-  //   name: 'Multi-Panel Doors w/ Glass Lites',
-  //   value: 'MultiPanel'
-  // }
+  }
 ];
 
 const thickness = [
@@ -287,8 +247,6 @@ class DoorInfo extends Component {
 
   render() {
     const { fields, formState, isValid, edit, updateSubmit } = this.props;
-
-    console.log({ formState });
 
     return (
       <div className="order-tour">
