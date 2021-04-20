@@ -171,14 +171,38 @@ class DoorInfo extends Component {
         });
         break;
       default:
-        fields.push({
-          orderType: orderType[0],
-          construction: construction[0],
-          thickness: thickness[0],
-          dimensions: [],
-          addPrice: 0,
-          files: [],
-        });
+        switch(this.state.type) {
+          case 'Door':
+            fields.push({
+              orderType: orderType[0],
+              construction: construction[0],
+              thickness: thickness[0],
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
+          case 'DF':
+            fields.push({
+              orderType: orderType[1],
+              construction: construction[0],
+              thickness: thickness[0],
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
+          default:
+            fields.push({
+              orderType: orderType[0],
+              construction: construction[0],
+              thickness: thickness[0],
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+        }
+
     }
 
     this.toggle();
