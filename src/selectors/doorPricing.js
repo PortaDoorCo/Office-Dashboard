@@ -683,13 +683,13 @@ export const itemPriceSelector = createSelector(
                   : 1 * wood + (6.5 + edge) + extraCost;
             } else {
               price =
-                eval(pricer.door_pricing) +
+                eval(pricer && pricer.door_pricing) +
                 leftStileAdd +
                 rightStileAdd +
                 topRailAdd +
                 bottomRailAdd +
                 extraCost
-                  ? eval(pricer.door_pricing) +
+                  ? eval(pricer && pricer.door_pricing) +
                     leftStileAdd +
                     rightStileAdd +
                     topRailAdd +
