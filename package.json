@@ -150,7 +150,7 @@
   },
   "scripts": {
     "start": "react-scripts --max_old_space_size=8192 start",
-    "build": "react-scripts --max_old_space_size=8192 build",
+    "build": "CI= false react-scripts --max_old_space_size=8192 build",
     "build2": "react-scripts --max_old_space_size=8192 build",
     "test": "react-scripts test --silent",
     "test-react": "react-scripts test",
