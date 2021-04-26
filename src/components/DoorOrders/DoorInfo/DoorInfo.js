@@ -145,7 +145,7 @@ class DoorInfo extends Component {
                   item: fields.length + 1,
                   unevenCheck: false,
                   unevenSplit: false,
-                  glass_check0: lastItem && lastItem.panel && lastItem.panel.NAME === 'Glass' ? true : false
+                  glass_check_0: lastItem && lastItem.panel && lastItem.panel.NAME === 'Glass' ? true : false
                 }
               ],
               addPrice: 0,
@@ -161,7 +161,25 @@ class DoorInfo extends Component {
               miter_design: lastItem.miter_design,
               panel: lastItem.panel,
               applied_profile: lastItem.applied_profile,
-              dimensions: [],
+              dimensions: [
+                {
+                  qty: 1,
+                  panelsH: 1,
+                  panelsW: 1,
+                  leftStile: fraction(lastItem && lastItem.profile && lastItem.miter_design.PROFILE_WIDTH),
+                  rightStile: fraction(lastItem && lastItem.profile && lastItem.miter_design.PROFILE_WIDTH),
+                  topRail: fraction(lastItem && lastItem.profile && lastItem.miter_design.PROFILE_WIDTH),
+                  bottomRail: fraction(lastItem && lastItem.profile && lastItem.miter_design.PROFILE_WIDTH),
+                  horizontalMidRailSize: 0,
+                  verticalMidRailSize: 0,
+                  unevenSplitInput: '0',
+                  showBuilder: false,
+                  item: fields.length + 1,
+                  unevenCheck: false,
+                  unevenSplit: false,
+                  glass_check_0: lastItem && lastItem.panel && lastItem.panel.NAME === 'Glass' ? true : false
+                }
+              ],
               addPrice: 0,
               files: [],
             });
@@ -176,7 +194,25 @@ class DoorInfo extends Component {
               panel: lastItem.panel,
               edge: lastItem.edge,
               applied_profile: lastItem.applied_profile,
-              dimensions: [],
+              dimensions: [
+                {
+                  qty: 1,
+                  panelsH: 1,
+                  panelsW: 1,
+                  leftStile: fraction(lastItem && lastItem.profile && lastItem.mt_design.MID_RAIL_MINIMUMS),
+                  rightStile: fraction(lastItem && lastItem.profile && lastItem.mt_design.MID_RAIL_MINIMUMS),
+                  topRail: fraction(lastItem && lastItem.profile && lastItem.mt_design.MID_RAIL_MINIMUMS),
+                  bottomRail: fraction(lastItem && lastItem.profile && lastItem.mt_design.MID_RAIL_MINIMUMS),
+                  horizontalMidRailSize: 0,
+                  verticalMidRailSize: 0,
+                  unevenSplitInput: '0',
+                  showBuilder: false,
+                  item: fields.length + 1,
+                  unevenCheck: false,
+                  unevenSplit: false,
+                  glass_check_0: lastItem && lastItem.panel && lastItem.panel.NAME === 'Glass' ? true : false
+                }
+              ],
               addPrice: 0,
               files: [],
             });

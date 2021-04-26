@@ -28,7 +28,6 @@ import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
 
-
 const required = (value) => (value ? undefined : 'Required');
 
 const fraction = (num) => {
@@ -357,7 +356,7 @@ const Cope_Table = ({
       item: fields.length + 1,
       unevenCheck: false,
       unevenSplit: false,
-      glass_check0: formState.part_list[i].panel.NAME === 'Glass' ? true : false
+      glass_check_0: formState.part_list[i].panel.NAME === 'Glass' ? true : false
     });
   };
 
@@ -726,7 +725,7 @@ const Cope_Table = ({
                       <FormGroup>
                         <strong>Glass Opening {index+1}</strong>
                         <Field
-                          name={`${table}.glass_check${index}`}
+                          name={`${table}.glass_check_${index}`}
                           component={renderCheckboxToggle}
                         />
                       </FormGroup>
@@ -742,12 +741,12 @@ const Cope_Table = ({
               )
                 .map((l, k) => {
                   return (
-                    eval(`formState.part_list[i].dimensions[index].glass_check${k}`) ? 
+                    eval(`formState.part_list[i].dimensions[index].glass_check_${k}`) ? 
                       <Col lg='2'>
                         <FormGroup>
                           <strong>Opening {k + 1} Options</strong>
                           <Field
-                            name={`${table}.lite${k}`}
+                            name={`${table}.lite_${k}`}
                             component={renderDropdownListFilter}
                             data={lites}
                             valueField="value"
