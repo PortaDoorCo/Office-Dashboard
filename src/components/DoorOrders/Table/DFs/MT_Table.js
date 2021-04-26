@@ -70,44 +70,58 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
 
 
   const updateFullFrame = (e, index) => {
-
     const part = formState.part_list[i];
-
-
     if (e) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(numQty(leftStileWidth))
-        )
-      );
+      if(leftStileWidth){
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(numQty(leftStileWidth))
+          )
+        );
+  
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(numQty(leftStileWidth))
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(part.mt_df_design ? (part.mt_df_design.MID_RAIL_MINIMUMS) : 0)
+          )
+        );
+  
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(part.mt_df_design ? (part.mt_df_design.MID_RAIL_MINIMUMS) : 0)
+          )
+        );
+      }
 
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(numQty(leftStileWidth))
-        )
-      );
     } else {
       dispatch(
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(part.mt_design ? (part.mt_design.DF_Reduction) : 0)
+          fraction(part.mt_df_design ? (part.mt_df_design.DF_Reduction) : 0)
         )
       );
-
       dispatch(
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(part.mt_design ? (part.mt_design.DF_Reduction) : 0)
+          fraction(part.mt_df_design ? (part.mt_df_design.DF_Reduction) : 0)
         )
       );
     }
-
   };
 
   const clearNotes = (index, e) => {

@@ -367,7 +367,7 @@ export const itemPriceSelector = createSelector(
 
                 if (part.thickness.value === 0.75) {
                   if (part.cope_df_design) {
-                    price = part.cope_df_design.UPCHARGE;
+                    price = part.cope_df_design && part.cope_df_design.UPCHARGE;
                   } else {
                     price = 0;
                   }
@@ -375,7 +375,7 @@ export const itemPriceSelector = createSelector(
 
                 if (part.thickness.value === 1) {
                   if (part.cope_df_design) {
-                    price = part.cope_df_design.UPCHARGE_THICK;
+                    price = part.cope_df_design && part.cope_df_design.UPCHARGE_THICK;
                   } else {
                     price = 0;
                   }
@@ -422,14 +422,14 @@ export const itemPriceSelector = createSelector(
 
                 if (part.thickness.value === 0.75) {
                   if (part.cope_design) {
-                    price = part.cope_design.UPCHARGE;
+                    price = part.cope_design && part.cope_design.UPCHARGE;
                   } else {
                     price = 0;
                   }
                 }
                 if (part.thickness.value === 1) {
                   if (part.cope_design) {
-                    price = part.cope_design.UPCHARGE_THICK;
+                    price = part.cope_design && part.cope_design.UPCHARGE_THICK;
                   } else {
                     price = 0;
                   }
@@ -483,10 +483,10 @@ export const itemPriceSelector = createSelector(
                 let price = 0;
 
                 if (part.thickness.value === 0.75) {
-                  price = part.miter_df_design.UPCHARGE;
+                  price = part.miter_df_design && part.miter_df_design.UPCHARGE;
                 }
                 if (part.thickness.value === 1) {
-                  price = part.miter_df_design.UPCHARGE_THICK;
+                  price = part.miter_df_design && part.miter_df_design.UPCHARGE_THICK;
                 }
 
                 //leftStile
@@ -521,10 +521,10 @@ export const itemPriceSelector = createSelector(
                 let price = 0;
 
                 if (part.thickness.value === 0.75) {
-                  price = part.miter_design.UPCHARGE;
+                  price = part.miter_design && part.miter_design.UPCHARGE;
                 }
                 if (part.thickness.value === 1) {
-                  price = part.miter_design.UPCHARGE_THICK;
+                  price = part.miter_design && part.miter_design.UPCHARGE_THICK;
                 }
 
                 //leftStile
@@ -568,10 +568,10 @@ export const itemPriceSelector = createSelector(
                 part.orderType.value === 'Glass_DF'
               ) {
                 if (part.thickness.value === 0.75) {
-                  price = part.mt_df_design.UPCHARGE;
+                  price = part.mt_df_design && part.mt_df_design.UPCHARGE;
                 }
                 if (part.thickness.value === 1) {
-                  price = part.mt_df_design.UPCHARGE_THICK;
+                  price = part.mt_df_design && part.mt_df_design.UPCHARGE_THICK;
                 }
 
                 //leftStile
@@ -612,10 +612,10 @@ export const itemPriceSelector = createSelector(
                 }
               } else {
                 if (part.thickness.value === 0.75) {
-                  price = part.mt_design.UPCHARGE;
+                  price = part.mt_design && part.mt_design.UPCHARGE;
                 }
                 if (part.thickness.value === 1) {
-                  price = part.mt_design.UPCHARGE_THICK;
+                  price = part.mt_design && part.mt_design.UPCHARGE_THICK;
                 }
 
                 //leftStile
