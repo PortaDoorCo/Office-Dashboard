@@ -46,6 +46,7 @@ import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import validate from './validate';
 import currencyMask from '../../../utils/currencyMask';
+import Ratio from 'lb-ratio';
 
 const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
@@ -57,6 +58,12 @@ const cookie = Cookies.get('jwt');
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
+
+const fraction = (num) => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
+
 
 class DoorOrders extends Component {
   constructor(props) {
@@ -161,6 +168,7 @@ class DoorOrders extends Component {
       this.setState({ updateSubmit: !this.state.updateSubmit });
       reset();
       window.scrollTo(0, 0);
+      return;
     } else {
       alert('Submission Error: Please double check your order');
       return;
@@ -463,7 +471,25 @@ const mapStateToProps = state => ({
           name: 'None',
           value: 'None'
         },
-        dimensions: [],
+        dimensions: [
+          {
+            qty: 1,
+            panelsH: 1,
+            panelsW: 1,
+            leftStile: fraction(2.3125),
+            rightStile: fraction(2.3125),
+            topRail: fraction(2.3125),
+            bottomRail: fraction(2.3125),
+            horizontalMidRailSize: 0,
+            verticalMidRailSize: 0,
+            unevenSplitInput: '0',
+            showBuilder: false,
+            item: 1,
+            unevenCheck: false,
+            unevenSplit: false,
+            glass_check0: false
+          }
+        ],
         addPrice: 0,
       }
     ],

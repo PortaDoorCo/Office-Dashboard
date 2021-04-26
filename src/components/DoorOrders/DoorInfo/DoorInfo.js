@@ -3,6 +3,13 @@ import { Row, Col, CardSubtitle, Button, ButtonGroup } from 'reactstrap';
 import DoorFilter from '../DoorInfo/Filter/Filter';
 import Conditionals from './Conditionals';
 import CopyModal from './CopyModal';
+import Ratio from 'lb-ratio';
+
+
+const fraction = (num) => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
 
 const construction = [
   {
@@ -122,7 +129,25 @@ class DoorInfo extends Component {
               edge: lastItem.edge,
               profile: lastItem.profile,
               applied_profile: lastItem.applied_profile,
-              dimensions: [],
+              dimensions: [
+                {
+                  qty: 1,
+                  panelsH: 1,
+                  panelsW: 1,
+                  leftStile: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
+                  rightStile: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
+                  topRail: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
+                  bottomRail: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
+                  horizontalMidRailSize: 0,
+                  verticalMidRailSize: 0,
+                  unevenSplitInput: '0',
+                  showBuilder: false,
+                  item: fields.length + 1,
+                  unevenCheck: false,
+                  unevenSplit: false,
+                  glass_check0: lastItem && lastItem.panel && lastItem.panel.NAME === 'Glass' ? true : false
+                }
+              ],
               addPrice: 0,
               files: [],
             });
