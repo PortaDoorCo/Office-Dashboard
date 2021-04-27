@@ -116,7 +116,7 @@ type PropTypes = {
 
 type StateTypes = {
   isAuth: boolean,
-  cookie: any
+  cookie: any,
 }
 
 class App extends Component<PropTypes, StateTypes> {
@@ -296,8 +296,7 @@ class App extends Component<PropTypes, StateTypes> {
           10000
         )
       )
-    );
-    
+    );    
   };
 
   componentDidUpdate = async (prevProps: any) => {

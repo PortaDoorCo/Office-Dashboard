@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../../../redux/users/actions';
 import { loadOrders } from '../../../redux/orders/actions';
+import MessageModal from './MessageModal';
 
 const Chart1 = React.lazy(() => import('./components/Chart1'));
 const Chart2 = React.lazy(() => import('./components/Chart2'));
@@ -34,7 +35,8 @@ type StateTypes = {
   modal: boolean,
   selectedOrder: {},
   orderEdit: boolean,
-  charts: boolean
+  charts: boolean,
+  viewPopup: boolean
 }
 
 class Dashboard extends Component<PropTypes, StateTypes> {
@@ -48,8 +50,27 @@ class Dashboard extends Component<PropTypes, StateTypes> {
       selectedOrder: null,
       orderEdit: false,
       maps: false,
-      charts: false
+      charts: false,
+      viewPopup: false
     };
+  }
+
+  componentDidMount(){
+    let visited = localStorage['alreadyVisited'];
+    if(visited) {
+      this.setState({ viewPopup: false });
+      //do not view Popup
+    } else {
+      //this is the first time
+      localStorage['alreadyVisited'] = true;
+      this.setState({ viewPopup: true});
+    }
+  }
+
+  toggleMessageModal = () => {
+    this.setState({
+      viewPopup: !this.state.viewPopup
+    });
   }
 
   toggleMap = () => {
@@ -68,6 +89,12 @@ class Dashboard extends Component<PropTypes, StateTypes> {
     const { role } = this.props;
     return (
       <div className="animated fadeIn">
+
+        <MessageModal
+          toggle={this.toggleMessageModal}
+          modal={this.state.viewPopup}
+        />
+        
         {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
           <div>
 
