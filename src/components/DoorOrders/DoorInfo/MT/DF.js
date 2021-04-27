@@ -134,7 +134,7 @@ class MT_DF extends Component {
       edit,
       one_piece,
       updateSubmit,
-      special_instructions
+      door_piece_number
     } = this.props;
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
     return (
@@ -207,11 +207,11 @@ class MT_DF extends Component {
         <Row>
           <Col xs="4">
             <FormGroup>
-              <Label htmlFor="arches">Special Instructions</Label>
+              <Label htmlFor="arches"># of Pieces</Label>
               <Field
-                name={`${part}.special_instructions`}
+                name={`${part}.door_piece_number`}
                 component={renderDropdownListFilter}
-                data={special_instructions}
+                data={door_piece_number}
                 valueField="value"
                 textField="name"
                 validate={required}
