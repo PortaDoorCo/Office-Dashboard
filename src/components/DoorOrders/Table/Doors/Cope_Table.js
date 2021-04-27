@@ -128,6 +128,16 @@ const Cope_Table = ({
     setHeight(newHeight);
   };
 
+  const clearNotes = (index, e) => {
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].notes`,
+        ''
+      )
+    );
+  };
+
   const twoHigh = (index, e, v) => {
     let value;
     const part = formState.part_list[i];
@@ -198,15 +208,6 @@ const Cope_Table = ({
     }
   };
 
-  const clearNotes = (index, e) => {
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].notes`,
-        ''
-      )
-    );
-  };
 
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
@@ -652,6 +653,7 @@ const Cope_Table = ({
                       <Field
                         name={`${table}.unevenCheck`}
                         component={renderCheckboxToggle}
+                        edit={edit}
                       />
                     </FormGroup>
 
@@ -727,6 +729,7 @@ const Cope_Table = ({
                         <Field
                           name={`${table}.glass_check_${index}`}
                           component={renderCheckboxToggle}
+                          edit={edit}
                         />
                       </FormGroup>
                     </Col>

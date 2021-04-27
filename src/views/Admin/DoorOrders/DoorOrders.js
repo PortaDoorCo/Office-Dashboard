@@ -467,29 +467,8 @@ const mapStateToProps = state => ({
           name: '4/4',
           value: 0.75
         },
-        special_instructions: {
-          name: 'None',
-          value: 'None'
-        },
-        dimensions: [
-          {
-            qty: 1,
-            panelsH: 1,
-            panelsW: 1,
-            leftStile: fraction(2.3125),
-            rightStile: fraction(2.3125),
-            topRail: fraction(2.3125),
-            bottomRail: fraction(2.3125),
-            horizontalMidRailSize: 0,
-            verticalMidRailSize: 0,
-            unevenSplitInput: '0',
-            showBuilder: false,
-            item: 1,
-            unevenCheck: false,
-            unevenSplit: false,
-            glass_check0: false
-          }
-        ],
+        door_piece_number: state.part_list.door_piece_number[0],
+        dimensions: [],
         addPrice: 0,
       }
     ],

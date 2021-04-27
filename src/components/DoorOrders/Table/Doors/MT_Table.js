@@ -11,7 +11,8 @@ import {
   renderFieldDisabled,
   renderCheckboxToggle,
   renderInt,
-  renderPrice
+  renderPrice,
+  renderDropdownList
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
@@ -38,6 +39,7 @@ const MT_Table = ({
   edit,
   dispatch,
   addPrice,
+  lites
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -123,15 +125,15 @@ const MT_Table = ({
     let value;
     const part = formState.part_list[i];
 
-    if (e) {
+    if(e){
       value = e.target.value;
-      if (
-        part.dimensions[index].notes !== '' &&
-        parseInt(part.dimensions[index].panelsW) > 1 &&
-        parseInt(e.target.value) > 1
-      ) {
+      if((part.dimensions[index].notes !== '') && (parseInt(e.target.value) > 1) ){
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            ''
+          )
         );
       } else {
         dispatch(
@@ -144,20 +146,28 @@ const MT_Table = ({
       }
     } else {
       value = v;
-      if (
-        part.dimensions[index].notes !== '' &&
-        parseInt(part.dimensions[index].panelsW) > 1 &&
-        parseInt(v) > 1
-      ) {
+      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsW) > 1) && (parseInt(v) > 1) ){
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            ''
+          )
         );
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].panelsH`,
+            v
+          )
         );
       } else {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].panelsH`,
+            v
+          )
         );
       }
     }
@@ -180,19 +190,20 @@ const MT_Table = ({
       );
     }
   };
+
 
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
     let value;
-    if (e) {
+    if(e){
       value = e.target.value;
-      if (
-        part.dimensions[index].notes !== '' &&
-        parseInt(part.dimensions[index].panelsH) > 1 &&
-        parseInt(e.target.value) > 1
-      ) {
+      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(e.target.value) > 1) ){
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            ''
+          )
         );
       } else {
         dispatch(
@@ -205,23 +216,32 @@ const MT_Table = ({
       }
     } else {
       value = v;
-      if (
-        part.dimensions[index].notes !== '' &&
-        parseInt(part.dimensions[index].panelsH) > 1 &&
-        parseInt(v) > 1
-      ) {
+      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(v) > 1) ){
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            ''
+          )
         );
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].panelsW`,
+            v
+          )
         );
       } else {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].panelsW`,
+            v
+          )
         );
       }
     }
+    
 
     if (value > 1) {
       dispatch(
@@ -241,6 +261,7 @@ const MT_Table = ({
       );
     }
   };
+
 
   const clearNotes = (index, e) => {
     dispatch(
@@ -650,6 +671,56 @@ const MT_Table = ({
               </div>
             ) : null}
 
+            <div>
+              <Row>
+                {Array.from(
+                  formState.part_list[i].dimensions[index].panelsH ? Array(
+                    parseInt(formState.part_list[i].dimensions[index].panelsH)
+                  ).keys() : 0
+                )
+                  .map((i, index) => {
+                    return (
+                      <Col lg='1'>
+                        <FormGroup>
+                          <strong>Glass Opening {index+1}</strong>
+                          <Field
+                            name={`${table}.glass_check_${index}`}
+                            component={renderCheckboxToggle}
+                            edit={edit}
+                          />
+                        </FormGroup>
+                      </Col>
+                    );
+                  })}
+              </Row>
+              <Row>
+                {Array.from(
+                  formState.part_list[i].dimensions[index].panelsH ? Array(
+                    parseInt(formState.part_list[i].dimensions[index].panelsH)
+                  ).keys() : 0
+                )
+                  .map((l, k) => {
+                    return (
+                      eval(`formState.part_list[i].dimensions[index].glass_check_${k}`) ? 
+                        <Col lg='2'>
+                          <FormGroup>
+                            <strong>Opening {k + 1} Options</strong>
+                            <Field
+                              name={`${table}.lite_${k}`}
+                              component={renderDropdownList}
+                              data={lites}
+                              valueField="value"
+                              textField="NAME"
+                              validate={required}
+                              edit={edit}
+                            />
+                          </FormGroup>
+                        </Col> : null
+                    );
+                  })}
+              </Row>
+            </div>
+
             <Row>
               <Col xs="4">
                 <strong>Notes</strong>
@@ -757,4 +828,9 @@ const MT_Table = ({
   );
 };
 
-export default connect()(MT_Table);
+const mapStateToProps = (state) => ({
+  lites: state.part_list.lites,
+});
+
+
+export default connect(mapStateToProps, null)(MT_Table);

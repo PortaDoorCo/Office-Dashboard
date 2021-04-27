@@ -129,25 +129,7 @@ class DoorInfo extends Component {
               edge: lastItem.edge,
               profile: lastItem.profile,
               applied_profile: lastItem.applied_profile,
-              dimensions: [
-                {
-                  qty: 1,
-                  panelsH: 1,
-                  panelsW: 1,
-                  leftStile: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
-                  rightStile: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
-                  topRail: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
-                  bottomRail: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
-                  horizontalMidRailSize: 0,
-                  verticalMidRailSize: 0,
-                  unevenSplitInput: '0',
-                  showBuilder: false,
-                  item: fields.length + 1,
-                  unevenCheck: false,
-                  unevenSplit: false,
-                  glass_check_0: lastItem && lastItem.panel && lastItem.panel.NAME === 'Glass' ? true : false
-                }
-              ],
+              dimensions: [],
               addPrice: 0,
               files: [],
             });
@@ -161,25 +143,7 @@ class DoorInfo extends Component {
               miter_design: lastItem.miter_design,
               panel: lastItem.panel,
               applied_profile: lastItem.applied_profile,
-              dimensions: [
-                {
-                  qty: 1,
-                  panelsH: 1,
-                  panelsW: 1,
-                  leftStile: fraction(lastItem && lastItem.miter_design && lastItem.miter_design.PROFILE_WIDTH),
-                  rightStile: fraction(lastItem && lastItem.miter_design && lastItem.miter_design.PROFILE_WIDTH),
-                  topRail: fraction(lastItem && lastItem.miter_design && lastItem.miter_design.PROFILE_WIDTH),
-                  bottomRail: fraction(lastItem && lastItem.miter_design && lastItem.miter_design.PROFILE_WIDTH),
-                  horizontalMidRailSize: 0,
-                  verticalMidRailSize: 0,
-                  unevenSplitInput: '0',
-                  showBuilder: false,
-                  item: fields.length + 1,
-                  unevenCheck: false,
-                  unevenSplit: false,
-                  glass_check_0: lastItem && lastItem.panel && lastItem.panel.NAME === 'Glass' ? true : false
-                }
-              ],
+              dimensions: [],
               addPrice: 0,
               files: [],
             });
@@ -194,25 +158,7 @@ class DoorInfo extends Component {
               panel: lastItem.panel,
               edge: lastItem.edge,
               applied_profile: lastItem.applied_profile,
-              dimensions: [
-                {
-                  qty: 1,
-                  panelsH: 1,
-                  panelsW: 1,
-                  leftStile: fraction(lastItem && lastItem.mt_design && lastItem.mt_design.MID_RAIL_MINIMUMS),
-                  rightStile: fraction(lastItem && lastItem.mt_design && lastItem.mt_design.MID_RAIL_MINIMUMS),
-                  topRail: fraction(lastItem && lastItem.mt_design && lastItem.mt_design.MID_RAIL_MINIMUMS),
-                  bottomRail: fraction(lastItem && lastItem.mt_design && lastItem.mt_design.MID_RAIL_MINIMUMS),
-                  horizontalMidRailSize: 0,
-                  verticalMidRailSize: 0,
-                  unevenSplitInput: '0',
-                  showBuilder: false,
-                  item: fields.length + 1,
-                  unevenCheck: false,
-                  unevenSplit: false,
-                  glass_check_0: lastItem && lastItem.panel && lastItem.panel.NAME === 'Glass' ? true : false
-                }
-              ],
+              dimensions: [],
               addPrice: 0,
               files: [],
             });
@@ -234,23 +180,7 @@ class DoorInfo extends Component {
               edge: lastItem.edge,
               profile: lastItem.profile,
               applied_profile: lastItem.applied_profile,
-              dimensions: [
-                {
-                  qty:1,
-                  panelsH: 1,
-                  panelsW: 1,
-                  leftStile: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
-                  rightStile: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
-                  topRail: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
-                  bottomRail: fraction(lastItem && lastItem.profile && lastItem.profile.MINIMUM_STILE_WIDTH),
-                  horizontalMidRailSize: 0,
-                  verticalMidRailSize: 0,
-                  unevenSplitInput: '0',
-                  showBuilder: false,
-                  full_frame: false,
-                  item: fields.length + 1
-                }
-              ],
+              dimensions: [],
               addPrice: 0,
               files: [],
             });
@@ -263,22 +193,7 @@ class DoorInfo extends Component {
               woodtype: lastItem.woodtype,
               miter_df_design: lastItem.miter_df_design,
               panel: lastItem.panel,
-              dimensions: [
-                {
-                  qty:1,
-                  panelsH: 1,
-                  panelsW: 1,
-                  leftStile: fraction(lastItem && lastItem.miter_df_design && lastItem.miter_df_design.PROFILE_WIDTH),
-                  rightStile: fraction(lastItem && lastItem.miter_df_design && lastItem.miter_df_design.PROFILE_WIDTH),
-                  topRail: fraction(lastItem && lastItem.miter_df_design && lastItem.miter_df_design.PROFILE_WIDTH),
-                  bottomRail: fraction(lastItem && lastItem.miter_df_design && lastItem.miter_df_design.PROFILE_WIDTH),
-                  horizontalMidRailSize: 0,
-                  verticalMidRailSize: 0,
-                  unevenSplitInput: '0',
-                  showBuilder: false,
-                  item: fields.length + 1
-                }
-              ],
+              dimensions: [],
               addPrice: 0,
               files: [],
             });
@@ -292,22 +207,7 @@ class DoorInfo extends Component {
               mt_df_design: lastItem.mt_df_design,
               panel: lastItem.panel,
               edge: lastItem.edge,
-              dimensions: [
-                {
-                  qty:1,
-                  panelsH: 1,
-                  panelsW: 1,
-                  leftStile: fraction(lastItem && lastItem.mt_df_design && lastItem.mt_df_design.MID_RAIL_MINIMUMS),
-                  rightStile: fraction(lastItem && lastItem.mt_df_design && lastItem.mt_df_design.MID_RAIL_MINIMUMS),
-                  topRail: fraction(lastItem && lastItem.mt_df_design && lastItem.mt_df_design.MID_RAIL_MINIMUMS),
-                  bottomRail: fraction(lastItem && lastItem.mt_df_design && lastItem.mt_df_design.MID_RAIL_MINIMUMS),
-                  horizontalMidRailSize: 0,
-                  verticalMidRailSize: 0,
-                  unevenSplitInput: '0',
-                  showBuilder: false,
-                  item: fields.length + 1
-                }
-              ],
+              dimensions: [],
               addPrice: 0,
               files: [],
             });

@@ -116,7 +116,7 @@ class MiterDoor extends Component {
       edit,
       one_piece,
       updateSubmit,
-      special_instructions
+      door_piece_number
     } = this.props;
 
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
@@ -190,11 +190,11 @@ class MiterDoor extends Component {
             <FormGroup>
               <Label htmlFor="arches">Special Instructions</Label>
               <Field
-                name={`${part}.special_instructions`}
+                name={`${part}.door_piece_number`}
                 component={renderDropdownListFilter}
-                data={special_instructions}
+                data={door_piece_number}
                 valueField="value"
-                textField="name"
+                textField="NAME"
                 validate={required}
                 edit={edit}
               />
@@ -252,7 +252,7 @@ const mapStateToProps = state => ({
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,
   applied_moulds: state.part_list.applied_profiles,
-  special_instructions: state.part_list.special_instructions,
+  door_piece_number: state.part_list.door_piece_number,
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),

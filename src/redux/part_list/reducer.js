@@ -61,6 +61,8 @@ const initialState = {
   box_bottom_woodtypes: ['Loading'],
   box_scoop: ['Loading'],
 
+  door_piece_number: ['Loading'],
+
   breakdowns: [],
   box_breakdowns: [],
 
@@ -120,20 +122,7 @@ const initialState = {
       value: 1,
     },
   ],
-  special_instructions: [
-    {
-      name: 'None',
-      value: 'None'
-    },
-    {
-      name: 'One Piece',
-      value: 'One_Piece'
-    },
-    {
-      name: 'Two Piece',
-      value: 'Two_Piece'
-    }
-  ],
+  
   loadedProducts: false,
   loadedBreakdowns: false,
   loadedBoxBreakdowns: false,
