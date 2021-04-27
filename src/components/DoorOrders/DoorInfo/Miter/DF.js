@@ -197,7 +197,7 @@ class MiterDF extends Component {
                 component={renderDropdownListFilter}
                 data={door_piece_number}
                 valueField="value"
-                textField="name"
+                textField="NAME"
                 validate={required}
                 edit={edit}
               />
