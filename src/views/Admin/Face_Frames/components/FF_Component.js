@@ -454,7 +454,12 @@ const mapStateToProps = state => ({
     discount: 0,
     Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
     part_list: [
+      
       {
+        construction: {
+          name: 'Cope And Stick',
+          value: 'Cope'
+        },
         orderType: {
           name: 'Face Frame',
           value: 'Face_Frame'

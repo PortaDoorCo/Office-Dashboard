@@ -30,8 +30,8 @@ class Chart2 extends Component<PropTypes> {
     const groups: Array<any> = [];
     filteredOrders.forEach(item => {
       item.part_list.forEach(part => {
-        if (item.orderType === 'Door Order') {
-          switch (part.construction.value) {
+        if (item && item.orderType === 'Door Order') {
+          switch (part && part.construction && part.construction.value) {
             case 'Cope':
               groups.push(part.cope_design);
               break;

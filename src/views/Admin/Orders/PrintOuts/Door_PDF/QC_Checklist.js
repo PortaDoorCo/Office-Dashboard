@@ -87,7 +87,7 @@ export default (data, breakdowns) => {
               stack: [
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' },
                 {
-                  text: `${
+                  text: `${i.design ? i.design.name :
                     i.cope_design
                       ? i.cope_design.NAME
                       : i.mt_design
