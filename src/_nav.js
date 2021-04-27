@@ -31,7 +31,7 @@ export default {
     },
     {
       name: 'Face Frames',
-      url: '/door-order',
+      url: '/face-frames',
     },
     {
       name: 'Mouldings',

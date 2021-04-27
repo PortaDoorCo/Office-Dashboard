@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { Table, Row, Col, Button, FormGroup, Label } from 'reactstrap';
+import { Table, Row, Col, Button, FormGroup, Label, Input } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change } from 'redux-form';
 import Ratio from 'lb-ratio';
@@ -238,14 +238,21 @@ const Frame_Only_Table = ({
                     />
                   </td>
                   <td>
-                    <Field
-                      name={`${table}.price`}
-                      type="text"
-                      component={renderField}
-                      label="price"
-                      edit={edit}
-                      validate={required}
-                    />
+                    {prices[i] ? (
+                      <Input
+                        type="text"
+                        className="form-control"
+                        disabled={true}
+                        placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                      />
+                    ) : (
+                      <Input
+                        type="text"
+                        className="form-control"
+                        disabled={true}
+                        placeholder={'$0.00'}
+                      />
+                    )}
                   </td>
                   <td>
                     {!edit ? (

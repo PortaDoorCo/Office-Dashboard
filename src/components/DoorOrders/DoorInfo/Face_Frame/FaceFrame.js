@@ -18,6 +18,45 @@ import {
 
 const required = value => (value ? undefined : 'Required');
 
+const ff_thickness = [
+  {
+    name: '1"',
+    value: 1,
+  },
+  {
+    name: '1 1/8"',
+    value: 1.125,
+  },
+  {
+    name: '1 1/4"',
+    value: 1.25,
+  },
+  {
+    name: '1 3/8"',
+    value: 1.375,
+  },
+  {
+    name: '1 1/2"',
+    value: 1.5,
+  },
+  {
+    name: '1 5/8"',
+    value: 1.625,
+  },
+  {
+    name: '1 3/4"',
+    value: 1.75,
+  },
+  {
+    name: '1 7/8"',
+    value: 1.875,
+  },
+  {
+    name: '2"',
+    value: 2,
+  },
+];
+
 
 class FaceFrame extends Component {
 
@@ -27,8 +66,6 @@ class FaceFrame extends Component {
       woodtypes,
       face_frame_designs,
       face_frame_top_rails,
-      furniture_feets,
-      edges,
       isValid,
       index,
       part_list,
@@ -41,7 +78,7 @@ class FaceFrame extends Component {
     return (
       <div>
         <Row>
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -56,7 +93,9 @@ class FaceFrame extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          
+
+          <Col>
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -71,7 +110,7 @@ class FaceFrame extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="hinges">Top Rail Design</Label>
               <Field
@@ -85,6 +124,7 @@ class FaceFrame extends Component {
               />
             </FormGroup>
           </Col>
+
         </Row>
 
 

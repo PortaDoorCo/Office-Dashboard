@@ -257,7 +257,15 @@ export const itemPriceSelector = createSelector(
 
       if (part.orderType.value === 'Face_Frame') {
         if (part.dimensions) {
+
+
+          console.log('HEREJKLSDJFDSKLFJSDFLKJ');
+
           const linePrice = part.dimensions.map((i) => {
+
+
+            console.log({i});
+
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings);
@@ -266,7 +274,7 @@ export const itemPriceSelector = createSelector(
             const panelsH = parseInt(i.panelsH) > 1 ? parseInt(i.panelsH) : 1;
             const panelsW = parseInt(i.panelsW) > 1 ? parseInt(i.panelsW) : 1;
 
-            const price = i.price ? parseFloat(i.price) : 0;
+            const price = eval(pricer && pricer.face_frame_pricing);
 
             if (height > -1) {
               return price;
@@ -274,6 +282,8 @@ export const itemPriceSelector = createSelector(
               return 0;
             }
           });
+
+          console.log({linePrice});
 
           return linePrice;
         } else {

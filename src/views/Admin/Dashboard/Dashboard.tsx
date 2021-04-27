@@ -55,17 +55,17 @@ class Dashboard extends Component<PropTypes, StateTypes> {
     };
   }
 
-  componentDidMount(){
-    let visited = localStorage['alreadyVisited'];
-    if(visited) {
-      this.setState({ viewPopup: false });
-      //do not view Popup
-    } else {
-      //this is the first time
-      localStorage['alreadyVisited'] = true;
-      this.setState({ viewPopup: true});
-    }
-  }
+  // componentDidMount(){
+  //   let visited = localStorage['alreadyVisited'];
+  //   if(visited) {
+  //     this.setState({ viewPopup: false });
+  //     //do not view Popup
+  //   } else {
+  //     //this is the first time
+  //     localStorage['alreadyVisited'] = true;
+  //     this.setState({ viewPopup: true});
+  //   }
+  // }
 
   toggleMessageModal = () => {
     this.setState({

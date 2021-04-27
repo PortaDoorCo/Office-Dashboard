@@ -9,6 +9,13 @@ import { connect } from 'react-redux';
 import { Field, change, untouch, autofill } from 'redux-form';
 import { renderDropdownList } from '../../../RenderInputs/renderInputs';
 
+const faceFrameOrderType = [
+  {
+    name: 'Face Frame',
+    value: 'Face_Frame',
+  }
+];
+
 const required = value => (value ? undefined : 'Required');
 
 class DoorFilter extends Component {
@@ -256,7 +263,7 @@ class DoorFilter extends Component {
                   <Field
                     name={`${part}.orderType`}
                     component={renderDropdownList}
-                    data={orderType}
+                    data={faceFrameOrderType}
                     onChange={() => this.onChangeType(index)}
                     valueField="value"
                     textField="name"
