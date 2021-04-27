@@ -18,7 +18,7 @@ import {
   renderNumber,
   renderInt,
   renderFieldDisabled,
-  renderDropdownListFilter,
+  renderDropdownList,
   renderCheckboxToggle,
   renderPrice
 } from '../../../RenderInputs/renderInputs';
@@ -750,7 +750,7 @@ const Cope_Table = ({
                           <strong>Opening {k + 1} Options</strong>
                           <Field
                             name={`${table}.lite_${k}`}
-                            component={renderDropdownListFilter}
+                            component={renderDropdownList}
                             data={lites}
                             valueField="value"
                             textField="NAME"

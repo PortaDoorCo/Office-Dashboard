@@ -13,7 +13,7 @@ import { Field, change } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
-import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, renderPrice } from '../../../RenderInputs/renderInputs';
+import { renderField, renderNumber, renderFieldDisabled, renderCheckboxToggle, renderPrice, renderDropdownList } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
@@ -27,7 +27,7 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch }) => {
+const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, doorOptions, edit, dispatch, lites }) => {
 
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -419,6 +419,56 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                 : null
               }
 
+              <div>
+                <Row>
+                  {Array.from(
+                    formState.part_list[i].dimensions[index].panelsH ? Array(
+                      parseInt(formState.part_list[i].dimensions[index].panelsH)
+                    ).keys() : 0
+                  )
+                    .map((i, index) => {
+                      return (
+                        <Col lg='1'>
+                          <FormGroup>
+                            <strong>Glass Opening {index+1}</strong>
+                            <Field
+                              name={`${table}.glass_check_${index}`}
+                              component={renderCheckboxToggle}
+                              edit={edit}
+                            />
+                          </FormGroup>
+                        </Col>
+                      );
+                    })}
+                </Row>
+                <Row>
+                  {Array.from(
+                    formState.part_list[i].dimensions[index].panelsH ? Array(
+                      parseInt(formState.part_list[i].dimensions[index].panelsH)
+                    ).keys() : 0
+                  )
+                    .map((l, k) => {
+                      return (
+                        eval(`formState.part_list[i].dimensions[index].glass_check_${k}`) ? 
+                          <Col lg='2'>
+                            <FormGroup>
+                              <strong>Opening {k + 1} Options</strong>
+                              <Field
+                                name={`${table}.lite_${k}`}
+                                component={renderDropdownList}
+                                data={lites}
+                                valueField="value"
+                                textField="NAME"
+                                validate={required}
+                                edit={edit}
+                              />
+                            </FormGroup>
+                          </Col> : null
+                      );
+                    })}
+                </Row>
+              </div>
+
               <Row>
                 <Col xs="4">
                   <strong>Notes</strong>
@@ -516,4 +566,8 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
   );
 };
 
-export default connect()(Cope_Table);
+const mapStateToProps = (state) => ({
+  lites: state.part_list.lites,
+});
+
+export default connect(mapStateToProps, null)(Cope_Table);
