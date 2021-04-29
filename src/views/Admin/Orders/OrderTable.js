@@ -155,7 +155,7 @@ const OrderTable = (props) => {
   const columns = [
     {
       name: 'Company',
-      selector: 'job_info.customer.Company',
+      cell: row => <div>{row.job_info && row.job_info.customer && row.job_info.customer.Company}</div>,
       sortable: true,
       grow: 2
 
@@ -210,7 +210,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Submitted By',
-      selector: 'user.FirstName',
+      cell: row => <div>{row.user && row.user.FirstName}</div>,
       sortable: true,
 
     },
@@ -228,7 +228,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Terms',
-      selector: 'companyprofile.PMT_TERMS',
+      cell: row => <div>{row.companyprofile && row.companyprofile.PMT_TERMS}</div>,
       sortable: true,
     },
     {

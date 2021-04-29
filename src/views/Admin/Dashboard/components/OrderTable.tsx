@@ -119,7 +119,7 @@ const OrderTable = (props: TablePropTypes) => {
   const columns = [
     {
       name: 'Company',
-      selector: 'job_info.customer.Company',
+      cell: row => <div>{row.job_info && row.job_info.customer && row.job_info.customer.Company}</div>,
       sortable: true,
       grow: 2
 
@@ -142,16 +142,16 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'Date Ordered',
-      cell: (row: { createdAt: any }) => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',
-      cell: (row: { status: string, dueDate: any }) => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Status',
       grow: 1,
-      cell: (row: any) => <div>
+      cell: row => <div>
 
 
         <Row>
@@ -174,7 +174,7 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'Submitted By',
-      selector: 'user.FirstName',
+      cell: row => <div>{row.user && row.user.FirstName}</div>,
       sortable: true,
 
     },
@@ -183,23 +183,23 @@ const OrderTable = (props: TablePropTypes) => {
       name: 'Total',
       selector: 'total',
       sortable: true,
-      cell: (row: { total: number }) => <div>${row.total && row.total.toFixed(2)}</div>,
+      cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
     },
     {
       name: 'Balance Paid',
       sortable: true,
-      cell: (row: { balance_history: Array<any> }) => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
+      cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
     },
     {
       name: 'Terms',
-      selector: 'companyprofile.PMT_TERMS',
+      cell: row => <div>{row.companyprofile && row.companyprofile.PMT_TERMS}</div>,
       sortable: true,
     },
     {
       name: ' ',
       button: true,
       grow: 2,
-      cell: (row: { id: string }) => <Tooltip title="View Order" placement="top">
+      cell: (row) => <Tooltip title="View Order" placement="top">
         <IconButton onClick={function (event) {
           event.preventDefault();
           toggle(row);
