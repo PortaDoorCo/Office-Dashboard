@@ -3,12 +3,11 @@ const GlassCheck = (i) => {
     .map((i, v) => {
       return `glass_check_${i}`;
     });
-
-  const isGlass = a.map(j => i.hasOwnProperty(j)).includes(true);
-
+  const glassPanels = a.map(j => i.hasOwnProperty(j));
+  const isGlass = glassPanels.includes(true);
   return {
     ...i,
-    isGlass
+    isGlass,
   };
 };
 
