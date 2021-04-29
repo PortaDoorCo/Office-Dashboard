@@ -146,10 +146,10 @@ export default (
       nodesOnNextPage,
       previousNodesOnPage
     ) {
-      console.log({currentNode});
-      console.log({followingNodesOnPage});
-      console.log({nodesOnNextPage});
-      console.log({previousNodesOnPage});
+      // console.log({currentNode});
+      // console.log({followingNodesOnPage});
+      // console.log({nodesOnNextPage});
+      // console.log({previousNodesOnPage});
       return (
         currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0
       );

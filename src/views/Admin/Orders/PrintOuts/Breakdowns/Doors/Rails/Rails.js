@@ -15,7 +15,7 @@ import Glass_Door from './designs/Glass/Glass';
 
 export default (info, part, breakdowns) => {
 
-  console.log({part});
+  // console.log({part});
 
 
   if(part.orderType?.value === 'Door') {

@@ -4,10 +4,14 @@ import Rails from '../Breakdowns/Doors/Rails/Rails';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import Size from '../Breakdowns/Doors/Size';
 import SlabSize from '../Breakdowns/Doors/SlabSize';
+import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
 
-  console.log({data});
+  // console.log({data: data.part_list});
+
+  GlassSort(data);
+  
   return [
     {
       columns: [
@@ -230,7 +234,7 @@ export default (data, breakdowns) => {
           },
           layout: {
             hLineWidth: function (i, node) {
-              console.log(i, node);
+              // console.log(i, node);
               return (i === 1 ) ? 1 : 0;
             },
             vLineWidth: function (i, node) {
