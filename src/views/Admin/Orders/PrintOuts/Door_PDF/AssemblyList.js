@@ -4,13 +4,11 @@ import Rails from '../Breakdowns/Doors/Rails/Rails';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import Size from '../Breakdowns/Doors/Size';
 import SlabSize from '../Breakdowns/Doors/SlabSize';
-import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
 
   // console.log({data: data.part_list});
 
-  GlassSort(data);
   
   return [
     {
