@@ -5,17 +5,10 @@ const GlassCheck = (i) => {
     });
 
   const isGlass = a.map(j => i.hasOwnProperty(j)).includes(true);
-     
-  if(isGlass){
-    return {
-      ...i,
-      isGlass: true
-    };
-  } else {
-    return {
-      ...i,
-      isGlass: false
-    };
+
+  return {
+    ...i,
+    isGlass
   };
 };
 
