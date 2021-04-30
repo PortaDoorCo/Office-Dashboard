@@ -163,16 +163,16 @@ class DoorOrders extends Component {
     });
 
 
-    if(canSubmit){
-      await submitOrder(order, cookie);
-      this.setState({ updateSubmit: !this.state.updateSubmit });
-      reset();
-      window.scrollTo(0, 0);
-      return;
-    } else {
-      alert('Submission Error: Please double check your order');
-      return;
-    }
+    // if(canSubmit){
+    //   await submitOrder(order, cookie);
+    //   this.setState({ updateSubmit: !this.state.updateSubmit });
+    //   reset();
+    //   window.scrollTo(0, 0);
+    //   return;
+    // } else {
+    //   alert('Submission Error: Please double check your order');
+    //   return;
+    // }
   };
 
   cancelOrder = e => {
