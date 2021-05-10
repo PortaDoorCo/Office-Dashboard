@@ -98,7 +98,7 @@ export default (data, breakdowns) => {
           {
             stack: [
               { text: Panels(item, i, breakdowns).map((panel) => {
-                return `${panel.qty} ${panel.measurement} - ${panel.pattern}`;
+                return `${panel.qty} ${panel.measurement} - ${panel.pattern} \n`;
               }), style: 'fonts' },
               item.cab_number ? 
                 {

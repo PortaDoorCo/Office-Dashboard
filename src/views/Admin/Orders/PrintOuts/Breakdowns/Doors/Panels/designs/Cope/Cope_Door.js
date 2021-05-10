@@ -1,5 +1,6 @@
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
+import { flatten } from 'lodash';
 // import frac2dec from '../frac2dec'
 
 const fraction = (num) => {
@@ -45,25 +46,54 @@ export default (info, part, breakdowns) => {
   const unevenSplitTotal =
     unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
 
-  const glassDoor = [
-    {
-      qty: '',
-      measurement: 'GLASS',
-      pattern: '',
-    },
+  const glassDoor = {
+    qty: '',
+    measurement: 'GLASS',
+    pattern: '',
+  };
+
+  const door = [{
+    qty: `(${panelsH * panelsW * qty})`,
+    measurement: `${fraction(
+      Math.round(eval(breakdowns.panel_width) * 16) / 16
+    )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
+    pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+    width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+    height: Math.round(eval(breakdowns.panel_height) * 16) / 16
+  }];
+
+  const doorMulti = {
+    qty: `(${(panelsH-1) * qty})`,
+    measurement: `${fraction(
+      Math.round(eval(breakdowns.panel_width) * 16) / 16
+    )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
+    pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+    width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+    height: Math.round(eval(breakdowns.panel_height) * 16) / 16
+  };
+
+
+  const doorFunc = () => {
+
+
+  };
+
+
+
+  const multiPanel = [
+    ...Array.from(Array(panelsH).keys())
+      .map((i, v) => {        
+        if(info[`glass_check_${i}`]){
+          return glassDoor;
+        }
+        else {
+          return doorMulti;
+        }
+      })
   ];
 
-  const door = [
-    {
-      qty: `(${panelsH * panelsW * qty})`,
-      measurement: `${fraction(
-        Math.round(eval(breakdowns.panel_width) * 16) / 16
-      )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-      pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
-      width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
-      height: Math.round(eval(breakdowns.panel_height) * 16) / 16
-    },
-  ];
+  console.log({multiPanel: flatten(multiPanel)});
+
 
   const unevenSplit = [
     ...Array.from(Array(panelsH).keys())
@@ -105,6 +135,8 @@ export default (info, part, breakdowns) => {
     return unevenSplit;
   } else if (panelName === 'Glass') {
     return glassDoor;
+  } else if (info.glass_index === (1 || 2)){
+    return multiPanel;
   } else {
     return door;
   }
