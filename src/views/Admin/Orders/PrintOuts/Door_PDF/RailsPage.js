@@ -56,7 +56,7 @@ export default (data, breakdowns) => {
         (item.panelsH > 1 && item.panelsW)
       ) {
         tableBody.push([
-          { text: index + 1, style: 'fonts' },
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
           {
             text: item.name,
             style: 'fonts',
@@ -93,7 +93,7 @@ export default (data, breakdowns) => {
         ]);
       } else {
         tableBody.push([
-          { text: index + 1, style: 'fonts' },
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
           {
             text: item.name,
             style: 'fonts',

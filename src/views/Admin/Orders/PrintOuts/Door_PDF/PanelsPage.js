@@ -46,7 +46,7 @@ export default (data, breakdowns) => {
     ];
     i.dimensions.forEach((item, index) => {
       tableBody.push([
-        { text: index + 1, style: 'fonts' },
+        { text: item.item ? item.item : index + 1, style: 'fonts' },
         { text: item.name, style: 'fonts' },
         { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} \n`; }), style: 'fonts' },
         { text: Panels(item, i, breakdowns).map(panel => { return `${panel.measurement} \n`; }), style: 'fonts' },

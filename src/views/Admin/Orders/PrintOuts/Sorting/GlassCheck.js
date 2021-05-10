@@ -9,8 +9,6 @@ const GlassCheck = (i) => {
   const hasGlass = glassPanels.includes(true);
   const multiGlass = glassPanels.length > 1 ? !checker(glassPanels) : false;
 
-  console.log({multiGlass});
-
   if(hasGlass && !multiGlass){
     return {
       ...i,
@@ -33,8 +31,6 @@ const GlassCheck = (i) => {
       glass_index: 3
     };
   }
-
-
 };
 
 export default GlassCheck;

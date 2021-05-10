@@ -1,16 +1,20 @@
 import { flatten } from 'lodash';
 import GlassCheck from './GlassCheck';
 
-const GlassSort = (data) => {
+const GlassSort = (part) => {
 
-  const part = data.part_list;
-  const dimensions = part.map(i => i.dimensions);
-  const flatten_dimensions = flatten(dimensions);
+  console.log({part});
 
-
-  return flatten_dimensions.map(i => {
+  const dimensions =  part.dimensions.map(i => {
     return GlassCheck(i);
   });
+
+
+  const sort = dimensions.sort((a,b) => a.glass_index - b.glass_index );
+
+  return sort;
+
+
 };
 
 export default GlassSort;
