@@ -74,9 +74,43 @@ export default (info, part, breakdowns) => {
 
 
   const doorFunc = () => {
+    const arr = [
+      ...Array.from(Array(panelsH).keys())
+        .map((i, v) => {        
+          if(info[`glass_check_${i}`]){
+            return glassDoor;
+          }
+          else {
+            return doorMulti;
+          }
+        })
+    ];
 
+    let new_arr = arr.reduce((ar, obj) => {
+      let bool = false;
+      if (!ar) {
+        ar = [];
+      }
+      ar.forEach((a) => {
+        if (a === obj) {
+          a.count++;
+          bool = true;
+        }
+      });
+      if (!bool) {
+        obj.count = 1;
+        ar.push(obj);
+      }
+      return ar;
+    }, []);
 
+    console.log(new_arr);
+
+    return null;
   };
+
+
+  doorFunc();
 
 
 
