@@ -723,7 +723,7 @@ const Cope_Table = ({
               )
                 .map((i, index) => {
                   return (
-                    <Col lg='1'>
+                    <Col lg='2'>
                       <FormGroup>
                         <strong>Glass Opening {index+1}</strong>
                         <Field

@@ -1,6 +1,5 @@
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
-import { flatten } from 'lodash';
 // import frac2dec from '../frac2dec'
 
 const fraction = (num) => {
@@ -47,27 +46,27 @@ export default (info, part, breakdowns) => {
     unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
 
   const glassDoor = {
-    qty: parseInt(info.qty),
+    qty: qty,
     measurement: 'GLASS',
     pattern: '',
   };
 
   const door = [{
-    qty: `(${panelsH * panelsW * qty})`,
+    qty: `(${panelsH * panelsW * qty})`, 
     measurement: `${fraction(
       Math.round(eval(breakdowns.panel_width) * 16) / 16
     )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-    pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+    pattern: part && part.panel && part.panel.Flat ? '- PF' : '- PR',
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
     height: Math.round(eval(breakdowns.panel_height) * 16) / 16
   }];
 
   const doorMulti = {
-    qty: parseInt(info.qty),
+    qty: qty,
     measurement: `${fraction(
       Math.round(eval(breakdowns.panel_width) * 16) / 16
     )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-    pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+    pattern: part && part.panel && part.panel.Flat ? '- PF' : '- PR',
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
     height: Math.round(eval(breakdowns.panel_height) * 16) / 16
   };
@@ -87,18 +86,11 @@ export default (info, part, breakdowns) => {
     ];
 
     let new_arr = arr.reduce((ar, obj) => {
-
-      console.log({ar});
-      console.log({obj});
-
       let bool = false;
       if (!ar) {
         ar = [];
       }
       ar.forEach((a) => {
-
-        console.log({a});
-
         if (a === obj) {
           a.count++;
           let b = a.count++;
@@ -109,34 +101,13 @@ export default (info, part, breakdowns) => {
       if (!bool) {
         obj.count = 1;
         obj.qty = `(${parseInt(info.qty)})`;
-        // obj.qty = '2';
         ar.push(obj);
       }
       return ar;
     }, []);
 
-    console.log(new_arr);
-
     return new_arr;
   };
-
-
-  
-
-
-
-  const multiPanel = [
-    ...Array.from(Array(panelsH).keys())
-      .map((i, v) => {        
-        if(info[`glass_check_${i}`]){
-          return glassDoor;
-        }
-        else {
-          return doorMulti;
-        }
-      })
-  ];
-
 
   const unevenSplit = [
     ...Array.from(Array(panelsH).keys())
