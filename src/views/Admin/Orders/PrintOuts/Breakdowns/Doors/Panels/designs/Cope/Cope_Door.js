@@ -47,7 +47,7 @@ export default (info, part, breakdowns) => {
     unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
 
   const glassDoor = {
-    qty: '',
+    qty: parseInt(info.qty),
     measurement: 'GLASS',
     pattern: '',
   };
@@ -63,7 +63,7 @@ export default (info, part, breakdowns) => {
   }];
 
   const doorMulti = {
-    qty: `(${(panelsH-1) * qty})`,
+    qty: parseInt(info.qty),
     measurement: `${fraction(
       Math.round(eval(breakdowns.panel_width) * 16) / 16
     )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
@@ -87,18 +87,29 @@ export default (info, part, breakdowns) => {
     ];
 
     let new_arr = arr.reduce((ar, obj) => {
+
+      console.log({ar});
+      console.log({obj});
+
       let bool = false;
       if (!ar) {
         ar = [];
       }
       ar.forEach((a) => {
+
+        console.log({a});
+
         if (a === obj) {
           a.count++;
+          let b = a.count++;
+          a.qty = `(${b * qty})`;
           bool = true;
         }
       });
       if (!bool) {
         obj.count = 1;
+        obj.qty = `(${parseInt(info.qty)})`;
+        // obj.qty = '2';
         ar.push(obj);
       }
       return ar;
@@ -106,11 +117,11 @@ export default (info, part, breakdowns) => {
 
     console.log(new_arr);
 
-    return null;
+    return new_arr;
   };
 
 
-  doorFunc();
+  
 
 
 
@@ -125,8 +136,6 @@ export default (info, part, breakdowns) => {
         }
       })
   ];
-
-  console.log({multiPanel: flatten(multiPanel)});
 
 
   const unevenSplit = [
@@ -170,7 +179,7 @@ export default (info, part, breakdowns) => {
   } else if (panelName === 'Glass') {
     return glassDoor;
   } else if (info.glass_index === (1 || 2)){
-    return multiPanel;
+    return doorFunc();
   } else {
     return door;
   }
