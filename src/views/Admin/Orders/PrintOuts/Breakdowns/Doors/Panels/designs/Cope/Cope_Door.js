@@ -148,7 +148,7 @@ export default (info, part, breakdowns) => {
   if (info.unevenCheck) {
     return unevenSplit;
   } else if (panelName === 'Glass') {
-    return glassDoor;
+    return [glassDoor];
   } else if (info.glass_index === (1 || 2)){
     return doorFunc();
   } else {
