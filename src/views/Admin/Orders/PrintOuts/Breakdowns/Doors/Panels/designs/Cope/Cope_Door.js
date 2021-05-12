@@ -76,7 +76,7 @@ export default (info, part, breakdowns) => {
     const arr = [
       ...Array.from(Array(panelsH).keys())
         .map((i, v) => {        
-          if(info[`glass_check_${i}`]){
+          if(info[`glass_check_${v}`]){
             return glassDoor;
           }
           else {
@@ -149,7 +149,7 @@ export default (info, part, breakdowns) => {
     return unevenSplit;
   } else if (panelName === 'Glass') {
     return [glassDoor];
-  } else if (info.glass_index === (1 || 2)){
+  } else if (info.glass_index === 1 || 2){
     return doorFunc();
   } else {
     return door;
