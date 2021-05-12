@@ -1,12 +1,16 @@
 const GlassCheck = (i) => {
   const a = Array.from(Array(parseInt(i.panelsH)).keys())
     .map((i, v) => {
-      return `glass_check_${i}`;
+      return `glass_check_${v}`;
     });
 
   const checker = arr => arr.every(v => v === true);
-  const glassPanels = a.map(j => i.hasOwnProperty(j));
+  const glassPanels = a.map(j => i[j]);
+
+  console.log({glassPanels});
+
   const hasGlass = glassPanels.includes(true);
+  
   const multiGlass = glassPanels.length > 1 ? !checker(glassPanels) : false;
 
   if(hasGlass && !multiGlass){

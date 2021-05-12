@@ -66,6 +66,10 @@ export default (data, breakdowns) => {
     
     {
       GlassSort(i).forEach((item, index) => {
+
+
+        console.log({item});
+
         tableBody.push([
           { text: item.item, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
