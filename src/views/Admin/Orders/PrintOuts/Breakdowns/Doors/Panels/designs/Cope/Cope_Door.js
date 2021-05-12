@@ -11,10 +11,10 @@ export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 
-  const topRail = numQty(info.topRail) + (part.edge.LIP_FACTOR / 2);
-  const bottomRail = numQty(info.bottomRail) + (part.edge.LIP_FACTOR / 2);
-  const leftStile = numQty(info.leftStile) + (part.edge.LIP_FACTOR / 2);
-  const rightStile = numQty(info.rightStile) + (part.edge.LIP_FACTOR / 2);
+  const topRail = numQty(info.topRail) + part.edge.LIP_FACTOR / 2;
+  const bottomRail = numQty(info.bottomRail) + part.edge.LIP_FACTOR / 2;
+  const leftStile = numQty(info.leftStile) + part.edge.LIP_FACTOR / 2;
+  const rightStile = numQty(info.rightStile) + part.edge.LIP_FACTOR / 2;
   const vertMull = numQty(vMidRail);
   const horizMull = numQty(hMidRail);
   const panelsH = parseInt(info.panelsH);
@@ -51,15 +51,17 @@ export default (info, part, breakdowns) => {
     pattern: '',
   };
 
-  const door = [{
-    qty: `(${panelsH * panelsW * qty})`, 
-    measurement: `${fraction(
-      Math.round(eval(breakdowns.panel_width) * 16) / 16
-    )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-    pattern: part && part.panel && part.panel.Flat ? '- PF' : '- PR',
-    width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
-    height: Math.round(eval(breakdowns.panel_height) * 16) / 16
-  }];
+  const door = [
+    {
+      qty: `(${panelsH * panelsW * qty})`,
+      measurement: `${fraction(
+        Math.round(eval(breakdowns.panel_width) * 16) / 16
+      )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
+      pattern: part && part.panel && part.panel.Flat ? '- PF' : '- PR',
+      width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+      height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+    },
+  ];
 
   const doorMulti = {
     qty: qty,
@@ -68,22 +70,76 @@ export default (info, part, breakdowns) => {
     )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
     pattern: part && part.panel && part.panel.Flat ? '- PF' : '- PR',
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
-    height: Math.round(eval(breakdowns.panel_height) * 16) / 16
+    height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
   };
 
+  const unevenSplit = () => {
 
-  const doorFunc = () => {
-    const arr = [
+    const panelWidth = ( (width - leftStile - rightStile - vertMull * (panelsW - 1) ) / panelsW);
+    const panelHeight = height - unevenSplitTotal - horizMull * (panelsH - 1) - bottomRail - topRail; 
+    const unevenSplitInput = (v) => numQty(info[`unevenSplitInput${v}`]);
+    const glassCheck = (v) => info[`glass_check_${v}`];
+
+    const unEven = [
       ...Array.from(Array(panelsH).keys())
-        .map((i, v) => {        
-          if(info[`glass_check_${v}`]){
+        .slice(1)
+        .map((i, v) => {
+          if(glassCheck(v)){
             return glassDoor;
-          }
-          else {
-            return doorMulti;
+          } else {
+            return {
+              qty: `(${qty})`,
+              measurement: `${fraction(panelWidth)} x ${fraction(unevenSplitInput(v))}`,
+              pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+            };
           }
         })
     ];
+
+    const bottom = {
+      qty: `(${qty})`,
+      measurement: `${fraction(panelWidth)} x ${fraction(panelHeight)}`,
+      pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+    };
+
+    if(glassCheck(panelsH - 1)){
+      return [
+        ...unEven,
+        glassDoor
+      ];
+    } else {
+      return [
+        ...unEven,
+        bottom
+      ];
+    }
+
+
+  };
+
+  const doorFunc = () => {
+
+    console.log({check_this: unevenSplit()});
+
+    let arr = [];
+
+
+
+    if(info.unevenCheck){
+      arr = unevenSplit();
+    } else {
+      arr = [
+        ...Array.from(Array(panelsH).keys()).map((i, v) => {
+          if (info[`glass_check_${v}`]) {
+            return glassDoor;
+          } else {
+            return doorMulti;
+          } 
+        }),
+      ];
+    }
+
+    console.log({arr});
 
     let new_arr = arr.reduce((ar, obj) => {
       let bool = false;
@@ -91,7 +147,7 @@ export default (info, part, breakdowns) => {
         ar = [];
       }
       ar.forEach((a) => {
-        if (a === obj) {
+        if (a.measurement === obj.measurement) {
           a.count++;
           let b = a.count++;
           a.qty = `(${b * qty})`;
@@ -106,52 +162,20 @@ export default (info, part, breakdowns) => {
       return ar;
     }, []);
 
+
+
     return new_arr;
   };
 
-  const unevenSplit = [
-    ...Array.from(Array(panelsH).keys())
-      .slice(1)
-      .map((i, v) => {
-        return {
-          qty: `(${qty})`,
-          measurement: `${fraction(
-            (width +
-              add_len -
-              leftStile -
-              rightStile -
-              vertMull * (panelsW - 1)) /
-              panelsW +
-              INSET * 2
-          )} x ${fraction(numQty(info[`unevenSplitInput${v}`]) + INSET * 2)}`,
-          pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
-        };
-      }),
-    {
-      qty: `(${qty})`,
-      measurement: `${fraction(
-        (width + add_len - leftStile - rightStile - vertMull * (panelsW - 1)) /
-          panelsW +
-          INSET * 2
-      )} x ${fraction(
-        height -
-          unevenSplitTotal -
-          horizMull * (panelsH - 1) -
-          bottomRail -
-          topRail +
-          INSET * 2
-      )}`,
-      pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
-    },
-  ];
 
-  if (info.unevenCheck) {
-    return unevenSplit;
-  } else if (panelName === 'Glass') {
-    return [glassDoor];
-  } else if (info.glass_index === 1 || 2){
-    return doorFunc();
-  } else {
-    return door;
-  }
+
+  // if (panelName === 'Glass') {
+  //   return [glassDoor];
+  // } else if (info.glass_index === 1 || 2) {
+  //   return doorFunc();
+  // } else {
+  //   return door;
+  // }
+
+  return doorFunc();
 };
