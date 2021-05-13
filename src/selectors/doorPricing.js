@@ -309,7 +309,7 @@ export const itemPriceSelector = createSelector(
             const calcPrice = (add, part, price, w) => {
               const width = w;
               const difference = numQty(part) - width;
-              const calc = difference * 10 + price;
+              const calc = (difference * 10) + price;
               const priceDifference = calc - price;
 
               switch (add) {
