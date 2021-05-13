@@ -28,6 +28,10 @@ export default (info, part, breakdowns) => {
     if (part.construction.value === 'Glass') {
       return Glass_Door(info, part);
     }
+
+    if (part.construction.value === 'Slab') {
+      return Slab_Door(info);
+    }
   }
 
   if (part.orderType.value === 'Glass') {
@@ -66,6 +70,10 @@ export default (info, part, breakdowns) => {
     }
     if (part.construction.value === 'Glass') {
       return Glass_Door(info, part);
+    }
+
+    if (part.construction.value === 'Slab') {
+      return Slab_Door(info);
     }
   }
 

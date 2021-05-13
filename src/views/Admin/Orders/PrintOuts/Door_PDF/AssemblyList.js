@@ -25,12 +25,10 @@ export default (data, breakdowns) => {
       ]
     ];
 
-    console.log({GlassSort: GlassSort(i)});
 
 
 
-
-    if (i.orderType.value === 'Slab_Door') {
+    if ((i.orderType.value === 'Slab_Door' )|| (i.construction.value === 'Slab')) {
       i.dimensions.forEach((item, index) => {
         tableBody.push([
           { text: item.item ? item.item : index + 1, style: 'fonts' },

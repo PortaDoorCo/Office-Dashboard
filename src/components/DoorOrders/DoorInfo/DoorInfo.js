@@ -163,6 +163,19 @@ class DoorInfo extends Component {
               files: [],
             });
             break;
+          case 'Slab':
+            fields.push({
+              orderType: orderType[0],
+              construction: lastItem.construction,
+              thickness: lastItem.thickness,
+              woodtype: lastItem.woodtype,
+              edge: lastItem.edge,
+              applied_profile: lastItem.applied_profile,
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
           default:
             return;
         }
@@ -207,6 +220,19 @@ class DoorInfo extends Component {
               mt_df_design: lastItem.mt_df_design,
               panel: lastItem.panel,
               edge: lastItem.edge,
+              dimensions: [],
+              addPrice: 0,
+              files: [],
+            });
+            break;
+          case 'Slab':
+            fields.push({
+              orderType: orderType[1],
+              construction: lastItem.construction,
+              thickness: lastItem.thickness,
+              woodtype: lastItem.woodtype,
+              edge: lastItem.edge,
+              applied_profile: lastItem.applied_profile,
               dimensions: [],
               addPrice: 0,
               files: [],

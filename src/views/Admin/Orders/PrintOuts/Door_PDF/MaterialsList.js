@@ -210,12 +210,15 @@ export default (data, breakdowns) => {
     const equation = calc.reduce((acc, item) => acc + item);
 
     if (
+      i.construction.value === 'Slab' ||
       i.orderType.value === 'One_Piece' ||
       i.orderType.value === 'One_Piece_DF' ||
       i.orderType.value === 'Two_Piece' ||
-      i.orderType.value === 'Two_Piece_DF'
+      i.orderType.value === 'Two_Piece_DF' ||
+      i.orderType.value === 'Slab_Door' ||
+      i.orderType.value === 'Slab_DF'
     ) {
-      return null;
+      return 0;
     } else {
       return {
         orderType: i.orderType.value,

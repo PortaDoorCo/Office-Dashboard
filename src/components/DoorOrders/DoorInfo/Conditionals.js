@@ -96,6 +96,18 @@ class Conditionals extends Component {
                 updateSubmit={updateSubmit}
               />;
               break;
+            case 'Slab':
+              component = <SlabDoor
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={false}
+                updateSubmit={updateSubmit}
+              />;
+              break;
             default:
               return;
           }
@@ -140,6 +152,18 @@ class Conditionals extends Component {
               break;
             case 'Glass':
               component = <GlassDF
+                part={part}
+                index={index}
+                isValid={isValid}
+                part_list={part_list}
+                formState={formState}
+                edit={edit}
+                one_piece={false}
+                updateSubmit={updateSubmit}
+              />;
+              break;
+            case 'Slab':
+              component = <SlabDF
                 part={part}
                 index={index}
                 isValid={isValid}

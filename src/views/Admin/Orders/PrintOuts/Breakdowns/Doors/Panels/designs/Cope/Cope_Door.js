@@ -24,13 +24,10 @@ export default (info, part, breakdowns) => {
   const qty = parseInt(info.qty);
 
   const lites = info.lite ? info.lite.NAME : '';
-
   const inset = part.profile.INSET;
   const edge_factor = part.edge.LIP_FACTOR;
   const panel_factor = part.panel.PANEL_FACTOR;
-
   const panelName = part.panel.NAME;
-
   const add_len = 0;
   const INSET = 0;
 
@@ -123,8 +120,6 @@ export default (info, part, breakdowns) => {
 
     let arr = [];
 
-
-
     if(info.unevenCheck){
       arr = unevenSplit();
     } else {
@@ -169,13 +164,9 @@ export default (info, part, breakdowns) => {
 
 
 
-  // if (panelName === 'Glass') {
-  //   return [glassDoor];
-  // } else if (info.glass_index === 1 || 2) {
-  //   return doorFunc();
-  // } else {
-  //   return door;
-  // }
-
-  return doorFunc();
+  if (info.glass_index === 1 || 2) {
+    return doorFunc();
+  } else {
+    return door;
+  }
 };

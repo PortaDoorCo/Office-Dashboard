@@ -661,6 +661,8 @@ export const itemPriceSelector = createSelector(
 
             let price = 0;
 
+            //Slab Doors here 
+
             if (
               part.orderType.value === 'DF' ||
               part.orderType.value === 'One_Piece_DF' ||
@@ -681,12 +683,12 @@ export const itemPriceSelector = createSelector(
                     bottomRailAdd +
                     extraCost
                   : 0;
-            } else if (part.orderType.value === 'Slab_Door') {
+            } else if ((part.orderType.value === 'Slab_Door') || ((part.orderType.value === 'Door') && (part.construction.value === 'Slab'))  ) {
               price =
                 (width * height) / 144 > 2
                   ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                   : 2 * wood + (6.5 + edge) + extraCost;
-            } else if (part.orderType.value === 'Slab_DF') {
+            } else if ((part.orderType.value === 'Slab_Door') || ( (part.orderType.value === 'DF') && (part.construction.value === 'Slab')  )) {
               price =
                 (width * height) / 144 > 1
                   ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost

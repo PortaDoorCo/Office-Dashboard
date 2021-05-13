@@ -44,26 +44,42 @@ export default (data, breakdowns) => {
         { text: 'Note', style: 'fonts' }
       ]
     ];
-    i.dimensions.forEach((item, index) => {
-      tableBody.push([
-        { text: item.item ? item.item : index + 1, style: 'fonts' },
-        { text: item.name, style: 'fonts' },
-        { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} \n`; }), style: 'fonts' },
-        { text: Panels(item, i, breakdowns).map(panel => { return `${panel.measurement} \n`; }), style: 'fonts' },
-        { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n`; }), style: 'fonts' },
-        { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
-        { text: `${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
-        item.notes || item.full_frame || item.lite ? 
-          {
-            text: `${item.notes ? item.notes : ''} ${
-              item.full_frame ? 'Full Frame DF' : ''
-            } ${item.lite ? item.lite.NAME : ''}`,
-            style: 'tableBold', alignment: 'left'
-          } : null,
-      ]);
-    });
 
     if (
+      i.construction.value === 'Slab' ||
+      i.orderType.value === 'One_Piece' ||
+      i.orderType.value === 'One_Piece_DF' ||
+      i.orderType.value === 'Two_Piece' ||
+      i.orderType.value === 'Two_Piece_DF' ||
+      i.orderType.value === 'Slab_Door' ||
+      i.orderType.value === 'Slab_DF'
+    ) {
+      return null;
+    } else {
+      i.dimensions.forEach((item, index) => {
+        tableBody.push([
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
+          { text: item.name, style: 'fonts' },
+          { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} \n`; }), style: 'fonts' },
+          { text: Panels(item, i, breakdowns).map(panel => { return `${panel.measurement} \n`; }), style: 'fonts' },
+          { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n`; }), style: 'fonts' },
+          { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
+          { text: `${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
+          item.notes || item.full_frame || item.lite ? 
+            {
+              text: `${item.notes ? item.notes : ''} ${
+                item.full_frame ? 'Full Frame DF' : ''
+              } ${item.lite ? item.lite.NAME : ''}`,
+              style: 'tableBold', alignment: 'left'
+            } : null,
+        ]);
+      });
+    }
+
+
+
+    if (
+      i.construction.value === 'Slab' ||
       i.orderType.value === 'One_Piece' ||
       i.orderType.value === 'One_Piece_DF' ||
       i.orderType.value === 'Two_Piece' ||

@@ -30,6 +30,9 @@ class SideBar extends Component {
           case 'Glass':
             component = <GlassDoor part={part} i={i} />;
             break;
+          case 'Slab':
+            component = <div />;
+            break;
           default: 
             return;
         }
@@ -47,6 +50,9 @@ class SideBar extends Component {
             break;
           case 'Glass':
             component = <GlassDF part={part} i={i} />;
+            break;
+          case 'Slab':
+            component = <div />;
             break;
           default:
             return;

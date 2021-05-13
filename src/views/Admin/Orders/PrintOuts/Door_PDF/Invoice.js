@@ -356,14 +356,15 @@ export default (data) => {
                                 : part.face_frame_design
                                   ? part.face_frame_design.NAME
                                   : part.orderType.value === 'Slab_Door' ||
-                        part.orderType.value === 'Slab_DF'
-                                    ? ''
+                        part.orderType.value === 'Slab_DF' || part.construction.value === 'Slab'
+                                    ? 'Slab'
                                     : ''
                   } - ${
                     part.panel
                       ? part.panel.NAME
                       : part.orderType.value === 'Slab_Door' ||
-                        part.orderType.value === 'Slab_DF'
+                        part.orderType.value === 'Slab_DF' || 
+                        part.construction.value === 'Slab'
                         ? ''
                         : 'Glass'
                   } ${i.lite ? '- ' + i.lite.NAME : ''}`,
