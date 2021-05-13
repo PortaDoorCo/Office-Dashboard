@@ -1,5 +1,8 @@
 const GlassCheck = (i) => {
-  const a = Array.from(Array(parseInt(i.panelsH)).keys())
+
+  const panelH = i.panelsH ? parseInt(i.panelsH) : 0;
+
+  const a = Array.from(Array(panelH).keys())
     .map((i, v) => {
       return `glass_check_${v}`;
     });
