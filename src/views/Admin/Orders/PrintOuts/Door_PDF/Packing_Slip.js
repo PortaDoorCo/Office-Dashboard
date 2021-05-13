@@ -119,11 +119,12 @@ export default (data, breakdowns) => {
             style: 'fontsBold',
             width: 80
           },
-          {
-            text: `Edge: ${i.edge && i.edge.NAME}`,
-            alignment: 'left',
-            style: 'fonts',
-          },
+          i.edge ? 
+            {
+              text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
+              alignment: 'left',
+              style: 'fonts',
+            } : null
         ],
       },
       // {
