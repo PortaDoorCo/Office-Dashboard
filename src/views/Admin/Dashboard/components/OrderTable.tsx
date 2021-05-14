@@ -176,7 +176,6 @@ const OrderTable = (props: TablePropTypes) => {
       name: 'Submitted By',
       cell: row => <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>,
       sortable: true,
-
     },
 
     {
