@@ -210,11 +210,9 @@ const OrderTable = (props) => {
     },
     {
       name: 'Submitted By',
-      cell: row => <div>{row.user && row.user.FirstName}</div>,
+      cell: row => <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>,
       sortable: true,
-
     },
-
     {
       name: 'Total',
       selector: 'total',
@@ -228,7 +226,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Terms',
-      cell: row => <div>{row.companyprofile && row.companyprofile.PMT_TERMS}</div>,
+      cell: row => <div>{row.companyprofile && row.companyprofile.PMT_TERMS ? row.companyprofile.PMT_TERMS  : ''}</div>,
       sortable: true,
     },
     {
