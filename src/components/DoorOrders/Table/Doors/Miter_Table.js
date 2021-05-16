@@ -596,12 +596,14 @@ const Miter_Table = ({
             </Table>
 
             <Row>
-              <Col lg="9">
-                <Field
-                  name={`${table}.showBuilder`}
-                  component={renderCheckboxToggle}
-                  label="Show Builder"
-                />
+              <Col lg='2'>
+                <FormGroup>
+                  <strong>Show Builder</strong>
+                  <Field
+                    name={`${table}.showBuilder`}
+                    component={renderCheckboxToggle}
+                  />
+                </FormGroup>
               </Col>
               <Col>
                 {!edit ? (
@@ -609,11 +611,15 @@ const Miter_Table = ({
                     1 &&
                   parseInt(formState.part_list[i].dimensions[index].panelsW) ===
                     1 ? (
-                      <Field
-                        name={`${table}.unevenCheck`}
-                        component={renderCheckboxToggle}
-                        label="Uneven Split"
-                      />
+                      <FormGroup>
+                        <strong>Uneven Split</strong>
+                        <Field
+                          name={`${table}.unevenCheck`}
+                          component={renderCheckboxToggle}
+                          edit={edit}
+                        />
+                      </FormGroup>
+
                     ) : null
                 ) : null}
               </Col>
@@ -654,14 +660,12 @@ const Miter_Table = ({
                         <div>
                           <Col />
                           <Col>
-                            <p
-                              style={{ textAlign: 'center', marginTop: '10px' }}
-                            >
+                            <p style={{ textAlign: 'center', marginTop: '10px' }}>
                               <strong>Panel Opening {index + 1}</strong>
                             </p>
                             <Field
                               name={`${table}.unevenSplitInput${index}`}
-                              component={renderNumber}
+                              component={renderField}
                               edit={edit}
                             />
                           </Col>
@@ -682,7 +686,7 @@ const Miter_Table = ({
                 )
                   .map((i, index) => {
                     return (
-                      <Col lg='1'>
+                      <Col lg='2'>
                         <FormGroup>
                           <strong>Glass Opening {index+1}</strong>
                           <Field
@@ -726,24 +730,16 @@ const Miter_Table = ({
             <Row>
               <Col xs="4">
                 <strong>Notes</strong>
-                <Row>
-                  <Col lg='11'>
-                    <Field
-                      name={`${table}.notes`}
-                      type="textarea"
-                      component={renderField}
-                      edit={edit}
-                      label="notes"
-                    />
-                  </Col>
-                  <Col lg='1'>
-                    {!edit ?
-                      <Button color='danger' className="btn-circle" onClick={(e) => clearNotes(index, e)}>X</Button>
-                      : null }
-                  </Col>
-                </Row>
+                <Field
+                  name={`${table}.notes`}
+                  type="textarea"
+                  component={renderField}
+                  edit={edit}
+                  label="notes"
+                />
               </Col>
-              <Col xs="5" />
+              <Col xs="5">
+              </Col>
               <Col xs="3">
                 <strong>Extra Design Cost</strong>
                 <Field

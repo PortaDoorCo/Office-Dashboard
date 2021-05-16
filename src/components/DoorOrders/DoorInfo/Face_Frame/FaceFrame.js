@@ -9,7 +9,7 @@ import {
 import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
 import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../../../RenderInputs/renderInputs';
-import Frame_Only_Table from '../../Table/Doors/Frame_Only_Table';
+import Frame_Only_Table from '../../Table/Doors/Face_Frame_Table';
 import {
   linePriceSelector,
   itemPriceSelector,

@@ -21,10 +21,6 @@ import GlassMTDF from './Glass/MT/DF';
 import GlassMitreDoor from './Glass/Mitre/Door';
 import GlassMitreDF from './Glass/Mitre/DF';
 
-import MultiPanelCopeDoor from './MultiPanel/Cope/Door';
-import MultiPanelMiterDoor from './MultiPanel/Mitre/Door';
-import MultiPanelMTDoor from './MultiPanel/MT/Door';
-
 
 
 
@@ -435,48 +431,6 @@ class Conditionals extends Component {
                 formState={formState}
                 edit={edit}
                 one_piece={true}
-                updateSubmit={updateSubmit}
-              />;
-              break;
-            default:
-              return;
-          }
-          break;
-        case 'MultiPanel':
-          switch (formState.part_list[index].construction.value) {
-            case 'Cope':
-              component = <MultiPanelCopeDoor
-                part={part}
-                index={index}
-                isValid={isValid}
-                part_list={part_list}
-                formState={formState}
-                edit={edit}
-                one_piece={false}
-                updateSubmit={updateSubmit}
-              />;
-              break;
-            case 'M':
-              component = <MultiPanelMiterDoor
-                part={part}
-                index={index}
-                isValid={isValid}
-                part_list={part_list}
-                formState={formState}
-                edit={edit}
-                one_piece={false}
-                updateSubmit={updateSubmit}
-              />;
-              break;
-            case 'MT':
-              component = <MultiPanelMTDoor
-                part={part}
-                index={index}
-                isValid={isValid}
-                part_list={part_list}
-                formState={formState}
-                edit={edit}
-                one_piece={false}
                 updateSubmit={updateSubmit}
               />;
               break;

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FrameOnlyTable from '../Frame_Only_Table';
+import FrameOnlyTable from '../Face_Frame_Table';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';

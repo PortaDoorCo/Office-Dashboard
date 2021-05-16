@@ -357,7 +357,7 @@ const Cope_Table = ({
       item: fields.length + 1,
       unevenCheck: false,
       unevenSplit: false,
-      glass_check_0: formState.part_list[i].panel.NAME === 'Glass' ? true : false
+      glass_check_0: formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false
     });
   };
 
@@ -633,7 +633,7 @@ const Cope_Table = ({
           </Table>
 
           <Row>
-            <Col lg='1'>
+            <Col lg='2'>
               <FormGroup>
                 <strong>Show Builder</strong>
                 <Field
