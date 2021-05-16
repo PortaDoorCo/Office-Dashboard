@@ -319,7 +319,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
 
 
               <Row>
-                <Col lg='9'>
+                <Col lg='2'>
         
                   <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
 
@@ -381,7 +381,7 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                   )
                     .map((i, index) => {
                       return (
-                        <Col lg='1'>
+                        <Col lg='2'>
                           <FormGroup>
                             <strong>Glass Opening {index+1}</strong>
                             <Field

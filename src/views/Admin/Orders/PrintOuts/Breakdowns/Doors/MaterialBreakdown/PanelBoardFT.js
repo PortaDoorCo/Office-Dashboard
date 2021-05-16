@@ -57,66 +57,136 @@ export default (info, part, breakdowns) => {
   const unevenSplitTotal =
     unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
 
-  const glassDoor = [
-    {
-      qty: '',
-      measurement: `GLASS \n ${lites}`,
-      pattern: '',
-    },
-  ];
-
+  const glassDoor = {
+    qty: qty,
+    measurement: 'GLASS',
+    pattern: '',
+    width: 0,
+    height: 0
+  };
+  
   const door = [
     {
       qty: `(${panelsH * panelsW * qty})`,
-      width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
-      height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
       measurement: `${fraction(
         Math.round(eval(breakdowns.panel_width) * 16) / 16
       )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-      pattern: 'PR',
+      pattern: part && part.panel && part.panel.Flat ? '- PF' : '- PR',
+      width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+      height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
     },
   ];
-
-  const unevenSplit = [
-    ...Array.from(Array(panelsH).keys())
-      .slice(1)
-      .map((i, v) => {
-        return {
-          qty: `(${qty})`,
-          measurement: `${fraction(
-            (width +
-            add_len -
-            leftStile -
-            rightStile -
-            vertMull * (panelsW - 1)) /
-            panelsW +
-            INSET * 2
-          )} x ${fraction(numQty(info[`unevenSplitInput${v}`]) + INSET * 2)}`,
-          pattern: 'PR',
-        };
-      }),
-    {
+  
+  const doorMulti = {
+    qty: qty,
+    measurement: `${fraction(
+      Math.round(eval(breakdowns.panel_width) * 16) / 16
+    )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
+    pattern: part && part.panel && part.panel.Flat ? '- PF' : '- PR',
+    width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+    height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+  };
+  
+  const unevenSplit = () => {
+  
+    const panelWidth = ( (width - leftStile - rightStile - vertMull * (panelsW - 1) ) / panelsW);
+    const panelHeight = height - unevenSplitTotal - horizMull * (panelsH - 1) - bottomRail - topRail; 
+    const unevenSplitInput = (v) => numQty(info[`unevenSplitInput${v}`]);
+    const glassCheck = (v) => info[`glass_check_${v}`];
+  
+    const unEven = [
+      ...Array.from(Array(panelsH).keys())
+        .slice(1)
+        .map((i, v) => {
+          if(glassCheck(v)){
+            return glassDoor;
+          } else {
+            return {
+              qty: `(${qty})`,
+              measurement: `${fraction(panelWidth)} x ${fraction(unevenSplitInput(v))}`,
+              pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+              width: Math.round(panelWidth),
+              height: Math.round(unevenSplitInput(v))
+            };
+          }
+        })
+    ];
+  
+    const bottom = {
       qty: `(${qty})`,
-      measurement: `${fraction(
-        (width + add_len - leftStile - rightStile - vertMull * (panelsW - 1)) /
-        panelsW +
-        INSET * 2
-      )} x ${fraction(
-        height -
-        unevenSplitTotal -
-        horizMull * (panelsH - 1) -
-        bottomRail -
-        topRail +
-        INSET * 2
-      )}`,
-      pattern: 'PR',
-    },
-  ];
-
-  if (info.unevenCheck) {
-    return unevenSplit;
-  } else if (panelName === 'Glass') {
-    return glassDoor;
+      measurement: `${fraction(panelWidth)} x ${fraction(panelHeight)}`,
+      pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+      width: Math.round(panelWidth),
+      height: Math.round(panelHeight)
+    };
+  
+    if(glassCheck(panelsH - 1)){
+      return [
+        ...unEven,
+        glassDoor
+      ];
+    } else {
+      return [
+        ...unEven,
+        bottom
+      ];
+    }
+  
+  
+  };
+  
+  const doorFunc = () => {
+  
+    console.log({check_this: unevenSplit()});
+  
+    let arr = [];
+  
+    if(info.unevenCheck){
+      arr = unevenSplit();
+    } else {
+      arr = [
+        ...Array.from(Array(panelsH).keys()).map((i, v) => {
+          if (info[`glass_check_${v}`]) {
+            return glassDoor;
+          } else {
+            return doorMulti;
+          } 
+        }),
+      ];
+    }
+  
+    console.log({arr});
+  
+    let new_arr = arr.reduce((ar, obj) => {
+      let bool = false;
+      if (!ar) {
+        ar = [];
+      }
+      ar.forEach((a) => {
+        if (a.measurement === obj.measurement) {
+          a.count++;
+          let b = a.count++;
+          a.qty = `(${b * qty})`;
+          bool = true;
+        }
+      });
+      if (!bool) {
+        obj.count = 1;
+        obj.qty = `(${parseInt(info.qty)})`;
+        ar.push(obj);
+      }
+      return ar;
+    }, []);
+  
+  
+  
+    return new_arr;
+  };
+  
+  
+  
+  if (info.glass_index === 1 || 2) {
+    return doorFunc();
   } else {
     return door;
   }

@@ -46,8 +46,10 @@ export default (info, part, breakdowns) => {
     qty: qty,
     measurement: 'GLASS',
     pattern: '',
+    width: 0,
+    height: 0
   };
-
+    
   const door = [
     {
       qty: `(${panelsH * panelsW * qty})`,
@@ -59,7 +61,7 @@ export default (info, part, breakdowns) => {
       height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
     },
   ];
-
+    
   const doorMulti = {
     qty: qty,
     measurement: `${fraction(
@@ -69,14 +71,14 @@ export default (info, part, breakdowns) => {
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
     height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
   };
-
+    
   const unevenSplit = () => {
-
+    
     const panelWidth = ( (width - leftStile - rightStile - vertMull * (panelsW - 1) ) / panelsW);
     const panelHeight = height - unevenSplitTotal - horizMull * (panelsH - 1) - bottomRail - topRail; 
     const unevenSplitInput = (v) => numQty(info[`unevenSplitInput${v}`]);
     const glassCheck = (v) => info[`glass_check_${v}`];
-
+    
     const unEven = [
       ...Array.from(Array(panelsH).keys())
         .slice(1)
@@ -88,17 +90,21 @@ export default (info, part, breakdowns) => {
               qty: `(${qty})`,
               measurement: `${fraction(panelWidth)} x ${fraction(unevenSplitInput(v))}`,
               pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+              width: Math.round(panelWidth),
+              height: Math.round(unevenSplitInput(v))
             };
           }
         })
     ];
-
+    
     const bottom = {
       qty: `(${qty})`,
       measurement: `${fraction(panelWidth)} x ${fraction(panelHeight)}`,
       pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+      width: Math.round(panelWidth),
+      height: Math.round(panelHeight)
     };
-
+    
     if(glassCheck(panelsH - 1)){
       return [
         ...unEven,
@@ -110,16 +116,16 @@ export default (info, part, breakdowns) => {
         bottom
       ];
     }
-
-
+    
+    
   };
-
+    
   const doorFunc = () => {
-
+    
     console.log({check_this: unevenSplit()});
-
+    
     let arr = [];
-
+    
     if(info.unevenCheck){
       arr = unevenSplit();
     } else {
@@ -133,9 +139,9 @@ export default (info, part, breakdowns) => {
         }),
       ];
     }
-
+    
     console.log({arr});
-
+    
     let new_arr = arr.reduce((ar, obj) => {
       let bool = false;
       if (!ar) {
@@ -156,14 +162,14 @@ export default (info, part, breakdowns) => {
       }
       return ar;
     }, []);
-
-
-
+    
+    
+    
     return new_arr;
   };
-
-
-
+    
+    
+    
   if (info.glass_index === 1 || 2) {
     return doorFunc();
   } else {

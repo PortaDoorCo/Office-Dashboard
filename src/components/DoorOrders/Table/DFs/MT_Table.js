@@ -357,7 +357,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
 
 
               <Row>
-                <Col lg='9'>
+                <Col lg='2'>
               
                   <Field name={`${table}.showBuilder`} component={renderCheckboxToggle} label="Show Builder" />
         
@@ -424,7 +424,7 @@ const MT_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit, 
                   )
                     .map((i, index) => {
                       return (
-                        <Col lg='1'>
+                        <Col lg='2'>
                           <FormGroup>
                             <strong>Glass Opening {index+1}</strong>
                             <Field

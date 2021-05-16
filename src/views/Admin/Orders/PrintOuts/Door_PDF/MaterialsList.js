@@ -198,6 +198,9 @@ export default (data, breakdowns) => {
   const PanelBoardFTCalc = data.part_list.map((i, index) => {
     const calc = i.dimensions.map((item, index) => {
       const width = Panels(item, i, breakdowns).map((panel) => {
+
+        console.log({panel});
+
         return numQty(panel.width);
       });
       const height = Panels(item, i, breakdowns).map((panel) => {
