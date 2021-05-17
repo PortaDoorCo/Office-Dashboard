@@ -300,7 +300,7 @@ export const itemPriceSelector = createSelector(
             const panelsW = parseInt(i.panelsW);
 
             //add lite pricing here
-            // const lites = i.lite ? i.lite.UPCHARGE : 0;
+            const lites = i.lite ? i.lite.UPCHARGE : 0;
 
             const liteArray = Array.from(
               panelsH ? Array(
