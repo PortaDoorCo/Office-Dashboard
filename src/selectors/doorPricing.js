@@ -292,6 +292,11 @@ export const itemPriceSelector = createSelector(
       } else {
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
+
+
+            console.log({i});
+
+
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
@@ -300,16 +305,21 @@ export const itemPriceSelector = createSelector(
             const panelsW = parseInt(i.panelsW);
 
             //add lite pricing here
-            const lites = i.lite ? i.lite.UPCHARGE : 0;
+            // const lites = i.lite ? i.lite.UPCHARGE : 0;
 
-            const liteArray = Array.from(
+            const litePriceArray = Array.from(
               panelsH ? Array(
                 parseInt(panelsH)
               ).keys() : 0
             )
-              .map((i, index) => {
-                return 0;
+              .map((j, index) => {
+                return eval(`i.lite_${index}`) ? eval(`i.lite_${index}.UPCHARGE`) : 0;
               });
+
+
+            const lites = litePriceArray.reduce((acc, item) => acc + item, 0);
+
+
 
               
 
