@@ -324,7 +324,7 @@ export default (data) => {
             {
               stack: [
                 {
-                  text: `${part.orderType ? part.orderType.name : ''}`,
+                  text: `${part.orderType ? part.orderType.name : ''} ${(part.door_piece_number && (part.door_piece_number.pieces === 1 || part.door_piece_number.pieces === 2)) ? '- ' + part.door_piece_number.NAME + ' Door': '' }`,
                   style: 'fonts',
                 },
                 {
