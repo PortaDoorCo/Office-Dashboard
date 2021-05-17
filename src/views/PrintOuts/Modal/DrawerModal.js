@@ -3,10 +3,10 @@ import { Modal, ModalHeader, ModalBody, Button, ModalFooter, Form, FormGroup, La
 import { DropdownList } from 'react-widgets';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addPrinterOption, savePrinterOption } from '../../../../../redux/misc_items/actions';
+import { addPrinterOption, savePrinterOption } from '../../../redux/misc_items/actions';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import db_url from '../../../../../redux/db_url';
+import db_url from '../../../redux/db_url';
 
 
 const cookie = Cookies.get('jwt');

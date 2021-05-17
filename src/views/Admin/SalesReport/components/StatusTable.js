@@ -18,7 +18,7 @@ import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
-import SalesmenReport from '../../Orders/PrintOuts/Reports/SalesmenReport';
+import SalesmenReport from '../../../PrintOuts/Reports/SalesmenReport';
 import status from '../../../../utils/status';
 
 momentLocaliser(moment);
