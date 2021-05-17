@@ -299,7 +299,21 @@ export const itemPriceSelector = createSelector(
             const panelsH = parseInt(i.panelsH);
             const panelsW = parseInt(i.panelsW);
 
-            const lites = i.lite ? i.lite.UPCHARGE : 0;
+            //add lite pricing here
+            // const lites = i.lite ? i.lite.UPCHARGE : 0;
+
+            const liteArray = Array.from(
+              panelsH ? Array(
+                parseInt(panelsH)
+              ).keys() : 0
+            )
+              .map((i, index) => {
+                return 0;
+              });
+
+              
+
+
 
             let leftStileAdd = 0;
             let rightStileAdd = 0;
