@@ -29,6 +29,7 @@ var midRails = (function () {
     const mr = Array.from(Array(panelsH).keys()).slice(1).map(i => {
       let a = new line([ls, ((height / panelsH) * (i)) + (horizontalMidRailSize / 2)], [width - rs, ((height / panelsH) * (i)) + (horizontalMidRailSize / 2)]);
       let b = new line([ls, ((height / panelsH) * (i)) - (horizontalMidRailSize / 2)], [width - rs, ((height / panelsH) * (i)) - (horizontalMidRailSize / 2)]);
+
       return [a, b];
     });
 
