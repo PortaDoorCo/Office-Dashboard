@@ -31,8 +31,7 @@ export default (info, part, breakdowns) => {
 
   const edge_factor = part.edge.LIP_FACTOR;
   const panel_factor = part.panel.PANEL_FACTOR;
-
-  const panelName = part.panel.NAME;
+  const panelName = part.panel?.NAME;
 
 
   const add_len = 0;
@@ -50,6 +49,14 @@ export default (info, part, breakdowns) => {
   
   const glassDoor = {
     qty: qty,
+    measurement: 'GLASS',
+    pattern: '',
+    width: 0,
+    height: 0
+  };
+
+  const glassOnlyDoor = {
+    qty: '',
     measurement: 'GLASS',
     pattern: '',
     width: 0,
@@ -175,8 +182,10 @@ export default (info, part, breakdowns) => {
   };
   
   
-  
-  if (info.glass_index === 1 || 2) {
+  if(panelName === 'Glass') {
+    return [glassOnlyDoor];
+  }  
+  else if (info.glass_index === 1 || 2) {
     return doorFunc();
   } else {
     return door;

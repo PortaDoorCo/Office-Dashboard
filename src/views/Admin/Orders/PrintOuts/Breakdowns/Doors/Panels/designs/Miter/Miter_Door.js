@@ -33,7 +33,7 @@ export default (info, part, breakdowns) => {
   const panel_factor = part.panel.PANEL_FACTOR;
   const profile_width = part.miter_design.PROFILE_WIDTH;
 
-  const panelName = part.panel.NAME;
+  const panelName = part.panel?.NAME;
 
   const add_len = 0;
   const INSET = 0;
@@ -56,6 +56,14 @@ export default (info, part, breakdowns) => {
     height: 0
   };
   
+  const glassOnlyDoor = {
+    qty: '',
+    measurement: 'GLASS',
+    pattern: '',
+    width: 0,
+    height: 0
+  };
+
   const door = [
     {
       qty: `(${panelsH * panelsW * qty})`,
@@ -177,7 +185,10 @@ export default (info, part, breakdowns) => {
   
   
   
-  if (info.glass_index === 1 || 2) {
+  if(panelName === 'Glass') {
+    return [glassOnlyDoor];
+  }  
+  else if (info.glass_index === 1 || 2) {
     return doorFunc();
   } else {
     return door;

@@ -35,6 +35,8 @@ export default (info, part, breakdowns) => {
 
   const VERTICAL_GRAIN = part.VERTICAL_GRAIN;
 
+  const panelName = part.panel?.NAME;
+
   const add_len = 0;
   const INSET = 0;
 
@@ -59,7 +61,13 @@ export default (info, part, breakdowns) => {
     height: 0
   };
   
-  
+  const glassOnlyDoor = {
+    qty: '',
+    measurement: 'GLASS',
+    pattern: '',
+    width: 0,
+    height: 0
+  };
   
   if(VERTICAL_GRAIN){
     door = [
@@ -194,9 +202,10 @@ export default (info, part, breakdowns) => {
     return new_arr;
   };
   
-  
-  
-  if (info.glass_index === 1 || 2) {
+  if(panelName === 'Glass') {
+    return [glassOnlyDoor];
+  }  
+  else if (info.glass_index === 1 || 2) {
     return doorFunc();
   } else {
     return door;
