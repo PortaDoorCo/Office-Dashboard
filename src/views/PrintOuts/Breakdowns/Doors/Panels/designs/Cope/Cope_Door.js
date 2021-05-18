@@ -42,12 +42,15 @@ export default (info, part, breakdowns) => {
   const unevenSplitTotal =
     unevenSplitArray.length > 0 ? unevenSplitArray.reduce(reducer) : 0;
 
-  const glassDoor = {
-    qty: qty,
-    measurement: 'GLASS',
-    pattern: '',
-    width: 0,
-    height: 0
+  const glassDoor = (index) => {
+    const lite = info[`lite_${index}`]?.NAME;
+    return {
+      qty: qty,
+      measurement: `GLASS ${lite !== 'None' ? lite : ''}`,
+      pattern: '',
+      width: 0,
+      height: 0
+    };
   };
 
   const glassOnlyDoor = {
@@ -92,7 +95,7 @@ export default (info, part, breakdowns) => {
         .slice(1)
         .map((i, v) => {
           if(glassCheck(v)){
-            return glassDoor;
+            return glassDoor(v);
           } else {
             return {
               qty: `(${qty})`,
@@ -116,7 +119,7 @@ export default (info, part, breakdowns) => {
     if(glassCheck(panelsH - 1)){
       return [
         ...unEven,
-        glassDoor
+        glassDoor(panelsH) // <-------Needs Testing
       ];
     } else {
       return [
@@ -140,7 +143,7 @@ export default (info, part, breakdowns) => {
       arr = [
         ...Array.from(Array(panelsH).keys()).map((i, v) => {
           if (info[`glass_check_${v}`]) {
-            return glassDoor;
+            return glassDoor(v);
           } else {
             return doorMulti;
           } 
