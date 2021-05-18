@@ -7,13 +7,9 @@ import SlabSize from '../Breakdowns/Doors/SlabSize';
 import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
-
   // console.log({data: data.part_list});
 
-
   const table_content = data.part_list.map((i, index) => {
-
-
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -22,22 +18,27 @@ export default (data, breakdowns) => {
         { text: 'Stile', style: 'fonts' },
         { text: 'Rails', style: 'fonts' },
         { text: 'Panels WxH', style: 'fonts' },
-      ]
+      ],
     ];
 
-
-
-
-    if ((i.orderType.value === 'Slab_Door' )|| (i.construction.value === 'Slab')) {
+    if (i.orderType.value === 'Slab_Door' || i.construction.value === 'Slab') {
       i.dimensions.forEach((item, index) => {
         tableBody.push([
           { text: item.item ? item.item : index + 1, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
           {
-            text: `${SlabSize(item, i.edge.LIP_FACTOR)} ${
-              item.notes ? item.notes : ''
-            }`,
-            style: 'fonts',
+            stack: [
+              { text: `${SlabSize(item, i.edge.LIP_FACTOR)}`, style: 'fonts' },
+              item.notes || item.full_frame || item.lite
+                ? {
+                  text: `${item.notes ? item.notes : ''} ${
+                    item.full_frame ? 'Full Frame DF' : ''
+                  } ${item.lite ? item.lite.NAME : ''}`,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
+                : null,
+            ],
           },
           {
             text: Stiles(item, i, breakdowns).map((stile) => {
@@ -56,17 +57,9 @@ export default (data, breakdowns) => {
           { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
         ]);
       });
-    } 
-    
-    
-    else 
-    
-    
-    {
+    } else {
       GlassSort(i).forEach((item, index) => {
-
-
-        console.log({item});
+        console.log({ item });
 
         tableBody.push([
           { text: item.item, style: 'fonts' },
@@ -74,13 +67,15 @@ export default (data, breakdowns) => {
           {
             stack: [
               { text: `${Size(item)}`, style: 'fonts' },
-              item.notes || item.full_frame || item.lite ? 
-                {
+              item.notes || item.full_frame || item.lite
+                ? {
                   text: `${item.notes ? item.notes : ''} ${
                     item.full_frame ? 'Full Frame DF' : ''
                   } ${item.lite ? item.lite.NAME : ''}`,
-                  style: 'tableBold', alignment: 'left'
-                } : null,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
+                : null,
             ],
           },
           {
@@ -99,22 +94,26 @@ export default (data, breakdowns) => {
           },
           {
             stack: [
-              { text: Panels(item, i, breakdowns).map((panel) => {
-                return `${panel.qty} ${panel.measurement} ${panel.pattern} \n`;
-              }), style: 'fonts' },
-              item.cab_number ? 
-                {
+              {
+                text: Panels(item, i, breakdowns).map((panel) => {
+                  return `${panel.qty} ${panel.measurement} ${
+                    '- ' + panel.pattern
+                  } \n`;
+                }),
+                style: 'fonts',
+              },
+              item.cab_number
+                ? {
                   text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
-                  style: 'tableBold', alignment: 'left'
-                } : null,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
+                : null,
             ],
           },
         ]);
       });
     }
-
-
-
 
     return [
       {
@@ -125,32 +124,52 @@ export default (data, breakdowns) => {
               {
                 text: `${
                   i.cope_design
-                    ? i.cope_design.NAME :
-                    i.cope_df_design
+                    ? i.cope_design.NAME
+                    : i.cope_df_design
                       ? i.cope_df_design.NAME + ' DF'
                       : i.mt_design
                         ? i.mt_design.NAME + ' ' + i.construction.value
                         : i.miter_design
                           ? i.miter_design.NAME + ' ' + i.construction.value
                           : i.miter_df_design
-                            ? i.miter_df_design.NAME +
-                    ' ' +
-                    i.construction.value
+                            ? i.miter_df_design.NAME + ' ' + i.construction.value
                             : i.mt_df_design
-                              ? i.mt_df_design.NAME + ' ' + i.construction.value :
-                              i.face_frame_design
-                                ? i.face_frame_design.NAME :
-                                (i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF' || i.construction.value === 'Slab') ? 'Slab ' + i.orderType.value : ''
+                              ? i.mt_df_design.NAME + ' ' + i.construction.value
+                              : i.face_frame_design
+                                ? i.face_frame_design.NAME
+                                : i.orderType.value === 'Slab_Door' ||
+                      i.orderType.value === 'Slab_DF' ||
+                      i.construction.value === 'Slab'
+                                  ? 'Slab ' + i.orderType.value
+                                  : ''
                 } - ${i.panel ? i.panel.NAME : ''} ${
                   i.lite ? '- ' + i.lite.NAME : ''
-                } ${((i.door_piece_number && i.door_piece_number.pieces) === (1 || 2)) ? '- ' + i.door_piece_number.NAME + ' ' + i.orderType.value : ''}`,
+                } ${
+                  (i.door_piece_number && i.door_piece_number.pieces) ===
+                  (1 || 2)
+                    ? '- ' + i.door_piece_number.NAME + ' ' + i.orderType.value
+                    : ''
+                }`,
                 style: 'fonts',
               },
-              { text: `${i.woodtype.NAME} - ${i.thickness.value === 0.75 ? '4/4 - 3/4"' : i.thickness.value === 1 ? '5/4 - 1"' : ''}`, style: 'woodtype' },
+              {
+                text: `${i.woodtype.NAME} - ${
+                  i.thickness.value === 0.75
+                    ? '4/4 - 3/4"'
+                    : i.thickness.value === 1
+                      ? '5/4 - 1"'
+                      : ''
+                }`,
+                style: 'woodtype',
+              },
             ],
-            width: 200
+            width: 200,
           },
-          { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold', alignment: 'center' },
+          {
+            text: `${i.notes ? i.notes : ''}`,
+            style: 'fontsBold',
+            alignment: 'center',
+          },
           {
             stack: [
               {
@@ -158,7 +177,9 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
               {
-                text: `IP: ${i.profile ? i.profile.NAME : 'None'}  Edge: ${i.edge ? i.edge.NAME : 'None'}`,
+                text: `IP: ${i.profile ? i.profile.NAME : 'None'}  Edge: ${
+                  i.edge ? i.edge.NAME : 'None'
+                }`,
                 style: 'fonts',
               },
               // { text: `Applied Profile: ${i.applied_profile ? i.applied_profile.NAME : 'None'}`, style: 'fonts' },
@@ -170,7 +191,7 @@ export default (data, breakdowns) => {
       {
         text: '==============================================================================',
         alignment: 'center',
-        margin: [0,0,0,0]
+        margin: [0, 0, 0, 0],
       },
       {
         table: {
@@ -181,7 +202,7 @@ export default (data, breakdowns) => {
         layout: {
           hLineWidth: function (i, node) {
             // console.log(i, node);
-            return (i === 1 ) ? 1 : 0;
+            return i === 1 ? 1 : 0;
           },
           vLineWidth: function (i, node) {
             return 0;
@@ -190,19 +211,19 @@ export default (data, breakdowns) => {
             if (i === 0 || i === node.table.body.length) {
               return null;
             }
-            return {dash: {length: 1, space: 1}};
+            return { dash: { length: 1, space: 1 } };
           },
           paddingLeft: function (i) {
             return i === 0 ? 0 : 8;
           },
           paddingRight: function (i, node) {
-            return (i === node.table.widths.length - 1) ? 0 : 8;
+            return i === node.table.widths.length - 1 ? 0 : 8;
           },
-        }
+        },
       },
       {
         text: '==============================================================================',
-        alignment: 'center'
+        alignment: 'center',
       },
     ];
   });
@@ -265,20 +286,20 @@ export default (data, breakdowns) => {
       columns: [
         {
           text: `${data.job_info.customer.Company}`,
-          style: 'fonts'
+          style: 'fonts',
         },
         {
           stack: [{ text: `PO: ${data.job_info.poNum}`, alignment: 'right' }],
-          style: 'fonts'
+          style: 'fonts',
         },
       ],
       margin: [0, 10],
     },
     {
       text: '==============================================================================',
-      alignment: 'center'
+      alignment: 'center',
     },
-    table_content
+    table_content,
     // { text: '', pageBreak: 'before' }
   ];
 };

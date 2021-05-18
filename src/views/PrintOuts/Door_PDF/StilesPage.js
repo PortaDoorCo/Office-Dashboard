@@ -19,7 +19,7 @@ export default (data, breakdowns) => {
                   ? i.mt_df_design.NAME + ' ' + i.construction.value
                   : i.face_frame_design
                     ? i.face_frame_design.NAME
-                    : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
+                    : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF' || i.construction.value === 'Slab'
                       ? ''
                       : ''
     }`;
@@ -90,7 +90,8 @@ export default (data, breakdowns) => {
       i.orderType.value === 'Two_Piece' ||
       i.orderType.value === 'Two_Piece_DF' ||
       i.orderType.value === 'Slab_Door' ||
-      i.orderType.value === 'Slab_DF'
+      i.orderType.value === 'Slab_DF' ||
+      i.construction.value === 'Slab'
     ) {
       return null;
     } else {
