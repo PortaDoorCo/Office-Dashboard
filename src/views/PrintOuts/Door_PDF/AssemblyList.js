@@ -140,10 +140,10 @@ export default (data, breakdowns) => {
                               ? i.mt_df_design.NAME + ' ' + i.construction.value :
                               i.face_frame_design
                                 ? i.face_frame_design.NAME :
-                                (i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF') ? '' : ''
+                                (i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF' || i.construction.value === 'Slab') ? 'Slab ' + i.orderType.value : ''
                 } - ${i.panel ? i.panel.NAME : ''} ${
                   i.lite ? '- ' + i.lite.NAME : ''
-                }`,
+                } ${((i.door_piece_number && i.door_piece_number.pieces) === (1 || 2)) ? i.door_piece_number.NAME + ' ' + i.orderType.value : ''}`,
                 style: 'fonts',
               },
               { text: `${i.woodtype.NAME} - ${i.thickness.value === 0.75 ? '4/4 - 3/4"' : i.thickness.value === 1 ? '5/4 - 1"' : ''}`, style: 'woodtype' },

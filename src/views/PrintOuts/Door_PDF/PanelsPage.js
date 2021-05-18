@@ -40,13 +40,14 @@ export default (data, breakdowns) => {
         { text: 'Width x Height', style: 'fonts' },
         { text: 'Pat', style: 'fonts' },
         { text: 'Arch', style: 'fonts' },
-        { text: 'Panel' },
+        { text: 'Panel', style: 'fonts' },
         { text: 'Note', style: 'fonts' }
       ]
     ];
 
     if (
       i.construction.value === 'Slab' ||
+      i.door_piece_number.pieces === (1 || 2)||
       i.orderType.value === 'One_Piece' ||
       i.orderType.value === 'One_Piece_DF' ||
       i.orderType.value === 'Two_Piece' ||
@@ -125,7 +126,7 @@ export default (data, breakdowns) => {
           table: {
             headerRows: 1,
             // widths: [22, 95, 30, '*', 200],
-            widths: [22, 50, 30, 100, 25, 40, 40, 120],
+            widths: [22, 50, 30, 80, 25, 40, 60, 120],
             body: tableBody,
           },
           layout: {

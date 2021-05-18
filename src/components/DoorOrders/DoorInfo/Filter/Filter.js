@@ -51,6 +51,23 @@ class DoorFilter extends Component {
           );
         }
 
+        if ((index === i) && (part.cope_df_design !== undefined)) {
+          this.props.dispatch(
+            autofill(
+              'DoorOrder',
+              `part_list[${i}].cope_df_design`,
+              undefined
+            )
+          );
+
+          this.props.dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].cope_df_design`,
+            )
+          );
+        }
+
         if ((index === i) && (part.miter_design !== undefined)) {
           this.props.dispatch(
             autofill(
@@ -64,6 +81,23 @@ class DoorFilter extends Component {
             untouch(
               'DoorOrder',
               `part_list[${i}].miter_design`,
+            )
+          );
+        }
+
+        if ((index === i) && (part.miter_df_design !== undefined)) {
+          this.props.dispatch(
+            autofill(
+              'DoorOrder',
+              `part_list[${i}].miter_df_design`,
+              undefined
+            )
+          );
+
+          this.props.dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].miter_df_design`,
             )
           );
         }
@@ -197,6 +231,22 @@ class DoorFilter extends Component {
             untouch(
               'DoorOrder',
               `part_list[${i}].finish`,
+            )
+          );
+        }
+
+        if ((index === i) && (part.door_piece_number !== undefined)) {
+          this.props.dispatch(
+            autofill(
+              'DoorOrder',
+              `part_list[${i}].door_piece_number`,
+              undefined
+            )
+          );
+          this.props.dispatch(
+            untouch(
+              'DoorOrder',
+              `part_list[${i}].door_piece_number`,
             )
           );
         }
