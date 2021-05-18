@@ -52,7 +52,7 @@ export default (info, part, breakdowns) => {
     const lite = info[`lite_${index}`]?.NAME;
     return {
       qty: qty,
-      measurement: `GLASS ${lite !== 'None' ? lite : ''}`,
+      measurement: `GLASS ${lite !== 'None' ? '- ' + lite : ''}`,
       pattern: '',
       width: 0,
       height: 0
