@@ -47,6 +47,10 @@ const thickness = [
 
 const ff_thickness = [
   {
+    name: '3/4"',
+    value: 0.75,
+  },
+  {
     name: '1"',
     value: 1,
   },

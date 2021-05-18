@@ -465,8 +465,8 @@ const mapStateToProps = state => ({
           value: 'Face_Frame'
         },
         thickness:   {
-          name: '1"',
-          value: 1,
+          name: '3/4"',
+          value: 0.75,
         },
         door_piece_number: state.part_list.door_piece_number[0],
         dimensions: [],

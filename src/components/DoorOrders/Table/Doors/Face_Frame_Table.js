@@ -501,18 +501,6 @@ const Frame_Only_Table = ({
                   fields.push({
                     qty: 1,
                     openings: 1,
-                    leftStile: leftStileWidth
-                      ? fraction(numQty(leftStileWidth))
-                      : fraction(2.375),
-                    rightStile: rightStileWidth
-                      ? fraction(numQty(rightStileWidth))
-                      : fraction(2.375),
-                    topRail: topRailWidth
-                      ? fraction(numQty(topRailWidth))
-                      : fraction(2.375),
-                    bottomRail: bottomRailWidth
-                      ? fraction(numQty(bottomRailWidth))
-                      : fraction(2.375),
                     horizontalMidRailSize: 0,
                     verticalMidRailSize: 0,
                     unevenSplitInput: '0',

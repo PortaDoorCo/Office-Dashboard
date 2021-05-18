@@ -18,45 +18,6 @@ import {
 
 const required = value => (value ? undefined : 'Required');
 
-const ff_thickness = [
-  {
-    name: '1"',
-    value: 1,
-  },
-  {
-    name: '1 1/8"',
-    value: 1.125,
-  },
-  {
-    name: '1 1/4"',
-    value: 1.25,
-  },
-  {
-    name: '1 3/8"',
-    value: 1.375,
-  },
-  {
-    name: '1 1/2"',
-    value: 1.5,
-  },
-  {
-    name: '1 5/8"',
-    value: 1.625,
-  },
-  {
-    name: '1 3/4"',
-    value: 1.75,
-  },
-  {
-    name: '1 7/8"',
-    value: 1.875,
-  },
-  {
-    name: '2"',
-    value: 2,
-  },
-];
-
 
 class FaceFrame extends Component {
 
