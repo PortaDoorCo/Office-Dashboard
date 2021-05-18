@@ -489,7 +489,8 @@ const Miter_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmi
                           verticalMidRailSize: 0,
                           unevenSplitInput: '0',
                           showBuilder: false,
-                          item: fields.length + 1
+                          item: fields.length + 1,
+                          glass_check_0: formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false
                         })
                         : alert('please select a design')
                     )}

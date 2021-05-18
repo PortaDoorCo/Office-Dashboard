@@ -1,13 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import {
-  Table,
-  Input,
-  Row,
-  Col,
-  Button,
-  FormGroup,
-  Label,
-} from 'reactstrap';
+import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, change } from 'redux-form';
 import Ratio from 'lb-ratio';
@@ -20,7 +12,7 @@ import {
   renderFieldDisabled,
   renderDropdownList,
   renderCheckboxToggle,
-  renderPrice
+  renderPrice,
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
@@ -35,7 +27,6 @@ const fraction = (num) => {
   return fraction.toLocaleString();
 };
 
-
 const Cope_Table = ({
   props,
   fields,
@@ -47,7 +38,7 @@ const Cope_Table = ({
   edit,
   dispatch,
   addPrice,
-  lites
+  lites,
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -90,9 +81,10 @@ const Cope_Table = ({
         tag: 'width',
         sub_tag: 'width_greater_than',
         title: 'Width Greater Than 24 Inches',
-        message: 'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
+        message:
+          'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
         action: 'Add Panel',
-        deny: 'No Thanks'
+        deny: 'No Thanks',
       });
       toggle();
     }
@@ -119,9 +111,10 @@ const Cope_Table = ({
         tag: 'height',
         sub_tag: 'height_greater_than',
         title: 'Height Greater Than 48 Inches',
-        message: 'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
+        message:
+          'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
         action: 'Add Panel',
-        deny: 'No Thanks'
+        deny: 'No Thanks',
       });
       toggle();
     }
@@ -130,11 +123,7 @@ const Cope_Table = ({
 
   const clearNotes = (index, e) => {
     dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${index}].notes`,
-        ''
-      )
+      change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
     );
   };
 
@@ -142,15 +131,11 @@ const Cope_Table = ({
     let value;
     const part = formState.part_list[i];
 
-    if(e){
+    if (e) {
       value = e.target.value;
-      if((part.dimensions[index].notes !== '') && (parseInt(e.target.value) > 1) ){
+      if (part.dimensions[index].notes !== '' && parseInt(e.target.value) > 1) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
       } else {
         dispatch(
@@ -163,28 +148,20 @@ const Cope_Table = ({
       }
     } else {
       value = v;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsW) > 1) && (parseInt(v) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsW) > 1 &&
+        parseInt(v) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsH`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
         );
       } else {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsH`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
         );
       }
     }
@@ -197,6 +174,20 @@ const Cope_Table = ({
           fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
         )
       );
+
+      if (part.panel?.NAME === 'Glass') {
+        for (let j = 0; j < value; j++) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].glass_check_${j}`,
+              true
+            )
+          );
+        }
+      }
+
+      
     } else {
       dispatch(
         change(
@@ -208,19 +199,18 @@ const Cope_Table = ({
     }
   };
 
-
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
     let value;
-    if(e){
+    if (e) {
       value = e.target.value;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(e.target.value) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsH) > 1 &&
+        parseInt(e.target.value) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
       } else {
         dispatch(
@@ -233,32 +223,23 @@ const Cope_Table = ({
       }
     } else {
       value = v;
-      if((part.dimensions[index].notes !== '') && (parseInt(part.dimensions[index].panelsH) > 1) && (parseInt(v) > 1) ){
+      if (
+        part.dimensions[index].notes !== '' &&
+        parseInt(part.dimensions[index].panelsH) > 1 &&
+        parseInt(v) > 1
+      ) {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            ''
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
         );
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsW`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
         );
       } else {
         dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].panelsW`,
-            v
-          )
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
         );
       }
     }
-    
 
     if (value > 1) {
       dispatch(
@@ -325,31 +306,23 @@ const Cope_Table = ({
     }
   };
 
-  const addFields = i => {
+  const addFields = (i) => {
     fields.push({
       qty: 1,
       panelsH: 1,
       panelsW: 1,
       leftStile: leftStileWidth
         ? fraction(numQty(leftStileWidth))
-        : fraction(
-          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-        ),
+        : fraction(formState.part_list[i].profile.MINIMUM_STILE_WIDTH),
       rightStile: rightStileWidth
         ? fraction(numQty(rightStileWidth))
-        : fraction(
-          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-        ),
+        : fraction(formState.part_list[i].profile.MINIMUM_STILE_WIDTH),
       topRail: topRailWidth
         ? fraction(numQty(topRailWidth))
-        : fraction(
-          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-        ),
+        : fraction(formState.part_list[i].profile.MINIMUM_STILE_WIDTH),
       bottomRail: bottomRailWidth
         ? fraction(numQty(bottomRailWidth))
-        : fraction(
-          formState.part_list[i].profile.MINIMUM_STILE_WIDTH
-        ),
+        : fraction(formState.part_list[i].profile.MINIMUM_STILE_WIDTH),
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
@@ -357,21 +330,36 @@ const Cope_Table = ({
       item: fields.length + 1,
       unevenCheck: false,
       unevenSplit: false,
-      glass_check_0: formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false
+      glass_check_0:
+        formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
     });
   };
 
   const addTable = (i) => {
-    if(formState.part_list[i].construction.value === 'Cope' && formState.part_list[i].profile) {
+    if (
+      formState.part_list[i].construction.value === 'Cope' &&
+      formState.part_list[i].profile
+    ) {
       addFields(i);
     } else {
       alert('please select a profile');
-    } 
+    }
   };
-  
+
   return (
     <div>
-      {modal ? <WarningModal toggle={toggle} modal={modal} warningType={warningType} twoHigh={twoHigh} twoWide={twoWide} dispatch={dispatch} change={change} prices={prices} /> : null}
+      {modal ? (
+        <WarningModal
+          toggle={toggle}
+          modal={modal}
+          warningType={warningType}
+          twoHigh={twoHigh}
+          twoWide={twoWide}
+          dispatch={dispatch}
+          change={change}
+          prices={prices}
+        />
+      ) : null}
       {fields.map((table, index) => (
         <Fragment key={index}>
           <hr />
@@ -429,7 +417,7 @@ const Cope_Table = ({
                       )
                     }
                     label="width"
-                    validate={[ required ]}
+                    validate={[required]}
                     edit={edit}
                   />
                 </td>
@@ -633,7 +621,7 @@ const Cope_Table = ({
           </Table>
 
           <Row>
-            <Col lg='2'>
+            <Col lg="2">
               <FormGroup>
                 <strong>Show Builder</strong>
                 <Field
@@ -656,7 +644,6 @@ const Cope_Table = ({
                         edit={edit}
                       />
                     </FormGroup>
-
                   ) : null
               ) : null}
             </Col>
@@ -717,50 +704,53 @@ const Cope_Table = ({
           <div>
             <Row>
               {Array.from(
-                formState.part_list[i].dimensions[index].panelsH ? Array(
-                  parseInt(formState.part_list[i].dimensions[index].panelsH)
-                ).keys() : 0
-              )
-                .map((i, index) => {
-                  return (
-                    <Col lg='2'>
+                formState.part_list[i].dimensions[index].panelsH
+                  ? Array(
+                    parseInt(formState.part_list[i].dimensions[index].panelsH)
+                  ).keys()
+                  : 0
+              ).map((i, index) => {
+                return (
+                  <Col lg="2">
+                    <FormGroup>
+                      <strong>Glass Opening {index + 1}</strong>
+                      <Field
+                        name={`${table}.glass_check_${index}`}
+                        component={renderCheckboxToggle}
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                );
+              })}
+            </Row>
+            <Row>
+              {Array.from(
+                formState.part_list[i].dimensions[index].panelsH
+                  ? Array(
+                    parseInt(formState.part_list[i].dimensions[index].panelsH)
+                  ).keys()
+                  : 0
+              ).map((l, k) => {
+                return eval(
+                  `formState.part_list[i].dimensions[index].glass_check_${k}`
+                ) ? (
+                    <Col lg="2">
                       <FormGroup>
-                        <strong>Glass Opening {index+1}</strong>
+                        <strong>Opening {k + 1} Options</strong>
                         <Field
-                          name={`${table}.glass_check_${index}`}
-                          component={renderCheckboxToggle}
+                          name={`${table}.lite_${k}`}
+                          component={renderDropdownList}
+                          data={lites}
+                          valueField="value"
+                          textField="NAME"
+                          validate={required}
                           edit={edit}
                         />
                       </FormGroup>
                     </Col>
-                  );
-                })}
-            </Row>
-            <Row>
-              {Array.from(
-                formState.part_list[i].dimensions[index].panelsH ? Array(
-                  parseInt(formState.part_list[i].dimensions[index].panelsH)
-                ).keys() : 0
-              )
-                .map((l, k) => {
-                  return (
-                    eval(`formState.part_list[i].dimensions[index].glass_check_${k}`) ? 
-                      <Col lg='2'>
-                        <FormGroup>
-                          <strong>Opening {k + 1} Options</strong>
-                          <Field
-                            name={`${table}.lite_${k}`}
-                            component={renderDropdownList}
-                            data={lites}
-                            valueField="value"
-                            textField="NAME"
-                            validate={required}
-                            edit={edit}
-                          />
-                        </FormGroup>
-                      </Col> : null
-                  );
-                })}
+                  ) : null;
+              })}
             </Row>
           </div>
 
@@ -775,8 +765,7 @@ const Cope_Table = ({
                 label="notes"
               />
             </Col>
-            <Col xs="5">
-            </Col>
+            <Col xs="5"></Col>
             <Col xs="3">
               <strong>Extra Design Cost</strong>
               <Field
@@ -801,13 +790,12 @@ const Cope_Table = ({
                 className="btn-circle add-item-tour"
                 onClick={(e) => addTable(i)}
               >
-              +
+                +
               </Button>
             </div>
           ) : (
             <div />
           )}
-          
         </Col>
       </Row>
 

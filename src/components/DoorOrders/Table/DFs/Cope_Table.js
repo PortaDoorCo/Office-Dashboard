@@ -537,7 +537,8 @@ const Cope_Table = ({ fields, formState, i, prices, subTotal, part, updateSubmit
                           unevenSplitInput: '0',
                           showBuilder: false,
                           full_frame: false,
-                          item: fields.length + 1
+                          item: fields.length + 1,
+                          glass_check_0: formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false
                         })
                         : alert('please select a profile')
                     )}

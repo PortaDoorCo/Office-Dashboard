@@ -181,6 +181,20 @@ const Miter_Table = ({
           fraction(part.miter_design ? part.miter_design.PROFILE_WIDTH : 0)
         )
       );
+
+
+      if (part.panel?.NAME === 'Glass') {
+        for (let j = 0; j < value; j++) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].glass_check_${j}`,
+              true
+            )
+          );
+        }
+      }
+
     } else {
       dispatch(
         change(
@@ -795,6 +809,7 @@ const Miter_Table = ({
                       unevenCheck: false,
                       showBuilder: false,
                       item: fields.length + 1,
+                      glass_check_0: formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false
                     })
                     : alert('please select a profile')
                 }
