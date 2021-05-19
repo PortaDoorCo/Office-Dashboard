@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
+import  GlassSort  from '../Sorting/GlassSort'; 
 
 export default (data, breakdowns) => {
   const getName = i => {
@@ -57,15 +58,15 @@ export default (data, breakdowns) => {
     ) {
       return null;
     } else {
-      i.dimensions.forEach((item, index) => {
+      GlassSort(i).forEach((item, index) => {
         tableBody.push([
-          { text: item.item ? item.item : index + 1, style: 'fonts' },
+          { text: item.item, style: 'fonts' },
           { text: item.name, style: 'fonts' },
           { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} \n`; }), style: 'fonts' },
           { text: Panels(item, i, breakdowns).map(panel => { return `${panel.measurement} \n`; }), style: 'fonts' },
           { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n`; }), style: 'fonts' },
           { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
-          { text: `${i.panel ? i.panel.NAME : 'Glass'}`, style: 'fonts' },
+          { text: Panels(item, i, breakdowns).map(panel => { return `${panel.panel} \n`; }), style: 'fonts' },
           item.notes || item.full_frame || item.lite ? 
             {
               text: `${item.notes ? item.notes : ''} ${
@@ -126,7 +127,7 @@ export default (data, breakdowns) => {
           table: {
             headerRows: 1,
             // widths: [22, 95, 30, '*', 200],
-            widths: [22, 50, 30, 80, 25, 40, 60, 120],
+            widths: [22, 50, 20, 80, 25, 30, 70, 120],
             body: tableBody,
           },
           layout: {

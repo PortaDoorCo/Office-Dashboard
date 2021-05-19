@@ -55,10 +55,11 @@ export default (info, part, breakdowns) => {
     const lite = info[`lite_${index}`]?.NAME;
     return {
       qty: qty,
-      measurement: `GLASS ${lite !== "None" ? "- " + lite : ""}`,
+      measurement: `${lite !== "Glass" ?  lite : ""}`,
       pattern: "",
       width: 0,
       height: 0,
+      panel: "Glass"
     };
   };
 
@@ -68,6 +69,7 @@ export default (info, part, breakdowns) => {
     pattern: "",
     width: 0,
     height: 0,
+    panel: "Glass"
   };
 
   if (VERTICAL_GRAIN) {
@@ -80,6 +82,7 @@ export default (info, part, breakdowns) => {
         pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
         width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
         height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+        panel: panelName
       },
     ];
   } else {
@@ -92,6 +95,7 @@ export default (info, part, breakdowns) => {
         pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
         width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
         height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+        panel: panelName
       },
     ];
   }
@@ -104,6 +108,7 @@ export default (info, part, breakdowns) => {
     pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
     height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+    panel: panelName
   };
 
   const unevenSplit = () => {
@@ -133,6 +138,7 @@ export default (info, part, breakdowns) => {
               pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
               width: Math.round(panelWidth),
               height: Math.round(unevenSplitInput(v)),
+              panel: panelName
             };
           }
         }),
@@ -144,6 +150,7 @@ export default (info, part, breakdowns) => {
       pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
       width: Math.round(panelWidth),
       height: Math.round(panelHeight),
+      panel: panelName
     };
 
     if (glassCheck(panelsH - 1)) {
