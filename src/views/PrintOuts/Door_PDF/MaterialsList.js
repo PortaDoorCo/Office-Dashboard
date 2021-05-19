@@ -206,20 +206,46 @@ export default (data, breakdowns) => {
       const height = Panels(item, i, breakdowns).map((panel) => {
         return numQty(panel.height);
       });
-      const q = ((width * height) / 144) * parseInt(item.qty);
+
+      const qty = Panels(item, i, breakdowns).map((panel) => {
+        if(panel.count){
+          return panel.count;
+        } else {
+          return 0;
+        }
+      });
+
+      const width_total = width.reduce((acc, item) => acc + item);
+      const height_total = height.reduce((acc, item) => acc + item);
+      const qty_total = qty.reduce((acc, item) => acc + item);
+
+
+      console.log({qty});
+      console.log({width});
+      console.log({height});
+
+      const q = ((width_total * height_total) / 144) * parseInt(qty_total ? qty_total : 0);
+
+      console.log({q});
+
       return q;
     });
 
+    console.log({calc});
+
     const equation = calc.reduce((acc, item) => acc + item);
 
+    console.log({equation});
+
     if (
-      i.construction.value === 'Slab' ||
       i.orderType.value === 'One_Piece' ||
       i.orderType.value === 'One_Piece_DF' ||
       i.orderType.value === 'Two_Piece' ||
       i.orderType.value === 'Two_Piece_DF' ||
       i.orderType.value === 'Slab_Door' ||
-      i.orderType.value === 'Slab_DF'
+      i.orderType.value === 'Slab_DF' ||
+      i.construction.value === 'Slab' || 
+      i.door_piece_number?.pieces === (1 || 2)
     ) {
       return 0;
     } else {

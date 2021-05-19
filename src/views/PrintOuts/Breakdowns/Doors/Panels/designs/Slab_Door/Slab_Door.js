@@ -27,7 +27,10 @@ export default (info) => {
       )}`,
       pattern: 'PR',
       width: 0,
-      height: 0
+      height: 0,
+      panel: '',
+      count: qty,
+      multiplier: qty
     },
   ];
 

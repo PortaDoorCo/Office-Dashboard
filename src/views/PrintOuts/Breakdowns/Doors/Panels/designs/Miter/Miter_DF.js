@@ -59,7 +59,8 @@ export default (info, part, breakdowns) => {
       pattern: "",
       width: 0,
       height: 0,
-      panel: "Glass"
+      panel: "Glass",
+      multiplier: qty
     };
   };
 
@@ -82,7 +83,8 @@ export default (info, part, breakdowns) => {
         pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
         width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
         height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-        panel: panelName
+        panel: panelName,
+        multiplier: qty
       },
     ];
   } else {
@@ -95,7 +97,8 @@ export default (info, part, breakdowns) => {
         pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
         width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
         height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-        panel: panelName
+        panel: panelName,
+        multiplier: qty
       },
     ];
   }
@@ -108,7 +111,8 @@ export default (info, part, breakdowns) => {
     pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
     height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-    panel: panelName
+    panel: panelName,
+    multiplier: qty
   };
 
   const unevenSplit = () => {
@@ -138,7 +142,8 @@ export default (info, part, breakdowns) => {
               pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
               width: Math.round(panelWidth),
               height: Math.round(unevenSplitInput(v)),
-              panel: panelName
+              panel: panelName,
+              multiplier: qty
             };
           }
         }),
@@ -150,7 +155,8 @@ export default (info, part, breakdowns) => {
       pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
       width: Math.round(panelWidth),
       height: Math.round(panelHeight),
-      panel: panelName
+      panel: panelName,
+      multiplier: qty
     };
 
     if (glassCheck(panelsH - 1)) {

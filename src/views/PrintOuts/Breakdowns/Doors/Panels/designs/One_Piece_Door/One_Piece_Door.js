@@ -12,7 +12,9 @@ export default (info, part, breakdowns) => {
       pattern: '',
       width: 0,
       height: 0,
-      panel: ''
+      panel: '',
+      count: 0,
+      multiplier: 0
     },
   ];
 
