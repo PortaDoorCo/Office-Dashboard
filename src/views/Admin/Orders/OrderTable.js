@@ -213,7 +213,6 @@ const OrderTable = (props) => {
       cell: row => <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>,
       sortable: true,
     },
-
     {
       name: 'Total',
       selector: 'total',
