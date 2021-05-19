@@ -138,7 +138,8 @@ export default (data, breakdowns) => {
       i.orderType.value === 'Two_Piece_DF' ||
       i.orderType.value === 'Slab_Door' ||
       i.orderType.value === 'Slab_DF' ||
-      i.construction.value === 'Slab'
+      i.construction.value === 'Slab' || 
+      i.door_piece_number?.pieces === (1 || 2)
     ) {
       return null;
     } else {

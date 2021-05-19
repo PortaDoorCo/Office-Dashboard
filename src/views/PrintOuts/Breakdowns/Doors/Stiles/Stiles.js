@@ -17,16 +17,29 @@ export default (info, part, breakdowns) => {
 
   if(part.orderType.value === 'Door') {
     if (part.construction.value === 'Cope') {
-      return Cope_Door(info, part, breakdowns[0]);
+
+      if(part.door_piece_number?.pieces === (1 || 2)){
+        return One_Piece_Door(info,part, breakdowns[0]);
+      } else {
+        return Cope_Door(info, part, breakdowns[0]);
+      }
     }
     if (part.construction.value === 'MT') {
-      return MT_Door(info, part, breakdowns[1]);
+      if(part.door_piece_number?.pieces === (1 || 2)){
+        return One_Piece_Door(info,part, breakdowns[0]);
+      } else {
+        return MT_Door(info, part, breakdowns[1]);
+      }
     }
 
     if (part.construction.value === 'M') {
-      return Miter_Door(info, part, breakdowns[2]);
+      if(part.door_piece_number?.pieces === (1 || 2)){
+        return One_Piece_Door(info,part, breakdowns[0]);
+      } else {
+        return Miter_Door(info, part, breakdowns[2]);
+      }
     }
-
+    
     if (part.construction.value === 'Slab') {
       return Slab_Door(info);
     }
@@ -48,13 +61,25 @@ export default (info, part, breakdowns) => {
 
   if(part.orderType.value === 'DF') {
     if (part.construction.value === 'Cope') {
-      return Cope_DF(info, part, breakdowns[3]);
+      if(part.door_piece_number?.pieces === (1 || 2)){
+        return One_Piece_Door(info,part, breakdowns[0]);
+      } else {
+        return Cope_DF(info, part, breakdowns[3]);
+      }
     }
     if (part.construction.value === 'MT') {
-      return MT_DF(info, part, breakdowns[4]);
+      if(part.door_piece_number?.pieces === (1 || 2)){
+        return One_Piece_Door(info,part, breakdowns[0]);
+      } else {
+        return MT_DF(info, part, breakdowns[4]);
+      }
     }
     if (part.construction.value === 'M') {
-      return Miter_DF(info, part, breakdowns[5]);
+      if(part.door_piece_number?.pieces === (1 || 2)){
+        return One_Piece_Door(info,part, breakdowns[0]);
+      } else {
+        return Miter_DF(info, part, breakdowns[5]);
+      }
     }
 
     if (part.construction.value === 'Slab') {

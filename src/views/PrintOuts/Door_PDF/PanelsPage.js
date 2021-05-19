@@ -48,7 +48,7 @@ export default (data, breakdowns) => {
 
     if (
       i.construction.value === 'Slab' ||
-      i.door_piece_number.pieces === (1 || 2)||
+      i.door_piece_number?.pieces === (1 || 2)||
       i.orderType.value === 'One_Piece' ||
       i.orderType.value === 'One_Piece_DF' ||
       i.orderType.value === 'Two_Piece' ||
