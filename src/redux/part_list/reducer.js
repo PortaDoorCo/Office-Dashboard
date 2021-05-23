@@ -21,36 +21,21 @@ import _ from 'lodash';
 const initialState = {
   woodtypes: ['Loading'],
   applied_profiles: ['Loading'],
-  base_cap: ['Loading'],
-  flat_stock: ['Loading'],
-  baseboards: ['Loading'],
-  casings: ['Loading'],
-  chair_rails: ['Loading'],
-  cope_designs: ['Loading'],
-  cope_df_designs: ['Loading'],
-  crown_mouldings: ['Loading'],
+  designs:['Loading'],
   edge_slabs: ['Loading'],
   edges: ['Loading'],
   finish: ['Loading'],
   lites: ['Loading'],
-  miter_df_designs: ['Loading'],
-  miter_designs: ['Loading'],
   mouldings_lengths: ['Loading'],
   moulding_material: ['Loading'],
-  mt_designs: ['Loading'],
-  mt_df_designs: ['Loading'],
   panels: ['Loading'],
-  plynths_stools: ['Loading'],
   profiles: ['Loading'],
-  solid_crowns: ['Loading'],
-  wainscot_beads: ['Loading'],
+
   face_frame_designs: ['Loading'],
   face_frame_top_rail: ['Loading'],
   furniture_feet: ['Loading'],
-  one_piece_woodtypes: ['Loading'],
-  one_piece_designs: ['Loading'],
-  one_piece_panels: ['Loading'],
-  one_piece_edges: ['Loading'],
+
+
 
   box_bottom_thickness: ['Loading'],
   box_finish: ['Loading'],
@@ -95,7 +80,7 @@ const initialState = {
     },
     {
       name: 'Mitered Construction',
-      value: 'M',
+      value: 'Miter',
     },
     {
       name: 'MT Construction',
@@ -110,6 +95,14 @@ const initialState = {
     {
       name: 'Drawer Order',
       value: 'DF',
+    },
+    {
+      name: 'One Piece',
+      value: 'One_Piece',
+    },
+    {
+      name: 'Two Piece',
+      value: 'Two_Piece',
     },
   ],
   thickness: [
