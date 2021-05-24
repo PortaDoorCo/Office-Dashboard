@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import CopeDoor from './SideBar/Cope/Door';
-import MiterDoor from './SideBar/Miter/Door';
-import MTDoor from './SideBar/MT/Door';
-import CopeDF from './SideBar/Cope/DF';
-import MiterDF from './SideBar/Miter/DF';
-import MTDF from './SideBar/MT/DF';
-import GlassDoor from './SideBar/Glass/Door';
-import GlassDF from './SideBar/Glass/DF';
+import Door from './SideBar/Door/Door';
+import DF from './SideBar/DF/DF';
+
 
 class SideBar extends Component {
   render() {
@@ -17,46 +12,10 @@ class SideBar extends Component {
 
     switch (part.orderType.value) {
       case 'Door':
-        switch (part.construction.value) {
-          case 'Cope':
-            component = <CopeDoor part={part} i={i} />;
-            break;
-          case 'M':
-            component = <MiterDoor part={part} i={i} />;
-            break;
-          case 'MT':
-            component = <MTDoor part={part} i={i} />;
-            break;
-          case 'Glass':
-            component = <GlassDoor part={part} i={i} />;
-            break;
-          case 'Slab':
-            component = <div />;
-            break;
-          default: 
-            return;
-        }
+        component = <Door part={part} i={i} />;
         break;
       case 'DF':
-        switch (part.construction.value) {
-          case 'Cope':
-            component = <CopeDF part={part} i={i} />;
-            break;
-          case 'M':
-            component = <MiterDF part={part} i={i} />;
-            break;
-          case 'MT':
-            component = <MTDF part={part} i={i} />;
-            break;
-          case 'Glass':
-            component = <GlassDF part={part} i={i} />;
-            break;
-          case 'Slab':
-            component = <div />;
-            break;
-          default:
-            return;
-        }
+        component = <DF part={part} i={i} />;
         break;
       case 'Face_Frame':
         component = <div />;
