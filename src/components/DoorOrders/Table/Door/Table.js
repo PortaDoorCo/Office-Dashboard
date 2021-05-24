@@ -307,22 +307,35 @@ const Cope_Table = ({
   };
 
   const addFields = (i) => {
+
+    const construction = formState?.part_list[i]?.construction?.value;
+    const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
+    const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
+
     fields.push({
       qty: 1,
       panelsH: 1,
       panelsW: 1,
       leftStile: leftStileWidth
         ? fraction(numQty(leftStileWidth))
-        : fraction(formState.part_list[i].profile.MINIMUM_STILE_WIDTH),
+        : (construction === 'Cope' && profile) ?
+          fraction(profile) :
+          fraction(design),
       rightStile: rightStileWidth
         ? fraction(numQty(rightStileWidth))
-        : fraction(formState.part_list[i].profile.MINIMUM_STILE_WIDTH),
+        : (construction === 'Cope' && profile) ?
+          fraction(profile) :
+          fraction(design) ,
       topRail: topRailWidth
         ? fraction(numQty(topRailWidth))
-        : fraction(formState.part_list[i].profile.MINIMUM_STILE_WIDTH),
+        : (construction === 'Cope' && profile) ?
+          fraction(profile) :
+          fraction(design),
       bottomRail: bottomRailWidth
         ? fraction(numQty(bottomRailWidth))
-        : fraction(formState.part_list[i].profile.MINIMUM_STILE_WIDTH),
+        : (construction === 'Cope' && profile) ?
+          fraction(profile) :
+          fraction(design),
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
@@ -335,16 +348,6 @@ const Cope_Table = ({
     });
   };
 
-  const addTable = (i) => {
-    if (
-      formState.part_list[i].construction.value === 'Cope' &&
-      formState.part_list[i].profile
-    ) {
-      addFields(i);
-    } else {
-      alert('please select a profile');
-    }
-  };
 
   return (
     <div>
@@ -788,7 +791,7 @@ const Cope_Table = ({
               <Button
                 color="primary"
                 className="btn-circle add-item-tour"
-                onClick={(e) => addTable(i)}
+                onClick={(e) => addFields(i)}
               >
                 +
               </Button>

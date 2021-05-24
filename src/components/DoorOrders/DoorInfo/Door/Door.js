@@ -1,32 +1,25 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  CardSubtitle,
-  FormGroup,
-  Label
-} from 'reactstrap';
+import { Row, Col, CardSubtitle, FormGroup, Label } from 'reactstrap';
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownListFilter, renderTextField } from '../../../RenderInputs/renderInputs';
+import {
+  renderDropdownListFilter,
+  renderTextField,
+} from '../../../RenderInputs/renderInputs';
 import Table from '../../Table/Door/Table';
 import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
   totalSelector,
-  addPriceSelector
+  addPriceSelector,
 } from '../../../../selectors/doorPricing';
 
-import changeProfile from './functions/changeProfile';
+import changeProfile from '../Functions/changeProfile';
 
-const required = value => (value ? undefined : 'Required');
-
-
+const required = (value) => (value ? undefined : 'Required');
 
 class Door extends Component {
-
-
   render() {
     const {
       part,
@@ -48,15 +41,19 @@ class Door extends Component {
       updateSubmit,
     } = this.props;
 
-    const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
-    const filtered_designs = designs.filter(design => (design.CONSTRUCTION === formState?.part_list[index]?.construction?.value) && (design.ORDERTYPE === formState?.part_list[index]?.orderType?.value));
+    const construction = formState?.part_list[index]?.construction?.value;
+    const orderType = formState?.part_list[index]?.orderType?.value;
 
-    console.log({filtered_designs});
+    const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
+    const filtered_designs = designs.filter(
+      (design) =>
+        design.CONSTRUCTION === construction && design.ORDERTYPE === orderType
+    );
 
     return (
       <div>
         <Row>
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
@@ -71,7 +68,7 @@ class Door extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -86,40 +83,44 @@ class Door extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
-            <FormGroup>
-              <Label htmlFor="mould">Edge</Label>
-              <Field
-                name={`${part}.edge`}
-                component={renderDropdownListFilter}
-                data={edges}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
+          {construction === ('Cope' || 'MT') ? (
+            <Col>
+              <FormGroup>
+                <Label htmlFor="mould">Edge</Label>
+                <Field
+                  name={`${part}.edge`}
+                  component={renderDropdownListFilter}
+                  data={edges}
+                  valueField="value"
+                  textField="NAME"
+                  validate={required}
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+          ): null }
         </Row>
         <Row>
 
-          <Col xs="4">
-            <FormGroup>
-              <Label htmlFor="edge">Profile</Label>
-              <Field
-                name={`${part}.profile`}
-                component={renderDropdownListFilter}
-                data={profiles}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-                onBlur={() => changeProfile(part, index, this.props, change)}
-              />
-            </FormGroup>
-          </Col>
+          {construction === 'Cope' ? (
+            <Col>
+              <FormGroup>
+                <Label htmlFor="edge">Profile</Label>
+                <Field
+                  name={`${part}.profile`}
+                  component={renderDropdownListFilter}
+                  data={profiles}
+                  valueField="value"
+                  textField="NAME"
+                  validate={required}
+                  edit={edit}
+                  onBlur={() => changeProfile(part, index, this.props, change)}
+                />
+              </FormGroup>
+            </Col>
+          ) : null}
 
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
@@ -134,7 +135,7 @@ class Door extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
@@ -149,7 +150,6 @@ class Door extends Component {
             </FormGroup>
           </Col>
         </Row>
-
 
         <Row className="mt-2">
           <Col xs="4">
@@ -168,7 +168,9 @@ class Door extends Component {
         </Row>
 
         <div>
-          <CardSubtitle className="mt-4 mb-1"><strong>Dimensions</strong></CardSubtitle>
+          <CardSubtitle className="mt-4 mb-1">
+            <strong>Dimensions</strong>
+          </CardSubtitle>
           <div className="mt-1" />
           <FieldArray
             name={`${part}.dimensions`}
@@ -185,12 +187,10 @@ class Door extends Component {
             updateSubmit={updateSubmit}
           />
         </div>
-
       </div>
     );
   }
 }
-
 
 const mapStateToProps = (state, props) => ({
   woodtypes: state.part_list.woodtypes,
@@ -206,11 +206,6 @@ const mapStateToProps = (state, props) => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   addPrice: addPriceSelector(state),
-
 });
 
-
-export default connect(
-  mapStateToProps,
-  null
-)(Door);
+export default connect(mapStateToProps, null)(Door);

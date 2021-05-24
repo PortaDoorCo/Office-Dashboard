@@ -1,26 +1,22 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  CardSubtitle,
-  FormGroup,
-  Label
-} from 'reactstrap';
+import { Row, Col, CardSubtitle, FormGroup, Label } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderTextField } from '../../../RenderInputs/renderInputs';
+import {
+  renderDropdownList,
+  renderDropdownListFilter,
+  renderTextField,
+} from '../../../RenderInputs/renderInputs';
 import Frame_Only_Table from '../../Table/Face_Frame/Face_Frame_Table';
 import {
   linePriceSelector,
   itemPriceSelector,
-  subTotalSelector
+  subTotalSelector,
 } from '../../../../selectors/doorPricing';
 
-const required = value => (value ? undefined : 'Required');
-
+const required = (value) => (value ? undefined : 'Required');
 
 class FaceFrame extends Component {
-
   render() {
     const {
       part,
@@ -34,7 +30,7 @@ class FaceFrame extends Component {
       prices,
       subTotal,
       edit,
-      updateSubmit
+      updateSubmit,
     } = this.props;
     return (
       <div>
@@ -53,8 +49,6 @@ class FaceFrame extends Component {
               />
             </FormGroup>
           </Col>
-
-          
 
           <Col>
             <FormGroup>
@@ -85,10 +79,7 @@ class FaceFrame extends Component {
               />
             </FormGroup>
           </Col>
-
         </Row>
-
-
 
         <Row className="mt-2">
           <Col xs="4">
@@ -107,7 +98,9 @@ class FaceFrame extends Component {
         </Row>
 
         <div>
-          <CardSubtitle className="mt-4 mb-1"><strong>Dimensions</strong></CardSubtitle>
+          <CardSubtitle className="mt-4 mb-1">
+            <strong>Dimensions</strong>
+          </CardSubtitle>
           <div className="mt-1" />
           <FieldArray
             name={`${part}.dimensions`}
@@ -128,8 +121,7 @@ class FaceFrame extends Component {
   }
 }
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   woodtypes: state.part_list.woodtypes,
   face_frame_designs: state.part_list.face_frame_designs,
   face_frame_top_rails: state.part_list.face_frame_top_rail,
@@ -140,7 +132,4 @@ const mapStateToProps = state => ({
   subTotal: subTotalSelector(state),
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(FaceFrame);
+export default connect(mapStateToProps, null)(FaceFrame);

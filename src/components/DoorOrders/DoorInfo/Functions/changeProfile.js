@@ -1,5 +1,5 @@
 
-import fraction from '../../../../../utils/fraction';
+import fraction from '../../../../utils/fraction';
 
 const changeProfile = (p, ind, props, change) => {
 
