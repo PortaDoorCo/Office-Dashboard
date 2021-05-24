@@ -27,7 +27,7 @@ const fraction = (num) => {
   return fraction.toLocaleString();
 };
 
-const Cope_Table = ({
+const DoorTable = ({
   props,
   fields,
   formState,
@@ -167,13 +167,24 @@ const Cope_Table = ({
     }
 
     if (value > 1) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-          fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-        )
-      );
+      if(part.construction === 'Cope'){
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+            fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+            fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+          )
+        );
+      }
+
 
       if (part.panel?.NAME === 'Glass') {
         for (let j = 0; j < value; j++) {
@@ -242,13 +253,24 @@ const Cope_Table = ({
     }
 
     if (value > 1) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-          fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-        )
-      );
+      if(part.construction === 'Cope'){
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+            fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+            fraction(part.profile ? part.design.PROFILE_WIDTH : 0)
+          )
+        );
+      }
+
     } else {
       dispatch(
         change(
@@ -822,4 +844,4 @@ const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
 });
 
-export default connect(mapStateToProps, null)(Cope_Table);
+export default connect(mapStateToProps, null)(DoorTable);
