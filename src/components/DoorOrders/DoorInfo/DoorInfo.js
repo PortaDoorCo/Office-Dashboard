@@ -12,7 +12,7 @@ const construction = [
   },
   {
     name: 'Mitered Construction',
-    value: 'M',
+    value: 'Miter',
   },
   {
     name: 'MT Construction',

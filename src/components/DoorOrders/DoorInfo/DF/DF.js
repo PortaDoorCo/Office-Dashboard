@@ -9,7 +9,7 @@ import {
 import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
 import { renderDropdownListFilter, renderTextField, renderCheckboxToggle } from '../../../RenderInputs/renderInputs';
-import Cope_Table from '../../Table/DFs/Cope_Table';
+import Table from '../../Table/DF/Table';
 import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
@@ -308,7 +308,7 @@ class CopeDF extends Component {
           <div className="mt-1" />
           <FieldArray
             name={`${part}.dimensions`}
-            component={Cope_Table}
+            component={Table}
             i={index}
             prices={prices}
             subTotal={subTotal}

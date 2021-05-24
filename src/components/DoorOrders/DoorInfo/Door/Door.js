@@ -10,7 +10,6 @@ import { Field, FieldArray, change } from 'redux-form';
 import { connect } from 'react-redux';
 import { renderDropdownListFilter, renderTextField } from '../../../RenderInputs/renderInputs';
 import Table from '../../Table/Door/Table';
-import Ratio from 'lb-ratio';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -19,89 +18,14 @@ import {
   addPriceSelector
 } from '../../../../selectors/doorPricing';
 
+import changeProfile from './functions/changeProfile';
+
 const required = value => (value ? undefined : 'Required');
 
-const fraction = num => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
-
-class CopeDoor extends Component {
-
-  onChangeProfile = (p, ind) => {
-
-    const { formState } = this.props;
-
-    const part = formState.part_list[ind];
-
-    if(part.dimensions){
-      part.dimensions.forEach((info, index) => {
-        if(info){
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `${p}.dimensions[${index}].leftStile`,
-              fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-            )
-          );
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `${p}.dimensions[${index}].rightStile`,
-              fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
-            )
-          );
 
 
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `${p}.dimensions[${index}].topRail`,
-              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
-            )
-          );
+class Door extends Component {
 
-
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `${p}.dimensions[${index}].bottomRail`,
-              fraction(part.profile ? (part.profile.MINIMUM_STILE_WIDTH) : 0)
-            )
-          );
-
-
-
-          if (parseInt(info.panelsH) > 1) {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `${p}.dimensions[${index}].horizontalMidRailSize`,
-                fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-              )
-            );
-          } 
-
-
-
-          if (parseInt(info.panelsW) > 1) {
-            this.props.dispatch(
-              change(
-                'DoorOrder',
-                `${p}.dimensions[${index}].verticalMidRailSize`,
-                fraction(part.profile ? part.profile.MID_RAIL_MINIMUMS : 0)
-              )
-            );
-          }
-        } else {
-          return null;
-        }
-      });
-    } else {
-      return null;
-    }
-  }
 
   render() {
     const {
@@ -122,12 +46,13 @@ class CopeDoor extends Component {
       addPrice,
       one_piece,
       updateSubmit,
-      door_piece_number
     } = this.props;
 
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
 
+    const filtered_designs = designs.filter(design => design.CONSTRUCTION === formState?.part_list[index]?.construction?.value);
 
+    console.log({filtered_designs});
 
     return (
       <div>
@@ -153,7 +78,7 @@ class CopeDoor extends Component {
               <Field
                 name={`${part}.design`}
                 component={renderDropdownListFilter}
-                data={designs}
+                data={filtered_designs}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -190,7 +115,7 @@ class CopeDoor extends Component {
                 textField="NAME"
                 validate={required}
                 edit={edit}
-                onBlur={() => this.onChangeProfile(part, index)}
+                onBlur={() => changeProfile(part, index, this.props, change)}
               />
             </FormGroup>
           </Col>
@@ -225,25 +150,6 @@ class CopeDoor extends Component {
             </FormGroup>
           </Col>
         </Row>
-
-
-        <Row>
-          <Col xs="4">
-            <FormGroup>
-              <Label htmlFor="arches"># of Pieces</Label>
-              <Field
-                name={`${part}.door_piece_number`}
-                component={renderDropdownListFilter}
-                data={door_piece_number}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-
 
 
         <Row className="mt-2">
@@ -308,4 +214,4 @@ const mapStateToProps = (state, props) => ({
 export default connect(
   mapStateToProps,
   null
-)(CopeDoor);
+)(Door);
