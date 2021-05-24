@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Component from '../FFInfo';
+import DoorInfo from '../FFInfo';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -12,10 +12,10 @@ const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...mi
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-
+  DoorInfo.defaultProps = { fields: [] };
   ReactDOM.render(
     <Provider store={store}>
-      <Component />
+      <DoorInfo />
     </Provider>
     , div);
   ReactDOM.unmountComponentAtNode(div);
