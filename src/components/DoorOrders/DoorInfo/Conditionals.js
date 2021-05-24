@@ -2,34 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Door from './Door/Door';
 import DF from './DF/DF';
-
-
-import MTDoor from './MT/Door';
-import GlassDoor from './Glass/Glass_Door';
-import CopeDF from './Cope/DF';
-import MiterDF from './Miter/DF';
-import MT_DF from './MT/DF';
-
-
 import FaceFrame from './Face_Frame/FaceFrame';
 import SlabDoor from './Slab_Door/Slab_Door';
 import SlabDF from './Slab_Door/Slab_DF';
-
-
-
-import GlassDF from './Glass/Glass_DF';
-
-import GlassCopeDoor from './Glass/Cope/Door';
-import GlassCopeDF from './Glass/Cope/DF';
-
-import GlassMTDoor from './Glass/MT/Door';
-import GlassMTDF from './Glass/MT/DF';
-
-import GlassMitreDoor from './Glass/Mitre/Door';
-import GlassMitreDF from './Glass/Mitre/DF';
-
-
-
 
 
 class Conditionals extends Component {

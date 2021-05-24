@@ -3,13 +3,7 @@ import { Row, Col, CardSubtitle, Button, ButtonGroup } from 'reactstrap';
 import DoorFilter from '../DoorInfo/Filter/Filter';
 import Conditionals from './Conditionals';
 import CopyModal from './CopyModal';
-import Ratio from 'lb-ratio';
 
-
-const fraction = (num) => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
 
 const construction = [
   {
