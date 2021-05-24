@@ -49,8 +49,7 @@ class Door extends Component {
     } = this.props;
 
     const one_piece_wood = woodtypes.filter(wood => wood.one_piece === true);
-
-    const filtered_designs = designs.filter(design => design.CONSTRUCTION === formState?.part_list[index]?.construction?.value);
+    const filtered_designs = designs.filter(design => (design.CONSTRUCTION === formState?.part_list[index]?.construction?.value) && (design.ORDERTYPE === formState?.part_list[index]?.orderType?.value));
 
     console.log({filtered_designs});
 
