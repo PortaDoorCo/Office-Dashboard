@@ -26,6 +26,7 @@ const initialState = {
   edges: ['Loading'],
   finish: ['Loading'],
   lites: ['Loading'],
+  mouldings: ['Loading'],
   mouldings_lengths: ['Loading'],
   moulding_material: ['Loading'],
   panels: ['Loading'],
