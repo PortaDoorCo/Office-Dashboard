@@ -6,6 +6,7 @@ import CopeDF from './Products/DrawerFront/Cope/Cope';
 import MTDF from './Products/DrawerFront/MT/MT';
 import MiterDF from './Products/DrawerFront/Mitre/Mitre';
 import AccountSettings from './AccountSettings';
+// import Door from './Products/Door/Door/Door';
 import SlabDoor from './Products/Door/Slab_Type_Door/Slab';
 import OnePiece from './Products/Door/One_Piece_Door/One_Piece';
 import FaceFrame from './Products/FaceFrame/FaceFrame';
@@ -27,6 +28,8 @@ const Selection = props => {
   switch (selection) {
     case 'index':
       return <AccountSettings />;
+    // case 'door':
+    //   return <Door />;
     case 'cope_door':
       return <CopeDoor />;
     case 'mt_door':
