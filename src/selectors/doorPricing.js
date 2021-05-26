@@ -174,61 +174,12 @@ export const itemPriceSelector = createSelector(
   [partListSelector, pricingSelector, discountSelector],
   (parts, pricer, discount) =>
     parts.map((part, index) => {
-      let design = 0;
-
-      if (part.cope_design) {
-        design =
-          part.cope_design && part.thickness.value === 0.75
-            ? part.cope_design.UPCHARGE
-            : part.cope_design && part.thickness.value === 1
-              ? part.cope_design.UPCHARGE_THICK
-              : 0;
-      }
-
-      if (part.cope_df_design) {
-        design =
-          part.cope_df_design && part.thickness.value === 0.75
-            ? part.cope_df_design.UPCHARGE
-            : part.cope_df_design && part.thickness.value === 1
-              ? part.cope_df_design.UPCHARGE_THICK
-              : 0;
-      }
-
-      if (part.miter_design) {
-        design =
-          part.miter_design && part.thickness.value === 0.75
-            ? part.miter_design.UPCHARGE
-            : part.miter_design && part.thickness.value === 1
-              ? part.miter_design.UPCHARGE_THICK
-              : 0;
-      }
-
-      if (part.mt_design) {
-        design =
-          part.mt_design && part.thickness.value === 0.75
-            ? part.mt_design.UPCHARGE
-            : part.mt_design && part.thickness.value === 1
-              ? part.mt_design.UPCHARGE_THICK
-              : 0;
-      }
-
-      if (part.miter_df_design) {
-        design =
-          part.miter_df_design && part.thickness.value === 0.75
-            ? part.miter_df_design.UPCHARGE
-            : part.miter_df_design && part.thickness.value === 1
-              ? part.miter_df_design.UPCHARGE_THICK
-              : 0;
-      }
-
-      if (part.mt_df_design) {
-        design =
-          part.mt_df_design && part.thickness.value === 0.75
-            ? part.mt_df_design.UPCHARGE
-            : part.mt_df_design && part.thickness.value === 1
-              ? part.mt_df_design.UPCHARGE_THICK
-              : 0;
-      }
+      const design =
+        part.design && part.thickness.value === 0.75
+          ? part.design.UPCHARGE
+          : part.design && part.thickness.value === 1
+            ? part.design.UPCHARGE_THICK
+            : 0;
 
       const wood =
         part.woodtype && part.thickness.value === 0.75
@@ -236,7 +187,7 @@ export const itemPriceSelector = createSelector(
           : part.woodtype && part.thickness.value === 1
             ? part.woodtype.STANDARD_GRADE_THICK
             : 0;
-      // const design = part.design && part.thickness.value === 0.75 ? part.design.UPCHARGE : (part.design && part.thickness.value === 1) ? part.design.UPCHARGE_THICK :  0;
+
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
       const applied_profile = part.applied_profile
@@ -257,14 +208,8 @@ export const itemPriceSelector = createSelector(
 
       if (part.orderType.value === 'Face_Frame') {
         if (part.dimensions) {
-
-
-          console.log('HEREJKLSDJFDSKLFJSDFLKJ');
-
           const linePrice = part.dimensions.map((i) => {
-
-
-            console.log({i});
+            console.log({ i });
 
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
@@ -283,7 +228,7 @@ export const itemPriceSelector = createSelector(
             }
           });
 
-          console.log({linePrice});
+          console.log({ linePrice });
 
           return linePrice;
         } else {
@@ -292,10 +237,7 @@ export const itemPriceSelector = createSelector(
       } else {
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
-
-
-            console.log({i});
-
+            console.log({ i });
 
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
@@ -308,22 +250,14 @@ export const itemPriceSelector = createSelector(
             // const lites = i.lite ? i.lite.UPCHARGE : 0;
 
             const litePriceArray = Array.from(
-              panelsH ? Array(
-                parseInt(panelsH)
-              ).keys() : 0
-            )
-              .map((j, index) => {
-                return eval(`i.lite_${index}`) ? eval(`i.lite_${index}.UPCHARGE`) : 0;
-              });
-
+              panelsH ? Array(parseInt(panelsH)).keys() : 0
+            ).map((j, index) => {
+              return eval(`i.lite_${index}`)
+                ? eval(`i.lite_${index}.UPCHARGE`)
+                : 0;
+            });
 
             const lites = litePriceArray.reduce((acc, item) => acc + item, 0);
-
-
-
-              
-
-
 
             let leftStileAdd = 0;
             let rightStileAdd = 0;
@@ -333,7 +267,7 @@ export const itemPriceSelector = createSelector(
             const calcPrice = (add, part, price, w) => {
               const width = w;
               const difference = numQty(part) - width;
-              const calc = (difference * 10) + price;
+              const calc = difference * 10 + price;
               const priceDifference = calc - price;
 
               switch (add) {
@@ -390,302 +324,83 @@ export const itemPriceSelector = createSelector(
               }
             };
 
-            if (part.construction.value === 'Cope') {
-              if (
-                part.orderType.value === 'DF' ||
-                part.orderType.value === 'One_Piece_DF' ||
-                part.orderType.value === 'Two_Piece_DF' ||
-                part.orderType.value === 'Glass_DF'
-              ) {
-                let price = 0;
-
-                if (part.thickness.value === 0.75) {
-                  if (part.cope_df_design) {
-                    price = part.cope_df_design && part.cope_df_design.UPCHARGE;
-                  } else {
-                    price = 0;
-                  }
-                }
-
-                if (part.thickness.value === 1) {
-                  if (part.cope_df_design) {
-                    price = part.cope_df_design && part.cope_df_design.UPCHARGE_THICK;
-                  } else {
-                    price = 0;
-                  }
-                }
-
-                //leftStile
-                if (
-                  part.profile &&
-                  part.profile.MINIMUM_STILE_WIDTH !== numQty(i.leftStile)
-                ) {
-                  calc('leftStile', part.profile.MINIMUM_STILE_WIDTH, price);
-                }
-                //rightStile
-                if (
-                  part.profile &&
-                  part.profile.MINIMUM_STILE_WIDTH !== numQty(i.rightStile)
-                ) {
-                  calc('rightStile', part.profile.MINIMUM_STILE_WIDTH, price);
-                }
-                //topRail
-                if (
-                  part.profile &&
-                  part.profile.MINIMUM_STILE_WIDTH !== numQty(i.topRail)
-                ) {
-                  calc(
-                    'topRail',
-                    part.profile.DF_Reduction ? part.profile.DF_Reduction : 1.5,
-                    price
-                  );
-                }
-                //bottomRail
-                if (
-                  part.profile &&
-                  part.profile.MINIMUM_STILE_WIDTH !== numQty(i.bottomRail)
-                ) {
-                  calc(
-                    'bottomRail',
-                    part.profile.DF_Reduction ? part.profile.DF_Reduction : 1.5,
-                    price
-                  );
-                }
-              } else {
-                let price = 0;
-
-                if (part.thickness.value === 0.75) {
-                  if (part.cope_design) {
-                    price = part.cope_design && part.cope_design.UPCHARGE;
-                  } else {
-                    price = 0;
-                  }
-                }
-                if (part.thickness.value === 1) {
-                  if (part.cope_design) {
-                    price = part.cope_design && part.cope_design.UPCHARGE_THICK;
-                  } else {
-                    price = 0;
-                  }
-                }
-
-                if (part.profile) {
-                  //leftStile
-                  if (
-                    (part.profile && part.profile.MINIMUM_STILE_WIDTH) !==
-                    numQty(i.leftStile)
-                  ) {
-                    calc('leftStile', part.profile.MINIMUM_STILE_WIDTH, price);
-                  }
-                  //rightStile
-                  if (
-                    (part.profile && part.profile.MINIMUM_STILE_WIDTH) !==
-                    numQty(i.rightStile)
-                  ) {
-                    calc('rightStile', part.profile.MINIMUM_STILE_WIDTH, price);
-                  }
-                  //topRail
-                  if (
-                    (part.profile && part.profile.MINIMUM_STILE_WIDTH) !==
-                    numQty(i.topRail)
-                  ) {
-                    calc('topRail', part.profile.MINIMUM_STILE_WIDTH, price);
-                  }
-                  //bottomRail
-                  if (
-                    (part.profile && part.profile.MINIMUM_STILE_WIDTH) !==
-                    numQty(i.bottomRail)
-                  ) {
-                    calc('bottomRail', part.profile.MINIMUM_STILE_WIDTH, price);
-                  }
-                } else {
-                  calc('leftStile', 2.3125, price);
-                  calc('rightStile', 2.3125, price);
-                  calc('topRail', 2.3125, price);
-                  calc('bottomRail', 2.3125, price);
-                }
-              }
-            }
-
-            if (part.construction.value === 'M') {
-              if (
-                part.orderType.value === 'DF' ||
-                part.orderType.value === 'One_Piece_DF' ||
-                part.orderType.value === 'Two_Piece_DF' ||
-                part.orderType.value === 'Glass_DF'
-              ) {
-                let price = 0;
-
-                if (part.thickness.value === 0.75) {
-                  price = part.miter_df_design && part.miter_df_design.UPCHARGE;
-                }
-                if (part.thickness.value === 1) {
-                  price = part.miter_df_design && part.miter_df_design.UPCHARGE_THICK;
-                }
-
-                //leftStile
-                if (
-                  part.miter_df_design &&
-                  part.miter_df_design.PROFILE_WIDTH !== numQty(i.leftStile)
-                ) {
-                  calc('leftStile', part.miter_df_design.PROFILE_WIDTH, price);
-                }
-                //rightStile
-                if (
-                  part.miter_df_design &&
-                  part.miter_df_design.PROFILE_WIDTH !== numQty(i.rightStile)
-                ) {
-                  calc('rightStile', part.miter_df_design.PROFILE_WIDTH, price);
-                }
-                //topRail
-                if (
-                  part.miter_df_design &&
-                  part.miter_df_design.PROFILE_WIDTH !== numQty(i.topRail)
-                ) {
-                  calc('topRail', part.miter_df_design.PROFILE_WIDTH, price);
-                }
-                //bottomRail
-                if (
-                  part.miter_df_design &&
-                  part.miter_df_design.PROFILE_WIDTH !== numQty(i.bottomRail)
-                ) {
-                  calc('bottomRail', part.miter_df_design.PROFILE_WIDTH, price);
-                }
-              } else {
-                let price = 0;
-
-                if (part.thickness.value === 0.75) {
-                  price = part.miter_design && part.miter_design.UPCHARGE;
-                }
-                if (part.thickness.value === 1) {
-                  price = part.miter_design && part.miter_design.UPCHARGE_THICK;
-                }
-
-                //leftStile
-                if (
-                  part.miter_design &&
-                  part.miter_design.PROFILE_WIDTH !== numQty(i.leftStile)
-                ) {
-                  calc('leftStile', part.miter_design.PROFILE_WIDTH, price);
-                }
-                //rightStile
-                if (
-                  part.miter_design &&
-                  part.miter_design.PROFILE_WIDTH !== numQty(i.rightStile)
-                ) {
-                  calc('rightStile', part.miter_design.PROFILE_WIDTH, price);
-                }
-                //topRail
-                if (
-                  part.miter_design &&
-                  part.miter_design.PROFILE_WIDTH !== numQty(i.topRail)
-                ) {
-                  calc('topRail', part.miter_design.PROFILE_WIDTH, price);
-                }
-                //bottomRail
-                if (
-                  part.miter_design &&
-                  part.miter_design.PROFILE_WIDTH !== numQty(i.bottomRail)
-                ) {
-                  calc('bottomRail', part.miter_design.PROFILE_WIDTH, price);
-                }
-              }
-            }
-
-            if (part.construction.value === 'MT') {
-              let price = 0;
-
-              if (
-                part.orderType.value === 'DF' ||
-                part.orderType.value === 'One_Piece_DF' ||
-                part.orderType.value === 'Two_Piece_DF' ||
-                part.orderType.value === 'Glass_DF'
-              ) {
-                if (part.thickness.value === 0.75) {
-                  price = part.mt_df_design && part.mt_df_design.UPCHARGE;
-                }
-                if (part.thickness.value === 1) {
-                  price = part.mt_df_design && part.mt_df_design.UPCHARGE_THICK;
-                }
-
-                //leftStile
-                if (
-                  part.mt_df_design &&
-                  part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.leftStile)
-                ) {
-                  calc('leftStile', part.mt_df_design.MID_RAIL_MINIMUMS, price);
-                }
-                //rightStile
-                if (
-                  part.mt_df_design &&
-                  part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.rightStile)
-                ) {
-                  calc(
-                    'rightStile',
-                    part.mt_df_design.MID_RAIL_MINIMUMS,
-                    price
-                  );
-                }
-                //topRail
-                if (
-                  part.mt_df_design &&
-                  part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.topRail)
-                ) {
-                  calc('topRail', part.mt_df_design.MID_RAIL_MINIMUMS, price);
-                }
-                //bottomRail
-                if (
-                  part.mt_df_design &&
-                  part.mt_df_design.MID_RAIL_MINIMUMS !== numQty(i.bottomRail)
-                ) {
-                  calc(
-                    'bottomRail',
-                    part.mt_df_design.MID_RAIL_MINIMUMS,
-                    price
-                  );
-                }
-              } else {
-                if (part.thickness.value === 0.75) {
-                  price = part.mt_design && part.mt_design.UPCHARGE;
-                }
-                if (part.thickness.value === 1) {
-                  price = part.mt_design && part.mt_design.UPCHARGE_THICK;
-                }
-
-                //leftStile
-                if (
-                  part.mt_design &&
-                  part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.leftStile)
-                ) {
-                  calc('leftStile', part.mt_design.MID_RAIL_MINIMUMS, price);
-                }
-                //rightStile
-                if (
-                  part.mt_design &&
-                  part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.rightStile)
-                ) {
-                  calc('rightStile', part.mt_design.MID_RAIL_MINIMUMS, price);
-                }
-                //topRail
-                if (
-                  part.mt_design &&
-                  part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.topRail)
-                ) {
-                  calc('topRail', part.mt_design.MID_RAIL_MINIMUMS, price);
-                }
-                //bottomRail
-                if (
-                  part.mt_design &&
-                  part.mt_design.MID_RAIL_MINIMUMS !== numQty(i.bottomRail)
-                ) {
-                  calc('bottomRail', part.mt_design.MID_RAIL_MINIMUMS, price);
-                }
-              }
-            }
-
             let price = 0;
 
-            //Slab Doors here 
+            if (part.thickness.value === 0.75) {
+              if (part.design) {
+                price = part.design && part.design.UPCHARGE;
+              } else {
+                price = 0;
+              }
+            }
+            if (part.thickness.value === 1) {
+              if (part.design) {
+                price = part.design && part.design.UPCHARGE_THICK;
+              } else {
+                price = 0;
+              }
+            }
+
+            if (part.profile) {
+              //leftStile
+              if (
+                (part.profile && part.profile.PROFILE_WIDTH) !==
+                numQty(i.leftStile)
+              ) {
+                calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+              }
+              //rightStile
+              if (
+                (part.profile && part.profile.PROFILE_WIDTH) !==
+                numQty(i.rightStile)
+              ) {
+                calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+              }
+              //topRail
+              if (
+                (part.profile && part.profile.PROFILE_WIDTH) !==
+                numQty(i.topRail)
+              ) {
+                calc('topRail', part.profile?.PROFILE_WIDTH, price);
+              }
+              //bottomRail
+              if (
+                (part.profile && part.profile.PROFILE_WIDTH) !==
+                numQty(i.bottomRail)
+              ) {
+                calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+              }
+            } else {
+              //leftStile
+              if (
+                (part.design && part.design.PROFILE_WIDTH) !==
+                numQty(i.leftStile)
+              ) {
+                calc('leftStile', part.design?.PROFILE_WIDTH, price);
+              }
+              //rightStile
+              if (
+                (part.design && part.design.PROFILE_WIDTH) !==
+                numQty(i.rightStile)
+              ) {
+                calc('rightStile', part.design?.PROFILE_WIDTH, price);
+              }
+              //topRail
+              if (
+                (part.design && part.design.PROFILE_WIDTH) !== numQty(i.topRail)
+              ) {
+                calc('topRail', part.design?.PROFILE_WIDTH, price);
+              }
+              //bottomRail
+              if (
+                (part.design && part.design.PROFILE_WIDTH) !==
+                numQty(i.bottomRail)
+              ) {
+                calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+              }
+            }
+
+            //Slab Doors here
 
             if (
               part.orderType.value === 'DF' ||
@@ -707,12 +422,20 @@ export const itemPriceSelector = createSelector(
                     bottomRailAdd +
                     extraCost
                   : 0;
-            } else if ((part.orderType.value === 'Slab_Door') || ((part.orderType.value === 'Door') && (part.construction.value === 'Slab'))  ) {
+            } else if (
+              part.orderType.value === 'Slab_Door' ||
+              (part.orderType.value === 'Door' &&
+                part.construction.value === 'Slab')
+            ) {
               price =
                 (width * height) / 144 > 2
                   ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                   : 2 * wood + (6.5 + edge) + extraCost;
-            } else if ((part.orderType.value === 'Slab_Door') || ( (part.orderType.value === 'DF') && (part.construction.value === 'Slab')  )) {
+            } else if (
+              part.orderType.value === 'Slab_Door' ||
+              (part.orderType.value === 'DF' &&
+                part.construction.value === 'Slab')
+            ) {
               price =
                 (width * height) / 144 > 1
                   ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
