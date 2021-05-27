@@ -8,18 +8,26 @@ const fraction = num => {
   return fraction.toLocaleString();
 };
 
-export default (info, part, breakdowns) => {
 
+export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
-
-  const top_rail_add = part && part.mt_df_design && part.mt_df_design.TOP_RAIL_ADD;
-  const btm_rail_add = part && part.mt_df_design && part.mt_df_design.BTM_RAIL_ADD;
-
-  const topRail = numQty(info.topRail) + (part.edge.LIP_FACTOR / 2);
-  const bottomRail = numQty(info.bottomRail) + (part.edge.LIP_FACTOR / 2);
-  const leftStile = numQty(info.leftStile) + (part.edge.LIP_FACTOR / 2);
-  const rightStile = numQty(info.rightStile) + (part.edge.LIP_FACTOR / 2);
+  
+  const top_rail_arch = part?.design?.TOP_RAIL_ADD;
+  const btm_rail_arch = part?.design?.BTM_RAIL_ADD;
+  
+  const topRail = info.topRail
+    ? numQty(info.topRail) + part?.edge?.LIP_FACTOR / 2
+    : 0;
+  const bottomRail = info.bottomRail
+    ? numQty(info.bottomRail) + part.edge.LIP_FACTOR / 2
+    : 0;
+  const leftStile = info.leftStile
+    ? numQty(info.leftStile) + part.edge.LIP_FACTOR / 2
+    : 0;
+  const rightStile = info.rightStile
+    ? numQty(info.rightStile) + part.edge.LIP_FACTOR / 2
+    : 0;
   const vertMull = numQty(vMidRail);
   const horizMull = numQty(hMidRail);
   const panelsH = parseInt(info.panelsH);
@@ -27,15 +35,15 @@ export default (info, part, breakdowns) => {
   const height = numQty(info.height);
   const width = numQty(info.width);
   const qty = parseInt(info.qty);
-
-  const inset = part.mt_df_design.INSET;
-  const edge_factor = part.edge.LIP_FACTOR;
-
-  const add_len = 0;
-  const tenon_factor = 0;
-
-  const woodtype = part.woodtype.NAME;
-
+  const edge_factor = part.edge?.LIP_FACTOR;
+  
+  let inset = 0;
+  if (part.profile) {
+    inset = part.profile?.INSET;
+  } else {
+    inset = part.design?.INSET;
+  }
+  
   if (eval(breakdowns.leftStile_width) === eval(breakdowns.rightStile_width)) {
     if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH == 1))) {
       return [
@@ -47,8 +55,7 @@ export default (info, part, breakdowns) => {
           pattern: 'LR',
           width: eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_width),
-          multiplier: 2,
-          woodtype
+          multiplier: 2
         },
         {
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
@@ -56,11 +63,10 @@ export default (info, part, breakdowns) => {
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
-          pattern: 'VM3',
           width: eval(breakdowns.vertical_mid_rail_width),
           height: eval(breakdowns.vertical_mid_rail_height),
-          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
-          woodtype
+          pattern: 'VM',
+          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)
         },
       ];
     } else {
@@ -73,8 +79,7 @@ export default (info, part, breakdowns) => {
           pattern: 'LR',
           width: eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
-          multiplier: 2,
-          woodtype
+          multiplier: 2
         }
       ];
     }
@@ -90,8 +95,7 @@ export default (info, part, breakdowns) => {
           pattern: 'L',
           width:eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
-          multiplier: 1,
-          woodtype
+          multiplier: 1
         },
         {
           qty: `(${(qty)})`,
@@ -101,8 +105,7 @@ export default (info, part, breakdowns) => {
           pattern: 'R',
           width:eval(breakdowns.rightStile_width),
           height: eval(breakdowns.rightStile_height),
-          multiplier: 1,
-          woodtype
+          multiplier: 1
         },
         {
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
@@ -110,11 +113,10 @@ export default (info, part, breakdowns) => {
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
-          pattern: 'VM9',
+          pattern: 'VM',
           width: eval(breakdowns.vertical_mid_rail_width),
           height: eval(breakdowns.vertical_mid_rail_height),
-          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
-          woodtype
+          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)
         },
       ];
     }
@@ -128,8 +130,7 @@ export default (info, part, breakdowns) => {
           pattern: 'L',
           width: eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
-          multiplier: 1,
-          woodtype
+          multiplier: 1
         },
         {
           qty: `(${(qty)})`,
@@ -139,8 +140,7 @@ export default (info, part, breakdowns) => {
           pattern: 'R',
           width: eval(breakdowns.rightStile_width),
           height: eval(breakdowns.rightStile_height),
-          multiplier: 1,
-          woodtype
+          multiplier: 1
         }
 
       ];

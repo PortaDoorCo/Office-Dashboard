@@ -8,32 +8,43 @@ const fraction = (num) => {
 };
 
 export default (info, part, breakdowns) => {
-  const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
-  const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
+    const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
+    const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
+    
+    const top_rail_arch = part?.design?.TOP_RAIL_ADD;
+    const btm_rail_arch = part?.design?.BTM_RAIL_ADD;
+    
+    const topRail = info.topRail
+      ? numQty(info.topRail) + part?.edge?.LIP_FACTOR / 2
+      : 0;
+    const bottomRail = info.bottomRail
+      ? numQty(info.bottomRail) + part.edge.LIP_FACTOR / 2
+      : 0;
+    const leftStile = info.leftStile
+      ? numQty(info.leftStile) + part.edge.LIP_FACTOR / 2
+      : 0;
+    const rightStile = info.rightStile
+      ? numQty(info.rightStile) + part.edge.LIP_FACTOR / 2
+      : 0;
+    const vertMull = numQty(vMidRail);
+    const horizMull = numQty(hMidRail);
+    const panelsH = parseInt(info.panelsH);
+    const panelsW = parseInt(info.panelsW);
+    const height = numQty(info.height);
+    const width = numQty(info.width);
+    const qty = parseInt(info.qty);
+    const edge_factor = part.edge?.LIP_FACTOR;
+    
+    let inset = 0;
+    if (part.profile) {
+      inset = part.profile?.INSET;
+    } else {
+      inset = part.design?.INSET;
+    }
 
-  const top_rail_add = part.mt_design.TOP_RAIL_ADD;
-  const btm_rail_add = part.mt_design.BTM_RAIL_ADD;
-
-  const topRail = numQty(info.topRail) + part.edge.LIP_FACTOR / 2;
-  const bottomRail = numQty(info.bottomRail) + part.edge.LIP_FACTOR / 2;
-  const leftStile = numQty(info.leftStile) + part.edge.LIP_FACTOR / 2;
-  const rightStile = numQty(info.rightStile) + part.edge.LIP_FACTOR / 2;
-  const vertMull = numQty(vMidRail);
-  const horizMull = numQty(hMidRail);
-  const panelsH = parseInt(info.panelsH);
-  const panelsW = parseInt(info.panelsW);
-  const height = numQty(info.height);
-  const width = numQty(info.width);
-  const qty = parseInt(info.qty);
-
-  const lites = part.lite ? part.lite.NAME : "";
-
-  const edge_factor = part.edge.LIP_FACTOR;
-  const panel_factor = part.panel.PANEL_FACTOR;
-  const panelName = part.panel?.NAME;
-
-  const add_len = 0;
-  const INSET = 0;
+  const lites = info.lite ? info.lite.NAME : "";
+  const panel_factor = part?.panel?.PANEL_FACTOR;
+  const panelName = part?.panel?.NAME;
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
@@ -51,10 +62,11 @@ export default (info, part, breakdowns) => {
     return {
       qty: qty,
       measurement: `${lite !== "Glass" ?  lite : ""}`,
-      pattern: "",
+      pattern: "GL",
       width: 0,
       height: 0,
-      panel: "Glass"
+      panel: "Glass",
+      multiplier: qty
     };
   };
 
@@ -64,7 +76,8 @@ export default (info, part, breakdowns) => {
     pattern: "",
     width: 0,
     height: 0,
-    panel: "Glass"
+    panel: "Glass",
+    multiplier: qty
   };
 
   const door = [
@@ -76,7 +89,8 @@ export default (info, part, breakdowns) => {
       pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
       width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
       height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-      panel: panelName
+      panel: panelName,
+      multiplier: panelsH * panelsW * qty
     },
   ];
 
@@ -88,7 +102,8 @@ export default (info, part, breakdowns) => {
     pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
     height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-    panel: panelName
+    panel: panelName,
+    multiplier: qty
   };
 
   const unevenSplit = () => {
@@ -118,7 +133,8 @@ export default (info, part, breakdowns) => {
               pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
               width: Math.round(panelWidth),
               height: Math.round(unevenSplitInput(v)),
-              panel: panelName
+              panel: panelName,
+              multiplier: qty
             };
           }
         }),
@@ -130,11 +146,15 @@ export default (info, part, breakdowns) => {
       pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
       width: Math.round(panelWidth),
       height: Math.round(panelHeight),
-      panel: panelName
+      panel: panelName,
+      multiplier: qty
     };
 
     if (glassCheck(panelsH - 1)) {
-      return [...unEven, glassDoor(panelsH)];
+      return [
+        ...unEven,
+        glassDoor(panelsH - 1), // <-------Needs Testing
+      ];
     } else {
       return [...unEven, bottom];
     }
