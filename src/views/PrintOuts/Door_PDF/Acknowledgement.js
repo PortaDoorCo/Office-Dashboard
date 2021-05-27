@@ -38,7 +38,6 @@ export default (data) => {
 
   const order_sub_total = misc_total + discountSubTotal;
 
-
   console.log({ data });
 
   return [
@@ -128,14 +127,6 @@ export default (data) => {
                 {
                   stack: [
                     { text: `${data.job_info.customer.Company}` },
-                    // {
-                    //   text: `${
-                    //     data.companyprofile.Contact
-                    //       ? data.companyprofile.Contact
-                    //       : ''
-                    //   }`,
-                    //   style: 'fonts',
-                    // },
                     {
                       text: `${
                         data.companyprofile.Address1
@@ -184,7 +175,6 @@ export default (data) => {
 
         {
           text: '',
-          // width: 200,
           alignment: 'center',
         },
         {
@@ -224,12 +214,10 @@ export default (data) => {
                     {
                       text: `${data.job_info.customer.Company}`,
                       style: 'fonts',
-                      // alignment: 'right',
                       margin: [0, 0, 0, 0],
                     },
                     {
                       text: `${data.job_info.Address1}`,
-                      // alignment: 'right',
                       style: 'fonts',
                       margin: [0, 0, 0, 0],
                     },
@@ -237,25 +225,16 @@ export default (data) => {
                       text: `${
                         data.job_info.Address2 ? data.job_info.Address2 : ''
                       }`,
-                      // alignment: 'right',
                       style: 'fonts',
                       margin: [0, 0, 0, 0],
                     },
                     {
                       text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                      // alignment: 'right',
                       style: 'fonts',
                       margin: [0, 0, 0, 0],
                     },
-                    // {
-                    //   text: `${data.job_info.Zip}`,
-                    //   alignment: 'left',
-                    //   style: 'fonts',
-                    //   margin: [0, 0, 0, 0],
-                    // },
                     {
                       text: `${data.companyprofile.Phone1}`,
-                      // alignment: 'right',
                       style: 'fonts',
                       margin: [0, 0, 0, 0],
                     },
@@ -268,8 +247,7 @@ export default (data) => {
       ],
     },
     {
-      text:
-        '==============================================================================',
+      text: '==============================================================================',
       alignment: 'center',
       margin: [0, 5, 0, 0],
     },
@@ -296,9 +274,7 @@ export default (data) => {
             } ${item.lite ? item.lite.NAME : ''}`,
             style: 'fontsBold',
           },
-          // {
-          //   text: ''
-          // },
+
           {
             text: `${(data.linePrice[i][index] / parseInt(item.qty)).toFixed(
               2
@@ -324,7 +300,16 @@ export default (data) => {
             {
               stack: [
                 {
-                  text: `${part.orderType ? part.orderType.name : ''} ${(part.door_piece_number && (part.door_piece_number.pieces === 1 || part.door_piece_number.pieces === 2)) ? '- ' + part.door_piece_number.NAME + ' ' + part.orderType.value: '' }`,
+                  text: `${part.orderType ? part.orderType.name : ''} ${
+                    part.door_piece_number &&
+                    (part.door_piece_number.pieces === 1 ||
+                      part.door_piece_number.pieces === 2)
+                      ? '- ' +
+                        part.door_piece_number.NAME +
+                        ' ' +
+                        part.orderType.value
+                      : ''
+                  }`,
                   style: 'fonts',
                 },
                 {
@@ -340,35 +325,20 @@ export default (data) => {
 
                 {
                   text: `${
-                    part.cope_design
-                      ? part.cope_design.NAME
-                      : part.cope_df_design
-                        ? part.cope_df_design.NAME + ' DF'
-                        : part.mt_design
-                          ? part.mt_design.NAME + ' ' + part.construction.value
-                          : part.miter_design
-                            ? part.miter_design.NAME + ' ' + part.construction.value
-                            : part.miter_df_design
-                              ? part.miter_df_design.NAME +
-                        ' ' +
-                        part.construction.value
-                              : part.mt_df_design
-                                ? part.mt_df_design.NAME + ' ' + part.construction.value
-                                : part.face_frame_design
-                                  ? part.face_frame_design.NAME
-                                  : part.orderType.value === 'Slab_Door' ||
-                        part.orderType.value === 'Slab_DF' || part.construction.value === 'Slab'
-                                    ? 'Slab'
-                                    : ''
+                    part.design
+                      ? part.design.NAME
+                      : part.face_frame_design
+                        ? part.face_frame_design.NAME
+                        : part.construction.value === 'Slab'
+                          ? 'Slab'
+                          : ''
                   } - ${
                     part.panel
                       ? part.panel.NAME
-                      : part.orderType.value === 'Slab_Door' ||
-                        part.orderType.value === 'Slab_DF' || 
-                        part.construction.value === 'Slab'
+                      : part.construction.value === 'Slab'
                         ? ''
                         : 'Glass'
-                  } ${i.lite ? '- ' + i.lite.NAME : ''}`,
+                  }`,
                   style: 'fonts',
                 },
               ],
@@ -401,39 +371,15 @@ export default (data) => {
                   }  Edge: ${part.edge ? part.edge.NAME : 'None'}`,
                   style: 'fonts',
                 },
-                // {
-                //   text: `Applied Profile: ${
-                //     part.applied_profile ? part.applied_profile.NAME : 'None'
-                //   }`,
-                //   style: 'fonts',
-                // },
-                // {
-                //   text: `Thickness: ${
-                //     part.thickness ? part.thickness.name : 'None'
-                //   }`,
-                //   style: 'fonts',
-                // },
               ],
               alignment: 'right',
             },
           ],
         },
         {
-          text:
-            '==============================================================================',
+          text: '==============================================================================',
           alignment: 'center',
         },
-        // {
-        //   margin: [0, 10, 0, 0],
-        //   columns: [
-        //     {
-        //       stack: [
-
-        //       ],
-        //       width: 260,
-        //     },
-        //   ],
-        // },
         {
           table: {
             headerRows: 1,
@@ -522,8 +468,7 @@ export default (data) => {
         },
 
         {
-          text:
-            '==============================================================================',
+          text: '==============================================================================',
           alignment: 'center',
         },
       ];
@@ -558,16 +503,14 @@ export default (data) => {
       columns: [
         { text: '', style: 'totals', width: 317 },
         {
-          text: `${data.discount > 0 ? data.discount + '% ' + 'Discount' : ''}`,
+          text: `${data.discount > 0 ? data.discount + '% Discount' : ''}`,
           style: 'totals',
           margin: [0, 0, 0, 0],
           alignment: 'right',
           width: 120,
         },
         {
-          text: `${
-            data.discount > 0 ? '-' + '$' + discountTotal.toFixed(2) : ''
-          }`,
+          text: `${data.discount > 0 ? '- $' + discountTotal.toFixed(2) : ''}`,
           style: 'fonts',
           alignment: 'right',
         },
@@ -828,17 +771,5 @@ export default (data) => {
         },
       ],
     },
-    {
-      columns: [
-        // {
-        //   pageReference: 'liability',
-        //   style: 'fonts',
-        //   alignment: 'left',
-        //   margin: [0, 0, 0, 0],
-        // },
-      ],
-    },
-
-    // { text: '', pageBreak: 'before' }
   ];
 };

@@ -123,32 +123,19 @@ export default (data, breakdowns) => {
             stack: [
               {
                 text: `${
-                  i.cope_design
-                    ? i.cope_design.NAME
-                    : i.cope_df_design
-                      ? i.cope_df_design.NAME + ' DF'
-                      : i.mt_design
-                        ? i.mt_design.NAME + ' ' + i.construction.value
-                        : i.miter_design
-                          ? i.miter_design.NAME + ' ' + i.construction.value
-                          : i.miter_df_design
-                            ? i.miter_df_design.NAME + ' ' + i.construction.value
-                            : i.mt_df_design
-                              ? i.mt_df_design.NAME + ' ' + i.construction.value
-                              : i.face_frame_design
-                                ? i.face_frame_design.NAME
-                                : i.orderType.value === 'Slab_Door' ||
-                      i.orderType.value === 'Slab_DF' ||
-                      i.construction.value === 'Slab'
-                                  ? 'Slab ' + i.orderType.value
-                                  : ''
-                } - ${i.panel ? i.panel.NAME : ''} ${
-                  i.lite ? '- ' + i.lite.NAME : ''
-                } ${
-                  (i.door_piece_number && i.door_piece_number.pieces) ===
-                  (1 || 2)
-                    ? '- ' + i.door_piece_number.NAME + ' ' + i.orderType.value
-                    : ''
+                  i.design
+                    ? i.design.NAME
+                    : i.face_frame_design
+                      ? i.face_frame_design.NAME
+                      : i.construction.value === 'Slab'
+                        ? 'Slab'
+                        : ''
+                } - ${
+                  i.panel
+                    ? i.panel.NAME
+                    : i.construction.value === 'Slab'
+                      ? ''
+                      : 'Glass'
                 }`,
                 style: 'fonts',
               },
