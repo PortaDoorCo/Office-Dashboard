@@ -22,7 +22,7 @@ export const PRINTER_OPTION_UPDATED = 'PRINTER_OPTION_UPDATED';
 
 export function loadPrinterOptions(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/printer-options`, {
+    const res = await fetch(`${db_url}/printer-options?_sort=id:ASC`, {
       headers: {
         'Authorization': `Bearer ${cookie}`
       }

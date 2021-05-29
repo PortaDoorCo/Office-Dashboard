@@ -202,7 +202,7 @@ const Cope = (props) => {
 
 const mapStateToProps = (state) => ({
   woodtypes: state.part_list.woodtypes,
-  designs: state.part_list.cope_designs,
+  designs: state.part_list.designs,
   edges: state.part_list.edges,
   panels: state.part_list.panels,
   profiles: state.part_list.profiles,

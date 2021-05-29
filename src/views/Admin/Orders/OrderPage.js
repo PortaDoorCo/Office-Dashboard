@@ -39,18 +39,18 @@ import LabelIcon from '@material-ui/icons/Label';
 
 import { CSVLink, CSVDownload } from 'react-csv';
 
-import DoorPDF from './PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from './PrintOuts/Pages/Drawer/DrawerPDF';
-import BoxLabelPDF from './PrintOuts/Pages/Drawer/BoxLabels';
+import DoorPDF from '../../PrintOuts/Pages/Door/DoorPDF';
+import DrawerPDF from '../../PrintOuts/Pages/Drawer/DrawerPDF';
+import BoxLabelPDF from '../../PrintOuts/Pages/Drawer/BoxLabels';
 
 
 import moment from 'moment';
 
 
-import MiscItemsPDF from './PrintOuts/Pages/MiscItems/MiscItemsPDF';
+import MiscItemsPDF from '../../PrintOuts/Pages/MiscItems/MiscItemsPDF';
 
 
-import MouldingsPDF from './PrintOuts/Pages/Mouldings/MouldingsPDF';
+import MouldingsPDF from '../../PrintOuts/Pages/Mouldings/MouldingsPDF';
 
 
 
@@ -78,7 +78,7 @@ import DrawerConversationNotes from './Notes/DrawerOrder/Conversation_Notes';
 import MiscConversationNotes from './Notes/MiscItems/Conversation_Notes';
 import MouldingsConversationNotes from './Notes/Mouldings/Conversation_Notes';
 
-import PrintModal from './PrintOuts/Modal/Modal';
+import PrintModal from '../../PrintOuts/Modal/Modal';
 import numQty from 'numeric-quantity';
 
 import Cookies from 'js-cookie';

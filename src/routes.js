@@ -14,6 +14,7 @@ const Users = React.lazy(() => import('./views/Admin/Users/Users'));
 const MiscItems = React.lazy(() => import('./views/Admin/MiscItems/MiscItems'));
 const Catalog = React.lazy(() => import('./views/Admin/Catalog/Catalog'));
 const Mouldings = React.lazy(() => import('./views/Admin/Mouldings/Mouldings'));
+const FaceFrames = React.lazy(() => import('./views/Admin/Face_Frames/FaceFrames'));
 
 
 
@@ -34,6 +35,7 @@ const routes = [
   { path: '/misc-items', name: 'MiscItems', component: MiscItems },
   { path: '/catalog', name: 'Catalog', component: Catalog },
   { path: '/mouldings', name: 'Mouldings', component: Mouldings },
+  { path: '/face-frames', name: 'FaceFrames', component: FaceFrames },
 ];
 
 

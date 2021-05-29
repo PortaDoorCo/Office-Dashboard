@@ -9,6 +9,13 @@ import { connect } from 'react-redux';
 import { Field, change, untouch, autofill } from 'redux-form';
 import { renderDropdownList } from '../../../RenderInputs/renderInputs';
 
+const faceFrameOrderType = [
+  {
+    name: 'Face Frame',
+    value: 'Face_Frame',
+  }
+];
+
 const required = value => (value ? undefined : 'Required');
 
 class DoorFilter extends Component {
@@ -17,21 +24,14 @@ class DoorFilter extends Component {
 
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
-        if (index === i && part.dimensions) {
-          this.props.dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions`,
-              []
-            )
-          );
-        }
 
-        if ((index === i) && (part.cope_design !== undefined)) {
+        
+
+        if ((index === i) && (part.design !== undefined)) {
           this.props.dispatch(
             autofill(
               'DoorOrder',
-              `part_list[${i}].cope_design`,
+              `part_list[${i}].design`,
               undefined
             )
           );
@@ -43,58 +43,6 @@ class DoorFilter extends Component {
             )
           );
         }
-
-        if ((index === i) && (part.miter_design !== undefined)) {
-          this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].miter_design`,
-              undefined
-            )
-          );
-
-          this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].miter_design`,
-            )
-          );
-        }
-
-        if ((index === i) && (part.mt_design !== undefined)) {
-          this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].mt_design`,
-              undefined
-            )
-          );
-
-          this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].mt_design`,
-            )
-          );
-        }
-
-        if ((index === i) && (part.miter_df_design !== undefined)) {
-          this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].miter_df_design`,
-              undefined
-            )
-          );
-
-          this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].miter_df_design`,
-            )
-          );
-        }
-
 
 
         if ((index === i) && (part.woodtype !== undefined)) {
@@ -256,7 +204,7 @@ class DoorFilter extends Component {
                   <Field
                     name={`${part}.orderType`}
                     component={renderDropdownList}
-                    data={orderType}
+                    data={faceFrameOrderType}
                     onChange={() => this.onChangeType(index)}
                     valueField="value"
                     textField="name"

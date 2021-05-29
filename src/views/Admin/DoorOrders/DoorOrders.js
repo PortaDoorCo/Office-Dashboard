@@ -46,6 +46,7 @@ import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import validate from './validate';
 import currencyMask from '../../../utils/currencyMask';
+import Ratio from 'lb-ratio';
 
 const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
@@ -57,6 +58,12 @@ const cookie = Cookies.get('jwt');
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
+
+const fraction = (num) => {
+  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
+  return fraction.toLocaleString();
+};
+
 
 class DoorOrders extends Component {
   constructor(props) {
@@ -161,6 +168,7 @@ class DoorOrders extends Component {
       this.setState({ updateSubmit: !this.state.updateSubmit });
       reset();
       window.scrollTo(0, 0);
+      return;
     } else {
       alert('Submission Error: Please double check your order');
       return;
@@ -265,16 +273,6 @@ class DoorOrders extends Component {
                     <Col xs="3">
                       <Row className='mb-0'>
                         <Col xs='9' />
-                        {/* <Col>
-                          <FormGroup>
-                            <Label htmlFor="companyName">Taxable?</Label>
-                            <Field
-                              name={'Taxable'}
-                              component={renderCheckboxToggle}
-                            />
-                          </FormGroup>
-                        </Col> */}
-
                       </Row>
 
 
@@ -312,22 +310,6 @@ class DoorOrders extends Component {
                       </InputGroup>
                     </Col>
                   </Row>
-                  {/* <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
-                    <Col xs="3">
-                      <Row>
-                        <Col>
-                          <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                        </Col>
-                        <Col>
-                          <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                            Cancel
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row> */}
                 </form>
               </CardBody>
             </Card>
@@ -485,6 +467,7 @@ const mapStateToProps = state => ({
           name: '4/4',
           value: 0.75
         },
+        door_piece_number: state.part_list.door_piece_number[0],
         dimensions: [],
         addPrice: 0,
       }

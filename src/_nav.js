@@ -24,11 +24,14 @@ export default {
     {
       name: 'Door Order',
       url: '/door-order',
-
     },
     {
       name: 'Drawer Order',
       url: '/drawer-order',
+    },
+    {
+      name: 'Face Frames',
+      url: '/face-frames',
     },
     {
       name: 'Mouldings',
