@@ -10,23 +10,22 @@ const fraction = (num) => {
 export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
-
-  const topRail =
-    numQty(info.topRail) === part.profile.MINIMUM_STILE_WIDTH
-      ? numQty(info.topRail)
-      : numQty(info.topRail) + part.edge.LIP_FACTOR / 2;
-  const bottomRail =
-    numQty(info.bottomRail) === part.profile.MINIMUM_STILE_WIDTH
-      ? numQty(info.bottomRail)
-      : numQty(info.bottomRail) + part.edge.LIP_FACTOR / 2;
-  const leftStile =
-    numQty(info.leftStile) === part.profile.MINIMUM_STILE_WIDTH
-      ? numQty(info.leftStile)
-      : numQty(info.leftStile) + part.edge.LIP_FACTOR / 2;
-  const rightStile =
-    numQty(info.rightStile) === part.profile.MINIMUM_STILE_WIDTH
-      ? numQty(info.rightStile)
-      : numQty(info.rightStile) + part.edge.LIP_FACTOR / 2;
+    
+  const top_rail_arch = part?.design?.TOP_RAIL_ADD;
+  const btm_rail_arch = part?.design?.BTM_RAIL_ADD;
+    
+  const topRail = info.topRail
+    ? numQty(info.topRail) + part?.edge?.LIP_FACTOR / 2
+    : 0;
+  const bottomRail = info.bottomRail
+    ? numQty(info.bottomRail) + part.edge.LIP_FACTOR / 2
+    : 0;
+  const leftStile = info.leftStile
+    ? numQty(info.leftStile) + part.edge.LIP_FACTOR / 2
+    : 0;
+  const rightStile = info.rightStile
+    ? numQty(info.rightStile) + part.edge.LIP_FACTOR / 2
+    : 0;
   const vertMull = numQty(vMidRail);
   const horizMull = numQty(hMidRail);
   const panelsH = parseInt(info.panelsH);
@@ -34,17 +33,18 @@ export default (info, part, breakdowns) => {
   const height = numQty(info.height);
   const width = numQty(info.width);
   const qty = parseInt(info.qty);
+  const edge_factor = part.edge?.LIP_FACTOR;
+    
+  let inset = 0;
+  if (part.profile) {
+    inset = part.profile?.INSET;
+  } else {
+    inset = part.design?.INSET;
+  }
 
-  const lites = part.lite ? part.lite.NAME : '';
-
-  const inset = part.profile.INSET;
-  const edge_factor = part.edge.LIP_FACTOR;
-  const panel_factor = part.panel.PANEL_FACTOR;
-
-  const panelName = part.panel.NAME;
-
-  const add_len = 0;
-  const INSET = 0;
+  const lites = info.lite ? info.lite.NAME : '';
+  const panel_factor = part?.panel?.PANEL_FACTOR;
+  const panelName = part?.panel?.NAME;
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
