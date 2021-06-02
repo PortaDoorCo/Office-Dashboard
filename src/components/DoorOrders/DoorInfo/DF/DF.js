@@ -79,7 +79,7 @@ class CopeDF extends Component {
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
-                name={`${part}.cope_df_design`}
+                name={`${part}.design`}
                 component={renderDropdownListFilter}
                 data={filtered_designs}
                 valueField="value"
