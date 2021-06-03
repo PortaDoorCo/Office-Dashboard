@@ -695,12 +695,12 @@ const DoorTable = ({
             </Col>
           </Row>
 
-          {formState.part_list[i].dimensions[index].unevenCheck ? (
+          {formState?.part_list[i]?.dimensions[index]?.unevenCheck ? (
             <div className="mb-3">
               <Row>
                 {Array.from(
                   Array(
-                    parseInt(formState.part_list[i].dimensions[index].panelsH)
+                    parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) ? parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) : 0
                   ).keys()
                 )
                   .slice(1)
