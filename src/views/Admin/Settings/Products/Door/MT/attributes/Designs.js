@@ -117,8 +117,7 @@ const Designs = (props) => {
 
   const updateProduct = async () => {
     let id = product.id;
-    let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'designs', cookie);
+    await props.updateProduct(id, product, 'designs', cookie);
     await setModal(!modal);
   };
 
@@ -147,6 +146,10 @@ const Designs = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item,
     };
+
+
+
+
     await props.addProduct(submittedProduct, 'designs', cookie);
     await setModal(!modal);
   };
@@ -295,7 +298,6 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-
               <Row>
                 <Col>
                   <Label for="4/4_Price">4/4 Price</Label>
@@ -336,48 +338,48 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-              <Col>
-                <Label for="5/4_Price">Minimum Stile Width</Label>
-                <Input
-                  type="number"
-                  value={product.MINIMUM_STILE_WIDTH}
-                  name="MINIMUM_STILE_WIDTH"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">Profile Width</Label>
-                <Input
-                  type="number"
-                  value={product.PROFILE_WIDTH}
-                  name="PROFILE_WIDTH"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
+              
               <Row>
+                <Col>
+                  <Label for="5/4_Price">Minimum Stile Width</Label>
+                  <Input
+                    type="number"
+                    value={product.MINIMUM_STILE_WIDTH}
+                    name="MINIMUM_STILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">Profile Width</Label>
+                  <Input
+                    type="number"
+                    value={product.PROFILE_WIDTH}
+                    name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+              </Row>
 
-                <Row>
-                  <Col>
-                    <Label for="5/4_Price">INSET</Label>
-                    <Input
-                      type="number"
-                      value={product.INSET}
-                      name="INSET"
-                      onChange={(e) => change(e)}
-                    ></Input>
-                  </Col>
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">INSET</Label>
+                  <Input
+                    type="number"
+                    value={product.INSET}
+                    name="INSET"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
 
-                  <Col>
-                    <Label for="5/4_Price">DF Reduction</Label>
-                    <Input
-                      type="number"
-                      value={product.DF_REDUCTION}
-                      name="DF_REDUCTION"
-                      onChange={(e) => change(e)}
-                    ></Input>
-                  </Col>
-                </Row>
-                
+                <Col>
+                  <Label for="5/4_Price">DF Reduction</Label>
+                  <Input
+                    type="number"
+                    value={product.DF_REDUCTION}
+                    name="DF_REDUCTION"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
               </Row>
 
               <Row className="mt-5">
