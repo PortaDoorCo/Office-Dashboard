@@ -117,8 +117,7 @@ const Designs = (props) => {
 
   const updateProduct = async () => {
     let id = product.id;
-    let updatedProduct = product;
-    await props.updateProduct(id, updatedProduct, 'designs', cookie);
+    await props.updateProduct(id, product, 'designs', cookie);
     await setModal(!modal);
   };
 

@@ -117,7 +117,6 @@ const Designs = (props) => {
 
   const updateProduct = async () => {
     let id = product.id;
-    console.log({ product });
     await props.updateProduct(id, product, 'designs', cookie);
     await setModal(!modal);
   };
@@ -343,7 +342,7 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-              
+
               <Row>
                 <Col>
                   <Label for="5/4_Price">Minimum Stile Width</Label>
