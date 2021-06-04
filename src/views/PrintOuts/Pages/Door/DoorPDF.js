@@ -14,6 +14,7 @@ import moment from 'moment';
 
 export default (
   data,
+  designs,
   edges,
   moulds,
   miter,
@@ -34,6 +35,7 @@ export default (
     Content.push(
       Profiles(
         data,
+        designs,
         edges,
         moulds,
         miter,
@@ -69,6 +71,7 @@ export default (
     Content.push(
       Profiles(
         data,
+        designs,
         edges,
         moulds,
         miter,

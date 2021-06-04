@@ -226,6 +226,16 @@ class OrderPage extends Component {
   
     if (data.orderType === 'Door Order') {
 
+      const designPromiseArr1 = selectedOrder.part_list
+        .filter((i) => i.design && i.design.photo && i.design.photo.url)
+        .map((i) => {
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.design.photo.url, (result) => {
+              resolve(result);
+            });
+          });
+        });
+
       const edgesPromiseArr1 = selectedOrder.part_list
         .filter((i) => i.edge && i.edge.photo && i.edge.photo.url)
         .map((i) => {
@@ -299,7 +309,8 @@ class OrderPage extends Component {
             });
           });
         });
-  
+        
+      let design1;
       let edges1;
       let moulds1;
       let miter1;
@@ -308,6 +319,7 @@ class OrderPage extends Component {
       let appliedProfiles1;
   
       try {
+        design1 = await Promise.all(designPromiseArr1);
         edges1 = await Promise.all(edgesPromiseArr1);
         moulds1 = await Promise.all(mouldsPromiseArr1);
         miter1 = await Promise.all(miterPromiseArr1);
@@ -319,6 +331,7 @@ class OrderPage extends Component {
       }  
       DoorPDF(
         data,
+        design1,
         edges1,
         moulds1,
         miter1,
