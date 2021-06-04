@@ -47,8 +47,8 @@ class SideBar extends Component {
                 <div
                   style={{ width: '100px', height: '140px', margin: 'auto' }}
                 >
-                  {(part.cope_design && part.cope_design.photo) ? (
-                    <img src={part.cope_design.photo.url} style={style} alt="" />
+                  {(part.design && part.design.photo) ? (
+                    <img src={part.design.photo.url} style={style} alt="" />
                   ) : (
                     <img src={comingSoon} style={style} alt="" />
                   )}
