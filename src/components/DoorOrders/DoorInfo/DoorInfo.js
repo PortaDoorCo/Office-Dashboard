@@ -32,6 +32,14 @@ const orderType = [
   {
     name: 'Drawer Front',
     value: 'DF',
+  },
+  {
+    name: 'One Piece',
+    value: 'One_Piece',
+  },
+  {
+    name: 'Two Piece',
+    value: 'Two_Piece',
   }
 ];
 

@@ -46,7 +46,7 @@ class Door extends Component {
 
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
     const filtered_designs = designs.filter(
-      (design) =>
+      (design) => orderType !== 'Door' || 'DF' ? design.CONSTRUCTION === construction :
         design.CONSTRUCTION === construction && design.ORDERTYPE === orderType
     );
 
@@ -98,10 +98,9 @@ class Door extends Component {
                 />
               </FormGroup>
             </Col>
-          ): null }
+          ) : null}
         </Row>
         <Row>
-
           {construction === 'Cope' ? (
             <Col>
               <FormGroup>
