@@ -6,19 +6,10 @@ import FaceFrame from './Face_Frame/FaceFrame';
 import SlabDoor from './Slab_Door/Slab_Door';
 import SlabDF from './Slab_Door/Slab_DF';
 
-
 class Conditionals extends Component {
-
   render() {
-    const {
-      formState,
-      part,
-      index,
-      isValid,
-      part_list,
-      edit,
-      updateSubmit,
-    } = this.props;
+    const { formState, part, index, isValid, part_list, edit, updateSubmit } =
+      this.props;
 
     let component;
 
@@ -27,108 +18,168 @@ class Conditionals extends Component {
         case 'Door':
           switch (formState.part_list[index].construction.value) {
             case 'Slab':
-              component = <SlabDoor
-                part={part}
-                index={index}
-                isValid={isValid}
-                part_list={part_list}
-                formState={formState}
-                edit={edit}
-                one_piece={true}
-                updateSubmit={updateSubmit}
-              />;
+              component = (
+                <SlabDoor
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={true}
+                  updateSubmit={updateSubmit}
+                />
+              );
               break;
             default:
-              component = <Door
-                part={part}
-                index={index}
-                isValid={isValid}
-                part_list={part_list}
-                formState={formState}
-                edit={edit}
-                one_piece={false}
-                updateSubmit={updateSubmit}
-              />;
+              component = (
+                <Door
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={false}
+                  updateSubmit={updateSubmit}
+                />
+              );
               break;
           }
           break;
+
 
 
         case 'DF':
           switch (formState.part_list[index].construction.value) {
             case 'Slab':
-              component = <SlabDF
-                part={part}
-                index={index}
-                isValid={isValid}
-                part_list={part_list}
-                formState={formState}
-                edit={edit}
-                one_piece={true}
-                updateSubmit={updateSubmit}
-              />;
+              component = (
+                <SlabDF
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={true}
+                  updateSubmit={updateSubmit}
+                />
+              );
               break;
             default:
-              component = <DF
-                part={part}
-                index={index}
-                isValid={isValid}
-                part_list={part_list}
-                formState={formState}
-                edit={edit}
-                one_piece={false}
-                updateSubmit={updateSubmit}
-              />;
+              component = (
+                <DF
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={false}
+                  updateSubmit={updateSubmit}
+                />
+              );
               break;
           }
           break;
-        
+
+        case 'One_Piece':
+          switch (formState.part_list[index].construction.value) {
+            case 'Slab':
+              component = (
+                <SlabDoor
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={true}
+                  updateSubmit={updateSubmit}
+                />
+              );
+              break;
+            default:
+              component = (
+                <Door
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={false}
+                  updateSubmit={updateSubmit}
+                />
+              );
+              break;
+          }
+          break;
+  
+        case 'Two_Piece':
+          switch (formState.part_list[index].construction.value) {
+            case 'Slab':
+              component = (
+                <SlabDoor
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={true}
+                  updateSubmit={updateSubmit}
+                />
+              );
+              break;
+            default:
+              component = (
+                <Door
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={false}
+                  updateSubmit={updateSubmit}
+                />
+              );
+              break;
+          }
+          break;
 
         case 'Face_Frame':
-          component = <FaceFrame
-            part={part}
-            index={index}
-            isValid={isValid}
-            part_list={part_list}
-            formState={formState}
-            edit={edit}
-            one_piece={false}
-            updateSubmit={updateSubmit}
-          />;
+          component = (
+            <FaceFrame
+              part={part}
+              index={index}
+              isValid={isValid}
+              part_list={part_list}
+              formState={formState}
+              edit={edit}
+              one_piece={false}
+              updateSubmit={updateSubmit}
+            />
+          );
           break;
-        case 'One_Piece':
 
-          break;
         case 'One_Piece_DF':
-
           break;
-        case 'Two_Piece':
 
-          break;
         case 'Two_Piece_DF':
-          
           break;
         default:
           component = <div />;
       }
 
-      return (
-        <div>
-          {component}
-        </div>
-      );
+      return <div>{component}</div>;
     } else {
       return <div />;
     }
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({});
 
-});
-
-
-export default connect(
-  mapStateToProps,
-  null
-)(Conditionals);
+export default connect(mapStateToProps, null)(Conditionals);
