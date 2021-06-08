@@ -122,8 +122,11 @@ const DrawerBox = (props) => {
               <Row>
                 <Col>
 
-                  <img src="https://res.cloudinary.com/porta-door/image/upload/v1617574759/drawer_f6214eb4de.png" alt="drawer_box" className="mb-3 mt-3"/>
-
+                  <img src="https://res.cloudinary.com/porta-door/image/upload/v1623171458/drawer_f6214eb4de_c32ad6473c.png" alt="drawer_box" className="mb-3 mt-3"/>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
                   {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
                     <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
                     : <div />
