@@ -46,7 +46,8 @@ import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import validate from './validate';
 import currencyMask from '../../../utils/currencyMask';
-import Ratio from 'lb-ratio';
+import NavBar from './NavBar';
+import NavModal from './Modal';
 
 const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
@@ -59,12 +60,6 @@ const maxValue = max => value => value && value > max ? `Cannot be greater than 
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
 
-const fraction = (num) => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
-
-
 class DoorOrders extends Component {
   constructor(props) {
     super(props);
@@ -74,7 +69,9 @@ class DoorOrders extends Component {
       loaded: false,
       customerAddress: [],
       updateSubmit: false,
-      files: []
+      files: [],
+      subNavModal: false,
+      subNavPage: null
     };
   }
 
@@ -193,6 +190,13 @@ class DoorOrders extends Component {
     this.setState({ files: a });
   }
 
+  onSubNav = (nav) => {
+    this.setState({
+      subNavModal: !this.state.subNavModal,
+      subNavPage: nav
+    });
+  }
+
   render() {
 
     const {
@@ -210,11 +214,15 @@ class DoorOrders extends Component {
 
     return (
       <div className="animated fadeIn">
+
+        <NavModal {...this.state} {...this.props} onSubNav={this.onSubNav}  />
+
+
         <div className="orderForm">
           <div className="orderFormCol1">
             <Card>
               <CardHeader>
-                <strong>Door Order</strong>
+                <NavBar onSubNav={this.onSubNav} />
               </CardHeader>
               <CardBody>
                 <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
