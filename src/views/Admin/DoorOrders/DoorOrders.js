@@ -192,8 +192,7 @@ class DoorOrders extends Component {
 
   onSubNav = (nav) => {
     this.setState({
-      subNavModal: !this.state.subNavModal,
-      subNavPage: nav
+      subNavModal: !this.state.subNavModal
     });
   }
 
@@ -340,7 +339,7 @@ class DoorOrders extends Component {
               <Col>
                 <Card>
                   <CardBody className="misc-item-tour">
-                    <MiscItems />
+                    {/* <MiscItems /> */}
                     <hr />
                     <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
                       <Row>
