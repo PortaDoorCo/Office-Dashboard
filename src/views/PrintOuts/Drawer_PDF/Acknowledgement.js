@@ -284,7 +284,7 @@ export default (data) => {
         [
           { text: 'Item', style: 'fonts' },
           
-          { text: 'Actual Size WxH', style: 'fonts' },
+          { text: 'Actual Size WxDxH', style: 'fonts' },
           { text: 'Qty', style: 'fonts' },
           { text: 'Notes', style: 'fonts' },
           { text: 'Total 1 Unit', style: 'fonts' },
