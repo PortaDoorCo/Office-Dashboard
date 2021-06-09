@@ -63,7 +63,7 @@ let Inputs = (props) => {
                     name={`${table}.style`}
                     component={renderDropdownList}
                     data={styles}
-                    onChange={(e) => changeMiscItem(e, index)}
+                    // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="name"
                     edit={edit}
@@ -94,11 +94,11 @@ let Inputs = (props) => {
                     required
                   />  
                 </td> */}
-                <td>
+                <td style={{ width: '150px' }}>
                   <Field
                     name={`${table}.item`}
                     component={renderDropdownList}
-                    data={data}
+                    data={part_list?.mouldings.filter(item => item.Style === formState?.mouldings[index]?.style?.value)}
                     // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="NAME"

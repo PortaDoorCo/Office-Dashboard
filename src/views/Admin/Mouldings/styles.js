@@ -1,27 +1,27 @@
 const styles = [
   {
     name: 'Base Caps',
-    value: 'base_cap'
+    value: 'Base_Cap'
   },
   {
     name: 'Baseboards',
-    value: 'baseboards'
+    value: 'Baseboard'
   },
   {
     name: 'Casings',
-    value: 'casings'
+    value: 'Casing'
   },
   {
     name: 'Chair Rails',
-    value: 'chair_rails'
+    value: 'Chair_Rail'
   },
   {
     name: 'Crown Mouldings',
-    value: 'crown_mouldings'
+    value: 'Crown_Moulding'
   },
   {
     name: 'Solid Crowns',
-    value: 'solid_crowns'
+    value: 'Solid_Crown'
   },
   {
     name: 'Flat Stock',

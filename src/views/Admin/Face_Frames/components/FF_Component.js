@@ -47,6 +47,7 @@ import NumberFormat from 'react-number-format';
 import validate from '../../DoorOrders/validate';
 import currencyMask from '../../../../utils/currencyMask';
 import Ratio from 'lb-ratio';
+import CheckoutBox from './CheckoutBox';
 
 const DoorInfo = React.lazy(() => import('../../../../components/DoorOrders/DoorInfo/FFInfo'));
 const JobInfo = React.lazy(() => import('../../../../components/JobInfo/JobInfo'));
@@ -74,7 +75,9 @@ class DoorOrders extends Component {
       loaded: false,
       customerAddress: [],
       updateSubmit: false,
-      files: []
+      files: [],
+      subNavModal: false,
+      subNavPage: 'misc',
     };
   }
 
@@ -218,21 +221,6 @@ class DoorOrders extends Component {
               </CardHeader>
               <CardBody>
                 <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
-                  <Row className="mb-4">
-                    <Col xs='8' />
-                    <Col xs="4">
-                      <Row>
-                        <Col>
-                          <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                        </Col>
-                        <Col>
-                          <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                            Cancel
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
                   {!submitted ? (
                     <FormSection name="job_info">
                       <Suspense fallback={loading()}>
@@ -315,126 +303,40 @@ class DoorOrders extends Component {
             </Card>
           </div>
           <div className="orderFormCol2">
-            <Row>
-              <Col>
-                <Card>
-                  <CardBody>
-                    <FormGroup>
-                      <h3>Upload Files</h3>
-                      <FileUploader onUploaded={this.onUploaded} multi={true} />
-                    </FormGroup>
-                  </CardBody>
-                </Card>
 
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Card>
-                  <CardBody className="misc-item-tour">
-                    <MiscItems />
-                    <hr />
-                    <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
-                      <Row>
-                        <Col xs='8' />
-                        <Col xs="4">
-                          <Row className='mb-0'>
-                            <Col xs='9' />
-                            <Col>
-                              <FormGroup>
-                                <Label htmlFor="companyName">Taxable?</Label>
-                                <Field
-                                  name={'Taxable'}
-                                  component={renderCheckboxToggle}
-                                />
-                              </FormGroup>
-                            </Col>
+            <Sticky
+              top={100}
+              // bottomBoundary={`#item-${i}`}
+              enabled={true}
+              // key={i}
+            >
+              <Row>
+                <Col>
+                  <Card>
+                    <CardBody>
+                      <FormGroup>
+                        <h3>Upload Files</h3>
+                        <FileUploader onUploaded={this.onUploaded} multi={true} />
+                      </FormGroup>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
 
-                          </Row>
+              <CheckoutBox
+                {...this.props}
+                {...this.state}
+                onSubNav={this.onSubNav}
+                handleSubmit={handleSubmit}
+                maxValue={maxValue}
+                onUploaded={this.onUploaded}
+              />
+            </Sticky>
 
 
+            
 
-                          <strong>Discount: </strong>
-                          <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>%</InputGroupText>
-                            </InputGroupAddon>
-                            <Field
-                              name={'discount'}
-                              type="text"
-                              component={renderField}
-                              label="discount"
-                              validate={maxValue(100)}
-                            />
-                          </InputGroup>
-
-                      
-                          <strong>Tax: </strong>
-                          <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>$</InputGroupText>
-                            </InputGroupAddon>
-                            <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
-                          </InputGroup>
-
-
-                          <strong>Total: </strong>
-                          <InputGroup className='mb-3'>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>$</InputGroupText>
-                            </InputGroupAddon>
-                            <NumberFormat thousandSeparator={true} value={total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs='8' />
-                        <Col xs="4">
-                          <Row>
-                            <Col>
-                              <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                            </Col>
-                            <Col>
-                              <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                            Cancel
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </form>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-
-            {(this.props.formState && this.props.formState.part_list) ? (
-              this.props.formState.part_list.map((part, i) => {
-                return (
-                  <div key={i}>
-                    <Row style={{ height: '100%' }}>
-                      <Col>
-                        <Sticky
-                          top={100}
-                          bottomBoundary={`#item-${i}`}
-                          enabled={true}
-                          key={i}
-                        >
-                          <SideBar key={i} i={i} part={part} />
-                        </Sticky>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-
-                      </Col>
-                    </Row>
-                  </div>
-                );
-              })
-            ) : (
-              <div />
-            )}
+           
           </div>
         </div>
       </div>

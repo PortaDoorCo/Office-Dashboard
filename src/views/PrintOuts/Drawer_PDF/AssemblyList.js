@@ -77,7 +77,7 @@ export default (data, breakdowns) => {
                 stack: [
                   {
                     text: `Drawer Box ${i.box_thickness.NAME}`,
-                    style: 'fonts'
+                    style: 'fontsBold'
                   },
                   { text: `${i.box_woodtype.NAME}`, style: 'woodtype' },
                 ]
@@ -91,7 +91,7 @@ export default (data, breakdowns) => {
                 stack: [
                   {
                     text: `${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`,
-                    style: 'fonts'
+                    style: 'fontsBold'
                   },
                   {
                     text: `${i.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
@@ -114,7 +114,7 @@ export default (data, breakdowns) => {
           [
             { text: 'Item', style: 'fonts' },
             { text: 'Qty', style: 'fonts' },
-            { text: 'Finish Box Size', style: 'fonts' },
+            { text: 'Finish Box Size (WxDxH)', style: 'fonts' },
             { text: 'Qty Box Sides', style: 'fonts' },
             { text: 'Qty Box Fronts/Backs', style: 'fonts' },
             { text: 'Box Bottoms', style: 'fonts' },

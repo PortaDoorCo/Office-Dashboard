@@ -20,6 +20,8 @@ import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
 import NumberFormat from 'react-number-format';
 import currencyMask from '../../../../utils/currencyMask';
+import CheckoutBox from './CheckoutBox';
+import Sticky from 'react-stickynode';
 
 const JobInfo = React.lazy(() => import('../../../../components/JobInfo/MouldingJobInfo'));
 const MiscItems = React.lazy(() => import('./MiscItems'));
@@ -40,7 +42,9 @@ class Mouldings extends Component {
      loaded: false,
      customerAddress: [],
      updateSubmit: false,
-     files: []
+     files: [],
+     subNavModal: false,
+     subNavPage: 'misc',
    };
 
    onKeyPress(event) {
@@ -206,103 +210,38 @@ render() {
 
         <div className="mouldingFormCol2">
 
-          <Row>
-            <Col>
-              <Card>
-                <CardBody>
-                  <FormGroup>
-                    <h3>Upload Files</h3>
-                    <FileUploader onUploaded={this.onUploaded} multi={true} />
-                  </FormGroup>
-                </CardBody>
-              </Card>
 
-            </Col>
-          </Row>
+          <Sticky
+            top={100}
+            // bottomBoundary={`#item-${i}`}
+            enabled={true}
+            // key={i}
+          >
+            <Row>
+              <Col>
+                <Card>
+                  <CardBody>
+                    <FormGroup>
+                      <h3>Upload Files</h3>
+                      <FileUploader onUploaded={this.onUploaded} multi={true} />
+                    </FormGroup>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
 
-          <Row>
-            <Col>
-              <Card>
-                <CardBody>
-                  <FormGroup>
-                    <h3>Upload Files</h3>
-                    <Suspense fallback={loading()}>
-                      <MiscItems />
-                    </Suspense>
-                    
-                    <hr />
-                    <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
-                      <Row>
-                        <Col xs='8' />
-                        <Col xs="4">
-                          <Row className='mb-0'>
-                            <Col xs='9' />
-                            <Col>
-                              <FormGroup>
-                                <Label htmlFor="companyName">Taxable?</Label>
-                                <Field
-                                  name={'Taxable'}
-                                  component={renderCheckboxToggle}
-                                />
-                              </FormGroup>
-                            </Col>
-                          </Row>
-
-                          <strong>Discount: </strong>
-                          <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>%</InputGroupText>
-                            </InputGroupAddon>
-                            <Field
-                              name={'discount'}
-                              type="text"
-                              component={renderField}
-                              label="discount"
-                              validate={maxValue(100)}
-                            />
-                          </InputGroup>
-
-                      
-                          <strong>Tax: </strong>
-                          <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>$</InputGroupText>
-                            </InputGroupAddon>
-                            <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
-                          </InputGroup>
+            <CheckoutBox
+              {...this.props}
+              {...this.state}
+              onSubNav={this.onSubNav}
+              handleSubmit={handleSubmit}
+              maxValue={maxValue}
+              onUploaded={this.onUploaded}
+            />
+          </Sticky>
 
 
-                          <strong>Total: </strong>
-                          <InputGroup className='mb-3'>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>$</InputGroupText>
-                            </InputGroupAddon>
-                            <NumberFormat thousandSeparator={true} value={total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs='8' />
-                        <Col xs="4">
-                          <Row>
-                            <Col>
-                              <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                            </Col>
-                            <Col>
-                              <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                            Cancel
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </form>
-                  </FormGroup>
-                </CardBody>
-              </Card>
 
-            </Col>
-          </Row>
         </div>
 
       </div>

@@ -273,6 +273,7 @@ const mapStateToProps = (state) => ({
 MiscItems = reduxForm({
   form: 'DoorOrder',
   enableReinitialize: true,
+  destroyOnUnmount: false
 })(MiscItems);
 
 export default connect(mapStateToProps, null)(MiscItems);

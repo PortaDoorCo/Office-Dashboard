@@ -8,7 +8,10 @@ import {
   Input,
   Button,
   FormGroup,
-  InputGroup, InputGroupAddon, InputGroupText, Label
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Label,
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,12 +23,9 @@ import {
   FormSection,
   getFormValues,
   FieldArray,
-  Field
+  Field,
 } from 'redux-form';
-import {
-  submitOrder,
-  loadOrders,
-} from '../../../redux/orders/actions';
+import { submitOrder, loadOrders } from '../../../redux/orders/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -40,30 +40,36 @@ import SideBar from '../../../components/DoorOrders/SideBar';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
-import { renderField, renderCheckboxToggle } from '../../../components/RenderInputs/renderInputs';
+import {
+  renderField,
+  renderCheckboxToggle,
+} from '../../../components/RenderInputs/renderInputs';
 import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import validate from './validate';
 import currencyMask from '../../../utils/currencyMask';
-import Ratio from 'lb-ratio';
+import NavBar from './NavBar';
+import NavModal from './MiscItemCollapse';
+import CheckoutBox from './CheckoutBox';
 
-const DoorInfo = React.lazy(() => import('../../../components/DoorOrders/DoorInfo/DoorInfo'));
+const DoorInfo = React.lazy(() =>
+  import('../../../components/DoorOrders/DoorInfo/DoorInfo')
+);
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
 
-const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+const loading = () => (
+  <div className="animated fadeIn pt-1 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+);
 
 const cookie = Cookies.get('jwt');
 
-const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
+const maxValue = (max) => (value) =>
+  value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
-
-const fraction = (num) => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
-
 
 class DoorOrders extends Component {
   constructor(props) {
@@ -74,7 +80,9 @@ class DoorOrders extends Component {
       loaded: false,
       customerAddress: [],
       updateSubmit: false,
-      files: []
+      files: [],
+      subNavModal: false,
+      subNavPage: 'misc',
     };
   }
 
@@ -96,7 +104,6 @@ class DoorOrders extends Component {
       total,
       submitOrder,
       user,
-      
     } = this.props;
 
     const orderType = 'Door Order';
@@ -107,7 +114,10 @@ class DoorOrders extends Component {
         id: values.job_info.customer.id,
         Company: values.job_info.customer.Company,
         TaxRate: values.job_info.customer.TaxRate,
-        sale: values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
+        sale:
+          values.job_info.customer &&
+          values.job_info.customer.sale &&
+          values.job_info.customer.sale.id,
         Taxable: values.job_info.customer.Taxable,
         Address1: values.job_info.customer.Address1,
         Address2: values.job_info.customer.Address2,
@@ -142,28 +152,30 @@ class DoorOrders extends Component {
       submittedBy: user.FirstName,
       tracking: [
         {
-          'status': values.job_info.status,
-          'date': new Date()
-        }
+          status: values.job_info.status,
+          date: new Date(),
+        },
       ],
       balance_history: [
         {
-          'balance_paid': values.balance_paid,
-          'date': new Date()
-        }
+          balance_paid: values.balance_paid,
+          date: new Date(),
+        },
       ],
-      sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
+      sale:
+        values.job_info &&
+        values.job_info.customer &&
+        values.job_info.customer.sale &&
+        values.job_info.customer.sale.id,
     };
-
 
     let canSubmit = false;
 
-    values.part_list.map(v => {
-      return v.dimensions.length > 0 ? canSubmit = true : canSubmit = false;
+    values.part_list.map((v) => {
+      return v.dimensions.length > 0 ? (canSubmit = true) : (canSubmit = false);
     });
 
-
-    if(canSubmit){
+    if (canSubmit) {
       await submitOrder(order, cookie);
       this.setState({ updateSubmit: !this.state.updateSubmit });
       reset();
@@ -175,7 +187,7 @@ class DoorOrders extends Component {
     }
   };
 
-  cancelOrder = e => {
+  cancelOrder = (e) => {
     e.preventDefault();
     this.setState({ updateSubmit: false });
     this.props.reset();
@@ -188,13 +200,19 @@ class DoorOrders extends Component {
   }
 
   onUploaded = (e) => {
-    const id = e.map(i => (i.id));
+    const id = e.map((i) => i.id);
     const a = [...this.state.files, id];
     this.setState({ files: a });
-  }
+  };
+
+  onSubNav = (nav) => {
+    this.setState({
+      subNavModal: !this.state.subNavModal,
+      subNavPage: nav
+    });
+  };
 
   render() {
-
     const {
       submitted,
       handleSubmit,
@@ -210,6 +228,8 @@ class DoorOrders extends Component {
 
     return (
       <div className="animated fadeIn">
+        
+
         <div className="orderForm">
           <div className="orderFormCol1">
             <Card>
@@ -217,22 +237,35 @@ class DoorOrders extends Component {
                 <strong>Door Order</strong>
               </CardHeader>
               <CardBody>
-                <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
-                  <Row className="mb-4">
-                    <Col xs='8' />
+                <form
+                  onKeyPress={this.onKeyPress}
+                  onSubmit={handleSubmit(this.submit)}
+                >
+                  {/* <Row className="mb-4">
+                    <Col xs="8" />
                     <Col xs="4">
                       <Row>
                         <Col>
-                          <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
+                          <Button
+                            color="primary"
+                            className="submit"
+                            style={{ width: '100%' }}
+                          >
+                            Submit
+                          </Button>
                         </Col>
                         <Col>
-                          <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
+                          <Button
+                            color="danger"
+                            onClick={this.cancelOrder}
+                            style={{ width: '100%' }}
+                          >
                             Cancel
                           </Button>
                         </Col>
                       </Row>
                     </Col>
-                  </Row>
+                  </Row> */}
                   {!submitted ? (
                     <FormSection name="job_info">
                       <Suspense fallback={loading()}>
@@ -244,7 +277,6 @@ class DoorOrders extends Component {
                           handleAddress={this.handleAddress}
                         />
                       </Suspense>
-
                     </FormSection>
                   ) : null}
 
@@ -262,7 +294,6 @@ class DoorOrders extends Component {
                     />
                   </Suspense>
 
-
                   <div className="mb-3" />
 
                   <hr />
@@ -271,11 +302,9 @@ class DoorOrders extends Component {
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
-                      <Row className='mb-0'>
-                        <Col xs='9' />
+                      <Row className="mb-0">
+                        <Col xs="9" />
                       </Row>
-
-
 
                       <strong>Discount: </strong>
                       <InputGroup>
@@ -291,22 +320,34 @@ class DoorOrders extends Component {
                         />
                       </InputGroup>
 
-                      
                       <strong>Tax: </strong>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
+                        <NumberFormat
+                          thousandSeparator={true}
+                          value={tax}
+                          disabled={true}
+                          customInput={Input}
+                          {...currencyMask}
+                          prefix={'$'}
+                        />
                       </InputGroup>
 
-
                       <strong>Total: </strong>
-                      <InputGroup className='mb-3'>
+                      <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <NumberFormat thousandSeparator={true} value={total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
+                        <NumberFormat
+                          thousandSeparator={true}
+                          value={total}
+                          disabled={true}
+                          customInput={Input}
+                          {...currencyMask}
+                          prefix={'$'}
+                        />
                       </InputGroup>
                     </Col>
                   </Row>
@@ -315,126 +356,34 @@ class DoorOrders extends Component {
             </Card>
           </div>
           <div className="orderFormCol2">
-            <Row>
-              <Col>
-                <Card>
-                  <CardBody>
-                    <FormGroup>
-                      <h3>Upload Files</h3>
-                      <FileUploader onUploaded={this.onUploaded} multi={true} />
-                    </FormGroup>
-                  </CardBody>
-                </Card>
+            <Sticky
+              top={100}
+              // bottomBoundary={`#item-${i}`}
+              enabled={true}
+              // key={i}
+            >
+              <Row>
+                <Col>
+                  <Card>
+                    <CardBody>
+                      <FormGroup>
+                        <h3>Upload Files</h3>
+                        <FileUploader onUploaded={this.onUploaded} multi={true} />
+                      </FormGroup>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
 
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Card>
-                  <CardBody className="misc-item-tour">
-                    <MiscItems />
-                    <hr />
-                    <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
-                      <Row>
-                        <Col xs='8' />
-                        <Col xs="4">
-                          <Row className='mb-0'>
-                            <Col xs='9' />
-                            <Col>
-                              <FormGroup>
-                                <Label htmlFor="companyName">Taxable?</Label>
-                                <Field
-                                  name={'Taxable'}
-                                  component={renderCheckboxToggle}
-                                />
-                              </FormGroup>
-                            </Col>
-
-                          </Row>
-
-
-
-                          <strong>Discount: </strong>
-                          <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>%</InputGroupText>
-                            </InputGroupAddon>
-                            <Field
-                              name={'discount'}
-                              type="text"
-                              component={renderField}
-                              label="discount"
-                              validate={maxValue(100)}
-                            />
-                          </InputGroup>
-
-                      
-                          <strong>Tax: </strong>
-                          <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>$</InputGroupText>
-                            </InputGroupAddon>
-                            <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
-                          </InputGroup>
-
-
-                          <strong>Total: </strong>
-                          <InputGroup className='mb-3'>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>$</InputGroupText>
-                            </InputGroupAddon>
-                            <NumberFormat thousandSeparator={true} value={total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs='8' />
-                        <Col xs="4">
-                          <Row>
-                            <Col>
-                              <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                            </Col>
-                            <Col>
-                              <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                            Cancel
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </form>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-
-            {(this.props.formState && this.props.formState.part_list) ? (
-              this.props.formState.part_list.map((part, i) => {
-                return (
-                  <div key={i}>
-                    <Row style={{ height: '100%' }}>
-                      <Col>
-                        <Sticky
-                          top={100}
-                          bottomBoundary={`#item-${i}`}
-                          enabled={true}
-                          key={i}
-                        >
-                          <SideBar key={i} i={i} part={part} />
-                        </Sticky>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-
-                      </Col>
-                    </Row>
-                  </div>
-                );
-              })
-            ) : (
-              <div />
-            )}
+              <CheckoutBox
+                {...this.props}
+                {...this.state}
+                onSubNav={this.onSubNav}
+                handleSubmit={handleSubmit}
+                maxValue={maxValue}
+                onUploaded={this.onUploaded}
+              />
+            </Sticky>
           </div>
         </div>
       </div>
@@ -442,7 +391,7 @@ class DoorOrders extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   customers: state.customers.customerDB,
   customerDBLoaded: state.customers.customerDBLoaded,
   user: state.users.user,
@@ -452,25 +401,27 @@ const mapStateToProps = state => ({
     balance_paid: 0,
     open: true,
     discount: 0,
-    Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
+    Taxable: state.customers.customerDB[0].Taxable
+      ? state.customers.customerDB[0].Taxable
+      : false,
     part_list: [
       {
         construction: {
           name: 'Cope And Stick',
-          value: 'Cope'
+          value: 'Cope',
         },
         orderType: {
           name: 'Door Order',
-          value: 'Door'
+          value: 'Door',
         },
         thickness: {
           name: '4/4',
-          value: 0.75
+          value: 0.75,
         },
         door_piece_number: state.part_list.door_piece_number[0],
         dimensions: [],
         addPrice: 0,
-      }
+      },
     ],
     job_info: {
       customer: state.customers.customerDB[0],
@@ -487,7 +438,7 @@ const mapStateToProps = state => ({
       // PaymentMethod: {
       //   NAME: state.customers.customerDB[0].PaymentMethod
       // }
-    }
+    },
   },
   formState: getFormValues('DoorOrder')(state),
   prices: linePriceSelector(state),
@@ -499,7 +450,7 @@ const mapStateToProps = state => ({
   miscTotalSelector: miscTotalSelector(state),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       submitOrder,
@@ -512,10 +463,7 @@ const mapDispatchToProps = dispatch =>
 DoorOrders = reduxForm({
   form: 'DoorOrder',
   enableReinitialize: true,
-  validate
+  validate,
 })(DoorOrders);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DoorOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(DoorOrders);
