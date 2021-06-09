@@ -50,7 +50,7 @@ import NumberFormat from 'react-number-format';
 import validate from './validate';
 import currencyMask from '../../../utils/currencyMask';
 import NavBar from './NavBar';
-import NavModal from './Modal';
+import NavModal from './MiscItemCollapse';
 import CheckoutBox from './CheckoutBox';
 
 const DoorInfo = React.lazy(() =>
@@ -82,7 +82,7 @@ class DoorOrders extends Component {
       updateSubmit: false,
       files: [],
       subNavModal: false,
-      subNavPage: null,
+      subNavPage: 'misc',
     };
   }
 
@@ -208,6 +208,7 @@ class DoorOrders extends Component {
   onSubNav = (nav) => {
     this.setState({
       subNavModal: !this.state.subNavModal,
+      subNavPage: nav
     });
   };
 
@@ -227,7 +228,7 @@ class DoorOrders extends Component {
 
     return (
       <div className="animated fadeIn">
-        <NavModal {...this.state} {...this.props} onSubNav={this.onSubNav} />
+        
 
         <div className="orderForm">
           <div className="orderFormCol1">
@@ -355,26 +356,34 @@ class DoorOrders extends Component {
             </Card>
           </div>
           <div className="orderFormCol2">
-            <Row>
-              <Col>
-                <Card>
-                  <CardBody>
-                    <FormGroup>
-                      <h3>Upload Files</h3>
-                      <FileUploader onUploaded={this.onUploaded} multi={true} />
-                    </FormGroup>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
+            <Sticky
+              top={100}
+              // bottomBoundary={`#item-${i}`}
+              enabled={true}
+              // key={i}
+            >
+              <Row>
+                <Col>
+                  <Card>
+                    <CardBody>
+                      <FormGroup>
+                        <h3>Upload Files</h3>
+                        <FileUploader onUploaded={this.onUploaded} multi={true} />
+                      </FormGroup>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
 
-            <CheckoutBox
-              {...this.props}
-              {...this.state}
-              onSubNav={this.onSubNav}
-              handleSubmit={handleSubmit}
-              maxValue={maxValue}
-            />
+              <CheckoutBox
+                {...this.props}
+                {...this.state}
+                onSubNav={this.onSubNav}
+                handleSubmit={handleSubmit}
+                maxValue={maxValue}
+                onUploaded={this.onUploaded}
+              />
+            </Sticky>
           </div>
         </div>
       </div>

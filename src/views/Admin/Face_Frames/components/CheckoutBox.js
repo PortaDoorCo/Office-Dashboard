@@ -3,7 +3,6 @@ import {
   Row,
   Col,
   Card,
-
   CardBody,
   Input,
   Button,
@@ -15,9 +14,9 @@ import {
   Field
 } from 'redux-form';
 import 'react-notifications/lib/notifications.css';
-import { renderField, renderCheckboxToggle } from '../../../components/RenderInputs/renderInputs';
+import { renderField, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
 import NumberFormat from 'react-number-format';
-import currencyMask from '../../../utils/currencyMask';
+import currencyMask from '../../../../utils/currencyMask';
 import NavBar from './NavBar';
 import NavModal from './MiscItemCollapse';
 

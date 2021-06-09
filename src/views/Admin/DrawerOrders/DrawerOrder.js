@@ -43,6 +43,8 @@ import MiscItems from '../../../components/DrawerOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import currencyMask from '../../../utils/currencyMask';
+import CheckoutBox from './CheckoutBox';
+import Sticky from 'react-stickynode';
 
 const DrawerBoxInfo = React.lazy(() => import('../../../components/DrawerOrders/DrawerBoxInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/DrawerJobInfo'));
@@ -74,7 +76,9 @@ class DoorOrders extends Component {
       collapse: true,
       loaded: false,
       customerAddress: [],
-      files: []
+      files: [],
+      subNavModal: false,
+      subNavPage: 'misc',
     };
   }
 
@@ -192,6 +196,13 @@ class DoorOrders extends Component {
     const a = [...this.state.files, id];
     this.setState({ files: a });
   }
+
+  onSubNav = (nav) => {
+    this.setState({
+      subNavModal: !this.state.subNavModal,
+      subNavPage: nav
+    });
+  };
 
   render() {
     const {
@@ -329,97 +340,38 @@ class DoorOrders extends Component {
 
 
           <div className="orderFormCol2">
-            <Row>
-              <Col>
-                <Card>
-                  <CardBody>
-                    <FormGroup>
-                      <h3>Upload Files</h3>
-                      <FileUploader onUploaded={this.onUploaded} multi={true} />
-                    </FormGroup>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Card>
-                  <CardBody>
-                    <MiscItems />
-                    <hr />
-                    <form
-                      onKeyPress={this.onKeyPress}
-                      onSubmit={handleSubmit(this.submit)}
-                    >
-                      <Row>
-                        <Col xs="8" />
-                        <Col xs="4">
+            <Sticky
+              top={100}
+              // bottomBoundary={`#item-${i}`}
+              enabled={true}
+              // key={i}
+            >
+              <Row>
+                <Col>
+                  <Card>
+                    <CardBody>
+                      <FormGroup>
+                        <h3>Upload Files</h3>
+                        <FileUploader onUploaded={this.onUploaded} multi={true} />
+                      </FormGroup>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
 
-                          <Row className='mb-0'>
-                            <Col xs='9' />
-                            <Col>
-                              <FormGroup>
-                                <Label htmlFor="companyName">Taxable?</Label>
-                                <Field
-                                  name={'Taxable'}
-                                  component={renderCheckboxToggle}
-                                />
-                              </FormGroup>
-                            </Col>
-
-                          </Row>
-
-                          <strong>Discount: </strong>
-                          <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>%</InputGroupText>
-                            </InputGroupAddon>
-                            <Field
-                              name={'discount'}
-                              type="text"
-                              component={renderField}
-                              label="discount"
-                              validate={maxValue(100)}
-                            />
-                          </InputGroup>
-                          <strong>Tax: </strong>
-                          <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>$</InputGroupText>
-                            </InputGroupAddon>
-                            <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
-                          </InputGroup>
+              <CheckoutBox
+                {...this.props}
+                {...this.state}
+                onSubNav={this.onSubNav}
+                handleSubmit={handleSubmit}
+                maxValue={maxValue}
+                onUploaded={this.onUploaded}
+              />
+            </Sticky>
+            
 
 
-                          <strong>Total: </strong>
-                          <InputGroup className='mb-3'>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>$</InputGroupText>
-                            </InputGroupAddon>
-                            <NumberFormat thousandSeparator={true} value={total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
-                          </InputGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs='8' />
-                        <Col xs="4">
-                          <Row>
-                            <Col>
-                              <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
-                            </Col>
-                            <Col>
-                              <Button color="danger" onClick={this.cancelOrder} style={{ width: '100%' }}>
-                            Cancel
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </form>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
+
           </div>
         </div>
       </div>

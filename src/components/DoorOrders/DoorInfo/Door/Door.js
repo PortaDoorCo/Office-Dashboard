@@ -37,7 +37,6 @@ class Door extends Component {
       prices,
       subTotal,
       addPrice,
-      one_piece,
       updateSubmit,
     } = this.props;
 
@@ -45,9 +44,10 @@ class Door extends Component {
     const orderType = formState?.part_list[index]?.orderType?.value;
 
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
-    const filtered_designs = designs.filter(
-      (design) => orderType !== 'Door' || 'DF' ? design.CONSTRUCTION === construction :
-        design.CONSTRUCTION === construction && design.ORDERTYPE === orderType
+    const filtered_designs = designs.filter((design) =>
+      orderType !== 'Door' || 'DF'
+        ? design.CONSTRUCTION === construction
+        : design.CONSTRUCTION === construction && design.ORDERTYPE === orderType
     );
 
     return (
@@ -59,7 +59,13 @@ class Door extends Component {
               <Field
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
-                data={orderType === 'One_Piece' || 'Two_Piece' ? one_piece_wood : woodtypes}
+                data={
+                  orderType === 'One_Piece'
+                    ? one_piece_wood
+                    : orderType === 'Two_Piece'
+                      ? one_piece_wood
+                      : woodtypes
+                }
                 valueField="value"
                 textField="NAME"
                 validate={required}

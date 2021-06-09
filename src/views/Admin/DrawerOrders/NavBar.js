@@ -27,9 +27,9 @@ const Example = (props) => {
             <NavItem>
               <NavLink onClick={() => props.onSubNav('misc')}>Misc Items</NavLink>
             </NavItem>
-            <NavItem>
+            {/* <NavItem>
               <NavLink onClick={() => props.onSubNav('photos')}>Photos</NavLink>
-            </NavItem>
+            </NavItem> */}
           </Nav>
         </Collapse>
       </Navbar>
