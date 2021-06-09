@@ -10,7 +10,7 @@ const ModalExample = (props) => {
 
   return (
     <div>
-      <Modal isOpen={props.subNavModal} toggle={props.onSubNav} className={className}>
+      <Modal isOpen={props.subNavModal} toggle={props.onSubNav} className='modal-lg' >
         <ModalHeader toggle={props.onSubNav}>Modal title</ModalHeader>
         <ModalBody>
 
@@ -19,8 +19,8 @@ const ModalExample = (props) => {
           
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={() => props.onSubNav()}>Do Something</Button>{' '}
-          <Button color="secondary" onClick={() => props.onSubNav()}>Cancel</Button>
+          <Button color="primary" onClick={() => props.onSubNav('misc')}>Do Something</Button>{' '}
+          <Button color="secondary" onClick={() => props.onSubNav('misc')}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </div>
