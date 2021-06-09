@@ -59,7 +59,7 @@ class Door extends Component {
               <Field
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
-                data={one_piece ? one_piece_wood : woodtypes}
+                data={orderType === 'One_Piece' || 'Two_Piece' ? one_piece_wood : woodtypes}
                 valueField="value"
                 textField="NAME"
                 validate={required}
