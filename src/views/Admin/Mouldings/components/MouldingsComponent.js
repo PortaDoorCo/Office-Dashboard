@@ -142,6 +142,13 @@ onUploaded = (e) => {
   this.setState({ files: a });
 }
 
+onSubNav = (nav) => {
+  this.setState({
+    subNavModal: !this.state.subNavModal,
+    subNavPage: nav
+  });
+};
+
 render() {
   const { formState, handleSubmit, customers, tax, total, edit, mouldingTotal } = this.props;
 

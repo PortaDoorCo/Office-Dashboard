@@ -196,6 +196,13 @@ class DoorOrders extends Component {
     this.setState({ files: a });
   }
 
+  onSubNav = (nav) => {
+    this.setState({
+      subNavModal: !this.state.subNavModal,
+      subNavPage: nav
+    });
+  };
+
   render() {
 
     const {
