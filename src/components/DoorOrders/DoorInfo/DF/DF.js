@@ -52,11 +52,8 @@ class CopeDF extends Component {
     const orderType = formState?.part_list[index]?.orderType?.value;
 
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
-    const filtered_designs = designs.filter(
-      (design) =>
-        design.CONSTRUCTION ===
-          formState?.part_list[index]?.construction?.value &&
-        design.ORDERTYPE === formState?.part_list[index]?.orderType?.value
+    const filtered_designs = designs.filter((design) =>
+      (design.CONSTRUCTION === construction) && (design.ORDERTYPE === orderType)
     );
 
     return (
@@ -89,7 +86,7 @@ class CopeDF extends Component {
               <Field
                 name={`${part}.design`}
                 component={renderDropdownListFilter}
-                data={filtered_designs}
+                data={orderType === 'Door' || orderType === 'DF' ? filtered_designs : designs}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -98,7 +95,7 @@ class CopeDF extends Component {
             </FormGroup>
           </Col>
 
-          {construction === ('Cope' || 'MT') ? (
+          {construction === 'Cope' || construction === 'MT' ? (
             <Col>
               <FormGroup>
                 <Label htmlFor="mould">Edge</Label>
