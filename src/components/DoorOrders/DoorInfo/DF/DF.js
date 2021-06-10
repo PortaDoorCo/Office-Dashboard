@@ -48,6 +48,9 @@ class CopeDF extends Component {
       updateSubmit,
     } = this.props;
 
+    const construction = formState?.part_list[index]?.construction?.value;
+    const orderType = formState?.part_list[index]?.orderType?.value;
+
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
     const filtered_designs = designs.filter(
       (design) =>
@@ -59,23 +62,28 @@ class CopeDF extends Component {
     return (
       <div>
         <Row>
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="woodtype">Woodtype</Label>
               <Field
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
-                data={one_piece ? one_piece_wood : woodtypes}
+                data={
+                  orderType === 'One_Piece'
+                    ? one_piece_wood
+                    : orderType === 'Two_Piece'
+                      ? one_piece_wood
+                      : woodtypes
+                }
                 valueField="value"
                 textField="NAME"
-                onBlur={() => this.onChangeWoodtype(part, index)}
                 validate={required}
                 edit={edit}
               />
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="design">Design</Label>
               <Field
@@ -90,39 +98,43 @@ class CopeDF extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
-            <FormGroup>
-              <Label htmlFor="mould">Edge</Label>
-              <Field
-                name={`${part}.edge`}
-                component={renderDropdownListFilter}
-                data={edges}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
+          {construction === ('Cope' || 'MT') ? (
+            <Col>
+              <FormGroup>
+                <Label htmlFor="mould">Edge</Label>
+                <Field
+                  name={`${part}.edge`}
+                  component={renderDropdownListFilter}
+                  data={edges}
+                  valueField="value"
+                  textField="NAME"
+                  validate={required}
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+          ) : null}
         </Row>
         <Row>
-          <Col xs="4">
-            <FormGroup>
-              <Label htmlFor="edge">Profile</Label>
-              <Field
-                name={`${part}.profile`}
-                component={renderDropdownListFilter}
-                data={profiles}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-                onBlur={() => changeProfile(part, index, this.props, change)}
-              />
-            </FormGroup>
-          </Col>
+          {construction === 'Cope' ? (
+            <Col>
+              <FormGroup>
+                <Label htmlFor="edge">Profile</Label>
+                <Field
+                  name={`${part}.profile`}
+                  component={renderDropdownListFilter}
+                  data={profiles}
+                  valueField="value"
+                  textField="NAME"
+                  validate={required}
+                  edit={edit}
+                  onBlur={() => changeProfile(part, index, this.props, change)}
+                />
+              </FormGroup>
+            </Col>
+          ) : null}
 
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="panel">Panel</Label>
               <Field
@@ -137,7 +149,7 @@ class CopeDF extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="4">
+          <Col>
             <FormGroup>
               <Label htmlFor="arches">Applied Profiles</Label>
               <Field
