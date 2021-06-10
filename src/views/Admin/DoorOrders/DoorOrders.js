@@ -380,6 +380,8 @@ class DoorOrders extends Component {
                 {...this.state}
                 onSubNav={this.onSubNav}
                 handleSubmit={handleSubmit}
+                onSubmit={this.onSubmit}
+                cancelOrder={this.cancelOrder}
                 maxValue={maxValue}
                 onUploaded={this.onUploaded}
               />

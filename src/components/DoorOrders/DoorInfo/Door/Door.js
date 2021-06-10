@@ -40,14 +40,12 @@ class Door extends Component {
       updateSubmit,
     } = this.props;
 
-    const construction = formState?.part_list[index]?.construction?.value;
-    const orderType = formState?.part_list[index]?.orderType?.value;
+    let construction = formState?.part_list[index]?.construction?.value;
+    let orderType = formState?.part_list[index]?.orderType?.value;
 
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
     const filtered_designs = designs.filter((design) =>
-      orderType !== 'Door' || 'DF'
-        ? design.CONSTRUCTION === construction
-        : design.CONSTRUCTION === construction && design.ORDERTYPE === orderType
+      (design.CONSTRUCTION === construction) && (design.ORDERTYPE === orderType)
     );
 
     return (
@@ -80,7 +78,7 @@ class Door extends Component {
               <Field
                 name={`${part}.design`}
                 component={renderDropdownListFilter}
-                data={filtered_designs}
+                data={orderType === 'Door' || orderType === 'DF' ? filtered_designs : designs}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -89,7 +87,7 @@ class Door extends Component {
             </FormGroup>
           </Col>
 
-          {construction === ('Cope' || 'MT') ? (
+          {construction === 'Cope' || construction === 'MT' ? (
             <Col>
               <FormGroup>
                 <Label htmlFor="mould">Edge</Label>
