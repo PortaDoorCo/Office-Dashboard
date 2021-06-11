@@ -31,7 +31,7 @@ const Product = (props) => {
               <Row className="mt-2">
                 <Col>
                   <CardTitle>
-                    <h1>Basebaords</h1>
+                    <h1>Baseboards</h1>
                   </CardTitle>
                   <Products product_type="baseboards" />
                 </Col>
