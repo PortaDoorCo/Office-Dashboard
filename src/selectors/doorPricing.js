@@ -175,18 +175,24 @@ export const itemPriceSelector = createSelector(
   (parts, pricer, discount) =>
     parts.map((part, index) => {
       const design =
-        part.design && part.thickness.value === 0.75
+        (part.design && part.thickness.value === 1) ||
+          (part.design && part.thickness.value === 2)
           ? part.design.UPCHARGE
-          : part.design && part.thickness.value === 1
+          : (part.design && part.thickness.value === 3) ||
+            (part.design && part.thickness.value === 4)
             ? part.design.UPCHARGE_THICK
             : 0;
 
       const wood =
-        part.woodtype && part.thickness.value === 0.75
+        part.woodtype && part.thickness.value === 1
           ? part.woodtype.STANDARD_GRADE
-          : part.woodtype && part.thickness.value === 1
-            ? part.woodtype.STANDARD_GRADE_THICK
-            : 0;
+          : part.woodtype && part.thickness.value === 2
+            ? part.woodtype.SELECT_GRADE
+            : part.woodtype && part.thickness.value === 3
+              ? part.woodtype.STANDARD_GRADE_THICK
+              : part.woodtype && part.thickness.value === 4
+                ? part.woodtype.SELECT_GRADE_THICK
+                : 0;
 
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
@@ -326,14 +332,14 @@ export const itemPriceSelector = createSelector(
 
             let price = 0;
 
-            if (part.thickness.value === 0.75) {
+            if ((part.thickness.value === 1) || (part.thickness.value === 2)) {
               if (part.design) {
                 price = part.design && part.design.UPCHARGE;
               } else {
                 price = 0;
               }
             }
-            if (part.thickness.value === 1) {
+            if ((part.thickness.value === 3) || (part.thickness.value === 4)) {
               if (part.design) {
                 price = part.design && part.design.UPCHARGE_THICK;
               } else {
@@ -411,17 +417,17 @@ export const itemPriceSelector = createSelector(
             ) {
               price =
                 eval(pricer.df_pricing) +
-                leftStileAdd +
-                rightStileAdd +
-                topRailAdd +
-                bottomRailAdd +
-                extraCost
+                  leftStileAdd +
+                  rightStileAdd +
+                  topRailAdd +
+                  bottomRailAdd +
+                  extraCost
                   ? eval(pricer.df_pricing) +
-                    leftStileAdd +
-                    rightStileAdd +
-                    topRailAdd +
-                    bottomRailAdd +
-                    extraCost
+                  leftStileAdd +
+                  rightStileAdd +
+                  topRailAdd +
+                  bottomRailAdd +
+                  extraCost
                   : 0;
             } else if (
               part.orderType.value === 'Slab_Door' ||
@@ -444,17 +450,17 @@ export const itemPriceSelector = createSelector(
             } else {
               price =
                 eval(pricer && pricer.door_pricing) +
-                leftStileAdd +
-                rightStileAdd +
-                topRailAdd +
-                bottomRailAdd +
-                extraCost
+                  leftStileAdd +
+                  rightStileAdd +
+                  topRailAdd +
+                  bottomRailAdd +
+                  extraCost
                   ? eval(pricer && pricer.door_pricing) +
-                    leftStileAdd +
-                    rightStileAdd +
-                    topRailAdd +
-                    bottomRailAdd +
-                    extraCost
+                  leftStileAdd +
+                  rightStileAdd +
+                  topRailAdd +
+                  bottomRailAdd +
+                  extraCost
                   : 0;
             }
 

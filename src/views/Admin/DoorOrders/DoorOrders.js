@@ -417,8 +417,8 @@ const mapStateToProps = (state) => ({
           value: 'Door',
         },
         thickness: {
-          name: '4/4',
-          value: 0.75,
+          name: '4/4 Standard Grade',
+          value: 1,
         },
         door_piece_number: state.part_list.door_piece_number[0],
         dimensions: [],

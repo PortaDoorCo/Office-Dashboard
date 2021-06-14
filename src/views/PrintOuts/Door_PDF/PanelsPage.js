@@ -86,9 +86,9 @@ export default (data, breakdowns) => {
           columns: [
             {
               text: `${i.woodtype.NAME} - ${
-                i.thickness.value === 0.75
+                (i.thickness.value === 1) || (i.thickness.value === 2)
                   ? '4/4 - 3/4"'
-                  : i.thickness.value === 1
+                  : (i.thickness.value === 3) || (i.thickness.value === 4)
                     ? '5/4 - 1"'
                     : ''
               }`,
