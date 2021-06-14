@@ -45,12 +45,28 @@ const orderType = [
 
 const thickness = [
   {
-    name: '4/4',
-    value: 0.75,
+    name: '4/4 Standard Grade',
+    value: 1,
   },
   {
-    name: '5/4',
-    value: 1,
+    name: '4/4 Select Grade',
+    value: 2,
+  },
+  {
+    name: '5/4 Standard Grade',
+    value: 3,
+  },
+  {
+    name: '5/4 Select Grade',
+    value: 4,
+  },
+  {
+    name: '6/4 Standard Grade',
+    value: 5,
+  },
+  {
+    name: '6/4 Select Grade',
+    value: 4,
   },
 ];
 

@@ -79,7 +79,7 @@ export default (data, breakdowns) => {
                     text: `Drawer Box ${i.box_thickness.NAME}`,
                     style: 'fontsBold'
                   },
-                  { text: `${i.box_woodtype.NAME}`, style: 'woodtype' },
+                  { text: `${i.woodtype.NAME}`, style: 'woodtype' },
                 ]
               },
               {
@@ -156,7 +156,7 @@ export default (data, breakdowns) => {
 
         let mb = {
           columns: [
-            { text: `${i.box_woodtype.NAME}`, style: 'fonts' },
+            { text: `${i.woodtype.NAME}`, style: 'fonts' },
             { text: `${k} x ${i.box_thickness.NAME}`, style: 'fonts' },
             { text: `${SQFT(v, i, breakdowns)} Sq FT`, style: 'fonts' },
             { text: `${LinearFT(v, i, breakdowns)} Lin FT`, style: 'fonts' },

@@ -29,7 +29,7 @@ export default (data, breakdowns) => {
     let feet = (i.item.MOULDING_WIDTH * 12) / 144;
     let waste = feet * 1.25;
     let multiplier = i.item.Multiplier;
-    let wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE : 0;
+    let wood = i.woodtype ? i.woodtype.STANDARD_GRADE : 0;
     let premium = 0;
 
     let a = waste * multiplier;

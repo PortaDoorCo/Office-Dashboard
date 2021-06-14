@@ -182,7 +182,7 @@ export default (data, breakdowns) => {
         columns: [
           {
             text: `Board Feet of ${i.woodtype} - ${
-              i.thickness === '4/4' ? '4/4' : i.thickness === '5/4' ? '5/4' : null
+              (i.thickness === '4/4 Standard Grade') || (i.thickness === '4/4 Select Grade')  ? '4/4' : (i.thickness === '5/4 Standard Grade') || (i.thickness === '5/4 Select Grade')  ? '5/4' : null
             }" Thickness - Stile/Rail/Mullion Material Needed: ${i.BoardFT.toFixed(2)}`,
             style: 'fonts',
             width: 400,

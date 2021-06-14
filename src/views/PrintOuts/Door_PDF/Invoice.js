@@ -328,9 +328,9 @@ export default (data) => {
                 },
                 {
                   text: `${part.woodtype.NAME} - ${
-                    part.thickness && part.thickness.value === 0.75
+                    (part?.thickness.value === 1) || (part?.thickness.value === 2)
                       ? '4/4'
-                      : part.thickness && part.thickness.value === 1
+                      : (part?.thickness.value === 3) || (part?.thickness.value === 4)
                         ? '5/4'
                         : ''
                   }`,

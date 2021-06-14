@@ -320,7 +320,7 @@ export default (data) => {
                   text: `Drawer Box ${part.box_thickness.NAME}`,
                   style: 'fonts'
                 },
-                { text: `${part.box_woodtype.NAME}`, style: 'woodtype' }
+                { text: `${part.woodtype.NAME}`, style: 'woodtype' }
               ]
             },
             { text: `${part.notes ? part.notes : ''}`, style: 'fontsBold', alignment: 'center' },

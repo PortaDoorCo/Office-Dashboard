@@ -349,7 +349,7 @@ class DoorOrders extends Component {
                 {...this.state}
                 onSubNav={this.onSubNav}
                 handleSubmit={handleSubmit}
-                onSubmit={this.onSubmit}
+                submit={this.submit}
                 cancelOrder={this.cancelOrder}
                 maxValue={maxValue}
                 onUploaded={this.onUploaded}
@@ -367,7 +367,7 @@ class DoorOrders extends Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-  woodtypes: state.part_list.box_woodtypes,
+  woodtypes: state.part_list.woodtypes,
   boxBottomWoodtype: state.part_list.box_bottom_woodtypes,
   boxThickness: state.part_list.box_thickness,
   boxBottoms: state.part_list.box_bottom_thickness,

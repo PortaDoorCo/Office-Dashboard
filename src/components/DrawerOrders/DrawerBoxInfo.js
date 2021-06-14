@@ -53,7 +53,7 @@ class DrawerBoxInfo extends Component {
                 <FormGroup>
                   <Label htmlFor="woodtypeSelection">Woodtype</Label>
                   <Field
-                    name={`${part}.box_woodtype`}
+                    name={`${part}.woodtype`}
                     component={renderDropdownListFilter}
                     data={woodtypes}
                     valueField="value"
