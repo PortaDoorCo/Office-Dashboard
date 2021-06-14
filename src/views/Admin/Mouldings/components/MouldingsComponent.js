@@ -227,7 +227,7 @@ render() {
               {...this.state}
               onSubNav={this.onSubNav}
               handleSubmit={handleSubmit}
-              onSubmit={this.onSubmit}
+              submit={this.submit}
               cancelOrder={this.cancelOrder}
               maxValue={maxValue}
               onUploaded={this.onUploaded}
