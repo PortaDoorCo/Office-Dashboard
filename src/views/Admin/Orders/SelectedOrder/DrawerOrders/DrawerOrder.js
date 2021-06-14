@@ -329,7 +329,7 @@ const mapStateToProps = (state, props) => ({
   },
   order: state.Orders.selectedOrder,
 
-  woodtypes: state.part_list.box_woodtypes,
+  woodtypes: state.part_list.woodtypes,
   boxBottomWoodtype: state.part_list.box_bottom_woodtypes,
   boxThickness: state.part_list.box_thickness,
   boxBottoms: state.part_list.box_bottom_thickness,

@@ -99,7 +99,7 @@ export default (data, breakdowns) => {
 
           let mb = {
             columns: [
-              { text: `${i.box_woodtype.NAME}`, style: 'fonts' },
+              { text: `${i.woodtype.NAME}`, style: 'fonts' },
               { text: `${k} x ${i.box_thickness.NAME}`, style: 'fonts' },
               { text: `= ${LinearIN(v, i, breakdowns)} Lin IN`, style: 'fonts' },
               { text: '', style: 'fonts' },
@@ -119,7 +119,7 @@ export default (data, breakdowns) => {
           columns: [
             {
               stack: [
-                { text: `${i.box_woodtype.NAME}`, style: 'woodtype' },
+                { text: `${i.woodtype.NAME}`, style: 'woodtype' },
                 { text: `Notes: ${i.notes ? i.notes : ''}`, style: 'fontsBold' },
               ]
             },
