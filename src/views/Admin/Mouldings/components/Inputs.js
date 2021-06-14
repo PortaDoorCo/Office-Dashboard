@@ -72,9 +72,9 @@ let Inputs = (props) => {
                 </td>
                 <td>
                   <Field
-                    name={`${table}.moulding_material`}
+                    name={`${table}.woodtype`}
                     component={renderDropdownList}
-                    data={part_list.moulding_material}
+                    data={part_list.woodtypes}
                     // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="NAME"

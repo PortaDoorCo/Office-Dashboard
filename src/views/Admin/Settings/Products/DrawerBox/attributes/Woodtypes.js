@@ -263,7 +263,7 @@ const Woodtype = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  woodtypes: state.part_list.box_woodtypes,
+  woodtypes: state.part_list.woodtypes,
   role: state.users.user.role
 });
 
