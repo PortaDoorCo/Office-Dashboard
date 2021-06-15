@@ -47,7 +47,7 @@ const Designs = (props) => {
   const [filteredProducts, setFilteredProducts] = useState(props.designs);
 
   useEffect(() => {
-    const filteredProduct = props.designs.filter((x) => x.Style === 'Baseboard');
+    const filteredProduct = props.designs.filter((x) => x.Style === 'Crown_Moulding');
     setFilteredProducts(filteredProduct);
   }, [props.designs]);
 
@@ -71,7 +71,7 @@ const Designs = (props) => {
       MOULDING_WIDTH: '',
       MOULDING_THICKNESS: '',
       Multiplier: '',
-      Style: 'Baseboard',
+      Style: 'Crown_Moulding',
       photo: null,
     };
     setNewProduct(true);
