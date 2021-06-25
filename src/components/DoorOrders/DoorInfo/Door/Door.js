@@ -16,6 +16,7 @@ import {
 } from '../../../../selectors/doorPricing';
 
 import changeProfile from '../Functions/changeProfile';
+import changeDesign from '../Functions/changeDesign';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -83,6 +84,7 @@ class Door extends Component {
                 textField="NAME"
                 validate={required}
                 edit={edit}
+                onBlur={() => changeDesign(part, index, this.props, change)}
               />
             </FormGroup>
           </Col>
