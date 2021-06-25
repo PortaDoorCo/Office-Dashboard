@@ -172,6 +172,18 @@ const Cope_Table = ({
     const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
 
+    let df_reduction;
+
+    if(construction === 'Cope'){
+      df_reduction = profile.DF_Reduction;
+    } else if (construction === 'MT'){
+      df_reduction = formState?.part_list[i]?.design?.DF_REDUCTION;
+    } else {
+      df_reduction = design;
+    }
+
+
+
     fields.push({
       qty: 1,
       panelsH: 1,
@@ -186,16 +198,8 @@ const Cope_Table = ({
         : (construction === 'Cope' && profile) ?
           fraction(profile) :
           fraction(design) ,
-      topRail: topRailWidth
-        ? fraction(numQty(topRailWidth))
-        : (construction === 'Cope' && profile) ?
-          fraction(profile) :
-          fraction(design),
-      bottomRail: bottomRailWidth
-        ? fraction(numQty(bottomRailWidth))
-        : (construction === 'Cope' && profile) ?
-          fraction(profile) :
-          fraction(design),
+      topRail: fraction(df_reduction),
+      bottomRail: fraction(df_reduction),
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',

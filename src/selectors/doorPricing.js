@@ -176,7 +176,7 @@ export const itemPriceSelector = createSelector(
     parts.map((part, index) => {
       const design =
         (part.design && part.thickness.value === 1) ||
-          (part.design && part.thickness.value === 2)
+        (part.design && part.thickness.value === 2)
           ? part.design.UPCHARGE
           : (part.design && part.thickness.value === 3) ||
             (part.design && part.thickness.value === 4)
@@ -332,14 +332,14 @@ export const itemPriceSelector = createSelector(
 
             let price = 0;
 
-            if ((part.thickness.value === 1) || (part.thickness.value === 2)) {
+            if (part.thickness.value === 1 || part.thickness.value === 2) {
               if (part.design) {
                 price = part.design && part.design.UPCHARGE;
               } else {
                 price = 0;
               }
             }
-            if ((part.thickness.value === 3) || (part.thickness.value === 4)) {
+            if (part.thickness.value === 3 || part.thickness.value === 4) {
               if (part.design) {
                 price = part.design && part.design.UPCHARGE_THICK;
               } else {
@@ -410,57 +410,53 @@ export const itemPriceSelector = createSelector(
             //Slab Doors here
 
             if (
-              part.orderType.value === 'DF' ||
-              part.orderType.value === 'One_Piece_DF' ||
-              part.orderType.value === 'Two_Piece_DF' ||
-              part.orderType.value === 'Glass_DF'
-            ) {
-              price =
-                eval(pricer.df_pricing) +
-                  leftStileAdd +
-                  rightStileAdd +
-                  topRailAdd +
-                  bottomRailAdd +
-                  extraCost
-                  ? eval(pricer.df_pricing) +
-                  leftStileAdd +
-                  rightStileAdd +
-                  topRailAdd +
-                  bottomRailAdd +
-                  extraCost
-                  : 0;
-            } else if (
-              part.orderType.value === 'Slab_Door' ||
-              (part.orderType.value === 'Door' &&
-                part.construction.value === 'Slab')
+              part.orderType.value === 'Door' &&
+              part.construction.value === 'Slab'
             ) {
               price =
                 (width * height) / 144 > 2
                   ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                   : 2 * wood + (6.5 + edge) + extraCost;
             } else if (
-              part.orderType.value === 'Slab_Door' ||
-              (part.orderType.value === 'DF' &&
-                part.construction.value === 'Slab')
+              part.orderType.value === 'DF' &&
+              part.construction.value === 'Slab'
             ) {
               price =
                 (width * height) / 144 > 1
                   ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                   : 1 * wood + (6.5 + edge) + extraCost;
-            } else {
+            } else if (
+              part.orderType.value === 'DF'
+            ) {
+              price =
+                eval(pricer.df_pricing) +
+                leftStileAdd +
+                rightStileAdd +
+                topRailAdd +
+                bottomRailAdd +
+                extraCost
+                  ? eval(pricer.df_pricing) +
+                    leftStileAdd +
+                    rightStileAdd +
+                    topRailAdd +
+                    bottomRailAdd +
+                    extraCost
+                  : 0;
+            } 
+            else {
               price =
                 eval(pricer && pricer.door_pricing) +
-                  leftStileAdd +
-                  rightStileAdd +
-                  topRailAdd +
-                  bottomRailAdd +
-                  extraCost
+                leftStileAdd +
+                rightStileAdd +
+                topRailAdd +
+                bottomRailAdd +
+                extraCost
                   ? eval(pricer && pricer.door_pricing) +
-                  leftStileAdd +
-                  rightStileAdd +
-                  topRailAdd +
-                  bottomRailAdd +
-                  extraCost
+                    leftStileAdd +
+                    rightStileAdd +
+                    topRailAdd +
+                    bottomRailAdd +
+                    extraCost
                   : 0;
             }
 
@@ -492,8 +488,7 @@ export const linePriceSelector = createSelector(
                 (part.orderType.value === 'Door' ||
                   part.orderType.value === 'Glass' ||
                   part.orderType.value === 'One_Piece' ||
-                  part.orderType.value === 'Two_Piece' ||
-                  part.orderType.value === 'Slab_Door') &&
+                  part.orderType.value === 'Two_Piece') &&
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
