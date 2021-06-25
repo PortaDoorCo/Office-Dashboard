@@ -122,7 +122,7 @@ export const mouldingPriceSelector = createSelector(
       let feet = (item.MOULDING_WIDTH * 12) / 144;
       let waste = feet * 1.25;
       let multiplier = item.Multiplier;
-      let wood = woodtype ? woodtype.STANDARD_GRADE : 0;
+      let wood = woodtype ? woodtype.STANDARD_GRADE / 4 : 0;
       let premium = 0;
 
       let a = waste * multiplier;
