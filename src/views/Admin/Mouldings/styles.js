@@ -24,6 +24,14 @@ const styles = [
     value: 'Solid_Crown'
   },
   {
+    name: 'Wainscot',
+    value: 'Wainscot'
+  },
+  {
+    name: 'Plynths & Others',
+    value: 'Plynths'
+  },
+  {
     name: 'Flat Stock',
     value: 'flat_stock'
   },
