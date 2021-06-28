@@ -43,12 +43,16 @@ class Door extends Component {
 
     let construction = formState?.part_list[index]?.construction?.value;
     let orderType = formState?.part_list[index]?.orderType?.value;
+    let thickness = formState?.part_list[index]?.thickness?.db_name;
 
+    const filtered_woodtypes = woodtypes.filter((wood) => wood[thickness]);
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
     const two_piece_wood = woodtypes.filter((wood) => wood.two_piece === true);
     const filtered_designs = designs.filter((design) =>
       (design.CONSTRUCTION === construction) && (design.ORDERTYPE === orderType)
     );
+
+
 
     return (
       <div>
@@ -64,7 +68,7 @@ class Door extends Component {
                     ? one_piece_wood
                     : orderType === 'Two_Piece'
                       ? two_piece_wood
-                      : woodtypes
+                      : filtered_woodtypes
                 }
                 valueField="value"
                 textField="NAME"
