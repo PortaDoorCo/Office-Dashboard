@@ -27,7 +27,11 @@ const Woodtype = (props) => {
     id: '',
     NAME: '',
     STANDARD_GRADE: '',
+    SELECT_GRADE: '',
     STANDARD_GRADE_THICK: '',
+    SELECT_GRADE_THICK: '',
+    SIX_QUARTER: '',
+    SIX_QUARTER_THICK: '',
     VERTICAL_GRAIN: false
   });
   const [newProduct, setNewProduct] = useState(false);
@@ -56,7 +60,11 @@ const Woodtype = (props) => {
     const p = {
       NAME: '',
       STANDARD_GRADE: '',
+      SELECT_GRADE: '',
       STANDARD_GRADE_THICK: '',
+      SELECT_GRADE_THICK: '',
+      SIX_QUARTER: '',
+      SIX_QUARTER_THICK: '',
       VERTICAL_GRAIN: false
     };
     setNewProduct(true);
@@ -106,7 +114,11 @@ const Woodtype = (props) => {
     const submittedProduct = {
       NAME: product.NAME,
       STANDARD_GRADE: product.STANDARD_GRADE,
+      SELECT_GRADE: product.SELECT_GRADE,
       STANDARD_GRADE_THICK: product.STANDARD_GRADE_THICK,
+      SELECT_GRADE_THICK: product.SELECT_GRADE_THICK,
+      SIX_QUARTER: product.SIX_QUARTER,
+      SIX_QUARTER_THICK: product.SIX_QUARTER_THICK,
       VERTICAL_GRAIN: product.VERTICAL_GRAIN,
       photo: product.photo ? product.photo.id : '',
       Item: item
@@ -128,8 +140,12 @@ const Woodtype = (props) => {
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>4/4 Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
-            <CardTitle><strong>5/4 Price:</strong> ${card.STANDARD_GRADE_THICK}</CardTitle>
+            <CardTitle><strong>4/4 Standard Grade Price:</strong> ${card.STANDARD_GRADE}</CardTitle>
+            <CardTitle><strong>4/4 Select Grade Price:</strong> ${card.SELECT_GRADE}</CardTitle>
+            <CardTitle><strong>5/4 Standard Grade Price:</strong> ${card.STANDARD_GRADE_THICK}</CardTitle>
+            <CardTitle><strong>5/4 Select Grade Price:</strong> ${card.SELECT_GRADE_THICK}</CardTitle>
+            <CardTitle><strong>6/4 Standard Grade Price:</strong> ${card.SIX_QUARTER}</CardTitle>
+            <CardTitle><strong>6/4 Select Grade Price:</strong> ${card.SIX_QUARTER_THICK}</CardTitle>
             <CardTitle><strong>DF Grain Direction:</strong> {card.VERTICAL_GRAIN ? <div>Vertical</div>  : <div>Horizontal</div>}</CardTitle>
           </CardBody>
         </Card>
@@ -188,12 +204,32 @@ const Woodtype = (props) => {
               </Row>
               <Row>
                 <Col>
-                  <Label for="4/4_Price">4/4 Price</Label>
+                  <Label for="4/4_Price">4/4 Standard Grade Price</Label>
                   <Input type="number" value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
-                  <Label for="5/4_Price">5/4 Price</Label>
+                  <Label for="5/4_Price">5/4 Standard Grade Price</Label>
                   <Input type="number" value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">4/4 Select Grade Price</Label>
+                  <Input type="number" value={product.SELECT_GRADE} name="SELECT_GRADE" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">5/4 Select Grade Price</Label>
+                  <Input type="number" value={product.SELECT_GRADE_THICK} name="SELECT_GRADE_THICK" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">6/4 Standard Grade Price</Label>
+                  <Input type="number" value={product.SIX_QUARTER} name="SIX_QUARTER" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">6/4 Select Grade Price</Label>
+                  <Input type="number" value={product.SIX_QUARTER_THICK} name="SIX_QUARTER_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row className="mt-3">
@@ -303,12 +339,32 @@ const Woodtype = (props) => {
               </Row>
               <Row>
                 <Col>
-                  <Label for="4/4_Price">4/4 Price</Label>
+                  <Label for="4/4_Price">4/4 Standard Grade Price</Label>
                   <Input type="number" value={product.STANDARD_GRADE} name="STANDARD_GRADE" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
-                  <Label for="5/4_Price">5/4 Price</Label>
+                  <Label for="5/4_Price">5/4 Standard Grade Price</Label>
                   <Input type="number" value={product.STANDARD_GRADE_THICK} name="STANDARD_GRADE_THICK" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">4/4 Select Grade Price</Label>
+                  <Input type="number" value={product.SELECT_GRADE} name="SELECT_GRADE" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">5/4 Select Grade Price</Label>
+                  <Input type="number" value={product.SELECT_GRADE_THICK} name="SELECT_GRADE_THICK" onChange={(e) => change(e)}></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">6/4 Standard Grade Price</Label>
+                  <Input type="number" value={product.SIX_QUARTER} name="SIX_QUARTER" onChange={(e) => change(e)}></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">6/4 Select Grade Price</Label>
+                  <Input type="number" value={product.SIX_QUARTER_THICK} name="SIX_QUARTER_THICK" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
               <Row className="mt-3">
