@@ -24,6 +24,7 @@ const construction = [
   },
 ];
 
+
 const orderType = [
   {
     name: 'Door Order',

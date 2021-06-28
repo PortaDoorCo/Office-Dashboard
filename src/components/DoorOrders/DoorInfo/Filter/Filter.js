@@ -16,6 +16,33 @@ const faceFrameOrderType = [
   }
 ];
 
+const construction_one_piece = [
+  {
+    name: 'Cope And Stick',
+    value: 'Cope',
+  },
+  {
+    name: 'Mitered Construction',
+    value: 'Miter',
+  },
+  {
+    name: 'MT Construction',
+    value: 'MT',
+  }
+];
+
+const thickness_one_piece = [
+  {
+    name: '4/4 Standard Grade',
+    value: 1,
+  },
+  {
+    name: '5/4 Standard Grade',
+    value: 3,
+  },
+
+];
+
 const required = value => (value ? undefined : 'Required');
 
 class DoorFilter extends Component {
@@ -232,97 +259,117 @@ class DoorFilter extends Component {
           </Fragment>
         );
       }
-      if ((formState.part_list[index].orderType.value === 'Slab_Door' || formState.part_list[index].orderType.value === 'Slab_DF')) {
-        return (
-          <Fragment>
-            <Row>
-              <Col xs="4">
-                <FormGroup>
-                  <Label for="orderType">Order Type</Label>
-                  <Field
-                    name={`${part}.orderType`}
-                    component={renderDropdownList}
-                    data={orderType}
-                    onChange={() => this.onChangeType(index)}
-                    valueField="value"
-                    textField="name"
-                    edit={edit}
-                    validate={required}
-                  />
-                </FormGroup>
-              </Col>
-
-              <Col xs="4">
-                <FormGroup>
-                  <Label for="construction">Thickness</Label>
-                  <Field
-                    name={`${part}.thickness`}
-                    component={renderDropdownList}
-                    data={thickness}
-                    valueField="value"
-                    textField="name"
-                    edit={edit}
-                    validate={required}
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-          </Fragment>
-        );
-      }
       else {
-        return (
-          <Fragment>
-            <Row>
-              <Col xs="4">
-                <FormGroup>
-                  <Label for="orderType">Order Type</Label>
-                  <Field
-                    name={`${part}.orderType`}
-                    component={renderDropdownList}
-                    data={orderType}
-                    onChange={() => this.onChangeType(index)}
-                    valueField="value"
-                    textField="name"
-                    edit={edit}
-                    validate={required}
-                  />
-                </FormGroup>
-              </Col>
 
-              <Col xs="4">
-                <FormGroup>
-                  <Label for="construction">Construction</Label>
-                  <Field
-                    name={`${part}.construction`}
-                    component={renderDropdownList}
-                    data={construction}
-                    onChange={() => this.onChangeType(index)}
-                    valueField="value"
-                    textField="name"
-                    edit={edit}
-                    validate={required}
-                  />
-                </FormGroup>
-              </Col>
+        if((formState.part_list[index].orderType.value === 'One_Piece') || (formState.part_list[index].orderType.value === 'Two_Piece')){
+          return (
+            <Fragment>
+              <Row>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label for="orderType">Order Type</Label>
+                    <Field
+                      name={`${part}.orderType`}
+                      component={renderDropdownList}
+                      data={orderType}
+                      onChange={() => this.onChangeType(index)}
+                      valueField="value"
+                      textField="name"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
 
-              <Col xs="4">
-                <FormGroup>
-                  <Label for="construction">Thickness</Label>
-                  <Field
-                    name={`${part}.thickness`}
-                    component={renderDropdownList}
-                    data={thickness}
-                    valueField="value"
-                    textField="name"
-                    edit={edit}
-                    validate={required}
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-          </Fragment>
-        );
+                <Col xs="4">
+                  <FormGroup>
+                    <Label for="construction">Construction</Label>
+                    <Field
+                      name={`${part}.construction`}
+                      component={renderDropdownList}
+                      data={construction_one_piece}
+                      onChange={() => this.onChangeType(index)}
+                      valueField="value"
+                      textField="name"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
+
+                <Col xs="4">
+                  <FormGroup>
+                    <Label for="construction">Thickness</Label>
+                    <Field
+                      name={`${part}.thickness`}
+                      component={renderDropdownList}
+                      data={thickness_one_piece}
+                      valueField="value"
+                      textField="name"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+            </Fragment>
+          );
+        } else {
+          return (
+            <Fragment>
+              <Row>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label for="orderType">Order Type</Label>
+                    <Field
+                      name={`${part}.orderType`}
+                      component={renderDropdownList}
+                      data={orderType}
+                      onChange={() => this.onChangeType(index)}
+                      valueField="value"
+                      textField="name"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
+
+                <Col xs="4">
+                  <FormGroup>
+                    <Label for="construction">Construction</Label>
+                    <Field
+                      name={`${part}.construction`}
+                      component={renderDropdownList}
+                      data={construction}
+                      onChange={() => this.onChangeType(index)}
+                      valueField="value"
+                      textField="name"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
+
+                <Col xs="4">
+                  <FormGroup>
+                    <Label for="construction">Thickness</Label>
+                    <Field
+                      name={`${part}.thickness`}
+                      component={renderDropdownList}
+                      data={thickness}
+                      valueField="value"
+                      textField="name"
+                      edit={edit}
+                      validate={required}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+            </Fragment>
+          );
+        }
+
+
       }
     } else {
       return null;
