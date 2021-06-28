@@ -21,6 +21,8 @@ import CrownMouldings from './Products/Mouldings/Crown_Mouldings/Crown_Mouldings
 import SolidCrowns from './Products/Mouldings/Solid_Crowns/Solid_Crowns';
 import MiscItems from './Products/MiscItems/Misc_Items';
 import FlatStock from './Products/Mouldings/Flat_Stock/Flat_Stock';
+import Wainscot from './Products/Mouldings/Wainscot/Wainscot';
+import Plynths from './Products/Mouldings/Plynths/Plynths';
 
 const Selection = props => {
 
@@ -70,6 +72,10 @@ const Selection = props => {
       return <MiscItems />;
     case 'flat_stock':
       return <FlatStock />;
+    case 'wainscot':
+      return <Wainscot />;
+    case 'plynths':
+      return <Plynths />;
     default:
       return <AccountSettings />;
   }

@@ -45,6 +45,7 @@ class Door extends Component {
     let orderType = formState?.part_list[index]?.orderType?.value;
 
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
+    const two_piece_wood = woodtypes.filter((wood) => wood.two_piece === true);
     const filtered_designs = designs.filter((design) =>
       (design.CONSTRUCTION === construction) && (design.ORDERTYPE === orderType)
     );
@@ -62,7 +63,7 @@ class Door extends Component {
                   orderType === 'One_Piece'
                     ? one_piece_wood
                     : orderType === 'Two_Piece'
-                      ? one_piece_wood
+                      ? two_piece_wood
                       : woodtypes
                 }
                 valueField="value"

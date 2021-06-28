@@ -1,25 +1,38 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  CardSubtitle,
-  FormGroup,
-  Label,
-  Button
-} from 'reactstrap';
+import { Row, Col, CardSubtitle, FormGroup, Label, Button } from 'reactstrap';
 import 'antd/dist/antd.css';
 import { Field, FieldArray } from 'redux-form';
 import OrderTable from './OrderTable';
-import { renderDropdownList, renderField, renderDropdownListFilter } from '../RenderInputs/renderInputs';
+import {
+  renderDropdownList,
+  renderField,
+  renderDropdownListFilter,
+} from '../RenderInputs/renderInputs';
 
-
-const required = value => value ? undefined : 'Required';
+const required = (value) => (value ? undefined : 'Required');
 
 class DrawerBoxInfo extends Component {
-
-
   render() {
-    const { woodtypes, boxBottomWoodtype, boxThickness, boxBottoms, notchDrill, drawerFinishes, fields, scoop, dividers, prices, subTotal, formState, edit, box_assembly } = this.props;
+    const {
+      woodtypes,
+      boxBottomWoodtype,
+      boxThickness,
+      boxBottoms,
+      notchDrill,
+      drawerFinishes,
+      fields,
+      scoop,
+      dividers,
+      prices,
+      subTotal,
+      formState,
+      edit,
+      box_assembly,
+    } = this.props;
+
+
+    const drawer_box_woodtypes = woodtypes.filter((wood) => wood.drawer_box === true);
+
     return (
       <div>
         {fields.map((part, index) => (
@@ -31,19 +44,22 @@ class DrawerBoxInfo extends Component {
                   <div>
                     <h2>Item #{index + 1}</h2>
                   </div>
-
                 </Col>
                 <Col>
-                  {!edit ?
+                  {!edit ? (
                     <div>
                       {fields.length > 1 ? (
-                        <Button color="danger" onClick={() => fields.remove(index)}>
+                        <Button
+                          color="danger"
+                          onClick={() => fields.remove(index)}
+                        >
                           x
                         </Button>
                       ) : null}
-                    </div> : <div />
-                  }
-
+                    </div>
+                  ) : (
+                    <div />
+                  )}
                 </Col>
               </Row>
             </CardSubtitle>
@@ -55,11 +71,12 @@ class DrawerBoxInfo extends Component {
                   <Field
                     name={`${part}.woodtype`}
                     component={renderDropdownListFilter}
-                    data={woodtypes}
+                    data={drawer_box_woodtypes}
                     valueField="value"
                     textField="NAME"
                     edit={edit}
-                    validate={required} />
+                    validate={required}
+                  />
                 </FormGroup>
               </Col>
               <Col xs="4">
@@ -72,12 +89,15 @@ class DrawerBoxInfo extends Component {
                     valueField="value"
                     textField="NAME"
                     edit={edit}
-                    validate={required} />
+                    validate={required}
+                  />
                 </FormGroup>
               </Col>
               <Col xs="4">
                 <FormGroup>
-                  <Label htmlFor="box-bottom-woodtype">Box Bottom Woodtype</Label>
+                  <Label htmlFor="box-bottom-woodtype">
+                    Box Bottom Woodtype
+                  </Label>
                   <Field
                     name={`${part}.box_bottom_woodtype`}
                     component={renderDropdownListFilter}
@@ -85,10 +105,10 @@ class DrawerBoxInfo extends Component {
                     valueField="value"
                     textField="NAME"
                     edit={edit}
-                    validate={required} />
+                    validate={required}
+                  />
                 </FormGroup>
               </Col>
-
             </Row>
             <Row>
               <Col xs="3">
@@ -101,7 +121,8 @@ class DrawerBoxInfo extends Component {
                     valueField="value"
                     textField="NAME"
                     edit={edit}
-                    validate={required} />
+                    validate={required}
+                  />
                 </FormGroup>
               </Col>
 
@@ -115,7 +136,8 @@ class DrawerBoxInfo extends Component {
                     valueField="value"
                     textField="NAME"
                     edit={edit}
-                    validate={required} />
+                    validate={required}
+                  />
                 </FormGroup>
               </Col>
               <Col xs="3">
@@ -128,7 +150,8 @@ class DrawerBoxInfo extends Component {
                     valueField="value"
                     textField="NAME"
                     edit={edit}
-                    validate={required} />
+                    validate={required}
+                  />
                 </FormGroup>
               </Col>
 
@@ -142,7 +165,8 @@ class DrawerBoxInfo extends Component {
                     valueField="value"
                     textField="NAME"
                     edit={edit}
-                    validate={required} />
+                    validate={required}
+                  />
                 </FormGroup>
               </Col>
             </Row>
@@ -164,7 +188,9 @@ class DrawerBoxInfo extends Component {
             </Row>
 
             <div>
-              <CardSubtitle className="mt-4 mb-1"><strong>Dimensions</strong></CardSubtitle>
+              <CardSubtitle className="mt-4 mb-1">
+                <strong>Dimensions</strong>
+              </CardSubtitle>
               <div className="mt-1" />
               <FieldArray
                 name={`${part}.dimensions`}
@@ -184,26 +210,22 @@ class DrawerBoxInfo extends Component {
           </div>
         ))}
 
-        {!edit
-          ?
+        {!edit ? (
           <Button
             color="primary"
             onClick={() =>
               fields.push({
                 dimensions: [],
-                addPrice: 0
-
+                addPrice: 0,
               })
             }
           >
             Add Item
           </Button>
-          :
+        ) : (
           <div />
-        }
-
-      </div >
-
+        )}
+      </div>
     );
   }
 }

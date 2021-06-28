@@ -115,6 +115,12 @@ const Settings = (props) => {
                     <DropdownItem onClick={() => setSelection('solid_crowns')}>
                       Solid Crowns
                     </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('wainscot')}>
+                      Wainscot
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setSelection('plynths')}>
+                      Plynths and Others
+                    </DropdownItem>
                     <DropdownItem onClick={() => setSelection('flat_stock')}>
                       Flat Stock
                     </DropdownItem>
