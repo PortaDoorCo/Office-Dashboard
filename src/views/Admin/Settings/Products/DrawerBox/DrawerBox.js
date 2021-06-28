@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Row, Col, Button, Card, CardBody, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Woodtype from './attributes/Woodtypes';
+import Woodtype from '../Door/Attributes/Woodtypes';
 import BoxThickness from './attributes/BoxThickness';
 import BoxBottomThickness from './attributes/BoxBottomThickness';
 import { updateProduct } from '../../../../../redux/part_list/actions';
