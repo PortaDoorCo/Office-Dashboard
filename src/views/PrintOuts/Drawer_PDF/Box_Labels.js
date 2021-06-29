@@ -11,25 +11,47 @@ export default (data, breakdowns) => {
     return i.dimensions;
   });
 
+  console.log({dim});
+
 
   const flatten_d = flatten(dim);
 
+  console.log({flatten_d});
+
+  const amount = flatten_d.map(n => parseInt(n.qty));
+  const total = amount.reduce((acc, item) => acc + item, 0);
+
+  console.log({total});
+
   const arr = [];
   const a = flatten(flatten_d.map(i => {
-    return [
-      {
-        stack: [
-          {text: `${data.job_info && data.job_info.customer && data.job_info.customer.Company}`, alignment: 'center', style: 'fonts'},
-          {text: `${data.job_info && data.job_info.poNum}`, alignment: 'center', style: 'fonts'},
-          {text: `Order#: ${data.orderNum}`, alignment: 'center', style: 'fonts'},
-          {text: `${i.width} x ${i.depth} x ${i.height}`, alignment: 'center', style: 'fonts'},
-          {text: `Cab#: ${i.cab_number ? i.cab_number : ''}`, alignment: 'center', style: 'fonts'}
-        ],
-        margin: [0,4,0,0]
-      }
 
-    ];
+    let obj=[];
+
+    for(let p = 0; p < parseInt(i.qty); p++){
+      obj.push([
+        {
+          stack: [
+            {text: `${data.job_info && data.job_info.customer && data.job_info.customer.Company}`, alignment: 'center', style: 'fonts'},
+            {text: `${data.job_info && data.job_info.poNum}`, alignment: 'center', style: 'fonts'},
+            {text: `Order#: ${data.orderNum}`, alignment: 'center', style: 'fonts'},
+            {text: `${i.width} x ${i.depth} x ${i.height}`, alignment: 'center', style: 'fonts'},
+            {text: `Cab#: ${i.cab_number ? i.cab_number : ''}`, alignment: 'center', style: 'fonts'}
+          ],
+          margin: [0,4,0,0]
+        }
+      ]);
+    }
+
+    console.log({obj});
+
+    return obj;
+
+    
   }));
+
+
+  console.log({a});
 
 
   let chunk;
