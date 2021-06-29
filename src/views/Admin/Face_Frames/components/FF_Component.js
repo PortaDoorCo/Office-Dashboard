@@ -215,7 +215,7 @@ class DoorOrders extends Component {
       total,
       dispatch,
       tax,
-      addPriceSelector,
+      addPriceSelector
     } = this.props;
 
     return (

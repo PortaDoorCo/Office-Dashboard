@@ -32,6 +32,9 @@ class FaceFrame extends Component {
       edit,
       updateSubmit,
     } = this.props;
+
+    console.log({prices});
+
     return (
       <div>
         <Row>

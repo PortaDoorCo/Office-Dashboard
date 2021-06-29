@@ -202,8 +202,8 @@ export const itemPriceSelector = createSelector(
       const finish = part.finish ? part.finish.UPCHARGE : 0;
 
       const ff_opening_cost =
-        part.design && part.orderType.value === 'Face_Frame'
-          ? part.design.opening_cost
+        part.face_frame_design
+          ? part.face_frame_design.opening_cost
           : 0;
       const ff_top_rail_design = part.face_frame_top_rail
         ? part.face_frame_top_rail.UPCHARGE
@@ -212,20 +212,19 @@ export const itemPriceSelector = createSelector(
         ? part.furniture_feet.UPCHARGE
         : 0;
 
-      if (part.orderType.value === 'Face_Frame') {
+      if (part?.orderType?.value === 'Face_Frame') {
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
             console.log({ i });
 
+            const ff_wood = part?.woodtype?.STANDARD_GRADE;
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings);
-            const qty = parseInt(i.qty);
-            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
-            const panelsH = parseInt(i.panelsH) > 1 ? parseInt(i.panelsH) : 1;
-            const panelsW = parseInt(i.panelsW) > 1 ? parseInt(i.panelsW) : 1;
 
             const price = eval(pricer && pricer.face_frame_pricing);
+
+            console.log({ price });
 
             if (height > -1) {
               return price;
@@ -245,6 +244,7 @@ export const itemPriceSelector = createSelector(
           const linePrice = part.dimensions.map((i) => {
             console.log({ i });
 
+            
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
@@ -425,9 +425,7 @@ export const itemPriceSelector = createSelector(
                 (width * height) / 144 > 1
                   ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                   : 1 * wood + (6.5 + edge) + extraCost;
-            } else if (
-              part.orderType.value === 'DF'
-            ) {
+            } else if (part.orderType.value === 'DF') {
               price =
                 eval(pricer.df_pricing) +
                 leftStileAdd +
@@ -442,8 +440,7 @@ export const itemPriceSelector = createSelector(
                     bottomRailAdd +
                     extraCost
                   : 0;
-            } 
-            else {
+            } else {
               price =
                 eval(pricer && pricer.door_pricing) +
                 leftStileAdd +
