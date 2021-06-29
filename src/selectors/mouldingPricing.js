@@ -117,24 +117,17 @@ export const mouldingPriceSelector = createSelector(
     let price = 0;
 
     if(i.item){
-      const { item, moulding_material, woodtype, linearFT } = i;
+      const { item, woodtype, linearFT, grade } = i;
 
       let feet = (item.MOULDING_WIDTH * 12) / 144;
       let waste = feet * 1.25;
       let multiplier = item.Multiplier;
-      let wood = woodtype ? woodtype.STANDARD_GRADE / 4 : 0;
+      let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
       let premium = 0;
 
       let a = waste * multiplier;
 
-      // if(thickness.value === 0.75){
-      //   wood = moulding_material ? moulding_material.STANDARD_GRADE : 0;
-      // } else if (thickness.value === 1) {
-      //   wood = moulding_material ? moulding_material.STANDARD_GRADE_THICK : 0;
-      // } else {
-      //   wood = 0;
-      // }
-      
+
       if(parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
         premium = 3 + 1;
       } else if (parseFloat(linearFT) >= 31 && parseFloat(linearFT) <= 50) {

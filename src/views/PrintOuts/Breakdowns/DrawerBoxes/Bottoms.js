@@ -26,6 +26,8 @@ export default (item, part, breakdowns) => {
     return {
       qty: parseInt(item.qty),
       measurement: `${fraction(numQty(eval(b.bottoms_width)))} x ${fraction(numQty(eval(b.bottoms_depth)))}`,
+      width: fraction(numQty(eval(b.bottoms_width))),
+      length: fraction(numQty(eval(b.bottoms_depth))),
       pattern: 'Bottoms'
     };
   }
