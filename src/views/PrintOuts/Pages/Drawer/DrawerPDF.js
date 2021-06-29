@@ -103,7 +103,11 @@ export default (data, breakdowns, p) => {
     },
     styles: {
       woodtype: {
-        fontSize: 15,
+        fontSize: 14,
+        bold: false,
+      },
+      orderNum: {
+        fontSize: 24,
         bold: true,
       },
       fonts: {

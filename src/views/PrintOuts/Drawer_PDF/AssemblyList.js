@@ -7,23 +7,21 @@ import _ from 'lodash';
 import LinearIN from '../Breakdowns/DrawerBoxes/LinearIN';
 import LinearFT from '../Breakdowns/DrawerBoxes/LinearFT';
 import SQFT from '../Breakdowns/DrawerBoxes/SQFT';
-
-
-
+import { flatten } from 'lodash';
 
 export default (data, breakdowns) => {
-
   return [
-    
     {
       headlineLevel: 1,
       columns: [
         {
           stack: [
             { text: 'Assembly List', bold: true },
-            `Shipping Date: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`,
+            `Shipping Date: ${moment(data.job_info.DueDate).format(
+              'MM/DD/YYYY'
+            )}`,
             { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
-          ]
+          ],
         },
         {
           stack: [
@@ -31,34 +29,81 @@ export default (data, breakdowns) => {
             { text: '65 Cogwheel Lane', alignment: 'center' },
             { text: 'Seymour, CT', alignment: 'center' },
             { text: '203-888-6191', alignment: 'center' },
-            { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-          ]
+            { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+          ],
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+            {
+              text:
+                data.job_info.Rush && data.job_info.Sample
+                  ? 'Sample / Rush'
+                  : data.job_info.Rush
+                    ? 'Rush'
+                    : data.job_info.Sample
+                      ? 'Sample'
+                      : '',
+              alignment: 'right',
+              bold: true,
+            },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
-          ]
-        }
-      ]
+            {
+              text: `Est. Completion: ${moment(data.job_info.DueDate).format(
+                'MM/DD/YYYY'
+              )}`,
+              alignment: 'right',
+            },
+          ],
+        },
+      ],
     },
     {
       columns: [
         {
-          text: `${data.job_info.customer.Company}`,
+          stack: [
+            { text: `${data.job_info.customer.Company}` },
+            { text: `${data.orderNum}`, style: 'orderNum' },
+          ],
         },
-        { text: `PO: ${data.job_info.poNum}`, alignment: 'right' }
+        {stack: [
+          {
+            stack: data.misc_items.map((i) =>
+              i.item?.NAME.includes('Clear Finish')
+                ? 'Clear Finish'
+                : i.item?.NAME.includes('Notch')
+                  ? 'Notch and Drilled'
+                  : ''
+            ),
+            alignment: 'center',
+            style: 'fontsBold',
+          },
+          {
+            stack: data.part_list.map((i) => {
+              const fingerpull = i.dimensions.filter((j) =>
+                j.scoop?.NAME.includes('Yes')
+              );
+              const fingerpull_items = fingerpull.map((k) => k.item);
+
+              if (fingerpull.length > 0) {
+                return { text: `Fingerpull - Item# ${fingerpull_items}` };
+              } else {
+                return null;
+              }
+            }),
+            alignment: 'center',
+            style: 'fontsBold',
+          },
+        ]},
+
+        { text: `PO: ${data.job_info.poNum}`, alignment: 'right' },
       ],
-      margin: [0, 10]
+      margin: [0, 10, 0, 0],
     },
     {
-      text:
-        '==============================================================================',
+      text: '==============================================================================',
       alignment: 'center',
     },
-    data.part_list.map(i => {
-
+    data.part_list.map((i) => {
       const info = [];
 
       const tableBody = [];
@@ -68,7 +113,6 @@ export default (data, breakdowns) => {
       const groupedByHeight = _.groupBy(i.dimensions, 'height');
 
       Object.entries(groupedByHeight).map(([k, v], lineIn) => {
-
         const groupedInfoBody = [
           {
             margin: [0, 10, 0, 0],
@@ -77,35 +121,31 @@ export default (data, breakdowns) => {
                 stack: [
                   {
                     text: `Drawer Box ${i.box_thickness.NAME}`,
-                    style: 'fontsBold'
+                    style: 'woodtype',
                   },
                   { text: `${i.woodtype.NAME}`, style: 'woodtype' },
-                ]
+                ],
               },
               {
-                text: `${i.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
+                text: '',
                 style: 'fontsBold',
-                alignment: 'center'
+                alignment: 'center',
               },
               {
                 stack: [
+                  {text: ' '},
                   {
                     text: `${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`,
-                    style: 'fontsBold'
+                    style: 'woodtype',
                   },
-                  {
-                    text: `${i.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
-                    style: 'fonts'
-                  }
                 ],
-                alignment: 'right'
-              }
-            ]
+                alignment: 'right',
+              },
+            ],
           },
           { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
           {
-            text:
-              '==============================================================================',
+            text: '==============================================================================',
             alignment: 'center',
           },
         ];
@@ -118,41 +158,60 @@ export default (data, breakdowns) => {
             { text: 'Qty Box Sides', style: 'fonts' },
             { text: 'Qty Box Fronts/Backs', style: 'fonts' },
             { text: 'Box Bottoms', style: 'fonts' },
-          ]
+          ],
         ];
 
         const groupedMaterialBody = [];
 
-
-
         v.forEach((item, index) => {
-
-          let tb =  [
+          let tb = [
             { text: item.item, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
             {
               stack: [
                 { text: Size(item), style: 'fonts' },
-                {text: `${item.notes ? item.notes : ''} ${item.full_frame ? 'Full Frame DF' : ''} ${item.lite ? item.lite.NAME : ''}`, style: 'tableBold', margin: [0, 4, 0, 0]}
-              ]
+                {
+                  text: `${item.notes ? item.notes : ''} ${
+                    item.full_frame ? 'Full Frame DF' : ''
+                  } ${item.lite ? item.lite.NAME : ''}`,
+                  style: 'tableBold',
+                  margin: [0, 4, 0, 0],
+                },
+              ],
             },
-            { text: `${Sides(item, i, breakdowns).qty} - ${Sides(item, i, breakdowns).measurement}`, style: 'fonts' },
-            { text: `${Fronts(item, i, breakdowns).qty} - ${Fronts(item, i, breakdowns).measurement}`, style: 'fonts' },
+            {
+              text: `${Sides(item, i, breakdowns).qty} - ${
+                Sides(item, i, breakdowns).measurement
+              }`,
+              style: 'fonts',
+            },
+            {
+              text: `${Fronts(item, i, breakdowns).qty} - ${
+                Fronts(item, i, breakdowns).measurement
+              }`,
+              style: 'fonts',
+            },
             {
               stack: [
-                { text: `${Bottoms(item, i, breakdowns).qty} - ${Bottoms(item, i, breakdowns).measurement}`, style: 'fonts' },
-                item.cab_number ? 
-                  {
+                {
+                  text: `${Bottoms(item, i, breakdowns).qty} - ${
+                    Bottoms(item, i, breakdowns).measurement
+                  }`,
+                  style: 'fonts',
+                },
+                item.cab_number
+                  ? {
                     text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
-                    style: 'tableBold', alignment: 'left'
-                  } : null,
+                    style: 'tableBold',
+                    alignment: 'left',
+                  }
+                  : null,
               ],
-            },           
+            },
           ];
-          
+
           groupedTableBody.push(tb);
         });
-
 
         let mb = {
           columns: [
@@ -162,9 +221,8 @@ export default (data, breakdowns) => {
             { text: `${LinearFT(v, i, breakdowns)} Lin FT`, style: 'fonts' },
             { text: `${LinearIN(v, i, breakdowns)} Lin IN`, style: 'fonts' },
             { text: '', style: 'fonts' },
-          ]
+          ],
         };
-
 
         return (
           info.push(groupedInfoBody),
@@ -172,8 +230,6 @@ export default (data, breakdowns) => {
           groupedMaterialBody.push(mb),
           materialBody.push(groupedMaterialBody)
         );
-
-
       });
 
       let table = tableBody.map((i, index) => {
@@ -183,7 +239,7 @@ export default (data, breakdowns) => {
             table: {
               headerRows: 1,
               widths: [22, 15, 105, 112, 112, 95],
-              body: i
+              body: i,
             },
             layout: {
               hLineWidth: function (i, node) {
@@ -207,40 +263,36 @@ export default (data, breakdowns) => {
             },
           },
           {
-            text:
-              '==============================================================================',
+            text: '==============================================================================',
             alignment: 'center',
           },
         ];
       });
 
       const materialBreakdown = materialBody.map((i, index) => {
-
         return i;
       });
 
       let body = [
         table,
         {
-          text: 'Box Sides / Box Fronts & Backs - Material Breakdown', style: 'fonts', margin: [0, 12, 0, 0],
+          text: 'Box Sides / Box Fronts & Backs - Material Breakdown',
+          style: 'fonts',
+          margin: [0, 12, 0, 0],
         },
         {
-          text:
-            '==============================================================================',
+          text: '==============================================================================',
           alignment: 'center',
         },
         materialBreakdown,
         {
-          text:
-            '==============================================================================',
+          text: '==============================================================================',
           alignment: 'center',
         },
       ];
 
       return body;
-
     }),
     // { text: '', pageBreak: 'before' }
   ];
-  
 };
