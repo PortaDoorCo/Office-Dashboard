@@ -21,15 +21,9 @@ import NumberFormat from 'react-number-format';
 import styles from '../styles';
 import currencyMask from '../../../../utils/currencyMask';
 
-
-
 let Inputs = (props) => {
   const { fields, formState, linePrices, edit, part_list } = props;
-  const [data, setData] = useState([]);
-
-  const changeMiscItem = (e, index) => {
-    setData(eval(`part_list.${e.value}`));
-  };
+  const moulding_woodtype = part_list?.woodtypes.filter((wood) => wood.mouldings === true);
 
   return (
     <div>
@@ -74,7 +68,7 @@ let Inputs = (props) => {
                   <Field
                     name={`${table}.woodtype`}
                     component={renderDropdownList}
-                    data={part_list.woodtypes}
+                    data={moulding_woodtype}
                     // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="NAME"
