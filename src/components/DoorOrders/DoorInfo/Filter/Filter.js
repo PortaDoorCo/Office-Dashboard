@@ -140,7 +140,7 @@ class DoorFilter extends Component {
         return (
           <Fragment>
             <Row>
-              <Col xs="4">
+              <Col xs="6">
                 <FormGroup>
                   <Label for="orderType">Order Type</Label>
                   <Field
@@ -156,7 +156,7 @@ class DoorFilter extends Component {
                 </FormGroup>
               </Col>
 
-              <Col xs="4">
+              <Col xs="6">
                 <FormGroup>
                   <Label for="construction">Thickness</Label>
                   <Field
