@@ -416,9 +416,10 @@ const mapStateToProps = (state) => ({
           name: 'Door Order',
           value: 'Door',
         },
-        thickness:   {
+        thickness: {
           name: '4/4 Standard Grade',
-          thickness: '4/4',
+          thickness_1: '4/4',
+          thickness_2: '3/4',
           db_name: 'STANDARD_GRADE',
           value: 1,
         },
