@@ -13,7 +13,7 @@ export default (data, breakdowns) => {
   GlassSelection(data);
 
 
-  const table_content = data.part_list.map((i, index) => {
+  const table_content = GlassSelection(data).map((i, index) => {
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
