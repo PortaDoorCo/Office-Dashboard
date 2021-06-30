@@ -10,7 +10,7 @@ export default (data, breakdowns) => {
       columns: [
         {
           stack: [
-            { text: 'Bottoms List', bold: true },
+            { text: 'BOTTOMS LIST', bold: true },
             `Shipping Date: ${moment(data.job_info.DueDate).format(
               'MM/DD/YYYY'
             )}`,
@@ -135,15 +135,6 @@ export default (data, breakdowns) => {
                   style: 'fontsBold',
                 },
               ],
-            },
-            {
-              text: `${
-                i.box_notch.NAME === 'Yes - Add in Misc Items'
-                  ? 'Notch and Drilled'
-                  : ''
-              }`,
-              style: 'fontsBold',
-              alignment: 'center',
             },
           ],
         },

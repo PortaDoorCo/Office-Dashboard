@@ -8,12 +8,16 @@ import _ from 'lodash';
 export default (data, breakdowns) => {
   return [
     {
+      headlineLevel: 1,
       columns: [
         {
           stack: [
-            { text: 'Sides/Fronts/Backs List', bold: true },
-            `Shipping Date: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
-          ]
+            { text: 'SIDES/FRONTS/BACKS LIST', bold: true },
+            `Shipping Date: ${moment(data.job_info.DueDate).format(
+              'MM/DD/YYYY'
+            )}`,
+            { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
+          ],
         },
         {
           stack: [
@@ -21,26 +25,75 @@ export default (data, breakdowns) => {
             { text: '65 Cogwheel Lane', alignment: 'center' },
             { text: 'Seymour, CT', alignment: 'center' },
             { text: '203-888-6191', alignment: 'center' },
-            { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-          ]
+            { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+          ],
         },
         {
           stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+            {
+              text:
+                data.job_info.Rush && data.job_info.Sample
+                  ? 'Sample / Rush'
+                  : data.job_info.Rush
+                    ? 'Rush'
+                    : data.job_info.Sample
+                      ? 'Sample'
+                      : '',
+              alignment: 'right',
+              bold: true,
+            },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Est. Completion: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
-          ]
-        }
-      ]
+            {
+              text: `Est. Completion: ${moment(data.job_info.DueDate).format(
+                'MM/DD/YYYY'
+              )}`,
+              alignment: 'right',
+            },
+          ],
+        },
+      ],
     },
     {
       columns: [
         {
-          text: `${data.job_info.customer.Company}`,
+          stack: [
+            { text: `${data.job_info.customer.Company}` },
+            { text: `${data.orderNum}`, style: 'orderNum' },
+          ],
         },
-        { text: `PO: ${data.job_info.poNum}`, alignment: 'right' }
+        {stack: [
+          {
+            stack: data.misc_items.map((i) =>
+              i.item?.NAME.includes('Clear Finish')
+                ? 'Clear Finish'
+                : i.item?.NAME.includes('Notch')
+                  ? 'Notch and Drilled'
+                  : ''
+            ),
+            alignment: 'center',
+            style: 'fontsBold',
+          },
+          {
+            stack: data.part_list.map((i) => {
+              const fingerpull = i.dimensions.filter((j) =>
+                j.scoop?.NAME.includes('Yes')
+              );
+              const fingerpull_items = fingerpull.map((k) => k.item);
+
+              if (fingerpull.length > 0) {
+                return { text: `Fingerpull - Item# ${fingerpull_items}` };
+              } else {
+                return null;
+              }
+            }),
+            alignment: 'center',
+            style: 'fontsBold',
+          },
+        ]},
+
+        { text: `PO: ${data.job_info.poNum}`, alignment: 'right' },
       ],
-      margin: [0, 10]
+      margin: [0, 10, 0, 0],
     },
     {
       text:

@@ -7,7 +7,6 @@ import _ from 'lodash';
 import LinearIN from '../Breakdowns/DrawerBoxes/LinearIN';
 import LinearFT from '../Breakdowns/DrawerBoxes/LinearFT';
 import SQFT from '../Breakdowns/DrawerBoxes/SQFT';
-import { flatten } from 'lodash';
 
 export default (data, breakdowns) => {
   return [
@@ -16,7 +15,7 @@ export default (data, breakdowns) => {
       columns: [
         {
           stack: [
-            { text: 'Assembly List', bold: true },
+            { text: 'ASSEMBLY LIST', bold: true },
             `Shipping Date: ${moment(data.job_info.DueDate).format(
               'MM/DD/YYYY'
             )}`,

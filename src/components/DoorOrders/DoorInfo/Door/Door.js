@@ -49,7 +49,7 @@ class Door extends Component {
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
     const two_piece_wood = woodtypes.filter((wood) => wood.two_piece === true);
     const filtered_designs = designs.filter((design) =>
-      (design.CONSTRUCTION === construction) && (design.ORDERTYPE === orderType)
+      (design.CONSTRUCTION === construction) && (design.ORDERTYPE === 'Door')
     );
 
 
@@ -84,7 +84,7 @@ class Door extends Component {
               <Field
                 name={`${part}.design`}
                 component={renderDropdownListFilter}
-                data={orderType === 'Door' || orderType === 'DF' ? filtered_designs : designs}
+                data={filtered_designs}
                 valueField="value"
                 textField="NAME"
                 validate={required}

@@ -102,7 +102,7 @@ const Cope_Table = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].topRail`,
-            fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+            fraction(part.profile ? part.profile?.PROFILE_WIDTH  : 0)
           )
         );
 
@@ -110,7 +110,7 @@ const Cope_Table = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].bottomRail`,
-            fraction(part.profile ? part.profile.MINIMUM_STILE_WIDTH : 0)
+            fraction(part.profile ? part.profile?.PROFILE_WIDTH  : 0)
           )
         );
       }
@@ -172,10 +172,10 @@ const Cope_Table = ({
     const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
 
-    let df_reduction;
+    let df_reduction = 0;
 
     if(construction === 'Cope'){
-      df_reduction = profile.DF_Reduction;
+      df_reduction = formState?.part_list[i]?.profile?.DF_Reduction;
     } else if (construction === 'MT'){
       df_reduction = formState?.part_list[i]?.design?.DF_REDUCTION;
     } else {
