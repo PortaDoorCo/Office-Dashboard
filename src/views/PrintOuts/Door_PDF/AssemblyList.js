@@ -144,13 +144,7 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
               {
-                text: `${i.woodtype.NAME} - ${
-                  (i.thickness.value === 1) || (i.thickness.value === 2)
-                    ? '4/4 - 3/4"'
-                    : (i.thickness.value === 3) || (i.thickness.value === 4)
-                      ? '5/4 - 1"'
-                      : ''
-                }`,
+                text: `${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
                 style: 'woodtype',
               },
             ],
@@ -164,7 +158,7 @@ export default (data, breakdowns) => {
           {
             stack: [
               {
-                text: `Thickness / Grade:  ${i.thickness ? i.thickness.name : ''}`,
+                text: `Thickness:  ${i.thickness ? i.thickness.thickness_2 : ''}"`,
                 style: 'fonts',
               },
               {

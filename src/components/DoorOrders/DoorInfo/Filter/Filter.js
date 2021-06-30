@@ -299,7 +299,7 @@ class DoorFilter extends Component {
 
                 <Col xs="4">
                   <FormGroup>
-                    <Label for="construction">Thickness</Label>
+                    <Label for="construction">Thickness / Grade</Label>
                     <Field
                       name={`${part}.thickness`}
                       component={renderDropdownList}
@@ -352,7 +352,7 @@ class DoorFilter extends Component {
 
                 <Col xs="4">
                   <FormGroup>
-                    <Label for="construction">Thickness</Label>
+                    <Label for="construction">Thickness / Grade</Label>
                     <Field
                       name={`${part}.thickness`}
                       component={renderDropdownList}

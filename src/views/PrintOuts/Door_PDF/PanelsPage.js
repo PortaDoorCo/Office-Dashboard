@@ -85,13 +85,7 @@ export default (data, breakdowns) => {
           margin: [0, 10, 0, 0],
           columns: [
             {
-              text: `${i.woodtype.NAME} - ${
-                (i.thickness.value === 1) || (i.thickness.value === 2)
-                  ? '4/4 - 3/4"'
-                  : (i.thickness.value === 3) || (i.thickness.value === 4)
-                    ? '5/4 - 1"'
-                    : ''
-              }`,
+              text: `${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
               style: 'woodtype',
               width: 200
             },
