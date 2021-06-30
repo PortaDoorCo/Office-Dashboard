@@ -10,10 +10,11 @@ export default (data, breakdowns) => {
       columns: [
         {
           stack: [
-            { text: 'Bottoms List', bold: true },
+            { text: 'BOTTOMS LIST', bold: true },
             `Shipping Date: ${moment(data.job_info.DueDate).format(
               'MM/DD/YYYY'
             )}`,
+            { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
           ],
         },
         {
@@ -51,13 +52,51 @@ export default (data, breakdowns) => {
       ],
     },
     {
-      columns: [
+      stack: [
+        { text: `${data.orderNum}`, style: 'orderNum' },
         {
-          text: `${data.job_info.customer.Company}`,
+          columns: [
+            {
+              stack: [
+                { text: `${data.job_info.customer.Company}` },
+              ],
+            },
+            {
+              stack: [
+                {
+                  stack: data.misc_items.map((i) =>
+                    i.item?.NAME.includes('Clear Finish')
+                      ? 'Clear Finish'
+                      : i.item?.NAME.includes('Notch')
+                        ? 'Notch and Drilled'
+                        : ''
+                  ),
+                  alignment: 'center',
+                  style: 'fontsBold',
+                },
+                {
+                  stack: data.part_list.map((i) => {
+                    const fingerpull = i.dimensions.filter((j) =>
+                      j.scoop?.NAME.includes('Yes')
+                    );
+                    const fingerpull_items = fingerpull.map((k) => k.item);
+
+                    if (fingerpull.length > 0) {
+                      return { text: `Fingerpull - Item# ${fingerpull_items}` };
+                    } else {
+                      return null;
+                    }
+                  }),
+                  alignment: 'center',
+                  style: 'fontsBold',
+                },
+              ],
+            },
+            { text: `PO: ${data.job_info.poNum}`, alignment: 'right' },
+          ],
         },
-        { text: `Job: ${data.job_info.poNum}`, alignment: 'right' },
       ],
-      margin: [0, 10],
+      margin: [0, 0, 0, 0],
     },
     {
       text: '==============================================================================',
@@ -135,15 +174,6 @@ export default (data, breakdowns) => {
                   style: 'fontsBold',
                 },
               ],
-            },
-            {
-              text: `${
-                i.box_notch.NAME === 'Yes - Add in Misc Items'
-                  ? 'Notch and Drilled'
-                  : ''
-              }`,
-              style: 'fontsBold',
-              alignment: 'center',
             },
           ],
         },

@@ -85,13 +85,7 @@ export default (data, breakdowns) => {
           margin: [0, 10, 0, 0],
           columns: [
             {
-              text: `${i.woodtype.NAME} - ${
-                (i.thickness.value === 1) || (i.thickness.value === 2)
-                  ? '4/4 - 3/4"'
-                  : (i.thickness.value === 3) || (i.thickness.value === 4)
-                    ? '5/4 - 1"'
-                    : ''
-              }`,
+              text: `${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
               style: 'woodtype',
               width: 200
             },
@@ -197,14 +191,20 @@ export default (data, breakdowns) => {
       ],
     },
     {
-      columns: [
+      stack: [
         {
-          text: `${data.job_info.customer.Company}`,
-          style: 'fonts'
+          text: `${data.orderNum}`, style: 'orderNum' ,
         },
         {
-          stack: [{ text: `PO: ${data.job_info.poNum}`, alignment: 'right', style: 'fonts' }],
-        },
+          columns: [
+            {
+              text: `${data.job_info.customer.Company}` , 
+            },
+            {
+              text: `PO: ${data.job_info.poNum}`, alignment: 'right' 
+            },
+          ],
+        }
       ],
       margin: [0, 10],
     },

@@ -49,12 +49,15 @@ class CopeDF extends Component {
       updateSubmit,
     } = this.props;
 
-    const construction = formState?.part_list[index]?.construction?.value;
-    const orderType = formState?.part_list[index]?.orderType?.value;
+    let construction = formState?.part_list[index]?.construction?.value;
+    let orderType = formState?.part_list[index]?.orderType?.value;
+    let thickness = formState?.part_list[index]?.thickness?.db_name;
 
+    const filtered_woodtypes = woodtypes.filter((wood) => wood[thickness]);
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
+    const two_piece_wood = woodtypes.filter((wood) => wood.two_piece === true);
     const filtered_designs = designs.filter((design) =>
-      (design.CONSTRUCTION === construction) && (design.ORDERTYPE === orderType)
+      (design.CONSTRUCTION === construction) && (design.ORDERTYPE === 'DF')
     );
 
     return (
@@ -67,11 +70,11 @@ class CopeDF extends Component {
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
                 data={
-                  orderType === 'One_Piece'
+                  orderType === 'One_Piece' || orderType === 'One_Piece_DF'
                     ? one_piece_wood
-                    : orderType === 'Two_Piece'
-                      ? one_piece_wood
-                      : woodtypes
+                    : orderType === 'Two_Piece' || orderType === 'Two_Piece_DF'
+                      ? two_piece_wood
+                      : filtered_woodtypes
                 }
                 valueField="value"
                 textField="NAME"
@@ -87,7 +90,7 @@ class CopeDF extends Component {
               <Field
                 name={`${part}.design`}
                 component={renderDropdownListFilter}
-                data={orderType === 'Door' || orderType === 'DF' ? filtered_designs : designs}
+                data={filtered_designs}
                 valueField="value"
                 textField="NAME"
                 validate={required}

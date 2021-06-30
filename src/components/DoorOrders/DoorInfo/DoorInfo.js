@@ -4,7 +4,6 @@ import DoorFilter from '../DoorInfo/Filter/Filter';
 import Conditionals from './Conditionals';
 import CopyModal from './CopyModal';
 
-
 const construction = [
   {
     name: 'Cope And Stick',
@@ -24,7 +23,6 @@ const construction = [
   },
 ];
 
-
 const orderType = [
   {
     name: 'Door Order',
@@ -39,39 +37,59 @@ const orderType = [
     value: 'One_Piece',
   },
   {
+    name: 'One Piece DF',
+    value: 'One_Piece_DF',
+  },
+  {
     name: 'Two Piece',
     value: 'Two_Piece',
-  }
+  },
+  {
+    name: 'Two Piece DF',
+    value: 'Two_Piece_DF',
+  },
 ];
 
 const thickness = [
   {
     name: '4/4 Standard Grade',
+    thickness_1: '4/4',
+    thickness_2: '3/4',
     db_name: 'STANDARD_GRADE',
     value: 1,
   },
   {
     name: '4/4 Select Grade',
+    thickness_1: '4/4',
+    thickness_2: '3/4',
     db_name: 'SELECT_GRADE',
     value: 2,
   },
   {
     name: '5/4 Standard Grade',
+    thickness_1: '5/4',
+    thickness_2: '1',
     db_name: 'STANDARD_GRADE_THICK',
     value: 3,
   },
   {
     name: '5/4 Select Grade',
+    thickness_1: '5/4',
+    thickness_2: '1',
     db_name: 'SELECT_GRADE_THICK',
     value: 4,
   },
   {
     name: '6/4 Standard Grade',
+    thickness_1: '6/4',
+    thickness_2: '1 1/8',
     db_name: 'SIX_QUARTER',
     value: 5,
   },
   {
     name: '6/4 Select Grade',
+    thickness_1: '6/4',
+    thickness_2: '1 1/8',
     db_name: 'SIX_QUARTER_THICK',
     value: 4,
   },
@@ -128,7 +146,7 @@ class DoorInfo extends Component {
       mouldFilter: [],
       test: [],
       modal: false,
-      type: null
+      type: null,
     };
   }
 
@@ -137,17 +155,21 @@ class DoorInfo extends Component {
       modal: !this.state.modal,
     });
     this.setState({
-      type: type
+      type: type,
     });
   };
 
   copy = (type) => {
     const { fields, formState } = this.props;
     const lastItem = formState.part_list[formState?.part_list?.length - 1];
-    switch(type) {
+    switch (type) {
       case 'Door':
         fields.push({
-          orderType: orderType[0],
+          orderType: lastItem.orderType.value === 'One_Piece'
+            ? orderType[3]
+            : lastItem.orderType.value === 'Two_Piece'
+              ? orderType[5]
+              : orderType[0],
           construction: lastItem.construction,
           thickness: lastItem.thickness,
           woodtype: lastItem.woodtype,
@@ -163,11 +185,15 @@ class DoorInfo extends Component {
         break;
       case 'DF':
         fields.push({
-          orderType: orderType[1],
+          orderType:
+            lastItem.orderType.value === 'One_Piece'
+              ? orderType[3]
+              : lastItem.orderType.value === 'Two_Piece'
+                ? orderType[5]
+                : orderType[1],
           construction: lastItem.construction,
           thickness: lastItem.thickness,
           woodtype: lastItem.woodtype,
-          design: lastItem.design,
           panel: lastItem.panel,
           edge: lastItem.edge,
           profile: lastItem.profile,
@@ -178,7 +204,7 @@ class DoorInfo extends Component {
         });
         break;
       default:
-        switch(this.state.type) {
+        switch (this.state.type) {
           case 'Door':
             fields.push({
               orderType: orderType[0],
@@ -237,7 +263,11 @@ class DoorInfo extends Component {
                     <div>
                       <h2>
                         Item #{index + 1} -{' '}
-                        {formState && formState.part_list && formState.part_list[index] && formState.part_list[index].orderType && formState.part_list[index].orderType.name}
+                        {formState &&
+                          formState.part_list &&
+                          formState.part_list[index] &&
+                          formState.part_list[index].orderType &&
+                          formState.part_list[index].orderType.name}
                       </h2>
                     </div>
                   </Col>

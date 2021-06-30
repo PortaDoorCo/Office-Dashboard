@@ -1,10 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {
-  Row,
-  Col,
-  FormGroup,
-  Label,
-} from 'reactstrap';
+import { Row, Col, FormGroup, Label } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Field, change, untouch, autofill } from 'redux-form';
 import { renderDropdownList } from '../../../RenderInputs/renderInputs';
@@ -13,7 +8,7 @@ const faceFrameOrderType = [
   {
     name: 'Face Frame',
     value: 'Face_Frame',
-  }
+  },
 ];
 
 const construction_one_piece = [
@@ -28,7 +23,7 @@ const construction_one_piece = [
   {
     name: 'MT Construction',
     value: 'MT',
-  }
+  },
 ];
 
 const thickness_one_piece = [
@@ -40,136 +35,70 @@ const thickness_one_piece = [
     name: '5/4 Standard Grade',
     value: 3,
   },
-
 ];
 
-const required = value => (value ? undefined : 'Required');
+const required = (value) => (value ? undefined : 'Required');
 
 class DoorFilter extends Component {
-
   onChangeType = (index) => {
-
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
-
-        
-
-        if ((index === i) && (part.design !== undefined)) {
+        if (index === i && part.design !== undefined) {
           this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].design`,
-              undefined
-            )
+            autofill('DoorOrder', `part_list[${i}].design`, undefined)
           );
 
           this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].cope_design`,
-            )
+            untouch('DoorOrder', `part_list[${i}].cope_design`)
           );
         }
 
-
-        if ((index === i) && (part.woodtype !== undefined)) {
+        if (index === i && part.woodtype !== undefined) {
           this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].woodtype`,
-              undefined
-            )
+            autofill('DoorOrder', `part_list[${i}].woodtype`, undefined)
           );
 
+          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].woodtype`));
+        }
+
+        if (index === i && part.edge !== undefined) {
           this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].woodtype`,
-            )
+            autofill('DoorOrder', `part_list[${i}].edge`, undefined)
+          );
+          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].edge`));
+        }
+
+        if (index === i && part.panel !== undefined) {
+          this.props.dispatch(
+            autofill('DoorOrder', `part_list[${i}].panel`, undefined)
+          );
+          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].panel`));
+        }
+
+        if (index === i && part.profile !== undefined) {
+          this.props.dispatch(
+            autofill('DoorOrder', `part_list[${i}].profile`, undefined)
+          );
+          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].profile`));
+        }
+
+        if (index === i && part.applied_profile !== undefined) {
+          this.props.dispatch(
+            autofill('DoorOrder', `part_list[${i}].applied_profile`, undefined)
+          );
+          this.props.dispatch(
+            untouch('DoorOrder', `part_list[${i}].applied_profile`)
           );
         }
 
-        if ((index === i) && (part.edge !== undefined)) {
+        if (index === i && part.finish !== undefined) {
           this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].edge`,
-              undefined
-            )
+            autofill('DoorOrder', `part_list[${i}].finish`, undefined)
           );
-          this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].edge`,
-            )
-          );
+          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].finish`));
         }
 
-        if ((index === i) && (part.panel !== undefined)) {
-          this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].panel`,
-              undefined
-            )
-          );
-          this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].panel`,
-            )
-          );
-        }
-
-        if ((index === i) && (part.profile !== undefined)) {
-          this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].profile`,
-              undefined
-            )
-          );
-          this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].profile`,
-            )
-          );
-        }
-
-        if ((index === i) && (part.applied_profile !== undefined)) {
-          this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].applied_profile`,
-              undefined
-            )
-          );
-          this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].applied_profile`,
-            )
-          );
-        }
-
-        if ((index === i) && (part.finish !== undefined)) {
-          this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].finish`,
-              undefined
-            )
-          );
-          this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].finish`,
-            )
-          );
-        }
-
-        if ((index === i) && (part.face_frame_top_rail !== undefined)) {
+        if (index === i && part.face_frame_top_rail !== undefined) {
           this.props.dispatch(
             autofill(
               'DoorOrder',
@@ -178,37 +107,23 @@ class DoorFilter extends Component {
             )
           );
           this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].face_frame_top_rail`,
-            )
+            untouch('DoorOrder', `part_list[${i}].face_frame_top_rail`)
           );
         }
 
-        if ((index === i) && (part.furniture_feet !== undefined)) {
+        if (index === i && part.furniture_feet !== undefined) {
           this.props.dispatch(
-            autofill(
-              'DoorOrder',
-              `part_list[${i}].furniture_feet`,
-              undefined
-            )
+            autofill('DoorOrder', `part_list[${i}].furniture_feet`, undefined)
           );
           this.props.dispatch(
-            untouch(
-              'DoorOrder',
-              `part_list[${i}].furniture_feet`,
-            )
+            untouch('DoorOrder', `part_list[${i}].furniture_feet`)
           );
         }
-
       });
-
     }
-  }
-
+  };
 
   render() {
-
     const {
       formState,
       index,
@@ -217,11 +132,11 @@ class DoorFilter extends Component {
       thickness,
       ff_thickness,
       orderType,
-      edit
+      edit,
     } = this.props;
 
     if (formState && formState.part_list) {
-      if ((formState.part_list[index].orderType.value === 'Face_Frame')) {
+      if (formState.part_list[index].orderType.value === 'Face_Frame') {
         return (
           <Fragment>
             <Row>
@@ -258,10 +173,13 @@ class DoorFilter extends Component {
             </Row>
           </Fragment>
         );
-      }
-      else {
-
-        if((formState.part_list[index].orderType.value === 'One_Piece') || (formState.part_list[index].orderType.value === 'Two_Piece')){
+      } else {
+        if (
+          formState.part_list[index].orderType.value === 'One_Piece' ||
+          formState.part_list[index].orderType.value === 'One_Piece_DF' ||
+          formState.part_list[index].orderType.value === 'Two_Piece' ||
+          formState.part_list[index].orderType.value === 'Two_Piece_DF' 
+        ) {
           return (
             <Fragment>
               <Row>
@@ -299,7 +217,7 @@ class DoorFilter extends Component {
 
                 <Col xs="4">
                   <FormGroup>
-                    <Label for="construction">Thickness</Label>
+                    <Label for="construction">Thickness / Grade</Label>
                     <Field
                       name={`${part}.thickness`}
                       component={renderDropdownList}
@@ -352,7 +270,7 @@ class DoorFilter extends Component {
 
                 <Col xs="4">
                   <FormGroup>
-                    <Label for="construction">Thickness</Label>
+                    <Label for="construction">Thickness / Grade</Label>
                     <Field
                       name={`${part}.thickness`}
                       component={renderDropdownList}
@@ -368,14 +286,11 @@ class DoorFilter extends Component {
             </Fragment>
           );
         }
-
-
       }
     } else {
       return null;
     }
   }
 }
-
 
 export default connect()(DoorFilter);

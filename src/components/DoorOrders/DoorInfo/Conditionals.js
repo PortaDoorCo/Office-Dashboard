@@ -165,9 +165,33 @@ class Conditionals extends Component {
           break;
 
         case 'One_Piece_DF':
+          component = (
+            <DF
+              part={part}
+              index={index}
+              isValid={isValid}
+              part_list={part_list}
+              formState={formState}
+              edit={edit}
+              one_piece={false}
+              updateSubmit={updateSubmit}
+            />
+          );
           break;
 
         case 'Two_Piece_DF':
+          component = (
+            <DF
+              part={part}
+              index={index}
+              isValid={isValid}
+              part_list={part_list}
+              formState={formState}
+              edit={edit}
+              one_piece={false}
+              updateSubmit={updateSubmit}
+            />
+          );
           break;
         default:
           component = <div />;

@@ -82,6 +82,10 @@ export default (
         fontSize: 15,
         bold: true,
       },
+      orderNum: {
+        fontSize: 24,
+        bold: true,
+      },
       fonts: {
         fontSize: 9,
       },

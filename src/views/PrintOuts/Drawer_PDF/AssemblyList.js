@@ -7,7 +7,6 @@ import _ from 'lodash';
 import LinearIN from '../Breakdowns/DrawerBoxes/LinearIN';
 import LinearFT from '../Breakdowns/DrawerBoxes/LinearFT';
 import SQFT from '../Breakdowns/DrawerBoxes/SQFT';
-import { flatten } from 'lodash';
 
 export default (data, breakdowns) => {
   return [
@@ -16,7 +15,7 @@ export default (data, breakdowns) => {
       columns: [
         {
           stack: [
-            { text: 'Assembly List', bold: true },
+            { text: 'ASSEMBLY LIST', bold: true },
             `Shipping Date: ${moment(data.job_info.DueDate).format(
               'MM/DD/YYYY'
             )}`,
@@ -58,46 +57,51 @@ export default (data, breakdowns) => {
       ],
     },
     {
-      columns: [
+      stack: [
+        { text: `${data.orderNum}`, style: 'orderNum' },
         {
-          stack: [
-            { text: `${data.job_info.customer.Company}` },
-            { text: `${data.orderNum}`, style: 'orderNum' },
+          columns: [
+            {
+              stack: [
+                { text: `${data.job_info.customer.Company}` },
+              ],
+            },
+            {
+              stack: [
+                {
+                  stack: data.misc_items.map((i) =>
+                    i.item?.NAME.includes('Clear Finish')
+                      ? 'Clear Finish'
+                      : i.item?.NAME.includes('Notch')
+                        ? 'Notch and Drilled'
+                        : ''
+                  ),
+                  alignment: 'center',
+                  style: 'fontsBold',
+                },
+                {
+                  stack: data.part_list.map((i) => {
+                    const fingerpull = i.dimensions.filter((j) =>
+                      j.scoop?.NAME.includes('Yes')
+                    );
+                    const fingerpull_items = fingerpull.map((k) => k.item);
+
+                    if (fingerpull.length > 0) {
+                      return { text: `Fingerpull - Item# ${fingerpull_items}` };
+                    } else {
+                      return null;
+                    }
+                  }),
+                  alignment: 'center',
+                  style: 'fontsBold',
+                },
+              ],
+            },
+            { text: `PO: ${data.job_info.poNum}`, alignment: 'right' },
           ],
         },
-        {stack: [
-          {
-            stack: data.misc_items.map((i) =>
-              i.item?.NAME.includes('Clear Finish')
-                ? 'Clear Finish'
-                : i.item?.NAME.includes('Notch')
-                  ? 'Notch and Drilled'
-                  : ''
-            ),
-            alignment: 'center',
-            style: 'fontsBold',
-          },
-          {
-            stack: data.part_list.map((i) => {
-              const fingerpull = i.dimensions.filter((j) =>
-                j.scoop?.NAME.includes('Yes')
-              );
-              const fingerpull_items = fingerpull.map((k) => k.item);
-
-              if (fingerpull.length > 0) {
-                return { text: `Fingerpull - Item# ${fingerpull_items}` };
-              } else {
-                return null;
-              }
-            }),
-            alignment: 'center',
-            style: 'fontsBold',
-          },
-        ]},
-
-        { text: `PO: ${data.job_info.poNum}`, alignment: 'right' },
       ],
-      margin: [0, 10, 0, 0],
+      margin: [0, 0, 0, 0],
     },
     {
       text: '==============================================================================',
@@ -133,7 +137,7 @@ export default (data, breakdowns) => {
               },
               {
                 stack: [
-                  {text: ' '},
+                  { text: ' ' },
                   {
                     text: `${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`,
                     style: 'woodtype',
