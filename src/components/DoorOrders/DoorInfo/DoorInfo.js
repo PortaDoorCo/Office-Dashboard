@@ -53,31 +53,37 @@ const orderType = [
 const thickness = [
   {
     name: '4/4 Standard Grade',
+    thickness: '4/4',
     db_name: 'STANDARD_GRADE',
     value: 1,
   },
   {
     name: '4/4 Select Grade',
+    thickness: '4/4',
     db_name: 'SELECT_GRADE',
     value: 2,
   },
   {
     name: '5/4 Standard Grade',
+    thickness: '5/4',
     db_name: 'STANDARD_GRADE_THICK',
     value: 3,
   },
   {
     name: '5/4 Select Grade',
+    thickness: '5/4',
     db_name: 'SELECT_GRADE_THICK',
     value: 4,
   },
   {
     name: '6/4 Standard Grade',
+    thickness: '6/4',
     db_name: 'SIX_QUARTER',
     value: 5,
   },
   {
     name: '6/4 Select Grade',
+    thickness: '6/4',
     db_name: 'SIX_QUARTER_THICK',
     value: 4,
   },

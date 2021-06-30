@@ -122,6 +122,10 @@ export default (data, breakdowns) => {
           {
             stack: [
               {
+                text: `${i.orderType ? i.orderType.name : ''}`,
+                style: 'fonts',
+              },
+              {
                 text: `${
                   i.design
                     ? i.design.NAME
@@ -160,11 +164,11 @@ export default (data, breakdowns) => {
           {
             stack: [
               {
-                text: `Thickness: ${i.thickness ? i.thickness.name : ''}"`,
+                text: `Thickness / Grade:  ${i.thickness ? i.thickness.name : ''}`,
                 style: 'fonts',
               },
               {
-                text: `IP: ${i.profile ? i.profile.NAME : 'None'}  Edge: ${
+                text: `IP:  ${i.profile ? i.profile.NAME : 'None'}   Edge:  ${
                   i.edge ? i.edge.NAME : 'None'
                 }`,
                 style: 'fonts',

@@ -102,29 +102,37 @@ export default (data, breakdowns) => {
       {
         margin: [0, 0, 0, 0],
         columns: [
-          {
-            text: `${i.woodtype.NAME} - ${
-              (i.thickness.value === 1) || (i.thickness.value === 2)
-                ? '4/4'
-                : (i.thickness.value === 3) || (i.thickness.value === 4)
-                  ? '5/4'
-                  : ''
-            }`,
-            style: 'woodtype',
-            width: 370,
-          },
-          {
-            text: '',
-            alignment: 'left',
-            style: 'fontsBold',
-            width: 80
-          },
-          i.edge ? 
+          {stack: [
             {
-              text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
-              alignment: 'left',
+              text: `${i.orderType ? i.orderType.name : ''}`,
               style: 'fonts',
-            } : null
+            },
+            {
+              text: `${i.woodtype.NAME} - ${
+                (i.thickness.value === 1) || (i.thickness.value === 2)
+                  ? '4/4'
+                  : (i.thickness.value === 3) || (i.thickness.value === 4)
+                    ? '5/4'
+                    : ''
+              }`,
+              style: 'woodtype',
+              width: 370,
+            },
+          ]},
+          {stack: [
+            {
+              text: '',
+              alignment: 'left',
+              style: 'fontsBold',
+              width: 80
+            },
+            i.edge ? 
+              {
+                text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
+                alignment: 'right',
+                style: 'fonts',
+              } : null
+          ]},
         ],
       },
       // {
