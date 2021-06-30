@@ -243,14 +243,20 @@ export default (data, breakdowns) => {
       ],
     },
     {
-      columns: [
+      stack: [
         {
-          text: `${data.job_info.customer.Company}`,
-          style: 'fonts'
+          text: `${data.orderNum}`, style: 'orderNum' ,
         },
         {
-          stack: [{ text: `PO: ${data.job_info.poNum}`, alignment: 'right', style: 'fonts' }],
-        },
+          columns: [
+            {
+              text: `${data.job_info.customer.Company}` , 
+            },
+            {
+              text: `PO: ${data.job_info.poNum}`, alignment: 'right' 
+            },
+          ],
+        }
       ],
       margin: [0, 10],
     },
