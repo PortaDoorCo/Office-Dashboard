@@ -421,7 +421,6 @@ const mapStateToProps = (state) => ({
           db_name: 'STANDARD_GRADE',
           value: 1,
         },
-        door_piece_number: state.part_list.door_piece_number[0],
         dimensions: [],
         addPrice: 0,
       },
