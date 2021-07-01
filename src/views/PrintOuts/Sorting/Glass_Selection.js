@@ -33,7 +33,5 @@ export default (data) => {
     return { ...i, dimensions };
   });
 
-  const end = [...array, start];
-
   return array.concat(start);
 };
