@@ -34,6 +34,7 @@ const initialState = {
 
   face_frame_designs: ['Loading'],
   face_frame_top_rail: ['Loading'],
+  face_frame_finishing: ['Loading'],
   furniture_feet: ['Loading'],
 
 

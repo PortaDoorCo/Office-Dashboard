@@ -5,11 +5,15 @@ import Panels from '../Breakdowns/Doors/Panels/Panels';
 import Size from '../Breakdowns/Doors/Size';
 import SlabSize from '../Breakdowns/Doors/SlabSize';
 import GlassSort from '../Sorting/GlassSort';
+import GlassSelection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
   // console.log({data: data.part_list});
 
-  const table_content = data.part_list.map((i, index) => {
+  GlassSelection(data);
+
+
+  const table_content = GlassSelection(data).map((i, index) => {
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -21,7 +25,7 @@ export default (data, breakdowns) => {
       ],
     ];
 
-    if (i.orderType.value === 'Slab_Door' || i.construction.value === 'Slab') {
+    if (i.construction.value === 'Slab') {
       i.dimensions.forEach((item, index) => {
         tableBody.push([
           { text: item.item ? item.item : index + 1, style: 'fonts' },
@@ -114,6 +118,8 @@ export default (data, breakdowns) => {
         ]);
       });
     }
+
+    console.log({tableBody});
 
     return [
       {
@@ -212,6 +218,8 @@ export default (data, breakdowns) => {
       },
     ];
   });
+
+  console.log({table_content});
 
   return [
     {

@@ -37,7 +37,6 @@ export default (data, breakdowns) => {
 
     if (
       i.construction.value === 'Slab' ||
-      i.door_piece_number?.pieces === (1 || 2)||
       i.orderType.value === 'One_Piece' ||
       i.orderType.value === 'One_Piece_DF' ||
       i.orderType.value === 'Two_Piece' ||
@@ -54,7 +53,7 @@ export default (data, breakdowns) => {
           { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} \n`; }), style: 'fonts' },
           { text: Panels(item, i, breakdowns).map(panel => { return `${panel.measurement} \n`; }), style: 'fonts' },
           { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n`; }), style: 'fonts' },
-          { text: i.cope_design && i.cope_design.TOP_RAIL_ADD > 0 ? i.cope_design.NAME : '', style: 'fonts' },
+          { text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '', style: 'fonts' },
           { text: Panels(item, i, breakdowns).map(panel => { return `${panel.panel} \n`; }), style: 'fonts' },
           item.notes || item.full_frame || item.lite ? 
             {

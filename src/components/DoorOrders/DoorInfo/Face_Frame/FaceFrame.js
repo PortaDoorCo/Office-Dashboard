@@ -16,6 +16,7 @@ import {
 
 const required = (value) => (value ? undefined : 'Required');
 
+
 class FaceFrame extends Component {
   render() {
     const {
@@ -23,6 +24,7 @@ class FaceFrame extends Component {
       woodtypes,
       face_frame_designs,
       face_frame_top_rails,
+      face_frame_finishing,
       isValid,
       index,
       part_list,
@@ -58,7 +60,7 @@ class FaceFrame extends Component {
               <Label htmlFor="design">Design</Label>
               <Field
                 name={`${part}.face_frame_design`}
-                component={renderDropdownListFilter}
+                component={renderDropdownList}
                 data={face_frame_designs}
                 valueField="value"
                 textField="NAME"
@@ -75,6 +77,21 @@ class FaceFrame extends Component {
                 name={`${part}.face_frame_top_rail`}
                 component={renderDropdownList}
                 data={face_frame_top_rails}
+                valueField="value"
+                textField="NAME"
+                validate={required}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
+
+          <Col>
+            <FormGroup>
+              <Label htmlFor="hinges">Finishing</Label>
+              <Field
+                name={`${part}.finish`}
+                component={renderDropdownList}
+                data={face_frame_finishing}
                 valueField="value"
                 textField="NAME"
                 validate={required}
@@ -128,6 +145,7 @@ const mapStateToProps = (state) => ({
   woodtypes: state.part_list.woodtypes,
   face_frame_designs: state.part_list.face_frame_designs,
   face_frame_top_rails: state.part_list.face_frame_top_rail,
+  face_frame_finishing: state.part_list.face_frame_finishing,
   furniture_feets: state.part_list.furniture_feet,
   edges: state.part_list.edges,
   prices: linePriceSelector(state),
