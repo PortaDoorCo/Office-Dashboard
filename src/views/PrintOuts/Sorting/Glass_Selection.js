@@ -3,8 +3,6 @@ import GlassCheck from './GlassCheck';
 export default (data) => {
   let array = [];
 
-  console.log({ part_list: data.part_list });
-
   const start = data.part_list.map((i) => {
     const glass_check = i.dimensions.map((j) => {
       return GlassCheck(j);
