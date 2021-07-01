@@ -1,5 +1,4 @@
 import GlassCheck from './GlassCheck';
-import { flatten } from 'lodash';
 
 export default (data) => {
   let array = [];
@@ -16,11 +15,7 @@ export default (data) => {
         if (g.glass_index === 1) {
           let dimensions = [];
           dimensions.push(g);
-
-          console.log({ i });
-
           const no_panel = { ...i, panel: { NAME: 'Glass' } };
-
           const newObj = { ...no_panel, dimensions };
           array.push(newObj);
           return null;
