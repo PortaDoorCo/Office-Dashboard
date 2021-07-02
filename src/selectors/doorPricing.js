@@ -192,7 +192,11 @@ export const itemPriceSelector = createSelector(
               ? part.woodtype.STANDARD_GRADE_THICK
               : part.woodtype && part.thickness.value === 4
                 ? part.woodtype.SELECT_GRADE_THICK
-                : 0;
+                : part.woodtype && part.thickness.value === 5
+                  ? part.woodtype.SIX_QUARTER
+                  : part.woodtype && part.thickness.value === 6
+                    ? part.woodtype.SIX_QUARTER_THICK
+                    : 0;
 
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
