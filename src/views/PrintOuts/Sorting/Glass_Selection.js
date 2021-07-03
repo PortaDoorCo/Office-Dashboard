@@ -13,7 +13,7 @@ export default (data) => {
         if (g.glass_index === 1) {
           let dimensions = [];
           dimensions.push(g);
-          const no_panel = { ...i, panel: { NAME: 'Glass' } };
+          const no_panel = { ...i, panel: { NAME: 'Glass', UPCHARGE: 0 } };
           const newObj = { ...no_panel, dimensions };
           array.push(newObj);
           return null;

@@ -339,7 +339,8 @@ class OrderPage extends Component {
         panels1,
         appliedProfiles1,
         breakdowns,
-        printerSettings
+        printerSettings,
+        this.props.pricing
       );
     } else if (data.orderType === 'Drawer Order') {
       DrawerPDF(data, box_breakdowns, printerSettings);
@@ -877,6 +878,7 @@ const mapStateToProps = (state, prop) => ({
   box_breakdowns: state.part_list.box_breakdowns,
   selectedOrder: state.Orders.selectedOrder,
   printer_options: state.misc_items.printer_options,
+  pricing: state.part_list.pricing,
   user: state.users.user
 });
 

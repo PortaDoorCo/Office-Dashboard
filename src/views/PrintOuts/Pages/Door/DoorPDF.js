@@ -22,7 +22,8 @@ export default (
   panels,
   appliedProfiles,
   breakdowns,
-  p
+  p,
+  pricing
 ) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
@@ -30,7 +31,7 @@ export default (
   let Content = [];
 
   for (let i = 0; i < p.acknowledgement; i++) {
-    Content.push(Acknowledgement(data, breakdowns));
+    Content.push(Acknowledgement(data, pricing));
 
     Content.push(
       Profiles(
@@ -48,7 +49,7 @@ export default (
   }
 
   for (let i = 0; i < p.invoice; i++) {
-    Content.push(Invoice(data, breakdowns));
+    Content.push(Invoice(data, pricing));
   }
 
   for (let i = 0; i < p.assembly_list; i++) {
