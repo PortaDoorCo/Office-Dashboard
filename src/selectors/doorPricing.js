@@ -467,9 +467,13 @@ export const itemPriceSelector = createSelector(
               return 0;
             }
           });
+
+          console.log({linePrice});
+
           return linePrice;
         } else {
           return 0;
+          
         }
       }
     })
