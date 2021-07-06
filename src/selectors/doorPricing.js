@@ -175,28 +175,30 @@ export const itemPriceSelector = createSelector(
   (parts, pricer, discount) =>
     parts.map((part, index) => {
       const design =
-        (part.design && part.thickness.value === 1) ||
-        (part.design && part.thickness.value === 2)
-          ? part.design.UPCHARGE
-          : (part.design && part.thickness.value === 3) ||
-            (part.design && part.thickness.value === 4)
-            ? part.design.UPCHARGE_THICK
-            : 0;
+      (part.design && part.thickness.value === 1) ||
+      (part.design && part.thickness.value === 2)
+        ? part.design.UPCHARGE
+        : (part.design && part.thickness.value === 3) ||
+          (part.design && part.thickness.value === 4) ||
+          (part.design && part.thickness.value === 5) ||
+          (part.design && part.thickness.value === 6) 
+          ? part.design.UPCHARGE_THICK
+          : 0;
 
       const wood =
-        part.woodtype && part.thickness.value === 1
-          ? part.woodtype.STANDARD_GRADE
-          : part.woodtype && part.thickness.value === 2
-            ? part.woodtype.SELECT_GRADE
-            : part.woodtype && part.thickness.value === 3
-              ? part.woodtype.STANDARD_GRADE_THICK
-              : part.woodtype && part.thickness.value === 4
-                ? part.woodtype.SELECT_GRADE_THICK
-                : part.woodtype && part.thickness.value === 5
-                  ? part.woodtype.SIX_QUARTER
-                  : part.woodtype && part.thickness.value === 6
-                    ? part.woodtype.SIX_QUARTER_THICK
-                    : 0;
+          part.woodtype && part.thickness.value === 1
+            ? part.woodtype.STANDARD_GRADE
+            : part.woodtype && part.thickness.value === 2
+              ? part.woodtype.SELECT_GRADE
+              : part.woodtype && part.thickness.value === 3
+                ? part.woodtype.STANDARD_GRADE_THICK
+                : part.woodtype && part.thickness.value === 4
+                  ? part.woodtype.SELECT_GRADE_THICK
+                  : part.woodtype && part.thickness.value === 5
+                    ? part.woodtype.SIX_QUARTER
+                    : part.woodtype && part.thickness.value === 6
+                      ? part.woodtype.SIX_QUARTER_THICK
+                      : 0;
 
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
@@ -336,6 +338,7 @@ export const itemPriceSelector = createSelector(
 
             let price = 0;
 
+
             if (part.thickness.value === 1 || part.thickness.value === 2) {
               if (part.design) {
                 price = part.design && part.design.UPCHARGE;
@@ -343,7 +346,12 @@ export const itemPriceSelector = createSelector(
                 price = 0;
               }
             }
-            if (part.thickness.value === 3 || part.thickness.value === 4) {
+            if (
+              part.thickness.value === 3 ||
+              part.thickness.value === 4 ||
+              part.thickness.value === 5 ||
+              part.thickness.value === 6
+            ) {
               if (part.design) {
                 price = part.design && part.design.UPCHARGE_THICK;
               } else {
