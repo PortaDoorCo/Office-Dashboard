@@ -50,13 +50,24 @@ const pricing = (parts, pricer) => {
         console.log({ i });
 
         const ff_wood = part?.woodtype?.STANDARD_GRADE;
-        const width = Math.ceil(numQty(i.width));
+        const width_input = Math.ceil(numQty(i.width));
+        const width = Math.ceil(numQty(i.width)) < 24 ? 18 : Math.ceil(numQty(i.width)) >= 24 && Math.ceil(numQty(i.width)) <= 48 ? 24 : 36;
         const height = Math.ceil(numQty(i.height));
         const openings = parseInt(i.openings);
+        const finish = part.finish ? part.finish.PRICE : 0;
 
-        const price = eval(pricer && pricer.face_frame_pricing);
+        const width_finish = finish * 0.25;
+        const height_finish = finish * 0.25;
 
-        console.log({ price });
+        const finishing = finish + width_finish + height_finish;
+
+        let overcharge = 0;
+
+        if(width_input > 48 || height > 96){
+          overcharge = 100;
+        }
+
+        const price = eval(pricer && pricer.face_frame_pricing); 
 
         return price;
       });

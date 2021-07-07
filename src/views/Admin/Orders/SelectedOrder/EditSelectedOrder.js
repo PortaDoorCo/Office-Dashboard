@@ -5,6 +5,7 @@ import DrawerOrder from './DrawerOrders/DrawerOrder';
 import MiscItems from './MiscItems/MiscItemsComponent';
 import Mouldings from './Mouldings/MouldingsComponent';
 import { connect } from 'react-redux';
+import FaceFrame from './FaceFrames/FaceFrame';
 
 
 
@@ -38,12 +39,19 @@ class EditSelectedOrder extends React.Component {
                   toggle={toggle}
                 />
                 :
-                <DrawerOrder
+                selectedOrder.orderType === 'Face Frame' ?
+                  <FaceFrame
+                    editable={editable}
+                    edit={edit}
+                    toggle={toggle}
+                  />
+                  :
 
-                  editable={editable}
-                  edit={edit}
-                  toggle={toggle}
-                />
+                  <DrawerOrder
+                    editable={editable}
+                    edit={edit}
+                    toggle={toggle}
+                  />
           }
         </div>
   

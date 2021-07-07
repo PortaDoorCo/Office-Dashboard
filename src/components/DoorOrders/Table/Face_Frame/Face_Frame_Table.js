@@ -172,8 +172,8 @@ const Frame_Only_Table = ({
               <thead>
                 <tr>
                   <th>Qty</th>
-                  <th>Width</th>
-                  <th>Height</th>
+                  <th>Smallest Dimension</th>
+                  <th>Other Dimension</th>
                   <th>Openings</th>
                   <th>Price</th>
                   <th />
@@ -269,88 +269,7 @@ const Frame_Only_Table = ({
                   </td>
                 </tr>
 
-                <tr>
-                  <td>
-                    <strong>
-                      <p>Left Stile</p>
-                    </strong>
-                    <Field
-                      name={`${table}.leftStile`}
-                      type="text"
-                      component={renderNumber}
-                      label="leftStile"
-                      edit={edit}
-                      validate={required}
-                      onChange={(e) => (
-                        registerChange(index, e),
-                        setLeftStileWidth(e.target.value)
-                      )}
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Right Stile</p>
-                    </strong>
-                    <Field
-                      name={`${table}.rightStile`}
-                      type="text"
-                      component={renderNumber}
-                      label="rightStile"
-                      edit={edit}
-                      validate={required}
-                      onChange={(e) => (
-                        registerChange(index, e),
-                        setRightStileWidth(e.target.value)
-                      )}
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Top Rail</p>
-                    </strong>
-                    <Field
-                      name={`${table}.topRail`}
-                      type="text"
-                      component={renderNumber}
-                      label="topRail"
-                      edit={edit}
-                      validate={required}
-                      onChange={(e) => (
-                        registerChange(index, e),
-                        setTopRailWidth(e.target.value)
-                      )}
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Bottom Rail</p>
-                    </strong>
-                    <Field
-                      name={`${table}.bottomRail`}
-                      type="text"
-                      component={renderNumber}
-                      label="bottomRail"
-                      edit={edit}
-                      validate={required}
-                      onChange={(e) => (
-                        registerChange(index, e),
-                        setBottomRailWidth(e.target.value)
-                      )}
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Hori. Mid Rail</p>
-                    </strong>
-                    <Field
-                      name={`${table}.horizontalMidRailSize`}
-                      type="text"
-                      component={renderNumber}
-                      label="horizontalMidRail"
-                      edit={edit}
-                    />
-                  </td>
-                </tr>
+                
                 <tr>
                   <td>
                     <strong>
@@ -367,102 +286,15 @@ const Frame_Only_Table = ({
                 </tr>
 
 
-                {!edit ? (
-                  <tr>
-                    <td>
-                      <Button
-                        onClick={() => changeFraming(index)}
-                        color="primary"
-                      >
-                        Update Framing
-                      </Button>
-                    </td>
-                  </tr>
-                ) : null}
-                <Row>
-                  <p className="ml-3">*Finish Stile/Rail Sizes*</p>
-                </Row>
+               
+              
                 <tr />
               </tbody>
             </Table>
 
-            <Row>
-              <Col lg="9">
-                <Field
-                  name={`${table}.showBuilder`}
-                  component={renderCheckboxToggle}
-                  label="Show Builder"
-                />
-              </Col>
-              <Col>
-                {!edit ? (
-                  parseInt(formState.part_list[i].dimensions[index].panelsH) >
-                    1 &&
-                  parseInt(formState.part_list[i].dimensions[index].panelsW) ===
-                    1 ? (
-                      <Field
-                        name={`${table}.unevenCheck`}
-                        component={renderCheckboxToggle}
-                        label="Uneven Split"
-                      />
-                    ) : null
-                ) : null}
-              </Col>
-            </Row>
 
-            <Row>
-              <Col>
-                {formState.part_list[i].dimensions[index].showBuilder ? (
-                  <div
-                    id={`makerJS${index}`}
-                    style={{ width: '100%', height: '300px' }}
-                  >
-                    <Maker
-                      width={width[index]}
-                      height={height[index]}
-                      i={i}
-                      index={index}
-                      style={{ width: '100%', height: '300px' }}
-                    />
-                  </div>
-                ) : (
-                  <div />
-                )}
-              </Col>
-            </Row>
 
-            {formState.part_list[i].dimensions[index].unevenCheck ? (
-              <div className="mb-3">
-                <Row>
-                  {Array.from(
-                    Array(
-                      parseInt(formState.part_list[i].dimensions[index].panelsH)
-                    ).keys()
-                  )
-                    .slice(1)
-                    .map((i, index) => {
-                      return (
-                        <div>
-                          <Col />
-                          <Col>
-                            <p
-                              style={{ textAlign: 'center', marginTop: '10px' }}
-                            >
-                              <strong>Panel Opening {index + 1}</strong>
-                            </p>
-                            <Field
-                              name={`${table}.unevenSplitInput${index}`}
-                              component={renderNumber}
-                              edit={edit}
-                            />
-                          </Col>
-                          <Col />
-                        </div>
-                      );
-                    })}
-                </Row>
-              </div>
-            ) : null}
+           
 
             <Row>
               <Col xs="4">

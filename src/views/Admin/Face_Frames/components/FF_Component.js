@@ -102,7 +102,7 @@ class DoorOrders extends Component {
       
     } = this.props;
 
-    const orderType = 'Door Order';
+    const orderType = 'Face Frame';
 
     const jobInfo = {
       ...values.job_info,

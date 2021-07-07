@@ -175,42 +175,41 @@ export const itemPriceSelector = createSelector(
   (parts, pricer, discount) =>
     parts.map((part, index) => {
       const design =
-      (part.design && part.thickness.value === 1) ||
-      (part.design && part.thickness.value === 2)
-        ? part.design.UPCHARGE
-        : (part.design && part.thickness.value === 3) ||
-          (part.design && part.thickness.value === 4) ||
-          (part.design && part.thickness.value === 5) ||
-          (part.design && part.thickness.value === 6) 
-          ? part.design.UPCHARGE_THICK
-          : 0;
+        (part.design && part.thickness.value === 1) ||
+        (part.design && part.thickness.value === 2)
+          ? part.design.UPCHARGE
+          : (part.design && part.thickness.value === 3) ||
+            (part.design && part.thickness.value === 4) ||
+            (part.design && part.thickness.value === 5) ||
+            (part.design && part.thickness.value === 6)
+            ? part.design.UPCHARGE_THICK
+            : 0;
 
       const wood =
-          part.woodtype && part.thickness.value === 1
-            ? part.woodtype.STANDARD_GRADE
-            : part.woodtype && part.thickness.value === 2
-              ? part.woodtype.SELECT_GRADE
-              : part.woodtype && part.thickness.value === 3
-                ? part.woodtype.STANDARD_GRADE_THICK
-                : part.woodtype && part.thickness.value === 4
-                  ? part.woodtype.SELECT_GRADE_THICK
-                  : part.woodtype && part.thickness.value === 5
-                    ? part.woodtype.SIX_QUARTER
-                    : part.woodtype && part.thickness.value === 6
-                      ? part.woodtype.SIX_QUARTER_THICK
-                      : 0;
+        part.woodtype && part.thickness.value === 1
+          ? part.woodtype.STANDARD_GRADE
+          : part.woodtype && part.thickness.value === 2
+            ? part.woodtype.SELECT_GRADE
+            : part.woodtype && part.thickness.value === 3
+              ? part.woodtype.STANDARD_GRADE_THICK
+              : part.woodtype && part.thickness.value === 4
+                ? part.woodtype.SELECT_GRADE_THICK
+                : part.woodtype && part.thickness.value === 5
+                  ? part.woodtype.SIX_QUARTER
+                  : part.woodtype && part.thickness.value === 6
+                    ? part.woodtype.SIX_QUARTER_THICK
+                    : 0;
 
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
       const applied_profile = part.applied_profile
         ? part.applied_profile.UPCHARGE
         : 0;
-      const finish = part.finish ? part.finish.UPCHARGE : 0;
+      // const finish = part.finish ? part.finish.UPCHARGE : 0;
 
-      const ff_opening_cost =
-        part.face_frame_design
-          ? part.face_frame_design.opening_cost
-          : 0;
+      const ff_opening_cost = part.face_frame_design
+        ? part.face_frame_design.opening_cost
+        : 0;
       const ff_top_rail_design = part.face_frame_top_rail
         ? part.face_frame_top_rail.UPCHARGE
         : 0;
@@ -224,11 +223,25 @@ export const itemPriceSelector = createSelector(
             console.log({ i });
 
             const ff_wood = part?.woodtype?.STANDARD_GRADE;
-            const width = Math.ceil(numQty(i.width));
+            const width_input = Math.ceil(numQty(i.width));
+            const width = Math.ceil(numQty(i.width)) < 24 ? 18 : Math.ceil(numQty(i.width)) >= 24 && Math.ceil(numQty(i.width)) <= 48 ? 24 : 36;
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings);
+            const finish = part.finish ? part.finish.PRICE : 0;
 
-            const price = eval(pricer && pricer.face_frame_pricing);
+            const width_finish = finish * 0.25;
+            const height_finish = finish * 0.25;
+
+            const finishing = finish + width_finish + height_finish;
+
+            let overcharge = 0;
+
+            if(width_input > 48 || height > 96){
+              overcharge = 100;
+            }
+
+            const price = eval(pricer && pricer.face_frame_pricing); 
+
 
             console.log({ price });
 
@@ -250,7 +263,6 @@ export const itemPriceSelector = createSelector(
           const linePrice = part.dimensions.map((i) => {
             console.log({ i });
 
-            
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
@@ -337,7 +349,6 @@ export const itemPriceSelector = createSelector(
             };
 
             let price = 0;
-
 
             if (part.thickness.value === 1 || part.thickness.value === 2) {
               if (part.design) {
@@ -476,12 +487,11 @@ export const itemPriceSelector = createSelector(
             }
           });
 
-          console.log({linePrice});
+          console.log({ linePrice });
 
           return linePrice;
         } else {
           return 0;
-          
         }
       }
     })
