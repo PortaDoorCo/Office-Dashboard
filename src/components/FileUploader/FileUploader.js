@@ -19,6 +19,8 @@ const FileUploader = (props) => {
 
   const uploadProps = {
     name: fileName,
+    listType: 'picture',
+    defaultFileList: [...fileList],
     multiple: props.multi,
     action: `${db_url}/upload`,
     customRequest: (options) => {
@@ -69,6 +71,15 @@ const FileUploader = (props) => {
       if (info.file.status === 'done') {
         NotificationManager.success('File Successfully Uploaded!', 'Success', 2000);
         setFileName('');
+
+        console.log('fire');
+        setFileList(
+          fileList.map(item => 
+            item.uid === info.file.uid 
+              ? {...info.file, url: info.file.response[0].url} 
+              : item 
+          ));
+
       } else if (info.file.status === 'error') {
         NotificationManager.error('There was an problem with your upload', 'Error', 2000);
       }
@@ -76,6 +87,8 @@ const FileUploader = (props) => {
       
     
   };
+
+  console.log({fileList});
 
   return (
     <div>
