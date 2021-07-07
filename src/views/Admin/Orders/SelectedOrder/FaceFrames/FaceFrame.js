@@ -170,7 +170,7 @@ class DoorOrders extends Component {
           <Col xs="12" sm="12" md="12" lg="12">
             <Card>
               <CardHeader>
-                <strong>Door Order</strong>
+                <strong>Face Frame</strong>
               </CardHeader>
               <CardBody>
                 <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
