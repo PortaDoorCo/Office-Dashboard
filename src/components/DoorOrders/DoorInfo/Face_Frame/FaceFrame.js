@@ -72,21 +72,6 @@ class FaceFrame extends Component {
 
           <Col>
             <FormGroup>
-              <Label htmlFor="hinges">Top Rail Design</Label>
-              <Field
-                name={`${part}.face_frame_top_rail`}
-                component={renderDropdownList}
-                data={face_frame_top_rails}
-                valueField="value"
-                textField="NAME"
-                validate={required}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-
-          <Col>
-            <FormGroup>
               <Label htmlFor="hinges">Finishing</Label>
               <Field
                 name={`${part}.finish`}
