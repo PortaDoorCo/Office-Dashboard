@@ -46,7 +46,6 @@ import FileUploader from '../../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import validate from '../../DoorOrders/validate';
 import currencyMask from '../../../../utils/currencyMask';
-import Ratio from 'lb-ratio';
 import CheckoutBox from './CheckoutBox';
 
 const DoorInfo = React.lazy(() => import('../../../../components/DoorOrders/DoorInfo/FFInfo'));
@@ -59,11 +58,6 @@ const cookie = Cookies.get('jwt');
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
-
-const fraction = (num) => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
 
 
 class DoorOrders extends Component {
@@ -243,6 +237,20 @@ class DoorOrders extends Component {
                     </FormSection>
                   ) : null}
 
+                  <Row>
+                    <Col>
+                      <Card>
+                        <CardBody>
+                          <FormGroup>
+                            <h3>Upload Files</h3>
+                            <p>Please Upload Sketches with Design References</p>
+                            <FileUploader onUploaded={this.onUploaded} multi={true} />
+                          </FormGroup>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+
                   <Suspense fallback={loading()}>
                     <FieldArray
                       name="part_list"
@@ -254,6 +262,7 @@ class DoorOrders extends Component {
                       dispatch={dispatch}
                       isValid={isValid}
                       updateSubmit={this.state.updateSubmit}
+                      onUploaded={this.onUploaded}
                     />
                   </Suspense>
 
@@ -317,7 +326,7 @@ class DoorOrders extends Component {
               enabled={true}
               // key={i}
             >
-              <Row>
+              {/* <Row>
                 <Col>
                   <Card>
                     <CardBody>
@@ -328,7 +337,7 @@ class DoorOrders extends Component {
                     </CardBody>
                   </Card>
                 </Col>
-              </Row>
+              </Row> */}
 
               <CheckoutBox
                 {...this.props}
