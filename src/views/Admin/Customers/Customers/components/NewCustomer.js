@@ -60,7 +60,6 @@ submit = async (values, e) => {
     PMT_TERMS: values.PMT_TERMS.NAME,
   };
 
-  console.log({data});
 
   await this.props.submitCustomer(data, cookie);
   await this.props.reset();

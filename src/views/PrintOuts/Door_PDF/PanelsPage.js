@@ -19,7 +19,6 @@ export default (data, breakdowns) => {
   const b = a.map(woodtype => woodtype.map((v, i) => ({...v, dimensions: flattenDeep( v.dimensions.map(d => ({...d, name: getName(v)}))  ) }))).map((t, x) => ({...t[0], dimensions: flattenDeep(t.map(c => c.dimensions))}));
   
 
-  console.log({ partttt: b, adtttt: data.part_list, aaaaaaaa: a });
 
   const table_body = b.map((i, index) => {
     const tableBody = [
@@ -114,7 +113,6 @@ export default (data, breakdowns) => {
           },
           layout: {
             hLineWidth: function (i, node) {
-              console.log(i, node);
               return i === 1 ? 1 : 0;
             },
             vLineWidth: function (i, node) {

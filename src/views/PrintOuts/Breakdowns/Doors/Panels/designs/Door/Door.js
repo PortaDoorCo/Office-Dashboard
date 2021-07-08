@@ -161,7 +161,6 @@ export default (info, part, breakdowns) => {
   };
 
   const doorFunc = () => {
-    console.log({ check_this: unevenSplit() });
 
     let arr = [];
 
@@ -179,7 +178,6 @@ export default (info, part, breakdowns) => {
       ];
     }
 
-    console.log({ arr });
 
     let new_arr = arr.reduce((ar, obj) => {
       let bool = false;

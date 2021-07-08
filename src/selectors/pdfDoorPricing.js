@@ -47,8 +47,6 @@ const pricing = (parts, pricer) => {
 
     if (part?.orderType?.value === 'Face_Frame') {
       const linePrice = part.dimensions.map((i) => {
-        console.log({ i });
-
         const ff_wood = part?.woodtype?.STANDARD_GRADE;
         const width_input = Math.ceil(numQty(i.width));
         const width = Math.ceil(numQty(i.width)) < 24 ? 18 : Math.ceil(numQty(i.width)) >= 24 && Math.ceil(numQty(i.width)) <= 48 ? 24 : 36;
@@ -72,12 +70,10 @@ const pricing = (parts, pricer) => {
         return price;
       });
 
-      console.log({ linePrice });
 
       return linePrice;
     } else {
       const linePrice = part.dimensions.map((i) => {
-        console.log({ i });
 
         const width = Math.ceil(numQty(i.width));
         const height = Math.ceil(numQty(i.height));
@@ -278,7 +274,6 @@ const pricing = (parts, pricer) => {
         return price;
       });
 
-      console.log({ linePrice });
 
       return linePrice;
     }

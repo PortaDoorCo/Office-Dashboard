@@ -11,7 +11,6 @@ const Message = props => {
 
   const [message, setMessage ] = useState('');
 
-  console.log({message});
 
   const sendMessage = async () => {
 

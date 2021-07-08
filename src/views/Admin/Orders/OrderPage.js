@@ -437,9 +437,6 @@ class OrderPage extends Component {
       ];
     }
 
-    console.log(this.props.user);
-
-
 
     return (
       <div className="animated noPrint resize">

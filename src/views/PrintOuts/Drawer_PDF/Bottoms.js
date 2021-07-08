@@ -132,12 +132,9 @@ export default (data, breakdowns) => {
         return { length: Bottoms(item, i, breakdowns).length };
       });
 
-      console.log({ length });
 
       const groupedByDepth = _.groupBy(length, 'length');
       Object.entries(groupedByDepth).map(([k, v]) => {
-        console.log({ k });
-        console.log({ v });
 
         const groupedMaterialBody = [];
 

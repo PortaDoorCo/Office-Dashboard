@@ -49,8 +49,6 @@ export default (data) => {
 
 
 
-  console.log({ data });
-
   return [
     {
       columns: [
@@ -308,7 +306,6 @@ export default (data) => {
 
       
 
-      console.log({ data });
 
       return [
         {

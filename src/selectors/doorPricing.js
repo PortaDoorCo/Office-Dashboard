@@ -28,7 +28,6 @@ const stateSelector = (state) => {
   const orders = state.form.DoorOrder;
 
   if (orders) {
-    console.log({ orders });
     if (
       state.form.DoorOrder.values &&
       state.form.DoorOrder.values.job_info &&
@@ -220,7 +219,6 @@ export const itemPriceSelector = createSelector(
       if (part?.orderType?.value === 'Face_Frame') {
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
-            console.log({ i });
 
             const ff_wood = part?.woodtype?.STANDARD_GRADE;
             const width_input = Math.ceil(numQty(i.width));
@@ -243,7 +241,6 @@ export const itemPriceSelector = createSelector(
             const price = eval(pricer && pricer.face_frame_pricing); 
 
 
-            console.log({ price });
 
             if (height > -1) {
               return price;
@@ -252,7 +249,6 @@ export const itemPriceSelector = createSelector(
             }
           });
 
-          console.log({ linePrice });
 
           return linePrice;
         } else {
@@ -261,7 +257,6 @@ export const itemPriceSelector = createSelector(
       } else {
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
-            console.log({ i });
 
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
@@ -487,7 +482,6 @@ export const itemPriceSelector = createSelector(
             }
           });
 
-          console.log({ linePrice });
 
           return linePrice;
         } else {
@@ -501,7 +495,6 @@ export const linePriceSelector = createSelector(
   [partListSelector, pricingSelector, itemPriceSelector],
   (parts, pricer, item) =>
     parts.map((part, index) => {
-      console.log({ part });
 
       if (part.dimensions) {
         return part.dimensions.map((i, p) => {
@@ -515,12 +508,10 @@ export const linePriceSelector = createSelector(
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
-                console.log('hereeeeee');
 
                 const base = item[index][p] * parseInt(i.qty);
                 const add = base * 0.2;
                 const price = base + add;
-                console.log({ base });
                 return price;
               } else {
                 return item[index][p] * parseInt(i.qty);
