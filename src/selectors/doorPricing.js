@@ -204,7 +204,7 @@ export const itemPriceSelector = createSelector(
       const applied_profile = part.applied_profile
         ? part.applied_profile.UPCHARGE
         : 0;
-      // const finish = part.finish ? part.finish.UPCHARGE : 0;
+      const finish = part.finish ? part.finish.UPCHARGE : 0;
 
       const ff_opening_cost = part.face_frame_design
         ? part.face_frame_design.opening_cost

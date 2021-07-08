@@ -209,6 +209,7 @@ const OrderTable = (props: TablePropTypes) => {
     },
 
 
+
   ];
 
   const toggle = (row: {}) => {
