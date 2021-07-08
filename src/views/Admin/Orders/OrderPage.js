@@ -22,6 +22,7 @@ import {
   deleteOrder,
   setSelectedOrder,
   uploadFilesToOrder,
+  submitOrder
 } from '../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
 import Print from '@material-ui/icons/Print';
@@ -35,25 +36,19 @@ import Dns from '@material-ui/icons/Dns';
 import Tooltip from '@material-ui/core/Tooltip';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import Chat from '@material-ui/icons/Chat';
-import LabelIcon from '@material-ui/icons/Label';
+import FileCopy from '@material-ui/icons/FileCopy';
 
-import { CSVLink, CSVDownload } from 'react-csv';
+import { CSVLink } from 'react-csv';
 
 import DoorPDF from '../../PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from '../../PrintOuts/Pages/Drawer/DrawerPDF';
 import BoxLabelPDF from '../../PrintOuts/Pages/Drawer/BoxLabels';
 
-
 import moment from 'moment';
-
 
 import MiscItemsPDF from '../../PrintOuts/Pages/MiscItems/MiscItemsPDF';
 
-
 import MouldingsPDF from '../../PrintOuts/Pages/Mouldings/MouldingsPDF';
-
-
-
 
 import DoorBalance from './Balance/Door_Order/Balance';
 import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory';
@@ -99,7 +94,6 @@ const toDataUrl = (url, callback) => {
   xhr.send();
 };
 
-
 class OrderPage extends Component {
   constructor(props) {
     super(props);
@@ -116,7 +110,7 @@ class OrderPage extends Component {
       balanceOpen: false,
       miscItemsOpen: false,
       notesOpen: false,
-      printModal: false
+      printModal: false,
     };
   }
 
@@ -191,9 +185,9 @@ class OrderPage extends Component {
 
   togglePrinter = () => {
     this.setState({
-      printModal: !this.state.printModal
+      printModal: !this.state.printModal,
     });
-  }
+  };
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption }, () =>
@@ -201,6 +195,57 @@ class OrderPage extends Component {
     );
   };
 
+  copyOrder = async () => {
+    const {
+      formState,
+      drawerState,
+      miscState,
+      mouldingsState,
+      selectedOrder,
+      submitOrder
+    } = this.props;
+    const data = formState
+      ? formState
+      : drawerState
+        ? drawerState
+        : miscState
+          ? miscState
+          : mouldingsState
+            ? mouldingsState
+            : [];
+            
+    console.log({data});
+    console.log({selectedOrder});
+
+    let newOrder = {...data, job_info: {
+      ...data.job_info, poNum: `${data.job_info.poNum} - COPY`, status: 'Quote'
+    }};
+
+    newOrder.part_list.map(i => {
+      delete i['id'];
+      delete i['_id'];
+      return null;
+    });
+
+    delete newOrder['id'];
+    delete newOrder['_id'];
+    delete newOrder['orderNum'];
+    delete newOrder['createdAt'];
+    delete newOrder['updatedAt'];
+    delete newOrder['published_at'];
+
+    newOrder['balance_history'] = [{balance_paid: 0}];
+    newOrder['balance_paid'] = 0;
+    newOrder['files'] = [];
+    newOrder['Rush'] = false;
+    newOrder['Sample'] = false; 
+
+    console.log({newOrder});
+
+    await submitOrder(newOrder, cookie);
+    await this.props.toggle();
+
+  }
 
   downloadPDF = async (printerSettings) => {
     const {
@@ -211,7 +256,6 @@ class OrderPage extends Component {
       breakdowns,
       box_breakdowns,
       selectedOrder,
-      user
     } = this.props;
     const data = formState
       ? formState
@@ -219,13 +263,11 @@ class OrderPage extends Component {
         ? drawerState
         : miscState
           ? miscState
-          : mouldingsState ?
-            mouldingsState
+          : mouldingsState
+            ? mouldingsState
             : [];
-  
-  
-    if (data.orderType === 'Door Order') {
 
+    if (data.orderType === 'Door Order') {
       const designPromiseArr1 = selectedOrder.part_list
         .filter((i) => i.design && i.design.photo && i.design.photo.url)
         .map((i) => {
@@ -245,11 +287,9 @@ class OrderPage extends Component {
             });
           });
         });
-  
+
       const mouldsPromiseArr1 = selectedOrder.part_list
-        .filter(
-          (i) => i.profile && i.profile.photo && i.profile.photo.url
-        )
+        .filter((i) => i.profile && i.profile.photo && i.profile.photo.url)
         .map((i) => {
           return new Promise((resolve, reject) => {
             toDataUrl(i.profile.photo.url, (result) => {
@@ -257,13 +297,11 @@ class OrderPage extends Component {
             });
           });
         });
-  
+
       const miterPromiseArr1 = selectedOrder.part_list
         .filter(
           (i) =>
-            i.miter_design &&
-                    i.miter_design.photo &&
-                    i.miter_design.photo.url
+            i.miter_design && i.miter_design.photo && i.miter_design.photo.url
         )
         .map((i) => {
           return new Promise((resolve, reject) => {
@@ -272,7 +310,7 @@ class OrderPage extends Component {
             });
           });
         });
-  
+
       const MT_PromiseArr1 = selectedOrder.part_list
         .filter(
           (i) => i.mt_design && i.mt_design.photo && i.mt_design.photo.url
@@ -284,7 +322,7 @@ class OrderPage extends Component {
             });
           });
         });
-  
+
       const panelsPromiseArr1 = selectedOrder.part_list
         .filter((i) => i.panel && i.panel.photo && i.panel.photo.url)
         .map((i) => {
@@ -294,13 +332,13 @@ class OrderPage extends Component {
             });
           });
         });
-  
+
       const appliedProfilePromiseArr1 = selectedOrder.part_list
         .filter(
           (i) =>
             i.applied_profile &&
-                    i.applied_profile.photo &&
-                    i.applied_profile.photo.url
+            i.applied_profile.photo &&
+            i.applied_profile.photo.url
         )
         .map((i) => {
           return new Promise((resolve, reject) => {
@@ -309,7 +347,7 @@ class OrderPage extends Component {
             });
           });
         });
-        
+
       let design1;
       let edges1;
       let moulds1;
@@ -317,7 +355,7 @@ class OrderPage extends Component {
       let mt_1;
       let panels1;
       let appliedProfiles1;
-  
+
       try {
         design1 = await Promise.all(designPromiseArr1);
         edges1 = await Promise.all(edgesPromiseArr1);
@@ -328,7 +366,7 @@ class OrderPage extends Component {
         appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
       } catch (err) {
         console.log('errrrrrr', err);
-      }  
+      }
       DoorPDF(
         data,
         design1,
@@ -346,8 +384,7 @@ class OrderPage extends Component {
       DrawerPDF(data, box_breakdowns, printerSettings);
     } else if (data.orderType === 'Misc Items') {
       MiscItemsPDF(data, box_breakdowns, printerSettings);
-    }
-    else if (data.orderType === 'Mouldings') {
+    } else if (data.orderType === 'Mouldings') {
       MouldingsPDF(data, box_breakdowns, printerSettings);
     }
   };
@@ -358,10 +395,7 @@ class OrderPage extends Component {
       drawerState,
       miscState,
       mouldingsState,
-      breakdowns,
       box_breakdowns,
-      selectedOrder,
-      user
     } = this.props;
     const data = formState
       ? formState
@@ -369,12 +403,11 @@ class OrderPage extends Component {
         ? drawerState
         : miscState
           ? miscState
-          : mouldingsState ?
-            mouldingsState
+          : mouldingsState
+            ? mouldingsState
             : [];
     BoxLabelPDF(data, box_breakdowns);
   };
-
 
   render() {
     const props = this.props;
@@ -387,10 +420,9 @@ class OrderPage extends Component {
     let exportCsv = [];
     let a = [];
 
-    let b = a.map((i,ind) => {
+    let b = a.map((i, ind) => {
       return i;
     });
-
 
     if (s.orderType === 'Door Order') {
       options = [
@@ -407,18 +439,36 @@ class OrderPage extends Component {
         { value: 'QC', label: 'QC' },
       ];
 
-      exportCsv = s ? s.part_list.map((f,index) => {
-        f.dimensions.forEach((j, ind) => {
-          if(f.orderType.value === 'DF') {
-            a.push([s.orderNum, '15DF', j.qty, f.woodtype && f.woodtype.NAME, numQty(j.width), numQty(j.height), f.edge && f.edge.NAME, f.thickness && f.thickness.value]);
-          } else {
-            a.push([s.orderNum, 'D', j.qty, f.woodtype && f.woodtype.NAME,  numQty(j.width), numQty(j.height), f.edge && f.edge.NAME, f.thickness && f.thickness.value]);
-          }
-        });
-        return a;
-      }) : [];
-      
-
+      exportCsv = s
+        ? s.part_list.map((f, index) => {
+          f.dimensions.forEach((j, ind) => {
+            if (f.orderType.value === 'DF') {
+              a.push([
+                s.orderNum,
+                '15DF',
+                j.qty,
+                f.woodtype && f.woodtype.NAME,
+                numQty(j.width),
+                numQty(j.height),
+                f.edge && f.edge.NAME,
+                f.thickness && f.thickness.value,
+              ]);
+            } else {
+              a.push([
+                s.orderNum,
+                'D',
+                j.qty,
+                f.woodtype && f.woodtype.NAME,
+                numQty(j.width),
+                numQty(j.height),
+                f.edge && f.edge.NAME,
+                f.thickness && f.thickness.value,
+              ]);
+            }
+          });
+          return a;
+        })
+        : [];
     } else if (s.orderType === 'Drawer Order') {
       options = [
         { value: 'Breakdowns', label: 'Breakdowns' },
@@ -436,7 +486,6 @@ class OrderPage extends Component {
         { value: 'Invoice', label: 'Invoice' },
       ];
     }
-
 
     return (
       <div className="animated noPrint resize">
@@ -549,10 +598,8 @@ class OrderPage extends Component {
 
                   <Col className="ml-5">
                     <Row>
-                      <Col lg="7">
-                      </Col>
+                      <Col lg="7"></Col>
                       <Col>
-
                         {/* {(s.orderType === 'Drawer Order') ? 
                           <Tooltip title="Box Labels" placement="top" className="mb-3">
                             <IconButton onClick={this.downloadBoxLabel}>
@@ -561,38 +608,65 @@ class OrderPage extends Component {
                           </Tooltip> : null
                         } */}
 
-
-
                         <Tooltip title="Print" placement="top" className="mb-3">
                           <IconButton onClick={this.togglePrinter}>
                             <Print style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
 
-                        <CSVLink data={a.map((i,ind) => {
-                          return [...i, ind + 1, `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`];
-                        })} filename={`${s && s.orderNum}.csv`} separator={','} className="mb-3">
-                          {' '}
-                          <Tooltip title="Export Edges" placement="top" className="mb-3">
-                            <IconButton>
-                              <GetAppIcon
-                                style={{ width: '40', height: '40' }}
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        </CSVLink>
-                        {(this.props.user && this.props.user.role && this.props.user.role && this.props.user.role.name === 'Administrator') || (this.props.user && this.props.user.role && this.props.user.role && this.props.user.role.name === 'Management') ? 
-                          <Tooltip
-                            title="Delete Order"
-                            placement="top"
+                        <Tooltip title="Copy Order" placement="top" className="mb-3">
+                          <IconButton onClick={this.copyOrder}>
+                            <FileCopy style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
+
+                        {selectedOrder && selectedOrder.orderType === 'Door Order' ?
+                          <CSVLink
+                            data={a.map((i, ind) => {
+                              return [
+                                ...i,
+                                ind + 1,
+                                `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`,
+                              ];
+                            })}
+                            filename={`${s && s.orderNum}.csv`}
+                            separator={','}
                             className="mb-3"
                           >
-                            <IconButton onClick={this.toggleDeleteModal}>
-                              <Delete style={{ width: '40', height: '40' }} />
-                            </IconButton>
-                          </Tooltip> : null
+                            {' '}
+                            <Tooltip
+                              title="Export Edges"
+                              placement="top"
+                              className="mb-3"
+                            >
+                              <IconButton>
+                                <GetAppIcon
+                                  style={{ width: '40', height: '40' }}
+                                />
+                              </IconButton>
+                            </Tooltip>
+                          </CSVLink> : null
                         }
 
+
+                        {(this.props.user &&
+                          this.props.user.role &&
+                          this.props.user.role &&
+                          this.props.user.role.name === 'Administrator') ||
+                        (this.props.user &&
+                          this.props.user.role &&
+                          this.props.user.role &&
+                          this.props.user.role.name === 'Management') ? (
+                            <Tooltip
+                              title="Delete Order"
+                              placement="top"
+                              className="mb-3"
+                            >
+                              <IconButton onClick={this.toggleDeleteModal}>
+                                <Delete style={{ width: '40', height: '40' }} />
+                              </IconButton>
+                            </Tooltip>
+                          ) : null}
                       </Col>
                     </Row>
                   </Col>
@@ -614,7 +688,11 @@ class OrderPage extends Component {
                                   <th scope="row">{index + 1}</th>
                                   <td>{i.name}</td>
                                   <td style={{ textAlign: 'right' }}>
-                                    <a href={i.url} rel="noopener noreferrer" target="_blank">
+                                    <a
+                                      href={i.url}
+                                      rel="noopener noreferrer"
+                                      target="_blank"
+                                    >
                                         View
                                     </a>
                                   </td>
@@ -693,14 +771,12 @@ class OrderPage extends Component {
                                   selectedOrder={props.selectedOrder}
                                 />
                               ) : selectedOrder &&
-                              selectedOrder.orderType === 'Mouldings' ? (
+                          selectedOrder.orderType === 'Mouldings' ? (
                                   <MouldingsConversationNotes
                                     toggleBalance={this.toggleBalance}
                                     selectedOrder={props.selectedOrder}
                                   />
-                                )
-                                :
-                                (
+                                ) : (
                                   <div />
                                 )}
                       </CardBody>
@@ -722,7 +798,7 @@ class OrderPage extends Component {
                               selectedOrder={props.selectedOrder}
                             /> */}
                         {selectedOrder &&
-                        selectedOrder.orderType === 'Door Order' ? (
+                        (selectedOrder.orderType === 'Door Order' || selectedOrder.orderType === 'Face Frame') ? (
                             <DoorBalance
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
@@ -740,14 +816,12 @@ class OrderPage extends Component {
                                   selectedOrder={props.selectedOrder}
                                 />
                               ) : selectedOrder &&
-                              selectedOrder.orderType === 'Mouldings' ? (
+                          selectedOrder.orderType === 'Mouldings' ? (
                                   <MouldingsBalance
                                     toggleBalance={this.toggleBalance}
                                     selectedOrder={props.selectedOrder}
                                   />
-                                )
-                                :
-                                (
+                                ) : (
                                   <div />
                                 )}
                       </CardBody>
@@ -758,7 +832,7 @@ class OrderPage extends Component {
                       <CardBody>
                         <h5>Balance History</h5>
                         {selectedOrder &&
-                        selectedOrder.orderType === 'Door Order' ? (
+                        (selectedOrder.orderType === 'Door Order' || selectedOrder.orderType === 'Face Frame') ? (
                             <DoorBalanceHistory
                               edit={!this.props.edit}
                               editable={this.props.editable}
@@ -776,14 +850,12 @@ class OrderPage extends Component {
                                   editable={this.props.editable}
                                 />
                               ) : selectedOrder &&
-                              selectedOrder.orderType === 'Mouldings' ? (
+                          selectedOrder.orderType === 'Mouldings' ? (
                                   <MouldingsBalanceHistory
                                     edit={!this.props.edit}
                                     editable={this.props.editable}
                                   />
-                                )
-                                :
-                                (
+                                ) : (
                                   <div />
                                 )}
                       </CardBody>
@@ -801,7 +873,7 @@ class OrderPage extends Component {
                       <CardBody>
                         <h5>Misc Items</h5>
                         {selectedOrder &&
-                        selectedOrder.orderType === 'Door Order' ? (
+                        (selectedOrder.orderType === 'Door Order' || selectedOrder.orderType === 'Face Frame') ? (
                             <DoorMiscItems
                               toggle={this.toggleMiscItems}
                               edit={!this.props.edit}
@@ -812,16 +884,13 @@ class OrderPage extends Component {
                                 toggle={this.toggleMiscItems}
                                 edit={!this.props.edit}
                               />
-                            ) : 
-                            selectedOrder &&
-                            selectedOrder.orderType === 'Mouldings' ? (
+                            ) : selectedOrder &&
+                          selectedOrder.orderType === 'Mouldings' ? (
                                 <MouldingsMiscItems
                                   toggle={this.toggleMiscItems}
                                   edit={!this.props.edit}
                                 />
-                              )
-                              :
-                              null}
+                              ) : null}
                       </CardBody>
                     </Card>
                   </Col>
@@ -876,7 +945,7 @@ const mapStateToProps = (state, prop) => ({
   selectedOrder: state.Orders.selectedOrder,
   printer_options: state.misc_items.printer_options,
   pricing: state.part_list.pricing,
-  user: state.users.user
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -887,6 +956,7 @@ const mapDispatchToProps = (dispatch) =>
       deleteOrder,
       setSelectedOrder,
       uploadFilesToOrder,
+      submitOrder
     },
     dispatch
   );
