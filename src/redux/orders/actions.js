@@ -273,7 +273,6 @@ export function socketReceiveUpdateStatus(res) {
 export function updateBalance(orderId, balance, cookie) {
 
 
-  console.log({balance});
 
   let item;
   
@@ -317,7 +316,6 @@ export function updateBalance(orderId, balance, cookie) {
   }
 
 
-  console.log({item});
 
   return async function (dispatch) {
     try {

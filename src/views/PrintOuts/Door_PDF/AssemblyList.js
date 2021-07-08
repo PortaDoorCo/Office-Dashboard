@@ -8,7 +8,6 @@ import GlassSort from '../Sorting/GlassSort';
 import GlassSelection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
-  // console.log({data: data.part_list});
 
   GlassSelection(data);
 
@@ -63,7 +62,6 @@ export default (data, breakdowns) => {
       });
     } else {
       GlassSort(i).forEach((item, index) => {
-        console.log({ item });
 
         tableBody.push([
           { text: item.item, style: 'fonts' },
@@ -119,7 +117,6 @@ export default (data, breakdowns) => {
       });
     }
 
-    console.log({tableBody});
 
     return [
       {
@@ -192,7 +189,6 @@ export default (data, breakdowns) => {
         },
         layout: {
           hLineWidth: function (i, node) {
-            // console.log(i, node);
             return i === 1 ? 1 : 0;
           },
           vLineWidth: function (i, node) {
@@ -219,7 +215,6 @@ export default (data, breakdowns) => {
     ];
   });
 
-  console.log({table_content});
 
   return [
     {

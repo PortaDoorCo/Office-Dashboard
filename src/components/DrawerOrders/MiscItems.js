@@ -49,15 +49,12 @@ let Inputs = (props) => {
 
   const changeMiscItem = (e, index) => {
 
-    console.log({e});
-    console.log({formState});
 
     let total_qty = 0;
 
     props.dispatch(change('DrawerOrder', `misc_items[${index}].price`, e.Price));
 
     if(e.count_items){
-      console.log({e});
       const categories = e.categories.map(i => i.value);
       if(categories.includes('Drawer_Box')){
         const quantities = formState && formState.part_list.map(i => {

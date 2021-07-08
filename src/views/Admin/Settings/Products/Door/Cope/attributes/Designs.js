@@ -147,7 +147,6 @@ const Designs = (props) => {
       Item: item,
     };
 
-    console.log({ submittedProduct });
 
     // await props.addProduct(submittedProduct, 'designs', cookie);
     await setModal(!modal);
@@ -168,7 +167,6 @@ const Designs = (props) => {
   };
 
 
-  console.log({product});
 
   const card = filteredProducts.map((card) => {
     return (

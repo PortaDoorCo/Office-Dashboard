@@ -5,7 +5,6 @@ import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 export default (data, breakdowns) => {
 
 
-  console.log({data});
 
   const qty = data.part_list.map((part, i) => {
     return part.dimensions
@@ -51,7 +50,6 @@ export default (data, breakdowns) => {
       dimensions: flattenDeep(t.map((c) => c.dimensions)),
     }));
 
-  console.log({ partttt: b, adtttt: data.part_list, aaaaaaaa: a });
 
   const table_body = b.map((i, index) => {
     const tableBody = [
@@ -148,7 +146,6 @@ export default (data, breakdowns) => {
         },
         layout: {
           hLineWidth: function (i, node) {
-            console.log(i, node);
             return i === 1 ? 1 : 0;
           },
           vLineWidth: function (i, node) {

@@ -49,7 +49,6 @@ export default (data) => {
 
 
 
-  console.log({ data });
 
   return [
     {
@@ -308,7 +307,6 @@ export default (data) => {
 
       
 
-      console.log({ data });
 
       return [
         {

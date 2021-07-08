@@ -73,7 +73,6 @@ const RenderBalances = ({
   };
 
 
-  console.log({index});
 
   return (
     <div>
@@ -105,7 +104,6 @@ const RenderBalances = ({
           {fields
             .map((i, index) => (
               <tr key={index}>
-                {console.log({ i })}
                 <td>
                   <Field
                     name={`${i}.date`}
@@ -215,13 +213,11 @@ class BalanceHistory extends Component {
         updateOrder,
       } = this.props;
 
-      console.log({ values });
 
       const order = {
         balance_history: values.balance_history,
       };
 
-      console.log({ order });
 
       const orderId = values.id;
       await updateOrder(orderId, order, cookie);

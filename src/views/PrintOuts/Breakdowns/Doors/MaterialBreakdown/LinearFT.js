@@ -24,8 +24,6 @@ export default (parts, breakdowns,thickness) => {
 
       const stile_map = Object.keys(j).map(a => {
 
-        console.log({stile_mappppp: j[a]});
-        console.log({stile_thickness: thickness});
 
         if(a === 'leftStile'){
           return j[a] === thickness ? stile[a] = j[a] : stile[a] = 0;
@@ -103,7 +101,6 @@ export default (parts, breakdowns,thickness) => {
 
       }); 
       
-      console.log({stileeeee: uniqBy(stiles, 'width')});
 
       const s = uniqBy(stiles, 'width');
       const r = uniqBy(rails, 'width');
@@ -114,7 +111,6 @@ export default (parts, breakdowns,thickness) => {
 
   const first_obj = flatten(calc);
 
-  console.log({first_obj});
 
   const flatten_obj = flatten(first_obj);
   const groupedObj = groupBy(flatten_obj, 'width');
@@ -125,11 +121,9 @@ export default (parts, breakdowns,thickness) => {
     return {width: k, sum: v.reduce((a,b) => a + b.sum, 0)};
   });
 
-  console.log({newObj});
 
   const newObj3 = newObj.map(i => {
 
-    console.log({ check: i});
 
     return {
       sum : i.sum.toFixed(2),

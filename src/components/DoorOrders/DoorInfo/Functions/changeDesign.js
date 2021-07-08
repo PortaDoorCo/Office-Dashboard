@@ -9,7 +9,6 @@ const changeProfile = (p, ind, props, change) => {
 
   const part = formState.part_list[ind];
 
-  console.log({parttttttt: part});
 
   if(part.dimensions){
     part.dimensions.forEach((info, index) => {

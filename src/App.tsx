@@ -353,7 +353,6 @@ class App extends Component<PropTypes, StateTypes> {
   };
 
   render() {
-    console.log({test_this: this.props.productAdded});
     return (
       <BrowserRouter>
         <React.Suspense fallback={loading()}>

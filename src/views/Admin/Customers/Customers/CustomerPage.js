@@ -84,8 +84,6 @@ class CustomerPage extends Component {
     }
 
 
-    console.log({updateOrders});
-    console.log({selectedCompanies});
 
     return (
       <div className="animated resize">

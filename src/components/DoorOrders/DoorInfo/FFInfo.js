@@ -129,7 +129,6 @@ class DoorInfo extends Component {
             <div id={`item-${index}`} key={index}>
               <hr />
               <CardSubtitle className="mt-4">
-                {console.log({ part111111: part })}
                 <Row>
                   <Col lg="11">
                     <div>

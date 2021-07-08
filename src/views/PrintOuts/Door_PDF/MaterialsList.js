@@ -28,7 +28,6 @@ export default (data, breakdowns) => {
     flattenDeep(data.part_list.map(i => i.thickness.name))
   );
 
-  console.log({uniques_thickness});
 
   //map items -> map thickness -> return object
   const b = uniques_items.map(i => {
@@ -46,7 +45,6 @@ export default (data, breakdowns) => {
   const c = flattenDeep(b).map(j => {
     return {
       parts: j.widths.filter(n => n !== 0).map(k => {
-        console.log({k});
 
 
 
@@ -56,7 +54,6 @@ export default (data, breakdowns) => {
           woodtype: j.woodtype,
           parts: j.parts.map(f => {
 
-            console.log({aaaa: flatten(f.dimensions).filter(j => [j.topRail, j.bottomRail, j.leftStile, j.rightStile, j.horizontalMidRailSize, j.verticalMidRailSize].includes(k))});
 
             return {
               width: k,
@@ -77,7 +74,6 @@ export default (data, breakdowns) => {
 
     return j.parts.map(n => {
 
-      console.log({n});
 
       return LinearFT(n.parts,breakdowns,n.width).map(b => {
         if(numQty(b.width) > 0) {
@@ -100,37 +96,29 @@ export default (data, breakdowns) => {
 
   const flattenD = flattenDeep(d);
 
-  console.log({flattenD: flattenD});
-  console.log({testtttt: uniq(flattenD)});
 
   const flattenD2 = flattenD.filter(i => i.width === 2.375);
   const flattenD3 = groupBy(flattenD2, 'woodtype');
 
 
-  console.log({flattenD3});
   
 
   const flattenD4 = Object.entries(flattenD3).map(([k, v]) => {
 
-    console.log({k});
 
-    console.log({v});
 
     return {...v[0], width: v[0].width, linearFT: v.reduce((a,b) => a + b.linearFT, 0), waste: v.reduce((a,b) => a + b.waste, 0), woodtype: v[0].woodtype,  };
   });
 
-  console.log({flattenD4});
 
   const flattenD5 = flattenD.filter(item => item.width !== 2.375);
 
 
-  console.log({flattenD5});
 
 
 
   const flattenD6 = flattenD4.concat(flattenD5);
 
-  console.log({flattenD6});
 
   const flattenD7 = flattenD6.sort((a, b) => (a.waste > b.waste) ? -1 : 1);
 
@@ -175,7 +163,6 @@ export default (data, breakdowns) => {
 
   const BoardFTDisplay = BoardFT_Total.map(i => {
 
-    console.log({i});
 
     return [
       {
@@ -199,7 +186,6 @@ export default (data, breakdowns) => {
     const calc = i.dimensions.map((item, index) => {
       const width = Panels(item, i, breakdowns).map((panel) => {
 
-        console.log({panel});
 
         return numQty(panel.width);
       });
@@ -220,22 +206,16 @@ export default (data, breakdowns) => {
       const qty_total = qty.reduce((acc, item) => acc + item);
 
 
-      console.log({qty});
-      console.log({width});
-      console.log({height});
 
       const q = ((width_total * height_total) / 144) * parseInt(qty_total ? qty_total : 0);
 
-      console.log({q});
 
       return q;
     });
 
-    console.log({calc});
 
     const equation = calc.reduce((acc, item) => acc + item);
 
-    console.log({equation});
 
     if (
       i.orderType.value === 'One_Piece' ||

@@ -40,10 +40,8 @@ export default (data, pricing) => {
 
   const order_sub_total = misc_total + discountSubTotal;
 
-  console.log({ data });
 
   const parts = Glass_Selection(data);
-  console.log({ parts });
 
   const prices = pdfDoorPricing(parts, pricing[0]);
 

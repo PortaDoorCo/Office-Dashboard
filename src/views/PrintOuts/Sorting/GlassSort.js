@@ -3,7 +3,6 @@ import GlassCheck from './GlassCheck';
 
 const GlassSort = (part) => {
 
-  console.log({part});
 
   const dimensions =  part.dimensions.map(i => {
     return GlassCheck(i);

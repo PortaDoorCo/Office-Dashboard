@@ -3,25 +3,20 @@ import { flatten } from 'lodash';
 
 export default (data, breakdowns) => {
 
-  console.log({data});
 
-  console.log({dataaaaa: flatten(data.part_list)});
 
   const dim = data.part_list.map(i => {
     return i.dimensions;
   });
 
-  console.log({dim});
 
 
   const flatten_d = flatten(dim);
 
-  console.log({flatten_d});
 
   const amount = flatten_d.map(n => parseInt(n.qty));
   const total = amount.reduce((acc, item) => acc + item, 0);
 
-  console.log({total});
 
   const arr = [];
   const a = flatten(flatten_d.map(i => {
@@ -43,7 +38,6 @@ export default (data, breakdowns) => {
       ]);
     }
 
-    console.log({obj});
 
     return obj;
 
@@ -51,7 +45,6 @@ export default (data, breakdowns) => {
   }));
 
 
-  console.log({a});
 
 
   let chunk;
@@ -72,11 +65,9 @@ export default (data, breakdowns) => {
       el.push({text: '', alignment: 'center', margin: [0,5,0,0]});
     }
 
-    console.log({el});
 
     const elem = [...chunk, el];
 
-    console.log({aaaaa: flatten(elem)});
 
     arr.push(flatten(elem));
 

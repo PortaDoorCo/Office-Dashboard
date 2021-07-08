@@ -29,7 +29,6 @@ export default (data, breakdowns) => {
       dimensions: flattenDeep(t.map((c) => c.dimensions)),
     }));
 
-  console.log({ partttt: b, adtttt: data.part_list, aaaaaaaa: a });
 
   const table_body = b.map((i, index) => {
     const tableBody = [
@@ -120,7 +119,6 @@ export default (data, breakdowns) => {
           },
           layout: {
             hLineWidth: function (i, node) {
-              console.log(i, node);
               return i === 1 ? 1 : 0;
             },
             vLineWidth: function (i, node) {

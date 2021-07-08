@@ -10,7 +10,6 @@ const GlassCheck = (i) => {
   const checker = arr => arr.every(v => v === true);
   const glassPanels = a.map(j => i[j]);
 
-  console.log({glassPanels});
 
   const hasGlass = glassPanels.includes(true);
   

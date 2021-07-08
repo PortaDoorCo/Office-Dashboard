@@ -39,7 +39,6 @@ const FileUploader = (props) => {
         props.onUploaded(res.data);
       }).catch((err) => {
         NotificationManager.error('There was an problem with your upload', 'Error', 2000);
-        console.log(err);
       });
       
 
@@ -58,7 +57,6 @@ const FileUploader = (props) => {
     fileList: fileList,
     onChange(info) {
 
-      console.log({info});
 
       info.file.name = fileName ? fileName : info.file.name;
       
@@ -66,13 +64,11 @@ const FileUploader = (props) => {
   
   
       if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
       }
       if (info.file.status === 'done') {
         NotificationManager.success('File Successfully Uploaded!', 'Success', 2000);
         setFileName('');
 
-        console.log('fire');
         setFileList(
           fileList.map(item => 
             item.uid === info.file.uid 
@@ -88,7 +84,6 @@ const FileUploader = (props) => {
     
   };
 
-  console.log({fileList});
 
   return (
     <div>
