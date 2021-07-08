@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, CardSubtitle, Button, ButtonGroup } from 'reactstrap';
+import { Row, Col, CardSubtitle, Button, Card, CardBody, FormGroup } from 'reactstrap';
 import DoorFilter from '../DoorInfo/Filter/Filter';
 import Conditionals from './Conditionals';
 import CopyModal from './CopyModal';
+import FileUploader from '../../FileUploader/FileUploader';
 
 const construction = [
   {
@@ -111,7 +112,7 @@ class DoorInfo extends Component {
 
   
   render() {
-    const { fields, formState, isValid, edit, updateSubmit } = this.props;
+    const { fields, formState, isValid, edit, updateSubmit, onUploaded } = this.props;
 
     return (
       <div className="order-tour">
@@ -163,6 +164,7 @@ class DoorInfo extends Component {
                 thickness={thickness}
                 ff_thickness={ff_thickness}
                 updateSubmit={updateSubmit}
+                onUploaded={onUploaded}
               />
 
               <Conditionals
