@@ -94,13 +94,8 @@ export default (data, pricing) => {
                 style: 'fonts',
               },
               {
-                text: `${part.woodtype.NAME} - ${
-                  part?.thickness.value === 1 || part?.thickness.value === 2
-                    ? '4/4'
-                    : part?.thickness.value === 3 || part?.thickness.value === 4
-                      ? '5/4'
-                      : ''
-                }`,
+                
+                text: `${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${part.thickness?.thickness_2}"`,
                 style: 'fonts',
               },
 
