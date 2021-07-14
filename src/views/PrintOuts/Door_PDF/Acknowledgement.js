@@ -4,7 +4,10 @@ import Glass_Selection from '../Sorting/Glass_Selection';
 import pdfDoorPricing from '../../../selectors/pdfDoorPricing';
 
 export default (data, pricing) => {
-  const qty = data.part_list.map((part, i) => {
+
+  const parts = Glass_Selection(data);
+
+  const qty = parts.map((part, i) => {
     return part.dimensions
       .map((dim, index) => {
         return parseInt(dim.qty);
@@ -41,9 +44,11 @@ export default (data, pricing) => {
   const order_sub_total = misc_total + discountSubTotal;
 
 
-  const parts = Glass_Selection(data);
+
 
   const prices = pdfDoorPricing(parts, pricing[0]);
+
+  console.log({parts});
 
   const table_content = Glass_Selection(data).map((part, i) => {
     const tableBody = [
