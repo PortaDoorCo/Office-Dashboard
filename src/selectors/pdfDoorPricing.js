@@ -52,10 +52,10 @@ const pricing = (parts, pricer) => {
         const width = Math.ceil(numQty(i.width)) < 24 ? 18 : Math.ceil(numQty(i.width)) >= 24 && Math.ceil(numQty(i.width)) <= 48 ? 24 : 36;
         const height = Math.ceil(numQty(i.height));
         const openings = parseInt(i.openings);
-        const finish = part.finish ? part.finish.PRICE : 0;
+        const finish = part.face_frame_finishing ? part.face_frame_finishing.PRICE : 0;
 
-        const width_finish = finish * 0.25;
-        const height_finish = finish * 0.25;
+        const width_finish = width_input >= 35 ? finish * 0.25 : 0;
+        const height_finish = height >= 97 ? finish * 0.25 : 0;
 
         const finishing = finish + width_finish + height_finish;
 
