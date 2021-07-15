@@ -71,9 +71,9 @@ class FaceFrame extends Component {
 
           <Col>
             <FormGroup>
-              <Label htmlFor="hinges">Finishing</Label>
+              <Label htmlFor="finish">Finishing</Label>
               <Field
-                name={`${part}.finish`}
+                name={`${part}.face_frame_finishing`}
                 component={renderDropdownList}
                 data={face_frame_finishing}
                 valueField="value"
