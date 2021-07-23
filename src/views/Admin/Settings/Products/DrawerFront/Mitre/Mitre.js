@@ -82,14 +82,14 @@ const Cope = (props) => {
                         Panels
                       </NavLink>
                     </NavItem>
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         className={classnames({ active: activeTab === '4' })}
                         onClick={() => { toggle('4'); }}
                       >
                         Glass Options
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                   </Nav>
                 </Col>
               </Row>

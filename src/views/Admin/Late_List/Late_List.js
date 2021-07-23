@@ -94,7 +94,7 @@ const StatusTable = (props) => {
     },
     {
       name: 'Company',
-      selector: 'job_info.customer.Company',
+      cell: row => <span>{row.job_info?.customer?.Company}</span>,
       sortable: true,
       grow: 2,
     },
