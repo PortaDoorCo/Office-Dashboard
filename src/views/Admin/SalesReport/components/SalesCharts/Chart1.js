@@ -83,7 +83,7 @@ class Chart1 extends Component {
     //REMEMBER TO CHANGE DATE TO CREATED AT
 
     let groups = [...orders].filter((item) => {
-      let date = new Date(item.createdAt);
+      let date = new Date(item.created_at);
 
 
       return (
@@ -93,10 +93,10 @@ class Chart1 extends Component {
       );
       
 
-    }).sort((a, b) => moment(a.date || a.createdAt).isBefore(b.date || b.createdAt) ? -1 : 1);
+    }).sort((a, b) => moment(a.date || a.created_at).isBefore(b.date || b.created_at) ? -1 : 1);
 
     groups = _.groupBy(groups, item =>
-      moment(item.createdAt).format('MMM DD h:mm a')
+      moment(item.created_at).format('MMM DD h:mm a')
     );
 
     Object.keys(groups).forEach(

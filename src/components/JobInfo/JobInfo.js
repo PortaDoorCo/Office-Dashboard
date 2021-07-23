@@ -173,7 +173,7 @@ class JobInfo extends Component {
             <FormGroup>
               <Label htmlFor="shipping_method">Shipping Method</Label>
               <Field
-                name="ShippingMethod"
+                name="shipping_method"
                 component={renderDropdownList}
                 data={shippingMethods}
                 valueField="value"

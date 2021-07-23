@@ -90,11 +90,11 @@ const OrderTable = (props) => {
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
-  const minDate = orders.length > 0 ? new Date(orders[orders.length - 1].createdAt) : new Date();
+  const minDate = orders.length > 0 ? new Date(orders[orders.length - 1].created_at) : new Date();
 
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
-      let date = new Date(item.createdAt);
+      let date = new Date(item.created_at);
 
       if(filterStatus === 'All'){
         if(filterText.length > 0){
@@ -178,7 +178,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Date Ordered',
-      cell: row => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',

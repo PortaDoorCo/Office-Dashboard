@@ -106,7 +106,7 @@ const CustomerOrders = (props) => {
     },
     {
       name: 'Date Ordered',
-      cell: row => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',

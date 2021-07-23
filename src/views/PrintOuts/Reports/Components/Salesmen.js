@@ -42,7 +42,7 @@ export default (data, startDate, endDate, status) => {
       boxTotal++;
     }
     return tableBody.push(
-      [moment(i.createdAt).format('MM/DD/YYYY'),
+      [moment(i.created_at).format('MM/DD/YYYY'),
         i.job_info.customer.Company,
         i.orderNum,
         i.status,

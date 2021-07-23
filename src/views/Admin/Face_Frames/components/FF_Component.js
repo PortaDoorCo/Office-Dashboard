@@ -98,31 +98,13 @@ class DoorOrders extends Component {
 
     const orderType = 'Face Frame';
 
-    const jobInfo = {
-      ...values.job_info,
-      customer: {
-        id: values.job_info.customer.id,
-        Company: values.job_info.customer.Company,
-        TaxRate: values.job_info.customer.TaxRate,
-        sale: values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
-        Taxable: values.job_info.customer.Taxable,
-        Address1: values.job_info.customer.Address1,
-        Address2: values.job_info.customer.Address2,
-        City: values.job_info.customer.City,
-        Zip: values.job_info.customer.Zip,
-        Phone1: values.job_info.customer.Phone1,
-        Fax: values.job_info.customer.Fax,
-        Email: values.job_info.customer.Email,
-        PMT_TERMS: values.job_info.customer.PMT_TERMS,
-      },
-    };
 
     const order = {
       ...values,
       status: values.job_info.status,
       Rush: values.job_info.Rush,
       Sample: values.job_info.Sample,
-      job_info: jobInfo,
+      job_info: values.job_info,
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
       itemPrice: itemPrice,

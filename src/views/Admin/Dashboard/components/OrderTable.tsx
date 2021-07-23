@@ -86,7 +86,7 @@ const OrderTable = (props: TablePropTypes) => {
     const filteredOrders = orders.length > 0 ? orders.filter((item) => {
       if (filterText.length > 0) {
         return (
-          (item.orderNum.toString().includes(filterText) || item.job_info.customer.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info.poNum.toLowerCase().includes(filterText.toLowerCase()))
+          (item.orderNum?.toString().includes(filterText) || item.job_info?.customer?.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info?.poNum?.toLowerCase().includes(filterText.toLowerCase()))
         );
       } else {
         return item;
@@ -131,7 +131,7 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'PO #',
-      selector: 'job_info.poNum',
+      cell: row => <div>{row.job_info && row.job_info.poNum}</div>,
       sortable: true,
     },
     {
@@ -142,7 +142,7 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'Date Ordered',
-      cell: row => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',
@@ -166,7 +166,7 @@ const OrderTable = (props: TablePropTypes) => {
 
         <Row>
           <Col style={{ textAlign: 'center', color: 'red' }}>
-            {row.job_info.Rush && row.job_info.Sample ? 'Sample / Rush' : row.job_info.Rush ? 'Rush' : row.job_info.Sample ? 'Sample' : ''}
+            {row.job_info?.Rush && row.job_info?.Sample ? 'Sample / Rush' : row.job_info?.Rush ? 'Rush' : row.job_info?.Sample ? 'Sample' : ''}
           </Col>
         </Row>
 

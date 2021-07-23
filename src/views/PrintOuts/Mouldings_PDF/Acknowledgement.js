@@ -26,23 +26,18 @@ export default (data, breakdowns) => {
 
 
   data.mouldings.map(i  => {
+
+    console.log({i});
+
     let feet = (i.item.MOULDING_WIDTH * 12) / 144;
     let waste = feet * 1.25;
     let multiplier = i.item.Multiplier;
-    let wood = i.woodtype ? i.woodtype.STANDARD_GRADE : 0;
+    let wood = i.woodtype ? i.woodtype[i.grade?.db_name] * 0.25 : 0;
     let premium = 0;
 
     let a = waste * multiplier;
 
 
-    // if(i.thickness.value === 0.75){
-    //   wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE : 0;
-    // } else if (i.thickness.value === 1) {
-    //   wood = i.moulding_material ? i.moulding_material.STANDARD_GRADE_THICK : 0;
-    // } else {
-    //   wood = 0;
-    // }
-      
     if(parseFloat(i.linearFT) > 0 && parseFloat(i.linearFT) <= 30) {
       premium = 3 + 1;
     } else if (parseFloat(i.linearFT) >= 31 && parseFloat(i.linearFT) <= 50) {
@@ -62,7 +57,7 @@ export default (data, breakdowns) => {
     tableBody.push([
       { text: i.qty, style: 'fonts' },
       { text: i.style.name, style: 'fonts' },
-      { text: i.moulding_material.NAME, style: 'fonts' },
+      { text: i.woodtype.NAME, style: 'fonts' },
       // { text: i.thickness.NAME, style: 'fonts' },
       { text: i.item.NAME, style: 'fonts' },
       { text: i.linearFT, style: 'fonts' },
