@@ -8,7 +8,6 @@ import {
 } from 'redux-form';
 import {
   renderField,
-  renderNumber,
   renderDropdownListFilter,
   renderPrice,
   renderInt
