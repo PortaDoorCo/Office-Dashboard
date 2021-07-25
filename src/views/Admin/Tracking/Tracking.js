@@ -26,14 +26,14 @@ const Tracking = (props) => {
 
   useEffect(() => {
     const filteredOrders = orders.filter(item => {
-      let date = new Date(item.createdAt);
+      let date = new Date(item.created_at);
       return moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf();
     });
     setData(filteredOrders);
 
   }, [startDate, endDate, orders]);
 
-  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].createdAt) : new Date();
+  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].created_at) : new Date();
 
   return (
     <div>

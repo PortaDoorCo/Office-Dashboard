@@ -68,6 +68,7 @@ class Login extends Component {
         });
       })
       .catch((error) => {
+        console.log({error});
         NotificationManager.error('Login Credentials Incorrect', 'Error', 2000);
       });
   };

@@ -16,11 +16,11 @@ class Chart4 extends Component {
     const filteredOrders = orders.filter(order => {
       switch (selectedDateRange) {
         case 'month':
-          return moment(order.createdAt).isSame(new Date(), 'month');
+          return moment(order.created_at).isSame(new Date(), 'month');
         case 'year':
-          return moment(order.createdAt).isSame(new Date(), 'year');
+          return moment(order.created_at).isSame(new Date(), 'year');
         default:
-          return moment(order.createdAt).isSame(new Date(), 'day');
+          return moment(order.created_at).isSame(new Date(), 'day');
       }
     });
 

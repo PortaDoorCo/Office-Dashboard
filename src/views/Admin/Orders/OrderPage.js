@@ -230,7 +230,7 @@ class OrderPage extends Component {
     delete newOrder['id'];
     delete newOrder['_id'];
     delete newOrder['orderNum'];
-    delete newOrder['createdAt'];
+    delete newOrder['created_at'];
     delete newOrder['updatedAt'];
     delete newOrder['published_at'];
 

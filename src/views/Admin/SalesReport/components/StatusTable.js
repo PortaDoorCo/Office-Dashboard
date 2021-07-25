@@ -48,7 +48,7 @@ const StatusTable = (props) => {
 
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
-      let date = new Date(item.createdAt);
+      let date = new Date(item.created_at);
 
       if(props.filterStatus === 'All'){
         return (
@@ -69,6 +69,8 @@ const StatusTable = (props) => {
     setData(filteredOrders);
   }, [orders, props.filterStatus, props.accountName, props.startDate, props.endDate]);
 
+  console.log({account_name: props.accountName});
+
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
     const status = {
@@ -85,7 +87,7 @@ const StatusTable = (props) => {
     },
     {
       name: 'Company',
-      selector: 'job_info.customer.Company',
+      cell: (row) => <div>{row.job_info?.customer?.Company}</div>,
       sortable: true,
       grow: 2,
     },
@@ -96,7 +98,7 @@ const StatusTable = (props) => {
     },
     {
       name: 'Date Ordered',
-      cell: (row) => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
+      cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',

@@ -21,13 +21,27 @@ import NumberFormat from 'react-number-format';
 import styles from './styles';
 import currencyMask from '../../../../../utils/currencyMask';
 
-let Inputs = (props) => {
-  const { fields, linePrices, edit, part_list } = props;
-  const [data, setData] = useState([]);
+const thickness = [
+  {
+    name: 'Standard Grade',
+    db_name: 'STANDARD_GRADE',
+    value: 1,
+  },
+  {
+    name: 'Select Grade',
+    db_name: 'SELECT_GRADE',
+    value: 2,
+  }
+];
 
-  const changeMiscItem = (e, index) => {
-    setData(eval(`part_list.${e.value}`));
-  };
+let Inputs = (props) => {
+  const { fields, formState, linePrices, edit, part_list } = props;
+  const filtered_woodtypes = part_list?.woodtypes.filter((wood) => wood.mouldings === true);
+
+  console.log({part_list});
+  
+
+
   return (
     <div>
       <Table>
@@ -35,8 +49,8 @@ let Inputs = (props) => {
           <tr>
             <th>QTY</th>
             <th>Style</th>
+            <th>Grade</th>
             <th>Woodtype</th>
-            {/* <th>Thickness</th> */}
             <th>Item</th>
             <th>Linear FT</th>
             <th>Price</th>
@@ -45,6 +59,7 @@ let Inputs = (props) => {
         </thead>
         <tbody>
           {fields.map((table, index) => {
+            console.log(formState?.mouldings[index]?.style?.value);
             return (
               <tr key={index}>
                 <td style={{ width: '90px' }}>
@@ -60,7 +75,19 @@ let Inputs = (props) => {
                     name={`${table}.style`}
                     component={renderDropdownList}
                     data={styles}
-                    onChange={(e) => changeMiscItem(e, index)}
+                    // onChange={(e) => changeMiscItem(e, index)}
+                    valueField="value"
+                    textField="name"
+                    edit={edit}
+                    required
+                  />
+                </td>
+                <td>
+                  <Field
+                    name={`${table}.grade`}
+                    component={renderDropdownList}
+                    data={thickness}
+                    // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="name"
                     edit={edit}
@@ -71,7 +98,7 @@ let Inputs = (props) => {
                   <Field
                     name={`${table}.woodtype`}
                     component={renderDropdownList}
-                    data={part_list.woodtypes}
+                    data={filtered_woodtypes.filter((wood) => wood[formState?.mouldings[index]?.grade?.db_name])}
                     // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="NAME"
@@ -79,23 +106,11 @@ let Inputs = (props) => {
                     required
                   />
                 </td>
-                {/* <td>
-                  <Field
-                    name={`${table}.thickness`}
-                    component={renderDropdownList}
-                    data={thickness}
-                    // onChange={(e) => changeMiscItem(e, index)}
-                    valueField="value"
-                    textField="NAME"
-                    edit={edit}
-                    required
-                  />  
-                </td> */}
-                <td>
+                <td style={{ width: '150px' }}>
                   <Field
                     name={`${table}.item`}
                     component={renderDropdownList}
-                    data={data}
+                    data={part_list.mouldings.filter(item => item.Style === formState?.mouldings[index]?.style?.value)}
                     // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="NAME"

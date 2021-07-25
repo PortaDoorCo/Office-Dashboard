@@ -210,7 +210,7 @@ class DrawerBoxInfo extends Component {
           </div>
         ))}
 
-        {!edit ? (
+        {!edit && formState?.part_list && formState?.part_list[0]?.dimensions.length > 0 ? (
           <Button
             color="primary"
             onClick={() =>

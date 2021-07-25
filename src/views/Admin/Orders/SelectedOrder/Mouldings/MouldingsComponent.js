@@ -52,27 +52,9 @@ class MiscItems extends Component {
     } = this.props;
 
 
-    const jobInfo = {
-      ...values.job_info,
-      customer: {
-        id: values.job_info.customer.id,
-        Company: values.job_info.customer.Company,
-        TaxRate: values.job_info.customer.TaxRate,
-        // Taxable: values.job_info.customer.Taxable,
-        sale: values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
-        Address1: values.job_info.customer.Address1,
-        Address2: values.job_info.customer.Address2,
-        City: values.job_info.customer.City,
-        Zip: values.job_info.customer.Zip,
-        Phone1: values.job_info.customer.Phone1,
-        Fax: values.job_info.customer.Fax,
-        Email: values.job_info.customer.Email,
-      },
-    };
-
     const order = {
       ...values,
-      job_info: jobInfo,
+      job_info: values.job_info,
       Rush: values.job_info.Rush,
       Sample: values.job_info.Sample,
       companyprofile: values.job_info.customer.id,

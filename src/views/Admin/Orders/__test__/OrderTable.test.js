@@ -12,7 +12,7 @@ const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...mi
 
 OrderTable.defaultProps = { 
   orders: [{
-    createdAt: ''
+    created_at: ''
   }]
 };
 

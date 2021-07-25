@@ -94,7 +94,7 @@ const StatusTable = (props) => {
     },
     {
       name: 'Company',
-      selector: 'job_info.customer.Company',
+      cell: row => <span>{row.job_info?.customer?.Company}</span>,
       sortable: true,
       grow: 2,
     },
@@ -105,7 +105,7 @@ const StatusTable = (props) => {
     },
     {
       name: 'Date Ordered',
-      cell: (row) => <div>{moment(row.createdAt).format('MMM Do YYYY')}</div>,
+      cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',
@@ -255,7 +255,7 @@ const StatusTable = (props) => {
     setEdit(!edit);
   };
 
-  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].createdAt) : new Date();
+  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].created_at) : new Date();
 
 
   return (

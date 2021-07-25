@@ -79,7 +79,7 @@ class CustomerPage extends Component {
 
     if (this.props.orders.length > 0) {
       updateOrders = orders.filter(
-        x => x.job_info.customer.id === this.props.selectedCompanies.id
+        x => x.job_info?.customer?.id === this.props.selectedCompanies.id
       );
     }
 

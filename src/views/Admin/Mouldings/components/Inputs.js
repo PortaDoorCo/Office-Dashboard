@@ -36,13 +36,7 @@ const thickness = [
 
 let Inputs = (props) => {
   const { fields, formState, linePrices, edit, part_list } = props;
-
-
-
   const filtered_woodtypes = part_list?.woodtypes.filter((wood) => wood.mouldings === true);
-
-
-
   return (
     <div>
       <Table>
@@ -60,6 +54,7 @@ let Inputs = (props) => {
         </thead>
         <tbody>
           {fields.map((table, index) => {
+            console.log(formState?.mouldings[index]?.style?.value);
             return (
               <tr key={index}>
                 <td style={{ width: '90px' }}>

@@ -110,14 +110,14 @@ const Cope = (props) => {
                         Applied Profiles
                       </NavLink>
                     </NavItem>
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         className={classnames({ active: activeTab === '7' })}
                         onClick={() => { toggle('7'); }}
                       >
                         Glass Options
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                   </Nav>
                 </Col>
               </Row>

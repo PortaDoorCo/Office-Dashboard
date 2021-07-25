@@ -80,24 +80,24 @@ class Chart1 extends Component<PropTypes> {
     let groups = this.props.orders.length > 0 ? [...this.props.orders]
       .filter(record =>
         selectedDateRange === 'day'
-          ? moment(record.createdAt).isSame(new Date(), 'day')
+          ? moment(record.created_at).isSame(new Date(), 'day')
           : selectedDateRange === 'month'
-            ? moment(record.createdAt).isSame(new Date(), 'month')
+            ? moment(record.created_at).isSame(new Date(), 'month')
             : selectedDateRange === 'year'
-              ? moment(record.createdAt).isSame(new Date(), 'year')
+              ? moment(record.created_at).isSame(new Date(), 'year')
               : true
       )
-      .sort((a, b) => moment(a.date || a.createdAt).isBefore(b.date || b.createdAt) ? -1 : 1) : [];
+      .sort((a, b) => moment(a.date || a.created_at).isBefore(b.date || b.created_at) ? -1 : 1) : [];
     switch (selectedDateRange) {
       case 'month':
-        groups = _.groupBy(groups, item => moment(item.createdAt).format('MMMM DD'));
+        groups = _.groupBy(groups, item => moment(item.created_at).format('MMMM DD'));
         break;
       case 'year':
-        groups = _.groupBy(groups, item => moment(item.createdAt).format('MMM'));
+        groups = _.groupBy(groups, item => moment(item.created_at).format('MMM'));
         break;
       default:
         groups = _.groupBy(groups, item =>
-          moment(item.createdAt).format('h:mm:ss a')
+          moment(item.created_at).format('h:mm:ss a')
         );
         break;
     } 

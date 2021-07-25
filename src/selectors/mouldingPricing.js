@@ -3,10 +3,10 @@ import numQty from 'numeric-quantity';
 
 
 const discountSelector = state => {
-  const orders = state.form.Mouldings;
+  const orders = state?.form?.Mouldings;
 
   if (orders) {
-    if ((!state.form.Mouldings.values && !state.form.Mouldings.values.discount)) {
+    if ( !state?.form?.Mouldings?.values?.discount) {
       return 0;
     } else {
       if(state.form.Mouldings.values.discount > 0){
@@ -171,10 +171,10 @@ export const mouldingTotalSelector = createSelector(
 );
 
 const taxRate = state => {
-  const orders = state.form.Mouldings;
+  const orders = state?.form?.Mouldings;
 
   if (orders) {
-    if (!orders.values.job_info) {
+    if (!orders.values?.job_info) {
       return 0;
     } else {
       if(state.form && state.form.Mouldings && state.form.Mouldings.values && state.form.Mouldings.values.Taxable){

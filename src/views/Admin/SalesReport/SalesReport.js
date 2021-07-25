@@ -11,7 +11,7 @@ import Maps from './components/SalesCharts/Maps';
 import moment from 'moment';
 import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker } from 'react-dates';
+import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { Select } from 'antd';
 import status from '../../../utils/status';
@@ -43,7 +43,9 @@ const SalesReport = (props) => {
 
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
-      let date = new Date(item.createdAt);
+      let date = new Date(item.created_at);
+
+      console.log({date: item});
 
       if(filterStatus === 'All'){
 
@@ -67,11 +69,16 @@ const SalesReport = (props) => {
   }, [startDate, endDate, orders, filterStatus, filterText]);
 
 
-  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].createdAt) : new Date();
+  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].created_at) : new Date();
 
   const salesPerson = props.sale ? props.salesReps.filter(item => {
-    return item.id.includes(props.sale);
+    console.log({item});
+    return item.id === props.sale;
   }) : [];
+
+  console.log({data});
+  console.log(props.sale);
+  console.log(props.salesReps);
   
   return (
     role && (role.type === 'authenticated' || role.type === 'owner') ? 

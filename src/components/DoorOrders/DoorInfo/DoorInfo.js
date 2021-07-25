@@ -309,7 +309,8 @@ class DoorInfo extends Component {
           );
         })}
 
-        {!edit ? (
+        {!edit && formState?.part_list && formState?.part_list[0]?.dimensions.length > 0  ? (
+          
           <div>
             <ButtonGroup>
               <Button
