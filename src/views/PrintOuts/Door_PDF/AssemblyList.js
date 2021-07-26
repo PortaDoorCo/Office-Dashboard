@@ -5,7 +5,7 @@ import Panels from '../Breakdowns/Doors/Panels/Panels';
 import Size from '../Breakdowns/Doors/Size';
 import SlabSize from '../Breakdowns/Doors/SlabSize';
 import GlassSort from '../Sorting/GlassSort';
-import GlassSelection from '../Sorting/Glass_Selection';
+
 
 export default (data, breakdowns) => {
 

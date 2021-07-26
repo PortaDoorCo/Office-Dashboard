@@ -1,10 +1,10 @@
 import moment from 'moment';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
-import  GlassSort  from '../Sorting/GlassSort'; 
+import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
-  const getName = i => {
+  const getName = (i) => {
     return `${
       i.design
         ? i.design.NAME
@@ -16,9 +16,19 @@ export default (data, breakdowns) => {
     }`;
   };
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
-  const b = a.map(woodtype => woodtype.map((v, i) => ({...v, dimensions: flattenDeep( v.dimensions.map(d => ({...d, name: getName(v)}))  ) }))).map((t, x) => ({...t[0], dimensions: flattenDeep(t.map(c => c.dimensions))}));
-  
-
+  const b = a
+    .map((woodtype) =>
+      woodtype.map((v, i) => ({
+        ...v,
+        dimensions: flattenDeep(
+          v.dimensions.map((d) => ({ ...d, name: getName(v) }))
+        ),
+      }))
+    )
+    .map((t, x) => ({
+      ...t[0],
+      dimensions: flattenDeep(t.map((c) => c.dimensions)),
+    }));
 
   const table_body = b.map((i, index) => {
     const tableBody = [
@@ -30,8 +40,8 @@ export default (data, breakdowns) => {
         { text: 'Pat', style: 'fonts' },
         { text: 'Arch', style: 'fonts' },
         { text: 'Panel', style: 'fonts' },
-        { text: 'Note', style: 'fonts' }
-      ]
+        { text: 'Note', style: 'fonts' },
+      ],
     ];
 
     if (
@@ -49,23 +59,46 @@ export default (data, breakdowns) => {
         tableBody.push([
           { text: item.item, style: 'fonts' },
           { text: item.name, style: 'fonts' },
-          { text: Panels(item, i, breakdowns).map(panel => { return `${panel.qty} \n`; }), style: 'fonts' },
-          { text: Panels(item, i, breakdowns).map(panel => { return `${panel.measurement} \n`; }), style: 'fonts' },
-          { text: Panels(item, i, breakdowns).map(panel => { return `${panel.pattern} \n`; }), style: 'fonts' },
-          { text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '', style: 'fonts' },
-          { text: Panels(item, i, breakdowns).map(panel => { return `${panel.panel} \n`; }), style: 'fonts' },
-          item.notes || item.full_frame || item.lite ? 
-            {
+          {
+            text: Panels(item, i, breakdowns).map((panel) => {
+              return `${panel.qty} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: Panels(item, i, breakdowns).map((panel) => {
+              return `${panel.measurement} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: Panels(item, i, breakdowns).map((panel) => {
+              return `${panel.pattern} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
+            style: 'fonts',
+          },
+          {
+            text: Panels(item, i, breakdowns).map((panel) => {
+              return `${panel.panel} \n`;
+            }),
+            style: 'fonts',
+          },
+          item.notes || item.full_frame || item.lite
+            ? {
               text: `${item.notes ? item.notes : ''} ${
                 item.full_frame ? 'Full Frame DF' : ''
               } ${item.lite ? item.lite.NAME : ''}`,
-              style: 'tableBold', alignment: 'left'
-            } : null,
+              style: 'tableBold',
+              alignment: 'left',
+            }
+            : null,
         ]);
       });
     }
-
-
 
     if (
       i.construction.value === 'Slab' ||
@@ -85,7 +118,7 @@ export default (data, breakdowns) => {
             {
               text: `${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
               style: 'woodtype',
-              width: 200
+              width: 200,
             },
             {
               text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
@@ -100,8 +133,7 @@ export default (data, breakdowns) => {
           ],
         },
         {
-          text:
-            '==============================================================================',
+          text: '==============================================================================',
           alignment: 'center',
         },
         {
@@ -133,8 +165,7 @@ export default (data, breakdowns) => {
           },
         },
         {
-          text:
-            '==============================================================================',
+          text: '==============================================================================',
           alignment: 'center',
         },
 
@@ -149,9 +180,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack: [
-            'Individual - PANELS List',
-          ],
+          stack: ['Individual - PANELS List'],
         },
         {
           stack: [
@@ -190,18 +219,20 @@ export default (data, breakdowns) => {
     {
       stack: [
         {
-          text: `${data.orderNum}`, style: 'orderNum' ,
+          text: `${data.orderNum}`,
+          style: 'orderNum',
         },
         {
           columns: [
             {
-              text: `${data.job_info.customer.Company}` , 
+              text: `${data.job_info.customer.Company}`,
             },
             {
-              text: `PO: ${data.job_info.poNum}`, alignment: 'right' 
+              text: `PO: ${data.job_info.poNum}`,
+              alignment: 'right',
             },
           ],
-        }
+        },
       ],
       margin: [0, 10],
     },
