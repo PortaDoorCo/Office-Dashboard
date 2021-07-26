@@ -44,7 +44,7 @@ export default (data, breakdowns) => {
         {
           stack: [
             { text: 'PACKING SLIP', alignment: 'right', style: 'woodtype', decoration: 'underline' },
-            { text: `Ship Via: ${data.job_info?.ShippingMethod?.NAME}`, alignment: 'right', style: 'fonts' },
+            { text: `Ship Via: ${data.job_info?.shipping_method?.NAME}`, alignment: 'right', style: 'fonts' },
           ],
         },
       ],
@@ -396,8 +396,8 @@ export default (data, breakdowns) => {
         {
           text: `Ship Via: ${
             data.job_info &&
-            data.job_info.ShippingMethod &&
-            data.job_info.ShippingMethod.NAME
+            data.job_info.shipping_method &&
+            data.job_info.shipping_method.NAME
           }`,
           style: 'totals',
           width: 200,

@@ -309,8 +309,8 @@ export default (data, pricing) => {
             },
             {
               text: `Ship Via: ${
-                data.job_info.ShippingMethod
-                  ? data.job_info.ShippingMethod.NAME
+                data.job_info.shipping_method
+                  ? data.job_info.shipping_method.NAME
                   : ' '
               }`,
               alignment: 'right',

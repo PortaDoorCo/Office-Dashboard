@@ -1,6 +1,9 @@
 import GlassCheck from './GlassCheck';
+import { flatten } from 'lodash';
 
 export default (data) => {
+  console.log({ data });
+
   let array = [];
 
   const start = data.part_list
@@ -22,13 +25,11 @@ export default (data) => {
         })
         .filter((n) => n);
 
-
-      if(glass_dimensions.length > 0){
+      if (glass_dimensions.length > 0) {
         let no_panel = { ...i, panel: { NAME: 'Glass', UPCHARGE: 0 } };
         let newObj = { ...no_panel, dimensions: glass_dimensions };
-        array.push(newObj);
+        array.push([newObj]);
       }
-
 
       console.log({ dimensions });
       if (dimensions.length > 0) {
@@ -39,8 +40,12 @@ export default (data) => {
     })
     .filter((n) => n);
 
-  console.log({array});
-  console.log({start});
+  console.log({ array });
+  console.log({ start });
 
-  return array.concat(start);
+  const returnValue = [...array, start];
+
+  console.log({ returnValue });
+
+  return returnValue;
 };
