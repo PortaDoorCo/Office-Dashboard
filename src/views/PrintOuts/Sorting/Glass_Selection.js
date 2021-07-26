@@ -25,7 +25,7 @@ export default (data) => {
 
       if(glass_dimensions.length > 0){
         let no_panel = { ...i, panel: { NAME: 'Glass', UPCHARGE: 0 } };
-        let newObj = { ...no_panel, glass_dimensions };
+        let newObj = { ...no_panel, dimensions: glass_dimensions };
         array.push(newObj);
       }
 
