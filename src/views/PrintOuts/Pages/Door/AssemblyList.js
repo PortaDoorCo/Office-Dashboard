@@ -2,6 +2,7 @@ import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import AssemblyList from '../../Door_PDF/AssemblyList';
 import moment from 'moment';
+import Glass_Selection from '../../Sorting/Glass_Selection';
 
 
 export default (
@@ -15,8 +16,16 @@ export default (
   let Content = [];
 
 
+  
+
   for (let i = 0; i < p.assembly_list; i++) {
-    Content.push(AssemblyList(data, breakdowns));
+    console.log({data});
+    Glass_Selection(data).map(j => {
+      console.log({j});
+      return Content.push(AssemblyList(j, breakdowns));
+    });
+
+    
   }
 
   

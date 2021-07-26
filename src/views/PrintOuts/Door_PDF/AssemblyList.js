@@ -9,10 +9,9 @@ import GlassSelection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
 
-  GlassSelection(data);
+  console.log({data});
 
-
-  const table_content = GlassSelection(data).map((i, index) => {
+  const table_content = data.part_list.map((i, index) => {
 
     console.log({i});
     
@@ -27,7 +26,7 @@ export default (data, breakdowns) => {
       ],
     ];
 
-    if (i.construction.value === 'Slab') {
+    if (i?.construction?.value === 'Slab') {
       i.dimensions.forEach((item, index) => {
         tableBody.push([
           { text: item.item ? item.item : index + 1, style: 'fonts' },
@@ -263,8 +262,8 @@ export default (data, breakdowns) => {
             },
             {
               text: `Ship Via: ${
-                data.job_info.ShippingMethod
-                  ? data.job_info.ShippingMethod.NAME
+                data.job_info.shipping_method
+                  ? data.job_info.shipping_method.NAME
                   : ''
               }`,
               alignment: 'right',

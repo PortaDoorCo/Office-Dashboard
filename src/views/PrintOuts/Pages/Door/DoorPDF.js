@@ -11,6 +11,7 @@ import QC_Checklist from '../../Door_PDF/QC_Checklist';
 import Profiles from '../../Door_PDF/Profiles';
 import Packing_Slip from '../../Door_PDF/Packing_Slip';
 import moment from 'moment';
+import Glass_Selection from '../../Sorting/Glass_Selection';
 
 export default (
   data,
@@ -48,12 +49,31 @@ export default (
     );
   }
 
+  console.log({data});
+
   for (let i = 0; i < p.invoice; i++) {
     Content.push(Invoice(data, pricing));
   }
 
   for (let i = 0; i < p.assembly_list; i++) {
-    Content.push(AssemblyList(data, breakdowns));
+
+
+    const newParts = Glass_Selection(data).map(j => {
+      console.log({j});
+      console.log({data});
+      const newData = { ...data, part_list: j };
+      return newData;
+    });
+
+    console.log({newParts});
+
+    newParts.map(k => {
+      return Content.push(AssemblyList(k, breakdowns));
+    });
+
+    
+    
+    
   }
 
   for (let i = 0; i < p.panels; i++) {
