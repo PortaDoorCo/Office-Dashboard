@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
+import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
   return [
@@ -45,7 +46,7 @@ export default (data, breakdowns) => {
         '==============================================================================',
       alignment: 'center',
     },
-    data.part_list.map((i, index) => {
+    Glass_Selection(data).map((i, index) => {
       const tableBody = [
         [
           { text: 'Item', style: 'fonts' },

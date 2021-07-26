@@ -59,14 +59,12 @@ export default (
 
     const type = 'Page';
 
-    const newParts = Glass_Selection(data, 'Page').map(j => {
+    const newParts = Glass_Selection(data, type).map(j => {
       console.log({j});
       console.log({data});
       const newData = { ...data, part_list: j };
       return newData;
     });
-
-    console.log({newParts});
 
     newParts.map(k => {
       return Content.push(AssemblyList(k, breakdowns));

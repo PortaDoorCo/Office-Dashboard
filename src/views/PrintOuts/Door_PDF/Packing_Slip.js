@@ -40,7 +40,7 @@ export default (data, breakdowns) => {
         return {
           ...v,
           dimensions: flatten(
-            v.dimensions.map((d) => ({ ...d, name: getName(v), panel: v.panel }))
+            v.dimensions.map((d) => ({ ...d, name: getName(v), panel: v.panel, profile: v.profile }))
           ),
         };
       });
@@ -82,7 +82,7 @@ export default (data, breakdowns) => {
           alignment: 'left',
         },
         {
-          text: i.profile ? i.profile.NAME : '',
+          text: item.profile ? item.profile.NAME : '',
           style: 'fonts',
           alignment: 'left',
         },
