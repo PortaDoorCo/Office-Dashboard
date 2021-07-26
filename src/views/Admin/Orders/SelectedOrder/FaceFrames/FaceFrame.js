@@ -15,7 +15,7 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DoorInfo from '../../../../../components/DoorOrders/DoorInfo/DoorInfo';
+import DoorInfo from '../../../../../components/DoorOrders/DoorInfo/FFInfo';
 import JobInfo from '../../../../../components/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
 import {

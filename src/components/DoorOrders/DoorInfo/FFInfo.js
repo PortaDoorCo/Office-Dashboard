@@ -1,93 +1,13 @@
 import React, { Component } from 'react';
-import { Row, Col, CardSubtitle, Button, Card, CardBody, FormGroup } from 'reactstrap';
+import { Row, Col, CardSubtitle, Button } from 'reactstrap';
 import DoorFilter from '../DoorInfo/Filter/Filter';
 import Conditionals from './Conditionals';
 import CopyModal from './CopyModal';
-import FileUploader from '../../FileUploader/FileUploader';
+import thickness from './thickness';
 
-const construction = [
-  {
-    name: 'Cope And Stick',
-    value: 'Cope',
-  },
-  {
-    name: 'Mitered Construction',
-    value: 'M',
-  },
-  {
-    name: 'MT Construction',
-    value: 'MT',
-  },
-  {
-    name: 'Slab',
-    value: 'Slab',
-  },
-];
 
-const orderType = [
-  {
-    name: 'Door Order',
-    value: 'Door',
-  },
-  {
-    name: 'Drawer Front',
-    value: 'DF',
-  }
-];
 
-const thickness = [
-  {
-    name: '4/4',
-    value: 0.75,
-  },
-  {
-    name: '5/4',
-    value: 1,
-  },
-];
 
-const ff_thickness = [
-  {
-    name: '3/4"',
-    value: 0.75,
-  },
-  {
-    name: '1"',
-    value: 1,
-  },
-  {
-    name: '1 1/8"',
-    value: 1.125,
-  },
-  {
-    name: '1 1/4"',
-    value: 1.25,
-  },
-  {
-    name: '1 3/8"',
-    value: 1.375,
-  },
-  {
-    name: '1 1/2"',
-    value: 1.5,
-  },
-  {
-    name: '1 5/8"',
-    value: 1.625,
-  },
-  {
-    name: '1 3/4"',
-    value: 1.75,
-  },
-  {
-    name: '1 7/8"',
-    value: 1.875,
-  },
-  {
-    name: '2"',
-    value: 2,
-  },
-];
 
 class DoorInfo extends Component {
   constructor(props) {
@@ -158,10 +78,7 @@ class DoorInfo extends Component {
                 part={part}
                 index={index}
                 edit={edit}
-                orderType={orderType}
-                construction={construction}
                 thickness={thickness}
-                ff_thickness={ff_thickness}
                 updateSubmit={updateSubmit}
                 onUploaded={onUploaded}
               />

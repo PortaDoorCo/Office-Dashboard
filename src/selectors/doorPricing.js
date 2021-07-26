@@ -184,20 +184,33 @@ export const itemPriceSelector = createSelector(
             ? part.design.UPCHARGE_THICK
             : 0;
 
-      const wood =
-        part.woodtype && part.thickness.value === 1
-          ? part.woodtype.STANDARD_GRADE
-          : part.woodtype && part.thickness.value === 2
-            ? part.woodtype.SELECT_GRADE
-            : part.woodtype && part.thickness.value === 3
-              ? part.woodtype.STANDARD_GRADE_THICK
-              : part.woodtype && part.thickness.value === 4
-                ? part.woodtype.SELECT_GRADE_THICK
-                : part.woodtype && part.thickness.value === 5
-                  ? part.woodtype.SIX_QUARTER
-                  : part.woodtype && part.thickness.value === 6
-                    ? part.woodtype.SIX_QUARTER_THICK
-                    : 0;
+      let wood;
+
+      switch(part?.thickness?.value) {
+        case 2:
+          // code block
+          wood = part?.woodtype?.SELECT_GRADE;
+          break;
+        case 3:
+          // code block
+          wood = part?.woodtype?.STANDARD_GRADE_THICK;
+          break;
+        case 4:
+          // code block
+          wood = part?.woodtype?.SELECT_GRADE_THICK;
+          break;
+        case 5:
+          // code block
+          wood = part?.woodtype?.SIX_QUARTER;
+          break;
+        case 6:
+          // code block
+          wood = part?.woodtype?.SIX_QUARTER_THICK;
+          break;
+        default:
+          // code block
+          wood = part?.woodtype?.STANDARD_GRADE;
+      }
 
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
@@ -220,7 +233,9 @@ export const itemPriceSelector = createSelector(
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
 
-            const ff_wood = part?.woodtype?.STANDARD_GRADE;
+            console.log({part});
+
+
             const width_input = Math.ceil(numQty(i.width));
             const width = Math.ceil(numQty(i.width)) < 24 ? 18 : Math.ceil(numQty(i.width)) >= 24 && Math.ceil(numQty(i.width)) <= 48 ? 24 : 36;
             const height = Math.ceil(numQty(i.height));

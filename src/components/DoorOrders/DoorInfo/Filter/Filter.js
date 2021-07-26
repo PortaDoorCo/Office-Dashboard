@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Row, Col, FormGroup, Label } from 'reactstrap';
 import { connect } from 'react-redux';
-import { Field, change, untouch, autofill } from 'redux-form';
+import { Field, untouch, autofill } from 'redux-form';
 import { renderDropdownList } from '../../../RenderInputs/renderInputs';
 
 const faceFrameOrderType = [
@@ -162,7 +162,7 @@ class DoorFilter extends Component {
                   <Field
                     name={`${part}.thickness`}
                     component={renderDropdownList}
-                    data={ff_thickness}
+                    data={thickness}
                     valueField="value"
                     textField="name"
                     edit={edit}

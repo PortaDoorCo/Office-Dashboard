@@ -47,6 +47,7 @@ import NumberFormat from 'react-number-format';
 import validate from '../../DoorOrders/validate';
 import currencyMask from '../../../../utils/currencyMask';
 import CheckoutBox from './CheckoutBox';
+import thickness from '../../../../components/DoorOrders/DoorInfo/thickness';
 
 const DoorInfo = React.lazy(() => import('../../../../components/DoorOrders/DoorInfo/FFInfo'));
 const JobInfo = React.lazy(() => import('../../../../components/JobInfo/JobInfo'));
@@ -358,18 +359,11 @@ const mapStateToProps = state => ({
     part_list: [
       
       {
-        construction: {
-          name: 'Cope And Stick',
-          value: 'Cope'
-        },
         orderType: {
           name: 'Face Frame',
           value: 'Face_Frame'
         },
-        thickness:   {
-          name: '3/4"',
-          value: 0.75,
-        },
+        thickness: thickness[0],
         door_piece_number: state.part_list.door_piece_number[0],
         dimensions: [],
         addPrice: 0,
