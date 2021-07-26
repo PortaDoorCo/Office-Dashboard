@@ -1,10 +1,10 @@
 import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
+import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
-
-
+  console.log({ data });
 
   const qty = data.part_list.map((part, i) => {
     return part.dimensions
@@ -16,40 +16,43 @@ export default (data, breakdowns) => {
 
   const getName = (i) => {
     return `${
-      i.cope_design
-        ? i.cope_design.NAME
-        : i.cope_df_design
-          ? i.cope_df_design.NAME + ' DF'
-          : i.mt_design
-            ? i.mt_design.NAME + ' ' + i.construction.value
-            : i.miter_design
-              ? i.miter_design.NAME + ' ' + i.construction.value
-              : i.miter_df_design
-                ? i.miter_df_design.NAME + ' ' + i.construction.value
-                : i.mt_df_design
-                  ? i.mt_df_design.NAME + ' ' + i.construction.value
-                  : i.face_frame_design
-                    ? i.face_frame_design.NAME
-                    : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
-                      ? ''
-                      : ''
+      i.design
+        ? i.design.NAME
+        : i.face_frame_design
+          ? i.face_frame_design.NAME
+          : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
+            ? ''
+            : ''
     }`;
   };
-  const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
+  const a = Object.values(
+    groupBy(Glass_Selection(data), (x) => x?.woodtype?.NAME)
+  );
+
+  console.log({ a });
+
   const b = a
-    .map((woodtype) =>
-      woodtype.map((v, i) => ({
-        ...v,
-        dimensions: flattenDeep(
-          v.dimensions.map((d) => ({ ...d, name: getName(v) }))
-        ),
-      }))
-    )
+    .map((woodtype) => {
+      console.log({ woodtype });
+
+      return woodtype.map(v => {
+        console.log({v});
+        return {
+          ...v,
+          dimensions: flatten(
+            v.dimensions.map((d) => ({ ...d, name: getName(v), panel: v.panel }))
+          ),
+        };
+      });
+
+      
+    })
     .map((t, x) => ({
       ...t[0],
-      dimensions: flattenDeep(t.map((c) => c.dimensions)),
+      dimensions: flatten(t.map((c) => c.dimensions)),
     }));
 
+  console.log({b});
 
   const table_body = b.map((i, index) => {
     const tableBody = [
@@ -67,32 +70,38 @@ export default (data, breakdowns) => {
     i.dimensions.forEach((item, index) => {
       tableBody.push([
         { text: index + 1, style: 'fonts' },
-        { text: i.design.NAME, style: 'fonts' },
+        { text: item.name, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts' },
         {
           text: `${Size(item)}`,
           style: 'fonts',
         },
         {
-          text: i.panel ? i.panel.NAME : '',
+          text: item.panel ? item.panel.NAME : '',
           style: 'fonts',
-          alignment: 'left'
+          alignment: 'left',
         },
         {
           text: i.profile ? i.profile.NAME : '',
           style: 'fonts',
-          alignment: 'left'
+          alignment: 'left',
         },
-        item.notes || item.full_frame || item.lite ? 
-          {
+        item.notes || item.full_frame || item.lite
+          ? {
             text: `${item.notes ? item.notes : ''} ${
               item.full_frame ? 'Full Frame DF' : ''
             } ${item.lite ? item.lite.NAME : ''}`,
-            style: 'tableBold', alignment: 'left'
-          } : null,
-        item.cab_number ? {
-          text: `${item.cab_number}`, style: 'fonts', alignment: 'left'
-        } : null
+            style: 'tableBold',
+            alignment: 'left',
+          }
+          : null,
+        item.cab_number
+          ? {
+            text: `${item.cab_number}`,
+            style: 'fonts',
+            alignment: 'left',
+          }
+          : null,
       ]);
     });
 
@@ -100,37 +109,42 @@ export default (data, breakdowns) => {
       {
         margin: [0, 0, 0, 0],
         columns: [
-          {stack: [
-            {
-              text: `${i.orderType ? i.orderType.name : ''}`,
-              style: 'fonts',
-            },
-            {
-              text: `${i.woodtype.NAME} - ${
-                (i.thickness.value === 1) || (i.thickness.value === 2)
-                  ? '4/4'
-                  : (i.thickness.value === 3) || (i.thickness.value === 4)
-                    ? '5/4'
-                    : ''
-              }`,
-              style: 'woodtype',
-              width: 370,
-            },
-          ]},
-          {stack: [
-            {
-              text: '',
-              alignment: 'left',
-              style: 'fontsBold',
-              width: 80
-            },
-            i.edge ? 
+          {
+            stack: [
               {
-                text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
-                alignment: 'right',
+                text: `${i.orderType ? i.orderType.name : ''}`,
                 style: 'fonts',
-              } : null
-          ]},
+              },
+              {
+                text: `${i.woodtype.NAME} - ${
+                  i.thickness.value === 1 || i.thickness.value === 2
+                    ? '4/4'
+                    : i.thickness.value === 3 || i.thickness.value === 4
+                      ? '5/4'
+                      : ''
+                }`,
+                style: 'woodtype',
+                width: 370,
+              },
+            ],
+          },
+          {
+            stack: [
+              {
+                text: '',
+                alignment: 'left',
+                style: 'fontsBold',
+                width: 80,
+              },
+              i.edge
+                ? {
+                  text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
+                  alignment: 'right',
+                  style: 'fonts',
+                }
+                : null,
+            ],
+          },
         ],
       },
       // {
@@ -166,8 +180,7 @@ export default (data, breakdowns) => {
         },
       },
       {
-        text:
-          '==============================================================================',
+        text: '==============================================================================',
         alignment: 'center',
       },
 
@@ -183,13 +196,27 @@ export default (data, breakdowns) => {
         {
           stack: [
             { text: `Our Order: ${data.orderNum}`, style: 'fonts' },
-            { text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${data.job_info?.poNum}`, style: 'fonts' },
+            {
+              text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${
+                data.job_info?.poNum
+              }`,
+              style: 'fonts',
+            },
           ],
         },
         {
           stack: [
-            { text: 'PACKING SLIP', alignment: 'right', style: 'woodtype', decoration: 'underline' },
-            { text: `Ship Via: ${data.job_info?.shipping_method?.NAME}`, alignment: 'right', style: 'fonts' },
+            {
+              text: 'PACKING SLIP',
+              alignment: 'right',
+              style: 'woodtype',
+              decoration: 'underline',
+            },
+            {
+              text: `Ship Via: ${data.job_info?.shipping_method?.NAME}`,
+              alignment: 'right',
+              style: 'fonts',
+            },
           ],
         },
       ],
@@ -197,69 +224,87 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          text: ''
+          text: '',
         },
         {
           stack: [
-            { text: 'Porta Door Co, INC.', alignment: 'center', style: 'fonts' },
-            { text: 'Phone: 203-888-6191  Fax: 203-888-5803', alignment: 'center', style: 'fonts' },
-            { text: 'Email: Info@portadoor.com', alignment: 'center', style: 'fonts' },
+            {
+              text: 'Porta Door Co, INC.',
+              alignment: 'center',
+              style: 'fonts',
+            },
+            {
+              text: 'Phone: 203-888-6191  Fax: 203-888-5803',
+              alignment: 'center',
+              style: 'fonts',
+            },
+            {
+              text: 'Email: Info@portadoor.com',
+              alignment: 'center',
+              style: 'fonts',
+            },
           ],
         },
         {
-          text: ''
-        }
+          text: '',
+        },
       ],
     },
     {
       columns: [
-        { 
+        {
           width: 200,
           stack: [
-            { columns: [
-              {
-                text: 'Sold To: ',
-                width: 60
-              },
-              { 
-                
-                stack: [
-                  { text: `${data.job_info.customer.Company}` },
-                  // {
-                  //   text: `${
-                  //     data.companyprofile.Contact
-                  //       ? data.companyprofile.Contact
-                  //       : ''
-                  //   }`,
-                  //   style: 'fonts',
-                  // },
-                  {
-                    text: `${
-                      data.companyprofile.Address1
-                        ? data.companyprofile.Address1
-                        : ''
-                    }`,
-                    style: 'fonts',
-                  },
-                  {
-                    text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                    style: 'fonts',
-                  },
-                  { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-                  data.companyprofile.Fax ? 
+            {
+              columns: [
+                {
+                  text: 'Sold To: ',
+                  width: 60,
+                },
+                {
+                  stack: [
+                    { text: `${data.job_info.customer.Company}` },
+                    // {
+                    //   text: `${
+                    //     data.companyprofile.Contact
+                    //       ? data.companyprofile.Contact
+                    //       : ''
+                    //   }`,
+                    //   style: 'fonts',
+                    // },
                     {
-                      text: `Fax: ${
-                        data.companyprofile.Fax ? data.companyprofile.Fax : ''
+                      text: `${
+                        data.companyprofile.Address1
+                          ? data.companyprofile.Address1
+                          : ''
                       }`,
                       style: 'fonts',
-                      margin: [0, 0, 0, 10],
-                    } : null,
-                ],
-              }
-            ],
+                    },
+                    {
+                      text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                      style: 'fonts',
+                    },
+                    {
+                      text: `Ph: ${data.companyprofile.Phone1}`,
+                      style: 'fonts',
+                    },
+                    data.companyprofile.Fax
+                      ? {
+                        text: `Fax: ${
+                          data.companyprofile.Fax
+                            ? data.companyprofile.Fax
+                            : ''
+                        }`,
+                        style: 'fonts',
+                        margin: [0, 0, 0, 10],
+                      }
+                      : null,
+                  ],
+                },
+              ],
 
-            style: 'fonts',
-            margin: [0, 0, 0, 0],
+              style: 'fonts',
+              margin: [0, 0, 0, 0],
             },
           ],
           style: 'fonts',
@@ -268,14 +313,14 @@ export default (data, breakdowns) => {
         {
           text: '',
           // width: 200,
-          alignment: 'center'
+          alignment: 'center',
         },
         {
           stack: [
             {
-              margin:[10,0,0,0],
+              margin: [10, 0, 0, 0],
               columns: [
-                { 
+                {
                   width: 40,
                   stack: [
                     {
@@ -327,17 +372,15 @@ export default (data, breakdowns) => {
                       margin: [0, 0, 0, 0],
                     },
                   ],
-                }
-              ]
-  
+                },
+              ],
             },
           ],
         },
       ],
     },
     {
-      text:
-        '==============================================================================',
+      text: '==============================================================================',
       alignment: 'center',
     },
     table_body,
@@ -347,43 +390,42 @@ export default (data, breakdowns) => {
           text: 'OTHER ITEMS',
           style: 'woodtype',
           decoration: 'underline',
-          width: 160
+          width: 160,
         },
         {
           text: 'QTY',
           style: 'woodtype',
-          decoration: 'underline'
-        }
-      ]
+          decoration: 'underline',
+        },
+      ],
     },
-    data.misc_items.length>0 ?
-      {
+    data.misc_items.length > 0
+      ? {
         columns: [
           {
             text: data.misc_items.map((i) => {
-              return `${
-                i.item ? i.item.NAME : i.item2 ? i.item2 : ''
-              } \n`;
+              return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
             }),
             style: 'fonts',
-            width: 170
+            width: 170,
           },
           {
             style: 'fonts',
             stack: data.misc_items.map((i) => {
-              return { text:  i.qty ? parseInt(i.qty) : ''} ;
+              return { text: i.qty ? parseInt(i.qty) : '' };
             }),
-            width: 30
+            width: 30,
           },
         ],
         margin: [0, 2, 0, 0],
-      } : null,
+      }
+      : null,
     {
-      margin:[0,10,0,10],
+      margin: [0, 10, 0, 10],
       columns: [
         {
           text: '',
-          width: 200
+          width: 200,
         },
         {
           text: 'Checked By: ______________',
@@ -392,8 +434,7 @@ export default (data, breakdowns) => {
         },
         {
           text: `Payment Method: ${
-            data.companyprofile &&
-            data.companyprofile.PMT_TERMS
+            data.companyprofile && data.companyprofile.PMT_TERMS
           }`,
           style: 'totals',
           width: 200,
@@ -403,10 +444,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          text: `Qty Doors: ${qty.reduce(
-            (acc, item) => acc + item,
-            0
-          )}`,
+          text: `Qty Doors: ${qty.reduce((acc, item) => acc + item, 0)}`,
           style: 'totals',
           width: 200,
         },
@@ -416,8 +454,8 @@ export default (data, breakdowns) => {
           width: 347,
         },
         {
-          text: ''
-        }
+          text: '',
+        },
       ],
       margin: [0, 0, 0, 10],
     },
@@ -435,8 +473,8 @@ export default (data, breakdowns) => {
           width: 347,
         },
         {
-          text: ''
-        }
+          text: '',
+        },
       ],
       margin: [0, 0, 0, 10],
     },

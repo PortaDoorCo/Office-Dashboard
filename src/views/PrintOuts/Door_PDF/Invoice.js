@@ -41,11 +41,11 @@ export default (data, pricing) => {
   const order_sub_total = misc_total + discountSubTotal;
 
 
-  const parts = Glass_Selection(data);
+  const parts = Glass_Selection(data, null);
 
   const prices = pdfDoorPricing(parts, pricing[0]);
 
-  const table_content = Glass_Selection(data).map((part, i) => {
+  const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
