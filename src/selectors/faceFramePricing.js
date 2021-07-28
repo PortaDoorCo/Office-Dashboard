@@ -339,6 +339,20 @@ export const subTotalSelector = createSelector(
     })
 );
 
+export const finishItemSelector = createSelector(
+  [finishingSelector, miscTotalSelector],
+  (finish, misc) =>
+    finish.map((i, index) => {
+      if (i) {
+        let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
+        let sum = price;
+        return sum;
+      } else {
+        return 0;
+      }
+    })
+);
+
 export const subTotal_Total = createSelector(
   [subTotalSelector, miscTotalSelector],
   (subTotal, misc) => subTotal.reduce((acc, item) => acc + item, 0)
@@ -351,12 +365,14 @@ export const totalDiscountSelector = createSelector(
   }
 );
 
+
+
 export const finishTotalSelector = createSelector(
-  [finishingSelector],
-  (finish) => {
-    console.log({finish});
+  [finishingSelector, finishItemSelector],
+  (finish, test) => {
+    console.log({test});
     return (
-      parseFloat(finish.reduce((acc, item) => acc + item, 0))
+      parseFloat(test.reduce((acc, item) => acc + item, 0))
     );
   }
 );
