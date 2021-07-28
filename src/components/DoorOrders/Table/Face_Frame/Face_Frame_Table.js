@@ -36,7 +36,8 @@ const Frame_Only_Table = ({
   doorOptions,
   edit,
   dispatch,
-  finish
+  finish,
+  finishSubtotal
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -369,12 +370,21 @@ const Frame_Only_Table = ({
             )}
           </Col>
         </Row>
-
         <Row>
-          <Col xs="4" />
-          <Col xs="5" />
+          <Col xs="9" />
           <Col xs="3">
-            <strong>Sub Total: </strong>
+            <strong>Finish Sub Total: </strong>
+            {finishSubtotal[i] ? (
+              <RenderPriceHolder input={finishSubtotal[i].toFixed(2)} edit={true} />
+            ) : (
+              <RenderPriceHolder input={'0.00'} edit={true} />
+            )}
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="9" />
+          <Col xs="3">
+            <strong>Item Sub Total: </strong>
             {subTotal[i] ? (
               <RenderPriceHolder input={subTotal[i].toFixed(2)} edit={true} />
             ) : (
