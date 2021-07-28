@@ -6,14 +6,11 @@ import {
   CardHeader,
   CardBody,
   Input,
-  Button,
   FormGroup,
-  InputGroup, InputGroupAddon, InputGroupText, Label
+  InputGroup, InputGroupAddon, InputGroupText
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import DoorInfo from './components/DoorInfo/DoorInfo';
-// import JobInfo from './components/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
 import {
   reduxForm,
@@ -32,16 +29,14 @@ import {
   subTotalSelector,
   taxSelector,
   totalSelector,
-  addPriceSelector,
   miscTotalSelector,
-} from '../../../../selectors/doorPricing';
+  finishTotalSelector
+} from '../../../../selectors/faceFramePricing';
 import 'react-notifications/lib/notifications.css';
-import SideBar from '../../../../components/DoorOrders/SideBar';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
-import { renderField, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
-import MiscItems from '../../../../components/DoorOrders/MiscItems';
+import { renderField } from '../../../../components/RenderInputs/renderInputs';
 import FileUploader from '../../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import validate from '../../DoorOrders/validate';
@@ -192,8 +187,11 @@ class DoorOrders extends Component {
       total,
       dispatch,
       tax,
-      addPriceSelector
+      addPriceSelector,
+      finish
     } = this.props;
+
+    console.log({total});
 
     return (
       <div className="animated fadeIn">
@@ -201,7 +199,7 @@ class DoorOrders extends Component {
           <div className="orderFormCol1">
             <Card>
               <CardHeader>
-                <strong>Door Order</strong>
+                <strong>Face Frame Order</strong>
               </CardHeader>
               <CardBody>
                 <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
@@ -285,6 +283,14 @@ class DoorOrders extends Component {
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
                         <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
+                      </InputGroup>
+
+                      <strong>Total Finishing: </strong>
+                      <InputGroup className='mb-3'>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <NumberFormat thousandSeparator={true} value={finish} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                       </InputGroup>
 
 
@@ -392,8 +398,8 @@ const mapStateToProps = state => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  addPriceSelector: addPriceSelector(state),
   miscTotalSelector: miscTotalSelector(state),
+  finish: finishTotalSelector(state),
 });
 
 const mapDispatchToProps = dispatch =>

@@ -20,11 +20,20 @@ import { connect } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import styles from '../styles';
 import currencyMask from '../../../../utils/currencyMask';
+import {
+  linePriceSelector,
+  itemPriceSelector,
+  subTotalSelector,
+  taxSelector,
+  totalSelector,
+  miscTotalSelector,
+  finishingSelector
+} from '../../../../selectors/faceFramePricing';
 
 
 
 let Inputs = (props) => {
-  const { fields, formState, linePrices, edit, part_list } = props;
+  const { fields, formState, linePrices, edit, part_list, finish } = props;
   const [data, setData] = useState([]);
 
   const changeMiscItem = (e, index) => {
@@ -43,6 +52,7 @@ let Inputs = (props) => {
             <th>Item</th>
             <th>Linear FT</th>
             <th>Price</th>
+            <th>Finishing</th>
             <th></th>
           </tr>
         </thead>
@@ -136,6 +146,22 @@ let Inputs = (props) => {
                       {/* <Input  placeholder={linePrices[index]} {...currencyMask} disabled /> */}
                     </InputGroup>
                   </td>
+                  <td style={{ width: '150px' }}>
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>$</InputGroupText>
+                      </InputGroupAddon>
+                      <NumberFormat
+                        thousandSeparator={true}
+                        value={finish[index]}
+                        disabled={true}
+                        customInput={Input}
+                        {...currencyMask}
+                        prefix={'$'}
+                      />
+                      {/* <Input  placeholder={linePrices[index]} {...currencyMask} disabled /> */}
+                    </InputGroup>
+                  </td>
                 </>
 
                 {!edit ? (
@@ -178,6 +204,7 @@ let Inputs = (props) => {
 
 const mapStateToProps = (state) => ({
   part_list: state.part_list,
+  finish: finishingSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) =>
