@@ -12,7 +12,8 @@ import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
-} from '../../../../selectors/doorPricing';
+} from '../../../../selectors/faceFramePricing';
+import { finishingSelector } from '../../../../selectors/faceFramePricing';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -33,6 +34,7 @@ class FaceFrame extends Component {
       subTotal,
       edit,
       updateSubmit,
+      finish
     } = this.props;
 
 
@@ -111,6 +113,7 @@ class FaceFrame extends Component {
             component={Frame_Only_Table}
             i={index}
             prices={prices}
+            finish={finish}
             subTotal={subTotal}
             part_list={part_list}
             formState={formState}
@@ -135,6 +138,7 @@ const mapStateToProps = (state) => ({
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
+  finish: finishingSelector(state),
 });
 
 export default connect(mapStateToProps, null)(FaceFrame);

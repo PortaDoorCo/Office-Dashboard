@@ -6,14 +6,11 @@ import {
   CardHeader,
   CardBody,
   Input,
-  Button,
   FormGroup,
-  InputGroup, InputGroupAddon, InputGroupText, Label
+  InputGroup, InputGroupAddon, InputGroupText
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import DoorInfo from './components/DoorInfo/DoorInfo';
-// import JobInfo from './components/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
 import {
   reduxForm,
@@ -32,9 +29,9 @@ import {
   subTotalSelector,
   taxSelector,
   totalSelector,
-  addPriceSelector,
   miscTotalSelector,
-} from '../../../../selectors/doorPricing';
+  finishingSelector
+} from '../../../../selectors/faceFramePricing';
 import 'react-notifications/lib/notifications.css';
 import SideBar from '../../../../components/DoorOrders/SideBar';
 import Sticky from 'react-stickynode';
@@ -194,6 +191,8 @@ class DoorOrders extends Component {
       tax,
       addPriceSelector
     } = this.props;
+
+    console.log({total});
 
     return (
       <div className="animated fadeIn">
@@ -392,8 +391,8 @@ const mapStateToProps = state => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  addPriceSelector: addPriceSelector(state),
   miscTotalSelector: miscTotalSelector(state),
+  finishingSelector: finishingSelector(state),
 });
 
 const mapDispatchToProps = dispatch =>

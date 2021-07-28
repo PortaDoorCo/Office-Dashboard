@@ -36,6 +36,7 @@ const Frame_Only_Table = ({
   doorOptions,
   edit,
   dispatch,
+  finish
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -176,6 +177,7 @@ const Frame_Only_Table = ({
                   <th>Other Dimension</th>
                   <th>Openings</th>
                   <th>Price</th>
+                  <th>Finishing</th>
                   <th />
                 </tr>
               </thead>
@@ -244,6 +246,23 @@ const Frame_Only_Table = ({
                         className="form-control"
                         disabled={true}
                         placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                      />
+                    ) : (
+                      <Input
+                        type="text"
+                        className="form-control"
+                        disabled={true}
+                        placeholder={'$0.00'}
+                      />
+                    )}
+                  </td>
+                  <td>
+                    {finish[i] ? (
+                      <Input
+                        type="text"
+                        className="form-control"
+                        disabled={true}
+                        placeholder={'$' + finish[i][index].toFixed(2) || 0}
                       />
                     ) : (
                       <Input
