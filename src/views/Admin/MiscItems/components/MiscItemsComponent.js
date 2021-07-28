@@ -141,6 +141,21 @@ render() {
                     </FormSection>
                   </Col>
                 </Row>
+
+                <Row>
+                  <Col>
+                    <Card>
+                      <CardBody>
+                        <FormGroup>
+                          <h3>Upload Files</h3>
+                          <p>Please Upload Sketches with Design References</p>
+                          <FileUploader onUploaded={this.onUploaded} multi={true} />
+                        </FormGroup>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+
                 <Row>
                   <Col>
                     <FieldArray name="misc_items" component={Inputs} {...this.props} />
@@ -220,21 +235,6 @@ render() {
         </div>
 
 
-        <div className="orderFormCol2">
-          <Row>
-            <Col>
-              <Card>
-                <CardBody>
-                  <FormGroup>
-                    <h3>Upload Files</h3>
-                    <FileUploader onUploaded={this.onUploaded} multi={true} />
-                  </FormGroup>
-                </CardBody>
-              </Card>
-
-            </Col>
-          </Row>
-        </div>
       </div>
     </div>
   );

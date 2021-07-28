@@ -12,6 +12,7 @@ import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
+  finishItemSelector,
 } from '../../../../selectors/faceFramePricing';
 import { finishingSelector } from '../../../../selectors/faceFramePricing';
 
@@ -34,7 +35,8 @@ class FaceFrame extends Component {
       subTotal,
       edit,
       updateSubmit,
-      finish
+      finish,
+      finishSubtotal
     } = this.props;
 
 
@@ -114,6 +116,7 @@ class FaceFrame extends Component {
             i={index}
             prices={prices}
             finish={finish}
+            finishSubtotal={finishSubtotal}
             subTotal={subTotal}
             part_list={part_list}
             formState={formState}
@@ -139,6 +142,7 @@ const mapStateToProps = (state) => ({
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
   finish: finishingSelector(state),
+  finishSubtotal: finishItemSelector(state),
 });
 
 export default connect(mapStateToProps, null)(FaceFrame);

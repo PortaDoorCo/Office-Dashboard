@@ -156,6 +156,21 @@ render() {
                   </FormSection>
                 </Col>
               </Row>
+
+              <Row>
+                <Col>
+                  <Card>
+                    <CardBody>
+                      <FormGroup>
+                        <h3>Upload Files</h3>
+                        <p>Please Upload Sketches with Design References</p>
+                        <FileUploader onUploaded={this.onUploaded} multi={true} />
+                      </FormGroup>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+
               <Row>
                 <Col>
                   <FieldArray name="mouldings" component={Inputs} {...this.props} />
@@ -190,19 +205,6 @@ render() {
             enabled={true}
             // key={i}
           >
-            <Row>
-              <Col>
-                <Card>
-                  <CardBody>
-                    <FormGroup>
-                      <h3>Upload Files</h3>
-                      <FileUploader onUploaded={this.onUploaded} multi={true} />
-                    </FormGroup>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-
             <CheckoutBox
               {...this.props}
               {...this.state}

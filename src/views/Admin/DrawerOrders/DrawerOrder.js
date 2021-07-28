@@ -237,6 +237,20 @@ class DoorOrders extends Component {
                     </FormSection>
                   ) : null}
 
+                  <Row>
+                    <Col>
+                      <Card>
+                        <CardBody>
+                          <FormGroup>
+                            <h3>Upload Files</h3>
+                            <p>Please Upload Sketches with Design References</p>
+                            <FileUploader onUploaded={this.onUploaded} multi={true} />
+                          </FormGroup>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+
                   <Suspense fallback={loading()}>
                     <FieldArray
                       name="part_list"
@@ -313,18 +327,6 @@ class DoorOrders extends Component {
               enabled={true}
               // key={i}
             >
-              <Row>
-                <Col>
-                  <Card>
-                    <CardBody>
-                      <FormGroup>
-                        <h3>Upload Files</h3>
-                        <FileUploader onUploaded={this.onUploaded} multi={true} />
-                      </FormGroup>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
 
               <CheckoutBox
                 {...this.props}

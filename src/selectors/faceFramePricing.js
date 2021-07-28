@@ -368,11 +368,11 @@ export const totalDiscountSelector = createSelector(
 
 
 export const finishTotalSelector = createSelector(
-  [finishingSelector, finishItemSelector],
-  (finish, test) => {
-    console.log({test});
+  [finishItemSelector],
+  (finish) => {
+
     return (
-      parseFloat(test.reduce((acc, item) => acc + item, 0))
+      parseFloat(finish.reduce((acc, item) => acc + item, 0))
     );
   }
 );
