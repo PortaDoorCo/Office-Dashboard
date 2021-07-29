@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardBody,
   Input,
-  Button,
   InputGroup,
   InputGroupText,
   InputGroupAddon,
@@ -48,6 +47,8 @@ import {
 import 'react-notifications/lib/notifications.css';
 import Cookies from 'js-cookie';
 import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
+import CheckoutBox from '../CheckoutBox';
+import StickyBox from 'react-sticky-box';
 
 const cookie = Cookies.get('jwt');
 
@@ -150,7 +151,7 @@ class DoorOrders extends Component {
 
       <div className="animated fadeIn">
         <Row>
-          <Col xs="12" sm="12" md="12" lg="12">
+          <Col xs="12" sm="12" md="10" lg="9">
             <Card>
               <CardHeader>
                 <strong>Door Order</strong>
@@ -185,8 +186,7 @@ class DoorOrders extends Component {
                   <hr />
                   <hr />
                   <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
+                    <Col xs="9" />
                     <Col xs="3">
                       <Row className='mb-0'>
                         <Col xs='9' />
@@ -233,9 +233,8 @@ class DoorOrders extends Component {
                       </InputGroup>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
+                  {/* <Row>
+                    <Col xs="9" />
                     <Col xs="3">
                       {!edit ?
                         <Row>
@@ -251,10 +250,24 @@ class DoorOrders extends Component {
                         <div />
                       }
                     </Col>
-                  </Row>
+                  </Row> */}
                 </form>
               </CardBody>
             </Card>
+          </Col>
+          <Col lg="3">
+            <StickyBox offsetTop={20} offsetBottom={20}>
+              <CheckoutBox
+                {...this.props}
+                {...this.state}
+                onSubNav={this.onSubNav}
+                handleSubmit={handleSubmit}
+                submit={this.submit}
+                cancelOrder={this.cancelOrder}
+                maxValue={maxValue}
+                onUploaded={this.onUploaded}
+              />
+            </StickyBox>
           </Col>
         </Row>
       </div>
@@ -317,7 +330,6 @@ const mapDispatchToProps = dispatch =>
 
 DoorOrders = reduxForm({
   form: 'DoorOrder',
-  enableReinitialize: true,
 })(DoorOrders);
 
 export default connect(

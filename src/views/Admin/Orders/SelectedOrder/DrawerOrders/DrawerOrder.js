@@ -48,6 +48,8 @@ import {
 } from '../../../../../selectors/drawerPricing';
 import Cookies from 'js-cookie';
 import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
+import CheckoutBox from '../CheckoutBox';
+import StickyBox from 'react-sticky-box';
 
 const cookie = Cookies.get('jwt');
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
@@ -173,7 +175,7 @@ class DrawerOrder extends Component {
       <div className="animated fadeIn">
         <NotificationAlert ref="notify" />
         <Row>
-          <Col xs="12" sm="12" md="12" lg="12">
+          <Col xs="12" sm="12" md="12" lg="9">
             <Card>
               <CardHeader>
                 <strong>Door Order</strong>
@@ -217,8 +219,7 @@ class DrawerOrder extends Component {
                   <hr />
                   <hr />
                   <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
+                    <Col xs="9" />
                     <Col xs="3">
 
                       <Row className='mb-0'>
@@ -267,7 +268,7 @@ class DrawerOrder extends Component {
                       </InputGroup>
                     </Col>
                   </Row>
-                  <Row>
+                  {/* <Row>
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
@@ -288,10 +289,24 @@ class DrawerOrder extends Component {
                       }
 
                     </Col>
-                  </Row>
+                  </Row> */}
                 </form>
               </CardBody>
             </Card>
+          </Col>
+          <Col lg="3">
+            <StickyBox offsetTop={20} offsetBottom={20}>
+              <CheckoutBox
+                {...this.props}
+                {...this.state}
+                onSubNav={this.onSubNav}
+                handleSubmit={handleSubmit}
+                submit={this.submit}
+                cancelOrder={this.cancelOrder}
+                maxValue={maxValue}
+                onUploaded={this.onUploaded}
+              />
+            </StickyBox>
           </Col>
         </Row>
       </div>
@@ -351,7 +366,6 @@ const mapDispatchToProps = dispatch =>
 
 DrawerOrder = reduxForm({
   form: 'DrawerOrder',
-  enableReinitialize: true
 })(DrawerOrder);
 
 export default connect(

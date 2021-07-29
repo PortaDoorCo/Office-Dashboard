@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardBody,
   Input,
-  Button,
   InputGroup,
   InputGroupText,
   InputGroupAddon,
@@ -48,6 +47,8 @@ import {
 import 'react-notifications/lib/notifications.css';
 import Cookies from 'js-cookie';
 import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
+import CheckoutBox from '../CheckoutBox';
+import StickyBox from 'react-sticky-box';
 
 const cookie = Cookies.get('jwt');
 
@@ -85,6 +86,8 @@ class DoorOrders extends Component {
       balance
     } = this.props;
 
+    console.log({values});
+
     const order = {
       ...values,
       job_info: values.job_info,
@@ -98,6 +101,7 @@ class DoorOrders extends Component {
       tax: tax,
       total: total,
       balance_due: balance,
+      discount: values.discount,
       status: values.job_info.status,
       dueDate: values.job_info.DueDate,
       sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
@@ -106,6 +110,7 @@ class DoorOrders extends Component {
     const orderId = values.id;
     await updateOrder(orderId, order, cookie);
     this.setState({ updateSubmit: !this.state.updateSubmit });
+
     await this.props.editable();
 
   };
@@ -149,7 +154,7 @@ class DoorOrders extends Component {
 
       <div className="animated fadeIn">
         <Row>
-          <Col xs="12" sm="12" md="12" lg="12">
+          <Col xs="12" sm="12" md="12" lg="9">
             <Card>
               <CardHeader>
                 <strong>Face Frame</strong>
@@ -184,8 +189,7 @@ class DoorOrders extends Component {
                   <hr />
                   <hr />
                   <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
+                    <Col xs="9" />
                     <Col xs="3">
                       <Row className='mb-0'>
                         <Col xs='9' />
@@ -232,7 +236,7 @@ class DoorOrders extends Component {
                       </InputGroup>
                     </Col>
                   </Row>
-                  <Row>
+                  {/* <Row>
                     <Col xs="4" />
                     <Col xs="5" />
                     <Col xs="3">
@@ -250,10 +254,24 @@ class DoorOrders extends Component {
                         <div />
                       }
                     </Col>
-                  </Row>
+                  </Row> */}
                 </form>
               </CardBody>
             </Card>
+          </Col>
+          <Col lg="3">
+            <StickyBox offsetTop={20} offsetBottom={20}>
+              <CheckoutBox
+                {...this.props}
+                {...this.state}
+                onSubNav={this.onSubNav}
+                handleSubmit={handleSubmit}
+                submit={this.submit}
+                cancelOrder={this.cancelOrder}
+                maxValue={maxValue}
+                onUploaded={this.onUploaded}
+              />
+            </StickyBox>
           </Col>
         </Row>
       </div>
@@ -316,7 +334,6 @@ const mapDispatchToProps = dispatch =>
 
 DoorOrders = reduxForm({
   form: 'DoorOrder',
-  enableReinitialize: true,
 })(DoorOrders);
 
 export default connect(
