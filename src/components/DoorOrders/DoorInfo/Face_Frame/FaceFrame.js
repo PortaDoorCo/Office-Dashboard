@@ -40,6 +40,11 @@ class FaceFrame extends Component {
     } = this.props;
 
 
+    let thickness = formState?.part_list[index]?.thickness?.db_name;
+
+    const ff_woodtypes = woodtypes.filter(wood => wood.face_frame !== false && wood[thickness]);
+
+
     return (
       <div>
         <Row>
@@ -49,7 +54,7 @@ class FaceFrame extends Component {
               <Field
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
-                data={woodtypes}
+                data={ff_woodtypes}
                 valueField="value"
                 textField="NAME"
                 validate={required}
