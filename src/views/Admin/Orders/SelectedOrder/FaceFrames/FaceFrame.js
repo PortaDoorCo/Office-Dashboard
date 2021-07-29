@@ -44,7 +44,7 @@ import {
   miscTotalSelector,
   balanceSelector,
   balanceTotalSelector
-} from '../../../../../selectors/doorPricing';
+} from '../../../../../selectors/faceFramePricing';
 import 'react-notifications/lib/notifications.css';
 import Cookies from 'js-cookie';
 import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
