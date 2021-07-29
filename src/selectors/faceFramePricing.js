@@ -227,15 +227,15 @@ export const itemPriceSelector = createSelector(
         const linePrice = part.dimensions.map((i) => {
           console.log({ part });
 
-          const width_input = Math.ceil(numQty(i.width));
+          const width_input = numQty(i.width);
           const width =
-            Math.ceil(numQty(i.width)) < 24
+            numQty(i.width) < 24
               ? 18
-              : Math.ceil(numQty(i.width)) >= 24 &&
-                Math.ceil(numQty(i.width)) <= 48
+              : numQty(i.width) >= 24 &&
+                numQty(i.width) <= 48
                 ? 24
                 : 36;
-          const height = Math.ceil(numQty(i.height));
+          const height = numQty(i.height);
           const openings = parseInt(i.openings);
 
           let overcharge = 0;
@@ -268,8 +268,8 @@ export const finishingSelector = createSelector(
       if (part.dimensions) {
         const linePrice = part.dimensions.map((i) => {
           console.log({ part });
-          const width_input = Math.ceil(numQty(i.width));
-          const height = Math.ceil(numQty(i.height));
+          const width_input = numQty(i.width);
+          const height = numQty(i.height);
           const finish = part.face_frame_finishing
             ? part.face_frame_finishing.PRICE
             : 0;
@@ -280,7 +280,7 @@ export const finishingSelector = createSelector(
           const height_finish = height >= 97 ? finish * 0.25 : 0;
 
           const openings = parseInt(i.openings);
-          const opening_add = openings && finish > 0 ? 5 : 0;
+          const opening_add = (openings > 1) && (finish > 0) ? (openings - 1) * 5 : 0;
   
           const finishing = finish + (width_finish + height_finish + opening_add);
   
