@@ -75,6 +75,8 @@ import MouldingsConversationNotes from './Notes/Mouldings/Conversation_Notes';
 
 import PrintModal from '../../PrintOuts/Modal/Modal';
 import numQty from 'numeric-quantity';
+import Sticky from 'react-stickynode';
+import StickyBox from 'react-sticky-box';
 
 import Cookies from 'js-cookie';
 
@@ -901,14 +903,14 @@ class OrderPage extends Component {
             <div>
               {/* order edit here */}
 
-              <div>
-                <EditSelectedOrder
-                  selectedOrder={props.selectedOrder}
-                  editable={this.props.editable}
-                  edit={!this.props.edit}
-                  toggle={props.toggle}
-                />
-              </div>
+              <EditSelectedOrder
+                selectedOrder={props.selectedOrder}
+                editable={this.props.editable}
+                edit={!this.props.edit}
+                toggle={props.toggle}
+              />
+
+
             </div>
           </ModalBody>
           <ModalFooter>
