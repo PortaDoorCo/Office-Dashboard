@@ -12,12 +12,12 @@ import {
   mouldingPriceSelector,
   mouldingLinePriceSelector
 } from '../../../../../selectors/mouldingPricing';
-import moment from 'moment-business-days';
 import Inputs from './Inputs';
-import FileUploader from '../../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders, updateOrder } from '../../../../../redux/orders/actions';
+import CheckoutBox from '../CheckoutBox';
+import StickyBox from 'react-sticky-box';
 
 const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MouldingJobInfo'));
 
@@ -91,11 +91,11 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { formState, handleSubmit, customers, tax, total, prices, edit } = this.props;
+  const { formState, handleSubmit, customers, tax, total, edit } = this.props;
   return (
     <div>
       <Row>
-        <Col xs='12'>
+        <Col xs="12" sm="12" md="12" lg="12">
           <Card>
             <CardHeader>
               <strong>Mouldings</strong>
@@ -122,8 +122,7 @@ render() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs="4" />
-                  <Col xs="5" />
+                  <Col xs="9" />
                   <Col xs="3">
                     <Row className='mb-0'>
                       <Col xs='9' />
@@ -176,7 +175,7 @@ render() {
                     </InputGroup>
                   </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                   <Col xs="4" />
                   <Col xs="5" />
                   <Col xs="3">
@@ -195,10 +194,24 @@ render() {
                       <div />
                     }
                   </Col>
-                </Row>
+                </Row> */}
               </form>
             </CardBody>
           </Card>
+        </Col>
+        <Col>
+          <StickyBox offsetTop={20} offsetBottom={20}>
+            <CheckoutBox
+              {...this.props}
+              {...this.state}
+              onSubNav={this.onSubNav}
+              handleSubmit={handleSubmit}
+              submit={this.submit}
+              cancelOrder={this.cancelOrder}
+              maxValue={maxValue}
+              onUploaded={this.onUploaded}
+            />
+          </StickyBox>
         </Col>
       </Row>
         
@@ -242,7 +255,6 @@ const mapDispatchToProps = dispatch =>
 
 MiscItems = reduxForm({
   form: 'Mouldings',
-  enableReinitialize: true
 })(MiscItems);
 
 

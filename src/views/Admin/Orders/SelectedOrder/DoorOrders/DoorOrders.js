@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardBody,
   Input,
-  Button,
   InputGroup,
   InputGroupText,
   InputGroupAddon,
@@ -48,7 +47,7 @@ import {
 import 'react-notifications/lib/notifications.css';
 import Cookies from 'js-cookie';
 import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
-import CheckoutBox from './CheckoutBox';
+import CheckoutBox from '../CheckoutBox';
 import StickyBox from 'react-sticky-box';
 
 const cookie = Cookies.get('jwt');
@@ -187,8 +186,7 @@ class DoorOrders extends Component {
                   <hr />
                   <hr />
                   <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
+                    <Col xs="9" />
                     <Col xs="3">
                       <Row className='mb-0'>
                         <Col xs='9' />
@@ -235,9 +233,8 @@ class DoorOrders extends Component {
                       </InputGroup>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
+                  {/* <Row>
+                    <Col xs="9" />
                     <Col xs="3">
                       {!edit ?
                         <Row>
@@ -253,7 +250,7 @@ class DoorOrders extends Component {
                         <div />
                       }
                     </Col>
-                  </Row>
+                  </Row> */}
                 </form>
               </CardBody>
             </Card>
@@ -333,7 +330,6 @@ const mapDispatchToProps = dispatch =>
 
 DoorOrders = reduxForm({
   form: 'DoorOrder',
-  enableReinitialize: true,
 })(DoorOrders);
 
 export default connect(
