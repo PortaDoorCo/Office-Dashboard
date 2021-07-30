@@ -229,7 +229,7 @@ export const itemPriceSelector = createSelector(
 
           const width_input = numQty(i.width);
           const width =
-            numQty(i.width) < 24
+            numQty(i.width) <= 24
               ? 18
               : numQty(i.width) >= 24 &&
                 numQty(i.width) <= 48
