@@ -1,16 +1,31 @@
 import React, { Component, Suspense } from 'react';
-import { Field, reduxForm, FieldArray, getFormValues, FormSection, } from 'redux-form';
-import { renderField, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
-import { Button, Row, Col, Input, Label, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Card, CardHeader, CardBody } from 'reactstrap';
+import {
+  reduxForm,
+  FieldArray,
+  getFormValues,
+  FormSection,
+} from 'redux-form';
+import {
+  Row,
+  Col,
+  Input,
+  FormGroup,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Card,
+  CardHeader,
+  CardBody,
+} from 'reactstrap';
 import { connect } from 'react-redux';
-import { 
+import {
   subTotalSelector,
   taxSelector,
   totalSelector,
   mouldingTotalSelector,
   mouldingLineItemSelector,
   mouldingPriceSelector,
-  mouldingLinePriceSelector
+  mouldingLinePriceSelector,
 } from '../../../../selectors/mouldingPricing';
 import moment from 'moment-business-days';
 import Inputs from './Inputs';
@@ -18,40 +33,52 @@ import FileUploader from '../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
-import NumberFormat from 'react-number-format';
-import currencyMask from '../../../../utils/currencyMask';
 import CheckoutBox from './CheckoutBox';
 import Sticky from 'react-stickynode';
 
-const JobInfo = React.lazy(() => import('../../../../components/JobInfo/MouldingJobInfo'));
-const MiscItems = React.lazy(() => import('./MiscItems'));
+const JobInfo = React.lazy(() =>
+  import('../../../../components/JobInfo/MouldingJobInfo')
+);
 
-const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+const loading = () => (
+  <div className="animated fadeIn pt-1 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+);
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
 
 const cookie = Cookies.get('jwt');
 
-const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
-
+const maxValue = (max) => (value) =>
+  value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 class Mouldings extends Component {
+  state = {
+    collapse: true,
+    loaded: false,
+    customerAddress: [],
+    updateSubmit: false,
+    files: [],
+    subNavModal: false,
+    subNavPage: 'misc',
+    customerReminder: false
+  };
 
-   state = {
-     collapse: true,
-     loaded: false,
-     customerAddress: [],
-     updateSubmit: false,
-     files: [],
-     subNavModal: false,
-     subNavPage: 'misc',
-   };
+  toggleReminderModal = () => {
+    this.setState({ customerReminder: !this.state.customerReminder });
+  };
 
-   onKeyPress(event) {
-     if (event.which === 13 /* Enter */) {
-       event.preventDefault();
-     }
-   }
+  componentDidMount() {
+    window.scrollTo(0, 0);
+    // this.toggleReminderModal();
+  }
+
+  onKeyPress(event) {
+    if (event.which === 13 /* Enter */) {
+      event.preventDefault();
+    }
+  }
 
   submit = async (values, e) => {
     const {
@@ -61,11 +88,9 @@ class Mouldings extends Component {
       total,
       submitOrder,
       user,
-      miscLineItemSelector,
     } = this.props;
 
     const orderType = 'Mouldings';
-
 
     const order = {
       ...values,
@@ -87,19 +112,22 @@ class Mouldings extends Component {
       submittedBy: user.FirstName,
       tracking: [
         {
-          'status': values.job_info.status,
-          'date': new Date()
-        }
+          status: values.job_info.status,
+          date: new Date(),
+        },
       ],
       balance_history: [
         {
-          'balance_paid': values.balance_paid,
-          'date': new Date()
-        }
+          balance_paid: values.balance_paid,
+          date: new Date(),
+        },
       ],
-      sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
+      sale:
+        values.job_info &&
+        values.job_info.customer &&
+        values.job_info.customer.sale &&
+        values.job_info.customer.sale.id,
     };
-
 
     if (values.mouldings.length > 0) {
       await submitOrder(order, cookie);
@@ -112,125 +140,128 @@ class Mouldings extends Component {
     }
   };
 
-cancelOrder = e => {
-  e.preventDefault();
-  this.props.reset();
-};
+  cancelOrder = (e) => {
+    e.preventDefault();
+    this.props.reset();
+  };
 
-onUploaded = (e) => {
-  const id = e.map(i => (i.id));
-  const a = [...this.state.files, id];
-  this.setState({ files: a });
-}
+  onUploaded = (e) => {
+    const id = e.map((i) => i.id);
+    const a = [...this.state.files, id];
+    this.setState({ files: a });
+  };
 
-onSubNav = (nav) => {
-  this.setState({
-    subNavModal: !this.state.subNavModal,
-    subNavPage: nav
-  });
-};
+  onSubNav = (nav) => {
+    this.setState({
+      subNavModal: !this.state.subNavModal,
+      subNavPage: nav,
+    });
+  };
 
-render() {
-  const { formState, handleSubmit, customers, tax, total, edit, mouldingTotal } = this.props;
+  render() {
+    const {
+      formState,
+      handleSubmit,
+      customers,
+      edit,
+      mouldingTotal,
+    } = this.props;
 
-  return (
-    <div className="animated fadeIn">
-      <div className="orderForm">
-        <div className="mouldingFormCol1">
-          <Card>
-            <CardHeader>
-              <strong>Mouldings</strong>
-            </CardHeader>
-            <CardBody>
-              <Row>
-                <Col>
-                  <FormSection name="job_info">
-                    <Suspense fallback={loading()}>
-                      <JobInfo
-                        customers={customers}
-                        formState={formState}
-                        handleAddress={this.handleAddress}
-                        edit={edit}
-                      />
-                    </Suspense>
-                  </FormSection>
-                </Col>
-              </Row>
+    return (
+      <div className="animated fadeIn">
+        <div className="orderForm">
+          <div className="mouldingFormCol1">
+            <Card>
+              <CardHeader>
+                <strong>Mouldings</strong>
+              </CardHeader>
+              <CardBody>
+                <Row>
+                  <Col>
+                    <FormSection name="job_info">
+                      <Suspense fallback={loading()}>
+                        <JobInfo
+                          customers={customers}
+                          formState={formState}
+                          handleAddress={this.handleAddress}
+                          edit={edit}
+                          toggleReminderModal={this.toggleReminderModal}
+                          customerReminder={this.state.customerReminder}
+                        />
+                      </Suspense>
+                    </FormSection>
+                  </Col>
+                </Row>
 
-              <Row>
-                <Col>
-                  <Card>
-                    <CardBody>
-                      <FormGroup>
-                        <h3>Upload Files</h3>
-                        <p>Please Upload Sketches with Design References</p>
-                        <FileUploader onUploaded={this.onUploaded} multi={true} />
-                      </FormGroup>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
+                <Row>
+                  <Col>
+                    <Card>
+                      <CardBody>
+                        <FormGroup>
+                          <h3>Upload Files</h3>
+                          <p>Please Upload Sketches with Design References</p>
+                          <FileUploader
+                            onUploaded={this.onUploaded}
+                            multi={true}
+                          />
+                        </FormGroup>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
 
-              <Row>
-                <Col>
-                  <FieldArray name="mouldings" component={Inputs} {...this.props} />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs="4" />
-                <Col xs="5" />
-                <Col xs="3">
-                  <strong>Sub Total: </strong>
-                  <InputGroup className='mb-3'>
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>$</InputGroupText>
-                    </InputGroupAddon>
-                    <Input disabled placeholder={mouldingTotal.toFixed(2)} />
-                  </InputGroup>
-                </Col>
-              </Row>
-               
-   
-            </CardBody>
-          </Card>
+                <Row>
+                  <Col>
+                    <FieldArray
+                      name="mouldings"
+                      component={Inputs}
+                      {...this.props}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs="4" />
+                  <Col xs="5" />
+                  <Col xs="3">
+                    <strong>Sub Total: </strong>
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>$</InputGroupText>
+                      </InputGroupAddon>
+                      <Input disabled placeholder={mouldingTotal.toFixed(2)} />
+                    </InputGroup>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </div>
+
+          <div className="mouldingFormCol2">
+            <Sticky
+              top={100}
+              // bottomBoundary={`#item-${i}`}
+              enabled={true}
+              // key={i}
+            >
+              <CheckoutBox
+                {...this.props}
+                {...this.state}
+                onSubNav={this.onSubNav}
+                handleSubmit={handleSubmit}
+                submit={this.submit}
+                cancelOrder={this.cancelOrder}
+                maxValue={maxValue}
+                onUploaded={this.onUploaded}
+              />
+            </Sticky>
+          </div>
         </div>
-
-
-        <div className="mouldingFormCol2">
-
-
-          <Sticky
-            top={100}
-            // bottomBoundary={`#item-${i}`}
-            enabled={true}
-            // key={i}
-          >
-            <CheckoutBox
-              {...this.props}
-              {...this.state}
-              onSubNav={this.onSubNav}
-              handleSubmit={handleSubmit}
-              submit={this.submit}
-              cancelOrder={this.cancelOrder}
-              maxValue={maxValue}
-              onUploaded={this.onUploaded}
-            />
-          </Sticky>
-
-
-
-        </div>
-
       </div>
-        
-    </div>
-  );
-}
+    );
+  }
 }
 
-
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   formState: getFormValues('Mouldings')(state),
   misc_items: state.misc_items.misc_items,
   subTotal: subTotalSelector(state),
@@ -248,7 +279,9 @@ const mapStateToProps = state => ({
     balance_paid: 0,
     open: true,
     discount: 0,
-    Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
+    Taxable: state.customers.customerDB[0].Taxable
+      ? state.customers.customerDB[0].Taxable
+      : false,
     job_info: {
       customer: state.customers.customerDB[0],
       jobName: '',
@@ -261,15 +294,16 @@ const mapStateToProps = state => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
+      Notes: state.customers.customerDB[0].Notes
       // ShippingMethod: state.misc_items.shippingMethods[0],
       // PaymentMethod: {
       //   NAME: state.customers.customerDB[0].PaymentMethod
       // }
-    }
+    },
   },
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       submitOrder,
@@ -280,11 +314,7 @@ const mapDispatchToProps = dispatch =>
 
 Mouldings = reduxForm({
   form: 'Mouldings',
-  enableReinitialize: true
+  enableReinitialize: true,
 })(Mouldings);
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Mouldings);
+export default connect(mapStateToProps, mapDispatchToProps)(Mouldings);
