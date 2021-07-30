@@ -2,7 +2,6 @@ import React, { Component, Suspense } from 'react';
 import {
   Row,
   Col,
-  Button,
   Card,
   Input,
   CardHeader,
@@ -11,7 +10,6 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Label
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -38,8 +36,7 @@ import {
 } from '../../../selectors/drawerPricing';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
-import { renderField, renderCheckboxToggle } from '../../../components/RenderInputs/renderInputs';
-import MiscItems from '../../../components/DrawerOrders/MiscItems';
+import { renderField } from '../../../components/RenderInputs/renderInputs';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import currencyMask from '../../../utils/currencyMask';
@@ -79,7 +76,17 @@ class DoorOrders extends Component {
       files: [],
       subNavModal: false,
       subNavPage: 'misc',
+      customerReminder: false,
     };
+  }
+
+  toggleReminderModal = () => {
+    this.setState({ customerReminder: !this.state.customerReminder });
+  };
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
+    // this.toggleReminderModal();
   }
 
   reloadPage = () => {
@@ -158,10 +165,6 @@ class DoorOrders extends Component {
 
   };
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
   cancelOrder = e => {
     e.preventDefault();
     this.props.reset();
@@ -232,6 +235,8 @@ class DoorOrders extends Component {
                           formState={formState}
                           loaded={this.state.loaded}
                           handleAddress={this.handleAddress}
+                          toggleReminderModal={this.toggleReminderModal}
+                          customerReminder={this.state.customerReminder}
                         />
                       </Suspense>
                     </FormSection>
@@ -391,6 +396,7 @@ const mapStateToProps = (state, prop) => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
+      Notes: state.customers.customerDB[0].Notes
     }
   },
   formState: getFormValues('DrawerOrder')(state),

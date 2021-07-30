@@ -83,11 +83,17 @@ class DoorOrders extends Component {
       files: [],
       subNavModal: false,
       subNavPage: 'misc',
+      customerReminder: false,
     };
   }
 
+  toggleReminderModal = () => {
+    this.setState({ customerReminder: !this.state.customerReminder });
+  };
+
   componentDidMount() {
     window.scrollTo(0, 0);
+    // this.toggleReminderModal();
   }
 
   reloadPage = () => {
@@ -107,8 +113,6 @@ class DoorOrders extends Component {
     } = this.props;
 
     const orderType = 'Door Order';
-
-
 
     const order = {
       ...values,
@@ -188,7 +192,7 @@ class DoorOrders extends Component {
   onSubNav = (nav) => {
     this.setState({
       subNavModal: !this.state.subNavModal,
-      subNavPage: nav
+      subNavPage: nav,
     });
   };
 
@@ -208,8 +212,6 @@ class DoorOrders extends Component {
 
     return (
       <div className="animated fadeIn">
-        
-
         <div className="orderForm">
           <div className="orderFormCol1">
             <Card>
@@ -221,31 +223,6 @@ class DoorOrders extends Component {
                   onKeyPress={this.onKeyPress}
                   onSubmit={handleSubmit(this.submit)}
                 >
-                  {/* <Row className="mb-4">
-                    <Col xs="8" />
-                    <Col xs="4">
-                      <Row>
-                        <Col>
-                          <Button
-                            color="primary"
-                            className="submit"
-                            style={{ width: '100%' }}
-                          >
-                            Submit
-                          </Button>
-                        </Col>
-                        <Col>
-                          <Button
-                            color="danger"
-                            onClick={this.cancelOrder}
-                            style={{ width: '100%' }}
-                          >
-                            Cancel
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row> */}
                   {!submitted ? (
                     <FormSection name="job_info">
                       <Suspense fallback={loading()}>
@@ -255,6 +232,8 @@ class DoorOrders extends Component {
                           address={address}
                           loaded={this.state.loaded}
                           handleAddress={this.handleAddress}
+                          toggleReminderModal={this.toggleReminderModal}
+                          customerReminder={this.state.customerReminder}
                         />
                       </Suspense>
                     </FormSection>
@@ -267,7 +246,10 @@ class DoorOrders extends Component {
                           <FormGroup>
                             <h3>Upload Files</h3>
                             <p>Please Upload Sketches with Design References</p>
-                            <FileUploader onUploaded={this.onUploaded} multi={true} />
+                            <FileUploader
+                              onUploaded={this.onUploaded}
+                              multi={true}
+                            />
                           </FormGroup>
                         </CardBody>
                       </Card>
@@ -293,8 +275,7 @@ class DoorOrders extends Component {
                   <hr />
                   <hr />
                   <Row>
-                    <Col xs="4" />
-                    <Col xs="5" />
+                    <Col xs="9" />
                     <Col xs="3">
                       <Row className="mb-0">
                         <Col xs="9" />
@@ -356,7 +337,6 @@ class DoorOrders extends Component {
               enabled={true}
               // key={i}
             >
-
               <CheckoutBox
                 {...this.props}
                 {...this.state}
@@ -421,6 +401,7 @@ const mapStateToProps = (state) => ({
       Zip: state.customers.customerDB[0].Zip,
       Phone: state.customers.customerDB[0].Phone,
       DueDate: dueDate,
+      Notes: state.customers.customerDB[0].Notes,
       // PaymentMethod: {
       //   NAME: state.customers.customerDB[0].PaymentMethod
       // }

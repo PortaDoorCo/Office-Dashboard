@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  FormGroup,
-  Label,
-} from 'reactstrap';
+import { Row, Col, FormGroup, Label } from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment-business-days';
 import momentLocaliser from 'react-widgets-moment';
-import { renderCheckboxToggle, renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../RenderInputs/renderInputs';
+import {
+  renderCheckboxToggle,
+  renderDropdownList,
+  renderDropdownListFilter,
+  renderField,
+  renderTextField,
+} from '../RenderInputs/renderInputs';
 import { connect } from 'react-redux';
 import status from '../../utils/status';
+import CustomerReminder from './CustomerReminder';
 
 momentLocaliser(moment);
 
+const required = (value) => (value ? undefined : 'Required');
 
-const required = value => value ? undefined : 'Required';
-
-
-
-const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
-
+const renderDateTimePicker = ({
+  input: { onChange, value },
+  showTime,
+  edit,
+}) => (
   <div>
     <DateTimePicker
       onChange={onChange}
@@ -29,24 +31,29 @@ const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
       value={!value ? null : new Date(value)}
       disabled={edit}
     />
-  </div>;
-
-
+  </div>
+);
 
 class JobInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false
+      loaded: false,
     };
   }
+
 
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
     if (formState && formState.job_info && formState.job_info.customer) {
-      if (formState.job_info.customer !== prevProps.formState.job_info.customer) {
-
+      if (
+        formState.job_info.customer !== prevProps.formState.job_info.customer
+      ) {
         const customer = formState.job_info.customer;
+
+        if (customer.Notes) {
+          this.props.toggleReminderModal();
+        }
 
         this.props.dispatch(
           change(
@@ -90,50 +97,38 @@ class JobInfo extends Component {
             customer.Shipping_Phone || customer.Phone1
           )
         );
+        this.props.dispatch(change('DoorOrder', 'Taxable', customer.Taxable));
+        this.props.dispatch(change('DoorOrder', 'discount', customer.Discount));
         this.props.dispatch(
-          change(
-            'DoorOrder',
-            'Taxable',
-            customer.Taxable
-          )
+          change('DoorOrder', 'job_info.Notes', customer.Notes)
         );
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            'discount',
-            customer.Discount
-          )
-        );
-        this.props.dispatch(
-          change(
-            'DoorOrder',
-            'job_info.Notes',
-            customer.Notes
-          )
-        );
-
       }
     }
   }
 
-
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+  };
+
 
 
   render() {
     const { customers, edit, shippingMethods, formState } = this.props;
 
-    const dateDifference = moment(new Date()).businessDiff(moment(formState && formState.job_info && formState.job_info.DueDate));
-
+    const dateDifference = moment(new Date()).businessDiff(
+      moment(formState && formState.job_info && formState.job_info.DueDate)
+    );
 
     return (
-
-      <div className='job-info-tour'>
+      <div className="job-info-tour">
+        <CustomerReminder
+          {...this.props}
+          toggle={this.props.toggleReminderModal}
+          modal={this.props.customerReminder}
+        />
         <Row>
-          <Col lg='10' />
-          <Col lg='1'>
+          <Col lg="10" />
+          <Col lg="1">
             <FormGroup>
               <Label htmlFor="dueDate">Sample</Label>
               <Field
@@ -143,14 +138,10 @@ class JobInfo extends Component {
               />
             </FormGroup>
           </Col>
-          <Col lg='1'>
+          <Col lg="1">
             <FormGroup>
               <Label htmlFor="dueDate">Rush</Label>
-              <Field
-                name="Rush"
-                component={renderCheckboxToggle}
-                edit={edit}
-              />
+              <Field name="Rush" component={renderCheckboxToggle} edit={edit} />
             </FormGroup>
           </Col>
         </Row>
@@ -169,7 +160,7 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
           <Col xs="5" />
-          <Col xs='3'>
+          <Col xs="3">
             <FormGroup>
               <Label htmlFor="shipping_method">Shipping Method</Label>
               <Field
@@ -179,7 +170,8 @@ class JobInfo extends Component {
                 valueField="value"
                 edit={edit}
                 validate={required}
-                textField="NAME" />
+                textField="NAME"
+              />
             </FormGroup>
           </Col>
         </Row>
@@ -195,8 +187,8 @@ class JobInfo extends Component {
                 valueField="value"
                 textField="Company"
                 edit={edit}
-                validate={required} />
-
+                validate={required}
+              />
             </FormGroup>
           </Col>
           <Col xs="3">
@@ -233,85 +225,81 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-
-
-
         <Row>
           <Col xs="6">
             <FormGroup>
               <Label htmlFor="address1">Address 1</Label>
               <Field
-                name='Address1'
+                name="Address1"
                 type="text"
                 component={renderField}
                 edit={edit}
-                label="Address1" />
+                label="Address1"
+              />
             </FormGroup>
           </Col>
-
-
-
-
 
           <Col xs="6">
             <FormGroup>
               <Label htmlFor="address2">Address 2</Label>
               <Field
-                name='Address2'
+                name="Address2"
                 type="text"
                 component={renderField}
                 edit={edit}
-                label="Address2" />
+                label="Address2"
+              />
             </FormGroup>
           </Col>
-
         </Row>
-
-
 
         <Row>
           <Col xs="3">
             <FormGroup>
               <Label htmlFor="city">City</Label>
               <Field
-                name='City'
+                name="City"
                 type="text"
                 component={renderField}
                 edit={edit}
-                label="City" />
+                label="City"
+              />
             </FormGroup>
           </Col>
           <Col xs="3">
             <FormGroup>
               <Label htmlFor="state">State</Label>
               <Field
-                name='State'
+                name="State"
                 type="text"
                 component={renderField}
                 edit={edit}
-                label="State" />
+                label="State"
+              />
             </FormGroup>
           </Col>
           <Col xs="3">
             <FormGroup>
               <Label htmlFor="zipcode">Zip Code</Label>
               <Field
-                name='Zip'
+                name="Zip"
                 type="text"
                 component={renderField}
                 edit={edit}
-                label="Zip" />
+                label="Zip"
+              />
             </FormGroup>
           </Col>
           <Col xs="3">
             <FormGroup>
               <Label htmlFor="phone">Phone Number</Label>
               <Field
-                name='Phone'
+                name="Phone"
                 type="text"
                 component={renderField}
                 edit={edit}
-                label="Phone" />
+                label="Phone"
+              />
             </FormGroup>
           </Col>
         </Row>
@@ -325,28 +313,21 @@ class JobInfo extends Component {
                 type="text"
                 component={renderTextField}
                 edit={true}
-                label="Notes" />
+                label="Notes"
+              />
             </FormGroup>
           </Col>
         </Row>
 
         <hr />
-
-
       </div>
     );
   }
 }
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   formState: getFormValues('DoorOrder')(state),
   shippingMethods: state.misc_items.shippingMethods,
 });
 
-
-export default connect(
-  mapStateToProps,
-  null
-)(JobInfo);
-
+export default connect(mapStateToProps, null)(JobInfo);
