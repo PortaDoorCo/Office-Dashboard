@@ -22,7 +22,7 @@ import {
   deleteOrder,
   setSelectedOrder,
   uploadFilesToOrder,
-  submitOrder
+  submitOrder,
 } from '../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
 import Print from '@material-ui/icons/Print';
@@ -78,6 +78,8 @@ import numQty from 'numeric-quantity';
 import Sticky from 'react-stickynode';
 import StickyBox from 'react-sticky-box';
 
+import CopyModal from '../../../utils/Modal';
+
 import Cookies from 'js-cookie';
 
 const cookie = Cookies.get('jwt');
@@ -113,8 +115,13 @@ class OrderPage extends Component {
       miscItemsOpen: false,
       notesOpen: false,
       printModal: false,
+      copyModal: false,
     };
   }
+
+  handleCopyModal = () => {
+    this.setState({ copyModal: !this.state.copyModal });
+  };
 
   breakdown = (e) => {
     e.preventDefault();
@@ -204,7 +211,7 @@ class OrderPage extends Component {
       miscState,
       mouldingsState,
       selectedOrder,
-      submitOrder
+      submitOrder,
     } = this.props;
     const data = formState
       ? formState
@@ -215,15 +222,20 @@ class OrderPage extends Component {
           : mouldingsState
             ? mouldingsState
             : [];
-            
-    console.log({data});
-    console.log({selectedOrder});
 
-    let newOrder = {...data, job_info: {
-      ...data.job_info, poNum: `${data.job_info.poNum} - COPY`, status: 'Quote'
-    }};
+    console.log({ data });
+    console.log({ selectedOrder });
 
-    newOrder.part_list.map(i => {
+    let newOrder = {
+      ...data,
+      job_info: {
+        ...data.job_info,
+        poNum: `${data.job_info.poNum} - COPY`,
+        status: 'Quote',
+      },
+    };
+
+    newOrder.part_list.map((i) => {
       delete i['id'];
       delete i['_id'];
       return null;
@@ -236,18 +248,17 @@ class OrderPage extends Component {
     delete newOrder['updatedAt'];
     delete newOrder['published_at'];
 
-    newOrder['balance_history'] = [{balance_paid: 0}];
+    newOrder['balance_history'] = [{ balance_paid: 0 }];
     newOrder['balance_paid'] = 0;
     newOrder['files'] = [];
     newOrder['Rush'] = false;
-    newOrder['Sample'] = false; 
+    newOrder['Sample'] = false;
 
-    console.log({newOrder});
+    console.log({ newOrder });
 
     await submitOrder(newOrder, cookie);
     await this.props.toggle();
-
-  }
+  };
 
   downloadPDF = async (printerSettings) => {
     const {
@@ -491,6 +502,14 @@ class OrderPage extends Component {
 
     return (
       <div className="animated noPrint resize">
+        <CopyModal
+          message={'Would you like to copy this order?'}
+          title={'Copy Order'}
+          actionButton={'Copy Order'}
+          toggle={this.handleCopyModal}
+          modal={this.state.copyModal}
+          action={this.copyOrder}
+        />
         <Modal isOpen={props.modal} toggle={props.toggle} className="modal-lg">
           <ModalHeader toggle={props.toggle}>
             Order #{selectedOrder && selectedOrder.orderNum}
@@ -616,40 +635,44 @@ class OrderPage extends Component {
                           </IconButton>
                         </Tooltip>
 
-                        <Tooltip title="Copy Order" placement="top" className="mb-3">
-                          <IconButton onClick={this.copyOrder}>
+                        <Tooltip
+                          title="Copy Order"
+                          placement="top"
+                          className="mb-3"
+                        >
+                          <IconButton onClick={this.handleCopyModal}>
                             <FileCopy style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
 
-                        {selectedOrder && selectedOrder.orderType === 'Door Order' ?
-                          <CSVLink
-                            data={a.map((i, ind) => {
-                              return [
-                                ...i,
-                                ind + 1,
-                                `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`,
-                              ];
-                            })}
-                            filename={`${s && s.orderNum}.csv`}
-                            separator={','}
-                            className="mb-3"
-                          >
-                            {' '}
-                            <Tooltip
-                              title="Export Edges"
-                              placement="top"
+                        {selectedOrder &&
+                        selectedOrder.orderType === 'Door Order' ? (
+                            <CSVLink
+                              data={a.map((i, ind) => {
+                                return [
+                                  ...i,
+                                  ind + 1,
+                                  `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`,
+                                ];
+                              })}
+                              filename={`${s && s.orderNum}.csv`}
+                              separator={','}
                               className="mb-3"
                             >
-                              <IconButton>
-                                <GetAppIcon
-                                  style={{ width: '40', height: '40' }}
-                                />
-                              </IconButton>
-                            </Tooltip>
-                          </CSVLink> : null
-                        }
-
+                              {' '}
+                              <Tooltip
+                                title="Export Edges"
+                                placement="top"
+                                className="mb-3"
+                              >
+                                <IconButton>
+                                  <GetAppIcon
+                                    style={{ width: '40', height: '40' }}
+                                  />
+                                </IconButton>
+                              </Tooltip>
+                            </CSVLink>
+                          ) : null}
 
                         {(this.props.user &&
                           this.props.user.role &&
@@ -800,7 +823,8 @@ class OrderPage extends Component {
                               selectedOrder={props.selectedOrder}
                             /> */}
                         {selectedOrder &&
-                        (selectedOrder.orderType === 'Door Order' || selectedOrder.orderType === 'Face Frame') ? (
+                        (selectedOrder.orderType === 'Door Order' ||
+                          selectedOrder.orderType === 'Face Frame') ? (
                             <DoorBalance
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
@@ -834,7 +858,8 @@ class OrderPage extends Component {
                       <CardBody>
                         <h5>Balance History</h5>
                         {selectedOrder &&
-                        (selectedOrder.orderType === 'Door Order' || selectedOrder.orderType === 'Face Frame') ? (
+                        (selectedOrder.orderType === 'Door Order' ||
+                          selectedOrder.orderType === 'Face Frame') ? (
                             <DoorBalanceHistory
                               edit={!this.props.edit}
                               editable={this.props.editable}
@@ -875,7 +900,8 @@ class OrderPage extends Component {
                       <CardBody>
                         <h5>Misc Items</h5>
                         {selectedOrder &&
-                        (selectedOrder.orderType === 'Door Order' || selectedOrder.orderType === 'Face Frame') ? (
+                        (selectedOrder.orderType === 'Door Order' ||
+                          selectedOrder.orderType === 'Face Frame') ? (
                             <DoorMiscItems
                               toggle={this.toggleMiscItems}
                               edit={!this.props.edit}
@@ -909,8 +935,6 @@ class OrderPage extends Component {
                 edit={!this.props.edit}
                 toggle={props.toggle}
               />
-
-
             </div>
           </ModalBody>
           <ModalFooter>
@@ -958,7 +982,7 @@ const mapDispatchToProps = (dispatch) =>
       deleteOrder,
       setSelectedOrder,
       uploadFilesToOrder,
-      submitOrder
+      submitOrder,
     },
     dispatch
   );
