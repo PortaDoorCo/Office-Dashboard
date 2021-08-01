@@ -27,6 +27,10 @@ const Modal = (props) => {
       return(
         <MiscModal {...props} />
       );
+    case 'Face Frame':
+      return(
+        <MiscModal {...props} />
+      );
     default:
       return(
         <div />

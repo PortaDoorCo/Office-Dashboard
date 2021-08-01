@@ -49,6 +49,7 @@ import moment from 'moment';
 import MiscItemsPDF from '../../PrintOuts/Pages/MiscItems/MiscItemsPDF';
 
 import MouldingsPDF from '../../PrintOuts/Pages/Mouldings/MouldingsPDF';
+import FaceFramesPDF from '../../PrintOuts/Pages/FaceFrames/FaceFramesPDF';
 
 import DoorBalance from './Balance/Door_Order/Balance';
 import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory';
@@ -399,7 +400,10 @@ class OrderPage extends Component {
       MiscItemsPDF(data, box_breakdowns, printerSettings);
     } else if (data.orderType === 'Mouldings') {
       MouldingsPDF(data, box_breakdowns, printerSettings);
+    } else if (data.orderType === 'Face Frame') {
+      FaceFramesPDF(data, printerSettings, this.props.pricing);
     }
+    
   };
 
   downloadBoxLabel = async (printerSettings) => {
@@ -499,6 +503,9 @@ class OrderPage extends Component {
         { value: 'Invoice', label: 'Invoice' },
       ];
     }
+
+
+    console.log({pricing: this.props.pricing});
 
     return (
       <div className="animated noPrint resize">
