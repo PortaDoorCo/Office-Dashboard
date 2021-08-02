@@ -24,7 +24,6 @@ import {
   change,
   FieldArray,
   Field,
-  onSubmitFail
 } from 'redux-form';
 import {
   submitOrder,
@@ -51,7 +50,6 @@ import { renderField, renderCheckboxToggle } from '../../../../../components/Ren
 import CheckoutBox from '../CheckoutBox';
 import StickyBox from 'react-sticky-box';
 import { NotificationManager } from 'react-notifications';
-import { flatten } from 'lodash';
 
 const cookie = Cookies.get('jwt');
 
@@ -87,7 +85,6 @@ class DoorOrders extends Component {
       total,
       updateOrder,
       balance,
-      onSubmitFail
     } = this.props;
 
 
@@ -151,7 +148,6 @@ class DoorOrders extends Component {
       total,
       dispatch,
       tax,
-      onSubmitFail
     } = this.props;
 
     return (

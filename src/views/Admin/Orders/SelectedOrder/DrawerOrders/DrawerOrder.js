@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Row,
   Col,
-  Button,
   Card,
   CardHeader,
   CardBody,
@@ -51,7 +50,6 @@ import { renderField, renderCheckboxToggle } from '../../../../../components/Ren
 import CheckoutBox from '../CheckoutBox';
 import StickyBox from 'react-sticky-box';
 import { NotificationManager } from 'react-notifications';
-import { flatten } from 'lodash';
 
 const cookie = Cookies.get('jwt');
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;

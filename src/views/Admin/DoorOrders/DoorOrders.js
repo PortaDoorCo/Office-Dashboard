@@ -6,12 +6,10 @@ import {
   CardHeader,
   CardBody,
   Input,
-  Button,
   FormGroup,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Label,
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -36,24 +34,19 @@ import {
   miscTotalSelector,
 } from '../../../selectors/doorPricing';
 import 'react-notifications/lib/notifications.css';
-import SideBar from '../../../components/DoorOrders/SideBar';
+
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
 import {
   renderField,
-  renderCheckboxToggle,
 } from '../../../components/RenderInputs/renderInputs';
-import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import validate from './validate';
 import currencyMask from '../../../utils/currencyMask';
-import NavBar from './NavBar';
-import NavModal from './MiscItemCollapse';
 import CheckoutBox from './CheckoutBox';
 import { NotificationManager } from 'react-notifications';
-import { flatten } from 'lodash';
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
