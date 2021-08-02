@@ -371,6 +371,24 @@ const DoorTable = ({
   };
 
 
+  const glass_note_check = (index) => {
+    console.log({index});
+
+    const obj_names = Object.entries(formState?.part_list[i]?.dimensions[index]);
+    console.log({obj_names});
+
+    const filter_obj = obj_names.filter(n => n[0].includes('glass_check'));
+
+    console.log({filter_obj});
+
+    const check_if_glass = filter_obj.filter(n => n[1]).map(k => k.includes(true)).includes(true);
+
+    return check_if_glass;
+
+
+  };
+
+
   return (
     <div>
       {modal ? (
@@ -656,7 +674,7 @@ const DoorTable = ({
               </FormGroup>
             </Col>
             <Col>
-              {!edit ? (
+              {
                 parseInt(formState.part_list[i].dimensions[index].panelsH) >
                   1 &&
                 parseInt(formState.part_list[i].dimensions[index].panelsW) ===
@@ -670,7 +688,7 @@ const DoorTable = ({
                       />
                     </FormGroup>
                   ) : null
-              ) : null}
+              }
             </Col>
           </Row>
 
@@ -716,6 +734,7 @@ const DoorTable = ({
                             name={`${table}.unevenSplitInput${index}`}
                             component={renderField}
                             edit={edit}
+                            validate={required}
                           />
                         </Col>
                         <Col />
@@ -788,6 +807,7 @@ const DoorTable = ({
                 component={renderField}
                 edit={edit}
                 label="notes"
+                validate={glass_note_check(index) ? required : null}
               />
             </Col>
             <Col xs="5"></Col>
