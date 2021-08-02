@@ -40,6 +40,8 @@ import FileUploader from '../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
+import { NotificationManager } from 'react-notifications';
+import { flatten } from 'lodash';
 
 const JobInfo = React.lazy(() =>
   import('../../../../components/JobInfo/MiscJobInfo')
@@ -351,6 +353,10 @@ const mapDispatchToProps = (dispatch) =>
 MiscItems = reduxForm({
   form: 'MiscItems',
   enableReinitialize: true,
+  onSubmitFail: (errors, dispatch, submitError, props) => {
+    const job_info_message = 'You are missing required shipping info';
+    NotificationManager.error(job_info_message, 'Error', 2000);
+  },
 })(MiscItems);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MiscItems);

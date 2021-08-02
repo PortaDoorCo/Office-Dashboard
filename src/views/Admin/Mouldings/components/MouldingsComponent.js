@@ -35,6 +35,8 @@ import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
 import CheckoutBox from './CheckoutBox';
 import Sticky from 'react-stickynode';
+import { NotificationManager } from 'react-notifications';
+import { flatten } from 'lodash';
 
 const JobInfo = React.lazy(() =>
   import('../../../../components/JobInfo/MouldingJobInfo')
@@ -315,6 +317,10 @@ const mapDispatchToProps = (dispatch) =>
 Mouldings = reduxForm({
   form: 'Mouldings',
   enableReinitialize: true,
+  onSubmitFail: (errors, dispatch, submitError, props) => {
+    const job_info_message = 'You are missing required shipping info';
+    NotificationManager.error(job_info_message, 'Error', 2000);
+  },
 })(Mouldings);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Mouldings);
