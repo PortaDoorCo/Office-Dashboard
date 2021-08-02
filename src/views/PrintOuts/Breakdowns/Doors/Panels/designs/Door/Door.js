@@ -127,7 +127,9 @@ export default (info, part, breakdowns) => {
           } else {
             return {
               qty: `(${qty})`,
-              measurement: `${fraction(panelWidth)} x ${fraction(
+              measurement: `${fraction(
+                Math.round(eval(breakdowns.panel_width) * 16) / 16
+              )} x ${fraction(
                 unevenSplitInput(v)
               )}`,
               pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
@@ -142,7 +144,9 @@ export default (info, part, breakdowns) => {
 
     const bottom = {
       qty: `(${qty})`,
-      measurement: `${fraction(panelWidth)} x ${fraction(panelHeight)}`,
+      measurement: `${fraction(
+        Math.round(eval(breakdowns.panel_width) * 16) / 16
+      )} x ${fraction(panelHeight)}`,
       pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
       width: Math.round(panelWidth),
       height: Math.round(panelHeight),
