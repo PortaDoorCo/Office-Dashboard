@@ -76,6 +76,7 @@ export default (data, pricing) => {
         { text: 'Actual Size WxH', style: 'fonts' },
         { text: 'Qty', style: 'fonts', alignment: 'center' },
         { text: 'Notes', style: 'fonts' },
+        { text: 'Sketch #', style: 'fonts' },
         { text: 'Total 1 Unit', style: 'fonts', alignment: 'right' },
         { text: 'Total Cost', style: 'fonts', alignment: 'right' },
       ],
@@ -91,6 +92,10 @@ export default (data, pricing) => {
             item.full_frame ? 'Full Frame DF' : ''
           } ${item.lite ? item.lite.NAME : ''}`,
           style: 'fontsBold',
+        },
+        {
+          text: `${item.cab_number ? item.cab_number : ''}`,
+          style: 'fonts',
         },
 
         {
@@ -158,7 +163,7 @@ export default (data, pricing) => {
       {
         table: {
           headerRows: 1,
-          widths: [30, 100, 30, 155, '*', '*'],
+          widths: [30, 100, 30, 155, '*', '*', '*'],
           body: tableBody,
         },
 
