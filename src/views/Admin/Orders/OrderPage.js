@@ -555,6 +555,12 @@ class OrderPage extends Component {
                         <Chat style={{ width: '40', height: '40' }} />
                       </IconButton>
                     </Tooltip>
+                    
+                    <Tooltip title="View Files" placement="top">
+                      <IconButton onClick={this.toggleFiles}>
+                        <Attachment style={{ width: '40', height: '40' }} />
+                      </IconButton>
+                    </Tooltip>
                   </Col>
                   <Col />
                   <Col />
