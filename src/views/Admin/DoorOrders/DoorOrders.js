@@ -6,12 +6,10 @@ import {
   CardHeader,
   CardBody,
   Input,
-  Button,
   FormGroup,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Label,
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -36,22 +34,19 @@ import {
   miscTotalSelector,
 } from '../../../selectors/doorPricing';
 import 'react-notifications/lib/notifications.css';
-import SideBar from '../../../components/DoorOrders/SideBar';
+
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
 import {
   renderField,
-  renderCheckboxToggle,
 } from '../../../components/RenderInputs/renderInputs';
-import MiscItems from '../../../components/DoorOrders/MiscItems';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import validate from './validate';
 import currencyMask from '../../../utils/currencyMask';
-import NavBar from './NavBar';
-import NavModal from './MiscItemCollapse';
 import CheckoutBox from './CheckoutBox';
+import { NotificationManager } from 'react-notifications';
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
@@ -431,6 +426,19 @@ DoorOrders = reduxForm({
   form: 'DoorOrder',
   enableReinitialize: true,
   validate,
+  onSubmitFail: (errors, dispatch, submitError, props) => {
+    const part_list_err = errors?.part_list;
+    const part_list_message = 'You are missing required item info';
+    const job_info_message = 'You are missing required shipping info';
+    if (part_list_err.length > 0 && errors?.job_info) {
+      NotificationManager.error(job_info_message, 'Error', 2000);
+      NotificationManager.error(part_list_message, 'Error', 1900);
+    } else if (part_list_err.length > 0) {
+      NotificationManager.error(part_list_message, 'Error', 2000);
+    } else {
+      NotificationManager.error(job_info_message, 'Error', 2000);
+    }
+  },
 })(DoorOrders);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoorOrders);

@@ -42,6 +42,8 @@ import NumberFormat from 'react-number-format';
 import currencyMask from '../../../utils/currencyMask';
 import CheckoutBox from './CheckoutBox';
 import Sticky from 'react-stickynode';
+import { NotificationManager } from 'react-notifications';
+import { flatten } from 'lodash';
 
 const DrawerBoxInfo = React.lazy(() => import('../../../components/DrawerOrders/DrawerBoxInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/DrawerJobInfo'));
@@ -420,7 +422,20 @@ const mapDispatchToProps = dispatch =>
 
 DoorOrders = reduxForm({
   form: 'DrawerOrder',
-  enableReinitialize: true
+  enableReinitialize: true,
+  onSubmitFail: (errors, dispatch, submitError, props) => {
+    const part_list_err = errors?.part_list;
+    const part_list_message = 'You are missing required item info';
+    const job_info_message = 'You are missing required shipping info';
+    if (part_list_err.length > 0 && errors?.job_info) {
+      NotificationManager.error(job_info_message, 'Error', 2000);
+      NotificationManager.error(part_list_message, 'Error', 1900);
+    } else if (part_list_err.length > 0) {
+      NotificationManager.error(part_list_message, 'Error', 2000);
+    } else {
+      NotificationManager.error(job_info_message, 'Error', 2000);
+    }
+  },
 })(DoorOrders);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoorOrders);
