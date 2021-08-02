@@ -46,6 +46,12 @@ class JobInfo extends Component {
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
     if (formState && formState.job_info && formState.job_info.customer) {
+      if(formState.job_info.Sample !== prevProps.formState.job_info.Sample){
+        if(formState.job_info.Sample){
+          this.props.dispatch(change('DoorOrder', 'discount', 50));
+        }
+        
+      }
       if (
         formState.job_info.customer !== prevProps.formState.job_info.customer
       ) {
@@ -98,7 +104,13 @@ class JobInfo extends Component {
           )
         );
         this.props.dispatch(change('DoorOrder', 'Taxable', customer.Taxable));
-        this.props.dispatch(change('DoorOrder', 'discount', customer.Discount));
+
+        if(formState.job_info.Sample){
+          this.props.dispatch(change('DoorOrder', 'discount', 50));
+        }else{
+          this.props.dispatch(change('DoorOrder', 'discount', customer.Discount));
+        }
+        
         this.props.dispatch(
           change('DoorOrder', 'job_info.Notes', customer.Notes)
         );

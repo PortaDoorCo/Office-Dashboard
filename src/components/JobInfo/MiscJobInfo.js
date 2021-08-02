@@ -45,6 +45,13 @@ class JobInfo extends Component {
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
     if (formState && formState.job_info && formState.job_info.customer) {
+
+      if(formState.job_info.Sample !== prevProps.formState.job_info.Sample){
+        if(formState.job_info.Sample){
+          this.props.dispatch(change('MiscItems', 'discount', 50));
+        }
+      }
+
       if (
         formState.job_info.customer !== prevProps.formState.job_info.customer
       ) {
@@ -96,6 +103,13 @@ class JobInfo extends Component {
             customer.Shipping_Phone || customer.Phone1
           )
         );
+
+        if(formState.job_info.Sample){
+          this.props.dispatch(change('MiscItems', 'discount', 50));
+        }else{
+          this.props.dispatch(change('MiscItems', 'discount', customer.Discount));
+        }
+
         this.props.dispatch(change('MiscItems', 'Taxable', customer.Taxable));
         this.props.dispatch(
           change('MiscItems', 'job_info.Notes', customer.Notes)
