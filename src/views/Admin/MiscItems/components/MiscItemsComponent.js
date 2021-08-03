@@ -41,7 +41,7 @@ import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
 import { NotificationManager } from 'react-notifications';
-import { flatten } from 'lodash';
+import CancelModal from '../../../../utils/Modal';
 
 const JobInfo = React.lazy(() =>
   import('../../../../components/JobInfo/MiscJobInfo')
@@ -67,7 +67,8 @@ class MiscItems extends Component {
     customerAddress: [],
     updateSubmit: false,
     files: [],
-    customerReminder: false
+    customerReminder: false,
+    CancelModal: false
   };
   
   toggleReminderModal = () => {
@@ -150,7 +151,13 @@ class MiscItems extends Component {
 
   cancelOrder = (e) => {
     e.preventDefault();
+    this.setState({ updateSubmit: false });
+    this.toggleCancelModal();
     this.props.reset();
+  };
+
+  toggleCancelModal = () => {
+    this.setState({ cancelModal: !this.state.cancelModal });
   };
 
   onUploaded = (e) => {
@@ -164,6 +171,15 @@ class MiscItems extends Component {
 
     return (
       <div className="animated fadeIn">
+        <CancelModal
+          toggle={this.toggleCancelModal}
+          modal={this.state.cancelModal}
+          title={'Cancel Order?'}
+          message={'Are you sure you want to this cancel this order?'}
+          action={this.cancelOrder}
+          actionButton={'Cancel Order'}
+          buttonColor={'danger'}
+        />
         <div className="orderForm">
           <div className="orderFormCol1">
             <Card>
@@ -281,7 +297,7 @@ class MiscItems extends Component {
                         <Col>
                           <Button
                             color="danger"
-                            onClick={this.cancelOrder}
+                            onClick={this.toggleCancelModal}
                             style={{ width: '100%' }}
                           >
                             Cancel
@@ -354,8 +370,10 @@ MiscItems = reduxForm({
   form: 'MiscItems',
   enableReinitialize: true,
   onSubmitFail: (errors, dispatch, submitError, props) => {
-    const job_info_message = 'You are missing required shipping info';
-    NotificationManager.error(job_info_message, 'Error', 2000);
+    const job_info_message = 'You are missing required info';
+    if (errors) {
+      NotificationManager.error(job_info_message, 'Error', 2000);
+    } 
   },
 })(MiscItems);
 

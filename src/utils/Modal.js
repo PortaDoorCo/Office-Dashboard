@@ -22,7 +22,7 @@ const ModalUtil = (props) => {
           {message}
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={action}>{actionButton}</Button>{' '}
+          <Button color={props.buttonColor ? props.buttonColor : 'primary'} onClick={action}>{actionButton}</Button>{' '}
           <Button color="secondary" onClick={toggle}>Close</Button>
         </ModalFooter>
       </Modal>

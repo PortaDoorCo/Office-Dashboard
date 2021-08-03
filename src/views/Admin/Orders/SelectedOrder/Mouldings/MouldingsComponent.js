@@ -258,8 +258,10 @@ const mapDispatchToProps = dispatch =>
 MiscItems = reduxForm({
   form: 'Mouldings',
   onSubmitFail: (errors, dispatch, submitError, props) => {
-    const job_info_message = 'You are missing required shipping info';
-    NotificationManager.error(job_info_message, 'Error', 2000);
+    const job_info_message = 'You are missing required info';
+    if (errors) {
+      NotificationManager.error(job_info_message, 'Error', 2000);
+    } 
   },
 })(MiscItems);
 

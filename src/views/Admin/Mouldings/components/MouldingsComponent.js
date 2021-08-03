@@ -36,7 +36,7 @@ import { submitOrder, loadOrders } from '../../../../redux/orders/actions';
 import CheckoutBox from './CheckoutBox';
 import Sticky from 'react-stickynode';
 import { NotificationManager } from 'react-notifications';
-import { flatten } from 'lodash';
+import CancelModal from '../../../../utils/Modal';
 
 const JobInfo = React.lazy(() =>
   import('../../../../components/JobInfo/MouldingJobInfo')
@@ -64,7 +64,8 @@ class Mouldings extends Component {
     files: [],
     subNavModal: false,
     subNavPage: 'misc',
-    customerReminder: false
+    customerReminder: false,
+    cancelModal: false,
   };
 
   toggleReminderModal = () => {
@@ -144,7 +145,13 @@ class Mouldings extends Component {
 
   cancelOrder = (e) => {
     e.preventDefault();
+    this.setState({ updateSubmit: false });
+    this.toggleCancelModal();
     this.props.reset();
+  };
+
+  toggleCancelModal = () => {
+    this.setState({ cancelModal: !this.state.cancelModal });
   };
 
   onUploaded = (e) => {
@@ -171,6 +178,15 @@ class Mouldings extends Component {
 
     return (
       <div className="animated fadeIn">
+        <CancelModal
+          toggle={this.toggleCancelModal}
+          modal={this.state.cancelModal}
+          title={'Cancel Order?'}
+          message={'Are you sure you want to this cancel this order?'}
+          action={this.cancelOrder}
+          actionButton={'Cancel Order'}
+          buttonColor={'danger'}
+        />
         <div className="orderForm">
           <div className="mouldingFormCol1">
             <Card>
@@ -251,7 +267,7 @@ class Mouldings extends Component {
                 onSubNav={this.onSubNav}
                 handleSubmit={handleSubmit}
                 submit={this.submit}
-                cancelOrder={this.cancelOrder}
+                toggleCancelModal={this.toggleCancelModal}
                 maxValue={maxValue}
                 onUploaded={this.onUploaded}
               />
@@ -318,8 +334,10 @@ Mouldings = reduxForm({
   form: 'Mouldings',
   enableReinitialize: true,
   onSubmitFail: (errors, dispatch, submitError, props) => {
-    const job_info_message = 'You are missing required shipping info';
-    NotificationManager.error(job_info_message, 'Error', 2000);
+    const job_info_message = 'You are missing required info';
+    if (errors) {
+      NotificationManager.error(job_info_message, 'Error', 2000);
+    } 
   },
 })(Mouldings);
 
