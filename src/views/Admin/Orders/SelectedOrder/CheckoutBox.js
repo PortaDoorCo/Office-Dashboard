@@ -97,7 +97,7 @@ const CheckoutBox = (props) => {
                         <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
                       </Col>
                       <Col>
-                        <Button color="danger" onClick={props.cancelOrder} style={{ width: '100%' }}>
+                        <Button color="danger" onClick={props.toggleCancelModal} style={{ width: '100%' }}>
                           Cancel
                         </Button>
                       </Col>

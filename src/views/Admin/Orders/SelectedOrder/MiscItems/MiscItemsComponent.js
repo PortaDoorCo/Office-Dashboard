@@ -21,7 +21,7 @@ import { submitOrder, loadOrders, updateOrder } from '../../../../../redux/order
 import CheckoutBox from '../CheckoutBox';
 import StickyBox from 'react-sticky-box';
 import { NotificationManager } from 'react-notifications';
-import { flatten } from 'lodash';
+import CancelModal from '../../../../../utils/Modal';
 
 const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MiscJobInfo'));
 
@@ -40,7 +40,8 @@ class MiscItems extends Component {
      loaded: false,
      customerAddress: [],
      updateSubmit: false,
-     files: []
+     files: [],
+     cancelModal: false
    };
 
    onKeyPress(event) {
@@ -89,10 +90,17 @@ class MiscItems extends Component {
     }
   };
 
-cancelOrder = e => {
-  e.preventDefault();
-  this.props.reset();
-};
+  cancelOrder = (e) => {
+    e.preventDefault();
+    this.setState({ updateSubmit: false });
+    this.toggleCancelModal();
+    this.props.reset();
+    this.props.editable();
+  };
+  
+  toggleCancelModal = () => {
+    this.setState({ cancelModal: !this.state.cancelModal });
+  };
 
 onUploaded = (e) => {
   const id = e.map(i => (i.id));
@@ -105,6 +113,18 @@ render() {
 
   return (
     <div>
+      <CancelModal
+        toggle={this.toggleCancelModal}
+        modal={this.state.cancelModal}
+        title={'Cancel Editing Order?'}
+        message={<div>
+          <p>Are you sure you want to cancel editing this order?</p>
+          <p><strong>Your Changes Will Not Be Saved</strong></p>
+        </div>}
+        action={this.cancelOrder}
+        actionButton={'Cancel Edit'}
+        buttonColor={'danger'}
+      />
       <Row>
         <Col xs="12" sm="12" md="12" lg="9">
           <Card>
@@ -218,7 +238,7 @@ render() {
               onSubNav={this.onSubNav}
               handleSubmit={handleSubmit}
               submit={this.submit}
-              cancelOrder={this.cancelOrder}
+              toggleCancelModal={this.toggleCancelModal}
               maxValue={maxValue}
               onUploaded={this.onUploaded}
             />

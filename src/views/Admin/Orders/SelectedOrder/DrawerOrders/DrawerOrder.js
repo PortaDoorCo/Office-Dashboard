@@ -50,6 +50,7 @@ import { renderField, renderCheckboxToggle } from '../../../../../components/Ren
 import CheckoutBox from '../CheckoutBox';
 import StickyBox from 'react-sticky-box';
 import { NotificationManager } from 'react-notifications';
+import CancelModal from '../../../../../utils/Modal';
 
 const cookie = Cookies.get('jwt');
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
@@ -74,7 +75,8 @@ class DrawerOrder extends Component {
       collapse: true,
       loaded: false,
       customerAddress: [],
-      files: []
+      files: [],
+      cancelModal: false
     };
   }
 
@@ -127,10 +129,16 @@ class DrawerOrder extends Component {
     window.scrollTo(0, 0);
   }
 
-  cancelOrder = async (e) => {
+  cancelOrder = (e) => {
     e.preventDefault();
-    await this.props.reset();
-    await this.props.editable();
+    this.setState({ updateSubmit: false });
+    this.toggleCancelModal();
+    this.props.reset();
+    this.props.editable();
+  };
+
+  toggleCancelModal = () => {
+    this.setState({ cancelModal: !this.state.cancelModal });
   };
 
   onKeyPress(event) {
@@ -173,6 +181,18 @@ class DrawerOrder extends Component {
 
     return (
       <div className="animated fadeIn">
+        <CancelModal
+          toggle={this.toggleCancelModal}
+          modal={this.state.cancelModal}
+          title={'Cancel Editing Order?'}
+          message={<div>
+            <p>Are you sure you want to cancel editing this order?</p>
+            <p><strong>Your Changes Will Not Be Saved</strong></p>
+          </div>}
+          action={this.cancelOrder}
+          actionButton={'Cancel Edit'}
+          buttonColor={'danger'}
+        />
         <NotificationAlert ref="notify" />
         <Row>
           <Col xs="12" sm="12" md="12" lg="9">
@@ -302,7 +322,7 @@ class DrawerOrder extends Component {
                 onSubNav={this.onSubNav}
                 handleSubmit={handleSubmit}
                 submit={this.submit}
-                cancelOrder={this.cancelOrder}
+                toggleCancelModal={this.toggleCancelModal}
                 maxValue={maxValue}
                 onUploaded={this.onUploaded}
               />
