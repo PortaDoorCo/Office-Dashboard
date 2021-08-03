@@ -110,7 +110,7 @@ class CustomerPage extends Component {
                         <Table striped>
                           <tbody>
                             {selectedCompanies
-                              ? selectedCompanies.files.map((i, index) => (
+                              ? selectedCompanies?.files?.map((i, index) => (
                                 <tr>
                                   <th scope="row">{index + 1}</th>
                                   <td>{i.name}</td>
