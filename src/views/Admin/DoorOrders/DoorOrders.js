@@ -38,15 +38,15 @@ import 'react-notifications/lib/notifications.css';
 import Sticky from 'react-stickynode';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
-import {
-  renderField,
-} from '../../../components/RenderInputs/renderInputs';
+import { renderField } from '../../../components/RenderInputs/renderInputs';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import validate from './validate';
 import currencyMask from '../../../utils/currencyMask';
 import CheckoutBox from './CheckoutBox';
 import { NotificationManager } from 'react-notifications';
+import CancelModal from '../../../utils/Modal';
+
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
@@ -79,6 +79,7 @@ class DoorOrders extends Component {
       subNavModal: false,
       subNavPage: 'misc',
       customerReminder: false,
+      cancelModal: false
     };
   }
 
@@ -169,7 +170,12 @@ class DoorOrders extends Component {
   cancelOrder = (e) => {
     e.preventDefault();
     this.setState({ updateSubmit: false });
+    this.toggleCancelModal();
     this.props.reset();
+  };
+
+  toggleCancelModal = () => {
+    this.setState({ cancelModal: !this.state.cancelModal });
   };
 
   onKeyPress(event) {
@@ -207,6 +213,15 @@ class DoorOrders extends Component {
 
     return (
       <div className="animated fadeIn">
+        <CancelModal
+          toggle={this.toggleCancelModal}
+          modal={this.state.cancelModal}
+          title={'Cancel Order?'}
+          message={'Are you sure you want to this cancel this order?'}
+          action={this.cancelOrder}
+          actionButton={'Cancel Order'}
+          buttonColor={'danger'}
+        />
         <div className="orderForm">
           <div className="orderFormCol1">
             <Card>
@@ -338,7 +353,7 @@ class DoorOrders extends Component {
                 onSubNav={this.onSubNav}
                 handleSubmit={handleSubmit}
                 submit={this.submit}
-                cancelOrder={this.cancelOrder}
+                toggleCancelModal={this.toggleCancelModal}
                 maxValue={maxValue}
                 onUploaded={this.onUploaded}
               />
@@ -427,17 +442,10 @@ DoorOrders = reduxForm({
   enableReinitialize: true,
   validate,
   onSubmitFail: (errors, dispatch, submitError, props) => {
-    const part_list_err = errors?.part_list;
-    const part_list_message = 'You are missing required item info';
-    const job_info_message = 'You are missing required shipping info';
-    if (part_list_err.length > 0 && errors?.job_info) {
+    const job_info_message = 'You are missing required info';
+    if (errors) {
       NotificationManager.error(job_info_message, 'Error', 2000);
-      NotificationManager.error(part_list_message, 'Error', 1900);
-    } else if (part_list_err.length > 0) {
-      NotificationManager.error(part_list_message, 'Error', 2000);
-    } else {
-      NotificationManager.error(job_info_message, 'Error', 2000);
-    }
+    } 
   },
 })(DoorOrders);
 

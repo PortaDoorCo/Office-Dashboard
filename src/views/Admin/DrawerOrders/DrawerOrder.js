@@ -43,7 +43,7 @@ import currencyMask from '../../../utils/currencyMask';
 import CheckoutBox from './CheckoutBox';
 import Sticky from 'react-stickynode';
 import { NotificationManager } from 'react-notifications';
-import { flatten } from 'lodash';
+import CancelModal from '../../../utils/Modal';
 
 const DrawerBoxInfo = React.lazy(() => import('../../../components/DrawerOrders/DrawerBoxInfo'));
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/DrawerJobInfo'));
@@ -79,6 +79,7 @@ class DoorOrders extends Component {
       subNavModal: false,
       subNavPage: 'misc',
       customerReminder: false,
+      cancelModal: false,
     };
   }
 
@@ -167,9 +168,15 @@ class DoorOrders extends Component {
 
   };
 
-  cancelOrder = e => {
+  cancelOrder = (e) => {
     e.preventDefault();
+    this.setState({ updateSubmit: false });
+    this.toggleCancelModal();
     this.props.reset();
+  };
+
+  toggleCancelModal = () => {
+    this.setState({ cancelModal: !this.state.cancelModal });
   };
 
   onKeyPress(event) {
@@ -216,6 +223,15 @@ class DoorOrders extends Component {
     return (
       <div className="animated fadeIn">
         <NotificationAlert ref="notify" />
+        <CancelModal
+          toggle={this.toggleCancelModal}
+          modal={this.state.cancelModal}
+          title={'Cancel Order?'}
+          message={'Are you sure you want to this cancel this order?'}
+          action={this.cancelOrder}
+          actionButton={'Cancel Order'}
+          buttonColor={'danger'}
+        />
         <div className="orderForm">
           <div className="orderFormCol1">
             <Card>
@@ -341,7 +357,7 @@ class DoorOrders extends Component {
                 onSubNav={this.onSubNav}
                 handleSubmit={handleSubmit}
                 submit={this.submit}
-                cancelOrder={this.cancelOrder}
+                toggleCancelModal={this.toggleCancelModal}
                 maxValue={maxValue}
                 onUploaded={this.onUploaded}
               />
@@ -424,17 +440,10 @@ DoorOrders = reduxForm({
   form: 'DrawerOrder',
   enableReinitialize: true,
   onSubmitFail: (errors, dispatch, submitError, props) => {
-    const part_list_err = errors?.part_list;
-    const part_list_message = 'You are missing required item info';
-    const job_info_message = 'You are missing required shipping info';
-    if (part_list_err.length > 0 && errors?.job_info) {
+    const job_info_message = 'You are missing required info';
+    if (errors) {
       NotificationManager.error(job_info_message, 'Error', 2000);
-      NotificationManager.error(part_list_message, 'Error', 1900);
-    } else if (part_list_err.length > 0) {
-      NotificationManager.error(part_list_message, 'Error', 2000);
-    } else {
-      NotificationManager.error(job_info_message, 'Error', 2000);
-    }
+    } 
   },
 })(DoorOrders);
 

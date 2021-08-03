@@ -19,7 +19,7 @@ import { submitOrder, loadOrders, updateOrder } from '../../../../../redux/order
 import CheckoutBox from '../CheckoutBox';
 import StickyBox from 'react-sticky-box';
 import { NotificationManager } from 'react-notifications';
-import { flatten } from 'lodash';
+import CancelModal from '../../../../../utils/Modal';
 
 const JobInfo = React.lazy(() => import('../../../../../components/JobInfo/MouldingJobInfo'));
 
@@ -35,7 +35,8 @@ class MiscItems extends Component {
      loaded: false,
      customerAddress: [],
      updateSubmit: false,
-     files: []
+     files: [],
+     cancelModal: false
    };
 
    onKeyPress(event) {
@@ -80,11 +81,17 @@ class MiscItems extends Component {
     }
   };
 
-cancelOrder = e => {
-  e.preventDefault();
-  this.props.reset();
-  this.props.editable();
-};
+  cancelOrder = (e) => {
+    e.preventDefault();
+    this.setState({ updateSubmit: false });
+    this.toggleCancelModal();
+    this.props.reset();
+    this.props.editable();
+  };
+  
+  toggleCancelModal = () => {
+    this.setState({ cancelModal: !this.state.cancelModal });
+  };
 
 onUploaded = (e) => {
   const id = e.map(i => (i.id));
@@ -96,6 +103,18 @@ render() {
   const { formState, handleSubmit, customers, tax, total, edit } = this.props;
   return (
     <div>
+      <CancelModal
+        toggle={this.toggleCancelModal}
+        modal={this.state.cancelModal}
+        title={'Cancel Editing Order?'}
+        message={<div>
+          <p>Are you sure you want to cancel editing this order?</p>
+          <p><strong>Your Changes Will Not Be Saved</strong></p>
+        </div>}
+        action={this.cancelOrder}
+        actionButton={'Cancel Edit'}
+        buttonColor={'danger'}
+      />
       <Row>
         <Col xs="12" sm="12" md="12" lg="12">
           <Card>
@@ -209,7 +228,7 @@ render() {
               onSubNav={this.onSubNav}
               handleSubmit={handleSubmit}
               submit={this.submit}
-              cancelOrder={this.cancelOrder}
+              toggleCancelModal={this.toggleCancelModal}
               maxValue={maxValue}
               onUploaded={this.onUploaded}
             />
@@ -258,8 +277,10 @@ const mapDispatchToProps = dispatch =>
 MiscItems = reduxForm({
   form: 'Mouldings',
   onSubmitFail: (errors, dispatch, submitError, props) => {
-    const job_info_message = 'You are missing required shipping info';
-    NotificationManager.error(job_info_message, 'Error', 2000);
+    const job_info_message = 'You are missing required info';
+    if (errors) {
+      NotificationManager.error(job_info_message, 'Error', 2000);
+    } 
   },
 })(MiscItems);
 

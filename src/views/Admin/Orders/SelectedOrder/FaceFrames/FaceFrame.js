@@ -50,7 +50,7 @@ import { renderField, renderCheckboxToggle } from '../../../../../components/Ren
 import CheckoutBox from '../CheckoutBox';
 import StickyBox from 'react-sticky-box';
 import { NotificationManager } from 'react-notifications';
-import { flatten } from 'lodash';
+import CancelModal from '../../../../../utils/Modal';
 
 const cookie = Cookies.get('jwt');
 
@@ -65,7 +65,8 @@ class DoorOrders extends Component {
       loaded: false,
       customerAddress: [],
       updateSubmit: false,
-      files: []
+      files: [],
+      cancelModal: false
     };
   }
 
@@ -117,10 +118,16 @@ class DoorOrders extends Component {
 
   };
 
-  cancelOrder = async () => {
-    await this.props.reset();
+  cancelOrder = (e) => {
+    e.preventDefault();
     this.setState({ updateSubmit: false });
-    await this.props.editable();
+    this.toggleCancelModal();
+    this.props.reset();
+    this.props.editable();
+  };
+
+  toggleCancelModal = () => {
+    this.setState({ cancelModal: !this.state.cancelModal });
   };
 
   onKeyPress(event) {
@@ -155,6 +162,18 @@ class DoorOrders extends Component {
     return (
 
       <div className="animated fadeIn">
+        <CancelModal
+          toggle={this.toggleCancelModal}
+          modal={this.state.cancelModal}
+          title={'Cancel Editing Order?'}
+          message={<div>
+            <p>Are you sure you want to cancel editing this order?</p>
+            <p><strong>Your Changes Will Not Be Saved</strong></p>
+          </div>}
+          action={this.cancelOrder}
+          actionButton={'Cancel Edit'}
+          buttonColor={'danger'}
+        />
         <Row>
           <Col xs="12" sm="12" md="12" lg="9">
             <Card>
@@ -269,7 +288,7 @@ class DoorOrders extends Component {
                 onSubNav={this.onSubNav}
                 handleSubmit={handleSubmit}
                 submit={this.submit}
-                cancelOrder={this.cancelOrder}
+                toggleCancelModal={this.toggleCancelModal}
                 maxValue={maxValue}
                 onUploaded={this.onUploaded}
               />
@@ -337,17 +356,10 @@ const mapDispatchToProps = dispatch =>
 DoorOrders = reduxForm({
   form: 'DoorOrder',
   onSubmitFail: (errors, dispatch, submitError, props) => {
-    const part_list_err = errors?.part_list;
-    const part_list_message = 'You are missing required item info';
-    const job_info_message = 'You are missing required shipping info';
-    if (part_list_err.length > 0 && errors?.job_info) {
+    const job_info_message = 'You are missing required info';
+    if (errors) {
       NotificationManager.error(job_info_message, 'Error', 2000);
-      NotificationManager.error(part_list_message, 'Error', 1900);
-    } else if (part_list_err.length > 0) {
-      NotificationManager.error(part_list_message, 'Error', 2000);
-    } else {
-      NotificationManager.error(job_info_message, 'Error', 2000);
-    }
+    } 
   },
 })(DoorOrders);
 
