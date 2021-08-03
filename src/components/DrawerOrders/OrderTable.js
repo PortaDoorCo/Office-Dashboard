@@ -12,8 +12,13 @@ import {
 } from '../RenderInputs/renderInputs';
 import RenderPriceHolder from '../RenderInputs/RenderPriceHolder';
 import currencyMask from '../../utils/currencyMask';
+import numQty from 'numeric-quantity';
 
 const required = (value) => (value ? undefined : 'Required');
+
+const height_limit = value => numQty(value) < 2.125 ? 'Height is too small' : numQty(value) > 33 ? 'Height is too big' : undefined;
+
+
 
 class OrderTable extends Component {
   render() {
@@ -115,7 +120,7 @@ class OrderTable extends Component {
                         type="text"
                         component={renderNumber}
                         label="height"
-                        validate={required}
+                        validate={height_limit}
                         edit={edit}
                       />
                     </td>
@@ -248,6 +253,6 @@ class OrderTable extends Component {
       <div />
     );
   }
-}
+};
 
 export default connect()(OrderTable);
