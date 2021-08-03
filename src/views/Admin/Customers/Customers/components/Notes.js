@@ -110,13 +110,18 @@ class Customer_Notes extends Component {
         <form onSubmit={handleSubmit(this.submit)}>
           <Row>
             <Col>
+              <h3>Customer Notes</h3>
+            </Col>
+            
+          </Row>
+          <Row>
+            <Col>
               <NotesTable />
             </Col>
           </Row>
           <Row>
             <Col xs='6'>
               <FormGroup>
-                <Label for="exampleText">Customer Notes</Label>
                 <Field
                   name='note'
                   type="textarea"

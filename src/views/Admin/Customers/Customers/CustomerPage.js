@@ -7,18 +7,22 @@ import {
   ModalFooter,
   Button,
   Row,
-  Col
+  Col,
+  CardBody,
+  Table,
 } from 'reactstrap';
 import Edit from './components/Edit';
-import {
-} from '../../../../redux/orders/actions';
+import { uploadFilesToCustomer } from '../../../../redux/customers/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OrderPage from '../../Orders/OrderPage';
 import CompanyOrders from './components/CompanyOrders';
 import Maps from './components/Maps';
 import Notes from './components/Notes';
+import FileUploader from '../../../../components/FileUploader/FileUploader';
+import Cookies from 'js-cookie';
 
+const cookie = Cookies.get('jwt');
 
 class CustomerPage extends Component {
   constructor(props) {
@@ -29,7 +33,7 @@ class CustomerPage extends Component {
       selectedOrder: null,
       modal: false,
       orderEdit: false,
-      orders: []
+      orders: [],
     };
 
     this.toggle = this.toggle.bind(this);
@@ -41,37 +45,39 @@ class CustomerPage extends Component {
       hidePageListOnlyOnePage: true,
       clearSearch: true,
       alwaysShowAllBtns: false,
-      withFirstAndLast: false
+      withFirstAndLast: false,
     };
   }
 
-
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
     if (this.state.orderEdit) {
       this.setState({
-        orderEdit: false
+        orderEdit: false,
       });
     }
   };
 
   editable = () => {
     this.setState({
-      orderEdit: !this.state.orderEdit
+      orderEdit: !this.state.orderEdit,
     });
   };
 
   onEdit = () => {
-    
     this.setState({
-      edit: !this.state.edit
+      edit: !this.state.edit,
     });
   };
 
-  render() {
+  onUploaded = (e) => {
+    const { uploadFilesToCustomer, selectedCompanies } = this.props;
+    uploadFilesToCustomer(selectedCompanies, e, cookie);
+  };
 
+  render() {
     const props = this.props;
     const { locations, defaultCenter, selectedCompanies, orders } = this.props;
 
@@ -79,11 +85,9 @@ class CustomerPage extends Component {
 
     if (this.props.orders.length > 0) {
       updateOrders = orders.filter(
-        x => x.job_info?.customer?.id === this.props.selectedCompanies.id
+        (x) => x.job_info?.customer?.id === this.props.selectedCompanies.id
       );
     }
-
-
 
     return (
       <div className="animated resize">
@@ -91,18 +95,53 @@ class CustomerPage extends Component {
           <ModalHeader toggle={props.toggle}>Companies</ModalHeader>
           <ModalBody>
             <Row>
-   
               <Col>
-        
                 <Edit
                   onEdit={this.onEdit}
                   selectedCompanies={props.selectedCompanies}
                   edit={!this.state.edit}
                 />
-    
-              </Col>
-       
 
+                <Row>
+                  <Col lg="12">
+                    <Card>
+                      <CardBody>
+                        <h4>Attachments</h4>
+                        <Table striped>
+                          <tbody>
+                            {selectedCompanies
+                              ? selectedCompanies.files.map((i, index) => (
+                                <tr>
+                                  <th scope="row">{index + 1}</th>
+                                  <td>{i.name}</td>
+                                  <td style={{ textAlign: 'right' }}>
+                                    <a
+                                      href={i.url}
+                                      rel="noopener noreferrer"
+                                      target="_blank"
+                                    >
+                                      <img
+                                        src={i.url}
+                                        alt={i.name}
+                                        width="50"
+                                        height="50"
+                                      />
+                                    </a>
+                                  </td>
+                                </tr>
+                              ))
+                              : null}
+                          </tbody>
+                        </Table>
+                        <FileUploader
+                          onUploaded={this.onUploaded}
+                          multi={true}
+                        />
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Col>
 
               <Col>
                 <Card>
@@ -112,18 +151,11 @@ class CustomerPage extends Component {
                       locations={locations}
                       defaultCenter={defaultCenter}
                     />
-                    <CompanyOrders
-                      orders={updateOrders}
-                    />
+                    <CompanyOrders orders={updateOrders} />
                   </div>
                 </Card>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
                 <Notes />
               </Col>
-              <Col />
             </Row>
           </ModalBody>
           <ModalFooter>
@@ -133,7 +165,7 @@ class CustomerPage extends Component {
           </ModalFooter>
         </Modal>
 
-        {!this.state.modal ?
+        {!this.state.modal ? (
           <OrderPage
             toggle={this.toggle}
             modal={this.state.modal}
@@ -141,9 +173,8 @@ class CustomerPage extends Component {
             company={selectedCompanies && selectedCompanies.Company}
             editable={this.editable}
             edit={this.state.orderEdit}
-          /> : null
-        }
-
+          />
+        ) : null}
       </div>
     );
   }
@@ -153,18 +184,15 @@ const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   customerOrder: state.Orders.customerOrder,
-  selectedCompanies: state.customers.selectedCompanies
+  selectedCompanies: state.customers.selectedCompanies,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-
+      uploadFilesToCustomer,
     },
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CustomerPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerPage);

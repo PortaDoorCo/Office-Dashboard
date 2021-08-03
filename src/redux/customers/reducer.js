@@ -6,7 +6,8 @@ import {
   DB_NOT_LOADED,
   CUSTOMER_ADDED,
   CUSTOMER_UPDATED,
-  CUSTOMER_DELETED
+  CUSTOMER_DELETED,
+  UPLOAD_FILE_TO_CUSTOMER
 } from './actions';
 
 const initialState = {
@@ -59,6 +60,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         dbLoadComplete: false
+      };
+    case UPLOAD_FILE_TO_CUSTOMER:
+      return {
+        ...state,
+        customerDB: state.customerDB.map((item, index) => {
+          if (item.id !== data.data.id) {
+            return item;
+          }
+          return data.data;
+        }),
+        selectedCompanies: data.data,
       };
     case UPDATE_CUSTOMER:
       return {
