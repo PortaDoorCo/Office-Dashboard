@@ -19,11 +19,12 @@ import {
   getFormValues
 } from 'redux-form';
 import { updateCustomer, submitCustomer } from '../../../../../redux/customers/actions';
-import { renderField, renderDropdownList, renderCheckboxToggle, renderPhone, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs';
+import { renderField, renderDropdownList, renderCheckboxToggle, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs';
 import Cookies from 'js-cookie';
 import 'react-phone-number-input/style.css';
 import normalizePhone from './normalizerPhone';
 import states from '../../AddCustomer/states';
+import FileUploader from '../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
 const required = value => (value ? undefined : 'Required');
@@ -35,7 +36,8 @@ class Edit extends Component {
     this.state = {
       Company: [],
       Contact: [],
-      contactInfo: false
+      contactInfo: false,
+      files: []
     };
   }
 
@@ -49,6 +51,12 @@ toggleInfo = () => {
   });
 }
 
+onUploaded = (e) => {
+  const id = e.map((i) => i.id);
+  const a = [...this.state.files, id];
+  this.setState({ files: a });
+};
+
 
 submit = async (values, e) => {
 
@@ -58,6 +66,7 @@ submit = async (values, e) => {
     State: values.State && values.State.abbreviation,
     Shipping_State: values.Shipping_State && values.Shipping_State.abbreviation,
     PMT_TERMS: values.PMT_TERMS.NAME,
+    files: this.state.files,
   };
 
 
@@ -739,6 +748,21 @@ render() {
                         edit={edit}
                       />
                     </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Card>
+                      <CardBody>
+                        <FormGroup>
+                          <h3>Attachments</h3>
+                          <FileUploader
+                            onUploaded={this.onUploaded}
+                            multi={true}
+                          />
+                        </FormGroup>
+                      </CardBody>
+                    </Card>
                   </Col>
                 </Row>
 

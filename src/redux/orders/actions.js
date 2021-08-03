@@ -2,11 +2,9 @@ import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 import db_url from '../db_url';
 
-
 export const TOGGLE = 'TOGGLE';
 export const LOAD_ORDERS = 'LOAD_ORDERS';
 export const SUBMIT_ORDER = 'SUBMIT_ORDER';
-
 
 export const SHIPPING_ADDRESS = 'SHIPPING_ADDRESS';
 
@@ -38,8 +36,6 @@ export const UPDATE_NOTES = 'UPDATE_NOTES';
 
 export const UPDATE_SELECTED_ORDER = 'UPDATE_SELECTED_ORDER';
 
-
-
 export function orderAdded(res) {
   return async function (dispatch) {
     return dispatch({
@@ -67,96 +63,86 @@ export function orderDeleted(res) {
   };
 }
 
-
-
 export function setSelectedOrder(data) {
-
   return async function (dispatch) {
     return await dispatch({
       type: SET_SELECTED_ORDER,
-      data: data
+      data: data,
     });
   };
 }
 
 export function updateSelectedOrder(data) {
-
   return async function (dispatch) {
     return await dispatch({
       type: UPDATE_SELECTED_ORDER,
-      data: data
+      data: data,
     });
   };
 }
 
-
 export function uploadFilesToOrder(order, e, cookie) {
-
   const orderId = order.id;
 
-  const id = e.map(i => (i.id));
-  const orderIds = order.files.map(i => i.id);
+  const id = e.map((i) => i.id);
+  const orderIds = order.files.map((i) => i.id);
 
   const fileIds = orderIds.concat(id);
 
-
   const files = {
-    files: fileIds
+    files: fileIds,
   };
 
   return async function (dispatch) {
-
     try {
       const res = await axios.put(`${db_url}/orders/${orderId}`, files, {
         headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
+          Authorization: `Bearer ${cookie}`,
+        },
       });
       const data = await res;
-    
+
       return dispatch({
         type: UPLOAD_FILE_TO_ORDER,
-        data: data
+        data: data,
       });
     } catch (error) {
       console.error(error);
-      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
     }
   };
 }
 
-
 export function loadOrders(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/orders`,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
-      }
-    );
+    const res = await fetch(`${db_url}/orders`, {
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
     const data = await res.json();
     return await dispatch({
       type: LOAD_ORDERS,
-      data: data
+      data: data,
     });
   };
 }
 
 export function loadAllOrders(cookie) {
- 
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/orders/all`,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
-      }
-    );
+    const res = await fetch(`${db_url}/orders/all`, {
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
     const data = await res.json();
     return await dispatch({
       type: LOAD_ORDERS,
-      data: data
+      data: data,
     });
   };
 }
@@ -164,33 +150,34 @@ export function loadAllOrders(cookie) {
 export function submitOrder(order, cookie) {
   return async function (dispatch) {
     try {
-      const res = axios.post(`${db_url}/orders/`, order,
-        {
-          headers: {
-            'Authorization': `Bearer ${cookie}`
-          }
-        }
-      );
+      const res = axios.post(`${db_url}/orders/`, order, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
       const data = await res;
       return dispatch({
         type: SUBMIT_ORDER,
-        data: data
+        data: data,
       });
     } catch (error) {
       console.error(error);
-      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
     }
   };
 }
-
 
 export function deleteOrder(orderId, cookie) {
   return async function (dispatch) {
     try {
       const res = await axios.delete(`${db_url}/orders/${orderId}`, {
         headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
+          Authorization: `Bearer ${cookie}`,
+        },
       });
       const data = await res;
       return dispatch({
@@ -198,187 +185,188 @@ export function deleteOrder(orderId, cookie) {
       });
     } catch (error) {
       console.error(error);
-      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
     }
   };
 }
 
-
 export function updateOrder(orderId, order, cookie) {
-
   return async function (dispatch) {
-
     try {
       const res = await axios.put(`${db_url}/orders/${orderId}`, order, {
         headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
+          Authorization: `Bearer ${cookie}`,
+        },
       });
       const data = await res;
-    
+
       return dispatch({
         type: UPDATE_ORDER,
-        data: data
+        data: data,
       });
     } catch (error) {
       console.error(error);
-      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
     }
   };
 }
 
-
 export function updateStatus(orderId, key, status, cookie) {
-
   const item = {
     status: status.status,
     tracking: [
       ...key.tracking,
       {
-        'status': status.status,
-        'date': new Date()
-      }
-    ]
+        status: status.status,
+        date: new Date(),
+      },
+    ],
   };
   return async function (dispatch) {
     try {
       const res = await axios.put(`${db_url}/orders/status/${orderId}`, item, {
         headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
+          Authorization: `Bearer ${cookie}`,
+        },
       });
       const data = await res;
       return dispatch({
         type: UPDATE_STATUS,
-        data: data
+        data: data,
       });
     } catch (error) {
       console.error(error);
-      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
     }
   };
 }
-
 
 export function socketReceiveUpdateStatus(res) {
   return async function (dispatch) {
     return dispatch({
       type: SOCKET_RECEIVE_UPDATE_STATUS,
-      data: res
+      data: res,
     });
   };
 }
 
-
 export function updateBalance(orderId, balance, cookie) {
-
-
-
   let item;
-  
 
-  if(balance.status === 'Quote'){
+  if (balance.status === 'Quote') {
     item = {
       balance_due: balance.balance_due,
       balance_paid: balance.balance_paid,
       balance_history: [
         ...balance.balance_history,
         {
-          'balance_due': parseFloat(balance.balance_due),
-          'balance_paid': parseFloat(balance.balance_paid),
-          'payment_method': balance.payment_method,
-          'date': balance.payment_date
-        }
+          balance_due: parseFloat(balance.balance_due),
+          balance_paid: parseFloat(balance.balance_paid),
+          payment_method: balance.payment_method,
+          date: balance.payment_date,
+        },
       ],
       status: 'Ordered',
       tracking: [
         ...balance.tracking,
         {
-          'status': 'Ordered',
-          'date': new Date()
-        }
-      ]
+          status: 'Ordered',
+          date: new Date(),
+        },
+      ],
     };
-  }else {
+  } else {
     item = {
       balance_due: balance.balance_due,
       balance_paid: balance.balance_paid,
       balance_history: [
         ...balance.balance_history,
         {
-          'balance_due': parseFloat(balance.balance_due),
-          'balance_paid': parseFloat(balance.balance_paid),
-          'payment_method': balance.payment_method,
-          'date': balance.payment_date
-        }
+          balance_due: parseFloat(balance.balance_due),
+          balance_paid: parseFloat(balance.balance_paid),
+          payment_method: balance.payment_method,
+          date: balance.payment_date,
+        },
       ],
     };
   }
-
-
 
   return async function (dispatch) {
     try {
       await axios.put(`${db_url}/orders/${orderId}`, item, {
         headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
+          Authorization: `Bearer ${cookie}`,
+        },
       });
       return dispatch({
         type: UPDATE_BALANCE,
       });
     } catch (error) {
       console.error(error);
-      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
     }
   };
 }
 
 export function getDeliveries(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/deliveries`,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
-      }
-    );
+    const res = await fetch(`${db_url}/deliveries`, {
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
     const data = await res.json();
     return await dispatch({
       type: LOAD_DELIVERIES,
-      data: data
+      data: data,
     });
   };
 }
 
-
-
 export function updateNotes(orderId, balance, cookie) {
-
   const item = {
     Conversation_Notes: [
       ...balance.Conversation_Notes,
       {
-        'note': balance.note,
-        'date': new Date()
-      }
-    ]
+        note: balance.note,
+        date: new Date(),
+      },
+    ],
   };
 
   return async function (dispatch) {
     try {
       await axios.put(`${db_url}/orders/${orderId}`, item, {
         headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
+          Authorization: `Bearer ${cookie}`,
+        },
       });
       return dispatch({
         type: UPDATE_NOTES,
       });
     } catch (error) {
       console.error(error);
-      NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
     }
   };
 }
-

@@ -13,6 +13,7 @@ export const UPDATE_NOTES = 'UPDATE_NOTES';
 export const CUSTOMER_ADDED = 'CUSTOMER_ADDED';
 export const CUSTOMER_UPDATED = 'CUSTOMER_UPDATED';
 export const CUSTOMER_DELETED = 'CUSTOMER_DELETED';
+export const UPLOAD_FILE_TO_CUSTOMER = 'UPLOAD_FILE_TO_CUSTOMER';
 
 
 export function setSelectedCompanies(data) {
@@ -92,6 +93,42 @@ export function updateCustomer(custId, customer, cookie) {
     } catch (error) {
       console.error(error);
       NotificationManager.error('There was an problem with your submission', 'Error', 2000);
+    }
+  };
+}
+
+export function uploadFilesToCustomer(customer, e, cookie) {
+  const orderId = customer.id;
+
+  const id = e.map((i) => i.id);
+  const orderIds = customer.files.map((i) => i.id);
+
+  const fileIds = orderIds.concat(id);
+
+  const files = {
+    files: fileIds,
+  };
+
+  return async function (dispatch) {
+    try {
+      const res = await axios.put(`${db_url}/companyprofiles/${orderId}`, files, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res;
+
+      return dispatch({
+        type: UPLOAD_FILE_TO_CUSTOMER,
+        data: data,
+      });
+    } catch (error) {
+      console.error(error);
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
     }
   };
 }

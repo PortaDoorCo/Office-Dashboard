@@ -65,9 +65,9 @@ let Notes_Table = props =>  {
         <Table striped>
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Notes</th>
-              <th>Submitted By:</th>
+              <th width={'25%'}>Date</th>
+              <th width={'50%'}>Notes</th>
+              <th width={'15%'}>Submitted By:</th>
               <th />
             </tr>
           </thead>
@@ -75,11 +75,11 @@ let Notes_Table = props =>  {
             {formState && formState.Customer_Notes
               ? formState.Customer_Notes.reverse().map((i, index) => (
                 <tr key={index}>
-                  <td width={250}>
+                  <td width={'25%'}>
                     {moment(i.date).format('MMMM Do YYYY, h:mm:ss a')}
                   </td>
-                  <td>{i.note}</td>
-                  <td>{i.Name}</td>
+                  <td width={'50%'}>{i.note}</td>
+                  <td width={'15%'}>{i.Name}</td>
                   <td>
                     <Button
                       color="danger"
