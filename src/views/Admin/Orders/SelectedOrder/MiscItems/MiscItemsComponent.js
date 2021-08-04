@@ -41,7 +41,13 @@ class MiscItems extends Component {
      customerAddress: [],
      updateSubmit: false,
      files: [],
-     cancelModal: false
+     cancelModal: false,
+     customerReminder: false,
+   };
+
+
+   toggleReminderModal = () => {
+     this.setState({ customerReminder: !this.state.customerReminder });
    };
 
    onKeyPress(event) {
@@ -142,6 +148,8 @@ render() {
                           formState={formState}
                           handleAddress={this.handleAddress}
                           edit={edit}
+                          toggleReminderModal={this.toggleReminderModal}
+                          customerReminder={this.state.customerReminder}
                         />
                       </Suspense>
                     </FormSection>

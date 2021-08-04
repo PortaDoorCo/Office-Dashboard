@@ -59,8 +59,8 @@ class JobInfo extends Component {
       ) {
         const customer = formState.job_info.customer;
 
-        if (customer.Notes) {
-          this.toggleReminderModal();
+        if (customer?.Notes) {
+          this.props.toggleReminderModal();
         }
 
         this.props.dispatch(
@@ -135,8 +135,8 @@ class JobInfo extends Component {
       <div>
         <CustomerReminder
           {...this.props}
-          toggle={this.toggleReminderModal}
-          modal={this.state.customerReminder}
+          toggle={this.props.toggleReminderModal}
+          modal={this.props.customerReminder}
         />
         <Row>
           <Col lg="10" />
