@@ -198,10 +198,6 @@ class BalanceHistory extends Component {
       0
     );
 
-    // const submit = async (values, e) => {
-    //   console.log({values});
-    // };
-
     const onKeyPress = (event) => {
       if (event.which === 13 /* Enter */) {
         event.preventDefault();

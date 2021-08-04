@@ -69,8 +69,6 @@ const StatusTable = (props) => {
     setData(filteredOrders);
   }, [orders, props.filterStatus, props.accountName, props.startDate, props.endDate]);
 
-  console.log({account_name: props.accountName});
-
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
     const status = {

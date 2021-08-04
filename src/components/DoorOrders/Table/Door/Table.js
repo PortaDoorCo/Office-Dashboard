@@ -372,14 +372,14 @@ const DoorTable = ({
 
 
   const glass_note_check = (index) => {
-    console.log({index});
+
 
     const obj_names = Object.entries(formState?.part_list[i]?.dimensions[index]);
-    console.log({obj_names});
+
 
     const filter_obj = obj_names.filter(n => n[0].includes('glass_check'));
 
-    console.log({filter_obj});
+
 
     const check_if_glass = filter_obj.filter(n => n[1]).map(k => k.includes(true)).includes(true);
 

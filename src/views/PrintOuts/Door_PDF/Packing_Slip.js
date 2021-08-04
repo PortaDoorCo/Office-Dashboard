@@ -4,8 +4,6 @@ import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
-  console.log({ data });
-
   const qty = data.part_list.map((part, i) => {
     return part.dimensions
       .map((dim, index) => {
@@ -29,30 +27,26 @@ export default (data, breakdowns) => {
     groupBy(Glass_Selection(data), (x) => x?.woodtype?.NAME)
   );
 
-  console.log({ a });
-
   const b = a
     .map((woodtype) => {
-      console.log({ woodtype });
-
-      return woodtype.map(v => {
-        console.log({v});
+      return woodtype.map((v) => {
         return {
           ...v,
           dimensions: flatten(
-            v.dimensions.map((d) => ({ ...d, name: getName(v), panel: v.panel, profile: v.profile }))
+            v.dimensions.map((d) => ({
+              ...d,
+              name: getName(v),
+              panel: v.panel,
+              profile: v.profile,
+            }))
           ),
         };
       });
-
-      
     })
     .map((t, x) => ({
       ...t[0],
       dimensions: flatten(t.map((c) => c.dimensions)),
     }));
-
-  console.log({b});
 
   const table_body = b.map((i, index) => {
     const tableBody = [

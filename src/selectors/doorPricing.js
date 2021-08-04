@@ -232,10 +232,6 @@ export const itemPriceSelector = createSelector(
       if (part?.orderType?.value === 'Face_Frame') {
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
-
-            console.log({part});
-
-
             const width_input = Math.ceil(numQty(i.width));
             const width = Math.ceil(numQty(i.width)) < 24 ? 18 : Math.ceil(numQty(i.width)) >= 24 && Math.ceil(numQty(i.width)) <= 48 ? 24 : 36;
             const height = Math.ceil(numQty(i.height));

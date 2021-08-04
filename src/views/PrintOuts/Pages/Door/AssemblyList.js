@@ -19,9 +19,9 @@ export default (
   
 
   for (let i = 0; i < p.assembly_list; i++) {
-    console.log({data});
+
     Glass_Selection(data, 'Page').map(j => {
-      console.log({j});
+
       return Content.push(AssemblyList(j, breakdowns));
     });
 

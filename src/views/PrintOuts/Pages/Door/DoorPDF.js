@@ -49,30 +49,21 @@ export default (
     );
   }
 
-  console.log({data});
-
   for (let i = 0; i < p.invoice; i++) {
     Content.push(Invoice(data, pricing));
   }
 
   for (let i = 0; i < p.assembly_list; i++) {
-
     const type = 'Page';
 
-    const newParts = Glass_Selection(data, type).map(j => {
-      console.log({j});
-      console.log({data});
+    const newParts = Glass_Selection(data, type).map((j) => {
       const newData = { ...data, part_list: j };
       return newData;
     });
 
-    newParts.map(k => {
+    newParts.map((k) => {
       return Content.push(AssemblyList(k, breakdowns));
     });
-
-    
-    
-    
   }
 
   for (let i = 0; i < p.panels; i++) {
@@ -103,12 +94,10 @@ export default (
     );
   }
 
-
   for (let i = 0; i < p.materials; i++) {
     Content.push(MaterialsList(data, breakdowns));
   }
 
-  
   for (let i = 0; i < p.packing_slip; i++) {
     Content.push(Packing_Slip(data, breakdowns));
   }
@@ -126,7 +115,6 @@ export default (
     }
   });
 
-
   const fileName = `Order #${data.orderNum}`;
 
   const documentDefinition = {
@@ -134,33 +122,37 @@ export default (
     pageOrientation: 'portrait',
     content: ContentSorted,
     pageMargins: [40, 40, 40, 60],
-    footer: function(currentPage, pageCount) { 
+    footer: function (currentPage, pageCount) {
       return {
         columns: [
           {
             stack: [
               {
                 text: moment().format('MM-D-YYYY'),
-                style: 'warrantyFont'
+                style: 'warrantyFont',
               },
               {
-                text: currentPage.toString() + ' of ' + pageCount, style: 'warrantyFont'
-              }
+                text: currentPage.toString() + ' of ' + pageCount,
+                style: 'warrantyFont',
+              },
             ],
-            width: 250
+            width: 250,
           },
           {
             stack: [
               {
-                text: ' ', style: 'warrantyFont',
+                text: ' ',
+                style: 'warrantyFont',
               },
               {
-                text: fileName, style: 'warrantyFont', alignment: 'right'
-              }
-            ]  
-          }
+                text: fileName,
+                style: 'warrantyFont',
+                alignment: 'right',
+              },
+            ],
+          },
         ],
-        margin: [40,10,40,0]
+        margin: [40, 10, 40, 0],
       };
     },
     pageBreakBefore: function (

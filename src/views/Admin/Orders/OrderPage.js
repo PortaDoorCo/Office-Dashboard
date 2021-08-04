@@ -224,9 +224,6 @@ class OrderPage extends Component {
             ? mouldingsState
             : [];
 
-    console.log({ data });
-    console.log({ selectedOrder });
-
     let newOrder = {
       ...data,
       job_info: {
@@ -254,8 +251,6 @@ class OrderPage extends Component {
     newOrder['files'] = [];
     newOrder['Rush'] = false;
     newOrder['Sample'] = false;
-
-    console.log({ newOrder });
 
     await submitOrder(newOrder, cookie);
     await this.props.toggle();
@@ -403,7 +398,6 @@ class OrderPage extends Component {
     } else if (data.orderType === 'Face Frame') {
       FaceFramesPDF(data, printerSettings, this.props.pricing);
     }
-    
   };
 
   downloadBoxLabel = async (printerSettings) => {
@@ -504,9 +498,6 @@ class OrderPage extends Component {
       ];
     }
 
-
-    console.log({pricing: this.props.pricing});
-
     return (
       <div className="animated noPrint resize">
         <CopyModal
@@ -555,7 +546,7 @@ class OrderPage extends Component {
                         <Chat style={{ width: '40', height: '40' }} />
                       </IconButton>
                     </Tooltip>
-                    
+
                     <Tooltip title="View Files" placement="top">
                       <IconButton onClick={this.toggleFiles}>
                         <Attachment style={{ width: '40', height: '40' }} />

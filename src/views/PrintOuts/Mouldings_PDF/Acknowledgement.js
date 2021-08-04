@@ -27,7 +27,7 @@ export default (data, breakdowns) => {
 
   data.mouldings.map(i  => {
 
-    console.log({i});
+
 
     let feet = (i.item.MOULDING_WIDTH * 12) / 144;
     let waste = feet * 1.25;

@@ -5,9 +5,6 @@ import pdfDoorPricing from '../../../selectors/pdfFaceFramePricing';
 import pdfFinishing from '../../../selectors/pdfFinishingPricing';
 
 export default (data, pricing) => {
-
-  console.log({data});
-
   const qty = data.part_list.map((part, i) => {
     return part.dimensions
       .map((dim, index) => {
@@ -44,10 +41,6 @@ export default (data, pricing) => {
 
   const order_sub_total = misc_total + discountSubTotal;
 
-
-
-  console.log({pricing});
-
   const prices = pdfDoorPricing(data?.part_list, pricing[0]);
   const finishing = pdfFinishing(data?.part_list, pricing[0]);
   const finishingSubtotal = finishing.map((i, index) => {
@@ -60,14 +53,9 @@ export default (data, pricing) => {
     }
   });
 
-  const finishingTotal = parseFloat(finishingSubtotal.reduce((acc, item) => acc + item, 0));
-
-  console.log({finishingSubtotal});
-  console.log({finishingTotal});
-
-  console.log({prices});
-
-
+  const finishingTotal = parseFloat(
+    finishingSubtotal.reduce((acc, item) => acc + item, 0)
+  );
 
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
@@ -129,9 +117,7 @@ export default (data, pricing) => {
 
               {
                 text: `${
-                  part.face_frame_design
-                    ? part.face_frame_design.NAME : ''
-                    
+                  part.face_frame_design ? part.face_frame_design.NAME : ''
                 }`,
                 style: 'fonts',
               },
@@ -145,7 +131,7 @@ export default (data, pricing) => {
                 text: `${part.notes ? part.notes : ''}`,
                 style: 'headerFont',
                 alignment: 'center',
-              }
+              },
             ],
           },
           {
@@ -678,8 +664,8 @@ export default (data, pricing) => {
       margin: [0, 0, 0, 0],
       alignment: 'right',
     },
-    finishingTotal > 0 ?
-      {
+    finishingTotal > 0
+      ? {
         columns: [
           { text: '', style: 'totals', width: 317, decoration: 'underline' },
           {
@@ -697,7 +683,8 @@ export default (data, pricing) => {
           },
         ],
         margin: [0, 10, 0, 0],
-      } : null,
+      }
+      : null,
     {
       columns: [
         { text: '', style: 'totals', width: 317, decoration: 'underline' },

@@ -45,7 +45,7 @@ const SalesReport = (props) => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.created_at);
 
-      console.log({date: item});
+   
 
       if(filterStatus === 'All'){
 
@@ -72,13 +72,11 @@ const SalesReport = (props) => {
   const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].created_at) : new Date();
 
   const salesPerson = props.sale ? props.salesReps.filter(item => {
-    console.log({item});
+
     return item.id === props.sale;
   }) : [];
 
-  console.log({data});
-  console.log(props.sale);
-  console.log(props.salesReps);
+
   
   return (
     role && (role.type === 'authenticated' || role.type === 'owner') ? 
