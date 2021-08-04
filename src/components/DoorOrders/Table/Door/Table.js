@@ -21,6 +21,7 @@ import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
 
 const required = (value) => (value ? undefined : 'Required');
+const trim_val = value => (value.trim('')  ? undefined : 'Required');
 
 const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -167,7 +168,7 @@ const DoorTable = ({
     }
 
     if (value > 1) {
-      if(part.construction?.value === 'Cope'){
+      if (part.construction?.value === 'Cope') {
         dispatch(
           change(
             'DoorOrder',
@@ -185,7 +186,6 @@ const DoorTable = ({
         );
       }
 
-
       if (part.panel?.NAME === 'Glass') {
         for (let j = 0; j < value; j++) {
           dispatch(
@@ -197,8 +197,6 @@ const DoorTable = ({
           );
         }
       }
-
-      
     } else {
       dispatch(
         change(
@@ -253,7 +251,7 @@ const DoorTable = ({
     }
 
     if (value > 1) {
-      if(part.construction?.value === 'Cope'){
+      if (part.construction?.value === 'Cope') {
         dispatch(
           change(
             'DoorOrder',
@@ -270,7 +268,6 @@ const DoorTable = ({
           )
         );
       }
-
     } else {
       dispatch(
         change(
@@ -329,7 +326,6 @@ const DoorTable = ({
   };
 
   const addFields = (i) => {
-
     const construction = formState?.part_list[i]?.construction?.value;
     const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
@@ -340,24 +336,24 @@ const DoorTable = ({
       panelsW: 1,
       leftStile: leftStileWidth
         ? fraction(numQty(leftStileWidth))
-        : (construction === 'Cope' && profile) ?
-          fraction(profile) :
-          fraction(design),
+        : construction === 'Cope' && profile
+          ? fraction(profile)
+          : fraction(design),
       rightStile: rightStileWidth
         ? fraction(numQty(rightStileWidth))
-        : (construction === 'Cope' && profile) ?
-          fraction(profile) :
-          fraction(design) ,
+        : construction === 'Cope' && profile
+          ? fraction(profile)
+          : fraction(design),
       topRail: topRailWidth
         ? fraction(numQty(topRailWidth))
-        : (construction === 'Cope' && profile) ?
-          fraction(profile) :
-          fraction(design),
+        : construction === 'Cope' && profile
+          ? fraction(profile)
+          : fraction(design),
       bottomRail: bottomRailWidth
         ? fraction(numQty(bottomRailWidth))
-        : (construction === 'Cope' && profile) ?
-          fraction(profile) :
-          fraction(design),
+        : construction === 'Cope' && profile
+          ? fraction(profile)
+          : fraction(design),
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
@@ -370,24 +366,20 @@ const DoorTable = ({
     });
   };
 
-
   const glass_note_check = (index) => {
+    const obj_names = Object.entries(
+      formState?.part_list[i]?.dimensions[index]
+    );
 
+    const filter_obj = obj_names.filter((n) => n[0].includes('glass_check'));
 
-    const obj_names = Object.entries(formState?.part_list[i]?.dimensions[index]);
-
-
-    const filter_obj = obj_names.filter(n => n[0].includes('glass_check'));
-
-
-
-    const check_if_glass = filter_obj.filter(n => n[1]).map(k => k.includes(true)).includes(true);
+    const check_if_glass = filter_obj
+      .filter((n) => n[1])
+      .map((k) => k.includes(true))
+      .includes(true);
 
     return check_if_glass;
-
-
   };
-
 
   return (
     <div>
@@ -674,21 +666,18 @@ const DoorTable = ({
               </FormGroup>
             </Col>
             <Col>
-              {
-                parseInt(formState.part_list[i].dimensions[index].panelsH) >
-                  1 &&
-                parseInt(formState.part_list[i].dimensions[index].panelsW) ===
-                  1 ? (
-                    <FormGroup>
-                      <strong>Uneven Split</strong>
-                      <Field
-                        name={`${table}.unevenCheck`}
-                        component={renderCheckboxToggle}
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  ) : null
-              }
+              {parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 &&
+              parseInt(formState.part_list[i].dimensions[index].panelsW) ===
+                1 ? (
+                  <FormGroup>
+                    <strong>Uneven Split</strong>
+                    <Field
+                      name={`${table}.unevenCheck`}
+                      component={renderCheckboxToggle}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                ) : null}
             </Col>
           </Row>
 
@@ -718,7 +707,11 @@ const DoorTable = ({
               <Row>
                 {Array.from(
                   Array(
-                    parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) ? parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) : 0
+                    parseInt(formState.part_list[i]?.dimensions[index]?.panelsH)
+                      ? parseInt(
+                          formState.part_list[i]?.dimensions[index]?.panelsH
+                      )
+                      : 0
                   ).keys()
                 )
                   .slice(1)
@@ -807,7 +800,7 @@ const DoorTable = ({
                 component={renderField}
                 edit={edit}
                 label="notes"
-                validate={glass_note_check(index) ? required : null}
+                validate={glass_note_check(index) ? [required, trim_val] : null}
               />
             </Col>
             <Col xs="5"></Col>
