@@ -66,9 +66,14 @@ class DoorOrders extends Component {
       customerAddress: [],
       updateSubmit: false,
       files: [],
-      cancelModal: false
+      cancelModal: false,
+      customerReminder: false,
     };
   }
+
+  toggleReminderModal = () => {
+    this.setState({ customerReminder: !this.state.customerReminder });
+  };
 
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -191,6 +196,8 @@ class DoorOrders extends Component {
                       handleAddress={this.handleAddress}
                       edit={edit}
                       shippingMethods={shippingMethods}
+                      toggleReminderModal={this.toggleReminderModal}
+                      customerReminder={this.state.customerReminder}
                     />
                   </FormSection>
 

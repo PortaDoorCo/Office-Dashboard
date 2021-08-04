@@ -76,9 +76,15 @@ class DrawerOrder extends Component {
       loaded: false,
       customerAddress: [],
       files: [],
-      cancelModal: false
+      cancelModal: false,
+      customerReminder: false,
     };
   }
+
+  toggleReminderModal = () => {
+    this.setState({ customerReminder: !this.state.customerReminder });
+  };
+
 
   reloadPage = () => {
     // return this.props.history.push('/dashboard')
@@ -212,6 +218,8 @@ class DrawerOrder extends Component {
                         loaded={this.state.loaded}
                         handleAddress={this.handleAddress}
                         edit={edit}
+                        toggleReminderModal={this.toggleReminderModal}
+                        customerReminder={this.state.customerReminder}
                       />
                     </FormSection>
                   ) : null}
