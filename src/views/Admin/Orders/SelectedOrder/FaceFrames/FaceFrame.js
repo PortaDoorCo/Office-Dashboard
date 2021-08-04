@@ -94,8 +94,6 @@ class DoorOrders extends Component {
       balance
     } = this.props;
 
-    console.log({values});
-
     const order = {
       ...values,
       job_info: values.job_info,

@@ -225,7 +225,7 @@ export const itemPriceSelector = createSelector(
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map((i) => {
-          console.log({ part });
+      
 
           const width_input = numQty(i.width);
           const width =
@@ -267,14 +267,14 @@ export const finishingSelector = createSelector(
   
       if (part.dimensions) {
         const linePrice = part.dimensions.map((i) => {
-          console.log({ part });
+    
           const width_input = numQty(i.width);
           const height = numQty(i.height);
           const finish = part.face_frame_finishing
             ? part.face_frame_finishing.PRICE
             : 0;
 
-          console.log({finiishhh: finish});
+         
   
           const width_finish = width_input >= 35 ? finish * 0.25 : 0;
           const height_finish = height >= 97 ? finish * 0.25 : 0;
@@ -284,9 +284,7 @@ export const finishingSelector = createSelector(
   
           const finishing = finish + (width_finish + height_finish + opening_add);
   
-          console.log({finishing});
-          console.log({width_finish});
-          console.log({height_finish});
+  
   
           if (height > -1) {
             return finishing;
@@ -295,7 +293,7 @@ export const finishingSelector = createSelector(
           }
         });
   
-        console.log({linePrice});
+    
         return linePrice;
       } else {
         return 0;
@@ -388,7 +386,7 @@ export const taxSelector = createSelector(
     finishTotalSelector
   ],
   (subTotal, tax, discount, dis, misc, state, finish) => {
-    console.log({finish});
+ 
     return (
       (subTotal.reduce((acc, item) => acc + item, 0) - discount + misc + finish) * tax
     );
@@ -398,8 +396,7 @@ export const taxSelector = createSelector(
 export const totalSelector = createSelector(
   [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector, finishTotalSelector],
   (subTotal, tax, misc, discount, finish) => {
-    console.log({finish});
-    console.log({discount});
+
     return (
       subTotal.reduce((acc, item) => acc + item, 0) + finish + tax + misc - discount
     );

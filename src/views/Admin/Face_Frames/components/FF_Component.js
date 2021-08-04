@@ -78,7 +78,7 @@ class DoorOrders extends Component {
       subNavModal: false,
       subNavPage: 'misc',
       customerReminder: false,
-      cancelModal: false
+      cancelModal: false,
     };
   }
 
@@ -210,8 +210,6 @@ class DoorOrders extends Component {
       addPriceSelector,
       finish,
     } = this.props;
-
-    console.log({ total });
 
     return (
       <div className="animated fadeIn">
@@ -454,7 +452,7 @@ DoorOrders = reduxForm({
     const job_info_message = 'You are missing required info';
     if (errors) {
       NotificationManager.error(job_info_message, 'Error', 2000);
-    } 
+    }
   },
 })(DoorOrders);
 

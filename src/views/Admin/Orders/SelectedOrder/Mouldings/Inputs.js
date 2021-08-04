@@ -3,7 +3,7 @@ import { Field } from 'redux-form';
 import {
   renderNumber,
   renderDropdownList,
-  renderInt
+  renderInt,
 } from '../../../../../components/RenderInputs/renderInputs';
 import {
   Button,
@@ -31,16 +31,14 @@ const thickness = [
     name: 'Select Grade',
     db_name: 'SELECT_GRADE',
     value: 2,
-  }
+  },
 ];
 
 let Inputs = (props) => {
   const { fields, formState, linePrices, edit, part_list } = props;
-  const filtered_woodtypes = part_list?.woodtypes.filter((wood) => wood.mouldings === true);
-
-  console.log({part_list});
-  
-
+  const filtered_woodtypes = part_list?.woodtypes.filter(
+    (wood) => wood.mouldings === true
+  );
 
   return (
     <div>
@@ -59,7 +57,6 @@ let Inputs = (props) => {
         </thead>
         <tbody>
           {fields.map((table, index) => {
-            console.log(formState?.mouldings[index]?.style?.value);
             return (
               <tr key={index}>
                 <td style={{ width: '90px' }}>
@@ -98,7 +95,10 @@ let Inputs = (props) => {
                   <Field
                     name={`${table}.woodtype`}
                     component={renderDropdownList}
-                    data={filtered_woodtypes.filter((wood) => wood[formState?.mouldings[index]?.grade?.db_name])}
+                    data={filtered_woodtypes.filter(
+                      (wood) =>
+                        wood[formState?.mouldings[index]?.grade?.db_name]
+                    )}
                     // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="NAME"
@@ -110,7 +110,10 @@ let Inputs = (props) => {
                   <Field
                     name={`${table}.item`}
                     component={renderDropdownList}
-                    data={part_list.mouldings.filter(item => item.Style === formState?.mouldings[index]?.style?.value)}
+                    data={part_list.mouldings.filter(
+                      (item) =>
+                        item.Style === formState?.mouldings[index]?.style?.value
+                    )}
                     // onChange={(e) => changeMiscItem(e, index)}
                     valueField="value"
                     textField="NAME"

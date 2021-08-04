@@ -6,15 +6,8 @@ import Size from '../Breakdowns/Doors/Size';
 import SlabSize from '../Breakdowns/Doors/SlabSize';
 import GlassSort from '../Sorting/GlassSort';
 
-
 export default (data, breakdowns) => {
-
-  console.log({data});
-
   const table_content = data.part_list.map((i, index) => {
-
-    console.log({i});
-    
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -64,7 +57,6 @@ export default (data, breakdowns) => {
       });
     } else {
       GlassSort(i).forEach((item, index) => {
-
         tableBody.push([
           { text: item.item, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
@@ -119,7 +111,6 @@ export default (data, breakdowns) => {
       });
     }
 
-
     return [
       {
         margin: [0, 0, 0, 0],
@@ -163,7 +154,9 @@ export default (data, breakdowns) => {
           {
             stack: [
               {
-                text: `Thickness:  ${i.thickness ? i.thickness.thickness_2 : ''}"`,
+                text: `Thickness:  ${
+                  i.thickness ? i.thickness.thickness_2 : ''
+                }"`,
                 style: 'fonts',
               },
               {
@@ -216,7 +209,6 @@ export default (data, breakdowns) => {
       },
     ];
   });
-
 
   return [
     {
@@ -275,18 +267,20 @@ export default (data, breakdowns) => {
     {
       stack: [
         {
-          text: `${data.orderNum}`, style: 'orderNum' ,
+          text: `${data.orderNum}`,
+          style: 'orderNum',
         },
         {
           columns: [
             {
-              text: `${data.job_info.customer.Company}` , 
+              text: `${data.job_info.customer.Company}`,
             },
             {
-              text: `PO: ${data.job_info.poNum}`, alignment: 'right' 
+              text: `PO: ${data.job_info.poNum}`,
+              alignment: 'right',
             },
           ],
-        }
+        },
       ],
       margin: [0, 10],
     },
