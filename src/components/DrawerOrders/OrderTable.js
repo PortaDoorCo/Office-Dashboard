@@ -47,6 +47,7 @@ class OrderTable extends Component {
     const checkScoop = (index, e) => {
       // const value = e.target.value;
       console.log({ e });
+      const str = 'WITH SCOOP';
 
       if(e.NAME === 'Yes'){
         dispatch(
@@ -54,6 +55,14 @@ class OrderTable extends Component {
             'DrawerOrder',
             `part_list[${i}].dimensions[${index}].notes`,
             'WITH SCOOP'
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DrawerOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            str.replace(str, '')
           )
         );
       }

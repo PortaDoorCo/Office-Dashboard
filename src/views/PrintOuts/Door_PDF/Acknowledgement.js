@@ -14,8 +14,6 @@ export default (data, pricing) => {
       .reduce((acc, item) => acc + item, 0);
   });
 
-  const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0);
-
   const balancePaid = data.balance_history.reduce(function (
     accumulator,
     balance
@@ -24,7 +22,7 @@ export default (data, pricing) => {
   },
   0);
 
-  const balanceDue = data.total - balancePaid;
+  
 
   const misc_prices = data.misc_items.map((i) => {
     if (i.category === 'preselect') {
@@ -34,6 +32,12 @@ export default (data, pricing) => {
     }
   });
 
+  const prices = pdfDoorPricing(parts, pricing[0]);
+
+  const subTotal = prices
+    .map((i) => i.reduce((acc, item) => acc + item, 0))
+    .reduce((acc, item) => acc + item, 0);
+
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
   const discountTotal = subTotal * (data.discount / 100);
@@ -42,7 +46,13 @@ export default (data, pricing) => {
 
   const order_sub_total = misc_total + discountSubTotal;
 
-  const prices = pdfDoorPricing(parts, pricing[0]);
+  const tax = order_sub_total * (data.companyprofile.TaxRate / 100);
+
+  const total = order_sub_total + tax;
+
+  const balanceDue = total - balancePaid;
+
+  console.log({ prices });
 
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
@@ -660,7 +670,7 @@ export default (data, pricing) => {
           alignment: 'right',
         },
         {
-          text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
+          text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
           style: 'fonts',
           alignment: 'right',
         },
@@ -683,7 +693,7 @@ export default (data, pricing) => {
           width: 120,
         },
         {
-          text: `$${data.total.toFixed(2)}`,
+          text: `$${total.toFixed(2)}`,
           style: 'fonts',
           margin: [0, 0, 0, 0],
           alignment: 'right',
