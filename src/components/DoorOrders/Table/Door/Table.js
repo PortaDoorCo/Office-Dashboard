@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
+import { deleteMiscItem } from '../../../../redux/misc_items/actions';
 
 const required = (value) => (value ? undefined : 'Required');
 const trim_val = value => (value.trim('')  ? undefined : 'Required');
@@ -62,6 +63,15 @@ const DoorTable = ({
     setTopRailWidth(null);
     setBottomRailWidth(null);
   }, [updateSubmit]);
+
+  useEffect(() => {
+    return formState?.part_list[i]?.dimensions?.map((j,k) => {
+      return dispatch(
+        change('DoorOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
+      );
+    });
+
+  }, [formState?.part_list, i, dispatch]);
 
   const w = (e, v, index) => {
     e.preventDefault();
@@ -324,6 +334,7 @@ const DoorTable = ({
       );
     }
   };
+  
 
   const addFields = (i) => {
     const construction = formState?.part_list[i]?.construction?.value;
@@ -409,7 +420,6 @@ const DoorTable = ({
                   type="text"
                   component={renderFieldDisabled}
                   label="item"
-                  edit={true}
                 />
               </FormGroup>
             </Col>
