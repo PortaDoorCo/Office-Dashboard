@@ -16,7 +16,7 @@ import numQty from 'numeric-quantity';
 
 const required = (value) => (value ? undefined : 'Required');
 
-const height_limit = value => numQty(value) < 2.125 ? 'Height is too small' : numQty(value) > 33 ? 'Height is too big' : required();
+const height_limit = value => numQty(value) < 2.125 ? 'Height is too small' : numQty(value) > 33 ? 'Height is too big' : value ? undefined : 'Required';
 
 
 
@@ -42,6 +42,21 @@ class OrderTable extends Component {
           ''
         )
       );
+    };
+
+    const checkScoop = (index, e) => {
+      // const value = e.target.value;
+      console.log({ e });
+
+      if(e.NAME === 'Yes'){
+        dispatch(
+          change(
+            'DrawerOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            'WITH SCOOP'
+          )
+        );
+      }
     };
 
     return formState ? (
@@ -133,6 +148,7 @@ class OrderTable extends Component {
                         textField="NAME"
                         validate={required}
                         edit={edit}
+                        onChange={(e) => checkScoop(index, e)}
                       />
                     </td>
                     <td style={{ width: '14%' }}>
