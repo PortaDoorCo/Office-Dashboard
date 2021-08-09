@@ -3,20 +3,21 @@
 import { createSelector } from 'reselect';
 import numQty from 'numeric-quantity';
 
-
-const pricingSelector = state => {
+const pricingSelector = (state) => {
   const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
   return pricing;
 };
 
-
-const discountSelector = state => {
+const discountSelector = (state) => {
   const orders = state.form.DrawerOrder;
 
   if (orders) {
-    if ((state.form.DrawerOrder.values && state.form.DrawerOrder.values.discount)) {
-      if(state.form.DrawerOrder.values.discount > 0){
-        return (numQty(state.form.DrawerOrder.values.discount) / 100);
+    if (
+      state.form.DrawerOrder.values &&
+      state.form.DrawerOrder.values.discount
+    ) {
+      if (state.form.DrawerOrder.values.discount > 0) {
+        return numQty(state.form.DrawerOrder.values.discount) / 100;
       } else {
         return 0;
       }
@@ -28,10 +29,14 @@ const discountSelector = state => {
   }
 };
 
-const partListSelector = state => {
+const partListSelector = (state) => {
   const orders = state.form.DrawerOrder;
   if (orders) {
-    if (state.form.DrawerOrder && state.form.DrawerOrder.values && state.form.DrawerOrder.values.part_list) {
+    if (
+      state.form.DrawerOrder &&
+      state.form.DrawerOrder.values &&
+      state.form.DrawerOrder.values.part_list
+    ) {
       return state.form.DrawerOrder.values.part_list;
     } else {
       return [];
@@ -62,7 +67,6 @@ export const miscItemPriceSelector = createSelector(
   [miscItemsSelector],
   (misc) =>
     misc.map((i) => {
-
       let price = 0;
 
       if (i.category === 'preselect') {
@@ -117,13 +121,17 @@ export const miscTotalSelector = createSelector(
   (misc) => misc.reduce((acc, item) => acc + item, 0)
 );
 
-
-const taxRate = state => {
+const taxRate = (state) => {
   const orders = state.form.DrawerOrder;
   if (orders) {
     if (orders.values && orders.values.job_info) {
-      if(state.form && state.form.DrawerOrder && state.form.DrawerOrder.values && state.form.DrawerOrder.values.Taxable){
-        return (state.form.DrawerOrder.values.job_info.customer.TaxRate / 100);
+      if (
+        state.form &&
+        state.form.DrawerOrder &&
+        state.form.DrawerOrder.values &&
+        state.form.DrawerOrder.values.Taxable
+      ) {
+        return state.form.DrawerOrder.values.job_info.customer.TaxRate / 100;
       } else {
         return 0;
       }
@@ -135,11 +143,11 @@ const taxRate = state => {
   }
 };
 
-const totalBalanceDue = state => {
+const totalBalanceDue = (state) => {
   const orders = state.form.DrawerOrder;
   if (orders) {
     if (orders.values && orders.values.balance_history) {
-      return state.form.DrawerOrder.values.balance_history.map(i => {
+      return state.form.DrawerOrder.values.balance_history.map((i) => {
         return i.balance_paid;
       });
     } else {
@@ -154,21 +162,16 @@ export const itemPriceSelector = createSelector(
   [partListSelector, pricingSelector],
   (parts, pricer) =>
     parts.map((part, index) => {
-
-    
-
       const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
       const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
       const assembly = part.box_assembly ? part.box_assembly.UPCHARGE : 0;
       const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
 
-    
-
       if (part.dimensions) {
-        const linePrice = part.dimensions.map(i => {
-          const width = (numQty(i.width));
-          const height = (numQty(i.height));
-          const depth = (numQty(i.depth));
+        const linePrice = part.dimensions.map((i) => {
+          const width = numQty(i.width);
+          const height = numQty(i.height);
+          const depth = numQty(i.depth);
 
           const scoop = i.scoop.PRICE;
 
@@ -191,22 +194,17 @@ export const linePriceSelector = createSelector(
   [partListSelector, pricingSelector],
   (parts, pricer) =>
     parts.map((part, index) => {
-
-    
-
       const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
       const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
       const assembly = part.box_assembly ? part.box_assembly.UPCHARGE : 0;
       const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
 
-
-
       if (part.dimensions) {
-        const linePrice = part.dimensions.map(i => {
-          const width = (numQty(i.width));
-          const height = (numQty(i.height));
-          const depth = (numQty(i.depth));
-          const qty = parseInt(i.qty); 
+        const linePrice = part.dimensions.map((i) => {
+          const width = numQty(i.width);
+          const height = numQty(i.height);
+          const depth = numQty(i.depth);
+          const qty = parseInt(i.qty);
           const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
           const scoop = i.scoop.PRICE;
 
@@ -225,18 +223,15 @@ export const linePriceSelector = createSelector(
     })
 );
 
-export const addPriceSelector = createSelector(
-  [partListSelector],
-  (parts) =>
-    parts.map((part, index) => {
-      if (part.addPrice) {
-        return parseFloat(part.addPrice);
-      } else {
-        return 0;
-      }
-    })
+export const addPriceSelector = createSelector([partListSelector], (parts) =>
+  parts.map((part, index) => {
+    if (part.addPrice) {
+      return parseFloat(part.addPrice);
+    } else {
+      return 0;
+    }
+  })
 );
-
 
 export const subTotalSelector = createSelector(
   [linePriceSelector, addPriceSelector],
@@ -244,7 +239,7 @@ export const subTotalSelector = createSelector(
     prices.map((i, index) => {
       if (i) {
         let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
-        let sum = price += add[index];
+        let sum = (price += add[index]);
         return sum;
       } else {
         return 0;
@@ -252,36 +247,34 @@ export const subTotalSelector = createSelector(
     })
 );
 
-export const subTotal_Total = createSelector(
-  [subTotalSelector],
-  (subTotal) =>subTotal.reduce((acc, item) => acc + item, 0)
+export const subTotal_Total = createSelector([subTotalSelector], (subTotal) =>
+  subTotal.reduce((acc, item) => acc + item, 0)
 );
-
-
 
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector],
   (subTotal, misc, discount) => {
-    return (subTotal.reduce((acc, item) => acc + item, 0)) * discount;
+    return subTotal.reduce((acc, item) => acc + item, 0) * discount;
   }
 );
 
 export const taxSelector = createSelector(
   [subTotalSelector, taxRate, totalDiscountSelector, miscTotalSelector],
   (subTotal, tax, discount, misc) => {
-    return ((subTotal.reduce((acc, item) => acc + item, 0) - discount) + misc) * tax;
+    return (
+      (subTotal.reduce((acc, item) => acc + item, 0) - discount + misc) * tax
+    );
   }
 );
-
 
 export const totalSelector = createSelector(
   [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
   (subTotal, tax, misc, discount) => {
-    return subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount;
+    return (
+      subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount
+    );
   }
 );
-
-
 
 export const balanceTotalSelector = createSelector(
   [totalBalanceDue],

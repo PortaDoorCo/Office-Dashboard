@@ -1,8 +1,8 @@
 import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
-import pdfDoorPricing from '../../../selectors/pdfFaceFramePricing';
-import pdfFinishing from '../../../selectors/pdfFinishingPricing';
+import pdfDoorPricing from '../../../selectors/pdfs/pdfFaceFramePricing';
+import pdfFinishing from '../../../selectors/pdfs/pdfFinishingPricing';
 
 export default (data, pricing) => {
   const qty = data.part_list.map((part, i) => {

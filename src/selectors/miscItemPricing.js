@@ -146,16 +146,18 @@ export const subTotal_Total = createSelector(
   (subTotal, misc) => subTotal.length > 0 ? subTotal.reduce((acc, item) => acc + item, 0) : 0
 );
 
-export const taxSelector = createSelector(
-  [subTotalSelector, taxRate],
-  (subTotal, tax) => (subTotal * tax)
-);
+
 
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector],
   (subTotal, misc, discount) => {
     return (subTotal) * discount;
   }
+);
+
+export const taxSelector = createSelector(
+  [subTotalSelector, taxRate, totalDiscountSelector],
+  (subTotal, tax, discount) => (subTotal - discount) * tax
 );
 
 export const totalSelector = createSelector(

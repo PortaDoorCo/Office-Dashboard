@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
-import pdfDoorPricing from '../../../selectors/pdfDoorPricing';
+import pdfDoorPricing from '../../../selectors/pdfs/pdfDoorPricing';
 
 export default (data, pricing) => {
   const parts = Glass_Selection(data, null);
@@ -14,8 +14,6 @@ export default (data, pricing) => {
       .reduce((acc, item) => acc + item, 0);
   });
 
-  const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0);
-
   const balancePaid = data.balance_history.reduce(function (
     accumulator,
     balance
@@ -23,8 +21,6 @@ export default (data, pricing) => {
     return accumulator + balance.balance_paid;
   },
   0);
-
-  const balanceDue = data.total - balancePaid;
 
   const misc_prices = data.misc_items.map((i) => {
     if (i.category === 'preselect') {
@@ -34,6 +30,12 @@ export default (data, pricing) => {
     }
   });
 
+  const prices = pdfDoorPricing(parts, pricing[0]);
+
+  const subTotal = prices
+    .map((i) => i.reduce((acc, item) => acc + item, 0))
+    .reduce((acc, item) => acc + item, 0);
+
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
   const discountTotal = subTotal * (data.discount / 100);
@@ -42,7 +44,13 @@ export default (data, pricing) => {
 
   const order_sub_total = misc_total + discountSubTotal;
 
-  const prices = pdfDoorPricing(parts, pricing[0]);
+  const tax = data.Taxable
+    ? order_sub_total * (data.companyprofile.TaxRate / 100)
+    : 0;
+
+  const total = order_sub_total + tax;
+
+  const balanceDue = total - balancePaid;
 
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
@@ -642,31 +650,33 @@ export default (data, pricing) => {
         margin: [0, 10, 0, 0],
       }
       : null,
-    {
-      columns: [
-        { text: '', style: 'totals', width: 317 },
-        {
-          text: data.Taxable
-            ? '$' +
-              order_sub_total.toFixed(2) +
-              ' x ' +
-              data.companyprofile.TaxRate +
-              '%' +
-              ' Tax:'
-            : '',
-          style: 'totals',
-          margin: [0, 0, 0, 4],
-          width: 120,
-          alignment: 'right',
-        },
-        {
-          text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 0],
-    },
+    data.Taxable
+      ? {
+        columns: [
+          { text: '', style: 'totals', width: 317 },
+          {
+            text: data.Taxable
+              ? '$' +
+                  order_sub_total.toFixed(2) +
+                  ' x ' +
+                  data.companyprofile.TaxRate +
+                  '%' +
+                  ' Tax:'
+              : '',
+            style: 'totals',
+            margin: [0, 0, 0, 4],
+            width: 120,
+            alignment: 'right',
+          },
+          {
+            text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
+            style: 'fonts',
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 0, 0, 0],
+      }
+      : null,
     {
       text: '======',
       margin: [0, 0, 0, 0],
@@ -683,7 +693,7 @@ export default (data, pricing) => {
           width: 120,
         },
         {
-          text: `$${data.total.toFixed(2)}`,
+          text: `$${total.toFixed(2)}`,
           style: 'fonts',
           margin: [0, 0, 0, 0],
           alignment: 'right',

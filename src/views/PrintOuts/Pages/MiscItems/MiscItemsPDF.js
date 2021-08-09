@@ -4,18 +4,18 @@ import Invoice from '../../Misc_Items_PDF/Invoice';
 import Acknowledgement from '../../Misc_Items_PDF/Acknowledgement';
 import moment from 'moment';
 
-export default (data, breakdowns, p) => {
+export default (data, breakdowns, p, pricing) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
   let Content = [];
 
   for (let i = 0; i < p.acknowledgement; i++) {
-    Content.push(Acknowledgement(data, breakdowns));
+    Content.push(Acknowledgement(data, pricing));
   }
 
   for (let i = 0; i < p.invoice; i++) {
-    Content.push(Invoice(data, breakdowns));
+    Content.push(Invoice(data, pricing));
   }
 
   const rowLen = Content.length;
