@@ -58,13 +58,13 @@ const Frame_Only_Table = ({
   }, [updateSubmit]);
 
   useEffect(() => {
-    formState.part_list[i].dimensions.map((j,k) => {
+    return formState?.part_list[i]?.dimensions?.map((j,k) => {
       return dispatch(
         change('DoorOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
       );
     });
 
-  }, [formState.part_list, i, dispatch]);
+  }, [formState?.part_list, i, dispatch]);
 
   const w = (e, v, i) => {
     e.preventDefault();
