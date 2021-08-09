@@ -1,18 +1,18 @@
 import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
-import pdfDoorPricing from '../../../selectors/pdfDoorPricing';
+import pdfDoorPricing from '../../../selectors/pdfs/pdfDoorPricing';
 
 export default (data, pricing) => {
-  const qty = data.part_list.map((part, i) => {
+  const parts = Glass_Selection(data, null);
+
+  const qty = parts.map((part, i) => {
     return part.dimensions
       .map((dim, index) => {
         return parseInt(dim.qty);
       })
       .reduce((acc, item) => acc + item, 0);
   });
-
-  const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0);
 
   const balancePaid = data.balance_history.reduce(function (
     accumulator,
@@ -22,7 +22,7 @@ export default (data, pricing) => {
   },
   0);
 
-  const balanceDue = data.total - balancePaid;
+  
 
   const misc_prices = data.misc_items.map((i) => {
     if (i.category === 'preselect') {
@@ -32,6 +32,12 @@ export default (data, pricing) => {
     }
   });
 
+  const prices = pdfDoorPricing(parts, pricing[0]);
+
+  const subTotal = prices
+    .map((i) => i.reduce((acc, item) => acc + item, 0))
+    .reduce((acc, item) => acc + item, 0);
+
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
   const discountTotal = subTotal * (data.discount / 100);
@@ -40,10 +46,13 @@ export default (data, pricing) => {
 
   const order_sub_total = misc_total + discountSubTotal;
 
+  const tax = data.Taxable ? order_sub_total * (data.companyprofile.TaxRate / 100) : 0;
 
-  const parts = Glass_Selection(data, null);
+  const total = order_sub_total + tax;
 
-  const prices = pdfDoorPricing(parts, pricing[0]);
+  const balanceDue = total - balancePaid;
+
+  console.log({ prices });
 
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
@@ -94,7 +103,6 @@ export default (data, pricing) => {
                 style: 'fonts',
               },
               {
-                
                 text: `${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${part.thickness?.thickness_2}"`,
                 style: 'fonts',
               },
@@ -644,7 +652,7 @@ export default (data, pricing) => {
         margin: [0, 10, 0, 0],
       }
       : null,
-    {
+    data.Taxable ? {
       columns: [
         { text: '', style: 'totals', width: 317 },
         {
@@ -662,13 +670,13 @@ export default (data, pricing) => {
           alignment: 'right',
         },
         {
-          text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
+          text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
           style: 'fonts',
           alignment: 'right',
         },
       ],
       margin: [0, 0, 0, 0],
-    },
+    } : null,
     {
       text: '======',
       margin: [0, 0, 0, 0],
@@ -685,7 +693,7 @@ export default (data, pricing) => {
           width: 120,
         },
         {
-          text: `$${data.total.toFixed(2)}`,
+          text: `$${total.toFixed(2)}`,
           style: 'fonts',
           margin: [0, 0, 0, 0],
           alignment: 'right',

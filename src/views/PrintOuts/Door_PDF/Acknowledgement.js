@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
-import pdfDoorPricing from '../../../selectors/pdfDoorPricing';
+import pdfDoorPricing from '../../../selectors/pdfs/pdfDoorPricing';
 
 export default (data, pricing) => {
   const parts = Glass_Selection(data, null);
@@ -46,13 +46,13 @@ export default (data, pricing) => {
 
   const order_sub_total = misc_total + discountSubTotal;
 
-  const tax = order_sub_total * (data.companyprofile.TaxRate / 100);
+  const tax = data.Taxable ? order_sub_total * (data.companyprofile.TaxRate / 100) : 0;
 
   const total = order_sub_total + tax;
 
   const balanceDue = total - balancePaid;
 
-  console.log({ prices });
+
 
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
@@ -652,7 +652,7 @@ export default (data, pricing) => {
         margin: [0, 10, 0, 0],
       }
       : null,
-    {
+    data.Taxable ? {
       columns: [
         { text: '', style: 'totals', width: 317 },
         {
@@ -676,7 +676,7 @@ export default (data, pricing) => {
         },
       ],
       margin: [0, 0, 0, 0],
-    },
+    } : null,
     {
       text: '======',
       margin: [0, 0, 0, 0],
