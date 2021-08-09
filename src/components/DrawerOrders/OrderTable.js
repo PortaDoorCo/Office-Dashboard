@@ -44,6 +44,21 @@ class OrderTable extends Component {
       );
     };
 
+    const checkScoop = (index, e) => {
+      // const value = e.target.value;
+      console.log({ e });
+
+      if(e.NAME === 'Yes'){
+        dispatch(
+          change(
+            'DrawerOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            'WITH SCOOP'
+          )
+        );
+      }
+    };
+
     return formState ? (
       <div>
         <Fragment>
@@ -133,6 +148,7 @@ class OrderTable extends Component {
                         textField="NAME"
                         validate={required}
                         edit={edit}
+                        onChange={(e) => checkScoop(index, e)}
                       />
                     </td>
                     <td style={{ width: '14%' }}>
