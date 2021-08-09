@@ -16,7 +16,7 @@ import numQty from 'numeric-quantity';
 
 const required = (value) => (value ? undefined : 'Required');
 
-const height_limit = value => numQty(value) < 2.125 ? 'Height is too small' : numQty(value) > 33 ? 'Height is too big' : required();
+const height_limit = value => numQty(value) < 2.125 ? 'Height is too small' : numQty(value) > 33 ? 'Height is too big' : value ? undefined : 'Required';
 
 
 
