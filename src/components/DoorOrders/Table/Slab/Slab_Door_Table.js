@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field } from 'redux-form';
+import { Field, change } from 'redux-form';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import {
@@ -46,6 +46,15 @@ const Slab_Door_Table = ({
     setHeight([]);
     setChangeValue(null);
   }, [updateSubmit]);
+
+  useEffect(() => {
+    formState.part_list[i].dimensions.map((j,k) => {
+      return dispatch(
+        change('DoorOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
+      );
+    });
+
+  }, [formState.part_list, i, dispatch]);
 
   const w = (e, v, i) => {
     e.preventDefault();

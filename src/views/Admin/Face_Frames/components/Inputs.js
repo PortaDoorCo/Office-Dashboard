@@ -21,12 +21,6 @@ import NumberFormat from 'react-number-format';
 import styles from '../styles';
 import currencyMask from '../../../../utils/currencyMask';
 import {
-  linePriceSelector,
-  itemPriceSelector,
-  subTotalSelector,
-  taxSelector,
-  totalSelector,
-  miscTotalSelector,
   finishingSelector
 } from '../../../../selectors/faceFramePricing';
 

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useEffect } from 'react';
 import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Field, change } from 'redux-form';
@@ -21,6 +21,19 @@ const height_limit = value => numQty(value) < 2.125 ? 'Height is too small' : nu
 
 
 class OrderTable extends Component {
+
+
+  componentDidUpdate(prevProps) {
+    const { formState, i, dispatch } = this.props;
+    if(formState?.part_list[i]?.dimensions !== prevProps.formState?.part_list.dimensions) {
+      formState.part_list[i].dimensions.map((j,k) => {
+        return dispatch(
+          change('DrawerOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
+        );
+      });
+    }
+  }
+
   render() {
     const {
       fields,
@@ -34,6 +47,9 @@ class OrderTable extends Component {
       dispatch
     } = this.props;
 
+
+
+
     const clearNotes = (index, e) => {
       dispatch(
         change(
@@ -43,6 +59,8 @@ class OrderTable extends Component {
         )
       );
     };
+
+
 
     const checkScoop = (index, e) => {
       // const value = e.target.value;
