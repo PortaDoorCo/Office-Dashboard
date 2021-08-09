@@ -394,7 +394,7 @@ class OrderPage extends Component {
     } else if (data.orderType === 'Misc Items') {
       MiscItemsPDF(data, box_breakdowns, printerSettings);
     } else if (data.orderType === 'Mouldings') {
-      MouldingsPDF(data, box_breakdowns, printerSettings);
+      MouldingsPDF(data, box_breakdowns, printerSettings, this.props.pricing);
     } else if (data.orderType === 'Face Frame') {
       FaceFramesPDF(data, printerSettings, this.props.pricing);
     }

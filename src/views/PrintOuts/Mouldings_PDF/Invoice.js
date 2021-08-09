@@ -1,16 +1,49 @@
 import moment from 'moment';
 import Size from '../Breakdowns/DrawerBoxes/Size';
+import pdfMouldingPricing from '../../../selectors/pdfs/pdfMouldingsPricing';
 
 
-export default (data, breakdowns) => {
+export default (data, pricing) => {
 
-  const subTotal = data.subTotals;
-  
-  const balancePaid = data.balance_history.reduce(function (accumulator, balance) {
+
+  const balancePaid = data.balance_history.reduce(function (
+    accumulator,
+    balance
+  ) {
     return accumulator + balance.balance_paid;
-  }, 0);
+  },
+  0);
 
-  const balanceDue = data.total - balancePaid;
+  const misc_prices = data.misc_items.map((i) => {
+    if (i.category === 'preselect') {
+      return parseFloat(i.qty) * parseFloat(i.price);
+    } else {
+      return i.pricePer ? parseFloat(i.qty) * parseFloat(i.pricePer) : 0;
+    }
+  });
+
+  const prices = pdfMouldingPricing(data.mouldings, pricing[0]);
+
+  console.log({ prices: prices });
+
+  const subTotal = prices
+    .reduce((acc, item) => acc + item, 0);
+
+  const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
+
+  const discountTotal = subTotal * (data.discount / 100);
+
+  const discountSubTotal = subTotal - discountTotal;
+
+  const order_sub_total = misc_total + discountSubTotal;
+
+  const tax = data.Taxable
+    ? order_sub_total * (data.companyprofile.TaxRate / 100)
+    : 0;
+
+  const total = order_sub_total + tax;
+
+  const balanceDue = total - balancePaid;
 
   const tableBody = [
     [
@@ -27,7 +60,8 @@ export default (data, breakdowns) => {
 
   data.mouldings.map(i  => {
 
-    
+
+
     let feet = (i.item.MOULDING_WIDTH * 12) / 144;
     let waste = feet * 1.25;
     let multiplier = i.item.Multiplier;
@@ -63,13 +97,6 @@ export default (data, breakdowns) => {
       { text: `$${(price * parseInt(i.qty)).toFixed(2)}`, style: 'fonts' },
     ]);
   });
-
-  const discountTotal = subTotal * (data.discount / 100);
-
-  const discountSubTotal = subTotal - discountTotal;
-
-  
-  const order_sub_total =  discountSubTotal;
 
   const limitedLiability = 'Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product';
 
@@ -397,31 +424,33 @@ export default (data, breakdowns) => {
       ],
       margin: [0, 0, 0, 0],
     },
-    {
-      columns: [
-        { text: '', style: 'totals', width: 317 },
-        {
-          text: data.Taxable
-            ? '$' +
-              order_sub_total.toFixed(2) +
-              ' x ' +
-              data.companyprofile.TaxRate +
-              '%' +
-              ' Tax:'
-            : '',
-          style: 'totals',
-          margin: [0, 0, 0, 4],
-          width: 120,
-          alignment: 'right'
-        },
-        {
-          text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 0],
-    },
+    data.Taxable
+      ? {
+        columns: [
+          { text: '', style: 'totals', width: 317 },
+          {
+            text: data.Taxable
+              ? '$' +
+                order_sub_total.toFixed(2) +
+                ' x ' +
+                data.companyprofile.TaxRate +
+                '%' +
+                ' Tax:'
+              : '',
+            style: 'totals',
+            margin: [0, 0, 0, 4],
+            width: 120,
+            alignment: 'right',
+          },
+          {
+            text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
+            style: 'fonts',
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 0, 0, 0],
+      }
+      : null,
     {
       text: '======',
       margin: [0, 0, 0, 0],
@@ -438,7 +467,7 @@ export default (data, breakdowns) => {
           width: 120
         },
         {
-          text: `$${data.total.toFixed(2)}`,
+          text: `$${total.toFixed(2)}`,
           style: 'fonts',
           margin: [0, 0, 0, 0],
           alignment: 'right',

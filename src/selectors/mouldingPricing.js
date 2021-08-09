@@ -1,16 +1,15 @@
 import { createSelector } from 'reselect';
 import numQty from 'numeric-quantity';
 
-
-const discountSelector = state => {
+const discountSelector = (state) => {
   const orders = state?.form?.Mouldings;
 
   if (orders) {
-    if ( !state?.form?.Mouldings?.values?.discount) {
+    if (!state?.form?.Mouldings?.values?.discount) {
       return 0;
     } else {
-      if(state.form.Mouldings.values.discount > 0){
-        return (numQty(state.form.Mouldings.values.discount) / 100);
+      if (state.form.Mouldings.values.discount > 0) {
+        return numQty(state.form.Mouldings.values.discount) / 100;
       } else {
         return 0;
       }
@@ -41,7 +40,6 @@ export const miscItemPriceSelector = createSelector(
   [miscItemsSelector],
   (misc) =>
     misc.map((i) => {
-
       let price = 0;
 
       if (i.category === 'preselect') {
@@ -96,13 +94,21 @@ export const miscTotalSelector = createSelector(
   (misc) => misc.reduce((acc, item) => acc + item, 0)
 );
 
-
-const mouldingsSelector = state => {
+const mouldingsSelector = (state) => {
   const orders = state.form.Mouldings;
 
   if (orders) {
-    if ((orders && orders.values && orders.values.mouldings && orders.values.mouldings.length > 0)) {
-      return state.form.Mouldings && state.form.Mouldings.values && state.form.Mouldings.values.mouldings;
+    if (
+      orders &&
+      orders.values &&
+      orders.values.mouldings &&
+      orders.values.mouldings.length > 0
+    ) {
+      return (
+        state.form.Mouldings &&
+        state.form.Mouldings.values &&
+        state.form.Mouldings.values.mouldings
+      );
     } else {
       return [];
     }
@@ -113,51 +119,46 @@ const mouldingsSelector = state => {
 
 export const mouldingPriceSelector = createSelector(
   [mouldingsSelector],
-  (misc) => misc.map(i => {
-    let price = 0;
+  (mouldings) =>
+    mouldings.map((i) => {
+      let price = 0;
 
-    if(i.item){
-      const { item, woodtype, linearFT, grade } = i;
+      if (i.item) {
+        const { item, woodtype, linearFT, grade } = i;
 
-      let feet = (item.MOULDING_WIDTH * 12) / 144;
-      let waste = feet * 1.25;
-      let multiplier = item.Multiplier;
-      let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
-      let premium = 0;
+        let feet = (item.MOULDING_WIDTH * 12) / 144;
+        let waste = feet * 1.25;
+        let multiplier = item.Multiplier;
+        let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
+        let premium = 0;
 
-      let a = waste * multiplier;
+        let a = waste * multiplier;
 
+        if (parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
+          premium = 3 + 1;
+        } else if (parseFloat(linearFT) >= 31 && parseFloat(linearFT) <= 50) {
+          premium = 2 + 1;
+        } else if (parseFloat(linearFT) >= 51 && parseFloat(linearFT) <= 100) {
+          premium = 1.75 + 1;
+        } else if (parseFloat(linearFT) > 101 && parseFloat(linearFT) <= 250) {
+          premium = 1.4 + 1;
+        } else if (parseFloat(linearFT) > 251 && parseFloat(linearFT) <= 500) {
+          premium = 1.1 + 1;
+        } else {
+          premium = 1 + 1;
+        }
 
-      if(parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
-        premium = 3 + 1;
-      } else if (parseFloat(linearFT) >= 31 && parseFloat(linearFT) <= 50) {
-        premium = 2 + 1;
-      } else if (parseFloat(linearFT) >= 51 && parseFloat(linearFT) <= 100) {
-        premium = 1.75 + 1;
-      } else if(parseFloat(linearFT) > 101 && parseFloat(linearFT) <= 250) {
-        premium = 1.4 + 1;
-      } else if (parseFloat(linearFT) > 251 && parseFloat(linearFT) <= 500) {
-        premium = 1.1 + 1;
-      } else {
-        premium = 1 + 1;
+        price = a * wood * parseFloat(linearFT) * premium;
       }
 
-      price = ((a * wood) * parseFloat(linearFT)) * premium;
-
-    }
-    
-   
-    return price;
-  })
+      return price;
+    })
 );
-
-
 
 export const mouldingLinePriceSelector = createSelector(
   [mouldingPriceSelector, mouldingsSelector],
   (pricer, parts, item) =>
     pricer.map((i, index) => {
-    
       const qty = parts[index].qty ? parts[index].qty : 0;
       const price = i ? i : 0;
 
@@ -167,18 +168,23 @@ export const mouldingLinePriceSelector = createSelector(
 
 export const mouldingTotalSelector = createSelector(
   [mouldingLinePriceSelector],
-  (misc) => (misc.reduce((acc, item) => acc + item, 0))
+  (misc) => misc.reduce((acc, item) => acc + item, 0)
 );
 
-const taxRate = state => {
+const taxRate = (state) => {
   const orders = state?.form?.Mouldings;
 
   if (orders) {
     if (!orders.values?.job_info) {
       return 0;
     } else {
-      if(state.form && state.form.Mouldings && state.form.Mouldings.values && state.form.Mouldings.values.Taxable){
-        return (state.form.Mouldings.values.job_info.customer.TaxRate / 100);
+      if (
+        state.form &&
+        state.form.Mouldings &&
+        state.form.Mouldings.values &&
+        state.form.Mouldings.values.Taxable
+      ) {
+        return state.form.Mouldings.values.job_info.customer.TaxRate / 100;
       } else {
         return 0;
       }
@@ -188,16 +194,13 @@ const taxRate = state => {
   }
 };
 
-
-
-
-const totalBalanceDue = state => {
+const totalBalanceDue = (state) => {
   const orders = state.form.Mouldings;
   if (orders) {
     if (!orders && !orders.values && !orders.values.balance_history) {
       return [];
     } else {
-      return state.form.Mouldings.values.balance_history.map(i => {
+      return state.form.Mouldings.values.balance_history.map((i) => {
         return i.balance_paid;
       });
     }
@@ -211,23 +214,18 @@ export const mouldingLineItemSelector = createSelector(
   (misc) => misc
 );
 
-
-
 export const subTotalSelector = createSelector(
   [mouldingTotalSelector],
-  (misc) =>
-    misc
+  (misc) => misc
 );
 
 export const subTotal_Total = createSelector(
   [mouldingTotalSelector],
-  (subTotal, misc) => subTotal.length > 0 ? subTotal.reduce((acc, item) => acc + item, 0) : 0
+  (subTotal, misc) =>
+    subTotal.length > 0 ? subTotal.reduce((acc, item) => acc + item, 0) : 0
 );
 
-export const taxSelector = createSelector(
-  [mouldingTotalSelector, taxRate],
-  (subTotal, tax) => (subTotal * tax)
-);
+
 
 export const totalDiscountSelector = createSelector(
   [mouldingTotalSelector, miscTotalSelector, discountSelector],
@@ -236,15 +234,22 @@ export const totalDiscountSelector = createSelector(
   }
 );
 
-export const totalSelector = createSelector(
-  [mouldingTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
-  (subTotal, tax, misc, discount) => {
-    return (
-      subTotal + tax + misc - discount
-    );
-  }
+export const taxSelector = createSelector(
+  [mouldingTotalSelector, totalDiscountSelector, taxRate],
+  (subTotal,discount, tax) => (subTotal - discount) * tax
 );
 
+export const totalSelector = createSelector(
+  [
+    mouldingTotalSelector,
+    taxSelector,
+    miscTotalSelector,
+    totalDiscountSelector,
+  ],
+  (subTotal, tax, misc, discount) => {
+    return subTotal + tax + misc - discount;
+  }
+);
 
 export const balanceTotalSelector = createSelector(
   [totalBalanceDue],
