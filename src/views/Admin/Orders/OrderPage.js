@@ -390,7 +390,7 @@ class OrderPage extends Component {
         this.props.pricing
       );
     } else if (data.orderType === 'Drawer Order') {
-      DrawerPDF(data, box_breakdowns, printerSettings);
+      DrawerPDF(data, box_breakdowns, printerSettings, this.props.pricing);
     } else if (data.orderType === 'Misc Items') {
       MiscItemsPDF(data, box_breakdowns, printerSettings);
     } else if (data.orderType === 'Mouldings') {

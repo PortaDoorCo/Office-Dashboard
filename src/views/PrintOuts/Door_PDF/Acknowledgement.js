@@ -22,8 +22,6 @@ export default (data, pricing) => {
   },
   0);
 
-  
-
   const misc_prices = data.misc_items.map((i) => {
     if (i.category === 'preselect') {
       return parseFloat(i.qty) * parseFloat(i.price);
@@ -46,13 +44,13 @@ export default (data, pricing) => {
 
   const order_sub_total = misc_total + discountSubTotal;
 
-  const tax = data.Taxable ? order_sub_total * (data.companyprofile.TaxRate / 100) : 0;
+  const tax = data.Taxable
+    ? order_sub_total * (data.companyprofile.TaxRate / 100)
+    : 0;
 
   const total = order_sub_total + tax;
 
   const balanceDue = total - balancePaid;
-
-
 
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
@@ -652,31 +650,33 @@ export default (data, pricing) => {
         margin: [0, 10, 0, 0],
       }
       : null,
-    data.Taxable ? {
-      columns: [
-        { text: '', style: 'totals', width: 317 },
-        {
-          text: data.Taxable
-            ? '$' +
-              order_sub_total.toFixed(2) +
-              ' x ' +
-              data.companyprofile.TaxRate +
-              '%' +
-              ' Tax:'
-            : '',
-          style: 'totals',
-          margin: [0, 0, 0, 4],
-          width: 120,
-          alignment: 'right',
-        },
-        {
-          text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 0],
-    } : null,
+    data.Taxable
+      ? {
+        columns: [
+          { text: '', style: 'totals', width: 317 },
+          {
+            text: data.Taxable
+              ? '$' +
+                  order_sub_total.toFixed(2) +
+                  ' x ' +
+                  data.companyprofile.TaxRate +
+                  '%' +
+                  ' Tax:'
+              : '',
+            style: 'totals',
+            margin: [0, 0, 0, 4],
+            width: 120,
+            alignment: 'right',
+          },
+          {
+            text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
+            style: 'fonts',
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 0, 0, 0],
+      }
+      : null,
     {
       text: '======',
       margin: [0, 0, 0, 0],
