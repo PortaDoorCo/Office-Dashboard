@@ -57,15 +57,6 @@ const Frame_Only_Table = ({
     setBottomRailWidth(null);
   }, [updateSubmit]);
 
-  // useEffect(() => {
-  //   return formState?.part_list[i]?.dimensions?.map((j,k) => {
-  //     return dispatch(
-  //       change('DoorOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
-  //     );
-  //   });
-
-  // }, [formState?.part_list, i, dispatch]);
-
   const w = (e, v, i) => {
     e.preventDefault();
     let newWidth = [...width];
@@ -167,13 +158,6 @@ const Frame_Only_Table = ({
                   <Label htmlFor="panel">
                     <strong>Line # {index + 1}</strong>
                   </Label>
-                  <Field
-                    name={`${table}.item`}
-                    type="text"
-                    component={renderFieldDisabled}
-                    label="item"
-                    edit={true}
-                  />
                 </FormGroup>
               </Col>
               <Col xs="10" />
@@ -368,7 +352,6 @@ const Frame_Only_Table = ({
                     unevenSplit: false,
                     unevenCheck: false,
                     showBuilder: false,
-                    item: fields.length + 1,
                   })
                 }
               >

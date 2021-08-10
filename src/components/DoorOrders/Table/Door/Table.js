@@ -64,15 +64,6 @@ const DoorTable = ({
     setBottomRailWidth(null);
   }, [updateSubmit]);
 
-  // useEffect(() => {
-  //   return formState?.part_list[i]?.dimensions?.map((j,k) => {
-  //     return dispatch(
-  //       change('DoorOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
-  //     );
-  //   });
-
-  // }, [formState?.part_list, i, dispatch]);
-
   const w = (e, v, index) => {
     e.preventDefault();
     const part = formState.part_list[i];
@@ -369,7 +360,6 @@ const DoorTable = ({
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
       showBuilder: false,
-      item: fields.length + 1,
       unevenCheck: false,
       unevenSplit: false,
       glass_check_0:
@@ -415,12 +405,6 @@ const DoorTable = ({
                 <Label htmlFor="panel">
                   <strong>Line # {index + 1}</strong>
                 </Label>
-                <Field
-                  name={`${table}.item`}
-                  type="text"
-                  component={renderFieldDisabled}
-                  label="item"
-                />
               </FormGroup>
             </Col>
             <Col xs="10" />

@@ -297,17 +297,19 @@ export default (data, pricing) => {
         ],
       ];
 
-      let sortedDimensions = part.dimensions.sort(function (a, b) {
+      let sortedDimensions = part.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) {
         return a.item - b.item;
       });
       sortedDimensions.forEach((item, index) => {
         tableBody.push([
-          { text: item.item, style: 'fonts' },
-
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
           { text: `${item.notes ? item.notes : ''}`, style: 'fonts' },
-          { text: `${(prices[i][index] / parseInt(item.qty)).toFixed(2)}`, style: 'fonts' },
+          {
+            text: `${(prices[i][index] / parseInt(item.qty)).toFixed(2)}`,
+            style: 'fonts',
+          },
           {
             text: `${prices[i][index].toFixed(2)}`,
             style: 'fonts',

@@ -1,8 +1,7 @@
-import { flatten } from 'lodash';
 import GlassCheck from './GlassCheck';
 
 const GlassSort = (part) => {
-  const dimensions = part.dimensions.map((i) => {
+  const dimensions = part.dimensions.map((i, j) => {
     return GlassCheck(i);
   });
 

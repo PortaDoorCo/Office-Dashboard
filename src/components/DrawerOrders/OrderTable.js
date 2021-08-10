@@ -23,17 +23,6 @@ const height_limit = value => numQty(value) < 2.125 ? 'Height is too small' : nu
 class OrderTable extends Component {
 
 
-  // componentDidUpdate(prevProps) {
-  //   const { formState, i, dispatch } = this.props;
-  //   if(formState?.part_list[i]?.dimensions !== prevProps.formState?.part_list.dimensions) {
-  //     formState.part_list[i].dimensions.map((j,k) => {
-  //       return dispatch(
-  //         change('DrawerOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
-  //       );
-  //     });
-  //   }
-  // }
-
   render() {
     const {
       fields,
@@ -98,13 +87,6 @@ class OrderTable extends Component {
                     <Label htmlFor="panel">
                       <strong>Line # {index + 1}</strong>
                     </Label>
-                    <Field
-                      name={`${table}.item`}
-                      type="text"
-                      component={renderFieldDisabled}
-                      label="item"
-                      edit={true}
-                    />
                   </FormGroup>
                 </Col>
                 <Col xs="10" />
@@ -268,7 +250,6 @@ class OrderTable extends Component {
                   qty: 1,
                   scoop: scoop[1],
                   dividers: dividers[0],
-                  item: fields.length + 1,
                 })
               }
             >

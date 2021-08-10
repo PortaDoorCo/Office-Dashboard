@@ -72,7 +72,7 @@ export default (data, pricing) => {
 
     part.dimensions.forEach((item, index) => {
       tableBody.push([
-        { text: item.item ? item.item : index + 1, style: 'fonts' },
+        { text: index + 1, style: 'fonts' },
         { text: `${Size(item)}`, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
         {

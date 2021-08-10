@@ -13,12 +13,12 @@ export default (data, type) => {
       let glass_dimensions = [];
 
       const dimensions = glass_check
-        .map((g) => {
+        .map((g, k) => {
           if (g.glass_index === 1) {
-            glass_dimensions.push(g);
+            glass_dimensions.push({...g, item: k + 1});
             return null;
           } else {
-            return g;
+            return {...g, item: k + 1};
           }
         })
         .filter((n) => n);
