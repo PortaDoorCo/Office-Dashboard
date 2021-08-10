@@ -63,7 +63,7 @@ export default (data, breakdowns) => {
     ];
     i.dimensions.forEach((item, index) => {
       tableBody.push([
-        { text: index + 1, style: 'fonts' },
+        { text: item.item ? item.item : index + 1, style: 'fonts' },
         { text: item.name, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts' },
         {

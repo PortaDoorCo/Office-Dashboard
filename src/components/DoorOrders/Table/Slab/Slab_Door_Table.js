@@ -47,15 +47,6 @@ const Slab_Door_Table = ({
     setChangeValue(null);
   }, [updateSubmit]);
 
-  // useEffect(() => {
-  //   return formState?.part_list[i]?.dimensions?.map((j,k) => {
-  //     return dispatch(
-  //       change('DoorOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
-  //     );
-  //   });
-
-  // }, [formState?.part_list, i, dispatch]);
-
   const w = (e, v, i) => {
     e.preventDefault();
     let newWidth = [...width];
@@ -326,7 +317,6 @@ const Slab_Door_Table = ({
                   fields.push({
                     qty: 1,
                     showBuilder: false,
-                    item: fields.length + 1,
                   })
                 }
               >

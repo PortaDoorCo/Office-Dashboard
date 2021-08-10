@@ -56,15 +56,6 @@ const Cope_Table = ({
     setBottomRailWidth(null);
   }, [updateSubmit]);
 
-  // useEffect(() => {
-  //   return formState?.part_list[i]?.dimensions?.map((j,k) => {
-  //     return dispatch(
-  //       change('DoorOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
-  //     );
-  //   });
-
-  // }, [formState?.part_list, i, dispatch]);
-
   const w = (e, v, i) => {
     e.preventDefault();
     let newWidth = [...width];
@@ -214,7 +205,6 @@ const Cope_Table = ({
       unevenSplitInput: '0',
       showBuilder: false,
       full_frame: false,
-      item: fields.length + 1,
       glass_check_0:
           formState.part_list[i]?.panel?.NAME === 'Glass'
             ? true
@@ -234,13 +224,6 @@ const Cope_Table = ({
                   <Label htmlFor="panel">
                     <strong>Line # {index + 1}</strong>
                   </Label>
-                  <Field
-                    name={`${table}.item`}
-                    type="text"
-                    component={renderFieldDisabled}
-                    label="item"
-                    edit={true}
-                  />
                 </FormGroup>
               </Col>
               <Col xs="10" />

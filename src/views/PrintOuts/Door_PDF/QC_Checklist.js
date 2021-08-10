@@ -62,7 +62,7 @@ export default (data, breakdowns) => {
       i.dimensions.forEach((item, index) => {
         // Panels(item, i, breakdowns);
         tableBody.push([
-          { text: index + 1, style: 'fonts' },
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
           { text: Size(item), style: 'fonts' },
           { text: '[      ]', style: 'fonts' },

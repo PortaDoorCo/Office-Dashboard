@@ -19,14 +19,14 @@ export default (data, breakdowns) => {
     .map((woodtype) =>
       woodtype.map((v, i) => ({
         ...v,
-        dimensions: flattenDeep(
-          v.dimensions.map((d) => ({ ...d, name: getName(v) }))
+        dimensions: flatten(
+          v.dimensions.map((d, k ) => ({ ...d, name: getName(v), item: k + 1 }))
         ),
       }))
     )
     .map((t, x) => ({
       ...t[0],
-      dimensions: flattenDeep(t.map((c) => c.dimensions)),
+      dimensions: flatten(t.map((c) => c.dimensions)),
     }));
 
 

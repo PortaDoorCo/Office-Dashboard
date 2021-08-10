@@ -169,7 +169,7 @@ export default (data, breakdowns) => {
 
         v.forEach((item, index) => {
           let tb = [
-            { text: item.item, style: 'fonts' },
+            { text: index + 1, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
             {
               stack: [

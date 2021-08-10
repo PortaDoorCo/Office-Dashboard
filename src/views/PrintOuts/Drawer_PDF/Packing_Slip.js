@@ -209,7 +209,7 @@ export default (data, breakdowns) => {
       let sortedDimensions = part.dimensions.sort(function (a, b) { return a.item - b.item; });
       sortedDimensions.forEach((item, index) => {
         tableBody.push([
-          { text: item.item, style: 'fonts' },
+          { text: index + 1, style: 'fonts' },
           { text: `Drawer Box ${part.box_thickness.NAME}`, style: 'fonts'},
           { text: `${item.qty}`, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },

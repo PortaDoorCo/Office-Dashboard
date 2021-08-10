@@ -120,7 +120,7 @@ export default (data, breakdowns) => {
       sortedQty.forEach((item, index) => {
 
         fronts.push([
-          { text: item.item, style: 'fonts' },
+          { text: index, style: 'fonts' },
           { text: Fronts(item, i, breakdowns).pattern, style: 'fonts' },
           { text: Fronts(item, i, breakdowns).qty, style: 'fonts' },
           { text: Fronts(item, i, breakdowns).measurement, style: 'fonts' },

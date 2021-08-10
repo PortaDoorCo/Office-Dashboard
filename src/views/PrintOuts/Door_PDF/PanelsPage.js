@@ -2,6 +2,7 @@ import moment from 'moment';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import GlassSort from '../Sorting/GlassSort';
+import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
   const getName = (i) => {
@@ -18,19 +19,29 @@ export default (data, breakdowns) => {
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
   const b = a
     .map((woodtype) =>
-      woodtype.map((v, i) => ({
-        ...v,
-        dimensions: flattenDeep(
-          v.dimensions.map((d) => ({ ...d, name: getName(v) }))
-        ),
-      }))
+
+      woodtype.map((v, i) => {
+
+        console.log({v});
+
+        return {
+          ...v,
+          dimensions: flatten(
+            v.dimensions.map((d, k) => ({ ...d, name: getName(v), item: k + 1 })))
+        };
+      })
+
+
     )
     .map((t, x) => ({
       ...t[0],
-      dimensions: flattenDeep(t.map((c) => c.dimensions)),
+      dimensions: flatten(t.map((c) => c.dimensions)),
     }));
 
   const table_body = b.map((i, index) => {
+
+    console.log({i});
+
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -56,47 +67,53 @@ export default (data, breakdowns) => {
       return null;
     } else {
       GlassSort(i).forEach((item, index) => {
-        tableBody.push([
-          { text: item.item, style: 'fonts' },
-          { text: item.name, style: 'fonts' },
-          {
-            text: Panels(item, i, breakdowns).map((panel) => {
-              return `${panel.qty} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: Panels(item, i, breakdowns).map((panel) => {
-              return `${panel.measurement} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: Panels(item, i, breakdowns).map((panel) => {
-              return `${panel.pattern} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
-            style: 'fonts',
-          },
-          {
-            text: Panels(item, i, breakdowns).map((panel) => {
-              return `${panel.panel} \n`;
-            }),
-            style: 'fonts',
-          },
-          item.notes || item.full_frame || item.lite
-            ? {
-              text: `${item.notes ? item.notes : ''} ${
-                item.full_frame ? 'Full Frame DF' : ''
-              } ${item.lite ? item.lite.NAME : ''}`,
-              style: 'tableBold',
-              alignment: 'left',
-            }
-            : null,
-        ]);
+        console.log({ item });
+
+        if (item.glass_index === 1) {
+          return null;
+        } else {
+          tableBody.push([
+            { text: item.item ? item.item : index + 1, style: 'fonts' },
+            { text: item.name, style: 'fonts' },
+            {
+              text: Panels(item, i, breakdowns).map((panel) => {
+                return `${panel.qty} \n`;
+              }),
+              style: 'fonts',
+            },
+            {
+              text: Panels(item, i, breakdowns).map((panel) => {
+                return `${panel.measurement} \n`;
+              }),
+              style: 'fonts',
+            },
+            {
+              text: Panels(item, i, breakdowns).map((panel) => {
+                return `${panel.pattern} \n`;
+              }),
+              style: 'fonts',
+            },
+            {
+              text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
+              style: 'fonts',
+            },
+            {
+              text: Panels(item, i, breakdowns).map((panel) => {
+                return `${panel.panel} \n`;
+              }),
+              style: 'fonts',
+            },
+            item.notes || item.full_frame || item.lite
+              ? {
+                text: `${item.notes ? item.notes : ''} ${
+                  item.full_frame ? 'Full Frame DF' : ''
+                } ${item.lite ? item.lite.NAME : ''}`,
+                style: 'tableBold',
+                alignment: 'left',
+              }
+              : null,
+          ]);
+        }
       });
     }
 

@@ -302,7 +302,7 @@ export default (data, pricing) => {
       });
       sortedDimensions.forEach((item, index) => {
         tableBody.push([
-          { text: item.item, style: 'fonts' },
+          { text: index + 1, style: 'fonts' },
 
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },

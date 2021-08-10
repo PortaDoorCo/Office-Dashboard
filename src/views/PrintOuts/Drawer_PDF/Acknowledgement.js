@@ -302,12 +302,14 @@ export default (data, pricing) => {
       });
       sortedDimensions.forEach((item, index) => {
         tableBody.push([
-          { text: item.item, style: 'fonts' },
-
+          { text: index + 1, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
           { text: `${item.notes ? item.notes : ''}`, style: 'fonts' },
-          { text: `${(prices[i][index] / parseInt(item.qty)).toFixed(2)}`, style: 'fonts' },
+          {
+            text: `${(prices[i][index] / parseInt(item.qty)).toFixed(2)}`,
+            style: 'fonts',
+          },
           {
             text: `${prices[i][index].toFixed(2)}`,
             style: 'fonts',
