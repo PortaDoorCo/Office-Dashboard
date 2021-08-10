@@ -206,7 +206,7 @@ export default (data, breakdowns) => {
         ]
       ];
 
-      let sortedDimensions = part.dimensions.sort(function (a, b) { return a.item - b.item; });
+      let sortedDimensions = part.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) { return a.item - b.item; });
       sortedDimensions.forEach((item, index) => {
         tableBody.push([
           { text: index + 1, style: 'fonts' },
