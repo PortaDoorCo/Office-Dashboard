@@ -23,16 +23,16 @@ const height_limit = value => numQty(value) < 2.125 ? 'Height is too small' : nu
 class OrderTable extends Component {
 
 
-  componentDidUpdate(prevProps) {
-    const { formState, i, dispatch } = this.props;
-    if(formState?.part_list[i]?.dimensions !== prevProps.formState?.part_list.dimensions) {
-      formState.part_list[i].dimensions.map((j,k) => {
-        return dispatch(
-          change('DrawerOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
-        );
-      });
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   const { formState, i, dispatch } = this.props;
+  //   if(formState?.part_list[i]?.dimensions !== prevProps.formState?.part_list.dimensions) {
+  //     formState.part_list[i].dimensions.map((j,k) => {
+  //       return dispatch(
+  //         change('DrawerOrder', `part_list[${i}].dimensions[${k}].item`, k + 1)
+  //       );
+  //     });
+  //   }
+  // }
 
   render() {
     const {
