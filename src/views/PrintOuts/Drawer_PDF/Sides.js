@@ -106,7 +106,7 @@ export default (data, breakdowns) => {
       alignment: 'center',
     },
     data.part_list.map((i, index) => {
-      let sortedDimensions = i.dimensions.sort(function (a, b) { return a.height - b.height; });
+      let sortedDimensions = i.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) { return a.height - b.height; });
       let sortedQty = sortedDimensions.sort(function (a, b) { return a.qty - b.qty; });
       const fronts = [
         [
@@ -120,7 +120,7 @@ export default (data, breakdowns) => {
       sortedQty.forEach((item, index) => {
 
         fronts.push([
-          { text: index, style: 'fonts' },
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
           { text: Fronts(item, i, breakdowns).pattern, style: 'fonts' },
           { text: Fronts(item, i, breakdowns).qty, style: 'fonts' },
           { text: Fronts(item, i, breakdowns).measurement, style: 'fonts' },
@@ -137,7 +137,7 @@ export default (data, breakdowns) => {
       ];
       sortedQty.forEach((item, index) => {
         sides.push([
-          { text: item.item, style: 'fonts' },
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
           { text: Sides(item, i, breakdowns).pattern, style: 'fonts' },
           { text: Sides(item, i, breakdowns).qty, style: 'fonts' },
           { text: Sides(item, i, breakdowns).measurement, style: 'fonts' },

@@ -103,7 +103,7 @@ export default (data, breakdowns) => {
       alignment: 'center',
     },
     data.part_list.map((i, index) => {
-      let sortedDimensions = i.dimensions.sort(function (a, b) {
+      let sortedDimensions = i.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) {
         return b.width - a.width;
       });
 
@@ -118,7 +118,7 @@ export default (data, breakdowns) => {
       ];
       sortedDimensions.forEach((item, index) => {
         bottoms.push([
-          { text: index + 1, style: 'fonts' },
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
           { text: Size(item, i), style: 'fonts' },
           { text: Bottoms(item, i, breakdowns).qty, style: 'fonts' },

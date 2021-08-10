@@ -114,7 +114,9 @@ export default (data, breakdowns) => {
 
       const materialBody = [];
 
-      const groupedByHeight = _.groupBy(i.dimensions, 'height');
+      const itemize = i.dimensions.map((j, k) => ({...j, item: k + 1}));
+
+      const groupedByHeight = _.groupBy(itemize, 'height');
 
       Object.entries(groupedByHeight).map(([k, v], lineIn) => {
         const groupedInfoBody = [
@@ -169,7 +171,7 @@ export default (data, breakdowns) => {
 
         v.forEach((item, index) => {
           let tb = [
-            { text: index + 1, style: 'fonts' },
+            { text: item.item ? item.item : index + 1, style: 'fonts' },
             { text: item.qty, style: 'fonts' },
             {
               stack: [
