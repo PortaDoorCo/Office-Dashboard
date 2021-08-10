@@ -297,12 +297,12 @@ export default (data, pricing) => {
         ],
       ];
 
-      let sortedDimensions = part.dimensions.sort(function (a, b) {
+      let sortedDimensions = part.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) {
         return a.item - b.item;
       });
       sortedDimensions.forEach((item, index) => {
         tableBody.push([
-          { text: index + 1, style: 'fonts' },
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
 
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
