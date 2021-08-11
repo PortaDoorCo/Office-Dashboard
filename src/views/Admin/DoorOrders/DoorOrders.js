@@ -212,7 +212,7 @@ class DoorOrders extends Component {
     } = this.props;
 
     return (
-      <div className="animated fadeIn">
+      <div className="animated fadeIn order-tour">
         <CancelModal
           toggle={this.toggleCancelModal}
           modal={this.state.cancelModal}

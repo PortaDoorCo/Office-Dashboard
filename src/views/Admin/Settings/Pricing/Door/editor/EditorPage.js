@@ -36,7 +36,7 @@ const EditorPage = (props) => {
                 </Col>
               </Row>
 
-              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
                 <div className="mt-2">
                   <Button color="primary" onClick={() => setDoorPricing(!doorPricing)}>Edit</Button>
                 </div>
@@ -61,7 +61,7 @@ const EditorPage = (props) => {
                 </Col>
               </Row>
 
-              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
                 <div className="mt-2">
                   <Button color="primary" onClick={() => setDFPricing(!dfPricing)}>Edit</Button>
                 </div>
@@ -86,7 +86,7 @@ const EditorPage = (props) => {
                 </Col>
               </Row>
 
-              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
                 <div className="mt-2">
                   <Button color="primary" onClick={() => setFaceFramePricing(!faceFramePricing)}>Edit</Button>
                 </div>

@@ -173,7 +173,7 @@ class Balance extends Component {
 
             <hr />
 
-            {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+            {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
               <div>
                 <Row>
                   <Col xs='5'>

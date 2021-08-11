@@ -227,7 +227,7 @@ const Designs = (props) => {
     role &&
     (role.type === 'management' ||
       role.type === 'authenticated' ||
-      role.type === 'owner')
+      role.type === 'owner' || role.type === 'administrator')
   ) {
     return (
       <div>

@@ -112,7 +112,7 @@ class DoorInfo extends Component {
     const { fields, formState, isValid, edit, updateSubmit } = this.props;
 
     return (
-      <div className="order-tour">
+      <div>
         <div>
           <CopyModal
             modal={this.state.modal}
@@ -121,11 +121,14 @@ class DoorInfo extends Component {
             type={this.state.type}
           />
         </div>
+        
         {fields.map((part, index) => {
           return (
-            <div id={`item-${index}`} key={index}>
+            <div id={`item-${index}`} key={index}  className="order-tour" >
+              
               <hr />
               <CardSubtitle className="mt-4">
+                
                 <Row>
                   <Col lg="11">
                     <div>
@@ -176,7 +179,7 @@ class DoorInfo extends Component {
             </div>
           );
         })}
-
+    
         {!edit && formState?.part_list && formState?.part_list[0]?.dimensions.length > 0  ? (
           
           <div>
