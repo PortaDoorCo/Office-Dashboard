@@ -124,7 +124,7 @@ class DoorInfo extends Component {
         
         {fields.map((part, index) => {
           return (
-            <div id={`item-${index}`} key={index}  className="order-tour" >
+            <div id={`item-${index}`} key={index} >
               
               <hr />
               <CardSubtitle className="mt-4">
