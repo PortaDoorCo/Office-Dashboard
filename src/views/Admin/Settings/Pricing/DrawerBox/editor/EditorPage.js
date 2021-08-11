@@ -33,7 +33,7 @@ const EditorPage = (props) => {
                 </Col>
               </Row>
 
-              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+              {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
                 <div className="mt-2">
                   <Button color="primary" onClick={() => setDrawerBoxPricing(!drawerBoxPricing)}>Edit</Button>
                 </div>

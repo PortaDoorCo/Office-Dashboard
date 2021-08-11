@@ -95,7 +95,7 @@ class Dashboard extends Component<PropTypes, StateTypes> {
           modal={this.state.viewPopup}
         />
         
-        {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+        {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
           <div>
 
             <Row className="mb-3">

@@ -328,7 +328,7 @@ const OrderTable = (props) => {
           </Row>
           <Row className="mt-3">
             <Col>
-              {role && (role.type === 'authenticated' || role.type === 'owner') ?
+              {role && (role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
                 <h3>Order Totals: ${data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}</h3> 
                 : null}
             </Col>

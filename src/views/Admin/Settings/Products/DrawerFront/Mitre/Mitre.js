@@ -110,7 +110,7 @@ const Cope = (props) => {
                   the tenon is long and runs the length of the mating surfaces and another where the slot is
                   perpendicular to the joined edges.
                   </p>
-                  {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+                  {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
                     <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
                     : <div />
                   }

@@ -104,7 +104,7 @@ const FaceFrame = (props) => {
               <Row>
                 <Col>
                 
-                  {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+                  {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
                     <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
                     : <div />
                   }

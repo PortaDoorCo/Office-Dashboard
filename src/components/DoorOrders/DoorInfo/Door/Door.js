@@ -56,6 +56,7 @@ class Door extends Component {
 
     return (
       <div>
+   
         <Row>
           <Col>
             <FormGroup>

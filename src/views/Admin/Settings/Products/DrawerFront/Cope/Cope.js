@@ -143,7 +143,7 @@ const Cope = (props) => {
                   that is put into the opposite edge so the stick can be seamlessly joined. The result is a
                   much more ornate design, but the greatest advantage is the strength and tight-fitting
                   durability that this technique achieves. </p>
-                  {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner') ?
+                  {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
                     <Button color="primary" onClick={toggleEditor} style={{ marginBottom: '1rem' }}>View Breakdowns</Button>
                     : <div />
                   }

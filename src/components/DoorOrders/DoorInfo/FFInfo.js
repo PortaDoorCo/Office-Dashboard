@@ -35,7 +35,7 @@ class DoorInfo extends Component {
     const { fields, formState, isValid, edit, updateSubmit, onUploaded } = this.props;
 
     return (
-      <div className="order-tour">
+      <div>
         <div>
           <CopyModal
             modal={this.state.modal}
