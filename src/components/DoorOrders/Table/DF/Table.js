@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
+import { Table, Input, Row, Col, Button, FormGroup, Label,  } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from 'redux-form';
+import { Field, change, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -17,8 +17,10 @@ import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import currencyMask from '../../../../utils/currencyMask';
+import { NotificationManager } from 'react-notifications';
 
 const required = (value) => (value ? undefined : 'Required');
+const trim_val = value => (value.trim('')  ? undefined : 'Required');
 
 const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -37,6 +39,7 @@ const Cope_Table = ({
   edit,
   dispatch,
   lites,
+  formSyncErrors
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -166,11 +169,101 @@ const Cope_Table = ({
     }
   };
 
+  const glass_note_check = (index) => {
+    const obj_names = Object.entries(
+      formState?.part_list[i]?.dimensions[index]
+    );
+
+    const filter_obj = obj_names.filter((n) => n[0].includes('glass_check'));
+
+    const check_if_glass = filter_obj
+      .filter((n) => n[1])
+      .map((k) => k.includes(true))
+      .includes(true);
+
+    return check_if_glass;
+  };
+
   const addFields = (i) => {
 
     const construction = formState?.part_list[i]?.construction?.value;
     const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
+
+    const index = fields.length - 1;
+
+    if(fields.length > 0){
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].notes`
+        )
+      );
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].width`
+        )
+      );
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].height`
+        )
+      );
+    }
+
+
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].woodtype`
+      )
+    );
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].design`
+      )
+    );
+
+    if(construction !== 'Miter'){
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].edge`
+        )
+      );
+    }
+
+
+
+    if(construction === 'Cope'){
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].profile`
+        )
+      );
+    }
+
+
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].applied_profile`
+      )
+    );
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].panel`
+      )
+    );
+
+    dispatch(
+      startAsyncValidation('DoorOrder')
+    );
 
     let df_reduction = 0;
 
@@ -183,37 +276,44 @@ const Cope_Table = ({
     }
 
 
-
-    fields.push({
-      qty: 1,
-      panelsH: 1,
-      panelsW: 1,
-      leftStile: leftStileWidth
-        ? fraction(numQty(leftStileWidth))
-        : (construction === 'Cope' && profile) ?
-          fraction(profile) :
-          fraction(design),
-      rightStile: rightStileWidth
-        ? fraction(numQty(rightStileWidth))
-        : (construction === 'Cope' && profile) ?
-          fraction(profile) :
-          fraction(design) ,
-      topRail: topRailWidth
-        ? fraction(numQty(topRailWidth))
-        : fraction(df_reduction) ,
-      bottomRail: bottomRailWidth
-        ? fraction(numQty(bottomRailWidth))
-        : fraction(df_reduction) ,
-      horizontalMidRailSize: 0,
-      verticalMidRailSize: 0,
-      unevenSplitInput: '0',
-      showBuilder: false,
-      full_frame: false,
-      glass_check_0:
+    if(fields.length > 0 && formSyncErrors){
+      NotificationManager.error(
+        'You are missing required info',
+        'Missing Items',
+        3000
+      );
+    } else {
+      fields.push({
+        qty: 1,
+        panelsH: 1,
+        panelsW: 1,
+        leftStile: leftStileWidth
+          ? fraction(numQty(leftStileWidth))
+          : (construction === 'Cope' && profile) ?
+            fraction(profile) :
+            fraction(design),
+        rightStile: rightStileWidth
+          ? fraction(numQty(rightStileWidth))
+          : (construction === 'Cope' && profile) ?
+            fraction(profile) :
+            fraction(design) ,
+        topRail: topRailWidth
+          ? fraction(numQty(topRailWidth))
+          : fraction(df_reduction) ,
+        bottomRail: bottomRailWidth
+          ? fraction(numQty(bottomRailWidth))
+          : fraction(df_reduction) ,
+        horizontalMidRailSize: 0,
+        verticalMidRailSize: 0,
+        unevenSplitInput: '0',
+        showBuilder: false,
+        full_frame: false,
+        glass_check_0:
           formState.part_list[i]?.panel?.NAME === 'Glass'
             ? true
             : false,
-    });
+      });
+    }
   };
 
   return formState ? (
@@ -569,6 +669,7 @@ const Cope_Table = ({
                       component={renderField}
                       edit={edit}
                       label="notes"
+                      validate={glass_note_check(index) ? [required, trim_val] : null}
                     />
                   </Col>
                   <Col lg="1">
@@ -637,6 +738,7 @@ const Cope_Table = ({
 
 const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
+  formSyncErrors: getFormSyncErrors('DoorOrder')(state),
 });
 
 export default connect(mapStateToProps, null)(Cope_Table);

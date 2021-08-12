@@ -21,7 +21,9 @@ import {
   getFormValues,
   change,
   FieldArray,
-  Field
+  Field,
+  touch,
+  startAsyncValidation
 } from 'redux-form';
 import { submitOrder } from '../../../redux/orders/actions';
 import { loadCustomers } from '../../../redux/customers/actions';
@@ -90,6 +92,27 @@ class DoorOrders extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     // this.toggleReminderModal();
+
+    const { dispatch } = this.props;
+
+    dispatch(
+      touch(
+        'DrawerOrder',
+        'job_info.poNum'
+      )
+    );
+
+    dispatch(
+      touch(
+        'DrawerOrder',
+        'job_info.shipping_method'
+      )
+    );
+
+
+    dispatch(
+      startAsyncValidation('DrawerOrder')
+    );
   }
 
   reloadPage = () => {

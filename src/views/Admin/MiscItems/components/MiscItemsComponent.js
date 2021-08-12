@@ -5,6 +5,8 @@ import {
   FieldArray,
   getFormValues,
   FormSection,
+  touch,
+  startAsyncValidation
 } from 'redux-form';
 import {
   renderField,
@@ -78,6 +80,26 @@ class MiscItems extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     // this.toggleReminderModal();
+    const { dispatch } = this.props;
+
+    dispatch(
+      touch(
+        'MiscItems',
+        'job_info.poNum'
+      )
+    );
+
+    dispatch(
+      touch(
+        'MiscItems',
+        'job_info.shipping_method'
+      )
+    );
+
+
+    dispatch(
+      startAsyncValidation('MiscItems')
+    );
   }
 
 

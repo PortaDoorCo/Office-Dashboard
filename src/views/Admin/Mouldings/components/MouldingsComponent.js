@@ -4,6 +4,8 @@ import {
   FieldArray,
   getFormValues,
   FormSection,
+  touch,
+  startAsyncValidation
 } from 'redux-form';
 import {
   Row,
@@ -75,6 +77,28 @@ class Mouldings extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     // this.toggleReminderModal();
+
+    const { dispatch } = this.props;
+
+    dispatch(
+      touch(
+        'Mouldings',
+        'job_info.poNum'
+      )
+    );
+
+    dispatch(
+      touch(
+        'Mouldings',
+        'job_info.shipping_method'
+      )
+    );
+
+
+    dispatch(
+      startAsyncValidation('Mouldings')
+    );
+    
   }
 
   onKeyPress(event) {

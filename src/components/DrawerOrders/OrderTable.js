@@ -1,18 +1,19 @@
-import React, { Component, Fragment, useEffect } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import { connect } from 'react-redux';
-import { Field, change } from 'redux-form';
+import { Field, change, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
 import {
   renderDropdownList,
   renderNumber,
   renderField,
-  renderFieldDisabled,
   renderPrice,
   renderInt
 } from '../RenderInputs/renderInputs';
 import RenderPriceHolder from '../RenderInputs/RenderPriceHolder';
 import currencyMask from '../../utils/currencyMask';
 import numQty from 'numeric-quantity';
+import { NotificationManager } from 'react-notifications';
+
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -33,7 +34,8 @@ class OrderTable extends Component {
       subTotal,
       formState,
       edit,
-      dispatch
+      dispatch,
+      formSyncErrors
     } = this.props;
 
 
@@ -246,11 +248,102 @@ class OrderTable extends Component {
               color="primary"
               className="btn-circle"
               onClick={() =>
-                fields.push({
-                  qty: 1,
-                  scoop: scoop[1],
-                  dividers: dividers[0],
-                })
+              {
+
+                const index = fields.length - 1;
+
+                if(fields.length > 0){
+                  dispatch(
+                    touch(
+                      'DrawerOrder',
+                      `part_list[${i}].dimensions[${index}].notes`
+                    )
+                  );
+                  dispatch(
+                    touch(
+                      'DrawerOrder',
+                      `part_list[${i}].dimensions[${index}].width`
+                    )
+                  );
+                  dispatch(
+                    touch(
+                      'DrawerOrder',
+                      `part_list[${i}].dimensions[${index}].height`
+                    )
+                  );
+                  dispatch(
+                    touch(
+                      'DrawerOrder',
+                      `part_list[${i}].dimensions[${index}].depth`
+                    )
+                  );
+                }
+
+                dispatch(
+                  touch(
+                    'DrawerOrder',
+                    `part_list[${i}].woodtype`
+                  )
+                );
+
+                dispatch(
+                  touch(
+                    'DrawerOrder',
+                    `part_list[${i}].box_thickness`
+                  )
+                );
+
+                dispatch(
+                  touch(
+                    'DrawerOrder',
+                    `part_list[${i}].box_bottom_woodtype`
+                  )
+                );
+
+                dispatch(
+                  touch(
+                    'DrawerOrder',
+                    `part_list[${i}].box_bottom_thickness`
+                  )
+                );
+
+                dispatch(
+                  touch(
+                    'DrawerOrder',
+                    `part_list[${i}].box_notch`
+                  )
+                );
+
+                dispatch(
+                  touch(
+                    'DrawerOrder',
+                    `part_list[${i}].box_finish`
+                  )
+                );
+
+
+
+                dispatch(
+                  startAsyncValidation('DrawerOrder')
+                );
+
+                if(fields.length > 0 && formSyncErrors){
+                  NotificationManager.error(
+                    'You are missing required info',
+                    'Missing Items',
+                    3000
+                  );
+                } else {
+
+                  fields.push({
+                    qty: 1,
+                    scoop: scoop[1],
+                    dividers: dividers[0],
+                  });
+
+                }
+              }
+
               }
             >
               +
@@ -279,4 +372,9 @@ class OrderTable extends Component {
   }
 };
 
-export default connect()(OrderTable);
+const mapStateToProps = (state) => ({
+  lites: state.part_list.lites,
+  formSyncErrors: getFormSyncErrors('DrawerOrder')(state),
+});
+
+export default connect(mapStateToProps, null)(OrderTable);

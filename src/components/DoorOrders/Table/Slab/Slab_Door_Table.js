@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from 'redux-form';
+import { Field, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
 import {
@@ -17,6 +17,8 @@ import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
 import currencyMask from '../../../../utils/currencyMask';
 import WarningModal from '../Warnings/Modal';
+import { NotificationManager } from 'react-notifications';
+import { connect } from 'react-redux';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -36,6 +38,7 @@ const Slab_Door_Table = ({
   doorOptions,
   edit,
   dispatch,
+  formSyncErrors
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -314,10 +317,81 @@ const Slab_Door_Table = ({
                 color="primary"
                 className="btn-circle"
                 onClick={(e) =>
-                  fields.push({
-                    qty: 1,
-                    showBuilder: false,
-                  })
+                {
+                  const construction = formState?.part_list[i]?.construction?.value;
+                  const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
+                  const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
+
+                  const index = fields.length - 1;
+
+                  if(fields.length > 0){
+                    dispatch(
+                      touch(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].notes`
+                      )
+                    );
+                    dispatch(
+                      touch(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].width`
+                      )
+                    );
+                    dispatch(
+                      touch(
+                        'DoorOrder',
+                        `part_list[${i}].dimensions[${index}].height`
+                      )
+                    );
+                  }
+
+
+                  dispatch(
+                    touch(
+                      'DoorOrder',
+                      `part_list[${i}].woodtype`
+                    )
+                  );
+
+
+                  if(construction !== 'Miter'){
+                    dispatch(
+                      touch(
+                        'DoorOrder',
+                        `part_list[${i}].edge`
+                      )
+                    );
+                  }
+
+
+
+
+                  dispatch(
+                    touch(
+                      'DoorOrder',
+                      `part_list[${i}].applied_profile`
+                    )
+                  );
+     
+                  dispatch(
+                    startAsyncValidation('DoorOrder')
+                  );
+
+
+                  if(fields.length > 0 && formSyncErrors){
+                    NotificationManager.error(
+                      'You are missing required info',
+                      'Missing Items',
+                      3000
+                    );
+                  } else {
+                    fields.push({
+                      qty: 1,
+                      showBuilder: false,
+                    });
+                  }
+                }
+   
                 }
               >
                 +
@@ -347,4 +421,8 @@ const Slab_Door_Table = ({
   );
 };
 
-export default Slab_Door_Table;
+const mapStateToProps = (state) => ({
+  formSyncErrors: getFormSyncErrors('DoorOrder')(state),
+});
+
+export default connect(mapStateToProps, null)(Slab_Door_Table);
