@@ -1,17 +1,47 @@
 import React, { Component } from 'react';
 import { Row, Col, CardSubtitle, FormGroup, Label, Button } from 'reactstrap';
 import 'antd/dist/antd.css';
-import { Field, FieldArray } from 'redux-form';
+import { Field, FieldArray, touch, startAsyncValidation } from 'redux-form';
 import OrderTable from './OrderTable';
 import {
   renderDropdownList,
   renderField,
   renderDropdownListFilter,
+  renderTextField,
 } from '../RenderInputs/renderInputs';
+import VisibilitySensor from 'react-visibility-sensor';
+import { connect } from 'react-redux';
+
 
 const required = (value) => (value ? undefined : 'Required');
+const noteRequired = (value) => (value ? undefined : 'Enter Item Build Note Here - Framing/Wood, etc.');
 
 class DrawerBoxInfo extends Component {
+
+  onNoteAppear = (isVisible) => {
+
+    const { dispatch, fields } = this.props;
+
+    console.log({dispatch});
+
+    const index = fields.length - 1;
+
+    console.log({index});
+
+    if (isVisible) {
+      dispatch(
+        touch(
+          'DrawerOrder',
+          `part_list[${index}].notes`
+        )
+      );
+
+      dispatch(
+        startAsyncValidation('DrawerOrder')
+      );
+    }
+  };
+
   render() {
     const {
       woodtypes,
@@ -173,17 +203,20 @@ class DrawerBoxInfo extends Component {
 
             <Row className="mt-2">
               <Col xs="4">
-                <FormGroup>
-                  <strong>
-                    <Label for="jobNotes">Job Notes</Label>
-                    <Field
-                      name={`${part}.notes`}
-                      type="textarea"
-                      edit={edit}
-                      component={renderField}
-                    />
-                  </strong>
-                </FormGroup>
+                <VisibilitySensor onChange={this.onNoteAppear}>
+                  <FormGroup>
+                    <strong>
+                      <Label for="jobNotes">Job Notes</Label>
+                      <Field
+                        name={`${part}.notes`}
+                        type="textarea"
+                        edit={edit}
+                        component={renderTextField}
+                        validate={noteRequired}
+                      />
+                    </strong>
+                  </FormGroup>
+                </VisibilitySensor>
               </Col>
             </Row>
 
@@ -230,4 +263,4 @@ class DrawerBoxInfo extends Component {
   }
 }
 
-export default DrawerBoxInfo;
+export default connect()(DrawerBoxInfo);

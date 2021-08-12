@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, CardSubtitle, FormGroup, Label } from 'reactstrap';
-import { Field, FieldArray } from 'redux-form';
+import { Field, FieldArray, touch, startAsyncValidation } from 'redux-form';
 import { connect } from 'react-redux';
 import {
   renderDropdownList,
@@ -15,11 +15,33 @@ import {
   finishItemSelector,
 } from '../../../../selectors/faceFramePricing';
 import { finishingSelector } from '../../../../selectors/faceFramePricing';
+import VisibilitySensor from 'react-visibility-sensor';
 
 const required = (value) => (value ? undefined : 'Required');
+const noteRequired = (value) => (value ? undefined : 'Enter Item Build Note Here - Framing/Wood, etc.');
 
 
 class FaceFrame extends Component {
+
+
+  onNoteAppear = (isVisible) => {
+
+    const { dispatch, index } = this.props;
+
+    if (isVisible) {
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${index}].notes`
+        )
+      );
+
+      dispatch(
+        startAsyncValidation('DoorOrder')
+      );
+    }
+  };
+
   render() {
     const {
       part,
@@ -96,17 +118,20 @@ class FaceFrame extends Component {
 
         <Row className="mt-2">
           <Col xs="4">
-            <FormGroup>
-              <strong>
-                <Label for="jobNotes">Job Notes</Label>
-                <Field
-                  name={`${part}.notes`}
-                  type="textarea"
-                  component={renderTextField}
-                  edit={edit}
-                />
-              </strong>
-            </FormGroup>
+            <VisibilitySensor onChange={this.onNoteAppear}>
+              <FormGroup>
+                <strong>
+                  <Label for="jobNotes">Job Notes</Label>
+                  <Field
+                    name={`${part}.notes`}
+                    type="textarea"
+                    component={renderTextField}
+                    edit={edit}
+                    validate={noteRequired}
+                  />
+                </strong>
+              </FormGroup>
+            </VisibilitySensor>
           </Col>
         </Row>
 
