@@ -433,51 +433,40 @@ const DoorTable = ({
       startAsyncValidation('DoorOrder')
     );
 
-
-
-
-    
-    if(formSyncErrors && !formSyncErrors?.part_list[i]?.dimensions){
-      NotificationManager.error(
-        'You are missing required info',
-        'Missing Items',
-        3000
-      );
-    } else {
-      fields.push({
-        qty: 1,
-        panelsH: 1,
-        panelsW: 1,
-        leftStile: leftStileWidth
-          ? fraction(numQty(leftStileWidth))
-          : construction === 'Cope' && profile
-            ? fraction(profile)
-            : fraction(design),
-        rightStile: rightStileWidth
-          ? fraction(numQty(rightStileWidth))
-          : construction === 'Cope' && profile
-            ? fraction(profile)
-            : fraction(design),
-        topRail: topRailWidth
-          ? fraction(numQty(topRailWidth))
-          : construction === 'Cope' && profile
-            ? fraction(profile)
-            : fraction(design),
-        bottomRail: bottomRailWidth
-          ? fraction(numQty(bottomRailWidth))
-          : construction === 'Cope' && profile
-            ? fraction(profile)
-            : fraction(design),
-        horizontalMidRailSize: 0,
-        verticalMidRailSize: 0,
-        unevenSplitInput: '0',
-        showBuilder: false,
-        unevenCheck: false,
-        unevenSplit: false,
-        glass_check_0:
+    fields.push({
+      qty: 1,
+      panelsH: 1,
+      panelsW: 1,
+      leftStile: leftStileWidth
+        ? fraction(numQty(leftStileWidth))
+        : construction === 'Cope' && profile
+          ? fraction(profile)
+          : fraction(design),
+      rightStile: rightStileWidth
+        ? fraction(numQty(rightStileWidth))
+        : construction === 'Cope' && profile
+          ? fraction(profile)
+          : fraction(design),
+      topRail: topRailWidth
+        ? fraction(numQty(topRailWidth))
+        : construction === 'Cope' && profile
+          ? fraction(profile)
+          : fraction(design),
+      bottomRail: bottomRailWidth
+        ? fraction(numQty(bottomRailWidth))
+        : construction === 'Cope' && profile
+          ? fraction(profile)
+          : fraction(design),
+      horizontalMidRailSize: 0,
+      verticalMidRailSize: 0,
+      unevenSplitInput: '0',
+      showBuilder: false,
+      unevenCheck: false,
+      unevenSplit: false,
+      glass_check_0:
           formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
-      });
-    }
+    });
+    
 
 
   };
