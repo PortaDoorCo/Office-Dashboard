@@ -327,7 +327,7 @@ class OrderTable extends Component {
                   startAsyncValidation('DrawerOrder')
                 );
 
-                if(fields.length > 0 && formSyncErrors){
+                if(formSyncErrors && !formSyncErrors?.part_list[i]?.dimensions){
                   NotificationManager.error(
                     'You are missing required info',
                     'Missing Items',
