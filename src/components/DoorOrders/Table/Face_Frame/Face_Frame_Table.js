@@ -397,26 +397,18 @@ const Frame_Only_Table = ({
                     startAsyncValidation('DoorOrder')
                   );
 
-                  if(formSyncErrors && !formSyncErrors?.part_list[i]?.dimensions){
-                    NotificationManager.error(
-                      'You are missing required info',
-                      'Missing Items',
-                      3000
-                    );
-                  } else {
-
-                    fields.push({
-                      qty: 1,
-                      openings: 1,
-                      horizontalMidRailSize: 0,
-                      verticalMidRailSize: 0,
-                      unevenSplitInput: '0',
-                      unevenSplit: false,
-                      unevenCheck: false,
-                      showBuilder: false,
-                    });
-                  }
+                  fields.push({
+                    qty: 1,
+                    openings: 1,
+                    horizontalMidRailSize: 0,
+                    verticalMidRailSize: 0,
+                    unevenSplitInput: '0',
+                    unevenSplit: false,
+                    unevenCheck: false,
+                    showBuilder: false,
+                  });
                 }
+                
                 }
               >
                 +

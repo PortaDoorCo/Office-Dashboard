@@ -50,6 +50,8 @@ class JobInfo extends Component {
       if(formState.job_info.Sample !== prevProps.formState.job_info.Sample){
         if(formState.job_info.Sample){
           this.props.dispatch(change('DrawerOrder', 'discount', 50));
+        } else {
+          this.props.dispatch(change('DoorOrder', 'discount', formState?.job_info?.customer?.Discount || 0));
         }
         
       }

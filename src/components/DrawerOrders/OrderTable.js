@@ -327,21 +327,15 @@ class OrderTable extends Component {
                   startAsyncValidation('DrawerOrder')
                 );
 
-                if(formSyncErrors && !formSyncErrors?.part_list[i]?.dimensions){
-                  NotificationManager.error(
-                    'You are missing required info',
-                    'Missing Items',
-                    3000
-                  );
-                } else {
+           
 
-                  fields.push({
-                    qty: 1,
-                    scoop: scoop[1],
-                    dividers: dividers[0],
-                  });
+                fields.push({
+                  qty: 1,
+                  scoop: scoop[1],
+                  dividers: dividers[0],
+                });
 
-                }
+                
               }
 
               }

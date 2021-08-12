@@ -378,19 +378,13 @@ const Slab_Door_Table = ({
                   );
 
 
-                  if(formSyncErrors && !formSyncErrors?.part_list[i]?.dimensions){
-                    NotificationManager.error(
-                      'You are missing required info',
-                      'Missing Items',
-                      3000
-                    );
-                  } else {
-                    fields.push({
-                      qty: 1,
-                      showBuilder: false,
-                    });
-                  }
+           
+                  fields.push({
+                    qty: 1,
+                    showBuilder: false,
+                  });
                 }
+                
    
                 }
               >
