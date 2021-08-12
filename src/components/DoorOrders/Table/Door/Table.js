@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change } from 'redux-form';
+import { Field, change, startAsyncValidation, touch, getFormSyncErrors } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -9,7 +9,6 @@ import {
   renderField,
   renderNumber,
   renderInt,
-  renderFieldDisabled,
   renderDropdownList,
   renderCheckboxToggle,
   renderPrice,
@@ -19,7 +18,7 @@ import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
-import { deleteMiscItem } from '../../../../redux/misc_items/actions';
+import { NotificationManager } from 'react-notifications';
 
 const required = (value) => (value ? undefined : 'Required');
 const trim_val = value => (value.trim('')  ? undefined : 'Required');
@@ -41,6 +40,8 @@ const DoorTable = ({
   dispatch,
   addPrice,
   lites,
+  formError,
+  formSyncErrors
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -325,46 +326,160 @@ const DoorTable = ({
       );
     }
   };
+
+  const validateGlass = (i, index) => {
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].notes`
+      )
+    );
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].width`
+      )
+    );
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${index}].height`
+      )
+    );
+    dispatch(
+      startAsyncValidation('DoorOrder')
+    );
+  };
   
 
   const addFields = (i) => {
+
     const construction = formState?.part_list[i]?.construction?.value;
     const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
 
-    fields.push({
-      qty: 1,
-      panelsH: 1,
-      panelsW: 1,
-      leftStile: leftStileWidth
-        ? fraction(numQty(leftStileWidth))
-        : construction === 'Cope' && profile
-          ? fraction(profile)
-          : fraction(design),
-      rightStile: rightStileWidth
-        ? fraction(numQty(rightStileWidth))
-        : construction === 'Cope' && profile
-          ? fraction(profile)
-          : fraction(design),
-      topRail: topRailWidth
-        ? fraction(numQty(topRailWidth))
-        : construction === 'Cope' && profile
-          ? fraction(profile)
-          : fraction(design),
-      bottomRail: bottomRailWidth
-        ? fraction(numQty(bottomRailWidth))
-        : construction === 'Cope' && profile
-          ? fraction(profile)
-          : fraction(design),
-      horizontalMidRailSize: 0,
-      verticalMidRailSize: 0,
-      unevenSplitInput: '0',
-      showBuilder: false,
-      unevenCheck: false,
-      unevenSplit: false,
-      glass_check_0:
-        formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
-    });
+    const index = fields.length - 1;
+
+    if(fields.length > 0){
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].notes`
+        )
+      );
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].width`
+        )
+      );
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].height`
+        )
+      );
+    }
+
+
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].woodtype`
+      )
+    );
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].design`
+      )
+    );
+
+    if(construction !== 'Miter'){
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].edge`
+        )
+      );
+    }
+
+
+
+    if(construction === 'Cope'){
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${i}].profile`
+        )
+      );
+    }
+
+
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].applied_profile`
+      )
+    );
+    dispatch(
+      touch(
+        'DoorOrder',
+        `part_list[${i}].panel`
+      )
+    );
+
+    dispatch(
+      startAsyncValidation('DoorOrder')
+    );
+
+
+
+
+    
+    if(fields.length > 0 && formSyncErrors){
+      NotificationManager.error(
+        'You are missing required info',
+        'Missing Items',
+        3000
+      );
+    } else {
+      fields.push({
+        qty: 1,
+        panelsH: 1,
+        panelsW: 1,
+        leftStile: leftStileWidth
+          ? fraction(numQty(leftStileWidth))
+          : construction === 'Cope' && profile
+            ? fraction(profile)
+            : fraction(design),
+        rightStile: rightStileWidth
+          ? fraction(numQty(rightStileWidth))
+          : construction === 'Cope' && profile
+            ? fraction(profile)
+            : fraction(design),
+        topRail: topRailWidth
+          ? fraction(numQty(topRailWidth))
+          : construction === 'Cope' && profile
+            ? fraction(profile)
+            : fraction(design),
+        bottomRail: bottomRailWidth
+          ? fraction(numQty(bottomRailWidth))
+          : construction === 'Cope' && profile
+            ? fraction(profile)
+            : fraction(design),
+        horizontalMidRailSize: 0,
+        verticalMidRailSize: 0,
+        unevenSplitInput: '0',
+        showBuilder: false,
+        unevenCheck: false,
+        unevenSplit: false,
+        glass_check_0:
+          formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
+      });
+    }
+
+
   };
 
   const glass_note_check = (index) => {
@@ -740,15 +855,16 @@ const DoorTable = ({
                     parseInt(formState.part_list[i].dimensions[index].panelsH)
                   ).keys()
                   : 0
-              ).map((i, index) => {
+              ).map((i, k) => {
                 return (
                   <Col lg="2">
                     <FormGroup>
                       <strong>Glass Opening {index + 1}</strong>
                       <Field
-                        name={`${table}.glass_check_${index}`}
+                        name={`${table}.glass_check_${k}`}
                         component={renderCheckboxToggle}
                         edit={edit}
+                        onClick={() => validateGlass(i, index)}
                       />
                     </FormGroup>
                   </Col>
@@ -849,6 +965,7 @@ const DoorTable = ({
 
 const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
+  formSyncErrors: getFormSyncErrors('DoorOrder')(state),
 });
 
 export default connect(mapStateToProps, null)(DoorTable);
