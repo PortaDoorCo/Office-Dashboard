@@ -8,13 +8,12 @@ import {
   Button,
   Input,
   InputGroup,
-  Form
+  Form,
 } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { registerUser } from '../../../redux/users/actions';
-import { strapiRegister } from '../../../utils/auth';
 import Background from '../../../assets/img/register-background.jpg';
 import axios from 'axios';
 import db_url from '../../../redux/db_url';
@@ -31,21 +30,21 @@ class Register extends Component {
       confirmPassword: '',
       Username: '',
       Company: '',
-      signedUp: false
+      signedUp: false,
     };
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     // Request API.
-    const { Username, Email, Password } = this.state;
+    const { Username, Email, Password, FirstName, LastName } = this.state;
 
     if (this.state.Password === this.state.confirmPassword) {
       axios
@@ -53,15 +52,18 @@ class Register extends Component {
           username: Username,
           email: Email,
           password: Password,
+          FirstName: FirstName,
+          LastName: LastName
         })
-        .then(response => {
-        // Handle success.
-          console.log('Well done!');
-          console.log('User profile', response.data.user);
-          console.log('User token', response.data.jwt);
+        .then((response) => {
+          // Handle success.
+          // console.log('Well done!');
+          // console.log('User profile', response.data.user);
+          // console.log('User token', response.data.jwt);
+          this.setState({ signedUp: true });
         })
-        .catch(error => {
-        // Handle error.
+        .catch((error) => {
+          // Handle error.
           console.log('An error occurred:', error.response);
         });
     } else {
@@ -78,92 +80,130 @@ class Register extends Component {
   };
 
   render() {
-    if (this.state.signedUp) {
-      return <Redirect to="/dashboard" />;
-    }
+    const { signedUp } = this.state;
 
-    return (
-      <div className="app flex-row align-items-center" style={{ backgroundImage: `url(${Background})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-        <Container>
-          <Form onSubmit={this.handleSubmit}>
-            <Row className="justify-content-center">
-              <Col md="6">
-                <Card className="mx-4">
-                  <CardBody className="p-4">
-                    <h1>Register</h1>
-                    <p className="text-muted">Create your account</p>
-                    <InputGroup className="mb-3">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text">
-                          <i className="icon-user" />
-                        </span>
-                      </div>
-                      <Input
-                        type="text"
-                        placeholder="Username"
-                        name="Username"
-                        onChange={this.handleChange}
-                        value={this.state.Username}
-                      />
-                    </InputGroup>
-                    <InputGroup className="mb-3">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text">@</span>
-                      </div>
-                      <Input
-                        type="text"
-                        placeholder="Email"
-                        name="Email"
-                        onChange={this.handleChange}
-                        value={this.state.Email}
-                      />
-                    </InputGroup>
-                    <InputGroup className="mb-3">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text">
-                          <i className="icon-lock" />
-                        </span>
-                      </div>
-                      <Input
-                        type="password"
-                        placeholder="Password"
-                        name="Password"
-                        onChange={this.handleChange}
-                        value={this.state.Password}
-                      />
-                    </InputGroup>
-                    <InputGroup className="mb-4">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text">
-                          <i className="icon-lock" />
-                        </span>
-                      </div>
-                      <Input
-                        type="password"
-                        placeholder="Password"
-                        name="confirmPassword"
-                        onChange={this.handleChange}
-                        value={this.state.confirmPassword}
-                      />
-                    </InputGroup>
-                    <Button color="success" block>
-                      Create Account
-                    </Button>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </Form>
-        </Container>
-      </div>
-    );
+    if (signedUp) {
+      return <Redirect to="/dashboard" />;
+    } else {
+      return (
+        <div
+          className="app flex-row align-items-center"
+          style={{
+            backgroundImage: `url(${Background})`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }}
+        >
+          <Container>
+            <Form onSubmit={this.handleSubmit}>
+              <Row className="justify-content-center">
+                <Col md="6">
+                  <Card className="mx-4">
+                    <CardBody className="p-4">
+                      <h1>Register</h1>
+                      <p className="text-muted">Create your account</p>
+                      <InputGroup className="mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <i className="icon-user" />
+                          </span>
+                        </div>
+                        <Input
+                          type="text"
+                          placeholder="Username"
+                          name="Username"
+                          onChange={this.handleChange}
+                          value={this.state.Username}
+                        />
+                      </InputGroup>
+                      <InputGroup className="mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">@</span>
+                        </div>
+                        <Input
+                          type="text"
+                          placeholder="Email"
+                          name="Email"
+                          onChange={this.handleChange}
+                          value={this.state.Email}
+                        />
+                      </InputGroup>
+                      <InputGroup className="mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <i className="icon-user" />
+                          </span>
+                        </div>
+                        <Input
+                          type="text"
+                          placeholder="First Name"
+                          name="FirstName"
+                          onChange={this.handleChange}
+                          value={this.state.FirstName}
+                        />
+                      </InputGroup>
+                      <InputGroup className="mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <i className="icon-user" />
+                          </span>
+                        </div>
+                        <Input
+                          type="text"
+                          placeholder="Last Name"
+                          name="LastName"
+                          onChange={this.handleChange}
+                          value={this.state.LastName}
+                        />
+                      </InputGroup>
+                      <InputGroup className="mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <i className="icon-lock" />
+                          </span>
+                        </div>
+                        <Input
+                          type="password"
+                          placeholder="Password"
+                          name="Password"
+                          onChange={this.handleChange}
+                          value={this.state.Password}
+                        />
+                      </InputGroup>
+                      <InputGroup className="mb-4">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <i className="icon-lock" />
+                          </span>
+                        </div>
+                        <Input
+                          type="password"
+                          placeholder="Password"
+                          name="confirmPassword"
+                          onChange={this.handleChange}
+                          value={this.state.confirmPassword}
+                        />
+                      </InputGroup>
+                      <Button color="success" block>
+                        Create Account
+                      </Button>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </Form>
+          </Container>
+        </div>
+      );
+    }
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      registerUser
+      registerUser,
     },
     dispatch
   );
