@@ -397,7 +397,7 @@ const Frame_Only_Table = ({
                     startAsyncValidation('DoorOrder')
                   );
 
-                  if(fields.length > 0 && formSyncErrors){
+                  if(formSyncErrors && !formSyncErrors?.part_list[i]?.dimensions){
                     NotificationManager.error(
                       'You are missing required info',
                       'Missing Items',
