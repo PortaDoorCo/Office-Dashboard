@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, CardSubtitle, FormGroup, Label } from 'reactstrap';
-import { Field, FieldArray, change } from 'redux-form';
+import { Field, FieldArray, change, touch, startAsyncValidation } from 'redux-form';
 import { connect } from 'react-redux';
 import {
   renderDropdownListFilter,
@@ -15,8 +15,10 @@ import {
 } from '../../../../selectors/doorPricing';
 import changeProfile from '../Functions/changeProfile';
 import changeDesign from '../Functions/changeDesign';
+import VisibilitySensor from 'react-visibility-sensor';
 
 const required = (value) => (value ? undefined : 'Required');
+const noteRequired = (value) => (value ? undefined : 'Enter Item Build Note Here - Framing/Wood, etc.');
 
 class CopeDF extends Component {
   onChangeWoodtype = (p, ind) => {
@@ -28,6 +30,25 @@ class CopeDF extends Component {
       this.props.dispatch(change('DoorOrder', `${p}.VERTICAL_GRAIN`, false));
     }
   };
+
+  onNoteAppear = (isVisible) => {
+
+    const { dispatch, index } = this.props;
+
+    if (isVisible) {
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${index}].notes`
+        )
+      );
+
+      dispatch(
+        startAsyncValidation('DoorOrder')
+      );
+    }
+  };
+
 
   render() {
     const {
@@ -190,17 +211,20 @@ class CopeDF extends Component {
 
         <Row className="mt-2">
           <Col xs="4">
-            <FormGroup>
-              <strong>
-                <Label for="jobNotes">Job Notes</Label>
-                <Field
-                  name={`${part}.notes`}
-                  type="textarea"
-                  component={renderTextField}
-                  edit={edit}
-                />
-              </strong>
-            </FormGroup>
+            <VisibilitySensor onChange={this.onNoteAppear}>
+              <FormGroup>
+                <strong>
+                  <Label for="jobNotes">Job Notes</Label>
+                  <Field
+                    name={`${part}.notes`}
+                    type="textarea"
+                    component={renderTextField}
+                    edit={edit}
+                    validate={noteRequired}
+                  />
+                </strong>
+              </FormGroup>
+            </VisibilitySensor>
           </Col>
         </Row>
 

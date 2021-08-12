@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, CardSubtitle, FormGroup, Label } from 'reactstrap';
-import { Field, FieldArray, change } from 'redux-form';
+import { Field, FieldArray, change, touch, startAsyncValidation } from 'redux-form';
 import { connect } from 'react-redux';
 import {
   renderDropdownListFilter,
@@ -17,10 +17,30 @@ import {
 
 import changeProfile from '../Functions/changeProfile';
 import changeDesign from '../Functions/changeDesign';
+import VisibilitySensor from 'react-visibility-sensor';
 
+const noteRequired = (value) => (value ? undefined : 'Enter Item Build Note Here - Framing/Wood, etc.');
 const required = (value) => (value ? undefined : 'Required');
 
 class Door extends Component {
+  onNoteAppear = (isVisible) => {
+
+    const { dispatch, index } = this.props;
+
+    if (isVisible) {
+      dispatch(
+        touch(
+          'DoorOrder',
+          `part_list[${index}].notes`
+        )
+      );
+
+      dispatch(
+        startAsyncValidation('DoorOrder')
+      );
+    }
+  };
+
   render() {
     const {
       part,
@@ -48,15 +68,13 @@ class Door extends Component {
     const filtered_woodtypes = woodtypes.filter((wood) => wood[thickness]);
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
     const two_piece_wood = woodtypes.filter((wood) => wood.two_piece === true);
-    const filtered_designs = designs.filter((design) =>
-      (design.CONSTRUCTION === construction) && (design.ORDERTYPE === 'Door')
+    const filtered_designs = designs.filter(
+      (design) =>
+        design.CONSTRUCTION === construction && design.ORDERTYPE === 'Door'
     );
-
-
 
     return (
       <div>
-   
         <Row>
           <Col>
             <FormGroup>
@@ -164,17 +182,20 @@ class Door extends Component {
 
         <Row className="mt-2">
           <Col xs="4">
-            <FormGroup>
-              <strong>
-                <Label for="jobNotes">Job Notes</Label>
-                <Field
-                  name={`${part}.notes`}
-                  type="textarea"
-                  component={renderTextField}
-                  edit={edit}
-                />
-              </strong>
-            </FormGroup>
+            <VisibilitySensor onChange={this.onNoteAppear}>
+              <FormGroup>
+                <strong>
+                  <Label for="jobNotes">Job Notes</Label>
+                  <Field
+                    name={`${part}.notes`}
+                    type="textarea"
+                    component={renderTextField}
+                    edit={edit}
+                    validate={noteRequired}
+                  />
+                </strong>
+              </FormGroup>
+            </VisibilitySensor>
           </Col>
         </Row>
 

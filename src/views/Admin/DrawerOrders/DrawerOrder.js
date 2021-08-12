@@ -240,7 +240,8 @@ class DoorOrders extends Component {
       customers,
       formState,
       address,
-      tax
+      tax,
+      dispatch
     } = this.props;
 
     return (
@@ -313,6 +314,7 @@ class DoorOrders extends Component {
                       prices={prices}
                       subTotal={subTotal}
                       box_assembly={box_assembly}
+                      dispatch={dispatch}
                     />
                   </Suspense>
 
