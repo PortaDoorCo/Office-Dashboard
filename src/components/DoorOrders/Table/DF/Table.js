@@ -198,8 +198,12 @@ const Cope_Table = ({
         : (construction === 'Cope' && profile) ?
           fraction(profile) :
           fraction(design) ,
-      topRail: fraction(df_reduction),
-      bottomRail: fraction(df_reduction),
+      topRail: topRailWidth
+        ? fraction(numQty(topRailWidth))
+        : fraction(df_reduction) ,
+      bottomRail: bottomRailWidth
+        ? fraction(numQty(bottomRailWidth))
+        : fraction(df_reduction) ,
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
