@@ -9,38 +9,13 @@ import {
   renderDropdownListFilter,
   renderTextField,
 } from '../RenderInputs/renderInputs';
-import VisibilitySensor from 'react-visibility-sensor';
 import { connect } from 'react-redux';
 
 
 const required = (value) => (value ? undefined : 'Required');
-const noteRequired = (value) => (value ? undefined : 'Enter Item Build Note Here - Framing/Wood, etc.');
+
 
 class DrawerBoxInfo extends Component {
-
-  onNoteAppear = (isVisible) => {
-
-    const { dispatch, fields } = this.props;
-
-    console.log({dispatch});
-
-    const index = fields.length - 1;
-
-    console.log({index});
-
-    if (isVisible) {
-      dispatch(
-        touch(
-          'DrawerOrder',
-          `part_list[${index}].notes`
-        )
-      );
-
-      dispatch(
-        startAsyncValidation('DrawerOrder')
-      );
-    }
-  };
 
   render() {
     const {
@@ -203,20 +178,20 @@ class DrawerBoxInfo extends Component {
 
             <Row className="mt-2">
               <Col xs="4">
-                <VisibilitySensor onChange={this.onNoteAppear}>
-                  <FormGroup>
-                    <strong>
-                      <Label for="jobNotes">Job Notes</Label>
-                      <Field
-                        name={`${part}.notes`}
-                        type="textarea"
-                        edit={edit}
-                        component={renderTextField}
-                        validate={noteRequired}
-                      />
-                    </strong>
-                  </FormGroup>
-                </VisibilitySensor>
+           
+                <FormGroup>
+                  <strong>
+                    <Label for="jobNotes">Job Notes</Label>
+                    <Field
+                      name={`${part}.notes`}
+                      type="textarea"
+                      edit={edit}
+                      component={renderTextField}
+                    />
+                    <p>Enter Item Build Note Here - Framing/Wood, etc.</p>
+                  </strong>
+                </FormGroup>
+         
               </Col>
             </Row>
 

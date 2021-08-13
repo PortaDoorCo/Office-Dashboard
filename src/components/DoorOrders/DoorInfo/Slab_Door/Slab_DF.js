@@ -100,6 +100,7 @@ class SlabDoor extends Component {
                   edit={edit}
                 />
               </strong>
+              <p>Enter Item Build Note Here - Framing/Wood, etc.</p>
             </FormGroup>
           </Col>
         </Row>
