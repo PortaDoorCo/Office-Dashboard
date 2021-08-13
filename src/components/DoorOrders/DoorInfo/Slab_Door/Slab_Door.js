@@ -99,6 +99,7 @@ class SlabDoor extends Component {
                   component={renderTextField}
                   edit={edit}
                 />
+                <p>Enter Item Build Note Here - Framing/Wood, etc.</p>
               </strong>
             </FormGroup>
           </Col>

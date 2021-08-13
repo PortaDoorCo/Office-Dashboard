@@ -15,39 +15,20 @@ import {
   finishItemSelector,
 } from '../../../../selectors/faceFramePricing';
 import { finishingSelector } from '../../../../selectors/faceFramePricing';
-import VisibilitySensor from 'react-visibility-sensor';
+
 
 const required = (value) => (value ? undefined : 'Required');
-const noteRequired = (value) => (value ? undefined : 'Enter Item Build Note Here - Framing/Wood, etc.');
+
 
 
 class FaceFrame extends Component {
 
-
-  onNoteAppear = (isVisible) => {
-
-    const { dispatch, index } = this.props;
-
-    if (isVisible) {
-      dispatch(
-        touch(
-          'DoorOrder',
-          `part_list[${index}].notes`
-        )
-      );
-
-      dispatch(
-        startAsyncValidation('DoorOrder')
-      );
-    }
-  };
 
   render() {
     const {
       part,
       woodtypes,
       face_frame_designs,
-      face_frame_top_rails,
       face_frame_finishing,
       isValid,
       index,
@@ -118,20 +99,19 @@ class FaceFrame extends Component {
 
         <Row className="mt-2">
           <Col xs="4">
-            <VisibilitySensor onChange={this.onNoteAppear}>
-              <FormGroup>
-                <strong>
-                  <Label for="jobNotes">Job Notes</Label>
-                  <Field
-                    name={`${part}.notes`}
-                    type="textarea"
-                    component={renderTextField}
-                    edit={edit}
-                    validate={noteRequired}
-                  />
-                </strong>
-              </FormGroup>
-            </VisibilitySensor>
+      
+            <FormGroup>
+              <strong>
+                <Label for="jobNotes">Job Notes</Label>
+                <Field
+                  name={`${part}.notes`}
+                  type="textarea"
+                  component={renderTextField}
+                  edit={edit}
+                />
+              </strong>
+            </FormGroup>
+            <p>Enter Item Build Note Here - Framing/Wood, etc.</p>
           </Col>
         </Row>
 
