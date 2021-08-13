@@ -79,6 +79,7 @@ class DefaultHeaderDropdown extends Component {
   }
 
   dropAccnt() {
+
     return (
       <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle nav>

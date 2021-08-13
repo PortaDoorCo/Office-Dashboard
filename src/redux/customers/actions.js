@@ -32,7 +32,7 @@ export function loadCustomers(cookie, user) {
 
   if(user.role?.type === 'customer'){
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/companyprofiles/${user.company}`,
+      const res = await fetch(`${db_url}/companyprofiles/${user.company.id}`,
         {
           headers: {
             'Authorization': `Bearer ${cookie}`

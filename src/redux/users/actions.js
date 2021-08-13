@@ -54,9 +54,15 @@ export function login(token) {
       }
     });
 
+    const newUser = await axios.get(`${db_url}/users/${res.data.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
     return dispatch({
       type: LOGIN,
-      user: res.data,
+      user: newUser.data,
     });
   };
 }

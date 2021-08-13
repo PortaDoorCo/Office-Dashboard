@@ -343,11 +343,11 @@ class App extends Component<PropTypes, StateTypes> {
           await loadCustomers(newCookie, user);
           await getUsers(newCookie);
           await loadMiscItems(newCookie);
-          await getDeliveries(newCookie);
           await loadShippingMethod(newCookie);
           await loadPaymentTypes(newCookie);
           await loadPaymentTerms(newCookie);
           await loadSales(newCookie);
+          await getDeliveries(newCookie);
           await loadAllOrders(newCookie, user);
           await loadAllCustomers(newCookie, user);
           

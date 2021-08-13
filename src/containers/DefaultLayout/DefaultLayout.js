@@ -17,6 +17,7 @@ import {
 } from '@coreui/react';
 // sidebar nav config
 import navigation from '../../_nav';
+import customerNav from '../../_customerNav';
 // routes config
 import routes from '../../routes';
 
@@ -185,6 +186,7 @@ let DefaultLayout = (props, context) => {
 
   const { customerDBLoaded, app_tour, userId, updateAppTour, role } = props;
 
+
   // console.log({role});
 
   if (!customerDBLoaded) {
@@ -217,7 +219,7 @@ let DefaultLayout = (props, context) => {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense fallback={loading()}>
-              <AppSidebarNav navConfig={navigation} {...props} />
+              <AppSidebarNav navConfig={role.type === 'customer' ? customerNav : navigation} {...props} />
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
