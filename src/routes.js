@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Dashboard = React.lazy(() => import('./views/Admin/Dashboard'));
+const Dashboard = React.lazy(() => import('./views/Admin/Dashboard/Dashboard'));
 const DoorOrders = React.lazy(() => import('./views/Admin/DoorOrders/DoorOrders'));
 const DrawerOrders = React.lazy(() => import('./views/Admin/DrawerOrders/DrawerOrder'));
 const Orders = React.lazy(() => import('./views/Admin/Orders/OrderTable'));
@@ -20,7 +20,7 @@ const FaceFrames = React.lazy(() => import('./views/Admin/Face_Frames/FaceFrames
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, component: Dashboard, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/door-order', name: 'Door Order', component: DoorOrders },
   { path: '/drawer-order', name: 'Drawer Order', component: DrawerOrders },

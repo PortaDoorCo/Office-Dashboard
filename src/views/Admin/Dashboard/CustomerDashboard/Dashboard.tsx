@@ -8,9 +8,9 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { login } from '../../../redux/users/actions';
-import { loadOrders } from '../../../redux/orders/actions';
-import MessageModal from './MessageModal';
+import { login } from '../../../../redux/users/actions';
+import { loadOrders } from '../../../../redux/orders/actions';
+import MessageModal from '../MessageModal';
 
 const Chart1 = React.lazy(() => import('./components/Chart1'));
 const Chart2 = React.lazy(() => import('./components/Chart2'));
@@ -24,7 +24,9 @@ const loading  = () => <div className="animated fadeIn pt-1 text-center"><div cl
 type PropTypes = {
   role: {
     type: string
-  }
+  },
+  orders: any,
+  user: any
 }
 
 type StateTypes = {
@@ -86,7 +88,10 @@ class Dashboard extends Component<PropTypes, StateTypes> {
   }
 
   render() {
-    const { role } = this.props;
+    const { role, orders, user } = this.props;
+
+    console.log({user});
+
     return (
       <div className="animated fadeIn">
 
@@ -95,82 +100,26 @@ class Dashboard extends Component<PropTypes, StateTypes> {
           modal={this.state.viewPopup}
         />
         
-        {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
+        {role && (role.type === 'customer') ?
           <div>
-
-            <Row className="mb-3">
-              <Col>
-                <ButtonGroup>
-                  <Button color="success" onClick={this.toggleCharts}>Charts</Button>
-                  <Button color="success" onClick={this.toggleMap}>Delivery Map</Button>
-                </ButtonGroup>
-              </Col>
-            </Row>
-
-            <Collapse isOpen={this.state.charts}>
-              <Row>
-                <Col lg="4">
-                  <Suspense fallback={loading()}>
-                    <Chart2 />
-                  </Suspense>
-                </Col>
-                <Col lg="4">
-                  <Suspense fallback={loading()}>
-                    <Chart3 />
-                  </Suspense>
-                </Col>
-                <Col lg="4">
-                  <Suspense fallback={loading()}>
-                    <Chart4 />
-                  </Suspense>
-                </Col>
-              </Row>
+            <Collapse isOpen={this.state.maps}>
               <Row>
                 <Col>
                   <Suspense fallback={loading()}>
-                    <Chart1 />
+                    <Maps />
                   </Suspense>
                 </Col>
               </Row>
             </Collapse>
-            
-            <Collapse isOpen={this.state.maps}>
-              <Row className="mb-5">
-                <Col style={{ height: 600 }}>
-                  <Suspense fallback={loading()}>
-                    <Maps  />
-                  </Suspense>
-                </Col>
-              </Row>
-            </Collapse>
-            <Row className="mt-5">
+            <Row className="mt-3">
               <Col>
                 <Suspense fallback={loading()}>
-                  <OrderTable />
+                  <OrderTable {...this.props} />
                 </Suspense>
               </Col>
             </Row>
           </div>
-          : role && (role.type === 'office' || role.type === 'sales') ?
-            <div>
-              <Collapse isOpen={this.state.maps}>
-                <Row>
-                  <Col>
-                    <Suspense fallback={loading()}>
-                      <Maps />
-                    </Suspense>
-                  </Col>
-                </Row>
-              </Collapse>
-              <Row className="mt-3">
-                <Col>
-                  <Suspense fallback={loading()}>
-                    <OrderTable  />
-                  </Suspense>
-                </Col>
-              </Row>
-            </div>
-            : loading()
+          : loading()
         }
       </div>
     );
@@ -182,7 +131,8 @@ const mapStateToProps = (state, prop) => ({
   customerDB: state.customers.customerDB,
   customerDBLoaded: state.customers.customerDBLoaded,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
-  role: state.users.user.role
+  role: state.users.user.role,
+  user: state.users.user
 });
 
 const mapDispatchToProps = dispatch =>

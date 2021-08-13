@@ -4,10 +4,10 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from 'reac
 import MarkerClusterer  from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import truck from '../../../../assets/icon/truck.png';
-import delivery from '../../../../assets/icon/delivery.png';
-import OrderPage from '../../Orders/OrderPage';
-import { setSelectedOrder } from '../../../../redux/orders/actions';
+import truck from '../../../../../assets/icon/truck.png';
+import delivery from '../../../../../assets/icon/delivery.png';
+import OrderPage from '../../../Orders/OrderPage';
+import { setSelectedOrder } from '../../../../../redux/orders/actions';
 import moment from 'moment';
 
 

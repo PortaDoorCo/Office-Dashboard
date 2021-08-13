@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
 import moment from 'moment';
-import OrderPage from '../../Orders/OrderPage';
+import OrderPage from '../../../Orders/OrderPage';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
 import { Select } from 'antd';
-import { updateStatus, loadOrders, setSelectedOrder } from '../../../../redux/orders/actions';
+import { updateStatus, loadOrders, setSelectedOrder } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import { Button, Row, Col } from 'reactstrap';
 import styled from 'styled-components';
-import status from '../../../../utils/status';
+import status from '../../../../../utils/status';
 
 const TextField = styled.input`
   height: 32px;
@@ -262,7 +262,6 @@ const OrderTable = (props: TablePropTypes) => {
 };
 
 const mapStateToProps = (state: any) => ({
-  orders: state.Orders.orders,
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded
 });

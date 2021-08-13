@@ -96,21 +96,23 @@ type PropTypes = {
   loadShippingMethod: (data: {}) => null,
   loadPaymentTypes: (data: {}) => null,
   loadPaymentTerms: (data: {}) => null,
-  loadAllCustomers: (data: {}) => null,
-  loadAllOrders: (data: {}) => null,
+  loadAllCustomers: (data: {}, user: {}) => null,
+  loadAllOrders: (data: {}, user: {}) => null,
   loadCategories: (data: {}) => null,
   loadPrinterOptions: (data: {}) => null,
   getAllProducts: (data: {}) => null,
   getPricing: (data: {}) => null,
   login: (data: {}) => null,
   getUsers: (data: {}) => null,
-  loadOrders: (data: {}) => null,
-  loadCustomers: (data: {}) => null,
+  loadOrders: (data: {}, user: {}) => null,
+  loadCustomers: (data: {}, user: {}) => null,
   loadSales: (data: {}) => null,
   loadMiscItems: (data: {}) => null,
   loggedIn: boolean,
+  user: any,
   users: {
-    loggedIn: boolean
+    loggedIn: boolean,
+    user: any
   }
 }
 
@@ -134,7 +136,7 @@ class App extends Component<PropTypes, StateTypes> {
       this.setState({
         isAuth: true,
       }, () => {
-        this.props.setLogin();
+        this.props.login(getCookie);
         if (cb) cb();
       });
     }
@@ -318,22 +320,27 @@ class App extends Component<PropTypes, StateTypes> {
       loadAllCustomers,
       loadAllOrders,
       loadCategories,
-      loadPrinterOptions
+      loadPrinterOptions,
+      user
     } = this.props;
     
     if (this.props.loggedIn !== prevProps.loggedIn) {
+      
       const getData = async () => {
         const newCookie = Cookies.get('jwt');
         if(newCookie){
+          await login(newCookie);
           await getAllProducts(newCookie);
           await getPricing(newCookie);
           await loadPrinterOptions(newCookie);
           await loadCategories(newCookie);
           await getBreakdowns(newCookie);
           await getBoxBreakdowns(newCookie);
-          await loadOrders(newCookie);
-          await loadCustomers(newCookie);
-          await login(newCookie);
+
+          await console.log({user});
+
+          await loadOrders(newCookie, user);
+          await loadCustomers(newCookie, user);
           await getUsers(newCookie);
           await loadMiscItems(newCookie);
           await getDeliveries(newCookie);
@@ -341,8 +348,8 @@ class App extends Component<PropTypes, StateTypes> {
           await loadPaymentTypes(newCookie);
           await loadPaymentTerms(newCookie);
           await loadSales(newCookie);
-          await loadAllOrders(newCookie);
-          await loadAllCustomers(newCookie);
+          await loadAllOrders(newCookie, user);
+          await loadAllCustomers(newCookie, user);
           
         }
       };
@@ -353,6 +360,7 @@ class App extends Component<PropTypes, StateTypes> {
   };
 
   render() {
+
     return (
       <BrowserRouter>
         <React.Suspense fallback={loading()}>
@@ -375,6 +383,12 @@ class App extends Component<PropTypes, StateTypes> {
               component={DefaultLayout}
               isLogged={this.state.isAuth}
             />
+            <PrivateRoute
+              path="/user"
+              name="User-Dashboard"
+              component={DefaultLayout}
+              isLogged={this.state.isAuth}
+            />
           </Switch>
         </React.Suspense>
       </BrowserRouter>
@@ -384,6 +398,7 @@ class App extends Component<PropTypes, StateTypes> {
 
 const mapStateToProps = (state: PropTypes) => ({
   loggedIn: state.users.loggedIn,
+  user: state.users.user
 });
 
 const mapDispatchToProps = (dispatch: any) =>

@@ -47,7 +47,7 @@ export default function (state = initialState, action) {
     case LOAD_ALL_CUSTOMERS:
       return {
         ...state,
-        customerDB: data,
+        customerDB: data ? data : state.customerDB,
         customerDBLoaded: true,
         dbLoadComplete: true
       };
