@@ -123,7 +123,7 @@ export function loadOrders(cookie, user) {
 
   if(user.role.type === 'customer'){
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders?companyprofile.id=${user?.company}&_sort=orderNum:DESC&_limit=50`, {
+      const res = await fetch(`${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=50`, {
         headers: {
           Authorization: `Bearer ${cookie}`,
         },
@@ -156,7 +156,7 @@ export function loadAllOrders(cookie, user) {
 
   if(user.role?.type === 'customer'){
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders?companyprofile.id=${user?.company}&_sort=orderNum:DESC&_limit=200`, {
+      const res = await fetch(`${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=200`, {
         headers: {
           Authorization: `Bearer ${cookie}`,
         },
