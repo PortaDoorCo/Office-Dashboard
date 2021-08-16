@@ -83,7 +83,7 @@ const OrderTable = (props: TablePropTypes) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
   useEffect(() => {
-    const filteredOrders = orders.length > 0 ? orders.filter((item) => {
+    const filteredOrders = orders?.length > 0 ? orders?.filter((item) => {
       if (filterText.length > 0) {
         return (
           (item.orderNum?.toString().includes(filterText) || item.job_info?.customer?.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info?.poNum?.toLowerCase().includes(filterText.toLowerCase()))
