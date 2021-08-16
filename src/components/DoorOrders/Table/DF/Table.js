@@ -1,7 +1,13 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { Table, Input, Row, Col, Button, FormGroup, Label,  } from 'reactstrap';
+import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
+import {
+  Field,
+  change,
+  touch,
+  startAsyncValidation,
+  getFormSyncErrors,
+} from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -18,9 +24,10 @@ import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import currencyMask from '../../../../utils/currencyMask';
 import { NotificationManager } from 'react-notifications';
+import FullFrameModal from '../../../../utils/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
-const trim_val = value => (value.trim('')  ? undefined : 'Required');
+const trim_val = (value) => (value.trim('') ? undefined : 'Required');
 
 const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
@@ -39,7 +46,7 @@ const Cope_Table = ({
   edit,
   dispatch,
   lites,
-  formSyncErrors
+  formSyncErrors,
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -48,6 +55,8 @@ const Cope_Table = ({
   const [rightStileWidth, setRightStileWidth] = useState(null);
   const [topRailWidth, setTopRailWidth] = useState(null);
   const [bottomRailWidth, setBottomRailWidth] = useState(null);
+  const [fullFrameNote, setFullFrameNote] = useState(false);
+  const [tableIndex, setTableIndex] = useState(0);
 
   useEffect(() => {
     setWidth([]);
@@ -58,6 +67,12 @@ const Cope_Table = ({
     setTopRailWidth(null);
     setBottomRailWidth(null);
   }, [updateSubmit]);
+
+  useEffect(() => {
+    const part = formState?.part_list[i];
+  });
+
+  const toggleFullFrameNote = () => setFullFrameNote(!fullFrameNote);
 
   const w = (e, v, i) => {
     e.preventDefault();
@@ -70,15 +85,30 @@ const Cope_Table = ({
     setWidth(newWidth);
   };
 
-  const h = (e, v, i) => {
+  const h = (e, v, index) => {
     e.preventDefault();
     let newHeight = [...height];
-    if (height[i]) {
-      newHeight.splice(i, 1, v);
+    if (height[index]) {
+      newHeight.splice(index, 1, v);
     } else {
       newHeight = [...newHeight, v];
     }
     setHeight(newHeight);
+
+    const part = formState?.part_list[i];
+    const leftStile = part.dimensions[index].leftStile;
+    const rightStile = part.dimensions[index].rightStile;
+
+    const limit = numQty(leftStile) + numQty(rightStile);
+    const heightLimit = numQty(v) * (2 / 3);
+
+    if (heightLimit > limit) {
+      toggleFullFrameNote();
+    }
+
+    console.log({ limit });
+    console.log({ heightLimit });
+    console.log({ i });
   };
 
   const updateFullFrame = (e, index) => {
@@ -105,7 +135,7 @@ const Cope_Table = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].topRail`,
-            fraction(part.profile ? part.profile?.PROFILE_WIDTH  : 0)
+            fraction(part.profile ? part.profile?.PROFILE_WIDTH : 0)
           )
         );
 
@@ -113,7 +143,7 @@ const Cope_Table = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].bottomRail`,
-            fraction(part.profile ? part.profile?.PROFILE_WIDTH  : 0)
+            fraction(part.profile ? part.profile?.PROFILE_WIDTH : 0)
           )
         );
       }
@@ -185,7 +215,6 @@ const Cope_Table = ({
   };
 
   const addFields = (i) => {
-
     const construction = formState?.part_list[i]?.construction?.value;
     const leftStile = formState?.part_list[i]?.leftStile;
     const rightStile = formState?.part_list[i]?.rightStile;
@@ -193,95 +222,45 @@ const Cope_Table = ({
     const bottomRail = formState?.part_list[i]?.bottomRail;
 
     const index = fields.length - 1;
+    setTableIndex(fields.length);
 
-    if(fields.length > 0){
+    if (fields.length > 0) {
       dispatch(
-        touch(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`
-        )
+        touch('DoorOrder', `part_list[${i}].dimensions[${index}].notes`)
       );
       dispatch(
-        touch(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].width`
-        )
+        touch('DoorOrder', `part_list[${i}].dimensions[${index}].width`)
       );
       dispatch(
-        touch(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].height`
-        )
+        touch('DoorOrder', `part_list[${i}].dimensions[${index}].height`)
       );
     }
 
+    dispatch(touch('DoorOrder', `part_list[${i}].woodtype`));
+    dispatch(touch('DoorOrder', `part_list[${i}].design`));
 
-    dispatch(
-      touch(
-        'DoorOrder',
-        `part_list[${i}].woodtype`
-      )
-    );
-    dispatch(
-      touch(
-        'DoorOrder',
-        `part_list[${i}].design`
-      )
-    );
-
-    if(construction !== 'Miter'){
-      dispatch(
-        touch(
-          'DoorOrder',
-          `part_list[${i}].edge`
-        )
-      );
+    if (construction !== 'Miter') {
+      dispatch(touch('DoorOrder', `part_list[${i}].edge`));
     }
 
-
-
-    if(construction === 'Cope'){
-      dispatch(
-        touch(
-          'DoorOrder',
-          `part_list[${i}].profile`
-        )
-      );
+    if (construction === 'Cope') {
+      dispatch(touch('DoorOrder', `part_list[${i}].profile`));
     }
 
+    dispatch(touch('DoorOrder', `part_list[${i}].applied_profile`));
+    dispatch(touch('DoorOrder', `part_list[${i}].panel`));
 
-    dispatch(
-      touch(
-        'DoorOrder',
-        `part_list[${i}].applied_profile`
-      )
-    );
-    dispatch(
-      touch(
-        'DoorOrder',
-        `part_list[${i}].panel`
-      )
-    );
-
-    dispatch(
-      startAsyncValidation('DoorOrder')
-    );
-
-
+    dispatch(startAsyncValidation('DoorOrder'));
 
     fields.push({
       qty: 1,
       panelsH: 1,
       panelsW: 1,
-      leftStile: leftStileWidth
-        ? fraction(numQty(leftStileWidth))
-        : leftStile,
+      leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : leftStile,
       rightStile: rightStileWidth
         ? fraction(numQty(rightStileWidth))
         : rightStile,
-      topRail: topRailWidth
-        ? fraction(numQty(topRailWidth))
-        : topRail,
+      topRail: topRailWidth ? fraction(numQty(topRailWidth)) : topRail,
       bottomRail: bottomRailWidth
         ? fraction(numQty(bottomRailWidth))
         : bottomRail,
@@ -291,15 +270,38 @@ const Cope_Table = ({
       showBuilder: false,
       full_frame: false,
       glass_check_0:
-          formState.part_list[i]?.panel?.NAME === 'Glass'
-            ? true
-            : false,
+        formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
     });
-    
+  };
+
+  console.log({tableIndex});
+
+  const addFullFrameNote = (e) => {
+    updateFullFrame(e, tableIndex);
+    toggleFullFrameNote();
+    dispatch(
+      change(
+        'DoorOrder',
+        `part_list[${i}].dimensions[${tableIndex}].full_frame`,
+        true
+      )
+    );
   };
 
   return formState ? (
     <div>
+      <FullFrameModal
+        toggle={toggleFullFrameNote}
+        modal={fullFrameNote}
+        message={
+          'Based On Your Sizes, We Suggest Making The Framing Full Frame'
+        }
+        title={'Do you want a full frame?'}
+        actionButton={'Update to Full Frame'}
+        action={(e) => {
+          addFullFrameNote(e);
+        }}
+      />
       <Fragment>
         {fields.map((table, index) => (
           <Fragment key={index}>
@@ -651,7 +653,9 @@ const Cope_Table = ({
                       component={renderField}
                       edit={edit}
                       label="notes"
-                      validate={glass_note_check(index) ? [required, trim_val] : null}
+                      validate={
+                        glass_note_check(index) ? [required, trim_val] : null
+                      }
                     />
                   </Col>
                   <Col lg="1">
