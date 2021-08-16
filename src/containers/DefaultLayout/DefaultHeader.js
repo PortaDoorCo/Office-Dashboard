@@ -162,7 +162,7 @@ class DefaultHeader extends Component {
               <RefreshIcon style={{ width: '40', height: '40' }} />
             </IconButton>
           </Tooltip>
-          <DefaultHeaderDropdown className="mr-5" onLogout={this.logOut} user={this.props.user} accnt/>
+          <DefaultHeaderDropdown className="mr-5" onLogout={this.logOut} {...this.props} accnt/>
           <div className="mr-5" />
           {/* <Button color="primary" className="mr-5" onClick={this.logOut}>Log Out</Button> */}
         </Nav>
@@ -178,6 +178,7 @@ DefaultHeader.defaultProps = defaultProps;
 
 const mapStateToProps = (state, prop) => ({
   user: state.users.user,
+  users: state.users.registeredUsers,
   dbLoadComplete: state.customers.dbLoadComplete
 });
 

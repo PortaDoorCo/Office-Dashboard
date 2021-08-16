@@ -6,6 +6,7 @@ import {
   renderDropdownListFilter,
   renderTextField,
   renderCheckboxToggle,
+  renderNumber
 } from '../../../RenderInputs/renderInputs';
 import Table from '../../Table/DF/Table';
 import {
@@ -189,6 +190,72 @@ class CopeDF extends Component {
           </Col>
         </Row>
 
+        <hr />
+
+        <Row>
+          <Col>
+            <h5><strong>Default Framing Size</strong></h5>
+          </Col>
+        </Row>
+        
+        <Row>
+
+          <Col>
+            <FormGroup>
+              <Label htmlFor="arches">Left Stile</Label>
+              <Field
+                name={`${part}.leftStile`}
+                type="text"
+                component={renderNumber}
+                label="leftStile"
+                edit={edit}
+                validate={required}
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label htmlFor="arches">Right Stile</Label>
+              <Field
+                name={`${part}.rightStile`}
+                type="text"
+                component={renderNumber}
+                label="rightStile"
+                edit={edit}
+                validate={required}
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label htmlFor="arches">Top Rail</Label>
+              <Field
+                name={`${part}.topRail`}
+                type="text"
+                component={renderNumber}
+                label="topRail"
+                edit={edit}
+                validate={required}
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label htmlFor="arches">Bottom Rail</Label>
+              <Field
+                name={`${part}.bottomRail`}
+                type="text"
+                component={renderNumber}
+                label="bottomRail"
+                edit={edit}
+                validate={required}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <hr />
+
         <Row className="mt-2">
           <Col xs="4">
        
@@ -207,6 +274,7 @@ class CopeDF extends Component {
  
           </Col>
         </Row>
+        
 
         <div>
           <CardSubtitle className="mt-4 mb-1">

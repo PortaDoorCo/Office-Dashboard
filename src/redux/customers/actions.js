@@ -26,42 +26,77 @@ export function setSelectedCompanies(data) {
   };
 }
 
-export function loadCustomers(cookie, amt) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/companyprofiles`,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
+export function loadCustomers(cookie, user) {
+
+  console.log({user});
+
+  if(user.role?.type === 'customer'){
+    return async function (dispatch) {
+      const res = await fetch(`${db_url}/companyprofiles/${user.company.id}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${cookie}`
+          }
         }
+      );
+      const data = await res.json();
+      await dispatch(hideLoading());
+      return await dispatch({
+        type: LOAD_CUSTOMERS,
+        data: [data]
       }
-    );
-    const data = await res.json();
-    await dispatch(hideLoading());
-    return await dispatch({
-      type: LOAD_CUSTOMERS,
-      data: data
-    }
-    );
-  };
+      );
+    };
+  } else {
+    return async function (dispatch) {
+      const res = await fetch(`${db_url}/companyprofiles?_sort=id:ASC&_limit=50`,
+        {
+          headers: {
+            'Authorization': `Bearer ${cookie}`
+          }
+        }
+      );
+      const data = await res.json();
+      await dispatch(hideLoading());
+      return await dispatch({
+        type: LOAD_CUSTOMERS,
+        data: data
+      }
+      );
+    };
+  }
+
 }
 
-export function loadAllCustomers(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/companyprofiles/all`,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
+export function loadAllCustomers(cookie, user) {
+
+  if(user.role?.type === 'customer'){
+    return async function (dispatch) {
+      await dispatch(hideLoading());
+      return await dispatch({
+        type: LOAD_ALL_CUSTOMERS,
       }
-    );
-    const data = await res.json();
-    await dispatch(hideLoading());
-    return await dispatch({
-      type: LOAD_ALL_CUSTOMERS,
-      data: data
-    }
-    );
-  };
+      );
+    };
+  } else {
+    return async function (dispatch) {
+      const res = await fetch(`${db_url}/companyprofiles/all`,
+        {
+          headers: {
+            'Authorization': `Bearer ${cookie}`
+          }
+        }
+      );
+      const data = await res.json();
+      await dispatch(hideLoading());
+      return await dispatch({
+        type: LOAD_ALL_CUSTOMERS,
+        data: data
+      }
+      );
+    };
+  }
+
 }
 
 export function dbNotLoaded(cookie) {

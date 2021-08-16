@@ -9,6 +9,62 @@ const changeProfile = (p, ind, props, change) => {
 
   const part = formState.part_list[ind];
 
+  if(part?.construction?.value === 'Cope'){
+    return null;
+  } else {
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.leftStile`,
+        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+      )
+    );
+
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.rightStile`,
+        fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+      )
+    );
+
+    if(part?.orderType?.value === 'DF'){
+      props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.topRail`,
+          fraction(part.design ? (part.design.DF_REDUCTION) : 0)
+        )
+      );
+
+      props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.bottomRail`,
+          fraction(part.design ? (part.design.DF_REDUCTION) : 0)
+        )
+      );
+    } else {
+      props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.topRail`,
+          fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
+        )
+      );
+
+      props.dispatch(
+        change(
+          'DoorOrder',
+          `${p}.bottomRail`,
+          fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
+        )
+      );
+    }
+  }
+
+
+
 
   if(part.dimensions){
     part.dimensions.forEach((info, index) => {

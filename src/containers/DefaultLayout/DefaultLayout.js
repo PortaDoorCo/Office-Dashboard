@@ -1,7 +1,7 @@
 import React, { useState, Suspense } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Container, Button } from 'reactstrap';
-import Tour from 'reactour'
+import Tour from 'reactour';
 
 import {
   AppAside,
@@ -17,6 +17,7 @@ import {
 } from '@coreui/react';
 // sidebar nav config
 import navigation from '../../_nav';
+import customerNav from '../../_customerNav';
 // routes config
 import routes from '../../routes';
 
@@ -53,16 +54,11 @@ import { login, getUsers, updateAppTour } from '../../redux/users/actions';
 import Loader from '../../views/Admin/Loader/Loader';
 import { NotificationContainer } from 'react-notifications';
 
-
 const cookie = Cookies.get('jwt');
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
-
-
-
-
 
 let DefaultLayout = (props, context) => {
   let loading = () => (
@@ -87,15 +83,22 @@ let DefaultLayout = (props, context) => {
       selector: '.side-bar-tour',
       content: ({ goTo }) => (
         <div>
-          <p>Here you will be able to navigate to different parts of the app.  Click Door Order to create your first order.</p>
-          <Button color="primary" onClick={async (e) => {
-            e.preventDefault();
-            await history.push('/door-order')
-            await goTo(2)
-          }}>Create Your First Order</Button>
+          <p>
+            Here you will be able to navigate to different parts of the app.
+            Click Door Order to create your first order.
+          </p>
+          <Button
+            color="primary"
+            onClick={async (e) => {
+              e.preventDefault();
+              await history.push('/door-order');
+              await goTo(2);
+            }}
+          >
+            Create Your First Order
+          </Button>
         </div>
       ),
-
     },
     {
       selector: '',
@@ -103,42 +106,57 @@ let DefaultLayout = (props, context) => {
     },
     {
       selector: '.job-info-tour',
-      content: 'Here is where you will select your customer, shipping method, due date and shipping address.',
+      content:
+        'Here is where you will select your customer, shipping method, due date and shipping address.',
     },
     {
       selector: '.order-tour',
-      content: 'Here is where you enter the door info.  Select between a variety of options from woodtypes, designs, edges, etc.',
+      content:
+        'Here is where you enter the door info.  Select between a variety of options from woodtypes, designs, edges, etc.',
     },
     {
       selector: '.misc-item-tour',
-      content: 'Here is where you will add Miscellaneous Items and submit your order.',
+      content:
+        'Here is where you will add Miscellaneous Items and submit your order.',
     },
     {
       selector: '.side-bar-tour',
       content: ({ goTo }) => (
         <div>
-          <p>As you can see there a few other options for order types.  You can also view reports and customers.  For now lets view the settings.  Click Settings To Continue</p>
-          <Button color="primary" onClick={async (e) => {
-            e.preventDefault();
-            await history.push('/settings')
-            await goTo(7)
-          }}>Go To Settings</Button>
+          <p>
+            As you can see there a few other options for order types. You can
+            also view reports and customers. For now lets view the settings.
+            Click Settings To Continue
+          </p>
+          <Button
+            color="primary"
+            onClick={async (e) => {
+              e.preventDefault();
+              await history.push('/settings');
+              await goTo(7);
+            }}
+          >
+            Go To Settings
+          </Button>
         </div>
       ),
     },
     {
       selector: '.account-tour',
-      content: 'Here is where your account settings are.  Edit your name, email, and password.  It is generally good practice to change your password a few times a year.',
+      content:
+        'Here is where your account settings are.  Edit your name, email, and password.  It is generally good practice to change your password a few times a year.',
     },
     {
       selector: '.account-tour',
-      content: 'Click on Doors in the Settings Navigation bar at the top and then Cope and Stick - Then click next to proceed',
-      position: 'top'
+      content:
+        'Click on Doors in the Settings Navigation bar at the top and then Cope and Stick - Then click next to proceed',
+      position: 'top',
     },
     {
       selector: '.account-tour',
-      content: 'Here you can see all the attributes to the doors.  With elevated credentials you will be able to edit things such as pricing, breakdowns, and other attributes',
-      position: 'top'
+      content:
+        'Here you can see all the attributes to the doors.  With elevated credentials you will be able to edit things such as pricing, breakdowns, and other attributes',
+      position: 'top',
     },
     {
       selector: '.app',
@@ -146,13 +164,19 @@ let DefaultLayout = (props, context) => {
         <div>
           <center>
             <p>Now please enjoy :)</p>
-            <p>Feel free to contact me on <a href="https://portadoor.slack.com">Slack</a></p>
-            <p>or by email <a href="mailto: justin@portadoor.com">justin@portadoor.com</a></p>
+            <p>
+              Feel free to contact me on{' '}
+              <a href="https://portadoor.slack.com">Slack</a>
+            </p>
+            <p>
+              or by email{' '}
+              <a href="mailto: justin@portadoor.com">justin@portadoor.com</a>
+            </p>
             <p>❤️</p>
           </center>
         </div>
       ),
-      position: 'top'
+      position: 'top',
     },
 
     // ...
@@ -160,8 +184,10 @@ let DefaultLayout = (props, context) => {
 
   const [isTourOpen, setIsTourOpen] = useState(true);
 
+  const { customerDBLoaded, app_tour, userId, updateAppTour, role } = props;
 
-  const { customerDBLoaded, app_tour, userId, updateAppTour } = props;
+
+  // console.log({role});
 
   if (!customerDBLoaded) {
     return (
@@ -176,9 +202,9 @@ let DefaultLayout = (props, context) => {
           steps={steps}
           isOpen={app_tour}
           onRequestClose={async (e) => {
-            e.preventDefault()
-            await history.push('/')
-            await updateAppTour(cookie, userId)
+            e.preventDefault();
+            await history.push('/');
+            await updateAppTour(cookie, userId);
           }}
           updateDelay={1}
         />
@@ -192,8 +218,8 @@ let DefaultLayout = (props, context) => {
           <AppSidebar fixed display="lg" className="side-bar-tour">
             <AppSidebarHeader />
             <AppSidebarForm />
-            <Suspense>
-              <AppSidebarNav navConfig={navigation} {...props} />
+            <Suspense fallback={loading()}>
+              <AppSidebarNav navConfig={role.type === 'customer' ? customerNav : navigation} {...props} />
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
@@ -212,7 +238,6 @@ let DefaultLayout = (props, context) => {
                         name={route.name}
                         render={(props) => <route.component {...props} />}
                       />
-
                     ) : null;
                   })}
                   <Redirect from="/" to="/dashboard" />
@@ -234,12 +259,13 @@ let DefaultLayout = (props, context) => {
       </div>
     );
   }
-}
+};
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   app_tour: state.users.app_tour,
+  role: state.users.user.role,
   userId: state.users.user.id,
   loggedIn: state.users.loggedIn,
   loadedOrders: state.part_list.loadedOrders,
@@ -263,21 +289,15 @@ const mapDispatchToProps = (dispatch) =>
       loadCustomers,
       loadSales,
       loadShippingMethod,
-
       getAllProducts,
-
       getDeliveries,
-
       getBreakdowns,
       getBoxBreakdowns,
-
       getPricing,
       getUsers,
       loadPaymentTypes,
       loadPaymentTerms,
-
       loadMiscItems,
-
       login,
       updateAppTour,
 

@@ -16,7 +16,7 @@ export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT';
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const GET_USERS = 'GET_USERS';
-export const UPDATE_APP_TOUR = 'UPDATE_APP_TOUR'
+export const UPDATE_APP_TOUR = 'UPDATE_APP_TOUR';
 
 
 
@@ -54,9 +54,15 @@ export function login(token) {
       }
     });
 
+    const newUser = await axios.get(`${db_url}/users/${res.data.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
     return dispatch({
       type: LOGIN,
-      user: res.data,
+      user: newUser.data,
     });
   };
 }
@@ -82,7 +88,7 @@ export function updateAppTour(token, id) {
 
   const userInfo = {
     app_tour: false
-  }
+  };
 
   return async function (dispatch) {
     const res = await axios.put(`${db_url}/users/${id}`, userInfo, {

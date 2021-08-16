@@ -15,7 +15,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { selectDateRange } from '../../../../redux/misc_items/actions';
+import { selectDateRange } from '../../../../../redux/misc_items/actions';
 
 type PropTypes ={
   selectedDateRange: {},

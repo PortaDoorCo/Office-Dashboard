@@ -355,8 +355,10 @@ const DoorTable = ({
   const addFields = (i) => {
 
     const construction = formState?.part_list[i]?.construction?.value;
-    const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
-    const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
+    const leftStile = formState?.part_list[i]?.leftStile;
+    const rightStile = formState?.part_list[i]?.rightStile;
+    const topRail = formState?.part_list[i]?.topRail;
+    const bottomRail = formState?.part_list[i]?.bottomRail;
 
     const index = fields.length - 1;
 
@@ -439,24 +441,16 @@ const DoorTable = ({
       panelsW: 1,
       leftStile: leftStileWidth
         ? fraction(numQty(leftStileWidth))
-        : construction === 'Cope' && profile
-          ? fraction(profile)
-          : fraction(design),
+        : leftStile,
       rightStile: rightStileWidth
         ? fraction(numQty(rightStileWidth))
-        : construction === 'Cope' && profile
-          ? fraction(profile)
-          : fraction(design),
+        : rightStile,
       topRail: topRailWidth
         ? fraction(numQty(topRailWidth))
-        : construction === 'Cope' && profile
-          ? fraction(profile)
-          : fraction(design),
+        : topRail,
       bottomRail: bottomRailWidth
         ? fraction(numQty(bottomRailWidth))
-        : construction === 'Cope' && profile
-          ? fraction(profile)
-          : fraction(design),
+        : bottomRail,
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',

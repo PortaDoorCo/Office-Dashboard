@@ -117,34 +117,71 @@ export function uploadFilesToOrder(order, e, cookie) {
   };
 }
 
-export function loadOrders(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/orders`, {
-      headers: {
-        Authorization: `Bearer ${cookie}`,
-      },
-    });
-    const data = await res.json();
-    return await dispatch({
-      type: LOAD_ORDERS,
-      data: data,
-    });
-  };
+export function loadOrders(cookie, user) {
+
+  console.log({user});
+
+  if(user.role.type === 'customer'){
+    return async function (dispatch) {
+      const res = await fetch(`${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=50`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res.json();
+      return await dispatch({
+        type: LOAD_ORDERS,
+        data: data,
+      });
+    };
+  } else {
+    return async function (dispatch) {
+      const res = await fetch(`${db_url}/orders?_sort=orderNum:DESC&_limit=50`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res.json();
+      return await dispatch({
+        type: LOAD_ORDERS,
+        data: data,
+      });
+    };
+  }
+
+
 }
 
-export function loadAllOrders(cookie) {
-  return async function (dispatch) {
-    const res = await fetch(`${db_url}/orders/all`, {
-      headers: {
-        Authorization: `Bearer ${cookie}`,
-      },
-    });
-    const data = await res.json();
-    return await dispatch({
-      type: LOAD_ORDERS,
-      data: data,
-    });
-  };
+export function loadAllOrders(cookie, user) {
+
+  if(user.role?.type === 'customer'){
+    return async function (dispatch) {
+      const res = await fetch(`${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=200`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res.json();
+      return await dispatch({
+        type: LOAD_ORDERS,
+        data: data,
+      });
+    };
+  } else {
+    return async function (dispatch) {
+      const res = await fetch(`${db_url}/orders/all`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res.json();
+      return await dispatch({
+        type: LOAD_ORDERS,
+        data: data,
+      });
+    };
+  }
+
 }
 
 export function submitOrder(order, cookie) {

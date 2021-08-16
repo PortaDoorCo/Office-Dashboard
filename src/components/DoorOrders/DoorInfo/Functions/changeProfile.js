@@ -9,6 +9,60 @@ const changeProfile = (p, ind, props, change) => {
 
   const part = formState.part_list[ind];
 
+  props.dispatch(
+    change(
+      'DoorOrder',
+      `${p}.leftStile`,
+      fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
+    )
+  );
+
+  props.dispatch(
+    change(
+      'DoorOrder',
+      `${p}.rightStile`,
+      fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
+    )
+  );
+
+  if(part?.orderType?.value === 'DF'){
+
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.topRail`,
+        fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+      )
+    );
+
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.bottomRail`,
+        fraction(part.profile ? (part.profile.DF_Reduction) : 0)
+      )
+    );
+  } else {
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.topRail`,
+        fraction(part.profile ? (part.profile.PROFILE_WIDTH) : 0)
+      )
+    );
+
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.bottomRail`,
+        fraction(part.profile ? (part.profile.PROFILE_WIDTH) : 0)
+      )
+    );
+  }
+
+
+  
+
 
   if(part.dimensions){
     part.dimensions.forEach((info, index) => {
@@ -76,6 +130,14 @@ const changeProfile = (p, ind, props, change) => {
             change(
               'DoorOrder',
               `${p}.dimensions[${index}].leftStile`,
+              fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
+            )
+          );
+
+          props.dispatch(
+            change(
+              'DoorOrder',
+              `${p}.leftStile`,
               fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
             )
           );
