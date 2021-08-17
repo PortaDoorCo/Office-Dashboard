@@ -71,9 +71,7 @@ class DoorOrders extends Component {
     };
   }
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
+
 
   reloadPage = () => {
     window.location.reload();

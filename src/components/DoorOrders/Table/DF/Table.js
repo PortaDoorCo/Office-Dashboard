@@ -216,6 +216,8 @@ const Cope_Table = ({
 
   const addFields = (i) => {
     const construction = formState?.part_list[i]?.construction?.value;
+    const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
+    const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
     const leftStile = formState?.part_list[i]?.leftStile;
     const rightStile = formState?.part_list[i]?.rightStile;
     const topRail = formState?.part_list[i]?.topRail;
@@ -252,18 +254,44 @@ const Cope_Table = ({
 
     dispatch(startAsyncValidation('DoorOrder'));
 
+    let df_reduction = 0;
+
+    if (construction === 'Cope') {
+      df_reduction = formState?.part_list[i]?.profile?.DF_Reduction;
+    } else if (construction === 'MT') {
+      df_reduction = formState?.part_list[i]?.design?.DF_REDUCTION;
+    } else {
+      df_reduction = design;
+    }
+
     fields.push({
       qty: 1,
       panelsH: 1,
       panelsW: 1,
-      leftStile: leftStileWidth ? fraction(numQty(leftStileWidth)) : leftStile,
+      leftStile: leftStileWidth
+        ? fraction(numQty(leftStileWidth))
+        : leftStile
+          ? leftStile
+          : construction === 'Cope' && profile
+            ? fraction(profile)
+            : fraction(design),
       rightStile: rightStileWidth
         ? fraction(numQty(rightStileWidth))
-        : rightStile,
-      topRail: topRailWidth ? fraction(numQty(topRailWidth)) : topRail,
+        : rightStile
+          ? rightStile
+          : construction === 'Cope' && profile
+            ? fraction(profile)
+            : fraction(design),
+      topRail: topRailWidth
+        ? fraction(numQty(topRailWidth))
+        : topRail
+          ? topRail
+          : fraction(df_reduction),
       bottomRail: bottomRailWidth
         ? fraction(numQty(bottomRailWidth))
-        : bottomRail,
+        : bottomRail
+          ? bottomRail
+          : fraction(df_reduction),
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
@@ -274,7 +302,7 @@ const Cope_Table = ({
     });
   };
 
-  console.log({tableIndex});
+  console.log({ tableIndex });
 
   const addFullFrameNote = (e) => {
     updateFullFrame(e, tableIndex);
