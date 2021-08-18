@@ -13,6 +13,15 @@ const pricing = (parts, pricer) => {
       let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
       let premium = 0;
 
+      let newWood = wood;
+
+      if(multiplier <= 1){
+        newWood = wood;
+      } else {
+        newWood = wood * 1.25;
+      }
+
+
       let a = waste * multiplier;
 
       if (parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
@@ -28,18 +37,15 @@ const pricing = (parts, pricer) => {
       } else {
         premium = 1 + 1;
       }
-
-      price = a * wood * parseFloat(linearFT) * premium;
+      price = ((a * newWood) * parseFloat(linearFT)) * premium;
     }
 
     return price;
   });
 
   const withQty = items.map((i, index) => {
-    const qty = parts[index].qty ? parts[index].qty : 0;
     const price = i ? i : 0;
-
-    return price * parseInt(qty);
+    return price;
   });
 
   return withQty;
