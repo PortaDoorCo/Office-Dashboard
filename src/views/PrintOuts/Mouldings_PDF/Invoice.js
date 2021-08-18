@@ -2,10 +2,7 @@ import moment from 'moment';
 import Size from '../Breakdowns/DrawerBoxes/Size';
 import pdfMouldingPricing from '../../../selectors/pdfs/pdfMouldingsPricing';
 
-
 export default (data, pricing) => {
-
-
   const balancePaid = data.balance_history.reduce(function (
     accumulator,
     balance
@@ -26,8 +23,7 @@ export default (data, pricing) => {
 
   console.log({ prices: prices });
 
-  const subTotal = prices
-    .reduce((acc, item) => acc + item, 0);
+  const subTotal = prices.reduce((acc, item) => acc + item, 0);
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
@@ -47,37 +43,39 @@ export default (data, pricing) => {
 
   const tableBody = [
     [
-      { text: 'Qty', style: 'fonts' },
       { text: 'Style', style: 'fonts' },
       { text: 'Material', style: 'fonts' },
       // { text: 'Thickness', style: 'fonts' },
       { text: 'Item', style: 'fonts' },
       { text: 'Linear FT', style: 'fonts' },
       { text: 'Price', style: 'fonts' },
-    ]
+    ],
   ];
 
-
-  data.mouldings.map(i  => {
-
-
-
+  data.mouldings.map((i) => {
     let feet = (i.item.MOULDING_WIDTH * 12) / 144;
     let waste = feet * 1.25;
     let multiplier = i.item.Multiplier;
     let wood = i.woodtype ? i.woodtype[i.grade?.db_name] * 0.25 : 0;
     let premium = 0;
 
+    let newWood = wood;
+
+    if (multiplier <= 1) {
+      newWood = wood;
+    } else {
+      newWood = wood * 1.25;
+    }
+
     let a = waste * multiplier;
 
-
-    if(parseFloat(i.linearFT) > 0 && parseFloat(i.linearFT) <= 30) {
+    if (parseFloat(i.linearFT) > 0 && parseFloat(i.linearFT) <= 30) {
       premium = 3 + 1;
     } else if (parseFloat(i.linearFT) >= 31 && parseFloat(i.linearFT) <= 50) {
       premium = 2 + 1;
     } else if (parseFloat(i.linearFT) >= 51 && parseFloat(i.linearFT) <= 100) {
       premium = 1.75 + 1;
-    } else if(parseFloat(i.linearFT) > 101 && parseFloat(i.linearFT) <= 250) {
+    } else if (parseFloat(i.linearFT) > 101 && parseFloat(i.linearFT) <= 250) {
       premium = 1.4 + 1;
     } else if (parseFloat(i.linearFT) > 251 && parseFloat(i.linearFT) <= 500) {
       premium = 1.1 + 1;
@@ -85,10 +83,9 @@ export default (data, pricing) => {
       premium = 1 + 1;
     }
 
-    let price = ((a * wood) * parseFloat(i.linearFT)) * premium;
+    let price = a * newWood * parseFloat(i.linearFT) * premium;
 
     tableBody.push([
-      { text: i.qty, style: 'fonts' },
       { text: i.style.name, style: 'fonts' },
       { text: i.woodtype.NAME, style: 'fonts' },
       // { text: i.thickness.NAME, style: 'fonts' },
@@ -98,21 +95,17 @@ export default (data, pricing) => {
     ]);
   });
 
-  const limitedLiability = 'Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product';
-
-
-
+  const limitedLiability =
+    'Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product';
 
   return [
     {
       columns: [
-        { 
+        {
           width: 200,
-          stack: [
-            {text: 'INVOICE', margin:[0,0,0,-10]},
-          ],
+          stack: [{ text: 'INVOICE', margin: [0, 0, 0, -10] }],
           style: 'headerFont',
-          id: 'header1'
+          id: 'header1',
         },
 
         {
@@ -128,7 +121,7 @@ export default (data, pricing) => {
             { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
           ],
           // width: 200,
-          alignment: 'center'
+          alignment: 'center',
         },
         {
           stack: [
@@ -180,61 +173,67 @@ export default (data, pricing) => {
     },
     {
       columns: [
-        { 
+        {
           width: 200,
           stack: [
-            { columns: [
-              {
-                text: 'Customer - ',
-                width: 60
-              },
-              { 
-                
-                stack: [
-                  { text: `${data.job_info.customer.Company}` },
-                  // {
-                  //   text: `${
-                  //     data.companyprofile.Contact
-                  //       ? data.companyprofile.Contact
-                  //       : ''
-                  //   }`,
-                  //   style: 'fonts',
-                  // },
-                  {
-                    text: `${
-                      data.companyprofile.Address1
-                        ? data.companyprofile.Address1
-                        : ''
-                    }`,
-                    style: 'fonts',
-                  },
-                  {
-                    text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                    style: 'fonts',
-                  },
-                  { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-                  data.companyprofile.Fax ? 
+            {
+              columns: [
+                {
+                  text: 'Customer - ',
+                  width: 60,
+                },
+                {
+                  stack: [
+                    { text: `${data.job_info.customer.Company}` },
+                    // {
+                    //   text: `${
+                    //     data.companyprofile.Contact
+                    //       ? data.companyprofile.Contact
+                    //       : ''
+                    //   }`,
+                    //   style: 'fonts',
+                    // },
                     {
-                      text: `Fax: ${
-                        data.companyprofile.Fax ? data.companyprofile.Fax : ''
+                      text: `${
+                        data.companyprofile.Address1
+                          ? data.companyprofile.Address1
+                          : ''
                       }`,
                       style: 'fonts',
-                      margin: [0, 0, 0, 10],
-                    } : null,
-                  {
-                    text: `Terms: ${
-                      data.companyprofile.PMT_TERMS
-                        ? data.companyprofile.PMT_TERMS
-                        : ''
-                    }`,
-                    style: 'fonts',
-                  },
-                ],
-              }
-            ],
+                    },
+                    {
+                      text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                      style: 'fonts',
+                    },
+                    {
+                      text: `Ph: ${data.companyprofile.Phone1}`,
+                      style: 'fonts',
+                    },
+                    data.companyprofile.Fax
+                      ? {
+                        text: `Fax: ${
+                          data.companyprofile.Fax
+                            ? data.companyprofile.Fax
+                            : ''
+                        }`,
+                        style: 'fonts',
+                        margin: [0, 0, 0, 10],
+                      }
+                      : null,
+                    {
+                      text: `Terms: ${
+                        data.companyprofile.PMT_TERMS
+                          ? data.companyprofile.PMT_TERMS
+                          : ''
+                      }`,
+                      style: 'fonts',
+                    },
+                  ],
+                },
+              ],
 
-            style: 'fontsBold',
-            margin: [0, 0, 0, 0],
+              style: 'fontsBold',
+              margin: [0, 0, 0, 0],
             },
           ],
           style: 'headerFont',
@@ -243,14 +242,14 @@ export default (data, pricing) => {
         {
           text: '',
           // width: 200,
-          alignment: 'center'
+          alignment: 'center',
         },
         {
           stack: [
             {
-              margin:[10,0,0,0],
+              margin: [10, 0, 0, 0],
               columns: [
-                { 
+                {
                   width: 40,
                   stack: [
                     {
@@ -318,24 +317,22 @@ export default (data, pricing) => {
                       margin: [0, 0, 0, 0],
                     },
                   ],
-                }
-              ]
-  
+                },
+              ],
             },
           ],
         },
       ],
     },
     {
-      text:
-        '==============================================================================',
+      text: '==============================================================================',
       alignment: 'center',
     },
     {
       table: {
         headerRows: 1,
-        widths: [30, '*', '*', '*', '*', '*'],
-        body: tableBody
+        widths: ['*', '*', '*', '*', '*'],
+        body: tableBody,
       },
       layout: {
         hLineWidth: function (i, node) {
@@ -357,11 +354,10 @@ export default (data, pricing) => {
           return i === node.table.widths.length - 1 ? 0 : 8;
         },
       },
-      margin: [0, 0, 0, 20]
+      margin: [0, 0, 0, 20],
     },
     {
-      text:
-        '==============================================================================',
+      text: '==============================================================================',
       alignment: 'center',
     },
     {
@@ -371,7 +367,13 @@ export default (data, pricing) => {
           style: 'fonts',
           width: 317,
         },
-        { text: 'Order Subtotal', style: 'totals', margin: [0, 0, 0, 0], width: 120, alignment: 'right' },
+        {
+          text: 'Order Subtotal',
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 120,
+          alignment: 'right',
+        },
         {
           text: `$${subTotal.toFixed(2)}`,
           style: 'fonts',
@@ -379,7 +381,7 @@ export default (data, pricing) => {
           alignment: 'right',
         },
       ],
-      margin:[0,0,0,10]
+      margin: [0, 0, 0, 10],
     },
     {
       columns: [
@@ -389,7 +391,7 @@ export default (data, pricing) => {
           style: 'totals',
           margin: [0, 0, 0, 0],
           alignment: 'right',
-          width: 120
+          width: 120,
         },
         {
           text: `${
@@ -414,7 +416,7 @@ export default (data, pricing) => {
           style: 'totals',
           margin: [0, 0, 0, 0],
           width: 120,
-          alignment: 'right'
+          alignment: 'right',
         },
         {
           text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,
@@ -431,11 +433,11 @@ export default (data, pricing) => {
           {
             text: data.Taxable
               ? '$' +
-                order_sub_total.toFixed(2) +
-                ' x ' +
-                data.companyprofile.TaxRate +
-                '%' +
-                ' Tax:'
+                  order_sub_total.toFixed(2) +
+                  ' x ' +
+                  data.companyprofile.TaxRate +
+                  '%' +
+                  ' Tax:'
               : '',
             style: 'totals',
             margin: [0, 0, 0, 4],
@@ -464,7 +466,7 @@ export default (data, pricing) => {
           style: 'totals',
           margin: [0, 0, 0, 0],
           alignment: 'right',
-          width: 120
+          width: 120,
         },
         {
           text: `$${total.toFixed(2)}`,
@@ -478,7 +480,13 @@ export default (data, pricing) => {
     {
       columns: [
         { text: '', style: 'totals', width: 317, decoration: 'underline' },
-        { text: 'Minus Balance Paid:', style: 'totals', margin: [0, 0, 0, 0], width: 120,  alignment: 'right' },
+        {
+          text: 'Minus Balance Paid:',
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 120,
+          alignment: 'right',
+        },
         {
           text: `$${balancePaid.toFixed(2)}`,
           style: 'fonts',
@@ -496,13 +504,18 @@ export default (data, pricing) => {
     {
       columns: [
         { text: '', style: 'totals', width: 330 },
-        { text: 'BALANCE DUE:', style: 'totals', margin: [0, 0, 0, 0], width:105, alignment: 'right' },
+        {
+          text: 'BALANCE DUE:',
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 105,
+          alignment: 'right',
+        },
         {
           text: `$${balanceDue.toFixed(2)}`,
           style: 'fonts',
           margin: [0, 0, 0, 0],
           alignment: 'right',
-          
         },
       ],
       margin: [0, 15, 0, 0],
@@ -513,16 +526,15 @@ export default (data, pricing) => {
           text: 'LIMITED WARRANTY',
           decoration: 'underline',
           style: 'fontsBold',
-          margin: [0,0,0,10]
+          margin: [0, 0, 0, 10],
         },
-        { 
-          text:
-          limitedLiability.toUpperCase(),
+        {
+          text: limitedLiability.toUpperCase(),
           style: 'warrantyFont',
           alignment: 'left',
           margin: [0, 0, 0, 5],
-        }
-      ]
+        },
+      ],
     },
     {
       columns: [
@@ -537,9 +549,8 @@ export default (data, pricing) => {
           style: 'fonts',
           alignment: 'right',
           margin: [0, 0, 0, 0],
-        }
-      ]
-
+        },
+      ],
     },
   ];
 };
