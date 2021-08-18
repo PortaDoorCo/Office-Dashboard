@@ -49,7 +49,6 @@ let Inputs = (props) => {
             <th>Grade</th>
             <th>Woodtype</th>
             <th>Item</th>
-
             <th>Price</th>
             <th></th>
           </tr>

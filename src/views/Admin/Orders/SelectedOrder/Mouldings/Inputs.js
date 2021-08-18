@@ -45,12 +45,11 @@ let Inputs = (props) => {
       <Table>
         <thead>
           <tr>
-            <th>QTY</th>
+            <th style={{ width: '150px' }}>Total Linear FT</th>
             <th>Style</th>
             <th>Grade</th>
             <th>Woodtype</th>
             <th>Item</th>
-            <th>Linear FT</th>
             <th>Price</th>
             <th></th>
           </tr>
@@ -59,13 +58,17 @@ let Inputs = (props) => {
           {fields.map((table, index) => {
             return (
               <tr key={index}>
-                <td style={{ width: '90px' }}>
-                  <Field
-                    name={`${table}.qty`}
-                    component={renderInt}
-                    edit={edit}
-                    type="text"
-                  />
+                <td style={{ width: '150px' }}>
+                  <InputGroup>
+                    <Field
+                      name={`${table}.linearFT`}
+                      type="text"
+                      component={renderNumber}
+                      label="price"
+                      edit={edit}
+                      required
+                    />
+                  </InputGroup>
                 </td>
                 <td>
                   <Field
@@ -110,7 +113,7 @@ let Inputs = (props) => {
                   <Field
                     name={`${table}.item`}
                     component={renderDropdownList}
-                    data={part_list.mouldings.filter(
+                    data={part_list?.mouldings.filter(
                       (item) =>
                         item.Style === formState?.mouldings[index]?.style?.value
                     )}
@@ -123,18 +126,7 @@ let Inputs = (props) => {
                 </td>
 
                 <>
-                  <td style={{ width: '150px' }}>
-                    <InputGroup>
-                      <Field
-                        name={`${table}.linearFT`}
-                        type="text"
-                        component={renderNumber}
-                        label="price"
-                        edit={edit}
-                        required
-                      />
-                    </InputGroup>
-                  </td>
+
                   <td style={{ width: '150px' }}>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
@@ -156,7 +148,7 @@ let Inputs = (props) => {
                 {!edit ? (
                   <td>
                     <Button color="danger" onClick={() => fields.remove(index)}>
-                      X
+                    X
                     </Button>
                   </td>
                 ) : null}
