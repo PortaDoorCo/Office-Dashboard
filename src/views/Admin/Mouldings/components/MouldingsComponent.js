@@ -262,8 +262,10 @@ class Mouldings extends Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs="4" />
-                  <Col xs="5" />
+                  <Col xs="9">
+                    <h4>Note: Please specify any required lengths in Misc Notes</h4>
+                  </Col>
+
                   <Col xs="3">
                     <strong>Sub Total: </strong>
                     <InputGroup className="mb-3">
