@@ -1,5 +1,14 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
+import {
+  Table,
+  Input,
+  Row,
+  Col,
+  Button,
+  FormGroup,
+  Label,
+  ButtonGroup,
+} from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import {
   Field,
@@ -141,18 +150,43 @@ const DoorTable = ({
   const twoHigh = (index, e, v) => {
     let value;
     const part = formState.part_list[i];
-    const panelsW = part.dimensions[index].panelsW;
+    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
+    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
+    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
+    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
+    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
+    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
+
+    const defaultLeftStile = formState?.part_list[i]?.leftStile;
+    const defaultRightStile = formState?.part_list[i].rightStile;
+    const defaultTopRail = formState?.part_list[i]?.topRail;
+    const defaultBottomRail = formState?.part_list[i]?.bottomRail;
 
     if (e) {
       value = e.target.value;
       if (part.dimensions[index].notes !== '' && parseInt(e.target.value) > 1) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${value}H ${panelsW}W`
-          )
-        );
+        if (
+          leftStile === defaultLeftStile ||
+          rightStile === defaultRightStile ||
+          topRail === defaultTopRail ||
+          bottomRail === defaultBottomRail
+        ) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `${value}H ${panelsW}W`
+            )
+          );
+        } else {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `${value}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+            )
+          );
+        }
       } else {
         if (numQty(height) >= 48) {
           dispatch(
@@ -252,8 +286,17 @@ const DoorTable = ({
 
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
-    const panelsH = part.dimensions[index].panelsH;
-    const notes = part.dimensions[index].notes;
+    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
+    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
+    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
+    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
+    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
+    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
+
+    const defaultLeftStile = formState?.part_list[i]?.leftStile;
+    const defaultRightStile = formState?.part_list[i].rightStile;
+    const defaultTopRail = formState?.part_list[i]?.topRail;
+    const defaultBottomRail = formState?.part_list[i]?.bottomRail;
     let value;
     if (e) {
       value = e.target.value;
@@ -261,13 +304,29 @@ const DoorTable = ({
         parseInt(part.dimensions[index].panelsH) > 1 &&
         parseInt(e.target.value) > 1
       ) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${panelsH}H ${value}W`
-          )
-        );
+
+        if (
+          leftStile === defaultLeftStile ||
+          rightStile === defaultRightStile ||
+          topRail === defaultTopRail ||
+          bottomRail === defaultBottomRail
+        ) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `${panelsH}H ${value}W`
+            )
+          );
+        } else {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `${panelsH}H ${value}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+            )
+          );
+        }
       } else {
         if (numQty(width) >= 24) {
           dispatch(
@@ -358,41 +417,80 @@ const DoorTable = ({
     const value = e.target.value;
     console.log({ e });
 
-    if (e.target.name.includes('leftStile')) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          `${panelsH}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target.name.includes('rightStile')) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target.name.includes('topRail')) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target.name.includes('bottomRail')) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-        )
-      );
+    if (panelsH > 1 || panelsW > 1) {
+      if (e.target.name.includes('leftStile')) {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${panelsH}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          )
+        );
+      }
+      if (e.target.name.includes('rightStile')) {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          )
+        );
+      }
+      if (e.target.name.includes('topRail')) {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
+          )
+        );
+      }
+      if (e.target.name.includes('bottomRail')) {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
+          )
+        );
+      }
+    } else {
+      if (e.target.name.includes('leftStile')) {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          )
+        );
+      }
+      if (e.target.name.includes('rightStile')) {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          )
+        );
+      }
+      if (e.target.name.includes('topRail')) {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
+          )
+        );
+      }
+      if (e.target.name.includes('bottomRail')) {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
+          )
+        );
+      }
     }
   };
 
@@ -401,44 +499,106 @@ const DoorTable = ({
     setChangeValue(value);
   };
 
-  const changeFraming = (index, e) => {
-    if (changeValue) {
-      setLeftStileWidth(fraction(numQty(changeValue)));
-      setRightStileWidth(fraction(numQty(changeValue)));
-      setTopRailWidth(fraction(numQty(changeValue)));
-      setBottomRailWidth(fraction(numQty(changeValue)));
+  const changeFraming = (e, index) => {
+    const leftStile = formState?.part_list[i]?.leftStile;
+    const rightStile = formState?.part_list[i]?.rightStile;
+    const topRail = formState?.part_list[i]?.topRail;
+    const bottomRail = formState?.part_list[i]?.bottomRail;
+    const panelsH = formState?.part_list[i]?.panelsH;
+    const panelsW = formState?.part_list[i]?.panelsW;
 
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].leftStile`,
-          fraction(numQty(changeValue))
-        )
-      );
+    console.log({ e });
 
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].rightStile`,
-          fraction(numQty(changeValue))
-        )
-      );
+    if (e.target.name === 'update_framing') {
+      if (changeValue) {
+        setLeftStileWidth(fraction(numQty(changeValue)));
+        setRightStileWidth(fraction(numQty(changeValue)));
+        setTopRailWidth(fraction(numQty(changeValue)));
+        setBottomRailWidth(fraction(numQty(changeValue)));
 
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(numQty(changeValue))
-        )
-      );
+        const newVal = fraction(numQty(changeValue));
 
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(numQty(changeValue))
-        )
-      );
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
+          )
+        );
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].leftStile`,
+            fraction(numQty(changeValue))
+          )
+        );
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].rightStile`,
+            fraction(numQty(changeValue))
+          )
+        );
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(numQty(changeValue))
+          )
+        );
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(numQty(changeValue))
+          )
+        );
+      }
+    }
+
+    if (e.target.name === 'default_framing') {
+      if (changeValue) {
+        setLeftStileWidth(fraction(numQty(changeValue)));
+        setRightStileWidth(fraction(numQty(changeValue)));
+        setTopRailWidth(fraction(numQty(changeValue)));
+        setBottomRailWidth(fraction(numQty(changeValue)));
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].leftStile`,
+            fraction(numQty(leftStile))
+          )
+        );
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].rightStile`,
+            fraction(numQty(rightStile))
+          )
+        );
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(numQty(topRail))
+          )
+        );
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(numQty(bottomRail))
+          )
+        );
+      }
     }
   };
 
@@ -804,12 +964,22 @@ const DoorTable = ({
               {!edit ? (
                 <tr>
                   <td>
-                    <Button
-                      onClick={() => changeFraming(index)}
-                      color="primary"
-                    >
-                      Update Framing
-                    </Button>
+                    <ButtonGroup vertical>
+                      <Button
+                        onClick={(e) => changeFraming(e, index)}
+                        color="primary"
+                        name="update_framing"
+                      >
+                        Update Framing
+                      </Button>
+                      <Button
+                        onClick={(e) => changeFraming(e, index)}
+                        color="primary"
+                        name="default_framing"
+                      >
+                        Default Framing
+                      </Button>
+                    </ButtonGroup>
                   </td>
                 </tr>
               ) : null}
