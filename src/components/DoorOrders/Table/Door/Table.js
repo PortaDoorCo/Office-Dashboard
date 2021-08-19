@@ -373,21 +373,46 @@ const DoorTable = ({
           );
         }
       } else {
-        if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              'OVERSIZE - NO GUARANTEE'
-            )
-          );
-        } else {
-          if (value > 1) {
+        if (
+          leftStile === defaultLeftStile ||
+          rightStile === defaultRightStile ||
+          topRail === defaultTopRail ||
+          bottomRail === defaultBottomRail
+        ) {
+          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
             dispatch(
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                `${panelsH}H ${value}W`
+                'OVERSIZE - NO GUARANTEE'
+              )
+            );
+          } else {
+            if (value > 1) {
+              dispatch(
+                change(
+                  'DoorOrder',
+                  `part_list[${i}].dimensions[${index}].notes`,
+                  `${panelsH}H ${value}W`
+                )
+              );
+            } else {
+              dispatch(
+                change(
+                  'DoorOrder',
+                  `part_list[${i}].dimensions[${index}].notes`,
+                  ''
+                )
+              );
+            }
+          }
+        } else {
+          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
               )
             );
           } else {
@@ -395,11 +420,13 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                ''
+                `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nOVERSIZE - NO GUARANTEE`
               )
             );
           }
+        
         }
+       
       }
     } else {
       value = v;
