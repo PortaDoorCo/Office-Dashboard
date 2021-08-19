@@ -163,7 +163,7 @@ const DoorTable = ({
             )
           );
         } else {
-          if(panelsW > 1 ){
+          if (panelsW > 1) {
             dispatch(
               change(
                 'DoorOrder',
@@ -278,7 +278,6 @@ const DoorTable = ({
             )
           );
         } else {
-
           dispatch(
             change(
               'DoorOrder',
@@ -286,9 +285,6 @@ const DoorTable = ({
               ''
             )
           );
-          
-
-
         }
       }
     } else {

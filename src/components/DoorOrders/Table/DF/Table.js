@@ -122,37 +122,35 @@ const Cope_Table = ({
     const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
     const full_frame = formState?.part_list[i]?.dimensions[index]?.full_frame;
 
-
     let profile_width;
     let df_reduction;
 
-    if(part.construction.value === 'Cope'){
+    if (part.construction.value === 'Cope') {
       profile_width = part.profile.PROFILE_WIDTH;
       df_reduction = part.profile.DF_Reduction;
     }
 
-    if(part.construction.value === 'MT'){
+    if (part.construction.value === 'MT') {
       profile_width = part.design.PROFILE_WIDTH;
       df_reduction = part.design.DF_REDUCTION;
     }
 
-    if(part.construction.value === 'Miter'){
+    if (part.construction.value === 'Miter') {
       profile_width = part.design.PROFILE_WIDTH;
       df_reduction = part.design.PROFILE_WIDTH;
     }
 
-    console.log({part});
-    
-    
+    console.log({ part });
 
     if (e) {
       if (leftStileWidth) {
-
         dispatch(
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${tableIndex}].notes`,
-            `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(numQty(leftStileWidth))}" Bottom Rail: ${fraction(numQty(leftStileWidth))}"`
+            `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
+              numQty(leftStileWidth)
+            )}" Bottom Rail: ${fraction(numQty(leftStileWidth))}"`
           )
         );
 
@@ -172,12 +170,13 @@ const Cope_Table = ({
           )
         );
       } else {
-
         dispatch(
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${tableIndex}].notes`,
-            `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(profile_width)}" Bottom Rail: ${fraction(profile_width)}"`
+            `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
+              profile_width
+            )}" Bottom Rail: ${fraction(profile_width)}"`
           )
         );
 
@@ -198,7 +197,6 @@ const Cope_Table = ({
         );
       }
     } else {
-
       dispatch(
         change(
           'DoorOrder',
@@ -236,14 +234,14 @@ const Cope_Table = ({
     const value = e.target.value;
     console.log({ e });
 
-
-
     if (e.target.name.includes('leftStile')) {
       dispatch(
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].notes`,
-          `${full_frame ? 'Full Frame \n' : ''}Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          `${
+            full_frame ? 'Full Frame \n' : ''
+          }Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
         )
       );
     }
@@ -252,7 +250,9 @@ const Cope_Table = ({
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].notes`,
-          `${full_frame ? 'Full Frame \n' : ''}Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          `${
+            full_frame ? 'Full Frame \n' : ''
+          }Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
         )
       );
     }
@@ -261,7 +261,9 @@ const Cope_Table = ({
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].notes`,
-          `${full_frame ? 'Full Frame \n' : ''}Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
+          `${
+            full_frame ? 'Full Frame \n' : ''
+          }Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
         )
       );
     }
@@ -270,7 +272,9 @@ const Cope_Table = ({
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].notes`,
-          `${full_frame ? 'Full Frame \n' : ''}Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
+          `${
+            full_frame ? 'Full Frame \n' : ''
+          }Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
         )
       );
     }
@@ -297,7 +301,6 @@ const Cope_Table = ({
     const full_frame = formState?.part_list[i]?.dimensions[index]?.full_frame;
 
     if (changeValue) {
-
       const newVal = fraction(numQty(changeValue));
 
       setLeftStileWidth(fraction(numQty(changeValue)));
@@ -307,7 +310,9 @@ const Cope_Table = ({
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].notes`,
-          `${full_frame ? 'Full Frame \n' : ''}Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          `${
+            full_frame ? 'Full Frame \n' : ''
+          }Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
         )
       );
 
