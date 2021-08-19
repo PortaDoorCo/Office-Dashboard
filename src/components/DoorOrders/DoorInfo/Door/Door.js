@@ -49,7 +49,7 @@ class Door extends Component {
         change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`)
       );
     }
-    if(e.target.name.includes('topRail')){
+    if(e.target.name.includes('bottomRail')){
       dispatch(
         change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`)
       );

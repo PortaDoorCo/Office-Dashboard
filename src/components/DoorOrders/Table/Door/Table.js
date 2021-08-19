@@ -18,6 +18,7 @@ import {
   renderDropdownList,
   renderCheckboxToggle,
   renderPrice,
+  renderTextField,
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
@@ -142,12 +143,15 @@ const DoorTable = ({
     const part = formState.part_list[i];
     const panelsW = part.dimensions[index].panelsW;
 
-
     if (e) {
       value = e.target.value;
       if (part.dimensions[index].notes !== '' && parseInt(e.target.value) > 1) {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${value}H ${panelsW}W`)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${value}H ${panelsW}W`
+          )
         );
       } else {
         dispatch(
@@ -160,12 +164,13 @@ const DoorTable = ({
       }
     } else {
       value = v;
-      if (
-        parseInt(panelsW) > 1 &&
-        parseInt(v) > 1
-      ) {
+      if (parseInt(panelsW) > 1 && parseInt(v) > 1) {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${v}H ${panelsW}W`)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${v}H ${panelsW}W`
+          )
         );
         dispatch(
           change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
@@ -175,7 +180,11 @@ const DoorTable = ({
           change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
         );
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${v}H`)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${v}H`
+          )
         );
       }
     }
@@ -233,7 +242,11 @@ const DoorTable = ({
         parseInt(e.target.value) > 1
       ) {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${panelsH}H ${value}W`)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${panelsH}H ${value}W`
+          )
         );
       } else {
         dispatch(
@@ -252,7 +265,11 @@ const DoorTable = ({
         parseInt(v) > 1
       ) {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${panelsH}H ${v}W`)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${panelsH}H ${v}W`
+          )
         );
         dispatch(
           change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
@@ -262,7 +279,11 @@ const DoorTable = ({
           change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
         );
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${v}W`)
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${v}W`
+          )
         );
       }
     }
@@ -291,6 +312,57 @@ const DoorTable = ({
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
           0
+        )
+      );
+    }
+  };
+
+  const onStileOrRailChange = (e, index) => {
+    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
+    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
+    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
+    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
+    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
+    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
+
+    const value = e.target.value;
+    console.log({ e });
+
+
+
+    if (e.target.name.includes('leftStile')) {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].notes`,
+          `${panelsH}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+        )
+      );
+    }
+    if (e.target.name.includes('rightStile')) {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].notes`,
+          `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+        )
+      );
+    }
+    if (e.target.name.includes('topRail')) {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].notes`,
+          `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
+        )
+      );
+    }
+    if (e.target.name.includes('bottomRail')) {
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].notes`,
+          `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
         )
       );
     }
@@ -427,6 +499,7 @@ const DoorTable = ({
       showBuilder: false,
       unevenCheck: false,
       unevenSplit: false,
+      notes: '1H 1W',
       glass_check_0:
         formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
     });
@@ -447,7 +520,7 @@ const DoorTable = ({
     return check_if_glass;
   };
 
-  console.log({note});
+  console.log({ note });
 
   return (
     <div>
@@ -602,7 +675,8 @@ const DoorTable = ({
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
-                      setLeftStileWidth(e.target.value)
+                      setLeftStileWidth(e.target.value),
+                      onStileOrRailChange(e, index)
                     )}
                   />
                 </td>
@@ -619,7 +693,8 @@ const DoorTable = ({
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
-                      setRightStileWidth(e.target.value)
+                      setRightStileWidth(e.target.value),
+                      onStileOrRailChange(e, index)
                     )}
                   />
                 </td>
@@ -635,7 +710,9 @@ const DoorTable = ({
                     edit={edit}
                     validate={required}
                     onChange={(e) => (
-                      registerChange(index, e), setTopRailWidth(e.target.value)
+                      registerChange(index, e),
+                      setTopRailWidth(e.target.value),
+                      onStileOrRailChange(e, index)
                     )}
                   />
                 </td>
@@ -652,7 +729,8 @@ const DoorTable = ({
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
-                      setBottomRailWidth(e.target.value)
+                      setBottomRailWidth(e.target.value),
+                      onStileOrRailChange(e, index)
                     )}
                   />
                 </td>
@@ -859,7 +937,7 @@ const DoorTable = ({
               <Field
                 name={`${table}.notes`}
                 type="textarea"
-                component={renderField}
+                component={renderTextField}
                 edit={edit}
                 label="notes"
                 onChange={(e) => setNotes(e.target.value)}
