@@ -154,13 +154,33 @@ const DoorTable = ({
           )
         );
       } else {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            'OVERSIZE - NO GUARANTEE'
-          )
-        );
+        if (numQty(height) >= 48) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              'OVERSIZE - NO GUARANTEE'
+            )
+          );
+        } else {
+          if(panelsW > 1 ){
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `${value}H ${panelsW}W`
+              )
+            );
+          } else {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                ''
+              )
+            );
+          }
+        }
       }
     } else {
       value = v;
@@ -249,13 +269,27 @@ const DoorTable = ({
           )
         );
       } else {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            'OVERSIZE - NO GUARANTEE'
-          )
-        );
+        if (numQty(width) >= 24) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              'OVERSIZE - NO GUARANTEE'
+            )
+          );
+        } else {
+
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              ''
+            )
+          );
+          
+
+
+        }
       }
     } else {
       value = v;
@@ -327,8 +361,6 @@ const DoorTable = ({
 
     const value = e.target.value;
     console.log({ e });
-
-
 
     if (e.target.name.includes('leftStile')) {
       dispatch(
@@ -933,15 +965,31 @@ const DoorTable = ({
           <Row>
             <Col xs="4">
               <strong>Notes</strong>
-              <Field
-                name={`${table}.notes`}
-                type="textarea"
-                component={renderTextField}
-                edit={edit}
-                label="notes"
-                onChange={(e) => setNotes(e.target.value)}
-                validate={glass_note_check(index) ? [required, trim_val] : null}
-              />
+              <Row>
+                <Col lg="11">
+                  <Field
+                    name={`${table}.notes`}
+                    type="textarea"
+                    component={renderTextField}
+                    edit={edit}
+                    label="notes"
+                    validate={
+                      glass_note_check(index) ? [required, trim_val] : null
+                    }
+                  />
+                </Col>
+                <Col lg="1">
+                  {!edit ? (
+                    <Button
+                      color="danger"
+                      className="btn-circle"
+                      onClick={(e) => clearNotes(index, e)}
+                    >
+                      X
+                    </Button>
+                  ) : null}
+                </Col>
+              </Row>
             </Col>
             <Col xs="5"></Col>
             <Col xs="3">

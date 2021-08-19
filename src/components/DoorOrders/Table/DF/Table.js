@@ -444,13 +444,6 @@ const Cope_Table = ({
         true
       )
     );
-    dispatch(
-      change(
-        'DoorOrder',
-        `part_list[${i}].dimensions[${tableIndex}].notes`,
-        'Full Frame'
-      )
-    );
   };
 
   return formState ? (
@@ -873,8 +866,7 @@ const Cope_Table = ({
         </Row>
 
         <Row>
-          <Col xs="4" />
-          <Col xs="5" />
+          <Col xs="9" />
           <Col xs="3">
             <strong>Sub Total: </strong>
             {subTotal[i] ? (
