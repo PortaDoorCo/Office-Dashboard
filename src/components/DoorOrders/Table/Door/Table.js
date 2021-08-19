@@ -499,7 +499,6 @@ const DoorTable = ({
       showBuilder: false,
       unevenCheck: false,
       unevenSplit: false,
-      notes: '1H 1W',
       glass_check_0:
         formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
     });
