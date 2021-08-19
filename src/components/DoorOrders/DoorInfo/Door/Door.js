@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {
   renderDropdownListFilter,
   renderTextField,
-  renderNumber
+  renderNumber,
 } from '../../../RenderInputs/renderInputs';
 import Table from '../../Table/Door/Table';
 import {
@@ -18,7 +18,6 @@ import {
 
 import changeProfile from '../Functions/changeProfile';
 import changeDesign from '../Functions/changeDesign';
-
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -166,12 +165,13 @@ class Door extends Component {
 
         <Row>
           <Col>
-            <h5><strong>Default Framing Size</strong></h5>
+            <h5>
+              <strong>Default Framing Size</strong>
+            </h5>
           </Col>
         </Row>
-        
-        <Row>
 
+        <Row>
           <Col>
             <FormGroup>
               <Label htmlFor="arches">Left Stile</Label>
@@ -230,7 +230,6 @@ class Door extends Component {
 
         <Row className="mt-2">
           <Col xs="4">
-            
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>
@@ -243,7 +242,6 @@ class Door extends Component {
                 <p>Enter Item Build Note Here - Framing/Wood, etc.</p>
               </strong>
             </FormGroup>
-         
           </Col>
         </Row>
 

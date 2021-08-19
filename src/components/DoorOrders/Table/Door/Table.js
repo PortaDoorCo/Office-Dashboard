@@ -55,6 +55,8 @@ const DoorTable = ({
   const [rightStileWidth, setRightStileWidth] = useState(null);
   const [topRailWidth, setTopRailWidth] = useState(null);
   const [bottomRailWidth, setBottomRailWidth] = useState(null);
+  const [tableIndex, setTableIndex] = useState(0);
+  const [note, setNotes] = useState('');
 
   const [modal, setModal] = useState(false);
   const [warningType, setWarningType] = useState(null);
@@ -138,12 +140,14 @@ const DoorTable = ({
   const twoHigh = (index, e, v) => {
     let value;
     const part = formState.part_list[i];
+    const panelsW = part.dimensions[index].panelsW;
+
 
     if (e) {
       value = e.target.value;
       if (part.dimensions[index].notes !== '' && parseInt(e.target.value) > 1) {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${value}H ${panelsW}W`)
         );
       } else {
         dispatch(
@@ -157,12 +161,11 @@ const DoorTable = ({
     } else {
       value = v;
       if (
-        part.dimensions[index].notes !== '' &&
-        parseInt(part.dimensions[index].panelsW) > 1 &&
+        parseInt(panelsW) > 1 &&
         parseInt(v) > 1
       ) {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${v}H ${panelsW}W`)
         );
         dispatch(
           change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
@@ -170,6 +173,9 @@ const DoorTable = ({
       } else {
         dispatch(
           change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
+        );
+        dispatch(
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${v}H`)
         );
       }
     }
@@ -217,16 +223,16 @@ const DoorTable = ({
 
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
+    const panelsH = part.dimensions[index].panelsH;
     let value;
     if (e) {
       value = e.target.value;
       if (
-        part.dimensions[index].notes !== '' &&
         parseInt(part.dimensions[index].panelsH) > 1 &&
         parseInt(e.target.value) > 1
       ) {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${panelsH}H ${value}W `)
         );
       } else {
         dispatch(
@@ -245,7 +251,7 @@ const DoorTable = ({
         parseInt(v) > 1
       ) {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${panelsH}H ${v}W`)
         );
         dispatch(
           change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
@@ -253,6 +259,9 @@ const DoorTable = ({
       } else {
         dispatch(
           change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
+        );
+        dispatch(
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${v}W`)
         );
       }
     }
@@ -349,6 +358,7 @@ const DoorTable = ({
     const bottomRail = formState?.part_list[i]?.bottomRail;
 
     const index = fields.length - 1;
+    setTableIndex(fields.length);
 
     if (fields.length > 0) {
       dispatch(
@@ -435,6 +445,8 @@ const DoorTable = ({
 
     return check_if_glass;
   };
+
+  console.log({note});
 
   return (
     <div>
@@ -849,6 +861,7 @@ const DoorTable = ({
                 component={renderField}
                 edit={edit}
                 label="notes"
+                onChange={(e) => setNotes(e.target.value)}
                 validate={glass_note_check(index) ? [required, trim_val] : null}
               />
             </Col>
@@ -887,8 +900,7 @@ const DoorTable = ({
       </Row>
 
       <Row>
-        <Col xs="4" />
-        <Col xs="5" />
+        <Col xs="9" />
         <Col xs="3">
           <strong>Sub Total: </strong>
           {subTotal[i] ? (
