@@ -171,38 +171,12 @@ const DoorTable = ({
           topRail === defaultTopRail ||
           bottomRail === defaultBottomRail
         ) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `${value}H ${panelsW}W`
-            )
-          );
-        } else {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `${value}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-            )
-          );
-        }
-      } else {
-        if (numQty(height) >= 48) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              'OVERSIZE - NO GUARANTEE'
-            )
-          );
-        } else {
-          if (panelsW > 1) {
+          if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
             dispatch(
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                `${value}H ${panelsW}W`
+                `${value}H ${panelsW}W \nOVERSIZE - NO GUARANTEE`
               )
             );
           } else {
@@ -210,10 +184,72 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                ''
+                `${value}H ${panelsW}W`
               )
             );
           }
+        } else {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+            )
+          );
+        }
+      } else {
+        if (
+          leftStile === defaultLeftStile ||
+          rightStile === defaultRightStile ||
+          topRail === defaultTopRail ||
+          bottomRail === defaultBottomRail
+        ) {
+          if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                'OVERSIZE - NO GUARANTEE'
+              )
+            );
+          } else {
+            if (panelsW > 1) {
+              dispatch(
+                change(
+                  'DoorOrder',
+                  `part_list[${i}].dimensions[${index}].notes`,
+                  `${value}H ${panelsW}W`
+                )
+              );
+            } else {
+              dispatch(
+                change(
+                  'DoorOrder',
+                  `part_list[${i}].dimensions[${index}].notes`,
+                  ''
+                )
+              );
+            }
+          }
+        } else {
+          if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+              )
+            );
+          } else {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nOVERSIZE - NO GUARANTEE`
+              )
+            );
+          }
+
         }
       }
     } else {
@@ -304,47 +340,93 @@ const DoorTable = ({
         parseInt(part.dimensions[index].panelsH) > 1 &&
         parseInt(e.target.value) > 1
       ) {
-
         if (
           leftStile === defaultLeftStile ||
           rightStile === defaultRightStile ||
           topRail === defaultTopRail ||
           bottomRail === defaultBottomRail
         ) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `${panelsH}H ${value}W`
-            )
-          );
+          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `${panelsH}H ${value}W \nOVERSIZE - NO GUARANTEE`
+              )
+            );
+          } else {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `${panelsH}H ${value}W`
+              )
+            );
+          }
         } else {
           dispatch(
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              `${panelsH}H ${value}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+              `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
             )
           );
         }
       } else {
-        if (numQty(width) >= 24) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              'OVERSIZE - NO GUARANTEE'
-            )
-          );
+        if (
+          leftStile === defaultLeftStile ||
+          rightStile === defaultRightStile ||
+          topRail === defaultTopRail ||
+          bottomRail === defaultBottomRail
+        ) {
+          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                'OVERSIZE - NO GUARANTEE'
+              )
+            );
+          } else {
+            if (value > 1) {
+              dispatch(
+                change(
+                  'DoorOrder',
+                  `part_list[${i}].dimensions[${index}].notes`,
+                  `${panelsH}H ${value}W`
+                )
+              );
+            } else {
+              dispatch(
+                change(
+                  'DoorOrder',
+                  `part_list[${i}].dimensions[${index}].notes`,
+                  ''
+                )
+              );
+            }
+          }
         } else {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              ''
-            )
-          );
+          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+              )
+            );
+          } else {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nOVERSIZE - NO GUARANTEE`
+              )
+            );
+          }
+        
         }
+       
       }
     } else {
       value = v;
@@ -417,7 +499,7 @@ const DoorTable = ({
     const value = e.target.value;
     console.log({ e });
 
-    if (panelsH > 1 || panelsW > 1) {
+    if ((height >= 48 && panelsH > 1) || (width >= 24 && panelsW > 1)) {
       if (e.target.name.includes('leftStile')) {
         dispatch(
           change(
@@ -455,41 +537,80 @@ const DoorTable = ({
         );
       }
     } else {
-      if (e.target.name.includes('leftStile')) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          )
-        );
-      }
-      if (e.target.name.includes('rightStile')) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          )
-        );
-      }
-      if (e.target.name.includes('topRail')) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-          )
-        );
-      }
-      if (e.target.name.includes('bottomRail')) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-          )
-        );
+      if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
+        if (e.target.name.includes('leftStile')) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nOVERSIZE - NO GUARANTEE"`
+            )
+          );
+        }
+        if (e.target.name.includes('rightStile')) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nOVERSIZE - NO GUARANTEE"`
+            )
+          );
+        }
+        if (e.target.name.includes('topRail')) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}\nOVERSIZE - NO GUARANTEE"`
+            )
+          );
+        }
+        if (e.target.name.includes('bottomRail')) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}\nOVERSIZE - NO GUARANTEE"`
+            )
+          );
+        }
+      } else {
+        if (e.target.name.includes('leftStile')) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+            )
+          );
+        }
+        if (e.target.name.includes('rightStile')) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+            )
+          );
+        }
+        if (e.target.name.includes('topRail')) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
+            )
+          );
+        }
+        if (e.target.name.includes('bottomRail')) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
+            )
+          );
+        }
       }
     }
   };
@@ -504,8 +625,8 @@ const DoorTable = ({
     const rightStile = formState?.part_list[i]?.rightStile;
     const topRail = formState?.part_list[i]?.topRail;
     const bottomRail = formState?.part_list[i]?.bottomRail;
-    const panelsH = formState?.part_list[i]?.panelsH;
-    const panelsW = formState?.part_list[i]?.panelsW;
+    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
+    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
     console.log({ e });
 
@@ -518,13 +639,33 @@ const DoorTable = ({
 
         const newVal = fraction(numQty(changeValue));
 
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
-          )
-        );
+        if (panelsH > 1 || panelsW > 1) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `${panelsH}H ${panelsW}W \nLeft Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
+            )
+          );
+        } else {
+          if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}" \nOVERSIZE - NO GUARANTEE`
+              )
+            );
+          } else {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
+              )
+            );
+          }
+        }
 
         dispatch(
           change(
@@ -566,6 +707,34 @@ const DoorTable = ({
         setRightStileWidth(fraction(numQty(changeValue)));
         setTopRailWidth(fraction(numQty(changeValue)));
         setBottomRailWidth(fraction(numQty(changeValue)));
+
+        if (panelsH > 1 || panelsW > 1) {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].notes`,
+              `${panelsH}H ${panelsW}W`
+            )
+          );
+        } else {
+          if (height >= 48 || width >= 24) {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                'OVERSIZE - NO GUARANTEE'
+              )
+            );
+          } else {
+            dispatch(
+              change(
+                'DoorOrder',
+                `part_list[${i}].dimensions[${index}].notes`,
+                ''
+              )
+            );
+          }
+        }
 
         dispatch(
           change(
