@@ -22,6 +22,41 @@ import changeDesign from '../Functions/changeDesign';
 const required = (value) => (value ? undefined : 'Required');
 
 class Door extends Component {
+
+
+  onChange = (e) => {
+    const { dispatch, index, part, formState } = this.props;
+
+    const leftStile = formState?.part_list[index]?.leftStile;
+    const rightStile = formState?.part_list[index]?.rightStile;
+    const topRail = formState?.part_list[index]?.topRail;
+    const bottomRail = formState?.part_list[index]?.bottomRail;
+
+    const value = e.target.value;
+    console.log({e});
+    if(e.target.name.includes('leftStile')){
+      dispatch(
+        change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${e.target.value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`)
+      );
+    }
+    if(e.target.name.includes('rightStile')){
+      dispatch(
+        change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`)
+      );
+    }
+    if(e.target.name.includes('topRail')){
+      dispatch(
+        change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`)
+      );
+    }
+    if(e.target.name.includes('topRail')){
+      dispatch(
+        change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`)
+      );
+    }
+  }
+
+
   render() {
     const {
       part,
@@ -182,6 +217,7 @@ class Door extends Component {
                 label="leftStile"
                 edit={edit}
                 validate={required}
+                onChange={(e) => this.onChange(e)}
               />
             </FormGroup>
           </Col>
@@ -195,6 +231,7 @@ class Door extends Component {
                 label="rightStile"
                 edit={edit}
                 validate={required}
+                onChange={(e) => this.onChange(e)}
               />
             </FormGroup>
           </Col>
@@ -208,6 +245,7 @@ class Door extends Component {
                 label="topRail"
                 edit={edit}
                 validate={required}
+                onChange={(e) => this.onChange(e)}
               />
             </FormGroup>
           </Col>
@@ -221,6 +259,7 @@ class Door extends Component {
                 label="bottomRail"
                 edit={edit}
                 validate={required}
+                onChange={(e) => this.onChange(e)}
               />
             </FormGroup>
           </Col>

@@ -224,6 +224,7 @@ const DoorTable = ({
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
     const panelsH = part.dimensions[index].panelsH;
+    const notes = part.dimensions[index].notes;
     let value;
     if (e) {
       value = e.target.value;
@@ -232,7 +233,7 @@ const DoorTable = ({
         parseInt(e.target.value) > 1
       ) {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${panelsH}H ${value}W `)
+          change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, `${panelsH}H ${value}W`)
         );
       } else {
         dispatch(

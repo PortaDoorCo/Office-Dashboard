@@ -3,29 +3,37 @@ import fraction from '../../../../utils/fraction';
 
 const changeProfile = (p, ind, props, change) => {
 
-  const { formState } = props;
+  const { formState, dispatch } = props;
 
   
 
   const part = formState.part_list[ind];
 
-  props.dispatch(
-    change(
-      'DoorOrder',
-      `${p}.leftStile`,
-      fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
-    )
-  );
 
-  props.dispatch(
-    change(
-      'DoorOrder',
-      `${p}.rightStile`,
-      fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
-    )
-  );
+
+
 
   if(part?.orderType?.value === 'DF'){
+
+    dispatch(
+      change('DoorOrder', `${p}.notes`, `Left Stile: ${fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)}" Right Stile: ${fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)}" \nTop Rail: ${fraction(part.profile ? part.profile.DF_Reduction : 0)} Bottom Rail: ${fraction(part.profile ? part.profile.DF_Reduction : 0)}"`)
+    );
+
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.leftStile`,
+        fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
+      )
+    );
+
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.rightStile`,
+        fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
+      )
+    );
 
     props.dispatch(
       change(
@@ -43,6 +51,27 @@ const changeProfile = (p, ind, props, change) => {
       )
     );
   } else {
+
+    dispatch(
+      change('DoorOrder', `${p}.notes`, `Left Stile: ${fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)}" Right Stile: ${fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)}" \nTop Rail: ${fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)} Bottom Rail: ${fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)}"`)
+    );
+
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.leftStile`,
+        fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
+      )
+    );
+
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.rightStile`,
+        fraction(part.profile ? part.profile.PROFILE_WIDTH : 0)
+      )
+    );
+
     props.dispatch(
       change(
         'DoorOrder',
