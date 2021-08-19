@@ -29,21 +29,41 @@ const changeProfile = (p, ind, props, change) => {
     );
 
     if(part?.orderType?.value === 'DF'){
-      props.dispatch(
-        change(
-          'DoorOrder',
-          `${p}.topRail`,
-          fraction(part.design ? (part.design.DF_REDUCTION) : 0)
-        )
-      );
 
-      props.dispatch(
-        change(
-          'DoorOrder',
-          `${p}.bottomRail`,
-          fraction(part.design ? (part.design.DF_REDUCTION) : 0)
-        )
-      );
+      if(part?.construction?.value === 'Miter'){
+        props.dispatch(
+          change(
+            'DoorOrder',
+            `${p}.topRail`,
+            fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
+          )
+        );
+
+        props.dispatch(
+          change(
+            'DoorOrder',
+            `${p}.bottomRail`,
+            fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
+          )
+        );
+      } else {
+        props.dispatch(
+          change(
+            'DoorOrder',
+            `${p}.topRail`,
+            fraction(part.design ? (part.design.DF_REDUCTION) : 0)
+          )
+        );
+
+        props.dispatch(
+          change(
+            'DoorOrder',
+            `${p}.bottomRail`,
+            fraction(part.design ? (part.design.DF_REDUCTION) : 0)
+          )
+        );
+      }
+
     } else {
       props.dispatch(
         change(

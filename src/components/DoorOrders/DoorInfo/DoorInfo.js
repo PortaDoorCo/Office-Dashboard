@@ -6,6 +6,7 @@ import CopyModal from './CopyModal';
 import thickness from './thickness';
 import orderType from './orderType';
 import construction from './construction';
+import fraction from '../../../utils/fraction';
 
 class DoorInfo extends Component {
   constructor(props) {
@@ -42,10 +43,13 @@ class DoorInfo extends Component {
           construction: lastItem.construction,
           thickness: lastItem.thickness,
           woodtype: lastItem.woodtype,
-          design: lastItem.design,
           panel: lastItem.panel,
           edge: lastItem.edge,
           profile: lastItem.profile,
+          leftStile: lastItem.profile ? fraction(lastItem.profile.PROFILE_WIDTH) : '2 5/16',
+          rightStile: lastItem.profile ? fraction(lastItem.profile.PROFILE_WIDTH)  : '2 5/16',
+          topRail: lastItem.profile ? fraction(lastItem.profile.PROFILE_WIDTH)  : '2 5/16',
+          bottomRail: lastItem.profile ? fraction(lastItem.profile.PROFILE_WIDTH) : '2 5/16',
           applied_profile: lastItem.applied_profile,
           dimensions: [],
           addPrice: 0,
@@ -66,6 +70,10 @@ class DoorInfo extends Component {
           panel: lastItem.panel,
           edge: lastItem.edge,
           profile: lastItem.profile,
+          leftStile: lastItem.profile ? fraction(lastItem.profile.PROFILE_WIDTH) : '2 5/16',
+          rightStile: lastItem.profile ? fraction(lastItem.profile.PROFILE_WIDTH)  : '2 5/16',
+          topRail: lastItem.profile ? fraction(lastItem.profile.DF_Reduction)  : '1 1/2',
+          bottomRail: lastItem.profile ? fraction(lastItem.profile.DF_Reduction) : '1 1/2',
           applied_profile: lastItem.applied_profile,
           dimensions: [],
           addPrice: 0,
