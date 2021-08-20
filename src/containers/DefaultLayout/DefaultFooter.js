@@ -13,12 +13,12 @@ const defaultProps = {};
 class DefaultFooter extends Component {
 
   state = {
-    repoInfo: []
+    repoInfo: {}
   }
 
   componentDidMount(){
     axios
-      .get('https://api.github.com/orgs/portadoorco/repos')
+      .get('https://api.github.com/repos/PortaDoorCo/Office-Dashboard/branches/master')
       .then(response => {
         this.setState({ repoInfo: response.data });
       })
@@ -33,11 +33,9 @@ class DefaultFooter extends Component {
     const { children, ...attributes } = this.props;
     const { repoInfo } = this.state;
 
-    console.log({repo: this.state.repoInfo});
-
     return (
       <React.Fragment>
-        <span> &copy; {moment().format('YYYY')} <a href="https://portadoor.com">Porta Door Co. Inc.</a> - Last Updated: {moment(repoInfo[0]?.pushed_at).format('ddd MMM D YYYY h:mm a')}</span>
+        <span> &copy; {moment().format('YYYY')} <a href="https://portadoor.com">Porta Door Co. Inc.</a> - Version: {moment(repoInfo?.commit?.commit?.committer?.date).format('YY.M.D.hhmm')}</span>
         <span className="ml-auto">Developed by <a href="https://thinkthoughtmedia.com" target="_blank" rel="noopener noreferrer">Think Thought Media LLC.</a></span>
       </React.Fragment>
     );
