@@ -1,3 +1,0 @@
-window.env = {
-  "HEROKU_RELEASE_CREATED_AT": "2015-04-02T18:00:42Z"
-};
