@@ -18,8 +18,6 @@ class DefaultFooter extends Component {
 
   componentDidMount(){
 
-    
-
     if(!sessionStorage.getItem('last_updated')){
       axios
         .get('https://api.github.com/repos/PortaDoorCo/Office-Dashboard/branches/master')
