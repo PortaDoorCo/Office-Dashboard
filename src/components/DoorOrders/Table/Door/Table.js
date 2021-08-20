@@ -703,10 +703,10 @@ const DoorTable = ({
 
     if (e.target.name === 'default_framing') {
       if (changeValue) {
-        setLeftStileWidth(fraction(numQty(changeValue)));
-        setRightStileWidth(fraction(numQty(changeValue)));
-        setTopRailWidth(fraction(numQty(changeValue)));
-        setBottomRailWidth(fraction(numQty(changeValue)));
+        setLeftStileWidth(fraction(numQty(leftStile)));
+        setRightStileWidth(fraction(numQty(rightStile)));
+        setTopRailWidth(fraction(numQty(topRail)));
+        setBottomRailWidth(fraction(numQty(bottomRail)));
 
         if (panelsH > 1 || panelsW > 1) {
           dispatch(
