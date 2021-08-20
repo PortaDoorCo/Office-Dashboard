@@ -13,7 +13,7 @@ const defaultProps = {};
 class DefaultFooter extends Component {
 
   state = {
-    last_updated: ''
+    last_updated: 'Loading'
   }
 
   componentDidMount(){
