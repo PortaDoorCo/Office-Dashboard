@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
+import { Table, Input, Row, Col, Button, FormGroup, Label, ButtonGroup } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import {
   Field,
@@ -291,7 +291,7 @@ const Cope_Table = ({
     setChangeValue(value);
   };
 
-  const changeFraming = (index, e) => {
+  const changeFraming = (e, index) => {
     const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
     const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
     const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
@@ -300,19 +300,59 @@ const Cope_Table = ({
     const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
     const full_frame = formState?.part_list[i]?.dimensions[index]?.full_frame;
 
-    if (changeValue) {
-      const newVal = fraction(numQty(changeValue));
 
-      setLeftStileWidth(fraction(numQty(changeValue)));
-      setRightStileWidth(fraction(numQty(changeValue)));
+    const defaultLeftStile = formState?.part_list[i]?.leftStile;
+    const defaultRightStile = formState?.part_list[i]?.rightStile;
+    const defaultTopRail = formState?.part_list[i]?.topRail;
+    const defaultBottomRail = formState?.part_list[i]?.bottomRail;
+
+    if (e.target.name === 'update_framing') {
+      if (changeValue) {
+        const newVal = fraction(numQty(changeValue));
+
+        setLeftStileWidth(fraction(numQty(changeValue)));
+        setRightStileWidth(fraction(numQty(changeValue)));
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${
+              full_frame ? 'Full Frame \n' : ''
+            }Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          )
+        );
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].leftStile`,
+            fraction(numQty(changeValue))
+          )
+        );
+
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].rightStile`,
+            fraction(numQty(changeValue))
+          )
+        );
+      }
+    }
+
+    if (e.target.name === 'default_framing') {
+
+      setLeftStileWidth(fraction(numQty(defaultLeftStile)));
+      setRightStileWidth(fraction(numQty(defaultRightStile)));
+      setTopRailWidth(fraction(numQty(defaultTopRail)));
+      setBottomRailWidth(fraction(numQty(defaultBottomRail)));
 
       dispatch(
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].notes`,
-          `${
-            full_frame ? 'Full Frame \n' : ''
-          }Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          ''
         )
       );
 
@@ -320,7 +360,7 @@ const Cope_Table = ({
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].leftStile`,
-          fraction(numQty(changeValue))
+          fraction(numQty(defaultLeftStile))
         )
       );
 
@@ -328,10 +368,29 @@ const Cope_Table = ({
         change(
           'DoorOrder',
           `part_list[${i}].dimensions[${index}].rightStile`,
-          fraction(numQty(changeValue))
+          fraction(numQty(defaultRightStile))
         )
       );
+
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(numQty(defaultTopRail))
+        )
+      );
+
+      dispatch(
+        change(
+          'DoorOrder',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(numQty(defaultBottomRail))
+        )
+      );
+        
     }
+
+    
   };
 
   const glass_note_check = (index) => {
@@ -663,15 +722,26 @@ const Cope_Table = ({
                 {!edit ? (
                   <tr>
                     <td>
-                      <Button
-                        onClick={() => changeFraming(index)}
-                        color="primary"
-                      >
-                        Update Framing
-                      </Button>
+                      <ButtonGroup vertical>
+                        <Button
+                          onClick={(e) => changeFraming(e, index)}
+                          color="primary"
+                          name="update_framing"
+                        >
+                          Update Framing
+                        </Button>
+                        <Button
+                          onClick={(e) => changeFraming(e, index)}
+                          color="primary"
+                          name="default_framing"
+                        >
+                          Default Framing
+                        </Button>
+                      </ButtonGroup>
                     </td>
                   </tr>
                 ) : null}
+
                 <Row>
                   <p className="ml-3">*Finish Stile/Rail Sizes*</p>
                 </Row>
