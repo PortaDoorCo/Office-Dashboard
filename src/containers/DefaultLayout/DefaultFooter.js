@@ -17,24 +17,15 @@ class DefaultFooter extends Component {
   }
 
   componentDidMount(){
-
-    if(!sessionStorage.getItem('last_updated')){
-      axios
-        .get('https://api.github.com/repos/PortaDoorCo/Office-Dashboard/branches/master')
-        .then(response => {
-          this.setState({ last_updated: response?.data?.commit?.commit?.committer?.date});
-          sessionStorage.setItem('last_updated', response?.data?.commit?.commit?.committer?.date);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    } else {
-      const last_updated = sessionStorage.getItem('last_updated');
-
-      this.setState({ last_updated });
-
-    }
-
+    axios
+      .get('https://api.github.com/repos/PortaDoorCo/Office-Dashboard/branches/master')
+      .then(response => {
+        this.setState({ last_updated: response?.data?.commit?.commit?.committer?.date});
+        sessionStorage.setItem('last_updated', response?.data?.commit?.commit?.committer?.date);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   render() {
