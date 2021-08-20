@@ -27,3 +27,5 @@ yarn-error.log*
 
 index.js
 
+/public/env.js
+
