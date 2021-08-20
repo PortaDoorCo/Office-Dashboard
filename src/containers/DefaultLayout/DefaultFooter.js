@@ -21,7 +21,6 @@ class DefaultFooter extends Component {
       .get('https://api.github.com/repos/PortaDoorCo/Office-Dashboard/branches/master')
       .then(response => {
         this.setState({ last_updated: response?.data?.commit?.commit?.committer?.date});
-        sessionStorage.setItem('last_updated', response?.data?.commit?.commit?.committer?.date);
       })
       .catch(function(error) {
         console.log(error);
