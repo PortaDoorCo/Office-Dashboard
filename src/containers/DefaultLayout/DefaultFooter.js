@@ -13,29 +13,45 @@ const defaultProps = {};
 class DefaultFooter extends Component {
 
   state = {
-    repoInfo: {}
+    last_updated: ''
   }
 
   componentDidMount(){
-    axios
-      .get('https://api.github.com/repos/PortaDoorCo/Office-Dashboard/branches/master')
-      .then(response => {
-        this.setState({ repoInfo: response.data });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+
+    
+
+    if(!sessionStorage.getItem('last_updated')){
+      axios
+        .get('https://api.github.com/repos/PortaDoorCo/Office-Dashboard/branches/master')
+        .then(response => {
+          this.setState({ last_updated: response?.data?.commit?.commit?.committer?.date});
+          sessionStorage.setItem('last_updated', response?.data?.commit?.commit?.committer?.date);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    } else {
+      const last_updated = sessionStorage.getItem('last_updated');
+
+      this.setState({ last_updated });
+
+    }
+
+    window.onunload = function () {
+      sessionStorage.removeItem('last_updated');
+    };
+
   }
 
   render() {
 
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
-    const { repoInfo } = this.state;
+    const { last_updated } = this.state;
 
     return (
       <React.Fragment>
-        <span> &copy; {moment().format('YYYY')} <a href="https://portadoor.com">Porta Door Co. Inc.</a> - Version: {moment(repoInfo?.commit?.commit?.committer?.date).format('YY.M.D.hhmm')}</span>
+        <span> &copy; {moment().format('YYYY')} <a href="https://portadoor.com">Porta Door Co. Inc.</a> - Version: {moment(last_updated).format('YY.M.D.hhmm')}</span>
         <span className="ml-auto">Developed by <a href="https://thinkthoughtmedia.com" target="_blank" rel="noopener noreferrer">Think Thought Media LLC.</a></span>
       </React.Fragment>
     );
