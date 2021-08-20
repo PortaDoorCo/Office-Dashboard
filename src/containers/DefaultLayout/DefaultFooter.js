@@ -35,10 +35,6 @@ class DefaultFooter extends Component {
 
     }
 
-    window.onunload = function () {
-      sessionStorage.removeItem('last_updated');
-    };
-
   }
 
   render() {
