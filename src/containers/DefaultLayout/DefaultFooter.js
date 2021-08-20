@@ -37,7 +37,7 @@ class DefaultFooter extends Component {
 
     return (
       <React.Fragment>
-        <span> &copy; {moment().format('YYYY')} <a href="https://portadoor.com">Porta Door Co. Inc.</a> - Last Updated: {moment(repoInfo[0]?.pushed_at).format('ddd MMM D YYYY h:mm a')}</span>
+        <span> &copy; {moment().format('YYYY')} <a href="https://portadoor.com">Porta Door Co. Inc.</a> - Version: {moment(repoInfo[0]?.pushed_at).format('YY.M.D.hhmm')}</span>
         <span className="ml-auto">Developed by <a href="https://thinkthoughtmedia.com" target="_blank" rel="noopener noreferrer">Think Thought Media LLC.</a></span>
       </React.Fragment>
     );
