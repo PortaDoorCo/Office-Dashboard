@@ -1,5 +1,14 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { Table, Input, Row, Col, Button, FormGroup, Label, ButtonGroup } from 'reactstrap';
+import {
+  Table,
+  Input,
+  Row,
+  Col,
+  Button,
+  FormGroup,
+  Label,
+  ButtonGroup,
+} from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import {
   Field,
@@ -136,7 +145,7 @@ const Cope_Table = ({
     }
 
     if (part.construction.value === 'Miter') {
-      profile_width = part.design.PROFILE_WIDTH;
+      profile_width = part.design.DF_FULL_FRAME;
       df_reduction = part.design.PROFILE_WIDTH;
     }
 
@@ -154,47 +163,110 @@ const Cope_Table = ({
           )
         );
 
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].topRail`,
-            fraction(numQty(leftStileWidth))
-          )
-        );
+        if (part.construction.value === 'Miter') {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].topRail`,
+              fraction(numQty(leftStileWidth))
+            )
+          );
 
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].bottomRail`,
-            fraction(numQty(leftStileWidth))
-          )
-        );
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].bottomRail`,
+              fraction(numQty(leftStileWidth))
+            )
+          );
+        } else {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].topRail`,
+              fraction(numQty(leftStileWidth))
+            )
+          );
+
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].bottomRail`,
+              fraction(numQty(leftStileWidth))
+            )
+          );
+        }
       } else {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${tableIndex}].notes`,
-            `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
-              profile_width
-            )}" Bottom Rail: ${fraction(profile_width)}"`
-          )
-        );
+        if (part.construction.value === 'Miter') {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${tableIndex}].notes`,
+              `Full Frame \nLeft Stile: ${profile_width}" Right Stile: ${profile_width}" \nTop Rail: ${fraction(
+                profile_width
+              )}" Bottom Rail: ${fraction(profile_width)}"`
+            )
+          );
 
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].topRail`,
-            fraction(profile_width)
-          )
-        );
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].leftStile`,
+              fraction(profile_width)
+            )
+          );
 
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].bottomRail`,
-            fraction(profile_width)
-          )
-        );
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].rightStile`,
+              fraction(profile_width)
+            )
+          );
+
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].topRail`,
+              fraction(profile_width)
+            )
+          );
+
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].bottomRail`,
+              fraction(profile_width)
+            )
+          );
+        } else {
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${tableIndex}].notes`,
+              `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
+                profile_width
+              )}" Bottom Rail: ${fraction(profile_width)}"`
+            )
+          );
+
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].topRail`,
+              fraction(profile_width)
+            )
+          );
+
+          dispatch(
+            change(
+              'DoorOrder',
+              `part_list[${i}].dimensions[${index}].bottomRail`,
+              fraction(profile_width)
+            )
+          );
+          
+        }
       }
     } else {
       dispatch(
@@ -205,20 +277,53 @@ const Cope_Table = ({
         )
       );
 
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].topRail`,
-          fraction(df_reduction)
-        )
-      );
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].bottomRail`,
-          fraction(df_reduction)
-        )
-      );
+      if (part.construction.value === 'Miter') {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].leftStile`,
+            fraction(df_reduction)
+          )
+        );
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].rightStile`,
+            fraction(df_reduction)
+          )
+        );
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(df_reduction)
+          )
+        );
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(df_reduction)
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(df_reduction)
+          )
+        );
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(df_reduction)
+          )
+        );
+      }
+
+
     }
   };
 
@@ -300,7 +405,6 @@ const Cope_Table = ({
     const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
     const full_frame = formState?.part_list[i]?.dimensions[index]?.full_frame;
 
-
     const defaultLeftStile = formState?.part_list[i]?.leftStile;
     const defaultRightStile = formState?.part_list[i]?.rightStile;
     const defaultTopRail = formState?.part_list[i]?.topRail;
@@ -342,18 +446,13 @@ const Cope_Table = ({
     }
 
     if (e.target.name === 'default_framing') {
-
       setLeftStileWidth(fraction(numQty(defaultLeftStile)));
       setRightStileWidth(fraction(numQty(defaultRightStile)));
       setTopRailWidth(fraction(numQty(defaultTopRail)));
       setBottomRailWidth(fraction(numQty(defaultBottomRail)));
 
       dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          ''
-        )
+        change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
       );
 
       dispatch(
@@ -387,10 +486,7 @@ const Cope_Table = ({
           fraction(numQty(defaultBottomRail))
         )
       );
-        
     }
-
-    
   };
 
   const glass_note_check = (index) => {

@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import CompanyDashboard from './CompanyDashboard/Dashboard';
 import CustomerDashboard from './CustomerDashboard/Dashboard';
 
+const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+
 const Dashboard = ({ role }) => {
   if(role.type === 'customer'){
-    return <CustomerDashboard />;
+    return (
+      <Suspense fallback={loading()}>
+        <CustomerDashboard />
+      </Suspense>
+    );
   } else {
-    return <CompanyDashboard />;
+    return (
+      <Suspense fallback={loading()}>
+        <CompanyDashboard />
+      </Suspense>);
   }
 };
 
