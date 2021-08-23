@@ -3,6 +3,7 @@ import Size from '../Breakdowns/DrawerBoxes/Size';
 import Bottoms from '../Breakdowns/DrawerBoxes/Bottoms';
 import LinearIN from '../Breakdowns/DrawerBoxes/LinearIN';
 import _ from 'lodash';
+import numQty from 'numeric-quantity';
 
 export default (data, breakdowns) => {
   return [
@@ -138,6 +139,10 @@ export default (data, breakdowns) => {
 
         const groupedMaterialBody = [];
 
+        const length = numQty(k);
+        let rips = Math.floor(97 / length);
+        let percentage_of_sheet = (length * rips) / 97;
+
         let mb = {
           columns: [
             {
@@ -145,8 +150,8 @@ export default (data, breakdowns) => {
               style: 'fonts',
             },
             { text: `${k}`, style: 'fonts' },
-            { text: '4', style: 'fonts' },
-            { text: '0.85', style: 'fonts', width: 50 },
+            { text: rips, style: 'fonts' },
+            { text: percentage_of_sheet.toFixed(2), style: 'fonts', width: 50 },
             { text: `Sheets ${i.box_bottom_thickness.NAME} ${i.box_bottom_woodtype.NAME} Bottom`, style: 'fonts' },
           ],
         };
