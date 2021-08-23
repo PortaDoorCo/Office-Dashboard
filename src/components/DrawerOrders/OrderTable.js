@@ -333,8 +333,8 @@ class OrderTable extends Component {
                   qty: 1,
                   scoop: scoop[1],
                   dividers: dividers[0],
-                  depth: index >= 0 ? formState.part_list[i].dimensions[index].depth : null,
-                  height: index >= 0 ? formState.part_list[i].dimensions[index].height : null
+                  // depth: index >= 0 ? formState.part_list[i].dimensions[index].depth : null,
+                  // height: index >= 0 ? formState.part_list[i].dimensions[index].height : null
                 });
 
                 

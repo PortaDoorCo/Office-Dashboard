@@ -135,12 +135,24 @@ export default (data, breakdowns) => {
 
 
       const groupedByDepth = _.groupBy(length, 'length');
+
+      let total_widths = 0;
+
+      const dim = i.dimensions;
+
+      for(let item of dim){
+        total_widths += (item.width * item.qty);
+      }
+
       Object.entries(groupedByDepth).map(([k, v]) => {
 
         const groupedMaterialBody = [];
 
         const length = numQty(k);
-        let rips = Math.floor(97 / length);
+
+        let waste = total_widths * 1.5;
+
+        let rips = Math.ceil(waste / 49);
         let percentage_of_sheet = (length * rips) / 97;
 
         let mb = {
