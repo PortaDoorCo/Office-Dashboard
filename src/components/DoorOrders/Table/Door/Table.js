@@ -61,25 +61,35 @@ const DoorTable = ({
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
   const [changeValue, setChangeValue] = useState(null);
-  const [leftStileWidth, setLeftStileWidth] = useState(null);
-  const [rightStileWidth, setRightStileWidth] = useState(null);
-  const [topRailWidth, setTopRailWidth] = useState(null);
-  const [bottomRailWidth, setBottomRailWidth] = useState(null);
-  const [tableIndex, setTableIndex] = useState(0);
-  const [note, setNotes] = useState('');
-
   const [modal, setModal] = useState(false);
   const [warningType, setWarningType] = useState(null);
   const toggle = () => setModal(!modal);
+
+  const index = fields.length - 1;
+
+  const leftStile =
+    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
+  const rightStile =
+    index >= 0
+      ? formState?.part_list[i]?.dimensions[index]?.rightStile
+      : null;
+  const topRail =
+    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
+  const bottomRail =
+    index >= 0
+      ? formState?.part_list[i]?.dimensions[index]?.bottomRail
+      : null;
+  const defaultLeftStile = formState?.part_list[i]?.leftStile;
+  const defaultRightStile = formState?.part_list[i]?.rightStile;
+  const defaultTopRail = formState?.part_list[i]?.topRail;
+  const defaultBottomRail = formState?.part_list[i]?.bottomRail;
+  const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
+  const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
   useEffect(() => {
     setWidth([]);
     setHeight([]);
     setChangeValue(null);
-    setLeftStileWidth(null);
-    setRightStileWidth(null);
-    setTopRailWidth(null);
-    setBottomRailWidth(null);
   }, [updateSubmit]);
 
   const w = (e, v, index) => {
@@ -150,17 +160,7 @@ const DoorTable = ({
   const twoHigh = (index, e, v) => {
     let value;
     const part = formState.part_list[i];
-    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
-    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
-    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
-    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
-    const defaultLeftStile = formState?.part_list[i]?.leftStile;
-    const defaultRightStile = formState?.part_list[i].rightStile;
-    const defaultTopRail = formState?.part_list[i]?.topRail;
-    const defaultBottomRail = formState?.part_list[i]?.bottomRail;
 
     if (e) {
       value = e.target.value;
@@ -321,17 +321,7 @@ const DoorTable = ({
 
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
-    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
-    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
-    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
-    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
-    const defaultLeftStile = formState?.part_list[i]?.leftStile;
-    const defaultRightStile = formState?.part_list[i].rightStile;
-    const defaultTopRail = formState?.part_list[i]?.topRail;
-    const defaultBottomRail = formState?.part_list[i]?.bottomRail;
     let value;
     if (e) {
       value = e.target.value;
@@ -486,12 +476,6 @@ const DoorTable = ({
   };
 
   const onStileOrRailChange = (e, index) => {
-    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
-    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
-    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
-    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
     const value = e.target.value;
     console.log({ e });
@@ -618,22 +602,11 @@ const DoorTable = ({
   };
 
   const changeFraming = (e, index) => {
-    const leftStile = formState?.part_list[i]?.leftStile;
-    const rightStile = formState?.part_list[i]?.rightStile;
-    const topRail = formState?.part_list[i]?.topRail;
-    const bottomRail = formState?.part_list[i]?.bottomRail;
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
     console.log({ e });
 
     if (e.target.name === 'update_framing') {
       if (changeValue) {
-        setLeftStileWidth(fraction(numQty(changeValue)));
-        setRightStileWidth(fraction(numQty(changeValue)));
-        setTopRailWidth(fraction(numQty(changeValue)));
-        setBottomRailWidth(fraction(numQty(changeValue)));
-
         const newVal = fraction(numQty(changeValue));
 
         if (panelsH > 1 || panelsW > 1) {
@@ -700,11 +673,6 @@ const DoorTable = ({
 
     if (e.target.name === 'default_framing') {
       if (changeValue) {
-        setLeftStileWidth(fraction(numQty(leftStile)));
-        setRightStileWidth(fraction(numQty(rightStile)));
-        setTopRailWidth(fraction(numQty(topRail)));
-        setBottomRailWidth(fraction(numQty(bottomRail)));
-
         if (panelsH > 1 || panelsW > 1) {
           dispatch(
             change(
@@ -776,24 +744,12 @@ const DoorTable = ({
   };
 
   const addFields = (i) => {
-    const index = fields.length - 1;
-    setTableIndex(fields.length);
+
 
     const construction = formState?.part_list[i]?.construction?.value;
     // const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     // const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
-    const leftStile =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
-    const rightStile =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.rightStile : null;
-    const topRail =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
-    const bottomRail =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.bottomRail : null;
-    const defaultLeftStile = formState?.part_list[i]?.leftStile;
-    const defaultRightStile = formState?.part_list[i]?.rightStile;
-    const defaultTopRail = formState?.part_list[i]?.topRail;
-    const defaultBottomRail = formState?.part_list[i]?.bottomRail;
+
 
     if (fields.length >= 0) {
       dispatch(
@@ -840,7 +796,7 @@ const DoorTable = ({
       notes:
         index >= 0 &&
         (leftStile !== defaultLeftStile ||
-          rightStile !==defaultRightStile ||
+          rightStile !== defaultRightStile ||
           topRail !== defaultTopRail ||
           bottomRail !== defaultBottomRail)
           ? `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
@@ -864,8 +820,6 @@ const DoorTable = ({
 
     return check_if_glass;
   };
-
-  console.log({ note });
 
   return (
     <div>
@@ -1020,7 +974,6 @@ const DoorTable = ({
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
-                      setLeftStileWidth(e.target.value),
                       onStileOrRailChange(e, index)
                     )}
                   />
@@ -1038,7 +991,6 @@ const DoorTable = ({
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
-                      setRightStileWidth(e.target.value),
                       onStileOrRailChange(e, index)
                     )}
                   />
@@ -1056,7 +1008,6 @@ const DoorTable = ({
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
-                      setTopRailWidth(e.target.value),
                       onStileOrRailChange(e, index)
                     )}
                   />
@@ -1074,7 +1025,6 @@ const DoorTable = ({
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
-                      setBottomRailWidth(e.target.value),
                       onStileOrRailChange(e, index)
                     )}
                   />
