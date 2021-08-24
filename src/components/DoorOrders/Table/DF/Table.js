@@ -60,7 +60,6 @@ const Cope_Table = ({
   const [height, setHeight] = useState([]);
   const [changeValue, setChangeValue] = useState(null);
   const [fullFrameNote, setFullFrameNote] = useState(false);
-  const [tableIndex, setTableIndex] = useState(0);
 
   const index = fields.length - 1;
 
@@ -155,7 +154,7 @@ const Cope_Table = ({
         dispatch(
           change(
             'DoorOrder',
-            `part_list[${i}].dimensions[${tableIndex}].notes`,
+            `part_list[${i}].dimensions[${index}].notes`,
             `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
               numQty(leftStile)
             )}" Bottom Rail: ${fraction(numQty(leftStile))}"`
@@ -200,7 +199,7 @@ const Cope_Table = ({
           dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${tableIndex}].notes`,
+              `part_list[${i}].dimensions[${index}].notes`,
               `Full Frame \nLeft Stile: ${profile_width}" Right Stile: ${profile_width}" \nTop Rail: ${fraction(
                 profile_width
               )}" Bottom Rail: ${fraction(profile_width)}"`
@@ -242,7 +241,7 @@ const Cope_Table = ({
           dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${tableIndex}].notes`,
+              `part_list[${i}].dimensions[${index}].notes`,
               `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
                 profile_width
               )}" Bottom Rail: ${fraction(profile_width)}"`
@@ -271,7 +270,7 @@ const Cope_Table = ({
       dispatch(
         change(
           'DoorOrder',
-          `part_list[${i}].dimensions[${tableIndex}].notes`,
+          `part_list[${i}].dimensions[${index}].notes`,
           ''
         )
       );
@@ -388,18 +387,6 @@ const Cope_Table = ({
   };
 
   const changeFraming = (e, index) => {
-    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
-    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
-    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
-    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
-    const full_frame = formState?.part_list[i]?.dimensions[index]?.full_frame;
-
-    const defaultLeftStile = formState?.part_list[i]?.leftStile;
-    const defaultRightStile = formState?.part_list[i]?.rightStile;
-    const defaultTopRail = formState?.part_list[i]?.topRail;
-    const defaultBottomRail = formState?.part_list[i]?.bottomRail;
 
     if (e.target.name === 'update_framing') {
       if (changeValue) {
@@ -519,6 +506,11 @@ const Cope_Table = ({
     dispatch(touch('DoorOrder', `part_list[${i}].applied_profile`));
     dispatch(touch('DoorOrder', `part_list[${i}].panel`));
 
+    dispatch(touch('DoorOrder', `part_list[${i}].leftStile`));
+    dispatch(touch('DoorOrder', `part_list[${i}].rightStile`));
+    dispatch(touch('DoorOrder', `part_list[${i}].topRail`));
+    dispatch(touch('DoorOrder', `part_list[${i}].bottomRail`));
+
     dispatch(startAsyncValidation('DoorOrder'));
 
     let df_reduction = 0;
@@ -557,15 +549,14 @@ const Cope_Table = ({
     });
   };
 
-  console.log({ tableIndex });
 
   const addFullFrameNote = (e) => {
-    updateFullFrame(e, tableIndex);
+    updateFullFrame(e, index);
     toggleFullFrameNote();
     dispatch(
       change(
         'DoorOrder',
-        `part_list[${i}].dimensions[${tableIndex}].full_frame`,
+        `part_list[${i}].dimensions[${index}].full_frame`,
         true
       )
     );

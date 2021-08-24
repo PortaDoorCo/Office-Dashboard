@@ -776,6 +776,12 @@ const DoorTable = ({
 
     dispatch(touch('DoorOrder', `part_list[${i}].applied_profile`));
     dispatch(touch('DoorOrder', `part_list[${i}].panel`));
+    
+    dispatch(touch('DoorOrder', `part_list[${i}].leftStile`));
+    dispatch(touch('DoorOrder', `part_list[${i}].rightStile`));
+    dispatch(touch('DoorOrder', `part_list[${i}].topRail`));
+    dispatch(touch('DoorOrder', `part_list[${i}].bottomRail`));
+
 
     dispatch(startAsyncValidation('DoorOrder'));
 
