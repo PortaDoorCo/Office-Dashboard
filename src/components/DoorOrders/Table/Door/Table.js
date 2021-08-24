@@ -783,13 +783,13 @@ const DoorTable = ({
     // const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     // const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
     const leftStile =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index].leftStile : null;
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
     const rightStile =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index].rightStile : null;
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.rightStile : null;
     const topRail =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index].topRail : null;
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
     const bottomRail =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index].bottomRail : null;
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.bottomRail : null;
     const defaultLeftStile = formState?.part_list[i]?.leftStile;
     const defaultRightStile = formState?.part_list[i]?.rightStile;
     const defaultTopRail = formState?.part_list[i]?.topRail;
@@ -838,7 +838,7 @@ const DoorTable = ({
       unevenCheck: false,
       unevenSplit: false,
       notes:
-        index > 0 &&
+        index >= 0 &&
         (leftStile !== defaultLeftStile ||
           rightStile !==defaultRightStile ||
           topRail !== defaultTopRail ||

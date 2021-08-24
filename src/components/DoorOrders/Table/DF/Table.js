@@ -505,16 +505,27 @@ const Cope_Table = ({
   };
 
   const addFields = (i) => {
-    const construction = formState?.part_list[i]?.construction?.value;
-    const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
-    const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
-    const leftStile = formState?.part_list[i]?.leftStile;
-    const rightStile = formState?.part_list[i]?.rightStile;
-    const topRail = formState?.part_list[i]?.topRail;
-    const bottomRail = formState?.part_list[i]?.bottomRail;
 
     const index = fields.length - 1;
     setTableIndex(fields.length);
+
+    const construction = formState?.part_list[i]?.construction?.value;
+    const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
+    const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
+    const leftStile =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
+    const rightStile =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.rightStile : null;
+    const topRail =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
+    const bottomRail =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.bottomRail : null;
+    const defaultLeftStile = formState?.part_list[i]?.leftStile;
+    const defaultRightStile = formState?.part_list[i]?.rightStile;
+    const defaultTopRail = formState?.part_list[i]?.topRail;
+    const defaultBottomRail = formState?.part_list[i]?.bottomRail;
+
+
 
     if (fields.length > 0) {
       dispatch(
@@ -558,30 +569,18 @@ const Cope_Table = ({
       qty: 1,
       panelsH: 1,
       panelsW: 1,
-      leftStile: leftStileWidth
-        ? fraction(numQty(leftStileWidth))
-        : leftStile
-          ? leftStile
-          : construction === 'Cope' && profile
-            ? fraction(profile)
-            : fraction(design),
-      rightStile: rightStileWidth
-        ? fraction(numQty(rightStileWidth))
-        : rightStile
-          ? rightStile
-          : construction === 'Cope' && profile
-            ? fraction(profile)
-            : fraction(design),
-      topRail: topRailWidth
-        ? fraction(numQty(topRailWidth))
-        : topRail
-          ? topRail
-          : fraction(df_reduction),
-      bottomRail: bottomRailWidth
-        ? fraction(numQty(bottomRailWidth))
-        : bottomRail
-          ? bottomRail
-          : fraction(df_reduction),
+      leftStile: leftStile ? leftStile : defaultLeftStile,
+      rightStile: rightStile ? rightStile : defaultRightStile,
+      topRail: topRail ? topRail : defaultTopRail,
+      bottomRail: bottomRail ? bottomRail : defaultBottomRail,
+      notes:
+      index >= 0 &&
+      (leftStile !== defaultLeftStile ||
+        rightStile !==defaultRightStile ||
+        topRail !== defaultTopRail ||
+        bottomRail !== defaultBottomRail)
+        ? `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+        : '',
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
