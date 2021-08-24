@@ -23,7 +23,6 @@ import 'react-widgets/dist/css/react-widgets.css';
 import {
   renderField,
   renderNumber,
-  renderFieldDisabled,
   renderCheckboxToggle,
   renderPrice,
   renderDropdownList,
@@ -33,7 +32,6 @@ import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import currencyMask from '../../../../utils/currencyMask';
-import { NotificationManager } from 'react-notifications';
 import FullFrameModal from '../../../../utils/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
@@ -61,26 +59,33 @@ const Cope_Table = ({
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
   const [changeValue, setChangeValue] = useState(null);
-  const [leftStileWidth, setLeftStileWidth] = useState(null);
-  const [rightStileWidth, setRightStileWidth] = useState(null);
-  const [topRailWidth, setTopRailWidth] = useState(null);
-  const [bottomRailWidth, setBottomRailWidth] = useState(null);
   const [fullFrameNote, setFullFrameNote] = useState(false);
-  const [tableIndex, setTableIndex] = useState(0);
+
+  const index = fields.length - 1;
+
+  const leftStile =
+    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
+  const rightStile =
+    index >= 0
+      ? formState?.part_list[i]?.dimensions[index]?.rightStile
+      : null;
+  const topRail =
+    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
+  const bottomRail =
+    index >= 0
+      ? formState?.part_list[i]?.dimensions[index]?.bottomRail
+      : null;
+  const defaultLeftStile = formState?.part_list[i]?.leftStile;
+  const defaultRightStile = formState?.part_list[i]?.rightStile;
+  const defaultTopRail = formState?.part_list[i]?.topRail;
+  const defaultBottomRail = formState?.part_list[i]?.bottomRail;
+  const full_frame = formState?.part_list[i]?.dimensions[index]?.full_frame;
 
   useEffect(() => {
     setWidth([]);
     setHeight([]);
     setChangeValue(null);
-    setLeftStileWidth(null);
-    setRightStileWidth(null);
-    setTopRailWidth(null);
-    setBottomRailWidth(null);
   }, [updateSubmit]);
-
-  useEffect(() => {
-    const part = formState?.part_list[i];
-  });
 
   const toggleFullFrameNote = () => setFullFrameNote(!fullFrameNote);
 
@@ -123,13 +128,6 @@ const Cope_Table = ({
 
   const updateFullFrame = (e, index) => {
     const part = formState.part_list[i];
-    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
-    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
-    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
-    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
-    const full_frame = formState?.part_list[i]?.dimensions[index]?.full_frame;
 
     let profile_width;
     let df_reduction;
@@ -152,14 +150,14 @@ const Cope_Table = ({
     console.log({ part });
 
     if (e) {
-      if (leftStileWidth) {
+      if (leftStile) {
         dispatch(
           change(
             'DoorOrder',
-            `part_list[${i}].dimensions[${tableIndex}].notes`,
+            `part_list[${i}].dimensions[${index}].notes`,
             `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
-              numQty(leftStileWidth)
-            )}" Bottom Rail: ${fraction(numQty(leftStileWidth))}"`
+              numQty(leftStile)
+            )}" Bottom Rail: ${fraction(numQty(leftStile))}"`
           )
         );
 
@@ -168,7 +166,7 @@ const Cope_Table = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].topRail`,
-              fraction(numQty(leftStileWidth))
+              fraction(numQty(leftStile))
             )
           );
 
@@ -176,7 +174,7 @@ const Cope_Table = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].bottomRail`,
-              fraction(numQty(leftStileWidth))
+              fraction(numQty(leftStile))
             )
           );
         } else {
@@ -184,7 +182,7 @@ const Cope_Table = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].topRail`,
-              fraction(numQty(leftStileWidth))
+              fraction(numQty(leftStile))
             )
           );
 
@@ -192,7 +190,7 @@ const Cope_Table = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].bottomRail`,
-              fraction(numQty(leftStileWidth))
+              fraction(numQty(leftStile))
             )
           );
         }
@@ -201,7 +199,7 @@ const Cope_Table = ({
           dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${tableIndex}].notes`,
+              `part_list[${i}].dimensions[${index}].notes`,
               `Full Frame \nLeft Stile: ${profile_width}" Right Stile: ${profile_width}" \nTop Rail: ${fraction(
                 profile_width
               )}" Bottom Rail: ${fraction(profile_width)}"`
@@ -243,7 +241,7 @@ const Cope_Table = ({
           dispatch(
             change(
               'DoorOrder',
-              `part_list[${i}].dimensions[${tableIndex}].notes`,
+              `part_list[${i}].dimensions[${index}].notes`,
               `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
                 profile_width
               )}" Bottom Rail: ${fraction(profile_width)}"`
@@ -272,7 +270,7 @@ const Cope_Table = ({
       dispatch(
         change(
           'DoorOrder',
-          `part_list[${i}].dimensions[${tableIndex}].notes`,
+          `part_list[${i}].dimensions[${index}].notes`,
           ''
         )
       );
@@ -328,14 +326,6 @@ const Cope_Table = ({
   };
 
   const onStileOrRailChange = (e, index) => {
-    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
-    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
-    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
-    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
-    const full_frame = formState?.part_list[i]?.dimensions[index]?.full_frame;
-
     const value = e.target.value;
     console.log({ e });
 
@@ -397,25 +387,12 @@ const Cope_Table = ({
   };
 
   const changeFraming = (e, index) => {
-    const leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile;
-    const rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile;
-    const topRail = formState?.part_list[i]?.dimensions[index]?.topRail;
-    const bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail;
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
-    const full_frame = formState?.part_list[i]?.dimensions[index]?.full_frame;
-
-    const defaultLeftStile = formState?.part_list[i]?.leftStile;
-    const defaultRightStile = formState?.part_list[i]?.rightStile;
-    const defaultTopRail = formState?.part_list[i]?.topRail;
-    const defaultBottomRail = formState?.part_list[i]?.bottomRail;
 
     if (e.target.name === 'update_framing') {
       if (changeValue) {
         const newVal = fraction(numQty(changeValue));
 
-        setLeftStileWidth(fraction(numQty(changeValue)));
-        setRightStileWidth(fraction(numQty(changeValue)));
+
 
         dispatch(
           change(
@@ -446,11 +423,6 @@ const Cope_Table = ({
     }
 
     if (e.target.name === 'default_framing') {
-      setLeftStileWidth(fraction(numQty(defaultLeftStile)));
-      setRightStileWidth(fraction(numQty(defaultRightStile)));
-      setTopRailWidth(fraction(numQty(defaultTopRail)));
-      setBottomRailWidth(fraction(numQty(defaultBottomRail)));
-
       dispatch(
         change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
       );
@@ -506,15 +478,7 @@ const Cope_Table = ({
 
   const addFields = (i) => {
     const construction = formState?.part_list[i]?.construction?.value;
-    const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
-    const leftStile = formState?.part_list[i]?.leftStile;
-    const rightStile = formState?.part_list[i]?.rightStile;
-    const topRail = formState?.part_list[i]?.topRail;
-    const bottomRail = formState?.part_list[i]?.bottomRail;
-
-    const index = fields.length - 1;
-    setTableIndex(fields.length);
 
     if (fields.length > 0) {
       dispatch(
@@ -542,6 +506,11 @@ const Cope_Table = ({
     dispatch(touch('DoorOrder', `part_list[${i}].applied_profile`));
     dispatch(touch('DoorOrder', `part_list[${i}].panel`));
 
+    dispatch(touch('DoorOrder', `part_list[${i}].leftStile`));
+    dispatch(touch('DoorOrder', `part_list[${i}].rightStile`));
+    dispatch(touch('DoorOrder', `part_list[${i}].topRail`));
+    dispatch(touch('DoorOrder', `part_list[${i}].bottomRail`));
+
     dispatch(startAsyncValidation('DoorOrder'));
 
     let df_reduction = 0;
@@ -558,30 +527,18 @@ const Cope_Table = ({
       qty: 1,
       panelsH: 1,
       panelsW: 1,
-      leftStile: leftStileWidth
-        ? fraction(numQty(leftStileWidth))
-        : leftStile
-          ? leftStile
-          : construction === 'Cope' && profile
-            ? fraction(profile)
-            : fraction(design),
-      rightStile: rightStileWidth
-        ? fraction(numQty(rightStileWidth))
-        : rightStile
-          ? rightStile
-          : construction === 'Cope' && profile
-            ? fraction(profile)
-            : fraction(design),
-      topRail: topRailWidth
-        ? fraction(numQty(topRailWidth))
-        : topRail
-          ? topRail
-          : fraction(df_reduction),
-      bottomRail: bottomRailWidth
-        ? fraction(numQty(bottomRailWidth))
-        : bottomRail
-          ? bottomRail
-          : fraction(df_reduction),
+      leftStile: leftStile ? leftStile : defaultLeftStile,
+      rightStile: rightStile ? rightStile : defaultRightStile,
+      topRail: topRail ? topRail : defaultTopRail,
+      bottomRail: bottomRail ? bottomRail : defaultBottomRail,
+      notes:
+      index >= 0 &&
+      (leftStile !== defaultLeftStile ||
+        rightStile !==defaultRightStile ||
+        topRail !== defaultTopRail ||
+        bottomRail !== defaultBottomRail)
+        ? `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+        : '',
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
@@ -592,15 +549,14 @@ const Cope_Table = ({
     });
   };
 
-  console.log({ tableIndex });
 
   const addFullFrameNote = (e) => {
-    updateFullFrame(e, tableIndex);
+    updateFullFrame(e, index);
     toggleFullFrameNote();
     dispatch(
       change(
         'DoorOrder',
-        `part_list[${i}].dimensions[${tableIndex}].full_frame`,
+        `part_list[${i}].dimensions[${index}].full_frame`,
         true
       )
     );
@@ -739,7 +695,6 @@ const Cope_Table = ({
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e),
-                        setLeftStileWidth(e.target.value),
                         onStileOrRailChange(e, index)
                       )}
                     />
@@ -757,7 +712,6 @@ const Cope_Table = ({
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e),
-                        setRightStileWidth(e.target.value),
                         onStileOrRailChange(e, index)
                       )}
                     />
@@ -775,7 +729,6 @@ const Cope_Table = ({
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e),
-                        setTopRailWidth(e.target.value),
                         onStileOrRailChange(e, index)
                       )}
                     />
@@ -793,7 +746,6 @@ const Cope_Table = ({
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e),
-                        setBottomRailWidth(e.target.value),
                         onStileOrRailChange(e, index)
                       )}
                     />
