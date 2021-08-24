@@ -490,15 +490,8 @@ const Cope_Table = ({
   };
 
   const addFields = (i) => {
-
-    const index = fields.length - 1;
-    setTableIndex(fields.length);
-
     const construction = formState?.part_list[i]?.construction?.value;
-    const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
-
-
 
     if (fields.length > 0) {
       dispatch(
