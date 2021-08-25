@@ -15,6 +15,7 @@ import {
   totalSelector,
   addPriceSelector,
 } from '../../../../selectors/doorPricing';
+import fraction from '../../../../utils/fraction';
 
 import changeProfile from '../Functions/changeProfile';
 import changeDesign from '../Functions/changeDesign';
@@ -80,6 +81,8 @@ class Door extends Component {
     let construction = formState?.part_list[index]?.construction?.value;
     let orderType = formState?.part_list[index]?.orderType?.value;
     let thickness = formState?.part_list[index]?.thickness?.db_name;
+    let topRailAdd = formState?.part_list[index]?.design?.TOP_RAIL_ADD ? formState?.part_list[index]?.design?.TOP_RAIL_ADD : 0;
+    let bottomRailAdd = formState?.part_list[index]?.design?.BTM_RAIL_ADD ? formState?.part_list[index]?.design?.BTM_RAIL_ADD : 0;
 
     const filtered_woodtypes = woodtypes.filter((wood) => wood[thickness]);
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
@@ -237,7 +240,7 @@ class Door extends Component {
           </Col>
           <Col>
             <FormGroup>
-              <Label htmlFor="arches">Top Rail</Label>
+              <Label htmlFor="arches">Top Rail {topRailAdd > 0 ? `+ Arch ${fraction(topRailAdd)}"` : null}</Label>
               <Field
                 name={`${part}.topRail`}
                 type="text"
@@ -251,7 +254,7 @@ class Door extends Component {
           </Col>
           <Col>
             <FormGroup>
-              <Label htmlFor="arches">Bottom Rail</Label>
+              <Label htmlFor="arches">Bottom Rail {bottomRailAdd > 0 ? `+ Arch ${fraction(bottomRailAdd)}"` : null}</Label>
               <Field
                 name={`${part}.bottomRail`}
                 type="text"

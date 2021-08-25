@@ -86,6 +86,9 @@ const DoorTable = ({
   const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
   const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
+  const topRailAdd = formState?.part_list[i]?.design?.TOP_RAIL_ADD;
+  const bottomRailAdd = formState?.part_list[i]?.design?.BTM_RAIL_ADD;
+
   useEffect(() => {
     setWidth([]);
     setHeight([]);
@@ -1003,7 +1006,7 @@ const DoorTable = ({
                 </td>
                 <td>
                   <strong>
-                    <p>Top Rail</p>
+                    <p>Top Rail {topRailAdd > 0 ? `+ Arch ${fraction(topRailAdd)}"` : null}</p>
                   </strong>
                   <Field
                     name={`${table}.topRail`}
@@ -1020,7 +1023,7 @@ const DoorTable = ({
                 </td>
                 <td>
                   <strong>
-                    <p>Bottom Rail</p>
+                    <p>Bottom Rail {bottomRailAdd > 0 ? `+ Arch ${fraction(bottomRailAdd)}"` : null}</p>
                   </strong>
                   <Field
                     name={`${table}.bottomRail`}
