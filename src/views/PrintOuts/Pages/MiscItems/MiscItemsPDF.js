@@ -71,15 +71,19 @@ export default (data, breakdowns, p, pricing) => {
         fontSize: 15,
         bold: true,
       },
+      orderNum: {
+        fontSize: 24,
+        bold: true,
+      },
       fonts: {
         fontSize: 9,
       },
       fontsBold: {
-        fontSize: 9,
+        fontSize: 8,
         bold: true,
       },
       headerFont: {
-        fontSize: 11,
+        fontSize: 10,
         bold: true,
       },
       tableBold: {
@@ -93,7 +97,7 @@ export default (data, breakdowns, p, pricing) => {
       warrantyFont: {
         fontSize: 7,
       },
-    }
+    },
   };
 
   // const fileName = `Order_${data.orderNum}`

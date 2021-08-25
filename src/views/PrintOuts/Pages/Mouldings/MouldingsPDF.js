@@ -69,24 +69,36 @@ export default (data, breakdowns, p, pricing) => {
     pageMargins: [ 40, 40, 40, 60 ],
     styles: {
       woodtype: {
-        fontSize: 18,
-        bold: true
+        fontSize: 15,
+        bold: true,
+      },
+      orderNum: {
+        fontSize: 24,
+        bold: true,
       },
       fonts: {
-        fontSize: 9
+        fontSize: 9,
       },
       fontsBold: {
-        fontSize: 12,
-        bold: true
+        fontSize: 8,
+        bold: true,
+      },
+      headerFont: {
+        fontSize: 10,
+        bold: true,
+      },
+      tableBold: {
+        fontSize: 9,
+        bold: true,
       },
       totals: {
-        fontSize: 8,
+        fontSize: 9,
         bold: true,
       },
       warrantyFont: {
         fontSize: 7,
-      }
-    }
+      },
+    },
   };
 
   // const fileName = `Order_${data.orderNum}`

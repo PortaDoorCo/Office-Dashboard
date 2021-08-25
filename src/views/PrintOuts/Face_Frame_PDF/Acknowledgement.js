@@ -76,7 +76,7 @@ export default (data, pricing) => {
         { text: `${Size(item)}`, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
         {
-          text: `${item.notes ? item.notes : ''} ${
+          text: `${item.notes ? item.notes.toUpperCase() : ''} ${
             item.full_frame ? 'Full Frame DF' : ''
           } ${item.lite ? item.lite.NAME : ''}`,
           style: 'fontsBold',
@@ -128,7 +128,7 @@ export default (data, pricing) => {
             width: 200,
             stack: [
               {
-                text: `${part.notes ? part.notes : ''}`,
+                text: `${part.notes ? part.notes.toUpperCase() : ''}`,
                 style: 'headerFont',
                 alignment: 'center',
               },
@@ -246,7 +246,6 @@ export default (data, pricing) => {
     {
       columns: [
         {
-          width: 200,
           stack: [{ text: 'ACKNOWLEDGEMENT', margin: [0, 0, 0, -10] }],
           style: 'headerFont',
           id: 'header1',
@@ -406,7 +405,7 @@ export default (data, pricing) => {
                     {
                       text: `${
                         data.job_info.poNum.length > 0
-                          ? data.job_info.poNum
+                          ? data.job_info.poNum.toUpperCase()
                           : 'None'
                       }`,
                       alignment: 'left',

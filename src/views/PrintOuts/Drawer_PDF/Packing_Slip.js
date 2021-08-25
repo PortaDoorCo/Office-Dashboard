@@ -43,6 +43,14 @@ export default (data, breakdowns) => {
         },
         {
           stack: [
+            { text: 'Porta Door Co, INC.', alignment: 'center', style: 'fonts' },
+            { text: 'Phone: 203-888-6191  Fax: 203-888-5803', alignment: 'center', style: 'fonts' },
+            { text: 'Email: Info@portadoor.com', alignment: 'center', style: 'fonts' },
+          ],
+          alignment: 'center'
+        },
+        {
+          stack: [
             { text: 'PACKING SLIP', alignment: 'right', style: 'woodtype', decoration: 'underline' },
             { text: `Ship Via: ${data.job_info?.shipping_method?.NAME}`, alignment: 'right', style: 'fonts' },
           ],
@@ -50,26 +58,9 @@ export default (data, breakdowns) => {
       ],
     },
     {
-      columns: [
-        {
-          text: ''
-        },
-        {
-          stack: [
-            { text: 'Porta Door Co, INC.', alignment: 'center', style: 'fonts' },
-            { text: 'Phone: 203-888-6191  Fax: 203-888-5803', alignment: 'center', style: 'fonts' },
-            { text: 'Email: Info@portadoor.com', alignment: 'center', style: 'fonts' },
-          ],
-        },
-        {
-          text: ''
-        }
-      ],
-    },
-    {
+      margin: [0, 10, 0, 0],
       columns: [
         { 
-          width: 200,
           stack: [
             { columns: [
               {

@@ -58,7 +58,7 @@ export default (data, pricing) => {
     {
       columns: [
         {
-          width: 200,
+
           stack: [{ text: 'ACKNOWLEDGEMENT', margin: [0, 0, 0, -10] }],
           style: 'headerFont',
         },
