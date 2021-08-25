@@ -276,6 +276,10 @@ export default (data, breakdowns) => {
               text: `${data.job_info.customer.Company}`,
             },
             {
+              text: `${data.job_info.Shop_Notes}`,
+              alignment: 'center'
+            },
+            {
               text: `PO: ${data.job_info.poNum}`,
               alignment: 'right',
             },

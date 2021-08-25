@@ -199,7 +199,7 @@ class BalanceHistory extends Component {
     );
 
     const onKeyPress = (event) => {
-      if (event.which === 13 /* Enter */) {
+      if (event.target.type !== 'textarea' && event.which === 13 /* Enter */) {
         event.preventDefault();
       }
     };
