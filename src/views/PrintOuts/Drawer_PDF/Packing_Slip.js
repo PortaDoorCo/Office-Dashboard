@@ -38,8 +38,16 @@ export default (data, breakdowns) => {
         {
           stack: [
             { text: `Our Order: ${data.orderNum}`, style: 'fonts' },
-            { text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${data.job_info?.poNum}`, style: 'fonts' },
+            { text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${data.job_info?.poNum.toUpperCase()}`, style: 'fonts' },
           ],
+        },
+        {
+          stack: [
+            { text: 'Porta Door Co, INC.', alignment: 'center', style: 'fonts' },
+            { text: 'Phone: 203-888-6191  Fax: 203-888-5803', alignment: 'center', style: 'fonts' },
+            { text: 'Email: Info@portadoor.com', alignment: 'center', style: 'fonts' },
+          ],
+          alignment: 'center'
         },
         {
           stack: [
@@ -50,26 +58,9 @@ export default (data, breakdowns) => {
       ],
     },
     {
-      columns: [
-        {
-          text: ''
-        },
-        {
-          stack: [
-            { text: 'Porta Door Co, INC.', alignment: 'center', style: 'fonts' },
-            { text: 'Phone: 203-888-6191  Fax: 203-888-5803', alignment: 'center', style: 'fonts' },
-            { text: 'Email: Info@portadoor.com', alignment: 'center', style: 'fonts' },
-          ],
-        },
-        {
-          text: ''
-        }
-      ],
-    },
-    {
+      margin: [0, 10, 0, 0],
       columns: [
         { 
-          width: 200,
           stack: [
             { columns: [
               {
@@ -121,8 +112,7 @@ export default (data, breakdowns) => {
         },
 
         {
-          text: '',
-          // width: 200,
+          text: `${data.job_info.Shop_Notes.toUpperCase()}`,
           alignment: 'center'
         },
         {
@@ -222,7 +212,7 @@ export default (data, breakdowns) => {
 
       return [
         {
-          margin: [0, 10, 0, 0],
+          margin: [0, 0, 0, 0],
           columns: [
             {
               stack: [

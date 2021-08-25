@@ -135,12 +135,11 @@ export default (data, breakdowns) => {
             {
               text: `${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
               style: 'woodtype',
-              width: 200,
             },
             {
               text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
               style: 'woodtype',
-              alignment: 'left',
+              alignment: 'center',
             },
             {
               text: 'PANELS',
@@ -245,7 +244,11 @@ export default (data, breakdowns) => {
               text: `${data.job_info.customer.Company}`,
             },
             {
-              text: `PO: ${data.job_info.poNum}`,
+              text: `${data.job_info.Shop_Notes.toUpperCase()}`,
+              alignment: 'center'
+            },
+            {
+              text: `PO: ${data.job_info.poNum.toUpperCase()}`,
               alignment: 'right',
             },
           ],

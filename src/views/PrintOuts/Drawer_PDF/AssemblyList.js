@@ -66,38 +66,43 @@ export default (data, breakdowns) => {
                 { text: `${data.job_info.customer.Company}` },
               ],
             },
-            {
-              stack: [
-                {
-                  stack: data.misc_items.map((i) =>
-                    i.item?.NAME.includes('Clear Finish')
-                      ? 'Clear Finish'
-                      : i.item?.NAME.includes('Notch')
-                        ? 'Notch and Drilled'
-                        : ''
-                  ),
-                  alignment: 'center',
-                  style: 'fontsBold',
-                },
-                {
-                  stack: data.part_list.map((i) => {
-                    const fingerpull = i.dimensions.filter((j) =>
-                      j.scoop?.NAME.includes('Yes')
-                    );
-                    const fingerpull_items = fingerpull.map((k) => k.item);
+            // {
+            //   stack: [
+            //     {
+            //       stack: data.misc_items.map((i) =>
+            //         i.item?.NAME.includes('Clear Finish')
+            //           ? 'Clear Finish'
+            //           : i.item?.NAME.includes('Notch')
+            //             ? 'Notch and Drilled'
+            //             : ''
+            //       ),
+            //       alignment: 'center',
+            //       style: 'fontsBold',
+            //     },
+            //     {
+            //       stack: data.part_list.map((i) => {
+            //         const fingerpull = i.dimensions.filter((j) =>
+            //           j.scoop?.NAME.includes('Yes')
+            //         );
+            //         const fingerpull_items = fingerpull.map((k) => k.item);
 
-                    if (fingerpull.length > 0) {
-                      return { text: `Fingerpull - Item# ${fingerpull_items}` };
-                    } else {
-                      return null;
-                    }
-                  }),
-                  alignment: 'center',
-                  style: 'fontsBold',
-                },
-              ],
+            //         if (fingerpull.length > 0) {
+            //           return { text: `Fingerpull - Item# ${fingerpull_items}` };
+            //         } else {
+            //           return null;
+            //         }
+            //       }),
+            //       alignment: 'center',
+            //       style: 'fontsBold',
+            //     },
+            //   ],
+            // },
+
+            {
+              text: `${data.job_info.Shop_Notes.toUpperCase()}`,
+              alignment: 'center'
             },
-            { text: `PO: ${data.job_info.poNum}`, alignment: 'right' },
+            { text: `PO: ${data.job_info.poNum.toUpperCase()}`, alignment: 'right' },
           ],
         },
       ],
@@ -121,7 +126,7 @@ export default (data, breakdowns) => {
       Object.entries(groupedByHeight).map(([k, v], lineIn) => {
         const groupedInfoBody = [
           {
-            margin: [0, 10, 0, 0],
+            margin: [0, 0, 0, 0],
             columns: [
               {
                 stack: [
@@ -132,11 +137,7 @@ export default (data, breakdowns) => {
                   { text: `${i.woodtype.NAME}`, style: 'woodtype' },
                 ],
               },
-              {
-                text: '',
-                style: 'fontsBold',
-                alignment: 'center',
-              },
+              { text: `${i.notes ? i.notes.toUpperCase() : ''}`, style: 'fontsBold', alignment: 'center' },
               {
                 stack: [
                   { text: ' ' },
@@ -149,7 +150,7 @@ export default (data, breakdowns) => {
               },
             ],
           },
-          { text: `${i.notes ? i.notes : ''}`, style: 'fontsBold' },
+          
           {
             text: '==============================================================================',
             alignment: 'center',
@@ -177,7 +178,7 @@ export default (data, breakdowns) => {
               stack: [
                 { text: Size(item), style: 'fonts' },
                 {
-                  text: `${item.notes ? item.notes : ''} ${
+                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${
                     item.full_frame ? 'Full Frame DF' : ''
                   } ${item.lite ? item.lite.NAME : ''}`,
                   style: 'tableBold',

@@ -82,7 +82,7 @@ export default (data, breakdowns) => {
         },
         item.notes || item.full_frame || item.lite
           ? {
-            text: `${item.notes ? item.notes : ''} ${
+            text: `${item.notes ? item.notes.toUpperCase() : ''} ${
               item.full_frame ? 'Full Frame DF' : ''
             } ${item.lite ? item.lite.NAME : ''}`,
             style: 'tableBold',
@@ -192,8 +192,27 @@ export default (data, breakdowns) => {
             { text: `Our Order: ${data.orderNum}`, style: 'fonts' },
             {
               text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${
-                data.job_info?.poNum
+                data.job_info?.poNum.toUpperCase()
               }`,
+              style: 'fonts',
+            },
+          ],
+        },
+        {
+          stack: [
+            {
+              text: 'Porta Door Co, INC.',
+              alignment: 'center',
+              style: 'fonts',
+            },
+            {
+              text: 'Phone: 203-888-6191  Fax: 203-888-5803',
+              alignment: 'center',
+              style: 'fonts',
+            },
+            {
+              text: 'Email: Info@portadoor.com',
+              alignment: 'center',
               style: 'fonts',
             },
           ],
@@ -216,35 +235,7 @@ export default (data, breakdowns) => {
       ],
     },
     {
-      columns: [
-        {
-          text: '',
-        },
-        {
-          stack: [
-            {
-              text: 'Porta Door Co, INC.',
-              alignment: 'center',
-              style: 'fonts',
-            },
-            {
-              text: 'Phone: 203-888-6191  Fax: 203-888-5803',
-              alignment: 'center',
-              style: 'fonts',
-            },
-            {
-              text: 'Email: Info@portadoor.com',
-              alignment: 'center',
-              style: 'fonts',
-            },
-          ],
-        },
-        {
-          text: '',
-        },
-      ],
-    },
-    {
+      margin: [0,10,0,0],
       columns: [
         {
           width: 200,
@@ -305,9 +296,8 @@ export default (data, breakdowns) => {
         },
 
         {
-          text: '',
-          // width: 200,
-          alignment: 'center',
+          text: `${data.job_info.Shop_Notes.toUpperCase()}`,
+          margin: [10,0,0,0]
         },
         {
           stack: [

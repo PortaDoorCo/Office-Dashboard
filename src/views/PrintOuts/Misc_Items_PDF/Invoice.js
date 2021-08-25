@@ -82,7 +82,6 @@ export default (data, pricing) => {
     {
       columns: [
         { 
-          width: 200,
           stack: [
             {text: 'INVOICE', margin:[0,0,0,-10]},
           ],
@@ -247,7 +246,7 @@ export default (data, pricing) => {
                     {
                       text: `${
                         data.job_info.poNum.length > 0
-                          ? data.job_info.poNum
+                          ? data.job_info.poNum.toUpperCase()
                           : 'None'
                       }`,
                       alignment: 'left',

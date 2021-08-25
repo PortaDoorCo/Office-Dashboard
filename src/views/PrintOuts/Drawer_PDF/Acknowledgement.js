@@ -58,7 +58,7 @@ export default (data, pricing) => {
     {
       columns: [
         {
-          width: 200,
+
           stack: [{ text: 'ACKNOWLEDGEMENT', margin: [0, 0, 0, -10] }],
           style: 'headerFont',
         },
@@ -226,7 +226,7 @@ export default (data, pricing) => {
                     {
                       text: `${
                         data.job_info.poNum.length > 0
-                          ? data.job_info.poNum
+                          ? data.job_info.poNum.toUpperCase()
                           : 'None'
                       }`,
                       alignment: 'left',
@@ -305,7 +305,7 @@ export default (data, pricing) => {
           { text: item.item ? item.item : index + 1, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
-          { text: `${item.notes ? item.notes : ''}`, style: 'fonts' },
+          { text: `${item.notes ? item.notes.toUpperCase() : ''}`, style: 'fonts' },
           {
             text: `${(prices[i][index] / parseInt(item.qty)).toFixed(2)}`,
             style: 'fonts',
@@ -332,7 +332,7 @@ export default (data, pricing) => {
               ],
             },
             {
-              text: `${part.notes ? part.notes : ''}`,
+              text: `${part.notes ? part.notes.toUpperCase() : ''}`,
               style: 'fontsBold',
               alignment: 'center',
             },

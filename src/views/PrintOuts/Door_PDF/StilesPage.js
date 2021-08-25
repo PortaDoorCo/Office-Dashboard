@@ -67,7 +67,7 @@ export default (data, breakdowns) => {
           style: 'fonts',
         },
         {
-          text: item.notes ? item.notes : '',
+          text: item.notes ? item.notes.toUpperCase() : '',
           style: 'fonts',
         },
       ]);
@@ -97,7 +97,7 @@ export default (data, breakdowns) => {
             {
               text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
               style: 'woodtype',
-              alignment: 'left',
+              alignment: 'center',
             },
             {
               text: 'STILES',
@@ -199,13 +199,18 @@ export default (data, breakdowns) => {
         {
           columns: [
             {
-              text: `${data.job_info.customer.Company}` , 
+              text: `${data.job_info.customer.Company}`,
             },
             {
-              text: `PO: ${data.job_info.poNum}`, alignment: 'right' 
+              text: `${data.job_info.Shop_Notes.toUpperCase()}`,
+              alignment: 'center'
+            },
+            {
+              text: `PO: ${data.job_info.poNum.toUpperCase()}`,
+              alignment: 'right',
             },
           ],
-        }
+        },
       ],
       margin: [0, 10],
     },

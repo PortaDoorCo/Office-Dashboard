@@ -29,7 +29,7 @@ export default (data, breakdowns) => {
               { text: `${SlabSize(item, i.edge.LIP_FACTOR)}`, style: 'fonts' },
               item.notes || item.full_frame || item.lite
                 ? {
-                  text: `${item.notes ? item.notes : ''} ${
+                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${
                     item.full_frame ? 'Full Frame DF' : ''
                   } ${item.lite ? item.lite.NAME : ''}`,
                   style: 'tableBold',
@@ -65,7 +65,7 @@ export default (data, breakdowns) => {
               { text: `${Size(item)}`, style: 'fonts' },
               item.notes || item.full_frame || item.lite
                 ? {
-                  text: `${item.notes ? item.notes : ''} ${
+                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${
                     item.full_frame ? 'Full Frame DF' : ''
                   } ${item.lite ? item.lite.NAME : ''}`,
                   style: 'tableBold',
@@ -144,10 +144,9 @@ export default (data, breakdowns) => {
                 style: 'woodtype',
               },
             ],
-            width: 200,
           },
           {
-            text: `${i.notes ? i.notes : ''}`,
+            text: `${i.notes ? i.notes.toUpperCase() : ''}`,
             style: 'fontsBold',
             alignment: 'center',
           },
@@ -276,7 +275,11 @@ export default (data, breakdowns) => {
               text: `${data.job_info.customer.Company}`,
             },
             {
-              text: `PO: ${data.job_info.poNum}`,
+              text: `${data.job_info.Shop_Notes.toUpperCase()}`,
+              alignment: 'center'
+            },
+            {
+              text: `PO: ${data.job_info.poNum.toUpperCase()}`,
               alignment: 'right',
             },
           ],

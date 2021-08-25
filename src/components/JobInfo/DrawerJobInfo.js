@@ -234,6 +234,23 @@ class JobInfo extends Component {
         </Row>
 
         <Row>
+          <Col xs="6">
+            <FormGroup>
+              <Label htmlFor="phone">Customer Note</Label>
+              <Field
+                name={'Notes'}
+                type="text"
+                component={renderTextField}
+                edit={true}
+                label="Notes"
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <hr />
+
+        <Row>
           <Col xs="12">
             <h6>Shipping Address</h6>
           </Col>
@@ -318,15 +335,17 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
+        <hr />
+
         <Row>
           <Col xs="6">
             <FormGroup>
-              <Label htmlFor="phone">Customer Note</Label>
+              <Label htmlFor="phone">Shop Notes</Label>
               <Field
-                name={'Notes'}
-                type="text"
+                name={'Shop_Notes'}
+                type="textarea"
                 component={renderTextField}
-                edit={true}
+                edit={edit}
                 label="Notes"
               />
             </FormGroup>
