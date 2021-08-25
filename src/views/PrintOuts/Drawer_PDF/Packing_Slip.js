@@ -38,7 +38,7 @@ export default (data, breakdowns) => {
         {
           stack: [
             { text: `Our Order: ${data.orderNum}`, style: 'fonts' },
-            { text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${data.job_info?.poNum}`, style: 'fonts' },
+            { text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${data.job_info?.poNum.toUpperCase()}`, style: 'fonts' },
           ],
         },
         {
@@ -121,8 +121,7 @@ export default (data, breakdowns) => {
         },
 
         {
-          text: '',
-          // width: 200,
+          text: `${data.job_info.Shop_Notes.toUpperCase()}`,
           alignment: 'center'
         },
         {
@@ -222,7 +221,7 @@ export default (data, breakdowns) => {
 
       return [
         {
-          margin: [0, 10, 0, 0],
+          margin: [0, 0, 0, 0],
           columns: [
             {
               stack: [

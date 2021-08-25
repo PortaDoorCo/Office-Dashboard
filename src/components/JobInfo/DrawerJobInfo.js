@@ -343,7 +343,7 @@ class JobInfo extends Component {
               <Label htmlFor="phone">Shop Notes</Label>
               <Field
                 name={'Shop_Notes'}
-                type="text"
+                type="textarea"
                 component={renderTextField}
                 edit={edit}
                 label="Notes"

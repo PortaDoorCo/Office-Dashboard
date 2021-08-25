@@ -226,7 +226,7 @@ export default (data, pricing) => {
                     {
                       text: `${
                         data.job_info.poNum.length > 0
-                          ? data.job_info.poNum
+                          ? data.job_info.poNum.toUpperCase()
                           : 'None'
                       }`,
                       alignment: 'left',
@@ -306,7 +306,7 @@ export default (data, pricing) => {
 
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
-          { text: `${item.notes ? item.notes : ''}`, style: 'fonts' },
+          { text: `${item.notes ? item.notes.toUpperCase() : ''}`, style: 'fonts' },
           { text: `${(prices[i][index] / parseInt(item.qty)).toFixed(2)}`, style: 'fonts' },
           {
             text: `${prices[i][index].toFixed(2)}`,
@@ -330,7 +330,7 @@ export default (data, pricing) => {
               ],
             },
             {
-              text: `${part.notes ? part.notes : ''}`,
+              text: `${part.notes ? part.notes.toUpperCase() : ''}`,
               style: 'fontsBold',
               alignment: 'center',
             },

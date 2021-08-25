@@ -178,11 +178,11 @@ export default (
         fontSize: 9,
       },
       fontsBold: {
-        fontSize: 9,
+        fontSize: 8,
         bold: true,
       },
       headerFont: {
-        fontSize: 11,
+        fontSize: 10,
         bold: true,
       },
       tableBold: {

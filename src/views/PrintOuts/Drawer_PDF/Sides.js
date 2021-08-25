@@ -63,38 +63,42 @@ export default (data, breakdowns) => {
                 { text: `${data.job_info.customer.Company}` },
               ],
             },
-            {
-              stack: [
-                {
-                  stack: data.misc_items.map((i) =>
-                    i.item?.NAME.includes('Clear Finish')
-                      ? 'Clear Finish'
-                      : i.item?.NAME.includes('Notch')
-                        ? 'Notch and Drilled'
-                        : ''
-                  ),
-                  alignment: 'center',
-                  style: 'fontsBold',
-                },
-                {
-                  stack: data.part_list.map((i) => {
-                    const fingerpull = i.dimensions.filter((j) =>
-                      j.scoop?.NAME.includes('Yes')
-                    );
-                    const fingerpull_items = fingerpull.map((k) => k.item);
+            // {
+            //   stack: [
+            //     {
+            //       stack: data.misc_items.map((i) =>
+            //         i.item?.NAME.includes('Clear Finish')
+            //           ? 'Clear Finish'
+            //           : i.item?.NAME.includes('Notch')
+            //             ? 'Notch and Drilled'
+            //             : ''
+            //       ),
+            //       alignment: 'center',
+            //       style: 'fontsBold',
+            //     },
+            //     {
+            //       stack: data.part_list.map((i) => {
+            //         const fingerpull = i.dimensions.filter((j) =>
+            //           j.scoop?.NAME.includes('Yes')
+            //         );
+            //         const fingerpull_items = fingerpull.map((k) => k.item);
 
-                    if (fingerpull.length > 0) {
-                      return { text: `Fingerpull - Item# ${fingerpull_items}` };
-                    } else {
-                      return null;
-                    }
-                  }),
-                  alignment: 'center',
-                  style: 'fontsBold',
-                },
-              ],
+            //         if (fingerpull.length > 0) {
+            //           return { text: `Fingerpull - Item# ${fingerpull_items}` };
+            //         } else {
+            //           return null;
+            //         }
+            //       }),
+            //       alignment: 'center',
+            //       style: 'fontsBold',
+            //     },
+            //   ],
+            // },
+            {
+              text: `${data.job_info.Shop_Notes.toUpperCase()}`,
+              alignment: 'center'
             },
-            { text: `PO: ${data.job_info.poNum}`, alignment: 'right' },
+            { text: `PO: ${data.job_info.poNum.toUpperCase()}`, alignment: 'right' },
           ],
         },
       ],
@@ -173,14 +177,14 @@ export default (data, breakdowns) => {
       return [
         {
           headlineLevel: 1,
-          margin: [0, 10, 0, 0],
+          margin: [0, 0, 0, 0],
           columns: [
             {
               stack: [
                 { text: `${i.woodtype.NAME}`, style: 'woodtype' },
-                { text: `Notes: ${i.notes ? i.notes : ''}`, style: 'fontsBold' },
               ]
             },
+            { text: `${i.notes ? i.notes.toUpperCase() : ''}`, style: 'fontsBold', alignment: 'center' },
             {
               stack: [
                 {

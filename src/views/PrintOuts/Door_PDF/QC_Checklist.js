@@ -31,15 +31,17 @@ export default (data, breakdowns) => {
       columns: [
         {
           text: `${data.job_info.customer.Company}`,
-          style: 'fonts'
         },
         {
-          stack: [
-            { text: `PO: ${data.job_info.poNum}`, alignment: 'right', style: 'fonts' }
-          ]
+          text: `${data.job_info.Shop_Notes.toUpperCase()}`,
+          alignment: 'center'
+        },
+        {
+          text: `PO: ${data.job_info.poNum.toUpperCase()}`,
+          alignment: 'right',
         },
       ],
-      margin: [0, 10,0,0]
+      margin: [0,10,0,0]
     },
     {
       text:
@@ -69,7 +71,7 @@ export default (data, breakdowns) => {
           { text: 'N/A', style: 'fonts' },
           item.notes || item.full_frame || item.lite ? 
             {
-              text: `${item.notes ? item.notes : ''} ${
+              text: `${item.notes ? item.notes.toUpperCase() : ''} ${
                 item.full_frame ? 'Full Frame DF' : ''
               } ${item.lite ? item.lite.NAME : ''}`,
               style: 'tableBold', alignment: 'left'
