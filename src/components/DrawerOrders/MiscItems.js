@@ -71,7 +71,7 @@ let Inputs = (props) => {
   };
 
   return (
-    <div>
+    <div className='resize'>
       <Table>
         <thead>
           <tr>

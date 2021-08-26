@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Container, Button } from 'reactstrap';
 import Tour from 'reactour';
@@ -186,7 +186,6 @@ let DefaultLayout = (props, context) => {
 
   const { customerDBLoaded, app_tour, userId, updateAppTour, role } = props;
 
-
   // console.log({role});
 
   if (!customerDBLoaded) {
@@ -226,7 +225,7 @@ let DefaultLayout = (props, context) => {
           </AppSidebar>
           <main className="main">
             <AppBreadcrumb appRoutes={routes} />
-            <Container fluid>
+            <Container fluid className="resize">
               <Suspense fallback={loading()}>
                 <Switch>
                   {routes.map((route, idx) => {

@@ -1246,10 +1246,10 @@ const DoorTable = ({
           </div>
 
           <Row>
-            <Col xs="4">
+            <Col xs="5">
               <strong>Notes</strong>
               <Row>
-                <Col lg="11">
+                <Col lg="10">
                   <Field
                     name={`${table}.notes`}
                     type="textarea"
@@ -1261,7 +1261,8 @@ const DoorTable = ({
                     }
                   />
                 </Col>
-                <Col lg="1">
+                
+                <Col lg="2">
                   {!edit ? (
                     <Button
                       color="danger"
@@ -1274,7 +1275,7 @@ const DoorTable = ({
                 </Col>
               </Row>
             </Col>
-            <Col xs="5"></Col>
+            <Col lg='4' />
             <Col xs="3">
               <strong>Extra Design Cost</strong>
               <Field

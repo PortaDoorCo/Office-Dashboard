@@ -202,8 +202,9 @@ class MiscItems extends Component {
           actionButton={'Cancel Order'}
           buttonColor={'danger'}
         />
-        <div className="orderForm">
-          <div className="orderFormCol1">
+
+        <Row>
+          <Col lg='9'>
             <Card>
               <CardHeader>
                 <strong>Misc Items Order</strong>
@@ -313,7 +314,7 @@ class MiscItems extends Component {
                             className="submit"
                             style={{ width: '100%' }}
                           >
-                            Submit
+                              Submit
                           </Button>
                         </Col>
                         <Col>
@@ -322,7 +323,7 @@ class MiscItems extends Component {
                             onClick={this.toggleCancelModal}
                             style={{ width: '100%' }}
                           >
-                            Cancel
+                              Cancel
                           </Button>
                         </Col>
                       </Row>
@@ -331,9 +332,13 @@ class MiscItems extends Component {
                 </form>
               </CardBody>
             </Card>
-          </div>
-        </div>
+          </Col>
+        </Row>
+
+
       </div>
+
+
     );
   }
 }

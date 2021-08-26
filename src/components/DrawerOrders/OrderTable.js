@@ -7,7 +7,8 @@ import {
   renderNumber,
   renderField,
   renderPrice,
-  renderInt
+  renderInt,
+  renderTextField
 } from '../RenderInputs/renderInputs';
 import RenderPriceHolder from '../RenderInputs/RenderPriceHolder';
 import currencyMask from '../../utils/currencyMask';
@@ -217,17 +218,33 @@ class OrderTable extends Component {
                 </tbody>
               </Table>
               <Row>
-                <Col xs="4">
+                <Col xs="5">
                   <strong>Notes</strong>
-                  <Field
-                    name={`${table}.notes`}
-                    type="textarea"
-                    component={renderField}
-                    edit={edit}
-                    label="notes"
-                  />
+                  <Row>
+                    <Col lg="10">
+                      <Field
+                        name={`${table}.notes`}
+                        type="textarea"
+                        component={renderTextField}
+                        edit={edit}
+                        label="notes"
+                      />
+                    </Col>
+                
+                    <Col lg="2">
+                      {!edit ? (
+                        <Button
+                          color="danger"
+                          className="btn-circle"
+                          onClick={(e) => clearNotes(index, e)}
+                        >
+                          X
+                        </Button>
+                      ) : null}
+                    </Col>
+                  </Row>
                 </Col>
-                <Col xs="5"></Col>
+                <Col lg='4' />
                 <Col xs="3">
                   <strong>Extra Design Cost</strong>
                   <Field
