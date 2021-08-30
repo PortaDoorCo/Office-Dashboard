@@ -8,7 +8,21 @@ export default (info, part, breakdowns) => {
     if (part.construction.value === 'Slab') {
       return Slab_Door(info);
     } else {
-      return Door(info, part, breakdowns[0]);
+
+      if(part.construction?.value === 'Cope'){
+        return Door(info, part, breakdowns[0]);
+      }
+
+      if(part.construction?.value === 'MT'){
+        return Door(info, part, breakdowns[1]);
+      }
+
+      if(part.construction?.value === 'Miter'){
+        return Door(info, part, breakdowns[2]);
+      }
+
+
+
     }
   }
 
@@ -16,7 +30,17 @@ export default (info, part, breakdowns) => {
     if (part.construction.value === 'Slab') {
       return Slab_Door(info);
     } else {
-      return Door(info, part, breakdowns[0]);
+      if(part.construction?.value === 'Cope'){
+        return Door(info, part, breakdowns[4]);
+      }
+
+      if(part.construction?.value === 'MT'){
+        return Door(info, part, breakdowns[3]);
+      }
+
+      if(part.construction?.value === 'Miter'){
+        return Door(info, part, breakdowns[5]);
+      }
     }
   }
 
