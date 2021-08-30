@@ -191,7 +191,10 @@ export default (data, breakdowns) => {
   });
 
   const PanelBoardFTCalc = data.part_list.map((i, index) => {
+    console.log({ i });
+
     const calc = i.dimensions.map((item, index) => {
+      console.log({ item });
       const width = Panels(item, i, breakdowns).map((panel) => {
         return numQty(panel.width);
       });
@@ -207,13 +210,13 @@ export default (data, breakdowns) => {
         }
       });
 
-      console.log({height});
+      console.log({ height });
 
       const width_total = width.reduce((acc, item) => acc + item);
       const height_total = height.reduce((acc, item) => acc + item);
       const qty_total = qty.reduce((acc, item) => acc + item);
 
-      console.log({qty_total});
+      console.log({ qty_total });
 
       const q =
         ((width_total * height_total) / 144) *
@@ -224,7 +227,7 @@ export default (data, breakdowns) => {
 
     const equation = calc.reduce((acc, item) => acc + item);
 
-    console.log({equation});
+    console.log({ equation });
 
     if (
       i.orderType.value === 'One_Piece' ||
@@ -233,9 +236,17 @@ export default (data, breakdowns) => {
       i.orderType.value === 'Two_Piece_DF' ||
       i.orderType.value === 'Slab_Door' ||
       i.orderType.value === 'Slab_DF' ||
-      i.construction.value === 'Slab'
+      i.construction.value === 'Slab' ||
+      i.panel.name === 'Glass'
     ) {
-      return 0;
+      return {
+        orderType: i.orderType.value,
+        BoardFT: 0,
+        waste: 0,
+        woodtype: i.woodtype.NAME,
+        thickness: i.thickness.name,
+        panel: i.panel,
+      };
     } else {
       return {
         orderType: i.orderType.value,
@@ -249,15 +260,34 @@ export default (data, breakdowns) => {
   });
   const PanelBoardFT_Total = Object.entries(
     groupBy(flatten(PanelBoardFTCalc), 'woodtype')
-  ).map(([k, v]) => ({
-    ...v[0],
-    BoardFT: v.reduce((a, b) => a + b.BoardFT, 0),
-  }));
+  ).map(([k, v]) => {
+    console.log({ k });
+    console.log({ v });
+
+    let totalBoardFt = 0;
+    let panel;
+
+    v.map((j, k) => {
+      console.log({ j });
+      if (!j.panel || j.panel?.NAME === 'Glass') {
+        return null;
+      } else {
+        totalBoardFt += j.BoardFT;
+        panel = j.panel;
+      }
+      return null;
+    }).filter((x) => x);
+
+    return {
+      ...v[0],
+      panel,
+      BoardFT: totalBoardFt,
+    };
+  });
 
   const PanelBoardFTDisplay = PanelBoardFT_Total.map((i, index) => {
     if (i && i.panel) {
-
-      console.log({i});
+      console.log({ i });
 
       return [
         {
@@ -266,7 +296,11 @@ export default (data, breakdowns) => {
               text: `${i.panel.Flat ? 'Square' : 'Board'} Feet of ${
                 i.woodtype
               } - ${
-                i.thickness.includes('4/4') ? '4/4' : i.thickness.includes('5/4') ? '5/4' : '6/4'
+                i.thickness.includes('4/4')
+                  ? '4/4'
+                  : i.thickness.includes('5/4')
+                    ? '5/4'
+                    : '6/4'
               }" Thickness ${i.panel.NAME} Material Needed: ${i.BoardFT.toFixed(
                 2
               )}`,
