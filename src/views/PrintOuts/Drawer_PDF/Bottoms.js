@@ -134,25 +134,30 @@ export default (data, breakdowns) => {
       const materialBody = [];
 
       const length = i.dimensions.map((item) => {
-        return { length: Bottoms(item, i, breakdowns).length };
+        return { length: Bottoms(item, i, breakdowns).length, width: item.width, qty: item.qty };
       });
 
 
       const groupedByDepth = _.groupBy(length, 'length');
 
-      let total_widths = 0;
 
-      const dim = i.dimensions;
-
-      for(let item of dim){
-        total_widths += (item.width * item.qty);
-      }
 
       Object.entries(groupedByDepth).map(([k, v]) => {
+
+        let total_widths = 0;
+
+        for(let item of v){
+          total_widths += (numQty(item.width) * parseInt(item.qty));
+        }
+
+        console.log({k});
+        console.log({v});
 
         const groupedMaterialBody = [];
 
         const length = numQty(k);
+
+        console.log({total_widths});
 
         let waste = total_widths * 1.5;
 
