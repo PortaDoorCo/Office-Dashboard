@@ -95,7 +95,7 @@ class CustomerPage extends Component {
           <ModalHeader toggle={props.toggle}>Companies</ModalHeader>
           <ModalBody>
             <Row>
-              <Col>
+              <Col lg='6'>
                 <Edit
                   onEdit={this.onEdit}
                   selectedCompanies={props.selectedCompanies}
@@ -143,7 +143,7 @@ class CustomerPage extends Component {
                 </Row>
               </Col>
 
-              <Col>
+              <Col lg='6'>
                 <Card>
                   <div className="animated resize">
                     <Maps
@@ -154,7 +154,12 @@ class CustomerPage extends Component {
                     <CompanyOrders orders={updateOrders} />
                   </div>
                 </Card>
-                <Notes />
+                <Card>
+                  <CardBody>
+                    <Notes />
+                  </CardBody>
+                </Card>
+                
               </Col>
             </Row>
           </ModalBody>

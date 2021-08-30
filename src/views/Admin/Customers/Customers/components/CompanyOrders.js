@@ -102,16 +102,15 @@ const CustomerOrders = (props) => {
       name: 'Order Type',
       selector: 'orderType',
       sortable: true,
-
     },
-    {
-      name: 'Date Ordered',
-      cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
-    },
-    {
-      name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
-    },
+    // {
+    //   name: 'Date Ordered',
+    //   cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
+    // },
+    // {
+    //   name: 'Due Date',
+    //   cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+    // },
     {
       name: 'Status',
       grow: 1,
@@ -142,11 +141,11 @@ const CustomerOrders = (props) => {
       sortable: true,
       cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
     },
-    {
-      name: 'Balance Paid',
-      sortable: true,
-      cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
-    },
+    // {
+    //   name: 'Balance Paid',
+    //   sortable: true,
+    //   cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
+    // },
     // {
     //   name: 'Terms',
     //   selector: 'companyprofile.PMT_TERMS',
@@ -182,7 +181,7 @@ const CustomerOrders = (props) => {
   }, [data, selectedRows, toggleCleared]);
 
   return (
-    <div>
+    <div className='resize'>
       <DataTable
         columns={columns}
         data={data}

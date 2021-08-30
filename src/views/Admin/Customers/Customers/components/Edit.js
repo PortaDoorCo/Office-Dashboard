@@ -614,7 +614,6 @@ class Edit extends Component {
                       textField="abbreviation"
                       label="company"
                       edit={edit}
-                      validate={required}
                     />
                   </FormGroup>
                 </Col>
