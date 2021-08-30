@@ -4,6 +4,7 @@ import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
 import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
 import TotalPieces from '../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
+import TotalSolidDFs from '../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 import numQty from 'numeric-quantity';
 import Ratio from 'lb-ratio';
@@ -321,6 +322,8 @@ export default (data, breakdowns) => {
     }
   });
 
+  console.log({TotalSolidDFs});
+
   return [
     {
       columns: [
@@ -393,16 +396,16 @@ export default (data, breakdowns) => {
     },
     {
       columns: [
-        { text: `Total Number of Doors: ${TotalPieces(data)}`, style: 'fonts' },
-        // { text: 'Total Number of Solid DF: Still Need To Be Calculated', style: 'fonts' },
+        { text: `Total Number of Doors: ${TotalPieces(data) - TotalSolidDFs(data)}`, style: 'fonts' },
       ],
     },
-    // {
-    //   columns: [
-    //     { text: 'Total Number of Solid DF: 0', style: 'fonts' }
-    //   ],
-    //   margin: [0, 0, 0, 20]
-    // },
+    TotalSolidDFs(data) > 0 ?
+      {
+        columns: [
+          { text: `Total Number of Solid DF: ${TotalSolidDFs(data)}`, style: 'fonts' },
+        ],
+        margin: [0, 0, 0, 10]
+      } : null,
     {
       columns: [
         { text: `Total SQ FT of Doors: ${SqFT(data)}`, style: 'fonts' },
