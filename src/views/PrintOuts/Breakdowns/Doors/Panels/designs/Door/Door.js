@@ -71,6 +71,7 @@ export default (info, part, breakdowns) => {
       width: 0,
       height: 0,
       panel: "Glass",
+      count: 0,
       multiplier: qty
     };
   };
@@ -98,6 +99,7 @@ export default (info, part, breakdowns) => {
         width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
         height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
         panel: panelName,
+        count: panelsH * panelsW * qty,
         multiplier: panelsH * panelsW * qty
       },
     ];
@@ -112,6 +114,7 @@ export default (info, part, breakdowns) => {
           pattern: panelFlat ? 'PF' : 'PR',
           width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
           height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+          count: panelsH * panelsW * qty
         },
       ];
     } else {
@@ -124,6 +127,7 @@ export default (info, part, breakdowns) => {
           pattern: panelFlat ? 'PF' : 'PR',
           width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
           height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+          count: panelsH * panelsW * qty
         },
       ];
     }
@@ -139,7 +143,8 @@ export default (info, part, breakdowns) => {
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
     height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
     panel: panelName,
-    multiplier: qty
+    multiplier: qty,
+    count: qty
   };
 
   const unevenSplit = () => {
@@ -172,7 +177,8 @@ export default (info, part, breakdowns) => {
               width: Math.round(panelWidth),
               height: Math.round(unevenSplitInput(v)),
               panel: panelName,
-              multiplier: qty
+              multiplier: qty,
+              count: qty
             };
           }
         }),
@@ -187,7 +193,8 @@ export default (info, part, breakdowns) => {
       width: Math.round(panelWidth),
       height: Math.round(panelHeight),
       panel: panelName,
-      multiplier: qty
+      multiplier: qty,
+      count: qty
     };
 
     if (glassCheck(panelsH - 1)) {
