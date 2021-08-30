@@ -1203,7 +1203,7 @@ const DoorTable = ({
                 return (
                   <Col lg="2">
                     <FormGroup>
-                      <strong>Glass Opening {index + 1}</strong>
+                      <strong>Glass Opening {k + 1}</strong>
                       <Field
                         name={`${table}.glass_check_${k}`}
                         component={renderCheckboxToggle}

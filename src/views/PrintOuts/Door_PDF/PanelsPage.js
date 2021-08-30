@@ -27,7 +27,7 @@ export default (data, breakdowns) => {
         return {
           ...v,
           dimensions: flatten(
-            v.dimensions.map((d, k) => ({ ...d, name: getName(v), item: k + 1 })))
+            v.dimensions.map((d, k) => ({ ...d, name: getName(v), panel: v.panel, item: k + 1 })))
         };
       })
 
@@ -37,6 +37,8 @@ export default (data, breakdowns) => {
       ...t[0],
       dimensions: flatten(t.map((c) => c.dimensions)),
     }));
+
+  console.log({b});
 
   const table_body = b.map((i, index) => {
 
