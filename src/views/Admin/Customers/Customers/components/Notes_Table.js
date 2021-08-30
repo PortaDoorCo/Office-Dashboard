@@ -6,6 +6,8 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  CardBody,
+  Card
 } from 'reactstrap';
 import {
   updateNotes,
@@ -62,12 +64,13 @@ let Notes_Table = props =>  {
             </Button>
           </ModalFooter>
         </Modal>
+
         <Table striped>
           <thead>
             <tr>
-              <th width={'25%'}>Date</th>
-              <th width={'50%'}>Notes</th>
-              <th width={'15%'}>Submitted By:</th>
+              <th width={'35%'} style={{ fontSize: 11 }}>Date</th>
+              <th width={'40%'} style={{ fontSize: 11 }}>Notes</th>
+              <th width={'30%'} style={{ fontSize: 11 }}>Submitted By:</th>
               <th />
             </tr>
           </thead>
@@ -75,21 +78,23 @@ let Notes_Table = props =>  {
             {formState && formState.Customer_Notes
               ? formState.Customer_Notes.reverse().map((i, index) => (
                 <tr key={index}>
-                  <td width={'25%'}>
-                    {moment(i.date).format('MMMM Do YYYY, h:mm:ss a')}
+                  <td width={'35%'} style={{ fontSize: 11 }}>
+                    {moment(i.date).format('MMMM D YY, h:mm a')}
                   </td>
-                  <td width={'50%'}>{i.note}</td>
-                  <td width={'15%'}>{i.Name}</td>
+                  <td width={'40%'} style={{ fontSize: 11 }}>{i.note}</td>
+                  <td width={'30%'} style={{ fontSize: 11 }}>{i.Name}</td>
                   <td>
                     <Button
                       color="danger"
+                      className="btn-circle"
+                      
                       onClick={(e) => {
                         toggle();
                         setSelectedItemId(i.id);
                         setSelectedItemIndex(index);
                       }}
                     >
-                          X
+                              X
                     </Button>
                   </td>
                 </tr>
@@ -97,6 +102,8 @@ let Notes_Table = props =>  {
               : null}
           </tbody>
         </Table>
+
+        
       </div>
     );
   } else {

@@ -55,11 +55,11 @@ const changeProfile = (p, ind, props, change) => {
     );
   } else {
 
-    if(part.design?.TOP_RAIL_ADD > 0 || part.design.BTM_RAIL_ADD > 0){
+    if(part.design?.TOP_RAIL_ADD > 0 || part.design?.BTM_RAIL_ADD > 0){
 
       const topRailAdd = part.design?.TOP_RAIL_ADD;
       const bottomRailAdd = part.design?.BTM_RAIL_ADD;
-      const profile_width = part.profile.PROFILE_WIDTH;
+      const profile_width = part.profile?.PROFILE_WIDTH;
 
       if(topRailAdd>0 && bottomRailAdd > 0 ){
         dispatch(

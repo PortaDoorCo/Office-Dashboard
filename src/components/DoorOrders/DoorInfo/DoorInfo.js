@@ -53,6 +53,7 @@ class DoorInfo extends Component {
           applied_profile: lastItem.applied_profile,
           dimensions: [],
           addPrice: 0,
+          notes: lastItem.notes ? lastItem.notes : '',
           files: [],
         });
         break;

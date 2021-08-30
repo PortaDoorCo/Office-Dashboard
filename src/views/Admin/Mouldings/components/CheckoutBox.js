@@ -21,12 +21,24 @@ import NavBar from './NavBar';
 import NavModal from './MiscItemCollapse';
 
 const CheckoutBox = (props) => {
+  const jobInfo = props.formState?.job_info;
   return(
     <Row>
       <Col>
         <Card>
           <CardBody className="misc-item-tour">
             <NavBar onSubNav={props.onSubNav} />
+            <hr />
+
+
+            <Row>
+              <Col>
+                <h3>Reminder:</h3>
+                <p>Please Add Shipping and Addon Charges in Misc Items</p>
+                <p>Specify any required lengths in Misc Notes</p>
+              </Col>
+            </Row>
+
             <hr />
 
             <NavModal {...props} onSubNav={props.onSubNav} onUploaded={props.onUploaded} />

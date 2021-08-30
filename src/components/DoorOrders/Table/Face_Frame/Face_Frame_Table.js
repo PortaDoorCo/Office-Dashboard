@@ -11,7 +11,8 @@ import {
   renderFieldDisabled,
   renderCheckboxToggle,
   renderPrice,
-  renderInt
+  renderInt,
+  renderTextField
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
@@ -101,6 +102,17 @@ const Frame_Only_Table = ({
       );
     }
   };
+
+  const clearNotes = (index, e) => {
+    dispatch(
+      change(
+        'DrawerOrder',
+        `part_list[${i}].dimensions[${index}].notes`,
+        ''
+      )
+    );
+  };
+
 
   const registerChange = (index, e) => {
     const value = e.target.value;
@@ -312,17 +324,33 @@ const Frame_Only_Table = ({
            
 
             <Row>
-              <Col xs="4">
+              <Col xs="5">
                 <strong>Notes</strong>
-                <Field
-                  name={`${table}.notes`}
-                  type="textarea"
-                  component={renderField}
-                  edit={edit}
-                  label="notes"
-                />
+                <Row>
+                  <Col lg="10">
+                    <Field
+                      name={`${table}.notes`}
+                      type="textarea"
+                      component={renderTextField}
+                      edit={edit}
+                      label="notes"
+                    />
+                  </Col>
+                
+                  <Col lg="2">
+                    {!edit ? (
+                      <Button
+                        color="danger"
+                        className="btn-circle"
+                        onClick={(e) => clearNotes(index, e)}
+                      >
+                        X
+                      </Button>
+                    ) : null}
+                  </Col>
+                </Row>
               </Col>
-              <Col xs="5" />
+              <Col lg='4' />
               <Col xs="3">
                 <strong>Extra Design Cost</strong>
                 <Field

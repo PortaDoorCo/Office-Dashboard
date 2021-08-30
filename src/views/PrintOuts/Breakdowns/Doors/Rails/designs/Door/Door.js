@@ -15,18 +15,20 @@ export default (info, part, breakdowns) => {
   const btm_rail_arch = part?.design?.BTM_RAIL_ADD;
 
   const lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
+
+  console.log({lip_factor});
   
   const topRail = info.topRail
-    ? numQty(info.topRail) + lip_factor / 2
+    ? numQty(info.topRail) + (lip_factor / 2)
     : 0;
   const bottomRail = info.bottomRail
-    ? numQty(info.bottomRail) + lip_factor / 2
+    ? numQty(info.bottomRail) + (lip_factor / 2)
     : 0;
   const leftStile = info.leftStile
-    ? numQty(info.leftStile) + lip_factor / 2
+    ? numQty(info.leftStile) + (lip_factor / 2)
     : 0;
   const rightStile = info.rightStile
-    ? numQty(info.rightStile) + lip_factor / 2
+    ? numQty(info.rightStile) + (lip_factor / 2)
     : 0;
   const vertMull = numQty(vMidRail);
   const horizMull = numQty(hMidRail);
@@ -35,7 +37,7 @@ export default (info, part, breakdowns) => {
   const height = numQty(info.height);
   const width = numQty(info.width);
   const qty = parseInt(info.qty);
-  const edge_factor = part.edge?.LIP_FACTOR;
+  const edge_factor = part.edge?.LIP_FACTOR ? part.edge?.LIP_FACTOR : 0;
 
   let inset = 0;
   if (part.profile) {
@@ -43,6 +45,8 @@ export default (info, part, breakdowns) => {
   } else {
     inset = part.design?.INSET;
   }
+
+  console.log({test: breakdowns.topRail_height});
 
   if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {
     if ((panelsW > 1 && panelsH > 1) || (panelsH > 1 && panelsW == 1)) {
