@@ -45,7 +45,9 @@ export default (info, part, breakdowns) => {
 
   const lites = info.lite ? info.lite.NAME : "";
   const panel_factor = part?.panel?.PANEL_FACTOR;
-  const panelName = part?.panel?.NAME;
+
+  const panelName = info?.panel?.NAME ? info?.panel?.NAME : part?.panel?.NAME;
+  const panelFlat = info?.panel?.Flat ? info?.panel?.Flat : part?.panel?.Flat;
 
   const VERTICAL_GRAIN = part.VERTICAL_GRAIN;
 
@@ -92,7 +94,7 @@ export default (info, part, breakdowns) => {
         measurement: `${fraction(
           Math.round(eval(breakdowns.panel_width) * 16) / 16
         )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-        pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
+        pattern: panelFlat ? "PF" : "PR",
         width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
         height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
         panel: panelName,
@@ -107,7 +109,7 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(Math.round(eval(breakdowns.panel_width) * 16) / 16)} x ${fraction(
             Math.round(eval(breakdowns.panel_height) * 16) / 16
           )}`,
-          pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+          pattern: panelFlat ? 'PF' : 'PR',
           width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
           height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
         },
@@ -119,7 +121,7 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             Math.round(eval(breakdowns.panel_height) * 16) / 16
           )} x ${fraction(Math.round(eval(breakdowns.panel_width) * 16) / 16)}`,
-          pattern: part && part.panel && part.panel.Flat ? 'PF' : 'PR',
+          pattern: panelFlat ? 'PF' : 'PR',
           width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
           height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
         },
@@ -128,19 +130,12 @@ export default (info, part, breakdowns) => {
   }
 
 
-  console.log({door})
-
-
-
-
-
-
   const doorMulti = {
     qty: qty,
     measurement: `${fraction(
       Math.round(eval(breakdowns.panel_width) * 16) / 16
     )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-    pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
+    pattern: panelFlat ? "PF" : "PR",
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
     height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
     panel: panelName,
@@ -173,7 +168,7 @@ export default (info, part, breakdowns) => {
               )} x ${fraction(
                 unevenSplitInput(v)
               )}`,
-              pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
+              pattern: panelFlat ? "PF" : "PR",
               width: Math.round(panelWidth),
               height: Math.round(unevenSplitInput(v)),
               panel: panelName,
@@ -188,7 +183,7 @@ export default (info, part, breakdowns) => {
       measurement: `${fraction(
         Math.round(eval(breakdowns.panel_width) * 16) / 16
       )} x ${fraction(panelHeight)}`,
-      pattern: part && part.panel && part.panel.Flat ? "PF" : "PR",
+      pattern: panelFlat ? "PF" : "PR",
       width: Math.round(panelWidth),
       height: Math.round(panelHeight),
       panel: panelName,
