@@ -4,6 +4,7 @@ import Invoice from '../../Mouldings_PDF/Invoice';
 import Acknowledgement from '../../Mouldings_PDF/Acknowledgement';
 import moment from 'moment';
 import AssemblyList from '../../Mouldings_PDF/AssemblyList';
+import PackingSlip from '../../Mouldings_PDF/PackingSlip';
 
 export default (data, breakdowns, p, pricing) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -21,6 +22,10 @@ export default (data, breakdowns, p, pricing) => {
 
   for (let i = 0; i < p.assembly_list; i++) {
     Content.push(AssemblyList(data, pricing));
+  }
+
+  for (let i = 0; i < p.packing_slip; i++) {
+    Content.push(PackingSlip(data, breakdowns));
   }
 
   const rowLen = Content.length;

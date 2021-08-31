@@ -21,6 +21,8 @@ const PrintModal = (props) => {
     NAME: printer_options[0].NAME,
     acknowledgement: printer_options[0].acknowledgement,
     invoice: printer_options[0].invoice,
+    assembly_list: printer_options[0].assembly_list,
+    packing_slip: printer_options[0].packing_slip,
   });
 
   const change = (e, name) => {
@@ -40,6 +42,7 @@ const PrintModal = (props) => {
       id: new_printer_option.length + 1,
       acknowledgement: 1,
       invoice: 1,
+      assembly_list: 1
     };
 
     set_new_printer_option([...new_printer_option, newOption]);
@@ -110,10 +113,10 @@ const PrintModal = (props) => {
                   <Label for="acknowledgement">Assembly List</Label>
                   <DropdownList filter
                     data={number_select}
-                    value={printer_option.acknowledgement}
-                    onChange={(e) => change(e, 'acknowledgement')}
-                    textField="acknowledgement"
-                    name="acknowledgement"
+                    value={printer_option.assembly_list}
+                    onChange={(e) => change(e, 'assembly_list')}
+                    textField="assembly_list"
+                    name="assembly_list"
                   />
                 </FormGroup>
               </Form>
@@ -124,10 +127,10 @@ const PrintModal = (props) => {
                   <Label for="invoice">Packing Slip</Label>
                   <DropdownList filter
                     data={number_select}
-                    value={printer_option.invoice} 
-                    onChange={(e) => change(e, 'invoice')}
-                    textField="invoice"
-                    name="invoice"
+                    value={printer_option.packing_slip} 
+                    onChange={(e) => change(e, 'packing_slip')}
+                    textField="packing_slip"
+                    name="packing_slip"
                   />
                 </FormGroup>
               </Form>
