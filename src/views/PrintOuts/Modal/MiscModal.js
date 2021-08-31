@@ -103,6 +103,53 @@ const PrintModal = (props) => {
             </Col>
           </Row>
 
+          <Row>
+            <Col>
+              <Form>
+                <FormGroup>
+                  <Label for="acknowledgement">Assembly List</Label>
+                  <DropdownList filter
+                    data={number_select}
+                    value={printer_option.acknowledgement}
+                    onChange={(e) => change(e, 'acknowledgement')}
+                    textField="acknowledgement"
+                    name="acknowledgement"
+                  />
+                </FormGroup>
+              </Form>
+            </Col>
+            <Col>
+              <Form>
+                <FormGroup>
+                  <Label for="invoice">Packing Slip</Label>
+                  <DropdownList filter
+                    data={number_select}
+                    value={printer_option.invoice} 
+                    onChange={(e) => change(e, 'invoice')}
+                    textField="invoice"
+                    name="invoice"
+                  />
+                </FormGroup>
+              </Form>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg='6'>
+              <Form>
+                <FormGroup>
+                  <Label for="acknowledgement">QC</Label>
+                  <DropdownList filter
+                    data={number_select}
+                    value={printer_option.acknowledgement}
+                    onChange={(e) => change(e, 'acknowledgement')}
+                    textField="acknowledgement"
+                    name="acknowledgement"
+                  />
+                </FormGroup>
+              </Form>
+            </Col>
+          </Row>
+
           <Row className="mt-3">
             <Col>
               <Button color="primary">Save</Button>
