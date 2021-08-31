@@ -23,6 +23,7 @@ const PrintModal = (props) => {
     invoice: printer_options[0].invoice,
     assembly_list: printer_options[0].assembly_list,
     packing_slip: printer_options[0].packing_slip,
+    qc: printer_options[0].qc,
   });
 
   const change = (e, name) => {
@@ -143,10 +144,10 @@ const PrintModal = (props) => {
                   <Label for="acknowledgement">QC</Label>
                   <DropdownList filter
                     data={number_select}
-                    value={printer_option.acknowledgement}
-                    onChange={(e) => change(e, 'acknowledgement')}
-                    textField="acknowledgement"
-                    name="acknowledgement"
+                    value={printer_option.qc}
+                    onChange={(e) => change(e, 'qc')}
+                    textField="qc"
+                    name="qc"
                   />
                 </FormGroup>
               </Form>
