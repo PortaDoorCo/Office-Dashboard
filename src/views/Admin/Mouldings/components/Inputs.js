@@ -69,7 +69,7 @@ let Inputs = (props) => {
                     />
                   </InputGroup>
                 </td>
-                <td>
+                <td style={{ width: '150px' }}>
                   <Field
                     name={`${table}.style`}
                     component={renderDropdownList}
@@ -81,7 +81,7 @@ let Inputs = (props) => {
                     required
                   />
                 </td>
-                <td>
+                <td style={{ width: '150px' }}>
                   <Field
                     name={`${table}.grade`}
                     component={renderDropdownList}
@@ -93,7 +93,7 @@ let Inputs = (props) => {
                     required
                   />
                 </td>
-                <td>
+                <td style={{ width: '150px' }}>
                   <Field
                     name={`${table}.woodtype`}
                     component={renderDropdownList}
