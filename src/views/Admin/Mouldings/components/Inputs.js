@@ -89,7 +89,7 @@ let Inputs = (props) => {
                       required
                     />
                   </td>
-                  <td style={{ width: '150px' }}>
+                  <td style={{ width: '175px' }}>
                     <Field
                       name={`${table}.grade`}
                       component={renderDropdownList}
@@ -116,7 +116,7 @@ let Inputs = (props) => {
                       required
                     />
                   </td>
-                  <td style={{ width: '150px' }}>
+                  <td style={{ width: '130px' }}>
                     <Field
                       name={`${table}.item`}
                       component={renderDropdownList}
@@ -134,7 +134,7 @@ let Inputs = (props) => {
 
                   <>
 
-                    <td style={{ width: '150px' }}>
+                    <td style={{ width: '125px' }}>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
@@ -205,7 +205,6 @@ let Inputs = (props) => {
                 className="mt-3"
                 onClick={() =>
                   fields.push({
-                    qty: 1,
                     linearFT: '0',
                     price: 0,
                   })

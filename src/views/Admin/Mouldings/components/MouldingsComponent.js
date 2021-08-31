@@ -318,7 +318,6 @@ const mapStateToProps = (state) => ({
     misc_items: [],
     mouldings: [
       {
-        qty: 1,
         linearFT: '0',
         price: 0,
       }
