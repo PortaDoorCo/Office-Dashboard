@@ -262,10 +262,7 @@ class Mouldings extends Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs="9">
-                    <h4>Note: Please specify any required lengths in Misc Notes</h4>
-                  </Col>
-
+                  <Col xs="9" />
                   <Col xs="3">
                     <strong>Sub Total: </strong>
                     <InputGroup className="mb-3">
@@ -319,7 +316,12 @@ const mapStateToProps = (state) => ({
   customers: state.customers.customerDB,
   initialValues: {
     misc_items: [],
-    mouldings: [],
+    mouldings: [
+      {
+        linearFT: '0',
+        price: 0,
+      }
+    ],
     balance_paid: 0,
     open: true,
     discount: 0,

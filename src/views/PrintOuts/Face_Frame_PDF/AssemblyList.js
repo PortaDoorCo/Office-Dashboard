@@ -8,6 +8,11 @@ import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
   const table_content = data.part_list.map((i, index) => {
+
+
+    console.log({i});
+    console.log({breakdowns});
+
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -122,21 +127,7 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
               {
-                text: `${
-                  i.design
-                    ? i.design.NAME
-                    : i.face_frame_design
-                      ? i.face_frame_design.NAME
-                      : i.construction.value === 'Slab'
-                        ? 'Slab'
-                        : ''
-                } - ${
-                  i.panel
-                    ? i.panel.NAME
-                    : i.construction.value === 'Slab'
-                      ? ''
-                      : 'Glass'
-                }`,
+                text: `${i.face_frame_design ? i.face_frame_design.NAME : ''}`,
                 style: 'fonts',
               },
               {

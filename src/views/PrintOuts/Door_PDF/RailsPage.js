@@ -249,7 +249,7 @@ export default (data, breakdowns) => {
               text: `${data.job_info.customer.Company}`,
             },
             {
-              text: `${data.job_info.Shop_Notes?.toUpperCase()}`,
+              text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
               alignment: 'center'
             },
             {

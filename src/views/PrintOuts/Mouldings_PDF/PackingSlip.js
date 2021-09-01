@@ -4,183 +4,36 @@ import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
-  const qty = data.part_list.map((part, i) => {
-    return part.dimensions
-      .map((dim, index) => {
-        return parseInt(dim.qty);
-      })
-      .reduce((acc, item) => acc + item, 0);
+
+  let qty = 0;
+
+  const count = data.mouldings.map((part, i) => {
+    qty += (i+ 1);
   });
 
-  const getName = (i) => {
-    return `${
-      i.design
-        ? i.design.NAME
-        : i.face_frame_design
-          ? i.face_frame_design.NAME
-          : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
-            ? ''
-            : ''
-    }`;
-  };
-  const a = Object.values(
-    groupBy(Glass_Selection(data), (x) => x?.woodtype?.NAME)
-  );
+  const table_body = [
+    [
+      { text: 'Linear Ft', style: 'fonts' },
+      { text: 'Style', style: 'fonts' },
+      { text: 'Grade', style: 'fonts' },
+      { text: 'Woodtype', style: 'fonts' },
+      { text: 'Item', style: 'fonts' },
+      { text: 'Notes', style: 'fonts' },
+    ],
+  ];
 
-  const b = a
-    .map((woodtype) => {
-      return woodtype.map((v) => {
-        return {
-          ...v,
-          dimensions: flatten(
-            v.dimensions.map((d) => ({
-              ...d,
-              name: getName(v),
-              panel: v.panel,
-              profile: v.profile,
-            }))
-          ),
-        };
-      });
-    })
-    .map((t, x) => ({
-      ...t[0],
-      dimensions: flatten(t.map((c) => c.dimensions)),
-    }));
 
-  const table_body = b.map((i, index) => {
-    const tableBody = [
-      [
-        { text: 'Item', style: 'fonts' },
-        { text: 'Style', style: 'fonts' },
-        { text: 'Qty', style: 'fonts' },
-        { text: 'Actual Size', style: 'fonts' },
-        { text: 'Panel', style: 'fonts', alignment: 'left' },
-        { text: 'IP', style: 'fonts', alignment: 'left' },
-        { text: 'Note', style: 'fonts' },
-        { text: 'Cab#', style: 'fonts' },
-      ],
-    ];
-    i.dimensions.forEach((item, index) => {
-      tableBody.push([
-        { text: item.item ? item.item : index + 1, style: 'fonts' },
-        { text: item.name, style: 'fonts' },
-        { text: `${item.qty}`, style: 'fonts' },
-        {
-          text: `${Size(item)}`,
-          style: 'fonts',
-        },
-        {
-          text: item.panel ? item.panel.NAME : '',
-          style: 'fonts',
-          alignment: 'left',
-        },
-        {
-          text: item.profile ? item.profile.NAME : '',
-          style: 'fonts',
-          alignment: 'left',
-        },
-        item.notes || item.full_frame || item.lite
-          ? {
-            text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-              item.full_frame ? 'Full Frame DF' : ''
-            } ${item.lite ? item.lite.NAME : ''}`,
-            style: 'tableBold',
-            alignment: 'left',
-          }
-          : null,
-        item.cab_number
-          ? {
-            text: `${item.cab_number}`,
-            style: 'fonts',
-            alignment: 'left',
-          }
-          : null,
-      ]);
-    });
-
-    return [
-      {
-        margin: [0, 0, 0, 0],
-        columns: [
-          {
-            stack: [
-              {
-                text: `${i.orderType ? i.orderType.name : ''}`,
-                style: 'fonts',
-              },
-              {
-                text: `${i.woodtype.NAME} - ${
-                  i.thickness.value === 1 || i.thickness.value === 2
-                    ? '4/4'
-                    : i.thickness.value === 3 || i.thickness.value === 4
-                      ? '5/4'
-                      : ''
-                }`,
-                style: 'woodtype',
-                width: 370,
-              },
-            ],
-          },
-          {
-            stack: [
-              {
-                text: '',
-                alignment: 'left',
-                style: 'fontsBold',
-                width: 80,
-              },
-              i.edge
-                ? {
-                  text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
-                  alignment: 'right',
-                  style: 'fonts',
-                }
-                : null,
-            ],
-          },
-        ],
-      },
-      // {
-      //   text:
-      //     '==============================================================================',
-      //   alignment: 'center',
-      // },
-      {
-        table: {
-          headerRows: 1,
-          widths: [22, 50, 20, 100, 60, 50, 90, 22],
-          body: tableBody,
-        },
-        layout: {
-          hLineWidth: function (i, node) {
-            return i === 1 ? 1 : 0;
-          },
-          vLineWidth: function (i, node) {
-            return 0;
-          },
-          hLineStyle: function (i, node) {
-            if (i === 0 || i === node.table.body.length) {
-              return null;
-            }
-            return { dash: { length: 1, space: 1 } };
-          },
-          paddingLeft: function (i) {
-            return i === 0 ? 0 : 8;
-          },
-          paddingRight: function (i, node) {
-            return i === node.table.widths.length - 1 ? 0 : 8;
-          },
-        },
-      },
-      {
-        text: '==============================================================================',
-        alignment: 'center',
-      },
-
-      // { text: '', pageBreak: 'before' }
-    ];
+  const t = data.mouldings?.forEach(i => {
+    table_body.push([
+      { text: i.linearFT, style: 'fonts' },
+      { text: i.style.name, style: 'fonts' },
+      { text: i.grade.name, style: 'fonts' },
+      { text: i.woodtype.NAME, style: 'fonts' },
+      { text: i.item.NAME, style: 'fonts' },
+      { text: i.notes ? i.notes : '', style: 'fontsBold' },
+    ]);
   });
+
 
   // const table_body = [];
 
@@ -367,7 +220,37 @@ export default (data, breakdowns) => {
       text: '==============================================================================',
       alignment: 'center',
     },
-    table_body,
+    {
+      table: {
+        headerRows: 1,
+        widths: ['*', '*', '*', '*', '*', '*'],
+        body: table_body,
+      },
+      layout: {
+        hLineWidth: function (i, node) {
+          return i === 1 ? 1 : 0;
+        },
+        vLineWidth: function (i, node) {
+          return 0;
+        },
+        hLineStyle: function (i, node) {
+          if (i === 0 || i === node.table.body.length) {
+            return null;
+          }
+          return { dash: { length: 1, space: 1 } };
+        },
+        paddingLeft: function (i) {
+          return i === 0 ? 0 : 8;
+        },
+        paddingRight: function (i, node) {
+          return i === node.table.widths.length - 1 ? 0 : 8;
+        },
+      },
+    },
+    {
+      text: '==============================================================================',
+      alignment: 'center',
+    },
     {
       columns: [
         {
@@ -428,7 +311,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          text: `Qty Doors: ${qty.reduce((acc, item) => acc + item, 0)}`,
+          text: `Qty Mouldings: ${qty}`,
           style: 'totals',
           width: 200,
         },

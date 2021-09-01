@@ -112,7 +112,7 @@ export default (data, breakdowns) => {
         },
 
         {
-          text: `${data.job_info.Shop_Notes?.toUpperCase()}`,
+          text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
           alignment: 'center'
         },
         {
@@ -224,7 +224,7 @@ export default (data, breakdowns) => {
               ]
             },
             {
-              text: `${part.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
+              text: '',
               style: 'fontsBold',
               alignment: 'center'
             },

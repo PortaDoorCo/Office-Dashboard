@@ -55,10 +55,8 @@ export default (data, breakdowns) => {
         { text: 'Style', style: 'fonts' },
         { text: 'Qty', style: 'fonts' },
         { text: 'Actual Size', style: 'fonts' },
-        { text: 'Panel', style: 'fonts', alignment: 'left' },
-        { text: 'IP', style: 'fonts', alignment: 'left' },
         { text: 'Note', style: 'fonts' },
-        { text: 'Cab#', style: 'fonts' },
+
       ],
     ];
     i.dimensions.forEach((item, index) => {
@@ -70,29 +68,12 @@ export default (data, breakdowns) => {
           text: `${Size(item)}`,
           style: 'fonts',
         },
-        {
-          text: item.panel ? item.panel.NAME : '',
-          style: 'fonts',
-          alignment: 'left',
-        },
-        {
-          text: item.profile ? item.profile.NAME : '',
-          style: 'fonts',
-          alignment: 'left',
-        },
         item.notes || item.full_frame || item.lite
           ? {
             text: `${item.notes ? item.notes.toUpperCase() : ''} ${
               item.full_frame ? 'Full Frame DF' : ''
             } ${item.lite ? item.lite.NAME : ''}`,
             style: 'tableBold',
-            alignment: 'left',
-          }
-          : null,
-        item.cab_number
-          ? {
-            text: `${item.cab_number}`,
-            style: 'fonts',
             alignment: 'left',
           }
           : null,
@@ -149,7 +130,7 @@ export default (data, breakdowns) => {
       {
         table: {
           headerRows: 1,
-          widths: [22, 50, 20, 100, 60, 50, 90, 22],
+          widths: ['*', '*', '*', '*', '*'],
           body: tableBody,
         },
         layout: {

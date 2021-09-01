@@ -21,6 +21,9 @@ const PrintModal = (props) => {
     NAME: printer_options[0].NAME,
     acknowledgement: printer_options[0].acknowledgement,
     invoice: printer_options[0].invoice,
+    assembly_list: printer_options[0].assembly_list,
+    packing_slip: printer_options[0].packing_slip,
+    qc: printer_options[0].qc,
   });
 
   const change = (e, name) => {
@@ -40,6 +43,7 @@ const PrintModal = (props) => {
       id: new_printer_option.length + 1,
       acknowledgement: 1,
       invoice: 1,
+      assembly_list: 1
     };
 
     set_new_printer_option([...new_printer_option, newOption]);
@@ -97,6 +101,53 @@ const PrintModal = (props) => {
                     onChange={(e) => change(e, 'invoice')}
                     textField="invoice"
                     name="invoice"
+                  />
+                </FormGroup>
+              </Form>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Form>
+                <FormGroup>
+                  <Label for="acknowledgement">Assembly List</Label>
+                  <DropdownList filter
+                    data={number_select}
+                    value={printer_option.assembly_list}
+                    onChange={(e) => change(e, 'assembly_list')}
+                    textField="assembly_list"
+                    name="assembly_list"
+                  />
+                </FormGroup>
+              </Form>
+            </Col>
+            <Col>
+              <Form>
+                <FormGroup>
+                  <Label for="invoice">Packing Slip</Label>
+                  <DropdownList filter
+                    data={number_select}
+                    value={printer_option.packing_slip} 
+                    onChange={(e) => change(e, 'packing_slip')}
+                    textField="packing_slip"
+                    name="packing_slip"
+                  />
+                </FormGroup>
+              </Form>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg='6'>
+              <Form>
+                <FormGroup>
+                  <Label for="acknowledgement">QC</Label>
+                  <DropdownList filter
+                    data={number_select}
+                    value={printer_option.qc}
+                    onChange={(e) => change(e, 'qc')}
+                    textField="qc"
+                    name="qc"
                   />
                 </FormGroup>
               </Form>

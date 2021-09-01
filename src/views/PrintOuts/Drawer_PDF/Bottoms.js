@@ -94,7 +94,7 @@ export default (data, breakdowns) => {
             //   ],
             // },
             {
-              text: `${data.job_info.Shop_Notes?.toUpperCase()}`,
+              text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
               alignment: 'center'
             },
             { text: `PO: ${data.job_info.poNum.toUpperCase()}`, alignment: 'right' },
@@ -159,10 +159,10 @@ export default (data, breakdowns) => {
 
         console.log({total_widths});
 
-        let waste = total_widths * 1.5;
+        let waste = total_widths * 1.3;
 
         let rips = Math.ceil(waste / 49);
-        let percentage_of_sheet = (length * rips) / 97;
+        let percentage_of_sheet = (length * rips) / 78;
 
         let mb = {
           columns: [
