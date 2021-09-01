@@ -8,13 +8,24 @@ const fraction = (num) => {
 };
 
 export default (info, part, breakdowns) => {
+
+  console.log({breakdowns});
+
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 
   const top_rail_arch = part?.design?.TOP_RAIL_ADD;
   const btm_rail_arch = part?.design?.BTM_RAIL_ADD;
 
-  const lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
+  let lip_factor;
+
+  if(part?.orderType?.value === 'DF'){
+    lip_factor = 0;
+  } else {
+    lip_factor = 
+    part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
+  }
+  
 
   console.log({lip_factor});
   

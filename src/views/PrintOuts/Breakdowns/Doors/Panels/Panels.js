@@ -26,7 +26,7 @@ export default (info, part, breakdowns) => {
     if (part?.construction?.value === 'Slab') {
       return Slab_Door(info);
     } else {
-      if(part.construction?.value === 'Cope'){
+      if(part.construction?.value === 'Cope'){ 
         return Door(info, part, breakdowns[4]);
       }
 
