@@ -17,18 +17,8 @@ export default (info, part, breakdowns) => {
   const top_rail_arch = part?.design?.TOP_RAIL_ADD;
   const btm_rail_arch = part?.design?.BTM_RAIL_ADD;
 
-  let lip_factor;
+  let lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
 
-  if(part?.orderType?.value === 'DF'){
-    lip_factor = 0;
-  } else {
-    lip_factor = 
-    part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
-  }
-  
-
-  console.log({lip_factor});
-  
   const topRail = info.topRail
     ? numQty(info.topRail) + (lip_factor / 2)
     : 0;
