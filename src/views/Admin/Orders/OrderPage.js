@@ -396,7 +396,7 @@ class OrderPage extends Component {
     } else if (data.orderType === 'Mouldings') {
       MouldingsPDF(data, box_breakdowns, printerSettings, this.props.pricing);
     } else if (data.orderType === 'Face Frame') {
-      FaceFramesPDF(data, printerSettings, this.props.pricing);
+      FaceFramesPDF(data, breakdowns, printerSettings, this.props.pricing);
     }
   };
 
