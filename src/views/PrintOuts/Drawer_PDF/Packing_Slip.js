@@ -224,7 +224,7 @@ export default (data, breakdowns) => {
               ]
             },
             {
-              text: `${part.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
+              text: '',
               style: 'fontsBold',
               alignment: 'center'
             },
