@@ -64,6 +64,8 @@ const EditorComponent = (props) => {
     editorRef.current._input.selectionStart = editorRef.current._input.selectionEnd = startIndex + val.length;
     editorRef.current._input.focus();
   };
+
+  console.log({breakdowns});
   return (
     <div>
 
