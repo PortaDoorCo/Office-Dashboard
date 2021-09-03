@@ -185,7 +185,7 @@ const EditorComponent = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  breakdowns: state.part_list.breakdowns[3]
+  breakdowns: state.part_list.breakdowns[4]
 });
 
 const mapDispatchToProps = dispatch =>
