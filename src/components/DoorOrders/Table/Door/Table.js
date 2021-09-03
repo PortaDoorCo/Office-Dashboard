@@ -708,7 +708,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].leftStile`,
-            fraction(numQty(leftStile))
+            fraction(numQty(defaultLeftStile))
           )
         );
 
@@ -716,7 +716,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].rightStile`,
-            fraction(numQty(rightStile))
+            fraction(numQty(defaultRightStile))
           )
         );
 
@@ -724,7 +724,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].topRail`,
-            fraction(numQty(topRail))
+            fraction(numQty(defaultTopRail))
           )
         );
 
@@ -732,7 +732,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].bottomRail`,
-            fraction(numQty(bottomRail))
+            fraction(numQty(defaultBottomRail))
           )
         );
       }

@@ -61,6 +61,10 @@ const EditorComponent = (props) => {
     editorRef.current._input.selectionStart = editorRef.current._input.selectionEnd = startIndex + val.length;
     editorRef.current._input.focus();
   };
+
+
+  console.log({breakdowns});
+
   return (
     <div>
 
@@ -185,7 +189,7 @@ const EditorComponent = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  breakdowns: state.part_list.breakdowns[3]
+  breakdowns: state.part_list.breakdowns[4]
 });
 
 const mapDispatchToProps = dispatch =>
