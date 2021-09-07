@@ -139,7 +139,7 @@ const StatusTable = (props) => {
       name: 'Total',
       selector: 'total',
       sortable: true,
-      cell: (row) => <div>${row.total.toFixed(2)}</div>,
+      cell: (row) => <div>${row.total?.toFixed(2)}</div>,
     },
     {
       name: ' ',
