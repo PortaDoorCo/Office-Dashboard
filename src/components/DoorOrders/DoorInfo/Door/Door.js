@@ -32,7 +32,6 @@ class Door extends Component {
     const rightStile = formState?.part_list[index]?.rightStile;
     const topRail = formState?.part_list[index]?.topRail;
     const bottomRail = formState?.part_list[index]?.bottomRail;
-    const applied_profile = formState?.part_list[index]?.applied_profile;
 
     const value = e.target?.value;
     console.log({e});
