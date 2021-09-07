@@ -139,7 +139,7 @@ export default (data, pricing) => {
                   text: `${
                     part.applied_profile ? part.applied_profile.NAME : ''
                   }`,
-                  style: 'fontsBold',
+                  style: 'headerFont',
                   alignment: 'center',
                 }
                 : null,

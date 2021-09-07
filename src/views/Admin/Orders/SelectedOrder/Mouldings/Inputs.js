@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Field } from 'redux-form';
 import {
   renderNumber,
   renderDropdownList,
   renderInt,
+  renderTextField,
+  renderDropdownListFilter,
 } from '../../../../../components/RenderInputs/renderInputs';
 import {
   Button,
@@ -42,121 +44,142 @@ let Inputs = (props) => {
 
   return (
     <div>
-      <Table>
-        <thead>
-          <tr>
-            <th style={{ width: '150px' }}>Total Linear FT</th>
-            <th>Style</th>
-            <th>Grade</th>
-            <th>Woodtype</th>
-            <th>Item</th>
-            <th>Price</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {fields.map((table, index) => {
-            return (
-              <tr key={index}>
-                <td style={{ width: '150px' }}>
-                  <InputGroup>
+      {fields.map((table, index) => {
+        return (
+          <Fragment key={index}>
+            <Table>
+              <thead>
+                <tr>
+                  <th style={{ width: '150px' }}>Total Linear FT</th>
+                  <th>Style</th>
+                  <th>Grade</th>
+                  <th>Woodtype</th>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr key={index}>
+                  <td style={{ width: '150px' }}>
+                    <InputGroup>
+                      <Field
+                        name={`${table}.linearFT`}
+                        type="text"
+                        component={renderNumber}
+                        label="price"
+                        edit={edit}
+                        required
+                      />
+                    </InputGroup>
+                  </td>
+                  <td style={{ width: '150px' }}>
                     <Field
-                      name={`${table}.linearFT`}
-                      type="text"
-                      component={renderNumber}
-                      label="price"
+                      name={`${table}.style`}
+                      component={renderDropdownList}
+                      data={styles}
+                      // onChange={(e) => changeMiscItem(e, index)}
+                      valueField="value"
+                      textField="name"
                       edit={edit}
                       required
                     />
-                  </InputGroup>
-                </td>
-                <td>
-                  <Field
-                    name={`${table}.style`}
-                    component={renderDropdownList}
-                    data={styles}
-                    // onChange={(e) => changeMiscItem(e, index)}
-                    valueField="value"
-                    textField="name"
-                    edit={edit}
-                    required
-                  />
-                </td>
-                <td>
-                  <Field
-                    name={`${table}.grade`}
-                    component={renderDropdownList}
-                    data={thickness}
-                    // onChange={(e) => changeMiscItem(e, index)}
-                    valueField="value"
-                    textField="name"
-                    edit={edit}
-                    required
-                  />
-                </td>
-                <td>
-                  <Field
-                    name={`${table}.woodtype`}
-                    component={renderDropdownList}
-                    data={filtered_woodtypes.filter(
-                      (wood) =>
-                        wood[formState?.mouldings[index]?.grade?.db_name]
-                    )}
-                    // onChange={(e) => changeMiscItem(e, index)}
-                    valueField="value"
-                    textField="NAME"
-                    edit={edit}
-                    required
-                  />
-                </td>
-                <td style={{ width: '150px' }}>
-                  <Field
-                    name={`${table}.item`}
-                    component={renderDropdownList}
-                    data={part_list?.mouldings.filter(
-                      (item) =>
-                        item.Style === formState?.mouldings[index]?.style?.value
-                    )}
-                    // onChange={(e) => changeMiscItem(e, index)}
-                    valueField="value"
-                    textField="NAME"
-                    edit={edit}
-                    required
-                  />
-                </td>
-
-                <>
-
+                  </td>
+                  <td style={{ width: '175px' }}>
+                    <Field
+                      name={`${table}.grade`}
+                      component={renderDropdownList}
+                      data={thickness}
+                      // onChange={(e) => changeMiscItem(e, index)}
+                      valueField="value"
+                      textField="name"
+                      edit={edit}
+                      required
+                    />
+                  </td>
                   <td style={{ width: '150px' }}>
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>$</InputGroupText>
-                      </InputGroupAddon>
-                      <NumberFormat
-                        thousandSeparator={true}
-                        value={linePrices[index]}
-                        disabled={true}
-                        customInput={Input}
-                        {...currencyMask}
-                        prefix={'$'}
-                      />
-                      {/* <Input  placeholder={linePrices[index]} {...currencyMask} disabled /> */}
-                    </InputGroup>
+                    <Field
+                      name={`${table}.woodtype`}
+                      component={renderDropdownListFilter}
+                      data={filtered_woodtypes.filter(
+                        (wood) =>
+                          wood[formState?.mouldings[index]?.grade?.db_name]
+                      )}
+                      // onChange={(e) => changeMiscItem(e, index)}
+                      valueField="value"
+                      textField="NAME"
+                      edit={edit}
+                      required
+                    />
                   </td>
-                </>
+                  <td style={{ width: '130px' }}>
+                    <Field
+                      name={`${table}.item`}
+                      component={renderDropdownListFilter}
+                      data={part_list?.mouldings.filter(
+                        (item) =>
+                          item.Style === formState?.mouldings[index]?.style?.value
+                      )}
+                      // onChange={(e) => changeMiscItem(e, index)}
+                      valueField="value"
+                      textField="NAME"
+                      edit={edit}
+                      required
+                    />
+                  </td>
 
-                {!edit ? (
-                  <td>
-                    <Button color="danger" onClick={() => fields.remove(index)}>
-                    X
-                    </Button>
-                  </td>
-                ) : null}
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+                  <>
+
+                    <td style={{ width: '125px' }}>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <NumberFormat
+                          thousandSeparator={true}
+                          value={linePrices[index]}
+                          disabled={true}
+                          customInput={Input}
+                          {...currencyMask}
+                          prefix={'$'}
+                        />
+                        {/* <Input  placeholder={linePrices[index]} {...currencyMask} disabled /> */}
+                      </InputGroup>
+                    </td>
+                  </>
+
+                  {!edit ? (
+                    <td>
+                      <Button color="danger" onClick={() => fields.remove(index)}>
+                      X
+                      </Button>
+                    </td>
+                  ) : null}
+                </tr>
+              </tbody>
+            </Table>
+            <Row mb='4'>
+              <Col xs="5">
+                <strong>Notes</strong>
+                <Row>
+                  <Col lg="10">
+                    <Field
+                      name={`${table}.notes`}
+                      type="textarea"
+                      component={renderTextField}
+                      edit={edit}
+                      placeholder={'Please specify any required lengths'}
+                      label="notes"
+                    />
+                  </Col>
+                
+                
+                </Row>
+              </Col>
+            </Row>
+          </Fragment>
+        );
+      })}
 
       <Row>
         <Col>

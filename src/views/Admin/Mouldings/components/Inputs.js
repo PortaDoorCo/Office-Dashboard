@@ -5,7 +5,8 @@ import {
   renderDropdownList,
   renderInt,
   renderTextField,
-  renderPrice
+  renderPrice,
+  renderDropdownListFilter
 } from '../../../../components/RenderInputs/renderInputs';
 import {
   Button,
@@ -42,9 +43,7 @@ let Inputs = (props) => {
     (wood) => wood.mouldings === true
   );
 
-  const clearNotes = (index, e) => {
-    alert('hi');
-  };
+
   return (
     <div>
       
@@ -104,7 +103,7 @@ let Inputs = (props) => {
                   <td style={{ width: '150px' }}>
                     <Field
                       name={`${table}.woodtype`}
-                      component={renderDropdownList}
+                      component={renderDropdownListFilter}
                       data={filtered_woodtypes.filter(
                         (wood) =>
                           wood[formState?.mouldings[index]?.grade?.db_name]
@@ -119,7 +118,7 @@ let Inputs = (props) => {
                   <td style={{ width: '130px' }}>
                     <Field
                       name={`${table}.item`}
-                      component={renderDropdownList}
+                      component={renderDropdownListFilter}
                       data={part_list?.mouldings.filter(
                         (item) =>
                           item.Style === formState?.mouldings[index]?.style?.value
@@ -177,17 +176,7 @@ let Inputs = (props) => {
                     />
                   </Col>
                 
-                  <Col lg="2">
-                    {!edit ? (
-                      <Button
-                        color="danger"
-                        className="btn-circle"
-                        onClick={(e) => clearNotes(index, e)}
-                      >
-                        X
-                      </Button>
-                    ) : null}
-                  </Col>
+                 
                 </Row>
               </Col>
             </Row>

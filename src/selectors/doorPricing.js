@@ -186,7 +186,7 @@ export const itemPriceSelector = createSelector(
 
       let wood;
 
-      switch(part?.thickness?.value) {
+      switch (part?.thickness?.value) {
         case 2:
           // code block
           wood = part?.woodtype?.SELECT_GRADE;
@@ -212,11 +212,11 @@ export const itemPriceSelector = createSelector(
           wood = part?.woodtype?.STANDARD_GRADE;
       }
 
+      console.log({discount});
+
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
-      const applied_profile = part.applied_profile
-        ? part.applied_profile.UPCHARGE
-        : 0;
+      const applied_profile = 0;
       const finish = part.finish ? part.finish.UPCHARGE : 0;
 
       const ff_opening_cost = part.face_frame_design
@@ -233,10 +233,18 @@ export const itemPriceSelector = createSelector(
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
             const width_input = Math.ceil(numQty(i.width));
-            const width = Math.ceil(numQty(i.width)) < 24 ? 18 : Math.ceil(numQty(i.width)) >= 24 && Math.ceil(numQty(i.width)) <= 48 ? 24 : 36;
+            const width =
+              Math.ceil(numQty(i.width)) < 24
+                ? 18
+                : Math.ceil(numQty(i.width)) >= 24 &&
+                  Math.ceil(numQty(i.width)) <= 48
+                  ? 24
+                  : 36;
             const height = Math.ceil(numQty(i.height));
             const openings = parseInt(i.openings);
-            const finish = part.face_frame_finishing ? part.face_frame_finishing.PRICE : 0;
+            const finish = part.face_frame_finishing
+              ? part.face_frame_finishing.PRICE
+              : 0;
 
             const width_finish = width_input >= 35 ? finish * 0.25 : 0;
             const height_finish = height >= 97 ? finish * 0.25 : 0;
@@ -245,13 +253,11 @@ export const itemPriceSelector = createSelector(
 
             let overcharge = 0;
 
-            if(width_input >= 48 || height >= 96){
+            if (width_input >= 48 || height >= 96) {
               overcharge = 100;
             }
 
-            const price = eval(pricer && pricer.face_frame_pricing); 
-
-
+            const price = eval(pricer && pricer.face_frame_pricing);
 
             if (height > -1) {
               return price;
@@ -260,7 +266,6 @@ export const itemPriceSelector = createSelector(
             }
           });
 
-
           return linePrice;
         } else {
           return 0;
@@ -268,7 +273,6 @@ export const itemPriceSelector = createSelector(
       } else {
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
-
             const width = Math.ceil(numQty(i.width));
             const height = Math.ceil(numQty(i.height));
             const qty = parseInt(i.qty);
@@ -493,7 +497,6 @@ export const itemPriceSelector = createSelector(
             }
           });
 
-
           return linePrice;
         } else {
           return 0;
@@ -506,7 +509,6 @@ export const linePriceSelector = createSelector(
   [partListSelector, pricingSelector, itemPriceSelector],
   (parts, pricer, item) =>
     parts.map((part, index) => {
-
       if (part.dimensions) {
         return part.dimensions.map((i, p) => {
           if (item[index][p]) {
@@ -519,7 +521,6 @@ export const linePriceSelector = createSelector(
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
-
                 const base = item[index][p] * parseInt(i.qty);
                 const add = base * 0.2;
                 const price = base + add;
@@ -538,6 +539,14 @@ export const linePriceSelector = createSelector(
         return 0;
       }
     })
+);
+
+export const nonDiscountedItems = createSelector(
+  [partListSelector],
+  (parts) =>
+    parts.map((i) => {
+      return i.applied_profile?.UPCHARGE ? i.applied_profile?.UPCHARGE : 0;
+    }).reduce((acc, item) => acc + item, 0)
 );
 
 export const addPriceSelector = createSelector(
@@ -605,19 +614,22 @@ export const taxSelector = createSelector(
     discountSelector,
     miscTotalSelector,
     stateSelector,
+    nonDiscountedItems
   ],
-  (subTotal, tax, discount, dis, misc, state) => {
+  (subTotal, tax, discount, dis, misc, state, nonDiscounted) => {
+
     return (
-      (subTotal.reduce((acc, item) => acc + item, 0) - discount + misc) * tax
+      (subTotal.reduce((acc, item) => acc + item, 0) - discount + misc + nonDiscounted) * tax
     );
   }
 );
 
 export const totalSelector = createSelector(
-  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector],
-  (subTotal, tax, misc, discount) => {
+  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector, nonDiscountedItems],
+  (subTotal, tax, misc, discount, nonDiscounted) => {
+
     return (
-      subTotal.reduce((acc, item) => acc + item, 0) + tax + misc - discount
+      subTotal.reduce((acc, item) => acc + item, 0) + tax + misc + nonDiscounted - discount
     );
   }
 );
