@@ -30,9 +30,7 @@ const pricing = (parts, pricer) => {
 
     const edge = part.edge ? part.edge.UPCHARGE : 0;
     const panel = part.panel ? part.panel.UPCHARGE : 0;
-    const applied_profile = part.applied_profile
-      ? part.applied_profile.UPCHARGE
-      : 0;
+    const applied_profile = 0;
     const finish = part.finish ? part.finish.UPCHARGE : 0;
 
     const ff_opening_cost = part.face_frame_design

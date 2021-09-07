@@ -146,9 +146,18 @@ export default (data, breakdowns) => {
             ],
           },
           {
-            text: `${i.notes ? i.notes.toUpperCase() : ''}`,
-            style: 'fontsBold',
-            alignment: 'center',
+            stack: [
+              {
+                text: `${i.notes ? i.notes.toUpperCase() : ''}`,
+                style: 'fontsBold',
+                alignment: 'center',
+              },
+              {
+                text: `${i.applied_profile ? i.applied_profile.NAME.toUpperCase() : ''}`,
+                style: 'fontsBold',
+                alignment: 'center',
+              },
+            ],
           },
           {
             stack: [
@@ -275,8 +284,12 @@ export default (data, breakdowns) => {
               text: `${data.job_info.customer.Company}`,
             },
             {
-              text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
-              alignment: 'center'
+              text: `${
+                data.job_info?.Shop_Notes
+                  ? data.job_info?.Shop_Notes?.toUpperCase()
+                  : ''
+              }`,
+              alignment: 'center',
             },
             {
               text: `PO: ${data.job_info.poNum.toUpperCase()}`,
