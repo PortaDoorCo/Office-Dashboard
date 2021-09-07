@@ -16,6 +16,7 @@ export default (data, breakdowns) => {
       { text: 'Grade', style: 'fonts' },
       { text: 'Woodtype', style: 'fonts' },
       { text: 'Item', style: 'fonts' },
+      { text: 'Notes', style: 'fonts' },
     ],
   ];
 
@@ -26,6 +27,7 @@ export default (data, breakdowns) => {
       { text: i.grade.name, style: 'fonts' },
       { text: i.woodtype.NAME, style: 'fonts' },
       { text: i.item.NAME, style: 'fonts' },
+      { text: i.notes ? i.notes : '', style: 'fontsBold' },
     ]);
   });
 
@@ -116,7 +118,7 @@ export default (data, breakdowns) => {
     {
       table: {
         headerRows: 1,
-        widths: ['*', '*', '*', '*', '*'],
+        widths: ['*', '*', '*', '*', '*', '*'],
         body: tableBody,
       },
       layout: {

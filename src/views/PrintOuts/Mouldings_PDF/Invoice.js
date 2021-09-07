@@ -48,6 +48,7 @@ export default (data, pricing) => {
       // { text: 'Thickness', style: 'fonts' },
       { text: 'Item', style: 'fonts' },
       { text: 'Linear FT', style: 'fonts' },
+      { text: 'Notes', style: 'fonts' },
       { text: 'Price', style: 'fonts' },
     ],
   ];
@@ -85,13 +86,16 @@ export default (data, pricing) => {
 
     let price = a * newWood * parseFloat(i.linearFT) * premium;
 
+    console.log({price});
+
     tableBody.push([
       { text: i.style.name, style: 'fonts' },
       { text: i.woodtype.NAME, style: 'fonts' },
       // { text: i.thickness.NAME, style: 'fonts' },
       { text: i.item.NAME, style: 'fonts' },
       { text: i.linearFT, style: 'fonts' },
-      { text: `$${(price * parseInt(i.qty)).toFixed(2)}`, style: 'fonts' },
+      { text: i.notes ? i.notes : '', style: 'fontsBold' },
+      { text: `$${price.toFixed(2)}`, style: 'fonts' },
     ]);
   });
 
@@ -330,7 +334,7 @@ export default (data, pricing) => {
     {
       table: {
         headerRows: 1,
-        widths: ['*', '*', '*', '*', '*'],
+        widths: ['*', '*', '*', '*', '*', '*'],
         body: tableBody,
       },
       layout: {
