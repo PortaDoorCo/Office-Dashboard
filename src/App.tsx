@@ -161,17 +161,6 @@ class App extends Component<PropTypes, StateTypes> {
     } = this.props;
 
     this.cookies(null);
-
-    // socket.on(
-    //   'new_deployment',
-    //   (res: any) => (
-    //     NotificationManager.success(
-    //       'There is a new version now available.  Please refresh your screen or open it in a new tab',
-    //       'New Version Released',
-    //       5000
-    //     )
-    //   )
-    // );
    
     socket.on(
       'order_submitted',
