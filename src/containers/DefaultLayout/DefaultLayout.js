@@ -53,6 +53,10 @@ import { login, getUsers, updateAppTour } from '../../redux/users/actions';
 
 import Loader from '../../views/Admin/Loader/Loader';
 import { NotificationContainer } from 'react-notifications';
+import db_url from '../../redux/db_url';
+import io from 'socket.io-client';
+
+const socket = io(db_url);
 
 const cookie = Cookies.get('jwt');
 
@@ -61,11 +65,39 @@ const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 let DefaultLayout = (props, context) => {
+
+  const [currentVersion, setCurrentVersion] = useState(true);
+
   let loading = () => (
     <div className="animated fadeIn pt-1 text-center">
       <div className="sk-spinner sk-spinner-pulse"></div>
     </div>
   );
+
+
+
+
+  useEffect(() => {
+    socket.on(
+      'new_deployment',
+      (res) => {
+        const timeout = process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT;
+        setTimeout(() => setCurrentVersion(false), timeout);
+      } 
+    );
+  },[]);
+
+  useEffect(() => {
+    if(!currentVersion){
+      NotificationManager.info(
+        'A new version of the app is now available!  Please refresh your page or open it in a new tab to see changes',
+        'A New Version is Available',
+        5000
+      );
+    }
+  },[currentVersion]);
+
+
 
   let history = useHistory();
 
@@ -210,7 +242,7 @@ let DefaultLayout = (props, context) => {
         <NotificationContainer />
         <AppHeader fixed>
           <Suspense fallback={loading()}>
-            <DefaultHeader />
+            <DefaultHeader currentVersion={currentVersion} />
           </Suspense>
         </AppHeader>
         <div className="app-body">
