@@ -17,6 +17,7 @@ import { loadingBarMiddleware } from 'react-redux-loading-bar';
 import Cookies from 'js-cookie';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
+import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
 const cookie = Cookies.get('jwt');
 
 

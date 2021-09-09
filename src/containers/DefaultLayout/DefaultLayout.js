@@ -55,6 +55,7 @@ import Loader from '../../views/Admin/Loader/Loader';
 import { NotificationContainer } from 'react-notifications';
 import db_url from '../../redux/db_url';
 import io from 'socket.io-client';
+import ErrorBoundary from '../../ErrorBoundry';
 
 const socket = io(db_url);
 
@@ -228,66 +229,69 @@ let DefaultLayout = (props, context) => {
     );
   } else {
     return (
-      <div className="app">
-        <Tour
-          steps={steps}
-          isOpen={app_tour}
-          onRequestClose={async (e) => {
-            e.preventDefault();
-            await history.push('/');
-            await updateAppTour(cookie, userId);
-          }}
-          updateDelay={1}
-        />
-        <NotificationContainer />
-        <AppHeader fixed>
-          <Suspense fallback={loading()}>
-            <DefaultHeader currentVersion={currentVersion} />
-          </Suspense>
-        </AppHeader>
-        <div className="app-body">
-          <AppSidebar fixed display="lg" className="side-bar-tour">
-            <AppSidebarHeader />
-            <AppSidebarForm />
+      <ErrorBoundary>
+        <div className="app">
+
+          <Tour
+            steps={steps}
+            isOpen={app_tour}
+            onRequestClose={async (e) => {
+              e.preventDefault();
+              await history.push('/');
+              await updateAppTour(cookie, userId);
+            }}
+            updateDelay={1}
+          />
+          <NotificationContainer />
+          <AppHeader fixed>
             <Suspense fallback={loading()}>
-              <AppSidebarNav navConfig={role.type === 'customer' ? customerNav : navigation} {...props} />
+              <DefaultHeader currentVersion={currentVersion} />
             </Suspense>
-            <AppSidebarFooter />
-            <AppSidebarMinimizer />
-          </AppSidebar>
-          <main className="main">
-            <AppBreadcrumb appRoutes={routes} />
-            <Container fluid className="resize">
+          </AppHeader>
+          <div className="app-body">
+            <AppSidebar fixed display="lg" className="side-bar-tour">
+              <AppSidebarHeader />
+              <AppSidebarForm />
               <Suspense fallback={loading()}>
-                <Switch>
-                  {routes.map((route, idx) => {
-                    return route.component ? (
-                      <Route
-                        key={idx}
-                        path={route.path}
-                        exact={route.exact}
-                        name={route.name}
-                        render={(props) => <route.component {...props} />}
-                      />
-                    ) : null;
-                  })}
-                  <Redirect from="/" to="/dashboard" />
-                </Switch>
+                <AppSidebarNav navConfig={role.type === 'customer' ? customerNav : navigation} {...props} />
               </Suspense>
-            </Container>
-          </main>
-          <AppAside fixed>
+              <AppSidebarFooter />
+              <AppSidebarMinimizer />
+            </AppSidebar>
+            <main className="main">
+              <AppBreadcrumb appRoutes={routes} />
+              <Container fluid className="resize">
+                <Suspense fallback={loading()}>
+                  <Switch>
+                    {routes.map((route, idx) => {
+                      return route.component ? (
+                        <Route
+                          key={idx}
+                          path={route.path}
+                          exact={route.exact}
+                          name={route.name}
+                          render={(props) => <route.component {...props} />}
+                        />
+                      ) : null;
+                    })}
+                    <Redirect from="/" to="/dashboard" />
+                  </Switch>
+                </Suspense>
+              </Container>
+            </main>
+            <AppAside fixed>
+              <Suspense fallback={loading()}>
+                <DefaultAside />
+              </Suspense>
+            </AppAside>
+          </div>
+          <AppFooter>
             <Suspense fallback={loading()}>
-              <DefaultAside />
+              <DefaultFooter />
             </Suspense>
-          </AppAside>
+          </AppFooter>
         </div>
-        <AppFooter>
-          <Suspense fallback={loading()}>
-            <DefaultFooter />
-          </Suspense>
-        </AppFooter>
-      </div>
+      </ErrorBoundary>
     );
   }
 };
