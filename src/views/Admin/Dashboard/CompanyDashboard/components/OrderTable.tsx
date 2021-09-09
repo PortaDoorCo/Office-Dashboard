@@ -142,7 +142,7 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'Date Ordered',
-      cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{moment(row.thing.created_at).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',
