@@ -161,7 +161,6 @@ class App extends Component<PropTypes, StateTypes> {
     } = this.props;
 
     this.cookies(null);
-
    
     socket.on(
       'order_submitted',

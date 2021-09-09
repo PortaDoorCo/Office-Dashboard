@@ -12,9 +12,10 @@ import { bindActionCreators } from 'redux';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import CloudDoneIcon from '@material-ui/icons/CloudDone';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
+import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
+import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
 
 import {
   loadAllOrders,
@@ -39,14 +40,24 @@ import {
   getBoxBreakdowns,
   getPricing
 } from '../../redux/part_list/actions';
-import { NotificationManager } from 'react-notifications';
 
 import Cookies from 'js-cookie';
 import CloudDone from '@material-ui/icons/CloudDone';
+import { withStyles } from '@material-ui/core/styles';
+
 
 const propTypes = {
   children: PropTypes.node,
 };
+
+const useStyles = theme => ({
+  customWidth: {
+    maxWidth: 500,
+  },
+});
+
+const updateMessage = 'There is a new version available!   Click here to refresh the page.';
+
 
 const defaultProps = {};
 
@@ -96,12 +107,15 @@ class DefaultHeader extends Component {
     }
   }
 
+  
+  
 
   render() {
 
     // eslint-disable-next-line
-    const { dbLoadComplete ,children, ...attributes } = this.props;
-    
+    const { dbLoadComplete, currentVersion, classes ,children, ...attributes  } = this.props;
+
+
 
     return (
       <React.Fragment>
@@ -135,6 +149,21 @@ class DefaultHeader extends Component {
           <NavItem className="px-3">
             <NavLink to="#" className="nav-link">Justin P. Romanos</NavLink>
           </NavItem> */}
+
+          <div className="mr-3">
+            {!currentVersion ?
+     
+              <Tooltip title={updateMessage} placement="bottom" classes={{ tooltip: classes.customWidth }} onClick={() => window.location.reload()}>
+                <NewReleasesIcon style={{ width: '40', height: '40', fill: '#ffa361' }} />
+              </Tooltip>
+              :
+              null
+            } 
+
+
+
+          </div>
+
           <div className="mr-3">
             {!dbLoadComplete ?
      
@@ -214,5 +243,5 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultHeader);
+)(withStyles(useStyles)(DefaultHeader));
 
