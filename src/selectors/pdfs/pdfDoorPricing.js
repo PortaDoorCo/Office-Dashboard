@@ -13,20 +13,34 @@ const pricing = (parts, pricer) => {
           ? part.design.UPCHARGE_THICK
           : 0;
 
-    const wood =
-      part.woodtype && part.thickness.value === 1
-        ? part.woodtype.STANDARD_GRADE
-        : part.woodtype && part.thickness.value === 2
-          ? part.woodtype.SELECT_GRADE
-          : part.woodtype && part.thickness.value === 3
-            ? part.woodtype.STANDARD_GRADE_THICK
-            : part.woodtype && part.thickness.value === 4
-              ? part.woodtype.SELECT_GRADE_THICK
-              : part.woodtype && part.thickness.value === 5
-                ? part.woodtype.SIX_QUARTER
-                : part.woodtype && part.thickness.value === 6
-                  ? part.woodtype.SIX_QUARTER_THICK
-                  : 0;
+    let wood;
+
+    switch (part?.thickness?.value) {
+      case 2:
+        // code block
+        wood = part?.woodtype?.SELECT_GRADE;
+        break;
+      case 3:
+        // code block
+        wood = part?.woodtype?.STANDARD_GRADE_THICK;
+        break;
+      case 4:
+        // code block
+        wood = part?.woodtype?.SELECT_GRADE_THICK;
+        break;
+      case 5:
+        // code block
+        wood = part?.woodtype?.SIX_QUARTER;
+        break;
+      case 6:
+        // code block
+        wood = part?.woodtype?.SIX_QUARTER_THICK;
+        break;
+      default:
+        // code block
+        wood = part?.woodtype?.STANDARD_GRADE;
+    }
+      
 
     const edge = part.edge ? part.edge.UPCHARGE : 0;
     const panel = part.panel ? part.panel.UPCHARGE : 0;
@@ -254,8 +268,12 @@ const pricing = (parts, pricer) => {
       const base = item[index][p] * parseInt(i.qty);
 
       if (
-        (parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
-        (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24)
+        (part.orderType.value === 'Door' ||
+        part.orderType.value === 'Glass' ||
+        part.orderType.value === 'One_Piece' ||
+        part.orderType.value === 'Two_Piece') &&
+      ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
+        (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
       ) {
         const add = base * 0.2;
         return base + add;
