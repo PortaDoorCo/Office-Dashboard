@@ -315,6 +315,7 @@ class App extends Component<PropTypes, StateTypes> {
     socket.on(
       'new_release',
       (res) => (
+        console.log({socket: res}),
         setTimeout(() => currentVersion(), timeout)
       ) 
     );
