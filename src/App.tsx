@@ -166,13 +166,13 @@ class App extends Component<PropTypes, StateTypes> {
 
     this.cookies(null);
 
+    const timeout = parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT);
+
     socket.on(
       'new_deployment',
-      (res) => {
-        const timeout = parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT);
-        console.log({res});
-        setTimeout(() => currentVersion(), timeout);
-      } 
+      (res) => (
+        setTimeout(() => currentVersion(), timeout)
+      ) 
     );
    
     socket.on(
