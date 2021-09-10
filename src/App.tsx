@@ -166,14 +166,7 @@ class App extends Component<PropTypes, StateTypes> {
 
     this.cookies(null);
 
-    const timeout = parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT);
 
-    socket.on(
-      'new_deployment',
-      (res) => (
-        setTimeout(() => currentVersion(), timeout)
-      ) 
-    );
    
     socket.on(
       'order_submitted',
@@ -310,7 +303,16 @@ class App extends Component<PropTypes, StateTypes> {
           10000
         )
       )
-    );    
+    );  
+    
+    // const timeout = parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT);
+
+    // socket.on(
+    //   'new_release',
+    //   (res) => (
+    //     setTimeout(() => currentVersion(), timeout)
+    //   ) 
+    // );
   };
 
   componentDidUpdate = async (prevProps: any) => {
