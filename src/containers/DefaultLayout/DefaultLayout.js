@@ -67,8 +67,6 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 let DefaultLayout = (props, context) => {
 
-  const [currentVersion, setCurrentVersion] = useState(true);
-
   let loading = () => (
     <div className="animated fadeIn pt-1 text-center">
       <div className="sk-spinner sk-spinner-pulse"></div>
@@ -76,30 +74,15 @@ let DefaultLayout = (props, context) => {
   );
 
 
-  console.log({process: parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT)});
-
-
   useEffect(() => {
-    socket.on(
-      'new_deployment',
-      (res) => {
-        const timeout = parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT);
-        console.log({res});
-        setTimeout(() => setCurrentVersion(false), timeout);
-      } 
-    );
-  },[]);
-
-  useEffect(() => {
-    if(!currentVersion){
+    if(!props.currentVersion){
       NotificationManager.info(
         'A new version of the app is now available!  Please refresh your page or open it in a new tab to see changes',
         'A New Version is Available',
         5000
       );
     }
-  },[currentVersion]);
-
+  },[props?.currentVersion]);
 
 
   let history = useHistory();
@@ -219,7 +202,9 @@ let DefaultLayout = (props, context) => {
 
   const [isTourOpen, setIsTourOpen] = useState(true);
 
-  const { customerDBLoaded, app_tour, userId, updateAppTour, role } = props;
+  const { customerDBLoaded, app_tour, userId, currentVersion, updateAppTour, role } = props;
+
+  console.log({currentVersion});
 
   // console.log({role});
 
@@ -317,6 +302,7 @@ const mapStateToProps = (state, prop) => ({
   customerDB: state.customers.customerDB,
   loadedMiscItems: state.misc_items.loadedMiscItems,
   loadedProducts: state.part_list.loadedProducts,
+  currentVersion: state.users.current_version
 });
 
 const mapDispatchToProps = (dispatch) =>

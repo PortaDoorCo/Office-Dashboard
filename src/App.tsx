@@ -25,7 +25,7 @@ import {
 } from './redux/part_list/actions';
 import { loadSales } from './redux/sales/actions';
 import { loadCustomers, loadAllCustomers, customerAdded, customerUpdated, customerDeleted } from './redux/customers/actions';
-import { setLogin } from './redux/users/actions';
+import { currentVersion, setLogin } from './redux/users/actions';
 import {
   getAllProducts,
   getBreakdowns,
@@ -108,17 +108,20 @@ type PropTypes = {
   loadCustomers: (data: {}, user: {}) => null,
   loadSales: (data: {}) => null,
   loadMiscItems: (data: {}) => null,
+  currentVersion: () => null,
   loggedIn: boolean,
   user: any,
+  current_version: boolean,
   users: {
     loggedIn: boolean,
-    user: any
+    user: any,
+    current_version: boolean
   }
 }
 
 type StateTypes = {
   isAuth: boolean,
-  cookie: any,
+  cookie: any
 }
 
 class App extends Component<PropTypes, StateTypes> {
@@ -157,10 +160,20 @@ class App extends Component<PropTypes, StateTypes> {
       customerUpdated,
       customerDeleted,
       printerOptionAdded,
-      printerOptionUpdated
+      printerOptionUpdated,
+      currentVersion
     } = this.props;
 
     this.cookies(null);
+
+    socket.on(
+      'new_deployment',
+      (res) => {
+        const timeout = parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT);
+        console.log({res});
+        setTimeout(() => currentVersion(), timeout);
+      } 
+    );
    
     socket.on(
       'order_submitted',
@@ -387,6 +400,7 @@ class App extends Component<PropTypes, StateTypes> {
               name="User-Dashboard"
               component={DefaultLayout}
               isLogged={this.state.isAuth}
+
             />
           </Switch>
         </React.Suspense>
@@ -397,7 +411,8 @@ class App extends Component<PropTypes, StateTypes> {
 
 const mapStateToProps = (state: PropTypes) => ({
   loggedIn: state.users.loggedIn,
-  user: state.users.user
+  user: state.users.user,
+  current_version: state.users.current_version
 });
 
 const mapDispatchToProps = (dispatch: any) =>
@@ -436,7 +451,8 @@ const mapDispatchToProps = (dispatch: any) =>
       customerDeleted,
       loadPrinterOptions,
       printerOptionAdded,
-      printerOptionUpdated
+      printerOptionUpdated,
+      currentVersion
     },
     dispatch
   );
