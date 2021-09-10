@@ -17,6 +17,7 @@ export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const GET_USERS = 'GET_USERS';
 export const UPDATE_APP_TOUR = 'UPDATE_APP_TOUR';
+export const CURRENT_VERSION = 'CURRENT_VERSION';
 
 
 
@@ -176,6 +177,15 @@ export function setLogin() {
   return async function (dispatch) {
     return dispatch({
       type: SET_LOGIN,
+    });
+  };
+}
+
+
+export function currentVersion() {
+  return async function (dispatch) {
+    return dispatch({
+      type: CURRENT_VERSION,
     });
   };
 }
