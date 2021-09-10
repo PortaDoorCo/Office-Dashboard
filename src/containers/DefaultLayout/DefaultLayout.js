@@ -76,13 +76,14 @@ let DefaultLayout = (props, context) => {
   );
 
 
+  console.log({process: parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT)});
 
 
   useEffect(() => {
     socket.on(
       'new_deployment',
       (res) => {
-        const timeout = process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT;
+        const timeout = parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT);
         console.log({res});
         setTimeout(() => setCurrentVersion(false), timeout);
       } 
