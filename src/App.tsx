@@ -307,6 +307,11 @@ class App extends Component<PropTypes, StateTypes> {
     
     const timeout = parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT);
 
+
+
+    console.log({process_1: process.env.REACT_APP_DB_URL});
+    console.log({process_1: process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT});
+
     socket.on(
       'new_release',
       (res) => (
