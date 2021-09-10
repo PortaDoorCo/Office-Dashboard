@@ -83,6 +83,7 @@ let DefaultLayout = (props, context) => {
       'new_deployment',
       (res) => {
         const timeout = process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT;
+        console.log({res});
         setTimeout(() => setCurrentVersion(false), timeout);
       } 
     );
