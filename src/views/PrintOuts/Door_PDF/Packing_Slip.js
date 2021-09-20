@@ -27,26 +27,22 @@ export default (data, breakdowns) => {
     groupBy(Glass_Selection(data), (x) => x?.woodtype?.NAME)
   );
 
-  const b = a
-    .map((woodtype) => {
-      return woodtype.map((v) => {
-        return {
-          ...v,
-          dimensions: flatten(
-            v.dimensions.map((d) => ({
-              ...d,
-              name: getName(v),
-              panel: v.panel,
-              profile: v.profile,
-            }))
-          ),
-        };
-      });
-    })
-    .map((t, x) => ({
-      ...t[0],
-      dimensions: flatten(t.map((c) => c.dimensions)),
-    }));
+  const b = Glass_Selection(data)
+    .map((v) => {
+
+      return {
+        ...v,
+        dimensions: flatten(
+          v.dimensions.map((d) => ({
+            ...d,
+            name: getName(v),
+            panel: v.panel,
+            profile: v.profile,
+          }))
+        ),
+      };
+
+    });
 
   const table_body = b.map((i, index) => {
     const tableBody = [
@@ -55,13 +51,16 @@ export default (data, breakdowns) => {
         { text: 'Style', style: 'fonts' },
         { text: 'Qty', style: 'fonts' },
         { text: 'Actual Size', style: 'fonts' },
-        { text: 'Panel', style: 'fonts', alignment: 'left' },
+        // { text: 'Panel', style: 'fonts', alignment: 'left' },
         { text: 'IP', style: 'fonts', alignment: 'left' },
         { text: 'Note', style: 'fonts' },
         { text: 'Cab#', style: 'fonts' },
       ],
     ];
     i.dimensions.forEach((item, index) => {
+
+      console.log({item});
+
       tableBody.push([
         { text: item.item ? item.item : index + 1, style: 'fonts' },
         { text: item.name, style: 'fonts' },
@@ -70,11 +69,11 @@ export default (data, breakdowns) => {
           text: `${Size(item)}`,
           style: 'fonts',
         },
-        {
-          text: item.panel ? item.panel.NAME : '',
-          style: 'fonts',
-          alignment: 'left',
-        },
+        // {
+        //   text: item.panel ? item.panel.NAME : '',
+        //   style: 'fonts',
+        //   alignment: 'left',
+        // },
         {
           text: item.profile ? item.profile.NAME : '',
           style: 'fonts',
@@ -82,7 +81,7 @@ export default (data, breakdowns) => {
         },
         item.notes || item.full_frame || item.lite
           ? {
-            text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+            text: `${
               item.full_frame ? 'Full Frame DF' : ''
             } ${item.lite ? item.lite.NAME : ''}`,
             style: 'tableBold',
@@ -137,6 +136,11 @@ export default (data, breakdowns) => {
                   style: 'fonts',
                 }
                 : null,
+              {
+                text: `Panel: ${i.panel ? i.panel.NAME : 'Glass'}`,
+                alignment: 'right',
+                style: 'woodtype',
+              },
             ],
           },
         ],
@@ -149,7 +153,7 @@ export default (data, breakdowns) => {
       {
         table: {
           headerRows: 1,
-          widths: [22, 50, 20, 100, 60, 50, 90, 22],
+          widths: [22, 50, 20, '*', '*', '*', '*'],
           body: tableBody,
         },
         layout: {

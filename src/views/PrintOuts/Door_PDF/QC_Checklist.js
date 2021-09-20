@@ -55,7 +55,7 @@ export default (data, breakdowns) => {
           { text: 'Qty', style: 'fonts' },
           { text: 'Actual Size WxH', style: 'fonts' },
           { text: 'CHK', style: 'fonts' },
-          { text: 'L/R', style: 'fonts' },
+          // { text: 'L/R', style: 'fonts' },
           { text: 'Build Instruction', style: 'fonts' },
           { text: 'Cab#', style: 'fonts' },
         ]
@@ -68,10 +68,10 @@ export default (data, breakdowns) => {
           { text: item.qty, style: 'fonts' },
           { text: Size(item), style: 'fonts' },
           { text: '[      ]', style: 'fonts' },
-          { text: 'N/A', style: 'fonts' },
+          // { text: 'N/A', style: 'fonts' },
           item.notes || item.full_frame || item.lite ? 
             {
-              text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+              text: `${
                 item.full_frame ? 'Full Frame DF' : ''
               } ${item.lite ? item.lite.NAME : ''}`,
               style: 'tableBold', alignment: 'left'
@@ -114,7 +114,7 @@ export default (data, breakdowns) => {
                 // },
               ]
             },
-            { text: ' ', style: 'fontsBold', width: 150 },
+            { text: ' ', style: 'fontsBold', width: 140 },
             { 
               stack: [
                 {text: ' ', style:'woodtype' },
@@ -150,7 +150,7 @@ export default (data, breakdowns) => {
           margin: [0,0,0,10],
           table: {
             headerRows: 1,
-            widths: [22, 15, 110, 40, 40, 155, '*' ],
+            widths: [22, 15, 110, 40, 155, '*' ],
             body: tableBody,
           },
           layout: {
