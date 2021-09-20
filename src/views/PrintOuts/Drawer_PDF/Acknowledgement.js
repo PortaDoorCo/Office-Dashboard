@@ -282,7 +282,7 @@ export default (data, pricing) => {
     {
       text: '==============================================================================',
       alignment: 'center',
-      margin: [0, 5, 0, 0],
+      margin: [0, 10, 0, 0],
     },
     data.part_list.map((part, i) => {
       const tableBody = [
@@ -359,6 +359,7 @@ export default (data, pricing) => {
         {
           text: '==============================================================================',
           alignment: 'center',
+
         },
         // {
         //   margin: [0, 10, 0, 0],

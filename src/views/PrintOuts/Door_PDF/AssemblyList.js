@@ -303,6 +303,7 @@ export default (data, breakdowns) => {
     {
       text: '==============================================================================',
       alignment: 'center',
+      margin: [0,10,0,0]
     },
     table_content,
     // { text: '', pageBreak: 'before' }

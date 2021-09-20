@@ -53,7 +53,7 @@ export default (data, breakdowns) => {
         { text: 'Pat', style: 'fonts' },
         { text: 'Arch', style: 'fonts' },
         { text: 'Panel', style: 'fonts' },
-        { text: 'Note', style: 'fonts' },
+        // { text: 'Note', style: 'fonts' },
       ],
     ];
 
@@ -105,15 +105,15 @@ export default (data, breakdowns) => {
               }),
               style: 'fonts',
             },
-            item.notes || item.full_frame || item.lite
-              ? {
-                text: `${item.notes ? item.notes : ''} ${
-                  item.full_frame ? 'Full Frame DF' : ''
-                } ${item.lite ? item.lite.NAME : ''}`,
-                style: 'tableBold',
-                alignment: 'left',
-              }
-              : null,
+            // item.notes || item.full_frame || item.lite
+            //   ? {
+            //     text: `${
+            //       item.full_frame ? 'Full Frame DF' : ''
+            //     } ${item.lite ? item.lite.NAME : ''}`,
+            //     style: 'tableBold',
+            //     alignment: 'left',
+            //   }
+            //   : null,
           ]);
         }
       });
@@ -158,7 +158,7 @@ export default (data, breakdowns) => {
           table: {
             headerRows: 1,
             // widths: [22, 95, 30, '*', 200],
-            widths: [22, 50, 20, 80, 25, 30, 70, 120],
+            widths: [22, 50, 20, 80, 25, 30, '*'],
             body: tableBody,
           },
           layout: {
@@ -260,6 +260,7 @@ export default (data, breakdowns) => {
     },
     {
       canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
+      
     },
     table_body,
   ];

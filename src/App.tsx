@@ -216,7 +216,7 @@ class App extends Component<PropTypes, StateTypes> {
 
     socket.on('delivery_added', () => this.props.getDeliveries(cookie));
     socket.on('customer_added', (res: {}) => customerAdded(res));
-    socket.on('customer_updated', (res: {}) => customerUpdated(res));
+    socket.on('customer_updated', (res: {}) => console.log({res}));
     socket.on('customer_deleted', (res: {}) => customerDeleted(res));
 
 
@@ -316,7 +316,7 @@ class App extends Component<PropTypes, StateTypes> {
       'new_release',
       (res) => (
         console.log({socket: res}),
-        setTimeout(() => currentVersion(), timeout)
+        currentVersion()
       ) 
     );
   };
