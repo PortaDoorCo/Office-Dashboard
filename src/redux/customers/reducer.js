@@ -27,6 +27,7 @@ export default function (state = initialState, action) {
         customerDB: [data, ...state.customerDB],
       };
     case CUSTOMER_UPDATED:
+      console.log({data});
       return {
         ...state,
         orders: state.customerDB.map((i) =>

@@ -262,7 +262,7 @@ export function customerAdded(res) {
 export function customerUpdated(res) {
   return async function (dispatch) {
     return dispatch({
-      type: CUSTOMER_UPDATED,
+      type: UPDATE_CUSTOMER,
       data: res,
     });
   };
