@@ -1008,7 +1008,7 @@ const DoorTable = ({
                 </td>
                 <td>
                   <strong>
-                    <p>Top Rail {topRailAdd > 0 ? `+ Arch ${fraction(topRailAdd)}"` : null}</p>
+                    <p>Top Rail {topRailAdd > 0 ? '+ Arch' : null}</p>
                   </strong>
                   <Field
                     name={`${table}.topRail`}
@@ -1025,7 +1025,7 @@ const DoorTable = ({
                 </td>
                 <td>
                   <strong>
-                    <p>Bottom Rail {bottomRailAdd > 0 ? `+ Arch ${fraction(bottomRailAdd)}"` : null}</p>
+                    <p>Bottom Rail {bottomRailAdd > 0 ? '+ Arch' : null}</p>
                   </strong>
                   <Field
                     name={`${table}.bottomRail`}
