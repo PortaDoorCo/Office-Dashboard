@@ -89,6 +89,8 @@ const DoorTable = ({
   const topRailAdd = formState?.part_list[i]?.design?.TOP_RAIL_ADD;
   const bottomRailAdd = formState?.part_list[i]?.design?.BTM_RAIL_ADD;
 
+  const construction = formState?.part_list[i]?.construction?.value;
+
   useEffect(() => {
     setWidth([]);
     setHeight([]);
@@ -979,7 +981,7 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="leftStile"
-                    edit={edit}
+                    edit={construction === 'Miter' ? true : edit}
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
@@ -996,7 +998,7 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="rightStile"
-                    edit={edit}
+                    edit={construction === 'Miter' ? true : edit}
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
@@ -1013,7 +1015,7 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="topRail"
-                    edit={edit}
+                    edit={construction === 'Miter' ? true : edit}
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
@@ -1030,7 +1032,7 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="bottomRail"
-                    edit={edit}
+                    edit={construction === 'Miter' ? true : edit}
                     validate={required}
                     onChange={(e) => (
                       registerChange(index, e),
@@ -1047,7 +1049,7 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="horizontalMidRail"
-                    edit={edit}
+                    edit={construction === 'Miter' ? true : edit}
                   />
                 </td>
                 <td>
@@ -1059,7 +1061,7 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="verticalMidRail"
-                    edit={edit}
+                    edit={construction === 'Miter' ? true : edit}
                   />
                 </td>
               </tr>

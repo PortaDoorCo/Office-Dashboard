@@ -219,7 +219,7 @@ class Door extends Component {
                 type="text"
                 component={renderNumber}
                 label="leftStile"
-                edit={edit}
+                edit={construction === 'Miter' ? true : edit}
                 validate={required}
                 onChange={(e) => this.onChange(e)}
               />
@@ -233,7 +233,7 @@ class Door extends Component {
                 type="text"
                 component={renderNumber}
                 label="rightStile"
-                edit={edit}
+                edit={construction === 'Miter' ? true : edit}
                 validate={required}
                 onChange={(e) => this.onChange(e)}
               />
@@ -247,7 +247,7 @@ class Door extends Component {
                 type="text"
                 component={renderNumber}
                 label="topRail"
-                edit={edit}
+                edit={construction === 'Miter' ? true : edit}
                 validate={required}
                 onChange={(e) => this.onChange(e)}
               />
@@ -261,7 +261,7 @@ class Door extends Component {
                 type="text"
                 component={renderNumber}
                 label="bottomRail"
-                edit={edit}
+                edit={construction === 'Miter' ? true : edit}
                 validate={required}
                 onChange={(e) => this.onChange(e)}
               />
