@@ -52,10 +52,16 @@ export default (info, part, breakdowns) => {
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
+  const unevenInset = 0.75;
+
   const unevenSplitArray = Array.from(Array(panelsH).keys())
     .slice(1)
     .map((i, v) => {
-      return numQty(info[`unevenSplitInput${v}`]);
+      return (
+        numQty(info[`unevenSplitInput${v}`]) -
+        topRail +
+        unevenInset + lip_factor
+      );
     });
 
   const unevenSplitTotal =
@@ -85,23 +91,96 @@ export default (info, part, breakdowns) => {
     multiplier: qty,
   };
 
+  const unevenSplit = () => {
+    const panelWidth =
+      (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
+    const panelHeight =
+      height -
+      unevenSplitTotal -
+      horizMull * (panelsH - 1) -
+      bottomRail - unevenInset - lip_factor
+
+    const unevenSplitInput = (v) =>
+      numQty(info[`unevenSplitInput${v}`]) -
+      topRail +
+      unevenInset +
+      lip_factor / 2;
+
+
+
+    const glassCheck = (v) => info[`glass_check_${v}`];
+
+    const unEven = [
+      ...Array.from(Array(panelsH).keys())
+        .slice(1)
+        .map((i, v) => {
+          if (glassCheck(v)) {
+            console.log({ v });
+            console.log({ glass: glassCheck(v) });
+            return glassDoor(v);
+          } else {
+            return {
+              qty: `(${qty})`,
+              measurement: `${fraction(
+                Math.round(eval(breakdowns.panel_width) * 16) / 16
+              )} x ${fraction(unevenSplitInput(v))}`,
+              pattern: panelFlat ? "PF" : "PR",
+              width: Math.round(panelWidth),
+              height: Math.round(unevenSplitInput(v)),
+              panel: panelName,
+              multiplier: qty,
+              count: qty,
+            };
+          }
+        }),
+    ];
+
+    const bottom = {
+      qty: `(${qty})`,
+      measurement: `${fraction(
+        Math.round(eval(breakdowns.panel_width) * 16) / 16
+      )} x ${fraction(panelHeight)}`,
+      pattern: panelFlat ? "PF" : "PR",
+      width: Math.round(panelWidth),
+      height: Math.round(panelHeight),
+      panel: panelName,
+      multiplier: qty,
+      count: qty,
+    };
+
+    if (glassCheck(panelsH - 1)) {
+      return [
+        ...unEven,
+        glassDoor(panelsH - 1), // <-------Needs Testing
+      ];
+    } else {
+      return [...unEven, bottom];
+    }
+  };
+
   let door;
 
   if (part.orderType.value === "Door") {
-    door = [
-      {
-        qty: `(${panelsH * panelsW * qty})`,
-        measurement: `${fraction(
-          Math.round(eval(breakdowns.panel_width) * 16) / 16
-        )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-        pattern: panelFlat ? "PF" : "PR",
-        width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
-        height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-        panel: panelName,
-        count: panelsH * panelsW * qty,
-        multiplier: panelsH * panelsW * qty,
-      },
-    ];
+    if (info.unevenCheck) {
+      door = unevenSplit();
+    } else {
+      door = [
+        {
+          qty: `(${panelsH * panelsW * qty})`,
+          measurement: `${fraction(
+            Math.round(eval(breakdowns.panel_width) * 16) / 16
+          )} x ${fraction(
+            Math.round(eval(breakdowns.panel_height) * 16) / 16
+          )}`,
+          pattern: panelFlat ? "PF" : "PR",
+          width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+          height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+          panel: panelName,
+          count: panelsH * panelsW * qty,
+          multiplier: panelsH * panelsW * qty,
+        },
+      ];
+    }
   } else if (part.orderType.value === "DF") {
     if (VERTICAL_GRAIN) {
       door = [
@@ -147,63 +226,7 @@ export default (info, part, breakdowns) => {
     count: qty,
   };
 
-  const unevenSplit = () => {
-    const panelWidth =
-      (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
-    const panelHeight =
-      height -
-      unevenSplitTotal -
-      horizMull * (panelsH - 1) -
-      bottomRail -
-      topRail;
-    const unevenSplitInput = (v) => numQty(info[`unevenSplitInput${v}`]);
-    const glassCheck = (v) => info[`glass_check_${v}`];
-
-    const unEven = [
-      ...Array.from(Array(panelsH).keys())
-        .slice(1)
-        .map((i, v) => {
-          if (glassCheck(v)) {
-            return glassDoor(v);
-          } else {
-            return {
-              qty: `(${qty})`,
-              measurement: `${fraction(
-                Math.round(eval(breakdowns.panel_width) * 16) / 16
-              )} x ${fraction(unevenSplitInput(v))}`,
-              pattern: panelFlat ? "PF" : "PR",
-              width: Math.round(panelWidth),
-              height: Math.round(unevenSplitInput(v)),
-              panel: panelName,
-              multiplier: qty,
-              count: qty,
-            };
-          }
-        }),
-    ];
-
-    const bottom = {
-      qty: `(${qty})`,
-      measurement: `${fraction(
-        Math.round(eval(breakdowns.panel_width) * 16) / 16
-      )} x ${fraction(panelHeight)}`,
-      pattern: panelFlat ? "PF" : "PR",
-      width: Math.round(panelWidth),
-      height: Math.round(panelHeight),
-      panel: panelName,
-      multiplier: qty,
-      count: qty,
-    };
-
-    if (glassCheck(panelsH - 1)) {
-      return [
-        ...unEven,
-        glassDoor(panelsH - 1), // <-------Needs Testing
-      ];
-    } else {
-      return [...unEven, bottom];
-    }
-  };
+  console.log({ info });
 
   const doorFunc = () => {
     let arr = [];
