@@ -9,9 +9,10 @@ import Inbox from '@material-ui/icons/Inbox';
 import { Select } from 'antd';
 import { updateStatus, loadOrders, setSelectedOrder } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import { Button, Row, Col } from 'reactstrap';
+import { Button, Row, Col, FormGroup, Label, Input } from 'reactstrap';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
+
 
 const TextField = styled.input`
   height: 32px;
@@ -150,25 +151,39 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'Status',
-      grow: 1,
       cell: row => <div>
 
 
         <Row>
           <Col>
-            <Select defaultValue={row.status} style={{ width: '100%' }} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
+
+            <FormGroup style={{ height: '100%'}}>
+              <Input type="select" name="select" id="exampleSelect" style={{ height: '100%'}}>
+                {status.map((i, index) => (
+                  <option key={index} value={i.value}>{i.value}</option>
+                ))}
+              </Input>
+            </FormGroup>
+
+
+
+
+            {/* <Select defaultValue={row.status} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
               {status.map((i, index) => (
                 <Option key={index} value={i.value}>{i.value}</Option>
               ))}
-            </Select>
+            </Select> */}
           </Col>
         </Row>
 
-        <Row>
-          <Col style={{ textAlign: 'center', color: 'red' }}>
-            {row.job_info?.Rush && row.job_info?.Sample ? 'Sample / Rush' : row.job_info?.Rush ? 'Rush' : row.job_info?.Sample ? 'Sample' : ''}
-          </Col>
-        </Row>
+        {row.job_info?.Rush && row.job_info?.Sample ? 
+          <Row>
+            <Col style={{ textAlign: 'center', color: 'red' }}>
+              {row.job_info?.Rush && row.job_info?.Sample ? 'Sample / Rush' : row.job_info?.Rush ? 'Rush' : row.job_info?.Sample ? 'Sample' : ''}
+            </Col>
+          </Row> : null
+        }
+
 
       </div>
     },

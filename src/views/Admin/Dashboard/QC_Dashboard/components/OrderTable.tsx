@@ -12,6 +12,7 @@ import Cookies from 'js-cookie';
 import { Button, Row, Col } from 'reactstrap';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
+import 'antd/dist/antd.css';
 
 const TextField = styled.input`
   height: 32px;
@@ -172,44 +173,6 @@ const OrderTable = (props: TablePropTypes) => {
 
       </div>
     },
-    {
-      name: 'Submitted By',
-      cell: row => <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>,
-      sortable: true,
-    },
-
-    {
-      name: 'Total',
-      selector: 'total',
-      sortable: true,
-      cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
-    },
-    {
-      name: 'Balance Paid',
-      sortable: true,
-      cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
-    },
-    {
-      name: 'Terms',
-      cell: row => <div>{row.companyprofile && row.companyprofile.PMT_TERMS ? row.companyprofile.PMT_TERMS  : ''}</div>,
-      sortable: true,
-    },
-    {
-      name: ' ',
-      button: true,
-      grow: 2,
-      cell: (row) => <Tooltip title="View Order" placement="top">
-        <IconButton onClick={function (event) {
-          event.preventDefault();
-          toggle(row);
-        }} id={row.id}>
-          <Inbox>Open</Inbox>
-        </IconButton>
-      </Tooltip>,
-    },
-
-
-
   ];
 
   const toggle = (row: {}) => {
