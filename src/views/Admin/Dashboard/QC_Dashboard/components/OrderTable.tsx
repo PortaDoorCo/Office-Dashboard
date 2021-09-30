@@ -204,7 +204,7 @@ const OrderTable = (props: TablePropTypes) => {
 
   return (
     <div>
-      {data.length > 0 ?
+      {data?.length > 0 ?
         <DataTable
           title="Quality Control"
           className="order-table3"
