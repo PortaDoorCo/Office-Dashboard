@@ -974,40 +974,6 @@ const DoorTable = ({
               <tr>
                 <td>
                   <strong>
-                    <p>Left Stile</p>
-                  </strong>
-                  <Field
-                    name={`${table}.leftStile`}
-                    type="text"
-                    component={renderNumber}
-                    label="leftStile"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e),
-                      onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-                <td>
-                  <strong>
-                    <p>Right Stile</p>
-                  </strong>
-                  <Field
-                    name={`${table}.rightStile`}
-                    type="text"
-                    component={renderNumber}
-                    label="rightStile"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e),
-                      onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-                <td>
-                  <strong>
                     <p>Top Rail {topRailAdd > 0 ? '+ Arch' : null}</p>
                   </strong>
                   <Field
@@ -1040,6 +1006,42 @@ const DoorTable = ({
                     )}
                   />
                 </td>
+
+                <td>
+                  <strong>
+                    <p>Left Stile</p>
+                  </strong>
+                  <Field
+                    name={`${table}.leftStile`}
+                    type="text"
+                    component={renderNumber}
+                    label="leftStile"
+                    edit={construction === 'Miter' ? true : edit}
+                    validate={required}
+                    onChange={(e) => (
+                      registerChange(index, e),
+                      onStileOrRailChange(e, index)
+                    )}
+                  />
+                </td>
+                <td>
+                  <strong>
+                    <p>Right Stile</p>
+                  </strong>
+                  <Field
+                    name={`${table}.rightStile`}
+                    type="text"
+                    component={renderNumber}
+                    label="rightStile"
+                    edit={construction === 'Miter' ? true : edit}
+                    validate={required}
+                    onChange={(e) => (
+                      registerChange(index, e),
+                      onStileOrRailChange(e, index)
+                    )}
+                  />
+                </td>
+
                 <td>
                   <strong>
                     <p>Hori. Mid Rail</p>

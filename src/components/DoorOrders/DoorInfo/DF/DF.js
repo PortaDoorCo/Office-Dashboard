@@ -199,33 +199,6 @@ class CopeDF extends Component {
         </Row>
         
         <Row>
-
-          <Col>
-            <FormGroup>
-              <Label htmlFor="arches">Left Stile</Label>
-              <Field
-                name={`${part}.leftStile`}
-                type="text"
-                component={renderNumber}
-                label="leftStile"
-                edit={edit}
-                validate={required}
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label htmlFor="arches">Right Stile</Label>
-              <Field
-                name={`${part}.rightStile`}
-                type="text"
-                component={renderNumber}
-                label="rightStile"
-                edit={edit}
-                validate={required}
-              />
-            </FormGroup>
-          </Col>
           <Col>
             <FormGroup>
               <Label htmlFor="arches">Top Rail</Label>
@@ -252,6 +225,33 @@ class CopeDF extends Component {
               />
             </FormGroup>
           </Col>
+          <Col>
+            <FormGroup>
+              <Label htmlFor="arches">Left Stile</Label>
+              <Field
+                name={`${part}.leftStile`}
+                type="text"
+                component={renderNumber}
+                label="leftStile"
+                edit={edit}
+                validate={required}
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label htmlFor="arches">Right Stile</Label>
+              <Field
+                name={`${part}.rightStile`}
+                type="text"
+                component={renderNumber}
+                label="rightStile"
+                edit={edit}
+                validate={required}
+              />
+            </FormGroup>
+          </Col>
+
         </Row>
 
         <hr />

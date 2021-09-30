@@ -684,40 +684,6 @@ const Cope_Table = ({
                 <tr>
                   <td>
                     <strong>
-                      <p>Left Stile</p>
-                    </strong>
-                    <Field
-                      name={`${table}.leftStile`}
-                      type="text"
-                      component={renderNumber}
-                      label="leftStile"
-                      edit={edit}
-                      validate={required}
-                      onChange={(e) => (
-                        registerChange(index, e),
-                        onStileOrRailChange(e, index)
-                      )}
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Right Stile</p>
-                    </strong>
-                    <Field
-                      name={`${table}.rightStile`}
-                      type="text"
-                      component={renderNumber}
-                      label="rightStile"
-                      edit={edit}
-                      validate={required}
-                      onChange={(e) => (
-                        registerChange(index, e),
-                        onStileOrRailChange(e, index)
-                      )}
-                    />
-                  </td>
-                  <td>
-                    <strong>
                       <p>Top Rail</p>
                     </strong>
                     <Field
@@ -750,6 +716,41 @@ const Cope_Table = ({
                       )}
                     />
                   </td>
+                  <td>
+                    <strong>
+                      <p>Left Stile</p>
+                    </strong>
+                    <Field
+                      name={`${table}.leftStile`}
+                      type="text"
+                      component={renderNumber}
+                      label="leftStile"
+                      edit={edit}
+                      validate={required}
+                      onChange={(e) => (
+                        registerChange(index, e),
+                        onStileOrRailChange(e, index)
+                      )}
+                    />
+                  </td>
+                  <td>
+                    <strong>
+                      <p>Right Stile</p>
+                    </strong>
+                    <Field
+                      name={`${table}.rightStile`}
+                      type="text"
+                      component={renderNumber}
+                      label="rightStile"
+                      edit={edit}
+                      validate={required}
+                      onChange={(e) => (
+                        registerChange(index, e),
+                        onStileOrRailChange(e, index)
+                      )}
+                    />
+                  </td>
+
                 </tr>
 
                 <tr>
