@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, FormGroup, Input } from 'reactstrap';
 import classnames from 'classnames';
 // import StatusTable from './components/StatusTable'
 import { connect } from 'react-redux';
@@ -68,6 +68,8 @@ const SalesReport = (props) => {
     setData(filteredOrders);
   }, [startDate, endDate, orders, filterStatus, filterText]);
 
+  console.log({filterStatus});
+
 
   const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].created_at) : new Date();
 
@@ -103,7 +105,7 @@ const SalesReport = (props) => {
                     }
                   }}
                 />
-
+      
                 <SingleDatePicker
                   date={endDate} // momentPropTypes.momentObj or null
                   onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
@@ -124,14 +126,14 @@ const SalesReport = (props) => {
             </Row>
             <Row>
               <Col>
-                <Select defaultValue="All" style={{ width: '69%' }} onChange={e => setFilterStatus(e)}>
-                  <Option value="All">All</Option>
-                  {status.map((i, index) => (
-                    <Option key={index} value={i.value}>
-                      {i.value}
-                    </Option>
-                  ))}
-                </Select>
+                <FormGroup style={{ height: '100%', width :'60%'}}>
+                  <Input type="select" name="select" id="status_dropdown" defaultValue='All' onChange={e => setFilterStatus(e.target.value)} >
+                    <option value='All'>All</option>
+                    {status.map((i, index) => (
+                      <option key={index} value={i.value}>{i.value}</option>
+                    ))}
+                  </Input>
+                </FormGroup> 
               </Col>
             </Row>
           </Col>

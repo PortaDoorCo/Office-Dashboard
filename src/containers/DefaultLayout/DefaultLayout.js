@@ -56,6 +56,7 @@ import { NotificationContainer } from 'react-notifications';
 import db_url from '../../redux/db_url';
 import io from 'socket.io-client';
 import ErrorBoundary from '../../ErrorBoundry';
+import _qcNav from '../../_qcNav';
 
 const socket = io(db_url);
 
@@ -240,7 +241,7 @@ let DefaultLayout = (props, context) => {
               <AppSidebarHeader />
               <AppSidebarForm />
               <Suspense fallback={loading()}>
-                <AppSidebarNav navConfig={role.type === 'customer' ? customerNav : navigation} {...props} />
+                <AppSidebarNav navConfig={role.type === 'customer' ? customerNav : role.type === 'quality_control' ? _qcNav : navigation} {...props} />
               </Suspense>
               <AppSidebarFooter />
               <AppSidebarMinimizer />

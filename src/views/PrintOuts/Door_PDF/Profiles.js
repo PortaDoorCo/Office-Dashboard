@@ -12,6 +12,8 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
 
   const d = designs.length > 0 ? designs : blob;
 
+  console.log({d});
+
   return [
     {
       columns: [
@@ -64,7 +66,7 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
                   style: 'fonts'
                 },
                 {
-                  image: i.profile ? m : i.design ? d : blob,
+                  image: i.profile ? m : i.design ? d[index] : blob,
                   width: 100,
                   height: 100,
                   fit: [100, 100]

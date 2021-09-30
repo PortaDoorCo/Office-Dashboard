@@ -6,18 +6,13 @@ import moment from 'moment';
 import OrderPage from '../../../Orders/OrderPage';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-// import { Select } from 'antd';
+import { Select } from 'antd';
 import { updateStatus, loadOrders, setSelectedOrder } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import { Button, Row, Col, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Row, Col, FormGroup, Input } from 'reactstrap';
 import styled from 'styled-components';
-import status from '../../../../../utils/status';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
-import Select from 'react-dropdown-select';
-
+import status from '../../../../../utils/QC_Status';
+import 'antd/dist/antd.css';
 
 const TextField = styled.input`
   height: 32px;
@@ -48,9 +43,11 @@ const ClearButton = styled(Button)`
   justify-content: center;
 `;
 
+const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+
 
 const cookie = Cookies.get('jwt');
-// const { Option } = Select;
+const { Option } = Select;
 
 const conditionalRowStyles = [
   {
@@ -95,7 +92,13 @@ const OrderTable = (props: TablePropTypes) => {
           (item.orderNum?.toString().includes(filterText) || item.job_info?.customer?.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info?.poNum?.toLowerCase().includes(filterText.toLowerCase()))
         );
       } else {
-        return item;
+        if(item.status === 'Quote'){
+          return null;
+        } else {
+          return item;
+        }
+
+        
       }
     }) : [];
     setData(filteredOrders);
@@ -117,13 +120,8 @@ const OrderTable = (props: TablePropTypes) => {
   const handleStatusChange = async (e: any, row: { id: string }) => {
     const { updateStatus } = props;
     const status = {
-      status: e.target.value
+      status: e
     };
-
-    console.log({e: e.target.value});
-    console.log({row});
-
-
     await updateStatus(row.id, row, status, cookie);
   };
 
@@ -161,66 +159,28 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'Status',
+      grow: 1,
       cell: row => <div>
+
+
         <Row>
           <Col>
-            <FormGroup style={{ height: '100%'}}>
-              <Input type="select" name="select" id="status_dropdown" defaultValue={row.status} style={{ height: '100%', boxShadow: 'none', border: '0px', outline: '0px', background: 'none'}} onChange={(e) => handleStatusChange(e,row)}>
-                {status.map((i, index) => (
-                  <option key={index} value={i.value}>{i.value}</option>
-                ))}
-              </Input>
-            </FormGroup> 
+            <Row>
+              <Col>
+                <FormGroup style={{ height: '100%'}}>
+                  <Input type="select" name="select" id="status_dropdown" defaultValue={row.status} style={{ height: '100%', boxShadow: 'none', border: '0px', outline: '0px', background: 'none'}} onChange={(e) => handleStatusChange(e,row)}>
+                    <option value={row.status}>{row.status}</option>
+                    {status.map((i, index) => (
+                      <option key={index} value={i.value}>{i.value}</option>
+                    ))}
+                  </Input>
+                </FormGroup> 
+              </Col>
+            </Row>
           </Col>
         </Row>
-
-        {row.job_info?.Rush && row.job_info?.Sample ? 
-          <Row>
-            <Col style={{ textAlign: 'center', color: 'red' }}>
-              {row.job_info?.Rush && row.job_info?.Sample ? 'Sample / Rush' : row.job_info?.Rush ? 'Rush' : row.job_info?.Sample ? 'Sample' : ''}
-            </Col>
-          </Row> : null
-        } 
       </div>
     },
-    {
-      name: 'Submitted By',
-      cell: row => <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>,
-      sortable: true,
-    },
-
-    {
-      name: 'Total',
-      selector: 'total',
-      sortable: true,
-      cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
-    },
-    {
-      name: 'Balance Paid',
-      sortable: true,
-      cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
-    },
-    {
-      name: 'Terms',
-      cell: row => <div>{row.companyprofile && row.companyprofile.PMT_TERMS ? row.companyprofile.PMT_TERMS  : ''}</div>,
-      sortable: true,
-    },
-    {
-      name: ' ',
-      button: true,
-      grow: 2,
-      cell: (row) => <Tooltip title="View Order" placement="top">
-        <IconButton onClick={function (event) {
-          event.preventDefault();
-          toggle(row);
-        }} id={row.id}>
-          <Inbox>Open</Inbox>
-        </IconButton>
-      </Tooltip>,
-    },
-
-
-
   ];
 
   const toggle = (row: {}) => {
@@ -244,18 +204,21 @@ const OrderTable = (props: TablePropTypes) => {
 
   return (
     <div>
-      <DataTable
-        title="Orders"
-        className="order-table3"
-        columns={columns}
-        data={data}
-        pagination
-        progressPending={!props.ordersDBLoaded}
-        highlightOnHover
-        conditionalRowStyles={conditionalRowStyles}
-        subHeader
-        subHeaderComponent={subHeaderComponentMemo}
-      />
+      {data?.length > 0 ?
+        <DataTable
+          title="Quality Control"
+          className="order-table3"
+          columns={columns}
+          data={data}
+          pagination
+          progressPending={!props.ordersDBLoaded}
+          highlightOnHover
+          conditionalRowStyles={conditionalRowStyles}
+          subHeader
+          subHeaderComponent={subHeaderComponentMemo}
+        /> :loading()
+      }
+
       {
         modal ?
           <OrderPage

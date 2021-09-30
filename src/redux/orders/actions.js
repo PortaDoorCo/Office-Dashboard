@@ -134,7 +134,22 @@ export function loadOrders(cookie, user) {
         data: data,
       });
     };
-  } else {
+  } else if(user.role.type === 'quality_control'){
+    return async function (dispatch) {
+      const res = await fetch(`${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=50`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res.json();
+      return await dispatch({
+        type: LOAD_ORDERS,
+        data: data,
+      });
+    };
+  }
+  
+  else {
     return async function (dispatch) {
       const res = await fetch(`${db_url}/orders?_sort=orderNum:DESC&_limit=50`, {
         headers: {
@@ -167,7 +182,21 @@ export function loadAllOrders(cookie, user) {
         data: data,
       });
     };
-  } else {
+  } else if(user.role.type === 'quality_control'){
+    return async function (dispatch) {
+      const res = await fetch(`${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=2000`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res.json();
+      return await dispatch({
+        type: LOAD_ORDERS,
+        data: data,
+      });
+    };
+  } 
+  else {
     return async function (dispatch) {
       const res = await fetch(`${db_url}/orders/all`, {
         headers: {
