@@ -14,7 +14,7 @@ import {
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import momentLocaliser from 'react-widgets-moment';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button, FormGroup, Input } from 'reactstrap';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -192,11 +192,14 @@ const OrderTable = (props) => {
 
         <Row>
           <Col>
-            <Select defaultValue={row.status} style={{ width: '100%' }} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
-              {status.map((i, index) => (
-                <Option key={index} value={i.value}>{i.value}</Option>
-              ))}
-            </Select>
+            <FormGroup style={{ height: '100%'}}>
+              <Input type="select" name="select" id="status_dropdown" defaultValue={row.status} style={{ height: '100%', boxShadow: 'none', border: '0px', outline: '0px', background: 'none'}} onChange={(e) => handleStatusChange(e,row)}>
+                <option value={row.status}>{row.status}</option>
+                {status.map((i, index) => (
+                  <option key={index} value={i.value}>{i.value}</option>
+                ))}
+              </Input>
+            </FormGroup> 
           </Col>
         </Row>
 
@@ -316,14 +319,14 @@ const OrderTable = (props) => {
           </Row>
           <Row>
             <Col>
-              <Select defaultValue="All" style={{ width: '69%' }} onChange={e => setFilterStatus(e)}>
-                <Option value="All">All</Option>
-                {status.map((i, index) => (
-                  <Option key={index} value={i.value}>
-                    {i.value}
-                  </Option>
-                ))}
-              </Select>
+              <FormGroup style={{ height: '100%', width :'60%'}}>
+                <Input type="select" name="select" id="status_dropdown" defaultValue='All' onChange={e => setFilterStatus(e.target.value)} >
+                  <option value='All'>All</option>
+                  {status.map((i, index) => (
+                    <option key={index} value={i.value}>{i.value}</option>
+                  ))}
+                </Input>
+              </FormGroup> 
             </Col>
           </Row>
           <Row className="mt-3">

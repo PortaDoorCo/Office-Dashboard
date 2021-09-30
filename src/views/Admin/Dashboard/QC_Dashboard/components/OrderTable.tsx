@@ -9,9 +9,9 @@ import Inbox from '@material-ui/icons/Inbox';
 import { Select } from 'antd';
 import { updateStatus, loadOrders, setSelectedOrder } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import { Button, Row, Col } from 'reactstrap';
+import { Button, Row, Col, FormGroup, Input } from 'reactstrap';
 import styled from 'styled-components';
-import status from '../../../../../utils/status';
+import status from '../../../../../utils/QC_Status';
 import 'antd/dist/antd.css';
 
 const TextField = styled.input`
@@ -42,6 +42,8 @@ const ClearButton = styled(Button)`
   align-items: center;
   justify-content: center;
 `;
+
+const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
 
 const cookie = Cookies.get('jwt');
@@ -90,7 +92,13 @@ const OrderTable = (props: TablePropTypes) => {
           (item.orderNum?.toString().includes(filterText) || item.job_info?.customer?.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info?.poNum?.toLowerCase().includes(filterText.toLowerCase()))
         );
       } else {
-        return item;
+        if(item.status === 'Quote'){
+          return null;
+        } else {
+          return item;
+        }
+
+        
       }
     }) : [];
     setData(filteredOrders);
@@ -157,20 +165,20 @@ const OrderTable = (props: TablePropTypes) => {
 
         <Row>
           <Col>
-            <Select defaultValue={row.status} style={{ width: '100%' }} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
-              {status.map((i, index) => (
-                <Option key={index} value={i.value}>{i.value}</Option>
-              ))}
-            </Select>
+            <Row>
+              <Col>
+                <FormGroup style={{ height: '100%'}}>
+                  <Input type="select" name="select" id="status_dropdown" defaultValue={row.status} style={{ height: '100%', boxShadow: 'none', border: '0px', outline: '0px', background: 'none'}} onChange={(e) => handleStatusChange(e,row)}>
+                    <option value={row.status}>{row.status}</option>
+                    {status.map((i, index) => (
+                      <option key={index} value={i.value}>{i.value}</option>
+                    ))}
+                  </Input>
+                </FormGroup> 
+              </Col>
+            </Row>
           </Col>
         </Row>
-
-        <Row>
-          <Col style={{ textAlign: 'center', color: 'red' }}>
-            {row.job_info?.Rush && row.job_info?.Sample ? 'Sample / Rush' : row.job_info?.Rush ? 'Rush' : row.job_info?.Sample ? 'Sample' : ''}
-          </Col>
-        </Row>
-
       </div>
     },
   ];
@@ -196,18 +204,21 @@ const OrderTable = (props: TablePropTypes) => {
 
   return (
     <div>
-      <DataTable
-        title="Orders"
-        className="order-table3"
-        columns={columns}
-        data={data}
-        pagination
-        progressPending={!props.ordersDBLoaded}
-        highlightOnHover
-        conditionalRowStyles={conditionalRowStyles}
-        subHeader
-        subHeaderComponent={subHeaderComponentMemo}
-      />
+      {data.length > 0 ?
+        <DataTable
+          title="Quality Control"
+          className="order-table3"
+          columns={columns}
+          data={data}
+          pagination
+          progressPending={!props.ordersDBLoaded}
+          highlightOnHover
+          conditionalRowStyles={conditionalRowStyles}
+          subHeader
+          subHeaderComponent={subHeaderComponentMemo}
+        /> :loading()
+      }
+
       {
         modal ?
           <OrderPage

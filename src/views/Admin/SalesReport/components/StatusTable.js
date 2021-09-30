@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
 import moment from 'moment';
 import OrderPage from '../../Orders/OrderPage';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, FormGroup, Input } from 'reactstrap';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
 import { Select, } from 'antd';
@@ -106,18 +106,14 @@ const StatusTable = (props) => {
       name: 'Status',
       grow: 1,
       cell: (row) => (
-        <Select
-          defaultValue={row.status}
-          style={{ width: '100%' }}
-          onChange={(e) => handleStatusChange(e, row)}
-          bordered={false}
-        >
-          {status.map((i, index) => (
-            <Option key={index} value={i.value}>
-              {i.value}
-            </Option>
-          ))}
-        </Select>
+        <FormGroup style={{ height: '100%'}}>
+          <Input type="select" name="select" id="status_dropdown" defaultValue={row.status} style={{ height: '100%', boxShadow: 'none', border: '0px', outline: '0px', background: 'none'}} onChange={(e) => handleStatusChange(e,row)}>
+            <option value={row.status}>{row.status}</option>
+            {status.map((i, index) => (
+              <option key={index} value={i.value}>{i.value}</option>
+            ))}
+          </Input>
+        </FormGroup> 
       ),
     },
     {

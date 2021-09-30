@@ -6,12 +6,17 @@ import moment from 'moment';
 import OrderPage from '../../../Orders/OrderPage';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import { Select } from 'antd';
+// import { Select } from 'antd';
 import { updateStatus, loadOrders, setSelectedOrder } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import { Button, Row, Col, FormGroup, Label, Input } from 'reactstrap';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+// import Select from '@mui/material/Select';
+import Select from 'react-dropdown-select';
 
 
 const TextField = styled.input`
@@ -45,7 +50,7 @@ const ClearButton = styled(Button)`
 
 
 const cookie = Cookies.get('jwt');
-const { Option } = Select;
+// const { Option } = Select;
 
 const conditionalRowStyles = [
   {
@@ -112,8 +117,13 @@ const OrderTable = (props: TablePropTypes) => {
   const handleStatusChange = async (e: any, row: { id: string }) => {
     const { updateStatus } = props;
     const status = {
-      status: e
+      status: e.target.value
     };
+
+    console.log({e: e.target.value});
+    console.log({row});
+
+
     await updateStatus(row.id, row, status, cookie);
   };
 
@@ -152,27 +162,15 @@ const OrderTable = (props: TablePropTypes) => {
     {
       name: 'Status',
       cell: row => <div>
-
-
         <Row>
           <Col>
-
             <FormGroup style={{ height: '100%'}}>
-              <Input type="select" name="select" id="exampleSelect" style={{ height: '100%'}}>
+              <Input type="select" name="select" id="status_dropdown" defaultValue={row.status} style={{ height: '100%', boxShadow: 'none', border: '0px', outline: '0px', background: 'none'}} onChange={(e) => handleStatusChange(e,row)}>
                 {status.map((i, index) => (
                   <option key={index} value={i.value}>{i.value}</option>
                 ))}
               </Input>
-            </FormGroup>
-
-
-
-
-            {/* <Select defaultValue={row.status} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
-              {status.map((i, index) => (
-                <Option key={index} value={i.value}>{i.value}</Option>
-              ))}
-            </Select> */}
+            </FormGroup> 
           </Col>
         </Row>
 
@@ -182,9 +180,7 @@ const OrderTable = (props: TablePropTypes) => {
               {row.job_info?.Rush && row.job_info?.Sample ? 'Sample / Rush' : row.job_info?.Rush ? 'Rush' : row.job_info?.Sample ? 'Sample' : ''}
             </Col>
           </Row> : null
-        }
-
-
+        } 
       </div>
     },
     {
