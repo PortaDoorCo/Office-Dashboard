@@ -213,34 +213,6 @@ class Door extends Component {
         <Row>
           <Col>
             <FormGroup>
-              <Label htmlFor="arches">Left Stile</Label>
-              <Field
-                name={`${part}.leftStile`}
-                type="text"
-                component={renderNumber}
-                label="leftStile"
-                edit={construction === 'Miter' ? true : edit}
-                validate={required}
-                onChange={(e) => this.onChange(e)}
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label htmlFor="arches">Right Stile</Label>
-              <Field
-                name={`${part}.rightStile`}
-                type="text"
-                component={renderNumber}
-                label="rightStile"
-                edit={construction === 'Miter' ? true : edit}
-                validate={required}
-                onChange={(e) => this.onChange(e)}
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
               <Label htmlFor="arches">Top Rail {topRailAdd > 0 ? `+ Arch ${fraction(topRailAdd)}"` : null}</Label>
               <Field
                 name={`${part}.topRail`}
@@ -267,6 +239,35 @@ class Door extends Component {
               />
             </FormGroup>
           </Col>
+          <Col>
+            <FormGroup>
+              <Label htmlFor="arches">Left Stile</Label>
+              <Field
+                name={`${part}.leftStile`}
+                type="text"
+                component={renderNumber}
+                label="leftStile"
+                edit={construction === 'Miter' ? true : edit}
+                validate={required}
+                onChange={(e) => this.onChange(e)}
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label htmlFor="arches">Right Stile</Label>
+              <Field
+                name={`${part}.rightStile`}
+                type="text"
+                component={renderNumber}
+                label="rightStile"
+                edit={construction === 'Miter' ? true : edit}
+                validate={required}
+                onChange={(e) => this.onChange(e)}
+              />
+            </FormGroup>
+          </Col>
+
         </Row>
 
         <hr />
