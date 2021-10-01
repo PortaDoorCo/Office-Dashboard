@@ -35,6 +35,8 @@ export default (info, part, breakdowns) => {
   const qty = parseInt(info.qty);
   const edge_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
 
+  const orderType = info?.orderType?.value ? info.orderType?.value : part?.orderType?.value
+
   let inset = 0;
   if (part.profile) {
     inset = part.profile?.INSET;
@@ -160,10 +162,13 @@ export default (info, part, breakdowns) => {
 
   let door;
 
-  if (part.orderType.value === "Door") {
+  if (orderType === "Door") {
     if (info.unevenCheck) {
       door = unevenSplit();
     } else {
+
+      console.log("HEREEEEE")
+
       door = [
         {
           qty: `(${panelsH * panelsW * qty})`,
@@ -181,7 +186,7 @@ export default (info, part, breakdowns) => {
         },
       ];
     }
-  } else if (part.orderType.value === "DF") {
+  } else if (orderType === "DF") {
     if (VERTICAL_GRAIN) {
       door = [
         {
@@ -195,9 +200,13 @@ export default (info, part, breakdowns) => {
           width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
           height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
           count: panelsH * panelsW * qty,
+          panel: panelName,
         },
       ];
     } else {
+
+      console.log("HERE")
+
       door = [
         {
           qty: `(${panelsH * panelsW * qty})`,
@@ -208,6 +217,7 @@ export default (info, part, breakdowns) => {
           width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
           height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
           count: panelsH * panelsW * qty,
+          panel: panelName,
         },
       ];
     }

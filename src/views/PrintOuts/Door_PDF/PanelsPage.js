@@ -27,7 +27,7 @@ export default (data, breakdowns) => {
         return {
           ...v,
           dimensions: flatten(
-            v.dimensions.map((d, k) => ({ ...d, name: getName(v), panel: v.panel, item: k + 1 })))
+            v.dimensions.map((d, k) => ({ ...d, name: getName(v), panel: v.panel, item: k + 1, orderType: v.orderType })))
         };
       })
 
