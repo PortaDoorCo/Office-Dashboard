@@ -23,8 +23,8 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
       columns: [
         {
           stack: [
-
             { text: 'Profiles', bold: true },
+            
           ]
         },
         {

@@ -328,7 +328,10 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack: ['Materials List'],
+          stack: [
+            { text: 'Materials List', bold: true },
+            { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
+          ],
         },
         {
           stack: [

@@ -155,7 +155,9 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack: ['Individual - STILES List'],
+          stack: ['Individual - STILES List',
+            { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
+          ],
         },
         {
           stack: [
