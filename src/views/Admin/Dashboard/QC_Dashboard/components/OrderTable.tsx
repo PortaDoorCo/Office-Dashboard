@@ -181,6 +181,19 @@ const OrderTable = (props: TablePropTypes) => {
         </Row>
       </div>
     },
+    {
+      name: ' ',
+      button: true,
+      grow: 2,
+      cell: (row) => <Tooltip title="View Order" placement="top">
+        <IconButton onClick={function (event) {
+          event.preventDefault();
+          toggle(row);
+        }} id={row.id}>
+          <Inbox>Open</Inbox>
+        </IconButton>
+      </Tooltip>,
+    },
   ];
 
   const toggle = (row: {}) => {

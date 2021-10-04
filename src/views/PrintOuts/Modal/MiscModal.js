@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, Button, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 import { DropdownList } from 'react-widgets';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addPrinterOption, savePrinterOption } from '../../../redux/misc_items/actions';
 
 const PrintModal = (props) => {
   const {
@@ -9,7 +12,8 @@ const PrintModal = (props) => {
     modal,
     toggle,
     printer_options,
-    downloadPDF
+    downloadPDF,
+    user
   } = props;
 
   const number_select = [0,1,2,3,4,5];
@@ -76,36 +80,38 @@ const PrintModal = (props) => {
             </Col>
           </Row>
 
-          <Row>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="acknowledgement">Acknowledgement</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.acknowledgement}
-                    onChange={(e) => change(e, 'acknowledgement')}
-                    textField="acknowledgement"
-                    name="acknowledgement"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="invoice">Invoice</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.invoice} 
-                    onChange={(e) => change(e, 'invoice')}
-                    textField="invoice"
-                    name="invoice"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
+          {user?.role?.type !== 'quality_control' ? 
+            <Row>
+              <Col>
+                <Form>
+                  <FormGroup>
+                    <Label for="acknowledgement">Acknowledgement</Label>
+                    <DropdownList filter
+                      data={number_select}
+                      value={printer_option.acknowledgement}
+                      onChange={(e) => change(e, 'acknowledgement')}
+                      textField="acknowledgement"
+                      name="acknowledgement"
+                    />
+                  </FormGroup>
+                </Form>
+              </Col>
+              <Col>
+                <Form>
+                  <FormGroup>
+                    <Label for="invoice">Invoice</Label>
+                    <DropdownList filter
+                      data={number_select}
+                      value={printer_option.invoice} 
+                      onChange={(e) => change(e, 'invoice')}
+                      textField="invoice"
+                      name="invoice"
+                    />
+                  </FormGroup>
+                </Form>
+              </Col>
+            </Row>
+            : null}
 
           <Row>
             <Col>
@@ -177,4 +183,17 @@ const PrintModal = (props) => {
   );
 };
 
-export default PrintModal;
+const mapStateToProps = (state, prop) => ({
+  user: state.users.user
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addPrinterOption,
+      savePrinterOption
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(PrintModal);

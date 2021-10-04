@@ -121,7 +121,7 @@ export function loadOrders(cookie, user) {
 
   console.log({user});
 
-  if(user.role.type === 'customer'){
+  if(user?.role?.type === 'customer'){
     return async function (dispatch) {
       const res = await fetch(`${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=50`, {
         headers: {
@@ -134,7 +134,7 @@ export function loadOrders(cookie, user) {
         data: data,
       });
     };
-  } else if(user.role.type === 'quality_control'){
+  } else if(user?.role?.type === 'quality_control'){
     return async function (dispatch) {
       const res = await fetch(`${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=50`, {
         headers: {
@@ -182,7 +182,7 @@ export function loadAllOrders(cookie, user) {
         data: data,
       });
     };
-  } else if(user.role.type === 'quality_control'){
+  } else if(user?.role?.type === 'quality_control'){
     return async function (dispatch) {
       const res = await fetch(`${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=2000`, {
         headers: {
