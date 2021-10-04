@@ -423,7 +423,7 @@ class OrderPage extends Component {
   render() {
     const props = this.props;
 
-    const { selectedOrder, printer_options } = this.props;
+    const { selectedOrder, printer_options, user } = this.props;
 
     let options;
     let s = selectedOrder ? selectedOrder : 'Door Order';
@@ -581,45 +581,49 @@ class OrderPage extends Component {
 
                 <Row></Row>
                 <Row>
-                  <Col>
-                    <Tooltip title="Edit" placement="top">
-                      <IconButton onClick={this.props.editable}>
-                        <Edit style={{ width: '40', height: '40' }} />
-                      </IconButton>
-                    </Tooltip>
+                  {user?.role?.type !== 'quality_control' ?
+                    <Col>
+                      <Tooltip title="Edit" placement="top">
+                        <IconButton onClick={this.props.editable}>
+                          <Edit style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="Tracking History" placement="top">
-                      <IconButton onClick={this.toggleTracking}>
-                        <List style={{ width: '40', height: '40' }} />
-                      </IconButton>
-                    </Tooltip>
+                      <Tooltip title="Tracking History" placement="top">
+                        <IconButton onClick={this.toggleTracking}>
+                          <List style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="Balance" placement="top">
-                      <IconButton onClick={this.toggleBalance}>
-                        <AttachMoneyIcon
-                          style={{ width: '40', height: '40' }}
-                        />
-                      </IconButton>
-                    </Tooltip>
+                      <Tooltip title="Balance" placement="top">
+                        <IconButton onClick={this.toggleBalance}>
+                          <AttachMoneyIcon
+                            style={{ width: '40', height: '40' }}
+                          />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="Misc Items" placement="top">
-                      <IconButton onClick={this.toggleMiscItems}>
-                        <Dns style={{ width: '40', height: '40' }} />
-                      </IconButton>
-                    </Tooltip>
+                      <Tooltip title="Misc Items" placement="top">
+                        <IconButton onClick={this.toggleMiscItems}>
+                          <Dns style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="View Notes" placement="top">
-                      <IconButton onClick={this.toggleNotes}>
-                        <Chat style={{ width: '40', height: '40' }} />
-                      </IconButton>
-                    </Tooltip>
+                      <Tooltip title="View Notes" placement="top">
+                        <IconButton onClick={this.toggleNotes}>
+                          <Chat style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="View Files" placement="top">
-                      <IconButton onClick={this.toggleFiles}>
-                        <Attachment style={{ width: '40', height: '40' }} />
-                      </IconButton>
-                    </Tooltip>
-                  </Col>
+                      <Tooltip title="View Files" placement="top">
+                        <IconButton onClick={this.toggleFiles}>
+                          <Attachment style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
+                    </Col> :
+                    <Col />
+                  }
+
 
                   <Col className="ml-5">
                     <Row>

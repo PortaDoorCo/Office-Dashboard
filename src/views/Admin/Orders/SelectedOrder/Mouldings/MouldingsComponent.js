@@ -105,7 +105,7 @@ onUploaded = (e) => {
 }
 
 render() {
-  const { formState, handleSubmit, customers, tax, total, edit } = this.props;
+  const { formState, handleSubmit, customers, tax, total, edit, user } = this.props;
   return (
     <div>
       <CancelModal
@@ -149,60 +149,64 @@ render() {
                     <FieldArray name="mouldings" component={Inputs} {...this.props} />
                   </Col>
                 </Row>
-                <Row>
-                  <Col xs="9" />
-                  <Col xs="3">
-                    <Row className='mb-0'>
-                      <Col xs='9' />
-                      <Col>
-                        <FormGroup>
-                          <Label htmlFor="companyName">Taxable?</Label>
-                          <Field
-                            name={'Taxable'}
-                            component={renderCheckboxToggle}
-                            edit={edit}
-                          />
-                        </FormGroup>
-                      </Col>
 
-                    </Row>
+                {user?.role?.type !== 'quality_control' ? 
+                  <Row>
+                    <Col xs="9" />
+                    <Col xs="3">
+                      <Row className='mb-0'>
+                        <Col xs='9' />
+                        <Col>
+                          <FormGroup>
+                            <Label htmlFor="companyName">Taxable?</Label>
+                            <Field
+                              name={'Taxable'}
+                              component={renderCheckboxToggle}
+                              edit={edit}
+                            />
+                          </FormGroup>
+                        </Col>
 
-
-
-                    <strong>Discount: </strong>
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>%</InputGroupText>
-                      </InputGroupAddon>
-                      <Field
-                        name={'discount'}
-                        type="text"
-                        component={renderField}
-                        label="discount"
-                        edit={edit}
-                        validate={maxValue(100)}
-                      />
-                    </InputGroup>
-
-                      
-                    <strong>Tax: </strong>
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>$</InputGroupText>
-                      </InputGroupAddon>
-                      <Input disabled placeholder={tax.toFixed(2)} />
-                    </InputGroup>
+                      </Row>
 
 
-                    <strong>Total: </strong>
-                    <InputGroup className='mb-3'>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>$</InputGroupText>
-                      </InputGroupAddon>
-                      <Input disabled placeholder={total.toFixed(2)} />
-                    </InputGroup>
-                  </Col>
-                </Row>
+
+                      <strong>Discount: </strong>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>%</InputGroupText>
+                        </InputGroupAddon>
+                        <Field
+                          name={'discount'}
+                          type="text"
+                          component={renderField}
+                          label="discount"
+                          edit={edit}
+                          validate={maxValue(100)}
+                        />
+                      </InputGroup>
+
+                    
+                      <strong>Tax: </strong>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input disabled placeholder={tax.toFixed(2)} />
+                      </InputGroup>
+
+
+                      <strong>Total: </strong>
+                      <InputGroup className='mb-3'>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <Input disabled placeholder={total.toFixed(2)} />
+                      </InputGroup>
+                    </Col>
+                  </Row> : null
+                }
+                
                 {/* <Row>
                   <Col xs="4" />
                   <Col xs="5" />
@@ -227,20 +231,21 @@ render() {
             </CardBody>
           </Card>
         </Col>
-        <Col>
-          <StickyBox offsetTop={20} offsetBottom={20}>
-            <CheckoutBox
-              {...this.props}
-              {...this.state}
-              onSubNav={this.onSubNav}
-              handleSubmit={handleSubmit}
-              submit={this.submit}
-              toggleCancelModal={this.toggleCancelModal}
-              maxValue={maxValue}
-              onUploaded={this.onUploaded}
-            />
-          </StickyBox>
-        </Col>
+        {user?.role?.type !== 'quality_control' ? 
+          <Col>
+            <StickyBox offsetTop={20} offsetBottom={20}>
+              <CheckoutBox
+                {...this.props}
+                {...this.state}
+                onSubNav={this.onSubNav}
+                handleSubmit={handleSubmit}
+                submit={this.submit}
+                toggleCancelModal={this.toggleCancelModal}
+                maxValue={maxValue}
+                onUploaded={this.onUploaded}
+              />
+            </StickyBox>
+          </Col> : null }
       </Row>
         
     </div>

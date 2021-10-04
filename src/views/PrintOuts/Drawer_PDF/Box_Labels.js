@@ -80,7 +80,7 @@ export default (data, breakdowns) => {
       table: {
         alignment: 'center',
         widths: [175, 182, 180],
-        heights: [57, 57,57, 58, 58, 58, 58, 57, 57, 57],
+        heights: [65, 70,70, 72, 71, 71, 70, 69, 69, 60],
         body: arr
       },
       layout: {
@@ -105,7 +105,7 @@ export default (data, breakdowns) => {
         // paddingLeft: function(i, node) { return 10; },
         // paddingRight: function(i, node) { return 5; },
         paddingTop: function(i, node) { return 7; },
-        paddingBottom: function(i, node) { return 7; }
+        paddingBottom: function(i, node) { return -0.5; }
       }
     },
   ];

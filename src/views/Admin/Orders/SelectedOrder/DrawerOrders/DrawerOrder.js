@@ -181,7 +181,8 @@ class DrawerOrder extends Component {
       address,
       tax,
       edit,
-      box_assembly
+      box_assembly,
+      user
     } = this.props;
 
 
@@ -201,7 +202,7 @@ class DrawerOrder extends Component {
         />
         <NotificationAlert ref="notify" />
         <Row>
-          <Col xs="12" sm="12" md="12" lg="9">
+          <Col xs="12" sm="12" md="12" lg={user?.role?.type !== 'quality_control' ? '9' : '12'}>
             <Card>
               <CardHeader>
                 <strong>Door Order</strong>
@@ -246,56 +247,57 @@ class DrawerOrder extends Component {
 
                   <hr />
                   <hr />
-                  <Row>
-                    <Col xs="9" />
-                    <Col xs="3">
+                  {user?.role?.type !== 'quality_control' ? 
+                    <Row>
+                      <Col xs="9" />
+                      <Col xs="3">
 
-                      <Row className='mb-0'>
-                        <Col xs='9' />
-                        <Col>
-                          <FormGroup>
-                            <Label htmlFor="companyName">Taxable?</Label>
-                            <Field
-                              name={'Taxable'}
-                              component={renderCheckboxToggle}
-                              edit={edit}
-                            />
-                          </FormGroup>
-                        </Col>
+                        <Row className='mb-0'>
+                          <Col xs='9' />
+                          <Col>
+                            <FormGroup>
+                              <Label htmlFor="companyName">Taxable?</Label>
+                              <Field
+                                name={'Taxable'}
+                                component={renderCheckboxToggle}
+                                edit={edit}
+                              />
+                            </FormGroup>
+                          </Col>
 
-                      </Row>
+                        </Row>
 
-                      <strong>Discount: </strong>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>%</InputGroupText>
-                        </InputGroupAddon>
-                        <Field
-                          name={'discount'}
-                          type="text"
-                          component={renderField}
-                          edit={edit}
-                          label="discount"
-                          validate={maxValue(100)}
-                        />
-                      </InputGroup>
-                      <strong>Tax: </strong>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>$</InputGroupText>
-                        </InputGroupAddon>
-                        <Input disabled placeholder={tax.toFixed(2)} />
-                      </InputGroup>
+                        <strong>Discount: </strong>
+                        <InputGroup>
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>%</InputGroupText>
+                          </InputGroupAddon>
+                          <Field
+                            name={'discount'}
+                            type="text"
+                            component={renderField}
+                            edit={edit}
+                            label="discount"
+                            validate={maxValue(100)}
+                          />
+                        </InputGroup>
+                        <strong>Tax: </strong>
+                        <InputGroup>
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>$</InputGroupText>
+                          </InputGroupAddon>
+                          <Input disabled placeholder={tax.toFixed(2)} />
+                        </InputGroup>
 
-                      <strong>Total: </strong>
-                      <InputGroup className='mb-3'>
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>$</InputGroupText>
-                        </InputGroupAddon>
-                        <Input disabled placeholder={total.toFixed(2)} />
-                      </InputGroup>
-                    </Col>
-                  </Row>
+                        <strong>Total: </strong>
+                        <InputGroup className='mb-3'>
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>$</InputGroupText>
+                          </InputGroupAddon>
+                          <Input disabled placeholder={total.toFixed(2)} />
+                        </InputGroup>
+                      </Col>
+                    </Row> : null }
                   {/* <Row>
                     <Col xs="4" />
                     <Col xs="5" />
@@ -322,20 +324,21 @@ class DrawerOrder extends Component {
               </CardBody>
             </Card>
           </Col>
-          <Col lg="3">
-            <StickyBox offsetTop={20} offsetBottom={20}>
-              <CheckoutBox
-                {...this.props}
-                {...this.state}
-                onSubNav={this.onSubNav}
-                handleSubmit={handleSubmit}
-                submit={this.submit}
-                toggleCancelModal={this.toggleCancelModal}
-                maxValue={maxValue}
-                onUploaded={this.onUploaded}
-              />
-            </StickyBox>
-          </Col>
+          {user?.role?.type !== 'quality_control' ? 
+            <Col lg="3">
+              <StickyBox offsetTop={20} offsetBottom={20}>
+                <CheckoutBox
+                  {...this.props}
+                  {...this.state}
+                  onSubNav={this.onSubNav}
+                  handleSubmit={handleSubmit}
+                  submit={this.submit}
+                  toggleCancelModal={this.toggleCancelModal}
+                  maxValue={maxValue}
+                  onUploaded={this.onUploaded}
+                />
+              </StickyBox>
+            </Col> : null}
         </Row>
       </div>
     );
