@@ -202,6 +202,7 @@ export default (data, breakdowns) => {
         {
           stack: [
             'Individual - RAILS List',
+            { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
           ],
         },
         {

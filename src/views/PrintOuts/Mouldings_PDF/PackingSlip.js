@@ -43,6 +43,7 @@ export default (data, breakdowns) => {
         {
           stack: [
             { text: `Our Order: ${data.orderNum}`, style: 'fonts' },
+            { qr: `${data.id}`, fit: '75', margin: [0, 0, 0, 5] },
             {
               text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${
                 data.job_info?.poNum.toUpperCase()

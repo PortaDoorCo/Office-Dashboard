@@ -198,7 +198,9 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack: ['Individual - PANELS List'],
+          stack: ['Individual - PANELS List',
+            { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
+          ],
         },
         {
           stack: [
