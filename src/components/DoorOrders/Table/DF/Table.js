@@ -562,6 +562,8 @@ const Cope_Table = ({
     );
   };
 
+  const construction = formState?.part_list[i]?.construction?.value;
+
   return formState ? (
     <div>
       <FullFrameModal
@@ -691,7 +693,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="topRail"
-                      edit={edit}
+                      edit={construction === 'Miter' ? true : edit}
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e),
@@ -708,7 +710,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="bottomRail"
-                      edit={edit}
+                      edit={construction === 'Miter' ? true : edit}
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e),
@@ -725,7 +727,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="leftStile"
-                      edit={edit}
+                      edit={construction === 'Miter' ? true : edit}
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e),
@@ -742,7 +744,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="rightStile"
-                      edit={edit}
+                      edit={construction === 'Miter' ? true : edit}
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e),
