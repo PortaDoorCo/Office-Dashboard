@@ -71,8 +71,16 @@ const conditionalRowStyles = [
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
-    <TextField id="search" type="text" placeholder="Search Orders" value={filterText} onChange={onFilter} />
-    <ClearButton type="button" color="danger" onClick={onClear}>X</ClearButton>
+    <TextField
+      id="search"
+      type="text"
+      placeholder="Search Orders"
+      value={filterText}
+      onChange={onFilter}
+    />
+    <ClearButton type="button" color="danger" onClick={onClear}>
+      X
+    </ClearButton>
   </>
 );
 
@@ -86,22 +94,31 @@ const OrderTable = (props) => {
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus ] = useState('All');
+  const [filterStatus, setFilterStatus] = useState('All');
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
-  const minDate = orders.length > 0 ? new Date(orders[orders.length - 1].created_at) : new Date();
+  const minDate =
+    orders.length > 0
+      ? new Date(orders[orders.length - 1].created_at)
+      : new Date();
 
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.created_at);
 
-      if(filterStatus === 'All'){
-        if(filterText.length > 0){
+      if (filterStatus === 'All') {
+        if (filterText.length > 0) {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum.toString().includes(filterText) || item.job_info.customer.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info.poNum.toLowerCase().includes(filterText.toLowerCase()))
+            (item.orderNum.toString().includes(filterText) ||
+              item.job_info.customer.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
           );
         } else {
           return (
@@ -109,28 +126,48 @@ const OrderTable = (props) => {
             moment(date) <= moment(endDate).endOf('day').valueOf()
           );
         }
-      } else {
-
-        if(filterText.length > 0) {
+      } else if (filterStatus === 'In Production') {
+        if (filterText.length > 0) {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                item.status.includes(filterStatus) && 
-                (item.orderNum.toString().includes(filterText) || item.companyprofile.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info.poNum.toLowerCase().includes(filterText.toLowerCase()))
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            (!item.status.includes('Quote') &&  !item.status.includes('Invoiced') && !item.status.includes('Ordered'))  &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
           );
         } else {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                item.status.includes(filterStatus)
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            (!item.status.includes('Quote') &&  !item.status.includes('Invoiced') && !item.status.includes('Ordered')) 
           );
+        }
+      } else {
+        if (filterText.length > 0) {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status.includes(filterStatus) &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
         }
       }
     });
     setData(filteredOrders);
   }, [startDate, endDate, orders, filterStatus, filterText]);
-
-  
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -140,9 +177,14 @@ const OrderTable = (props) => {
       }
     };
 
-    return <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />;
+    return (
+      <FilterComponent
+        onFilter={(e) => setFilterText(e.target.value)}
+        onClear={handleClear}
+        filterText={filterText}
+      />
+    );
   }, [filterText, resetPaginationToggle]);
-
 
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
@@ -155,10 +197,15 @@ const OrderTable = (props) => {
   const columns = [
     {
       name: 'Company',
-      cell: row => <div>{row.job_info && row.job_info.customer && row.job_info.customer.Company}</div>,
+      cell: (row) => (
+        <div>
+          {row.job_info &&
+            row.job_info.customer &&
+            row.job_info.customer.Company}
+        </div>
+      ),
       sortable: true,
-      grow: 2
-
+      grow: 2,
     },
     {
       name: 'Order #',
@@ -174,79 +221,124 @@ const OrderTable = (props) => {
       name: 'Order Type',
       selector: 'orderType',
       sortable: true,
-
     },
     {
       name: 'Date Ordered',
-      cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
+      cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      cell: (row) => (
+        <div>
+          {row.status === 'Quote'
+            ? 'TBD'
+            : moment(row.dueDate).format('MMM Do YYYY')}
+        </div>
+      ),
     },
     {
       name: 'Status',
       grow: 1,
-      cell: row => <div>
+      cell: (row) => (
+        <div>
+          <Row>
+            <Col>
+              <FormGroup style={{ height: '100%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue={row.status}
+                  style={{
+                    height: '100%',
+                    boxShadow: 'none',
+                    border: '0px',
+                    outline: '0px',
+                    background: 'none',
+                  }}
+                  onChange={(e) => handleStatusChange(e, row)}
+                >
+                  <option value={row.status}>{row.status}</option>
+                  {status.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
 
-
-        <Row>
-          <Col>
-            <FormGroup style={{ height: '100%'}}>
-              <Input type="select" name="select" id="status_dropdown" defaultValue={row.status} style={{ height: '100%', boxShadow: 'none', border: '0px', outline: '0px', background: 'none'}} onChange={(e) => handleStatusChange(e,row)}>
-                <option value={row.status}>{row.status}</option>
-                {status.map((i, index) => (
-                  <option key={index} value={i.value}>{i.value}</option>
-                ))}
-              </Input>
-            </FormGroup> 
-          </Col>
-        </Row>
-
-        <Row>
-          <Col style={{ textAlign: 'center', color: 'red' }}>
-            {row.job_info.Rush && row.job_info.Sample ? 'Sample / Rush' : row.job_info.Rush ? 'Rush' : row.job_info.Sample ? 'Sample' : ''}
-          </Col>
-        </Row>
-
-      </div>
+          <Row>
+            <Col style={{ textAlign: 'center', color: 'red' }}>
+              {row.job_info.Rush && row.job_info.Sample
+                ? 'Sample / Rush'
+                : row.job_info.Rush
+                  ? 'Rush'
+                  : row.job_info.Sample
+                    ? 'Sample'
+                    : ''}
+            </Col>
+          </Row>
+        </div>
+      ),
     },
     {
       name: 'Submitted By',
-      cell: row => <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>,
+      cell: (row) => (
+        <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>
+      ),
       sortable: true,
     },
     {
       name: 'Total',
       selector: 'total',
       sortable: true,
-      cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
+      cell: (row) => <div>${row.total && row.total.toFixed(2)}</div>,
     },
     {
       name: 'Balance Paid',
       sortable: true,
-      cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
+      cell: (row) => (
+        <div>
+          $
+          {row.balance_history &&
+            row.balance_history.reduce(
+              (acc, item) => acc + item.balance_paid,
+              0
+            )}
+        </div>
+      ),
     },
     {
       name: 'Terms',
-      cell: row => <div>{row.companyprofile && row.companyprofile.PMT_TERMS ? row.companyprofile.PMT_TERMS  : ''}</div>,
+      cell: (row) => (
+        <div>
+          {row.companyprofile && row.companyprofile.PMT_TERMS
+            ? row.companyprofile.PMT_TERMS
+            : ''}
+        </div>
+      ),
       sortable: true,
     },
     {
       name: ' ',
       button: true,
       grow: 2,
-      cell: (row) => <Tooltip title="View Order" placement="top">
-        <IconButton onClick={function (event) {
-          event.preventDefault();
-          toggle(row);
-        }} id={row.id}>
-          <Inbox>Open</Inbox>
-        </IconButton>
-      </Tooltip>,
+      cell: (row) => (
+        <Tooltip title="View Order" placement="top">
+          <IconButton
+            onClick={function (event) {
+              event.preventDefault();
+              toggle(row);
+            }}
+            id={row.id}
+          >
+            <Inbox>Open</Inbox>
+          </IconButton>
+        </Tooltip>
+      ),
     },
-
-
   ];
 
   const toggle = (row) => {
@@ -268,9 +360,8 @@ const OrderTable = (props) => {
 
   const exportReports = () => {
     Report1(data, startDate, endDate, filterStatus);
-    setToggleCleared(!toggleCleared); 
+    setToggleCleared(!toggleCleared);
   };
-
 
   return (
     <div>
@@ -279,13 +370,13 @@ const OrderTable = (props) => {
         <Col>
           <Row>
             <Col>
-
-
               <SingleDatePicker
                 date={startDate} // momentPropTypes.momentObj or null
-                onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
+                onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
                 focused={startDateFocusedInput} // PropTypes.bool
-                onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
+                onFocusChange={({ focused }) =>
+                  setStartDateFocusedInput(focused)
+                } // PropTypes.func.isRequired
                 id="startDate" // PropTypes.string.isRequired,
                 isOutsideRange={(date) => {
                   if (date > moment(new Date())) {
@@ -300,7 +391,7 @@ const OrderTable = (props) => {
 
               <SingleDatePicker
                 date={endDate} // momentPropTypes.momentObj or null
-                onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
+                onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
                 focused={endDateFocusedInput} // PropTypes.bool
                 onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
                 id="endDate" // PropTypes.string.isRequired,
@@ -314,31 +405,44 @@ const OrderTable = (props) => {
                   }
                 }}
               />
-
             </Col>
           </Row>
           <Row>
             <Col>
-              <FormGroup style={{ height: '100%', width :'60%'}}>
-                <Input type="select" name="select" id="status_dropdown" defaultValue='All' onChange={e => setFilterStatus(e.target.value)} >
-                  <option value='All'>All</option>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="All"
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                >
+                  <option value="All">All</option>
                   {status.map((i, index) => (
-                    <option key={index} value={i.value}>{i.value}</option>
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
                   ))}
                 </Input>
-              </FormGroup> 
+              </FormGroup>
             </Col>
           </Row>
           <Row className="mt-3">
             <Col>
-              {role && (role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
-                <h3>Order Totals: ${data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}</h3> 
-                : null}
+              {role &&
+              (role.type === 'authenticated' ||
+                role.type === 'owner' ||
+                role.type === 'administrator') ? (
+                  <h3>
+                  Order Totals: $
+                    {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
+                  </h3>
+                ) : null}
             </Col>
           </Row>
           <Row className="mt-3">
             <Col>
-              <h3># Of Orders: {data.length}</h3> 
+              <h3># Of Orders: {data.length}</h3>
             </Col>
           </Row>
         </Col>
@@ -347,7 +451,12 @@ const OrderTable = (props) => {
       <Row>
         {/* <Col lg='11' /> */}
         <Col>
-          <Tooltip title="View Reports" onClick={exportReports} placement="top" className="mb-3 mt-3">
+          <Tooltip
+            title="View Reports"
+            onClick={exportReports}
+            placement="top"
+            className="mb-3 mt-3"
+          >
             <IconButton>
               <Receipt style={{ width: '40', height: '40' }} />
             </IconButton>
@@ -384,7 +493,7 @@ const mapStateToProps = (state, prop) => ({
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
-  role: state.users.user.role
+  role: state.users.user.role,
 });
 
 const mapDispatchToProps = (dispatch) =>
