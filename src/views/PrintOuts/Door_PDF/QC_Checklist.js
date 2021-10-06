@@ -135,6 +135,14 @@ export default (data, breakdowns) => {
                 } ${i.lite ? '- ' + i.lite.NAME : ''}`, style: 'fonts', alignment:'right'}
               ]
             },
+
+
+            { 
+              stack: [
+                {text: ' ', style: 'woodtype' },
+                {text: `IP: ${i.profile ? i.profile.NAME : 'None'}`, style: 'fonts', alignment:'right' }
+              ]
+            },
             { 
               stack: [
                 {text: ' ', style: 'woodtype' },
@@ -145,13 +153,6 @@ export default (data, breakdowns) => {
                   style: 'fonts',
                   alignment: 'right'
                 },
-              ]
-            },
-
-            { 
-              stack: [
-                {text: ' ', style: 'woodtype' },
-                {text: `IP: ${i.profile ? i.profile.NAME : 'None'}`, style: 'fonts', alignment:'right' }
               ]
             },
             { 
