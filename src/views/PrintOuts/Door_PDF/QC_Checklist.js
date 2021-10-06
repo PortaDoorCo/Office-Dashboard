@@ -75,7 +75,7 @@ export default (data, breakdowns) => {
           item.notes || item.full_frame || item.lite ? 
             {
               text: `${
-                item.full_frame ? 'Full Frame DF' : ''
+                item.notes ? item.notes : ''
               } ${item.lite ? item.lite.NAME : ''}`,
               style: 'tableBold', alignment: 'left'
             } : null,
@@ -88,10 +88,13 @@ export default (data, breakdowns) => {
       return [
         {
           margin: [0, 2, 0, 0],
+          
           columns: [
+
             {
+              width:200,
               stack: [
-                { text: `${i.woodtype.NAME}`, style: 'woodtype' },
+                { text: `${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`, style: 'woodtype', width: 300 },
                 {
                   text: `${i.design ? i.design.NAME :
                     i.cope_design
@@ -110,14 +113,16 @@ export default (data, breakdowns) => {
                                 i.construction.name
                   }`,
                   style: 'fonts',
+
                 },
+                
                 // {
                 //   text: `${i.orderType ? i.orderType.name : ''}`,
                 //   style: 'fonts',
                 // },
               ]
             },
-            { text: ' ', style: 'fontsBold', width: 140 },
+            // { text: ' ', style: 'fontsBold', width: 140 },
             { 
               stack: [
                 {text: ' ', style:'woodtype' },
@@ -130,6 +135,19 @@ export default (data, breakdowns) => {
                 } ${i.lite ? '- ' + i.lite.NAME : ''}`, style: 'fonts', alignment:'right'}
               ]
             },
+            { 
+              stack: [
+                {text: ' ', style: 'woodtype' },
+                {
+                  text: `Thickness:  ${
+                    i.thickness ? i.thickness.thickness_2 : ''
+                  }"`,
+                  style: 'fonts',
+                  alignment: 'right'
+                },
+              ]
+            },
+
             { 
               stack: [
                 {text: ' ', style: 'woodtype' },
