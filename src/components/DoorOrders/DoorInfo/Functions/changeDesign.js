@@ -64,6 +64,8 @@ const changeProfile = (p, ind, props, change) => {
         );
       }
 
+
+
     } else {
       props.dispatch(
         change(
@@ -81,6 +83,22 @@ const changeProfile = (p, ind, props, change) => {
         )
       );
     }
+
+    props.dispatch(
+      change(
+        'DoorOrder',
+        `${p}.notes`,
+        `Left Stile: ${fraction(
+          part.leftStile ? part.leftStile : 0
+        )}" Right Stile: ${fraction(
+          part.rightStile ? part.rightStile : 0
+        )}" \nTop Rail: ${fraction(
+          part.topRail ? part.topRail : 0
+        )} Bottom Rail: ${fraction(
+          part.bottomRail ? part.bottomRail : 0
+        )}"`
+      )
+    );
   }
 
 
