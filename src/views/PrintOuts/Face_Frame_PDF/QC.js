@@ -121,6 +121,18 @@ export default (data, breakdowns) => {
             { 
               stack: [
                 {text: ' ', style: 'woodtype' },
+                {
+                  text: `Thickness:  ${
+                    i.thickness ? i.thickness.thickness_2 : ''
+                  }"`,
+                  style: 'fonts',
+                  alignment: 'right'
+                },
+              ]
+            },
+            { 
+              stack: [
+                {text: ' ', style: 'woodtype' },
                 {text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`, style: 'fonts', alignment:'right' }
               ]
             },
