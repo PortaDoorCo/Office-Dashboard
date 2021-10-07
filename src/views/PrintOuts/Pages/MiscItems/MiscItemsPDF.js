@@ -19,10 +19,6 @@ export default (data, breakdowns, p, pricing) => {
     Content.push(Invoice(data, pricing));
   }
 
-  for (let i = 0; i < p.invoice; i++) {
-    Content.push(Invoice(data, pricing));
-  }
-
   for (let i = 0; i < p.packing_slip; i++) {
     Content.push(Packing_Slip(data, breakdowns));
   }
