@@ -144,25 +144,23 @@ const PrintModal = (props) => {
                 </FormGroup>
               </Form>
             </Col>
+
+            <Col lg='6'>
+              <Form>
+                <FormGroup>
+                  <Label for="acknowledgement">QC</Label>
+                  <DropdownList filter
+                    data={number_select}
+                    value={printer_option.qc}
+                    onChange={(e) => change(e, 'qc')}
+                    textField="qc"
+                    name="qc"
+                  />
+                </FormGroup>
+              </Form>
+            </Col>
           </Row>
-          {orderType !== 'Misc Items' ? 
-            <Row>
-              <Col lg='6'>
-                <Form>
-                  <FormGroup>
-                    <Label for="acknowledgement">QC</Label>
-                    <DropdownList filter
-                      data={number_select}
-                      value={printer_option.qc}
-                      onChange={(e) => change(e, 'qc')}
-                      textField="qc"
-                      name="qc"
-                    />
-                  </FormGroup>
-                </Form>
-              </Col>
-            </Row> : null
-          }
+          
 
 
           <Row className="mt-3">
