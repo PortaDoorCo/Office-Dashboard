@@ -4,6 +4,7 @@ import Invoice from '../../Misc_Items_PDF/Invoice';
 import Acknowledgement from '../../Misc_Items_PDF/Acknowledgement';
 import moment from 'moment';
 import Packing_Slip from '../../Misc_Items_PDF/Packing_Slip';
+import QC from '../../Misc_Items_PDF/QC';
 
 export default (data, breakdowns, p, pricing) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -21,6 +22,10 @@ export default (data, breakdowns, p, pricing) => {
 
   for (let i = 0; i < p.packing_slip; i++) {
     Content.push(Packing_Slip(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.qc; i++) {
+    Content.push(QC(data, breakdowns));
   }
 
   const rowLen = Content.length;
