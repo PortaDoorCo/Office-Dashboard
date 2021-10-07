@@ -163,6 +163,11 @@ const OrderTable = (props) => {
                 .includes(filterText.toLowerCase()))
           );
         } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.status.includes(filterStatus)
+          );
         }
       }
     });
@@ -189,7 +194,7 @@ const OrderTable = (props) => {
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
     const status = {
-      status: e,
+      status: e.target.value,
     };
     await updateStatus(row.id, row, status, cookie);
   };

@@ -25,7 +25,7 @@ const Modal = (props) => {
 
     case 'Misc Items':
       return(
-        <MiscModal {...props} />
+        <MiscModal {...props} orderType={orderType} />
       );
     case 'Face Frame':
       return(

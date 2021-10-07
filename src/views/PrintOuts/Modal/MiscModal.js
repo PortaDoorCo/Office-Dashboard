@@ -13,7 +13,8 @@ const PrintModal = (props) => {
     toggle,
     printer_options,
     downloadPDF,
-    user
+    user,
+    orderType
   } = props;
 
   const number_select = [0,1,2,3,4,5];
@@ -114,20 +115,21 @@ const PrintModal = (props) => {
             : null}
 
           <Row>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="acknowledgement">Assembly List</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.assembly_list}
-                    onChange={(e) => change(e, 'assembly_list')}
-                    textField="assembly_list"
-                    name="assembly_list"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
+            {orderType !== 'Misc Items' ? 
+              <Col>
+                <Form>
+                  <FormGroup>
+                    <Label for="acknowledgement">Assembly List</Label>
+                    <DropdownList filter
+                      data={number_select}
+                      value={printer_option.assembly_list}
+                      onChange={(e) => change(e, 'assembly_list')}
+                      textField="assembly_list"
+                      name="assembly_list"
+                    />
+                  </FormGroup>
+                </Form>
+              </Col> : null }
             <Col>
               <Form>
                 <FormGroup>
@@ -143,22 +145,25 @@ const PrintModal = (props) => {
               </Form>
             </Col>
           </Row>
-          <Row>
-            <Col lg='6'>
-              <Form>
-                <FormGroup>
-                  <Label for="acknowledgement">QC</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.qc}
-                    onChange={(e) => change(e, 'qc')}
-                    textField="qc"
-                    name="qc"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
+          {orderType !== 'Misc Items' ? 
+            <Row>
+              <Col lg='6'>
+                <Form>
+                  <FormGroup>
+                    <Label for="acknowledgement">QC</Label>
+                    <DropdownList filter
+                      data={number_select}
+                      value={printer_option.qc}
+                      onChange={(e) => change(e, 'qc')}
+                      textField="qc"
+                      name="qc"
+                    />
+                  </FormGroup>
+                </Form>
+              </Col>
+            </Row> : null
+          }
+
 
           <Row className="mt-3">
             <Col>
