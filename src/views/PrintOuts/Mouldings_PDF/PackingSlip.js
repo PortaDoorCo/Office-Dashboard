@@ -30,7 +30,7 @@ export default (data, breakdowns) => {
       { text: i.grade.name, style: 'fonts' },
       { text: i.woodtype.NAME, style: 'fonts' },
       { text: i.item.NAME, style: 'fonts' },
-      { text: i.notes ? i.notes : '', style: 'fontsBold' },
+      { text: i.notes ? i.notes.toUpperCase() : '', style: 'fontsBold' },
     ]);
   });
 
