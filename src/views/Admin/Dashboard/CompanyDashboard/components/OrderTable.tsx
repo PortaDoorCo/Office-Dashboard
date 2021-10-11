@@ -9,15 +9,9 @@ import Inbox from '@material-ui/icons/Inbox';
 // import { Select } from 'antd';
 import { updateStatus, loadOrders, setSelectedOrder } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import { Button, Row, Col, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Row, Col, FormGroup, Input } from 'reactstrap';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
-
-
 
 const TextField = styled.input`
   height: 32px;

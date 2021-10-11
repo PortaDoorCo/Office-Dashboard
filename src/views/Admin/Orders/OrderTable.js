@@ -132,7 +132,7 @@ const OrderTable = (props) => {
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            (!item.status.includes('Quote') &&  !item.status.includes('Invoiced') && !item.status.includes('Ordered'))  &&
+            (!item.status.includes('Quote') &&  !item.status.includes('Invoiced') && !item.status.includes('Ordered') && !item.status.includes('Shipped'))  &&
             (item.orderNum.toString().includes(filterText) ||
               item.companyprofile.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -145,7 +145,7 @@ const OrderTable = (props) => {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            (!item.status.includes('Quote') &&  !item.status.includes('Invoiced') && !item.status.includes('Ordered')) 
+            (!item.status.includes('Quote') &&  !item.status.includes('Invoiced') && !item.status.includes('Ordered') && !item.status.includes('Shipped')) 
           );
         }
       } else {

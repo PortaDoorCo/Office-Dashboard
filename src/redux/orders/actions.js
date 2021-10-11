@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import { NotificationManager } from 'react-notifications';
 import db_url from '../db_url';
 
@@ -288,11 +289,12 @@ export function updateOrder(orderId, order, cookie) {
 export function updateStatus(orderId, key, status, cookie) {
   const item = {
     status: status.status,
+    dueDate: moment('2001-01-01'),
     tracking: [
       ...key.tracking,
       {
         status: status.status,
-        date: new Date(),
+        date: moment('2001-01-01').format()
       },
     ],
   };

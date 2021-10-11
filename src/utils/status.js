@@ -60,10 +60,10 @@ const status = [
     label: 'Shipped',
     value: 'Shipped',
   },
-  {
-    label: 'LATE',
-    value: 'LATE',
-  },
+  // {
+  //   label: 'LATE',
+  //   value: 'LATE',
+  // },
 ];
 
 export default status;
