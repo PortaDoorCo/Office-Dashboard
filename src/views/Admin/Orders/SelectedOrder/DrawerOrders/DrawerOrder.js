@@ -118,7 +118,7 @@ class DrawerOrder extends Component {
       subTotals: subTotal,
       tax: tax,
       total: total,
-      status: values.job_info.status,
+      status: values.job_info.status.value,
       balance_due: balance,
       dueDate: values.job_info.DueDate,
       sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,

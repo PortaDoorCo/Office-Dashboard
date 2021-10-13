@@ -108,7 +108,7 @@ class DoorOrders extends Component {
       total: total,
       balance_due: balance,
       discount: values.discount,
-      status: values.job_info.status,
+      status: values.job_info.status.value,
       dueDate: values.job_info.DueDate,
       sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
     };

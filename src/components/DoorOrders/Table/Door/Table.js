@@ -181,7 +181,7 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                `${value}H ${panelsW}W \nOVERSIZE - NO GUARANTEE`
+                `${value}H ${panelsW}W \nSINGLE - NO GUARANTEE`
               )
             );
           } else {
@@ -214,7 +214,7 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                'OVERSIZE - NO GUARANTEE'
+                'SINGLE - NO GUARANTEE'
               )
             );
           } else {
@@ -250,7 +250,7 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nOVERSIZE - NO GUARANTEE`
+                `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
               )
             );
           }
@@ -345,7 +345,7 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                `${panelsH}H ${value}W \nOVERSIZE - NO GUARANTEE`
+                `${panelsH}H ${value}W \nSINGLE - NO GUARANTEE`
               )
             );
           } else {
@@ -378,7 +378,7 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                'OVERSIZE - NO GUARANTEE'
+                'SINGLE - NO GUARANTEE'
               )
             );
           } else {
@@ -414,7 +414,7 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nOVERSIZE - NO GUARANTEE`
+                `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
               )
             );
           }
@@ -529,7 +529,7 @@ const DoorTable = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nOVERSIZE - NO GUARANTEE"`
+              `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
             )
           );
         }
@@ -538,7 +538,7 @@ const DoorTable = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nOVERSIZE - NO GUARANTEE"`
+              `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
             )
           );
         }
@@ -547,7 +547,7 @@ const DoorTable = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}\nOVERSIZE - NO GUARANTEE"`
+              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
             )
           );
         }
@@ -556,7 +556,7 @@ const DoorTable = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}\nOVERSIZE - NO GUARANTEE"`
+              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}\nSINGLE - NO GUARANTEE"`
             )
           );
         }
@@ -628,7 +628,7 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}" \nOVERSIZE - NO GUARANTEE`
+                `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}" \nSINGLE - NO GUARANTEE`
               )
             );
           } else {
@@ -692,7 +692,7 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                'OVERSIZE - NO GUARANTEE'
+                'SINGLE - NO GUARANTEE'
               )
             );
           } else {

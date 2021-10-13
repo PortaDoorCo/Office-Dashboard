@@ -135,7 +135,7 @@ export default (data, breakdowns) => {
                 }
                 : null,
               {
-                text: `Panel: ${i.panel ? i.panel.NAME : 'Glass'}`,
+                text: `Panel: ${i.panel ? i.panel.NAME : i.construction.value === 'Slab' ? 'Slab' : 'Glass'}`,
                 alignment: 'right',
                 style: 'woodtype',
               },
