@@ -139,7 +139,10 @@ class DoorOrders extends Component {
       status: values.job_info.status.value,
       Rush: values.job_info.Rush,
       Sample: values.job_info.Sample,
-      job_info: values.job_info,
+      job_info: {
+        ...values.job_info,
+        status: values.job_info.status.value
+      },
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
       itemPrice: itemPrice,
@@ -156,7 +159,7 @@ class DoorOrders extends Component {
       submittedBy: user.FirstName,
       tracking: [
         {
-          status: values.job_info.status,
+          status: values.job_info.status.value,
           date: new Date(),
         },
       ],
@@ -430,7 +433,7 @@ const mapStateToProps = (state) => ({
     job_info: {
       customer: state.customers.customerDB[0],
       jobName: '',
-      status: 'Quote',
+      status: {label: 'Quote', value: 'Quote'},
       poNum: '',
       Address1: state.customers.customerDB[0].Address1,
       Address2: state.customers.customerDB[0].Address2,
