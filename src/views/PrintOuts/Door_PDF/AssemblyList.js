@@ -26,7 +26,7 @@ export default (data, breakdowns) => {
           { text: item.qty, style: 'fonts' },
           {
             stack: [
-              { text: `${SlabSize(item, i.edge.LIP_FACTOR)}`, style: 'fonts' },
+              { text: `${SlabSize(item, 0)}`, style: 'fonts' },
               item.notes || item.full_frame || item.lite
                 ? {
                   text: `${item.notes ? item.notes.toUpperCase() : ''} ${
