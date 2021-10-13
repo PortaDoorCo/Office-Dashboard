@@ -12,6 +12,7 @@ import Profiles from '../../Door_PDF/Profiles';
 import Packing_Slip from '../../Door_PDF/Packing_Slip';
 import moment from 'moment';
 import Glass_Selection from '../../Sorting/Glass_Selection';
+import Door_Labels from '../../Door_PDF/Door_Labels';
 
 export default (
   data,
@@ -104,6 +105,10 @@ export default (
 
   for (let i = 0; i < p.qc; i++) {
     Content.push(QC_Checklist(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.door_labels; i++) {
+    Content.push(Door_Labels(data, breakdowns));
   }
 
   const rowLen = Content.length;

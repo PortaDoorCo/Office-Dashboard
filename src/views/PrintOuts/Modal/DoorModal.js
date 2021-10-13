@@ -38,7 +38,8 @@ const PrintModal = (props) => {
     rails: printer_options[0].rails,
     materials: printer_options[0].materials,
     packing_slip: printer_options[0].packing_slip,
-    qc: printer_options[0].qc
+    qc: printer_options[0].qc,
+    door_labels: printer_options[0].door_labels || 0
   });
 
   const change = (e, name) => {
@@ -63,7 +64,8 @@ const PrintModal = (props) => {
       rails: 0,
       materials: 0,
       packing_slip: 0,
-      qc: 0
+      qc: 0,
+      door_labels: 0
     };
 
 
@@ -261,6 +263,23 @@ const PrintModal = (props) => {
                     onChange={(e) => change(e, 'qc')}
                     textField="qc"
                     name="qc"
+                  />
+                </FormGroup>
+              </Form>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Form>
+                <FormGroup>
+                  <Label for="labels">Door Labels</Label>
+                  <DropdownList filter
+                    data={number_select}
+                    value={printer_option.door_labels}
+                    onChange={(e) => change(e, 'door_labels')}
+                    textField="door_labels"
+                    name="door_labels"
                   />
                 </FormGroup>
               </Form>
