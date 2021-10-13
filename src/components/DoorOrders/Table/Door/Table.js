@@ -214,7 +214,7 @@ const DoorTable = ({
               change(
                 'DoorOrder',
                 `part_list[${i}].dimensions[${index}].notes`,
-                'SINGLEW - NO GUARANTEE'
+                'SINGLE - NO GUARANTEE'
               )
             );
           } else {
