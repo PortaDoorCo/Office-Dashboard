@@ -8,6 +8,7 @@ import PackingSlip from '../Door/PackingSlip';
 import Glass_Selection from '../../Sorting/Glass_Selection';
 import Packing_Slip from '../../Face_Frame_PDF/Packing_Slip';
 import QC from '../../Face_Frame_PDF/QC';
+import Door_Labels from '../../Door_PDF/Door_Labels';
 
 export default (data, breakdowns, p, pricing) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -43,6 +44,10 @@ export default (data, breakdowns, p, pricing) => {
 
   for (let i = 0; i < p.qc; i++) {
     Content.push(QC(data, breakdowns));
+  }
+
+  for (let i = 0; i < p.door_labels; i++) {
+    Content.push(Door_Labels(data, breakdowns));
   }
 
 

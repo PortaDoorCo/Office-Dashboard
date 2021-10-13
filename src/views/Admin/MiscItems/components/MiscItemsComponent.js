@@ -124,7 +124,7 @@ class MiscItems extends Component {
 
     const order = {
       ...values,
-      status: values.job_info.status,
+      status: values.job_info.status.value,
       Rush: values.job_info.Rush,
       Sample: values.job_info.Sample,
       job_info: values.job_info,
