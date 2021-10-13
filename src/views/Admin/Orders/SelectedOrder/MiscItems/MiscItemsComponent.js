@@ -67,7 +67,21 @@ class MiscItems extends Component {
       updateOrder,
       user,
       miscLineItemSelector,
+      status,
+      tracking
     } = this.props;
+
+    let newStatus = tracking;
+
+    if(status !== values.status.value){
+      newStatus = [
+        ...tracking,
+        {
+          date: moment().format(),
+          status: values.job_info?.status?.value,
+        }
+      ];
+    }
 
   
     const order = {
@@ -83,6 +97,7 @@ class MiscItems extends Component {
       status: values.job_info.status.value,
       dueDate: values.job_info.DueDate,
       sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
+      tracking: newStatus
     };
 
     const orderId = values.id;
@@ -276,6 +291,8 @@ const mapStateToProps = state => ({
   miscLineItemSelector: miscLineItemSelector(state),
   user: state.users.user,
   customers: state.customers.customerDB,
+  status: state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.status,
+  tracking: state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.tracking,
   initialValues: {
     ...state.Orders && state.Orders.selectedOrder,
     job_info: {

@@ -294,7 +294,7 @@ export function updateStatus(orderId, key, status, cookie) {
       ...key.tracking,
       {
         status: status.status,
-        date: moment('2001-01-01').format()
+        date: moment().format()
       },
     ],
   };

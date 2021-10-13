@@ -51,6 +51,7 @@ import CheckoutBox from '../CheckoutBox';
 import StickyBox from 'react-sticky-box';
 import { NotificationManager } from 'react-notifications';
 import CancelModal from '../../../../../utils/Modal';
+import moment from 'moment';
 
 const cookie = Cookies.get('jwt');
 const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
@@ -103,8 +104,22 @@ class DrawerOrder extends Component {
       total,
       tax,
       updateOrder,
-      balance
+      balance,
+      status,
+      tracking
     } = this.props;
+
+    let newStatus = tracking;
+
+    if(status !== values.status.value){
+      newStatus = [
+        ...tracking,
+        {
+          date: moment().format(),
+          status: values.job_info?.status?.value,
+        }
+      ];
+    }
 
 
     const order = {
@@ -122,6 +137,7 @@ class DrawerOrder extends Component {
       balance_due: balance,
       dueDate: values.job_info.DueDate,
       sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
+      tracking: newStatus
     };
 
 
@@ -355,6 +371,9 @@ const mapStateToProps = (state, props) => ({
     }
   },
   order: state.Orders.selectedOrder,
+
+  status: state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.status,
+  tracking: state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.tracking,
 
   woodtypes: state.part_list.woodtypes,
   boxBottomWoodtype: state.part_list.box_bottom_woodtypes,
