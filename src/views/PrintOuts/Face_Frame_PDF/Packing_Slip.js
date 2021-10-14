@@ -2,6 +2,7 @@ import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import Glass_Selection from '../Sorting/Glass_Selection';
+import numQty from 'numeric-quantity';
 
 export default (data, breakdowns) => {
   const qty = data.part_list.map((part, i) => {
@@ -59,7 +60,10 @@ export default (data, breakdowns) => {
 
       ],
     ];
-    i.dimensions.forEach((item, index) => {
+
+    const b = i.dimensions.sort((a, b) => numQty(b.height) - numQty(a.height));
+
+    b.forEach((item, index) => {
       tableBody.push([
         { text: item.item ? item.item : index + 1, style: 'fonts' },
         { text: item.name, style: 'fonts' },

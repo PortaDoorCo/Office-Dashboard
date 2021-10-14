@@ -2,6 +2,7 @@ import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import Glass_Selection from '../Sorting/Glass_Selection';
+import numQty from 'numeric-quantity';
 
 export default (data, breakdowns) => {
   const qty = data.part_list.map((part, i) => {
@@ -23,28 +24,24 @@ export default (data, breakdowns) => {
             : ''
     }`;
   };
-  const a = Object.values(
-    groupBy(Glass_Selection(data), (x) => x?.woodtype?.NAME)
-  );
 
-  const b = Glass_Selection(data)
-    .map((v) => {
+  const a = Glass_Selection(data).map((v) => {
+    return {
+      ...v,
+      dimensions: flatten(
+        v.dimensions.map((d) => ({
+          ...d,
+          name: getName(v),
+          panel: v.panel,
+          profile: v.profile,
+        }))
+      ),
+    };
+  });
 
-      return {
-        ...v,
-        dimensions: flatten(
-          v.dimensions.map((d) => ({
-            ...d,
-            name: getName(v),
-            panel: v.panel,
-            profile: v.profile,
-          }))
-        ),
-      };
+  console.log({a});
 
-    });
-
-  const table_body = b.map((i, index) => {
+  const table_body = a.map((i, index) => {
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -57,9 +54,12 @@ export default (data, breakdowns) => {
         { text: 'Cab#', style: 'fonts' },
       ],
     ];
-    i.dimensions.forEach((item, index) => {
 
-      console.log({item});
+
+    const b = i.dimensions.sort((a, b) => numQty(b.height) - numQty(a.height));
+
+    b.forEach((item, index) => {
+      console.log({ item });
 
       tableBody.push([
         { text: item.item ? item.item : index + 1, style: 'fonts' },
@@ -69,11 +69,6 @@ export default (data, breakdowns) => {
           text: `${Size(item)}`,
           style: 'fonts',
         },
-        // {
-        //   text: item.panel ? item.panel.NAME : '',
-        //   style: 'fonts',
-        //   alignment: 'left',
-        // },
         {
           text: item.profile ? item.profile.NAME : '',
           style: 'fonts',
@@ -81,7 +76,9 @@ export default (data, breakdowns) => {
         },
         item.notes || item.full_frame || item.lite
           ? {
-            text: `${item.notes ? item.notes.toUpperCase() : ''} ${item.lite ? item.lite.NAME : ''}`,
+            text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+              item.lite ? item.lite.NAME : ''
+            }`,
             style: 'tableBold',
             alignment: 'left',
           }
@@ -135,7 +132,13 @@ export default (data, breakdowns) => {
                 }
                 : null,
               {
-                text: `Panel: ${i.panel ? i.panel.NAME : i.construction.value === 'Slab' ? 'Slab' : 'Glass'}`,
+                text: `Panel: ${
+                  i.panel
+                    ? i.panel.NAME
+                    : i.construction.value === 'Slab'
+                      ? 'Slab'
+                      : 'Glass'
+                }`,
                 alignment: 'right',
                 style: 'woodtype',
               },
@@ -191,13 +194,12 @@ export default (data, breakdowns) => {
       columns: [
         {
           stack: [
-            
             { text: `Our Order: ${data.orderNum}`, bold: true },
             { qr: `${data.id}`, fit: '75', margin: [0, 0, 0, 5] },
             {
-              text: `Job: ${data.status === 'Quote' ? 'QUOTE' : ''} - ${
-                data.job_info?.poNum.toUpperCase()
-              }`,
+              text: `Job: ${
+                data.status === 'Quote' ? 'QUOTE' : ''
+              } - ${data.job_info?.poNum.toUpperCase()}`,
               style: 'fonts',
             },
           ],
@@ -239,7 +241,7 @@ export default (data, breakdowns) => {
       ],
     },
     {
-      margin: [0,10,0,0],
+      margin: [0, 10, 0, 0],
       columns: [
         {
           width: 200,
@@ -300,8 +302,12 @@ export default (data, breakdowns) => {
         },
 
         {
-          text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
-          margin: [10,0,0,0]
+          text: `${
+            data.job_info?.Shop_Notes
+              ? data.job_info?.Shop_Notes?.toUpperCase()
+              : ''
+          }`,
+          margin: [10, 0, 0, 0],
         },
         {
           stack: [

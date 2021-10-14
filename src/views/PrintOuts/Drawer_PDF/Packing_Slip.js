@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Size from '../Breakdowns/DrawerBoxes/Size';
+import numQty from 'numeric-quantity';
 
 
 export default (data, breakdowns) => {
@@ -199,7 +200,8 @@ export default (data, breakdowns) => {
         ]
       ];
 
-      let sortedDimensions = part.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) { return a.item - b.item; });
+      let sortedDimensions = part.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) { return numQty(b.height) - numQty(a.height); });
+      
       sortedDimensions.forEach((item, index) => {
         tableBody.push([
           { text: item.item ? item.item : index + 1, style: 'fonts' },
