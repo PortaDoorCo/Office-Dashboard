@@ -38,6 +38,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import Chat from '@material-ui/icons/Chat';
 import FileCopy from '@material-ui/icons/FileCopy';
 
+
 import { CSVLink } from 'react-csv';
 
 import DoorPDF from '../../PrintOuts/Pages/Door/DoorPDF';
@@ -725,7 +726,7 @@ class OrderPage extends Component {
 
                   <Col className="ml-5">
                     <Row>
-                      <Col lg="7"></Col>
+                      <Col lg="6"></Col>
                       <Col>
                         {/* {(s.orderType === 'Drawer Order') ? 
                           <Tooltip title="Box Labels" placement="top" className="mb-3">
