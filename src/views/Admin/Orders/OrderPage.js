@@ -38,6 +38,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import Chat from '@material-ui/icons/Chat';
 import FileCopy from '@material-ui/icons/FileCopy';
 
+
 import { CSVLink } from 'react-csv';
 
 import DoorPDF from '../../PrintOuts/Pages/Door/DoorPDF';
@@ -430,6 +431,7 @@ class OrderPage extends Component {
 
     let exportCsv = [];
     let a = [];
+    let razorGuage = [];
 
     let b = a.map((i, ind) => {
       return i;
@@ -478,6 +480,103 @@ class OrderPage extends Component {
             }
           });
           return a;
+        })
+        : [];
+
+      const razor = s
+        ? s.part_list.map((f, index) => {
+
+          console.log({f});
+
+          f.dimensions.forEach((j, ind) => {
+
+            console.log({j});
+            
+
+            if(numQty(j.leftStile) === numQty(j.rightStile)){
+              razorGuage.push([
+                s.orderNum,
+                f.woodtype?.NAME,
+                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
+                numQty(j.height) + 0.125,
+                numQty(j.qty) * 2,
+                'L / R',
+                f.design?.NAME,
+                ind + 1,
+                f.profile?.NAME
+              ]);
+            } else {
+              razorGuage.push([
+                s.orderNum,
+                f.woodtype?.NAME,
+                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
+                j.qty,
+                numQty(j.height) + 0.125,
+                numQty(j.qty) * 1,
+                'L',
+                f.design?.NAME,
+                ind + 1,
+                f.profile?.NAME
+              ]);
+
+              razorGuage.push([
+                s.orderNum,
+                f.woodtype?.NAME,
+                numQty(j.rightStile) + (f.edge?.LIP_FACTOR / 2),
+                j.qty,
+                numQty(j.height) + 0.125,
+                numQty(j.qty) * 1,
+                'R',
+                f.design?.NAME,
+                ind + 1,
+                f.profile?.NAME
+              ]);
+            }
+
+
+            if(numQty(j.topRail) === numQty(j.bottomRail)){
+              razorGuage.push([
+                s.orderNum,
+                f.woodtype?.NAME,
+                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
+                numQty(j.width) - 3.5,
+                numQty(j.qty) * 2,
+                'T / B',
+                f.design?.NAME,
+                ind + 1,
+                f.profile?.NAME
+              ]);
+
+            } else {
+              razorGuage.push([
+                s.orderNum,
+                f.woodtype?.NAME,
+                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
+                numQty(j.width) - 3.5,
+                numQty(j.qty) * 1,
+                'T',
+                f.design?.NAME,
+                ind + 1,
+                f.profile?.NAME
+              ]);
+              razorGuage.push([
+                s.orderNum,
+                f.woodtype?.NAME,
+                numQty(j.bottomRail) + (f.edge?.LIP_FACTOR / 2),
+                j.qty,
+                numQty(j.width) - 3.5,
+                numQty(j.qty) * 1,
+                'B',
+                f.design?.NAME,
+                ind + 1,
+                f.profile?.NAME
+              ]);
+            }
+
+
+            
+          });
+          return razorGuage;
         })
         : [];
     } else if (s.orderType === 'Drawer Order') {
@@ -627,7 +726,7 @@ class OrderPage extends Component {
 
                   <Col className="ml-5">
                     <Row>
-                      <Col lg="7"></Col>
+                      <Col lg="6"></Col>
                       <Col>
                         {/* {(s.orderType === 'Drawer Order') ? 
                           <Tooltip title="Box Labels" placement="top" className="mb-3">
@@ -670,6 +769,29 @@ class OrderPage extends Component {
                               {' '}
                               <Tooltip
                                 title="Export Edges"
+                                placement="top"
+                                className="mb-3"
+                              >
+                                <IconButton>
+                                  <GetAppIcon
+                                    style={{ width: '40', height: '40' }}
+                                  />
+                                </IconButton>
+                              </Tooltip>
+                            </CSVLink>
+                          ) : null}
+
+                        {selectedOrder &&
+                        selectedOrder.orderType === 'Door Order' ? (
+                            <CSVLink
+                              data={razorGuage}
+                              filename={`${s && s.orderNum} Razor Guage.csv`}
+                              separator={','}
+                              className="mb-3"
+                            >
+                              {' '}
+                              <Tooltip
+                                title="Razorguage Export"
                                 placement="top"
                                 className="mb-3"
                               >
