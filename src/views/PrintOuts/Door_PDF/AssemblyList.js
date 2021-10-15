@@ -140,7 +140,7 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
               {
-                text: `${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
+                text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
                 style: 'woodtype',
               },
             ],

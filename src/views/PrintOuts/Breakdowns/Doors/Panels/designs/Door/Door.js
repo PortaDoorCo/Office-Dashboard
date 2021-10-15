@@ -100,7 +100,7 @@ export default (info, part, breakdowns) => {
       height -
       unevenSplitTotal -
       horizMull * (panelsH - 1) -
-      bottomRail - unevenInset - lip_factor
+      bottomRail - unevenInset - (lip_factor * 2)
 
     const unevenSplitInput = (v) =>
       numQty(info[`unevenSplitInput${v}`]) -

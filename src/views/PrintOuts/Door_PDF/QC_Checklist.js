@@ -94,7 +94,7 @@ export default (data, breakdowns) => {
             {
               width:200,
               stack: [
-                { text: `${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`, style: 'woodtype', width: 300 },
+                { text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`, style: 'woodtype', width: 300 },
                 {
                   text: `${i.design ? i.design.NAME :
                     i.cope_design

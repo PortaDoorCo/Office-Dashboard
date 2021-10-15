@@ -111,7 +111,7 @@ export default (data, pricing) => {
                 style: 'fonts',
               },
               {
-                text: `${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${part.thickness?.thickness_2}"`,
+                text: `${part.thickness?.grade_name ? part.thickness?.grade_name : ''}${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${part.thickness?.thickness_2}"`,
                 style: 'fonts',
               },
 
