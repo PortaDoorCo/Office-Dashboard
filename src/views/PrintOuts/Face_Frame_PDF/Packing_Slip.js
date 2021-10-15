@@ -95,7 +95,7 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
               {
-                text: `${i.woodtype.NAME} - ${
+                text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${
                   i.thickness.value === 1 || i.thickness.value === 2
                     ? '4/4'
                     : i.thickness.value === 3 || i.thickness.value === 4

@@ -88,7 +88,7 @@ export default (data, breakdowns) => {
           columns: [
             {
               stack: [
-                { text: `${i.woodtype.NAME}`, style: 'woodtype' },
+                { text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME}`, style: 'woodtype' },
                 {
                   text: `${i.face_frame_design ? i.face_frame_design.NAME : ''}`,
                   style: 'fonts',

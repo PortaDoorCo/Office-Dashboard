@@ -134,7 +134,7 @@ export default (data, breakdowns) => {
           margin: [0, 10, 0, 0],
           columns: [
             {
-              text: `${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
+              text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
               style: 'woodtype',
               width: 200
             },
