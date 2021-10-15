@@ -152,6 +152,7 @@ export default (data, breakdowns) => {
 
         console.log({k});
         console.log({v});
+        console.log({i});
 
         const groupedMaterialBody = [];
 
@@ -161,7 +162,11 @@ export default (data, breakdowns) => {
 
         let waste = total_widths * 1.3;
 
-        let rips = Math.ceil(waste / 49);
+        let sheetSize = i.box_bottom_woodtype?.NAME === 'Baltic Birch' ? 42 : 49;
+
+
+
+        let rips = Math.ceil(waste / sheetSize);
         let percentage_of_sheet = (length * rips) / 78;
 
         let mb = {

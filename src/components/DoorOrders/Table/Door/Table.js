@@ -289,7 +289,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(part.profile ? part.profile?.PROFILE_WIDTH : 0)
+            fraction(part.profile ? part.profile?.PROFILE_WIDTH + 0.0625 : 0)
           )
         );
       } else {
@@ -457,7 +457,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(part.profile ? part.profile?.PROFILE_WIDTH : 0)
+            fraction(part.profile ? part.profile?.PROFILE_WIDTH + 0.0625 : 0)
           )
         );
       } else {
