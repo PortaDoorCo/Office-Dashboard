@@ -494,7 +494,7 @@ class OrderPage extends Component {
 
             if(numQty(j.leftStile) === numQty(j.rightStile)){
               razorGuage.push([
-                s.orderNum,
+                `0${s.orderNum.toString()}`,
                 f.woodtype?.NAME,
                 numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
                 numQty(j.height) + 0.125,
@@ -506,7 +506,7 @@ class OrderPage extends Component {
               ]);
             } else {
               razorGuage.push([
-                s.orderNum,
+                `0${s.orderNum.toString()}`,
                 f.woodtype?.NAME,
                 numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
                 j.qty,
@@ -519,7 +519,7 @@ class OrderPage extends Component {
               ]);
 
               razorGuage.push([
-                s.orderNum,
+                `0${s.orderNum.toString()}`,
                 f.woodtype?.NAME,
                 numQty(j.rightStile) + (f.edge?.LIP_FACTOR / 2),
                 j.qty,
@@ -535,7 +535,7 @@ class OrderPage extends Component {
 
             if(numQty(j.topRail) === numQty(j.bottomRail)){
               razorGuage.push([
-                s.orderNum,
+                `0${s.orderNum.toString()}`,
                 f.woodtype?.NAME,
                 numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
                 numQty(j.width) - 3.5,
@@ -548,7 +548,7 @@ class OrderPage extends Component {
 
             } else {
               razorGuage.push([
-                s.orderNum,
+                `0${s.orderNum.toString()}`,
                 f.woodtype?.NAME,
                 numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
                 numQty(j.width) - 3.5,
@@ -559,7 +559,7 @@ class OrderPage extends Component {
                 f.profile?.NAME
               ]);
               razorGuage.push([
-                s.orderNum,
+                `0${s.orderNum.toString()}`,
                 f.woodtype?.NAME,
                 numQty(j.bottomRail) + (f.edge?.LIP_FACTOR / 2),
                 j.qty,

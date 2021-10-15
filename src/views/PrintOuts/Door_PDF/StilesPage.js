@@ -66,7 +66,9 @@ export default (data, breakdowns) => {
 
         const n = {
           ...i,
-          construction: item.construction
+          construction: item.construction,
+          profile: item.profile,
+          design: item.design
         };
 
         tableBody.push([
