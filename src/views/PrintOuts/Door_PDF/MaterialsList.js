@@ -394,6 +394,14 @@ export default (data, breakdowns) => {
         {
           text: 'MATERIAL BREAKDOWN',
         },
+        {
+          text: `Build Notes: ${
+            data.job_info?.Shop_Notes
+              ? data.job_info?.Shop_Notes?.toUpperCase()
+              : ''
+          }`,
+          alignment: 'right'
+        },
       ],
       margin: [0, 10, 0, 20],
     },

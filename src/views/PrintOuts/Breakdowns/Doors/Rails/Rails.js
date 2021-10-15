@@ -6,7 +6,7 @@ import Slab_Door from './designs/Slab_Door/Slab_Door';
 export default (info, part, breakdowns) => {
 
 
-  console.log({breakdowns});
+  console.log({part});
 
 
   if(part.orderType?.value === 'Door') {

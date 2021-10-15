@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
+import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
   const getName = (i) => {
@@ -20,7 +21,15 @@ export default (data, breakdowns) => {
       woodtype.map((v, i) => ({
         ...v,
         dimensions: flatten(
-          v.dimensions.map((d, k ) => ({ ...d, name: getName(v), item: k + 1 }))
+          v.dimensions.map((d, k) => ({
+            ...d,
+            name: getName(v),
+            construction: v.construction,
+            item: k + 1,
+            profile: v.profile,
+            design: v.design,
+            orderType: v.orderType,
+          }))
         ),
       }))
     )
@@ -28,7 +37,6 @@ export default (data, breakdowns) => {
       ...t[0],
       dimensions: flatten(t.map((c) => c.dimensions)),
     }));
-
 
   const table_body = b.map((i, index) => {
     const tableBody = [
@@ -41,112 +49,121 @@ export default (data, breakdowns) => {
         { text: 'Note', style: 'fonts' },
       ],
     ];
-    i.dimensions.forEach((item, index) => {
-      tableBody.push([
-        { text: item.item ? item.item : index + 1, style: 'fonts' },
-        {
-          text: item.name,
-          style: 'fonts',
-        },
-        {
-          text: Stiles(item, i, breakdowns).map((stile) => {
-            return `${stile.qty} \n`;
-          }),
-          style: 'fonts',
-        },
-        {
-          text: Stiles(item, i, breakdowns).map((stile) => {
-            return `${stile.measurement} \n`;
-          }),
-          style: 'fonts',
-        },
-        {
-          text: Stiles(item, i, breakdowns).map((stile) => {
-            return `${stile.pattern} \n`;
-          }),
-          style: 'fonts',
-        },
-        {
-          text: item.notes ? item.notes.toUpperCase() : '',
-          style: 'fonts',
-        },
-      ]);
+    GlassSort(i).forEach((item, index) => {
+
+      if (
+        item.glass_index === 1 ||
+          item.construction.value === 'Slab' ||
+          i.orderType.value === 'One_Piece' ||
+          i.orderType.value === 'One_Piece_DF' ||
+          i.orderType.value === 'Two_Piece' ||
+          i.orderType.value === 'Two_Piece_DF'
+      ) {
+        return null;
+      } else {
+
+        console.log({item});
+
+        const n = {
+          ...i,
+          construction: item.construction
+        };
+
+        tableBody.push([
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
+          {
+            text: item.name,
+            style: 'fonts',
+          },
+          {
+            text: Stiles(item, n, breakdowns).map((stile) => {
+              return `${stile.qty} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: Stiles(item, n, breakdowns).map((stile) => {
+              return `${stile.measurement} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: Stiles(item, n, breakdowns).map((stile) => {
+              return `${stile.pattern} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: item.notes ? item.notes.toUpperCase() : '',
+            style: 'fonts',
+          },
+        ]);
+      }
     });
 
-    if (
-      i.orderType.value === 'One_Piece' ||
-      i.orderType.value === 'One_Piece_DF' ||
-      i.orderType.value === 'Two_Piece' ||
-      i.orderType.value === 'Two_Piece_DF' ||
-      i.orderType.value === 'Slab_Door' ||
-      i.orderType.value === 'Slab_DF' ||
-      i.construction.value === 'Slab' ||
-      i.door_piece_number?.pieces === (1 || 2)
-    ) {
-      return null;
-    } else {
-      return [
-        {
-          margin: [0, 10, 0, 0],
-          columns: [
-            {
-              text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
-              style: 'woodtype',
-              width: 200,
-            },
-            {
-              text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
-              style: 'woodtype',
-              alignment: 'center',
-            },
-            {
-              text: 'STILES',
-              alignment: 'right',
-              style: 'woodtype',
-            },
-          ],
-        },
-        {
-          text:
-            '==============================================================================',
-          alignment: 'center',
-        },
-        {
-          table: {
-            headerRows: 1,
-            widths: [22, 80, 30, 120, 50, '*'],
-            body: tableBody,
-          },
-          layout: {
-            hLineWidth: function (i, node) {
-              return i === 1 ? 1 : 0;
-            },
-            vLineWidth: function (i, node) {
-              return 0;
-            },
-            hLineStyle: function (i, node) {
-              if (i === 0 || i === node.table.body.length) {
-                return null;
-              }
-              return { dash: { length: 1, space: 1 } };
-            },
-            paddingLeft: function (i) {
-              return i === 0 ? 0 : 8;
-            },
-            paddingRight: function (i, node) {
-              return i === node.table.widths.length - 1 ? 0 : 8;
-            },
-          },
-        },
-        {
-          text:
-            '==============================================================================',
-          alignment: 'center',
-        },
 
-        // { text: '', pageBreak: 'before' }
-      ];
-    }
+    return [
+      {
+        margin: [0, 10, 0, 0],
+        columns: [
+          {
+            text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${
+              i.woodtype.NAME
+            } - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
+            style: 'woodtype',
+            width: 200,
+          },
+          {
+            text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
+            style: 'woodtype',
+            alignment: 'center',
+          },
+          {
+            text: 'STILES',
+            alignment: 'right',
+            style: 'woodtype',
+          },
+        ],
+      },
+      {
+        text: '==============================================================================',
+        alignment: 'center',
+      },
+      {
+        table: {
+          headerRows: 1,
+          widths: [22, 80, 30, 120, 50, '*'],
+          body: tableBody,
+        },
+        layout: {
+          hLineWidth: function (i, node) {
+            return i === 1 ? 1 : 0;
+          },
+          vLineWidth: function (i, node) {
+            return 0;
+          },
+          hLineStyle: function (i, node) {
+            if (i === 0 || i === node.table.body.length) {
+              return null;
+            }
+            return { dash: { length: 1, space: 1 } };
+          },
+          paddingLeft: function (i) {
+            return i === 0 ? 0 : 8;
+          },
+          paddingRight: function (i, node) {
+            return i === node.table.widths.length - 1 ? 0 : 8;
+          },
+        },
+      },
+      {
+        text: '==============================================================================',
+        alignment: 'center',
+      },
+
+      // { text: '', pageBreak: 'before' }
+    ];
+    
   });
 
   // const table_body = [];
@@ -155,7 +172,8 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          stack: ['Individual - STILES List',
+          stack: [
+            'Individual - STILES List',
             { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
           ],
         },
@@ -196,7 +214,8 @@ export default (data, breakdowns) => {
     {
       stack: [
         {
-          text: `${data.orderNum}`, style: 'orderNum' ,
+          text: `${data.orderNum}`,
+          style: 'orderNum',
         },
         {
           columns: [
@@ -204,8 +223,12 @@ export default (data, breakdowns) => {
               text: `${data.job_info.customer.Company}`,
             },
             {
-              text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
-              alignment: 'center'
+              text: `${
+                data.job_info?.Shop_Notes
+                  ? data.job_info?.Shop_Notes?.toUpperCase()
+                  : ''
+              }`,
+              alignment: 'center',
             },
             {
               text: `PO: ${data.job_info.poNum.toUpperCase()}`,
@@ -218,7 +241,6 @@ export default (data, breakdowns) => {
     },
     {
       canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
-      
     },
     table_body,
   ];
