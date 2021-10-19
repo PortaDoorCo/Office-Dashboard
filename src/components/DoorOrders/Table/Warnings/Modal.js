@@ -45,7 +45,7 @@ const WarningModal = (props) => {
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              'OVERSIZE - NO GUARANTEE'
+              'SINGLE - NO GUARANTEE'
             )
           );
         }
@@ -57,7 +57,7 @@ const WarningModal = (props) => {
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              'OVERSIZE - NO GUARANTEE'
+              'SINGLE - NO GUARANTEE'
             )
           );
         }
