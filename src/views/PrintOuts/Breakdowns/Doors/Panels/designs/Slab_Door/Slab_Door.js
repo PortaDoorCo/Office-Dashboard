@@ -16,9 +16,9 @@ export default (info, part) => {
   const door = [
     {
       qty: `(${qty})`,
-      measurement: `${fraction(Math.round((width + edge_factor) * 16) / 16)} x ${fraction(
-        Math.round((height + edge_factor) * 16) / 16
-      )}`,
+      measurement: `${fraction(
+        Math.round((width + edge_factor) * 16) / 16
+      )} x ${fraction(Math.round((height + edge_factor) * 16) / 16)}`,
       pattern: 'SP',
       width: 0,
       height: 0,

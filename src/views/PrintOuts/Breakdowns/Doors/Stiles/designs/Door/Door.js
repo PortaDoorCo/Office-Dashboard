@@ -56,7 +56,7 @@ export default (info, part, breakdowns) => {
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: 'LR',
           width: eval(breakdowns.leftStile_width),
-          height: eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_height),
           multiplier: 2
         },
         {

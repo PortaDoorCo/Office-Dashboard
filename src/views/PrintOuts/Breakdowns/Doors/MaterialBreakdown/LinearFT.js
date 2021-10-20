@@ -70,6 +70,10 @@ export default (parts, breakdowns, thickness) => {
             numQty(stile.width) === 2.376 ? 2.375 : numQty(stile.width);
           const height =
             numQty(stile.height) * stile.multiplier * parseInt(j.qty);
+
+          console.log({ height: stile.height });
+
+            
           const sum = height / 12;
           return {
             sum,
@@ -83,12 +87,17 @@ export default (parts, breakdowns, thickness) => {
         }
       });
 
+      console.log({stiles});
+
       const rails = Rails(rail, part.part, breakdowns).map((stile) => {
         if (stile.width > 1 && stile.height > 1) {
           const width =
             numQty(stile.width) === 2.376 ? 2.375 : numQty(stile.width);
           const height =
             numQty(stile.height) * stile.multiplier * parseInt(j.qty);
+
+            
+
           const sum = height / 12;
           return {
             sum,
