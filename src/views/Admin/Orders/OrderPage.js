@@ -277,82 +277,76 @@ class OrderPage extends Component {
             ? mouldingsState
             : [];
 
+    const noPhoto = 'https://res.cloudinary.com/porta-door/image/upload/v1634763683/none_cfad2ff78a.png';
+
     if (data.orderType === 'Door Order') {
       const designPromiseArr1 = selectedOrder.part_list
-        .filter((i) => i.design && i.design.photo && i.design.photo.url)
         .map((i) => {
           return new Promise((resolve, reject) => {
-            toDataUrl(i.design.photo.url, (result) => {
+            toDataUrl(i.design?.photo?.url ? i.design?.photo?.url : noPhoto, (result) => {
               resolve(result);
             });
           });
         });
 
       const edgesPromiseArr1 = selectedOrder.part_list
-        .filter((i) => i.edge && i.edge.photo && i.edge.photo.url)
         .map((i) => {
-          return new Promise((resolve, reject) => {
-            toDataUrl(i.edge.photo.url, (result) => {
-              resolve(result);
+          if(i.edge){
+            return new Promise((resolve, reject) => {
+              toDataUrl(i.edge?.photo?.url ? i.edge?.photo?.url : noPhoto, (result) => {
+                resolve(result);
+              });
             });
-          });
+          } else {
+            return new Promise((resolve, reject) => {
+              toDataUrl(noPhoto, (result) => {
+                resolve(result);
+              });
+            });
+          }
+          
         });
 
       const mouldsPromiseArr1 = selectedOrder.part_list
-        .filter((i) => i.profile && i.profile.photo && i.profile.photo.url)
         .map((i) => {
           return new Promise((resolve, reject) => {
-            toDataUrl(i.profile.photo.url, (result) => {
+            toDataUrl(i.profile?.photo?.url ? i.profile?.photo?.url : noPhoto, (result) => {
               resolve(result);
             });
           });
         });
 
       const miterPromiseArr1 = selectedOrder.part_list
-        .filter(
-          (i) =>
-            i.miter_design && i.miter_design.photo && i.miter_design.photo.url
-        )
         .map((i) => {
           return new Promise((resolve, reject) => {
-            toDataUrl(i.miter_design.photo.url, (result) => {
+            toDataUrl(i.miter_design?.photo?.url ? i.miter_design?.photo?.url : noPhoto, (result) => {
               resolve(result);
             });
           });
         });
 
       const MT_PromiseArr1 = selectedOrder.part_list
-        .filter(
-          (i) => i.mt_design && i.mt_design.photo && i.mt_design.photo.url
-        )
         .map((i) => {
           return new Promise((resolve, reject) => {
-            toDataUrl(i.mt_design.photo.url, (result) => {
+            toDataUrl(i.mt_design?.photo?.url ? i.mt_design?.photo?.url : noPhoto, (result) => {
               resolve(result);
             });
           });
         });
 
       const panelsPromiseArr1 = selectedOrder.part_list
-        .filter((i) => i.panel && i.panel.photo && i.panel.photo.url)
         .map((i) => {
           return new Promise((resolve, reject) => {
-            toDataUrl(i.panel.photo.url, (result) => {
+            toDataUrl(i.panel?.photo?.url ? i.panel?.photo?.url : noPhoto, (result) => {
               resolve(result);
             });
           });
         });
 
       const appliedProfilePromiseArr1 = selectedOrder.part_list
-        .filter(
-          (i) =>
-            i.applied_profile &&
-            i.applied_profile.photo &&
-            i.applied_profile.photo.url
-        )
         .map((i) => {
           return new Promise((resolve, reject) => {
-            toDataUrl(i.applied_profile.photo.url, (result) => {
+            toDataUrl(i.applied_profile?.photo?.url ? i.applied_profile?.photo?.url : noPhoto, (result) => {
               resolve(result);
             });
           });
