@@ -6,17 +6,18 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
   });
   
 
-  const e = edges.length > 0 ? edges : blob;
-  const m = moulds.length > 0 ? moulds : blob;
-  const md = miter.length > 0 ? miter : blob;
-  const mtd = mt.length > 0 ? mt : blob;
-  const p = panels.length > 0 ? panels : blob;
-  const a = appliedProfiles.length > 0 ? appliedProfiles : blob;
+  const e = edges;
+  const m = moulds;
+  const md = miter;
+  const mtd = mt;
+  const p = panels;
+  const a = appliedProfiles;
 
-  const d = designs.length > 0 ? designs : blob;
+  const d = designs;
 
   console.log({designs});
   console.log({d});
+  console.log({blob});
 
   return [
     {
@@ -48,6 +49,7 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
       console.log({profile: i.profile});
       console.log({design: i.design});
       console.log({photo: d[index]});
+      console.log({blob: blob[index]});
 
       return [
         {
@@ -60,7 +62,7 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
                   style: 'fonts'
                 },
                 {
-                  image: i.edge ? e : blob,
+                  image: i.edge && e[index] ? e[index] : blob[index],
                   width: 100,
                   height: 100,
                   fit: [100, 100]
@@ -75,7 +77,7 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
                   style: 'fonts'
                 },
                 {
-                  image: i.profile ? m : i.design ? d[index] : blob,
+                  image: i.profile ? m[index] : i.design && d[index] ? d[index] : blob[index],
                   width: 100,
                   height: 100,
                   fit: [100, 100]
@@ -90,7 +92,7 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
                   style: 'fonts'
                 },
                 {
-                  image: i.panel ? p : blob,
+                  image: i.panel && p[index] ? p[index] : blob[index],
                   width: 100,
                   height: 100,
                   fit: [100, 100]
@@ -105,7 +107,7 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
                   style: 'fonts'
                 },
                 {
-                  image: i.applied_profile && i.applied_profile.NAME !== 'None' ? a : blob,
+                  image: i.applied_profile && a[index]  ? a[index] : blob[index],
                   width: 100,
                   height: 100,
                   fit: [100, 100]
