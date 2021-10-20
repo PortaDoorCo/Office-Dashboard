@@ -6,18 +6,18 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
   });
   
 
-  const e = edges.length > 0 ? edges : blob;
-  const m = moulds.length > 0 ? moulds : blob;
-  const md = miter.length > 0 ? miter : blob;
-  const mtd = mt.length > 0 ? mt : blob;
-  const p = panels.length > 0 ? panels : blob;
-  const a = appliedProfiles.length > 0 ? appliedProfiles : blob;
+  const e = edges;
+  const m = moulds;
+  const md = miter;
+  const mtd = mt;
+  const p = panels;
+  const a = appliedProfiles;
 
-  const d = designs.length > 0 ? designs : blob;
+  const d = designs;
 
   console.log({designs});
   console.log({d});
-  console.log({e});
+  console.log({blob});
 
   return [
     {

@@ -277,7 +277,7 @@ class OrderPage extends Component {
             ? mouldingsState
             : [];
 
-    const noPhoto = 'https://res.cloudinary.com/porta-door/image/upload/v1634763683/none_cfad2ff78a.png';
+    const noPhoto = 'https://res.cloudinary.com/porta-door/image/upload/v1634764886/none_2fcc23e82e.png';
 
     if (data.orderType === 'Door Order') {
       const designPromiseArr1 = selectedOrder.part_list
