@@ -12,6 +12,18 @@ export default (info, part) => {
   const width = numQty(info.width);
   const qty = parseInt(info.qty);
   const edge_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
+  const VERTICAL_GRAIN = part.VERTICAL_GRAIN;
+
+
+  const orderType = info?.orderType?.value
+    ? info.orderType?.value
+    : part?.orderType?.value;
+
+  console.log({info});
+  console.log({orderType});
+  console.log({VERTICAL_GRAIN});
+
+
 
   const door = [
     {
@@ -28,5 +40,30 @@ export default (info, part) => {
     },
   ];
 
-  return door;
+  const df = [
+    {
+      qty: `(${qty})`,
+      measurement: `${fraction(
+        Math.round((height + edge_factor) * 16) / 16
+      )} x ${fraction(Math.round((width + edge_factor) * 16) / 16)} `,
+      pattern: 'SP',
+      width: 0,
+      height: 0,
+      panel: 'SOLID PIECE',
+      count: qty,
+      multiplier: qty,
+    },
+  ];
+
+  if(orderType === 'Door'){
+    return door;
+  } else {
+    if(VERTICAL_GRAIN){
+      return door;
+    } else {
+      return df;
+    }
+  }
+
+  
 };

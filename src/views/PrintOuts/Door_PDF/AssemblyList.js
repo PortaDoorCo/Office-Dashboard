@@ -19,97 +19,61 @@ export default (data, breakdowns) => {
       ],
     ];
 
-    if (i?.construction?.value === 'Slab') {
-      i.dimensions.forEach((item, index) => {
-        tableBody.push([
-          { text: item.item ? item.item : index + 1, style: 'fonts' },
-          { text: item.qty, style: 'fonts' },
-          {
-            stack: [
-              { text: `${SlabSize(item, 0)}`, style: 'fonts' },
-              item.notes || item.full_frame || item.lite
-                ? {
-                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-                    item.full_frame ? 'Full Frame DF' : ''
-                  } ${item.lite ? item.lite.NAME : ''}`,
-                  style: 'tableBold',
-                  alignment: 'left',
-                }
-                : null,
-            ],
-          },
-          {
-            text: Stiles(item, i, breakdowns).map((stile) => {
-              return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: Rails(item, i, breakdowns).map((rail) => {
-              return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${
-                item.full_frame ? '** Full Frame DF **' : ''
-              }`;
-            }),
-            style: 'fonts',
-          },
-          { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
-        ]);
-      });
-    } else {
-      GlassSort(i).forEach((item, index) => {
-        tableBody.push([
-          { text: item.item, style: 'fonts' },
-          { text: item.qty, style: 'fonts' },
-          {
-            stack: [
-              { text: `${Size(item)}`, style: 'fonts' },
-              item.notes || item.full_frame || item.lite
-                ? {
-                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-                    item.full_frame ? 'Full Frame DF' : ''
-                  } ${item.lite ? item.lite.NAME : ''}`,
-                  style: 'tableBold',
-                  alignment: 'left',
-                }
-                : null,
-            ],
-          },
-          {
-            text: Stiles(item, i, breakdowns).map((stile) => {
-              return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: Rails(item, i, breakdowns).map((rail) => {
-              return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${
-                item.full_frame ? '** Full Frame DF **' : ''
-              }`;
-            }),
-            style: 'fonts',
-          },
-          {
-            stack: [
-              {
-                text: Panels(item, i, breakdowns).map((panel) => {
-                  return `${panel.qty} ${panel.measurement} ${
-                    '- ' + panel.pattern
-                  } \n`;
-                }),
-                style: 'fonts',
-              },
-              item.cab_number
-                ? {
-                  text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
-                  style: 'tableBold',
-                  alignment: 'left',
-                }
-                : null,
-            ],
-          },
-        ]);
-      });
-    }
+
+    GlassSort(i).forEach((item, index) => {
+      tableBody.push([
+        { text: item.item, style: 'fonts' },
+        { text: item.qty, style: 'fonts' },
+        {
+          stack: [
+            { text: `${Size(item)}`, style: 'fonts' },
+            item.notes || item.full_frame || item.lite
+              ? {
+                text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+                  item.full_frame ? 'Full Frame DF' : ''
+                } ${item.lite ? item.lite.NAME : ''}`,
+                style: 'tableBold',
+                alignment: 'left',
+              }
+              : null,
+          ],
+        },
+        {
+          text: Stiles(item, i, breakdowns).map((stile) => {
+            return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`;
+          }),
+          style: 'fonts',
+        },
+        {
+          text: Rails(item, i, breakdowns).map((rail) => {
+            return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${
+              item.full_frame ? '** Full Frame DF **' : ''
+            }`;
+          }),
+          style: 'fonts',
+        },
+        {
+          stack: [
+            {
+              text: Panels(item, i, breakdowns).map((panel) => {
+                return `${panel.qty} ${panel.measurement} ${
+                  '- ' + panel.pattern
+                } \n`;
+              }),
+              style: 'fonts',
+            },
+            item.cab_number
+              ? {
+                text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
+                style: 'tableBold',
+                alignment: 'left',
+              }
+              : null,
+          ],
+        },
+      ]);
+    });
+    
 
     return [
       {

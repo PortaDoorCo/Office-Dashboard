@@ -205,8 +205,6 @@ export default (info, part, breakdowns) => {
       ];
     } else {
 
-      console.log("HERE")
-
       door = [
         {
           qty: `(${panelsH * panelsW * qty})`,
