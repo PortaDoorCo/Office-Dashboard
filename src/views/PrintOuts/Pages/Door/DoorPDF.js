@@ -13,6 +13,7 @@ import Packing_Slip from '../../Door_PDF/Packing_Slip';
 import moment from 'moment';
 import Glass_Selection from '../../Sorting/Glass_Selection';
 import Door_Labels from '../../Door_PDF/Door_Labels';
+import Slab_Selection from '../../Sorting/Slab_Selection';
 
 export default (
   data,
@@ -68,7 +69,26 @@ export default (
   }
 
   for (let i = 0; i < p.panels; i++) {
-    Content.push(PanelsPage(data, breakdowns));
+
+    const type = 'Page';
+
+    const newParts = Slab_Selection(data, type).map((j) => {
+      const newData = { ...data, part_list: j, hasSlab: j.some(e => e.hasSlab === true) };
+      return newData;
+    });
+
+    newParts.map((k) => {
+
+      if(k.hasSlab){
+        return Content.push(PanelsPage(k, breakdowns, 'SOLIDS'));
+      } else {
+        return Content.push(PanelsPage(k, breakdowns, 'PANELS'));
+      }
+      
+    });
+
+
+    // Content.push(PanelsPage(data, breakdowns));
   }
 
   for (let i = 0; i < p.stiles; i++) {

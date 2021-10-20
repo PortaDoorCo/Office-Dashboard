@@ -47,7 +47,7 @@ export default (info, part, breakdowns) => {
   }
   
   if (eval(breakdowns.leftStile_width) === eval(breakdowns.rightStile_width)) {
-    if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH == 1))) {
+    if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH === 1))) {
       return [
         {
           qty: `(${(qty * 2)})`,
@@ -56,7 +56,7 @@ export default (info, part, breakdowns) => {
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: 'LR',
           width: eval(breakdowns.leftStile_width),
-          height: eval(breakdowns.leftStile_width),
+          height: eval(breakdowns.leftStile_height),
           multiplier: 2
         },
         {
@@ -87,7 +87,7 @@ export default (info, part, breakdowns) => {
     }
   }
   else {
-    if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH == 1))) {
+    if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH === 1))) {
       return [
         {
           qty: `(${(qty)})`,

@@ -39,6 +39,7 @@ import Chat from '@material-ui/icons/Chat';
 import FileCopy from '@material-ui/icons/FileCopy';
 
 import { CSVLink } from 'react-csv';
+import CsvDownloader from 'react-csv-downloader';
 
 import DoorPDF from '../../PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from '../../PrintOuts/Pages/Drawer/DrawerPDF';
@@ -507,84 +508,84 @@ class OrderPage extends Component {
 
             if (numQty(j.leftStile) === numQty(j.rightStile)) {
               razorGuage.push([
-                `0${s.orderNum.toString()}`,
-                  f.woodtype?.NAME,
-                  numQty(j.leftStile) + f.edge?.LIP_FACTOR / 2,
-                  numQty(j.height) + f.edge?.LIP_FACTOR
-                    ? f.edge?.LIP_FACTOR
-                    : 0,
-                  numQty(j.qty) * 2,
-                  'L / R',
-                  f.design?.NAME,
-                  ind + 1,
+                `${s.orderNum}`,
+                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
+                numQty(j.height) + (f.edge?.LIP_FACTOR
+                  ? f.edge?.LIP_FACTOR
+                  : 0),
+                numQty(j.qty) * 2,
+                'L / R',
+                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+                ind + 1,
                   f.profile?.NAME,
               ]);
             } else {
               razorGuage.push([
-                `0${s.orderNum.toString()}`,
-                  f.woodtype?.NAME,
-                  numQty(j.leftStile) + f.edge?.LIP_FACTOR / 2,
-                  j.qty,
-                  numQty(j.height) + f.edge?.LIP_FACTOR
-                    ? f.edge?.LIP_FACTOR
-                    : 0,
-                  numQty(j.qty) * 1,
-                  'L',
-                  f.design?.NAME,
-                  ind + 1,
+                `${s.orderNum}`,
+                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
+                j.qty,
+                numQty(j.height) + (f.edge?.LIP_FACTOR
+                  ? f.edge?.LIP_FACTOR
+                  : 0),
+                numQty(j.qty) * 1,
+                'L',
+                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+                ind + 1,
                   f.profile?.NAME,
               ]);
 
               razorGuage.push([
-                `0${s.orderNum.toString()}`,
-                  f.woodtype?.NAME,
-                  numQty(j.rightStile) + f.edge?.LIP_FACTOR / 2,
-                  j.qty,
-                  numQty(j.height) + f.edge?.LIP_FACTOR
-                    ? f.edge?.LIP_FACTOR
-                    : 0,
-                  numQty(j.qty) * 1,
-                  'R',
-                  f.design?.NAME,
-                  ind + 1,
+                `${s.orderNum}`,
+                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+                numQty(j.rightStile) + (f.edge?.LIP_FACTOR / 2),
+                j.qty,
+                numQty(j.height) + (f.edge?.LIP_FACTOR
+                  ? f.edge?.LIP_FACTOR
+                  : 0),
+                numQty(j.qty) * 1,
+                'R',
+                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+                ind + 1,
                   f.profile?.NAME,
               ]);
             }
 
             if (numQty(j.topRail) === numQty(j.bottomRail)) {
               razorGuage.push([
-                `0${s.orderNum.toString()}`,
-                  f.woodtype?.NAME,
-                  numQty(j.topRail) + f.edge?.LIP_FACTOR / 2,
-                  numQty(j.width) - 3.5,
-                  numQty(j.qty) * 2,
-                  'T / B',
-                  f.design?.NAME,
-                  ind + 1,
+                `${s.orderNum}`,
+                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
+                numQty(j.width) - 3.5,
+                numQty(j.qty) * 2,
+                'T / B',
+                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+                ind + 1,
                   f.profile?.NAME,
               ]);
             } else {
               razorGuage.push([
-                `0${s.orderNum.toString()}`,
-                  f.woodtype?.NAME,
-                  numQty(j.topRail) + f.edge?.LIP_FACTOR / 2,
-                  numQty(j.width) - 3.5,
-                  numQty(j.qty) * 1,
-                  'T',
-                  f.design?.NAME,
-                  ind + 1,
+                `${s.orderNum}`,
+                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
+                numQty(j.width) - 3.5,
+                numQty(j.qty) * 1,
+                'T',
+                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+                ind + 1,
                   f.profile?.NAME,
               ]);
               razorGuage.push([
-                `0${s.orderNum.toString()}`,
-                  f.woodtype?.NAME,
-                  numQty(j.bottomRail) + f.edge?.LIP_FACTOR / 2,
-                  j.qty,
-                  numQty(j.width) - 3.5,
-                  numQty(j.qty) * 1,
-                  'B',
-                  f.design?.NAME,
-                  ind + 1,
+                `${s.orderNum}`,
+                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+                numQty(j.bottomRail) + (f.edge?.LIP_FACTOR / 2),
+                j.qty,
+                numQty(j.width) - 3.5,
+                numQty(j.qty) * 1,
+                'B',
+                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+                ind + 1,
                   f.profile?.NAME,
               ]);
             }
@@ -796,25 +797,31 @@ class OrderPage extends Component {
 
                         {selectedOrder &&
                         selectedOrder.orderType === 'Door Order' ? (
-                            <CSVLink
-                              data={razorGuage}
-                              filename={`${s && s.orderNum} Razor Guage.csv`}
-                              separator={','}
+
+
+                            <Tooltip
+                              title="Razorguage Export"
+                              placement="top"
                               className="mb-3"
                             >
-                              {' '}
-                              <Tooltip
-                                title="Razorguage Export"
-                                placement="top"
-                                className="mb-3"
-                              >
-                                <IconButton>
+
+                              <IconButton>
+                                <CsvDownloader
+                                  datas={razorGuage}
+                                  filename={`${s && s.orderNum}`}
+                                  extension=".csv"
+                                  uFEFF={false}
+                                  separator=','
+                                >
                                   <GetAppIcon
                                     style={{ width: '40', height: '40' }}
                                   />
-                                </IconButton>
-                              </Tooltip>
-                            </CSVLink>
+                                </CsvDownloader>
+                              </IconButton>
+
+
+                            </Tooltip>
+
                           ) : null}
 
                         {(this.props.user &&

@@ -12,7 +12,7 @@ export default (info, part, breakdowns) => {
 
   if (orderType === 'Door') {
     if (part.construction?.value === 'Slab') {
-      return Slab_Door(info);
+      return Slab_Door(info, part);
     } else {
       if (part.construction?.value === 'Cope') {
         return Door(info, part, breakdowns[0]);
@@ -30,7 +30,7 @@ export default (info, part, breakdowns) => {
 
   if (orderType === 'DF') {
     if (part?.construction?.value === 'Slab') {
-      return Slab_Door(info);
+      return Slab_Door(info, part);
     } else {
       if (part.construction?.value === 'Cope') {
         return Door(info, part, breakdowns[4]);

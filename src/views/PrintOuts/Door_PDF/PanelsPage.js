@@ -4,7 +4,7 @@ import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import GlassSort from '../Sorting/GlassSort';
 import Glass_Selection from '../Sorting/Glass_Selection';
 
-export default (data, breakdowns) => {
+export default (data, breakdowns, type) => {
   const getName = (i) => {
     return `${
       i.design
@@ -70,7 +70,6 @@ export default (data, breakdowns) => {
 
       if (
         item.glass_index === 1 ||
-          item.construction.value === 'Slab' ||
           i.orderType.value === 'One_Piece' ||
           i.orderType.value === 'One_Piece_DF' ||
           i.orderType.value === 'Two_Piece' ||
@@ -138,7 +137,7 @@ export default (data, breakdowns) => {
             alignment: 'center',
           },
           {
-            text: 'PANELS',
+            text: `${type}`,
             alignment: 'right',
             style: 'woodtype',
           },
@@ -193,7 +192,7 @@ export default (data, breakdowns) => {
       columns: [
         {
           stack: [
-            'Individual - PANELS List',
+            `Individual - ${type} List`,
             { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
           ],
         },

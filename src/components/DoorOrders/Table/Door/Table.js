@@ -451,6 +451,8 @@ const DoorTable = ({
       }
     }
 
+    //look here
+
     if (value > 1) {
       if (part.construction?.value === 'Cope') {
         dispatch(
@@ -465,7 +467,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(part.profile ? part.design?.PROFILE_WIDTH : 0)
+            fraction(part.design ? part.design?.PROFILE_WIDTH : 0)
           )
         );
       }
