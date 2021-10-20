@@ -88,6 +88,9 @@ export default (data, breakdowns) => {
 
   const d = flattenDeep(c).map((j, index) => {
     return j.parts.map((n) => {
+
+      console.log({n});
+
       return LinearFT(n.parts, breakdowns, n.width).map((b) => {
         if (numQty(b.width) > 0) {
           return {
