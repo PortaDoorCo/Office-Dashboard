@@ -463,7 +463,15 @@ class OrderPage extends Component {
                 numQty(j.width),
                 numQty(j.height),
                 f.edge && f.edge.NAME,
-                f.thickness && f.thickness.value,
+                  f.thickness?.thickness_values
+                    ? f.thickness?.thickness_values
+                    : f.thickness?.thickness_1 === '4/4'
+                      ? 0.75
+                      : f.thickness?.thickness_1 === '5/4'
+                        ? 1
+                        : f.thickness?.thickness_1 === '6/4'
+                          ? 1.25
+                          : 0.75,
               ]);
             } else {
               a.push([
@@ -474,7 +482,15 @@ class OrderPage extends Component {
                 numQty(j.width),
                 numQty(j.height),
                 f.edge && f.edge.NAME,
-                f.thickness && f.thickness.value,
+                  f.thickness?.thickness_values
+                    ? f.thickness?.thickness_values
+                    : f.thickness?.thickness_1 === '4/4'
+                      ? 0.75
+                      : f.thickness?.thickness_1 === '5/4'
+                        ? 1
+                        : f.thickness?.thickness_1 === '6/4'
+                          ? 1.25
+                          : 0.75,
               ]);
             }
           });
@@ -484,96 +500,94 @@ class OrderPage extends Component {
 
       const razor = s
         ? s.part_list.map((f, index) => {
-
-          console.log({f});
+          console.log({ f });
 
           f.dimensions.forEach((j, ind) => {
+            console.log({ j });
 
-            console.log({j});
-            
-
-            if(numQty(j.leftStile) === numQty(j.rightStile)){
+            if (numQty(j.leftStile) === numQty(j.rightStile)) {
               razorGuage.push([
                 `0${s.orderNum.toString()}`,
-                f.woodtype?.NAME,
-                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
-                numQty(j.height) + 0.125,
-                numQty(j.qty) * 2,
-                'L / R',
-                f.design?.NAME,
-                ind + 1,
-                f.profile?.NAME
+                  f.woodtype?.NAME,
+                  numQty(j.leftStile) + f.edge?.LIP_FACTOR / 2,
+                  numQty(j.height) + f.edge?.LIP_FACTOR
+                    ? f.edge?.LIP_FACTOR
+                    : 0,
+                  numQty(j.qty) * 2,
+                  'L / R',
+                  f.design?.NAME,
+                  ind + 1,
+                  f.profile?.NAME,
               ]);
             } else {
               razorGuage.push([
                 `0${s.orderNum.toString()}`,
-                f.woodtype?.NAME,
-                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
-                j.qty,
-                numQty(j.height) + 0.125,
-                numQty(j.qty) * 1,
-                'L',
-                f.design?.NAME,
-                ind + 1,
-                f.profile?.NAME
+                  f.woodtype?.NAME,
+                  numQty(j.leftStile) + f.edge?.LIP_FACTOR / 2,
+                  j.qty,
+                  numQty(j.height) + f.edge?.LIP_FACTOR
+                    ? f.edge?.LIP_FACTOR
+                    : 0,
+                  numQty(j.qty) * 1,
+                  'L',
+                  f.design?.NAME,
+                  ind + 1,
+                  f.profile?.NAME,
               ]);
 
               razorGuage.push([
                 `0${s.orderNum.toString()}`,
-                f.woodtype?.NAME,
-                numQty(j.rightStile) + (f.edge?.LIP_FACTOR / 2),
-                j.qty,
-                numQty(j.height) + 0.125,
-                numQty(j.qty) * 1,
-                'R',
-                f.design?.NAME,
-                ind + 1,
-                f.profile?.NAME
+                  f.woodtype?.NAME,
+                  numQty(j.rightStile) + f.edge?.LIP_FACTOR / 2,
+                  j.qty,
+                  numQty(j.height) + f.edge?.LIP_FACTOR
+                    ? f.edge?.LIP_FACTOR
+                    : 0,
+                  numQty(j.qty) * 1,
+                  'R',
+                  f.design?.NAME,
+                  ind + 1,
+                  f.profile?.NAME,
               ]);
             }
 
-
-            if(numQty(j.topRail) === numQty(j.bottomRail)){
+            if (numQty(j.topRail) === numQty(j.bottomRail)) {
               razorGuage.push([
                 `0${s.orderNum.toString()}`,
-                f.woodtype?.NAME,
-                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
-                numQty(j.width) - 3.5,
-                numQty(j.qty) * 2,
-                'T / B',
-                f.design?.NAME,
-                ind + 1,
-                f.profile?.NAME
+                  f.woodtype?.NAME,
+                  numQty(j.topRail) + f.edge?.LIP_FACTOR / 2,
+                  numQty(j.width) - 3.5,
+                  numQty(j.qty) * 2,
+                  'T / B',
+                  f.design?.NAME,
+                  ind + 1,
+                  f.profile?.NAME,
               ]);
-
             } else {
               razorGuage.push([
                 `0${s.orderNum.toString()}`,
-                f.woodtype?.NAME,
-                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
-                numQty(j.width) - 3.5,
-                numQty(j.qty) * 1,
-                'T',
-                f.design?.NAME,
-                ind + 1,
-                f.profile?.NAME
+                  f.woodtype?.NAME,
+                  numQty(j.topRail) + f.edge?.LIP_FACTOR / 2,
+                  numQty(j.width) - 3.5,
+                  numQty(j.qty) * 1,
+                  'T',
+                  f.design?.NAME,
+                  ind + 1,
+                  f.profile?.NAME,
               ]);
               razorGuage.push([
                 `0${s.orderNum.toString()}`,
-                f.woodtype?.NAME,
-                numQty(j.bottomRail) + (f.edge?.LIP_FACTOR / 2),
-                j.qty,
-                numQty(j.width) - 3.5,
-                numQty(j.qty) * 1,
-                'B',
-                f.design?.NAME,
-                ind + 1,
-                f.profile?.NAME
+                  f.woodtype?.NAME,
+                  numQty(j.bottomRail) + f.edge?.LIP_FACTOR / 2,
+                  j.qty,
+                  numQty(j.width) - 3.5,
+                  numQty(j.qty) * 1,
+                  'B',
+                  f.design?.NAME,
+                  ind + 1,
+                  f.profile?.NAME,
               ]);
             }
-
-
-            
           });
           return razorGuage;
         })
@@ -679,7 +693,7 @@ class OrderPage extends Component {
 
                 <Row></Row>
                 <Row>
-                  {user?.role?.type !== 'quality_control' ?
+                  {user?.role?.type !== 'quality_control' ? (
                     <Col>
                       <Tooltip title="Edit" placement="top">
                         <IconButton onClick={this.props.editable}>
@@ -718,10 +732,10 @@ class OrderPage extends Component {
                           <Attachment style={{ width: '40', height: '40' }} />
                         </IconButton>
                       </Tooltip>
-                    </Col> :
+                    </Col>
+                  ) : (
                     <Col />
-                  }
-
+                  )}
 
                   <Col className="ml-5">
                     <Row>
