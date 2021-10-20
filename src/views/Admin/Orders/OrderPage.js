@@ -291,19 +291,13 @@ class OrderPage extends Component {
 
       const edgesPromiseArr1 = selectedOrder.part_list
         .map((i) => {
-          if(i.edge){
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.edge?.photo?.url ? i.edge?.photo?.url : noPhoto, (result) => {
-                resolve(result);
-              });
+  
+          return new Promise((resolve, reject) => {
+            toDataUrl(i.edge?.photo?.url ? i.edge?.photo?.url : noPhoto, (result) => {
+              resolve(result);
             });
-          } else {
-            return new Promise((resolve, reject) => {
-              toDataUrl(noPhoto, (result) => {
-                resolve(result);
-              });
-            });
-          }
+          });
+         
           
         });
 
