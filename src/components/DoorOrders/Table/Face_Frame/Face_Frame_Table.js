@@ -181,8 +181,8 @@ const Frame_Only_Table = ({
               <thead>
                 <tr>
                   <th>Qty</th>
-                  <th>Smallest Dimension</th>
-                  <th>Other Dimension</th>
+                  <th>Width</th>
+                  <th>Height</th>
                   <th>Openings</th>
                   <th>Price</th>
                   <th>Finishing</th>

@@ -70,15 +70,11 @@ const DoorTable = ({
   const leftStile =
     index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
   const rightStile =
-    index >= 0
-      ? formState?.part_list[i]?.dimensions[index]?.rightStile
-      : null;
+    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.rightStile : null;
   const topRail =
     index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
   const bottomRail =
-    index >= 0
-      ? formState?.part_list[i]?.dimensions[index]?.bottomRail
-      : null;
+    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.bottomRail : null;
   const defaultLeftStile = formState?.part_list[i]?.leftStile;
   const defaultRightStile = formState?.part_list[i]?.rightStile;
   const defaultTopRail = formState?.part_list[i]?.topRail;
@@ -165,7 +161,6 @@ const DoorTable = ({
   const twoHigh = (index, e, v) => {
     let value;
     const part = formState.part_list[i];
-
 
     if (e) {
       value = e.target.value;
@@ -289,7 +284,11 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(part.profile ? part.profile?.PROFILE_WIDTH + (part.edge?.LIP_FACTOR / 2) : 0)
+            fraction(
+              part.profile
+                ? part.profile?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
+                : 0
+            )
           )
         );
       } else {
@@ -297,7 +296,21 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(part.design ? part.design?.PROFILE_WIDTH + (part.edge?.LIP_FACTOR / 2) : 0)
+            fraction(
+              part.design
+                ? part.design?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
+                : 0
+            )
+          )
+        );
+      }
+
+      if(value > 2) {
+        dispatch(
+          change(
+            'DoorOrder',
+            `part_list[${i}].dimensions[${index}].unevenCheck`,
+            false
           )
         );
       }
@@ -459,7 +472,11 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(part.profile ? part.profile?.PROFILE_WIDTH + (part.edge?.LIP_FACTOR / 2) : 0)
+            fraction(
+              part.profile
+                ? part.profile?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
+                : 0
+            )
           )
         );
       } else {
@@ -467,7 +484,11 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(part.design ? part.design?.PROFILE_WIDTH + (part.edge?.LIP_FACTOR / 2) : 0)
+            fraction(
+              part.design
+                ? part.design?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
+                : 0
+            )
           )
         );
       }
@@ -483,7 +504,6 @@ const DoorTable = ({
   };
 
   const onStileOrRailChange = (e, index) => {
-
     const value = e.target.value;
     console.log({ e });
 
@@ -609,7 +629,6 @@ const DoorTable = ({
   };
 
   const changeFraming = (e, index) => {
-
     console.log({ e });
 
     if (e.target.name === 'update_framing') {
@@ -751,12 +770,9 @@ const DoorTable = ({
   };
 
   const addFields = (i) => {
-
-
     const construction = formState?.part_list[i]?.construction?.value;
     // const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
     // const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
-
 
     if (fields.length >= 0) {
       dispatch(
@@ -783,12 +799,11 @@ const DoorTable = ({
 
     dispatch(touch('DoorOrder', `part_list[${i}].applied_profile`));
     dispatch(touch('DoorOrder', `part_list[${i}].panel`));
-    
+
     dispatch(touch('DoorOrder', `part_list[${i}].leftStile`));
     dispatch(touch('DoorOrder', `part_list[${i}].rightStile`));
     dispatch(touch('DoorOrder', `part_list[${i}].topRail`));
     dispatch(touch('DoorOrder', `part_list[${i}].bottomRail`));
-
 
     dispatch(startAsyncValidation('DoorOrder'));
 
@@ -986,8 +1001,7 @@ const DoorTable = ({
                     edit={construction === 'Miter' ? true : edit}
                     validate={required}
                     onChange={(e) => (
-                      registerChange(index, e),
-                      onStileOrRailChange(e, index)
+                      registerChange(index, e), onStileOrRailChange(e, index)
                     )}
                   />
                 </td>
@@ -1003,8 +1017,7 @@ const DoorTable = ({
                     edit={construction === 'Miter' ? true : edit}
                     validate={required}
                     onChange={(e) => (
-                      registerChange(index, e),
-                      onStileOrRailChange(e, index)
+                      registerChange(index, e), onStileOrRailChange(e, index)
                     )}
                   />
                 </td>
@@ -1021,8 +1034,7 @@ const DoorTable = ({
                     edit={construction === 'Miter' ? true : edit}
                     validate={required}
                     onChange={(e) => (
-                      registerChange(index, e),
-                      onStileOrRailChange(e, index)
+                      registerChange(index, e), onStileOrRailChange(e, index)
                     )}
                   />
                 </td>
@@ -1038,8 +1050,7 @@ const DoorTable = ({
                     edit={construction === 'Miter' ? true : edit}
                     validate={required}
                     onChange={(e) => (
-                      registerChange(index, e),
-                      onStileOrRailChange(e, index)
+                      registerChange(index, e), onStileOrRailChange(e, index)
                     )}
                   />
                 </td>
@@ -1126,6 +1137,7 @@ const DoorTable = ({
             </Col>
             <Col>
               {parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 &&
+              parseInt(formState.part_list[i].dimensions[index].panelsH) < 3 &&
               parseInt(formState.part_list[i].dimensions[index].panelsW) ===
                 1 ? (
                   <FormGroup>
@@ -1179,15 +1191,21 @@ const DoorTable = ({
                       <div>
                         <Col />
                         <Col>
-                          <p style={{ textAlign: 'center', marginTop: '10px' }}>
+                          <div style={{ textAlign: 'center', marginTop: '10px' }}>
                             <strong>Panel Opening {index + 1}</strong>
-                          </p>
+                            <p>From Top of Door to Top of Mullion</p>
+                          </div>
+                          
                           <Field
                             name={`${table}.unevenSplitInput${index}`}
                             component={renderField}
                             edit={edit}
                             validate={required}
                           />
+
+                          <div style={{ textAlign: 'center', marginTop: '0px' }}>
+                            <p>In Inches</p>
+                          </div>
                         </Col>
                         <Col />
                       </div>
@@ -1266,8 +1284,12 @@ const DoorTable = ({
                       glass_note_check(index) ? [required, trim_val] : null
                     }
                   />
+                  {parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 &&
+                  parseInt(formState.part_list[i].dimensions[index].panelsH) < 3 &&
+                  parseInt(formState.part_list[i].dimensions[index].panelsW) ===
+                    1 ? null : <strong>Please Specify in Notes if Uneven</strong>}
                 </Col>
-                
+
                 <Col lg="2">
                   {!edit ? (
                     <Button
@@ -1281,7 +1303,7 @@ const DoorTable = ({
                 </Col>
               </Row>
             </Col>
-            <Col lg='4' />
+            <Col lg="4" />
             <Col xs="3">
               <strong>Extra Design Cost</strong>
               <Field

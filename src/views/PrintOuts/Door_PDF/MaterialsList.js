@@ -203,6 +203,9 @@ export default (data, breakdowns) => {
         return numQty(panel.width);
       });
       const height = Panels(item, i, breakdowns).map((panel) => {
+
+        console.log({testtttt: numQty(panel.height)});
+
         return numQty(panel.height);
       });
 
@@ -214,23 +217,32 @@ export default (data, breakdowns) => {
         }
       });
 
+      console.log({ width });
       console.log({ height });
+      console.log({ qty });
 
       const width_total = width.reduce((acc, item) => acc + item);
       const height_total = height.reduce((acc, item) => acc + item);
       const qty_total = qty.reduce((acc, item) => acc + item);
 
+      console.log({ width_total });
+      console.log({ height_total });
       console.log({ qty_total });
 
       const q =
         ((width_total * height_total) / 144) *
         parseInt(qty_total ? qty_total : 0);
 
+
+      console.log({testtt: ((width_total * height_total) / 144) * parseInt(qty_total ? qty_total : 0) }); 
+      console.log({q});
+
       return q;
     });
 
     const equation = calc.reduce((acc, item) => acc + item);
 
+    console.log({ calc });
     console.log({ equation });
 
     if (
