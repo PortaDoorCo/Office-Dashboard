@@ -19,13 +19,6 @@ export default (info, part, breakdowns) => {
   let edge_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
   let lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
 
-  const profile = part?.profile?.NAME;
-
-  if(profile === 'Deluxe Mould'){
-    lip_factor = 0;
-  }
-
-
   const topRail = info.topRail
     ? numQty(info.topRail) + lip_factor / 2
     : 0;
@@ -47,10 +40,6 @@ export default (info, part, breakdowns) => {
   const qty = parseInt(info.qty);
 
 
-
-
-  console.log({profile});
-  
   
   let inset = 0;
   if (part.profile) {

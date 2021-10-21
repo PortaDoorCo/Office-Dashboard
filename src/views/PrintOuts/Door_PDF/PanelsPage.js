@@ -3,6 +3,7 @@ import Panels from '../Breakdowns/Doors/Panels/Panels';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import GlassSort from '../Sorting/GlassSort';
 import Glass_Selection from '../Sorting/Glass_Selection';
+import HeightSort from '../Sorting/HeightSort';
 
 export default (data, breakdowns, type) => {
   const getName = (i) => {
@@ -65,7 +66,7 @@ export default (data, breakdowns, type) => {
     ];
 
 
-    GlassSort(i).forEach((item, index) => {
+    HeightSort(GlassSort(i)).forEach((item, index) => {
       console.log({ item });
 
       if (
