@@ -16,8 +16,16 @@ export default (info, part, breakdowns) => {
   const top_rail_arch = part?.design?.TOP_RAIL_ADD;
   const btm_rail_arch = part?.design?.BTM_RAIL_ADD;
 
-  const lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
-  
+  let edge_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
+  let lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
+
+  const profile = part?.profile?.NAME;
+
+  if(profile === 'Deluxe Mould'){
+    lip_factor = 0;
+  }
+
+
   const topRail = info.topRail
     ? numQty(info.topRail) + lip_factor / 2
     : 0;
@@ -37,7 +45,12 @@ export default (info, part, breakdowns) => {
   const height = numQty(info.height);
   const width = numQty(info.width);
   const qty = parseInt(info.qty);
-  const edge_factor = part.edge?.LIP_FACTOR;
+
+
+
+
+  console.log({profile});
+  
   
   let inset = 0;
   if (part.profile) {
