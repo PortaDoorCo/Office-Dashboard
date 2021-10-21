@@ -5,10 +5,15 @@ import Acknowledgement from '../../Misc_Items_PDF/Acknowledgement';
 import moment from 'moment';
 import Packing_Slip from '../../Misc_Items_PDF/Packing_Slip';
 import QC from '../../Misc_Items_PDF/QC';
+import TotalMisc from '../../Breakdowns/Doors/MaterialBreakdown/TotalMisc';
 
 export default (data, breakdowns, p, pricing) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
+
+  const totalUnits = TotalMisc(data);
+
+  console.log({totalUnits});
 
   let Content = [];
 
@@ -67,7 +72,7 @@ export default (data, breakdowns, p, pricing) => {
                 text: ' ', style: 'warrantyFont',
               },
               {
-                text: fileName, style: 'warrantyFont', alignment: 'right'
+                text: `UNITS: ${totalUnits}    ${fileName}`, style: 'warrantyFont', alignment: 'right'
               }
             ]  
           }

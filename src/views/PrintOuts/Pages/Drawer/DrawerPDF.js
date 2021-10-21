@@ -8,10 +8,14 @@ import Bottoms from '../../Drawer_PDF/Bottoms';
 import Packing_Slip from '../../Drawer_PDF/Packing_Slip';
 import Box_Labels from '../../Drawer_PDF/Box_Labels';
 import moment from 'moment';
+import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 
 export default (data, breakdowns, p, pricing) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
+
+  const totalUnits = TotalPieces(data);
+
 
   let Content = [];
 
@@ -83,7 +87,7 @@ export default (data, breakdowns, p, pricing) => {
                 text: ' ', style: 'warrantyFont',
               },
               {
-                text: fileName, style: 'warrantyFont', alignment: 'right'
+                text: `UNITS: ${totalUnits}    ${fileName}`, style: 'warrantyFont', alignment: 'right'
               }
             ]  
           }

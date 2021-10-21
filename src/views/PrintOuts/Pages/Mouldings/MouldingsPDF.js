@@ -6,10 +6,15 @@ import moment from 'moment';
 import AssemblyList from '../../Mouldings_PDF/AssemblyList';
 import PackingSlip from '../../Mouldings_PDF/PackingSlip';
 import QC from '../../Mouldings_PDF/QC';
+import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 
 export default (data, breakdowns, p, pricing) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
+
+
+  const totalUnits = data.mouldings.length;
+  console.log({totalUnits});
 
   let Content = [];
 
@@ -73,7 +78,7 @@ export default (data, breakdowns, p, pricing) => {
                 text: ' ', style: 'warrantyFont',
               },
               {
-                text: fileName, style: 'warrantyFont', alignment: 'right'
+                text: `UNITS: ${totalUnits}    ${fileName}`, style: 'warrantyFont', alignment: 'right'
               }
             ]  
           }

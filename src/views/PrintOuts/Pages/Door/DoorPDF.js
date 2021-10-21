@@ -14,6 +14,8 @@ import moment from 'moment';
 import Glass_Selection from '../../Sorting/Glass_Selection';
 import Door_Labels from '../../Door_PDF/Door_Labels';
 import Slab_Selection from '../../Sorting/Slab_Selection';
+import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
+import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 
 export default (
   data,
@@ -30,6 +32,11 @@ export default (
 ) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
+  
+  const units = TotalPieces(data);
+  const solidDFs = TotalSolidDFs(data);
+  const totalUnits = units + solidDFs;
+
 
   let Content = [];
 
@@ -169,11 +176,15 @@ export default (
                 text: ' ',
                 style: 'warrantyFont',
               },
+
               {
-                text: fileName,
+                text: `UNITS: ${totalUnits}    ${fileName}`,
                 style: 'warrantyFont',
                 alignment: 'right',
               },
+
+
+
             ],
           },
         ],

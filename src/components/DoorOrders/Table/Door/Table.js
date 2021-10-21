@@ -289,7 +289,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(part.profile ? part.profile?.PROFILE_WIDTH + 0.0625 : 0)
+            fraction(part.profile ? part.profile?.PROFILE_WIDTH + (part.edge?.LIP_FACTOR / 2) : 0)
           )
         );
       } else {
@@ -297,7 +297,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(part.design ? part.design?.PROFILE_WIDTH : 0)
+            fraction(part.design ? part.design?.PROFILE_WIDTH + (part.edge?.LIP_FACTOR / 2) : 0)
           )
         );
       }
@@ -459,7 +459,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(part.profile ? part.profile?.PROFILE_WIDTH + 0.0625 : 0)
+            fraction(part.profile ? part.profile?.PROFILE_WIDTH + (part.edge?.LIP_FACTOR / 2) : 0)
           )
         );
       } else {
@@ -467,7 +467,7 @@ const DoorTable = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(part.design ? part.design?.PROFILE_WIDTH : 0)
+            fraction(part.design ? part.design?.PROFILE_WIDTH + (part.edge?.LIP_FACTOR / 2) : 0)
           )
         );
       }
