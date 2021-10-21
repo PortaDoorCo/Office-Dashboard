@@ -166,7 +166,7 @@ export default (data, breakdowns) => {
             width: 200,
           },
           {
-            text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
+            text: `IP: ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}`,
             style: 'woodtype',
             alignment: 'center',
           },

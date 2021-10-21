@@ -132,7 +132,7 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
               {
-                text: `IP:  ${i.profile ? i.profile.NAME : 'None'}   Edge:  ${
+                text: `IP:  ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}   Edge:  ${
                   i.edge ? i.edge.NAME : 'None'
                 }`,
                 style: 'fonts',

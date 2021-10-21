@@ -149,7 +149,7 @@ export default (data, pricing) => {
             stack: [
               {
                 text: `IP: ${
-                  part.profile ? part.profile.NAME : 'None'
+                  part.profile ? part.profile.NAME : part.design ? part.design.NAME : 'None'
                 }  Edge: ${part.edge ? part.edge.NAME : 'None'}`,
                 style: 'fonts',
               },

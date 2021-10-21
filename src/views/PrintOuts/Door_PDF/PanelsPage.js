@@ -132,7 +132,7 @@ export default (data, breakdowns, type) => {
             style: 'woodtype',
           },
           {
-            text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
+            text: `IP: ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}`,
             style: 'woodtype',
             alignment: 'center',
           },

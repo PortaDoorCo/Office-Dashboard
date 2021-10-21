@@ -152,6 +152,8 @@ const DoorTable = ({
     setHeight(newHeight);
   };
 
+
+
   const clearNotes = (index, e) => {
     dispatch(
       change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')

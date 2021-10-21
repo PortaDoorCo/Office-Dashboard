@@ -11,7 +11,7 @@ import {
   renderNumber,
   renderDropdownListFilter,
   renderPrice,
-  renderInt
+  renderInt,
 } from '../RenderInputs/renderInputs';
 import {
   Button,
@@ -33,55 +33,86 @@ import {
 import NumberFormat from 'react-number-format';
 import currencyMask from '../../utils/currencyMask';
 
-
-
 let Inputs = (props) => {
   const { fields, misc_items, formState, linePrices, miscTotal } = props;
 
   let misc_items_category = ['Accessories', 'Door', 'DF'];
 
-  let sorted_misc_items = misc_items.filter(e => e.categories.some(c => misc_items_category.includes(c.value)));
+  let sorted_misc_items = misc_items.filter((e) =>
+    e.categories.some((c) => misc_items_category.includes(c.value))
+  );
 
   const changeMiscItem = (e, index) => {
-
     let total_qty = 0;
+
+
+    console.log({e});
+
+    console.log({formState});
 
     props.dispatch(change('DoorOrder', `misc_items[${index}].price`, e.Price));
 
-    if(e.count_items){
-      const categories = e.categories.map(i => i.value);
-      if(categories.includes('Door')){
-        const matched_orders = formState.part_list.filter(i => ['Door', 'Glass', 'One_Piece', 'Two_Piece', 'Slab_Door', 'Face_Frame'].includes(i.orderType.value));
+    if (e.count_items) {
+      const categories = e.categories.map((i) => i.value);
+      if (categories.includes('Door')) {
+        const matched_orders = formState.part_list.filter((i) =>
+          [
+            'Door',
+            'Glass',
+            'One_Piece',
+            'Two_Piece',
+            'Slab_Door',
+            'Face_Frame',
+          ].includes(i.orderType.value)
+        );
 
-        const quantities = matched_orders.map(i => {
-          const qty = i.dimensions.map(j => {
+        const quantities = matched_orders.map((i) => {
+          const qty = i.dimensions.map((j) => {
             return parseInt(j.qty);
           });
-          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          const sub_total_qty = parseFloat(
+            qty.reduce((acc, item) => acc + item, 0)
+          );
           return sub_total_qty;
         });
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
         total_qty = total_qty + sub_quantity;
       }
-      if(categories.includes('DF')){
-        const matched_orders = formState.part_list.filter(i => ['DF', 'Glass_DF', 'One_Piece_DF', 'Two_Piece_DF', 'Slab_DF'].includes(i.orderType.value));
-        
-        const quantities = matched_orders.map(i => {
-          const qty = i.dimensions.map(j => {
+      if (categories.includes('DF')) {
+        const matched_orders = formState.part_list.filter((i) =>
+          [
+            'DF',
+            'Glass_DF',
+            'One_Piece_DF',
+            'Two_Piece_DF',
+            'Slab_DF',
+          ].includes(i.orderType.value)
+        );
+
+        const quantities = matched_orders.map((i) => {
+          const qty = i.dimensions.map((j) => {
             return parseInt(j.qty);
           });
-          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          const sub_total_qty = parseFloat(
+            qty.reduce((acc, item) => acc + item, 0)
+          );
           return sub_total_qty;
         });
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
-        total_qty = total_qty+sub_quantity;
+        total_qty = total_qty + sub_quantity;
       }
-      props.dispatch(change('DoorOrder', `misc_items[${index}].qty`, total_qty > 0 ? total_qty : 1));
+      props.dispatch(
+        change(
+          'DoorOrder',
+          `misc_items[${index}].qty`,
+          total_qty > 0 ? total_qty : 1
+        )
+      );
     }
   };
 
   return (
-    <div className='resize'>
+    <div className="resize">
       <Table>
         <thead>
           <tr>
@@ -273,7 +304,7 @@ const mapStateToProps = (state) => ({
 MiscItems = reduxForm({
   form: 'DoorOrder',
   enableReinitialize: true,
-  destroyOnUnmount: false
+  destroyOnUnmount: false,
 })(MiscItems);
 
 export default connect(mapStateToProps, null)(MiscItems);

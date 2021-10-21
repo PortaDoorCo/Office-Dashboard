@@ -140,7 +140,7 @@ export default (data, breakdowns) => {
             { 
               stack: [
                 {text: ' ', style: 'woodtype' },
-                {text: `IP: ${i.profile ? i.profile.NAME : 'None'}`, style: 'fonts', alignment:'right' }
+                {text: `IP: ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}`, style: 'fonts', alignment:'right' }
               ]
             },
             { 
