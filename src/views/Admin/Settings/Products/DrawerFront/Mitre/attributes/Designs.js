@@ -41,7 +41,7 @@ const Designs = (props) => {
     UPCHARGE_THICK: '',
     TOP_RAIL_ADD: '',
     BTM_RAIL_ADD: '',
-    MINIMUM_STILE_WIDTH: '',
+    PROFILE_WIDTH: '',
     PROFILE_WIDTH: '',
     INSET: '',
     DF_REDUCTION: '',
@@ -81,7 +81,7 @@ const Designs = (props) => {
       UPCHARGE_THICK: '',
       TOP_RAIL_ADD: '',
       BTM_RAIL_ADD: '',
-      MINIMUM_STILE_WIDTH: '',
+      PROFILE_WIDTH: '',
       PROFILE_WIDTH: '',
       INSET: '',
       DF_REDUCTION: '',
@@ -138,7 +138,7 @@ const Designs = (props) => {
       UPCHARGE_THICK: product.UPCHARGE_THICK,
       TOP_RAIL_ADD: product.TOP_RAIL_ADD,
       BTM_RAIL_ADD: product.BTM_RAIL_ADD,
-      MINIMUM_STILE_WIDTH: product.MINIMUM_STILE_WIDTH,
+      PROFILE_WIDTH: product.PROFILE_WIDTH,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
       INSET: product.INSET,
       DF_REDUCTION: product.DF_REDUCTION,
@@ -206,7 +206,7 @@ const Designs = (props) => {
               <strong>Bottom Rail Arch:</strong> {card.BTM_RAIL_ADD}
             </CardTitle>
             <CardTitle>
-              <strong>Minimum Stile Width:</strong> {card.MINIMUM_STILE_WIDTH}
+              <strong>Minimum Stile Width:</strong> {card.PROFILE_WIDTH}
             </CardTitle>
             <CardTitle>
               <strong>Profile Width:</strong> {card.PROFILE_WIDTH}
@@ -340,8 +340,8 @@ const Designs = (props) => {
                 <Label for="5/4_Price">Minimum Stile Width</Label>
                 <Input
                   type="number"
-                  value={product.MINIMUM_STILE_WIDTH}
-                  name="MINIMUM_STILE_WIDTH"
+                  value={product.PROFILE_WIDTH}
+                  name="PROFILE_WIDTH"
                   onChange={(e) => change(e)}
                 ></Input>
               </Col>
@@ -536,8 +536,8 @@ const Designs = (props) => {
                 <Label for="5/4_Price">Minimum Stile Width</Label>
                 <Input
                   type="number"
-                  value={product.MINIMUM_STILE_WIDTH}
-                  name="MINIMUM_STILE_WIDTH"
+                  value={product.PROFILE_WIDTH}
+                  name="PROFILE_WIDTH"
                   onChange={(e) => change(e)}
                 ></Input>
               </Col>
