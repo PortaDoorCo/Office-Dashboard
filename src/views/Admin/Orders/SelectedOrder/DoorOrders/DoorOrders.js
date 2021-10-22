@@ -104,7 +104,7 @@ class DoorOrders extends Component {
       ];
     }
 
-    console.log({newStatus});
+    
 
     const order = {
       ...values,
@@ -127,9 +127,9 @@ class DoorOrders extends Component {
 
 
 
-    console.log({status});
+    
 
-    console.log({tracking});
+    
     
 
     const orderId = values.id;

@@ -25,7 +25,7 @@ export function setSelectedCompanies(data) {
 }
 
 export function loadCustomers(cookie, user) {
-  console.log({ user });
+  
 
   if (user.role?.type === 'customer') {
     return async function (dispatch) {
@@ -139,7 +139,7 @@ export function updateCustomer(custId, customer, cookie) {
         data: data.data,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -179,7 +179,7 @@ export function uploadFilesToCustomer(customer, e, cookie) {
         data: data,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -208,7 +208,7 @@ export function submitCustomer(customer, cookie) {
         data: res,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -242,7 +242,7 @@ export function updateNotes(orderId, data, cookie) {
         type: UPDATE_NOTES,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -272,7 +272,7 @@ export function deleteNote(id, data, cookie) {
         type: UPDATE_NOTES,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',

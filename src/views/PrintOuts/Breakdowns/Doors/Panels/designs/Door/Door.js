@@ -118,8 +118,8 @@ export default (info, part, breakdowns) => {
         .slice(1)
         .map((i, v) => {
           if (glassCheck(v)) {
-            console.log({ v });
-            console.log({ glass: glassCheck(v) });
+            
+            
             return glassDoor(v);
           } else {
             return {
@@ -168,7 +168,7 @@ export default (info, part, breakdowns) => {
       door = unevenSplit();
     } else {
 
-      console.log("HEREEEEE")
+      
 
       door = [
         {
@@ -235,7 +235,7 @@ export default (info, part, breakdowns) => {
     count: qty,
   };
 
-  console.log({ info });
+  
 
   const doorFunc = () => {
     let arr = [];

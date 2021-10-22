@@ -13,7 +13,7 @@ export default (data, breakdowns, p, pricing) => {
 
   const totalUnits = TotalMisc(data);
 
-  console.log({totalUnits});
+  
 
   let Content = [];
 

@@ -41,11 +41,11 @@ export default (data, breakdowns) => {
 
   const heightSort = b.map((i, index) => {
 
-    console.log({i});
+    
       
     const dim = GlassSort(i).map((item, index) => {
 
-      console.log({item});
+      
 
       if (
         item.glass_index === 1 ||
@@ -69,7 +69,7 @@ export default (data, breakdowns) => {
         return {
           ...item,
           rail_height: Rails(item, n, breakdowns).map((rail) => {
-            console.log({rail});
+            
             return rail.height;
           })[0]
         };
@@ -77,14 +77,14 @@ export default (data, breakdowns) => {
 
     });
 
-    console.log({dim});
+    
     return {
       ...i,
       dim
     };
   });
 
-  console.log({heightSort});
+  
     
 
   const table_body = heightSort.map((i, index) => {
@@ -100,7 +100,7 @@ export default (data, breakdowns) => {
       ],
     ];
   
-    console.log({i});
+    
       
     RailSort(i.dim).forEach((item, index) => {
       if (
@@ -121,7 +121,7 @@ export default (data, breakdowns) => {
           design: item.design
         };
   
-        console.log({item});
+        
   
         if (
           (item.panelsH && item.panelsW > 1) ||
@@ -204,7 +204,7 @@ export default (data, breakdowns) => {
       }
     });
   
-    console.log({tableBody});
+    
   
   
     return [

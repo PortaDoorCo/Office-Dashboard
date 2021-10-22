@@ -83,6 +83,7 @@ import StickyBox from 'react-sticky-box';
 import CopyModal from '../../../utils/Modal';
 
 import Cookies from 'js-cookie';
+import Rails from '../../PrintOuts/Breakdowns/Doors/Rails/Rails';
 
 const cookie = Cookies.get('jwt');
 
@@ -493,6 +494,20 @@ class OrderPage extends Component {
 
           f.dimensions.forEach((j, ind) => {
             console.log({ j });
+
+            const { breakdowns } = this.props;
+
+            const rail_width = f && j ? Rails(j, f, breakdowns).map((rail) => {
+              return `${rail.width}`;
+            }) : null;
+
+            const rail_height = f && j ? Rails(j, f, breakdowns).map((rail) => {
+              return `${rail.height}`;
+            }) : null;
+
+            console.log({rail_width});
+
+            
 
             if (numQty(j.leftStile) === numQty(j.rightStile)) {
               razorGuage.push([

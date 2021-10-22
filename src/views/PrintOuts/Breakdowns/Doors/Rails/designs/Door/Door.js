@@ -9,8 +9,8 @@ const fraction = (num) => {
 
 export default (info, part, breakdowns) => {
 
-  console.log({info});
-  console.log({part});
+  
+  
 
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
@@ -46,11 +46,11 @@ export default (info, part, breakdowns) => {
     inset = part.design?.INSET;
   }
 
-  console.log({width});
-  console.log({leftStile});
-  console.log({inset});
-  console.log({inset2: part.profile?.INSET});
-  console.log({edge_factor});
+  
+  
+  
+  
+  
   
 
   if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {

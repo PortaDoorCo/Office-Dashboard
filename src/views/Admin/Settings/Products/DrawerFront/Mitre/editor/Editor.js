@@ -65,7 +65,7 @@ const EditorComponent = (props) => {
     editorRef.current._input.focus();
   };
 
-  console.log({breakdowns});
+  
   return (
     <div>
 

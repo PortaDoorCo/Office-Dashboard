@@ -49,8 +49,8 @@ const OrderTable = ({
   };
 
   const checkSize = (e, index) => {
-    console.log({e});
-    console.log({index});
+    
+    
 
     switch(numQty(e.target.value)) {
       case 9:
@@ -94,7 +94,7 @@ const OrderTable = ({
 
   const checkScoop = (index, e) => {
     // const value = e.target.value;
-    console.log({ e });
+    
     const str = 'WITH SCOOP';
 
     if(e.NAME === 'Yes'){

@@ -68,7 +68,7 @@ const SalesReport = (props) => {
     setData(filteredOrders);
   }, [startDate, endDate, orders, filterStatus, filterText]);
 
-  console.log({filterStatus});
+  
 
 
   const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].created_at) : new Date();

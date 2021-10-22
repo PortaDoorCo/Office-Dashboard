@@ -14,7 +14,7 @@ export default (
 
   const count = data.part_list;
 
-  console.log({count});
+  
 
   let Content = [];
 

@@ -39,7 +39,7 @@ export default (data, breakdowns) => {
     };
   });
 
-  console.log({a});
+  
 
   const table_body = a.map((i, index) => {
     const tableBody = [
@@ -59,7 +59,7 @@ export default (data, breakdowns) => {
     const b = i.dimensions.sort((a, b) => numQty(b.height) - numQty(a.height));
 
     b.forEach((item, index) => {
-      console.log({ item });
+      
 
       tableBody.push([
         { text: item.item ? item.item : index + 1, style: 'fonts' },

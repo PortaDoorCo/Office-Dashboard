@@ -108,7 +108,7 @@ export function uploadFilesToOrder(order, e, cookie) {
         data: data,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -120,7 +120,7 @@ export function uploadFilesToOrder(order, e, cookie) {
 
 export function loadOrders(cookie, user) {
 
-  console.log({user});
+  
 
   if(user?.role?.type === 'customer'){
     return async function (dispatch) {
@@ -228,7 +228,7 @@ export function submitOrder(order, cookie) {
         data: data,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -251,7 +251,7 @@ export function deleteOrder(orderId, cookie) {
         type: DELETE_ORDER,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -276,7 +276,7 @@ export function updateOrder(orderId, order, cookie) {
         data: data,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -311,7 +311,7 @@ export function updateStatus(orderId, key, status, cookie) {
         data: data,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -382,7 +382,7 @@ export function updateBalance(orderId, balance, cookie) {
         type: UPDATE_BALANCE,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -429,7 +429,7 @@ export function updateNotes(orderId, balance, cookie) {
         type: UPDATE_NOTES,
       });
     } catch (error) {
-      console.error(error);
+      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',

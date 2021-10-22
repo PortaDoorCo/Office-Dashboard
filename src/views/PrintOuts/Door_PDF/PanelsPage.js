@@ -21,7 +21,7 @@ export default (data, breakdowns, type) => {
   const b = a
     .map((woodtype) =>
       woodtype.map((v, i) => {
-        console.log({ v });
+        
 
         return {
           ...v,
@@ -39,7 +39,7 @@ export default (data, breakdowns, type) => {
       })
     )
     .map((t, x) => {
-      console.log({ t });
+      
 
       return {
         ...t[0],
@@ -47,10 +47,10 @@ export default (data, breakdowns, type) => {
       };
     });
 
-  console.log({ b });
+  
 
   const table_body = b.map((i, index) => {
-    console.log({ i });
+    
 
     const tableBody = [
       [
@@ -67,7 +67,7 @@ export default (data, breakdowns, type) => {
 
 
     HeightSort(GlassSort(i)).forEach((item, index) => {
-      console.log({ item });
+      
 
       if (
         item.glass_index === 1 ||

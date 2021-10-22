@@ -121,9 +121,9 @@ const Cope_Table = ({
       toggleFullFrameNote();
     }
 
-    console.log({ limit });
-    console.log({ heightLimit });
-    console.log({ i });
+    
+    
+    
   };
 
   const updateFullFrame = (e, index) => {
@@ -147,7 +147,7 @@ const Cope_Table = ({
       df_reduction = part.design.PROFILE_WIDTH;
     }
 
-    console.log({ part });
+    
 
     if (e) {
       if (leftStile) {
@@ -327,7 +327,7 @@ const Cope_Table = ({
 
   const onStileOrRailChange = (e, index) => {
     const value = e.target.value;
-    console.log({ e });
+    
 
     if (e.target.name.includes('leftStile')) {
       dispatch(

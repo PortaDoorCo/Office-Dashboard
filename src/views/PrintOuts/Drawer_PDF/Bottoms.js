@@ -150,15 +150,15 @@ export default (data, breakdowns) => {
           total_widths += (numQty(item.width) * parseInt(item.qty));
         }
 
-        console.log({k});
-        console.log({v});
-        console.log({i});
+        
+        
+        
 
         const groupedMaterialBody = [];
 
         const length = numQty(k);
 
-        console.log({total_widths});
+        
 
         let waste = total_widths * 1.3;
 

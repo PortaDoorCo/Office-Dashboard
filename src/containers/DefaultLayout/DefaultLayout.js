@@ -205,9 +205,9 @@ let DefaultLayout = (props, context) => {
 
   const { customerDBLoaded, app_tour, userId, currentVersion, updateAppTour, role } = props;
 
-  console.log({currentVersion});
+  
 
-  // console.log({role});
+  // 
 
   if (!customerDBLoaded) {
     return (

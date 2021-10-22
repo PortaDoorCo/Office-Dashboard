@@ -212,7 +212,7 @@ export const itemPriceSelector = createSelector(
           wood = part?.woodtype?.STANDARD_GRADE;
       }
 
-      console.log({discount});
+      
 
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;

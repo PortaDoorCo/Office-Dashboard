@@ -46,9 +46,9 @@ let Inputs = (props) => {
     let total_qty = 0;
 
 
-    console.log({e});
+    
 
-    console.log({formState});
+    
 
     props.dispatch(change('DoorOrder', `misc_items[${index}].price`, e.Price));
 

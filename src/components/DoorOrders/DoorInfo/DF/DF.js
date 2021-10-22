@@ -37,7 +37,7 @@ class CopeDF extends Component {
     const { dispatch, index, part, formState } = this.props;
     const edge = formState?.part_list[index]?.edge;
 
-    console.log({edge});
+    
 
     switch(edge?.NAME) {
       case 'A Lip':
