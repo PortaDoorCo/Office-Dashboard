@@ -70,7 +70,7 @@ export default (data, breakdowns) => {
           style: 'fonts',
         },
         {
-          text: item.profile ? item.profile.NAME : '',
+          text: item.profile ? item.profile.NAME : item.design ? item.design.NAME : '',
           style: 'fonts',
           alignment: 'left',
         },

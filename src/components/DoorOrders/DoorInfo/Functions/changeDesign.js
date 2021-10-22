@@ -89,13 +89,13 @@ const changeProfile = (p, ind, props, change) => {
         'DoorOrder',
         `${p}.notes`,
         `Left Stile: ${fraction(
-          part.leftStile ? part.leftStile : 0
+          part.design ? (part.design.PROFILE_WIDTH) : 0
         )}" Right Stile: ${fraction(
-          part.rightStile ? part.rightStile : 0
+          part.design ? (part.design.PROFILE_WIDTH) : 0
         )}" \nTop Rail: ${fraction(
-          part.topRail ? part.topRail : 0
+          part.design ? (part.design.PROFILE_WIDTH) : 0
         )} Bottom Rail: ${fraction(
-          part.bottomRail ? part.bottomRail : 0
+          part.design ? (part.design.PROFILE_WIDTH) : 0
         )}"`
       )
     );

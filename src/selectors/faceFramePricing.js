@@ -225,22 +225,32 @@ export const itemPriceSelector = createSelector(
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map((i) => {
-      
+          console.log({ here: i });
 
-          const width_input = numQty(i.width);
-          const width =
+          let width =
             numQty(i.width) <= 24
               ? 18
-              : numQty(i.width) >= 24 &&
-                numQty(i.width) <= 48
+              : numQty(i.width) >= 24 && numQty(i.width) <= 48
                 ? 24
                 : 36;
-          const height = numQty(i.height);
+          let height = numQty(i.height);
+
+          if (numQty(i.width) > numQty(i.height)) {
+            height =
+              numQty(i.width) <= 24
+                ? 18
+                : numQty(i.width) >= 24 && numQty(i.width) <= 48
+                  ? 24
+                  : 36;
+            width = numQty(i.height);
+          }
+
+          const width_input = numQty(i.width);
           const openings = parseInt(i.openings);
 
           let overcharge = 0;
 
-          if (width_input >= 48 || height >= 96) {
+          if (width_input >= 48 || numQty(i.height) >= 96) {
             overcharge = 100;
           }
 
@@ -264,36 +274,31 @@ export const finishingSelector = createSelector(
   [partListSelector, pricingSelector, discountSelector],
   (parts, pricer, discount) =>
     parts.map((part, index) => {
-  
       if (part.dimensions) {
         const linePrice = part.dimensions.map((i) => {
-    
           const width_input = numQty(i.width);
           const height = numQty(i.height);
           const finish = part.face_frame_finishing
             ? part.face_frame_finishing.PRICE
             : 0;
 
-         
-  
           const width_finish = width_input >= 35 ? finish * 0.25 : 0;
           const height_finish = height >= 97 ? finish * 0.25 : 0;
 
           const openings = parseInt(i.openings);
-          const opening_add = (openings > 1) && (finish > 0) ? (openings - 1) * 5 : 0;
-  
-          const finishing = finish + (width_finish + height_finish + opening_add);
-  
-  
-  
+          const opening_add =
+            openings > 1 && finish > 0 ? (openings - 1) * 5 : 0;
+
+          const finishing =
+            finish + (width_finish + height_finish + opening_add);
+
           if (height > -1) {
             return finishing;
           } else {
             return 0;
           }
         });
-  
-    
+
         return linePrice;
       } else {
         return 0;
@@ -363,15 +368,10 @@ export const totalDiscountSelector = createSelector(
   }
 );
 
-
-
 export const finishTotalSelector = createSelector(
   [finishItemSelector],
   (finish) => {
-
-    return (
-      parseFloat(finish.reduce((acc, item) => acc + item, 0))
-    );
+    return parseFloat(finish.reduce((acc, item) => acc + item, 0));
   }
 );
 
@@ -383,22 +383,34 @@ export const taxSelector = createSelector(
     discountSelector,
     miscTotalSelector,
     stateSelector,
-    finishTotalSelector
+    finishTotalSelector,
   ],
   (subTotal, tax, discount, dis, misc, state, finish) => {
- 
     return (
-      (subTotal.reduce((acc, item) => acc + item, 0) - discount + misc + finish) * tax
+      (subTotal.reduce((acc, item) => acc + item, 0) -
+        discount +
+        misc +
+        finish) *
+      tax
     );
   }
 );
 
 export const totalSelector = createSelector(
-  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector, finishTotalSelector],
+  [
+    subTotalSelector,
+    taxSelector,
+    miscTotalSelector,
+    totalDiscountSelector,
+    finishTotalSelector,
+  ],
   (subTotal, tax, misc, discount, finish) => {
-
     return (
-      subTotal.reduce((acc, item) => acc + item, 0) + finish + tax + misc - discount
+      subTotal.reduce((acc, item) => acc + item, 0) +
+      finish +
+      tax +
+      misc -
+      discount
     );
   }
 );

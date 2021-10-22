@@ -9,10 +9,14 @@ import Glass_Selection from '../../Sorting/Glass_Selection';
 import Packing_Slip from '../../Face_Frame_PDF/Packing_Slip';
 import QC from '../../Face_Frame_PDF/QC';
 import Door_Labels from '../../Door_PDF/Door_Labels';
+import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 
 export default (data, breakdowns, p, pricing) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
+
+  const totalUnits = TotalPieces(data);
+
 
   let Content = [];
 
@@ -92,7 +96,7 @@ export default (data, breakdowns, p, pricing) => {
                 text: ' ', style: 'warrantyFont',
               },
               {
-                text: fileName, style: 'warrantyFont', alignment: 'right'
+                text: `UNITS: ${totalUnits}    ${fileName}`, style: 'warrantyFont', alignment: 'right'
               }
             ]  
           }

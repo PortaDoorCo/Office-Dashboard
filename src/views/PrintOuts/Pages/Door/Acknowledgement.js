@@ -12,6 +12,10 @@ export default (
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
+  const count = data.part_list;
+
+  console.log({count});
+
   let Content = [];
 
   for (let i = 0; i < p.acknowledgement; i++) {

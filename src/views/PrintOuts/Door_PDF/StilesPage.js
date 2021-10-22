@@ -2,6 +2,7 @@ import moment from 'moment';
 import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import GlassSort from '../Sorting/GlassSort';
+import HeightSort from '../Sorting/HeightSort';
 
 export default (data, breakdowns) => {
   const getName = (i) => {
@@ -49,7 +50,7 @@ export default (data, breakdowns) => {
         { text: 'Note', style: 'fonts' },
       ],
     ];
-    GlassSort(i).forEach((item, index) => {
+    HeightSort(GlassSort(i)).forEach((item, index) => {
 
       if (
         item.glass_index === 1 ||
@@ -116,7 +117,7 @@ export default (data, breakdowns) => {
             width: 200,
           },
           {
-            text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
+            text: `IP: ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}`,
             style: 'woodtype',
             alignment: 'center',
           },

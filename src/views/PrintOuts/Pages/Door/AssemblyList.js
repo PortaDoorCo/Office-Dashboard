@@ -4,31 +4,17 @@ import AssemblyList from '../../Door_PDF/AssemblyList';
 import moment from 'moment';
 import Glass_Selection from '../../Sorting/Glass_Selection';
 
-
-export default (
-  data,
-  breakdowns,
-  p
-) => {
+export default (data, breakdowns, p) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
   let Content = [];
 
-
-  
-
   for (let i = 0; i < p.assembly_list; i++) {
-
-    Glass_Selection(data, 'Page').map(j => {
-
+    Glass_Selection(data, 'Page').map((j) => {
       return Content.push(AssemblyList(j, breakdowns));
     });
-
-    
   }
-
-  
 
   const rowLen = Content.length;
   const ContentSorted = Content.map((i, index) => {
@@ -46,33 +32,37 @@ export default (
     pageOrientation: 'portrait',
     content: ContentSorted,
     pageMargins: [40, 40, 40, 60],
-    footer: function(currentPage, pageCount) { 
+    footer: function (currentPage, pageCount) {
       return {
         columns: [
           {
             stack: [
               {
                 text: moment().format('MM-D-YYYY'),
-                style: 'warrantyFont'
+                style: 'warrantyFont',
               },
               {
-                text: currentPage.toString() + ' of ' + pageCount, style: 'warrantyFont'
-              }
+                text: currentPage.toString() + ' of ' + pageCount,
+                style: 'warrantyFont',
+              },
             ],
-            width: 250
+            width: 250,
           },
           {
             stack: [
               {
-                text: ' ', style: 'warrantyFont',
+                text: ' ',
+                style: 'warrantyFont',
               },
               {
-                text: fileName, style: 'warrantyFont', alignment: 'right'
-              }
-            ]  
-          }
+                text: fileName,
+                style: 'warrantyFont',
+                alignment: 'right',
+              },
+            ],
+          },
         ],
-        margin: [40,10,40,0]
+        margin: [40, 10, 40, 0],
       };
     },
     pageBreakBefore: function (

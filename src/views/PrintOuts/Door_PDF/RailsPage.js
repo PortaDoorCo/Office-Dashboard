@@ -2,6 +2,7 @@ import moment from 'moment';
 import Rails from '../Breakdowns/Doors/Rails/Rails';
 import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import GlassSort from '../Sorting/GlassSort';
+import RailSort from '../Sorting/RailSort';
 
 export default (data, breakdowns) => {
   const getName = (i) => {
@@ -38,7 +39,55 @@ export default (data, breakdowns) => {
       dimensions: flatten(t.map((c) => c.dimensions)),
     }));
 
-  const table_body = b.map((i, index) => {
+  const heightSort = b.map((i, index) => {
+
+    console.log({i});
+      
+    const dim = GlassSort(i).map((item, index) => {
+
+      console.log({item});
+
+      if (
+        item.glass_index === 1 ||
+              item.construction.value === 'Slab' ||
+              i.orderType.value === 'One_Piece' ||
+              i.orderType.value === 'One_Piece_DF' ||
+              i.orderType.value === 'Two_Piece' ||
+              i.orderType.value === 'Two_Piece_DF'
+      ) {
+        return null;
+      } else {
+    
+        const n = {
+          ...i,
+          construction: item.construction,
+          profile: item.profile,
+          design: item.design
+        };
+
+
+        return {
+          ...item,
+          rail_height: Rails(item, n, breakdowns).map((rail) => {
+            console.log({rail});
+            return rail.height;
+          })[0]
+        };
+      }
+
+    });
+
+    console.log({dim});
+    return {
+      ...i,
+      dim
+    };
+  });
+
+  console.log({heightSort});
+    
+
+  const table_body = heightSort.map((i, index) => {
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -50,31 +99,33 @@ export default (data, breakdowns) => {
         { text: 'Note', style: 'fonts' },
       ],
     ];
-    GlassSort(i).forEach((item, index) => {
-
+  
+    console.log({i});
+      
+    RailSort(i.dim).forEach((item, index) => {
       if (
         item.glass_index === 1 ||
-          item.construction.value === 'Slab' ||
-          i.orderType.value === 'One_Piece' ||
-          i.orderType.value === 'One_Piece_DF' ||
-          i.orderType.value === 'Two_Piece' ||
-          i.orderType.value === 'Two_Piece_DF'
+            item.construction.value === 'Slab' ||
+            i.orderType.value === 'One_Piece' ||
+            i.orderType.value === 'One_Piece_DF' ||
+            i.orderType.value === 'Two_Piece' ||
+            i.orderType.value === 'Two_Piece_DF'
       ) {
         return null;
       } else {
-
+  
         const n = {
           ...i,
           construction: item.construction,
           profile: item.profile,
           design: item.design
         };
-
+  
         console.log({item});
-
+  
         if (
           (item.panelsH && item.panelsW > 1) ||
-        (item.panelsH > 1 && item.panelsW)
+          (item.panelsH > 1 && item.panelsW)
         ) {
           tableBody.push([
             { text: item.item ? item.item : index + 1, style: 'fonts' },
@@ -102,9 +153,9 @@ export default (data, breakdowns) => {
             },
             {
               text:
-              i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
-                ? i.cope_design.NAME
-                : '',
+                i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
+                  ? i.cope_design.NAME
+                  : '',
               style: 'fonts',
             },
             {
@@ -139,9 +190,9 @@ export default (data, breakdowns) => {
             },
             {
               text:
-              i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
-                ? i.cope_design.NAME
-                : '',
+                i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
+                  ? i.cope_design.NAME
+                  : '',
               style: 'fonts',
             },
             {
@@ -152,8 +203,10 @@ export default (data, breakdowns) => {
         }
       }
     });
-
-
+  
+    console.log({tableBody});
+  
+  
     return [
       {
         margin: [0, 10, 0, 0],
@@ -166,7 +219,7 @@ export default (data, breakdowns) => {
             width: 200,
           },
           {
-            text: `IP: ${i.profile ? i.profile.NAME : 'None'}`,
+            text: `IP: ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}`,
             style: 'woodtype',
             alignment: 'center',
           },
@@ -213,11 +266,13 @@ export default (data, breakdowns) => {
         text: '==============================================================================',
         alignment: 'center',
       },
-
+  
       // { text: '', pageBreak: 'before' }
     ];
-    
+      
   });
+
+
 
   // const table_body = [];
 

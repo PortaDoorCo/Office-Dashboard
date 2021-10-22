@@ -19,10 +19,76 @@ import fraction from '../../../../utils/fraction';
 
 import changeProfile from '../Functions/changeProfile';
 import changeDesign from '../Functions/changeDesign';
+import ModalUtil from '../../../../utils/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
 
 class Door extends Component {
+
+
+  state = {
+    title: 'Reminder',
+    message: 'The Edge You Selected Cannot Be Drilled For Concealed Hinges',
+    modal: false
+  };
+
+  toggle = () => {
+    this.setState({modal: !this.state.modal});
+  }
+
+  lipWarning = () => {
+    const { dispatch, index, part, formState } = this.props;
+    const edge = formState?.part_list[index]?.edge;
+
+    console.log({edge});
+
+    switch(edge?.NAME) {
+      case 'A Lip':
+        // code block
+        this.toggle();
+        break;
+      case 'B Lip':
+        // code block
+        this.toggle();
+        break;
+      case 'D Lip':
+        // code block
+        this.toggle();
+        break;
+      case 'E Lip':
+        // code block
+        this.toggle();
+        break;
+      case 'L Lip':
+        // code block
+        this.toggle();
+        break;
+      case 'P Lip':
+        // code block
+        this.toggle();
+        break;
+      case 'Q Lip':
+        // code block
+        this.toggle();
+        break;
+      case 'T Lip':
+        // code block
+        this.toggle();
+        break;
+      case 'W Lip':
+        // code block
+        this.toggle();
+        break;
+
+      default:
+        // code block
+        return null;
+    }
+
+  }
+
+
+
 
 
   onChange = (e) => {
@@ -95,6 +161,12 @@ class Door extends Component {
 
     return (
       <div>
+        <ModalUtil
+          toggle={this.toggle}
+          title={this.state.title}
+          message={this.state.message}
+          modal={this.state.modal}
+        />
         <Row>
           <Col>
             <FormGroup>
@@ -145,6 +217,7 @@ class Door extends Component {
                   textField="NAME"
                   validate={required}
                   edit={edit}
+                  onBlur={() => this.lipWarning()}
                 />
               </FormGroup>
             </Col>

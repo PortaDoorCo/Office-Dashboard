@@ -11,12 +11,15 @@ const ModalUtil = (props) => {
         <ModalHeader toggle={toggle}>{title}</ModalHeader>
         <ModalBody>{message}</ModalBody>
         <ModalFooter>
-          <Button
-            color={props.buttonColor ? props.buttonColor : 'primary'}
-            onClick={action}
-          >
-            {actionButton}
-          </Button>{' '}
+          {action ? (
+            <Button
+              color={props.buttonColor ? props.buttonColor : 'primary'}
+              onClick={action}
+            >
+              {actionButton}
+            </Button>
+          ) : null}
+
           <Button color="secondary" onClick={toggle}>
             Close
           </Button>
