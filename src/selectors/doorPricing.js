@@ -279,6 +279,7 @@ export const itemPriceSelector = createSelector(
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
             const panelsH = parseInt(i.panelsH);
             const panelsW = parseInt(i.panelsW);
+            const profile_cost = part.profile?.Extra_Charge ? part.profile?.Extra_Charge : 0;
 
             //add lite pricing here
             // const lites = i.lite ? i.lite.UPCHARGE : 0;
