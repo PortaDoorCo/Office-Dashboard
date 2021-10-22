@@ -58,24 +58,28 @@ export default (info, part, breakdowns) => {
       return [
         {
           qty: `(${qty * 2})`,
+          qty_2: qty * 2,
           measurement: `${fraction(
             eval(breakdowns.topRail_width)
           )} x ${fraction(
             Math.round(eval(breakdowns.topRail_height) * 16) / 16
           )}`,
           pattern: 'TB',
+          razor_pattern: 'T / B',
           width: eval(breakdowns.topRail_width),
           height: eval(breakdowns.topRail_height),
           multiplier: 2,
         },
         {
           qty: `(${(panelsH - 1) * qty})`,
+          qty_2: (panelsH - 1) * qty,
           measurement: `${fraction(
             eval(breakdowns.horizontal_mid_rail_width)
           )} x ${fraction(
             Math.round(eval(breakdowns.horizontal_mid_rail_height) * 16) / 16
           )}`,
           pattern: 'HM',
+          razor_pattern: 'HM',
           width: eval(breakdowns.horizontal_mid_rail_width),
           height: eval(breakdowns.horizontal_mid_rail_height),
           multiplier: panelsH - 1,
@@ -85,12 +89,14 @@ export default (info, part, breakdowns) => {
       return [
         {
           qty: `(${qty * 2})`,
+          qty_2: qty * 2,
           measurement: `${fraction(
             eval(breakdowns.topRail_width)
           )} x ${fraction(
             Math.round(eval(breakdowns.topRail_height) * 16) / 16
           )}`,
           pattern: 'TB',
+          razor_pattern: 'T / B',
           width: eval(breakdowns.topRail_width),
           height: eval(breakdowns.topRail_height),
           multiplier: 2,
@@ -102,36 +108,42 @@ export default (info, part, breakdowns) => {
       return [
         {
           qty: `(${qty})`,
+          qty_2: qty,
           measurement: `${fraction(
             eval(breakdowns.topRail_width)
           )} x ${fraction(
             Math.round(eval(breakdowns.topRail_height) * 16) / 16
           )}`,
           pattern: 'T',
+          razor_pattern: 'T',
           width: eval(breakdowns.topRail_width),
           height: eval(breakdowns.topRail_height),
           multiplier: 1,
         },
         {
           qty: `(${qty})`,
+          qty_2: qty,
           measurement: `${fraction(
             eval(breakdowns.bottomRail_width)
           )} x ${fraction(
             Math.round(eval(breakdowns.bottomRail_height) * 16) / 16
           )}`,
           pattern: 'B',
+          razor_pattern: 'B',
           width: eval(breakdowns.bottomRail_width),
           height: eval(breakdowns.bottomRail_height),
           multiplier: 1,
         },
         {
           qty: `(${(panelsH - 1) * qty})`,
+          qty_2: (panelsH - 1) * qty,
           measurement: `${fraction(
             eval(breakdowns.horizontal_mid_rail_width)
           )} x ${fraction(
             Math.round(eval(breakdowns.horizontal_mid_rail_height) * 16) / 16
           )}`,
           pattern: 'HM',
+          razor_pattern: 'HM',
           width: eval(breakdowns.horizontal_mid_rail_width),
           height: eval(breakdowns.horizontal_mid_rail_height),
           multiplier: panelsH - 1,
@@ -141,24 +153,28 @@ export default (info, part, breakdowns) => {
       return [
         {
           qty: `(${qty})`,
+          qty_2: qty,
           measurement: `${fraction(
             eval(breakdowns.topRail_width)
           )} x ${fraction(
             Math.round(eval(breakdowns.topRail_height) * 16) / 16
           )}`,
           pattern: 'T',
+          razor_pattern: 'T',
           width: eval(breakdowns.topRail_width),
           height: eval(breakdowns.topRail_height),
           multiplier: 1,
         },
         {
           qty: `(${qty})`,
+          qty_2: qty,
           measurement: `${fraction(
             eval(breakdowns.bottomRail_width)
           )} x ${fraction(
             Math.round(eval(breakdowns.bottomRail_height) * 16) / 16
           )}`,
           pattern: 'B',
+          razor_pattern: 'B',
           width: eval(breakdowns.bottomRail_width),
           height: eval(breakdowns.bottomRail_height),
           multiplier: 1,

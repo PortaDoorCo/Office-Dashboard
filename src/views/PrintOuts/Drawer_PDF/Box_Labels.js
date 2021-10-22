@@ -58,28 +58,28 @@ export default (data, breakdowns) => {
     })
   );
 
-  // let chunk;
+  let chunk;
 
-  // while (a.length > 0) {
-  //   chunk = a.splice(0, 3);
-  //   arr.push(chunk);
-  // }
+  while (a.length > 0) {
+    chunk = a.splice(0, 3);
+    arr.push(chunk);
+  }
 
-  // const lastArr = 3 - chunk.length;
+  const lastArr = 3 - chunk.length;
 
-  // if (lastArr > 0) {
-  //   arr.splice(-Math.abs(chunk.length));
+  if (lastArr > 0) {
+    arr.splice(-Math.abs(chunk.length));
 
-  //   let el = [];
+    let el = [];
 
-  //   for (let i = 0; i < lastArr; i++) {
-  //     el.push({ text: '', alignment: 'center', margin: [0, 5, 0, 0] });
-  //   }
+    for (let i = 0; i < lastArr; i++) {
+      el.push({ text: '', alignment: 'center', margin: [0, 5, 0, 0] });
+    }
 
-  //   const elem = [...chunk, el];
+    const elem = [...chunk, el];
 
-  //   arr.push(flatten(elem));
-  // }
+    arr.push(flatten(elem));
+  }
 
   return [
     {
@@ -88,7 +88,7 @@ export default (data, breakdowns) => {
         alignment: 'center',
         widths: [175, 182, 180],
         heights: [65, 70, 70, 72, 71, 71, 70, 69, 69, 60],
-        body: a,
+        body: arr,
       },
       layout: {
         hLineWidth: function (i, node) {

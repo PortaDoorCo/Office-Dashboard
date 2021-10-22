@@ -84,6 +84,7 @@ import CopyModal from '../../../utils/Modal';
 
 import Cookies from 'js-cookie';
 import Rails from '../../PrintOuts/Breakdowns/Doors/Rails/Rails';
+import Stiles from '../../PrintOuts/Breakdowns/Doors/Stiles/Stiles';
 
 const cookie = Cookies.get('jwt');
 
@@ -497,100 +498,46 @@ class OrderPage extends Component {
 
             const { breakdowns } = this.props;
 
-            const rail_width = f && j ? Rails(j, f, breakdowns).map((rail) => {
-              return `${rail.width}`;
-            }) : null;
 
-            const rail_height = f && j ? Rails(j, f, breakdowns).map((rail) => {
-              return `${rail.height}`;
-            }) : null;
+            const stile = Stiles(j, f, breakdowns).map((rail) => {
+              return rail;
+            });
 
-            console.log({rail_width});
-            console.log({rail_width});
+            const rail = Rails(j, f, breakdowns).map((rail) => {
+              return rail;
+            });
 
-            if (numQty(j.leftStile) === numQty(j.rightStile)) {
-              razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
-                numQty(j.height) + (f.edge?.LIP_FACTOR
-                  ? f.edge?.LIP_FACTOR
-                  : 0),
-                numQty(j.qty) * 2,
-                'L / R',
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
-                  f.profile?.NAME,
-              ]);
-            } else {
-              razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
-                j.qty,
-                numQty(j.height) + (f.edge?.LIP_FACTOR
-                  ? f.edge?.LIP_FACTOR
-                  : 0),
-                numQty(j.qty) * 1,
-                'L',
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
-                  f.profile?.NAME,
-              ]);
+            console.log({rail});
+            console.log({stile});
 
-              razorGuage.push([
+            const stilePrint = stile.map(i => {
+              return razorGuage.push([
                 `${s.orderNum}`,
                 `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.rightStile) + (f.edge?.LIP_FACTOR / 2),
-                j.qty,
-                numQty(j.height) + (f.edge?.LIP_FACTOR
-                  ? f.edge?.LIP_FACTOR
-                  : 0),
-                numQty(j.qty) * 1,
-                'R',
+                i.width,
+                i.height,
+                i.qty_2,
+                i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
                 ind + 1,
                   f.profile?.NAME,
               ]);
-            }
+            });
 
-            if (numQty(j.topRail) === numQty(j.bottomRail)) {
-              razorGuage.push([
+            const railPrint = rail.map(i => {
+              return razorGuage.push([
                 `${s.orderNum}`,
                 `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
-                numQty(j.width) - 3.5,
-                numQty(j.qty) * 2,
-                'T / B',
+                i.width,
+                i.height,
+                i.qty_2,
+                i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
                 ind + 1,
                   f.profile?.NAME,
               ]);
-            } else {
-              razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
-                numQty(j.width) - 3.5,
-                numQty(j.qty) * 1,
-                'T',
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
-                  f.profile?.NAME,
-              ]);
-              razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.bottomRail) + (f.edge?.LIP_FACTOR / 2),
-                j.qty,
-                numQty(j.width) - 3.5,
-                numQty(j.qty) * 1,
-                'B',
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
-                  f.profile?.NAME,
-              ]);
-            }
+            });
+
           });
           return razorGuage;
         })
