@@ -75,7 +75,7 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.vertical_mid_rail_width),
           height: eval(breakdowns.vertical_mid_rail_height),
           pattern: 'VM',
-          razor_pattern: 'VM',
+          razor_pattern: 'V Mull',
           multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)
         },
       ];
@@ -135,7 +135,7 @@ export default (info, part, breakdowns) => {
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
           pattern: 'VM',
-          razor_pattern: 'VM',
+          razor_pattern: 'V Mull',
           width: eval(breakdowns.vertical_mid_rail_width),
           height: eval(breakdowns.vertical_mid_rail_height),
           multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)
