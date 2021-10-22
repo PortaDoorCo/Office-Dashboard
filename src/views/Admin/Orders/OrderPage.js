@@ -506,8 +506,7 @@ class OrderPage extends Component {
             }) : null;
 
             console.log({rail_width});
-
-            
+            console.log({rail_width});
 
             if (numQty(j.leftStile) === numQty(j.rightStile)) {
               razorGuage.push([
