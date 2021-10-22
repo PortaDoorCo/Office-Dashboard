@@ -355,9 +355,6 @@ class App extends Component<PropTypes, StateTypes> {
           await loadCategories(newCookie);
           await getBreakdowns(newCookie);
           await getBoxBreakdowns(newCookie);
-
-          await 
-
           await loadOrders(newCookie, user);
           await loadCustomers(newCookie, user);
           await getUsers(newCookie);
