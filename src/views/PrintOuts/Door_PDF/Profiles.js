@@ -15,9 +15,9 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
 
   const d = designs;
 
-  console.log({designs});
-  console.log({d});
-  console.log({blob});
+  
+  
+  
 
   return [
     {
@@ -46,10 +46,10 @@ export default (data, designs, edges, moulds, miter, mt, panels, appliedProfiles
     },
     data.part_list.map((i, index) => {
 
-      console.log({profile: i.profile});
-      console.log({design: i.design});
-      console.log({photo: d[index]});
-      console.log({blob: blob[index]});
+      
+      
+      
+      
 
       return [
         {

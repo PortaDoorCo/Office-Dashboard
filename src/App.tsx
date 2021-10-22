@@ -309,13 +309,12 @@ class App extends Component<PropTypes, StateTypes> {
 
 
 
-    console.log({process_1: process.env.REACT_APP_DB_URL});
-    console.log({process_1: process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT});
+    
+    
 
     socket.on(
       'new_release',
       (res) => (
-        console.log({socket: res}),
         currentVersion()
       ) 
     );
@@ -356,9 +355,6 @@ class App extends Component<PropTypes, StateTypes> {
           await loadCategories(newCookie);
           await getBreakdowns(newCookie);
           await getBoxBreakdowns(newCookie);
-
-          await console.log({user});
-
           await loadOrders(newCookie, user);
           await loadCustomers(newCookie, user);
           await getUsers(newCookie);

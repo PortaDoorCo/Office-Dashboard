@@ -52,17 +52,22 @@ export default (info, part, breakdowns) => {
     if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH === 1))) {
       return [
         {
+          door_qty: qty,
           qty: `(${(qty * 2)})`,
+          qty_2: qty * 2,
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: 'LR',
+          razor_pattern: 'L / R',
           width: eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
           multiplier: 2
         },
         {
+          door_qty: qty,
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
+          qty_2: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
           measurement: `${fraction(eval(breakdowns.vertical_mid_rail_width))} x ${fraction(
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
@@ -70,17 +75,21 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.vertical_mid_rail_width),
           height: eval(breakdowns.vertical_mid_rail_height),
           pattern: 'VM',
+          razor_pattern: 'V Mull',
           multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)
         },
       ];
     } else {
       return [
         {
+          door_qty: qty,
           qty: `(${(qty * 2)})`,
+          qty_2: qty * 2,
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: 'LR',
+          razor_pattern: 'L / R',
           width: eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
           multiplier: 2
@@ -92,32 +101,41 @@ export default (info, part, breakdowns) => {
     if (((panelsW > 1) && (panelsH > 1)) || ((panelsW > 1) && (panelsH === 1))) {
       return [
         {
+          door_qty: qty,
           qty: `(${(qty)})`,
+          qty_2: qty,
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: 'L',
+          razor_pattern: 'L',
           width:eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
           multiplier: 1
         },
         {
+          door_qty: qty,
           qty: `(${(qty)})`,
+          qty_2: qty,
           measurement: `${fraction(
             eval(breakdowns.rightStile_width)
           )} x ${fraction(eval(breakdowns.rightStile_height))}`,
           pattern: 'R',
+          razor_pattern: 'R',
           width:eval(breakdowns.rightStile_width),
           height: eval(breakdowns.rightStile_height),
           multiplier: 1
         },
         {
+          door_qty: qty,
           qty: `(${(panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)})`,
+          qty_2: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
           measurement: `${fraction(eval(breakdowns.vertical_mid_rail_width))} x ${fraction(
             Math.round(
               eval(breakdowns.vertical_mid_rail_height) * 16) / 16
           )}`,
           pattern: 'VM',
+          razor_pattern: 'V Mull',
           width: eval(breakdowns.vertical_mid_rail_width),
           height: eval(breakdowns.vertical_mid_rail_height),
           multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)
@@ -127,21 +145,27 @@ export default (info, part, breakdowns) => {
     else {
       return [
         {
+          door_qty: qty,
           qty: `(${(qty)})`,
+          qty_2: qty,
           measurement: `${fraction(
             eval(breakdowns.leftStile_width)
           )} x ${fraction(eval(breakdowns.leftStile_height))}`,
           pattern: 'L',
+          razor_pattern: 'L',
           width: eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
           multiplier: 1
         },
         {
+          door_qty: qty,
           qty: `(${(qty)})`,
+          qty_2: qty,
           measurement: `${fraction(
             eval(breakdowns.rightStile_width)
           )} x ${fraction(eval(breakdowns.rightStile_height))}`,
           pattern: 'R',
+          razor_pattern: 'R',
           width: eval(breakdowns.rightStile_width),
           height: eval(breakdowns.rightStile_height),
           multiplier: 1

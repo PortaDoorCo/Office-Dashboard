@@ -114,8 +114,8 @@ const OrderTable = (props: TablePropTypes) => {
       status: e.target.value
     };
 
-    console.log({e: e.target.value});
-    console.log({row});
+    
+    
 
 
     await updateStatus(row.id, row, status, cookie);

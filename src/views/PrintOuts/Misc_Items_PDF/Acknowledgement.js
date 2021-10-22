@@ -22,7 +22,7 @@ export default (data, pricing) => {
   });
 
 
-  console.log({ prices: prices });
+  
 
   const subTotal = prices
     .reduce((acc, item) => acc + item, 0);

@@ -22,8 +22,8 @@ export default (parts, breakdowns, thickness) => {
 
       const stile_map = Object.keys(j).map((a) => {
 
-        console.log({j});
-        console.log({a});
+        
+        
 
         if (a === 'leftStile') {
           return j[a] === thickness ? (stile[a] = j[a]) : (stile[a] = 0);
@@ -50,7 +50,7 @@ export default (parts, breakdowns, thickness) => {
         }
 
         if (a === 'horizontalMidRailSize') {
-          console.log('hiiiii');
+          
           return j[a] === thickness ? (rail[a] = j[a]) : (rail[a] = 0);
         }
 
@@ -59,11 +59,11 @@ export default (parts, breakdowns, thickness) => {
         }
       }, {});
 
-      console.log({stile});
+      
 
       const stiles = Stiles(stile, part.part, breakdowns).map((stile) => {
 
-        console.log({qty: stile.qty});
+        
 
         if (numQty(stile.width) > 1 && numQty(stile.height) > 1) {
           const width =
@@ -71,7 +71,7 @@ export default (parts, breakdowns, thickness) => {
           const height =
             numQty(stile.height) * stile.multiplier * parseInt(j.qty);
 
-          console.log({ height: stile.height });
+          
 
             
           const sum = height / 12;
@@ -87,7 +87,7 @@ export default (parts, breakdowns, thickness) => {
         }
       });
 
-      console.log({stiles});
+      
 
       const rails = Rails(rail, part.part, breakdowns).map((stile) => {
         if (stile.width > 1 && stile.height > 1) {
@@ -123,11 +123,11 @@ export default (parts, breakdowns, thickness) => {
   const flatten_obj = flatten(first_obj);
   const groupedObj = groupBy(flatten_obj, 'width');
 
-  console.log({groupedObj});
+  
 
   const newObj = Object.entries(groupedObj).map(([k, v]) => {
 
-    console.log({v});
+    
 
     return { width: k, sum: v.reduce((a, b) => a + b.sum, 0) };
   });

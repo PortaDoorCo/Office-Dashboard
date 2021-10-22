@@ -21,7 +21,7 @@ export default (data, pricing) => {
 
   const prices = pdfMouldingPricing(data.mouldings, pricing[0]);
 
-  console.log({ prices: prices });
+  
 
   const subTotal = prices.reduce((acc, item) => acc + item, 0);
 
@@ -86,7 +86,7 @@ export default (data, pricing) => {
 
     let price = a * newWood * parseFloat(i.linearFT) * premium;
 
-    console.log({price});
+    
 
     tableBody.push([
       { text: i.style.name, style: 'fonts' },

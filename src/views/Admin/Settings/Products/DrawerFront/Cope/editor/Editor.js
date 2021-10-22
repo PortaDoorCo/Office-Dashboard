@@ -63,7 +63,7 @@ const EditorComponent = (props) => {
   };
 
 
-  console.log({breakdowns});
+  
 
   return (
     <div>

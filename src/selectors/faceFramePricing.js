@@ -225,7 +225,7 @@ export const itemPriceSelector = createSelector(
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map((i) => {
-          console.log({ here: i });
+          
 
           let width =
             numQty(i.width) <= 24

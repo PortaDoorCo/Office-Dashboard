@@ -3,6 +3,7 @@ import { Row, Col, FormGroup, Label } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Field, untouch, autofill } from 'redux-form';
 import { renderDropdownList } from '../../../RenderInputs/renderInputs';
+import ModalUtil from '../../../../utils/Modal';
 
 const faceFrameOrderType = [
   {
@@ -40,9 +41,49 @@ const thickness_one_piece = [
 const required = (value) => (value ? undefined : 'Required');
 
 class DoorFilter extends Component {
+
+  state = {
+    title: 'Are You Sure?',
+    message: <div>
+      <center>
+        <p>Are You Sure That This For A <strong>Door</strong>?</p>
+        <p>If you meant to select a <strong>Slab Drawer Front</strong></p>
+        <p>Please Change the Order Type to Drawer Front</p>
+      </center>
+    </div>,
+    modal: false
+  };
+
+  toggle = () => {
+    this.setState({modal: !this.state.modal});
+  }
+
+
   onChangeType = (index) => {
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
+
+        console.log({part});
+
+        if(part.orderType.value === 'Door' && part.construction.value === 'Slab'){
+          this.toggle();
+        }
+
+        if(part.orderType.value === 'DF' && part.construction.value === 'Slab'){
+          // this.setState({
+          //   message: <div>
+          //     <center>
+          //       <p>Are You Sure That This For A <strong>Drawer Front</strong>?</p>
+          //       <p>If you meant to select a <strong>Slab Door</strong></p>
+          //       <p>Please Change the Order Type to Door</p>
+          //     </center>
+          //   </div>
+          // });
+          this.toggle();
+        }
+
+
+
         if (index === i && part.design !== undefined) {
           this.props.dispatch(
             autofill('DoorOrder', `part_list[${i}].design`, undefined)
@@ -147,7 +188,7 @@ class DoorFilter extends Component {
                     name={`${part}.orderType`}
                     component={renderDropdownList}
                     data={faceFrameOrderType}
-                    onChange={() => this.onChangeType(index)}
+                    onBlur={() => this.onChangeType(index)}
                     valueField="value"
                     textField="name"
                     edit={edit}
@@ -182,6 +223,12 @@ class DoorFilter extends Component {
         ) {
           return (
             <Fragment>
+              <ModalUtil
+                toggle={this.toggle}
+                title={this.state.title}
+                message={this.state.message}
+                modal={this.state.modal}
+              />
               <Row>
                 <Col xs="4">
                   <FormGroup>
@@ -190,7 +237,7 @@ class DoorFilter extends Component {
                       name={`${part}.orderType`}
                       component={renderDropdownList}
                       data={orderType}
-                      onChange={() => this.onChangeType(index)}
+                      onBlur={() => this.onChangeType(index)}
                       valueField="value"
                       textField="name"
                       edit={edit}
@@ -206,7 +253,7 @@ class DoorFilter extends Component {
                       name={`${part}.construction`}
                       component={renderDropdownList}
                       data={construction_one_piece}
-                      onChange={() => this.onChangeType(index)}
+                      onBlur={() => this.onChangeType(index)}
                       valueField="value"
                       textField="name"
                       edit={edit}
@@ -235,6 +282,12 @@ class DoorFilter extends Component {
         } else {
           return (
             <Fragment>
+              <ModalUtil
+                toggle={this.toggle}
+                title={this.state.title}
+                message={this.state.message}
+                modal={this.state.modal}
+              />
               <Row>
                 <Col xs="4">
                   <FormGroup>
@@ -243,7 +296,7 @@ class DoorFilter extends Component {
                       name={`${part}.orderType`}
                       component={renderDropdownList}
                       data={orderType}
-                      onChange={() => this.onChangeType(index)}
+                      onBlur={() => this.onChangeType(index)}
                       valueField="value"
                       textField="name"
                       edit={edit}
@@ -259,7 +312,7 @@ class DoorFilter extends Component {
                       name={`${part}.construction`}
                       component={renderDropdownList}
                       data={construction}
-                      onChange={() => this.onChangeType(index)}
+                      onBlur={() => this.onChangeType(index)}
                       valueField="value"
                       textField="name"
                       edit={edit}

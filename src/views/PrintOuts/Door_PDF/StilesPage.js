@@ -63,7 +63,7 @@ export default (data, breakdowns) => {
         return null;
       } else {
 
-        console.log({item});
+        
 
         const n = {
           ...i,

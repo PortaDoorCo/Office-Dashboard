@@ -10,8 +10,8 @@ export default (data, breakdowns) => {
   const table_content = data.part_list.map((i, index) => {
 
 
-    console.log({i});
-    console.log({breakdowns});
+    
+    
 
     const tableBody = [
       [
@@ -63,7 +63,7 @@ export default (data, breakdowns) => {
     } else {
       GlassSort(i).forEach((item, index) => {
 
-        console.log({item});
+        
 
         tableBody.push([
           { text: item.item, style: 'fonts' },

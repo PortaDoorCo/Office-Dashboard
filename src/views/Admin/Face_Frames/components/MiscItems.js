@@ -258,7 +258,7 @@ const mapStateToProps = (state) => ({
 });
 
 MiscItems = reduxForm({
-  form: 'Mouldings',
+  form: 'DoorOrder',
   enableReinitialize: true,
 })(MiscItems);
 

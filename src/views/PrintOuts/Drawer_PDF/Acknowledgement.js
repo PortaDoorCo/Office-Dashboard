@@ -29,7 +29,7 @@ export default (data, pricing) => {
 
   const prices = pdfDrawerBoxPricing(data.part_list, pricing[0]);
 
-  console.log({ prices: pricing });
+  
 
   const subTotal = prices
     .map((i) => i.reduce((acc, item) => acc + item, 0))

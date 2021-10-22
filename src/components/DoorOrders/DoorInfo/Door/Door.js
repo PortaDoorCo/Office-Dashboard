@@ -40,7 +40,7 @@ class Door extends Component {
     const { dispatch, index, part, formState } = this.props;
     const edge = formState?.part_list[index]?.edge;
 
-    console.log({edge});
+    
 
     switch(edge?.NAME) {
       case 'A Lip':
@@ -100,7 +100,7 @@ class Door extends Component {
     const bottomRail = formState?.part_list[index]?.bottomRail;
 
     const value = e.target?.value;
-    console.log({e});
+    
     if(e.target?.name.includes('leftStile')){
       dispatch(
         change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${e.target.value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`)

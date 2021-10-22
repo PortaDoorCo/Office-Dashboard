@@ -168,7 +168,7 @@ const changeProfile = (p, ind, props, change) => {
       )
     );
 
-    console.log({toprailadd: part.design?.TOP_RAIL_ADD});
+    
 
     props.dispatch(
       change(

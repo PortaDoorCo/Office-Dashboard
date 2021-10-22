@@ -89,7 +89,7 @@ export default (data, breakdowns) => {
   const d = flattenDeep(c).map((j, index) => {
     return j.parts.map((n) => {
 
-      console.log({n});
+      
 
       return LinearFT(n.parts, breakdowns, n.width).map((b) => {
         if (numQty(b.width) > 0) {
@@ -165,7 +165,7 @@ export default (data, breakdowns) => {
   );
 
   const BoardFTDisplay = BoardFT_Total.map((i) => {
-    console.log({ thickness: i.thickness });
+    
 
     return [
       {
@@ -195,16 +195,16 @@ export default (data, breakdowns) => {
   });
 
   const PanelBoardFTCalc = data.part_list.map((i, index) => {
-    console.log({ i });
+    
 
     const calc = i.dimensions.map((item, index) => {
-      console.log({ item });
+      
       const width = Panels(item, i, breakdowns).map((panel) => {
         return numQty(panel.width);
       });
       const height = Panels(item, i, breakdowns).map((panel) => {
 
-        console.log({testtttt: numQty(panel.height)});
+        
 
         return numQty(panel.height);
       });
@@ -217,33 +217,33 @@ export default (data, breakdowns) => {
         }
       });
 
-      console.log({ width });
-      console.log({ height });
-      console.log({ qty });
+      
+      
+      
 
       const width_total = width.reduce((acc, item) => acc + item);
       const height_total = height.reduce((acc, item) => acc + item);
       const qty_total = qty.reduce((acc, item) => acc + item);
 
-      console.log({ width_total });
-      console.log({ height_total });
-      console.log({ qty_total });
+      
+      
+      
 
       const q =
         ((width_total * height_total) / 144) *
         parseInt(qty_total ? qty_total : 0);
 
 
-      console.log({testtt: ((width_total * height_total) / 144) * parseInt(qty_total ? qty_total : 0) }); 
-      console.log({q});
+       
+      
 
       return q;
     });
 
     const equation = calc.reduce((acc, item) => acc + item);
 
-    console.log({ calc });
-    console.log({ equation });
+    
+    
 
     if (
       i.orderType.value === 'One_Piece' ||
@@ -277,14 +277,14 @@ export default (data, breakdowns) => {
   const PanelBoardFT_Total = Object.entries(
     groupBy(flatten(PanelBoardFTCalc), 'woodtype')
   ).map(([k, v]) => {
-    console.log({ k });
-    console.log({ v });
+    
+    
 
     let totalBoardFt = 0;
     let panel;
 
     v.map((j, k) => {
-      console.log({ j });
+      
       if (!j.panel || j.panel?.NAME === 'Glass') {
         return null;
       } else {
@@ -303,7 +303,7 @@ export default (data, breakdowns) => {
 
   const PanelBoardFTDisplay = PanelBoardFT_Total.map((i, index) => {
     if (i && i.panel) {
-      console.log({ i });
+      
 
       return [
         {
@@ -337,7 +337,7 @@ export default (data, breakdowns) => {
     }
   });
 
-  console.log({TotalSolidDFs});
+  
 
   return [
     {

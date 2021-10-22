@@ -14,7 +14,7 @@ export default (data, breakdowns, p, pricing) => {
 
 
   const totalUnits = data.mouldings.length;
-  console.log({totalUnits});
+  
 
   let Content = [];
 

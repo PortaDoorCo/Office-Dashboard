@@ -212,7 +212,7 @@ export const itemPriceSelector = createSelector(
           wood = part?.woodtype?.STANDARD_GRADE;
       }
 
-      console.log({discount});
+      
 
       const edge = part.edge ? part.edge.UPCHARGE : 0;
       const panel = part.panel ? part.panel.UPCHARGE : 0;
@@ -279,6 +279,7 @@ export const itemPriceSelector = createSelector(
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
             const panelsH = parseInt(i.panelsH);
             const panelsW = parseInt(i.panelsW);
+            const profile_cost = part.profile?.Extra_Charge ? part.profile?.Extra_Charge : 0;
 
             //add lite pricing here
             // const lites = i.lite ? i.lite.UPCHARGE : 0;

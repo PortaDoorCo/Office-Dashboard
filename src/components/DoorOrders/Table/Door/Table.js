@@ -507,7 +507,7 @@ const DoorTable = ({
 
   const onStileOrRailChange = (e, index) => {
     const value = e.target.value;
-    console.log({ e });
+    
 
     if ((height >= 48 && panelsH > 1) || (width >= 24 && panelsW > 1)) {
       if (e.target.name.includes('leftStile')) {
@@ -631,7 +631,7 @@ const DoorTable = ({
   };
 
   const changeFraming = (e, index) => {
-    console.log({ e });
+    
 
     if (e.target.name === 'update_framing') {
       if (changeValue) {

@@ -83,6 +83,8 @@ import StickyBox from 'react-sticky-box';
 import CopyModal from '../../../utils/Modal';
 
 import Cookies from 'js-cookie';
+import Rails from '../../PrintOuts/Breakdowns/Doors/Rails/Rails';
+import Stiles from '../../PrintOuts/Breakdowns/Doors/Stiles/Stiles';
 
 const cookie = Cookies.get('jwt');
 
@@ -277,74 +279,88 @@ class OrderPage extends Component {
             ? mouldingsState
             : [];
 
-    const noPhoto = 'https://res.cloudinary.com/porta-door/image/upload/v1634764886/none_2fcc23e82e.png';
+    const noPhoto =
+      'https://res.cloudinary.com/porta-door/image/upload/v1634764886/none_2fcc23e82e.png';
 
     if (data.orderType === 'Door Order') {
-      const designPromiseArr1 = selectedOrder.part_list
-        .map((i) => {
-          return new Promise((resolve, reject) => {
-            toDataUrl(i.design?.photo?.url ? i.design?.photo?.url : noPhoto, (result) => {
+      const designPromiseArr1 = selectedOrder.part_list.map((i) => {
+        return new Promise((resolve, reject) => {
+          toDataUrl(
+            i.design?.photo?.url ? i.design?.photo?.url : noPhoto,
+            (result) => {
               resolve(result);
-            });
-          });
+            }
+          );
         });
+      });
 
-      const edgesPromiseArr1 = selectedOrder.part_list
-        .map((i) => {
-  
-          return new Promise((resolve, reject) => {
-            toDataUrl(i.edge?.photo?.url ? i.edge?.photo?.url : noPhoto, (result) => {
+      const edgesPromiseArr1 = selectedOrder.part_list.map((i) => {
+        return new Promise((resolve, reject) => {
+          toDataUrl(
+            i.edge?.photo?.url ? i.edge?.photo?.url : noPhoto,
+            (result) => {
               resolve(result);
-            });
-          });
-         
-          
+            }
+          );
         });
+      });
 
-      const mouldsPromiseArr1 = selectedOrder.part_list
-        .map((i) => {
-          return new Promise((resolve, reject) => {
-            toDataUrl(i.profile?.photo?.url ? i.profile?.photo?.url : noPhoto, (result) => {
+      const mouldsPromiseArr1 = selectedOrder.part_list.map((i) => {
+        return new Promise((resolve, reject) => {
+          toDataUrl(
+            i.profile?.photo?.url ? i.profile?.photo?.url : noPhoto,
+            (result) => {
               resolve(result);
-            });
-          });
+            }
+          );
         });
+      });
 
-      const miterPromiseArr1 = selectedOrder.part_list
-        .map((i) => {
-          return new Promise((resolve, reject) => {
-            toDataUrl(i.miter_design?.photo?.url ? i.miter_design?.photo?.url : noPhoto, (result) => {
+      const miterPromiseArr1 = selectedOrder.part_list.map((i) => {
+        return new Promise((resolve, reject) => {
+          toDataUrl(
+            i.miter_design?.photo?.url ? i.miter_design?.photo?.url : noPhoto,
+            (result) => {
               resolve(result);
-            });
-          });
+            }
+          );
         });
+      });
 
-      const MT_PromiseArr1 = selectedOrder.part_list
-        .map((i) => {
-          return new Promise((resolve, reject) => {
-            toDataUrl(i.mt_design?.photo?.url ? i.mt_design?.photo?.url : noPhoto, (result) => {
+      const MT_PromiseArr1 = selectedOrder.part_list.map((i) => {
+        return new Promise((resolve, reject) => {
+          toDataUrl(
+            i.mt_design?.photo?.url ? i.mt_design?.photo?.url : noPhoto,
+            (result) => {
               resolve(result);
-            });
-          });
+            }
+          );
         });
+      });
 
-      const panelsPromiseArr1 = selectedOrder.part_list
-        .map((i) => {
-          return new Promise((resolve, reject) => {
-            toDataUrl(i.panel?.photo?.url ? i.panel?.photo?.url : noPhoto, (result) => {
+      const panelsPromiseArr1 = selectedOrder.part_list.map((i) => {
+        return new Promise((resolve, reject) => {
+          toDataUrl(
+            i.panel?.photo?.url ? i.panel?.photo?.url : noPhoto,
+            (result) => {
               resolve(result);
-            });
-          });
+            }
+          );
         });
+      });
 
-      const appliedProfilePromiseArr1 = selectedOrder.part_list
-        .map((i) => {
-          return new Promise((resolve, reject) => {
-            toDataUrl(i.applied_profile?.photo?.url ? i.applied_profile?.photo?.url : noPhoto, (result) => {
+      const appliedProfilePromiseArr1 = selectedOrder.part_list.map((i) => {
+        return new Promise((resolve, reject) => {
+          toDataUrl(
+            i.applied_profile?.photo?.url
+              ? i.applied_profile?.photo?.url
+              : noPhoto,
+            (result) => {
               resolve(result);
-            });
-          });
+            }
+          );
         });
+      });
 
       let design1;
       let edges1;
@@ -494,89 +510,54 @@ class OrderPage extends Component {
           f.dimensions.forEach((j, ind) => {
             console.log({ j });
 
-            if (numQty(j.leftStile) === numQty(j.rightStile)) {
-              razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
-                numQty(j.height) + (f.edge?.LIP_FACTOR
-                  ? f.edge?.LIP_FACTOR
-                  : 0),
-                numQty(j.qty) * 2,
-                'L / R',
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
-                  f.profile?.NAME,
-              ]);
-            } else {
-              razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.leftStile) + (f.edge?.LIP_FACTOR / 2),
-                j.qty,
-                numQty(j.height) + (f.edge?.LIP_FACTOR
-                  ? f.edge?.LIP_FACTOR
-                  : 0),
-                numQty(j.qty) * 1,
-                'L',
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
-                  f.profile?.NAME,
-              ]);
+            const { breakdowns } = this.props;
 
-              razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.rightStile) + (f.edge?.LIP_FACTOR / 2),
-                j.qty,
-                numQty(j.height) + (f.edge?.LIP_FACTOR
-                  ? f.edge?.LIP_FACTOR
-                  : 0),
-                numQty(j.qty) * 1,
-                'R',
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
-                  f.profile?.NAME,
-              ]);
-            }
+            const stile = Stiles(j, f, breakdowns).map((rail) => {
+              return rail;
+            });
 
-            if (numQty(j.topRail) === numQty(j.bottomRail)) {
-              razorGuage.push([
+            const rail = Rails(j, f, breakdowns).map((rail) => {
+              return rail;
+            });
+
+            console.log({ rail });
+            console.log({ stile });
+
+            const stilePrint = stile.map((i) => {
+              return razorGuage.push([
                 `${s.orderNum}`,
                 `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
-                numQty(j.width) - 3.5,
-                numQty(j.qty) * 2,
-                'T / B',
+                i.width,
+                i.height,
+                i.qty_2,
+                i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
                 ind + 1,
-                  f.profile?.NAME,
+                  f.profile?.NAME
+                    ? f.profile?.NAME
+                    : f.design?.NAME
+                      ? f.design?.NAME
+                      : '',
               ]);
-            } else {
-              razorGuage.push([
+            });
+
+            const railPrint = rail.map((i) => {
+              return razorGuage.push([
                 `${s.orderNum}`,
                 `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.topRail) + (f.edge?.LIP_FACTOR / 2),
-                numQty(j.width) - 3.5,
-                numQty(j.qty) * 1,
-                'T',
+                i.width,
+                i.height,
+                i.qty_2,
+                i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
                 ind + 1,
-                  f.profile?.NAME,
+                  f.profile?.NAME
+                    ? f.profile?.NAME
+                    : f.design?.NAME
+                      ? f.design?.NAME
+                      : '',
               ]);
-              razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                numQty(j.bottomRail) + (f.edge?.LIP_FACTOR / 2),
-                j.qty,
-                numQty(j.width) - 3.5,
-                numQty(j.qty) * 1,
-                'B',
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
-                  f.profile?.NAME,
-              ]);
-            }
+            });
           });
           return razorGuage;
         })
@@ -785,31 +766,25 @@ class OrderPage extends Component {
 
                         {selectedOrder &&
                         selectedOrder.orderType === 'Door Order' ? (
-
-
                             <Tooltip
                               title="Razorguage Export"
                               placement="top"
                               className="mb-3"
                             >
-
                               <IconButton>
                                 <CsvDownloader
                                   datas={razorGuage}
                                   filename={`${s && s.orderNum}`}
                                   extension=".csv"
-                                  uFEFF={false}
-                                  separator=','
+                                  // uFEFF={false}
+                                  separator=","
                                 >
                                   <GetAppIcon
                                     style={{ width: '40', height: '40' }}
                                   />
                                 </CsvDownloader>
                               </IconButton>
-
-
                             </Tooltip>
-
                           ) : null}
 
                         {(this.props.user &&
