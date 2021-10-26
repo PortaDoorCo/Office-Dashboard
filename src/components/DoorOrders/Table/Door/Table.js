@@ -19,7 +19,7 @@ import {
 } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
-import 'react-widgets/dist/css/react-widgets.css';
+// import 'react-widgets/dist/css/react-widgets.css';
 import {
   renderField,
   renderNumber,
@@ -1259,7 +1259,7 @@ const DoorTable = ({
                           name={`${table}.lite_${k}`}
                           component={renderDropdownList}
                           data={lites}
-                          valueField="value"
+                          dataKey="value"
                           textField="NAME"
                           validate={required}
                           edit={edit}

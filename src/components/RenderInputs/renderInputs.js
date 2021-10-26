@@ -3,10 +3,11 @@ import {
   Input,
   CustomInput
 } from 'reactstrap';
-import DropdownList from 'react-widgets/lib/DropdownList';
-import Multiselect from 'react-widgets/lib/Multiselect';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-import 'react-widgets/dist/css/react-widgets.css';
+import DropdownList from 'react-widgets/DropdownList';
+import Multiselect from 'react-widgets/Multiselect';
+import Combobox from 'react-widgets/Combobox';
+import DatePicker from 'react-widgets/DatePicker';
+// import 'react-widgets/dist/css/react-widgets.css';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import NumberFormat from 'react-number-format';
@@ -14,10 +15,34 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { formatPhoneNumber } from 'react-phone-number-input';
 
+const renderColor = ({ item }) => 
+{
+  console.log({item});
+  return (
+    <>
+      <span
+        style={{
+          width: item.photo?.width < item.photo?.height ? 50 : 75,
+          height: item.photo?.height < item.photo?.width ? 50 : 75,
+          marginRight: 8,
+          display: 'inline-block',
+          verticalAlign: 'text-bottom',
+          // backgroundColor: 'red',
+        }}
+      >
+        <img src={item.photo?.url ? item.photo?.url : 'https://res.cloudinary.com/porta-door/image/upload/v1634764886/none_2fcc23e82e.png'} alt={item.NAME} width={item.photo?.width < item.photo?.height ? 50 : 75} height={item.photo?.height < item.photo?.width ? 50 : 75} />
+      </span>
+      {item.NAME}
+    </>
+  );
+};
+  
+
+
 export const renderMultiSelect = ({
   input,
   data,
-  valueField,
+  dataKey,
   textField,
   edit,
   meta: { touched, error, warning }
@@ -25,10 +50,11 @@ export const renderMultiSelect = ({
   <Fragment>
     <Multiselect
       {...input}
+      // onChange={() => input.onChange()}
       onBlur={() => input.onBlur()}
       value={input.value || []} // requires value to be an array
       data={data}
-      valueField={valueField}
+      dataKey={dataKey}
       textField={textField}
       placeholder="Add Misc Items"
       disabled={edit}
@@ -42,22 +68,25 @@ export const renderMultiSelect = ({
 export const renderDropdownListFilter = ({
   input,
   data,
-  valueField,
+  dataKey,
   textField,
   edit,
   meta: { touched, error, warning }
 }) => (
   <Fragment>
     <DropdownList
+      renderListItem={renderColor}
       {...input}
       data={data}
-      valueField={valueField}
+      // dataKey={dataKey}
       textField={textField}
       placeholder="Select"
-      onChange={input.onChange}
+      // onChange={() => input.onChange()}
+      onBlur={() => input.onBlur()}
       allowCreate={false}
       filter
       disabled={edit}
+
     />
     {touched &&
                 ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -69,7 +98,7 @@ export const renderDropdownListFilter = ({
 export const renderDropdownList = ({
   input,
   data,
-  valueField,
+  dataKey,
   textField,
   edit,
   meta: { touched, error, warning }
@@ -78,10 +107,11 @@ export const renderDropdownList = ({
     <DropdownList
       {...input}
       data={data}
-      valueField={valueField}
+      dataKey={dataKey}
       textField={textField}
       placeholder="Select"
-      onChange={input.onChange}
+      // onChange={() => input.onChange()}
+      onBlur={() => input.onBlur()}
       disabled={edit}
     />
     {touched &&
@@ -94,18 +124,19 @@ export const renderDropdownList = ({
 export const renderDatePicker = ({
   input,
   data,
-  valueField,
+  dataKey,
   textField,
   edit,
   meta: { touched, error, warning }
 }) => (
   <Fragment>
-    <DateTimePicker
+    <DatePicker
       {...input}
       data={data}
-      valueField={valueField}
+      dataKey={dataKey}
       textField={textField}
-      onChange={input.onChange}
+      // onChange={() => input.onChange()}
+      onBlur={() => input.onBlur()}
       disabled={edit}
     />
     {touched &&

@@ -20,8 +20,8 @@ import {
   balanceTotalSelector
 } from '../../../../../selectors/miscItemPricing';
 import { updateOrder, updateBalance, updateStatus } from '../../../../../redux/orders/actions';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-import 'react-widgets/dist/css/react-widgets.css';
+import DatePicker from 'react-widgets/DatePicker';
+// import 'react-widgets/dist/css/react-widgets.css';
 
 
 const cookie = Cookies.get('jwt');
@@ -31,7 +31,7 @@ const required = value => (value ? undefined : 'Required');
 const renderDateTimePicker = ({ input: { onChange, value }, showTime, edit }) =>
 
   <div>
-    <DateTimePicker
+    <DatePicker
       onChange={onChange}
       time={showTime}
       value={!value ? new Date() : new Date(value)}
@@ -195,7 +195,7 @@ class Balance extends Component {
                         name={'payment_method'}
                         component={renderDropdownList}
                         data={paymentTypes}
-                        valueField="value"
+                        dataKey="value"
                         textField="NAME"
                         validate={required}
                       />

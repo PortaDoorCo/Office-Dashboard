@@ -124,7 +124,7 @@ class Edit extends Component {
                       name={'sale'}
                       component={renderDropdownList}
                       data={salesReps}
-                      valueField="id"
+                      dataKey="id"
                       textField="fullName"
                       validate={required}
                       edit={edit}
@@ -139,7 +139,7 @@ class Edit extends Component {
                       type="text"
                       component={renderDropdownList}
                       data={paymentTerms}
-                      valueField="NAME"
+                      dataKey="NAME"
                       textField="NAME"
                       label="company"
                       validate={required}
@@ -529,7 +529,7 @@ class Edit extends Component {
                       type="text"
                       data={states}
                       component={renderDropdownListFilter}
-                      valueField="abbreviation"
+                      dataKey="abbreviation"
                       textField="abbreviation"
                       label="company"
                       edit={edit}
@@ -610,7 +610,7 @@ class Edit extends Component {
                       type="text"
                       data={states}
                       component={renderDropdownListFilter}
-                      valueField="abbreviation"
+                      dataKey="abbreviation"
                       textField="abbreviation"
                       label="company"
                       edit={edit}

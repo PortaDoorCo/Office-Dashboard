@@ -9,7 +9,7 @@ import Charts from './components/Chart';
 import Chart1 from './components/SalesCharts/Chart1';
 import Maps from './components/SalesCharts/Maps';
 import moment from 'moment';
-import momentLocaliser from 'react-widgets-moment';
+// import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -20,7 +20,7 @@ const StatusTable = React.lazy(() => import('./components/StatusTable'));
 
 const { Option } = Select;
 
-momentLocaliser(moment);
+// momentLocaliser(moment);
 
 // moment(this.state.startDate).startOf('day').valueOf()
 

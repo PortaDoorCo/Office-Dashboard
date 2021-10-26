@@ -13,7 +13,7 @@ import {
   setSelectedOrder,
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import momentLocaliser from 'react-widgets-moment';
+// import momentLocaliser from 'react-widgets-moment';
 import { Row, Col, Button, FormGroup, Input } from 'reactstrap';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
@@ -23,7 +23,7 @@ import Report1 from '../../PrintOuts/Reports/Report1';
 import styled from 'styled-components';
 import status from '../../../utils/status';
 
-momentLocaliser(moment);
+// momentLocaliser(moment);
 
 const TextField = styled.input`
   height: 32px;

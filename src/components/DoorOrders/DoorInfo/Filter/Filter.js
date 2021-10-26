@@ -189,7 +189,7 @@ class DoorFilter extends Component {
                     component={renderDropdownList}
                     data={faceFrameOrderType}
                     onBlur={() => this.onChangeType(index)}
-                    valueField="value"
+                    dataKey="value"
                     textField="name"
                     edit={edit}
                     validate={required}
@@ -204,7 +204,7 @@ class DoorFilter extends Component {
                     name={`${part}.thickness`}
                     component={renderDropdownList}
                     data={thickness}
-                    valueField="value"
+                    dataKey="value"
                     textField="name"
                     edit={edit}
                     validate={required}
@@ -238,7 +238,7 @@ class DoorFilter extends Component {
                       component={renderDropdownList}
                       data={orderType}
                       onBlur={() => this.onChangeType(index)}
-                      valueField="value"
+                      dataKey="value"
                       textField="name"
                       edit={edit}
                       validate={required}
@@ -254,7 +254,7 @@ class DoorFilter extends Component {
                       component={renderDropdownList}
                       data={construction_one_piece}
                       onBlur={() => this.onChangeType(index)}
-                      valueField="value"
+                      dataKey="value"
                       textField="name"
                       edit={edit}
                       validate={required}
@@ -269,7 +269,7 @@ class DoorFilter extends Component {
                       name={`${part}.thickness`}
                       component={renderDropdownList}
                       data={thickness_one_piece}
-                      valueField="value"
+                      dataKey="value"
                       textField="name"
                       edit={edit}
                       validate={required}
@@ -297,7 +297,7 @@ class DoorFilter extends Component {
                       component={renderDropdownList}
                       data={orderType}
                       onBlur={() => this.onChangeType(index)}
-                      valueField="value"
+                      dataKey="value"
                       textField="name"
                       edit={edit}
                       validate={required}
@@ -313,7 +313,7 @@ class DoorFilter extends Component {
                       component={renderDropdownList}
                       data={construction}
                       onBlur={() => this.onChangeType(index)}
-                      valueField="value"
+                      dataKey="value"
                       textField="name"
                       edit={edit}
                       validate={required}
@@ -328,7 +328,7 @@ class DoorFilter extends Component {
                       name={`${part}.thickness`}
                       component={renderDropdownList}
                       data={thickness}
-                      valueField="value"
+                      dataKey="value"
                       textField="name"
                       edit={edit}
                       validate={required}

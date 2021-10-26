@@ -79,7 +79,7 @@ let Inputs = (props) => {
                       component={renderDropdownList}
                       data={styles}
                       // onChange={(e) => changeMiscItem(e, index)}
-                      valueField="value"
+                      dataKey="value"
                       textField="name"
                       edit={edit}
                       required
@@ -91,7 +91,7 @@ let Inputs = (props) => {
                       component={renderDropdownList}
                       data={thickness}
                       // onChange={(e) => changeMiscItem(e, index)}
-                      valueField="value"
+                      dataKey="value"
                       textField="name"
                       edit={edit}
                       required
@@ -106,7 +106,7 @@ let Inputs = (props) => {
                           wood[formState?.mouldings[index]?.grade?.db_name]
                       )}
                       // onChange={(e) => changeMiscItem(e, index)}
-                      valueField="value"
+                      dataKey="value"
                       textField="NAME"
                       edit={edit}
                       required
@@ -121,7 +121,7 @@ let Inputs = (props) => {
                           item.Style === formState?.mouldings[index]?.style?.value
                       )}
                       // onChange={(e) => changeMiscItem(e, index)}
-                      valueField="value"
+                      dataKey="value"
                       textField="NAME"
                       edit={edit}
                       required

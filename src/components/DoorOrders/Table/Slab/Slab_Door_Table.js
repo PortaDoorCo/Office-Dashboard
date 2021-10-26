@@ -3,7 +3,7 @@ import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
 import { Field, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
 import Maker from '../../MakerJS/Maker';
-import 'react-widgets/dist/css/react-widgets.css';
+// import 'react-widgets/dist/css/react-widgets.css';
 import {
   renderField,
   renderNumber,

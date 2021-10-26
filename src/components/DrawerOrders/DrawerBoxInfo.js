@@ -77,7 +77,7 @@ class DrawerBoxInfo extends Component {
                     name={`${part}.woodtype`}
                     component={renderDropdownListFilter}
                     data={drawer_box_woodtypes}
-                    valueField="value"
+                    dataKey="value"
                     textField="NAME"
                     edit={edit}
                     validate={required}
@@ -91,7 +91,7 @@ class DrawerBoxInfo extends Component {
                     name={`${part}.box_thickness`}
                     component={renderDropdownList}
                     data={boxThickness}
-                    valueField="value"
+                    dataKey="value"
                     textField="NAME"
                     edit={edit}
                     validate={required}
@@ -107,7 +107,7 @@ class DrawerBoxInfo extends Component {
                     name={`${part}.box_bottom_woodtype`}
                     component={renderDropdownListFilter}
                     data={boxBottomWoodtype}
-                    valueField="value"
+                    dataKey="value"
                     textField="NAME"
                     edit={edit}
                     validate={required}
@@ -123,7 +123,7 @@ class DrawerBoxInfo extends Component {
                     name={`${part}.box_bottom_thickness`}
                     component={renderDropdownList}
                     data={boxBottoms}
-                    valueField="value"
+                    dataKey="value"
                     textField="NAME"
                     edit={edit}
                     validate={required}
@@ -138,7 +138,7 @@ class DrawerBoxInfo extends Component {
                     name={`${part}.box_notch`}
                     component={renderDropdownList}
                     data={notchDrill}
-                    valueField="value"
+                    dataKey="value"
                     textField="NAME"
                     edit={edit}
                     validate={required}
@@ -152,7 +152,7 @@ class DrawerBoxInfo extends Component {
                     name={`${part}.box_assembly`}
                     component={renderDropdownList}
                     data={box_assembly}
-                    valueField="value"
+                    dataKey="value"
                     textField="NAME"
                     edit={edit}
                     validate={required}
@@ -167,7 +167,7 @@ class DrawerBoxInfo extends Component {
                     name={`${part}.box_finish`}
                     component={renderDropdownList}
                     data={drawerFinishes}
-                    valueField="value"
+                    dataKey="value"
                     textField="NAME"
                     edit={edit}
                     validate={required}

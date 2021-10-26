@@ -147,7 +147,7 @@ class CopeDF extends Component {
                       ? two_piece_wood
                       : filtered_woodtypes
                 }
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
@@ -162,7 +162,7 @@ class CopeDF extends Component {
                 name={`${part}.design`}
                 component={renderDropdownListFilter}
                 data={filtered_designs}
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
@@ -179,7 +179,7 @@ class CopeDF extends Component {
                   name={`${part}.edge`}
                   component={renderDropdownListFilter}
                   data={edges}
-                  valueField="value"
+                  dataKey="value"
                   textField="NAME"
                   validate={required}
                   edit={edit}
@@ -198,7 +198,7 @@ class CopeDF extends Component {
                   name={`${part}.profile`}
                   component={renderDropdownListFilter}
                   data={profiles}
-                  valueField="value"
+                  dataKey="value"
                   textField="NAME"
                   validate={required}
                   edit={edit}
@@ -215,7 +215,7 @@ class CopeDF extends Component {
                 name={`${part}.panel`}
                 component={renderDropdownListFilter}
                 data={panels}
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
@@ -230,7 +230,7 @@ class CopeDF extends Component {
                 name={`${part}.applied_profile`}
                 component={renderDropdownListFilter}
                 data={applied_moulds}
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
