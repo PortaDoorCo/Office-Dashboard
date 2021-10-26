@@ -14,7 +14,7 @@ export default (data, breakdowns) => {
           : i.construction.value === 'Slab'
             ? 'Slab'
             : ''
-    } ${i.profile.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
+    } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
   const b = a
@@ -40,50 +40,40 @@ export default (data, breakdowns) => {
     }));
 
   const heightSort = b.map((i, index) => {
-
-    
-      
     const dim = GlassSort(i).map((item, index) => {
-
-      
-
       if (
         item.glass_index === 1 ||
-              item.construction.value === 'Slab' ||
-              i.orderType.value === 'One_Piece' ||
-              i.orderType.value === 'One_Piece_DF'
+        item.construction.value === 'Slab' ||
+        i.orderType.value === 'One_Piece' ||
+        i.orderType.value === 'One_Piece_DF'
       ) {
-        return null;
+        return {
+          ...item,
+          rail_height: 0,
+        };
       } else {
-    
         const n = {
           ...i,
           construction: item.construction,
           profile: item.profile,
-          design: item.design
+          design: item.design,
         };
-
 
         return {
           ...item,
           rail_height: Rails(item, n, breakdowns).map((rail) => {
-            
+            console.log({rail});
             return rail.height;
-          })[0]
+          })[0],
         };
       }
-
     });
 
-    
     return {
       ...i,
-      dim
+      dim,
     };
   });
-
-  
-    
 
   const table_body = heightSort.map((i, index) => {
     const tableBody = [
@@ -97,30 +87,23 @@ export default (data, breakdowns) => {
         { text: 'Note', style: 'fonts' },
       ],
     ];
-  
-    
-      
+
     RailSort(i.dim).forEach((item, index) => {
       if (
         item.glass_index === 1 ||
-            item.construction.value === 'Slab' ||
-            i.orderType.value === 'One_Piece' ||
-            i.orderType.value === 'One_Piece_DF' ||
-            i.orderType.value === 'Two_Piece' ||
-            i.orderType.value === 'Two_Piece_DF'
+        item.construction.value === 'Slab' ||
+        i.orderType.value === 'One_Piece' ||
+        i.orderType.value === 'One_Piece_DF'
       ) {
         return null;
       } else {
-  
         const n = {
           ...i,
           construction: item.construction,
           profile: item.profile,
-          design: item.design
+          design: item.design,
         };
-  
-        
-  
+
         if (
           (item.panelsH && item.panelsW > 1) ||
           (item.panelsH > 1 && item.panelsW)
@@ -201,10 +184,7 @@ export default (data, breakdowns) => {
         }
       }
     });
-  
-    
-  
-  
+
     return [
       {
         margin: [0, 10, 0, 0],
@@ -217,7 +197,9 @@ export default (data, breakdowns) => {
             width: 200,
           },
           {
-            text: `IP: ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}`,
+            text: `IP: ${
+              i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+            }`,
             style: 'woodtype',
             alignment: 'center',
           },
@@ -264,13 +246,10 @@ export default (data, breakdowns) => {
         text: '==============================================================================',
         alignment: 'center',
       },
-  
+
       // { text: '', pageBreak: 'before' }
     ];
-      
   });
-
-
 
   // const table_body = [];
 
