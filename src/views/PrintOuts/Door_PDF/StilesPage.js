@@ -56,9 +56,7 @@ export default (data, breakdowns) => {
         item.glass_index === 1 ||
           item.construction.value === 'Slab' ||
           i.orderType.value === 'One_Piece' ||
-          i.orderType.value === 'One_Piece_DF' ||
-          i.orderType.value === 'Two_Piece' ||
-          i.orderType.value === 'Two_Piece_DF'
+          i.orderType.value === 'One_Piece_DF' 
       ) {
         return null;
       } else {
@@ -79,19 +77,19 @@ export default (data, breakdowns) => {
             style: 'fonts',
           },
           {
-            text: Stiles(item, n, breakdowns).map((stile) => {
+            text: (Stiles(item, n, breakdowns) || []).map((stile) => {
               return `${stile.qty} \n`;
             }),
             style: 'fonts',
           },
           {
-            text: Stiles(item, n, breakdowns).map((stile) => {
+            text: (Stiles(item, n, breakdowns) || []).map((stile) => {
               return `${stile.measurement} \n`;
             }),
             style: 'fonts',
           },
           {
-            text: Stiles(item, n, breakdowns).map((stile) => {
+            text: (Stiles(item, n, breakdowns) || []).map((stile) => {
               return `${stile.pattern} \n`;
             }),
             style: 'fonts',

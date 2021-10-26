@@ -35,8 +35,9 @@ export default (info, part, breakdowns) => {
   const width = numQty(info.width);
   const qty = parseInt(info.qty);
 
-
-  const orderType = info?.orderType?.value ? info.orderType?.value : part?.orderType?.value
+  const orderType = info?.orderType?.value
+    ? info.orderType?.value
+    : part?.orderType?.value;
 
   let inset = 0;
   if (part.profile) {
@@ -63,7 +64,8 @@ export default (info, part, breakdowns) => {
       return (
         numQty(info[`unevenSplitInput${v}`]) -
         topRail +
-        unevenInset + lip_factor
+        unevenInset +
+        lip_factor
       );
     });
 
@@ -72,6 +74,11 @@ export default (info, part, breakdowns) => {
 
   const glassDoor = (index) => {
     const lite = info[`lite_${index}`]?.NAME;
+
+    console.log("hiiiiiiiii")
+
+    console.log({qty})
+
     return {
       qty: qty,
       measurement: `${lite !== "Glass" ? lite : ""}`,
@@ -101,15 +108,15 @@ export default (info, part, breakdowns) => {
       height -
       unevenSplitTotal -
       horizMull * (panelsH - 1) -
-      bottomRail - unevenInset - (lip_factor * 2)
+      bottomRail -
+      unevenInset -
+      lip_factor * 2;
 
     const unevenSplitInput = (v) =>
       numQty(info[`unevenSplitInput${v}`]) -
       topRail +
       unevenInset +
       lip_factor / 2;
-
-
 
     const glassCheck = (v) => info[`glass_check_${v}`];
 
@@ -118,8 +125,6 @@ export default (info, part, breakdowns) => {
         .slice(1)
         .map((i, v) => {
           if (glassCheck(v)) {
-            
-            
             return glassDoor(v);
           } else {
             return {
@@ -151,6 +156,7 @@ export default (info, part, breakdowns) => {
       count: qty,
     };
 
+    console.log("biiiii")
     if (glassCheck(panelsH - 1)) {
       return [
         ...unEven,
@@ -167,9 +173,6 @@ export default (info, part, breakdowns) => {
     if (info.unevenCheck) {
       door = unevenSplit();
     } else {
-
-      
-
       door = [
         {
           qty: `(${panelsH * panelsW * qty})`,
@@ -205,7 +208,6 @@ export default (info, part, breakdowns) => {
         },
       ];
     } else {
-
       door = [
         {
           qty: `(${panelsH * panelsW * qty})`,
@@ -235,8 +237,6 @@ export default (info, part, breakdowns) => {
     count: qty,
   };
 
-  
-
   const doorFunc = () => {
     let arr = [];
 
@@ -246,6 +246,7 @@ export default (info, part, breakdowns) => {
       arr = [
         ...Array.from(Array(panelsH).keys()).map((i, v) => {
           if (info[`glass_check_${v}`]) {
+            console.log("biiii2")
             return glassDoor(v);
           } else {
             return doorMulti;
@@ -274,6 +275,8 @@ export default (info, part, breakdowns) => {
       }
       return ar;
     }, []);
+
+    console.log({ new_arr });
 
     return new_arr;
   };
