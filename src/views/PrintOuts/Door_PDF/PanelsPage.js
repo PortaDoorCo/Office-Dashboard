@@ -72,9 +72,7 @@ export default (data, breakdowns, type) => {
       if (
         item.glass_index === 1 ||
           i.orderType.value === 'One_Piece' ||
-          i.orderType.value === 'One_Piece_DF' ||
-          i.orderType.value === 'Two_Piece' ||
-          i.orderType.value === 'Two_Piece_DF'
+          i.orderType.value === 'One_Piece_DF'
       ) {
         return null;
       } else {
@@ -82,19 +80,19 @@ export default (data, breakdowns, type) => {
           { text: item.item ? item.item : index + 1, style: 'fonts' },
           { text: item.name, style: 'fonts' },
           {
-            text: Panels(item, i, breakdowns).map((panel) => {
+            text: (Panels(item, i, breakdowns) || []).map((panel) => {
               return `${panel.qty} \n`;
             }),
             style: 'fonts',
           },
           {
-            text: Panels(item, i, breakdowns).map((panel) => {
+            text: (Panels(item, i, breakdowns) || []).map((panel) => {
               return `${panel.measurement} \n`;
             }),
             style: 'fonts',
           },
           {
-            text: Panels(item, i, breakdowns).map((panel) => {
+            text: (Panels(item, i, breakdowns) || []).map((panel) => {
               return `${panel.pattern} \n`;
             }),
             style: 'fonts',
@@ -104,7 +102,7 @@ export default (data, breakdowns, type) => {
             style: 'fonts',
           },
           {
-            text: Panels(item, i, breakdowns).map((panel) => {
+            text: (Panels(item, i, breakdowns) || []).map((panel) => {
               return `${panel.panel} \n`;
             }),
             style: 'fonts',

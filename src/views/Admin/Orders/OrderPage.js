@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
+import ReactDOM from 'react-dom';
 import {
   Modal,
   ModalHeader,
@@ -85,6 +86,7 @@ import CopyModal from '../../../utils/Modal';
 import Cookies from 'js-cookie';
 import Rails from '../../PrintOuts/Breakdowns/Doors/Rails/Rails';
 import Stiles from '../../PrintOuts/Breakdowns/Doors/Stiles/Stiles';
+import Navigation from './Navigation';
 
 const cookie = Cookies.get('jwt');
 
@@ -121,6 +123,7 @@ class OrderPage extends Component {
       printModal: false,
       copyModal: false,
     };
+    this.someRef = createRef();
   }
 
   handleCopyModal = () => {
@@ -154,30 +157,46 @@ class OrderPage extends Component {
     });
   };
 
-  toggleTracking = () =>
+  toggleTracking = () => {
+    const scroll = document.getElementById('scrollModal');
+    scroll.parentNode.scrollTo({ top: 0, behavior: 'smooth' });
     this.setState({
       trackingOpen: !this.state.trackingOpen,
     });
+  };
 
-  toggleBalance = () =>
+  toggleBalance = () => {
+    const scroll = document.getElementById('scrollModal');
+    scroll.parentNode.scrollTo({ top: 0, behavior: 'smooth' });
     this.setState({
       balanceOpen: !this.state.balanceOpen,
     });
+  };
 
-  toggleMiscItems = () =>
+  toggleMiscItems = () => {
+    const scroll = document.getElementById('scrollModal');
+    scroll.parentNode.scrollTo({ top: 0, behavior: 'smooth' });
+
     this.setState({
       miscItemsOpen: !this.state.miscItemsOpen,
     });
+  };
 
-  toggleFiles = () =>
+  toggleFiles = () => {
+    const scroll = document.getElementById('scrollModal');
+    scroll.parentNode.scrollTo({ top: 0, behavior: 'smooth' });
     this.setState({
       filesOpen: !this.state.filesOpen,
     });
+  };
 
-  toggleNotes = () =>
+  toggleNotes = () => {
+    const scroll = document.getElementById('scrollModal');
+    scroll.parentNode.scrollTo({ top: 0, behavior: 'smooth' });
     this.setState({
       notesOpen: !this.state.notesOpen,
     });
+  };
 
   toggleDeleteModal = () =>
     this.setState({
@@ -590,7 +609,13 @@ class OrderPage extends Component {
           modal={this.state.copyModal}
           action={this.copyOrder}
         />
-        <Modal isOpen={props.modal} toggle={props.toggle} className="modal-lg">
+
+        <Modal
+          isOpen={props.modal}
+          toggle={props.toggle}
+          className="modal-lg"
+          id="scrollModal"
+        >
           <ModalHeader toggle={props.toggle}>
             Order #{selectedOrder && selectedOrder.orderNum}
           </ModalHeader>
@@ -664,45 +689,14 @@ class OrderPage extends Component {
                 <Row></Row>
                 <Row>
                   {user?.role?.type !== 'quality_control' ? (
-                    <Col>
-                      <Tooltip title="Edit" placement="top">
-                        <IconButton onClick={this.props.editable}>
-                          <Edit style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
-
-                      <Tooltip title="Tracking History" placement="top">
-                        <IconButton onClick={this.toggleTracking}>
-                          <List style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
-
-                      <Tooltip title="Balance" placement="top">
-                        <IconButton onClick={this.toggleBalance}>
-                          <AttachMoneyIcon
-                            style={{ width: '40', height: '40' }}
-                          />
-                        </IconButton>
-                      </Tooltip>
-
-                      <Tooltip title="Misc Items" placement="top">
-                        <IconButton onClick={this.toggleMiscItems}>
-                          <Dns style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
-
-                      <Tooltip title="View Notes" placement="top">
-                        <IconButton onClick={this.toggleNotes}>
-                          <Chat style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
-
-                      <Tooltip title="View Files" placement="top">
-                        <IconButton onClick={this.toggleFiles}>
-                          <Attachment style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
-                    </Col>
+                    <Navigation
+                      {...this.props}
+                      toggleTracking={this.toggleTracking}
+                      toggleBalance={this.toggleBalance}
+                      toggleMiscItems={this.toggleMiscItems}
+                      toggleNotes={this.toggleNotes}
+                      toggleFiles={this.toggleFiles}
+                    />
                   ) : (
                     <Col />
                   )}
@@ -1047,6 +1041,11 @@ class OrderPage extends Component {
                 editable={this.props.editable}
                 edit={!this.props.edit}
                 toggle={props.toggle}
+                toggleTracking={this.toggleTracking}
+                toggleBalance={this.toggleBalance}
+                toggleMiscItems={this.toggleMiscItems}
+                toggleNotes={this.toggleNotes}
+                toggleFiles={this.toggleFiles}
               />
             </div>
           </ModalBody>
@@ -1056,6 +1055,7 @@ class OrderPage extends Component {
             </Button>
           </ModalFooter>
         </Modal>
+
         <PrintModal
           toggle={this.togglePrinter}
           modal={this.state.printModal}

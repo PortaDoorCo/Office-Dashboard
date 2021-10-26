@@ -21,6 +21,20 @@ export default (data, breakdowns) => {
 
 
     GlassSort(i).forEach((item, index) => {
+
+      console.log({item});
+
+      console.log({Panels: (Panels(item, i, breakdowns) || []).map((panel) => {
+
+        console.log({qty: panel.qty});
+        console.log({measurement: panel.measurement});
+        console.log({pattern: panel.pattern});
+
+        return `${panel.qty} ${panel.measurement} ${
+          '- ' + panel.pattern
+        } \n`;
+      })});
+
       tableBody.push([
         { text: item.item, style: 'fonts' },
         { text: item.qty, style: 'fonts' },
@@ -39,13 +53,13 @@ export default (data, breakdowns) => {
           ],
         },
         {
-          text: Stiles(item, i, breakdowns).map((stile) => {
+          text: (Stiles(item, i, breakdowns) || []).map((stile) => {
             return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`;
           }),
           style: 'fonts',
         },
         {
-          text: Rails(item, i, breakdowns).map((rail) => {
+          text: (Rails(item, i, breakdowns) || []).map((rail) => {
             return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${
               item.full_frame ? '** Full Frame DF **' : ''
             }`;
@@ -55,7 +69,12 @@ export default (data, breakdowns) => {
         {
           stack: [
             {
-              text: Panels(item, i, breakdowns).map((panel) => {
+              text: (Panels(item, i, breakdowns) || []).map((panel) => {
+
+                console.log({qty: panel.qty});
+                console.log({measurement: panel.measurement});
+                console.log({pattern: panel.pattern});
+
                 return `${panel.qty} ${panel.measurement} ${
                   '- ' + panel.pattern
                 } \n`;

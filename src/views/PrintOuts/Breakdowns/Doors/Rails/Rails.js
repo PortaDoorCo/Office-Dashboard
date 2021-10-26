@@ -62,11 +62,31 @@ export default (info, part, breakdowns) => {
   }
 
   if(part.orderType?.value === 'Two_Piece') {
-    return One_Piece_Door(info,part, breakdowns[0]);
+    if(part.construction?.value === 'Cope'){
+      return Door(info, part, breakdowns[0]);
+    }
+
+    if(part.construction?.value === 'MT'){
+      return Door(info, part, breakdowns[1]);
+    }
+
+    if(part.construction?.value === 'Miter'){
+      return Door(info, part, breakdowns[2]);
+    }
   }
 
   if(part.orderType?.value === 'Two_Piece_DF') {
-    return One_Piece_Door(info,part, breakdowns[0]);
+    if(part.construction?.value === 'Cope'){ 
+      return Door(info, part, breakdowns[4]);
+    }
+
+    if(part.construction?.value === 'MT'){
+      return Door(info, part, breakdowns[3]);
+    }
+
+    if(part.construction?.value === 'Miter'){
+      return Door(info, part, breakdowns[5]);
+    }
   }
 
 

@@ -13,7 +13,7 @@ class EditSelectedOrder extends React.Component {
 
   render() {
     
-    const { editable, edit, toggle, selectedOrder } = this.props;
+    const { editable, edit, toggle, selectedOrder, toggleTracking, toggleBalance, toggleMiscItems, toggleNotes, toggleFiles } = this.props;
 
     if(selectedOrder) {
       return (
@@ -23,6 +23,11 @@ class EditSelectedOrder extends React.Component {
               editable={editable}
               edit={edit}
               toggle={toggle}
+              toggleTracking={toggleTracking}
+              toggleBalance={toggleBalance}
+              toggleMiscItems={toggleMiscItems}
+              toggleNotes={toggleNotes}
+              toggleFiles={toggleFiles}
             />  
             :
             selectedOrder.orderType === 'Misc Items' ?
@@ -30,6 +35,11 @@ class EditSelectedOrder extends React.Component {
                 editable={editable}
                 edit={edit}
                 toggle={toggle}
+                toggleTracking={toggleTracking}
+                toggleBalance={toggleBalance}
+                toggleMiscItems={toggleMiscItems}
+                toggleNotes={toggleNotes}
+                toggleFiles={toggleFiles}
               />
               :
               selectedOrder.orderType === 'Mouldings' ?
@@ -37,6 +47,11 @@ class EditSelectedOrder extends React.Component {
                   editable={editable}
                   edit={edit}
                   toggle={toggle}
+                  toggleTracking={toggleTracking}
+                  toggleBalance={toggleBalance}
+                  toggleMiscItems={toggleMiscItems}
+                  toggleNotes={toggleNotes}
+                  toggleFiles={toggleFiles}
                 />
                 :
                 selectedOrder.orderType === 'Face Frame' ?
@@ -44,6 +59,11 @@ class EditSelectedOrder extends React.Component {
                     editable={editable}
                     edit={edit}
                     toggle={toggle}
+                    toggleTracking={toggleTracking}
+                    toggleBalance={toggleBalance}
+                    toggleMiscItems={toggleMiscItems}
+                    toggleNotes={toggleNotes}
+                    toggleFiles={toggleFiles}
                   />
                   :
 
@@ -51,6 +71,11 @@ class EditSelectedOrder extends React.Component {
                     editable={editable}
                     edit={edit}
                     toggle={toggle}
+                    toggleTracking={toggleTracking}
+                    toggleBalance={toggleBalance}
+                    toggleMiscItems={toggleMiscItems}
+                    toggleNotes={toggleNotes}
+                    toggleFiles={toggleFiles}
                   />
           }
         </div>

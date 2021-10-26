@@ -51,9 +51,7 @@ export default (data, breakdowns) => {
         item.glass_index === 1 ||
               item.construction.value === 'Slab' ||
               i.orderType.value === 'One_Piece' ||
-              i.orderType.value === 'One_Piece_DF' ||
-              i.orderType.value === 'Two_Piece' ||
-              i.orderType.value === 'Two_Piece_DF'
+              i.orderType.value === 'One_Piece_DF'
       ) {
         return null;
       } else {
@@ -134,19 +132,19 @@ export default (data, breakdowns) => {
               style: 'fonts',
             },
             {
-              text: Rails(item, n, breakdowns).map((rail) => {
+              text: (Rails(item, n, breakdowns) || []).map((rail) => {
                 return `${rail.qty} \n`;
               }),
               style: 'fonts',
             },
             {
-              text: Rails(item, n, breakdowns).map((rail) => {
+              text: (Rails(item, n, breakdowns) || []).map((rail) => {
                 return `${rail.measurement} \n`;
               }),
               style: 'fonts',
             },
             {
-              text: Rails(item, n, breakdowns).map((rail) => {
+              text: (Rails(item, n, breakdowns) || []).map((rail) => {
                 return `${rail.pattern} \n`;
               }),
               style: 'fonts',
@@ -171,19 +169,19 @@ export default (data, breakdowns) => {
               style: 'fonts',
             },
             {
-              text: Rails(item, n, breakdowns).map((rail) => {
+              text: (Rails(item, n, breakdowns) || []).map((rail) => {
                 return `${rail.qty} \n`;
               }),
               style: 'fonts',
             },
             {
-              text: Rails(item, n, breakdowns).map((rail) => {
+              text: (Rails(item, n, breakdowns) || []).map((rail) => {
                 return `${rail.measurement} \n`;
               }),
               style: 'fonts',
             },
             {
-              text: Rails(item, n, breakdowns).map((rail) => {
+              text: (Rails(item, n, breakdowns) || []).map((rail) => {
                 return `${rail.pattern} \n`;
               }),
               style: 'fonts',
