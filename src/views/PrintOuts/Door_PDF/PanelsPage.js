@@ -15,7 +15,7 @@ export default (data, breakdowns, type) => {
           : i.construction.value === 'Slab'
             ? 'Slab'
             : ''
-    }`;
+    } ${i.profile.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
   const b = a

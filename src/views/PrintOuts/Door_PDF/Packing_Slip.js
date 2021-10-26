@@ -22,7 +22,7 @@ export default (data, breakdowns) => {
           : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
             ? ''
             : ''
-    }`;
+    } ${i.profile.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
 
   const a = Glass_Selection(data).map((v) => {
