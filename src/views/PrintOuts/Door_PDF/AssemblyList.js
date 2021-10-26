@@ -100,7 +100,7 @@ export default (data, breakdowns) => {
                       : i.construction.value === 'Slab'
                         ? 'Slab'
                         : ''
-                } ${i.profile.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   i.panel
                     ? i.panel.NAME
                     : i.construction.value === 'Slab'
