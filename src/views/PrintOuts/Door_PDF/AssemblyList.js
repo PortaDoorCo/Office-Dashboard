@@ -22,19 +22,6 @@ export default (data, breakdowns) => {
 
     GlassSort(i).forEach((item, index) => {
 
-      console.log({item});
-
-      console.log({Panels: (Panels(item, i, breakdowns) || []).map((panel) => {
-
-        console.log({qty: panel.qty});
-        console.log({measurement: panel.measurement});
-        console.log({pattern: panel.pattern});
-
-        return `${panel.qty} ${panel.measurement} ${
-          '- ' + panel.pattern
-        } \n`;
-      })});
-
       tableBody.push([
         { text: item.item, style: 'fonts' },
         { text: item.qty, style: 'fonts' },
