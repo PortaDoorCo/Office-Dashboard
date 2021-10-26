@@ -93,9 +93,7 @@ export default (data, breakdowns) => {
         item.glass_index === 1 ||
         item.construction.value === 'Slab' ||
         i.orderType.value === 'One_Piece' ||
-        i.orderType.value === 'One_Piece_DF' ||
-        i.orderType.value === 'Two_Piece' ||
-        i.orderType.value === 'Two_Piece_DF'
+        i.orderType.value === 'One_Piece_DF'
       ) {
         return null;
       } else {

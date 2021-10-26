@@ -199,17 +199,20 @@ export default (data, breakdowns) => {
 
     const calc = i.dimensions.map((item, index) => {
       
-      const width = Panels(item, i, breakdowns).map((panel) => {
+      const width = (Panels(item, i, breakdowns) || [
+        {width: 0}
+      ]).map((panel) => {
         return numQty(panel.width);
       });
-      const height = Panels(item, i, breakdowns).map((panel) => {
-
-        
-
+      const height = (Panels(item, i, breakdowns) || [
+        {height: 0}
+      ]).map((panel) => {
         return numQty(panel.height);
       });
 
-      const qty = Panels(item, i, breakdowns).map((panel) => {
+      const qty = (Panels(item, i, breakdowns) || [
+        {qty: 0}
+      ]).map((panel) => {
         if (panel.count) {
           return panel.count;
         } else {
@@ -221,9 +224,9 @@ export default (data, breakdowns) => {
       
       
 
-      const width_total = width.reduce((acc, item) => acc + item);
-      const height_total = height.reduce((acc, item) => acc + item);
-      const qty_total = qty.reduce((acc, item) => acc + item);
+      const width_total = (width || [0]).reduce((acc, item) => acc + item);
+      const height_total = (height || [0]).reduce((acc, item) => acc + item);
+      const qty_total = (qty || [0]).reduce((acc, item) => acc + item);
 
       
       
@@ -248,8 +251,6 @@ export default (data, breakdowns) => {
     if (
       i.orderType.value === 'One_Piece' ||
       i.orderType.value === 'One_Piece_DF' ||
-      i.orderType.value === 'Two_Piece' ||
-      i.orderType.value === 'Two_Piece_DF' ||
       i.orderType.value === 'Slab_Door' ||
       i.orderType.value === 'Slab_DF' ||
       i.construction.value === 'Slab' ||
