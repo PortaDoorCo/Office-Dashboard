@@ -26,7 +26,7 @@ export default (data, startDate, endDate, status) => {
     let doors = 0;
     let dfs = 0;
     let boxes = 0;
-    let name = i.job_info.jobName.length > 0 ? i.job_info.jobName : 'None';
+    let name = i.job_info?.jobName ? i.job_info?.jobName : 'None';
     if (i.orderType === 'Door Order') {
       i.part_list.map(part => {
         if (part.orderType.value === 'Door') {
