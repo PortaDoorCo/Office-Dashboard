@@ -96,22 +96,15 @@ export default (data, breakdowns) => {
               stack: [
                 { text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`, style: 'woodtype', width: 300 },
                 {
-                  text: `${i.design ? i.design.NAME :
-                    i.cope_design
-                      ? i.cope_design.NAME
-                      : i.mt_design
-                        ? i.mt_design.NAME + ' ' + i.construction.value
-                        : i.miter_design
-                          ? i.miter_design.NAME + ' ' + i.construction.value
-                          : i.miter_df_design
-                            ? i.miter_df_design.NAME +
-                        ' ' +
-                        i.construction.value
-                            : i.mt_df_design
-                              ? i.mt_df_design.NAME + ' ' + i.construction.value :
-                              (i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF') ? '' :
-                                i.construction.name
-                  }`,
+                  text: `${
+                    i.design
+                      ? i.design.NAME
+                      : i.face_frame_design
+                        ? i.face_frame_design.NAME
+                        : i.construction.value === 'Slab'
+                          ? 'Slab'
+                          : ''
+                  } ${i.profile.NAME.includes('Deluxe') ? 'Deluxe' : ''}`,
                   style: 'fonts',
 
                 },
