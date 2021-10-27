@@ -25,7 +25,28 @@ export default (data, breakdowns) => {
     } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
 
-  const a = Glass_Selection(data).map((v) => {
+  let itemNum = 0;
+
+  const itemNumCounter = {
+    ...data,
+    part_list: data.part_list.map((i) => {
+      return {
+        ...i,
+        dimensions: i.dimensions.map((j) => {
+          itemNum += 1;
+          return {
+            ...j,
+            item: itemNum,
+          };
+        }),
+      };
+    }),
+  };
+
+  const a = Glass_Selection(itemNumCounter).map((v) => {
+
+    console.log({v});
+
     return {
       ...v,
       dimensions: flatten(
@@ -38,8 +59,6 @@ export default (data, breakdowns) => {
       ),
     };
   });
-
-  
 
   const table_body = a.map((i, index) => {
     const tableBody = [
@@ -55,12 +74,10 @@ export default (data, breakdowns) => {
       ],
     ];
 
-
     const b = i.dimensions.sort((a, b) => numQty(b.height) - numQty(a.height));
 
-    b.forEach((item, index) => {
-      
 
+    b.forEach((item, index) => {
       tableBody.push([
         { text: item.item ? item.item : index + 1, style: 'fonts' },
         { text: item.name, style: 'fonts' },
@@ -70,7 +87,11 @@ export default (data, breakdowns) => {
           style: 'fonts',
         },
         {
-          text: item.profile ? item.profile.NAME : item.design ? item.design.NAME : '',
+          text: item.profile
+            ? item.profile.NAME
+            : item.design
+              ? item.design.NAME
+              : '',
           style: 'fonts',
           alignment: 'left',
         },

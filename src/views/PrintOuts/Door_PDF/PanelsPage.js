@@ -17,12 +17,14 @@ export default (data, breakdowns, type) => {
             : ''
     } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
+
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
+
+  console.log({a});
+
   const b = a
     .map((woodtype) =>
       woodtype.map((v, i) => {
-        
-
         return {
           ...v,
           dimensions: flatten(
@@ -31,7 +33,6 @@ export default (data, breakdowns, type) => {
               name: getName(v),
               panel: v.panel,
               construction: v.construction,
-              item: k + 1,
               orderType: v.orderType,
             }))
           ),
@@ -39,13 +40,13 @@ export default (data, breakdowns, type) => {
       })
     )
     .map((t, x) => {
-      
-
       return {
         ...t[0],
         dimensions: flatten(t.map((c) => c.dimensions)),
       };
     });
+
+
 
   
 
@@ -68,7 +69,6 @@ export default (data, breakdowns, type) => {
 
     HeightSort(GlassSort(i)).forEach((item, index) => {
       
-
       if (
         item.glass_index === 1 ||
           i.orderType.value === 'One_Piece' ||
@@ -183,6 +183,8 @@ export default (data, breakdowns, type) => {
     ];
     
   });
+
+  console.log({b});
 
   // const table_body = [];
 

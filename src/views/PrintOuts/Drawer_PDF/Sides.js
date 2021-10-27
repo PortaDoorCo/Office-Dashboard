@@ -3,9 +3,13 @@ import Sides from '../Breakdowns/DrawerBoxes/Sides';
 import Fronts from '../Breakdowns/DrawerBoxes/Fronts';
 import LinearIN from '../Breakdowns/DrawerBoxes/LinearIN';
 import _ from 'lodash';
+import numQty from 'numeric-quantity';
 
 
 export default (data, breakdowns) => {
+
+  let itemNum = 0;
+
   return [
     {
       headlineLevel: 1,
@@ -110,8 +114,17 @@ export default (data, breakdowns) => {
       alignment: 'center',
     },
     data.part_list.map((i, index) => {
-      let sortedDimensions = i.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) { return a.height - b.height; });
-      let sortedQty = sortedDimensions.sort(function (a, b) { return a.qty - b.qty; });
+
+      const itemize = i.dimensions.map(i => {
+        itemNum += 1;
+        return {
+          ...i,
+          item: itemNum
+        };
+      });
+
+      let sortedDimensions = itemize.sort(function (a, b) { return numQty(a.height) - numQty(b.height); });
+      let sortedQty = sortedDimensions.sort(function (a, b) { return parseInt(a.qty) - parseInt(b.qty); });
       const fronts = [
         [
           { text: 'Item', style: 'fonts' },

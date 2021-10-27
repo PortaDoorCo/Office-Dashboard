@@ -52,6 +52,8 @@ export default (data, pricing) => {
 
   const balanceDue = total - balancePaid;
 
+  let itemNum = 0;
+
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
       [
@@ -65,8 +67,11 @@ export default (data, pricing) => {
     ];
 
     part.dimensions.forEach((item, index) => {
+
+      itemNum += 1;
+
       tableBody.push([
-        { text: item.item ? item.item : index + 1, style: 'fonts' },
+        { text: itemNum, style: 'fonts' },
         { text: `${Size(item)}`, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
         {

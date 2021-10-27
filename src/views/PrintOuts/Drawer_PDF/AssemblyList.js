@@ -9,6 +9,9 @@ import LinearFT from '../Breakdowns/DrawerBoxes/LinearFT';
 import SQFT from '../Breakdowns/DrawerBoxes/SQFT';
 
 export default (data, breakdowns) => {
+
+  let itemNum = 0;
+
   return [
     {
       headlineLevel: 1,
@@ -119,7 +122,13 @@ export default (data, breakdowns) => {
 
       const materialBody = [];
 
-      const itemize = i.dimensions.map((j, k) => ({...j, item: k + 1}));
+      const itemize = i.dimensions.map(i => {
+        itemNum += 1;
+        return {
+          ...i,
+          item: itemNum
+        };
+      });
 
       const groupedByHeight = _.groupBy(itemize, 'height');
 
