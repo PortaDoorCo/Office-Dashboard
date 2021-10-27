@@ -1,7 +1,13 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Table, Row, Col, Button, FormGroup, Label, Input } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, change, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
+import {
+  Field,
+  change,
+  touch,
+  startAsyncValidation,
+  getFormSyncErrors,
+} from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
 // import 'react-widgets/dist/css/react-widgets.css';
@@ -12,7 +18,7 @@ import {
   renderCheckboxToggle,
   renderPrice,
   renderInt,
-  renderTextField
+  renderTextField,
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
@@ -40,7 +46,7 @@ const Frame_Only_Table = ({
   dispatch,
   finish,
   finishSubtotal,
-  formSyncErrors
+  formSyncErrors,
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -105,14 +111,9 @@ const Frame_Only_Table = ({
 
   const clearNotes = (index, e) => {
     dispatch(
-      change(
-        'DrawerOrder',
-        `part_list[${i}].dimensions[${index}].notes`,
-        ''
-      )
+      change('DrawerOrder', `part_list[${i}].dimensions[${index}].notes`, '')
     );
   };
-
 
   const registerChange = (index, e) => {
     const value = e.target.value;
@@ -209,7 +210,7 @@ const Frame_Only_Table = ({
                       onBlur={(e) =>
                         w(
                           e,
-                          formState.part_list[i].dimensions[index].width,
+                          formState.part_list[i]?.dimensions[index]?.width,
                           index
                         )
                       }
@@ -227,7 +228,7 @@ const Frame_Only_Table = ({
                       onBlur={(e) =>
                         h(
                           e,
-                          formState.part_list[i].dimensions[index].height,
+                          formState.part_list[i]?.dimensions[index]?.height,
                           index
                         )
                       }
@@ -253,7 +254,11 @@ const Frame_Only_Table = ({
                         type="text"
                         className="form-control"
                         disabled={true}
-                        placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                        placeholder={
+                          '$' + prices[i][index]?.toFixed(2)
+                            ? prices[i][index]?.toFixed(2)
+                            : 0
+                        }
                       />
                     ) : (
                       <Input
@@ -296,7 +301,6 @@ const Frame_Only_Table = ({
                   </td>
                 </tr>
 
-                
                 <tr>
                   <td>
                     <strong>
@@ -312,16 +316,9 @@ const Frame_Only_Table = ({
                   </td>
                 </tr>
 
-
-               
-              
                 <tr />
               </tbody>
             </Table>
-
-
-
-           
 
             <Row>
               <Col xs="5">
@@ -336,7 +333,7 @@ const Frame_Only_Table = ({
                       label="notes"
                     />
                   </Col>
-                
+
                   <Col lg="2">
                     {!edit ? (
                       <Button
@@ -350,7 +347,7 @@ const Frame_Only_Table = ({
                   </Col>
                 </Row>
               </Col>
-              <Col lg='4' />
+              <Col lg="4" />
               <Col xs="3">
                 <strong>Extra Design Cost</strong>
                 <Field
@@ -373,14 +370,15 @@ const Frame_Only_Table = ({
                 color="primary"
                 className="btn-circle"
                 onClick={(e) => {
-
-                  const construction = formState?.part_list[i]?.construction?.value;
-                  const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
+                  const construction =
+                    formState?.part_list[i]?.construction?.value;
+                  const profile =
+                    formState?.part_list[i]?.profile?.PROFILE_WIDTH;
                   const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
 
                   const index = fields.length - 1;
 
-                  if(fields.length > 0){
+                  if (fields.length > 0) {
                     dispatch(
                       touch(
                         'DoorOrder',
@@ -401,29 +399,15 @@ const Frame_Only_Table = ({
                     );
                   }
 
-
+                  dispatch(touch('DoorOrder', `part_list[${i}].woodtype`));
                   dispatch(
-                    touch(
-                      'DoorOrder',
-                      `part_list[${i}].woodtype`
-                    )
+                    touch('DoorOrder', `part_list[${i}].face_frame_design`)
                   );
                   dispatch(
-                    touch(
-                      'DoorOrder',
-                      `part_list[${i}].face_frame_design`
-                    )
-                  );
-                  dispatch(
-                    touch(
-                      'DoorOrder',
-                      `part_list[${i}].face_frame_finishing`
-                    )
+                    touch('DoorOrder', `part_list[${i}].face_frame_finishing`)
                   );
 
-                  dispatch(
-                    startAsyncValidation('DoorOrder')
-                  );
+                  dispatch(startAsyncValidation('DoorOrder'));
 
                   fields.push({
                     qty: 1,
@@ -435,9 +419,7 @@ const Frame_Only_Table = ({
                     unevenCheck: false,
                     showBuilder: false,
                   });
-                }
-                
-                }
+                }}
               >
                 +
               </Button>
@@ -451,7 +433,10 @@ const Frame_Only_Table = ({
           <Col xs="3">
             <strong>Finish Sub Total: </strong>
             {finishSubtotal[i] ? (
-              <RenderPriceHolder input={finishSubtotal[i].toFixed(2)} edit={true} />
+              <RenderPriceHolder
+                input={finishSubtotal[i].toFixed(2)}
+                edit={true}
+              />
             ) : (
               <RenderPriceHolder input={'0.00'} edit={true} />
             )}
@@ -474,7 +459,6 @@ const Frame_Only_Table = ({
     <div />
   );
 };
-
 
 const mapStateToProps = (state) => ({
   formSyncErrors: getFormSyncErrors('DoorOrder')(state),

@@ -1,7 +1,12 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
 import 'semantic-ui-css/semantic.min.css';
-import { Field, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
+import {
+  Field,
+  touch,
+  startAsyncValidation,
+  getFormSyncErrors,
+} from 'redux-form';
 import Maker from '../../MakerJS/Maker';
 // import 'react-widgets/dist/css/react-widgets.css';
 import {
@@ -10,7 +15,7 @@ import {
   renderFieldDisabled,
   renderCheckboxToggle,
   renderPrice,
-  renderInt
+  renderInt,
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import numQty from 'numeric-quantity';
@@ -38,7 +43,7 @@ const Slab_Door_Table = ({
   doorOptions,
   edit,
   dispatch,
-  formSyncErrors
+  formSyncErrors,
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -126,7 +131,7 @@ const Slab_Door_Table = ({
                       onBlur={(e) =>
                         w(
                           e,
-                          formState.part_list[i].dimensions[index].width,
+                          formState.part_list[i]?.dimensions[index]?.width,
                           index
                         )
                       }
@@ -144,7 +149,7 @@ const Slab_Door_Table = ({
                       onBlur={(e) =>
                         h(
                           e,
-                          formState.part_list[i].dimensions[index].height,
+                          formState.part_list[i]?.dimensions[index]?.height,
                           index
                         )
                       }
@@ -160,7 +165,11 @@ const Slab_Door_Table = ({
                         type="text"
                         disabled={true}
                         className="form-control"
-                        placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                        placeholder={
+                          '$' + prices[i][index]?.toFixed(2)
+                            ? prices[i][index]?.toFixed(2)
+                            : 0
+                        }
                       />
                     ) : (
                       <Input
@@ -316,15 +325,16 @@ const Slab_Door_Table = ({
               <Button
                 color="primary"
                 className="btn-circle"
-                onClick={(e) =>
-                {
-                  const construction = formState?.part_list[i]?.construction?.value;
-                  const profile = formState?.part_list[i]?.profile?.PROFILE_WIDTH;
+                onClick={(e) => {
+                  const construction =
+                    formState?.part_list[i]?.construction?.value;
+                  const profile =
+                    formState?.part_list[i]?.profile?.PROFILE_WIDTH;
                   const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
 
                   const index = fields.length - 1;
 
-                  if(fields.length > 0){
+                  if (fields.length > 0) {
                     dispatch(
                       touch(
                         'DoorOrder',
@@ -345,48 +355,23 @@ const Slab_Door_Table = ({
                     );
                   }
 
+                  dispatch(touch('DoorOrder', `part_list[${i}].woodtype`));
 
-                  dispatch(
-                    touch(
-                      'DoorOrder',
-                      `part_list[${i}].woodtype`
-                    )
-                  );
-
-
-                  if(construction !== 'Miter'){
-                    dispatch(
-                      touch(
-                        'DoorOrder',
-                        `part_list[${i}].edge`
-                      )
-                    );
+                  if (construction !== 'Miter') {
+                    dispatch(touch('DoorOrder', `part_list[${i}].edge`));
                   }
 
-
-
-
                   dispatch(
-                    touch(
-                      'DoorOrder',
-                      `part_list[${i}].applied_profile`
-                    )
-                  );
-     
-                  dispatch(
-                    startAsyncValidation('DoorOrder')
+                    touch('DoorOrder', `part_list[${i}].applied_profile`)
                   );
 
+                  dispatch(startAsyncValidation('DoorOrder'));
 
-           
                   fields.push({
                     qty: 1,
                     showBuilder: false,
                   });
-                }
-                
-   
-                }
+                }}
               >
                 +
               </Button>
