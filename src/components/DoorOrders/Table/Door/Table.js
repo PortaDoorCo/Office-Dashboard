@@ -152,8 +152,6 @@ const DoorTable = ({
     setHeight(newHeight);
   };
 
-
-
   const clearNotes = (index, e) => {
     dispatch(
       change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
@@ -307,7 +305,7 @@ const DoorTable = ({
         );
       }
 
-      if(value > 2) {
+      if (value > 2) {
         dispatch(
           change(
             'DoorOrder',
@@ -507,7 +505,6 @@ const DoorTable = ({
 
   const onStileOrRailChange = (e, index) => {
     const value = e.target.value;
-    
 
     if ((height >= 48 && panelsH > 1) || (width >= 24 && panelsW > 1)) {
       if (e.target.name.includes('leftStile')) {
@@ -631,8 +628,6 @@ const DoorTable = ({
   };
 
   const changeFraming = (e, index) => {
-    
-
     if (e.target.name === 'update_framing') {
       if (changeValue) {
         const newVal = fraction(numQty(changeValue));
@@ -838,7 +833,7 @@ const DoorTable = ({
 
   const glass_note_check = (index) => {
     const obj_names = Object.entries(
-      formState?.part_list[i]?.dimensions[index]
+      formState?.part_list[i]?.dimensions[index] ? formState?.part_list[i]?.dimensions[index] : []
     );
 
     const filter_obj = obj_names.filter((n) => n[0].includes('glass_check'));
@@ -910,7 +905,7 @@ const DoorTable = ({
                     onBlur={(e) =>
                       w(
                         e,
-                        formState.part_list[i].dimensions[index].width,
+                        formState.part_list[i]?.dimensions[index]?.width,
                         index
                       )
                     }
@@ -928,7 +923,7 @@ const DoorTable = ({
                     onBlur={(e) =>
                       h(
                         e,
-                        formState.part_list[i].dimensions[index].height,
+                        formState.part_list[i]?.dimensions[index]?.height,
                         index
                       )
                     }
@@ -964,7 +959,9 @@ const DoorTable = ({
                       type="text"
                       className="form-control"
                       disabled={true}
-                      placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                      placeholder={
+                        '$' + prices[i][index]?.toFixed(2) ? prices[i][index]?.toFixed(2) : 0
+                      }
                     />
                   ) : (
                     <Input
@@ -1138,9 +1135,11 @@ const DoorTable = ({
               </FormGroup>
             </Col>
             <Col>
-              {parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 &&
-              parseInt(formState.part_list[i].dimensions[index].panelsH) < 3 &&
-              parseInt(formState.part_list[i].dimensions[index].panelsW) ===
+              {parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
+                1 &&
+              parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) <
+                3 &&
+              parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) ===
                 1 ? (
                   <FormGroup>
                     <strong>Uneven Split</strong>
@@ -1156,7 +1155,7 @@ const DoorTable = ({
 
           <Row>
             <Col>
-              {formState.part_list[i].dimensions[index].showBuilder ? (
+              {formState.part_list[i]?.dimensions[index]?.showBuilder ? (
                 <div
                   id={`makerJS${index}`}
                   style={{ width: '100%', height: '300px' }}
@@ -1193,11 +1192,13 @@ const DoorTable = ({
                       <div>
                         <Col />
                         <Col>
-                          <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                          <div
+                            style={{ textAlign: 'center', marginTop: '10px' }}
+                          >
                             <strong>Panel Opening {index + 1}</strong>
                             <p>From Top of Door to Top of Mullion</p>
                           </div>
-                          
+
                           <Field
                             name={`${table}.unevenSplitInput${index}`}
                             component={renderField}
@@ -1205,7 +1206,9 @@ const DoorTable = ({
                             validate={required}
                           />
 
-                          <div style={{ textAlign: 'center', marginTop: '0px' }}>
+                          <div
+                            style={{ textAlign: 'center', marginTop: '0px' }}
+                          >
                             <p>In Inches</p>
                           </div>
                         </Col>
@@ -1220,9 +1223,11 @@ const DoorTable = ({
           <div>
             <Row>
               {Array.from(
-                formState.part_list[i].dimensions[index].panelsH
+                formState.part_list[i]?.dimensions[index]?.panelsH
                   ? Array(
-                    parseInt(formState.part_list[i].dimensions[index].panelsH)
+                    parseInt(
+                        formState.part_list[i]?.dimensions[index]?.panelsH
+                    )
                   ).keys()
                   : 0
               ).map((i, k) => {
@@ -1243,14 +1248,16 @@ const DoorTable = ({
             </Row>
             <Row>
               {Array.from(
-                formState.part_list[i].dimensions[index].panelsH
+                formState.part_list[i]?.dimensions[index]?.panelsH
                   ? Array(
-                    parseInt(formState.part_list[i].dimensions[index].panelsH)
+                    parseInt(
+                        formState.part_list[i]?.dimensions[index]?.panelsH
+                    )
                   ).keys()
                   : 0
               ).map((l, k) => {
                 return eval(
-                  `formState.part_list[i].dimensions[index].glass_check_${k}`
+                  `formState.part_list[i]?.dimensions[index]?.glass_check_${k}`
                 ) ? (
                     <Col lg="2">
                       <FormGroup>
@@ -1286,10 +1293,16 @@ const DoorTable = ({
                       glass_note_check(index) ? [required, trim_val] : null
                     }
                   />
-                  {parseInt(formState.part_list[i].dimensions[index].panelsH) > 1 &&
-                  parseInt(formState.part_list[i].dimensions[index].panelsH) < 3 &&
-                  parseInt(formState.part_list[i].dimensions[index].panelsW) ===
-                    1 ? null : <strong>Please Specify in Notes if Uneven</strong>}
+                  {parseInt(
+                    formState.part_list[i]?.dimensions[index]?.panelsH
+                  ) > 1 &&
+                  parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) <
+                    3 &&
+                  parseInt(
+                    formState.part_list[i]?.dimensions[index]?.panelsW
+                  ) === 1 ? null : (
+                      <strong>Please Specify in Notes if Uneven</strong>
+                    )}
                 </Col>
 
                 <Col lg="2">

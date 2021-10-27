@@ -96,7 +96,7 @@ const OrderTable = ({
     const str = 'WITH SCOOP';
 
     
-    switch(numQty(formState.part_list[i].dimensions[index].depth)) {
+    switch(numQty(formState.part_list[i]?.dimensions[index]?.depth)) {
       case 9:
         // code block
         break;
@@ -430,8 +430,8 @@ const OrderTable = ({
                 qty: 1,
                 scoop: scoop[1],
                 dividers: dividers[0],
-                // depth: index >= 0 ? formState.part_list[i].dimensions[index].depth : null,
-                // height: index >= 0 ? formState.part_list[i].dimensions[index].height : null
+                // depth: index >= 0 ? formState.part_list[i]?.dimensions[index]?.depth : null,
+                // height: index >= 0 ? formState.part_list[i]?.dimensions[index]?.height : null
               });
 
                 

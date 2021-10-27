@@ -66,15 +66,11 @@ const Cope_Table = ({
   const leftStile =
     index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
   const rightStile =
-    index >= 0
-      ? formState?.part_list[i]?.dimensions[index]?.rightStile
-      : null;
+    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.rightStile : null;
   const topRail =
     index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
   const bottomRail =
-    index >= 0
-      ? formState?.part_list[i]?.dimensions[index]?.bottomRail
-      : null;
+    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.bottomRail : null;
   const defaultLeftStile = formState?.part_list[i]?.leftStile;
   const defaultRightStile = formState?.part_list[i]?.rightStile;
   const defaultTopRail = formState?.part_list[i]?.topRail;
@@ -120,10 +116,6 @@ const Cope_Table = ({
     if (heightLimit > limit) {
       toggleFullFrameNote();
     }
-
-    
-    
-    
   };
 
   const updateFullFrame = (e, index) => {
@@ -146,8 +138,6 @@ const Cope_Table = ({
       profile_width = part.design.DF_FULL_FRAME;
       df_reduction = part.design.PROFILE_WIDTH;
     }
-
-    
 
     if (e) {
       if (leftStile) {
@@ -263,16 +253,11 @@ const Cope_Table = ({
               fraction(profile_width)
             )
           );
-          
         }
       }
     } else {
       dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          ''
-        )
+        change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
       );
 
       if (part.construction.value === 'Miter') {
@@ -320,14 +305,11 @@ const Cope_Table = ({
           )
         );
       }
-
-
     }
   };
 
   const onStileOrRailChange = (e, index) => {
     const value = e.target.value;
-    
 
     if (e.target.name.includes('leftStile')) {
       dispatch(
@@ -387,12 +369,9 @@ const Cope_Table = ({
   };
 
   const changeFraming = (e, index) => {
-
     if (e.target.name === 'update_framing') {
       if (changeValue) {
         const newVal = fraction(numQty(changeValue));
-
-
 
         dispatch(
           change(
@@ -532,13 +511,13 @@ const Cope_Table = ({
       topRail: topRail ? topRail : defaultTopRail,
       bottomRail: bottomRail ? bottomRail : defaultBottomRail,
       notes:
-      index >= 0 &&
-      (leftStile !== defaultLeftStile ||
-        rightStile !==defaultRightStile ||
-        topRail !== defaultTopRail ||
-        bottomRail !== defaultBottomRail)
-        ? `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-        : '',
+        index >= 0 &&
+        (leftStile !== defaultLeftStile ||
+          rightStile !== defaultRightStile ||
+          topRail !== defaultTopRail ||
+          bottomRail !== defaultBottomRail)
+          ? `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          : '',
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
@@ -548,7 +527,6 @@ const Cope_Table = ({
         formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
     });
   };
-
 
   const addFullFrameNote = (e) => {
     updateFullFrame(e, index);
@@ -623,7 +601,7 @@ const Cope_Table = ({
                       onBlur={(e) =>
                         w(
                           e,
-                          formState.part_list[i].dimensions[index].width,
+                          formState.part_list[i]?.dimensions[index]?.width,
                           index
                         )
                       }
@@ -641,7 +619,7 @@ const Cope_Table = ({
                       onBlur={(e) =>
                         h(
                           e,
-                          formState.part_list[i].dimensions[index].height,
+                          formState.part_list[i]?.dimensions[index]?.height,
                           index
                         )
                       }
@@ -657,7 +635,11 @@ const Cope_Table = ({
                         type="text"
                         className="form-control"
                         disabled={edit}
-                        placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                        placeholder={
+                          '$' + prices[i][index]?.toFixed(2)
+                            ? prices[i][index]?.toFixed(2)
+                            : 0
+                        }
                       />
                     ) : (
                       <Input
@@ -696,8 +678,7 @@ const Cope_Table = ({
                       edit={construction === 'Miter' ? true : edit}
                       validate={required}
                       onChange={(e) => (
-                        registerChange(index, e),
-                        onStileOrRailChange(e, index)
+                        registerChange(index, e), onStileOrRailChange(e, index)
                       )}
                     />
                   </td>
@@ -713,8 +694,7 @@ const Cope_Table = ({
                       edit={construction === 'Miter' ? true : edit}
                       validate={required}
                       onChange={(e) => (
-                        registerChange(index, e),
-                        onStileOrRailChange(e, index)
+                        registerChange(index, e), onStileOrRailChange(e, index)
                       )}
                     />
                   </td>
@@ -730,8 +710,7 @@ const Cope_Table = ({
                       edit={construction === 'Miter' ? true : edit}
                       validate={required}
                       onChange={(e) => (
-                        registerChange(index, e),
-                        onStileOrRailChange(e, index)
+                        registerChange(index, e), onStileOrRailChange(e, index)
                       )}
                     />
                   </td>
@@ -747,12 +726,10 @@ const Cope_Table = ({
                       edit={construction === 'Miter' ? true : edit}
                       validate={required}
                       onChange={(e) => (
-                        registerChange(index, e),
-                        onStileOrRailChange(e, index)
+                        registerChange(index, e), onStileOrRailChange(e, index)
                       )}
                     />
                   </td>
-
                 </tr>
 
                 <tr>
@@ -821,7 +798,7 @@ const Cope_Table = ({
 
             <Row>
               <Col>
-                {formState.part_list[i].dimensions[index].showBuilder ? (
+                {formState.part_list[i]?.dimensions[index]?.showBuilder ? (
                   <div
                     id={`makerJS${index}`}
                     style={{ width: '100%', height: '300px' }}
@@ -840,12 +817,12 @@ const Cope_Table = ({
               </Col>
             </Row>
 
-            {formState.part_list[i].dimensions[index].unevenCheck ? (
+            {formState.part_list[i]?.dimensions[index]?.unevenCheck ? (
               <div className="mb-3">
                 <Row>
                   {Array.from(
                     Array(
-                      parseInt(formState.part_list[i].dimensions[index].panelsH)
+                      parseInt(formState.part_list[i]?.dimensions[index]?.panelsH)
                     ).keys()
                   )
                     .slice(1)
@@ -876,10 +853,10 @@ const Cope_Table = ({
             <div>
               <Row>
                 {Array.from(
-                  formState.part_list[i].dimensions[index].panelsH
+                  formState.part_list[i]?.dimensions[index]?.panelsH
                     ? Array(
                       parseInt(
-                        formState.part_list[i].dimensions[index].panelsH
+                        formState.part_list[i]?.dimensions[index]?.panelsH
                       )
                     ).keys()
                     : 0
@@ -900,16 +877,16 @@ const Cope_Table = ({
               </Row>
               <Row>
                 {Array.from(
-                  formState.part_list[i].dimensions[index].panelsH
+                  formState.part_list[i]?.dimensions[index]?.panelsH
                     ? Array(
                       parseInt(
-                        formState.part_list[i].dimensions[index].panelsH
+                        formState.part_list[i]?.dimensions[index]?.panelsH
                       )
                     ).keys()
                     : 0
                 ).map((l, k) => {
                   return eval(
-                    `formState.part_list[i].dimensions[index].glass_check_${k}`
+                    `formState.part_list[i]?.dimensions[index]?.glass_check_${k}`
                   ) ? (
                       <Col lg="2">
                         <FormGroup>
@@ -946,7 +923,7 @@ const Cope_Table = ({
                       }
                     />
                   </Col>
-                
+
                   <Col lg="2">
                     {!edit ? (
                       <Button
@@ -960,7 +937,7 @@ const Cope_Table = ({
                   </Col>
                 </Row>
               </Col>
-              <Col lg='4' />
+              <Col lg="4" />
               <Col xs="3">
                 <strong>Extra Design Cost</strong>
                 <Field
