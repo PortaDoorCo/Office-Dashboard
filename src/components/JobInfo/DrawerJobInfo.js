@@ -7,6 +7,7 @@ import moment from 'moment-business-days';
 import {
   renderDropdownList,
   renderDropdownListFilter,
+  renderDropdownListNoPhoto,
   renderField,
   renderCheckboxToggle,
   renderTextField,
@@ -196,7 +197,7 @@ class JobInfo extends Component {
               <Label htmlFor="companyName">Customers</Label>
               <Field
                 name="customer"
-                component={renderDropdownListFilter}
+                component={renderDropdownListNoPhoto}
                 data={customers}
                 dataKey="value"
                 textField="Company"

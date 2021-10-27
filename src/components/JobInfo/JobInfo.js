@@ -8,6 +8,7 @@ import {
   renderCheckboxToggle,
   renderDropdownList,
   renderDropdownListFilter,
+  renderDropdownListNoPhoto,
   renderField,
   renderTextField,
 } from '../RenderInputs/renderInputs';
@@ -197,7 +198,7 @@ class JobInfo extends Component {
               <Label htmlFor="companyName">Customers</Label>
               <Field
                 name="customer"
-                component={renderDropdownListFilter}
+                component={renderDropdownListNoPhoto}
                 data={customers}
                 dataKey="value"
                 textField="Company"
