@@ -7,6 +7,9 @@ import SlabSize from '../Breakdowns/Doors/SlabSize';
 import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
+
+  let itemNum = 0;
+
   const table_content = data.part_list.map((i, index) => {
 
 
@@ -26,8 +29,9 @@ export default (data, breakdowns) => {
 
     if (i?.construction?.value === 'Slab') {
       i.dimensions.forEach((item, index) => {
+        itemNum += 1;
         tableBody.push([
-          { text: item.item ? item.item : index + 1, style: 'fonts' },
+          { text: itemNum, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
           {
             stack: [
@@ -63,10 +67,11 @@ export default (data, breakdowns) => {
     } else {
       GlassSort(i).forEach((item, index) => {
 
+        itemNum += 1;
         
 
         tableBody.push([
-          { text: item.item, style: 'fonts' },
+          { text: itemNum, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
           {
             stack: [
