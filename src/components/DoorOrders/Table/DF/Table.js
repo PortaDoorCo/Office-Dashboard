@@ -442,7 +442,7 @@ const Cope_Table = ({
 
   const glass_note_check = (index) => {
     const obj_names = Object.entries(
-      formState?.part_list[i]?.dimensions[index]
+      formState?.part_list[i]?.dimensions[index] ? formState?.part_list[i]?.dimensions[index] : []
     );
 
     const filter_obj = obj_names.filter((n) => n[0].includes('glass_check'));
