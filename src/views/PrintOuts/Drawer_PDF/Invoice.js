@@ -51,6 +51,8 @@ export default (data, pricing) => {
 
   const balanceDue = total - balancePaid;
 
+  let itemNum = 0;
+
   const limitedLiability =
     'Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product';
 
@@ -297,12 +299,11 @@ export default (data, pricing) => {
         ],
       ];
 
-      let sortedDimensions = part.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) {
-        return a.item - b.item;
-      });
-      sortedDimensions.forEach((item, index) => {
+
+      part.dimensions.forEach((item, index) => {
+        itemNum += 1;
         tableBody.push([
-          { text: item.item ? item.item : index + 1, style: 'fonts' },
+          { text: itemNum, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
           { text: `${item.notes ? item.notes.toUpperCase() : ''}`, style: 'fonts' },

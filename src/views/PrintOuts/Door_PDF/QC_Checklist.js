@@ -3,6 +3,10 @@ import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
+
+
+  let itemNum = 0;
+
   return [
     {
       columns: [
@@ -66,8 +70,11 @@ export default (data, breakdowns) => {
 
       i.dimensions.forEach((item, index) => {
         // Panels(item, i, breakdowns);
+
+        itemNum += 1;
+
         tableBody.push([
-          { text: item.item ? item.item : index + 1, style: 'fonts' },
+          { text: itemNum, style: 'fonts' },
           { text: item.qty, style: 'fonts' },
           { text: Size(item), style: 'fonts' },
           { text: '[      ]', style: 'fonts' },

@@ -1,6 +1,8 @@
 import { flatten } from 'lodash';
 
 export default (data, breakdowns) => {
+
+  
   const dim = data.part_list.map((i) => {
     return i.dimensions;
   });

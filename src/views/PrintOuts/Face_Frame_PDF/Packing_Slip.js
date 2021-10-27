@@ -24,8 +24,27 @@ export default (data, breakdowns) => {
             : ''
     }`;
   };
+
+  let itemNum = 0;
+
+  const newData = {
+    ...data,
+    part_list: data.part_list.map(i => {
+      return {
+        ...i,
+        dimensions: i.dimensions.map(j => {
+          itemNum += 1;
+          return {
+            ...j,
+            item: itemNum
+          };
+        })
+      };
+    })
+  };
+
   const a = Object.values(
-    groupBy(Glass_Selection(data), (x) => x?.woodtype?.NAME)
+    groupBy(Glass_Selection(newData), (x) => x?.woodtype?.NAME)
   );
 
   const b = a

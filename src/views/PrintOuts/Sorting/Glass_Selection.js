@@ -15,10 +15,10 @@ export default (data, type) => {
       const dimensions = glass_check
         .map((g, k) => {
           if (g.glass_index === 1) {
-            glass_dimensions.push({...g, item: k + 1});
+            glass_dimensions.push({...g});
             return null;
           } else {
-            return {...g, item: k + 1};
+            return {...g};
           }
         })
         .filter((n) => n);

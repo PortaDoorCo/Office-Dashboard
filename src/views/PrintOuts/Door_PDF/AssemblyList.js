@@ -7,6 +7,11 @@ import SlabSize from '../Breakdowns/Doors/SlabSize';
 import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
+
+
+  let itemNum = 0;
+
+
   const table_content = data.part_list.map((i, index) => {
     const tableBody = [
       [
@@ -19,11 +24,14 @@ export default (data, breakdowns) => {
       ],
     ];
 
+    GlassSort(i).forEach((item, ind) => {
 
-    GlassSort(i).forEach((item, index) => {
+      itemNum += 1;
+      
+      console.log({item});
 
       tableBody.push([
-        { text: item.item, style: 'fonts' },
+        { text: itemNum, style: 'fonts' },
         { text: item.qty, style: 'fonts' },
         {
           stack: [

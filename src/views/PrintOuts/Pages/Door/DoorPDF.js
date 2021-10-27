@@ -35,7 +35,7 @@ export default (
   
   const units = TotalPieces(data);
   const solidDFs = TotalSolidDFs(data);
-  const totalUnits = units + solidDFs;
+  const totalUnits = units;
 
 
   let Content = [];
@@ -79,7 +79,25 @@ export default (
 
     const type = 'Page';
 
-    const newParts = Slab_Selection(data, type).map((j) => {
+    let itemNum = 0;
+
+    const itemNumCounter = {
+      ...data,
+      part_list: data.part_list.map((i) => {
+        return {
+          ...i,
+          dimensions: i.dimensions.map((j) => {
+            itemNum += 1;
+            return {
+              ...j,
+              item: itemNum,
+            };
+          }),
+        };
+      }),
+    };
+
+    const newParts = Slab_Selection(itemNumCounter, type).map((j) => {
       const newData = { ...data, part_list: j, hasSlab: j.some(e => e.hasSlab === true) };
       return newData;
     });
@@ -89,7 +107,14 @@ export default (
       if(k.hasSlab){
         return Content.push(PanelsPage(k, breakdowns, 'SOLIDS'));
       } else {
-        return Content.push(PanelsPage(k, breakdowns, 'PANELS'));
+
+        console.log({k});
+
+        if(k.part_list.length > 0){
+          return Content.push(PanelsPage(k, breakdowns, 'PANELS'));
+        } else {
+          return null;
+        }
       }
       
     });

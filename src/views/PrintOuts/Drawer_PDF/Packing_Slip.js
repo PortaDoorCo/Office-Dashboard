@@ -33,6 +33,8 @@ export default (data, breakdowns) => {
 
   const discountSubTotal = subTotal - (subTotal * (data.discount / 100));
 
+  let itemNum = 0;
+
   return [
     {
       columns: [
@@ -200,7 +202,15 @@ export default (data, breakdowns) => {
         ]
       ];
 
-      let sortedDimensions = part.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) { return numQty(b.height) - numQty(a.height); });
+      const itemize = part.dimensions.map(i => {
+        itemNum += 1;
+        return {
+          ...i,
+          item: itemNum
+        };
+      });
+
+      let sortedDimensions = itemize.sort(function (a, b) { return numQty(b.height) - numQty(a.height); });
       
       sortedDimensions.forEach((item, index) => {
         tableBody.push([

@@ -16,7 +16,24 @@ export default (data, breakdowns) => {
             : ''
     } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
-  const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
+
+
+  let itemNum = 0;
+
+  const itemNumCounter = data.part_list.map(i => {
+    return {
+      ...i,
+      dimensions: i.dimensions.map(j => {
+        itemNum += 1;
+        return {
+          ...j,
+          item: itemNum
+        };
+      })
+    };
+  });
+
+  const a = Object.values(groupBy(itemNumCounter, (x) => x?.woodtype?.NAME));
   const b = a
     .map((woodtype) =>
       woodtype.map((v, i) => ({
@@ -26,7 +43,6 @@ export default (data, breakdowns) => {
             ...d,
             name: getName(v),
             construction: v.construction,
-            item: k + 1,
             profile: v.profile,
             design: v.design,
             orderType: v.orderType,

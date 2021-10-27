@@ -6,6 +6,9 @@ import _ from 'lodash';
 import numQty from 'numeric-quantity';
 
 export default (data, breakdowns) => {
+
+  let itemNum = 0;
+
   return [
     {
       columns: [
@@ -108,8 +111,18 @@ export default (data, breakdowns) => {
       alignment: 'center',
     },
     data.part_list.map((i, index) => {
-      let sortedDimensions = i.dimensions.map((j, k) => ({...j, item: k + 1 })).sort(function (a, b) {
-        return b.width - a.width;
+
+      const itemize = i.dimensions.map(i => {
+        itemNum += 1;
+        return {
+          ...i,
+          item: itemNum
+        };
+      });
+
+
+      let sortedDimensions = itemize.sort(function (a, b) {
+        return numQty(b.width) - numQty(a.width);
       });
 
       const bottoms = [
