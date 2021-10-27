@@ -35,7 +35,7 @@ export default (
   
   const units = TotalPieces(data);
   const solidDFs = TotalSolidDFs(data);
-  const totalUnits = units + solidDFs;
+  const totalUnits = units;
 
 
   let Content = [];
