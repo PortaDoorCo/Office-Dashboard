@@ -48,7 +48,7 @@ class SlabDoor extends Component {
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
                 data={woodtypes}
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
@@ -63,7 +63,7 @@ class SlabDoor extends Component {
                 name={`${part}.edge`}
                 component={renderDropdownListFilter}
                 data={edges}
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
@@ -78,7 +78,7 @@ class SlabDoor extends Component {
                 name={`${part}.applied_profile`}
                 component={renderDropdownListFilter}
                 data={applied_moulds}
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}

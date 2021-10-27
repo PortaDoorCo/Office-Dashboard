@@ -14,14 +14,14 @@ import {
   setSelectedOrder,
 } from '../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import momentLocaliser from 'react-widgets-moment';
+// import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import SalesmenReport from '../../../PrintOuts/Reports/SalesmenReport';
 import status from '../../../../utils/status';
 
-momentLocaliser(moment);
+// momentLocaliser(moment);
 
 
 const cookie = Cookies.get('jwt');

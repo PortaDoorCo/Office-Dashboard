@@ -6,6 +6,7 @@ import {
 import {
   renderField,
   renderDropdownListFilter,
+  renderDropdownListNoPhoto,
   renderPrice,
   renderInt
 } from '../../../../components/RenderInputs/renderInputs';
@@ -40,10 +41,10 @@ let Inputs = (props) => {
       <Table>
         <thead>
           <tr>
-            <th>QTY</th>
+            <th style={{ width: '90px' }}>QTY</th>
             <th>Item</th>
-            <th>Price Per</th>
-            <th>Price</th>
+            <th style={{ width: '150px' }}>Price Per</th>
+            <th style={{ width: '150px' }}>Price</th>
             <th></th>
           </tr>
         </thead>
@@ -65,17 +66,17 @@ let Inputs = (props) => {
                   formState.misc_items[index].category === 'preselect' ? (
                       <Field
                         name={`${table}.item`}
-                        component={renderDropdownListFilter}
+                        component={renderDropdownListNoPhoto}
                         data={misc_items}
                         onChange={(e) => changeMiscItem(e, index)}
-                        valueField="value"
+                        dataKey="value"
                         textField="NAME"
                       />
                     ) : (
                       <Field
                         name={`${table}.item2`}
                         component={renderField}
-                        valueField="value"
+                        dataKey="value"
                         textField="NAME"
                       />
                     )}

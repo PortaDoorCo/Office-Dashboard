@@ -203,7 +203,7 @@ render() {
                         name={'sale'}
                         component={renderDropdownList}
                         data={salesReps}
-                        valueField="id"
+                        dataKey="id"
                         textField="fullName"
                         validate={required}
                         edit={edit}
@@ -218,7 +218,7 @@ render() {
                         type="text"
                         component={renderDropdownList}
                         data={paymentTerms}
-                        valueField="NAME"
+                        dataKey="NAME"
                         textField="NAME"
                         label="company"
                         validate={required}
@@ -612,8 +612,8 @@ render() {
                         name={'State'}
                         type="text"
                         data={states}
-                        component={renderDropdownListFilter}
-                        valueField="abbreviation"
+                        component={renderDropdownList}
+                        dataKey="abbreviation"
                         textField="abbreviation"
                         label="company"
                         edit={edit}
@@ -693,8 +693,8 @@ render() {
                         name={'Shipping_State'}
                         type="text"
                         data={states}
-                        component={renderDropdownListFilter}
-                        valueField="abbreviation"
+                        component={renderDropdownList}
+                        dataKey="abbreviation"
                         textField="abbreviation"
                         label="company"
                         edit={edit}

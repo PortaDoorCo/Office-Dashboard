@@ -58,7 +58,7 @@ class FaceFrame extends Component {
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
                 data={ff_woodtypes}
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
@@ -73,7 +73,7 @@ class FaceFrame extends Component {
                 name={`${part}.face_frame_design`}
                 component={renderDropdownList}
                 data={face_frame_designs}
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
@@ -88,7 +88,7 @@ class FaceFrame extends Component {
                 name={`${part}.face_frame_finishing`}
                 component={renderDropdownList}
                 data={face_frame_finishing}
-                valueField="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}

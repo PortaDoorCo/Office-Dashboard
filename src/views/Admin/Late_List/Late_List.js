@@ -13,7 +13,7 @@ import {
   setSelectedOrder,
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import momentLocaliser from 'react-widgets-moment';
+// import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import Assignment  from '@material-ui/icons/Assignment';
@@ -23,7 +23,7 @@ import { SingleDatePicker } from 'react-dates';
 import { Row, Col } from 'reactstrap';
 import status from '../../../utils/status';
 
-momentLocaliser(moment);
+// momentLocaliser(moment);
 
 const toDataUrl = (url, callback) => {
   const xhr = new XMLHttpRequest();

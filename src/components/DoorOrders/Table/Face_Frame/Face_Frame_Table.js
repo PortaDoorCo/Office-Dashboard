@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Field, change, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
-import 'react-widgets/dist/css/react-widgets.css';
+// import 'react-widgets/dist/css/react-widgets.css';
 import {
   renderField,
   renderNumber,

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Row, Col, FormGroup, Label } from 'reactstrap';
 import { Field, change, getFormValues } from 'redux-form';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import DatePicker from 'react-widgets/DatePicker';
 import moment from 'moment-business-days';
-import momentLocaliser from 'react-widgets-moment';
+// import momentLocaliser from 'react-widgets-moment';
 import {
   renderDropdownList,
   renderDropdownListFilter,
@@ -16,7 +16,7 @@ import CustomerReminder from './CustomerReminder';
 
 import status from '../../utils/status';
 
-momentLocaliser(moment);
+// momentLocaliser(moment);
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -26,7 +26,7 @@ const renderDateTimePicker = ({
   edit,
 }) => (
   <div>
-    <DateTimePicker
+    <DatePicker
       onChange={onChange}
       time={showTime}
       value={!value ? null : new Date(value)}
@@ -181,7 +181,7 @@ class JobInfo extends Component {
                 name="shipping_method"
                 component={renderDropdownList}
                 data={shippingMethods}
-                valueField="value"
+                dataKey="value"
                 edit={edit}
                 validate={required}
                 textField="NAME"
@@ -198,7 +198,7 @@ class JobInfo extends Component {
                 name="customer"
                 component={renderDropdownListFilter}
                 data={customers}
-                valueField="value"
+                dataKey="value"
                 textField="Company"
                 edit={edit}
                 validate={required}
@@ -211,7 +211,7 @@ class JobInfo extends Component {
               <Field
                 name="poNum"
                 component={renderField}
-                valueField="value"
+                dataKey="value"
                 textField="name"
                 edit={edit}
                 validate={required}
@@ -225,7 +225,7 @@ class JobInfo extends Component {
                 name="status"
                 component={renderDropdownList}
                 data={status}
-                valueField="value"
+                dataKey="value"
                 edit={edit}
                 textField="value"
               />

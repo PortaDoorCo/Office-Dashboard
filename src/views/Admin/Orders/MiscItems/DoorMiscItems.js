@@ -114,7 +114,7 @@ let Inputs = (props) => {
                         component={renderDropdownListFilter}
                         data={sorted_misc_items}
                         onChange={(e) => changeMiscItem(e, index)}
-                        valueField="value"
+                        dataKey="value"
                         textField="NAME"
                         edit={edit}
                       />
@@ -122,7 +122,7 @@ let Inputs = (props) => {
                       <Field
                         name={`${table}.item2`}
                         component={renderField}
-                        valueField="value"
+                        dataKey="value"
                         textField="NAME"
                         edit={edit}
                       />

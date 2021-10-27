@@ -18,7 +18,7 @@ import {
   balanceSelector,
   balanceTotalSelector,
 } from '../../../../../selectors/mouldingPricing';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import DatePicker from 'react-widgets/DatePicker';
 import { Field } from 'redux-form';
 import {
   renderDropdownList,
@@ -26,7 +26,7 @@ import {
 } from '../../../../../components/RenderInputs/renderInputs';
 import { updateOrder } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import 'react-widgets/dist/css/react-widgets.css';
+// import 'react-widgets/dist/css/react-widgets.css';
 import currencyMask from '../../../../../utils/currencyMask';
 
 
@@ -38,7 +38,7 @@ const renderDateTimePicker = ({
   edit,
 }) => (
   <div>
-    <DateTimePicker
+    <DatePicker
       onChange={onChange}
       time={showTime}
       value={!value ? null : new Date(value)}
@@ -133,7 +133,7 @@ const RenderBalances = ({
                     name={`${i}.payment_method`}
                     component={renderDropdownList}
                     data={paymentTypes}
-                    valueField="value"
+                    dataKey="value"
                     edit={edit}
                     // validate={required}
                     textField="NAME"

@@ -9,6 +9,7 @@ import {
 import {
   renderField,
   renderDropdownListFilter,
+  renderDropdownListNoPhoto,
   renderPrice,
   renderInt
 } from '../../../../components/RenderInputs/renderInputs';
@@ -46,7 +47,7 @@ let Inputs = (props) => {
 
     let total_qty = 0;
 
-    props.dispatch(change('Mouldings', `misc_items[${index}].price`, e.Price));
+    props.dispatch(change('DoorOrder', `misc_items[${index}].price`, e.Price));
 
     if(e.count_items){
       const categories = e.categories.map(i => i.value);
@@ -63,7 +64,7 @@ let Inputs = (props) => {
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
         total_qty = total_qty + sub_quantity;
       }
-      props.dispatch(change('Mouldings', `misc_items[${index}].qty`, total_qty > 0 ? total_qty : 1));
+      props.dispatch(change('DoorOrder', `misc_items[${index}].qty`, total_qty > 0 ? total_qty : 1));
     }
   };
 
@@ -97,17 +98,17 @@ let Inputs = (props) => {
                   formState.misc_items[index].category === 'preselect' ? (
                       <Field
                         name={`${table}.item`}
-                        component={renderDropdownListFilter}
+                        component={renderDropdownListNoPhoto}
                         data={sorted_misc_items}
                         onChange={(e) => changeMiscItem(e, index)}
-                        valueField="value"
+                        dataKey="value"
                         textField="NAME"
                       />
                     ) : (
                       <Field
                         name={`${table}.item2`}
                         component={renderField}
-                        valueField="value"
+                        dataKey="value"
                         textField="NAME"
                       />
                     )}
@@ -250,7 +251,7 @@ class MiscItems extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('Mouldings')(state),
+  formState: getFormValues('DoorOrder')(state),
   misc_items: state.misc_items.misc_items,
   prices: miscItemPriceSelector(state),
   linePrices: miscItemLinePriceSelector(state),
