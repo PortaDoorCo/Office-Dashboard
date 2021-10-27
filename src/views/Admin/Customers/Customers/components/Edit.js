@@ -528,7 +528,7 @@ class Edit extends Component {
                       name={'State'}
                       type="text"
                       data={states}
-                      component={renderDropdownListFilter}
+                      component={renderDropdownList}
                       dataKey="abbreviation"
                       textField="abbreviation"
                       label="company"
@@ -609,7 +609,7 @@ class Edit extends Component {
                       name={'Shipping_State'}
                       type="text"
                       data={states}
-                      component={renderDropdownListFilter}
+                      component={renderDropdownList}
                       dataKey="abbreviation"
                       textField="abbreviation"
                       label="company"

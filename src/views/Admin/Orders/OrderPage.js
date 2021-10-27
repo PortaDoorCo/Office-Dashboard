@@ -478,7 +478,7 @@ class OrderPage extends Component {
       exportCsv = s
         ? s.part_list.map((f, index) => {
           f.dimensions.forEach((j, ind) => {
-            if (f.orderType.value === 'DF') {
+            if ((f.orderType.value === 'DF') || (numQty(j.width) > numQty(j.height))) {
               a.push([
                 s.orderNum,
                 '15DF',
@@ -531,11 +531,11 @@ class OrderPage extends Component {
 
             const { breakdowns } = this.props;
 
-            const stile = Stiles(j, f, breakdowns).map((rail) => {
+            const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
               return rail;
             });
 
-            const rail = Rails(j, f, breakdowns).map((rail) => {
+            const rail = (Rails(j, f, breakdowns) || []).map((rail) => {
               return rail;
             });
 

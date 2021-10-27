@@ -10,6 +10,7 @@ import {
   renderField,
   renderNumber,
   renderDropdownListFilter,
+  renderDropdownListNoPhoto,
   renderPrice,
   renderInt,
 } from '../RenderInputs/renderInputs';
@@ -141,7 +142,7 @@ let Inputs = (props) => {
                   formState.misc_items[index].category === 'preselect' ? (
                       <Field
                         name={`${table}.item`}
-                        component={renderDropdownListFilter}
+                        component={renderDropdownListNoPhoto}
                         data={sorted_misc_items}
                         onChange={(e) => changeMiscItem(e, index)}
                         dataKey="value"

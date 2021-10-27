@@ -6,7 +6,8 @@ import {
   renderDropdownListFilter,
   renderTextField,
   renderCheckboxToggle,
-  renderNumber
+  renderNumber,
+  renderDropdownList
 } from '../../../RenderInputs/renderInputs';
 import Table from '../../Table/DF/Table';
 import {
@@ -160,7 +161,7 @@ class CopeDF extends Component {
               <Label htmlFor="design">Design</Label>
               <Field
                 name={`${part}.design`}
-                component={renderDropdownListFilter}
+                component={construction === 'Cope' ? renderDropdownList : renderDropdownListFilter}
                 data={filtered_designs}
                 dataKey="value"
                 textField="NAME"

@@ -6,7 +6,8 @@ import {
   renderInt,
   renderTextField,
   renderPrice,
-  renderDropdownListFilter
+  renderDropdownListFilter,
+  renderMouldingInputs
 } from '../../../../components/RenderInputs/renderInputs';
 import {
   Button,
@@ -53,7 +54,7 @@ let Inputs = (props) => {
             <Table>
               <thead>
                 <tr>
-                  <th style={{ width: '150px' }}>Total Linear FT</th>
+                  <th style={{ width: '125px' }}>Total Linear FT</th>
                   <th>Style</th>
                   <th>Grade</th>
                   <th>Woodtype</th>
@@ -64,7 +65,7 @@ let Inputs = (props) => {
               </thead>
               <tbody>
                 <tr key={index}>
-                  <td style={{ width: '150px' }}>
+                  <td style={{ width: '125px' }}>
                     <InputGroup>
                       <Field
                         name={`${table}.linearFT`}
@@ -76,13 +77,13 @@ let Inputs = (props) => {
                       />
                     </InputGroup>
                   </td>
-                  <td style={{ width: '150px' }}>
+                  <td style={{ width: '175px' }}>
                     <Field
                       name={`${table}.style`}
                       component={renderDropdownList}
                       data={styles}
                       // onChange={(e) => changeMiscItem(e, index)}
-                      dataKey="value"
+                      valueField="value"
                       textField="name"
                       edit={edit}
                       required
@@ -94,13 +95,13 @@ let Inputs = (props) => {
                       component={renderDropdownList}
                       data={thickness}
                       // onChange={(e) => changeMiscItem(e, index)}
-                      dataKey="value"
+                      valueField="value"
                       textField="name"
                       edit={edit}
                       required
                     />
                   </td>
-                  <td style={{ width: '150px' }}>
+                  <td style={{ width: '175px' }}>
                     <Field
                       name={`${table}.woodtype`}
                       component={renderDropdownListFilter}
@@ -109,22 +110,22 @@ let Inputs = (props) => {
                           wood[formState?.mouldings[index]?.grade?.db_name]
                       )}
                       // onChange={(e) => changeMiscItem(e, index)}
-                      dataKey="value"
+                      valueField="value"
                       textField="NAME"
                       edit={edit}
                       required
                     />
                   </td>
-                  <td style={{ width: '130px' }}>
+                  <td style={{ width: '200px' }}>
                     <Field
                       name={`${table}.item`}
-                      component={renderDropdownListFilter}
+                      component={renderMouldingInputs}
                       data={part_list?.mouldings.filter(
                         (item) =>
                           item.Style === formState?.mouldings[index]?.style?.value
                       )}
                       // onChange={(e) => changeMiscItem(e, index)}
-                      dataKey="value"
+                      valueField="value"
                       textField="NAME"
                       edit={edit}
                       required

@@ -612,7 +612,7 @@ render() {
                         name={'State'}
                         type="text"
                         data={states}
-                        component={renderDropdownListFilter}
+                        component={renderDropdownList}
                         dataKey="abbreviation"
                         textField="abbreviation"
                         label="company"
@@ -693,7 +693,7 @@ render() {
                         name={'Shipping_State'}
                         type="text"
                         data={states}
-                        component={renderDropdownListFilter}
+                        component={renderDropdownList}
                         dataKey="abbreviation"
                         textField="abbreviation"
                         label="company"
