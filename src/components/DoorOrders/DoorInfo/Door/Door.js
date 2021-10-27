@@ -181,7 +181,7 @@ class Door extends Component {
                       ? two_piece_wood
                       : filtered_woodtypes
                 }
-                // dataKey="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
@@ -196,7 +196,7 @@ class Door extends Component {
                 name={`${part}.design`}
                 component={renderDropdownListFilter}
                 data={filtered_designs}
-                // dataKey="value"
+                dataKey="value"
                 textField="NAME"
                 validate={required}
                 edit={edit}
