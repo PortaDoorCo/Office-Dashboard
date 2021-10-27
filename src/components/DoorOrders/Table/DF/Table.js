@@ -634,7 +634,7 @@ const Cope_Table = ({
                       <Input
                         type="text"
                         className="form-control"
-                        disabled={edit}
+                        disabled={true}
                         placeholder={
                           '$' + prices[i][index]?.toFixed(2)
                             ? prices[i][index]?.toFixed(2)
@@ -644,7 +644,7 @@ const Cope_Table = ({
                     ) : (
                       <Input
                         type="text"
-                        disabled={edit}
+                        disabled={true}
                         className="form-control"
                         placeholder={'$0.00'}
                       />
