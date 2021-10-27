@@ -442,7 +442,7 @@ const Cope_Table = ({
 
   const glass_note_check = (index) => {
     const obj_names = Object.entries(
-      formState?.part_list[i]?.dimensions[index]
+      formState?.part_list[i]?.dimensions[index] ? formState?.part_list[i]?.dimensions[index] : []
     );
 
     const filter_obj = obj_names.filter((n) => n[0].includes('glass_check'));
@@ -634,7 +634,7 @@ const Cope_Table = ({
                       <Input
                         type="text"
                         className="form-control"
-                        disabled={edit}
+                        disabled={true}
                         placeholder={
                           '$' + prices[i][index]?.toFixed(2)
                             ? prices[i][index]?.toFixed(2)
@@ -644,7 +644,7 @@ const Cope_Table = ({
                     ) : (
                       <Input
                         type="text"
-                        disabled={edit}
+                        disabled={true}
                         className="form-control"
                         placeholder={'$0.00'}
                       />
