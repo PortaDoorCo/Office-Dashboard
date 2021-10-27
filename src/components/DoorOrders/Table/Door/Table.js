@@ -1257,7 +1257,7 @@ const DoorTable = ({
                   : 0
               ).map((l, k) => {
                 return eval(
-                  `                        formState.part_list[i]?.dimensions[index]?.glass_check_${k}`
+                  `formState.part_list[i]?.dimensions[index]?.glass_check_${k}`
                 ) ? (
                     <Col lg="2">
                       <FormGroup>
