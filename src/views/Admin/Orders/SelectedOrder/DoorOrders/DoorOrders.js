@@ -10,7 +10,7 @@ import {
   InputGroupText,
   InputGroupAddon,
   FormGroup,
-  Label
+  Label,
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -29,11 +29,9 @@ import {
   submitOrder,
   loadOrders,
   updateOrder,
-  updateSelectedOrder
+  updateSelectedOrder,
 } from '../../../../../redux/orders/actions';
-import {
-  loadCustomers
-} from '../../../../../redux/customers/actions';
+import { loadCustomers } from '../../../../../redux/customers/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -42,11 +40,14 @@ import {
   totalSelector,
   miscTotalSelector,
   balanceSelector,
-  balanceTotalSelector
+  balanceTotalSelector,
 } from '../../../../../selectors/doorPricing';
 import 'react-notifications/lib/notifications.css';
 import Cookies from 'js-cookie';
-import { renderField, renderCheckboxToggle } from '../../../../../components/RenderInputs/renderInputs';
+import {
+  renderField,
+  renderCheckboxToggle,
+} from '../../../../../components/RenderInputs/renderInputs';
 import CheckoutBox from '../CheckoutBox';
 import StickyBox from 'react-sticky-box';
 import { NotificationManager } from 'react-notifications';
@@ -55,7 +56,8 @@ import moment from 'moment';
 
 const cookie = Cookies.get('jwt');
 
-const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
+const maxValue = (max) => (value) =>
+  value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 class DoorOrders extends Component {
   constructor(props) {
@@ -72,8 +74,6 @@ class DoorOrders extends Component {
     };
   }
 
-
-
   reloadPage = () => {
     window.location.reload();
   };
@@ -88,23 +88,33 @@ class DoorOrders extends Component {
       updateOrder,
       balance,
       status,
-      tracking
+      tracking,
     } = this.props;
-
 
     let newStatus = tracking;
 
-    if(status !== values.status.value){
-      newStatus = [
-        ...tracking,
-        {
-          date: moment().format(),
-          status: values.job_info?.status?.value,
-        }
-      ];
+    if (status !== values.job_info?.status?.value) {
+      if(values.job_info?.status?.value){
+        console.log('Status Updated');
+        newStatus = [
+          ...tracking,
+          {
+            date: moment().format(),
+            status: values.job_info?.status?.value,
+          },
+        ];
+      } else {
+        console.log('Order Edited');
+        newStatus = [
+          ...tracking,
+          {
+            date: moment().format(),
+            status: 'Order Edited',
+          },
+        ];
+      }
     }
 
-    
 
     const order = {
       ...values,
@@ -121,23 +131,18 @@ class DoorOrders extends Component {
       balance_due: balance,
       status: values.job_info.status.value,
       dueDate: values.job_info.DueDate,
-      sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
-      tracking: newStatus
+      sale:
+        values.job_info &&
+        values.job_info.customer &&
+        values.job_info.customer.sale &&
+        values.job_info.customer.sale.id,
+      tracking: newStatus,
     };
-
-
-
-    
-
-    
-    
 
     const orderId = values.id;
     await updateOrder(orderId, order, cookie);
     this.setState({ updateSubmit: !this.state.updateSubmit });
     await this.props.editable();
-
-
   };
 
   cancelOrder = (e) => {
@@ -167,10 +172,9 @@ class DoorOrders extends Component {
     const id = data[0].id;
     const a = [...this.state.files, id];
     this.setState({ files: a });
-  }
+  };
 
   render() {
-
     const {
       handleSubmit,
       prices,
@@ -183,32 +187,43 @@ class DoorOrders extends Component {
       total,
       dispatch,
       tax,
-      user
+      user,
     } = this.props;
 
     return (
-
       <div className="animated fadeIn">
         <CancelModal
           toggle={this.toggleCancelModal}
           modal={this.state.cancelModal}
           title={'Cancel Editing Order?'}
-          message={<div>
-            <p>Are you sure you want to cancel editing this order?</p>
-            <p><strong>Your Changes Will Not Be Saved</strong></p>
-          </div>}
+          message={
+            <div>
+              <p>Are you sure you want to cancel editing this order?</p>
+              <p>
+                <strong>Your Changes Will Not Be Saved</strong>
+              </p>
+            </div>
+          }
           action={this.cancelOrder}
           actionButton={'Cancel Edit'}
           buttonColor={'danger'}
         />
         <Row>
-          <Col xs="12" sm="12" md="10" lg={user?.role?.type !== 'quality_control' ? '9' : '12'}>
+          <Col
+            xs="12"
+            sm="12"
+            md="10"
+            lg={user?.role?.type !== 'quality_control' ? '9' : '12'}
+          >
             <Card>
               <CardHeader>
                 <strong>Door Order</strong>
               </CardHeader>
               <CardBody>
-                <form onKeyPress={this.onKeyPress} onSubmit={handleSubmit(this.submit)}>
+                <form
+                  onKeyPress={this.onKeyPress}
+                  onSubmit={handleSubmit(this.submit)}
+                >
                   <FormSection name="job_info">
                     <JobInfo
                       customers={customers}
@@ -239,12 +254,12 @@ class DoorOrders extends Component {
                   <hr />
                   <hr />
 
-                  {user?.role?.type !== 'quality_control' ? 
+                  {user?.role?.type !== 'quality_control' ? (
                     <Row>
                       <Col xs="9" />
                       <Col xs="3">
-                        <Row className='mb-0'>
-                          <Col xs='9' />
+                        <Row className="mb-0">
+                          <Col xs="9" />
                           <Col>
                             <FormGroup>
                               <Label htmlFor="companyName">Taxable?</Label>
@@ -255,7 +270,6 @@ class DoorOrders extends Component {
                               />
                             </FormGroup>
                           </Col>
-
                         </Row>
                         <strong>Discount: </strong>
                         <InputGroup>
@@ -280,15 +294,15 @@ class DoorOrders extends Component {
                         </InputGroup>
 
                         <strong>Total: </strong>
-                        <InputGroup className='mb-3'>
+                        <InputGroup className="mb-3">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>$</InputGroupText>
                           </InputGroupAddon>
                           <Input disabled placeholder={total.toFixed(2)} />
                         </InputGroup>
                       </Col>
-                    </Row> : null
-                  }
+                    </Row>
+                  ) : null}
 
                   {/* <Row>
                     <Col xs="9" />
@@ -312,7 +326,7 @@ class DoorOrders extends Component {
               </CardBody>
             </Card>
           </Col>
-          {user?.role?.type !== 'quality_control' ?
+          {user?.role?.type !== 'quality_control' ? (
             <Col lg="3">
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <CheckoutBox
@@ -326,10 +340,8 @@ class DoorOrders extends Component {
                   onUploaded={this.onUploaded}
                 />
               </StickyBox>
-            </Col> : null
-        
-          }
-          
+            </Col>
+          ) : null}
         </Row>
       </div>
     );
@@ -337,22 +349,31 @@ class DoorOrders extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-
-
   return {
     initialValues: {
-      ...state.Orders && state.Orders.selectedOrder,
+      ...(state.Orders && state.Orders.selectedOrder),
       job_info: {
-        ...state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.job_info,
-        status: state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.status,
-      }
+        ...(state.Orders &&
+          state.Orders.selectedOrder &&
+          state.Orders.selectedOrder.job_info),
+        status:
+          state.Orders &&
+          state.Orders.selectedOrder &&
+          state.Orders.selectedOrder.status,
+      },
     },
     order: state.Orders.selectedOrder,
     customers: state.customers.customerDB,
     customerDBLoaded: state.customers.customerDBLoaded,
 
-    status: state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.status,
-    tracking: state.Orders && state.Orders.selectedOrder && state.Orders.selectedOrder.tracking,
+    status:
+      state.Orders &&
+      state.Orders.selectedOrder &&
+      state.Orders.selectedOrder.status,
+    tracking:
+      state.Orders &&
+      state.Orders.selectedOrder &&
+      state.Orders.selectedOrder.tracking,
 
     user: state.users.user,
 
@@ -373,24 +394,23 @@ const mapStateToProps = (state, props) => {
     tax: taxSelector(state),
     miscTotalSelector: miscTotalSelector(state),
     balance: balanceSelector(state),
-    balanceTotal: balanceTotalSelector(state)
+    balanceTotal: balanceTotalSelector(state),
   };
 };
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       loadCustomers,
       submitOrder,
       loadOrders,
       updateOrder,
-      updateSelectedOrder
+      updateSelectedOrder,
     },
     dispatch
   );
 
 // eslint-disable-next-line no-class-assign
-
 
 DoorOrders = reduxForm({
   form: 'DoorOrder',
@@ -398,11 +418,8 @@ DoorOrders = reduxForm({
     const job_info_message = 'You are missing required info';
     if (errors) {
       NotificationManager.error(job_info_message, 'Error', 2000);
-    } 
+    }
   },
 })(DoorOrders);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DoorOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(DoorOrders);

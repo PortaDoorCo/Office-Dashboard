@@ -859,7 +859,7 @@ class OrderPage extends Component {
                                 .reverse()
                                 .map((i, index) => (
                                   <tr key={index}>
-                                    <th>{i.status}</th>
+                                    <th>{i.status ? i.status : 'Order Edited'}</th>
                                     <td>
                                       {moment(i.date).format(
                                         'dddd, MMMM Do YYYY, h:mm:ss a'
