@@ -1,8 +1,6 @@
 import { flatten } from 'lodash';
 
 export default (data, breakdowns) => {
-
-  
   const dim = data.part_list.map((i) => {
     return i.dimensions;
   });
@@ -60,27 +58,30 @@ export default (data, breakdowns) => {
     })
   );
 
-  let chunk;
-
-  while (a.length > 0) {
-    chunk = a.splice(0, 3);
-    arr.push(chunk);
+  function splitArrayIntoChunksOfLen(arr, len) {
+    var chunks = [],
+      i = 0,
+      n = arr.length;
+    while (i < n) {
+      chunks.push(arr.slice(i, (i += len)));
+    }
+    return chunks;
   }
 
-  const lastArr = 3 - chunk.length;
+  const newChunk = splitArrayIntoChunksOfLen(a, 3);
 
-  if (lastArr > 0) {
-    arr.splice(-Math.abs(chunk.length));
+  const lastArr = newChunk[newChunk.length - 1].length;
+
+  if (lastArr !== 3) {
+    // arr.splice(-Math.abs(newChunk.length));
 
     let el = [];
 
-    for (let i = 0; i < lastArr; i++) {
+    for (let i = 0; i < 3 - lastArr; i++) {
       el.push({ text: '', alignment: 'center', margin: [0, 5, 0, 0] });
     }
 
-    const elem = [...chunk, el];
-
-    arr.push(flatten(elem));
+    newChunk[newChunk.length - 1].push(el);
   }
 
   return [
@@ -90,7 +91,7 @@ export default (data, breakdowns) => {
         alignment: 'center',
         widths: [175, 182, 180],
         heights: [65, 70, 70, 72, 71, 71, 70, 69, 69, 60],
-        body: arr,
+        body: newChunk,
       },
       layout: {
         hLineWidth: function (i, node) {

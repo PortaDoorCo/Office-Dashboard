@@ -42,7 +42,6 @@ const Designs = (props) => {
     TOP_RAIL_ADD: '',
     BTM_RAIL_ADD: '',
     PROFILE_WIDTH: '',
-    PROFILE_WIDTH: '',
     INSET: '',
     DF_REDUCTION: '',
     CONSTRUCTION: 'Miter',
@@ -81,7 +80,6 @@ const Designs = (props) => {
       UPCHARGE_THICK: '',
       TOP_RAIL_ADD: '',
       BTM_RAIL_ADD: '',
-      PROFILE_WIDTH: '',
       PROFILE_WIDTH: '',
       INSET: '',
       DF_REDUCTION: '',
@@ -138,7 +136,6 @@ const Designs = (props) => {
       UPCHARGE_THICK: product.UPCHARGE_THICK,
       TOP_RAIL_ADD: product.TOP_RAIL_ADD,
       BTM_RAIL_ADD: product.BTM_RAIL_ADD,
-      PROFILE_WIDTH: product.PROFILE_WIDTH,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
       INSET: product.INSET,
       DF_REDUCTION: product.DF_REDUCTION,
@@ -336,49 +333,51 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-              <Col>
-                <Label for="5/4_Price">Minimum Stile Width</Label>
-                <Input
-                  type="number"
-                  value={product.PROFILE_WIDTH}
-                  name="PROFILE_WIDTH"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">Profile Width</Label>
-                <Input
-                  type="number"
-                  value={product.PROFILE_WIDTH}
-                  name="PROFILE_WIDTH"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
               <Row>
-
-                <Row>
-                  <Col>
-                    <Label for="5/4_Price">INSET</Label>
-                    <Input
-                      type="number"
-                      value={product.INSET}
-                      name="INSET"
-                      onChange={(e) => change(e)}
-                    ></Input>
-                  </Col>
-
-                  <Col>
-                    <Label for="5/4_Price">DF Reduction</Label>
-                    <Input
-                      type="number"
-                      value={product.DF_REDUCTION}
-                      name="DF_REDUCTION"
-                      onChange={(e) => change(e)}
-                    ></Input>
-                  </Col>
-                </Row>
-                
+                <Col>
+                  <Label for="5/4_Price">Minimum Stile Width</Label>
+                  <Input
+                    type="number"
+                    value={product.PROFILE_WIDTH}
+                    name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">Profile Width</Label>
+                  <Input
+                    type="number"
+                    value={product.PROFILE_WIDTH}
+                    name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
               </Row>
+
+
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">INSET</Label>
+                  <Input
+                    type="number"
+                    value={product.INSET}
+                    name="INSET"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+
+                <Col>
+                  <Label for="5/4_Price">DF Reduction</Label>
+                  <Input
+                    type="number"
+                    value={product.DF_REDUCTION}
+                    name="DF_REDUCTION"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+              </Row>
+                
+        
 
               <Row className="mt-5">
                 <Col>

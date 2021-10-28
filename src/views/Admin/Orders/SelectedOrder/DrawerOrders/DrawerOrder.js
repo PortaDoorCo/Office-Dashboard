@@ -111,14 +111,26 @@ class DrawerOrder extends Component {
 
     let newStatus = tracking;
 
-    if(status !== values.status.value){
-      newStatus = [
-        ...tracking,
-        {
-          date: moment().format(),
-          status: values.job_info?.status?.value,
-        }
-      ];
+    if (status !== values.job_info?.status?.value) {
+      if(values.job_info?.status?.value){
+        console.log('Status Updated');
+        newStatus = [
+          ...tracking,
+          {
+            date: moment().format(),
+            status: values.job_info?.status?.value,
+          },
+        ];
+      } else {
+        console.log('Order Edited');
+        newStatus = [
+          ...tracking,
+          {
+            date: moment().format(),
+            status: 'Order Edited',
+          },
+        ];
+      }
     }
 
 
