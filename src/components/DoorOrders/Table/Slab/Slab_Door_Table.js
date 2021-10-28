@@ -224,9 +224,9 @@ const Slab_Door_Table = ({
               </Col>
               <Col>
                 {!edit ? (
-                  parseInt(formState.part_list[i].dimensions[index].panelsH) >
+                  parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
                     1 &&
-                  parseInt(formState.part_list[i].dimensions[index].panelsW) ===
+                  parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) ===
                     1 ? (
                       <Field
                         name={`${table}.unevenCheck`}
@@ -240,7 +240,7 @@ const Slab_Door_Table = ({
 
             <Row>
               <Col>
-                {formState.part_list[i].dimensions[index].showBuilder ? (
+                {formState.part_list[i]?.dimensions[index]?.showBuilder ? (
                   <div
                     id={`makerJS${index}`}
                     style={{ width: '100%', height: '300px' }}
@@ -259,12 +259,12 @@ const Slab_Door_Table = ({
               </Col>
             </Row>
 
-            {formState.part_list[i].dimensions[index].unevenCheck ? (
+            {formState.part_list[i]?.dimensions[index]?.unevenCheck ? (
               <div className="mb-3">
                 <Row>
                   {Array.from(
                     Array(
-                      parseInt(formState.part_list[i].dimensions[index].panelsH)
+                      parseInt(formState.part_list[i]?.dimensions[index]?.panelsH)
                     ).keys()
                   )
                     .slice(1)
