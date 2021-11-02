@@ -440,7 +440,7 @@ const mapStateToProps = (state) => ({
       City: state.customers.customerDB[0].City,
       State: state.customers.customerDB[0].State,
       Zip: state.customers.customerDB[0].Zip,
-      Phone: state.customers.customerDB[0].Phone,
+      Phone: state.customers.customerDB[0].Shipping_Phone ? state.customers.customerDB[0].Shipping_Phone : state.customers.customerDB[0].Phone1,
       DueDate: dueDate,
       Notes: state.customers.customerDB[0].Notes,
       // PaymentMethod: {
