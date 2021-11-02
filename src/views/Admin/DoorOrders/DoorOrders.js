@@ -23,7 +23,7 @@ import {
   FieldArray,
   Field,
   touch,
-  startAsyncValidation
+  startAsyncValidation,
 } from 'redux-form';
 import { submitOrder, loadOrders } from '../../../redux/orders/actions';
 import {
@@ -48,7 +48,6 @@ import currencyMask from '../../../utils/currencyMask';
 import CheckoutBox from './CheckoutBox';
 import { NotificationManager } from 'react-notifications';
 import CancelModal from '../../../utils/Modal';
-
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
@@ -81,7 +80,7 @@ class DoorOrders extends Component {
       subNavModal: false,
       subNavPage: 'misc',
       customerReminder: false,
-      cancelModal: false
+      cancelModal: false,
     };
   }
 
@@ -94,24 +93,11 @@ class DoorOrders extends Component {
 
     const { dispatch } = this.props;
 
-    dispatch(
-      touch(
-        'DoorOrder',
-        'job_info.poNum'
-      )
-    );
+    dispatch(touch('DoorOrder', 'job_info.poNum'));
 
-    dispatch(
-      touch(
-        'DoorOrder',
-        'job_info.shipping_method'
-      )
-    );
+    dispatch(touch('DoorOrder', 'job_info.shipping_method'));
 
-
-    dispatch(
-      startAsyncValidation('DoorOrder')
-    );
+    dispatch(startAsyncValidation('DoorOrder'));
 
     // this.toggleReminderModal();
   }
@@ -141,7 +127,7 @@ class DoorOrders extends Component {
       Sample: values.job_info.Sample,
       job_info: {
         ...values.job_info,
-        status: values.job_info.status.value
+        status: values.job_info.status.value,
       },
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
@@ -433,14 +419,18 @@ const mapStateToProps = (state) => ({
     job_info: {
       customer: state.customers.customerDB[0],
       jobName: '',
-      status: {label: 'Quote', value: 'Quote'},
+      status: { label: 'Quote', value: 'Quote' },
       poNum: '',
       Address1: state.customers.customerDB[0].Address1,
       Address2: state.customers.customerDB[0].Address2,
       City: state.customers.customerDB[0].City,
       State: state.customers.customerDB[0].State,
       Zip: state.customers.customerDB[0].Zip,
-      Phone: state.customers.customerDB[0].Shipping_Phone ? state.customers.customerDB[0].Shipping_Phone : state.customers.customerDB[0].Phone1,
+      Phone: state.customers.customerDB[0].Shipping_Phone
+        ? state.customers.customerDB[0].Shipping_Phone
+        : state.customers.customerDB[0].Phone1
+          ? state.customers.customerDB[0].Phone1
+          : state.customers.customerDB[0].Phone,
       DueDate: dueDate,
       Notes: state.customers.customerDB[0].Notes,
       // PaymentMethod: {
@@ -476,7 +466,7 @@ DoorOrders = reduxForm({
     const job_info_message = 'You are missing required info';
     if (errors) {
       NotificationManager.error(job_info_message, 'Error', 2000);
-    } 
+    }
   },
 })(DoorOrders);
 
