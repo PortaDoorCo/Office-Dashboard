@@ -119,7 +119,7 @@ export default (data, pricing) => {
                       : part.construction.value === 'Slab'
                         ? 'Slab'
                         : ''
-                } ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                }${(part.construction.value !== 'Cope') || (part.construction.value !== 'Slab') ? part.construction.value : ''} ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   part.panel
                     ? part.panel.NAME
                     : part.construction.value === 'Slab'

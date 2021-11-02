@@ -72,6 +72,10 @@ export default (data, breakdowns) => {
 
   const lastArr = newChunk[newChunk.length - 1].length;
 
+  console.log({test: newChunk[newChunk.length - 1].length});
+  console.log({newChunk});
+  console.log({lastArr});
+
   if (lastArr !== 3) {
     // arr.splice(-Math.abs(newChunk.length));
 

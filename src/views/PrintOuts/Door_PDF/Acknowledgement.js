@@ -112,15 +112,14 @@ export default (data, pricing) => {
               },
 
               {
-                text: `${
-                  part.design
-                    ? part.design.NAME
-                    : part.face_frame_design
-                      ? part.face_frame_design.NAME
-                      : part.construction.value === 'Slab'
-                        ? 'Slab'
-                        : ''
-                } ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                text: `${part.design
+                  ? part.design.NAME
+                  : part.face_frame_design
+                    ? part.face_frame_design.NAME
+                    : part.construction.value === 'Slab'
+                      ? 'Slab'
+                      : ''
+                }${(part.construction.value !== 'Cope') || (part.construction.value !== 'Slab') ? part.construction.value : ''} ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   part.panel
                     ? part.panel.NAME
                     : part.construction.value === 'Slab'
