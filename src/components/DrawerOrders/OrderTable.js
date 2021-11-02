@@ -267,14 +267,16 @@ const OrderTable = ({
                         type="text"
                         className="form-control"
                         disabled={true}
-                        placeholder={'$' + prices[i][index].toFixed(2) || 0}
+                        placeholder={
+                          '$' + prices[i][index]?.toFixed(2) ? prices[i][index]?.toFixed(2) : 0
+                        }
                       />
                     ) : (
                       <Input
                         type="text"
                         className="form-control"
-                        placeholder={'$0.00'}
                         disabled={true}
+                        placeholder={'$0.00'}
                       />
                     )}
                   </td>

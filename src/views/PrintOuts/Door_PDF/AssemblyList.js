@@ -108,7 +108,7 @@ export default (data, breakdowns) => {
                       : i.construction.value === 'Slab'
                         ? 'Slab'
                         : ''
-                } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                }${(i.construction.value !== 'Cope') || (i.construction.value !== 'Slab') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   i.panel
                     ? i.panel.NAME
                     : i.construction.value === 'Slab'
@@ -165,7 +165,7 @@ export default (data, breakdowns) => {
       {
         table: {
           headerRows: 1,
-          widths: [21, 15, 94, 105, 105, 115],
+          widths: [21, 20, 94, 105, 105, 110],
           body: tableBody,
         },
         layout: {
