@@ -72,20 +72,11 @@ export default (data, breakdowns) => {
 
   const lastArr = newChunk[newChunk.length - 1].length;
 
-  console.log({test: newChunk[newChunk.length - 1]});
-  console.log({newChunk});
-  console.log({lastArr});
 
   if (lastArr !== 3) {
-    // arr.splice(-Math.abs(newChunk.length));
-
-    // let el = [];
-
     for (let i = 0; i < 3 - lastArr; i++) {
       newChunk[newChunk.length - 1].push({ text: '', alignment: 'center', margin: [0, 5, 0, 0] });
     }
-
-    // newChunk[newChunk.length - 1].push(el);
   }
 
   return [
