@@ -75,9 +75,7 @@ export default (data, pricing) => {
         { text: `${Size(item)}`, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
         {
-          text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-            item.full_frame ? 'Full Frame DF' : ''
-          } ${item.lite ? item.lite.NAME : ''}`,
+          text: `${item.notes ? item.notes.toUpperCase() : ''} ${item.lite ? item.lite.NAME : ''}`,
           style: 'fontsBold',
         },
 

@@ -107,7 +107,7 @@ export default (data, breakdowns, type) => {
             }),
             style: 'fonts',
           },
-          item.notes || item.full_frame || item.lite
+          item.notes || item.lite
             ? {
               text: `${item.notes ? item.notes : ''} ${
                 item.lite ? item.lite.NAME : ''

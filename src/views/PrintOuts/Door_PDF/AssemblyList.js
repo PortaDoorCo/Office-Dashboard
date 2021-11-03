@@ -38,9 +38,7 @@ export default (data, breakdowns) => {
             { text: `${Size(item)}`, style: 'fonts' },
             item.notes || item.full_frame || item.lite
               ? {
-                text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-                  item.full_frame ? 'Full Frame DF' : ''
-                } ${item.lite ? item.lite.NAME : ''}`,
+                text: `${item.notes ? item.notes.toUpperCase() : ''} ${item.lite ? item.lite.NAME : ''}`,
                 style: 'tableBold',
                 alignment: 'left',
               }

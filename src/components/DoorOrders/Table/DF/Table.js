@@ -145,9 +145,7 @@ const Cope_Table = ({
           change(
             'DoorOrder',
             `part_list[${i}].dimensions[${index}].notes`,
-            `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
-              numQty(leftStile)
-            )}" Bottom Rail: ${fraction(numQty(leftStile))}"`
+            'Full Frame'
           )
         );
 
@@ -190,9 +188,7 @@ const Cope_Table = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              `Full Frame \nLeft Stile: ${profile_width}" Right Stile: ${profile_width}" \nTop Rail: ${fraction(
-                profile_width
-              )}" Bottom Rail: ${fraction(profile_width)}"`
+              'Full Frame'
             )
           );
 
@@ -232,9 +228,7 @@ const Cope_Table = ({
             change(
               'DoorOrder',
               `part_list[${i}].dimensions[${index}].notes`,
-              `Full Frame \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${fraction(
-                profile_width
-              )}" Bottom Rail: ${fraction(profile_width)}"`
+              'Full Frame'
             )
           );
 
@@ -311,50 +305,50 @@ const Cope_Table = ({
   const onStileOrRailChange = (e, index) => {
     const value = e.target.value;
 
-    if (e.target.name.includes('leftStile')) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          `${
-            full_frame ? 'Full Frame \n' : ''
-          }Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target.name.includes('rightStile')) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          `${
-            full_frame ? 'Full Frame \n' : ''
-          }Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target.name.includes('topRail')) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          `${
-            full_frame ? 'Full Frame \n' : ''
-          }Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target.name.includes('bottomRail')) {
-      dispatch(
-        change(
-          'DoorOrder',
-          `part_list[${i}].dimensions[${index}].notes`,
-          `${
-            full_frame ? 'Full Frame \n' : ''
-          }Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-        )
-      );
-    }
+    // if (e.target.name.includes('leftStile')) {
+    //   dispatch(
+    //     change(
+    //       'DoorOrder',
+    //       `part_list[${i}].dimensions[${index}].notes`,
+    //       `${
+    //         full_frame ? 'Full Frame \n' : ''
+    //       }Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+    //     )
+    //   );
+    // }
+    // if (e.target.name.includes('rightStile')) {
+    //   dispatch(
+    //     change(
+    //       'DoorOrder',
+    //       `part_list[${i}].dimensions[${index}].notes`,
+    //       `${
+    //         full_frame ? 'Full Frame \n' : ''
+    //       }Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+    //     )
+    //   );
+    // }
+    // if (e.target.name.includes('topRail')) {
+    //   dispatch(
+    //     change(
+    //       'DoorOrder',
+    //       `part_list[${i}].dimensions[${index}].notes`,
+    //       `${
+    //         full_frame ? 'Full Frame \n' : ''
+    //       }Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
+    //     )
+    //   );
+    // }
+    // if (e.target.name.includes('bottomRail')) {
+    //   dispatch(
+    //     change(
+    //       'DoorOrder',
+    //       `part_list[${i}].dimensions[${index}].notes`,
+    //       `${
+    //         full_frame ? 'Full Frame \n' : ''
+    //       }Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
+    //     )
+    //   );
+    // }
   };
 
   const clearNotes = (index, e) => {
@@ -373,15 +367,15 @@ const Cope_Table = ({
       if (changeValue) {
         const newVal = fraction(numQty(changeValue));
 
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${
-              full_frame ? 'Full Frame \n' : ''
-            }Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          )
-        );
+        // dispatch(
+        //   change(
+        //     'DoorOrder',
+        //     `part_list[${i}].dimensions[${index}].notes`,
+        //     `${
+        //       full_frame ? 'Full Frame \n' : ''
+        //     }Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+        //   )
+        // );
 
         dispatch(
           change(
@@ -510,14 +504,7 @@ const Cope_Table = ({
       rightStile: rightStile ? rightStile : defaultRightStile,
       topRail: topRail ? topRail : defaultTopRail,
       bottomRail: bottomRail ? bottomRail : defaultBottomRail,
-      notes:
-        index >= 0 &&
-        (leftStile !== defaultLeftStile ||
-          rightStile !== defaultRightStile ||
-          topRail !== defaultTopRail ||
-          bottomRail !== defaultBottomRail)
-          ? `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          : '',
+      notes: '',
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
