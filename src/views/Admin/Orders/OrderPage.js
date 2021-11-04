@@ -885,7 +885,7 @@ class OrderPage extends Component {
                       <CardBody>
                         <h2>Conversation Notes</h2>
                         {selectedOrder &&
-                        selectedOrder.orderType === 'Door Order' ? (
+                        ((selectedOrder.orderType === 'Door Order') || (selectedOrder.orderType === 'Face Frame')) ? (
                             <DoorConversationNotes
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
