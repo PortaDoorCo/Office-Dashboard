@@ -64,7 +64,7 @@ export default (info, part, breakdowns) => {
       return (
         numQty(info[`unevenSplitInput${v}`]) -
         topRail +
-        unevenInset +
+        panel_factor +
         lip_factor
       );
     });
