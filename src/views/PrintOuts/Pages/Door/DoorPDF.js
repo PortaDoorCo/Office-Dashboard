@@ -17,7 +17,7 @@ import Slab_Selection from '../../Sorting/Slab_Selection';
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 
-export default (
+const DoorPDF =  async (
   data,
   designs,
   edges,
@@ -279,5 +279,22 @@ export default (
   };
 
 
-  pdfMake.createPdf(documentDefinition).open();
+  // pdfMake.createPdf(documentDefinition).open();
+
+  const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+
+
+  
+
+  return pdfDocGenerator.getBase64((blob) => {
+    console.log({blob});
+    // blobUrl()
+    return blob;
+  });
+
+
+
+
 };
+
+export default DoorPDF;

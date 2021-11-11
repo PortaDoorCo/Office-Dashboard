@@ -413,6 +413,22 @@ class OrderPage extends Component {
         printerSettings,
         this.props.pricing
       );
+
+      (async () => {
+        console.log(await DoorPDF(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          printerSettings,
+          this.props.pricing
+        ));
+      })();
     } else if (data.orderType === 'Drawer Order') {
       DrawerPDF(data, box_breakdowns, printerSettings, this.props.pricing);
     } else if (data.orderType === 'Misc Items') {
