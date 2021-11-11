@@ -110,10 +110,10 @@ const DoorPDF =  async (
         ],
         margin: [40, 0],
       },
-      {
-        canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
-        margin: [40, 0]
-      },
+      // {
+      //   canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
+      //   margin: [40, 0]
+      // },
     ];
 
     let Content = [];
