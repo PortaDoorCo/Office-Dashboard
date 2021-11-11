@@ -44,7 +44,7 @@ import CsvDownloader from 'react-csv-downloader';
 
 import DoorPDF from '../../PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from '../../PrintOuts/Pages/Drawer/DrawerPDF';
-import BoxLabelPDF from '../../PrintOuts/Pages/Drawer/BoxLabels';
+// import BoxLabelPDF from '../../PrintOuts/Pages/Drawer/BoxLabels';
 
 import moment from 'moment';
 
@@ -100,6 +100,15 @@ import MaterialsList from '../../PrintOuts/Pages/Door/MaterialList';
 import PackingSlip from '../../PrintOuts/Pages/Door/PackingSlip';
 import QC_Checklist from '../../PrintOuts/Pages/Door/QC';
 import Door_Labels from '../../PrintOuts/Pages/Door/Door_Labels';
+
+import Drawer_Acknowledgement from '../../PrintOuts/Pages/Drawer/Acknowledgement';
+import Drawer_Invoice from '../../PrintOuts/Pages/Drawer/Invoice';
+import Drawer_AssemblyList from '../../PrintOuts/Pages/Drawer/AssemblyList';
+import Drawer_Box_Labels from '../../PrintOuts/Pages/Drawer/Box_Labels';
+import Drawer_Packing_Slip from '../../PrintOuts/Pages/Drawer/PackingSlip';
+import Drawer_Sides from '../../PrintOuts/Pages/Drawer/Sides';
+import Drawer_Bottoms from '../../PrintOuts/Pages/Drawer/Bottoms';
+
 
 const cookie = Cookies.get('jwt');
 
@@ -651,7 +660,69 @@ class OrderPage extends Component {
 
 
     } else if (data.orderType === 'Drawer Order') {
-      DrawerPDF(data, box_breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+      // DrawerPDF(data, box_breakdowns, p, this.props.pricing);
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Drawer_Acknowledgement(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Drawer_Invoice(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.assembly_list; i++) {
+        await Drawer_AssemblyList(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.box_sides; i++) {
+        await Drawer_Sides(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.box_bottoms; i++) {
+        await Drawer_Bottoms(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await  Drawer_Packing_Slip(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.box_labels; i++) {
+        await Drawer_Box_Labels(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+      
+
+      const merger = new PDFMerger();
+
+      await Promise.all(files.map(async (file) => await merger.add(file)));
+
+      const mergedPdf = await merger.saveAsBlob();
+      const url = URL.createObjectURL(mergedPdf);
+
+      console.log({url});
+
+      if(files.length > 0) {
+        await window.open(url, '_blank').focus();
+        await files.pop();
+      }
+
+      
     } else if (data.orderType === 'Misc Items') {
       MiscItemsPDF(data, box_breakdowns, p, this.props.pricing);
     } else if (data.orderType === 'Mouldings') {
@@ -678,7 +749,7 @@ class OrderPage extends Component {
           : mouldingsState
             ? mouldingsState
             : [];
-    BoxLabelPDF(data, box_breakdowns);
+    Drawer_Box_Labels(data, box_breakdowns);
   };
 
   render() {
