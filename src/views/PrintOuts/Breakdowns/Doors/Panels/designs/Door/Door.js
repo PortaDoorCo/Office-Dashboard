@@ -75,9 +75,9 @@ export default (info, part, breakdowns) => {
   const glassDoor = (index) => {
     const lite = info[`lite_${index}`]?.NAME;
 
-    console.log("hiiiiiiiii")
+    
 
-    console.log({qty})
+    
 
     return {
       qty: qty,
@@ -156,7 +156,7 @@ export default (info, part, breakdowns) => {
       count: qty,
     };
 
-    console.log("biiiii")
+    
     if (glassCheck(panelsH - 1)) {
       return [
         ...unEven,
@@ -246,7 +246,7 @@ export default (info, part, breakdowns) => {
       arr = [
         ...Array.from(Array(panelsH).keys()).map((i, v) => {
           if (info[`glass_check_${v}`]) {
-            console.log("biiii2")
+            
             return glassDoor(v);
           } else {
             return doorMulti;
@@ -276,7 +276,7 @@ export default (info, part, breakdowns) => {
       return ar;
     }, []);
 
-    console.log({ new_arr });
+    
 
     return new_arr;
   };

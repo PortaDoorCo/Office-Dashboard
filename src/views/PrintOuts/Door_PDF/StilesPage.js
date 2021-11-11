@@ -18,22 +18,9 @@ export default (data, breakdowns) => {
   };
 
 
-  let itemNum = 0;
 
-  const itemNumCounter = data.part_list.map(i => {
-    return {
-      ...i,
-      dimensions: i.dimensions.map(j => {
-        itemNum += 1;
-        return {
-          ...j,
-          item: itemNum
-        };
-      })
-    };
-  });
 
-  const a = Object.values(groupBy(itemNumCounter, (x) => x?.woodtype?.NAME));
+  const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
   const b = a
     .map((woodtype) =>
       woodtype.map((v, i) => ({
@@ -69,8 +56,8 @@ export default (data, breakdowns) => {
     HeightSort(GlassSort(i)).forEach((item, index) => {
 
       if (
-        item.glass_index === 1 ||
-          item.construction.value === 'Slab' ||
+        // item.glass_index === 1 ||
+        item.construction.value === 'Slab' ||
           i.orderType.value === 'One_Piece' ||
           i.orderType.value === 'One_Piece_DF' 
       ) {
@@ -186,79 +173,7 @@ export default (data, breakdowns) => {
   // const table_body = [];
 
   return [
-    {
-      columns: [
-        {
-          stack: [
-            'Individual - STILES List',
-            { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
-          ],
-        },
-        {
-          stack: [
-            { text: 'Porta Door Co. Inc.', alignment: 'center' },
-            { text: '65 Cogwheel Lane', alignment: 'center' },
-            { text: 'Seymour, CT', alignment: 'center' },
-            { text: '203-888-6191', alignment: 'center' },
-            { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
-          ],
-        },
-        {
-          stack: [
-            {
-              text:
-                data.job_info.Rush && data.job_info.Sample
-                  ? 'Sample / Rush'
-                  : data.job_info.Rush
-                    ? 'Rush'
-                    : data.job_info.Sample
-                      ? 'Sample'
-                      : '',
-              alignment: 'right',
-              bold: true,
-            },
-            { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            {
-              text: `Estimated Ship: ${moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              )}`,
-              alignment: 'right',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      stack: [
-        {
-          text: `${data.orderNum}`,
-          style: 'orderNum',
-        },
-        {
-          columns: [
-            {
-              text: `${data.job_info.customer.Company}`,
-            },
-            {
-              text: `${
-                data.job_info?.Shop_Notes
-                  ? data.job_info?.Shop_Notes?.toUpperCase()
-                  : ''
-              }`,
-              alignment: 'center',
-            },
-            {
-              text: `PO: ${data.job_info.poNum.toUpperCase()}`,
-              alignment: 'right',
-            },
-          ],
-        },
-      ],
-      margin: [0, 10],
-    },
-    {
-      canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
-    },
+    
     table_body,
   ];
 };

@@ -13,7 +13,7 @@ import 'react-phone-input-2/lib/style.css';
 import { formatPhoneNumber } from 'react-phone-number-input';
 
 const renderPhoto = ({ item }) => {
-  console.log({ item });
+  
   return (
     <>
       <span
@@ -43,7 +43,7 @@ const renderPhoto = ({ item }) => {
 };
 
 const renderMouldings = ({ item }) => {
-  console.log({ item });
+  
   return (
     <>
       <span
@@ -73,7 +73,7 @@ const renderMouldings = ({ item }) => {
 };
 
 const renderMouldingEditPhoto = ({ item }) => {
-  console.log({ item });
+  
   return (
     <>
       <span

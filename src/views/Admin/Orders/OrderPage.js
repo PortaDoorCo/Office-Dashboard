@@ -88,6 +88,19 @@ import Rails from '../../PrintOuts/Breakdowns/Doors/Rails/Rails';
 import Stiles from '../../PrintOuts/Breakdowns/Doors/Stiles/Stiles';
 import Navigation from './Navigation';
 
+import PDFMerger from 'pdf-merger-js/browser';
+import Acknowledgement from '../../PrintOuts/Pages/Door/Acknowledgement';
+import Invoice from '../../PrintOuts/Pages/Door/Invoice';
+import AssemblyList from '../../PrintOuts/Pages/Door/AssemblyList';
+import PanelsPage from '../../PrintOuts/Pages/Door/Panels';
+import StilesPage from '../../PrintOuts/Pages/Door/Stiles';
+import RailsPage from '../../PrintOuts/Pages/Door/Rails';
+import Profiles from '../../PrintOuts/Pages/Door/Profiles';
+import MaterialsList from '../../PrintOuts/Pages/Door/MaterialList';
+import PackingSlip from '../../PrintOuts/Pages/Door/PackingSlip';
+import QC_Checklist from '../../PrintOuts/Pages/Door/QC';
+import Door_Labels from '../../PrintOuts/Pages/Door/Door_Labels';
+
 const cookie = Cookies.get('jwt');
 
 const toDataUrl = (url, callback) => {
@@ -278,7 +291,7 @@ class OrderPage extends Component {
     await this.props.toggle();
   };
 
-  downloadPDF = async (printerSettings) => {
+  downloadPDF = async (p) => {
     const {
       formState,
       drawerState,
@@ -400,22 +413,12 @@ class OrderPage extends Component {
       } catch (err) {
         console.log('errrrrrr', err);
       }
-      DoorPDF(
-        data,
-        design1,
-        edges1,
-        moulds1,
-        miter1,
-        mt_1,
-        panels1,
-        appliedProfiles1,
-        breakdowns,
-        printerSettings,
-        this.props.pricing
-      );
 
-      (async () => {
-        console.log(await DoorPDF(
+      let files = [];
+
+      
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Acknowledgement(
           data,
           design1,
           edges1,
@@ -425,18 +428,236 @@ class OrderPage extends Component {
           panels1,
           appliedProfiles1,
           breakdowns,
-          printerSettings,
+          p,
           this.props.pricing
-        ));
-      })();
+        ).then(async(v) => {
+          files.push(v);
+        });
+        await Profiles(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Invoice(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.assembly_list; i++) {
+        await AssemblyList(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.panels; i++) {
+        await PanelsPage(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.stiles; i++) {
+        await StilesPage(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.rails; i++) {
+        await RailsPage(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.profiles; i++) {
+        await Profiles(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.materials; i++) {
+        await MaterialsList(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await PackingSlip(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await QC_Checklist(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.door_labels; i++) {
+        await Door_Labels(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      const merger = new PDFMerger();
+
+      await Promise.all(files.map(async (file) => await merger.add(file)));
+
+      const mergedPdf = await merger.saveAsBlob();
+      const url = URL.createObjectURL(mergedPdf);
+
+      console.log({url});
+
+      if(files.length > 0) {
+        await window.open(url, '_blank').focus();
+        await files.pop();
+      }
+
+      
+      
+
+      
+
+
     } else if (data.orderType === 'Drawer Order') {
-      DrawerPDF(data, box_breakdowns, printerSettings, this.props.pricing);
+      DrawerPDF(data, box_breakdowns, p, this.props.pricing);
     } else if (data.orderType === 'Misc Items') {
-      MiscItemsPDF(data, box_breakdowns, printerSettings, this.props.pricing);
+      MiscItemsPDF(data, box_breakdowns, p, this.props.pricing);
     } else if (data.orderType === 'Mouldings') {
-      MouldingsPDF(data, box_breakdowns, printerSettings, this.props.pricing);
+      MouldingsPDF(data, box_breakdowns, p, this.props.pricing);
     } else if (data.orderType === 'Face Frame') {
-      FaceFramesPDF(data, breakdowns, printerSettings, this.props.pricing);
+      FaceFramesPDF(data, breakdowns, p, this.props.pricing);
     }
   };
 
@@ -540,10 +761,10 @@ class OrderPage extends Component {
 
       const razor = s
         ? s.part_list.map((f, index) => {
-          console.log({ f });
+          // console.log({ f });
 
           f.dimensions.forEach((j, ind) => {
-            console.log({ j });
+            // console.log({ j });
 
             const { breakdowns } = this.props;
 
@@ -555,8 +776,8 @@ class OrderPage extends Component {
               return rail;
             });
 
-            console.log({ rail });
-            console.log({ stile });
+            // console.log({ rail });
+            // console.log({ stile });
 
             const stilePrint = stile.map((i) => {
               return razorGuage.push([

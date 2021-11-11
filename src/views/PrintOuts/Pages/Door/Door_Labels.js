@@ -38,89 +38,12 @@ const DoorPDF =  async (
     const solidDFs = TotalSolidDFs(data);
     const totalUnits = units;
 
-    const headerInfo = [
-      {
-        margin: [40,40,40,10],
-        columns: [
-          {
-            stack: [
-              { text: 'QC Checkoff Sheet', bold: true },
-              { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
-            ],
-          },
-          {
-            stack: [
-              { text: 'Porta Door Co. Inc.', alignment: 'center' },
-              { text: '65 Cogwheel Lane', alignment: 'center' },
-              { text: 'Seymour, CT', alignment: 'center' },
-              { text: '203-888-6191', alignment: 'center' },
-              { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-            ]
-          },
-          {
-            stack: [
-              { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
-              { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-              { text: `Estimated Ship: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
-            ]
-          }
-        ]
-      },
-      {
-        columns: [
-          {
-            text: `${data.job_info.customer.Company}`,
-          },
-          {
-            text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
-            alignment: 'center'
-          },
-          {
-            text: `PO: ${data.job_info.poNum.toUpperCase()}`,
-            alignment: 'right',
-          },
-        ],
-        margin: [40,0],
-      },
-      {
-        text:
-          '==============================================================================',
-        alignment: 'center',
-      },
-    ];
-
     let Content = [];
 
-    const type = 'Page';
 
-    let itemNum = 0;
 
-    const itemNumCounter = {
-      ...data,
-      part_list: data.part_list.map((i) => {
-        return {
-          ...i,
-          dimensions: i.dimensions.map((j) => {
-            itemNum += 1;
-            return {
-              ...j,
-              item: itemNum,
-            };
-          }),
-        };
-      }),
-    };
 
-    Content.push(QC_Checklist(itemNumCounter, breakdowns));
-
-    // const newParts = Glass_Selection(itemNumCounter, type).map((j) => {
-    //   const newData = { ...data, part_list: j };
-    //   return newData;
-    // });
-
-    // newParts.map((k) => {
-    //   return 
-    // });
+    Content.push(Door_Labels(data, breakdowns));
     
 
     const rowLen = Content.length;
@@ -140,10 +63,26 @@ const DoorPDF =  async (
       pageSize: 'A4',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [40, 165, 40, 60],
-      header: function (currentPage) {
-        return headerInfo;
-      },
+      pageMargins: [40, 40, 40, 60],
+      // header: function (currentPage) {
+      //   var headers = ['SUMMARY', 'LEAK 1', 'LEAK 2', 'LEAK 3'];
+      //   return [
+      //     {
+      //       // margin: [30, 30, 0, 30],
+      //       table: {
+      //         // widths: ['50%', '50%'],
+      //         // heights: [30],
+      //         body: [
+      //           [
+      //             { text: headers[currentPage - 1]},
+      //             { text: 'afasdf' },
+      //           ],
+      //         ],
+      //       },
+      //       // layout: 'noBorders',
+      //     },
+      //   ];
+      // },
       footer: function (currentPage, pageCount) {
         return {
           columns: [
