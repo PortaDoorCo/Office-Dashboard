@@ -106,7 +106,7 @@ export default (data, breakdowns) => {
                       : i.construction.value === 'Slab'
                         ? 'Slab'
                         : ''
-                }${(i.construction.value !== 'Cope') || (i.construction.value !== 'Slab') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   i.panel
                     ? i.panel.NAME
                     : i.construction.value === 'Slab'
@@ -279,7 +279,7 @@ export default (data, breakdowns) => {
     {
       text: '==============================================================================',
       alignment: 'center',
-      margin: [0,10,0,0]
+      margin: [0, 10, 0, 0],
     },
     table_content,
     // { text: '', pageBreak: 'before' }

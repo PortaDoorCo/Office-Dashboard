@@ -14,7 +14,7 @@ export default (data, breakdowns) => {
           : i.construction.value === 'Slab'
             ? 'Slab'
             : ''
-    }${(i.construction.value !== 'Cope') || (i.construction.value !== 'Slab') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
+    } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
 
 

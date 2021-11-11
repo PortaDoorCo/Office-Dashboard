@@ -32,13 +32,14 @@ export default (
 ) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
-  
+
   const units = TotalPieces(data);
   const solidDFs = TotalSolidDFs(data);
   const totalUnits = units;
 
-
   let Content = [];
+
+
 
   for (let i = 0; i < p.acknowledgement; i++) {
     Content.push(Acknowledgement(data, pricing));
@@ -76,7 +77,6 @@ export default (
   }
 
   for (let i = 0; i < p.panels; i++) {
-
     const type = 'Page';
 
     let itemNum = 0;
@@ -98,27 +98,27 @@ export default (
     };
 
     const newParts = Slab_Selection(itemNumCounter, type).map((j) => {
-      const newData = { ...data, part_list: j, hasSlab: j.some(e => e.hasSlab === true) };
+      const newData = {
+        ...data,
+        part_list: j,
+        hasSlab: j.some((e) => e.hasSlab === true),
+      };
       return newData;
     });
 
     newParts.map((k) => {
-
-      if(k.hasSlab){
+      if (k.hasSlab) {
         return Content.push(PanelsPage(k, breakdowns, 'SOLIDS'));
       } else {
+        console.log({ k });
 
-        console.log({k});
-
-        if(k.part_list.length > 0){
+        if (k.part_list.length > 0) {
           return Content.push(PanelsPage(k, breakdowns, 'PANELS'));
         } else {
           return null;
         }
       }
-      
     });
-
 
     // Content.push(PanelsPage(data, breakdowns));
   }
@@ -172,6 +172,8 @@ export default (
     }
   });
 
+  // console.log({ Content });
+
   const fileName = `Order #${data.orderNum}`;
 
   const documentDefinition = {
@@ -179,6 +181,25 @@ export default (
     pageOrientation: 'portrait',
     content: ContentSorted,
     pageMargins: [40, 40, 40, 60],
+    // header: function (currentPage) {
+    //   var headers = ['SUMMARY', 'LEAK 1', 'LEAK 2', 'LEAK 3'];
+    //   return [
+    //     {
+    //       // margin: [30, 30, 0, 30],
+    //       table: {
+    //         // widths: ['50%', '50%'],
+    //         // heights: [30],
+    //         body: [
+    //           [
+    //             { text: headers[currentPage - 1]},
+    //             { text: 'afasdf' },
+    //           ],
+    //         ],
+    //       },
+    //       // layout: 'noBorders',
+    //     },
+    //   ];
+    // },
     footer: function (currentPage, pageCount) {
       return {
         columns: [
@@ -207,9 +228,6 @@ export default (
                 style: 'warrantyFont',
                 alignment: 'right',
               },
-
-
-
             ],
           },
         ],
@@ -259,6 +277,7 @@ export default (
       },
     },
   };
+
 
   pdfMake.createPdf(documentDefinition).open();
 };
