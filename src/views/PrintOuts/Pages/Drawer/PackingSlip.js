@@ -168,12 +168,12 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
           },
         ],
       },
-      {
-        text:
-              '==============================================================================',
-        alignment: 'center',
-        margin: [40,0]
-      },
+      // {
+      //   text:
+      //         '==============================================================================',
+      //   alignment: 'center',
+      //   margin: [40,0]
+      // },
     ];
 
     let Content = [];
@@ -202,7 +202,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
       pageSize: 'A4',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [40, 230, 40, 60],
+      pageMargins: [40, 210, 40, 60],
       header: function (currentPage) {
         return headerInfo;
       },
