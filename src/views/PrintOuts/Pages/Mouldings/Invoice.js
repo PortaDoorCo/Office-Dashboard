@@ -18,7 +18,7 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
   
     const headerInfo = [
       {
-        margin:[40,40,40,60],
+        margin:[40,40,40,30],
         columns: [
           {
             stack: [{ text: 'INVOICE', margin: [0, 0, 0, -10] }],
@@ -243,11 +243,11 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
           },
         ],
       },
-      {
-        text: '==============================================================================',
-        alignment: 'center',
-        margin:[40,0]
-      },
+      // {
+      //   text: '==============================================================================',
+      //   alignment: 'center',
+      //   margin:[40,0]
+      // },
     ];
 
     let Content = [];
