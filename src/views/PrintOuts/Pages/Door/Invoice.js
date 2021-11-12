@@ -245,11 +245,11 @@ const DoorPDF =  async (
           },
         ],
       },
-      {
-        text: '==============================================================================',
-        alignment: 'center',
-        margin: [0, 10, 0, 0],
-      }
+      // {
+      //   text: '==============================================================================',
+      //   alignment: 'center',
+      //   margin: [0, 10, 0, 0],
+      // }
     ];
 
     let Content = [];
@@ -294,7 +294,7 @@ const DoorPDF =  async (
       pageSize: 'A4',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [40, 230, 40, 60],
+      pageMargins: [40, 220, 40, 60],
       header: function (currentPage) {
         return headerInfo;
       },

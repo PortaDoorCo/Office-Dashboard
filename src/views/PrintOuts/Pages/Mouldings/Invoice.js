@@ -18,7 +18,7 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
   
     const headerInfo = [
       {
-        margin:[40,40,40,30],
+        margin:[40,40,40,10],
         columns: [
           {
             stack: [{ text: 'INVOICE', margin: [0, 0, 0, -10] }],

@@ -129,7 +129,7 @@ export default (data, breakdowns) => {
                 alignment: 'center',
               },
               {
-                text: `${i.applied_profile ? i.applied_profile.NAME.toUpperCase() : ''}`,
+                text: `${i.applied_profile && i.applied_profile.NAME !== 'None' ? i.applied_profile.NAME.toUpperCase() : ''}`,
                 style: 'fontsBold',
                 alignment: 'center',
               },

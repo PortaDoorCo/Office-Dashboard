@@ -161,7 +161,7 @@ const DoorPDF =  async (
       pageSize: 'A4',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [40, 180, 40, 60],
+      pageMargins: [40, 190, 40, 60],
       header: function (currentPage) {
         return headerInfo;
       },
