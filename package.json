@@ -102,6 +102,7 @@
     "react-google-maps": "^9.4.5",
     "react-icons": "^3.5.0",
     "react-loading": "^2.0.3",
+    "react-loading-overlay": "^1.0.1",
     "react-notification-alert": "0.0.12",
     "react-notifications": "^1.7.2",
     "react-notifications-component": "^2.0.6",

@@ -127,8 +127,11 @@ import Moulding_Assembly_List from '../../PrintOuts/Pages/Mouldings/AssemblyList
 import Moulding_Packing_Slip from '../../PrintOuts/Pages/Mouldings/Packing_Slip';
 import Moulding_QC from '../../PrintOuts/Pages/Mouldings/QC';
 
+import LoadingModal from '../../../utils/LoadingModal';
+import Typical from 'react-typical';
+import ReactLoading from 'react-loading';
 
-
+import LoadingOverlay from 'react-loading-overlay';
 
 const cookie = Cookies.get('jwt');
 
@@ -164,6 +167,7 @@ class OrderPage extends Component {
       notesOpen: false,
       printModal: false,
       copyModal: false,
+      loadingModal: false
     };
     this.someRef = createRef();
   }
@@ -320,7 +324,16 @@ class OrderPage extends Component {
     await this.props.toggle();
   };
 
+  toggleLoadingModal = () => {
+    this.setState({
+      loadingModal: !this.state.loadingModal
+    });
+  }
+
   downloadPDF = async (p) => {
+
+    this.toggleLoadingModal();
+
     const {
       formState,
       drawerState,
@@ -339,6 +352,29 @@ class OrderPage extends Component {
           : mouldingsState
             ? mouldingsState
             : [];
+
+    const merger = new PDFMerger();
+
+
+    const generatePDF = async (files) => {
+      if (files.length > 0) {
+
+
+
+        await Promise.all(files.map(async (file) => await merger.add(file)));
+
+        const mergedPdf = await merger.saveAsBlob();
+        const url = URL.createObjectURL(mergedPdf);
+
+        console.log({ url });
+
+
+        await window.open(url, '_blank').focus();
+        await files.pop();
+        
+        this.toggleLoadingModal();
+      } 
+    };
 
     const noPhoto =
       'https://res.cloudinary.com/porta-door/image/upload/v1634764886/none_2fcc23e82e.png';
@@ -445,7 +481,6 @@ class OrderPage extends Component {
 
       let files = [];
 
-      
       for (let i = 0; i < p.acknowledgement; i++) {
         await Acknowledgement(
           data,
@@ -459,7 +494,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
         await Profiles(
@@ -474,7 +509,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -492,7 +527,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -510,7 +545,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -528,7 +563,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -546,7 +581,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -564,7 +599,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -582,7 +617,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -600,7 +635,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -618,7 +653,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -636,7 +671,7 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
@@ -654,251 +689,254 @@ class OrderPage extends Component {
           breakdowns,
           p,
           this.props.pricing
-        ).then(async(v) => {
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
-      const merger = new PDFMerger();
-
-      await Promise.all(files.map(async (file) => await merger.add(file)));
-
-      const mergedPdf = await merger.saveAsBlob();
-      const url = URL.createObjectURL(mergedPdf);
-
-      console.log({url});
-
-      if(files.length > 0) {
-        await window.open(url, '_blank').focus();
-        await files.pop();
-      }
-
-      
-      
-
-      
-
-
+      await generatePDF(files);
     } else if (data.orderType === 'Drawer Order') {
-
       let files = [];
 
       // DrawerPDF(data, box_breakdowns, p, this.props.pricing);
 
       for (let i = 0; i < p.acknowledgement; i++) {
-        await Drawer_Acknowledgement(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Drawer_Acknowledgement(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.invoice; i++) {
-        await Drawer_Invoice(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
-          files.push(v);
-        });
+        await Drawer_Invoice(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
       }
 
       for (let i = 0; i < p.assembly_list; i++) {
-        await Drawer_AssemblyList(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Drawer_AssemblyList(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.box_sides; i++) {
-        await Drawer_Sides(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
-          files.push(v);
-        });
+        await Drawer_Sides(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
       }
 
       for (let i = 0; i < p.box_bottoms; i++) {
-        await Drawer_Bottoms(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
-          files.push(v);
-        });
+        await Drawer_Bottoms(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
       }
 
       for (let i = 0; i < p.packing_slip; i++) {
-        await  Drawer_Packing_Slip(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Drawer_Packing_Slip(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.box_labels; i++) {
-        await Drawer_Box_Labels(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Drawer_Box_Labels(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
-      
 
-      const merger = new PDFMerger();
-
-      await Promise.all(files.map(async (file) => await merger.add(file)));
-
-      const mergedPdf = await merger.saveAsBlob();
-      const url = URL.createObjectURL(mergedPdf);
-
-      console.log({url});
-
-      if(files.length > 0) {
-        await window.open(url, '_blank').focus();
-        await files.pop();
-      }
-
-      
+      await generatePDF(files);
     } else if (data.orderType === 'Misc Items') {
       // MiscItemsPDF(data, box_breakdowns, p, this.props.pricing);
 
       let files = [];
 
       for (let i = 0; i < p.acknowledgement; i++) {
-        await Misc_Item_Acknowledgement(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Misc_Item_Acknowledgement(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.invoice; i++) {
-        await Misc_Item_Invoice(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Misc_Item_Invoice(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.packing_slip; i++) {
-        await Misc_Item_Packing_Slip(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Misc_Item_Packing_Slip(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.qc; i++) {
-        await Misc_Item_QC(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
-          files.push(v);
-        });
+        await Misc_Item_QC(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
       }
 
-      const merger = new PDFMerger();
-
-      await Promise.all(files.map(async (file) => await merger.add(file)));
-
-      const mergedPdf = await merger.saveAsBlob();
-      const url = URL.createObjectURL(mergedPdf);
-
-      console.log({url});
-
-      if(files.length > 0) {
-        await window.open(url, '_blank').focus();
-        await files.pop();
-      }
-
-
+      await generatePDF(files);
     } else if (data.orderType === 'Mouldings') {
-
-
       // MouldingsPDF(data, box_breakdowns, p, this.props.pricing);
 
       let files = [];
 
-
       for (let i = 0; i < p.acknowledgement; i++) {
-        await Moulding_Acknowledgement(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Moulding_Acknowledgement(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.invoice; i++) {
-        await Moulding_Invoice(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Moulding_Invoice(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.assembly_list; i++) {
-        await Moulding_Assembly_List(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Moulding_Assembly_List(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.packing_slip; i++) {
-        await Moulding_Packing_Slip(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+        await Moulding_Packing_Slip(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.qc; i++) {
-        await Moulding_QC(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
-          files.push(v);
-        });
+        await Moulding_QC(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
       }
 
-      const merger = new PDFMerger();
-
-      await Promise.all(files.map(async (file) => await merger.add(file)));
-
-      const mergedPdf = await merger.saveAsBlob();
-      const url = URL.createObjectURL(mergedPdf);
-
-      console.log({url});
-
-      if(files.length > 0) {
-        await window.open(url, '_blank').focus();
-        await files.pop();
-      }
-
-
+      await generatePDF(files);
     } else if (data.orderType === 'Face Frame') {
-
       let files = [];
 
       // FaceFramesPDF(data, breakdowns, p, this.props.pricing);
 
       for (let i = 0; i < p.acknowledgement; i++) {
-        await Face_Frame_Acknowledgement(data, breakdowns, p, this.props.pricing).then(async(v) => {
+        await Face_Frame_Acknowledgement(
+          data,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.invoice; i++) {
-        await Face_Frame_Invoice(data, breakdowns, p, this.props.pricing).then(async(v) => {
-          files.push(v);
-        });
+        await Face_Frame_Invoice(data, breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
       }
 
       for (let i = 0; i < p.assembly_list; i++) {
-        await  Face_Frame_Assembly_List(data, breakdowns, p, this.props.pricing).then(async(v) => {
+        await Face_Frame_Assembly_List(
+          data,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
-
       for (let i = 0; i < p.packing_slip; i++) {
-        await Face_Frame_Packing_Slip(data, breakdowns, p, this.props.pricing).then(async(v) => {
+        await Face_Frame_Packing_Slip(
+          data,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
           files.push(v);
         });
       }
 
       for (let i = 0; i < p.qc; i++) {
-        await  Face_Frame_QC(data, breakdowns, p, this.props.pricing).then(async(v) => {
-          files.push(v);
-        });
+        await Face_Frame_QC(data, breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
       }
 
       for (let i = 0; i < p.door_labels; i++) {
-        await  Face_Frame_Labels(data, breakdowns, p, this.props.pricing).then(async(v) => {
-          files.push(v);
-        });
+        await Face_Frame_Labels(data, breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
       }
 
-
-      const merger = new PDFMerger();
-
-      await Promise.all(files.map(async (file) => await merger.add(file)));
-
-      const mergedPdf = await merger.saveAsBlob();
-      const url = URL.createObjectURL(mergedPdf);
-
-      console.log({url});
-
-      if(files.length > 0) {
-        await window.open(url, '_blank').focus();
-        await files.pop();
-      }
-
-
+      await generatePDF(files);
     }
   };
 
@@ -956,7 +994,10 @@ class OrderPage extends Component {
       exportCsv = s
         ? s.part_list.map((f, index) => {
           f.dimensions.forEach((j, ind) => {
-            if ((f.orderType.value === 'DF') || (numQty(j.width) > numQty(j.height))) {
+            if (
+              f.orderType.value === 'DF' ||
+                numQty(j.width) > numQty(j.height)
+            ) {
               a.push([
                 s.orderNum,
                 '15DF',
@@ -1079,6 +1120,7 @@ class OrderPage extends Component {
 
     return (
       <div className="animated noPrint resize">
+
         <CopyModal
           message={'Would you like to copy this order?'}
           title={'Copy Order'}
@@ -1087,6 +1129,8 @@ class OrderPage extends Component {
           modal={this.state.copyModal}
           action={this.copyOrder}
         />
+
+
 
         <Modal
           isOpen={props.modal}
@@ -1337,7 +1381,9 @@ class OrderPage extends Component {
                                 .reverse()
                                 .map((i, index) => (
                                   <tr key={index}>
-                                    <th>{i.status ? i.status : 'Order Edited'}</th>
+                                    <th>
+                                      {i.status ? i.status : 'Order Edited'}
+                                    </th>
                                     <td>
                                       {moment(i.date).format(
                                         'dddd, MMMM Do YYYY, h:mm:ss a'
@@ -1363,7 +1409,8 @@ class OrderPage extends Component {
                       <CardBody>
                         <h2>Conversation Notes</h2>
                         {selectedOrder &&
-                        ((selectedOrder.orderType === 'Door Order') || (selectedOrder.orderType === 'Face Frame')) ? (
+                        (selectedOrder.orderType === 'Door Order' ||
+                          selectedOrder.orderType === 'Face Frame') ? (
                             <DoorConversationNotes
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
@@ -1546,6 +1593,20 @@ class OrderPage extends Component {
           mouldingsState
           breakdowns
           box_breakdowns
+        />
+
+
+        <LoadingModal 
+          modal={this.state.loadingModal}
+          toggle={this.toggleLoadingModal}
+          message={
+            <div>
+              <center>
+                <h3>Loading...</h3>
+              </center>
+            </div>
+          }
+          title={'Loading'}
         />
       </div>
     );
