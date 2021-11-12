@@ -140,6 +140,7 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
                             : ''
                         }`,
                         style: 'fonts',
+                        margin: [0,10,0,0]
                       },
                     ],
                   },

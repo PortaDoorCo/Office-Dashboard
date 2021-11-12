@@ -41,11 +41,15 @@ export default (data, breakdowns) => {
 
       return [
         {
-          margin: [0, 2, 0, 0],
+          margin: [0, 0, 0, 0],
           columns: [
             {
+              width: 280,
               stack: [
-                { text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME}`, style: 'woodtype' },
+                {
+                  text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
+                  style: 'woodtype',
+                },
                 {
                   text: `${i.face_frame_design ? i.face_frame_design.NAME : ''}`,
                   style: 'fonts',
@@ -56,7 +60,7 @@ export default (data, breakdowns) => {
                 // },
               ]
             },
-            { text: ' ', style: 'fontsBold', width: 150 },
+            // { text: ' ', style: 'fontsBold' },
             { 
               stack: [
                 {text: ' ', style:'woodtype' },

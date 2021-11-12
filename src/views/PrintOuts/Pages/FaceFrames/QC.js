@@ -93,7 +93,7 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
       pageSize: 'A4',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [40, 180, 40, 60],
+      pageMargins: [40, 175, 40, 60],
       header: function (currentPage) {
         return headerInfo;
       },
