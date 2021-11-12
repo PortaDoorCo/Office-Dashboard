@@ -29,7 +29,7 @@ import {
   miscItemPriceSelector,
   miscItemLinePriceSelector,
   miscTotalSelector,
-} from '../../../../selectors/mouldingPricing';
+} from '../../../../selectors/doorPricing';
 import NumberFormat from 'react-number-format';
 import currencyMask from '../../../../utils/currencyMask';
 
@@ -123,7 +123,7 @@ let Inputs = (props) => {
                           <Field
                             name={`${table}.price`}
                             type="text"
-                            component={renderPrice}
+                            component={renderField}
                             label="price"
                             {...currencyMask}
                           />
@@ -150,7 +150,7 @@ let Inputs = (props) => {
                       <td style={{ width: '25%' }}>
                         <Field
                           name={`${table}.pricePer`}
-                          component={renderPrice}
+                          component={renderField}
                           type="text"
                           required
                           {...currencyMask}

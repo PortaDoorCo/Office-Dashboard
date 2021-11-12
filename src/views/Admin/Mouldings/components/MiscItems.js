@@ -123,7 +123,7 @@ let Inputs = (props) => {
                           <Field
                             name={`${table}.price`}
                             type="text"
-                            component={renderPrice}
+                            component={renderField}
                             label="price"
                             {...currencyMask}
                           />
@@ -150,10 +150,11 @@ let Inputs = (props) => {
                       <td style={{ width: '25%' }}>
                         <Field
                           name={`${table}.pricePer`}
-                          component={renderPrice}
+                          component={renderField}
                           type="text"
-                          required
+                          label="price"
                           {...currencyMask}
+                          required
                         />
                       </td>
                       <td style={{ width: '25%' }}>

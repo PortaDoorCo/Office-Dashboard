@@ -22,6 +22,7 @@ import DatePicker from 'react-widgets/DatePicker';
 import { Field } from 'redux-form';
 import {
   renderDropdownList,
+  renderField,
   renderPrice,
 } from '../../../../../components/RenderInputs/renderInputs';
 import { updateOrder } from '../../../../../redux/orders/actions';
@@ -122,7 +123,7 @@ const RenderBalances = ({
                   <Field
                     name={`${i}.balance_paid`}
                     type="text"
-                    component={renderPrice}
+                    component={renderField}
                     edit={true}
                     {...currencyMask}
                     label="balance_paid"
