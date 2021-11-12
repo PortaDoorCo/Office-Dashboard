@@ -116,6 +116,18 @@ import Face_Frame_Invoice from '../../PrintOuts/Pages/FaceFrames/Invoice';
 import Face_Frame_Packing_Slip from '../../PrintOuts/Pages/FaceFrames/Packing_Slip';
 import Face_Frame_QC from '../../PrintOuts/Pages/FaceFrames/QC';
 
+import Misc_Item_Acknowledgement from '../../PrintOuts/Pages/MiscItems/Acknowledgement';
+import Misc_Item_Invoice from '../../PrintOuts/Pages/MiscItems/Invoice';
+import Misc_Item_Packing_Slip from '../../PrintOuts/Pages/MiscItems/Packing_Slip';
+import Misc_Item_QC from '../../PrintOuts/Pages/MiscItems/QC';
+
+import Moulding_Acknowledgement from '../../PrintOuts/Pages/Mouldings/Acknowledgement';
+import Moulding_Invoice from '../../PrintOuts/Pages/Mouldings/Invoice';
+import Moulding_Assembly_List from '../../PrintOuts/Pages/Mouldings/AssemblyList';
+import Moulding_Packing_Slip from '../../PrintOuts/Pages/Mouldings/Packing_Slip';
+import Moulding_QC from '../../PrintOuts/Pages/Mouldings/QC';
+
+
 
 
 const cookie = Cookies.get('jwt');
@@ -732,9 +744,102 @@ class OrderPage extends Component {
 
       
     } else if (data.orderType === 'Misc Items') {
-      MiscItemsPDF(data, box_breakdowns, p, this.props.pricing);
+      // MiscItemsPDF(data, box_breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Misc_Item_Acknowledgement(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Misc_Item_Invoice(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Misc_Item_Packing_Slip(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await Misc_Item_QC(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      const merger = new PDFMerger();
+
+      await Promise.all(files.map(async (file) => await merger.add(file)));
+
+      const mergedPdf = await merger.saveAsBlob();
+      const url = URL.createObjectURL(mergedPdf);
+
+      console.log({url});
+
+      if(files.length > 0) {
+        await window.open(url, '_blank').focus();
+        await files.pop();
+      }
+
+
     } else if (data.orderType === 'Mouldings') {
-      MouldingsPDF(data, box_breakdowns, p, this.props.pricing);
+
+
+      // MouldingsPDF(data, box_breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Moulding_Acknowledgement(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Moulding_Invoice(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.assembly_list; i++) {
+        await Moulding_Assembly_List(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Moulding_Packing_Slip(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await Moulding_QC(data, box_breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      const merger = new PDFMerger();
+
+      await Promise.all(files.map(async (file) => await merger.add(file)));
+
+      const mergedPdf = await merger.saveAsBlob();
+      const url = URL.createObjectURL(mergedPdf);
+
+      console.log({url});
+
+      if(files.length > 0) {
+        await window.open(url, '_blank').focus();
+        await files.pop();
+      }
+
+
     } else if (data.orderType === 'Face Frame') {
 
       let files = [];

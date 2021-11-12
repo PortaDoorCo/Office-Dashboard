@@ -1,31 +1,30 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import Invoice from '../../Face_Frame_PDF/Invoice';
-import Acknowledgement from '../../Face_Frame_PDF/Acknowledgement';
+import Invoice from '../../Misc_Items_PDF/Invoice';
+import Acknowledgement from '../../Misc_Items_PDF/Acknowledgement';
 import moment from 'moment';
-import AssemblyList from '../../Face_Frame_PDF/AssemblyList';
-import PackingSlip from '../Door/PackingSlip';
-import Glass_Selection from '../../Sorting/Glass_Selection';
-import Packing_Slip from '../../Face_Frame_PDF/Packing_Slip';
-import QC from '../../Face_Frame_PDF/QC';
-import Door_Labels from '../../Door_PDF/Door_Labels';
-import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
+import Packing_Slip from '../../Misc_Items_PDF/Packing_Slip';
+import QC from '../../Misc_Items_PDF/QC';
+import TotalMisc from '../../Breakdowns/Doors/MaterialBreakdown/TotalMisc';
 
-const FaceFramePDF = (data, breakdowns, p, pricing) => {
+const MiscItemPDF = (data, breakdowns, p, pricing) => {
   return new Promise((resolve, reject) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
-    const totalUnits = TotalPieces(data);
+    const totalUnits = TotalMisc(data);
 
     const headerInfo = [
       {
-        margin: [40,40,40,10],
+        margin: [40,40,40,60],
         columns: [
-          {
-            stack: [{ text: 'ACKNOWLEDGEMENT', margin: [0, 0, 0, -10] }],
+          { 
+  
+            stack: [
+              {text: 'ACKNOWLEDGEMENT', margin:[0,0,0,-10]},
+            ],
             style: 'headerFont',
-            id: 'header1',
+            id: 'header1'
           },
   
           {
@@ -41,7 +40,7 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
               { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
             ],
             // width: 200,
-            alignment: 'center',
+            alignment: 'center'
           },
           {
             stack: [
@@ -94,59 +93,61 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
       {
         margin:[40,0],
         columns: [
-          {
+          { 
             width: 200,
             stack: [
-              {
-                columns: [
-                  {
-                    text: 'Customer - ',
-                    width: 60,
-                  },
-                  {
-                    stack: [
-                      { text: `${data.job_info.customer.Company}` },
+              { columns: [
+                {
+                  text: 'Customer - ',
+                  width: 60
+                },
+                { 
+                  
+                  stack: [
+                    { text: `${data.job_info.customer.Company}` },
+                    // {
+                    //   text: `${
+                    //     data.companyprofile.Contact
+                    //       ? data.companyprofile.Contact
+                    //       : ''
+                    //   }`,
+                    //   style: 'fonts',
+                    // },
+                    {
+                      text: `${
+                        data.companyprofile.Address1
+                          ? data.companyprofile.Address1
+                          : ''
+                      }`,
+                      style: 'fonts',
+                    },
+                    {
+                      text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                      style: 'fonts',
+                    },
+                    { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
+                    data.companyprofile.Fax ? 
                       {
-                        text: `${
-                          data.companyprofile.Address1
-                            ? data.companyprofile.Address1
-                            : ''
+                        text: `Fax: ${
+                          data.companyprofile.Fax ? data.companyprofile.Fax : ''
                         }`,
                         style: 'fonts',
-                      },
-                      {
-                        text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                        style: 'fonts',
-                      },
-                      {
-                        text: `Ph: ${data.companyprofile.Phone1}`,
-                        style: 'fonts',
-                      },
-                      data.companyprofile.Fax
-                        ? {
-                          text: `Fax: ${
-                            data.companyprofile.Fax
-                              ? data.companyprofile.Fax
-                              : ''
-                          }`,
-                          style: 'fonts',
-                          margin: [0, 0, 0, 10],
-                        }
-                        : null,
-                      {
-                        text: `Terms: ${
-                          data.companyprofile.PMT_TERMS
-                            ? data.companyprofile.PMT_TERMS
-                            : ''
-                        }`,
-                        style: 'fonts',
-                      },
-                    ],
-                  },
-                ],
+                        margin: [0, 0, 0, 10],
+                      } : null,
+                    {
+                      text: `Terms: ${
+                        data.companyprofile.PMT_TERMS
+                          ? data.companyprofile.PMT_TERMS
+                          : ''
+                      }`,
+                      style: 'fonts',
+                    },
+                  ],
+                }
+              ],
   
-                style: 'fontsBold',
-                margin: [0, 0, 0, 0],
+              style: 'fontsBold',
+              margin: [0, 0, 0, 0],
               },
             ],
             style: 'headerFont',
@@ -154,14 +155,15 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
   
           {
             text: '',
-            alignment: 'center',
+            // width: 200,
+            alignment: 'center'
           },
           {
             stack: [
               {
-                margin: [10, 0, 0, 0],
+                margin:[10,0,0,0],
                 columns: [
-                  {
+                  { 
                     width: 40,
                     stack: [
                       {
@@ -193,10 +195,12 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
                       {
                         text: `${data.job_info.customer.Company}`,
                         style: 'fonts',
+                        // alignment: 'right',
                         margin: [0, 0, 0, 0],
                       },
                       {
                         text: `${data.job_info.Address1}`,
+                        // alignment: 'right',
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
                       },
@@ -204,31 +208,42 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
                         text: `${
                           data.job_info.Address2 ? data.job_info.Address2 : ''
                         }`,
+                        // alignment: 'right',
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
                       },
                       {
                         text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                        // alignment: 'right',
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
                       },
+                      // {
+                      //   text: `${data.job_info.Zip}`,
+                      //   alignment: 'left',
+                      //   style: 'fonts',
+                      //   margin: [0, 0, 0, 0],
+                      // },
                       {
                         text: `${data.companyprofile.Phone1}`,
+                        // alignment: 'right',
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
                       },
                     ],
-                  },
-                ],
+                  }
+                ]
+    
               },
             ],
           },
         ],
       },
       {
-        text: '==============================================================================',
+        text:
+              '==============================================================================',
         alignment: 'center',
-        margin: [40,0],
+        margin: [40,0]
       },
     ];
 
@@ -239,8 +254,6 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
     
 
    
-
-
 
     const rowLen = Content.length;
     const ContentSorted = Content.map((i,index) => {
@@ -255,7 +268,6 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
     });
 
     const fileName = `Order #${data.orderNum}`;
-
 
     const documentDefinition = {
       pageSize: 'A4',
@@ -328,7 +340,6 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
       },
     };
 
-    // const fileName = `Order_${data.orderNum}`
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     return pdfDocGenerator.getBlob((blob) => {
       console.log({blob});
@@ -338,4 +349,4 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
   });
 };
 
-export default FaceFramePDF;
+export default MiscItemPDF;

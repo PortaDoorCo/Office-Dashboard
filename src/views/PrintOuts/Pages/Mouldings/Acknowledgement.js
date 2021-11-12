@@ -1,26 +1,24 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import Invoice from '../../Face_Frame_PDF/Invoice';
-import Acknowledgement from '../../Face_Frame_PDF/Acknowledgement';
+import Invoice from '../../Mouldings_PDF/Invoice';
+import Acknowledgement from '../../Mouldings_PDF/Acknowledgement';
 import moment from 'moment';
-import AssemblyList from '../../Face_Frame_PDF/AssemblyList';
-import PackingSlip from '../Door/PackingSlip';
-import Glass_Selection from '../../Sorting/Glass_Selection';
-import Packing_Slip from '../../Face_Frame_PDF/Packing_Slip';
-import QC from '../../Face_Frame_PDF/QC';
-import Door_Labels from '../../Door_PDF/Door_Labels';
+import AssemblyList from '../../Mouldings_PDF/AssemblyList';
+import PackingSlip from '../../Mouldings_PDF/PackingSlip';
+import QC from '../../Mouldings_PDF/QC';
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 
-const FaceFramePDF = (data, breakdowns, p, pricing) => {
+const MouldingPDF = (data, breakdowns, p, pricing) => {
   return new Promise((resolve, reject) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
-    const totalUnits = TotalPieces(data);
 
+    const totalUnits = data.mouldings.length;
+  
     const headerInfo = [
       {
-        margin: [40,40,40,10],
+        margin:[40,40,40,60],
         columns: [
           {
             stack: [{ text: 'ACKNOWLEDGEMENT', margin: [0, 0, 0, -10] }],
@@ -106,6 +104,14 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
                   {
                     stack: [
                       { text: `${data.job_info.customer.Company}` },
+                      // {
+                      //   text: `${
+                      //     data.companyprofile.Contact
+                      //       ? data.companyprofile.Contact
+                      //       : ''
+                      //   }`,
+                      //   style: 'fonts',
+                      // },
                       {
                         text: `${
                           data.companyprofile.Address1
@@ -154,6 +160,7 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
   
           {
             text: '',
+            // width: 200,
             alignment: 'center',
           },
           {
@@ -193,10 +200,12 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
                       {
                         text: `${data.job_info.customer.Company}`,
                         style: 'fonts',
+                        // alignment: 'right',
                         margin: [0, 0, 0, 0],
                       },
                       {
                         text: `${data.job_info.Address1}`,
+                        // alignment: 'right',
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
                       },
@@ -204,16 +213,25 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
                         text: `${
                           data.job_info.Address2 ? data.job_info.Address2 : ''
                         }`,
+                        // alignment: 'right',
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
                       },
                       {
                         text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                        // alignment: 'right',
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
                       },
+                      // {
+                      //   text: `${data.job_info.Zip}`,
+                      //   alignment: 'left',
+                      //   style: 'fonts',
+                      //   margin: [0, 0, 0, 0],
+                      // },
                       {
                         text: `${data.companyprofile.Phone1}`,
+                        // alignment: 'right',
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
                       },
@@ -228,7 +246,7 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
       {
         text: '==============================================================================',
         alignment: 'center',
-        margin: [40,0],
+        margin: [40,0]
       },
     ];
 
@@ -239,8 +257,6 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
     
 
    
-
-
 
     const rowLen = Content.length;
     const ContentSorted = Content.map((i,index) => {
@@ -338,4 +354,4 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
   });
 };
 
-export default FaceFramePDF;
+export default MouldingPDF;

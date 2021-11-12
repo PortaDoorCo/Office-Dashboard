@@ -16,29 +16,97 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
 
     const totalUnits = data.mouldings.length;
   
-    const headerInfo = [];
+    const headerInfo = [
+      {
+        margin:[40,40,40,60],
+        columns: [
+          {
+            stack: [
+              { text: 'QC Check Off Sheet', bold: true },
+              `Shipping Date: ${moment(data.job_info.DueDate).format(
+                'MM/DD/YYYY'
+              )}`,
+              { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
+            ],
+          },
+          {
+            stack: [
+              { text: 'Porta Door Co. Inc.', alignment: 'center' },
+              { text: '65 Cogwheel Lane', alignment: 'center' },
+              { text: 'Seymour, CT', alignment: 'center' },
+              { text: '203-888-6191', alignment: 'center' },
+              { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+            ],
+          },
+          {
+            stack: [
+              {
+                text:
+                      data.job_info.Rush && data.job_info.Sample
+                        ? 'Sample / Rush'
+                        : data.job_info.Rush
+                          ? 'Rush'
+                          : data.job_info.Sample
+                            ? 'Sample'
+                            : '',
+                alignment: 'right',
+                bold: true,
+              },
+              { text: `Order #: ${data.orderNum}`, alignment: 'right' },
+              {
+                text: `Est. Completion: ${moment(data.job_info.DueDate).format(
+                  'MM/DD/YYYY'
+                )}`,
+                alignment: 'right',
+              },
+              {
+                text: `Ship Via: ${
+                  data.job_info.shipping_method
+                    ? data.job_info.shipping_method.NAME
+                    : ''
+                }`,
+                alignment: 'right',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        stack: [
+          {
+            text: `${data.orderNum}`,
+            style: 'orderNum',
+          },
+          {
+            columns: [
+              {
+                text: `${data.job_info.customer.Company}`,
+              },
+              {
+                text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
+                alignment: 'center'
+              },
+              {
+                text: `PO: ${data.job_info.poNum.toUpperCase()}`,
+                alignment: 'right',
+              },
+            ],
+          },
+        ],
+        margin: [40, 0],
+      },
+      {
+        text: '==============================================================================',
+        alignment: 'center',
+        margin:[40,0]
+      },
+    ];
 
     let Content = [];
 
-    for (let i = 0; i < p.acknowledgement; i++) {
-      Content.push(Acknowledgement(data, pricing));
-    }
 
-    for (let i = 0; i < p.invoice; i++) {
-      Content.push(Invoice(data, pricing));
-    }
-
-    for (let i = 0; i < p.assembly_list; i++) {
-      Content.push(AssemblyList(data, pricing));
-    }
-
-    for (let i = 0; i < p.packing_slip; i++) {
-      Content.push(PackingSlip(data, breakdowns));
-    }
-
-    for (let i = 0; i < p.qc; i++) {
-      Content.push(QC(data, breakdowns));
-    }
+    Content.push(QC(data, breakdowns));
+    
 
     const rowLen = Content.length;
     const ContentSorted = Content.map((i,index) => {
