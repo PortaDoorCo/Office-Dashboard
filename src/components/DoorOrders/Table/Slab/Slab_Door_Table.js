@@ -309,7 +309,7 @@ const Slab_Door_Table = ({
                 <Field
                   name={`${table}.extraCost`}
                   type="text"
-                  component={renderPrice}
+                  component={renderField}
                   edit={edit}
                   label="extraCost"
                   {...currencyMask}
