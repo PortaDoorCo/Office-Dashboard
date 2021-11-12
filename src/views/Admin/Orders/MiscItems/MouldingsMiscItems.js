@@ -29,6 +29,7 @@ import {
   miscTotalSelector,
   miscItemLinePriceSelector
 } from '../../../../selectors/mouldingPricing';
+import currencyMask from '../../../../utils/currencyMask';
 
 let Inputs = (props) => {
   const {
@@ -110,6 +111,7 @@ let Inputs = (props) => {
                             component={renderField}
                             label="price"
                             edit={edit}
+                            {...currencyMask}
                           />
                         </InputGroup>
                       </td>
@@ -127,10 +129,12 @@ let Inputs = (props) => {
                       <td style={{ width: '150px' }}>
                         <Field
                           name={`${table}.pricePer`}
-                          component={renderPrice}
-                          edit={edit}
-                          required
+                          component={renderField}
                           type="text"
+                          label="price"
+                          edit={edit}
+                          {...currencyMask}
+                          required
                         />
                       </td>
                       <td style={{ width: '150px' }}>

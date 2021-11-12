@@ -108,7 +108,7 @@ let Inputs = (props) => {
                       <td style={{ width: '150px' }}>
                         <Field
                           name={`${table}.pricePer`}
-                          component={renderPrice}
+                          component={renderField}
                           type="text"
                         />
                       </td>
