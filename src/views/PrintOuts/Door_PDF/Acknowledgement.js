@@ -75,9 +75,7 @@ export default (data, pricing) => {
         { text: `${Size(item)}`, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
         {
-          text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-            item.full_frame ? 'Full Frame DF' : ''
-          } ${item.lite ? item.lite.NAME : ''}`,
+          text: `${item.notes ? item.notes.toUpperCase() : ''} ${item.lite ? item.lite.NAME : ''}`,
           style: 'fontsBold',
         },
 
@@ -112,15 +110,14 @@ export default (data, pricing) => {
               },
 
               {
-                text: `${
-                  part.design
-                    ? part.design.NAME
-                    : part.face_frame_design
-                      ? part.face_frame_design.NAME
-                      : part.construction.value === 'Slab'
-                        ? 'Slab'
-                        : ''
-                } ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                text: `${part.design
+                  ? part.design.NAME
+                  : part.face_frame_design
+                    ? part.face_frame_design.NAME
+                    : part.construction.value === 'Slab'
+                      ? 'Slab'
+                      : ''
+                } ${(part.construction.value === 'MT') || (part.construction.value === 'Miter') ? part.construction.value : ''} ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   part.panel
                     ? part.panel.NAME
                     : part.construction.value === 'Slab'

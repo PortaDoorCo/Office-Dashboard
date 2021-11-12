@@ -15,7 +15,7 @@ export default (data, breakdowns, type) => {
           : i.construction.value === 'Slab'
             ? 'Slab'
             : ''
-    } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
+    } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
 
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
@@ -107,7 +107,7 @@ export default (data, breakdowns, type) => {
             }),
             style: 'fonts',
           },
-          item.notes || item.full_frame || item.lite
+          item.notes || item.lite
             ? {
               text: `${item.notes ? item.notes : ''} ${
                 item.lite ? item.lite.NAME : ''

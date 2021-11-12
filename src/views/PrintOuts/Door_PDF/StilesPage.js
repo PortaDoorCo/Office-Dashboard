@@ -14,7 +14,7 @@ export default (data, breakdowns) => {
           : i.construction.value === 'Slab'
             ? 'Slab'
             : ''
-    } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
+    } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
 
 

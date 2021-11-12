@@ -225,7 +225,7 @@ export const itemPriceSelector = createSelector(
 
       if (part.dimensions) {
         const linePrice = part.dimensions.map((i) => {
-          
+          const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
 
           let width =
             numQty(i.width) <= 24
@@ -254,7 +254,7 @@ export const itemPriceSelector = createSelector(
             overcharge = 100;
           }
 
-          const price = eval(pricer && pricer.face_frame_pricing);
+          const price = eval(pricer && pricer.face_frame_pricing) + extraCost;
 
           if (height > -1) {
             return price;

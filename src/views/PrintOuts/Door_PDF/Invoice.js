@@ -75,9 +75,7 @@ export default (data, pricing) => {
         { text: `${Size(item)}`, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
         {
-          text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-            item.full_frame ? 'Full Frame DF' : ''
-          } ${item.lite ? item.lite.NAME : ''}`,
+          text: `${item.notes ? item.notes.toUpperCase() : ''} ${item.lite ? item.lite.NAME : ''}`,
           style: 'fontsBold',
         },
 
@@ -119,7 +117,7 @@ export default (data, pricing) => {
                       : part.construction.value === 'Slab'
                         ? 'Slab'
                         : ''
-                } ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                } ${(part.construction.value === 'MT') || (part.construction.value === 'Miter') ? part.construction.value : ''} ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   part.panel
                     ? part.panel.NAME
                     : part.construction.value === 'Slab'

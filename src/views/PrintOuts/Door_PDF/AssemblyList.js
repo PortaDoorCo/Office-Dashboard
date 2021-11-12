@@ -38,9 +38,7 @@ export default (data, breakdowns) => {
             { text: `${Size(item)}`, style: 'fonts' },
             item.notes || item.full_frame || item.lite
               ? {
-                text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-                  item.full_frame ? 'Full Frame DF' : ''
-                } ${item.lite ? item.lite.NAME : ''}`,
+                text: `${item.notes ? item.notes.toUpperCase() : ''} ${item.lite ? item.lite.NAME : ''}`,
                 style: 'tableBold',
                 alignment: 'left',
               }
@@ -108,7 +106,7 @@ export default (data, breakdowns) => {
                       : i.construction.value === 'Slab'
                         ? 'Slab'
                         : ''
-                } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   i.panel
                     ? i.panel.NAME
                     : i.construction.value === 'Slab'
@@ -165,7 +163,7 @@ export default (data, breakdowns) => {
       {
         table: {
           headerRows: 1,
-          widths: [21, 15, 94, 105, 105, 115],
+          widths: [21, 20, 94, 105, 105, 110],
           body: tableBody,
         },
         layout: {
@@ -281,7 +279,7 @@ export default (data, breakdowns) => {
     {
       text: '==============================================================================',
       alignment: 'center',
-      margin: [0,10,0,0]
+      margin: [0, 10, 0, 0],
     },
     table_content,
     // { text: '', pageBreak: 'before' }

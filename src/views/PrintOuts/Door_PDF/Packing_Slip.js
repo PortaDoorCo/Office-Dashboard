@@ -22,7 +22,7 @@ export default (data, breakdowns) => {
           : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
             ? ''
             : ''
-    } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
+    } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
 
   let itemNum = 0;

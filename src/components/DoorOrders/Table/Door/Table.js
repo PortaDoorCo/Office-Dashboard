@@ -189,13 +189,13 @@ const DoorTable = ({
             );
           }
         } else {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-            )
-          );
+          // dispatch(
+          //   change(
+          //     'DoorOrder',
+          //     `part_list[${i}].dimensions[${index}].notes`,
+          //     `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          //   )
+          // );
         }
       } else {
         if (
@@ -232,23 +232,23 @@ const DoorTable = ({
             }
           }
         } else {
-          if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
-            dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-              )
-            );
-          } else {
-            dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
-              )
-            );
-          }
+          // if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
+          //   dispatch(
+          //     change(
+          //       'DoorOrder',
+          //       `part_list[${i}].dimensions[${index}].notes`,
+          //       `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          //     )
+          //   );
+          // } else {
+          //   dispatch(
+          //     change(
+          //       'DoorOrder',
+          //       `part_list[${i}].dimensions[${index}].notes`,
+          //       `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
+          //     )
+          //   );
+          // }
         }
       }
     } else {
@@ -371,13 +371,13 @@ const DoorTable = ({
             );
           }
         } else {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-            )
-          );
+          // dispatch(
+          //   change(
+          //     'DoorOrder',
+          //     `part_list[${i}].dimensions[${index}].notes`,
+          //     `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          //   )
+          // );
         }
       } else {
         if (
@@ -414,23 +414,23 @@ const DoorTable = ({
             }
           }
         } else {
-          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
-            dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-              )
-            );
-          } else {
-            dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
-              )
-            );
-          }
+          // if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
+          //   dispatch(
+          //     change(
+          //       'DoorOrder',
+          //       `part_list[${i}].dimensions[${index}].notes`,
+          //       `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+          //     )
+          //   );
+          // } else {
+          //   dispatch(
+          //     change(
+          //       'DoorOrder',
+          //       `part_list[${i}].dimensions[${index}].notes`,
+          //       `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
+          //     )
+          //   );
+          // }
         }
       }
     } else {
@@ -504,122 +504,122 @@ const DoorTable = ({
   };
 
   const onStileOrRailChange = (e, index) => {
-    const value = e.target.value;
+  //   const value = e.target.value;
 
-    if ((height >= 48 && panelsH > 1) || (width >= 24 && panelsW > 1)) {
-      if (e.target.name.includes('leftStile')) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${panelsH}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          )
-        );
-      }
-      if (e.target.name.includes('rightStile')) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          )
-        );
-      }
-      if (e.target.name.includes('topRail')) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-          )
-        );
-      }
-      if (e.target.name.includes('bottomRail')) {
-        dispatch(
-          change(
-            'DoorOrder',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-          )
-        );
-      }
-    } else {
-      if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
-        if (e.target.name.includes('leftStile')) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
-            )
-          );
-        }
-        if (e.target.name.includes('rightStile')) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
-            )
-          );
-        }
-        if (e.target.name.includes('topRail')) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
-            )
-          );
-        }
-        if (e.target.name.includes('bottomRail')) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}\nSINGLE - NO GUARANTEE"`
-            )
-          );
-        }
-      } else {
-        if (e.target.name.includes('leftStile')) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-            )
-          );
-        }
-        if (e.target.name.includes('rightStile')) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-            )
-          );
-        }
-        if (e.target.name.includes('topRail')) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-            )
-          );
-        }
-        if (e.target.name.includes('bottomRail')) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-            )
-          );
-        }
-      }
-    }
+  //   if ((height >= 48 && panelsH > 1) || (width >= 24 && panelsW > 1)) {
+  //     if (e.target.name.includes('leftStile')) {
+  //       dispatch(
+  //         change(
+  //           'DoorOrder',
+  //           `part_list[${i}].dimensions[${index}].notes`,
+  //           `${panelsH}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+  //         )
+  //       );
+  //     }
+  //     if (e.target.name.includes('rightStile')) {
+  //       dispatch(
+  //         change(
+  //           'DoorOrder',
+  //           `part_list[${i}].dimensions[${index}].notes`,
+  //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+  //         )
+  //       );
+  //     }
+  //     if (e.target.name.includes('topRail')) {
+  //       dispatch(
+  //         change(
+  //           'DoorOrder',
+  //           `part_list[${i}].dimensions[${index}].notes`,
+  //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
+  //         )
+  //       );
+  //     }
+  //     if (e.target.name.includes('bottomRail')) {
+  //       dispatch(
+  //         change(
+  //           'DoorOrder',
+  //           `part_list[${i}].dimensions[${index}].notes`,
+  //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
+  //         )
+  //       );
+  //     }
+  //   } else {
+  //     if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
+  //       if (e.target.name.includes('leftStile')) {
+  //         dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             `part_list[${i}].dimensions[${index}].notes`,
+  //             `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
+  //           )
+  //         );
+  //       }
+  //       if (e.target.name.includes('rightStile')) {
+  //         dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             `part_list[${i}].dimensions[${index}].notes`,
+  //             `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
+  //           )
+  //         );
+  //       }
+  //       if (e.target.name.includes('topRail')) {
+  //         dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             `part_list[${i}].dimensions[${index}].notes`,
+  //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
+  //           )
+  //         );
+  //       }
+  //       if (e.target.name.includes('bottomRail')) {
+  //         dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             `part_list[${i}].dimensions[${index}].notes`,
+  //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}\nSINGLE - NO GUARANTEE"`
+  //           )
+  //         );
+  //       }
+  //     } else {
+  //       if (e.target.name.includes('leftStile')) {
+  //         dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             `part_list[${i}].dimensions[${index}].notes`,
+  //             `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+  //           )
+  //         );
+  //       }
+  //       if (e.target.name.includes('rightStile')) {
+  //         dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             `part_list[${i}].dimensions[${index}].notes`,
+  //             `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+  //           )
+  //         );
+  //       }
+  //       if (e.target.name.includes('topRail')) {
+  //         dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             `part_list[${i}].dimensions[${index}].notes`,
+  //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
+  //           )
+  //         );
+  //       }
+  //       if (e.target.name.includes('bottomRail')) {
+  //         dispatch(
+  //           change(
+  //             'DoorOrder',
+  //             `part_list[${i}].dimensions[${index}].notes`,
+  //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
+  //           )
+  //         );
+  //       }
+  //     }
+  //   }
   };
 
   const registerChange = (index, e) => {
@@ -632,33 +632,33 @@ const DoorTable = ({
       if (changeValue) {
         const newVal = fraction(numQty(changeValue));
 
-        if (panelsH > 1 || panelsW > 1) {
-          dispatch(
-            change(
-              'DoorOrder',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `${panelsH}H ${panelsW}W \nLeft Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
-            )
-          );
-        } else {
-          if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
-            dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}" \nSINGLE - NO GUARANTEE`
-              )
-            );
-          } else {
-            dispatch(
-              change(
-                'DoorOrder',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
-              )
-            );
-          }
-        }
+        // if (panelsH > 1 || panelsW > 1) {
+        //   dispatch(
+        //     change(
+        //       'DoorOrder',
+        //       `part_list[${i}].dimensions[${index}].notes`,
+        //       `${panelsH}H ${panelsW}W \nLeft Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
+        //     )
+        //   );
+        // } else {
+        //   if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
+        //     dispatch(
+        //       change(
+        //         'DoorOrder',
+        //         `part_list[${i}].dimensions[${index}].notes`,
+        //         `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}" \nSINGLE - NO GUARANTEE`
+        //       )
+        //     );
+        //   } else {
+        //     dispatch(
+        //       change(
+        //         'DoorOrder',
+        //         `part_list[${i}].dimensions[${index}].notes`,
+        //         `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
+        //       )
+        //     );
+        //   }
+        // }
 
         dispatch(
           change(
@@ -818,14 +818,7 @@ const DoorTable = ({
       showBuilder: false,
       unevenCheck: false,
       unevenSplit: false,
-      notes:
-        index >= 0 &&
-        (leftStile !== defaultLeftStile ||
-          rightStile !== defaultRightStile ||
-          topRail !== defaultTopRail ||
-          bottomRail !== defaultBottomRail)
-          ? `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          : '',
+      notes: '',
       glass_check_0:
         formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
     });

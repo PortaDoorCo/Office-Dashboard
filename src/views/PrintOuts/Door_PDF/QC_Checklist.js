@@ -79,7 +79,7 @@ export default (data, breakdowns) => {
           { text: Size(item), style: 'fonts' },
           { text: '[      ]', style: 'fonts' },
           // { text: 'N/A', style: 'fonts' },
-          item.notes || item.full_frame || item.lite ? 
+          item.notes || item.lite ? 
             {
               text: `${
                 item.notes ? item.notes : ''
@@ -111,7 +111,7 @@ export default (data, breakdowns) => {
                         : i.construction.value === 'Slab'
                           ? 'Slab'
                           : ''
-                  } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`,
+                  } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`,
                   style: 'fonts',
 
                 },

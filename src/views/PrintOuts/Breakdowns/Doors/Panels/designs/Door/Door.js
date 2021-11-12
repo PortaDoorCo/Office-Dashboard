@@ -64,7 +64,7 @@ export default (info, part, breakdowns) => {
       return (
         numQty(info[`unevenSplitInput${v}`]) -
         topRail +
-        unevenInset +
+        panel_factor +
         lip_factor
       );
     });
@@ -109,8 +109,8 @@ export default (info, part, breakdowns) => {
       unevenSplitTotal -
       horizMull * (panelsH - 1) -
       bottomRail -
-      unevenInset -
-      lip_factor * 2;
+      (panel_factor / 2) 
+      // (lip_factor * 2);
 
     const unevenSplitInput = (v) =>
       numQty(info[`unevenSplitInput${v}`]) -

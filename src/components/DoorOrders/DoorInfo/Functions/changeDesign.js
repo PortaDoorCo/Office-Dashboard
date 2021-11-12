@@ -84,21 +84,21 @@ const changeProfile = (p, ind, props, change) => {
       );
     }
 
-    props.dispatch(
-      change(
-        'DoorOrder',
-        `${p}.notes`,
-        `Left Stile: ${fraction(
-          part.design ? (part.design.PROFILE_WIDTH) : 0
-        )}" Right Stile: ${fraction(
-          part.design ? (part.design.PROFILE_WIDTH) : 0
-        )}" \nTop Rail: ${fraction(
-          part.design ? (part.design.PROFILE_WIDTH) : 0
-        )} Bottom Rail: ${fraction(
-          part.design ? (part.design.PROFILE_WIDTH) : 0
-        )}"`
-      )
-    );
+    // props.dispatch(
+    //   change(
+    //     'DoorOrder',
+    //     `${p}.notes`,
+    //     `Left Stile: ${fraction(
+    //       part.design ? (part.design.PROFILE_WIDTH) : 0
+    //     )}" Right Stile: ${fraction(
+    //       part.design ? (part.design.PROFILE_WIDTH) : 0
+    //     )}" \nTop Rail: ${fraction(
+    //       part.design ? (part.design.PROFILE_WIDTH) : 0
+    //     )} Bottom Rail: ${fraction(
+    //       part.design ? (part.design.PROFILE_WIDTH) : 0
+    //     )}"`
+    //   )
+    // );
   }
 
 
