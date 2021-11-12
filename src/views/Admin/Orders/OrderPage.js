@@ -109,6 +109,14 @@ import Drawer_Packing_Slip from '../../PrintOuts/Pages/Drawer/PackingSlip';
 import Drawer_Sides from '../../PrintOuts/Pages/Drawer/Sides';
 import Drawer_Bottoms from '../../PrintOuts/Pages/Drawer/Bottoms';
 
+import Face_Frame_Acknowledgement from '../../PrintOuts/Pages/FaceFrames/Acknowledgement';
+import Face_Frame_Assembly_List from '../../PrintOuts/Pages/FaceFrames/Assembly_List';
+import Face_Frame_Labels from '../../PrintOuts/Pages/FaceFrames/Door_Labels';
+import Face_Frame_Invoice from '../../PrintOuts/Pages/FaceFrames/Invoice';
+import Face_Frame_Packing_Slip from '../../PrintOuts/Pages/FaceFrames/Packing_Slip';
+import Face_Frame_QC from '../../PrintOuts/Pages/FaceFrames/QC';
+
+
 
 const cookie = Cookies.get('jwt');
 
@@ -728,7 +736,64 @@ class OrderPage extends Component {
     } else if (data.orderType === 'Mouldings') {
       MouldingsPDF(data, box_breakdowns, p, this.props.pricing);
     } else if (data.orderType === 'Face Frame') {
-      FaceFramesPDF(data, breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+      // FaceFramesPDF(data, breakdowns, p, this.props.pricing);
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Face_Frame_Acknowledgement(data, breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Face_Frame_Invoice(data, breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.assembly_list; i++) {
+        await  Face_Frame_Assembly_List(data, breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Face_Frame_Packing_Slip(data, breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await  Face_Frame_QC(data, breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.door_labels; i++) {
+        await  Face_Frame_Labels(data, breakdowns, p, this.props.pricing).then(async(v) => {
+          files.push(v);
+        });
+      }
+
+
+      const merger = new PDFMerger();
+
+      await Promise.all(files.map(async (file) => await merger.add(file)));
+
+      const mergedPdf = await merger.saveAsBlob();
+      const url = URL.createObjectURL(mergedPdf);
+
+      console.log({url});
+
+      if(files.length > 0) {
+        await window.open(url, '_blank').focus();
+        await files.pop();
+      }
+
+
     }
   };
 

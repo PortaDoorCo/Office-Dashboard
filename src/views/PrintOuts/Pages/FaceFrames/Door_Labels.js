@@ -21,39 +21,10 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
 
     let Content = [];
 
-    for (let i = 0; i < p.acknowledgement; i++) {
-      Content.push(Acknowledgement(data, pricing));
-    }
-
-    for (let i = 0; i < p.invoice; i++) {
-      Content.push(Invoice(data, pricing));
-    }
-
-    for (let i = 0; i < p.assembly_list; i++) {
-      const type = 'Page';
-
-      const newParts = Glass_Selection(data, type).map((j) => {
-        const newData = { ...data, part_list: j };
-        return newData;
-      });
-
-      newParts.map((k) => {
-        return Content.push(AssemblyList(k, breakdowns));
-      });
-    }
 
 
-    for (let i = 0; i < p.packing_slip; i++) {
-      Content.push(Packing_Slip(data, breakdowns));
-    }
-
-    for (let i = 0; i < p.qc; i++) {
-      Content.push(QC(data, breakdowns));
-    }
-
-    for (let i = 0; i < p.door_labels; i++) {
-      Content.push(Door_Labels(data, breakdowns));
-    }
+    Content.push(Door_Labels(data, breakdowns));
+    
 
 
 
