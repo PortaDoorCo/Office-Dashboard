@@ -44,7 +44,7 @@ import CsvDownloader from 'react-csv-downloader';
 
 import DoorPDF from '../../PrintOuts/Pages/Door/DoorPDF';
 import DrawerPDF from '../../PrintOuts/Pages/Drawer/DrawerPDF';
-import BoxLabelPDF from '../../PrintOuts/Pages/Drawer/BoxLabels';
+// import BoxLabelPDF from '../../PrintOuts/Pages/Drawer/BoxLabels';
 
 import moment from 'moment';
 
@@ -88,6 +88,51 @@ import Rails from '../../PrintOuts/Breakdowns/Doors/Rails/Rails';
 import Stiles from '../../PrintOuts/Breakdowns/Doors/Stiles/Stiles';
 import Navigation from './Navigation';
 
+import PDFMerger from 'pdf-merger-js/browser';
+import Acknowledgement from '../../PrintOuts/Pages/Door/Acknowledgement';
+import Invoice from '../../PrintOuts/Pages/Door/Invoice';
+import AssemblyList from '../../PrintOuts/Pages/Door/AssemblyList';
+import PanelsPage from '../../PrintOuts/Pages/Door/Panels';
+import StilesPage from '../../PrintOuts/Pages/Door/Stiles';
+import RailsPage from '../../PrintOuts/Pages/Door/Rails';
+import Profiles from '../../PrintOuts/Pages/Door/Profiles';
+import MaterialsList from '../../PrintOuts/Pages/Door/MaterialList';
+import PackingSlip from '../../PrintOuts/Pages/Door/PackingSlip';
+import QC_Checklist from '../../PrintOuts/Pages/Door/QC';
+import Door_Labels from '../../PrintOuts/Pages/Door/Door_Labels';
+
+import Drawer_Acknowledgement from '../../PrintOuts/Pages/Drawer/Acknowledgement';
+import Drawer_Invoice from '../../PrintOuts/Pages/Drawer/Invoice';
+import Drawer_AssemblyList from '../../PrintOuts/Pages/Drawer/AssemblyList';
+import Drawer_Box_Labels from '../../PrintOuts/Pages/Drawer/Box_Labels';
+import Drawer_Packing_Slip from '../../PrintOuts/Pages/Drawer/PackingSlip';
+import Drawer_Sides from '../../PrintOuts/Pages/Drawer/Sides';
+import Drawer_Bottoms from '../../PrintOuts/Pages/Drawer/Bottoms';
+
+import Face_Frame_Acknowledgement from '../../PrintOuts/Pages/FaceFrames/Acknowledgement';
+import Face_Frame_Assembly_List from '../../PrintOuts/Pages/FaceFrames/Assembly_List';
+import Face_Frame_Labels from '../../PrintOuts/Pages/FaceFrames/Door_Labels';
+import Face_Frame_Invoice from '../../PrintOuts/Pages/FaceFrames/Invoice';
+import Face_Frame_Packing_Slip from '../../PrintOuts/Pages/FaceFrames/Packing_Slip';
+import Face_Frame_QC from '../../PrintOuts/Pages/FaceFrames/QC';
+
+import Misc_Item_Acknowledgement from '../../PrintOuts/Pages/MiscItems/Acknowledgement';
+import Misc_Item_Invoice from '../../PrintOuts/Pages/MiscItems/Invoice';
+import Misc_Item_Packing_Slip from '../../PrintOuts/Pages/MiscItems/Packing_Slip';
+import Misc_Item_QC from '../../PrintOuts/Pages/MiscItems/QC';
+
+import Moulding_Acknowledgement from '../../PrintOuts/Pages/Mouldings/Acknowledgement';
+import Moulding_Invoice from '../../PrintOuts/Pages/Mouldings/Invoice';
+import Moulding_Assembly_List from '../../PrintOuts/Pages/Mouldings/AssemblyList';
+import Moulding_Packing_Slip from '../../PrintOuts/Pages/Mouldings/Packing_Slip';
+import Moulding_QC from '../../PrintOuts/Pages/Mouldings/QC';
+
+import LoadingModal from '../../../utils/LoadingModal';
+import Typical from 'react-typical';
+import ReactLoading from 'react-loading';
+
+import LoadingOverlay from 'react-loading-overlay';
+
 const cookie = Cookies.get('jwt');
 
 const toDataUrl = (url, callback) => {
@@ -122,6 +167,7 @@ class OrderPage extends Component {
       notesOpen: false,
       printModal: false,
       copyModal: false,
+      loadingModal: false
     };
     this.someRef = createRef();
   }
@@ -278,7 +324,16 @@ class OrderPage extends Component {
     await this.props.toggle();
   };
 
-  downloadPDF = async (printerSettings) => {
+  toggleLoadingModal = () => {
+    this.setState({
+      loadingModal: !this.state.loadingModal
+    });
+  }
+
+  downloadPDF = async (p) => {
+
+    this.toggleLoadingModal();
+
     const {
       formState,
       drawerState,
@@ -297,6 +352,29 @@ class OrderPage extends Component {
           : mouldingsState
             ? mouldingsState
             : [];
+
+    const merger = new PDFMerger();
+
+
+    const generatePDF = async (files) => {
+      if (files.length > 0) {
+
+
+
+        await Promise.all(files.map(async (file) => await merger.add(file)));
+
+        const mergedPdf = await merger.saveAsBlob();
+        const url = URL.createObjectURL(mergedPdf);
+
+        console.log({ url });
+
+
+        await window.open(url, '_blank').focus();
+        await files.pop();
+        
+        this.toggleLoadingModal();
+      } 
+    };
 
     const noPhoto =
       'https://res.cloudinary.com/porta-door/image/upload/v1634764886/none_2fcc23e82e.png';
@@ -400,27 +478,465 @@ class OrderPage extends Component {
       } catch (err) {
         console.log('errrrrrr', err);
       }
-      DoorPDF(
-        data,
-        design1,
-        edges1,
-        moulds1,
-        miter1,
-        mt_1,
-        panels1,
-        appliedProfiles1,
-        breakdowns,
-        printerSettings,
-        this.props.pricing
-      );
+
+      let files = [];
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Acknowledgement(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+        await Profiles(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Invoice(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.assembly_list; i++) {
+        await AssemblyList(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.panels; i++) {
+        await PanelsPage(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.stiles; i++) {
+        await StilesPage(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.rails; i++) {
+        await RailsPage(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.profiles; i++) {
+        await Profiles(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.materials; i++) {
+        await MaterialsList(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await PackingSlip(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await QC_Checklist(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.door_labels; i++) {
+        await Door_Labels(
+          data,
+          design1,
+          edges1,
+          moulds1,
+          miter1,
+          mt_1,
+          panels1,
+          appliedProfiles1,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      await generatePDF(files);
     } else if (data.orderType === 'Drawer Order') {
-      DrawerPDF(data, box_breakdowns, printerSettings, this.props.pricing);
+      let files = [];
+
+      // DrawerPDF(data, box_breakdowns, p, this.props.pricing);
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Drawer_Acknowledgement(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Drawer_Invoice(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      for (let i = 0; i < p.assembly_list; i++) {
+        await Drawer_AssemblyList(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.box_sides; i++) {
+        await Drawer_Sides(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      for (let i = 0; i < p.box_bottoms; i++) {
+        await Drawer_Bottoms(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Drawer_Packing_Slip(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.box_labels; i++) {
+        await Drawer_Box_Labels(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      await generatePDF(files);
     } else if (data.orderType === 'Misc Items') {
-      MiscItemsPDF(data, box_breakdowns, printerSettings, this.props.pricing);
+      // MiscItemsPDF(data, box_breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Misc_Item_Acknowledgement(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Misc_Item_Invoice(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Misc_Item_Packing_Slip(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await Misc_Item_QC(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      await generatePDF(files);
     } else if (data.orderType === 'Mouldings') {
-      MouldingsPDF(data, box_breakdowns, printerSettings, this.props.pricing);
+      // MouldingsPDF(data, box_breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Moulding_Acknowledgement(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Moulding_Invoice(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.assembly_list; i++) {
+        await Moulding_Assembly_List(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Moulding_Packing_Slip(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await Moulding_QC(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      await generatePDF(files);
     } else if (data.orderType === 'Face Frame') {
-      FaceFramesPDF(data, breakdowns, printerSettings, this.props.pricing);
+      let files = [];
+
+      // FaceFramesPDF(data, breakdowns, p, this.props.pricing);
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await Face_Frame_Acknowledgement(
+          data,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await Face_Frame_Invoice(data, breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      for (let i = 0; i < p.assembly_list; i++) {
+        await Face_Frame_Assembly_List(
+          data,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Face_Frame_Packing_Slip(
+          data,
+          breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await Face_Frame_QC(data, breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      for (let i = 0; i < p.door_labels; i++) {
+        await Face_Frame_Labels(data, breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      await generatePDF(files);
     }
   };
 
@@ -441,7 +957,7 @@ class OrderPage extends Component {
           : mouldingsState
             ? mouldingsState
             : [];
-    BoxLabelPDF(data, box_breakdowns);
+    Drawer_Box_Labels(data, box_breakdowns);
   };
 
   render() {
@@ -478,7 +994,10 @@ class OrderPage extends Component {
       exportCsv = s
         ? s.part_list.map((f, index) => {
           f.dimensions.forEach((j, ind) => {
-            if ((f.orderType.value === 'DF') || (numQty(j.width) > numQty(j.height))) {
+            if (
+              f.orderType.value === 'DF' ||
+                numQty(j.width) > numQty(j.height)
+            ) {
               a.push([
                 s.orderNum,
                 '15DF',
@@ -524,10 +1043,10 @@ class OrderPage extends Component {
 
       const razor = s
         ? s.part_list.map((f, index) => {
-          console.log({ f });
+          // console.log({ f });
 
           f.dimensions.forEach((j, ind) => {
-            console.log({ j });
+            // console.log({ j });
 
             const { breakdowns } = this.props;
 
@@ -539,8 +1058,8 @@ class OrderPage extends Component {
               return rail;
             });
 
-            console.log({ rail });
-            console.log({ stile });
+            // console.log({ rail });
+            // console.log({ stile });
 
             const stilePrint = stile.map((i) => {
               return razorGuage.push([
@@ -601,6 +1120,7 @@ class OrderPage extends Component {
 
     return (
       <div className="animated noPrint resize">
+
         <CopyModal
           message={'Would you like to copy this order?'}
           title={'Copy Order'}
@@ -609,6 +1129,8 @@ class OrderPage extends Component {
           modal={this.state.copyModal}
           action={this.copyOrder}
         />
+
+
 
         <Modal
           isOpen={props.modal}
@@ -859,7 +1381,9 @@ class OrderPage extends Component {
                                 .reverse()
                                 .map((i, index) => (
                                   <tr key={index}>
-                                    <th>{i.status ? i.status : 'Order Edited'}</th>
+                                    <th>
+                                      {i.status ? i.status : 'Order Edited'}
+                                    </th>
                                     <td>
                                       {moment(i.date).format(
                                         'dddd, MMMM Do YYYY, h:mm:ss a'
@@ -885,7 +1409,8 @@ class OrderPage extends Component {
                       <CardBody>
                         <h2>Conversation Notes</h2>
                         {selectedOrder &&
-                        ((selectedOrder.orderType === 'Door Order') || (selectedOrder.orderType === 'Face Frame')) ? (
+                        (selectedOrder.orderType === 'Door Order' ||
+                          selectedOrder.orderType === 'Face Frame') ? (
                             <DoorConversationNotes
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
@@ -1068,6 +1593,20 @@ class OrderPage extends Component {
           mouldingsState
           breakdowns
           box_breakdowns
+        />
+
+
+        <LoadingModal 
+          modal={this.state.loadingModal}
+          toggle={this.toggleLoadingModal}
+          message={
+            <div>
+              <center>
+                <h3>Loading...</h3>
+              </center>
+            </div>
+          }
+          title={'Loading'}
         />
       </div>
     );

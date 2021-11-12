@@ -4,50 +4,7 @@ import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
   return [
-    {
-      columns: [
-        {
-          stack: ['QC Check Off Sheet']
-        },
-        {
-          stack: [
-            { text: 'Porta Door Co. Inc.', alignment: 'center' },
-            { text: '65 Cogwheel Lane', alignment: 'center' },
-            { text: 'Seymour, CT', alignment: 'center' },
-            { text: '203-888-6191', alignment: 'center' },
-            { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-          ]
-        },
-        {
-          stack: [
-            { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
-            { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            { text: `Estimated Ship: ${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`, alignment: 'right' }
-          ]
-        }
-      ]
-    },
-    {
-      columns: [
-        {
-          text: `${data.job_info.customer.Company}`,
-        },
-        {
-          text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
-          alignment: 'center'
-        },
-        {
-          text: `PO: ${data.job_info.poNum.toUpperCase()}`,
-          alignment: 'right',
-        },
-      ],
-      margin: [0,10,0,0]
-    },
-    {
-      text:
-        '==============================================================================',
-      alignment: 'center',
-    },
+    
     Glass_Selection(data).map((i, index) => {
       const tableBody = [
         [
@@ -84,11 +41,15 @@ export default (data, breakdowns) => {
 
       return [
         {
-          margin: [0, 2, 0, 0],
+          margin: [0, 0, 0, 0],
           columns: [
             {
+              width: 280,
               stack: [
-                { text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME}`, style: 'woodtype' },
+                {
+                  text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
+                  style: 'woodtype',
+                },
                 {
                   text: `${i.face_frame_design ? i.face_frame_design.NAME : ''}`,
                   style: 'fonts',
@@ -99,7 +60,7 @@ export default (data, breakdowns) => {
                 // },
               ]
             },
-            { text: ' ', style: 'fontsBold', width: 150 },
+            // { text: ' ', style: 'fontsBold' },
             { 
               stack: [
                 {text: ' ', style:'woodtype' },

@@ -839,6 +839,7 @@ const DoorTable = ({
     return check_if_glass;
   };
 
+
   return (
     <div>
       {modal ? (
@@ -860,7 +861,7 @@ const DoorTable = ({
             <Col>
               <FormGroup>
                 <Label htmlFor="panel">
-                  <strong>Line # {index + 1}</strong>
+                  <strong>Item # {i + 1} - Line # {index + 1}</strong>
                 </Label>
               </FormGroup>
             </Col>

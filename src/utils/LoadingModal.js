@@ -1,0 +1,32 @@
+import React, { useState } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
+const ModalUtil = (props) => {
+  const { className, modal, toggle, message, title, action, actionButton } =
+    props;
+
+  return (
+    <div className="loading-modal">
+      <Modal isOpen={modal} toggle={toggle} className={className}>
+        <ModalHeader toggle={toggle}>{title}</ModalHeader>
+        <ModalBody>{message}</ModalBody>
+        <ModalFooter>
+          {action ? (
+            <Button
+              color={props.buttonColor ? props.buttonColor : 'primary'}
+              onClick={action}
+            >
+              {actionButton}
+            </Button>
+          ) : null}
+
+          {/* <Button color="secondary" onClick={toggle}>
+            Close
+          </Button> */}
+        </ModalFooter>
+      </Modal>
+    </div>
+  );
+};
+
+export default ModalUtil;

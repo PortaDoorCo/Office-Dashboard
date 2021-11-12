@@ -249,6 +249,25 @@ ul>li:hover {
   animation: spin 2s linear infinite;
 }
 
+// .loading-modal {
+//   text-align: center;
+//   padding: 0!important;
+// }
+
+// .loading-modal:before {
+//   content: '';
+//   display: inline-block;
+//   height: 100%;
+//   vertical-align: middle;
+//   margin-right: -4px;
+// }
+
+// .loading-modal-dialog {
+//   display: inline-block;
+//   text-align: left;
+//   vertical-align: middle;
+// }
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

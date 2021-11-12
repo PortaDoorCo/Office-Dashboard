@@ -25,25 +25,25 @@ export default (data, breakdowns) => {
     } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
 
-  let itemNum = 0;
+  // let itemNum = 0;
 
-  const itemNumCounter = {
-    ...data,
-    part_list: data.part_list.map((i) => {
-      return {
-        ...i,
-        dimensions: i.dimensions.map((j) => {
-          itemNum += 1;
-          return {
-            ...j,
-            item: itemNum,
-          };
-        }),
-      };
-    }),
-  };
+  // const itemNumCounter = {
+  //   ...data,
+  //   part_list: data.part_list.map((i) => {
+  //     return {
+  //       ...i,
+  //       dimensions: i.dimensions.map((j) => {
+  //         itemNum += 1;
+  //         return {
+  //           ...j,
+  //           item: itemNum,
+  //         };
+  //       }),
+  //     };
+  //   }),
+  // };
 
-  const a = Glass_Selection(itemNumCounter).map((v) => {
+  const a = Glass_Selection(data).map((v) => {
 
     console.log({v});
 
@@ -211,193 +211,7 @@ export default (data, breakdowns) => {
   // const table_body = [];
 
   return [
-    {
-      columns: [
-        {
-          stack: [
-            { text: `Our Order: ${data.orderNum}`, bold: true },
-            { qr: `${data.id}`, fit: '75', margin: [0, 0, 0, 5] },
-            {
-              text: `Job: ${
-                data.status === 'Quote' ? 'QUOTE' : ''
-              } - ${data.job_info?.poNum.toUpperCase()}`,
-              style: 'fonts',
-            },
-          ],
-        },
-        {
-          stack: [
-            {
-              text: 'Porta Door Co, INC.',
-              alignment: 'center',
-              style: 'fonts',
-            },
-            {
-              text: 'Phone: 203-888-6191  Fax: 203-888-5803',
-              alignment: 'center',
-              style: 'fonts',
-            },
-            {
-              text: 'Email: Info@portadoor.com',
-              alignment: 'center',
-              style: 'fonts',
-            },
-          ],
-        },
-        {
-          stack: [
-            {
-              text: 'PACKING SLIP',
-              alignment: 'right',
-              style: 'woodtype',
-              decoration: 'underline',
-            },
-            {
-              text: `Ship Via: ${data.job_info?.shipping_method?.NAME}`,
-              alignment: 'right',
-              style: 'fonts',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      margin: [0, 10, 0, 0],
-      columns: [
-        {
-          width: 200,
-          stack: [
-            {
-              columns: [
-                {
-                  text: 'Sold To: ',
-                  width: 60,
-                },
-                {
-                  stack: [
-                    { text: `${data.job_info.customer.Company}` },
-                    // {
-                    //   text: `${
-                    //     data.companyprofile.Contact
-                    //       ? data.companyprofile.Contact
-                    //       : ''
-                    //   }`,
-                    //   style: 'fonts',
-                    // },
-                    {
-                      text: `${
-                        data.companyprofile.Address1
-                          ? data.companyprofile.Address1
-                          : ''
-                      }`,
-                      style: 'fonts',
-                    },
-                    {
-                      text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                      style: 'fonts',
-                    },
-                    {
-                      text: `Ph: ${data.companyprofile.Phone1}`,
-                      style: 'fonts',
-                    },
-                    data.companyprofile.Fax
-                      ? {
-                        text: `Fax: ${
-                          data.companyprofile.Fax
-                            ? data.companyprofile.Fax
-                            : ''
-                        }`,
-                        style: 'fonts',
-                        margin: [0, 0, 0, 10],
-                      }
-                      : null,
-                  ],
-                },
-              ],
 
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-          ],
-          style: 'fonts',
-        },
-
-        {
-          text: `${
-            data.job_info?.Shop_Notes
-              ? data.job_info?.Shop_Notes?.toUpperCase()
-              : ''
-          }`,
-          margin: [10, 0, 0, 0],
-        },
-        {
-          stack: [
-            {
-              margin: [10, 0, 0, 0],
-              columns: [
-                {
-                  width: 40,
-                  stack: [
-                    {
-                      text: 'Ship To: ',
-                      style: 'fonts',
-                      alignment: 'left',
-                      margin: [0, 0, 0, 0],
-                    },
-                  ],
-                },
-                {
-                  stack: [
-                    {
-                      text: `${data.job_info.customer.Company}`,
-                      style: 'fonts',
-                      // alignment: 'right',
-                      margin: [0, 0, 0, 0],
-                    },
-                    {
-                      text: `${data.job_info.Address1}`,
-                      // alignment: 'right',
-                      style: 'fonts',
-                      margin: [0, 0, 0, 0],
-                    },
-                    {
-                      text: `${
-                        data.job_info.Address2 ? data.job_info.Address2 : ''
-                      }`,
-                      // alignment: 'right',
-                      style: 'fonts',
-                      margin: [0, 0, 0, 0],
-                    },
-                    {
-                      text: `${data.job_info.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                      // alignment: 'right',
-                      style: 'fonts',
-                      margin: [0, 0, 0, 0],
-                    },
-                    // {
-                    //   text: `${data.job_info.Zip}`,
-                    //   alignment: 'left',
-                    //   style: 'fonts',
-                    //   margin: [0, 0, 0, 0],
-                    // },
-                    {
-                      text: `${data.companyprofile.Phone1}`,
-                      // alignment: 'right',
-                      style: 'fonts',
-                      margin: [0, 0, 0, 0],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      text: '==============================================================================',
-      alignment: 'center',
-    },
     table_body,
     {
       columns: [
