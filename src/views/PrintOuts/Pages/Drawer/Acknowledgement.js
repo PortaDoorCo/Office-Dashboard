@@ -24,7 +24,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
         columns: [
           {
   
-            stack: [{ text: 'ACKNOWLEDGEMENT', margin: [0, 0, 0, -10] }],
+            stack: [{ text: `${ data.status === 'Quote' ? 'QUOTE' : 'ORDER'}`, margin: [0, 0, 0, -10] }],
             style: 'headerFont',
           },
   

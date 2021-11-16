@@ -55,6 +55,7 @@ export default (data, breakdowns) => {
             : ''
             }`,
             alignment: 'center',
+            style: 'fontsBold',
           },
           { text: '' },
         ],

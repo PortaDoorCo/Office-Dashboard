@@ -23,7 +23,7 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
         margin: [40,40,40,10],
         columns: [
           {
-            stack: [{ text: 'ACKNOWLEDGEMENT', margin: [0, 0, 0, -10] }],
+            stack: [{ text: `${ data.status === 'Quote' ? 'QUOTE' : 'ORDER'}`, margin: [0, 0, 0, -10] }],
             style: 'headerFont',
             id: 'header1',
           },

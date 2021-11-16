@@ -14,7 +14,7 @@ export default (data, breakdowns) => {
 
   return [
     
-    data.part_list.map((i) => {
+    data.part_list.map((i, index) => {
       const info = [];
 
       const tableBody = [];
@@ -147,9 +147,9 @@ export default (data, breakdowns) => {
         );
       });
 
-      let table = tableBody.map((i, index) => {
+      let table = tableBody.map((i, k) => {
         return [
-          data.job_info?.Shop_Notes
+          index === 0 && data.job_info?.Shop_Notes
             ? {
               columns: [
                 { text: '' },
@@ -160,12 +160,13 @@ export default (data, breakdowns) => {
                   : ''
                   }`,
                   alignment: 'center',
+                  style: 'fontsBold',
                 },
                 { text: '' },
               ],
               margin: [0, -26, 0, 10],
             } : null,
-          info[index],
+          info[k],
           {
             table: {
               headerRows: 1,

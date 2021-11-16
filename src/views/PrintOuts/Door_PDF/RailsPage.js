@@ -189,7 +189,7 @@ export default (data, breakdowns) => {
     });
 
     return [
-      data.job_info?.Shop_Notes
+      index === 0 && data.job_info?.Shop_Notes
         ? {
           columns: [
             { text: '' },
@@ -200,6 +200,7 @@ export default (data, breakdowns) => {
               : ''
               }`,
               alignment: 'center',
+              style: 'fontsBold',
             },
             { text: '' },
           ],

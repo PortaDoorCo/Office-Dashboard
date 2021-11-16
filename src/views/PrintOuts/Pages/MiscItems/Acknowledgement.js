@@ -21,7 +21,7 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
           { 
   
             stack: [
-              {text: 'ACKNOWLEDGEMENT', margin:[0,0,0,-10]},
+              {text: `${ data.status === 'Quote' ? 'QUOTE' : 'ORDER'}`, margin:[0,0,0,-10]},
             ],
             style: 'headerFont',
             id: 'header1'
