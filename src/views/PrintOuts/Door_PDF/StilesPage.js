@@ -107,23 +107,24 @@ export default (data, breakdowns) => {
 
 
     return [
-      {
-        columns: [
-          { text: '' },
-          {
-            text: `${
+      data.job_info?.Shop_Notes
+        ? {
+          columns: [
+            { text: '' },
+            {
+              text: `${
               data.job_info?.Shop_Notes
                 ? data.job_info?.Shop_Notes?.toUpperCase()
                 : ''
-            }`,
-            alignment: 'center',
-          },
-          { text: '' },
-        ],
-        margin: [0, -29, 0, 10],
-      },
+              }`,
+              alignment: 'center',
+            },
+            { text: '' },
+          ],
+          margin: [0, -29, 0, 0],
+        } : null,
       {
-        margin: [0, 0, 0, 0],
+        margin: [0, 10, 0, 0],
         columns: [
           {
             text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${

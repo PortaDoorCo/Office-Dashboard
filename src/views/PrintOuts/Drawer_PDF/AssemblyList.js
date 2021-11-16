@@ -149,21 +149,22 @@ export default (data, breakdowns) => {
 
       let table = tableBody.map((i, index) => {
         return [
-          {
-            columns: [
-              { text: '' },
-              {
-                text: `${
-                  data.job_info?.Shop_Notes
-                    ? data.job_info?.Shop_Notes?.toUpperCase()
-                    : ''
-                }`,
-                alignment: 'center',
-              },
-              { text: '' },
-            ],
-            margin: [0, -26, 0, 10],
-          },
+          data.job_info?.Shop_Notes
+            ? {
+              columns: [
+                { text: '' },
+                {
+                  text: `${
+                data.job_info?.Shop_Notes
+                  ? data.job_info?.Shop_Notes?.toUpperCase()
+                  : ''
+                  }`,
+                  alignment: 'center',
+                },
+                { text: '' },
+              ],
+              margin: [0, -26, 0, 0],
+            } : null,
           info[index],
           {
             table: {

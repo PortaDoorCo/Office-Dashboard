@@ -84,23 +84,24 @@ export default (data, breakdowns) => {
     });
 
     return [
+      data.job_info?.Shop_Notes
+        ? {
+          columns: [
+            { text: '' },
+            {
+              text: `${
+            data.job_info?.Shop_Notes
+              ? data.job_info?.Shop_Notes?.toUpperCase()
+              : ''
+              }`,
+              alignment: 'center',
+            },
+            { text: '' },
+          ],
+          margin: [0, -26, 0, 0],
+        } : null,
       {
-        columns: [
-          { text: '' },
-          {
-            text: `${
-              data.job_info?.Shop_Notes
-                ? data.job_info?.Shop_Notes?.toUpperCase()
-                : ''
-            }`,
-            alignment: 'center',
-          },
-          { text: '' },
-        ],
-        margin: [0, -26, 0, 10],
-      },
-      {
-        margin: [0, 0, 0, 0],
+        margin: [0, 10, 0, 0],
         columns: [
           {
             stack: [
