@@ -108,7 +108,22 @@ export default (data, breakdowns) => {
 
     return [
       {
-        margin: [0, 10, 0, 0],
+        columns: [
+          { text: '' },
+          {
+            text: `${
+              data.job_info?.Shop_Notes
+                ? data.job_info?.Shop_Notes?.toUpperCase()
+                : ''
+            }`,
+            alignment: 'center',
+          },
+          { text: '' },
+        ],
+        margin: [0, -29, 0, 10],
+      },
+      {
+        margin: [0, 0, 0, 0],
         columns: [
           {
             text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${

@@ -124,6 +124,21 @@ export default (data, breakdowns, type) => {
 
     return [
       {
+        columns: [
+          { text: '' },
+          {
+            text: `${
+              data.job_info?.Shop_Notes
+                ? data.job_info?.Shop_Notes?.toUpperCase()
+                : ''
+            }`,
+            alignment: 'center',
+          },
+          { text: '' },
+        ],
+        margin: [0, -21, 0, 10],
+      },
+      {
         margin: [0, 10, 0, 0],
         columns: [
           {

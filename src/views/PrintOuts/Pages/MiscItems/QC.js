@@ -81,7 +81,7 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
                 text: `${data.job_info.customer.Company}`,
               },
               {
-                text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
+                text: '',
                 alignment: 'center'
               },
               {

@@ -44,7 +44,21 @@ export default (data, breakdowns) => {
   // const table_body = [];
 
   return [
-   
+    {
+      columns: [
+        { text: '' },
+        {
+          text: `${
+            data.job_info?.Shop_Notes
+              ? data.job_info?.Shop_Notes?.toUpperCase()
+              : ''
+          }`,
+          alignment: 'center',
+        },
+        { text: '' },
+      ],
+      margin: [0, -26, 0, 10],
+    },
     {
       table: {
         headerRows: 1,
