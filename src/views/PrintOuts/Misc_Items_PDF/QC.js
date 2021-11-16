@@ -59,7 +59,7 @@ export default (data, breakdowns) => {
           },
           { text: '' },
         ],
-        margin: [0, -26, 0, 0],
+        margin: [0, -26, 0, 10],
       } : null,
     {
       table: {

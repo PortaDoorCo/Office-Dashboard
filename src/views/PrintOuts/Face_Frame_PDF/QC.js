@@ -57,7 +57,7 @@ export default (data, breakdowns) => {
             margin: [0, -26, 0, 0],
           } : null,
         {
-          margin: [0, 0, 0, 0],
+          margin: [0, 10, 0, 0],
           columns: [
             {
               width: 280,
