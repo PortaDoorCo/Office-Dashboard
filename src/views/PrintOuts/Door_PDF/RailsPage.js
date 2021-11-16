@@ -189,6 +189,23 @@ export default (data, breakdowns) => {
     });
 
     return [
+      index === 0 && data.job_info?.Shop_Notes
+        ? {
+          columns: [
+            { text: '' },
+            {
+              text: `${
+            data.job_info?.Shop_Notes
+              ? data.job_info?.Shop_Notes?.toUpperCase()
+              : ''
+              }`,
+              alignment: 'center',
+              style: 'fontsBold',
+            },
+            { text: '' },
+          ],
+          margin: [0, -29, 0, 0],
+        } : null,
       {
         margin: [0, 10, 0, 0],
         columns: [

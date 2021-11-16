@@ -7,10 +7,7 @@ import SlabSize from '../Breakdowns/Doors/SlabSize';
 import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
-
-
   let itemNum = 0;
-
 
   const table_content = data.part_list.map((i, index) => {
     const tableBody = [
@@ -25,10 +22,9 @@ export default (data, breakdowns) => {
     ];
 
     GlassSort(i).forEach((item, ind) => {
-
       itemNum += 1;
-      
-      console.log({item});
+
+      console.log({ item });
 
       tableBody.push([
         { text: item.item ? item.item : itemNum, style: 'fonts' },
@@ -38,7 +34,9 @@ export default (data, breakdowns) => {
             { text: `${Size(item)}`, style: 'fonts' },
             item.notes || item.full_frame || item.lite
               ? {
-                text: `${item.notes ? item.notes.toUpperCase() : ''} ${item.lite ? item.lite.NAME : ''}`,
+                text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+                  item.lite ? item.lite.NAME : ''
+                }`,
                 style: 'tableBold',
                 alignment: 'left',
               }
@@ -63,10 +61,9 @@ export default (data, breakdowns) => {
           stack: [
             {
               text: (Panels(item, i, breakdowns) || []).map((panel) => {
-
-                console.log({qty: panel.qty});
-                console.log({measurement: panel.measurement});
-                console.log({pattern: panel.pattern});
+                console.log({ qty: panel.qty });
+                console.log({ measurement: panel.measurement });
+                console.log({ pattern: panel.pattern });
 
                 return `${panel.qty} ${panel.measurement} ${
                   '- ' + panel.pattern
@@ -85,11 +82,27 @@ export default (data, breakdowns) => {
         },
       ]);
     });
-    
 
     return [
+      index === 0 && data.job_info?.Shop_Notes
+        ? {
+          columns: [
+            { text: '' },
+            {
+              text: `${
+            data.job_info?.Shop_Notes
+              ? data.job_info?.Shop_Notes?.toUpperCase()
+              : ''
+              }`,
+              alignment: 'center',
+              style: 'fontsBold',
+            },
+            { text: '' },
+          ],
+          margin: [0, -26, 0, 0],
+        } : null,
       {
-        margin: [0, 0, 0, 0],
+        margin: [0, 10, 0, 0],
         columns: [
           {
             stack: [
@@ -106,7 +119,12 @@ export default (data, breakdowns) => {
                       : i.construction.value === 'Slab'
                         ? 'Slab'
                         : ''
-                } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                } ${
+                  i.construction.value === 'MT' ||
+                  i.construction.value === 'Miter'
+                    ? i.construction.value
+                    : ''
+                } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   i.panel
                     ? i.panel.NAME
                     : i.construction.value === 'Slab'
@@ -116,7 +134,11 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
               {
-                text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
+                text: `${
+                  i.thickness?.grade_name ? i.thickness?.grade_name : ''
+                }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
+                  i.thickness.thickness_2
+                }"`,
                 style: 'woodtype',
               },
             ],
@@ -129,7 +151,11 @@ export default (data, breakdowns) => {
                 alignment: 'center',
               },
               {
-                text: `${i.applied_profile && i.applied_profile.NAME !== 'None' ? i.applied_profile.NAME.toUpperCase() : ''}`,
+                text: `${
+                  i.applied_profile && i.applied_profile.NAME !== 'None'
+                    ? i.applied_profile.NAME.toUpperCase()
+                    : ''
+                }`,
                 style: 'fontsBold',
                 alignment: 'center',
               },
@@ -144,9 +170,9 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
               {
-                text: `IP:  ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}   Edge:  ${
-                  i.edge ? i.edge.NAME : 'None'
-                }`,
+                text: `IP:  ${
+                  i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+                }   Edge:  ${i.edge ? i.edge.NAME : 'None'}`,
                 style: 'fonts',
               },
               // { text: `Applied Profile: ${i.applied_profile ? i.applied_profile.NAME : 'None'}`, style: 'fonts' },
@@ -195,7 +221,6 @@ export default (data, breakdowns) => {
   });
 
   return [
-    
     table_content,
     // { text: '', pageBreak: 'before' }
   ];

@@ -72,6 +72,8 @@ export default (data, pricing) => {
       ];
 
 
+      console.log({subtotal: data.subTotals, otherSub: subTotal });
+
 
 
       part.dimensions.forEach((item, index) => {

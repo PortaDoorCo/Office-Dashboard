@@ -152,12 +152,7 @@ const DoorPDF =  async (
           },
 
           {
-            text: `${
-              data.job_info?.Shop_Notes
-                ? data.job_info?.Shop_Notes?.toUpperCase()
-                : ''
-            }`,
-            margin: [10, 0, 0, 0],
+            text: ''
           },
           {
             stack: [

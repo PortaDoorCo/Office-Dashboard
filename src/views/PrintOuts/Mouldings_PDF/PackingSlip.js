@@ -38,7 +38,23 @@ export default (data, breakdowns) => {
   // const table_body = [];
 
   return [
-    
+    data.job_info?.Shop_Notes
+      ? {
+        columns: [
+          { text: '' },
+          {
+            text: `${
+          data.job_info?.Shop_Notes
+            ? data.job_info?.Shop_Notes?.toUpperCase()
+            : ''
+            }`,
+            alignment: 'center',
+            style: 'fontsBold',
+          },
+          { text: '' },
+        ],
+        margin: [0, -26, 0, 10],
+      } : null,
     {
       table: {
         headerRows: 1,

@@ -130,7 +130,7 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
           },
   
           {
-            text: `${data.job_info?.Shop_Notes ? data.job_info?.Shop_Notes?.toUpperCase() : ''}`,
+            text: '',
             margin: [10,0,0,0]
           },
           {
