@@ -76,7 +76,7 @@ const pricing = (parts, pricer) => {
         const price = eval(pricer && pricer.face_frame_pricing) + extraCost;
 
         if (height > -1) {
-          return price;
+          return price * parseInt(i.qty);
         } else {
           return 0;
         }

@@ -71,6 +71,7 @@ export default (data, pricing) => {
     ];
 
     part.dimensions.forEach((item, index) => {
+      const price = prices[i][index] / parseInt(item.qty);
       tableBody.push([
         { text: index + 1, style: 'fonts' },
         { text: `${Size(item)}`, style: 'fonts' },
@@ -87,12 +88,12 @@ export default (data, pricing) => {
         },
 
         {
-          text: `${(prices[i][index] / parseInt(item.qty)).toFixed(2)}`,
+          text: `${price.toFixed(2)}`,
           style: 'fonts',
           alignment: 'right',
         },
         {
-          text: `${prices[i][index].toFixed(2)}`,
+          text: `${(price * parseFloat(item.qty)).toFixed(2)}`,
           style: 'fonts',
           alignment: 'right',
           width: 210,
