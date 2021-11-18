@@ -101,6 +101,8 @@ import PackingSlip from '../../PrintOuts/Pages/Door/PackingSlip';
 import QC_Checklist from '../../PrintOuts/Pages/Door/QC';
 import Door_Labels from '../../PrintOuts/Pages/Door/Door_Labels';
 
+import SolidsPage from '../../PrintOuts/Pages/Door/Solids';
+
 import Drawer_Acknowledgement from '../../PrintOuts/Pages/Drawer/Acknowledgement';
 import Drawer_Invoice from '../../PrintOuts/Pages/Drawer/Invoice';
 import Drawer_AssemblyList from '../../PrintOuts/Pages/Drawer/AssemblyList';
@@ -132,6 +134,7 @@ import Typical from 'react-typical';
 import ReactLoading from 'react-loading';
 
 import LoadingOverlay from 'react-loading-overlay';
+import Slab_Selection from '../../PrintOuts/Sorting/Slab_Selection';
 
 const cookie = Cookies.get('jwt');
 
@@ -167,7 +170,7 @@ class OrderPage extends Component {
       notesOpen: false,
       printModal: false,
       copyModal: false,
-      loadingModal: false
+      loadingModal: false,
     };
     this.someRef = createRef();
   }
@@ -326,12 +329,11 @@ class OrderPage extends Component {
 
   toggleLoadingModal = () => {
     this.setState({
-      loadingModal: !this.state.loadingModal
+      loadingModal: !this.state.loadingModal,
     });
-  }
+  };
 
   downloadPDF = async (p) => {
-
     this.toggleLoadingModal();
 
     const {
@@ -355,12 +357,8 @@ class OrderPage extends Component {
 
     const merger = new PDFMerger();
 
-
     const generatePDF = async (files) => {
       if (files.length > 0) {
-
-
-
         await Promise.all(files.map(async (file) => await merger.add(file)));
 
         const mergedPdf = await merger.saveAsBlob();
@@ -368,12 +366,11 @@ class OrderPage extends Component {
 
         console.log({ url });
 
-
         await window.open(url, '_blank').focus();
         await files.pop();
-        
+
         this.toggleLoadingModal();
-      } 
+      }
     };
 
     const noPhoto =
@@ -479,6 +476,39 @@ class OrderPage extends Component {
         console.log('errrrrrr', err);
       }
 
+      const type = 'Page';
+
+      let itemNum = 0;
+
+      const itemNumCounter = {
+        ...data,
+        part_list: data.part_list.map((i) => {
+          return {
+            ...i,
+            dimensions: i.dimensions.map((j) => {
+              itemNum += 1;
+              return {
+                ...j,
+                item: itemNum,
+              };
+            }),
+          };
+        }),
+      };
+
+      const newParts = Slab_Selection(itemNumCounter, type).map((j) => {
+        const newData = {
+          ...data,
+          part_list: j,
+          hasSlab: j.some((e) => e.hasSlab === true),
+        };
+        return newData;
+      });
+
+      console.log({ newParts });
+
+
+
       let files = [];
 
       for (let i = 0; i < p.acknowledgement; i++) {
@@ -551,21 +581,56 @@ class OrderPage extends Component {
       }
 
       for (let i = 0; i < p.panels; i++) {
-        await PanelsPage(
-          data,
-          design1,
-          edges1,
-          moulds1,
-          miter1,
-          mt_1,
-          panels1,
-          appliedProfiles1,
-          breakdowns,
-          p,
-          this.props.pricing
-        ).then(async (v) => {
-          files.push(v);
-        });
+
+        await Promise.all(newParts.map(async (k) => {
+          if (k.hasSlab) {
+            return await SolidsPage(
+              k,
+              design1,
+              edges1,
+              moulds1,
+              miter1,
+              mt_1,
+              panels1,
+              appliedProfiles1,
+              breakdowns,
+              p,
+              this.props.pricing
+            ).then(async (v) => {
+              console.log({v});
+              files.push(v);
+            });
+          } else {
+            if (k.part_list.length > 0) {
+              return await PanelsPage(
+                k,
+                design1,
+                edges1,
+                moulds1,
+                miter1,
+                mt_1,
+                panels1,
+                appliedProfiles1,
+                breakdowns,
+                p,
+                this.props.pricing
+              ).then(async (v) => {
+                files.push(v);
+              });
+            } else {
+              return null;
+            }
+          }
+        }));
+
+
+        // const generatePanels = async () => {
+
+        // };
+
+        // await generatePanels();
+
+        
       }
 
       for (let i = 0; i < p.stiles; i++) {
@@ -693,6 +758,8 @@ class OrderPage extends Component {
           files.push(v);
         });
       }
+
+      console.log({files});
 
       await generatePDF(files);
     } else if (data.orderType === 'Drawer Order') {
@@ -1120,7 +1187,6 @@ class OrderPage extends Component {
 
     return (
       <div className="animated noPrint resize">
-
         <CopyModal
           message={'Would you like to copy this order?'}
           title={'Copy Order'}
@@ -1129,8 +1195,6 @@ class OrderPage extends Component {
           modal={this.state.copyModal}
           action={this.copyOrder}
         />
-
-
 
         <Modal
           isOpen={props.modal}
@@ -1595,8 +1659,7 @@ class OrderPage extends Component {
           box_breakdowns
         />
 
-
-        <LoadingModal 
+        <LoadingModal
           modal={this.state.loadingModal}
           toggle={this.toggleLoadingModal}
           message={

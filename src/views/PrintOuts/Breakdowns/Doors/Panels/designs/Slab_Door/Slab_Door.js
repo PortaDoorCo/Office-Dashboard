@@ -19,9 +19,9 @@ export default (info, part) => {
     ? info.orderType?.value
     : part?.orderType?.value;
 
-  console.log({info});
-  console.log({orderType});
-  console.log({VERTICAL_GRAIN});
+  
+  
+  
 
 
 

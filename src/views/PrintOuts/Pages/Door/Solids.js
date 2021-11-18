@@ -44,7 +44,7 @@ const DoorPDF =  async (
         columns: [
           {
             stack: [
-              'Individual - PANELS List',
+              'Individual - SOLIDS List',
               { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
             ],
           },
@@ -115,7 +115,7 @@ const DoorPDF =  async (
     let Content = [];
 
 
-    Content.push(PanelsPage(data, breakdowns, 'PANELS'));
+    Content.push(PanelsPage(data, breakdowns, 'SOLIDS'));
     
 
 
