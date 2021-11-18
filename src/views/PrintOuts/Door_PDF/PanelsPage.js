@@ -153,7 +153,7 @@ export default (data, breakdowns, type) => {
             alignment: 'center',
           },
           {
-            text: `${type}`,
+            text: `${i.woodtype.NAME.includes('MDF') ? 'MDF ' : ''}${type}`,
             alignment: 'right',
             style: 'woodtype',
           },
