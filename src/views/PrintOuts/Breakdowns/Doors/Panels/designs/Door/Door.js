@@ -108,16 +108,25 @@ export default (info, part, breakdowns) => {
       (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
     const panelHeight =
       height -
-      unevenSplitTotal -
-      horizMull * (panelsH - 1) -
-      bottomRail - 
+      topRail -
+      numQty(info[`unevenSplitInput${0}`]) -
+      horizMull * (panelsH - 1) +
       panel_factor +
-      lip_factor;
+      (lip_factor/ 2);
+
+
+  
+      // console.log({height})
+      // console.log({unevenSplitTotal})
+      // console.log({horizMull})
+      // console.log({bottomRail})
+      // console.log({panel_factor})
+      // console.log({lip_factor})
 
     const unevenSplitInput = (v) =>
       numQty(info[`unevenSplitInput${v}`]) -
       topRail +
-      unevenInset +
+      panel_factor +
       lip_factor / 2;
 
     const glassCheck = (v) => info[`glass_check_${v}`];
