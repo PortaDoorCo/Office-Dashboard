@@ -49,6 +49,8 @@ export default (info, part, breakdowns) => {
   const lites = info.lite ? info.lite.NAME : "";
   const panel_factor = part?.panel?.PANEL_FACTOR;
 
+  console.log({inset})
+
   const panelName = info?.panel?.NAME ? info?.panel?.NAME : part?.panel?.NAME;
   const panelFlat = info?.panel?.Flat ? info?.panel?.Flat : part?.panel?.Flat;
 
@@ -75,7 +77,7 @@ export default (info, part, breakdowns) => {
   const glassDoor = (index) => {
     const lite = info[`lite_${index}`]?.NAME;
 
-    
+
 
     
 
@@ -108,9 +110,9 @@ export default (info, part, breakdowns) => {
       height -
       unevenSplitTotal -
       horizMull * (panelsH - 1) -
-      bottomRail -
-      (panel_factor / 2) 
-      // (lip_factor * 2);
+      bottomRail - 
+      panel_factor +
+      lip_factor;
 
     const unevenSplitInput = (v) =>
       numQty(info[`unevenSplitInput${v}`]) -

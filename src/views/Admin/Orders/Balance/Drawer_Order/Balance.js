@@ -192,7 +192,7 @@ class Balance extends Component {
                         data={paymentTypes}
                         dataKey="value"
                         textField="NAME"
-                        validate={required}
+                        // validate={required}
                       />
                     </FormGroup>
                   </Col>
