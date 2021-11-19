@@ -116,12 +116,12 @@ export default (info, part, breakdowns) => {
 
 
   
-      console.log({height})
-      console.log({unevenSplitTotal})
-      console.log({horizMull})
-      console.log({bottomRail})
-      console.log({panel_factor})
-      console.log({lip_factor})
+      // console.log({height})
+      // console.log({unevenSplitTotal})
+      // console.log({horizMull})
+      // console.log({bottomRail})
+      // console.log({panel_factor})
+      // console.log({lip_factor})
 
     const unevenSplitInput = (v) =>
       numQty(info[`unevenSplitInput${v}`]) -
