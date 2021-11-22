@@ -11,15 +11,15 @@ export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 
-  const top_rail_arch = part?.design?.TOP_RAIL_ADD;
-  const btm_rail_arch = part?.design?.BTM_RAIL_ADD;
+  const top_rail_arch = part?.design?.TOP_RAIL_ADD ?  part?.design?.TOP_RAIL_ADD : 0;
+  const btm_rail_arch = part?.design?.BTM_RAIL_ADD ? part?.design?.BTM_RAIL_ADD : 0;
 
   let edge_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
   let lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
 
-  const topRail = info.topRail ? numQty(info.topRail) + lip_factor / 2 : 0;
+  const topRail = info.topRail ? (numQty(info.topRail) + ( lip_factor / 2)) - top_rail_arch : 0;
   const bottomRail = info.bottomRail
-    ? numQty(info.bottomRail) + lip_factor / 2
+    ? (numQty(info.bottomRail) + (lip_factor / 2)) - btm_rail_arch
     : 0;
   const leftStile = info.leftStile
     ? numQty(info.leftStile) + lip_factor / 2
