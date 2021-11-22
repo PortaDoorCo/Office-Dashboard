@@ -24,7 +24,7 @@ const Profiles = (props) => {
     NAME: '',
     INSET: '',
     PROFILE_WIDTH: '',
-    MID_RAIL_MINIMUMS: '',
+    MINIMUM_STILE_WIDTH: '',
     DF_Reduction: '',
     photo: null
   });
@@ -55,7 +55,7 @@ const Profiles = (props) => {
       NAME: '',
       INSET: '',
       PROFILE_WIDTH: '',
-      MID_RAIL_MINIMUMS: '',
+      MINIMUM_STILE_WIDTH: '',
       DF_Reduction: '',
       photo: null
     };
@@ -105,7 +105,7 @@ const Profiles = (props) => {
       NAME: product.NAME,
       INSET: product.INSET,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
-      MID_RAIL_MINIMUMS: product.MID_RAIL_MINIMUMS,
+      MINIMUM_STILE_WIDTH: product.MINIMUM_STILE_WIDTH,
       DF_Reduction: product.DF_Reduction,
       photo: product.photo ? product.photo.id : '',
       Item: item
@@ -128,7 +128,7 @@ const Profiles = (props) => {
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>Inset: </strong> {card.INSET}</CardTitle>
             <CardTitle><strong>Stile/Rail Width: </strong> {card.PROFILE_WIDTH}</CardTitle>
-            <CardTitle><strong>Mid Rail Width: </strong> {card.MID_RAIL_MINIMUMS}</CardTitle>
+            <CardTitle><strong>Mid Rail Width: </strong> {card.MINIMUM_STILE_WIDTH}</CardTitle>
             <CardTitle><strong>Standard Top/Bottom DF Rails: </strong> {card.DF_Reduction ? card.DF_Reduction : <strong style={{textDecoration: 'underline'}}>NO VALUE</strong>}</CardTitle>
           </CardBody>
         </Card>
@@ -199,7 +199,7 @@ const Profiles = (props) => {
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Mid Rail Width</Label>
-                  <Input type="number" value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Standard Top/Bottom DF Rails</Label>
@@ -304,7 +304,7 @@ const Profiles = (props) => {
                 </Col>
                 <Col>
                   <Label for="5/4_Price">Mid Rail Width</Label>
-                  <Input type="number" value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
+                  <Input type="number" value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
                   <Label for="5/4_Price">DF Reduction</Label>
