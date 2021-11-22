@@ -24,7 +24,7 @@ const Profiles = (props) => {
     NAME: '',
     INSET: '',
     PROFILE_WIDTH: '',
-    MID_RAIL_MINIMUMS: '',
+    // MINIMUM_STILE_WIDTH: '',
     photo: null
   });
   const [newProduct, setNewProduct] = useState(false);
@@ -54,7 +54,7 @@ const Profiles = (props) => {
       NAME: '',
       INSET: '',
       PROFILE_WIDTH: '',
-      MID_RAIL_MINIMUMS: '',
+      // MINIMUM_STILE_WIDTH: '',
       photo: null
     };
     setNewProduct(true);
@@ -103,7 +103,7 @@ const Profiles = (props) => {
       NAME: product.NAME,
       INSET: product.INSET,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
-      MID_RAIL_MINIMUMS: product.MID_RAIL_MINIMUMS,
+      // MINIMUM_STILE_WIDTH: product.MINIMUM_STILE_WIDTH,
       photo: product.photo ? product.photo.id : '',
       Item: item
     };
@@ -124,8 +124,8 @@ const Profiles = (props) => {
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
             <CardTitle><strong>Inset: </strong> {card.INSET}</CardTitle>
-            <CardTitle><strong>Stile/Rail Width: </strong> {card.PROFILE_WIDTH}</CardTitle>
-            <CardTitle><strong>Mid Rail Width: </strong> {card.MID_RAIL_MINIMUMS}</CardTitle>
+            <CardTitle><strong>Framing Width: </strong> {card.PROFILE_WIDTH}</CardTitle>
+            {/* <CardTitle><strong>Mid Rail Width: </strong> {card.MINIMUM_STILE_WIDTH}</CardTitle> */}
           </CardBody>
         </Card>
       </div>
@@ -190,13 +190,13 @@ const Profiles = (props) => {
               </Row>
               <Row>
                 <Col>
-                  <Label for="5/4_Price">Stile/Rail Width</Label>
+                  <Label for="5/4_Price">Framing Width</Label>
                   <Input type="number" value={product.PROFILE_WIDTH} name="PROFILE_WIDTH" onChange={(e) => change(e)}></Input>
                 </Col>
-                <Col>
+                {/* <Col>
                   <Label for="5/4_Price">Mid Rail Width</Label>
-                  <Input type="number" value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
-                </Col>
+                  <Input type="number" value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
+                </Col> */}
               </Row>
   
               <Row className="mt-5">
@@ -291,13 +291,13 @@ const Profiles = (props) => {
               </Row>
               <Row>
                 <Col>
-                  <Label for="5/4_Price">Stile/Rail Width</Label>
+                  <Label for="5/4_Price">Framing Width</Label>
                   <Input type="number" value={product.PROFILE_WIDTH} name="PROFILE_WIDTH" onChange={(e) => change(e)}></Input>
                 </Col>
-                <Col>
+                {/* <Col>
                   <Label for="5/4_Price">Mid Rail Width</Label>
-                  <Input type="number" value={product.MID_RAIL_MINIMUMS} name="MID_RAIL_MINIMUMS" onChange={(e) => change(e)}></Input>
-                </Col>
+                  <Input type="number" value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
+                </Col> */}
               </Row>
   
             </ModalBody>
