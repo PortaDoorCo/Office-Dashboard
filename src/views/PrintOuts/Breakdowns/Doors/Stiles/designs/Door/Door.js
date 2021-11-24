@@ -38,6 +38,7 @@ export default (info, part, breakdowns) => {
   const height = numQty(info.height);
   const width = numQty(info.width);
   const qty = parseInt(info.qty);
+  const item = parseInt(info.item);
 
 
   
@@ -62,7 +63,8 @@ export default (info, part, breakdowns) => {
           razor_pattern: 'L / R',
           width: eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
-          multiplier: 2
+          multiplier: 2,
+          item: item,
         },
         {
           door_qty: qty,
@@ -76,7 +78,8 @@ export default (info, part, breakdowns) => {
           height: eval(breakdowns.vertical_mid_rail_height),
           pattern: 'VM',
           razor_pattern: 'V Mull',
-          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)
+          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
+          item: item,
         },
       ];
     } else {
@@ -92,7 +95,8 @@ export default (info, part, breakdowns) => {
           razor_pattern: 'L / R',
           width: eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
-          multiplier: 2
+          multiplier: 2,
+          item: item,
         }
       ];
     }
@@ -111,7 +115,8 @@ export default (info, part, breakdowns) => {
           razor_pattern: 'L',
           width:eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
-          multiplier: 1
+          multiplier: 1,
+          item: item,
         },
         {
           door_qty: qty,
@@ -124,7 +129,8 @@ export default (info, part, breakdowns) => {
           razor_pattern: 'R',
           width:eval(breakdowns.rightStile_width),
           height: eval(breakdowns.rightStile_height),
-          multiplier: 1
+          multiplier: 1,
+          item: item,
         },
         {
           door_qty: qty,
@@ -138,7 +144,8 @@ export default (info, part, breakdowns) => {
           razor_pattern: 'V Mull',
           width: eval(breakdowns.vertical_mid_rail_width),
           height: eval(breakdowns.vertical_mid_rail_height),
-          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1)
+          multiplier: (panelsW > 1 ? (panelsH > 1 ? panelsH : panelsW - 1) : panelsW - 1),
+          item: item,
         },
       ];
     }
@@ -155,7 +162,8 @@ export default (info, part, breakdowns) => {
           razor_pattern: 'L',
           width: eval(breakdowns.leftStile_width),
           height: eval(breakdowns.leftStile_height),
-          multiplier: 1
+          multiplier: 1,
+          item: item,
         },
         {
           door_qty: qty,
@@ -168,7 +176,8 @@ export default (info, part, breakdowns) => {
           razor_pattern: 'R',
           width: eval(breakdowns.rightStile_width),
           height: eval(breakdowns.rightStile_height),
-          multiplier: 1
+          multiplier: 1,
+          item: item,
         }
 
       ];

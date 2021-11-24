@@ -31,6 +31,7 @@ export default (info, part, breakdowns) => {
   const height = numQty(info.height);
   const width = numQty(info.width);
   const qty = parseInt(info.qty);
+  const item = parseInt(info.item);
 
   let inset = 0;
   if (part.profile) {
@@ -55,6 +56,7 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.topRail_width),
           height: eval(breakdowns.topRail_height),
           multiplier: 2,
+          item: item,
         },
         {
           qty: `(${(panelsH - 1) * qty})`,
@@ -69,6 +71,7 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.horizontal_mid_rail_width),
           height: eval(breakdowns.horizontal_mid_rail_height),
           multiplier: panelsH - 1,
+          item: item,
         },
       ];
     } else {
@@ -86,6 +89,7 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.topRail_width),
           height: eval(breakdowns.topRail_height),
           multiplier: 2,
+          item: item,
         },
       ];
     }
@@ -105,6 +109,7 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.topRail_width),
           height: eval(breakdowns.topRail_height),
           multiplier: 1,
+          item: item,
         },
         {
           qty: `(${qty})`,
@@ -119,6 +124,7 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.bottomRail_width),
           height: eval(breakdowns.bottomRail_height),
           multiplier: 1,
+          item: item,
         },
         {
           qty: `(${(panelsH - 1) * qty})`,
@@ -133,6 +139,7 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.horizontal_mid_rail_width),
           height: eval(breakdowns.horizontal_mid_rail_height),
           multiplier: panelsH - 1,
+          item: item,
         },
       ];
     } else {
@@ -150,6 +157,7 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.topRail_width),
           height: eval(breakdowns.topRail_height),
           multiplier: 1,
+          item: item,
         },
         {
           qty: `(${qty})`,
@@ -164,6 +172,7 @@ export default (info, part, breakdowns) => {
           width: eval(breakdowns.bottomRail_width),
           height: eval(breakdowns.bottomRail_height),
           multiplier: 1,
+          item: item,
         },
       ];
     }
