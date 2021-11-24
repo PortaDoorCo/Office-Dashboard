@@ -1043,6 +1043,24 @@ class OrderPage extends Component {
       return i;
     });
 
+    let itemNum = 0;
+
+    const itemNumCounter = {
+      ...s,
+      part_list: s?.part_list?.map((i) => {
+        return {
+          ...i,
+          dimensions: i?.dimensions?.map((j) => {
+            itemNum += 1;
+            return {
+              ...j,
+              item: itemNum,
+            };
+          }),
+        };
+      }),
+    };
+
     if (s.orderType === 'Door Order') {
       options = [
         { value: 'Breakdowns', label: 'Breakdowns' },
@@ -1059,7 +1077,7 @@ class OrderPage extends Component {
       ];
 
       exportCsv = s
-        ? s.part_list.map((f, index) => {
+        ? itemNumCounter.part_list.map((f, index) => {
           f.dimensions.forEach((j, ind) => {
             if (
               f.orderType.value === 'DF' ||
@@ -1108,8 +1126,8 @@ class OrderPage extends Component {
         })
         : [];
 
-      const razor = s
-        ? s.part_list.map((f, index) => {
+      const razor = itemNumCounter
+        ? itemNumCounter.part_list.map((f, index) => {
           // console.log({ f });
 
           f.dimensions.forEach((j, ind) => {
@@ -1137,7 +1155,7 @@ class OrderPage extends Component {
                 i.qty_2,
                 i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
+                i.item,
                   f.profile?.NAME
                     ? f.profile?.NAME
                     : f.design?.NAME
@@ -1147,6 +1165,7 @@ class OrderPage extends Component {
             });
 
             const railPrint = rail.map((i) => {
+              console.log({i});
               return razorGuage.push([
                 `${s.orderNum}`,
                 `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
@@ -1155,7 +1174,7 @@ class OrderPage extends Component {
                 i.qty_2,
                 i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                ind + 1,
+                i.item,
                   f.profile?.NAME
                     ? f.profile?.NAME
                     : f.design?.NAME
