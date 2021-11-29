@@ -551,7 +551,7 @@ const Cope_Table = ({
               <Col>
                 <FormGroup>
                   <Label htmlFor="panel">
-                    <strong>Line # {index + 1}</strong>
+                    <strong>Item # {i + 1} - Line # {index + 1}</strong>
                   </Label>
                 </FormGroup>
               </Col>
