@@ -110,7 +110,7 @@ export default (info, part, breakdowns) => {
       (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
     const panelHeight =
       height -
-      topRail -
+      bottomRail -
       numQty(info[`unevenSplitInput${0}`]) -
       horizMull * (panelsH - 1) +
       panel_factor +
