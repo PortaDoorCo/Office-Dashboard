@@ -77,6 +77,24 @@ const Slab_Door_Table = ({
     setHeight(newHeight);
   };
 
+  let itemNum = 0;
+
+  const itemNumCounter = {
+    ...formState,
+    part_list: formState?.part_list?.map((i) => {
+      return {
+        ...i,
+        dimensions: i?.dimensions?.map((j) => {
+          itemNum += 1;
+          return {
+            ...j,
+            item: itemNum,
+          };
+        }),
+      };
+    }),
+  };
+
   return formState ? (
     <div>
       <Fragment>
@@ -87,7 +105,7 @@ const Slab_Door_Table = ({
               <Col>
                 <FormGroup>
                   <Label htmlFor="panel">
-                    <strong>Item # {i + 1} - Line # {index + 1}</strong>
+                    <strong>Line # {itemNumCounter?.part_list[i]?.dimensions[index]?.item}</strong>
                   </Label>
                   <Field
                     name={`${table}.item`}
