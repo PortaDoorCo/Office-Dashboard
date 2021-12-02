@@ -275,7 +275,11 @@ const Frame_Only_Table = ({
                         type="text"
                         className="form-control"
                         disabled={true}
-                        placeholder={'$' + finish[i][index].toFixed(2) || 0}
+                        placeholder={
+                          '$' + finish[i][index]?.toFixed(2)
+                            ? finish[i][index]?.toFixed(2)
+                            : 0
+                        }
                       />
                     ) : (
                       <Input
