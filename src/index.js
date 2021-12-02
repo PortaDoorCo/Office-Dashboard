@@ -1,23 +1,22 @@
 // import 'react-app-polyfill/ie9'; // For IE 9-11 support
-import 'react-app-polyfill/ie11'; // For IE 11 support
-import 'react-app-polyfill/stable';
-import './polyfill';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import rootReducer from './rootReducer';
-import { save, load } from 'redux-localstorage-simple';
-import { loadingBarMiddleware } from 'react-redux-loading-bar';
-import Cookies from 'js-cookie';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
-import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
+import Cookies from 'js-cookie';
+import React from 'react';
+import 'react-app-polyfill/ie11'; // For IE 11 support
+import 'react-app-polyfill/stable';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { loadingBarMiddleware } from 'react-redux-loading-bar';
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { load, save } from 'redux-localstorage-simple';
+import thunk from 'redux-thunk';
+import App from './App';
+import './index.css';
+import './polyfill';
+import rootReducer from './rootReducer';
+import * as serviceWorker from './serviceWorker';
 const cookie = Cookies.get('jwt');
 
 

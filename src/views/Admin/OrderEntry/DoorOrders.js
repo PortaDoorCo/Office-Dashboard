@@ -43,9 +43,9 @@ import Cookies from 'js-cookie';
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
-import validate from './validate';
+import validate from './components/validate';
 import currencyMask from '../../../utils/currencyMask';
-import CheckoutBox from './CheckoutBox';
+import CheckoutBox from './components/CheckoutBox';
 import { NotificationManager } from 'react-notifications';
 import CancelModal from '../../../utils/Modal';
 
@@ -224,8 +224,6 @@ class DoorOrders extends Component {
       tax,
       addPriceSelector,
     } = this.props;
-
-    console.log({door_props: this.props});
 
     return (
       <div className="animated fadeIn order-tour">

@@ -3,9 +3,9 @@ import {
   Row,
   Col,
   Card,
+  Input,
   CardHeader,
   CardBody,
-  Input,
   FormGroup,
   InputGroup,
   InputGroupAddon,
@@ -13,70 +13,70 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import DoorInfo from './components/DoorInfo/DoorInfo';
-// import JobInfo from './components/JobInfo/JobInfo';
+import NotificationAlert from 'react-notification-alert';
 import 'react-notifications/lib/notifications.css';
 import {
   reduxForm,
   FormSection,
   getFormValues,
+  change,
   FieldArray,
   Field,
   touch,
-  startAsyncValidation,
+  startAsyncValidation
 } from 'redux-form';
-import { submitOrder, loadOrders } from '../../../redux/orders/actions';
+import { submitOrder } from '../../../redux/orders/actions';
+import { loadCustomers } from '../../../redux/customers/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
-  taxSelector,
   totalSelector,
+  taxSelector,
   addPriceSelector,
-  miscTotalSelector,
-} from '../../../selectors/doorPricing';
-import 'react-notifications/lib/notifications.css';
-
-import Sticky from 'react-stickynode';
+  miscTotalSelector
+} from '../../../selectors/drawerPricing';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
-import validate from './validate';
 import currencyMask from '../../../utils/currencyMask';
-import CheckoutBox from './CheckoutBox';
+import CheckoutBox from './components/CheckoutBox';
+import Sticky from 'react-stickynode';
 import { NotificationManager } from 'react-notifications';
 import CancelModal from '../../../utils/Modal';
 
-const DoorInfo = React.lazy(() =>
-  import('../../../components/DoorOrders/DoorInfo/DoorInfo')
-);
-const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
+const DrawerBoxInfo = React.lazy(() => import('../../../components/DrawerOrders/DrawerBoxInfo'));
+const JobInfo = React.lazy(() => import('../../../components/JobInfo/DrawerJobInfo'));
 
-const loading = () => (
-  <div className="animated fadeIn pt-1 text-center">
-    <div className="sk-spinner sk-spinner-pulse"></div>
-  </div>
-);
+const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
 const cookie = Cookies.get('jwt');
-
-const maxValue = (max) => (value) =>
-  value && value > max ? `Cannot be greater than ${max}%` : undefined;
+const maxValue = max => value => value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
 
+let options = {};
+options = {
+  place: 'br',
+  message: (
+    <div>
+      <div>Order Submitted Successfuly</div>
+    </div>
+  ),
+  type: 'primary',
+  icon: 'now-ui-icons ui-1_bell-53',
+  autoDismiss: 3
+};
 
 class DoorOrders extends Component {
   constructor(props) {
     super(props);
-    this.makerJS = React.createRef();
     this.state = {
       collapse: true,
       loaded: false,
       customerAddress: [],
-      updateSubmit: false,
       files: [],
       subNavModal: false,
       subNavPage: 'misc',
@@ -91,20 +91,37 @@ class DoorOrders extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    // this.toggleReminderModal();
 
     const { dispatch } = this.props;
 
-    dispatch(touch('DoorOrder', 'job_info.poNum'));
+    dispatch(
+      touch(
+        'DrawerOrder',
+        'job_info.poNum'
+      )
+    );
 
-    dispatch(touch('DoorOrder', 'job_info.shipping_method'));
+    dispatch(
+      touch(
+        'DrawerOrder',
+        'job_info.shipping_method'
+      )
+    );
 
-    dispatch(startAsyncValidation('DoorOrder'));
 
-    // this.toggleReminderModal();
+    dispatch(
+      startAsyncValidation('DrawerOrder')
+    );
   }
 
   reloadPage = () => {
+    // return this.props.history.push('/dashboard')
     window.location.reload();
+  };
+
+  notify = () => {
+    this.refs.notify.notificationAlert(options);
   };
 
   submit = async (values, e) => {
@@ -113,13 +130,14 @@ class DoorOrders extends Component {
       prices,
       itemPrice,
       subTotal,
-      tax,
       total,
       submitOrder,
-      user,
+      tax,
+      user
     } = this.props;
 
-    const orderType = 'Door Order';
+    const orderType = 'Drawer Order';
+
 
     const order = {
       ...values,
@@ -128,7 +146,7 @@ class DoorOrders extends Component {
       Sample: values.job_info.Sample,
       job_info: {
         ...values.job_info,
-        status: values.job_info.status.value,
+        status: values.job_info.status.value
       },
       companyprofile: values.job_info.customer.id,
       linePrice: prices,
@@ -146,39 +164,34 @@ class DoorOrders extends Component {
       submittedBy: user.FirstName,
       tracking: [
         {
-          status: values.job_info.status.value,
-          date: new Date(),
-        },
+          'status': values.job_info.status.value,
+          'date': new Date()
+        }
       ],
       balance_history: [
         {
-          balance_paid: values.balance_paid,
-          date: new Date(),
-        },
+          'balance_paid': values.balance_paid,
+          'date': new Date()
+        }
       ],
-      sale:
-        values.job_info &&
-        values.job_info.customer &&
-        values.job_info.customer.sale &&
-        values.job_info.customer.sale.id,
+      sale: values.job_info && values.job_info.customer && values.job_info.customer.sale && values.job_info.customer.sale.id,
     };
 
     let canSubmit = false;
 
-    values.part_list.map((v) => {
-      return v.dimensions.length > 0 ? (canSubmit = true) : (canSubmit = false);
+    values.part_list.map(v => {
+      return v.dimensions.length > 0 ? canSubmit = true : canSubmit = false;
     });
 
-    if (canSubmit) {
-      await submitOrder(order, cookie);
-      this.setState({ updateSubmit: !this.state.updateSubmit });
+    if(canSubmit){
+      submitOrder(order, cookie);
       reset();
       window.scrollTo(0, 0);
-      return;
     } else {
       alert('Submission Error: Please double check your order');
       return;
     }
+
   };
 
   cancelOrder = (e) => {
@@ -199,15 +212,15 @@ class DoorOrders extends Component {
   }
 
   onUploaded = (e) => {
-    const id = e.map((i) => i.id);
+    const id = e.map(i => (i.id));
     const a = [...this.state.files, id];
     this.setState({ files: a });
-  };
+  }
 
   onSubNav = (nav) => {
     this.setState({
       subNavModal: !this.state.subNavModal,
-      subNavPage: nav,
+      subNavPage: nav
     });
   };
 
@@ -215,20 +228,28 @@ class DoorOrders extends Component {
     const {
       submitted,
       handleSubmit,
+      prices,
+      subTotal,
+      total,
+      woodtypes,
+      boxBottomWoodtype,
+      boxBottoms,
+      boxThickness,
+      notchDrill,
+      scoop,
+      dividers,
+      drawerFinishes,
+      box_assembly,
       customers,
       formState,
-      isValid,
       address,
-      total,
-      dispatch,
       tax,
-      addPriceSelector,
+      dispatch
     } = this.props;
 
-    console.log({door_props: this.props});
-
     return (
-      <div className="animated fadeIn order-tour">
+      <div className="animated fadeIn">
+        <NotificationAlert ref="notify" />
         <CancelModal
           toggle={this.toggleCancelModal}
           modal={this.state.cancelModal}
@@ -242,7 +263,7 @@ class DoorOrders extends Component {
           <div className="orderFormCol1">
             <Card>
               <CardHeader>
-                <strong>Door Order</strong>
+                <strong>Drawer Order</strong>
               </CardHeader>
               <CardBody>
                 <form
@@ -254,8 +275,9 @@ class DoorOrders extends Component {
                       <Suspense fallback={loading()}>
                         <JobInfo
                           customers={customers}
-                          formState={formState}
+                          change={change}
                           address={address}
+                          formState={formState}
                           loaded={this.state.loaded}
                           handleAddress={this.handleAddress}
                           toggleReminderModal={this.toggleReminderModal}
@@ -272,10 +294,7 @@ class DoorOrders extends Component {
                           <FormGroup>
                             <h3>Upload Files</h3>
                             <p>Please Upload Sketches with Design References</p>
-                            <FileUploader
-                              onUploaded={this.onUploaded}
-                              multi={true}
-                            />
+                            <FileUploader onUploaded={this.onUploaded} multi={true} />
                           </FormGroup>
                         </CardBody>
                       </Card>
@@ -285,14 +304,20 @@ class DoorOrders extends Component {
                   <Suspense fallback={loading()}>
                     <FieldArray
                       name="part_list"
-                      component={DoorInfo}
-                      // prices={prices}
+                      component={DrawerBoxInfo}
+                      woodtypes={woodtypes}
+                      boxBottomWoodtype={boxBottomWoodtype}
+                      boxThickness={boxThickness}
+                      boxBottoms={boxBottoms}
+                      notchDrill={notchDrill}
+                      drawerFinishes={drawerFinishes}
+                      scoop={scoop}
+                      dividers={dividers}
                       formState={formState}
-                      // subTotal={subTotal}
-                      addPriceSelector={addPriceSelector}
+                      prices={prices}
+                      subTotal={subTotal}
+                      box_assembly={box_assembly}
                       dispatch={dispatch}
-                      isValid={isValid}
-                      updateSubmit={this.state.updateSubmit}
                     />
                   </Suspense>
 
@@ -301,10 +326,12 @@ class DoorOrders extends Component {
                   <hr />
                   <hr />
                   <Row>
-                    <Col xs="9" />
+                    <Col xs="4" />
+                    <Col xs="5" />
                     <Col xs="3">
-                      <Row className="mb-0">
-                        <Col xs="9" />
+
+                      <Row className='mb-0'>
+                        <Col xs='9' />
                       </Row>
 
                       <strong>Discount: </strong>
@@ -320,35 +347,21 @@ class DoorOrders extends Component {
                           label="discount"
                         />
                       </InputGroup>
-
                       <strong>Tax: </strong>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <NumberFormat
-                          thousandSeparator={true}
-                          value={tax}
-                          disabled={true}
-                          customInput={Input}
-                          {...currencyMask}
-                          prefix={'$'}
-                        />
+                        <NumberFormat thousandSeparator={true} value={tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                       </InputGroup>
 
+
                       <strong>Total: </strong>
-                      <InputGroup className="mb-3">
+                      <InputGroup className='mb-3'>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>$</InputGroupText>
                         </InputGroupAddon>
-                        <NumberFormat
-                          thousandSeparator={true}
-                          value={total}
-                          disabled={true}
-                          customInput={Input}
-                          {...currencyMask}
-                          prefix={'$'}
-                        />
+                        <NumberFormat thousandSeparator={true} value={total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
                       </InputGroup>
                     </Col>
                   </Row>
@@ -356,6 +369,8 @@ class DoorOrders extends Component {
               </CardBody>
             </Card>
           </div>
+
+
           <div className="orderFormCol2">
             <Sticky
               top={100}
@@ -363,6 +378,7 @@ class DoorOrders extends Component {
               enabled={true}
               // key={i}
             >
+
               <CheckoutBox
                 {...this.props}
                 {...this.state}
@@ -374,6 +390,10 @@ class DoorOrders extends Component {
                 onUploaded={this.onUploaded}
               />
             </Sticky>
+            
+
+
+
           </div>
         </div>
       </div>
@@ -381,48 +401,39 @@ class DoorOrders extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, prop) => ({
+  woodtypes: state.part_list.woodtypes,
+  boxBottomWoodtype: state.part_list.box_bottom_woodtypes,
+  boxThickness: state.part_list.box_thickness,
+  boxBottoms: state.part_list.box_bottom_thickness,
+  notchDrill: state.part_list.box_notch,
+  drawerFinishes: state.part_list.box_finish,
+  box_assembly: state.part_list.box_assembly,
+  scoop: state.part_list.box_scoop,
+  dividers: state.part_list.dividers,
   customers: state.customers.customerDB,
-  customerDBLoaded: state.customers.customerDBLoaded,
+  address: state.Orders.address,
+
   user: state.users.user,
+
   submitted: state.Orders.submitted,
   initialValues: {
-    misc_items: [],
-    balance_paid: 0,
     open: true,
+    balance_paid: 0,
+    misc_items: [],
     discount: 0,
-    Taxable: state.customers.customerDB[0].Taxable
-      ? state.customers.customerDB[0].Taxable
-      : false,
+    Taxable: state.customers.customerDB[0].Taxable ? state.customers.customerDB[0].Taxable : false,
     part_list: [
       {
-        construction: {
-          name: 'Cope And Stick',
-          value: 'Cope',
-        },
-        orderType: {
-          name: 'Door Order',
-          value: 'Door',
-        },
-        thickness: {
-          name: '4/4 Standard Grade',
-          thickness_1: '4/4',
-          thickness_2: '3/4',
-          db_name: 'STANDARD_GRADE',
-          value: 1,
-        },
-        // leftStile: '2 5/16',
-        // rightStile: '2 5/16',
-        // topRail: '2 5/16',
-        // bottomRail: '2 5/16',
+        box_assembly: state.part_list.box_assembly[0],
         dimensions: [],
-        addPrice: 0,
-      },
+        addPrice: 0
+      }
     ],
     job_info: {
       customer: state.customers.customerDB[0],
       jobName: '',
-      status: { label: 'Quote', value: 'Quote' },
+      status: {label: 'Quote', value: 'Quote'},
       poNum: '',
       Address1: state.customers.customerDB[0].Address1,
       Address2: state.customers.customerDB[0].Address2,
@@ -435,41 +446,36 @@ const mapStateToProps = (state) => ({
           ? state.customers.customerDB[0].Phone1
           : state.customers.customerDB[0].Phone,
       DueDate: dueDate,
-      Notes: state.customers.customerDB[0].Notes,
-      // PaymentMethod: {
-      //   NAME: state.customers.customerDB[0].PaymentMethod
-      // }
-    },
+      Notes: state.customers.customerDB[0].Notes
+    }
   },
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('DrawerOrder')(state),
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
-  miscTotalSelector: miscTotalSelector(state),
+  miscTotalSelector: miscTotalSelector(state)
 });
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       submitOrder,
-      loadOrders,
+      loadCustomers
     },
     dispatch
   );
 
-// eslint-disable-next-line no-class-assign
 DoorOrders = reduxForm({
-  form: 'DoorOrder',
+  form: 'DrawerOrder',
   enableReinitialize: true,
-  validate,
   onSubmitFail: (errors, dispatch, submitError, props) => {
     const job_info_message = 'You are missing required info';
     if (errors) {
       NotificationManager.error(job_info_message, 'Error', 2000);
-    }
+    } 
   },
 })(DoorOrders);
 

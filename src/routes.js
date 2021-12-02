@@ -22,8 +22,8 @@ const FaceFrames = React.lazy(() => import('./views/Admin/Face_Frames/FaceFrames
 const routes = [
   { path: '/', exact: true, component: Dashboard, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/door-order', name: 'Door Order', component: DoorOrders },
-  { path: '/drawer-order', name: 'Drawer Order', component: DrawerOrders },
+  { path: '/door-order', name: 'Door Order', component: DoorOrders, type: 'door_order' },
+  { path: '/drawer-order', name: 'Drawer Order', component: DrawerOrders, type: 'drawer_order' },
   { path: '/view-orders', name: 'Orders', component: Orders },
   { path: '/customers', name: 'Customers', component: Customers },
   { path: '/settings', name: 'Settings', component: Settings, className: 'settings-tour' },
@@ -32,10 +32,10 @@ const routes = [
   { path: '/sales-reports', name: 'Sales Reports', component: SalesReport },
   { path: '/late-list', name: 'Late List', component: LateList },
   { path: '/users', name: 'Users', component: Users },
-  { path: '/misc-items', name: 'MiscItems', component: MiscItems },
+  { path: '/misc-items', name: 'MiscItems', component: MiscItems, type: 'misc_items' },
   { path: '/catalog', name: 'Catalog', component: Catalog },
-  { path: '/mouldings', name: 'Mouldings', component: Mouldings },
-  { path: '/face-frames', name: 'FaceFrames', component: FaceFrames },
+  { path: '/mouldings', name: 'Mouldings', component: Mouldings, type: 'mouldings' },
+  { path: '/face-frames', name: 'FaceFrames', component: FaceFrames, type: 'face_frame' },
 ];
 
 
