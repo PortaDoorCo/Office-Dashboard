@@ -10,6 +10,15 @@ import {
   renderTextField,
 } from '../RenderInputs/renderInputs';
 import { connect } from 'react-redux';
+import {
+  linePriceSelector,
+  itemPriceSelector,
+  subTotalSelector,
+  totalSelector,
+  taxSelector,
+  addPriceSelector,
+  miscTotalSelector
+} from '../../selectors/drawerPricing';
 
 
 const required = (value) => (value ? undefined : 'Required');
@@ -238,4 +247,24 @@ class DrawerBoxInfo extends Component {
   }
 }
 
-export default connect()(DrawerBoxInfo);
+const mapStateToProps = (state, props) => ({
+  woodtypes: state.part_list.woodtypes,
+  boxBottomWoodtype: state.part_list.box_bottom_woodtypes,
+  boxThickness: state.part_list.box_thickness,
+  boxBottoms: state.part_list.box_bottom_thickness,
+  notchDrill: state.part_list.box_notch,
+  drawerFinishes: state.part_list.box_finish,
+  box_assembly: state.part_list.box_assembly,
+  scoop: state.part_list.box_scoop,
+  dividers: state.part_list.dividers,
+  prices: linePriceSelector(state),
+  itemPrice: itemPriceSelector(state),
+  subTotal: subTotalSelector(state),
+  total: totalSelector(state),
+  tax: taxSelector(state),
+  addPriceSelector: addPriceSelector(state),
+  miscTotalSelector: miscTotalSelector(state)
+});
+
+export default connect(mapStateToProps, null)(DrawerBoxInfo);
+

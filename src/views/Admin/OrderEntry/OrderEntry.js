@@ -48,10 +48,24 @@ import currencyMask from '../../../utils/currencyMask';
 import CheckoutBox from './components/CheckoutBox';
 import { NotificationManager } from 'react-notifications';
 import CancelModal from '../../../utils/Modal';
+import thickness from '../../../components/DoorOrders/DoorInfo/thickness';
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
 );
+const DrawerInfo = React.lazy(() =>
+  import('../../../components/DrawerOrders/DrawerBoxInfo')
+);
+const Mouldings = React.lazy(() =>
+  import('../../../components/Mouldings/MouldingsInfo')
+);
+const MiscItems = React.lazy(() =>
+  import('../../../components/MiscItems/MiscItemsInfo')
+);
+const FF_Info = React.lazy(() =>
+  import('../../../components/DoorOrders/DoorInfo/FFInfo')
+);
+
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
 
 const loading = () => (
@@ -67,8 +81,7 @@ const maxValue = (max) => (value) =>
 
 const dueDate = moment(new Date()).businessAdd(7)._d;
 
-
-class DoorOrders extends Component {
+class OrderEntry extends Component {
   constructor(props) {
     super(props);
     this.makerJS = React.createRef();
@@ -94,11 +107,11 @@ class DoorOrders extends Component {
 
     const { dispatch } = this.props;
 
-    dispatch(touch('DoorOrder', 'job_info.poNum'));
+    dispatch(touch('Order', 'job_info.poNum'));
 
-    dispatch(touch('DoorOrder', 'job_info.shipping_method'));
+    dispatch(touch('Order', 'job_info.shipping_method'));
 
-    dispatch(startAsyncValidation('DoorOrder'));
+    dispatch(startAsyncValidation('Order'));
 
     // this.toggleReminderModal();
   }
@@ -223,6 +236,7 @@ class DoorOrders extends Component {
       dispatch,
       tax,
       addPriceSelector,
+      route,
     } = this.props;
 
     return (
@@ -281,17 +295,52 @@ class DoorOrders extends Component {
                   </Row>
 
                   <Suspense fallback={loading()}>
-                    <FieldArray
-                      name="part_list"
-                      component={DoorInfo}
-                      // prices={prices}
-                      formState={formState}
-                      // subTotal={subTotal}
-                      addPriceSelector={addPriceSelector}
-                      dispatch={dispatch}
-                      isValid={isValid}
-                      updateSubmit={this.state.updateSubmit}
-                    />
+                    {route?.type === 'door_order' ? (
+                      <FieldArray
+                        name="part_list"
+                        component={DoorInfo}
+                        // prices={prices}
+                        formState={formState}
+                        // subTotal={subTotal}
+                        addPriceSelector={addPriceSelector}
+                        dispatch={dispatch}
+                        isValid={isValid}
+                        updateSubmit={this.state.updateSubmit}
+                      />
+                    ) : route?.type === 'drawer_order' ? (
+                      <FieldArray
+                        name="part_list"
+                        component={DrawerInfo}
+                        dispatch={dispatch}
+                        formState={formState}
+                      />
+                    ) : route?.type === 'face_frame' ? (
+                      <FieldArray
+                        name="part_list"
+                        component={FF_Info}
+                        // prices={prices}
+                        formState={formState}
+                        // subTotal={subTotal}
+                        addPriceSelector={addPriceSelector}
+                        dispatch={dispatch}
+                        isValid={isValid}
+                        updateSubmit={this.state.updateSubmit}
+                      />
+                    ) : route?.type === 'mouldings' ? (
+                      <FieldArray
+                        name="mouldings"
+                        component={Mouldings}
+                        dispatch={dispatch}
+                        formState={formState}
+                      />
+                    ) : route?.type === 'misc_items' ? (
+                      <FieldArray
+                        name="misc_items"
+                        component={MiscItems}
+                        dispatch={dispatch}
+                        formState={formState}
+                      />
+                    ) : null}
                   </Suspense>
 
                   <div className="mb-3" />
@@ -379,7 +428,7 @@ class DoorOrders extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, props) => ({
   customers: state.customers.customerDB,
   customerDBLoaded: state.customers.customerDBLoaded,
   user: state.users.user,
@@ -392,31 +441,51 @@ const mapStateToProps = (state) => ({
     Taxable: state.customers.customerDB[0].Taxable
       ? state.customers.customerDB[0].Taxable
       : false,
-    part_list: [
-      {
-        construction: {
-          name: 'Cope And Stick',
-          value: 'Cope',
-        },
-        orderType: {
-          name: 'Door Order',
-          value: 'Door',
-        },
-        thickness: {
-          name: '4/4 Standard Grade',
-          thickness_1: '4/4',
-          thickness_2: '3/4',
-          db_name: 'STANDARD_GRADE',
-          value: 1,
-        },
-        // leftStile: '2 5/16',
-        // rightStile: '2 5/16',
-        // topRail: '2 5/16',
-        // bottomRail: '2 5/16',
-        dimensions: [],
-        addPrice: 0,
-      },
-    ],
+    part_list:
+      props?.route?.type === 'door_order'
+        ? [
+          {
+            construction: {
+              name: 'Cope And Stick',
+              value: 'Cope',
+            },
+            orderType: {
+              name: 'Door Order',
+              value: 'Door',
+            },
+            thickness: {
+              name: '4/4 Standard Grade',
+              thickness_1: '4/4',
+              thickness_2: '3/4',
+              db_name: 'STANDARD_GRADE',
+              value: 1,
+            },
+            dimensions: [],
+            addPrice: 0,
+          },
+        ]
+        : props?.route?.type === 'drawer_order'
+          ? [
+            {
+              box_assembly: state.part_list.box_assembly[0],
+              dimensions: [],
+              addPrice: 0,
+            },
+          ]
+          : props?.route?.type === 'face_frame'
+            ? [
+              {
+                orderType: {
+                  name: 'Face Frame',
+                  value: 'Face_Frame',
+                },
+                thickness: thickness[0],
+                door_piece_number: state.part_list.door_piece_number[0],
+                dimensions: [],
+                addPrice: 0,
+              },
+            ]
+            : [],
     job_info: {
       customer: state.customers.customerDB[0],
       jobName: '',
@@ -439,11 +508,19 @@ const mapStateToProps = (state) => ({
       // }
     },
   },
-  formState: getFormValues('DoorOrder')(state),
-  prices: linePriceSelector(state),
-  itemPrice: itemPriceSelector(state),
-  subTotal: subTotalSelector(state),
-  total: totalSelector(state),
+  formState: getFormValues('Order')(state),
+  total:
+    props?.route?.type === 'door_order'
+      ? totalSelector(state)
+      : props?.route?.type === 'door_order'
+        ? totalSelector(state)
+        : props?.route?.type === 'door_order'
+          ? totalSelector(state)
+          : props?.route?.type === 'door_order'
+            ? totalSelector(state)
+            : props?.route?.type === 'door_order'
+              ? totalSelector(state)
+              : null,
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
   miscTotalSelector: miscTotalSelector(state),
@@ -459,8 +536,8 @@ const mapDispatchToProps = (dispatch) =>
   );
 
 // eslint-disable-next-line no-class-assign
-DoorOrders = reduxForm({
-  form: 'DoorOrder',
+OrderEntry = reduxForm({
+  form: 'Order',
   enableReinitialize: true,
   validate,
   onSubmitFail: (errors, dispatch, submitError, props) => {
@@ -469,6 +546,6 @@ DoorOrders = reduxForm({
       NotificationManager.error(job_info_message, 'Error', 2000);
     }
   },
-})(DoorOrders);
+})(OrderEntry);
 
-export default connect(mapStateToProps, mapDispatchToProps)(DoorOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderEntry);

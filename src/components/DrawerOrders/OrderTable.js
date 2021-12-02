@@ -41,7 +41,7 @@ const OrderTable = ({
   const clearNotes = (index, e) => {
     dispatch(
       change(
-        'DrawerOrder',
+        'Order',
         `part_list[${i}].dimensions[${index}].notes`,
         ''
       )
@@ -80,7 +80,7 @@ const OrderTable = ({
         setStandardSize(false);
         dispatch(
           change(
-            'DrawerOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].notes`,
             'CANNOT WORK WITH UNDER MOUNT'
           )
@@ -128,7 +128,7 @@ const OrderTable = ({
           if(!standardSize){
             dispatch(
               change(
-                'DrawerOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 'CANNOT WORK WITH UNDER MOUNT \nWITH SCOOP'
               )
@@ -136,7 +136,7 @@ const OrderTable = ({
           } else {
             dispatch(
               change(
-                'DrawerOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 'WITH SCOOP'
               )
@@ -146,7 +146,7 @@ const OrderTable = ({
         } else {
           dispatch(
             change(
-              'DrawerOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].notes`,
               str.replace(str, '')
             )
@@ -354,25 +354,25 @@ const OrderTable = ({
               if(fields.length > 0){
                 dispatch(
                   touch(
-                    'DrawerOrder',
+                    'Order',
                     `part_list[${i}].dimensions[${index}].notes`
                   )
                 );
                 dispatch(
                   touch(
-                    'DrawerOrder',
+                    'Order',
                     `part_list[${i}].dimensions[${index}].width`
                   )
                 );
                 dispatch(
                   touch(
-                    'DrawerOrder',
+                    'Order',
                     `part_list[${i}].dimensions[${index}].height`
                   )
                 );
                 dispatch(
                   touch(
-                    'DrawerOrder',
+                    'Order',
                     `part_list[${i}].dimensions[${index}].depth`
                   )
                 );
@@ -380,42 +380,42 @@ const OrderTable = ({
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].woodtype`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_thickness`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_bottom_woodtype`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_bottom_thickness`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_notch`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_finish`
                 )
               );
@@ -423,7 +423,7 @@ const OrderTable = ({
 
 
               dispatch(
-                startAsyncValidation('DrawerOrder')
+                startAsyncValidation('Order')
               );
 
            
@@ -471,7 +471,7 @@ const OrderTable = ({
 
 const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
-  formSyncErrors: getFormSyncErrors('DrawerOrder')(state),
+  formSyncErrors: getFormSyncErrors('Order')(state),
 });
 
 export default connect(mapStateToProps, null)(OrderTable);

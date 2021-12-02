@@ -93,7 +93,7 @@ const Frame_Only_Table = ({
     if (value > 1) {
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
           fraction(2.375)
         )
@@ -101,7 +101,7 @@ const Frame_Only_Table = ({
     } else {
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
           0
         )
@@ -129,7 +129,7 @@ const Frame_Only_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].leftStile`,
           fraction(numQty(changeValue))
         )
@@ -137,7 +137,7 @@ const Frame_Only_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].rightStile`,
           fraction(numQty(changeValue))
         )
@@ -145,7 +145,7 @@ const Frame_Only_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].topRail`,
           fraction(numQty(changeValue))
         )
@@ -153,7 +153,7 @@ const Frame_Only_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].bottomRail`,
           fraction(numQty(changeValue))
         )
@@ -385,33 +385,33 @@ const Frame_Only_Table = ({
                   if (fields.length > 0) {
                     dispatch(
                       touch(
-                        'DoorOrder',
+                        'Order',
                         `part_list[${i}].dimensions[${index}].notes`
                       )
                     );
                     dispatch(
                       touch(
-                        'DoorOrder',
+                        'Order',
                         `part_list[${i}].dimensions[${index}].width`
                       )
                     );
                     dispatch(
                       touch(
-                        'DoorOrder',
+                        'Order',
                         `part_list[${i}].dimensions[${index}].height`
                       )
                     );
                   }
 
-                  dispatch(touch('DoorOrder', `part_list[${i}].woodtype`));
+                  dispatch(touch('Order', `part_list[${i}].woodtype`));
                   dispatch(
-                    touch('DoorOrder', `part_list[${i}].face_frame_design`)
+                    touch('Order', `part_list[${i}].face_frame_design`)
                   );
                   dispatch(
-                    touch('DoorOrder', `part_list[${i}].face_frame_finishing`)
+                    touch('Order', `part_list[${i}].face_frame_finishing`)
                   );
 
-                  dispatch(startAsyncValidation('DoorOrder'));
+                  dispatch(startAsyncValidation('Order'));
 
                   fields.push({
                     qty: 1,
@@ -465,7 +465,7 @@ const Frame_Only_Table = ({
 };
 
 const mapStateToProps = (state) => ({
-  formSyncErrors: getFormSyncErrors('DoorOrder')(state),
+  formSyncErrors: getFormSyncErrors('Order')(state),
 });
 
 export default connect(mapStateToProps, null)(Frame_Only_Table);

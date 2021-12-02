@@ -42,7 +42,7 @@ import { renderField } from '../../../components/RenderInputs/renderInputs';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import NumberFormat from 'react-number-format';
 import currencyMask from '../../../utils/currencyMask';
-import CheckoutBox from './components/CheckoutBox';
+import CheckoutBox from './CheckoutBox';
 import Sticky from 'react-stickynode';
 import { NotificationManager } from 'react-notifications';
 import CancelModal from '../../../utils/Modal';

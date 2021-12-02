@@ -14,7 +14,7 @@ const changeProfile = (p, ind, props, change) => {
   } else {
     props.dispatch(
       change(
-        'DoorOrder',
+        'Order',
         `${p}.leftStile`,
         fraction(part.design ? part.design.PROFILE_WIDTH : 0)
       )
@@ -22,7 +22,7 @@ const changeProfile = (p, ind, props, change) => {
 
     props.dispatch(
       change(
-        'DoorOrder',
+        'Order',
         `${p}.rightStile`,
         fraction(part.design ? part.design.PROFILE_WIDTH : 0)
       )
@@ -33,7 +33,7 @@ const changeProfile = (p, ind, props, change) => {
       if(part?.construction?.value === 'Miter'){
         props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `${p}.topRail`,
             fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
           )
@@ -41,7 +41,7 @@ const changeProfile = (p, ind, props, change) => {
 
         props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `${p}.bottomRail`,
             fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
           )
@@ -49,7 +49,7 @@ const changeProfile = (p, ind, props, change) => {
       } else {
         props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `${p}.topRail`,
             fraction(part.design ? (part.design.DF_REDUCTION) : 0)
           )
@@ -57,7 +57,7 @@ const changeProfile = (p, ind, props, change) => {
 
         props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `${p}.bottomRail`,
             fraction(part.design ? (part.design.DF_REDUCTION) : 0)
           )
@@ -69,7 +69,7 @@ const changeProfile = (p, ind, props, change) => {
     } else {
       props.dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `${p}.topRail`,
           fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
         )
@@ -77,7 +77,7 @@ const changeProfile = (p, ind, props, change) => {
 
       props.dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `${p}.bottomRail`,
           fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
         )
@@ -86,7 +86,7 @@ const changeProfile = (p, ind, props, change) => {
 
     // props.dispatch(
     //   change(
-    //     'DoorOrder',
+    //     'Order',
     //     `${p}.notes`,
     //     `Left Stile: ${fraction(
     //       part.design ? (part.design.PROFILE_WIDTH) : 0
@@ -114,7 +114,7 @@ const changeProfile = (p, ind, props, change) => {
           if(part?.orderType?.value === 'DF'){
             props.dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `${p}.dimensions[${index}].leftStile`,
                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
               )
@@ -122,7 +122,7 @@ const changeProfile = (p, ind, props, change) => {
   
             props.dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `${p}.dimensions[${index}].rightStile`,
                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
               )
@@ -131,7 +131,7 @@ const changeProfile = (p, ind, props, change) => {
             if(part?.construction?.value === 'MT'){
               props.dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `${p}.dimensions[${index}].topRail`,
                   fraction(part.design ? (part.design.DF_REDUCTION) : 0)
                 )
@@ -140,7 +140,7 @@ const changeProfile = (p, ind, props, change) => {
     
               props.dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `${p}.dimensions[${index}].bottomRail`,
                   fraction(part.design ? (part.design.DF_REDUCTION) : 0)
                 )
@@ -148,7 +148,7 @@ const changeProfile = (p, ind, props, change) => {
             } else {
               props.dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `${p}.dimensions[${index}].topRail`,
                   fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
                 )
@@ -157,7 +157,7 @@ const changeProfile = (p, ind, props, change) => {
     
               props.dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `${p}.dimensions[${index}].bottomRail`,
                   fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
                 )
@@ -170,7 +170,7 @@ const changeProfile = (p, ind, props, change) => {
             if (parseInt(info.panelsH) > 1) {
               props.dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `${p}.dimensions[${index}].horizontalMidRailSize`,
                   fraction(part.design ? part.design.PROFILE_WIDTH : 0)
                 )
@@ -181,7 +181,7 @@ const changeProfile = (p, ind, props, change) => {
             if (parseInt(info.panelsW) > 1) {
               props.dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `${p}.dimensions[${index}].verticalMidRailSize`,
                   fraction(part.design ? part.design.PROFILE_WIDTH : 0)
                 )
@@ -190,7 +190,7 @@ const changeProfile = (p, ind, props, change) => {
           } else {
             props.dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `${p}.dimensions[${index}].leftStile`,
                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
               )
@@ -198,7 +198,7 @@ const changeProfile = (p, ind, props, change) => {
   
             props.dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `${p}.dimensions[${index}].rightStile`,
                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
               )
@@ -207,7 +207,7 @@ const changeProfile = (p, ind, props, change) => {
   
             props.dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `${p}.dimensions[${index}].topRail`,
                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
               )
@@ -216,7 +216,7 @@ const changeProfile = (p, ind, props, change) => {
   
             props.dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `${p}.dimensions[${index}].bottomRail`,
                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
               )
@@ -226,7 +226,7 @@ const changeProfile = (p, ind, props, change) => {
             if (parseInt(info.panelsH) > 1) {
               props.dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `${p}.dimensions[${index}].horizontalMidRailSize`,
                   fraction(part.design ? part.design.PROFILE_WIDTH : 0)
                 )
@@ -237,7 +237,7 @@ const changeProfile = (p, ind, props, change) => {
             if (parseInt(info.panelsW) > 1) {
               props.dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `${p}.dimensions[${index}].verticalMidRailSize`,
                   fraction(part.design ? part.design.PROFILE_WIDTH : 0)
                 )

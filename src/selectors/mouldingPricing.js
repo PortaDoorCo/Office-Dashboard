@@ -2,14 +2,14 @@ import { createSelector } from 'reselect';
 import numQty from 'numeric-quantity';
 
 const discountSelector = (state) => {
-  const orders = state?.form?.Mouldings;
+  const orders = state?.form?.Order;
 
   if (orders) {
-    if (!state?.form?.Mouldings?.values?.discount) {
+    if (!state?.form?.Order?.values?.discount) {
       return 0;
     } else {
-      if (state.form.Mouldings.values.discount > 0) {
-        return numQty(state.form.Mouldings.values.discount) / 100;
+      if (state.form.Order.values.discount > 0) {
+        return numQty(state.form.Order.values.discount) / 100;
       } else {
         return 0;
       }
@@ -20,14 +20,14 @@ const discountSelector = (state) => {
 };
 
 const miscItemsSelector = (state) => {
-  const orders = state.form.Mouldings;
+  const orders = state.form.Order;
   if (orders) {
     if (
-      state.form.Mouldings.values &&
-      state.form.Mouldings.values.misc_items &&
-      state.form.Mouldings.values.misc_items.length > 0
+      state.form.Order.values &&
+      state.form.Order.values.misc_items &&
+      state.form.Order.values.misc_items.length > 0
     ) {
-      return state.form.Mouldings.values.misc_items;
+      return state.form.Order.values.misc_items;
     } else {
       return [];
     }
@@ -97,20 +97,20 @@ export const miscTotalSelector = createSelector(
   (misc) => misc.reduce((acc, item) => acc + item, 0)
 );
 
-const mouldingsSelector = (state) => {
-  const orders = state.form.Mouldings;
+const OrderSelector = (state) => {
+  const orders = state.form.Order;
 
   if (orders) {
     if (
       orders &&
       orders.values &&
-      orders.values.mouldings &&
-      orders.values.mouldings.length > 0
+      orders.values.Order &&
+      orders.values.Order.length > 0
     ) {
       return (
-        state.form.Mouldings &&
-        state.form.Mouldings.values &&
-        state.form.Mouldings.values.mouldings
+        state.form.Order &&
+        state.form.Order.values &&
+        state.form.Order.values.Order
       );
     } else {
       return [];
@@ -121,9 +121,9 @@ const mouldingsSelector = (state) => {
 };
 
 export const mouldingPriceSelector = createSelector(
-  [mouldingsSelector],
-  (mouldings) =>
-    mouldings.map((i) => {
+  [OrderSelector],
+  (Order) =>
+    Order.map((i) => {
       let price = 0;
 
       if (i.item) {
@@ -167,7 +167,7 @@ export const mouldingPriceSelector = createSelector(
 );
 
 export const mouldingLinePriceSelector = createSelector(
-  [mouldingPriceSelector, mouldingsSelector],
+  [mouldingPriceSelector, OrderSelector],
   (pricer, parts, item) =>
     pricer.map((i, index) => {
       const price = i ? i : 0;
@@ -182,7 +182,7 @@ export const mouldingTotalSelector = createSelector(
 );
 
 const taxRate = (state) => {
-  const orders = state?.form?.Mouldings;
+  const orders = state?.form?.Order;
 
   if (orders) {
     if (!orders.values?.job_info) {
@@ -190,11 +190,11 @@ const taxRate = (state) => {
     } else {
       if (
         state.form &&
-        state.form.Mouldings &&
-        state.form.Mouldings.values &&
-        state.form.Mouldings.values.Taxable
+        state.form.Order &&
+        state.form.Order.values &&
+        state.form.Order.values.Taxable
       ) {
-        return state.form.Mouldings.values.job_info.customer.TaxRate / 100;
+        return state.form.Order.values.job_info.customer.TaxRate / 100;
       } else {
         return 0;
       }
@@ -205,12 +205,12 @@ const taxRate = (state) => {
 };
 
 const totalBalanceDue = (state) => {
-  const orders = state.form.Mouldings;
+  const orders = state.form.Order;
   if (orders) {
     if (!orders && !orders.values && !orders.values.balance_history) {
       return [];
     } else {
-      return state.form.Mouldings.values.balance_history.map((i) => {
+      return state.form.Order.values.balance_history.map((i) => {
         return i.balance_paid;
       });
     }
@@ -220,7 +220,7 @@ const totalBalanceDue = (state) => {
 };
 
 export const mouldingLineItemSelector = createSelector(
-  [mouldingsSelector],
+  [OrderSelector],
   (misc) => misc
 );
 

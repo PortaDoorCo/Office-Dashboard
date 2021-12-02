@@ -12,6 +12,10 @@ import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
+  taxSelector,
+  totalSelector,
+  miscTotalSelector,
+  finishTotalSelector,
   finishItemSelector,
 } from '../../../../selectors/faceFramePricing';
 import { finishingSelector } from '../../../../selectors/faceFramePricing';
@@ -151,7 +155,10 @@ const mapStateToProps = (state) => ({
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
-  finish: finishingSelector(state),
+  total: totalSelector(state),
+  tax: taxSelector(state),
+  miscTotalSelector: miscTotalSelector(state),
+  finish: finishTotalSelector(state),
   finishSubtotal: finishItemSelector(state),
 });
 

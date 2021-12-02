@@ -9,15 +9,15 @@ const pricingSelector = (state) => {
 };
 
 const discountSelector = (state) => {
-  const orders = state.form.DrawerOrder;
+  const orders = state.form.Order;
 
   if (orders) {
     if (
-      state.form.DrawerOrder.values &&
-      state.form.DrawerOrder.values.discount
+      state.form.Order.values &&
+      state.form.Order.values.discount
     ) {
-      if (state.form.DrawerOrder.values.discount > 0) {
-        return numQty(state.form.DrawerOrder.values.discount) / 100;
+      if (state.form.Order.values.discount > 0) {
+        return numQty(state.form.Order.values.discount) / 100;
       } else {
         return 0;
       }
@@ -30,14 +30,14 @@ const discountSelector = (state) => {
 };
 
 const partListSelector = (state) => {
-  const orders = state.form.DrawerOrder;
+  const orders = state.form.Order;
   if (orders) {
     if (
-      state.form.DrawerOrder &&
-      state.form.DrawerOrder.values &&
-      state.form.DrawerOrder.values.part_list
+      state.form.Order &&
+      state.form.Order.values &&
+      state.form.Order.values.part_list
     ) {
-      return state.form.DrawerOrder.values.part_list;
+      return state.form.Order.values.part_list;
     } else {
       return [];
     }
@@ -47,14 +47,14 @@ const partListSelector = (state) => {
 };
 
 const miscItemsSelector = (state) => {
-  const orders = state.form.DrawerOrder;
+  const orders = state.form.Order;
   if (orders) {
     if (
-      state.form.DrawerOrder.values &&
-      state.form.DrawerOrder.values.misc_items &&
-      state.form.DrawerOrder.values.misc_items.length > 0
+      state.form.Order.values &&
+      state.form.Order.values.misc_items &&
+      state.form.Order.values.misc_items.length > 0
     ) {
-      return state.form.DrawerOrder.values.misc_items;
+      return state.form.Order.values.misc_items;
     } else {
       return [];
     }
@@ -122,16 +122,16 @@ export const miscTotalSelector = createSelector(
 );
 
 const taxRate = (state) => {
-  const orders = state.form.DrawerOrder;
+  const orders = state.form.Order;
   if (orders) {
     if (orders.values && orders.values.job_info) {
       if (
         state.form &&
-        state.form.DrawerOrder &&
-        state.form.DrawerOrder.values &&
-        state.form.DrawerOrder.values.Taxable
+        state.form.Order &&
+        state.form.Order.values &&
+        state.form.Order.values.Taxable
       ) {
-        return state.form.DrawerOrder.values.job_info.customer.TaxRate / 100;
+        return state.form.Order.values.job_info.customer.TaxRate / 100;
       } else {
         return 0;
       }
@@ -144,10 +144,10 @@ const taxRate = (state) => {
 };
 
 const totalBalanceDue = (state) => {
-  const orders = state.form.DrawerOrder;
+  const orders = state.form.Order;
   if (orders) {
     if (orders.values && orders.values.balance_history) {
-      return state.form.DrawerOrder.values.balance_history.map((i) => {
+      return state.form.Order.values.balance_history.map((i) => {
         return i.balance_paid;
       });
     } else {

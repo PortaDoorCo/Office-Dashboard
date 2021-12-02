@@ -3,14 +3,14 @@ import numQty from 'numeric-quantity';
 
 
 const discountSelector = state => {
-  const orders = state.form.MiscItems;
+  const orders = state.form.Order;
 
   if (orders) {
-    if ((!state.form.MiscItems.values && !state.form.MiscItems.values.discount)) {
+    if ((!state.form.Order.values && !state.form.Order.values.discount)) {
       return 0;
     } else {
-      if(state.form.MiscItems.values.discount > 0){
-        return (numQty(state.form.MiscItems.values.discount) / 100);
+      if(state.form.Order.values.discount > 0){
+        return (numQty(state.form.Order.values.discount) / 100);
       } else {
         return 0;
       }
@@ -20,11 +20,11 @@ const discountSelector = state => {
   }
 };
 
-const miscItemsSelector = state => {
-  const orders = state.form.MiscItems;
+const OrderSelector = state => {
+  const orders = state.form.Order;
   if (orders) {
-    if ((state.form.MiscItems.values && state.form.MiscItems.values.misc_items && state.form.MiscItems.values.misc_items.length > 0)) {
-      return state.form.MiscItems.values.misc_items;
+    if ((state.form.Order.values && state.form.Order.values.misc_items && state.form.Order.values.misc_items.length > 0)) {
+      return state.form.Order.values.misc_items;
     } else {
       return [];
     }
@@ -34,7 +34,7 @@ const miscItemsSelector = state => {
 };
 
 export const miscItemPriceSelector = createSelector(
-  [miscItemsSelector],
+  [OrderSelector],
   (misc ) => misc.map(i => {
     let price = 0;
 
@@ -58,7 +58,7 @@ export const miscItemPriceSelector = createSelector(
 
 
 export const miscItemLinePriceSelector = createSelector(
-  [miscItemsSelector, miscItemPriceSelector],
+  [OrderSelector, miscItemPriceSelector],
   (parts, pricer, item) =>
     parts.map((i, index) => {
       let price = 0;
@@ -93,14 +93,14 @@ export const miscTotalSelector = createSelector(
 );
 
 const taxRate = state => {
-  const orders = state.form.MiscItems;
+  const orders = state.form.Order;
 
   if (orders) {
     if (!orders.values.job_info) {
       return 0;
     } else {
-      if(state.form && state.form.MiscItems && state.form.MiscItems.values && state.form.MiscItems.values.Taxable){
-        return (state.form.MiscItems.values.job_info.customer.TaxRate / 100);
+      if(state.form && state.form.Order && state.form.Order.values && state.form.Order.values.Taxable){
+        return (state.form.Order.values.job_info.customer.TaxRate / 100);
       } else {
         return 0;
       }
@@ -114,12 +114,12 @@ const taxRate = state => {
 
 
 const totalBalanceDue = state => {
-  const orders = state.form.MiscItems;
+  const orders = state.form.Order;
   if (orders) {
     if (!orders && !orders.values && !orders.values.balance_history) {
       return [];
     } else {
-      return state.form.MiscItems.values.balance_history.map(i => {
+      return state.form.Order.values.balance_history.map(i => {
         return i.balance_paid;
       });
     }
@@ -129,7 +129,7 @@ const totalBalanceDue = state => {
 };
 
 export const miscLineItemSelector = createSelector(
-  [miscItemsSelector],
+  [OrderSelector],
   (misc) => misc
 );
 

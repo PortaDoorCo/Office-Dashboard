@@ -15,6 +15,7 @@ const MiscItems = React.lazy(() => import('./views/Admin/MiscItems/MiscItems'));
 const Catalog = React.lazy(() => import('./views/Admin/Catalog/Catalog'));
 const Mouldings = React.lazy(() => import('./views/Admin/Mouldings/Mouldings'));
 const FaceFrames = React.lazy(() => import('./views/Admin/Face_Frames/FaceFrames'));
+const OrderEntry = React.lazy(() => import('./views/Admin/OrderEntry/OrderEntry'));
 
 
 
@@ -22,8 +23,8 @@ const FaceFrames = React.lazy(() => import('./views/Admin/Face_Frames/FaceFrames
 const routes = [
   { path: '/', exact: true, component: Dashboard, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/door-order', name: 'Door Order', component: DoorOrders, type: 'door_order' },
-  { path: '/drawer-order', name: 'Drawer Order', component: DrawerOrders, type: 'drawer_order' },
+  { path: '/door-order', name: 'Door Order', component: OrderEntry, type: 'door_order' },
+  { path: '/drawer-order', name: 'Drawer Order', component: OrderEntry, type: 'drawer_order' },
   { path: '/view-orders', name: 'Orders', component: Orders },
   { path: '/customers', name: 'Customers', component: Customers },
   { path: '/settings', name: 'Settings', component: Settings, className: 'settings-tour' },
@@ -32,10 +33,10 @@ const routes = [
   { path: '/sales-reports', name: 'Sales Reports', component: SalesReport },
   { path: '/late-list', name: 'Late List', component: LateList },
   { path: '/users', name: 'Users', component: Users },
-  { path: '/misc-items', name: 'MiscItems', component: MiscItems, type: 'misc_items' },
+  { path: '/misc-items', name: 'MiscItems', component: OrderEntry, type: 'misc_items' },
   { path: '/catalog', name: 'Catalog', component: Catalog },
-  { path: '/mouldings', name: 'Mouldings', component: Mouldings, type: 'mouldings' },
-  { path: '/face-frames', name: 'FaceFrames', component: FaceFrames, type: 'face_frame' },
+  { path: '/mouldings', name: 'Mouldings', component: OrderEntry, type: 'mouldings' },
+  { path: '/face-frames', name: 'FaceFrames', component: OrderEntry, type: 'face_frame' },
 ];
 
 

@@ -7,12 +7,12 @@ const pricingSelector = (state) => {
 };
 
 const discountSelector = (state) => {
-  const orders = state.form.DoorOrder;
+  const orders = state.form.Order;
 
   if (orders) {
-    if (state.form.DoorOrder.values && state.form.DoorOrder.values.discount) {
-      if (state.form.DoorOrder.values.discount > 0) {
-        return numQty(state.form.DoorOrder.values.discount) / 100;
+    if (state.form.Order.values && state.form.Order.values.discount) {
+      if (state.form.Order.values.discount > 0) {
+        return numQty(state.form.Order.values.discount) / 100;
       } else {
         return 0;
       }
@@ -25,15 +25,15 @@ const discountSelector = (state) => {
 };
 
 const stateSelector = (state) => {
-  const orders = state.form.DoorOrder;
+  const orders = state.form.Order;
 
   if (orders) {
     if (
-      state.form.DoorOrder.values &&
-      state.form.DoorOrder.values.job_info &&
-      state.form.DoorOrder.values.job_info.State
+      state.form.Order.values &&
+      state.form.Order.values.job_info &&
+      state.form.Order.values.job_info.State
     ) {
-      return state.form.DoorOrder.values.job_info.State;
+      return state.form.Order.values.job_info.State;
     } else {
       return null;
     }
@@ -43,11 +43,11 @@ const stateSelector = (state) => {
 };
 
 const partListSelector = (state) => {
-  const orders = state.form.DoorOrder;
+  const orders = state.form.Order;
 
   if (orders) {
     if (orders && orders.values && orders.values.part_list) {
-      return state.form.DoorOrder.values.part_list;
+      return state.form.Order.values.part_list;
     } else {
       return [];
     }
@@ -57,14 +57,14 @@ const partListSelector = (state) => {
 };
 
 const miscItemsSelector = (state) => {
-  const orders = state.form.DoorOrder;
+  const orders = state.form.Order;
   if (orders) {
     if (
-      state.form.DoorOrder.values &&
-      state.form.DoorOrder.values.misc_items &&
-      state.form.DoorOrder.values.misc_items.length > 0
+      state.form.Order.values &&
+      state.form.Order.values.misc_items &&
+      state.form.Order.values.misc_items.length > 0
     ) {
-      return state.form.DoorOrder.values.misc_items;
+      return state.form.Order.values.misc_items;
     } else {
       return [];
     }
@@ -132,17 +132,17 @@ export const miscTotalSelector = createSelector(
 );
 
 const taxRate = (state) => {
-  const orders = state.form.DoorOrder;
+  const orders = state.form.Order;
 
   if (orders) {
     if (orders.values && orders.values.job_info) {
       if (
         state.form &&
-        state.form.DoorOrder &&
-        state.form.DoorOrder.values &&
-        state.form.DoorOrder.values.Taxable
+        state.form.Order &&
+        state.form.Order.values &&
+        state.form.Order.values.Taxable
       ) {
-        return state.form.DoorOrder.values.job_info.customer.TaxRate / 100;
+        return state.form.Order.values.job_info.customer.TaxRate / 100;
       } else {
         return 0;
       }
@@ -155,10 +155,10 @@ const taxRate = (state) => {
 };
 
 const totalBalanceDue = (state) => {
-  const orders = state.form.DoorOrder;
+  const orders = state.form.Order;
   if (orders) {
     if (orders && orders.values && orders.values.balance_history) {
-      return state.form.DoorOrder.values.balance_history.map((i) => {
+      return state.form.Order.values.balance_history.map((i) => {
         return i.balance_paid;
       });
     } else {
