@@ -23,6 +23,7 @@ import {
   deleteOrder,
   setSelectedOrder,
   uploadFilesToOrder,
+  deleteFilesFromOrder,
   submitOrder,
 } from '../../../redux/orders/actions';
 import Edit from '@material-ui/icons/Edit';
@@ -507,8 +508,6 @@ class OrderPage extends Component {
 
       console.log({ newParts });
 
-
-
       let files = [];
 
       for (let i = 0; i < p.acknowledgement; i++) {
@@ -581,28 +580,10 @@ class OrderPage extends Component {
       }
 
       for (let i = 0; i < p.panels; i++) {
-
-        await Promise.all(newParts.map(async (k) => {
-          if (k.hasSlab) {
-            return await SolidsPage(
-              k,
-              design1,
-              edges1,
-              moulds1,
-              miter1,
-              mt_1,
-              panels1,
-              appliedProfiles1,
-              breakdowns,
-              p,
-              this.props.pricing
-            ).then(async (v) => {
-              console.log({v});
-              files.push(v);
-            });
-          } else {
-            if (k.part_list.length > 0) {
-              return await PanelsPage(
+        await Promise.all(
+          newParts.map(async (k) => {
+            if (k.hasSlab) {
+              return await SolidsPage(
                 k,
                 design1,
                 edges1,
@@ -615,22 +596,38 @@ class OrderPage extends Component {
                 p,
                 this.props.pricing
               ).then(async (v) => {
+                console.log({ v });
                 files.push(v);
               });
             } else {
-              return null;
+              if (k.part_list.length > 0) {
+                return await PanelsPage(
+                  k,
+                  design1,
+                  edges1,
+                  moulds1,
+                  miter1,
+                  mt_1,
+                  panels1,
+                  appliedProfiles1,
+                  breakdowns,
+                  p,
+                  this.props.pricing
+                ).then(async (v) => {
+                  files.push(v);
+                });
+              } else {
+                return null;
+              }
             }
-          }
-        }));
-
+          })
+        );
 
         // const generatePanels = async () => {
 
         // };
 
         // await generatePanels();
-
-        
       }
 
       for (let i = 0; i < p.stiles; i++) {
@@ -759,7 +756,7 @@ class OrderPage extends Component {
         });
       }
 
-      console.log({files});
+      console.log({ files });
 
       await generatePDF(files);
     } else if (data.orderType === 'Drawer Order') {
@@ -1030,7 +1027,8 @@ class OrderPage extends Component {
   render() {
     const props = this.props;
 
-    const { selectedOrder, printer_options, user } = this.props;
+    const { selectedOrder, printer_options, user, deleteFilesFromOrder } =
+      this.props;
 
     let options;
     let s = selectedOrder ? selectedOrder : 'Door Order';
@@ -1165,7 +1163,7 @@ class OrderPage extends Component {
             });
 
             const railPrint = rail.map((i) => {
-              console.log({i});
+              console.log({ i });
               return razorGuage.push([
                 `${s.orderNum}`,
                 `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
@@ -1423,15 +1421,30 @@ class OrderPage extends Component {
                               ? selectedOrder.files.map((i, index) => (
                                 <tr>
                                   <th scope="row">{index + 1}</th>
-                                  <td>{i.name}</td>
+                                  <td style={{ width: '90%' }}>{i.name}</td>
                                   <td style={{ textAlign: 'right' }}>
                                     <a
                                       href={i.url}
                                       rel="noopener noreferrer"
                                       target="_blank"
                                     >
+                                      <Button>
                                         View
+                                      </Button>
                                     </a>
+                                  </td>
+                                  <td style={{ textAlign: 'right' }}>
+                                    <Button
+                                      onClick={() =>
+                                        deleteFilesFromOrder(
+                                          selectedOrder,
+                                          i,
+                                          cookie
+                                        )
+                                      }
+                                    >
+                                      Delete
+                                    </Button>
                                   </td>
                                 </tr>
                               ))
@@ -1716,6 +1729,7 @@ const mapDispatchToProps = (dispatch) =>
       deleteOrder,
       setSelectedOrder,
       uploadFilesToOrder,
+      deleteFilesFromOrder,
       submitOrder,
     },
     dispatch
