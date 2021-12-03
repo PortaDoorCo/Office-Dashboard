@@ -33,7 +33,7 @@ import {
   mouldingLineItemSelector,
   mouldingPriceSelector,
   mouldingLinePriceSelector,
-} from '../../selectors/mouldingPricing';
+} from '../../selectors/pricing';
 
 
 const thickness = [

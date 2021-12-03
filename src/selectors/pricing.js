@@ -44,6 +44,29 @@ const stateSelector = (state) => {
 
 const orderTypeSelector = (state) => state?.Orders?.orderType;
 
+const OrderSelector = (state) => {
+  const orders = state.form.Order;
+
+  if (orders) {
+    if (
+      orders &&
+      orders.values &&
+      orders.values.mouldings &&
+      orders.values.mouldings.length > 0
+    ) {
+      return (
+        state.form.Order &&
+        state.form.Order.values &&
+        state.form.Order.values.mouldings
+      );
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
+};
+
 const partListSelector = (state) => {
   const orders = state.form.Order;
 
@@ -665,18 +688,101 @@ export const addPriceSelector = createSelector(
 
 );
 
-export const subTotalSelector = createSelector(
-  [linePriceSelector, miscTotalSelector],
-  (prices, misc) =>
-    prices.map((i, index) => {
-      if (i) {
-        let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
-        let sum = price;
-        return sum;
-      } else {
-        return 0;
+export const mouldingPriceSelector = createSelector(
+  [OrderSelector],
+  (Order) =>
+    Order.map((i) => {
+      let price = 0;
+
+      if (i.item) {
+        const { item, woodtype, linearFT, grade } = i;
+
+        let feet = (item.MOULDING_WIDTH * 12) / 144;
+        let waste = feet * 1.25;
+        let multiplier = item.Multiplier;
+        let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
+        let premium = 0;
+
+        let newWood = wood;
+
+        if(multiplier <= 1){
+          newWood = wood;
+        } else {
+          newWood = wood * 1.25;
+        }
+
+        let a = waste * multiplier;
+
+        if (parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
+          premium = 3 + 1;
+        } else if (parseFloat(linearFT) >= 31 && parseFloat(linearFT) <= 50) {
+          premium = 2 + 1;
+        } else if (parseFloat(linearFT) >= 51 && parseFloat(linearFT) <= 100) {
+          premium = 1.75 + 1;
+        } else if (parseFloat(linearFT) > 101 && parseFloat(linearFT) <= 250) {
+          premium = 1.4 + 1;
+        } else if (parseFloat(linearFT) > 251 && parseFloat(linearFT) <= 500) {
+          premium = 1.1 + 1;
+        } else {
+          premium = 1 + 1;
+        }
+
+        price = ((a * newWood) * parseFloat(linearFT)) * premium;
       }
+
+      return price;
     })
+);
+
+export const mouldingLinePriceSelector = createSelector(
+  [mouldingPriceSelector, OrderSelector],
+  (pricer, parts, item) =>
+    pricer.map((i, index) => {
+      const price = i ? i : 0;
+
+      return price;
+    })
+);
+
+export const mouldingTotalSelector = createSelector(
+  [mouldingLinePriceSelector],
+  (misc) => misc.reduce((acc, item) => acc + item, 0)
+);
+
+
+export const subTotalSelector = createSelector(
+  [linePriceSelector, miscTotalSelector, orderTypeSelector, mouldingTotalSelector],
+  (prices, misc,orderType, moulding) =>
+  {
+
+    console.log({orderType});
+    console.log({moulding});
+
+    if(orderType){
+      if (orderType === 'mouldings'){
+        return [moulding];
+      } else {
+        prices.map((i, index) => {
+          if (i) {
+            let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
+            let sum = price;
+            return sum;
+          } else {
+            return 0;
+          }
+        });
+      }
+    } else {
+      return [0];
+    }
+
+  }
+
+);
+
+export const mouldingLineItemSelector = createSelector(
+  [OrderSelector],
+  (misc) => misc
 );
 
 export const subTotal_Total = createSelector(

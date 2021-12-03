@@ -22,7 +22,7 @@ const initialState = {
   deliveries: [],
   sortedDestinations: [],
   selectedOrder: null,
-  orderType: ''
+  orderType: null
 };
 
 export default function (state = initialState, action) {
