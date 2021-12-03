@@ -11,7 +11,8 @@ import {
   ORDER_UPDATED,
   ORDER_DELETED,
   UPDATE_SELECTED_ORDER,
-  UPDATE_NOTES
+  UPDATE_NOTES,
+  SET_ORDER_TYPE
 } from './actions';
 import moment from 'moment';
 
@@ -21,6 +22,7 @@ const initialState = {
   deliveries: [],
   sortedDestinations: [],
   selectedOrder: null,
+  orderType: ''
 };
 
 export default function (state = initialState, action) {
@@ -31,6 +33,11 @@ export default function (state = initialState, action) {
         ...state,
         orders: data,
         ordersDBLoaded: true,
+      };
+    case SET_ORDER_TYPE:
+      return {
+        ...state,
+        orderType: data
       };
     case SUBMIT_ORDER:
       return {

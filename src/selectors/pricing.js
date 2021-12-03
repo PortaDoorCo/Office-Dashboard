@@ -42,6 +42,8 @@ const stateSelector = (state) => {
   }
 };
 
+const orderTypeSelector = (state) => state?.Orders?.orderType;
+
 const partListSelector = (state) => {
   const orders = state.form.Order;
 
@@ -170,338 +172,412 @@ const totalBalanceDue = (state) => {
 };
 
 export const itemPriceSelector = createSelector(
+  [partListSelector, pricingSelector, orderTypeSelector],
+  (parts, pricer, orderType) => {
+
+    if(orderType === 'door_order' || orderType === 'face_frame'){
+      return parts.map((part, index) => {
+        console.log({orderType});
+        const design =
+          (part.design && part.thickness.value === 1) ||
+          (part.design && part.thickness.value === 2)
+            ? part.design.UPCHARGE
+            : (part.design && part.thickness.value === 3) ||
+              (part.design && part.thickness.value === 4) ||
+              (part.design && part.thickness.value === 5) ||
+              (part.design && part.thickness.value === 6)
+              ? part.design.UPCHARGE_THICK
+              : 0;
+  
+        let wood;
+  
+        switch (part?.thickness?.value) {
+          case 2:
+            // code block
+            wood = part?.woodtype?.SELECT_GRADE;
+            break;
+          case 3:
+            // code block
+            wood = part?.woodtype?.STANDARD_GRADE_THICK;
+            break;
+          case 4:
+            // code block
+            wood = part?.woodtype?.SELECT_GRADE_THICK;
+            break;
+          case 5:
+            // code block
+            wood = part?.woodtype?.SIX_QUARTER;
+            break;
+          case 6:
+            // code block
+            wood = part?.woodtype?.SIX_QUARTER_THICK;
+            break;
+          default:
+            // code block
+            wood = part?.woodtype?.STANDARD_GRADE;
+        }
+  
+        
+        const profile_cost = part.profile?.Extra_Charge ? part.profile?.Extra_Charge : 0;
+        const edge = part.edge ? part.edge.UPCHARGE : 0;
+        const panel = part.panel ? part.panel.UPCHARGE : 0;
+        const applied_profile = 0;
+        const finish = part.finish ? part.finish.UPCHARGE : 0;
+  
+        const ff_opening_cost = part.face_frame_design
+          ? part.face_frame_design.opening_cost
+          : 0;
+        const ff_top_rail_design = part.face_frame_top_rail
+          ? part.face_frame_top_rail.UPCHARGE
+          : 0;
+        const furniture_feet = part.furniture_feet
+          ? part.furniture_feet.UPCHARGE
+          : 0;
+  
+        if (part?.orderType?.value === 'Face_Frame') {
+          if (part.dimensions) {
+            const linePrice = part.dimensions.map((i) => {
+              const width_input = Math.ceil(numQty(i.width));
+              const width =
+                Math.ceil(numQty(i.width)) < 24
+                  ? 18
+                  : Math.ceil(numQty(i.width)) >= 24 &&
+                    Math.ceil(numQty(i.width)) <= 48
+                    ? 24
+                    : 36;
+              const height = Math.ceil(numQty(i.height));
+              const openings = parseInt(i.openings);
+              const finish = part.face_frame_finishing
+                ? part.face_frame_finishing.PRICE
+                : 0;
+  
+              const width_finish = width_input >= 35 ? finish * 0.25 : 0;
+              const height_finish = height >= 97 ? finish * 0.25 : 0;
+  
+              const finishing = finish + width_finish + height_finish;
+  
+              let overcharge = 0;
+  
+              if (width_input >= 48 || height >= 96) {
+                overcharge = 100;
+              }
+  
+              const price = eval(pricer && pricer.face_frame_pricing);
+  
+              if (height > -1) {
+                return price;
+              } else {
+                return 0;
+              }
+            });
+  
+            return linePrice;
+          } else {
+            return 0;
+          }
+        } else {
+          if (part.dimensions) {
+            const linePrice = part.dimensions.map((i) => {
+              const width = Math.ceil(numQty(i.width));
+              const height = Math.ceil(numQty(i.height));
+              const qty = parseInt(i.qty);
+              const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
+              const panelsH = parseInt(i.panelsH);
+              const panelsW = parseInt(i.panelsW);
+  
+  
+              //add lite pricing here
+              // const lites = i.lite ? i.lite.UPCHARGE : 0;
+  
+              const litePriceArray = Array.from(
+                panelsH ? Array(parseInt(panelsH)).keys() : 0
+              ).map((j, index) => {
+                return eval(`i.lite_${index}`)
+                  ? eval(`i.lite_${index}.UPCHARGE`)
+                  : 0;
+              });
+  
+              const lites = litePriceArray.reduce((acc, item) => acc + item, 0);
+  
+              let leftStileAdd = 0;
+              let rightStileAdd = 0;
+              let topRailAdd = 0;
+              let bottomRailAdd = 0;
+  
+              const calcPrice = (add, part, price, w) => {
+                const width = w;
+                const difference = numQty(part) - width;
+                const calc = difference * 10 + price;
+                const priceDifference = calc - price;
+  
+                switch (add) {
+                  case 'leftStileAdd':
+                    leftStileAdd = priceDifference / 4;
+                    break;
+                  case 'rightStileAdd':
+                    rightStileAdd = priceDifference / 4;
+                    break;
+                  case 'topRailAdd':
+                    topRailAdd = priceDifference / 4;
+                    break;
+                  case 'bottomRailAdd':
+                    bottomRailAdd = priceDifference / 4;
+                    break;
+                  default:
+                    // code block
+                    break;
+                }
+              };
+  
+              const leftStileCalc = (p, price) => {
+                return calcPrice('leftStileAdd', eval('i.leftStile'), price, p);
+              };
+  
+              const rightStileCalc = (p, price) => {
+                return calcPrice('rightStileAdd', eval('i.rightStile'), price, p);
+              };
+  
+              const topRailCalc = (p, price) => {
+                return calcPrice('topRailAdd', eval('i.topRail'), price, p);
+              };
+  
+              const bottomRailCalc = (p, price) => {
+                return calcPrice('bottomRailAdd', eval('i.bottomRail'), price, p);
+              };
+  
+              const calc = (part, design, price) => {
+                switch (part) {
+                  case 'leftStile':
+                    leftStileCalc(design, price);
+                    break;
+                  case 'rightStile':
+                    rightStileCalc(design, price);
+                    break;
+                  case 'topRail':
+                    topRailCalc(design, price);
+                    break;
+                  case 'bottomRail':
+                    bottomRailCalc(design, price);
+                    break;
+                  default:
+                    return 0;
+                }
+              };
+  
+              let price = 0;
+  
+              if (part.thickness.value === 1 || part.thickness.value === 2) {
+                if (part.design) {
+                  price = part.design && part.design.UPCHARGE;
+                } else {
+                  price = 0;
+                }
+              }
+              if (
+                part.thickness.value === 3 ||
+                part.thickness.value === 4 ||
+                part.thickness.value === 5 ||
+                part.thickness.value === 6
+              ) {
+                if (part.design) {
+                  price = part.design && part.design.UPCHARGE_THICK;
+                } else {
+                  price = 0;
+                }
+              }
+  
+              if (part.profile) {
+                //leftStile
+                if (
+                  (part.profile && part.profile.PROFILE_WIDTH) !==
+                  numQty(i.leftStile)
+                ) {
+                  calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+                }
+                //rightStile
+                if (
+                  (part.profile && part.profile.PROFILE_WIDTH) !==
+                  numQty(i.rightStile)
+                ) {
+                  calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+                }
+                //topRail
+                if (
+                  (part.profile && part.profile.PROFILE_WIDTH) !==
+                  numQty(i.topRail)
+                ) {
+                  calc('topRail', part.profile?.PROFILE_WIDTH, price);
+                }
+                //bottomRail
+                if (
+                  (part.profile && part.profile.PROFILE_WIDTH) !==
+                  numQty(i.bottomRail)
+                ) {
+                  calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+                }
+              } else {
+                //leftStile
+                if (
+                  (part.design && part.design.PROFILE_WIDTH) !==
+                  numQty(i.leftStile)
+                ) {
+                  calc('leftStile', part.design?.PROFILE_WIDTH, price);
+                }
+                //rightStile
+                if (
+                  (part.design && part.design.PROFILE_WIDTH) !==
+                  numQty(i.rightStile)
+                ) {
+                  calc('rightStile', part.design?.PROFILE_WIDTH, price);
+                }
+                //topRail
+                if (
+                  (part.design && part.design.PROFILE_WIDTH) !== numQty(i.topRail)
+                ) {
+                  calc('topRail', part.design?.PROFILE_WIDTH, price);
+                }
+                //bottomRail
+                if (
+                  (part.design && part.design.PROFILE_WIDTH) !==
+                  numQty(i.bottomRail)
+                ) {
+                  calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+                }
+              }
+  
+              //test
+              //Slab Doors here
+  
+              if (
+                part.orderType.value === 'Door' &&
+                part.construction.value === 'Slab'
+              ) {
+                price =
+                  (width * height) / 144 > 2
+                    ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
+                    : 2 * wood + (6.5 + edge) + extraCost;
+              } else if (
+                part.orderType.value === 'DF' &&
+                part.construction.value === 'Slab'
+              ) {
+                price =
+                  (width * height) / 144 > 1
+                    ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
+                    : 1 * wood + (6.5 + edge) + extraCost;
+              } else if (part.orderType.value === 'DF') {
+                price =
+                  eval(pricer.df_pricing) +
+                  leftStileAdd +
+                  rightStileAdd +
+                  topRailAdd +
+                  bottomRailAdd +
+                  extraCost
+                    ? eval(pricer.df_pricing) +
+                      leftStileAdd +
+                      rightStileAdd +
+                      topRailAdd +
+                      bottomRailAdd +
+                      extraCost
+                    : 0;
+              } else {
+                price =
+                  eval(pricer && pricer.door_pricing) +
+                  leftStileAdd +
+                  rightStileAdd +
+                  topRailAdd +
+                  bottomRailAdd +
+                  extraCost
+                    ? eval(pricer && pricer.door_pricing) +
+                      leftStileAdd +
+                      rightStileAdd +
+                      topRailAdd +
+                      bottomRailAdd +
+                      extraCost
+                    : 0;
+              }
+  
+              if (height > -1) {
+                return price;
+              } else {
+                return 0;
+              }
+            });
+  
+            return linePrice;
+          } else {
+            return 0;
+          }
+        }
+      });
+    }
+
+    if(orderType === 'drawer_order'){
+      return  parts.map((part, index) => {
+        const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
+        const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
+        const assembly = part.box_assembly ? part.box_assembly.UPCHARGE : 0;
+        const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
+  
+        if (part.dimensions) {
+          const linePrice = part.dimensions.map((i) => {
+            const width = numQty(i.width);
+            const height = numQty(i.height);
+            const depth = numQty(i.depth);
+  
+            const scoop = i.scoop.PRICE;
+  
+            const price = eval(pricer.drawer_box_pricing);
+  
+            if (height > -1) {
+              return price;
+            } else {
+              return 0;
+            }
+          });
+          return linePrice;
+        } else {
+          return 0;
+        }
+      });
+    }
+
+
+  }
+
+);
+
+export const finishingSelector = createSelector(
   [partListSelector, pricingSelector, discountSelector],
   (parts, pricer, discount) =>
     parts.map((part, index) => {
-      const design =
-        (part.design && part.thickness.value === 1) ||
-        (part.design && part.thickness.value === 2)
-          ? part.design.UPCHARGE
-          : (part.design && part.thickness.value === 3) ||
-            (part.design && part.thickness.value === 4) ||
-            (part.design && part.thickness.value === 5) ||
-            (part.design && part.thickness.value === 6)
-            ? part.design.UPCHARGE_THICK
+      if (part.dimensions) {
+        const linePrice = part.dimensions.map((i) => {
+          const width_input = numQty(i.width);
+          const height = numQty(i.height);
+          const finish = part.face_frame_finishing
+            ? part.face_frame_finishing.PRICE
             : 0;
 
-      let wood;
+          const width_finish = width_input >= 35 ? finish * 0.25 : 0;
+          const height_finish = height >= 97 ? finish * 0.25 : 0;
 
-      switch (part?.thickness?.value) {
-        case 2:
-          // code block
-          wood = part?.woodtype?.SELECT_GRADE;
-          break;
-        case 3:
-          // code block
-          wood = part?.woodtype?.STANDARD_GRADE_THICK;
-          break;
-        case 4:
-          // code block
-          wood = part?.woodtype?.SELECT_GRADE_THICK;
-          break;
-        case 5:
-          // code block
-          wood = part?.woodtype?.SIX_QUARTER;
-          break;
-        case 6:
-          // code block
-          wood = part?.woodtype?.SIX_QUARTER_THICK;
-          break;
-        default:
-          // code block
-          wood = part?.woodtype?.STANDARD_GRADE;
-      }
+          const openings = parseInt(i.openings);
+          const opening_add =
+            openings > 1 && finish > 0 ? (openings - 1) * 5 : 0;
 
-      
-      const profile_cost = part.profile?.Extra_Charge ? part.profile?.Extra_Charge : 0;
-      const edge = part.edge ? part.edge.UPCHARGE : 0;
-      const panel = part.panel ? part.panel.UPCHARGE : 0;
-      const applied_profile = 0;
-      const finish = part.finish ? part.finish.UPCHARGE : 0;
+          const finishing =
+            finish + (width_finish + height_finish + opening_add);
 
-      const ff_opening_cost = part.face_frame_design
-        ? part.face_frame_design.opening_cost
-        : 0;
-      const ff_top_rail_design = part.face_frame_top_rail
-        ? part.face_frame_top_rail.UPCHARGE
-        : 0;
-      const furniture_feet = part.furniture_feet
-        ? part.furniture_feet.UPCHARGE
-        : 0;
+          if (height > -1) {
+            return finishing;
+          } else {
+            return 0;
+          }
+        });
 
-      if (part?.orderType?.value === 'Face_Frame') {
-        if (part.dimensions) {
-          const linePrice = part.dimensions.map((i) => {
-            const width_input = Math.ceil(numQty(i.width));
-            const width =
-              Math.ceil(numQty(i.width)) < 24
-                ? 18
-                : Math.ceil(numQty(i.width)) >= 24 &&
-                  Math.ceil(numQty(i.width)) <= 48
-                  ? 24
-                  : 36;
-            const height = Math.ceil(numQty(i.height));
-            const openings = parseInt(i.openings);
-            const finish = part.face_frame_finishing
-              ? part.face_frame_finishing.PRICE
-              : 0;
-
-            const width_finish = width_input >= 35 ? finish * 0.25 : 0;
-            const height_finish = height >= 97 ? finish * 0.25 : 0;
-
-            const finishing = finish + width_finish + height_finish;
-
-            let overcharge = 0;
-
-            if (width_input >= 48 || height >= 96) {
-              overcharge = 100;
-            }
-
-            const price = eval(pricer && pricer.face_frame_pricing);
-
-            if (height > -1) {
-              return price;
-            } else {
-              return 0;
-            }
-          });
-
-          return linePrice;
-        } else {
-          return 0;
-        }
+        return linePrice;
       } else {
-        if (part.dimensions) {
-          const linePrice = part.dimensions.map((i) => {
-            const width = Math.ceil(numQty(i.width));
-            const height = Math.ceil(numQty(i.height));
-            const qty = parseInt(i.qty);
-            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
-            const panelsH = parseInt(i.panelsH);
-            const panelsW = parseInt(i.panelsW);
-
-
-            //add lite pricing here
-            // const lites = i.lite ? i.lite.UPCHARGE : 0;
-
-            const litePriceArray = Array.from(
-              panelsH ? Array(parseInt(panelsH)).keys() : 0
-            ).map((j, index) => {
-              return eval(`i.lite_${index}`)
-                ? eval(`i.lite_${index}.UPCHARGE`)
-                : 0;
-            });
-
-            const lites = litePriceArray.reduce((acc, item) => acc + item, 0);
-
-            let leftStileAdd = 0;
-            let rightStileAdd = 0;
-            let topRailAdd = 0;
-            let bottomRailAdd = 0;
-
-            const calcPrice = (add, part, price, w) => {
-              const width = w;
-              const difference = numQty(part) - width;
-              const calc = difference * 10 + price;
-              const priceDifference = calc - price;
-
-              switch (add) {
-                case 'leftStileAdd':
-                  leftStileAdd = priceDifference / 4;
-                  break;
-                case 'rightStileAdd':
-                  rightStileAdd = priceDifference / 4;
-                  break;
-                case 'topRailAdd':
-                  topRailAdd = priceDifference / 4;
-                  break;
-                case 'bottomRailAdd':
-                  bottomRailAdd = priceDifference / 4;
-                  break;
-                default:
-                  // code block
-                  break;
-              }
-            };
-
-            const leftStileCalc = (p, price) => {
-              return calcPrice('leftStileAdd', eval('i.leftStile'), price, p);
-            };
-
-            const rightStileCalc = (p, price) => {
-              return calcPrice('rightStileAdd', eval('i.rightStile'), price, p);
-            };
-
-            const topRailCalc = (p, price) => {
-              return calcPrice('topRailAdd', eval('i.topRail'), price, p);
-            };
-
-            const bottomRailCalc = (p, price) => {
-              return calcPrice('bottomRailAdd', eval('i.bottomRail'), price, p);
-            };
-
-            const calc = (part, design, price) => {
-              switch (part) {
-                case 'leftStile':
-                  leftStileCalc(design, price);
-                  break;
-                case 'rightStile':
-                  rightStileCalc(design, price);
-                  break;
-                case 'topRail':
-                  topRailCalc(design, price);
-                  break;
-                case 'bottomRail':
-                  bottomRailCalc(design, price);
-                  break;
-                default:
-                  return 0;
-              }
-            };
-
-            let price = 0;
-
-            if (part.thickness.value === 1 || part.thickness.value === 2) {
-              if (part.design) {
-                price = part.design && part.design.UPCHARGE;
-              } else {
-                price = 0;
-              }
-            }
-            if (
-              part.thickness.value === 3 ||
-              part.thickness.value === 4 ||
-              part.thickness.value === 5 ||
-              part.thickness.value === 6
-            ) {
-              if (part.design) {
-                price = part.design && part.design.UPCHARGE_THICK;
-              } else {
-                price = 0;
-              }
-            }
-
-            if (part.profile) {
-              //leftStile
-              if (
-                (part.profile && part.profile.PROFILE_WIDTH) !==
-                numQty(i.leftStile)
-              ) {
-                calc('leftStile', part.profile?.PROFILE_WIDTH, price);
-              }
-              //rightStile
-              if (
-                (part.profile && part.profile.PROFILE_WIDTH) !==
-                numQty(i.rightStile)
-              ) {
-                calc('rightStile', part.profile?.PROFILE_WIDTH, price);
-              }
-              //topRail
-              if (
-                (part.profile && part.profile.PROFILE_WIDTH) !==
-                numQty(i.topRail)
-              ) {
-                calc('topRail', part.profile?.PROFILE_WIDTH, price);
-              }
-              //bottomRail
-              if (
-                (part.profile && part.profile.PROFILE_WIDTH) !==
-                numQty(i.bottomRail)
-              ) {
-                calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
-              }
-            } else {
-              //leftStile
-              if (
-                (part.design && part.design.PROFILE_WIDTH) !==
-                numQty(i.leftStile)
-              ) {
-                calc('leftStile', part.design?.PROFILE_WIDTH, price);
-              }
-              //rightStile
-              if (
-                (part.design && part.design.PROFILE_WIDTH) !==
-                numQty(i.rightStile)
-              ) {
-                calc('rightStile', part.design?.PROFILE_WIDTH, price);
-              }
-              //topRail
-              if (
-                (part.design && part.design.PROFILE_WIDTH) !== numQty(i.topRail)
-              ) {
-                calc('topRail', part.design?.PROFILE_WIDTH, price);
-              }
-              //bottomRail
-              if (
-                (part.design && part.design.PROFILE_WIDTH) !==
-                numQty(i.bottomRail)
-              ) {
-                calc('bottomRail', part.design?.PROFILE_WIDTH, price);
-              }
-            }
-
-            //test
-            //Slab Doors here
-
-            if (
-              part.orderType.value === 'Door' &&
-              part.construction.value === 'Slab'
-            ) {
-              price =
-                (width * height) / 144 > 2
-                  ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
-                  : 2 * wood + (6.5 + edge) + extraCost;
-            } else if (
-              part.orderType.value === 'DF' &&
-              part.construction.value === 'Slab'
-            ) {
-              price =
-                (width * height) / 144 > 1
-                  ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
-                  : 1 * wood + (6.5 + edge) + extraCost;
-            } else if (part.orderType.value === 'DF') {
-              price =
-                eval(pricer.df_pricing) +
-                leftStileAdd +
-                rightStileAdd +
-                topRailAdd +
-                bottomRailAdd +
-                extraCost
-                  ? eval(pricer.df_pricing) +
-                    leftStileAdd +
-                    rightStileAdd +
-                    topRailAdd +
-                    bottomRailAdd +
-                    extraCost
-                  : 0;
-            } else {
-              price =
-                eval(pricer && pricer.door_pricing) +
-                leftStileAdd +
-                rightStileAdd +
-                topRailAdd +
-                bottomRailAdd +
-                extraCost
-                  ? eval(pricer && pricer.door_pricing) +
-                    leftStileAdd +
-                    rightStileAdd +
-                    topRailAdd +
-                    bottomRailAdd +
-                    extraCost
-                  : 0;
-            }
-
-            if (height > -1) {
-              return price;
-            } else {
-              return 0;
-            }
-          });
-
-          return linePrice;
-        } else {
-          return 0;
-        }
+        return 0;
       }
     })
 );
@@ -515,10 +591,10 @@ export const linePriceSelector = createSelector(
           if (item[index][p]) {
             if (i.qty) {
               if (
-                (part.orderType.value === 'Door' ||
-                  part.orderType.value === 'Glass' ||
-                  part.orderType.value === 'One_Piece' ||
-                  part.orderType.value === 'Two_Piece') &&
+                (part?.orderType?.value === 'Door' ||
+                part?.orderType?.value === 'Glass' ||
+                part?.orderType?.value === 'One_Piece' ||
+                part?.orderType?.value === 'Two_Piece') &&
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
@@ -551,34 +627,42 @@ export const nonDiscountedItems = createSelector(
 );
 
 export const addPriceSelector = createSelector(
-  [partListSelector, pricingSelector, itemPriceSelector],
-  (parts, pricer, item) =>
-    parts.map((part, index) => {
-      if (part.dimensions) {
-        return part.dimensions.map((i, p) => {
-          if (item[index][p]) {
-            if (i.qty) {
-              if (
-                (parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
-                (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24)
-              ) {
-                const base = item[index][p] * parseInt(i.qty);
-                const add = base * 0.2;
-                return add;
+  [partListSelector, pricingSelector, itemPriceSelector, orderTypeSelector],
+  (parts, pricer, item, orderType) =>
+  {
+    if(orderType === 'door_order') {
+      return  parts.map((part, index) => {
+        if (part.dimensions) {
+          return part.dimensions.map((i, p) => {
+            if (item[index][p]) {
+              if (i.qty) {
+                if (
+                  (parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
+                  (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24)
+                ) {
+                  const base = item[index][p] * parseInt(i.qty);
+                  const add = base * 0.2;
+                  return add;
+                } else {
+                  return 0;
+                }
               } else {
                 return 0;
               }
             } else {
               return 0;
             }
-          } else {
-            return 0;
-          }
-        });
-      } else {
-        return 0;
-      }
-    })
+          });
+        } else {
+          return 0;
+        }
+      });
+    } else {
+      return 0;
+    }
+
+  }
+
 );
 
 export const subTotalSelector = createSelector(

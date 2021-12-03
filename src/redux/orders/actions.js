@@ -37,6 +37,8 @@ export const UPDATE_NOTES = 'UPDATE_NOTES';
 
 export const UPDATE_SELECTED_ORDER = 'UPDATE_SELECTED_ORDER';
 
+export const SET_ORDER_TYPE = 'SET_ORDER_TYPE';
+
 export function orderAdded(res) {
   return async function (dispatch) {
     return dispatch({
@@ -438,3 +440,15 @@ export function updateNotes(orderId, balance, cookie) {
     }
   };
 }
+
+export function setOrderType(orderType) {
+  return async function (dispatch) {
+
+    return dispatch({
+      type: SET_ORDER_TYPE,
+      data: orderType
+    });
+  
+  };
+}
+

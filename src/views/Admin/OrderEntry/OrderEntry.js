@@ -25,16 +25,17 @@ import {
   touch,
   startAsyncValidation,
 } from 'redux-form';
-import { submitOrder, loadOrders } from '../../../redux/orders/actions';
+import { submitOrder, loadOrders, setOrderType } from '../../../redux/orders/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
   subTotalSelector,
+  orderTypeSelector,
   taxSelector,
   totalSelector,
   addPriceSelector,
   miscTotalSelector,
-} from '../../../selectors/doorPricing';
+} from '../../../selectors/pricing';
 import 'react-notifications/lib/notifications.css';
 
 import Sticky from 'react-stickynode';
@@ -105,7 +106,9 @@ class OrderEntry extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    const { dispatch } = this.props;
+    const { dispatch, setOrderType, route } = this.props;
+
+    setOrderType(route?.type);
 
     dispatch(touch('Order', 'job_info.poNum'));
 
@@ -442,7 +445,7 @@ const mapStateToProps = (state, props) => ({
       ? state.customers.customerDB[0].Taxable
       : false,
     part_list:
-      props?.route?.type === 'door_order'
+      state.Orders.orderType === 'door_order'
         ? [
           {
             construction: {
@@ -464,7 +467,7 @@ const mapStateToProps = (state, props) => ({
             addPrice: 0,
           },
         ]
-        : props?.route?.type === 'drawer_order'
+        : state.Orders.orderType === 'drawer_order'
           ? [
             {
               box_assembly: state.part_list.box_assembly[0],
@@ -472,7 +475,7 @@ const mapStateToProps = (state, props) => ({
               addPrice: 0,
             },
           ]
-          : props?.route?.type === 'face_frame'
+          : state.Orders.orderType === 'face_frame'
             ? [
               {
                 orderType: {
@@ -509,18 +512,7 @@ const mapStateToProps = (state, props) => ({
     },
   },
   formState: getFormValues('Order')(state),
-  total:
-    props?.route?.type === 'door_order'
-      ? totalSelector(state)
-      : props?.route?.type === 'door_order'
-        ? totalSelector(state)
-        : props?.route?.type === 'door_order'
-          ? totalSelector(state)
-          : props?.route?.type === 'door_order'
-            ? totalSelector(state)
-            : props?.route?.type === 'door_order'
-              ? totalSelector(state)
-              : null,
+  total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
   miscTotalSelector: miscTotalSelector(state),
@@ -531,6 +523,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       submitOrder,
       loadOrders,
+      setOrderType
     },
     dispatch
   );
