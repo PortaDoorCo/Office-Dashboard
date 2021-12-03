@@ -30,7 +30,7 @@ import {
   miscLineItemSelector,
   miscItemPriceSelector,
   miscItemLinePriceSelector,
-} from '../../selectors/miscItemPricing';
+} from '../../selectors/pricing';
 
 
 
@@ -38,7 +38,7 @@ let Inputs = (props) => {
   const { fields, misc_items, formState, linePrices, edit } = props;
 
   const changeMiscItem = (e, index) => {
-    props.dispatch(change('MiscItems', `misc_items[${index}].price`, e.Price));
+    props.dispatch(change('Order', `misc_items[${index}].price`, e.Price));
   };
   return (
     <div>
@@ -206,6 +206,7 @@ let Inputs = (props) => {
   
 const mapStateToProps = (state) => ({
   part_list: state.part_list,
+  misc_items: state.misc_items.misc_items,
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),

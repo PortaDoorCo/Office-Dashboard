@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import numQty from 'numeric-quantity';
+import orderType from '../components/DoorOrders/DoorInfo/orderType';
 
 const pricingSelector = (state) => {
   const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
@@ -749,20 +750,28 @@ export const mouldingTotalSelector = createSelector(
   (misc) => misc.reduce((acc, item) => acc + item, 0)
 );
 
+export const miscLineItemSelector = createSelector(
+  [miscItemsSelector],
+  (misc) => misc
+);
+
 
 export const subTotalSelector = createSelector(
   [linePriceSelector, miscTotalSelector, orderTypeSelector, mouldingTotalSelector],
   (prices, misc,orderType, moulding) =>
   {
-
+    console.log({misc});
+    console.log({misc});
     console.log({orderType});
     console.log({moulding});
 
     if(orderType){
       if (orderType === 'mouldings'){
         return [moulding];
+      } if (orderType === 'misc_items'){
+        return [misc];
       } else {
-        prices.map((i, index) => {
+        return prices.map((i, index) => {
           if (i) {
             let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
             let sum = price;
@@ -791,9 +800,20 @@ export const subTotal_Total = createSelector(
 );
 
 export const totalDiscountSelector = createSelector(
-  [subTotalSelector, miscTotalSelector, discountSelector],
-  (subTotal, misc, discount) => {
-    return subTotal.reduce((acc, item) => acc + item, 0) * discount;
+  [subTotalSelector, miscTotalSelector, discountSelector, orderTypeSelector],
+  (subTotal, misc, discount, orderType) => {
+    console.log({subTotal});
+    if(orderType){
+      if(orderType === 'misc_items'){
+        return 0;
+      } else {
+        return subTotal.reduce((acc, item) => acc + item, 0) * discount;
+      }
+    } else {
+      return 0;
+    }
+
+
   }
 );
 
@@ -805,23 +825,38 @@ export const taxSelector = createSelector(
     discountSelector,
     miscTotalSelector,
     stateSelector,
-    nonDiscountedItems
+    nonDiscountedItems,
+    orderTypeSelector
   ],
-  (subTotal, tax, discount, dis, misc, state, nonDiscounted) => {
+  (subTotal, tax, discount, dis, misc, state, nonDiscounted, orderType) => {
 
-    return (
-      (subTotal.reduce((acc, item) => acc + item, 0) - discount + misc + nonDiscounted) * tax
-    );
+    if(orderType === 'misc_items'){
+      return (
+        (subTotal.reduce((acc, item) => acc + item, 0) - discount + nonDiscounted) * tax
+      );
+    } else {
+      return (
+        (subTotal.reduce((acc, item) => acc + item, 0) - discount + misc + nonDiscounted) * tax
+      );
+    }
+
   }
 );
 
 export const totalSelector = createSelector(
-  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector, nonDiscountedItems],
-  (subTotal, tax, misc, discount, nonDiscounted) => {
+  [subTotalSelector, taxSelector, miscTotalSelector, totalDiscountSelector, nonDiscountedItems, orderTypeSelector],
+  (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
 
-    return (
-      subTotal.reduce((acc, item) => acc + item, 0) + tax + misc + nonDiscounted - discount
-    );
+    if(orderType === 'misc_items'){
+      return (
+        subTotal.reduce((acc, item) => acc + item, 0) + tax + nonDiscounted - discount
+      );
+    } else {
+      return (
+        subTotal.reduce((acc, item) => acc + item, 0) + tax + misc + nonDiscounted - discount
+      );
+    }
+
   }
 );
 

@@ -51,7 +51,7 @@ let Inputs = (props) => {
 
     
 
-    props.dispatch(change('DoorOrder', `misc_items[${index}].price`, e.Price));
+    props.dispatch(change('Order', `misc_items[${index}].price`, e.Price));
 
     if (e.count_items) {
       const categories = e.categories.map((i) => i.value);
@@ -104,7 +104,7 @@ let Inputs = (props) => {
       }
       props.dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `misc_items[${index}].qty`,
           total_qty > 0 ? total_qty : 1
         )
@@ -295,7 +295,7 @@ class MiscItems extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('Order')(state),
   misc_items: state.misc_items.misc_items,
   prices: miscItemPriceSelector(state),
   linePrices: miscItemLinePriceSelector(state),
@@ -303,7 +303,7 @@ const mapStateToProps = (state) => ({
 });
 
 MiscItems = reduxForm({
-  form: 'DoorOrder',
+  form: 'Order',
   enableReinitialize: true,
   destroyOnUnmount: false,
 })(MiscItems);

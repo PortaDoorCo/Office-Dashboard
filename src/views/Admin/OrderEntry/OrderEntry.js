@@ -25,7 +25,11 @@ import {
   touch,
   startAsyncValidation,
 } from 'redux-form';
-import { submitOrder, loadOrders, setOrderType } from '../../../redux/orders/actions';
+import {
+  submitOrder,
+  loadOrders,
+  setOrderType,
+} from '../../../redux/orders/actions';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -240,6 +244,7 @@ class OrderEntry extends Component {
       tax,
       addPriceSelector,
       route,
+      orderType
     } = this.props;
 
     return (
@@ -298,7 +303,7 @@ class OrderEntry extends Component {
                   </Row>
 
                   <Suspense fallback={loading()}>
-                    {route?.type === 'door_order' ? (
+                    {orderType === 'door_order' ? (
                       <FieldArray
                         name="part_list"
                         component={DoorInfo}
@@ -310,14 +315,14 @@ class OrderEntry extends Component {
                         isValid={isValid}
                         updateSubmit={this.state.updateSubmit}
                       />
-                    ) : route?.type === 'drawer_order' ? (
+                    ) : orderType === 'drawer_order' ? (
                       <FieldArray
                         name="part_list"
                         component={DrawerInfo}
                         dispatch={dispatch}
                         formState={formState}
                       />
-                    ) : route?.type === 'face_frame' ? (
+                    ) : orderType === 'face_frame' ? (
                       <FieldArray
                         name="part_list"
                         component={FF_Info}
@@ -329,14 +334,14 @@ class OrderEntry extends Component {
                         isValid={isValid}
                         updateSubmit={this.state.updateSubmit}
                       />
-                    ) : route?.type === 'mouldings' ? (
+                    ) : orderType === 'mouldings' ? (
                       <FieldArray
                         name="mouldings"
                         component={Mouldings}
                         dispatch={dispatch}
                         formState={formState}
                       />
-                    ) : route?.type === 'misc_items' ? (
+                    ) : orderType === 'misc_items' ? (
                       <FieldArray
                         name="misc_items"
                         component={MiscItems}
@@ -357,19 +362,25 @@ class OrderEntry extends Component {
                         <Col xs="9" />
                       </Row>
 
-                      <strong>Discount: </strong>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>%</InputGroupText>
-                        </InputGroupAddon>
-                        <Field
-                          name={'discount'}
-                          type="text"
-                          edit={true}
-                          component={renderField}
-                          label="discount"
-                        />
-                      </InputGroup>
+                      {orderType === 'misc_items' ? null :
+                        <div>
+                          <strong>Discount: </strong>
+                          <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>%</InputGroupText>
+                            </InputGroupAddon>
+                            <Field
+                              name={'discount'}
+                              type="text"
+                              edit={true}
+                              component={renderField}
+                              label="discount"
+                            />
+                          </InputGroup>
+                        </div>
+                      }
+
+
 
                       <strong>Tax: </strong>
                       <InputGroup>
@@ -407,23 +418,25 @@ class OrderEntry extends Component {
             </Card>
           </div>
           <div className="orderFormCol2">
-            <Sticky
-              top={100}
-              // bottomBoundary={`#item-${i}`}
-              enabled={true}
-              // key={i}
-            >
-              <CheckoutBox
-                {...this.props}
-                {...this.state}
-                onSubNav={this.onSubNav}
-                handleSubmit={handleSubmit}
-                submit={this.submit}
-                toggleCancelModal={this.toggleCancelModal}
-                maxValue={maxValue}
-                onUploaded={this.onUploaded}
-              />
-            </Sticky>
+            {this.props.orderType === 'misc_items' ? null : (
+              <Sticky
+                top={100}
+                // bottomBoundary={`#item-${i}`}
+                enabled={true}
+                // key={i}
+              >
+                <CheckoutBox
+                  {...this.props}
+                  {...this.state}
+                  onSubNav={this.onSubNav}
+                  handleSubmit={handleSubmit}
+                  submit={this.submit}
+                  toggleCancelModal={this.toggleCancelModal}
+                  maxValue={maxValue}
+                  onUploaded={this.onUploaded}
+                />
+              </Sticky>
+            )}
           </div>
         </div>
       </div>
@@ -436,6 +449,7 @@ const mapStateToProps = (state, props) => ({
   customerDBLoaded: state.customers.customerDBLoaded,
   user: state.users.user,
   submitted: state.Orders.submitted,
+  orderType: state.Orders.orderType,
   initialValues: {
     misc_items: [],
     balance_paid: 0,
@@ -523,7 +537,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       submitOrder,
       loadOrders,
-      setOrderType
+      setOrderType,
     },
     dispatch
   );
