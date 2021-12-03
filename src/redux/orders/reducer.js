@@ -12,7 +12,8 @@ import {
   ORDER_DELETED,
   UPDATE_SELECTED_ORDER,
   UPDATE_NOTES,
-  SET_ORDER_TYPE
+  SET_ORDER_TYPE,
+  DELETE_FILE_FROM_ORDER
 } from './actions';
 import moment from 'moment';
 
@@ -77,6 +78,17 @@ export default function (state = initialState, action) {
         selectedOrder: data.data
       };
     case UPLOAD_FILE_TO_ORDER:
+      return {
+        ...state,
+        orders: state.orders.map((item, index) => {
+          if (item.id !== data.data.id) {
+            return item;
+          }
+          return data.data;
+        }),
+        selectedOrder: data.data,
+      };
+    case DELETE_FILE_FROM_ORDER:
       return {
         ...state,
         orders: state.orders.map((item, index) => {

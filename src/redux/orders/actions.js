@@ -38,6 +38,7 @@ export const UPDATE_NOTES = 'UPDATE_NOTES';
 export const UPDATE_SELECTED_ORDER = 'UPDATE_SELECTED_ORDER';
 
 export const SET_ORDER_TYPE = 'SET_ORDER_TYPE';
+export const DELETE_FILE_FROM_ORDER = 'DELETE_FILE_FROM_ORDER';
 
 export function orderAdded(res) {
   return async function (dispatch) {
@@ -107,6 +108,45 @@ export function uploadFilesToOrder(order, e, cookie) {
 
       return dispatch({
         type: UPLOAD_FILE_TO_ORDER,
+        data: data,
+      });
+    } catch (error) {
+      
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
+    }
+  };
+}
+
+export function deleteFilesFromOrder(order, e, cookie) {
+  const orderId = order.id;
+
+  console.log({e});
+  console.log({order});
+
+  let fileIds = order?.files?.filter(item => item.id !== e.id);
+
+  const files = {
+    files: fileIds,
+  };
+
+  console.log({files});
+
+
+  return async function (dispatch) {
+    try {
+      const res = await axios.put(`${db_url}/orders/${orderId}`, files, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res;
+
+      return dispatch({
+        type: DELETE_FILE_FROM_ORDER,
         data: data,
       });
     } catch (error) {
