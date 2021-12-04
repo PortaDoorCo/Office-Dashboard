@@ -11,6 +11,7 @@ import {
   updateStatus,
   loadOrders,
   setSelectedOrder,
+  setOrderType
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import momentLocaliser from 'react-widgets-moment';
@@ -239,15 +240,17 @@ const StatusTable = (props) => {
   }, [selectedRows, props, toggleCleared]);
 
   const toggle = (row) => {
-    const { setSelectedOrder } = props;
+    const { setSelectedOrder, setOrderType } = props;
 
     setEdit(false);
     setModal(!modal);
 
     if (!modal) {
       setSelectedOrder(row);
+      setOrderType(row.orderType);
     } else {
       setSelectedOrder(null);
+      setOrderType(null);
     }
   };
 
@@ -343,6 +346,7 @@ const mapDispatchToProps = (dispatch) =>
       updateStatus,
       loadOrders,
       setSelectedOrder,
+      setOrderType
     },
     dispatch
   );

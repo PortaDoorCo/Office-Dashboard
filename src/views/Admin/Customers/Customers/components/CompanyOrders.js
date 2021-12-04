@@ -12,7 +12,7 @@ import DataTable from 'react-data-table-component';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
 import differenceBy from 'lodash/differenceBy';
-import { setSelectedOrder } from '../../../../../redux/orders/actions';
+import { setSelectedOrder, setOrderType } from '../../../../../redux/orders/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Select } from 'antd';
@@ -65,12 +65,14 @@ const CustomerOrders = (props) => {
   }, [filterText, resetPaginationToggle]);
 
   const toggle = (row) => {
-    const { setSelectedOrder } = props;
+    const { setSelectedOrder, setOrderType } = props;
     setModal(!modal);
     if (!modal) {
       setSelectedOrder(row);
+      setOrderType(row.orderType);
     } else {
       setSelectedOrder(null);
+      setOrderType(null);
     }
   };
 
@@ -218,7 +220,8 @@ const mapStateToProps = (state, prop) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setSelectedOrder
+      setSelectedOrder,
+      setOrderType
     },
     dispatch
   );

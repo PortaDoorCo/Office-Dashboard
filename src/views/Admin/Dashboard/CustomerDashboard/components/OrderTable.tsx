@@ -7,7 +7,7 @@ import OrderPage from '../../../Orders/OrderPage';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
 import { Select } from 'antd';
-import { updateStatus, loadOrders, setSelectedOrder } from '../../../../../redux/orders/actions';
+import { updateStatus, loadOrders, setSelectedOrder, setOrderType } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import { Button, Row, Col } from 'reactstrap';
 import styled from 'styled-components';
@@ -68,6 +68,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 
 type TablePropTypes = {
   setSelectedOrder: (date: any) => null,
+  setOrderType: (type: any) => null,
   orders: Array<any>,
   updateStatus: any,
   ordersDBLoaded: boolean
@@ -212,17 +213,19 @@ const OrderTable = (props: TablePropTypes) => {
 
   ];
 
-  const toggle = (row: {}) => {
+  const toggle = (row: { orderType: any }) => {
 
-    const { setSelectedOrder } = props;
+    const { setSelectedOrder, setOrderType } = props;
 
     setEdit(false);
     setModal(!modal);
 
     if (!modal) {
       setSelectedOrder(row);
+      setOrderType(row.orderType);
     } else {
       setSelectedOrder(null);
+      setOrderType(null);
     }
   };
 
@@ -271,7 +274,8 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       updateStatus,
       loadOrders,
-      setSelectedOrder
+      setSelectedOrder,
+      setOrderType
     },
     dispatch
   );
