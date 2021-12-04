@@ -23,8 +23,8 @@ const OrderEntry = React.lazy(() => import('./views/Admin/OrderEntry/OrderEntry'
 const routes = [
   { path: '/', exact: true, component: Dashboard, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/door-order', name: 'Door Order', component: OrderEntry, type: 'door_order' },
-  { path: '/drawer-order', name: 'Drawer Order', component: OrderEntry, type: 'drawer_order' },
+  { path: '/door-order', name: 'Door Order', component: OrderEntry, type: 'Door Order' },
+  { path: '/drawer-order', name: 'Drawer Order', component: OrderEntry, type: 'Drawer Order' },
   { path: '/view-orders', name: 'Orders', component: Orders },
   { path: '/customers', name: 'Customers', component: Customers },
   { path: '/settings', name: 'Settings', component: Settings, className: 'settings-tour' },
@@ -33,10 +33,10 @@ const routes = [
   { path: '/sales-reports', name: 'Sales Reports', component: SalesReport },
   { path: '/late-list', name: 'Late List', component: LateList },
   { path: '/users', name: 'Users', component: Users },
-  { path: '/misc-items', name: 'MiscItems', component: OrderEntry, type: 'misc_items' },
+  { path: '/misc-items', name: 'MiscItems', component: OrderEntry, type: 'Misc Items' },
   { path: '/catalog', name: 'Catalog', component: Catalog },
-  { path: '/mouldings', name: 'Mouldings', component: OrderEntry, type: 'mouldings' },
-  { path: '/face-frames', name: 'FaceFrames', component: OrderEntry, type: 'face_frame' },
+  { path: '/mouldings', name: 'Mouldings', component: OrderEntry, type: 'Mouldings' },
+  { path: '/face-frames', name: 'FaceFrames', component: OrderEntry, type: 'Face Frame' },
 ];
 
 

@@ -18,7 +18,7 @@ import {
   taxSelector,
   addPriceSelector,
   miscTotalSelector
-} from '../../selectors/drawerPricing';
+} from '../../selectors/pricing';
 
 
 const required = (value) => (value ? undefined : 'Required');

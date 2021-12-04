@@ -137,6 +137,8 @@ import ReactLoading from 'react-loading';
 import LoadingOverlay from 'react-loading-overlay';
 import Slab_Selection from '../../PrintOuts/Sorting/Slab_Selection';
 
+import OrderEntry from '../OrderEntry/OrderEntry';
+
 const cookie = Cookies.get('jwt');
 
 const toDataUrl = (url, callback) => {
@@ -1657,7 +1659,9 @@ class OrderPage extends Component {
             <div>
               {/* order edit here */}
 
-              <EditSelectedOrder
+              <OrderEntry
+                isEdit={true}
+                editOrderType={props.selectedOrder?.orderType}
                 selectedOrder={props.selectedOrder}
                 editable={this.props.editable}
                 edit={!this.props.edit}
@@ -1709,10 +1713,10 @@ class OrderPage extends Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-  formState: getFormValues('DoorOrder')(state),
-  drawerState: getFormValues('DrawerOrder')(state),
-  miscState: getFormValues('MiscItems')(state),
-  mouldingsState: getFormValues('Mouldings')(state),
+  formState: getFormValues('Order')(state),
+  drawerState: getFormValues('Order')(state),
+  miscState: getFormValues('Order')(state),
+  mouldingsState: getFormValues('Order')(state),
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   selectedOrder: state.Orders.selectedOrder,

@@ -11,6 +11,7 @@ import {
   updateStatus,
   loadOrders,
   setSelectedOrder,
+  setOrderType
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import momentLocaliser from 'react-widgets-moment';
@@ -22,6 +23,7 @@ import Receipt from '@material-ui/icons/Receipt';
 import Report1 from '../../PrintOuts/Reports/Report1';
 import styled from 'styled-components';
 import status from '../../../utils/status';
+
 
 // momentLocaliser(moment);
 
@@ -347,16 +349,21 @@ const OrderTable = (props) => {
   ];
 
   const toggle = (row) => {
-    const { setSelectedOrder } = props;
+    const { setSelectedOrder, setOrderType } = props;
 
-    setEdit(false);
-    setModal(!modal);
 
-    if (!modal) {
-      setSelectedOrder(row);
-    } else {
-      setSelectedOrder(null);
-    }
+    console.log({row});
+
+    // setEdit(false);
+    // setModal(!modal);
+
+    // if (!modal) {
+    //   setSelectedOrder(row);
+    //   setOrderType(row.orderType);
+    // } else {
+    //   setSelectedOrder(null);
+    //   setOrderType(null);
+    // }
   };
 
   const editable = () => {
@@ -507,6 +514,7 @@ const mapDispatchToProps = (dispatch) =>
       updateStatus,
       loadOrders,
       setSelectedOrder,
+      setOrderType
     },
     dispatch
   );

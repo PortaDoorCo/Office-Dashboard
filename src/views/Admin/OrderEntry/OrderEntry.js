@@ -54,6 +54,8 @@ import CheckoutBox from './components/CheckoutBox';
 import { NotificationManager } from 'react-notifications';
 import CancelModal from '../../../utils/Modal';
 import thickness from '../../../components/DoorOrders/DoorInfo/thickness';
+import StickyBox from 'react-sticky-box';
+import EditCheckoutBox from '../Orders/SelectedOrder/CheckoutBox';
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
@@ -110,9 +112,14 @@ class OrderEntry extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    const { dispatch, setOrderType, route } = this.props;
+    const { dispatch, setOrderType, route, isEdit, editOrderType } = this.props;
 
-    setOrderType(route?.type);
+    if(isEdit){
+      return null;
+    } else {
+      setOrderType(route?.type);
+    }
+
 
     dispatch(touch('Order', 'job_info.poNum'));
 
@@ -137,9 +144,10 @@ class OrderEntry extends Component {
       total,
       submitOrder,
       user,
+      orderType
     } = this.props;
 
-    const orderType = 'Door Order';
+    // const orderType = orderType;
 
     const order = {
       ...values,
@@ -244,8 +252,12 @@ class OrderEntry extends Component {
       tax,
       addPriceSelector,
       route,
-      orderType
+      orderType,
+      edit
     } = this.props;
+
+    console.log({orderType});
+    console.log({isEdit: this.props.isEdit});
 
     return (
       <div className="animated fadeIn order-tour">
@@ -280,6 +292,7 @@ class OrderEntry extends Component {
                           handleAddress={this.handleAddress}
                           toggleReminderModal={this.toggleReminderModal}
                           customerReminder={this.state.customerReminder}
+                          edit={edit}
                         />
                       </Suspense>
                     </FormSection>
@@ -303,7 +316,7 @@ class OrderEntry extends Component {
                   </Row>
 
                   <Suspense fallback={loading()}>
-                    {orderType === 'door_order' ? (
+                    {orderType === 'Door Order' ? (
                       <FieldArray
                         name="part_list"
                         component={DoorInfo}
@@ -313,16 +326,18 @@ class OrderEntry extends Component {
                         addPriceSelector={addPriceSelector}
                         dispatch={dispatch}
                         isValid={isValid}
+                        edit={edit}
                         updateSubmit={this.state.updateSubmit}
                       />
-                    ) : orderType === 'drawer_order' ? (
+                    ) : orderType === 'Drawer Order' ? (
                       <FieldArray
                         name="part_list"
                         component={DrawerInfo}
                         dispatch={dispatch}
                         formState={formState}
+                        edit={edit}
                       />
-                    ) : orderType === 'face_frame' ? (
+                    ) : orderType === 'Face Frame' ? (
                       <FieldArray
                         name="part_list"
                         component={FF_Info}
@@ -333,20 +348,23 @@ class OrderEntry extends Component {
                         dispatch={dispatch}
                         isValid={isValid}
                         updateSubmit={this.state.updateSubmit}
+                        edit={edit}
                       />
-                    ) : orderType === 'mouldings' ? (
+                    ) : orderType === 'Mouldings' ? (
                       <FieldArray
                         name="mouldings"
                         component={Mouldings}
                         dispatch={dispatch}
                         formState={formState}
+                        edit={edit}
                       />
-                    ) : orderType === 'misc_items' ? (
+                    ) : orderType === 'Misc Items' ? (
                       <FieldArray
                         name="misc_items"
                         component={MiscItems}
                         dispatch={dispatch}
                         formState={formState}
+                        edit={edit}
                       />
                     ) : null}
                   </Suspense>
@@ -418,13 +436,21 @@ class OrderEntry extends Component {
             </Card>
           </div>
           <div className="orderFormCol2">
-            {this.props.orderType === 'misc_items' ? null : (
-              <Sticky
-                top={100}
-                // bottomBoundary={`#item-${i}`}
-                enabled={true}
-                // key={i}
-              >
+            {this.props.orderType === 'Misc Items' ? null : this.props.isEdit ? (
+              <StickyBox offsetTop={20} offsetBottom={20}>
+                <EditCheckoutBox
+                  {...this.props}
+                  {...this.state}
+                  onSubNav={this.onSubNav}
+                  handleSubmit={handleSubmit}
+                  submit={this.submit}
+                  toggleCancelModal={this.toggleCancelModal}
+                  maxValue={maxValue}
+                  onUploaded={this.onUploaded}
+                />
+              </StickyBox>
+            ) : (
+              <StickyBox offsetTop={20} offsetBottom={20}>
                 <CheckoutBox
                   {...this.props}
                   {...this.state}
@@ -435,7 +461,7 @@ class OrderEntry extends Component {
                   maxValue={maxValue}
                   onUploaded={this.onUploaded}
                 />
-              </Sticky>
+              </StickyBox>
             )}
           </div>
         </div>
@@ -450,7 +476,18 @@ const mapStateToProps = (state, props) => ({
   user: state.users.user,
   submitted: state.Orders.submitted,
   orderType: state.Orders.orderType,
-  initialValues: {
+  initialValues: props.isEdit === true ? {
+    ...(state.Orders && state.Orders.selectedOrder),
+    job_info: {
+      ...(state.Orders &&
+        state.Orders.selectedOrder &&
+        state.Orders.selectedOrder.job_info),
+      status:
+        state.Orders &&
+        state.Orders.selectedOrder &&
+        state.Orders.selectedOrder.status,
+    },
+  } : {
     misc_items: [],
     balance_paid: 0,
     open: true,
@@ -458,51 +495,50 @@ const mapStateToProps = (state, props) => ({
     Taxable: state.customers.customerDB[0].Taxable
       ? state.customers.customerDB[0].Taxable
       : false,
-    part_list:
-      state.Orders.orderType === 'door_order'
+    part_list: state.Orders.orderType === 'Door Order'
+      ? [
+        {
+          construction: {
+            name: 'Cope And Stick',
+            value: 'Cope',
+          },
+          orderType: {
+            name: 'Door Order',
+            value: 'Door',
+          },
+          thickness: {
+            name: '4/4 Standard Grade',
+            thickness_1: '4/4',
+            thickness_2: '3/4',
+            db_name: 'STANDARD_GRADE',
+            value: 1,
+          },
+          dimensions: [],
+          addPrice: 0,
+        },
+      ]
+      : state.Orders.orderType === 'Drawer Order'
         ? [
           {
-            construction: {
-              name: 'Cope And Stick',
-              value: 'Cope',
-            },
-            orderType: {
-              name: 'Door Order',
-              value: 'Door',
-            },
-            thickness: {
-              name: '4/4 Standard Grade',
-              thickness_1: '4/4',
-              thickness_2: '3/4',
-              db_name: 'STANDARD_GRADE',
-              value: 1,
-            },
+            box_assembly: state.part_list.box_assembly[0],
             dimensions: [],
             addPrice: 0,
           },
         ]
-        : state.Orders.orderType === 'drawer_order'
+        : state.Orders.orderType === 'Face Frame'
           ? [
             {
-              box_assembly: state.part_list.box_assembly[0],
+              orderType: {
+                name: 'Face Frame',
+                value: 'Face_Frame',
+              },
+              thickness: thickness[0],
+              door_piece_number: state.part_list.door_piece_number[0],
               dimensions: [],
               addPrice: 0,
             },
           ]
-          : state.Orders.orderType === 'face_frame'
-            ? [
-              {
-                orderType: {
-                  name: 'Face Frame',
-                  value: 'Face_Frame',
-                },
-                thickness: thickness[0],
-                door_piece_number: state.part_list.door_piece_number[0],
-                dimensions: [],
-                addPrice: 0,
-              },
-            ]
-            : [],
+          : [],
     job_info: {
       customer: state.customers.customerDB[0],
       jobName: '',
