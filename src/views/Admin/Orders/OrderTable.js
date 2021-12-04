@@ -354,16 +354,16 @@ const OrderTable = (props) => {
 
     console.log({row});
 
-    // setEdit(false);
-    // setModal(!modal);
+    setEdit(false);
+    setModal(!modal);
 
-    // if (!modal) {
-    //   setSelectedOrder(row);
-    //   setOrderType(row.orderType);
-    // } else {
-    //   setSelectedOrder(null);
-    //   setOrderType(null);
-    // }
+    if (!modal) {
+      setSelectedOrder(row);
+      setOrderType(row.orderType);
+    } else {
+      setSelectedOrder(null);
+      setOrderType(null);
+    }
   };
 
   const editable = () => {

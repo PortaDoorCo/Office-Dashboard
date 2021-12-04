@@ -177,7 +177,7 @@ class DoorFilter extends Component {
     } = this.props;
 
     if (formState && formState.part_list) {
-      if (formState.part_list[index].orderType.value === 'Face_Frame') {
+      if (formState.part_list[index]?.orderType?.value === 'Face_Frame') {
         return (
           <Fragment>
             <Row>
@@ -216,10 +216,10 @@ class DoorFilter extends Component {
         );
       } else {
         if (
-          formState.part_list[index].orderType.value === 'One_Piece' ||
-          formState.part_list[index].orderType.value === 'One_Piece_DF' ||
-          formState.part_list[index].orderType.value === 'Two_Piece' ||
-          formState.part_list[index].orderType.value === 'Two_Piece_DF' 
+          formState.part_list[index]?.orderType?.value === 'One_Piece' ||
+          formState.part_list[index]?.orderType?.value === 'One_Piece_DF' ||
+          formState.part_list[index]?.orderType?.value === 'Two_Piece' ||
+          formState.part_list[index]?.orderType?.value === 'Two_Piece_DF' 
         ) {
           return (
             <Fragment>
