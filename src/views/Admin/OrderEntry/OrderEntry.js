@@ -29,6 +29,7 @@ import {
   submitOrder,
   loadOrders,
   setOrderType,
+  updateOrder,
 } from '../../../redux/orders/actions';
 import {
   linePriceSelector,
@@ -39,6 +40,8 @@ import {
   totalSelector,
   addPriceSelector,
   miscTotalSelector,
+  balanceSelector,
+  balanceTotalSelector,
 } from '../../../selectors/pricing';
 import 'react-notifications/lib/notifications.css';
 
@@ -114,12 +117,11 @@ class OrderEntry extends Component {
 
     const { dispatch, setOrderType, route, isEdit, editOrderType } = this.props;
 
-    if(isEdit){
+    if (isEdit) {
       return null;
     } else {
       setOrderType(route?.type);
     }
-
 
     dispatch(touch('Order', 'job_info.poNum'));
 
@@ -144,52 +146,99 @@ class OrderEntry extends Component {
       total,
       submitOrder,
       user,
-      orderType
+      orderType,
+      isEdit,
+      balance,
+      status,
+      tracking,
     } = this.props;
 
     // const orderType = orderType;
 
-    const order = {
-      ...values,
-      status: values.job_info.status.value,
-      Rush: values.job_info.Rush,
-      Sample: values.job_info.Sample,
-      job_info: {
-        ...values.job_info,
+    let order = {};
+
+    let newStatus = tracking;
+
+    if (status !== values.job_info?.status?.value) {
+      if (values.job_info?.status?.value) {
+        console.log('Status Updated');
+        newStatus = [
+          ...tracking,
+          {
+            date: moment().format(),
+            status: values.job_info?.status?.value,
+          },
+        ];
+      } else {
+        console.log('Order Edited');
+        newStatus = [
+          ...tracking,
+          {
+            date: moment().format(),
+            status: 'Order Edited',
+          },
+        ];
+      }
+    }
+
+    if (isEdit) {
+      order = {
+        ...values,
+        job_info: values.job_info,
+        part_list: values.part_list,
+        Rush: values.job_info?.Rush,
+        Sample: values.job_info?.Sample,
+        companyprofile: values.job_info?.customer?.id,
+        linePrice: prices,
+        itemPrice: itemPrice,
+        subTotals: subTotal,
+        tax: tax,
+        total: total,
+        balance_due: balance,
+        status: values.job_info?.status?.value,
+        dueDate: values.job_info?.DueDate,
+        sale: values.job_info?.customer?.sale?.id,
+        tracking: newStatus,
+      };
+    } else {
+      order = {
+        ...values,
         status: values.job_info.status.value,
-      },
-      companyprofile: values.job_info.customer.id,
-      linePrice: prices,
-      itemPrice: itemPrice,
-      subTotals: subTotal,
-      tax: tax,
-      total: total,
-      balance_due: total,
-      orderType: orderType,
-      dueDate: values.job_info.DueDate,
-      Date: new Date(),
-      user: user.id,
-      userName: user.username,
-      files: this.state.files,
-      submittedBy: user.FirstName,
-      tracking: [
-        {
+        Rush: values.job_info.Rush,
+        Sample: values.job_info.Sample,
+        job_info: {
+          ...values.job_info,
           status: values.job_info.status.value,
-          date: new Date(),
         },
-      ],
-      balance_history: [
-        {
-          balance_paid: values.balance_paid,
-          date: new Date(),
-        },
-      ],
-      sale:
-        values.job_info &&
-        values.job_info.customer &&
-        values.job_info.customer.sale &&
-        values.job_info.customer.sale.id,
-    };
+        companyprofile: values.job_info.customer.id,
+        linePrice: prices,
+        itemPrice: itemPrice,
+        subTotals: subTotal,
+        tax: tax,
+        total: total,
+        balance_due: total,
+        orderType: orderType,
+        dueDate: values.job_info.DueDate,
+        Date: new Date(),
+        user: user.id,
+        userName: user.username,
+        files: this.state.files,
+        submittedBy: user.FirstName,
+        tracking: [
+          {
+            status: values.job_info?.status?.value,
+            date: new Date(),
+          },
+        ],
+        balance_history: [
+          {
+            balance_paid: values.balance_paid,
+            date: new Date(),
+          },
+        ],
+        sale: values.job_info?.customer?.sale?.id,
+      };
+    }
 
     let canSubmit = false;
 
@@ -197,15 +246,22 @@ class OrderEntry extends Component {
       return v.dimensions.length > 0 ? (canSubmit = true) : (canSubmit = false);
     });
 
-    if (canSubmit) {
-      await submitOrder(order, cookie);
+    if (isEdit) {
+      const orderId = values.id;
+      await updateOrder(orderId, order, cookie);
       this.setState({ updateSubmit: !this.state.updateSubmit });
-      reset();
-      window.scrollTo(0, 0);
-      return;
+      await this.props.editable();
     } else {
-      alert('Submission Error: Please double check your order');
-      return;
+      if (canSubmit) {
+        await submitOrder(order, cookie);
+        this.setState({ updateSubmit: !this.state.updateSubmit });
+        reset();
+        window.scrollTo(0, 0);
+        return;
+      } else {
+        alert('Submission Error: Please double check your order');
+        return;
+      }
     }
   };
 
@@ -253,11 +309,11 @@ class OrderEntry extends Component {
       addPriceSelector,
       route,
       orderType,
-      edit
+      edit,
     } = this.props;
 
-    console.log({orderType});
-    console.log({isEdit: this.props.isEdit});
+    console.log({ orderType });
+    console.log({ isEdit: this.props.isEdit });
 
     return (
       <div className="animated fadeIn order-tour">
@@ -380,7 +436,7 @@ class OrderEntry extends Component {
                         <Col xs="9" />
                       </Row>
 
-                      {orderType === 'misc_items' ? null :
+                      {orderType === 'misc_items' ? null : (
                         <div>
                           <strong>Discount: </strong>
                           <InputGroup>
@@ -396,9 +452,7 @@ class OrderEntry extends Component {
                             />
                           </InputGroup>
                         </div>
-                      }
-
-
+                      )}
 
                       <strong>Tax: </strong>
                       <InputGroup>
@@ -436,33 +490,34 @@ class OrderEntry extends Component {
             </Card>
           </div>
           <div className="orderFormCol2">
-            {this.props.orderType === 'Misc Items' ? null : this.props.isEdit ? (
-              <StickyBox offsetTop={20} offsetBottom={20}>
-                <EditCheckoutBox
-                  {...this.props}
-                  {...this.state}
-                  onSubNav={this.onSubNav}
-                  handleSubmit={handleSubmit}
-                  submit={this.submit}
-                  toggleCancelModal={this.toggleCancelModal}
-                  maxValue={maxValue}
-                  onUploaded={this.onUploaded}
-                />
-              </StickyBox>
-            ) : (
-              <StickyBox offsetTop={20} offsetBottom={20}>
-                <CheckoutBox
-                  {...this.props}
-                  {...this.state}
-                  onSubNav={this.onSubNav}
-                  handleSubmit={handleSubmit}
-                  submit={this.submit}
-                  toggleCancelModal={this.toggleCancelModal}
-                  maxValue={maxValue}
-                  onUploaded={this.onUploaded}
-                />
-              </StickyBox>
-            )}
+            {this.props.orderType === 'Misc Items' ? null : this.props
+              .isEdit ? (
+                <StickyBox offsetTop={20} offsetBottom={20}>
+                  <EditCheckoutBox
+                    {...this.props}
+                    {...this.state}
+                    onSubNav={this.onSubNav}
+                    handleSubmit={handleSubmit}
+                    submit={this.submit}
+                    toggleCancelModal={this.toggleCancelModal}
+                    maxValue={maxValue}
+                    onUploaded={this.onUploaded}
+                  />
+                </StickyBox>
+              ) : (
+                <StickyBox offsetTop={20} offsetBottom={20}>
+                  <CheckoutBox
+                    {...this.props}
+                    {...this.state}
+                    onSubNav={this.onSubNav}
+                    handleSubmit={handleSubmit}
+                    submit={this.submit}
+                    toggleCancelModal={this.toggleCancelModal}
+                    maxValue={maxValue}
+                    onUploaded={this.onUploaded}
+                  />
+                </StickyBox>
+              )}
           </div>
         </div>
       </div>
@@ -476,96 +531,113 @@ const mapStateToProps = (state, props) => ({
   user: state.users.user,
   submitted: state.Orders.submitted,
   orderType: state.Orders.orderType,
-  initialValues: props.isEdit === true ? {
-    ...(state.Orders && state.Orders.selectedOrder),
-    job_info: {
-      ...(state.Orders &&
-        state.Orders.selectedOrder &&
-        state.Orders.selectedOrder.job_info),
-      status:
-        state.Orders &&
-        state.Orders.selectedOrder &&
-        state.Orders.selectedOrder.status,
-    },
-  } : {
-    misc_items: [],
-    balance_paid: 0,
-    open: true,
-    discount: 0,
-    Taxable: state.customers.customerDB[0].Taxable
-      ? state.customers.customerDB[0].Taxable
-      : false,
-    part_list: state.Orders.orderType === 'Door Order'
-      ? [
-        {
-          construction: {
-            name: 'Cope And Stick',
-            value: 'Cope',
-          },
-          orderType: {
-            name: 'Door Order',
-            value: 'Door',
-          },
-          thickness: {
-            name: '4/4 Standard Grade',
-            thickness_1: '4/4',
-            thickness_2: '3/4',
-            db_name: 'STANDARD_GRADE',
-            value: 1,
-          },
-          dimensions: [],
-          addPrice: 0,
+  initialValues:
+    props.isEdit === true
+      ? {
+        ...(state.Orders && state.Orders.selectedOrder),
+        job_info: {
+          ...(state.Orders &&
+              state.Orders.selectedOrder &&
+              state.Orders.selectedOrder.job_info),
+          status:
+              state.Orders &&
+              state.Orders.selectedOrder &&
+              state.Orders.selectedOrder.status,
         },
-      ]
-      : state.Orders.orderType === 'Drawer Order'
-        ? [
-          {
-            box_assembly: state.part_list.box_assembly[0],
-            dimensions: [],
-            addPrice: 0,
-          },
-        ]
-        : state.Orders.orderType === 'Face Frame'
-          ? [
-            {
-              orderType: {
-                name: 'Face Frame',
-                value: 'Face_Frame',
-              },
-              thickness: thickness[0],
-              door_piece_number: state.part_list.door_piece_number[0],
-              dimensions: [],
-              addPrice: 0,
-            },
-          ]
-          : [],
-    job_info: {
-      customer: state.customers.customerDB[0],
-      jobName: '',
-      status: { label: 'Quote', value: 'Quote' },
-      poNum: '',
-      Address1: state.customers.customerDB[0].Address1,
-      Address2: state.customers.customerDB[0].Address2,
-      City: state.customers.customerDB[0].City,
-      State: state.customers.customerDB[0].State,
-      Zip: state.customers.customerDB[0].Zip,
-      Phone: state.customers.customerDB[0].Shipping_Phone
-        ? state.customers.customerDB[0].Shipping_Phone
-        : state.customers.customerDB[0].Phone1
-          ? state.customers.customerDB[0].Phone1
-          : state.customers.customerDB[0].Phone,
-      DueDate: dueDate,
-      Notes: state.customers.customerDB[0].Notes,
-      // PaymentMethod: {
-      //   NAME: state.customers.customerDB[0].PaymentMethod
-      // }
-    },
-  },
+      }
+      : {
+        misc_items: [],
+        balance_paid: 0,
+        open: true,
+        discount: 0,
+        Taxable: state.customers.customerDB[0].Taxable
+          ? state.customers.customerDB[0].Taxable
+          : false,
+        part_list:
+            state.Orders.orderType === 'Door Order'
+              ? [
+                {
+                  construction: {
+                    name: 'Cope And Stick',
+                    value: 'Cope',
+                  },
+                  orderType: {
+                    name: 'Door Order',
+                    value: 'Door',
+                  },
+                  thickness: {
+                    name: '4/4 Standard Grade',
+                    thickness_1: '4/4',
+                    thickness_2: '3/4',
+                    db_name: 'STANDARD_GRADE',
+                    value: 1,
+                  },
+                  dimensions: [],
+                  addPrice: 0,
+                },
+              ]
+              : state.Orders.orderType === 'Drawer Order'
+                ? [
+                  {
+                    box_assembly: state.part_list.box_assembly[0],
+                    dimensions: [],
+                    addPrice: 0,
+                  },
+                ]
+                : state.Orders.orderType === 'Face Frame'
+                  ? [
+                    {
+                      orderType: {
+                        name: 'Face Frame',
+                        value: 'Face_Frame',
+                      },
+                      thickness: thickness[0],
+                      door_piece_number: state.part_list.door_piece_number[0],
+                      dimensions: [],
+                      addPrice: 0,
+                    },
+                  ]
+                  : [],
+        mouldings:
+            state.Orders.orderType === 'Mouldings'
+              ? [
+                {
+                  linearFT: '0',
+                  price: 0,
+                },
+              ]
+              : null,
+        job_info: {
+          customer: state.customers.customerDB[0],
+          jobName: '',
+          status: { label: 'Quote', value: 'Quote' },
+          poNum: '',
+          Address1: state.customers.customerDB[0].Address1,
+          Address2: state.customers.customerDB[0].Address2,
+          City: state.customers.customerDB[0].City,
+          State: state.customers.customerDB[0].State,
+          Zip: state.customers.customerDB[0].Zip,
+          Phone: state.customers.customerDB[0].Shipping_Phone
+            ? state.customers.customerDB[0].Shipping_Phone
+            : state.customers.customerDB[0].Phone1
+              ? state.customers.customerDB[0].Phone1
+              : state.customers.customerDB[0].Phone,
+          DueDate: dueDate,
+          Notes: state.customers.customerDB[0].Notes,
+          // PaymentMethod: {
+          //   NAME: state.customers.customerDB[0].PaymentMethod
+          // }
+        },
+      },
+  status: state.Orders?.selectedOrder?.status,
+  tracking: state.Orders?.selectedOrder?.tracking,
   formState: getFormValues('Order')(state),
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
   miscTotalSelector: miscTotalSelector(state),
+  balance: balanceSelector(state),
+  balanceTotal: balanceTotalSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -574,6 +646,7 @@ const mapDispatchToProps = (dispatch) =>
       submitOrder,
       loadOrders,
       setOrderType,
+      updateOrder,
     },
     dispatch
   );
