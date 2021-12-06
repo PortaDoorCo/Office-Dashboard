@@ -151,56 +151,47 @@ class OrderEntry extends Component {
       balance,
       status,
       tracking,
+      updateOrder
     } = this.props;
 
     // const orderType = orderType;
+
+    console.log({values});
 
     let order = {};
 
     let newStatus = tracking;
 
-    if (status !== values.job_info?.status?.value) {
-      if (values.job_info?.status?.value) {
-        console.log('Status Updated');
-        newStatus = [
-          ...tracking,
-          {
-            date: moment().format(),
-            status: values.job_info?.status?.value,
-          },
-        ];
-      } else {
-        console.log('Order Edited');
-        newStatus = [
-          ...tracking,
-          {
-            date: moment().format(),
-            status: 'Order Edited',
-          },
-        ];
+
+    if(isEdit){
+      if (status !== values.job_info?.status?.value) {
+        if (values.job_info?.status?.value) {
+          console.log('Status Updated');
+          newStatus = [
+            ...tracking,
+            {
+              date: moment().format(),
+              status: values.job_info?.status?.value,
+            },
+          ];
+        } else {
+          console.log('Order Edited');
+          newStatus = [
+            ...tracking,
+            {
+              date: moment().format(),
+              status: 'Order Edited',
+            },
+          ];
+        }
       }
     }
 
-    if (isEdit) {
-      order = {
-        ...values,
-        job_info: values.job_info,
-        part_list: values.part_list,
-        Rush: values.job_info?.Rush,
-        Sample: values.job_info?.Sample,
-        companyprofile: values.job_info?.customer?.id,
-        linePrice: prices,
-        itemPrice: itemPrice,
-        subTotals: subTotal,
-        tax: tax,
-        total: total,
-        balance_due: balance,
-        status: values.job_info?.status?.value,
-        dueDate: values.job_info?.DueDate,
-        sale: values.job_info?.customer?.sale?.id,
-        tracking: newStatus,
-      };
-    } else {
+
+    console.log('here');
+
+    if (!isEdit) {
+      console.log('here 2');
       order = {
         ...values,
         status: values.job_info.status.value,
@@ -209,6 +200,7 @@ class OrderEntry extends Component {
         job_info: {
           ...values.job_info,
           status: values.job_info.status.value,
+          Notes: values.job_info.Notes
         },
         companyprofile: values.job_info.customer.id,
         linePrice: prices,
@@ -238,6 +230,27 @@ class OrderEntry extends Component {
         ],
         sale: values.job_info?.customer?.sale?.id,
       };
+
+
+    } else {
+      order = {
+        ...values,
+        job_info: values.job_info,
+        part_list: values.part_list,
+        Rush: values.job_info?.Rush,
+        Sample: values.job_info?.Sample,
+        companyprofile: values.job_info?.customer?.id,
+        linePrice: prices,
+        itemPrice: itemPrice,
+        subTotals: subTotal,
+        tax: tax,
+        total: total,
+        balance_due: balance,
+        status: values.job_info?.status?.value,
+        dueDate: values.job_info?.DueDate,
+        sale: values.job_info?.customer?.sale?.id,
+        tracking: newStatus,
+      };
     }
 
     let canSubmit = false;
@@ -246,12 +259,12 @@ class OrderEntry extends Component {
       return v.dimensions.length > 0 ? (canSubmit = true) : (canSubmit = false);
     });
 
-    if (isEdit) {
-      const orderId = values.id;
-      await updateOrder(orderId, order, cookie);
-      this.setState({ updateSubmit: !this.state.updateSubmit });
-      await this.props.editable();
-    } else {
+    console.log({canSubmit});
+
+    console.log({order});
+
+    if (!isEdit) {
+
       if (canSubmit) {
         await submitOrder(order, cookie);
         this.setState({ updateSubmit: !this.state.updateSubmit });
@@ -262,6 +275,11 @@ class OrderEntry extends Component {
         alert('Submission Error: Please double check your order');
         return;
       }
+    } else {
+      const orderId = values.id;
+      await updateOrder(orderId, order, cookie);
+      this.setState({ updateSubmit: !this.state.updateSubmit });
+      await this.props.editable();
     }
   };
 
@@ -310,6 +328,7 @@ class OrderEntry extends Component {
       route,
       orderType,
       edit,
+      isEdit
     } = this.props;
 
     console.log({ orderType });
@@ -327,10 +346,10 @@ class OrderEntry extends Component {
           buttonColor={'danger'}
         />
         <div className="orderForm">
-          <div className="orderFormCol1">
+          <div className={isEdit ? 'editFormCol1' : 'orderFormCol1'}>
             <Card>
               <CardHeader>
-                <strong>Door Order</strong>
+                <strong>{orderType}</strong>
               </CardHeader>
               <CardBody>
                 <form
@@ -489,9 +508,9 @@ class OrderEntry extends Component {
               </CardBody>
             </Card>
           </div>
-          <div className="orderFormCol2">
-            {this.props.orderType === 'Misc Items' ? null : this.props
-              .isEdit ? (
+          {this.props.orderType === 'Misc Items' ? null : 
+            <div className={isEdit ? 'editFormCol2' : 'orderFormCol2'}>
+              {this.props.isEdit ? (
                 <StickyBox offsetTop={20} offsetBottom={20}>
                   <EditCheckoutBox
                     {...this.props}
@@ -518,7 +537,10 @@ class OrderEntry extends Component {
                   />
                 </StickyBox>
               )}
-          </div>
+            </div>
+          
+          }
+
         </div>
       </div>
     );

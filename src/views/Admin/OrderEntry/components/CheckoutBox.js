@@ -25,13 +25,14 @@ const CheckoutBox = (props) => {
 
   const jobInfo = props.formState?.job_info;
 
+  console.log({props});
 
   return(
     <Row>
       <Col>
         <Card>
           <CardBody className="misc-item-tour">
-            <NavBar onSubNav={props.onSubNav} />
+            <NavBar onSubNav={props.onSubNav} {...props} />
             <hr />
 
             <Row>

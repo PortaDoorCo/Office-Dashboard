@@ -179,7 +179,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
     let Content = [];
 
 
-    Content.push(Packing_Slip(data, breakdowns));
+    Content.push(Packing_Slip(data, breakdowns, pricing));
   
 
   

@@ -50,9 +50,9 @@ class JobInfo extends Component {
 
       if(formState.job_info.Sample !== prevProps.formState.job_info.Sample){
         if(formState.job_info.Sample){
-          this.props.dispatch(change('DrawerOrder', 'discount', 50));
+          this.props.dispatch(change('Order', 'discount', 50));
         } else {
-          this.props.dispatch(change('DoorOrder', 'discount', formState?.job_info?.customer?.Discount || 0));
+          this.props.dispatch(change('Order', 'discount', formState?.job_info?.customer?.Discount || 0));
         }
         
       }
@@ -110,14 +110,14 @@ class JobInfo extends Component {
         );
 
         if(formState.job_info.Sample){
-          this.props.dispatch(change('DrawerOrder', 'discount', 50));
+          this.props.dispatch(change('Order', 'discount', 50));
         }else{
-          this.props.dispatch(change('DrawerOrder', 'discount', customer.Discount));
+          this.props.dispatch(change('Order', 'discount', customer.Discount));
         }
 
-        this.props.dispatch(change('DrawerOrder', 'Taxable', customer.Taxable));
+        this.props.dispatch(change('Order', 'Taxable', customer.Taxable));
         this.props.dispatch(
-          change('DrawerOrder', 'job_info.Notes', customer.Notes)
+          change('Order', 'job_info.Notes', customer.Notes)
         );
       }
     }
@@ -360,7 +360,7 @@ class JobInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('DrawerOrder')(state),
+  formState: getFormValues('Order')(state),
   shippingMethods: state.misc_items.shippingMethods,
 });
 

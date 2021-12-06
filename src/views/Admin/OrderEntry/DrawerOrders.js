@@ -70,7 +70,7 @@ options = {
   autoDismiss: 3
 };
 
-class DoorOrders extends Component {
+class Orders extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -449,7 +449,7 @@ const mapStateToProps = (state, prop) => ({
       Notes: state.customers.customerDB[0].Notes
     }
   },
-  formState: getFormValues('DrawerOrder')(state),
+  formState: getFormValues('Order')(state),
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
@@ -468,7 +468,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-DoorOrders = reduxForm({
+Orders = reduxForm({
   form: 'DrawerOrder',
   enableReinitialize: true,
   onSubmitFail: (errors, dispatch, submitError, props) => {
@@ -477,6 +477,6 @@ DoorOrders = reduxForm({
       NotificationManager.error(job_info_message, 'Error', 2000);
     } 
   },
-})(DoorOrders);
+})(Orders);
 
-export default connect(mapStateToProps, mapDispatchToProps)(DoorOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

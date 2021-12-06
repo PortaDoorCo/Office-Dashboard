@@ -52,7 +52,7 @@ let Inputs = (props) => {
 
     let total_qty = 0;
 
-    props.dispatch(change('DrawerOrder', `misc_items[${index}].price`, e.Price));
+    props.dispatch(change('Order', `misc_items[${index}].price`, e.Price));
 
     if(e.count_items){
       const categories = e.categories.map(i => i.value);
@@ -67,7 +67,7 @@ let Inputs = (props) => {
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
         total_qty = total_qty+sub_quantity;
       }
-      props.dispatch(change('DrawerOrder', `misc_items[${index}].qty`, total_qty));
+      props.dispatch(change('Order', `misc_items[${index}].qty`, total_qty));
     }
   };
 
@@ -255,7 +255,7 @@ class MiscItems extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('DrawerOrder')(state),
+  formState: getFormValues('Order')(state),
   misc_items: state.misc_items.misc_items,
   prices: miscItemPriceSelector(state),
   linePrices: miscItemLinePriceSelector(state),

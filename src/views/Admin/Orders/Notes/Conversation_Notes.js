@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
-import { updateNotes } from '../../../../../redux/orders/actions';
+import { updateNotes } from '../../../../redux/orders/actions';
 import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import NotesTable from './Notes_Table';
-import { renderField } from '../../../../../components/RenderInputs/renderInputs';
+import { renderField } from '../../../../components/RenderInputs/renderInputs';
 import Cookies from 'js-cookie';
 
 const cookie = Cookies.get('jwt');
@@ -42,7 +42,7 @@ class Conversation_Notes extends Component {
       if(values.Conversation_Notes){
         await this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'Conversation_Notes',
             [
               ...values.Conversation_Notes,
@@ -56,7 +56,7 @@ class Conversation_Notes extends Component {
         );
         await this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'note',
             ''
           )
@@ -64,7 +64,7 @@ class Conversation_Notes extends Component {
       } else {
         await this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'Conversation_Notes',
             [
               {
@@ -76,7 +76,7 @@ class Conversation_Notes extends Component {
         );
         await this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'note',
             ''
           )
@@ -129,7 +129,7 @@ class Conversation_Notes extends Component {
 
 const mapStateToProps = (state, props) => ({
 
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('Order')(state),
 
 
 });
@@ -144,7 +144,7 @@ const mapDispatchToProps = dispatch =>
   );
 
 Conversation_Notes = reduxForm({
-  form: 'DoorOrder',
+  form: 'Order',
 })(Conversation_Notes);
 
 

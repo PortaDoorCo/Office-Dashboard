@@ -50,7 +50,7 @@ import { NotificationManager } from 'react-notifications';
 import CancelModal from '../../../utils/Modal';
 
 const DoorInfo = React.lazy(() =>
-  import('../../../components/DoorOrders/DoorInfo/DoorInfo')
+  import('../../../components/Orders/DoorInfo/DoorInfo')
 );
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
 
@@ -68,7 +68,7 @@ const maxValue = (max) => (value) =>
 const dueDate = moment(new Date()).businessAdd(7)._d;
 
 
-class DoorOrders extends Component {
+class Orders extends Component {
   constructor(props) {
     super(props);
     this.makerJS = React.createRef();
@@ -94,11 +94,11 @@ class DoorOrders extends Component {
 
     const { dispatch } = this.props;
 
-    dispatch(touch('DoorOrder', 'job_info.poNum'));
+    dispatch(touch('Order', 'job_info.poNum'));
 
-    dispatch(touch('DoorOrder', 'job_info.shipping_method'));
+    dispatch(touch('Order', 'job_info.shipping_method'));
 
-    dispatch(startAsyncValidation('DoorOrder'));
+    dispatch(startAsyncValidation('Order'));
 
     // this.toggleReminderModal();
   }
@@ -439,7 +439,7 @@ const mapStateToProps = (state) => ({
       // }
     },
   },
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('Order')(state),
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
@@ -459,8 +459,8 @@ const mapDispatchToProps = (dispatch) =>
   );
 
 // eslint-disable-next-line no-class-assign
-DoorOrders = reduxForm({
-  form: 'DoorOrder',
+Orders = reduxForm({
+  form: 'Order',
   enableReinitialize: true,
   validate,
   onSubmitFail: (errors, dispatch, submitError, props) => {
@@ -469,6 +469,6 @@ DoorOrders = reduxForm({
       NotificationManager.error(job_info_message, 'Error', 2000);
     }
   },
-})(DoorOrders);
+})(Orders);
 
-export default connect(mapStateToProps, mapDispatchToProps)(DoorOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

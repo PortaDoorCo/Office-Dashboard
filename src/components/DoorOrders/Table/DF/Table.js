@@ -143,7 +143,7 @@ const Cope_Table = ({
       if (leftStile) {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].notes`,
             'Full Frame'
           )
@@ -152,7 +152,7 @@ const Cope_Table = ({
         if (part.construction.value === 'Miter') {
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].topRail`,
               fraction(numQty(leftStile))
             )
@@ -160,7 +160,7 @@ const Cope_Table = ({
 
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].bottomRail`,
               fraction(numQty(leftStile))
             )
@@ -168,7 +168,7 @@ const Cope_Table = ({
         } else {
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].topRail`,
               fraction(numQty(leftStile))
             )
@@ -176,7 +176,7 @@ const Cope_Table = ({
 
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].bottomRail`,
               fraction(numQty(leftStile))
             )
@@ -186,7 +186,7 @@ const Cope_Table = ({
         if (part.construction.value === 'Miter') {
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].notes`,
               'Full Frame'
             )
@@ -194,7 +194,7 @@ const Cope_Table = ({
 
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].leftStile`,
               fraction(profile_width)
             )
@@ -202,7 +202,7 @@ const Cope_Table = ({
 
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].rightStile`,
               fraction(profile_width)
             )
@@ -210,7 +210,7 @@ const Cope_Table = ({
 
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].topRail`,
               fraction(profile_width)
             )
@@ -218,7 +218,7 @@ const Cope_Table = ({
 
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].bottomRail`,
               fraction(profile_width)
             )
@@ -226,7 +226,7 @@ const Cope_Table = ({
         } else {
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].notes`,
               'Full Frame'
             )
@@ -234,7 +234,7 @@ const Cope_Table = ({
 
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].topRail`,
               fraction(profile_width)
             )
@@ -242,7 +242,7 @@ const Cope_Table = ({
 
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].bottomRail`,
               fraction(profile_width)
             )
@@ -251,34 +251,34 @@ const Cope_Table = ({
       }
     } else {
       dispatch(
-        change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+        change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
       );
 
       if (part.construction.value === 'Miter') {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].leftStile`,
             fraction(df_reduction)
           )
         );
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].rightStile`,
             fraction(df_reduction)
           )
         );
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].topRail`,
             fraction(df_reduction)
           )
         );
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].bottomRail`,
             fraction(df_reduction)
           )
@@ -286,14 +286,14 @@ const Cope_Table = ({
       } else {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].topRail`,
             fraction(df_reduction)
           )
         );
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].bottomRail`,
             fraction(df_reduction)
           )
@@ -308,7 +308,7 @@ const Cope_Table = ({
     // if (e.target.name.includes('leftStile')) {
     //   dispatch(
     //     change(
-    //       'DoorOrder',
+    //       'Order',
     //       `part_list[${i}].dimensions[${index}].notes`,
     //       `${
     //         full_frame ? 'Full Frame \n' : ''
@@ -319,7 +319,7 @@ const Cope_Table = ({
     // if (e.target.name.includes('rightStile')) {
     //   dispatch(
     //     change(
-    //       'DoorOrder',
+    //       'Order',
     //       `part_list[${i}].dimensions[${index}].notes`,
     //       `${
     //         full_frame ? 'Full Frame \n' : ''
@@ -330,7 +330,7 @@ const Cope_Table = ({
     // if (e.target.name.includes('topRail')) {
     //   dispatch(
     //     change(
-    //       'DoorOrder',
+    //       'Order',
     //       `part_list[${i}].dimensions[${index}].notes`,
     //       `${
     //         full_frame ? 'Full Frame \n' : ''
@@ -341,7 +341,7 @@ const Cope_Table = ({
     // if (e.target.name.includes('bottomRail')) {
     //   dispatch(
     //     change(
-    //       'DoorOrder',
+    //       'Order',
     //       `part_list[${i}].dimensions[${index}].notes`,
     //       `${
     //         full_frame ? 'Full Frame \n' : ''
@@ -353,7 +353,7 @@ const Cope_Table = ({
 
   const clearNotes = (index, e) => {
     dispatch(
-      change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+      change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
     );
   };
 
@@ -369,7 +369,7 @@ const Cope_Table = ({
 
         // dispatch(
         //   change(
-        //     'DoorOrder',
+        //     'Order',
         //     `part_list[${i}].dimensions[${index}].notes`,
         //     `${
         //       full_frame ? 'Full Frame \n' : ''
@@ -379,7 +379,7 @@ const Cope_Table = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].leftStile`,
             fraction(numQty(changeValue))
           )
@@ -387,7 +387,7 @@ const Cope_Table = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].rightStile`,
             fraction(numQty(changeValue))
           )
@@ -397,12 +397,12 @@ const Cope_Table = ({
 
     if (e.target.name === 'default_framing') {
       dispatch(
-        change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+        change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
       );
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].leftStile`,
           fraction(numQty(defaultLeftStile))
         )
@@ -410,7 +410,7 @@ const Cope_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].rightStile`,
           fraction(numQty(defaultRightStile))
         )
@@ -418,7 +418,7 @@ const Cope_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].topRail`,
           fraction(numQty(defaultTopRail))
         )
@@ -426,7 +426,7 @@ const Cope_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].bottomRail`,
           fraction(numQty(defaultBottomRail))
         )
@@ -455,36 +455,36 @@ const Cope_Table = ({
 
     if (fields.length > 0) {
       dispatch(
-        touch('DoorOrder', `part_list[${i}].dimensions[${index}].notes`)
+        touch('Order', `part_list[${i}].dimensions[${index}].notes`)
       );
       dispatch(
-        touch('DoorOrder', `part_list[${i}].dimensions[${index}].width`)
+        touch('Order', `part_list[${i}].dimensions[${index}].width`)
       );
       dispatch(
-        touch('DoorOrder', `part_list[${i}].dimensions[${index}].height`)
+        touch('Order', `part_list[${i}].dimensions[${index}].height`)
       );
     }
 
-    dispatch(touch('DoorOrder', `part_list[${i}].woodtype`));
-    dispatch(touch('DoorOrder', `part_list[${i}].design`));
+    dispatch(touch('Order', `part_list[${i}].woodtype`));
+    dispatch(touch('Order', `part_list[${i}].design`));
 
     if (construction !== 'Miter') {
-      dispatch(touch('DoorOrder', `part_list[${i}].edge`));
+      dispatch(touch('Order', `part_list[${i}].edge`));
     }
 
     if (construction === 'Cope') {
-      dispatch(touch('DoorOrder', `part_list[${i}].profile`));
+      dispatch(touch('Order', `part_list[${i}].profile`));
     }
 
-    dispatch(touch('DoorOrder', `part_list[${i}].applied_profile`));
-    dispatch(touch('DoorOrder', `part_list[${i}].panel`));
+    dispatch(touch('Order', `part_list[${i}].applied_profile`));
+    dispatch(touch('Order', `part_list[${i}].panel`));
 
-    dispatch(touch('DoorOrder', `part_list[${i}].leftStile`));
-    dispatch(touch('DoorOrder', `part_list[${i}].rightStile`));
-    dispatch(touch('DoorOrder', `part_list[${i}].topRail`));
-    dispatch(touch('DoorOrder', `part_list[${i}].bottomRail`));
+    dispatch(touch('Order', `part_list[${i}].leftStile`));
+    dispatch(touch('Order', `part_list[${i}].rightStile`));
+    dispatch(touch('Order', `part_list[${i}].topRail`));
+    dispatch(touch('Order', `part_list[${i}].bottomRail`));
 
-    dispatch(startAsyncValidation('DoorOrder'));
+    dispatch(startAsyncValidation('Order'));
 
     let df_reduction = 0;
 
@@ -520,7 +520,7 @@ const Cope_Table = ({
     toggleFullFrameNote();
     dispatch(
       change(
-        'DoorOrder',
+        'Order',
         `part_list[${i}].dimensions[${index}].full_frame`,
         true
       )
@@ -994,7 +994,7 @@ const Cope_Table = ({
 
 const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
-  formSyncErrors: getFormSyncErrors('DoorOrder')(state),
+  formSyncErrors: getFormSyncErrors('Order')(state),
 });
 
 export default connect(mapStateToProps, null)(Cope_Table);

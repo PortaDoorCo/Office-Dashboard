@@ -157,6 +157,33 @@ export const renderDropdownListFilter = ({
   </Fragment>
 );
 
+export const renderDropdownListFilterNoPhoto = ({
+  input,
+  data,
+  dataKey,
+  textField,
+  edit,
+  meta: { touched, error, warning },
+}) => (
+  <Fragment>
+    <DropdownList
+      {...input}
+      data={data}
+      // dataKey={dataKey}
+      textField={textField}
+      placeholder="Select"
+      // onChange={() => input.onChange()}
+      onBlur={() => input.onBlur()}
+      allowCreate={false}
+      filter
+      disabled={edit}
+    />
+    {touched &&
+      ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+        (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+  </Fragment>
+);
+
 export const renderMouldingInputs = ({
   input,
   data,

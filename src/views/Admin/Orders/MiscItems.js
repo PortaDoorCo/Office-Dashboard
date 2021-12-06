@@ -8,11 +8,12 @@ import {
 } from 'redux-form';
 import {
   renderField,
+  renderNumber,
   renderDropdownListFilter,
-  renderDropdownListNoPhoto,
   renderPrice,
-  renderInt
-} from '../../../../components/RenderInputs/renderInputs';
+  renderInt,
+  renderDropdownListFilterNoPhoto
+} from '../../../components/RenderInputs/renderInputs';
 import {
   Button,
   Table,
@@ -29,30 +30,37 @@ import {
   miscItemPriceSelector,
   miscItemLinePriceSelector,
   miscTotalSelector,
-} from '../../../../selectors/mouldingPricing';
+} from '../../../selectors/doorPricing';
 import NumberFormat from 'react-number-format';
-import currencyMask from '../../../../utils/currencyMask';
+import currencyMask from '../../../utils/currencyMask';
 
 
 let Inputs = (props) => {
-  const { fields, misc_items, formState, linePrices, miscTotal } = props;
+  const { fields, misc_items, formState, linePrices, miscTotal, edit, orderType } = props;
 
-  let misc_items_category = ['Accessories'];
+  let misc_items_category = ['Accessories', 'Door', 'DF', 'Drawer_Box'];
 
-  let sorted_misc_items_start = misc_items.filter(i => i.categories.filter(j => misc_items_category.includes(j.value)));
+  if(orderType === 'Door Order'){
+    misc_items_category = ['Accessories', 'Door', 'DF', 'Drawer_Box'];
+  }
+
+  if(orderType === 'Drawer Order'){
+    misc_items_category = ['Accessories', 'Drawer_Box'];
+  }
 
   let sorted_misc_items = misc_items.filter(e => e.categories.some(c => misc_items_category.includes(c.value)));
+
 
   const changeMiscItem = (e, index) => {
 
     let total_qty = 0;
 
-    props.dispatch(change('Mouldings', `misc_items[${index}].price`, e.Price));
+    props.dispatch(change('Order', `misc_items[${index}].price`, e.Price));
 
     if(e.count_items){
       const categories = e.categories.map(i => i.value);
       if(categories.includes('Door')){
-        const matched_orders = formState.part_list.filter(i => ['Accessories'].includes(i.orderType.value));
+        const matched_orders = formState.part_list.filter(i => ['Door', 'Glass', 'One_Piece', 'Two_Piece', 'Slab_Door', 'Face_Frame'].includes(i.orderType.value));
 
         const quantities = matched_orders.map(i => {
           const qty = i.dimensions.map(j => {
@@ -64,12 +72,36 @@ let Inputs = (props) => {
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
         total_qty = total_qty + sub_quantity;
       }
-      props.dispatch(change('Mouldings', `misc_items[${index}].qty`, total_qty > 0 ? total_qty : 1));
+      if(categories.includes('DF')){
+        const matched_orders = formState.part_list.filter(i => ['DF', 'Glass_DF', 'One_Piece_DF', 'Two_Piece_DF', 'Slab_DF'].includes(i.orderType.value));
+        
+        const quantities = matched_orders.map(i => {
+          const qty = i.dimensions.map(j => {
+            return parseInt(j.qty);
+          });
+          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          return sub_total_qty;
+        });
+        const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
+        total_qty = total_qty+sub_quantity;
+      }
+      if(categories.includes('Drawer_Box')){
+        const quantities = formState && formState.part_list.map(i => {
+          const qty = i.dimensions.map(j => {
+            return parseInt(j.qty);
+          });
+          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          return sub_total_qty;
+        });
+        const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
+        total_qty = total_qty+sub_quantity;
+      }
+      props.dispatch(change('Order', `misc_items[${index}].qty`, total_qty > 0 ? total_qty : 1));
     }
   };
 
   return (
-    <div className='resize'>
+    <div>
       <Table>
         <thead>
           <tr>
@@ -89,6 +121,7 @@ let Inputs = (props) => {
                     name={`${table}.qty`}
                     component={renderInt}
                     type="text"
+                    edit={edit}
                   />
                 </td>
                 <td style={{ width: '40%' }}>
@@ -98,11 +131,12 @@ let Inputs = (props) => {
                   formState.misc_items[index].category === 'preselect' ? (
                       <Field
                         name={`${table}.item`}
-                        component={renderDropdownListNoPhoto}
+                        component={renderDropdownListFilterNoPhoto}
                         data={sorted_misc_items}
                         onChange={(e) => changeMiscItem(e, index)}
                         dataKey="value"
                         textField="NAME"
+                        edit={edit}
                       />
                     ) : (
                       <Field
@@ -110,6 +144,7 @@ let Inputs = (props) => {
                         component={renderField}
                         dataKey="value"
                         textField="NAME"
+                        edit={edit}
                       />
                     )}
                 </td>
@@ -126,6 +161,7 @@ let Inputs = (props) => {
                             component={renderField}
                             label="price"
                             {...currencyMask}
+                            edit={edit}
                           />
                         </InputGroup>
                       </td>
@@ -141,6 +177,7 @@ let Inputs = (props) => {
                             customInput={Input}
                             {...currencyMask}
                             prefix={'$'}
+                    
                           />
                         </InputGroup>
                       </td>
@@ -152,9 +189,9 @@ let Inputs = (props) => {
                           name={`${table}.pricePer`}
                           component={renderField}
                           type="text"
-                          label="price"
-                          {...currencyMask}
                           required
+                          {...currencyMask}
+                          edit={edit}
                         />
                       </td>
                       <td style={{ width: '25%' }}>
@@ -175,9 +212,11 @@ let Inputs = (props) => {
                     </>
                   )}
                 <td>
-                  <Button color="danger" onClick={() => fields.remove(index)}>
+                  {!edit ? 
+                    <Button color="danger" onClick={() => fields.remove(index)}>
                     X
-                  </Button>
+                    </Button>
+                    : null }
                 </td>
               </tr>
             );
@@ -187,36 +226,38 @@ let Inputs = (props) => {
 
       <Row>
         <Col>
-          <>
-            <Button
-              color="primary"
-              className="mt-3"
-              onClick={() =>
-                fields.push({
-                  category: 'preselect',
-                  qty: 1,
-                  price: 0,
-                })
-              }
-            >
+          {!edit ? 
+            <>
+              <Button
+                color="primary"
+                className="mt-3"
+                onClick={() =>
+                  fields.push({
+                    category: 'preselect',
+                    qty: 1,
+                    price: 0,
+                  })
+                }
+              >
               Add Item{' '}
-            </Button>
+              </Button>
 
-            <Button
-              color="primary"
-              className="mt-3"
-              onClick={() =>
-                fields.push({
-                  category: 'custom',
-                  qty: 1,
-                  price: 0,
-                  pricePer: 0,
-                })
-              }
-            >
+              <Button
+                color="primary"
+                className="mt-3"
+                onClick={() =>
+                  fields.push({
+                    category: 'custom',
+                    qty: 1,
+                    price: 0,
+                    pricePer: 0,
+                  })
+                }
+              >
               Custom Item
-            </Button>
-          </>
+              </Button>
+            </>
+            : null }
         </Col>
         <Col />
         <Col>
@@ -252,7 +293,7 @@ class MiscItems extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('Mouldings')(state),
+  formState: getFormValues('Order')(state),
   misc_items: state.misc_items.misc_items,
   prices: miscItemPriceSelector(state),
   linePrices: miscItemLinePriceSelector(state),
@@ -260,7 +301,7 @@ const mapStateToProps = (state) => ({
 });
 
 MiscItems = reduxForm({
-  form: 'Mouldings',
+  form: 'Order',
   enableReinitialize: true,
 })(MiscItems);
 

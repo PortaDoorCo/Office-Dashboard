@@ -86,78 +86,78 @@ class DoorFilter extends Component {
 
         if (index === i && part.design !== undefined) {
           this.props.dispatch(
-            autofill('DoorOrder', `part_list[${i}].design`, undefined)
+            autofill('Order', `part_list[${i}].design`, undefined)
           );
 
           this.props.dispatch(
-            untouch('DoorOrder', `part_list[${i}].cope_design`)
+            untouch('Order', `part_list[${i}].cope_design`)
           );
         }
 
         if (index === i && part.woodtype !== undefined) {
           this.props.dispatch(
-            autofill('DoorOrder', `part_list[${i}].woodtype`, undefined)
+            autofill('Order', `part_list[${i}].woodtype`, undefined)
           );
 
-          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].woodtype`));
+          this.props.dispatch(untouch('Order', `part_list[${i}].woodtype`));
         }
 
         if (index === i && part.edge !== undefined) {
           this.props.dispatch(
-            autofill('DoorOrder', `part_list[${i}].edge`, undefined)
+            autofill('Order', `part_list[${i}].edge`, undefined)
           );
-          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].edge`));
+          this.props.dispatch(untouch('Order', `part_list[${i}].edge`));
         }
 
         if (index === i && part.panel !== undefined) {
           this.props.dispatch(
-            autofill('DoorOrder', `part_list[${i}].panel`, undefined)
+            autofill('Order', `part_list[${i}].panel`, undefined)
           );
-          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].panel`));
+          this.props.dispatch(untouch('Order', `part_list[${i}].panel`));
         }
 
         if (index === i && part.profile !== undefined) {
           this.props.dispatch(
-            autofill('DoorOrder', `part_list[${i}].profile`, undefined)
+            autofill('Order', `part_list[${i}].profile`, undefined)
           );
-          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].profile`));
+          this.props.dispatch(untouch('Order', `part_list[${i}].profile`));
         }
 
         if (index === i && part.applied_profile !== undefined) {
           this.props.dispatch(
-            autofill('DoorOrder', `part_list[${i}].applied_profile`, undefined)
+            autofill('Order', `part_list[${i}].applied_profile`, undefined)
           );
           this.props.dispatch(
-            untouch('DoorOrder', `part_list[${i}].applied_profile`)
+            untouch('Order', `part_list[${i}].applied_profile`)
           );
         }
 
         if (index === i && part.finish !== undefined) {
           this.props.dispatch(
-            autofill('DoorOrder', `part_list[${i}].finish`, undefined)
+            autofill('Order', `part_list[${i}].finish`, undefined)
           );
-          this.props.dispatch(untouch('DoorOrder', `part_list[${i}].finish`));
+          this.props.dispatch(untouch('Order', `part_list[${i}].finish`));
         }
 
         if (index === i && part.face_frame_top_rail !== undefined) {
           this.props.dispatch(
             autofill(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].face_frame_top_rail`,
               undefined
             )
           );
           this.props.dispatch(
-            untouch('DoorOrder', `part_list[${i}].face_frame_top_rail`)
+            untouch('Order', `part_list[${i}].face_frame_top_rail`)
           );
         }
 
         if (index === i && part.furniture_feet !== undefined) {
           this.props.dispatch(
-            autofill('DoorOrder', `part_list[${i}].furniture_feet`, undefined)
+            autofill('Order', `part_list[${i}].furniture_feet`, undefined)
           );
           this.props.dispatch(
-            untouch('DoorOrder', `part_list[${i}].furniture_feet`)
+            untouch('Order', `part_list[${i}].furniture_feet`)
           );
         }
       });

@@ -49,9 +49,9 @@ class JobInfo extends Component {
 
       if(formState.job_info.Sample !== prevProps.formState.job_info.Sample){
         if(formState.job_info.Sample){
-          this.props.dispatch(change('Mouldings', 'discount', 50));
+          this.props.dispatch(change('Order', 'discount', 50));
         } else {
-          this.props.dispatch(change('DoorOrder', 'discount', 0));
+          this.props.dispatch(change('Order', 'discount', 0));
         }
       }
 
@@ -106,16 +106,16 @@ class JobInfo extends Component {
             customer.Shipping_Phone || customer.Phone1
           )
         );
-        this.props.dispatch(change('Mouldings', 'Taxable', customer.Taxable));
+        this.props.dispatch(change('Order', 'Taxable', customer.Taxable));
         
         if(formState.job_info.Sample){
-          this.props.dispatch(change('Mouldings', 'discount', 50));
+          this.props.dispatch(change('Order', 'discount', 50));
         }else{
-          this.props.dispatch(change('Mouldings', 'discount', 0));
+          this.props.dispatch(change('Order', 'discount', 0));
         }
         
         this.props.dispatch(
-          change('Mouldings', 'job_info.Notes', customer.Notes)
+          change('Order', 'job_info.Notes', customer.Notes)
         );
       }
     }
@@ -357,7 +357,7 @@ class JobInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('Mouldings')(state),
+  formState: getFormValues('Order')(state),
   shippingMethods: state.misc_items.shippingMethods,
 });
 

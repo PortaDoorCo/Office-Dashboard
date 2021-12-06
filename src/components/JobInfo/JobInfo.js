@@ -47,8 +47,8 @@ class JobInfo extends Component {
 
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
-    if (formState && formState.job_info && formState.job_info.customer) {
-      if(formState.job_info.Sample !== prevProps.formState.job_info.Sample){
+    if (formState?.job_info?.customer) {
+      if(formState.job_info?.Sample !== prevProps.formState?.job_info?.Sample){
         if(formState.job_info.Sample){
           this.props.dispatch(change('Order', 'discount', 50));
         } else {
@@ -57,11 +57,11 @@ class JobInfo extends Component {
         
       }
       if (
-        formState.job_info.customer !== prevProps.formState.job_info.customer
+        formState?.job_info?.customer?.id !== prevProps.formState?.job_info?.customer?.id
       ) {
         const customer = formState?.job_info?.customer;
 
-        if (customer?.Notes) {
+        if (customer?.Notes !== '') {
           this.props.toggleReminderModal();
         }
 

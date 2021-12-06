@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import numQty from 'numeric-quantity';
-import orderType from '../components/DoorOrders/DoorInfo/orderType';
+
 
 const pricingSelector = (state) => {
   const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;

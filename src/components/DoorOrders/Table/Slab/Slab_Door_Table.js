@@ -355,35 +355,35 @@ const Slab_Door_Table = ({
                   if (fields.length > 0) {
                     dispatch(
                       touch(
-                        'DoorOrder',
+                        'Order',
                         `part_list[${i}].dimensions[${index}].notes`
                       )
                     );
                     dispatch(
                       touch(
-                        'DoorOrder',
+                        'Order',
                         `part_list[${i}].dimensions[${index}].width`
                       )
                     );
                     dispatch(
                       touch(
-                        'DoorOrder',
+                        'Order',
                         `part_list[${i}].dimensions[${index}].height`
                       )
                     );
                   }
 
-                  dispatch(touch('DoorOrder', `part_list[${i}].woodtype`));
+                  dispatch(touch('Order', `part_list[${i}].woodtype`));
 
                   if (construction !== 'Miter') {
-                    dispatch(touch('DoorOrder', `part_list[${i}].edge`));
+                    dispatch(touch('Order', `part_list[${i}].edge`));
                   }
 
                   dispatch(
-                    touch('DoorOrder', `part_list[${i}].applied_profile`)
+                    touch('Order', `part_list[${i}].applied_profile`)
                   );
 
-                  dispatch(startAsyncValidation('DoorOrder'));
+                  dispatch(startAsyncValidation('Order'));
 
                   fields.push({
                     qty: 1,
@@ -419,7 +419,7 @@ const Slab_Door_Table = ({
 };
 
 const mapStateToProps = (state) => ({
-  formSyncErrors: getFormSyncErrors('DoorOrder')(state),
+  formSyncErrors: getFormSyncErrors('Order')(state),
 });
 
 export default connect(mapStateToProps, null)(Slab_Door_Table);

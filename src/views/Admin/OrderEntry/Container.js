@@ -9,38 +9,18 @@ import {
   reduxForm
 } from 'redux-form';
 import validate from './components/validate';
+import OrderEntry from './OrderEntry';
 
 
 let Container = (props) => {
 
+  return(
+    <OrderEntry isEdit={false} {...props} />
+  );
 
 
 
 };
 
-const mapStateToProps = (state) => ({
-
-});
   
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-
-    },
-    dispatch
-  );
-  
-// eslint-disable-next-line no-class-assign
-Container = reduxForm({
-  form: 'Order',
-  enableReinitialize: true,
-  validate,
-  onSubmitFail: (errors, dispatch, submitError, props) => {
-    const job_info_message = 'You are missing required info';
-    if (errors) {
-      NotificationManager.error(job_info_message, 'Error', 2000);
-    }
-  },
-})(Container);
-  
-export default connect(mapStateToProps, mapDispatchToProps)(Container);
+export default Container;

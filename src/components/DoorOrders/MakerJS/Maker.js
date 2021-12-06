@@ -20,22 +20,22 @@ const Maker = props => {
   const [pathItem, setPathItem] = useState(null);
   // const [width, setWidth] = useState(0);
 
-  let width = formState.part_list[i].dimensions[index].width ? numQty(formState.part_list[i].dimensions[index].width) : 0;
-  let height = formState.part_list[i].dimensions[index].height ? numQty(formState.part_list[i].dimensions[index].height) : 0;
-  let leftStile = formState.part_list[i].dimensions[index].leftStile ? numQty(formState.part_list[i].dimensions[index].leftStile) : 0;
-  let rightStile = formState.part_list[i].dimensions[index].rightStile ? numQty(formState.part_list[i].dimensions[index].rightStile) : 0;
-  let topRail = formState.part_list[i].dimensions[index].topRail ? numQty(formState.part_list[i].dimensions[index].topRail) : 0;
-  let bottomRail = formState.part_list[i].dimensions[index].bottomRail ? numQty(formState.part_list[i].dimensions[index].bottomRail) : 0;
-  let panelsH = formState.part_list[i].dimensions[index].panelsH ? parseInt(formState.part_list[i].dimensions[index].panelsH) : 0;
-  let panelsW = formState.part_list[i].dimensions[index].panelsW ? parseInt(formState.part_list[i].dimensions[index].panelsW) : 0;
-  let horizontalMidRailSize = formState.part_list[i].dimensions[index].horizontalMidRailSize ? numQty(formState.part_list[i].dimensions[index].horizontalMidRailSize) : 0;
-  let verticalMidRailSize = formState.part_list[i].dimensions[index].verticalMidRailSize ? numQty(formState.part_list[i].dimensions[index].verticalMidRailSize) : 0;
-  let unevenInput1 = formState.part_list[i].dimensions[index].unevenSplitInput0 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput0) : 0;
-  let unevenInput2 = formState.part_list[i].dimensions[index].unevenSplitInput1 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput1) : 0;
-  let unevenInput3 = formState.part_list[i].dimensions[index].unevenSplitInput2 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput2) : 0;
-  let unevenInput4 = formState.part_list[i].dimensions[index].unevenSplitInput3 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput3) : 0;
-  let unevenInput5 = formState.part_list[i].dimensions[index].unevenSplitInput4 ? numQty(formState.part_list[i].dimensions[index].unevenSplitInput4) : 0;
-  let unevenCheck = formState.part_list[i].dimensions[index].unevenCheck ? formState.part_list[i].dimensions[index].unevenCheck : false;
+  let width = formState?.part_list[i]?.dimensions[index]?.width ? numQty(formState?.part_list[i]?.dimensions[index]?.width) : 0;
+  let height = formState?.part_list[i]?.dimensions[index]?.height ? numQty(formState?.part_list[i]?.dimensions[index]?.height) : 0;
+  let leftStile = formState?.part_list[i]?.dimensions[index]?.leftStile ? numQty(formState?.part_list[i]?.dimensions[index]?.leftStile) : 0;
+  let rightStile = formState?.part_list[i]?.dimensions[index]?.rightStile ? numQty(formState?.part_list[i]?.dimensions[index]?.rightStile) : 0;
+  let topRail = formState?.part_list[i]?.dimensions[index]?.topRail ? numQty(formState?.part_list[i]?.dimensions[index]?.topRail) : 0;
+  let bottomRail = formState?.part_list[i]?.dimensions[index]?.bottomRail ? numQty(formState?.part_list[i]?.dimensions[index]?.bottomRail) : 0;
+  let panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH ? parseInt(formState?.part_list[i]?.dimensions[index]?.panelsH) : 0;
+  let panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW ? parseInt(formState?.part_list[i]?.dimensions[index]?.panelsW) : 0;
+  let horizontalMidRailSize = formState?.part_list[i]?.dimensions[index]?.horizontalMidRailSize ? numQty(formState?.part_list[i]?.dimensions[index]?.horizontalMidRailSize) : 0;
+  let verticalMidRailSize = formState?.part_list[i]?.dimensions[index]?.verticalMidRailSize ? numQty(formState?.part_list[i]?.dimensions[index]?.verticalMidRailSize) : 0;
+  let unevenInput1 = formState?.part_list[i]?.dimensions[index]?.unevenSplitInput0 ? numQty(formState?.part_list[i]?.dimensions[index]?.unevenSplitInput0) : 0;
+  let unevenInput2 = formState?.part_list[i]?.dimensions[index]?.unevenSplitInput1 ? numQty(formState?.part_list[i]?.dimensions[index]?.unevenSplitInput1) : 0;
+  let unevenInput3 = formState?.part_list[i]?.dimensions[index]?.unevenSplitInput2 ? numQty(formState?.part_list[i]?.dimensions[index]?.unevenSplitInput2) : 0;
+  let unevenInput4 = formState?.part_list[i]?.dimensions[index]?.unevenSplitInput3 ? numQty(formState?.part_list[i]?.dimensions[index]?.unevenSplitInput3) : 0;
+  let unevenInput5 = formState?.part_list[i]?.dimensions[index]?.unevenSplitInput4 ? numQty(formState?.part_list[i]?.dimensions[index]?.unevenSplitInput4) : 0;
+  let unevenCheck = formState?.part_list[i]?.dimensions[index]?.unevenCheck ? formState?.part_list[i]?.dimensions[index]?.unevenCheck : false;
 
 
 
@@ -129,7 +129,7 @@ const Maker = props => {
 };
 
 const mapStateToProps = state => ({
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('Order')(state),
 });
 
 const mapDispatchToProps = dispatch =>

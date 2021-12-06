@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Input, FormGroup, Label, Button, Table } from 'reactstrap';
-import { updateNotes } from '../../../../../redux/orders/actions';
+import { updateNotes } from '../../../../redux/orders/actions';
 import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -48,7 +48,10 @@ class Notes_Table extends Component {
 
 
 const mapStateToProps = (state, props) => ({
-  formState: getFormValues('Mouldings')(state),
+
+  formState: getFormValues('Order')(state),
+
+
 });
 
 const mapDispatchToProps = dispatch =>
@@ -61,7 +64,7 @@ const mapDispatchToProps = dispatch =>
   );
 
 Notes_Table = reduxForm({
-  form: 'Mouldings',
+  form: 'Order',
 })(Notes_Table);
 
 

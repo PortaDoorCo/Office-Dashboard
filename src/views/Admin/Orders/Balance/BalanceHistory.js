@@ -17,17 +17,17 @@ import {
   totalSelector,
   balanceSelector,
   balanceTotalSelector,
-} from '../../../../../selectors/doorPricing';
+} from '../../../../selectors/pricing';
 import DatePicker from 'react-widgets/DatePicker';
 import { Field } from 'redux-form';
 import {
   renderDropdownList,
   renderPrice,
-} from '../../../../../components/RenderInputs/renderInputs';
-import { updateOrder } from '../../../../../redux/orders/actions';
+} from '../../../../components/RenderInputs/renderInputs';
+import { updateOrder } from '../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import 'react-widgets/dist/css/react-widgets.css';
-import currencyMask from '../../../../../utils/currencyMask';
+import currencyMask from '../../../../utils/currencyMask';
 
 
 const cookie = Cookies.get('jwt');
@@ -271,7 +271,7 @@ class BalanceHistory extends Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('Order')(state),
   balanceTotal: balanceTotalSelector(state),
   balance: balanceSelector(state),
   total: totalSelector(state),
@@ -287,7 +287,7 @@ const mapDispatchToProps = (dispatch) =>
   );
 
 BalanceHistory = reduxForm({
-  form: 'DoorOrder',
+  form: 'Order',
 })(BalanceHistory);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BalanceHistory);

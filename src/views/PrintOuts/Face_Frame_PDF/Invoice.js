@@ -13,7 +13,15 @@ export default (data, pricing) => {
       .reduce((acc, item) => acc + item, 0);
   });
 
-  const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0);
+  const prices = pdfDoorPricing(data?.part_list, pricing[0]);
+  const finishing = pdfFinishing(data?.part_list, pricing[0]);
+
+
+  const subTotal = prices
+    .map((i) => i.reduce((acc, item) => acc + item, 0))
+    .reduce((acc, item) => acc + item, 0);
+
+
 
   const balancePaid = data.balance_history.reduce(function (
     accumulator,
@@ -41,8 +49,7 @@ export default (data, pricing) => {
 
   const order_sub_total = misc_total + discountSubTotal;
 
-  const prices = pdfDoorPricing(data?.part_list, pricing[0]);
-  const finishing = pdfFinishing(data?.part_list, pricing[0]);
+
   const finishingSubtotal = finishing.map((i, index) => {
     if (i) {
       let price = parseFloat(i.reduce((acc, item) => acc + item, 0));

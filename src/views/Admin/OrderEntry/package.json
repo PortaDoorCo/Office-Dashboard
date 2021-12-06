@@ -1,6 +1,6 @@
 {
-  "name": "DoorOrder",
+  "name": "Order",
   "version": "0.0.0",
   "private": true,
-  "main": "./DoorOrder.js"
+  "main": "./Order.js"
 }

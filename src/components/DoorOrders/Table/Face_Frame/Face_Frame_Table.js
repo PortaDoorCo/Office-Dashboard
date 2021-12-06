@@ -111,7 +111,7 @@ const Frame_Only_Table = ({
 
   const clearNotes = (index, e) => {
     dispatch(
-      change('DrawerOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+      change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
     );
   };
 

@@ -238,7 +238,7 @@ export default (data, pricing) => {
                     width: 79,
                   },
                   {
-                    text: `${prices[i]
+                    text: `$${prices[i]
                       .reduce((acc, item) => acc + item, 0)
                       .toFixed(2)}`,
                     style: 'fonts',
