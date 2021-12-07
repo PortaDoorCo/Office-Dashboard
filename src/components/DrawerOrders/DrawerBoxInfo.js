@@ -1,24 +1,16 @@
-import React, { Component } from 'react';
-import { Row, Col, CardSubtitle, FormGroup, Label, Button } from 'reactstrap';
 import 'antd/dist/antd.css';
-import { Field, FieldArray, touch, startAsyncValidation } from 'redux-form';
-import OrderTable from './OrderTable';
-import {
-  renderDropdownList,
-  renderField,
-  renderDropdownListFilter,
-  renderTextField,
-} from '../RenderInputs/renderInputs';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button, CardSubtitle, Col, FormGroup, Label, Row } from 'reactstrap';
+import { Field, FieldArray } from 'redux-form';
 import {
-  linePriceSelector,
-  itemPriceSelector,
-  subTotalSelector,
-  totalSelector,
-  taxSelector,
-  addPriceSelector,
-  miscTotalSelector
+  addPriceSelector, itemPriceSelector, linePriceSelector, miscTotalSelector, subTotalSelector, taxSelector, totalSelector
 } from '../../selectors/pricing';
+import {
+  renderDropdownList, renderDropdownListFilter,
+  renderTextField
+} from '../RenderInputs/renderInputs';
+import OrderTable from './OrderTable';
 
 
 const required = (value) => (value ? undefined : 'Required');

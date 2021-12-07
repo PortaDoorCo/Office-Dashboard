@@ -1,37 +1,22 @@
 import React, { Component } from 'react';
-import {
-  Field,
-  reduxForm,
-  FieldArray,
-  getFormValues,
-  change,
-} from 'redux-form';
-import {
-  renderField,
-  renderNumber,
-  renderDropdownListFilter,
-  renderPrice,
-  renderInt,
-  renderDropdownListFilterNoPhoto
-} from '../../../components/RenderInputs/renderInputs';
-import {
-  Button,
-  Table,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Row,
-  Col,
-  Label,
-} from 'reactstrap';
+import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import {
-  miscItemPriceSelector,
-  miscItemLinePriceSelector,
-  miscTotalSelector,
+  Button, Col, Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText, Label, Row, Table
+} from 'reactstrap';
+import {
+  change, Field, FieldArray,
+  getFormValues, reduxForm
+} from 'redux-form';
+import {
+  renderDropdownListFilterNoPhoto, renderField, renderInt
+} from '../../../components/RenderInputs/renderInputs';
+import {
+  miscItemLinePriceSelector, miscItemPriceSelector, miscTotalSelector
 } from '../../../selectors/doorPricing';
-import NumberFormat from 'react-number-format';
 import currencyMask from '../../../utils/currencyMask';
 
 

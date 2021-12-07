@@ -1,23 +1,19 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import {
-  Input,
-  Button,
-  Row,
-  Col
-} from 'reactstrap';
-import OrderPage from '../../../Orders/OrderPage';
-import moment from 'moment';
-
-import DataTable from 'react-data-table-component';
-import { Tooltip, IconButton } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import differenceBy from 'lodash/differenceBy';
-import { setSelectedOrder, setOrderType } from '../../../../../redux/orders/actions';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Select } from 'antd';
 import Cookies from 'js-cookie';
+import differenceBy from 'lodash/differenceBy';
+import React, { useEffect, useMemo, useState } from 'react';
+import DataTable from 'react-data-table-component';
+import { connect } from 'react-redux';
+import {
+  Button, Col, Input, Row
+} from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import { setOrderType, setSelectedOrder } from '../../../../../redux/orders/actions';
 import status from '../../../../../utils/status';
+import OrderPage from '../../../Orders/OrderPage';
+
 
 const cookie = Cookies.get('jwt');
 

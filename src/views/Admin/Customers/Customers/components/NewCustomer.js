@@ -1,30 +1,20 @@
+import Cookies from 'js-cookie';
 import React, { Component } from 'react';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Collapse
-} from 'reactstrap';
+import 'react-phone-number-input/style.css';
 import { connect } from 'react-redux';
+import {
+  Button, Card, CardBody, CardHeader, Col, Collapse, FormGroup,
+  Label, Row
+} from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import {
-  reduxForm,
-  Field,
-  change,
-  getFormValues
+  change, Field, getFormValues, reduxForm
 } from 'redux-form';
-import { updateCustomer, submitCustomer } from '../../../../../redux/customers/actions';
-import { renderField, renderDropdownList, renderCheckboxToggle, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs';
-import Cookies from 'js-cookie';
-import 'react-phone-number-input/style.css';
-import normalizePhone from './normalizerPhone';
-import states from '../../AddCustomer/states';
 import FileUploader from '../../../../../components/FileUploader/FileUploader';
+import { renderCheckboxToggle, renderDropdownList, renderField } from '../../../../../components/RenderInputs/renderInputs';
+import { submitCustomer, updateCustomer } from '../../../../../redux/customers/actions';
+import states from '../../AddCustomer/states';
+import normalizePhone from './normalizerPhone';
 
 const cookie = Cookies.get('jwt');
 const required = value => (value ? undefined : 'Required');

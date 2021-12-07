@@ -1,30 +1,18 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import { Table, Row, Col, Button, FormGroup, Label, Input } from 'reactstrap';
-import 'semantic-ui-css/semantic.min.css';
-import {
-  Field,
-  change,
-  touch,
-  startAsyncValidation,
-  getFormSyncErrors,
-} from 'redux-form';
 import Ratio from 'lb-ratio';
-import Maker from '../../MakerJS/Maker';
+import numQty from 'numeric-quantity';
+import React, { Fragment, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { Button, Col, FormGroup, Input, Label, Row, Table } from 'reactstrap';
+import {
+  change, Field, getFormSyncErrors, startAsyncValidation, touch
+} from 'redux-form';
+import 'semantic-ui-css/semantic.min.css';
+import currencyMask from '../../../../utils/currencyMask';
 // import 'react-widgets/dist/css/react-widgets.css';
 import {
-  renderField,
-  renderNumber,
-  renderFieldDisabled,
-  renderCheckboxToggle,
-  renderPrice,
-  renderInt,
-  renderTextField,
+  renderField, renderInt, renderNumber, renderTextField
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
-import { connect } from 'react-redux';
-import numQty from 'numeric-quantity';
-import currencyMask from '../../../../utils/currencyMask';
-import { NotificationManager } from 'react-notifications';
 
 const required = (value) => (value ? undefined : 'Required');
 

@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
-  Row,
-  Col,
-  CardSubtitle,
-  FormGroup,
-  Label
+  CardSubtitle, Col, FormGroup,
+  Label, Row
 } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
-import { connect } from 'react-redux';
-import { renderDropdownList, renderDropdownListFilter, renderField, renderTextField } from '../../../RenderInputs/renderInputs';
-import Slab_Door_Table from '../../Table/Slab/Slab_Door_Table';
 import {
-  linePriceSelector,
-  itemPriceSelector,
-  subTotalSelector
+  itemPriceSelector, linePriceSelector, subTotalSelector
 } from '../../../../selectors/doorPricing';
+import { renderDropdownListFilter, renderTextField } from '../../../RenderInputs/renderInputs';
+import Slab_Door_Table from '../../Table/Slab/Slab_Door_Table';
 
 const required = value => (value ? undefined : 'Required');
 

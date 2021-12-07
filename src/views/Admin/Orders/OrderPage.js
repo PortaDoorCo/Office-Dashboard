@@ -78,27 +78,6 @@ import ConversationNotes from './Notes/Conversation_Notes';
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const cookie = Cookies.get('jwt');
 
 const toDataUrl = (url, callback) => {

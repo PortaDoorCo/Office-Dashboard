@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
-import { Row, Col, FormGroup, Label } from 'reactstrap';
-import { Field, change, getFormValues } from 'redux-form';
-import DatePicker from 'react-widgets/DatePicker';
 import moment from 'moment-business-days';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import DatePicker from 'react-widgets/DatePicker';
+import { Col, FormGroup, Label, Row } from 'reactstrap';
+import { change, Field, getFormValues } from 'redux-form';
+import status from '../../utils/status';
 // import momentLocaliser from 'react-widgets-moment';
 import {
   renderCheckboxToggle,
-  renderDropdownList,
-  renderDropdownListFilter,
-  renderDropdownListNoPhoto,
+  renderDropdownList, renderDropdownListNoPhoto,
   renderField,
-  renderTextField,
+  renderTextField
 } from '../RenderInputs/renderInputs';
-import { connect } from 'react-redux';
-import status from '../../utils/status';
 import CustomerReminder from './CustomerReminder';
 
 

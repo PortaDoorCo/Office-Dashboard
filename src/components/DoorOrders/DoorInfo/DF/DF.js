@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
-import { Row, Col, CardSubtitle, FormGroup, Label } from 'reactstrap';
-import { Field, FieldArray, change, touch, startAsyncValidation } from 'redux-form';
 import { connect } from 'react-redux';
+import { CardSubtitle, Col, FormGroup, Label, Row } from 'reactstrap';
+import { change, Field, FieldArray } from 'redux-form';
 import {
-  renderDropdownListFilter,
-  renderTextField,
-  renderCheckboxToggle,
-  renderNumber,
-  renderDropdownList
+  itemPriceSelector, linePriceSelector, subTotalSelector
+} from '../../../../selectors/doorPricing';
+import ModalUtil from '../../../../utils/Modal';
+import {
+  renderCheckboxToggle, renderDropdownList, renderDropdownListFilter, renderNumber, renderTextField
 } from '../../../RenderInputs/renderInputs';
 import Table from '../../Table/DF/Table';
-import {
-  linePriceSelector,
-  itemPriceSelector,
-  subTotalSelector,
-} from '../../../../selectors/doorPricing';
-import changeProfile from '../Functions/changeProfile';
 import changeDesign from '../Functions/changeDesign';
-import ModalUtil from '../../../../utils/Modal';
+import changeProfile from '../Functions/changeProfile';
 
 
 const required = (value) => (value ? undefined : 'Required');

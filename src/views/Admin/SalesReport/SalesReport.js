@@ -1,20 +1,19 @@
-import React, { useState, useEffect, Suspense } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, FormGroup, Input } from 'reactstrap';
+import { Select } from 'antd';
 import classnames from 'classnames';
-// import StatusTable from './components/StatusTable'
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { loadOrders } from '../../../redux/orders/actions';
-import Charts from './components/Chart';
-import Chart1 from './components/SalesCharts/Chart1';
-import Maps from './components/SalesCharts/Maps';
 import moment from 'moment';
+import React, { Suspense, useEffect, useState } from 'react';
+import { SingleDatePicker } from 'react-dates';
 // import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
-import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import { Select } from 'antd';
+// import StatusTable from './components/StatusTable'
+import { connect } from 'react-redux';
+import { Col, FormGroup, Input, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import { loadOrders } from '../../../redux/orders/actions';
 import status from '../../../utils/status';
+import Charts from './components/Chart';
+import Chart1 from './components/SalesCharts/Chart1';
 
 const StatusTable = React.lazy(() => import('./components/StatusTable'));
 

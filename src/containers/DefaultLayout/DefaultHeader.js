@@ -1,49 +1,39 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Nav, NavItem, Button } from 'reactstrap';
-import PropTypes from 'prop-types';
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import DefaultHeaderDropdown  from './DefaultHeaderDropdown';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import CloudDone from '@material-ui/icons/CloudDone';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import Cookies from 'js-cookie';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { Nav, NavItem } from 'reactstrap';
+import { bindActionCreators } from 'redux';
 import logo from '../../assets/img/brand/portadoor.png';
 import sygnet from '../../assets/img/brand/sygnet.svg';
-import { unsetToken } from '../../utils/auth';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import NewReleasesIcon from '@material-ui/icons/NewReleases';
-import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
-
+import { dbNotLoaded, loadAllCustomers } from '../../redux/customers/actions';
 import {
-  loadAllOrders,
-  getDeliveries,
-  socketReceiveUpdateStatus
-} from '../../redux/orders/actions';
-import {
-  loadMiscItems,
-  loadShippingMethod,
-  loadPaymentTypes,
-  loadPaymentTerms,
+  loadMiscItems, loadPaymentTerms, loadPaymentTypes, loadShippingMethod
 } from '../../redux/misc_items/actions';
 import {
-  loadSales,
-} from '../../redux/sales/actions';
-
-import { loadAllCustomers, dbNotLoaded } from '../../redux/customers/actions';
-
+  getDeliveries, loadAllOrders, socketReceiveUpdateStatus
+} from '../../redux/orders/actions';
 import {
-  getAllProducts,
-  getBreakdowns,
-  getBoxBreakdowns,
-  getPricing
+  getAllProducts, getBoxBreakdowns, getBreakdowns, getPricing
 } from '../../redux/part_list/actions';
+import {
+  loadSales
+} from '../../redux/sales/actions';
+import { unsetToken } from '../../utils/auth';
+import DefaultHeaderDropdown from './DefaultHeaderDropdown';
 
-import Cookies from 'js-cookie';
-import CloudDone from '@material-ui/icons/CloudDone';
-import { withStyles } from '@material-ui/core/styles';
+
+
+
 
 
 const propTypes = {

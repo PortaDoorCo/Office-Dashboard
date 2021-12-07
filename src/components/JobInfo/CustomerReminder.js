@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React from 'react';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
 const CustomerReminder = (props) => {
   const { className, modal, toggle, formState } = props;

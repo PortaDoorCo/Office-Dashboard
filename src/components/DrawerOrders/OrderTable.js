@@ -1,19 +1,13 @@
-import React, { Component, Fragment, useState } from 'react';
-import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
+import numQty from 'numeric-quantity';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Field, change, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
+import { Button, Col, FormGroup, Input, Label, Row, Table } from 'reactstrap';
+import { change, Field, getFormSyncErrors, startAsyncValidation, touch } from 'redux-form';
+import currencyMask from '../../utils/currencyMask';
 import {
-  renderDropdownList,
-  renderNumber,
-  renderField,
-  renderPrice,
-  renderInt,
-  renderTextField
+  renderDropdownList, renderField, renderInt, renderNumber, renderPrice, renderTextField
 } from '../RenderInputs/renderInputs';
 import RenderPriceHolder from '../RenderInputs/RenderPriceHolder';
-import currencyMask from '../../utils/currencyMask';
-import numQty from 'numeric-quantity';
-import { NotificationManager } from 'react-notifications';
 
 
 const required = (value) => (value ? undefined : 'Required');

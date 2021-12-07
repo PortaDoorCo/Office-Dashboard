@@ -1,14 +1,14 @@
-import React, { useRef, useState } from 'react';
-import Editor from 'react-simple-code-editor';
-import { highlight, languages } from 'prismjs/components/prism-core';
-import 'prismjs/components/prism-clike';
-import 'prismjs/components/prism-javascript';
-import { Button, Row, Col, Collapse, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Parameters from './Parameters';
 import Cookies from 'js-cookie';
+import 'prismjs/components/prism-clike';
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-javascript';
+import React, { useRef, useState } from 'react';
 import { connect } from 'react-redux';
+import Editor from 'react-simple-code-editor';
+import { Button, Col, Collapse, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import { updateBreakdowns, getBreakdowns } from '../../../../../../../redux/part_list/actions';
+import { getBreakdowns, updateBreakdowns } from '../../../../../../../redux/part_list/actions';
+import Parameters from './Parameters';
 
 const cookie = Cookies.get('jwt');
 

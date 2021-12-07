@@ -1,14 +1,14 @@
+import classnames from 'classnames';
 import React, { useState } from 'react';
-import { Breadcrumb, BreadcrumbItem,Row, Col, Button, Card, CardBody, CardTitle, TabContent, TabPane, Nav, NavItem, NavLink, Collapse } from 'reactstrap';
 import { connect } from 'react-redux';
+import { Breadcrumb, BreadcrumbItem, Button, Card, CardBody, CardTitle, Col, Collapse, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import Woodtype from '../Attributes/Woodtypes';
-import Designs from './attributes/Designs';
-import Panels from '../Attributes/Panels';
+import { updateProduct } from '../../../../../../redux/part_list/actions';
 import AppliedProfiles from '../Attributes/Applied_Profiles';
 import GlassOptions from '../Attributes/Glass_Options';
-import { updateProduct } from '../../../../../../redux/part_list/actions';
-import classnames from 'classnames';
+import Panels from '../Attributes/Panels';
+import Woodtype from '../Attributes/Woodtypes';
+import Designs from './attributes/Designs';
 import EditorPage from './editor/EditorPage';
 
 

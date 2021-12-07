@@ -1,16 +1,13 @@
+import { AvField, AvForm } from 'availity-reactstrap-validation';
 import React, { Fragment } from 'react';
-import { Input, CustomInput } from 'reactstrap';
+import NumberFormat from 'react-number-format';
+import 'react-phone-input-2/lib/style.css';
+import DatePicker from 'react-widgets/DatePicker';
 import DropdownList from 'react-widgets/DropdownList';
 import Multiselect from 'react-widgets/Multiselect';
-import Combobox from 'react-widgets/Combobox';
-import DatePicker from 'react-widgets/DatePicker';
+import { CustomInput, Input } from 'reactstrap';
 // import 'react-widgets/dist/css/react-widgets.css';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
-import { AvForm, AvField } from 'availity-reactstrap-validation';
-import NumberFormat from 'react-number-format';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import { formatPhoneNumber } from 'react-phone-number-input';
 
 const renderPhoto = ({ item }) => {
   

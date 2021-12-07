@@ -1,37 +1,23 @@
 import React, { Component } from 'react';
-import {
-  Field,
-  reduxForm,
-  FieldArray,
-  getFormValues,
-  change,
-} from 'redux-form';
-import {
-  renderField,
-  renderDropdownListFilter,
-  renderDropdownListNoPhoto,
-  renderPrice,
-  renderInt
-} from '../RenderInputs/renderInputs';
-import {
-  Button,
-  Table,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Row,
-  Col,
-  Label,
-} from 'reactstrap';
+import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import {
-  miscItemPriceSelector,
-  miscItemLinePriceSelector,
-  miscTotalSelector,
+  Button, Col, Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText, Label, Row, Table
+} from 'reactstrap';
+import {
+  change, Field, FieldArray,
+  getFormValues, reduxForm
+} from 'redux-form';
+import {
+  miscItemLinePriceSelector, miscItemPriceSelector, miscTotalSelector
 } from '../../selectors/drawerPricing';
-import NumberFormat from 'react-number-format';
 import currencyMask from '../../utils/currencyMask';
+import {
+  renderDropdownListNoPhoto, renderField, renderInt
+} from '../RenderInputs/renderInputs';
 
 
 let Inputs = (props) => {

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup } from 'reactstrap';
 import Cookies from 'js-cookie';
+import React, { useEffect, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
+import { Button, Card, CardBody, CardImg, CardTitle, Col, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
-import { AppSwitch } from '@coreui/react';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
+import { addProduct, deleteProduct, updateProduct } from '../../../../../../redux/part_list/actions';
 
 const cookie = Cookies.get('jwt');
 

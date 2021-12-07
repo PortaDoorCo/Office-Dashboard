@@ -1,39 +1,27 @@
-import React, { Fragment, useState } from 'react';
-import { Field, change } from 'redux-form';
+import React, { Fragment } from 'react';
+import NumberFormat from 'react-number-format';
+import { connect } from 'react-redux';
 import {
-  renderNumber,
-  renderDropdownList,
-  renderInt,
-  renderTextField,
-  renderPrice,
-  renderDropdownListFilter,
-  renderMouldingInputs
-} from '../RenderInputs/renderInputs';
-import {
-  Button,
-  Table,
-  Row,
-  Col,
+  Button, Col,
   Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupText,
+  InputGroupText, Row, Table
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import NumberFormat from 'react-number-format';
-import styles from './styles';
-import currencyMask from '../../utils/currencyMask';
-
+import { Field } from 'redux-form';
 import {
-  subTotalSelector,
+  mouldingLineItemSelector, mouldingLinePriceSelector, mouldingPriceSelector, mouldingTotalSelector, subTotalSelector,
   taxSelector,
-  totalSelector,
-  mouldingTotalSelector,
-  mouldingLineItemSelector,
-  mouldingPriceSelector,
-  mouldingLinePriceSelector,
+  totalSelector
 } from '../../selectors/pricing';
+import currencyMask from '../../utils/currencyMask';
+import {
+  renderDropdownList, renderDropdownListFilter,
+  renderMouldingInputs, renderNumber, renderTextField
+} from '../RenderInputs/renderInputs';
+import styles from './styles';
+
 
 
 const thickness = [

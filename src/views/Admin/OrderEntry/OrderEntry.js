@@ -1,64 +1,41 @@
+import Cookies from 'js-cookie';
+import moment from 'moment-business-days';
 import React, { Component, Suspense } from 'react';
-import {
-  Row,
-  Col,
-  Card,
-  CardHeader,
-  CardBody,
-  Input,
-  FormGroup,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-} from 'reactstrap';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { NotificationManager } from 'react-notifications';
 // import DoorInfo from './components/DoorInfo/DoorInfo';
 // import JobInfo from './components/JobInfo/JobInfo';
 import 'react-notifications/lib/notifications.css';
+import NumberFormat from 'react-number-format';
+import { connect } from 'react-redux';
+import StickyBox from 'react-sticky-box';
 import {
-  reduxForm,
-  FormSection,
-  getFormValues,
-  FieldArray,
-  Field,
-  touch,
-  startAsyncValidation,
+  Card, CardBody, CardHeader, Col, FormGroup, Input, InputGroup,
+  InputGroupAddon,
+  InputGroupText, Row
+} from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import {
+  Field, FieldArray, FormSection,
+  getFormValues, reduxForm, startAsyncValidation, touch
 } from 'redux-form';
+import thickness from '../../../components/DoorOrders/DoorInfo/thickness';
+import FileUploader from '../../../components/FileUploader/FileUploader';
+import { renderField } from '../../../components/RenderInputs/renderInputs';
 import {
-  submitOrder,
   loadOrders,
-  setOrderType,
-  updateOrder,
+  setOrderType, submitOrder, updateOrder
 } from '../../../redux/orders/actions';
 import {
-  linePriceSelector,
-  itemPriceSelector,
-  subTotalSelector,
-  orderTypeSelector,
-  taxSelector,
-  totalSelector,
-  addPriceSelector,
-  miscTotalSelector,
-  balanceSelector,
-  balanceTotalSelector,
+  addPriceSelector, balanceSelector,
+  balanceTotalSelector, miscTotalSelector, taxSelector,
+  totalSelector
 } from '../../../selectors/pricing';
-import 'react-notifications/lib/notifications.css';
-
-import Sticky from 'react-stickynode';
-import moment from 'moment-business-days';
-import Cookies from 'js-cookie';
-import { renderField } from '../../../components/RenderInputs/renderInputs';
-import FileUploader from '../../../components/FileUploader/FileUploader';
-import NumberFormat from 'react-number-format';
-import validate from './components/validate';
 import currencyMask from '../../../utils/currencyMask';
-import CheckoutBox from './components/CheckoutBox';
-import { NotificationManager } from 'react-notifications';
 import CancelModal from '../../../utils/Modal';
-import thickness from '../../../components/DoorOrders/DoorInfo/thickness';
-import StickyBox from 'react-sticky-box';
-import EditCheckoutBox from '../Orders/SelectedOrder/CheckoutBox';
+import EditCheckoutBox from '../Orders/CheckoutBox';
+import CheckoutBox from './components/CheckoutBox';
+import validate from './components/validate';
+
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
