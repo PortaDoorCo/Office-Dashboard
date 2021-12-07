@@ -148,8 +148,10 @@ export default (data, breakdowns) => {
       });
 
       let table = tableBody.map((i, k) => {
+
+
         return [
-          index === 0 && data.job_info?.Shop_Notes
+          index === 0 && k === 0 && data.job_info?.Shop_Notes
             ? {
               columns: [
                 { text: '' },
