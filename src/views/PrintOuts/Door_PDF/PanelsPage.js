@@ -1,8 +1,6 @@
-import moment from 'moment';
+import { flatten, groupBy } from 'lodash';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
-import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import GlassSort from '../Sorting/GlassSort';
-import Glass_Selection from '../Sorting/Glass_Selection';
 import HeightSort from '../Sorting/HeightSort';
 
 export default (data, breakdowns, type) => {

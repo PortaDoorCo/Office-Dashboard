@@ -1,7 +1,6 @@
-import moment from 'moment';
-import Size from '../Breakdowns/DrawerBoxes/Size';
 import numQty from 'numeric-quantity';
 import pdfDrawerBoxPricing from '../../../selectors/pdfs/pdfDrawerBoxPricing';
+import Size from '../Breakdowns/DrawerBoxes/Size';
 
 
 export default (data, breakdowns, pricing) => {

@@ -1,5 +1,4 @@
 import SlabCheck from './Slab_Check';
-import { flatten } from 'lodash';
 
 export default (data, type) => {
   let array = [];

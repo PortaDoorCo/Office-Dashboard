@@ -1,7 +1,6 @@
-import moment from 'moment';
+import pdfDoorPricing from '../../../selectors/pdfs/pdfDoorPricing';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
-import pdfDoorPricing from '../../../selectors/pdfs/pdfDoorPricing';
 
 export default (data, pricing) => {
   const parts = Glass_Selection(data, null);

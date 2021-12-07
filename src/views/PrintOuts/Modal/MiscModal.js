@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, Button, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
-import { DropdownList } from 'react-widgets';
 import { connect } from 'react-redux';
+import { DropdownList } from 'react-widgets';
+import { Button, Col, Form, FormGroup, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { addPrinterOption, savePrinterOption } from '../../../redux/misc_items/actions';
 

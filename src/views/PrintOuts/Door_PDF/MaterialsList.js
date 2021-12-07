@@ -1,13 +1,12 @@
+import Ratio from 'lb-ratio';
+import { flatten, flattenDeep, groupBy, uniq } from 'lodash';
 import moment from 'moment';
-import { flattenDeep, uniq, flatten, groupBy, uniqBy, _ } from 'lodash';
+import numQty from 'numeric-quantity';
 import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
-import BoardFT from '../Breakdowns/Doors/MaterialBreakdown/BoardFT';
-import Panels from '../Breakdowns/Doors/Panels/Panels';
+import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
 import TotalPieces from '../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
-import SqFT from '../Breakdowns/Doors/MaterialBreakdown/SqFT';
-import numQty from 'numeric-quantity';
-import Ratio from 'lb-ratio';
+import Panels from '../Breakdowns/Doors/Panels/Panels';
 
 const fraction = (num) => {
   let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);

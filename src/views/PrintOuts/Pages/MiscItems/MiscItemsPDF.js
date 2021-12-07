@@ -1,11 +1,11 @@
+import moment from 'moment';
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import Invoice from '../../Misc_Items_PDF/Invoice';
+import TotalMisc from '../../Breakdowns/Doors/MaterialBreakdown/TotalMisc';
 import Acknowledgement from '../../Misc_Items_PDF/Acknowledgement';
-import moment from 'moment';
+import Invoice from '../../Misc_Items_PDF/Invoice';
 import Packing_Slip from '../../Misc_Items_PDF/Packing_Slip';
 import QC from '../../Misc_Items_PDF/QC';
-import TotalMisc from '../../Breakdowns/Doors/MaterialBreakdown/TotalMisc';
 
 const MiscItemPDF = (data, breakdowns, p, pricing) => {
   return new Promise((resolve, reject) => {

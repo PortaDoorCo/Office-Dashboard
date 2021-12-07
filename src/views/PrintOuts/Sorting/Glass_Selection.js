@@ -1,5 +1,4 @@
 import GlassCheck from './GlassCheck';
-import { flatten } from 'lodash';
 
 export default (data, type) => {
   let array = [];

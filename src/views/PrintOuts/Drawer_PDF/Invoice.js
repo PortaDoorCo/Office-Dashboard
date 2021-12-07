@@ -1,6 +1,6 @@
 import moment from 'moment';
-import Size from '../Breakdowns/DrawerBoxes/Size';
 import pdfDrawerBoxPricing from '../../../selectors/pdfs/pdfDrawerBoxPricing';
+import Size from '../Breakdowns/DrawerBoxes/Size';
 
 export default (data, pricing) => {
   const qty = data.part_list.map((part, i) => {
