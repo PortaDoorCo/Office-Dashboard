@@ -18,6 +18,7 @@ import './polyfill';
 import 'antd/dist/antd.css';
 import rootReducer from './rootReducer';
 import * as serviceWorker from './serviceWorker';
+import 'prismjs';
 const cookie = Cookies.get('jwt');
 
 

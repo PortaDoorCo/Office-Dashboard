@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Orders from '../Orders';
+import OrderEntry from '../OrderEntry';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -16,7 +16,7 @@ it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <Provider store={store}>
-      <Orders />
+      <OrderEntry />
     </Provider>
     , div);
   ReactDOM.unmountComponentAtNode(div);
