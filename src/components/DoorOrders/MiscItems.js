@@ -13,7 +13,7 @@ import {
 } from 'redux-form';
 import {
   miscItemLinePriceSelector, miscItemPriceSelector, miscTotalSelector
-} from '../../selectors/doorPricing';
+} from '../../selectors/pricing';
 import currencyMask from '../../utils/currencyMask';
 import {
   renderDropdownListNoPhoto, renderField, renderInt

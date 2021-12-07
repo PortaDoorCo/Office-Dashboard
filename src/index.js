@@ -15,6 +15,7 @@ import thunk from 'redux-thunk';
 import App from './App';
 import './index.css';
 import './polyfill';
+import 'antd/dist/antd.css';
 import rootReducer from './rootReducer';
 import * as serviceWorker from './serviceWorker';
 const cookie = Cookies.get('jwt');

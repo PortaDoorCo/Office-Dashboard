@@ -16,7 +16,7 @@ import {
 } from '../../../components/RenderInputs/renderInputs';
 import {
   miscItemLinePriceSelector, miscItemPriceSelector, miscTotalSelector
-} from '../../../selectors/doorPricing';
+} from '../../../selectors/pricing';
 import currencyMask from '../../../utils/currencyMask';
 
 

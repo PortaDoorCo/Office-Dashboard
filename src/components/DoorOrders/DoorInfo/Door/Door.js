@@ -14,7 +14,7 @@ import {
   subTotalSelector,
   totalSelector,
   addPriceSelector,
-} from '../../../../selectors/doorPricing';
+} from '../../../../selectors/pricing';
 import fraction from '../../../../utils/fraction';
 
 import changeProfile from '../Functions/changeProfile';

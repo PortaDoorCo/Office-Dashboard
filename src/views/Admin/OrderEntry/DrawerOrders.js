@@ -35,7 +35,7 @@ import {
   taxSelector,
   addPriceSelector,
   miscTotalSelector
-} from '../../../selectors/drawerPricing';
+} from '../../../selectors/pricing';
 import moment from 'moment-business-days';
 import Cookies from 'js-cookie';
 import { renderField } from '../../../components/RenderInputs/renderInputs';

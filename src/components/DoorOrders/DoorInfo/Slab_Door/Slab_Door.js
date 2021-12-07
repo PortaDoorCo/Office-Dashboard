@@ -7,7 +7,7 @@ import {
 import { Field, FieldArray } from 'redux-form';
 import {
   itemPriceSelector, linePriceSelector, subTotalSelector
-} from '../../../../selectors/doorPricing';
+} from '../../../../selectors/pricing';
 import { renderDropdownListFilter, renderTextField } from '../../../RenderInputs/renderInputs';
 import Slab_Door_Table from '../../Table/Slab/Slab_Door_Table';
 

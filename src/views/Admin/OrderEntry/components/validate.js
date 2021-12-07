@@ -1,7 +1,7 @@
 const validate = values => {
   const errors = {};
 
-  if (!values.part_list || !values.part_list.length) {
+  if (!values.part_list || !values.part_list?.length) {
     errors.part_list = { _error: 'At least one member must be entered' };
   } else {
     const partArrayErrors = [];

@@ -34,7 +34,7 @@ import {
   totalSelector,
   addPriceSelector,
   miscTotalSelector,
-} from '../../../selectors/doorPricing';
+} from '../../../selectors/pricing';
 import 'react-notifications/lib/notifications.css';
 
 import Sticky from 'react-stickynode';

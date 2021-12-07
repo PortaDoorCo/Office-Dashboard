@@ -4,7 +4,7 @@ import { CardSubtitle, Col, FormGroup, Label, Row } from 'reactstrap';
 import { change, Field, FieldArray } from 'redux-form';
 import {
   itemPriceSelector, linePriceSelector, subTotalSelector
-} from '../../../../selectors/doorPricing';
+} from '../../../../selectors/pricing';
 import ModalUtil from '../../../../utils/Modal';
 import {
   renderCheckboxToggle, renderDropdownList, renderDropdownListFilter, renderNumber, renderTextField
