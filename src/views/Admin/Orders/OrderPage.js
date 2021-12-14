@@ -57,6 +57,9 @@ import FaceFramesPDF from '../../PrintOuts/Pages/FaceFrames/FaceFramesPDF';
 import DoorBalance from './Balance/Door_Order/Balance';
 import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory';
 
+import FaceFrameBalance from './Balance/FaceFrameOrder/Balance';
+import FaceFrameBalanceHistory from './Balance/FaceFrameOrder/BalanceHistory';
+
 import MiscItemBalance from './Balance/MiscItems/Balance';
 import MiscItemBalanceHistory from './Balance/MiscItems/BalanceHistory';
 
@@ -1551,8 +1554,7 @@ class OrderPage extends Component {
                               selectedOrder={props.selectedOrder}
                             /> */}
                         {selectedOrder &&
-                        (selectedOrder.orderType === 'Door Order' ||
-                          selectedOrder.orderType === 'Face Frame') ? (
+                        (selectedOrder.orderType === 'Door Order') ? (
                             <DoorBalance
                               toggleBalance={this.toggleBalance}
                               selectedOrder={props.selectedOrder}
@@ -1564,20 +1566,27 @@ class OrderPage extends Component {
                                 selectedOrder={props.selectedOrder}
                               />
                             ) : selectedOrder &&
-                          selectedOrder.orderType === 'Misc Items' ? (
-                                <MiscItemBalance
+                            selectedOrder.orderType === 'Face Frame' ? (
+                                <FaceFrameBalance
                                   toggleBalance={this.toggleBalance}
                                   selectedOrder={props.selectedOrder}
                                 />
-                              ) : selectedOrder &&
-                          selectedOrder.orderType === 'Mouldings' ? (
-                                  <MouldingsBalance
+                              ) :                    
+                              selectedOrder &&
+                          selectedOrder.orderType === 'Misc Items' ? (
+                                  <MiscItemBalance
                                     toggleBalance={this.toggleBalance}
                                     selectedOrder={props.selectedOrder}
                                   />
-                                ) : (
-                                  <div />
-                                )}
+                                ) : selectedOrder &&
+                          selectedOrder.orderType === 'Mouldings' ? (
+                                    <MouldingsBalance
+                                      toggleBalance={this.toggleBalance}
+                                      selectedOrder={props.selectedOrder}
+                                    />
+                                  ) : (
+                                    <div />
+                                  )}
                       </CardBody>
                     </Card>
                   </Col>
@@ -1586,8 +1595,7 @@ class OrderPage extends Component {
                       <CardBody>
                         <h5>Balance History</h5>
                         {selectedOrder &&
-                        (selectedOrder.orderType === 'Door Order' ||
-                          selectedOrder.orderType === 'Face Frame') ? (
+                        (selectedOrder.orderType === 'Door Order') ? (
                             <DoorBalanceHistory
                               edit={!this.props.edit}
                               editable={this.props.editable}
@@ -1598,21 +1606,28 @@ class OrderPage extends Component {
                                 edit={!this.props.edit}
                                 editable={this.props.editable}
                               />
-                            ) : selectedOrder &&
+                            ) :selectedOrder &&
+                            selectedOrder.orderType === 'Face Frame' ?
+                              <FaceFrameBalanceHistory
+                                edit={!this.props.edit}
+                                editable={this.props.editable}
+                              /> :
+                            
+                              selectedOrder &&
                           selectedOrder.orderType === 'Misc Items' ? (
-                                <MiscItemBalanceHistory
-                                  edit={!this.props.edit}
-                                  editable={this.props.editable}
-                                />
-                              ) : selectedOrder &&
-                          selectedOrder.orderType === 'Mouldings' ? (
-                                  <MouldingsBalanceHistory
+                                  <MiscItemBalanceHistory
                                     edit={!this.props.edit}
                                     editable={this.props.editable}
                                   />
-                                ) : (
-                                  <div />
-                                )}
+                                ) : selectedOrder &&
+                          selectedOrder.orderType === 'Mouldings' ? (
+                                    <MouldingsBalanceHistory
+                                      edit={!this.props.edit}
+                                      editable={this.props.editable}
+                                    />
+                                  ) : (
+                                    <div />
+                                  )}
                       </CardBody>
                     </Card>
                   </Col>
