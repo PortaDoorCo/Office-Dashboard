@@ -40,6 +40,9 @@ export default (info, part, breakdowns) => {
     inset = part.design?.INSET;
   }
 
+
+  console.log({inset});
+
   if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {
     if ((panelsW > 1 && panelsH > 1) || (panelsH > 1 && panelsW === 1)) {
       return [

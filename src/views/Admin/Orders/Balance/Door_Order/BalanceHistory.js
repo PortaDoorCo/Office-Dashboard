@@ -17,7 +17,7 @@ import {
   totalSelector,
   balanceSelector,
   balanceTotalSelector,
-} from '../../../../../selectors/doorPricing';
+} from '../../../../../selectors/faceFramePricing';
 import DatePicker from 'react-widgets/DatePicker';
 import { Field } from 'redux-form';
 import {

@@ -254,6 +254,10 @@ export const itemPriceSelector = createSelector(
             overcharge = 100;
           }
 
+          console.log({width_input});
+          console.log({width});
+          console.log({height});
+
           const price = eval(pricer && pricer.face_frame_pricing) + extraCost;
 
           if (height > -1) {
