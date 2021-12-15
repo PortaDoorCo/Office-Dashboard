@@ -1141,7 +1141,7 @@ class OrderPage extends Component {
                 {((user?.role?.type !== 'quality_control') || (user?.role?.type !== 'sales')) ? 
                   <Row>
                     <Col>
-                      <IconButton onClick={this.props.editable}>a
+                      <IconButton onClick={this.props.editable}>
                         <ArrowBack style={{ width: '40', height: '40' }} />
                       </IconButton>
 

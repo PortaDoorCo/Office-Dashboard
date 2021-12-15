@@ -485,23 +485,25 @@ class OrderEntry extends Component {
               </CardBody>
             </Card>
           </div>
-          {this.props.orderType === 'Misc Items' ? null : 
-            <div className={isEdit ? 'editFormCol2' : 'orderFormCol2'}>
-              {this.props.isEdit ? (
-                <StickyBox offsetTop={20} offsetBottom={20}>
-                  <EditCheckoutBox
-                    {...this.props}
-                    {...this.state}
-                    onSubNav={this.onSubNav}
-                    handleSubmit={handleSubmit}
-                    submit={this.submit}
-                    toggleCancelModal={this.toggleCancelModal}
-                    maxValue={maxValue}
-                    onUploaded={this.onUploaded}
-                  />
-                </StickyBox>
-              ) : (
-                <StickyBox offsetTop={20} offsetBottom={20}>
+          
+          <div className={isEdit ? 'editFormCol2' : 'orderFormCol2'}>
+            {this.props.isEdit ? (
+              <StickyBox offsetTop={20} offsetBottom={20}>
+                <EditCheckoutBox
+                  {...this.props}
+                  {...this.state}
+                  onSubNav={this.onSubNav}
+                  handleSubmit={handleSubmit}
+                  submit={this.submit}
+                  toggleCancelModal={this.toggleCancelModal}
+                  maxValue={maxValue}
+                  onUploaded={this.onUploaded}
+                />
+              </StickyBox>
+            ) : (
+              <StickyBox offsetTop={20} offsetBottom={20}>
+
+                {this.props.orderType === 'Misc Items' ? null : 
                   <CheckoutBox
                     {...this.props}
                     {...this.state}
@@ -511,12 +513,12 @@ class OrderEntry extends Component {
                     toggleCancelModal={this.toggleCancelModal}
                     maxValue={maxValue}
                     onUploaded={this.onUploaded}
-                  />
-                </StickyBox>
-              )}
-            </div>
+                  /> }
+              </StickyBox>
+            )}
+          </div>
           
-          }
+          
 
         </div>
       </div>
