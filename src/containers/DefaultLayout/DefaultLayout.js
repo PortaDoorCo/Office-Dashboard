@@ -57,6 +57,8 @@ import db_url from '../../redux/db_url';
 import io from 'socket.io-client';
 import ErrorBoundary from '../../ErrorBoundry';
 import _qcNav from '../../_qcNav';
+import _salesNav from '../../_sales_nav';
+
 
 const socket = io(db_url);
 
@@ -241,7 +243,7 @@ let DefaultLayout = (props, context) => {
               <AppSidebarHeader />
               <AppSidebarForm />
               <Suspense fallback={loading()}>
-                <AppSidebarNav navConfig={role.type === 'customer' ? customerNav : role.type === 'quality_control' ? _qcNav : navigation} {...props} />
+                <AppSidebarNav navConfig={role.type === 'customer' ? customerNav : role.type === 'quality_control' ? _qcNav : role.type === 'sales' ? _salesNav : navigation} {...props} />
               </Suspense>
               <AppSidebarFooter />
               <AppSidebarMinimizer />

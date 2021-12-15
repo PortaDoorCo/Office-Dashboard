@@ -102,8 +102,17 @@ class Dashboard extends Component<PropTypes, StateTypes> {
                 </Suspense>
               </Col>
             </Row>
-          </div>
-          : loading()
+          </div> : role && (role.type === 'sales') ?
+            <div>
+              <Row className="mt-3">
+                <Col>
+                  <Suspense fallback={loading()}>
+                    <OrderTable {...this.props} />
+                  </Suspense>
+                </Col>
+              </Row>
+            </div>
+            : loading()
         }
       </div>
     );

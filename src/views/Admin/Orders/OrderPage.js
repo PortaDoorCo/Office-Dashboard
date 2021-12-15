@@ -1228,47 +1228,50 @@ class OrderPage extends Component {
           <ModalBody>
             {this.props.edit ? (
               <div>
-                <Row>
-                  <Col>
-                    <IconButton onClick={this.props.editable}>
-                      <ArrowBack style={{ width: '40', height: '40' }} />
-                    </IconButton>
-
-                    <Tooltip title="Tracking History" placement="top">
-                      <IconButton onClick={this.toggleTracking}>
-                        <List style={{ width: '40', height: '40' }} />
+                {((user?.role?.type !== 'quality_control') || (user?.role?.type !== 'sales')) ? 
+                  <Row>
+                    <Col>
+                      <IconButton onClick={this.props.editable}>a
+                        <ArrowBack style={{ width: '40', height: '40' }} />
                       </IconButton>
-                    </Tooltip>
 
-                    <Tooltip title="Balance" placement="top">
-                      <IconButton onClick={this.toggleBalance}>
-                        <AttachMoneyIcon
-                          style={{ width: '40', height: '40' }}
-                        />
-                      </IconButton>
-                    </Tooltip>
+                      <Tooltip title="Tracking History" placement="top">
+                        <IconButton onClick={this.toggleTracking}>
+                          <List style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="Misc Items" placement="top">
-                      <IconButton onClick={this.toggleMiscItems}>
-                        <Dns style={{ width: '40', height: '40' }} />
-                      </IconButton>
-                    </Tooltip>
+                      <Tooltip title="Balance" placement="top">
+                        <IconButton onClick={this.toggleBalance}>
+                          <AttachMoneyIcon
+                            style={{ width: '40', height: '40' }}
+                          />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="View Notes" placement="top">
-                      <IconButton onClick={this.toggleNotes}>
-                        <Chat style={{ width: '40', height: '40' }} />
-                      </IconButton>
-                    </Tooltip>
+                      <Tooltip title="Misc Items" placement="top">
+                        <IconButton onClick={this.toggleMiscItems}>
+                          <Dns style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="View Files" placement="top">
-                      <IconButton onClick={this.toggleFiles}>
-                        <Attachment style={{ width: '40', height: '40' }} />
-                      </IconButton>
-                    </Tooltip>
-                  </Col>
-                  <Col />
-                  <Col />
-                </Row>
+                      <Tooltip title="View Notes" placement="top">
+                        <IconButton onClick={this.toggleNotes}>
+                          <Chat style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="View Files" placement="top">
+                        <IconButton onClick={this.toggleFiles}>
+                          <Attachment style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
+                    </Col>
+                    <Col />
+                    <Col />
+                  </Row> : null
+                }
+
               </div>
             ) : (
               <div>
@@ -1294,7 +1297,7 @@ class OrderPage extends Component {
 
                 <Row></Row>
                 <Row>
-                  {user?.role?.type !== 'quality_control' ? (
+                  {((user?.role?.type !== 'quality_control') && (user?.role?.type !== 'sales')) ? (
                     <Navigation
                       {...this.props}
                       toggleTracking={this.toggleTracking}
@@ -1310,84 +1313,102 @@ class OrderPage extends Component {
                   <Col className="ml-5">
                     <Row>
                       <Col lg="6"></Col>
-                      <Col>
-                        {/* {(s.orderType === 'Drawer Order') ? 
+
+                      {(user?.role?.type !== 'sales') ?
+
+                        <Col>
+                          {/* {(s.orderType === 'Drawer Order') ? 
                           <Tooltip title="Box Labels" placement="top" className="mb-3">
                             <IconButton onClick={this.downloadBoxLabel}>
                               <LabelIcon style={{ width: '40', height: '40' }} />
                             </IconButton>
                           </Tooltip> : null
                         } */}
+                          {user.role?.type !== 'sales' ?
+                            <Tooltip title="Print" placement="top" className="mb-3">
+                              <IconButton onClick={this.togglePrinter}>
+                                <Print style={{ width: '40', height: '40' }} />
+                              </IconButton>
+                            </Tooltip> : null  
+                          }
 
-                        <Tooltip title="Print" placement="top" className="mb-3">
-                          <IconButton onClick={this.togglePrinter}>
-                            <Print style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
+                        
+                  
 
-                        <Tooltip
-                          title="Copy Order"
-                          placement="top"
-                          className="mb-3"
-                        >
-                          <IconButton onClick={this.handleCopyModal}>
-                            <FileCopy style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
 
-                        {selectedOrder &&
-                        selectedOrder.orderType === 'Door Order' ? (
-                            <CSVLink
-                              data={a.map((i, ind) => {
-                                return [
-                                  ...i,
-                                  ind + 1,
-                                  `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`,
-                                ];
-                              })}
-                              filename={`${s && s.orderNum}.csv`}
-                              separator={','}
+                          {user.role?.type !== 'quality_control' ?
+                            <Tooltip
+                              title="Copy Order"
+                              placement="top"
                               className="mb-3"
                             >
-                              {' '}
+                              <IconButton onClick={this.handleCopyModal}>
+                                <FileCopy style={{ width: '40', height: '40' }} />
+                              </IconButton>
+                            </Tooltip>: null  
+                          }
+
+                          {selectedOrder &&
+                            selectedOrder.orderType === 'Door Order' && user.role?.type !== 'quality_control' ? (
+                              <CSVLink
+                                data={a.map((i, ind) => {
+                                  return [
+                                    ...i,
+                                    ind + 1,
+                                    `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`,
+                                  ];
+                                })}
+                                filename={`${s && s.orderNum}.csv`}
+                                separator={','}
+                                className="mb-3"
+                              >
+                                {' '}
+                                <Tooltip
+                                  title="Export Edges"
+                                  placement="top"
+                                  className="mb-3"
+                                >
+                                  <IconButton>
+                                    <GetAppIcon
+                                      style={{ width: '40', height: '40' }}
+                                    />
+                                  </IconButton>
+                                </Tooltip>
+                              </CSVLink>
+                            ) : null}
+
+                          {selectedOrder &&
+                            selectedOrder.orderType === 'Door Order' && user.role?.type !== 'quality_control' ? (
                               <Tooltip
-                                title="Export Edges"
+                                title="Razorguage Export"
                                 placement="top"
                                 className="mb-3"
                               >
                                 <IconButton>
-                                  <GetAppIcon
-                                    style={{ width: '40', height: '40' }}
-                                  />
+                                  <CsvDownloader
+                                    datas={razorGuage}
+                                    filename={`${s && s.orderNum}`}
+                                    extension=".csv"
+                                    // uFEFF={false}
+                                    separator=","
+                                  >
+                                    <GetAppIcon
+                                      style={{ width: '40', height: '40' }}
+                                    />
+                                  </CsvDownloader>
                                 </IconButton>
                               </Tooltip>
-                            </CSVLink>
-                          ) : null}
+                            ) : null}
 
-                        {selectedOrder &&
-                        selectedOrder.orderType === 'Door Order' ? (
-                            <Tooltip
-                              title="Razorguage Export"
-                              placement="top"
-                              className="mb-3"
-                            >
-                              <IconButton>
-                                <CsvDownloader
-                                  datas={razorGuage}
-                                  filename={`${s && s.orderNum}`}
-                                  extension=".csv"
-                                  // uFEFF={false}
-                                  separator=","
-                                >
-                                  <GetAppIcon
-                                    style={{ width: '40', height: '40' }}
-                                  />
-                                </CsvDownloader>
-                              </IconButton>
-                            </Tooltip>
-                          ) : null}
 
-                        {(this.props.user &&
+
+
+
+
+
+
+
+                          {(this.props.user &&
                           this.props.user.role &&
                           this.props.user.role &&
                           this.props.user.role.name === 'Administrator') ||
@@ -1395,17 +1416,19 @@ class OrderPage extends Component {
                           this.props.user.role &&
                           this.props.user.role &&
                           this.props.user.role.name === 'Management') ? (
-                            <Tooltip
-                              title="Delete Order"
-                              placement="top"
-                              className="mb-3"
-                            >
-                              <IconButton onClick={this.toggleDeleteModal}>
-                                <Delete style={{ width: '40', height: '40' }} />
-                              </IconButton>
-                            </Tooltip>
-                          ) : null}
-                      </Col>
+                              <Tooltip
+                                title="Delete Order"
+                                placement="top"
+                                className="mb-3"
+                              >
+                                <IconButton onClick={this.toggleDeleteModal}>
+                                  <Delete style={{ width: '40', height: '40' }} />
+                                </IconButton>
+                              </Tooltip>
+                            ) : null}
+                        </Col>
+                        : null }
+
                     </Row>
                   </Col>
                 </Row>

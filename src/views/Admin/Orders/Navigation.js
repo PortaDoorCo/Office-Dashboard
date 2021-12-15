@@ -12,47 +12,53 @@ import Attachment from '@material-ui/icons/Attachment';
 
 const Navigation = props => {
 
-  return (
-    <Col>
-      <Tooltip title="Edit" placement="top">
-        <IconButton onClick={props.editable}>
-          <Edit style={{ width: '40', height: '40' }} />
-        </IconButton>
-      </Tooltip>
+  if((props.user?.role?.type !== 'quality_control') && (props.user?.role?.type !== 'sales')) {
+    return (
+      <Col>
+        <Tooltip title="Edit" placement="top">
+          <IconButton onClick={props.editable}>
+            <Edit style={{ width: '40', height: '40' }} />
+          </IconButton>
+        </Tooltip>
   
-      <Tooltip title="Tracking History" placement="top">
-        <IconButton onClick={props.toggleTracking}>
-          <List style={{ width: '40', height: '40' }} />
-        </IconButton>
-      </Tooltip>
+        <Tooltip title="Tracking History" placement="top">
+          <IconButton onClick={props.toggleTracking}>
+            <List style={{ width: '40', height: '40' }} />
+          </IconButton>
+        </Tooltip>
   
-      <Tooltip title="Balance" placement="top">
-        <IconButton onClick={props.toggleBalance}>
-          <AttachMoneyIcon
-            style={{ width: '40', height: '40' }}
-          />
-        </IconButton>
-      </Tooltip>
+        <Tooltip title="Balance" placement="top">
+          <IconButton onClick={props.toggleBalance}>
+            <AttachMoneyIcon
+              style={{ width: '40', height: '40' }}
+            />
+          </IconButton>
+        </Tooltip>
   
-      <Tooltip title="Misc Items" placement="top">
-        <IconButton onClick={props.toggleMiscItems}>
-          <Dns style={{ width: '40', height: '40' }} />
-        </IconButton>
-      </Tooltip>
+        <Tooltip title="Misc Items" placement="top">
+          <IconButton onClick={props.toggleMiscItems}>
+            <Dns style={{ width: '40', height: '40' }} />
+          </IconButton>
+        </Tooltip>
   
-      <Tooltip title="View Notes" placement="top">
-        <IconButton onClick={props.toggleNotes}>
-          <Chat style={{ width: '40', height: '40' }} />
-        </IconButton>
-      </Tooltip>
+        <Tooltip title="View Notes" placement="top">
+          <IconButton onClick={props.toggleNotes}>
+            <Chat style={{ width: '40', height: '40' }} />
+          </IconButton>
+        </Tooltip>
   
-      <Tooltip title="View Files" placement="top">
-        <IconButton onClick={props.toggleFiles}>
-          <Attachment style={{ width: '40', height: '40' }} />
-        </IconButton>
-      </Tooltip>
-    </Col>
-  );
+        <Tooltip title="View Files" placement="top">
+          <IconButton onClick={props.toggleFiles}>
+            <Attachment style={{ width: '40', height: '40' }} />
+          </IconButton>
+        </Tooltip>
+      </Col>
+    );
+  } else {
+    return null;
+  }
+
+
 };
 
 export default Navigation;
