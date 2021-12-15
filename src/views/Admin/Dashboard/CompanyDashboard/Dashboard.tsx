@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import { login } from '../../../../redux/users/actions';
 import { loadOrders } from '../../../../redux/orders/actions';
 import MessageModal from '../MessageModal';
+import SalesTable from './components/SalesTable';
 
 const Chart1 = React.lazy(() => import('./components/Chart1'));
 const Chart2 = React.lazy(() => import('./components/Chart2'));
@@ -156,7 +157,7 @@ class Dashboard extends Component<PropTypes, StateTypes> {
               </Col>
             </Row>
           </div>
-          : role && (role.type === 'office' || role.type === 'sales') ?
+          : role && (role.type === 'office') ?
             <div>
               <Collapse isOpen={this.state.maps}>
                 <Row>
@@ -175,7 +176,26 @@ class Dashboard extends Component<PropTypes, StateTypes> {
                 </Col>
               </Row>
             </div>
-            : loading()
+            : role &&  role.type === 'sales'?
+              <div>
+                <Collapse isOpen={this.state.maps}>
+                  <Row>
+                    <Col>
+                      <Suspense fallback={loading()}>
+                        <Maps />
+                      </Suspense>
+                    </Col>
+                  </Row>
+                </Collapse>
+                <Row className="mt-3">
+                  <Col>
+                    <Suspense fallback={loading()}>
+                      <SalesTable {...this.props} />
+                    </Suspense>
+                  </Col>
+                </Row>
+              </div>
+              : loading()
         }
       </div>
     );
