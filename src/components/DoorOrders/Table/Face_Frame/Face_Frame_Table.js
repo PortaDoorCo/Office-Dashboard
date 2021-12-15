@@ -44,6 +44,8 @@ const Frame_Only_Table = ({
   const [topRailWidth, setTopRailWidth] = useState(null);
   const [bottomRailWidth, setBottomRailWidth] = useState(null);
 
+  console.log({finish});
+
   useEffect(() => {
     setWidth([]);
     setHeight([]);

@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { CardSubtitle, Col, FormGroup, Label, Row } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import {
+  finishingSelector,
   finishItemSelector, finishTotalSelector, itemPriceSelector, linePriceSelector, miscTotalSelector, subTotalSelector,
   taxSelector,
   totalSelector
-} from '../../../../selectors/faceFramePricing';
+} from '../../../../selectors/pricing';
 import {
   renderDropdownList,
   renderDropdownListFilter,
@@ -152,7 +153,7 @@ const mapStateToProps = (state) => ({
   total: totalSelector(state),
   tax: taxSelector(state),
   miscTotalSelector: miscTotalSelector(state),
-  finish: finishTotalSelector(state),
+  finish: finishingSelector(state),
   finishSubtotal: finishItemSelector(state),
 });
 

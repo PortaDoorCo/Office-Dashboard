@@ -608,6 +608,28 @@ export const finishingSelector = createSelector(
     })
 );
 
+
+export const finishItemSelector = createSelector(
+  [finishingSelector, miscTotalSelector],
+  (finish, misc) =>
+    finish.map((i, index) => {
+      if (i) {
+        let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
+        let sum = price;
+        return sum;
+      } else {
+        return 0;
+      }
+    })
+);
+
+export const finishTotalSelector = createSelector(
+  [finishItemSelector],
+  (finish) => {
+    return parseFloat(finish.reduce((acc, item) => acc + item, 0));
+  }
+);
+
 export const linePriceSelector = createSelector(
   [partListSelector, pricingSelector, itemPriceSelector],
   (parts, pricer, item) =>
