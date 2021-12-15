@@ -169,7 +169,7 @@ class Balance extends Component {
                   <Label htmlFor="balance_paid">Balance Paid</Label>
                   <Input
                     disabled
-                    placeholder={`$${balanceTotal}`}
+                    placeholder={`$${balanceTotal?.toFixed(2)}`}
                   />
                 </FormGroup>
               </Col>
