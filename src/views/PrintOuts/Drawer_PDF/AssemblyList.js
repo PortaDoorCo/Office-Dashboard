@@ -86,9 +86,7 @@ export default (data, breakdowns) => {
               stack: [
                 { text: Size(item), style: 'fonts' },
                 {
-                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-                    item.full_frame ? 'Full Frame DF' : ''
-                  } ${item.lite ? item.lite.NAME : ''}`,
+                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${item.scoop?.NAME === 'Yes' ? 'SCOOP' : ''}`,
                   style: 'tableBold',
                   margin: [0, 4, 0, 0],
                 },

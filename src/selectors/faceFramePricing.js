@@ -257,6 +257,9 @@ export const itemPriceSelector = createSelector(
           console.log({width_input});
           console.log({width});
           console.log({height});
+          console.log({ff_opening_cost});
+          console.log({ff_top_rail_design});
+
 
           const price = eval(pricer && pricer.face_frame_pricing) + extraCost;
 
