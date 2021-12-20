@@ -839,11 +839,7 @@ export const totalDiscountSelector = createSelector(
   (subTotal, misc, discount, orderType) => {
     console.log({subTotal});
     if(orderType){
-      if(orderType === 'Misc Items'){
-        return 0;
-      } else {
-        return subTotal.reduce((acc, item) => acc + item, 0) * discount;
-      }
+      return subTotal.reduce((acc, item) => acc + item, 0) * discount;
     } else {
       return 0;
     }
