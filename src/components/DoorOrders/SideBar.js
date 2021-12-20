@@ -10,7 +10,7 @@ class SideBar extends Component {
 
     let component;
 
-    switch (part.orderType.value) {
+    switch (part?.orderType?.value) {
       case 'Door':
         component = <Door part={part} i={i} />;
         break;

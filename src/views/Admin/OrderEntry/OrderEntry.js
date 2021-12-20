@@ -35,6 +35,7 @@ import CancelModal from '../../../utils/Modal';
 import EditCheckoutBox from '../Orders/CheckoutBox';
 import CheckoutBox from './components/CheckoutBox';
 import validate from './components/validate';
+import Sticky from 'react-stickynode';
 
 
 const DoorInfo = React.lazy(() =>
@@ -501,7 +502,12 @@ class OrderEntry extends Component {
                 />
               </StickyBox>
             ) : (
-              <StickyBox offsetTop={20} offsetBottom={20}>
+              <Sticky
+                top={100}
+                // bottomBoundary={`#item-${i}`}
+                enabled={true}
+              // key={i}
+              >
 
                 {this.props.orderType === 'Misc Items' ? null : 
                   <CheckoutBox
@@ -514,7 +520,7 @@ class OrderEntry extends Component {
                     maxValue={maxValue}
                     onUploaded={this.onUploaded}
                   /> }
-              </StickyBox>
+              </Sticky>
             )}
           </div>
           
