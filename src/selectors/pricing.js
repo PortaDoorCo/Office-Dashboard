@@ -263,33 +263,44 @@ export const itemPriceSelector = createSelector(
         if (part?.orderType?.value === 'Face_Frame') {
           if (part.dimensions) {
             const linePrice = part.dimensions.map((i) => {
-              const width_input = Math.ceil(numQty(i.width));
-              const width =
-                Math.ceil(numQty(i.width)) < 24
+              const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
+
+              let width =
+                numQty(i.width) <= 24
                   ? 18
-                  : Math.ceil(numQty(i.width)) >= 24 &&
-                    Math.ceil(numQty(i.width)) <= 48
+                  : numQty(i.width) >= 24 && numQty(i.width) <= 48
                     ? 24
                     : 36;
-              const height = Math.ceil(numQty(i.height));
+              let height = numQty(i.height);
+
+              if (numQty(i.width) > numQty(i.height)) {
+                height =
+                  numQty(i.width) <= 24
+                    ? 18
+                    : numQty(i.width) >= 24 && numQty(i.width) <= 48
+                      ? 24
+                      : 36;
+                width = numQty(i.height);
+              }
+
+              const width_input = numQty(i.width);
               const openings = parseInt(i.openings);
-              const finish = part.face_frame_finishing
-                ? part.face_frame_finishing.PRICE
-                : 0;
-  
-              const width_finish = width_input >= 35 ? finish * 0.25 : 0;
-              const height_finish = height >= 97 ? finish * 0.25 : 0;
-  
-              const finishing = finish + width_finish + height_finish;
-  
+
               let overcharge = 0;
-  
-              if (width_input >= 48 || height >= 96) {
+
+              if (width_input >= 48 || numQty(i.height) >= 96) {
                 overcharge = 100;
               }
-  
-              const price = eval(pricer && pricer.face_frame_pricing);
-  
+
+              console.log({width_input});
+              console.log({width});
+              console.log({height});
+              console.log({ff_opening_cost});
+              console.log({ff_top_rail_design});
+
+
+              const price = eval(pricer && pricer.face_frame_pricing) + extraCost;
+
               if (height > -1) {
                 return price;
               } else {
