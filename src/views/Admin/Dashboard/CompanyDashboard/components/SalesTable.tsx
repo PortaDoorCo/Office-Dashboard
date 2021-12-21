@@ -210,7 +210,7 @@ const OrderTable = (props: TablePropTypes) => {
     {
       name: 'Balance Paid',
       sortable: true,
-      cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
+      cell: row => <div>${(row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)?.toFixed(2))}</div>,
     },
     {
       name: 'Terms',

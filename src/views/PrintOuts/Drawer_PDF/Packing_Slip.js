@@ -1,9 +1,9 @@
-import moment from 'moment';
-import Size from '../Breakdowns/DrawerBoxes/Size';
 import numQty from 'numeric-quantity';
+import pdfDrawerBoxPricing from '../../../selectors/pdfs/pdfDrawerBoxPricing';
+import Size from '../Breakdowns/DrawerBoxes/Size';
 
 
-export default (data, breakdowns) => {
+export default (data, breakdowns, pricing) => {
 
   const qty = data.part_list.map((part, i) => {
     return part.dimensions
@@ -13,7 +13,11 @@ export default (data, breakdowns) => {
       .reduce((acc, item) => acc + item, 0);
   });
 
-  const subTotal = data.subTotals.reduce((acc, item) => acc + item, 0);
+  const prices = pdfDrawerBoxPricing(data.part_list, pricing[0]);
+
+  const subTotal = prices
+    .map((i) => i.reduce((acc, item) => acc + item, 0))
+    .reduce((acc, item) => acc + item, 0);
   
   const balancePaid = data.balance_history.reduce(function (accumulator, balance) {
     return accumulator + balance.balance_paid;

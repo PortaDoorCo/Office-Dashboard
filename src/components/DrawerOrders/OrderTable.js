@@ -1,19 +1,13 @@
-import React, { Component, Fragment, useState } from 'react';
-import { Table, Input, Row, Col, Button, FormGroup, Label } from 'reactstrap';
+import numQty from 'numeric-quantity';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Field, change, touch, startAsyncValidation, getFormSyncErrors } from 'redux-form';
+import { Button, Col, FormGroup, Input, Label, Row, Table } from 'reactstrap';
+import { change, Field, getFormSyncErrors, startAsyncValidation, touch } from 'redux-form';
+import currencyMask from '../../utils/currencyMask';
 import {
-  renderDropdownList,
-  renderNumber,
-  renderField,
-  renderPrice,
-  renderInt,
-  renderTextField
+  renderDropdownList, renderField, renderInt, renderNumber, renderPrice, renderTextField
 } from '../RenderInputs/renderInputs';
 import RenderPriceHolder from '../RenderInputs/RenderPriceHolder';
-import currencyMask from '../../utils/currencyMask';
-import numQty from 'numeric-quantity';
-import { NotificationManager } from 'react-notifications';
 
 
 const required = (value) => (value ? undefined : 'Required');
@@ -41,7 +35,7 @@ const OrderTable = ({
   const clearNotes = (index, e) => {
     dispatch(
       change(
-        'DrawerOrder',
+        'Order',
         `part_list[${i}].dimensions[${index}].notes`,
         ''
       )
@@ -80,7 +74,7 @@ const OrderTable = ({
         setStandardSize(false);
         dispatch(
           change(
-            'DrawerOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].notes`,
             'CANNOT WORK WITH UNDER MOUNT'
           )
@@ -128,7 +122,7 @@ const OrderTable = ({
           if(!standardSize){
             dispatch(
               change(
-                'DrawerOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 'CANNOT WORK WITH UNDER MOUNT \nWITH SCOOP'
               )
@@ -136,7 +130,7 @@ const OrderTable = ({
           } else {
             dispatch(
               change(
-                'DrawerOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 'WITH SCOOP'
               )
@@ -146,7 +140,7 @@ const OrderTable = ({
         } else {
           dispatch(
             change(
-              'DrawerOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].notes`,
               str.replace(str, '')
             )
@@ -354,25 +348,25 @@ const OrderTable = ({
               if(fields.length > 0){
                 dispatch(
                   touch(
-                    'DrawerOrder',
+                    'Order',
                     `part_list[${i}].dimensions[${index}].notes`
                   )
                 );
                 dispatch(
                   touch(
-                    'DrawerOrder',
+                    'Order',
                     `part_list[${i}].dimensions[${index}].width`
                   )
                 );
                 dispatch(
                   touch(
-                    'DrawerOrder',
+                    'Order',
                     `part_list[${i}].dimensions[${index}].height`
                   )
                 );
                 dispatch(
                   touch(
-                    'DrawerOrder',
+                    'Order',
                     `part_list[${i}].dimensions[${index}].depth`
                   )
                 );
@@ -380,42 +374,42 @@ const OrderTable = ({
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].woodtype`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_thickness`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_bottom_woodtype`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_bottom_thickness`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_notch`
                 )
               );
 
               dispatch(
                 touch(
-                  'DrawerOrder',
+                  'Order',
                   `part_list[${i}].box_finish`
                 )
               );
@@ -423,7 +417,7 @@ const OrderTable = ({
 
 
               dispatch(
-                startAsyncValidation('DrawerOrder')
+                startAsyncValidation('Order')
               );
 
            
@@ -471,7 +465,7 @@ const OrderTable = ({
 
 const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
-  formSyncErrors: getFormSyncErrors('DrawerOrder')(state),
+  formSyncErrors: getFormSyncErrors('Order')(state),
 });
 
 export default connect(mapStateToProps, null)(OrderTable);

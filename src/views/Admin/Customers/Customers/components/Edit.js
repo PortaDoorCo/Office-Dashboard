@@ -1,24 +1,16 @@
+import Cookies from 'js-cookie';
 import React, { Component } from 'react';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Collapse
-} from 'reactstrap';
 import { connect } from 'react-redux';
+import {
+  Button, Card, CardBody, CardHeader, Col, Collapse, FormGroup,
+  Label, Row
+} from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import {
-  reduxForm,
-  Field,
+  Field, reduxForm
 } from 'redux-form';
+import { renderCheckboxToggle, renderDropdownList, renderField } from '../../../../../components/RenderInputs/renderInputs';
 import { updateCustomer } from '../../../../../redux/customers/actions';
-import { renderField, renderDropdownList, renderCheckboxToggle, renderDropdownListFilter } from '../../../../../components/RenderInputs/renderInputs';
-import Cookies from 'js-cookie';
 import states from '../../AddCustomer/states';
 import normalizePhone from './normalizerPhone';
 

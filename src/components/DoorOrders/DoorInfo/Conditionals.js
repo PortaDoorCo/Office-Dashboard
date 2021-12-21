@@ -14,7 +14,7 @@ class Conditionals extends Component {
     let component;
 
     if (formState && formState.part_list) {
-      switch (formState.part_list[index].orderType.value) {
+      switch (formState.part_list[index]?.orderType?.value) {
         case 'Door':
           switch (formState.part_list[index].construction.value) {
             case 'Slab':

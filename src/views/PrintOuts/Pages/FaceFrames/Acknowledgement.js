@@ -1,15 +1,8 @@
+import moment from 'moment';
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import Invoice from '../../Face_Frame_PDF/Invoice';
-import Acknowledgement from '../../Face_Frame_PDF/Acknowledgement';
-import moment from 'moment';
-import AssemblyList from '../../Face_Frame_PDF/AssemblyList';
-import PackingSlip from '../Door/PackingSlip';
-import Glass_Selection from '../../Sorting/Glass_Selection';
-import Packing_Slip from '../../Face_Frame_PDF/Packing_Slip';
-import QC from '../../Face_Frame_PDF/QC';
-import Door_Labels from '../../Door_PDF/Door_Labels';
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
+import Acknowledgement from '../../Face_Frame_PDF/Acknowledgement';
 
 const FaceFramePDF = (data, breakdowns, p, pricing) => {
   return new Promise((resolve, reject) => {

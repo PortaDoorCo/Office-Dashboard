@@ -1,23 +1,16 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Table,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  CardBody,
-  Card
-} from 'reactstrap';
-import {
-  updateNotes,
-  deleteNote,
-} from '../../../../../redux/customers/actions';
-import { reduxForm, change, getFormValues, arrayRemove } from 'redux-form';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import moment from 'moment';
 import Cookies from 'js-cookie';
+import moment from 'moment';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import {
+  Button, Modal, ModalBody,
+  ModalFooter, ModalHeader, Table
+} from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import { arrayRemove, change, getFormValues, reduxForm } from 'redux-form';
+import {
+  deleteNote, updateNotes
+} from '../../../../../redux/customers/actions';
 
 const cookie = Cookies.get('jwt');
 

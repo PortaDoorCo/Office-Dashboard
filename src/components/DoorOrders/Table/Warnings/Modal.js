@@ -43,7 +43,7 @@ const WarningModal = (props) => {
         if(numQty(value) >= 48) {
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].notes`,
               'SINGLE - NO GUARANTEE'
             )
@@ -55,7 +55,7 @@ const WarningModal = (props) => {
         if(numQty(value) >= 24) {
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].notes`,
               'SINGLE - NO GUARANTEE'
             )

@@ -1,144 +1,82 @@
-import React, { Component, createRef } from 'react';
-import ReactDOM from 'react-dom';
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  Row,
-  Col,
-  CardBody,
-  Card,
-  Table,
-  Collapse,
-} from 'reactstrap';
-import { getFormValues } from 'redux-form';
-import EditSelectedOrder from './SelectedOrder/EditSelectedOrder';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {
-  updateOrder,
-  loadOrders,
-  deleteOrder,
-  setSelectedOrder,
-  uploadFilesToOrder,
-  deleteFilesFromOrder,
-  submitOrder,
-} from '../../../redux/orders/actions';
-import Edit from '@material-ui/icons/Edit';
-import Print from '@material-ui/icons/Print';
-import Attachment from '@material-ui/icons/Attachment';
-import List from '@material-ui/icons/List';
-import ArrowBack from '@material-ui/icons/ArrowBack';
-import GetAppIcon from '@material-ui/icons/GetApp';
 import IconButton from '@material-ui/core/IconButton';
-import Delete from '@material-ui/icons/Delete';
-import Dns from '@material-ui/icons/Dns';
 import Tooltip from '@material-ui/core/Tooltip';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import Attachment from '@material-ui/icons/Attachment';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import Chat from '@material-ui/icons/Chat';
+import Delete from '@material-ui/icons/Delete';
+import Dns from '@material-ui/icons/Dns';
 import FileCopy from '@material-ui/icons/FileCopy';
-
+import GetAppIcon from '@material-ui/icons/GetApp';
+import List from '@material-ui/icons/List';
+import Print from '@material-ui/icons/Print';
+import Cookies from 'js-cookie';
+// import BoxLabelPDF from '../../PrintOuts/Pages/Drawer/BoxLabels';
+import moment from 'moment';
+import numQty from 'numeric-quantity';
+import PDFMerger from 'pdf-merger-js/browser';
+import React, { Component, createRef } from 'react';
 import { CSVLink } from 'react-csv';
 import CsvDownloader from 'react-csv-downloader';
-
-import DoorPDF from '../../PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from '../../PrintOuts/Pages/Drawer/DrawerPDF';
-// import BoxLabelPDF from '../../PrintOuts/Pages/Drawer/BoxLabels';
-
-import moment from 'moment';
-
-import MiscItemsPDF from '../../PrintOuts/Pages/MiscItems/MiscItemsPDF';
-
-import MouldingsPDF from '../../PrintOuts/Pages/Mouldings/MouldingsPDF';
-import FaceFramesPDF from '../../PrintOuts/Pages/FaceFrames/FaceFramesPDF';
-
-import DoorBalance from './Balance/Door_Order/Balance';
-import DoorBalanceHistory from './Balance/Door_Order/BalanceHistory';
-
-import FaceFrameBalance from './Balance/FaceFrameOrder/Balance';
-import FaceFrameBalanceHistory from './Balance/FaceFrameOrder/BalanceHistory';
-
-import MiscItemBalance from './Balance/MiscItems/Balance';
-import MiscItemBalanceHistory from './Balance/MiscItems/BalanceHistory';
-
-import MouldingsBalance from './Balance/Mouldings/Balance';
-import MouldingsBalanceHistory from './Balance/Mouldings/BalanceHistory';
-
-import DrawerBalance from './Balance/Drawer_Order/Balance';
-import DrawerBalanceHistory from './Balance/Drawer_Order/BalanceHistory';
-import DoorMiscItems from './MiscItems/DoorMiscItems';
-import DrawerMiscItems from './MiscItems/DrawerMiscItems';
-
-import MouldingsMiscItems from './MiscItems/MouldingsMiscItems';
-
+import { connect } from 'react-redux';
+import {
+  Button, Card, CardBody, Col, Collapse, Modal, ModalBody,
+  ModalFooter, ModalHeader, Row, Table
+} from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import { getFormValues } from 'redux-form';
 import FileUploader from '../../../components/FileUploader/FileUploader';
-
-import DoorConversationNotes from './Notes/DoorOrder/Conversation_Notes';
-import DrawerConversationNotes from './Notes/DrawerOrder/Conversation_Notes';
-import MiscConversationNotes from './Notes/MiscItems/Conversation_Notes';
-import MouldingsConversationNotes from './Notes/Mouldings/Conversation_Notes';
-
-import PrintModal from '../../PrintOuts/Modal/Modal';
-import numQty from 'numeric-quantity';
-import Sticky from 'react-stickynode';
-import StickyBox from 'react-sticky-box';
-
+import {
+  deleteFilesFromOrder, deleteOrder, loadOrders, setSelectedOrder, submitOrder, updateOrder, uploadFilesToOrder
+} from '../../../redux/orders/actions';
+import LoadingModal from '../../../utils/LoadingModal';
 import CopyModal from '../../../utils/Modal';
-
-import Cookies from 'js-cookie';
 import Rails from '../../PrintOuts/Breakdowns/Doors/Rails/Rails';
 import Stiles from '../../PrintOuts/Breakdowns/Doors/Stiles/Stiles';
-import Navigation from './Navigation';
-
-import PDFMerger from 'pdf-merger-js/browser';
+import PrintModal from '../../PrintOuts/Modal/Modal';
 import Acknowledgement from '../../PrintOuts/Pages/Door/Acknowledgement';
-import Invoice from '../../PrintOuts/Pages/Door/Invoice';
 import AssemblyList from '../../PrintOuts/Pages/Door/AssemblyList';
-import PanelsPage from '../../PrintOuts/Pages/Door/Panels';
-import StilesPage from '../../PrintOuts/Pages/Door/Stiles';
-import RailsPage from '../../PrintOuts/Pages/Door/Rails';
-import Profiles from '../../PrintOuts/Pages/Door/Profiles';
+import Door_Labels from '../../PrintOuts/Pages/Door/Door_Labels';
+import Invoice from '../../PrintOuts/Pages/Door/Invoice';
 import MaterialsList from '../../PrintOuts/Pages/Door/MaterialList';
 import PackingSlip from '../../PrintOuts/Pages/Door/PackingSlip';
+import PanelsPage from '../../PrintOuts/Pages/Door/Panels';
+import Profiles from '../../PrintOuts/Pages/Door/Profiles';
 import QC_Checklist from '../../PrintOuts/Pages/Door/QC';
-import Door_Labels from '../../PrintOuts/Pages/Door/Door_Labels';
-
+import RailsPage from '../../PrintOuts/Pages/Door/Rails';
 import SolidsPage from '../../PrintOuts/Pages/Door/Solids';
-
+import StilesPage from '../../PrintOuts/Pages/Door/Stiles';
 import Drawer_Acknowledgement from '../../PrintOuts/Pages/Drawer/Acknowledgement';
-import Drawer_Invoice from '../../PrintOuts/Pages/Drawer/Invoice';
 import Drawer_AssemblyList from '../../PrintOuts/Pages/Drawer/AssemblyList';
+import Drawer_Bottoms from '../../PrintOuts/Pages/Drawer/Bottoms';
 import Drawer_Box_Labels from '../../PrintOuts/Pages/Drawer/Box_Labels';
+import Drawer_Invoice from '../../PrintOuts/Pages/Drawer/Invoice';
 import Drawer_Packing_Slip from '../../PrintOuts/Pages/Drawer/PackingSlip';
 import Drawer_Sides from '../../PrintOuts/Pages/Drawer/Sides';
-import Drawer_Bottoms from '../../PrintOuts/Pages/Drawer/Bottoms';
-
 import Face_Frame_Acknowledgement from '../../PrintOuts/Pages/FaceFrames/Acknowledgement';
 import Face_Frame_Assembly_List from '../../PrintOuts/Pages/FaceFrames/Assembly_List';
 import Face_Frame_Labels from '../../PrintOuts/Pages/FaceFrames/Door_Labels';
 import Face_Frame_Invoice from '../../PrintOuts/Pages/FaceFrames/Invoice';
 import Face_Frame_Packing_Slip from '../../PrintOuts/Pages/FaceFrames/Packing_Slip';
 import Face_Frame_QC from '../../PrintOuts/Pages/FaceFrames/QC';
-
 import Misc_Item_Acknowledgement from '../../PrintOuts/Pages/MiscItems/Acknowledgement';
 import Misc_Item_Invoice from '../../PrintOuts/Pages/MiscItems/Invoice';
 import Misc_Item_Packing_Slip from '../../PrintOuts/Pages/MiscItems/Packing_Slip';
 import Misc_Item_QC from '../../PrintOuts/Pages/MiscItems/QC';
-
 import Moulding_Acknowledgement from '../../PrintOuts/Pages/Mouldings/Acknowledgement';
-import Moulding_Invoice from '../../PrintOuts/Pages/Mouldings/Invoice';
 import Moulding_Assembly_List from '../../PrintOuts/Pages/Mouldings/AssemblyList';
+import Moulding_Invoice from '../../PrintOuts/Pages/Mouldings/Invoice';
 import Moulding_Packing_Slip from '../../PrintOuts/Pages/Mouldings/Packing_Slip';
 import Moulding_QC from '../../PrintOuts/Pages/Mouldings/QC';
-
-import LoadingModal from '../../../utils/LoadingModal';
-import Typical from 'react-typical';
-import ReactLoading from 'react-loading';
-
-import LoadingOverlay from 'react-loading-overlay';
 import Slab_Selection from '../../PrintOuts/Sorting/Slab_Selection';
+import OrderEntry from '../OrderEntry/OrderEntry';
+import Balance from './Balance/Balance';
+import BalanceHistory from './Balance/BalanceHistory';
+import MiscItems from './MiscItems';
+import Navigation from './Navigation';
+import ConversationNotes from './Notes/Conversation_Notes';
+
+
 
 const cookie = Cookies.get('jwt');
 
@@ -283,21 +221,11 @@ class OrderPage extends Component {
   copyOrder = async () => {
     const {
       formState,
-      drawerState,
-      miscState,
-      mouldingsState,
-      selectedOrder,
       submitOrder,
     } = this.props;
     const data = formState
       ? formState
-      : drawerState
-        ? drawerState
-        : miscState
-          ? miscState
-          : mouldingsState
-            ? mouldingsState
-            : [];
+      : [];
 
     let newOrder = {
       ...data,
@@ -342,22 +270,13 @@ class OrderPage extends Component {
 
     const {
       formState,
-      drawerState,
-      miscState,
-      mouldingsState,
       breakdowns,
       box_breakdowns,
       selectedOrder,
     } = this.props;
     const data = formState
       ? formState
-      : drawerState
-        ? drawerState
-        : miscState
-          ? miscState
-          : mouldingsState
-            ? mouldingsState
-            : [];
+      : [];
 
     const merger = new PDFMerger();
 
@@ -1010,20 +929,11 @@ class OrderPage extends Component {
   downloadBoxLabel = async (printerSettings) => {
     const {
       formState,
-      drawerState,
-      miscState,
-      mouldingsState,
       box_breakdowns,
     } = this.props;
     const data = formState
       ? formState
-      : drawerState
-        ? drawerState
-        : miscState
-          ? miscState
-          : mouldingsState
-            ? mouldingsState
-            : [];
+      : [];
     Drawer_Box_Labels(data, box_breakdowns);
   };
 
@@ -1231,7 +1141,7 @@ class OrderPage extends Component {
                 {((user?.role?.type !== 'quality_control') || (user?.role?.type !== 'sales')) ? 
                   <Row>
                     <Col>
-                      <IconButton onClick={this.props.editable}>a
+                      <IconButton onClick={this.props.editable}>
                         <ArrowBack style={{ width: '40', height: '40' }} />
                       </IconButton>
 
@@ -1530,34 +1440,10 @@ class OrderPage extends Component {
                     <Card>
                       <CardBody>
                         <h2>Conversation Notes</h2>
-                        {selectedOrder &&
-                        (selectedOrder.orderType === 'Door Order' ||
-                          selectedOrder.orderType === 'Face Frame') ? (
-                            <DoorConversationNotes
-                              toggleBalance={this.toggleBalance}
-                              selectedOrder={props.selectedOrder}
-                            />
-                          ) : selectedOrder &&
-                          selectedOrder.orderType === 'Drawer Order' ? (
-                              <DrawerConversationNotes
-                                toggleBalance={this.toggleBalance}
-                                selectedOrder={props.selectedOrder}
-                              />
-                            ) : selectedOrder &&
-                          selectedOrder.orderType === 'Misc Items' ? (
-                                <MiscConversationNotes
-                                  toggleBalance={this.toggleBalance}
-                                  selectedOrder={props.selectedOrder}
-                                />
-                              ) : selectedOrder &&
-                          selectedOrder.orderType === 'Mouldings' ? (
-                                  <MouldingsConversationNotes
-                                    toggleBalance={this.toggleBalance}
-                                    selectedOrder={props.selectedOrder}
-                                  />
-                                ) : (
-                                  <div />
-                                )}
+                        <ConversationNotes
+                          toggleBalance={this.toggleBalance}
+                          selectedOrder={props.selectedOrder}
+                        />
                       </CardBody>
                     </Card>
                   </Col>
@@ -1572,44 +1458,10 @@ class OrderPage extends Component {
                     <Card>
                       <CardBody>
                         <h5>Balance</h5>
-                        {/* <DoorBalance
-                              toggleBalance={this.toggleBalance}
-                              selectedOrder={props.selectedOrder}
-                            /> */}
-                        {selectedOrder &&
-                        (selectedOrder.orderType === 'Door Order') ? (
-                            <DoorBalance
-                              toggleBalance={this.toggleBalance}
-                              selectedOrder={props.selectedOrder}
-                            />
-                          ) : selectedOrder &&
-                          selectedOrder.orderType === 'Drawer Order' ? (
-                              <DrawerBalance
-                                toggleBalance={this.toggleBalance}
-                                selectedOrder={props.selectedOrder}
-                              />
-                            ) : selectedOrder &&
-                            selectedOrder.orderType === 'Face Frame' ? (
-                                <FaceFrameBalance
-                                  toggleBalance={this.toggleBalance}
-                                  selectedOrder={props.selectedOrder}
-                                />
-                              ) :                    
-                              selectedOrder &&
-                          selectedOrder.orderType === 'Misc Items' ? (
-                                  <MiscItemBalance
-                                    toggleBalance={this.toggleBalance}
-                                    selectedOrder={props.selectedOrder}
-                                  />
-                                ) : selectedOrder &&
-                          selectedOrder.orderType === 'Mouldings' ? (
-                                    <MouldingsBalance
-                                      toggleBalance={this.toggleBalance}
-                                      selectedOrder={props.selectedOrder}
-                                    />
-                                  ) : (
-                                    <div />
-                                  )}
+                        <Balance
+                          toggleBalance={this.toggleBalance}
+                          selectedOrder={props.selectedOrder}
+                        />
                       </CardBody>
                     </Card>
                   </Col>
@@ -1617,40 +1469,10 @@ class OrderPage extends Component {
                     <Card>
                       <CardBody>
                         <h5>Balance History</h5>
-                        {selectedOrder &&
-                        (selectedOrder.orderType === 'Door Order') ? (
-                            <DoorBalanceHistory
-                              edit={!this.props.edit}
-                              editable={this.props.editable}
-                            />
-                          ) : selectedOrder &&
-                          selectedOrder.orderType === 'Drawer Order' ? (
-                              <DrawerBalanceHistory
-                                edit={!this.props.edit}
-                                editable={this.props.editable}
-                              />
-                            ) :selectedOrder &&
-                            selectedOrder.orderType === 'Face Frame' ?
-                              <FaceFrameBalanceHistory
-                                edit={!this.props.edit}
-                                editable={this.props.editable}
-                              /> :
-                            
-                              selectedOrder &&
-                          selectedOrder.orderType === 'Misc Items' ? (
-                                  <MiscItemBalanceHistory
-                                    edit={!this.props.edit}
-                                    editable={this.props.editable}
-                                  />
-                                ) : selectedOrder &&
-                          selectedOrder.orderType === 'Mouldings' ? (
-                                    <MouldingsBalanceHistory
-                                      edit={!this.props.edit}
-                                      editable={this.props.editable}
-                                    />
-                                  ) : (
-                                    <div />
-                                  )}
+                        <BalanceHistory
+                          edit={!this.props.edit}
+                          editable={this.props.editable}
+                        />
                       </CardBody>
                     </Card>
                   </Col>
@@ -1665,26 +1487,11 @@ class OrderPage extends Component {
                     <Card>
                       <CardBody>
                         <h5>Misc Items</h5>
-                        {selectedOrder &&
-                        (selectedOrder.orderType === 'Door Order' ||
-                          selectedOrder.orderType === 'Face Frame') ? (
-                            <DoorMiscItems
-                              toggle={this.toggleMiscItems}
-                              edit={!this.props.edit}
-                            />
-                          ) : selectedOrder &&
-                          selectedOrder.orderType === 'Drawer Order' ? (
-                              <DrawerMiscItems
-                                toggle={this.toggleMiscItems}
-                                edit={!this.props.edit}
-                              />
-                            ) : selectedOrder &&
-                          selectedOrder.orderType === 'Mouldings' ? (
-                                <MouldingsMiscItems
-                                  toggle={this.toggleMiscItems}
-                                  edit={!this.props.edit}
-                                />
-                              ) : null}
+                        <MiscItems
+                          toggle={this.toggleMiscItems}
+                          edit={!this.props.edit}
+                        />
+                         
                       </CardBody>
                     </Card>
                   </Col>
@@ -1695,7 +1502,9 @@ class OrderPage extends Component {
             <div>
               {/* order edit here */}
 
-              <EditSelectedOrder
+              <OrderEntry
+                isEdit={true}
+                editOrderType={props.selectedOrder?.orderType}
                 selectedOrder={props.selectedOrder}
                 editable={this.props.editable}
                 edit={!this.props.edit}
@@ -1747,10 +1556,7 @@ class OrderPage extends Component {
 }
 
 const mapStateToProps = (state, prop) => ({
-  formState: getFormValues('DoorOrder')(state),
-  drawerState: getFormValues('DrawerOrder')(state),
-  miscState: getFormValues('MiscItems')(state),
-  mouldingsState: getFormValues('Mouldings')(state),
+  formState: getFormValues('Order')(state),
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   selectedOrder: state.Orders.selectedOrder,

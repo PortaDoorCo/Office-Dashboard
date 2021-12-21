@@ -1,8 +1,7 @@
-import moment from 'moment';
-import Size from '../Breakdowns/Doors/Size';
-import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
-import Glass_Selection from '../Sorting/Glass_Selection';
+import { flatten, groupBy } from 'lodash';
 import numQty from 'numeric-quantity';
+import Size from '../Breakdowns/Doors/Size';
+import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
   const qty = data.part_list.map((part, i) => {

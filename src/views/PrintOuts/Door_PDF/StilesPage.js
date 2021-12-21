@@ -1,6 +1,5 @@
-import moment from 'moment';
+import { flatten, groupBy } from 'lodash';
 import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
-import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
 import GlassSort from '../Sorting/GlassSort';
 import HeightSort from '../Sorting/HeightSort';
 

@@ -1,16 +1,13 @@
+import { AvField, AvForm } from 'availity-reactstrap-validation';
 import React, { Fragment } from 'react';
-import { Input, CustomInput } from 'reactstrap';
+import NumberFormat from 'react-number-format';
+import 'react-phone-input-2/lib/style.css';
+import DatePicker from 'react-widgets/DatePicker';
 import DropdownList from 'react-widgets/DropdownList';
 import Multiselect from 'react-widgets/Multiselect';
-import Combobox from 'react-widgets/Combobox';
-import DatePicker from 'react-widgets/DatePicker';
+import { CustomInput, Input } from 'reactstrap';
 // import 'react-widgets/dist/css/react-widgets.css';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
-import { AvForm, AvField } from 'availity-reactstrap-validation';
-import NumberFormat from 'react-number-format';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import { formatPhoneNumber } from 'react-phone-number-input';
 
 const renderPhoto = ({ item }) => {
   
@@ -140,6 +137,33 @@ export const renderDropdownListFilter = ({
   <Fragment>
     <DropdownList
       renderListItem={renderPhoto}
+      {...input}
+      data={data}
+      // dataKey={dataKey}
+      textField={textField}
+      placeholder="Select"
+      // onChange={() => input.onChange()}
+      onBlur={() => input.onBlur()}
+      allowCreate={false}
+      filter
+      disabled={edit}
+    />
+    {touched &&
+      ((error && <span style={{ color: 'red' }}>{error}</span>) ||
+        (warning && <span style={{ color: 'red' }}>{warning}</span>))}
+  </Fragment>
+);
+
+export const renderDropdownListFilterNoPhoto = ({
+  input,
+  data,
+  dataKey,
+  textField,
+  edit,
+  meta: { touched, error, warning },
+}) => (
+  <Fragment>
+    <DropdownList
       {...input}
       data={data}
       // dataKey={dataKey}

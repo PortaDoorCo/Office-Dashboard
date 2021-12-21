@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, Button, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
-import { DropdownList } from 'react-widgets';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { addPrinterOption, savePrinterOption } from '../../../redux/misc_items/actions';
-import Cookies from 'js-cookie';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { DropdownList } from 'react-widgets';
+import { Button, Col, Form, FormGroup, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
+import { bindActionCreators } from 'redux';
 import db_url from '../../../redux/db_url';
+import { addPrinterOption, savePrinterOption } from '../../../redux/misc_items/actions';
 
 
 const cookie = Cookies.get('jwt');

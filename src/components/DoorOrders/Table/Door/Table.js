@@ -154,7 +154,7 @@ const DoorTable = ({
 
   const clearNotes = (index, e) => {
     dispatch(
-      change('DoorOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+      change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
     );
   };
 
@@ -174,7 +174,7 @@ const DoorTable = ({
           if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
             dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 `${value}H ${panelsW}W \nSINGLE - NO GUARANTEE`
               )
@@ -182,7 +182,7 @@ const DoorTable = ({
           } else {
             dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 `${value}H ${panelsW}W`
               )
@@ -191,7 +191,7 @@ const DoorTable = ({
         } else {
           // dispatch(
           //   change(
-          //     'DoorOrder',
+          //     'Order',
           //     `part_list[${i}].dimensions[${index}].notes`,
           //     `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
           //   )
@@ -207,7 +207,7 @@ const DoorTable = ({
           if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
             dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 'SINGLE - NO GUARANTEE'
               )
@@ -216,7 +216,7 @@ const DoorTable = ({
             if (panelsW > 1) {
               dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `part_list[${i}].dimensions[${index}].notes`,
                   `${value}H ${panelsW}W`
                 )
@@ -224,7 +224,7 @@ const DoorTable = ({
             } else {
               dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `part_list[${i}].dimensions[${index}].notes`,
                   ''
                 )
@@ -235,7 +235,7 @@ const DoorTable = ({
           // if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
           //   dispatch(
           //     change(
-          //       'DoorOrder',
+          //       'Order',
           //       `part_list[${i}].dimensions[${index}].notes`,
           //       `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
           //     )
@@ -243,7 +243,7 @@ const DoorTable = ({
           // } else {
           //   dispatch(
           //     change(
-          //       'DoorOrder',
+          //       'Order',
           //       `part_list[${i}].dimensions[${index}].notes`,
           //       `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
           //     )
@@ -256,21 +256,21 @@ const DoorTable = ({
       if (parseInt(panelsW) > 1 && parseInt(v) > 1) {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].notes`,
             `${v}H ${panelsW}W`
           )
         );
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
+          change('Order', `part_list[${i}].dimensions[${index}].panelsH`, v)
         );
       } else {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsH`, v)
+          change('Order', `part_list[${i}].dimensions[${index}].panelsH`, v)
         );
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].notes`,
             `${v}H`
           )
@@ -282,7 +282,7 @@ const DoorTable = ({
       if (part.construction?.value === 'Cope') {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
             fraction(
               part.profile
@@ -294,7 +294,7 @@ const DoorTable = ({
       } else {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
             fraction(
               part.design
@@ -308,7 +308,7 @@ const DoorTable = ({
       if (value > 2) {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].unevenCheck`,
             false
           )
@@ -319,7 +319,7 @@ const DoorTable = ({
         for (let j = 0; j < value; j++) {
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].glass_check_${j}`,
               true
             )
@@ -329,7 +329,7 @@ const DoorTable = ({
     } else {
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
           0
         )
@@ -356,7 +356,7 @@ const DoorTable = ({
           if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
             dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 `${panelsH}H ${value}W \nSINGLE - NO GUARANTEE`
               )
@@ -364,7 +364,7 @@ const DoorTable = ({
           } else {
             dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 `${panelsH}H ${value}W`
               )
@@ -373,7 +373,7 @@ const DoorTable = ({
         } else {
           // dispatch(
           //   change(
-          //     'DoorOrder',
+          //     'Order',
           //     `part_list[${i}].dimensions[${index}].notes`,
           //     `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
           //   )
@@ -389,7 +389,7 @@ const DoorTable = ({
           if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
             dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 'SINGLE - NO GUARANTEE'
               )
@@ -398,7 +398,7 @@ const DoorTable = ({
             if (value > 1) {
               dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `part_list[${i}].dimensions[${index}].notes`,
                   `${panelsH}H ${value}W`
                 )
@@ -406,7 +406,7 @@ const DoorTable = ({
             } else {
               dispatch(
                 change(
-                  'DoorOrder',
+                  'Order',
                   `part_list[${i}].dimensions[${index}].notes`,
                   ''
                 )
@@ -417,7 +417,7 @@ const DoorTable = ({
           // if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
           //   dispatch(
           //     change(
-          //       'DoorOrder',
+          //       'Order',
           //       `part_list[${i}].dimensions[${index}].notes`,
           //       `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
           //     )
@@ -425,7 +425,7 @@ const DoorTable = ({
           // } else {
           //   dispatch(
           //     change(
-          //       'DoorOrder',
+          //       'Order',
           //       `part_list[${i}].dimensions[${index}].notes`,
           //       `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
           //     )
@@ -442,21 +442,21 @@ const DoorTable = ({
       ) {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].notes`,
             `${panelsH}H ${v}W`
           )
         );
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
+          change('Order', `part_list[${i}].dimensions[${index}].panelsW`, v)
         );
       } else {
         dispatch(
-          change('DoorOrder', `part_list[${i}].dimensions[${index}].panelsW`, v)
+          change('Order', `part_list[${i}].dimensions[${index}].panelsW`, v)
         );
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].notes`,
             `${v}W`
           )
@@ -470,7 +470,7 @@ const DoorTable = ({
       if (part.construction?.value === 'Cope') {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
             fraction(
               part.profile
@@ -482,7 +482,7 @@ const DoorTable = ({
       } else {
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
             fraction(
               part.design
@@ -495,7 +495,7 @@ const DoorTable = ({
     } else {
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
           0
         )
@@ -510,7 +510,7 @@ const DoorTable = ({
   //     if (e.target.name.includes('leftStile')) {
   //       dispatch(
   //         change(
-  //           'DoorOrder',
+  //           'Order',
   //           `part_list[${i}].dimensions[${index}].notes`,
   //           `${panelsH}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
   //         )
@@ -519,7 +519,7 @@ const DoorTable = ({
   //     if (e.target.name.includes('rightStile')) {
   //       dispatch(
   //         change(
-  //           'DoorOrder',
+  //           'Order',
   //           `part_list[${i}].dimensions[${index}].notes`,
   //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
   //         )
@@ -528,7 +528,7 @@ const DoorTable = ({
   //     if (e.target.name.includes('topRail')) {
   //       dispatch(
   //         change(
-  //           'DoorOrder',
+  //           'Order',
   //           `part_list[${i}].dimensions[${index}].notes`,
   //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
   //         )
@@ -537,7 +537,7 @@ const DoorTable = ({
   //     if (e.target.name.includes('bottomRail')) {
   //       dispatch(
   //         change(
-  //           'DoorOrder',
+  //           'Order',
   //           `part_list[${i}].dimensions[${index}].notes`,
   //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
   //         )
@@ -548,7 +548,7 @@ const DoorTable = ({
   //       if (e.target.name.includes('leftStile')) {
   //         dispatch(
   //           change(
-  //             'DoorOrder',
+  //             'Order',
   //             `part_list[${i}].dimensions[${index}].notes`,
   //             `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
   //           )
@@ -557,7 +557,7 @@ const DoorTable = ({
   //       if (e.target.name.includes('rightStile')) {
   //         dispatch(
   //           change(
-  //             'DoorOrder',
+  //             'Order',
   //             `part_list[${i}].dimensions[${index}].notes`,
   //             `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
   //           )
@@ -566,7 +566,7 @@ const DoorTable = ({
   //       if (e.target.name.includes('topRail')) {
   //         dispatch(
   //           change(
-  //             'DoorOrder',
+  //             'Order',
   //             `part_list[${i}].dimensions[${index}].notes`,
   //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
   //           )
@@ -575,7 +575,7 @@ const DoorTable = ({
   //       if (e.target.name.includes('bottomRail')) {
   //         dispatch(
   //           change(
-  //             'DoorOrder',
+  //             'Order',
   //             `part_list[${i}].dimensions[${index}].notes`,
   //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}\nSINGLE - NO GUARANTEE"`
   //           )
@@ -585,7 +585,7 @@ const DoorTable = ({
   //       if (e.target.name.includes('leftStile')) {
   //         dispatch(
   //           change(
-  //             'DoorOrder',
+  //             'Order',
   //             `part_list[${i}].dimensions[${index}].notes`,
   //             `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
   //           )
@@ -594,7 +594,7 @@ const DoorTable = ({
   //       if (e.target.name.includes('rightStile')) {
   //         dispatch(
   //           change(
-  //             'DoorOrder',
+  //             'Order',
   //             `part_list[${i}].dimensions[${index}].notes`,
   //             `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
   //           )
@@ -603,7 +603,7 @@ const DoorTable = ({
   //       if (e.target.name.includes('topRail')) {
   //         dispatch(
   //           change(
-  //             'DoorOrder',
+  //             'Order',
   //             `part_list[${i}].dimensions[${index}].notes`,
   //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
   //           )
@@ -612,7 +612,7 @@ const DoorTable = ({
   //       if (e.target.name.includes('bottomRail')) {
   //         dispatch(
   //           change(
-  //             'DoorOrder',
+  //             'Order',
   //             `part_list[${i}].dimensions[${index}].notes`,
   //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
   //           )
@@ -635,7 +635,7 @@ const DoorTable = ({
         // if (panelsH > 1 || panelsW > 1) {
         //   dispatch(
         //     change(
-        //       'DoorOrder',
+        //       'Order',
         //       `part_list[${i}].dimensions[${index}].notes`,
         //       `${panelsH}H ${panelsW}W \nLeft Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
         //     )
@@ -644,7 +644,7 @@ const DoorTable = ({
         //   if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
         //     dispatch(
         //       change(
-        //         'DoorOrder',
+        //         'Order',
         //         `part_list[${i}].dimensions[${index}].notes`,
         //         `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}" \nSINGLE - NO GUARANTEE`
         //       )
@@ -652,7 +652,7 @@ const DoorTable = ({
         //   } else {
         //     dispatch(
         //       change(
-        //         'DoorOrder',
+        //         'Order',
         //         `part_list[${i}].dimensions[${index}].notes`,
         //         `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
         //       )
@@ -662,7 +662,7 @@ const DoorTable = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].leftStile`,
             fraction(numQty(changeValue))
           )
@@ -670,7 +670,7 @@ const DoorTable = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].rightStile`,
             fraction(numQty(changeValue))
           )
@@ -678,7 +678,7 @@ const DoorTable = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].topRail`,
             fraction(numQty(changeValue))
           )
@@ -686,7 +686,7 @@ const DoorTable = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].bottomRail`,
             fraction(numQty(changeValue))
           )
@@ -699,7 +699,7 @@ const DoorTable = ({
         if (panelsH > 1 || panelsW > 1) {
           dispatch(
             change(
-              'DoorOrder',
+              'Order',
               `part_list[${i}].dimensions[${index}].notes`,
               `${panelsH}H ${panelsW}W`
             )
@@ -708,7 +708,7 @@ const DoorTable = ({
           if (height >= 48 || width >= 24) {
             dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 'SINGLE - NO GUARANTEE'
               )
@@ -716,7 +716,7 @@ const DoorTable = ({
           } else {
             dispatch(
               change(
-                'DoorOrder',
+                'Order',
                 `part_list[${i}].dimensions[${index}].notes`,
                 ''
               )
@@ -726,7 +726,7 @@ const DoorTable = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].leftStile`,
             fraction(numQty(defaultLeftStile))
           )
@@ -734,7 +734,7 @@ const DoorTable = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].rightStile`,
             fraction(numQty(defaultRightStile))
           )
@@ -742,7 +742,7 @@ const DoorTable = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].topRail`,
             fraction(numQty(defaultTopRail))
           )
@@ -750,7 +750,7 @@ const DoorTable = ({
 
         dispatch(
           change(
-            'DoorOrder',
+            'Order',
             `part_list[${i}].dimensions[${index}].bottomRail`,
             fraction(numQty(defaultBottomRail))
           )
@@ -760,10 +760,10 @@ const DoorTable = ({
   };
 
   const validateGlass = (i, index) => {
-    dispatch(touch('DoorOrder', `part_list[${i}].dimensions[${index}].notes`));
-    dispatch(touch('DoorOrder', `part_list[${i}].dimensions[${index}].width`));
-    dispatch(touch('DoorOrder', `part_list[${i}].dimensions[${index}].height`));
-    dispatch(startAsyncValidation('DoorOrder'));
+    dispatch(touch('Order', `part_list[${i}].dimensions[${index}].notes`));
+    dispatch(touch('Order', `part_list[${i}].dimensions[${index}].width`));
+    dispatch(touch('Order', `part_list[${i}].dimensions[${index}].height`));
+    dispatch(startAsyncValidation('Order'));
   };
 
   const addFields = (i) => {
@@ -773,36 +773,36 @@ const DoorTable = ({
 
     if (fields.length >= 0) {
       dispatch(
-        touch('DoorOrder', `part_list[${i}].dimensions[${index}].notes`)
+        touch('Order', `part_list[${i}].dimensions[${index}].notes`)
       );
       dispatch(
-        touch('DoorOrder', `part_list[${i}].dimensions[${index}].width`)
+        touch('Order', `part_list[${i}].dimensions[${index}].width`)
       );
       dispatch(
-        touch('DoorOrder', `part_list[${i}].dimensions[${index}].height`)
+        touch('Order', `part_list[${i}].dimensions[${index}].height`)
       );
     }
 
-    dispatch(touch('DoorOrder', `part_list[${i}].woodtype`));
-    dispatch(touch('DoorOrder', `part_list[${i}].design`));
+    dispatch(touch('Order', `part_list[${i}].woodtype`));
+    dispatch(touch('Order', `part_list[${i}].design`));
 
     if (construction !== 'Miter') {
-      dispatch(touch('DoorOrder', `part_list[${i}].edge`));
+      dispatch(touch('Order', `part_list[${i}].edge`));
     }
 
     if (construction === 'Cope') {
-      dispatch(touch('DoorOrder', `part_list[${i}].profile`));
+      dispatch(touch('Order', `part_list[${i}].profile`));
     }
 
-    dispatch(touch('DoorOrder', `part_list[${i}].applied_profile`));
-    dispatch(touch('DoorOrder', `part_list[${i}].panel`));
+    dispatch(touch('Order', `part_list[${i}].applied_profile`));
+    dispatch(touch('Order', `part_list[${i}].panel`));
 
-    dispatch(touch('DoorOrder', `part_list[${i}].leftStile`));
-    dispatch(touch('DoorOrder', `part_list[${i}].rightStile`));
-    dispatch(touch('DoorOrder', `part_list[${i}].topRail`));
-    dispatch(touch('DoorOrder', `part_list[${i}].bottomRail`));
+    dispatch(touch('Order', `part_list[${i}].leftStile`));
+    dispatch(touch('Order', `part_list[${i}].rightStile`));
+    dispatch(touch('Order', `part_list[${i}].topRail`));
+    dispatch(touch('Order', `part_list[${i}].bottomRail`));
 
-    dispatch(startAsyncValidation('DoorOrder'));
+    dispatch(startAsyncValidation('Order'));
 
     fields.push({
       qty: 1,
@@ -1381,7 +1381,7 @@ const DoorTable = ({
 
 const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
-  formSyncErrors: getFormSyncErrors('DoorOrder')(state),
+  formSyncErrors: getFormSyncErrors('Order')(state),
 });
 
 export default connect(mapStateToProps, null)(DoorTable);

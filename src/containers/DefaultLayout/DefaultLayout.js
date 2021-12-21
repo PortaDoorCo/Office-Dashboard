@@ -254,13 +254,20 @@ let DefaultLayout = (props, context) => {
                 <Suspense fallback={loading()}>
                   <Switch>
                     {routes.map((route, idx) => {
+                      console.log({route});
                       return route.component ? (
                         <Route
                           key={idx}
                           path={route.path}
                           exact={route.exact}
                           name={route.name}
-                          render={(props) => <route.component {...props} />}
+                          render={(props) => {
+                            console.log({route_prop: props});
+                            return(
+                              <route.component {...props} route={route} />
+                            );
+                          
+                          }}
                         />
                       ) : null;
                     })}

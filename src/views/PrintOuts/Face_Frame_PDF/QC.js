@@ -1,4 +1,3 @@
-import moment from 'moment';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
 

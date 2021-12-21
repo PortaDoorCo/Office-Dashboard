@@ -11,6 +11,7 @@ import {
   updateStatus,
   loadOrders,
   setSelectedOrder,
+  setOrderType
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import momentLocaliser from 'react-widgets-moment';
@@ -22,6 +23,7 @@ import Receipt from '@material-ui/icons/Receipt';
 import Report1 from '../../PrintOuts/Reports/Report1';
 import styled from 'styled-components';
 import status from '../../../utils/status';
+
 
 // momentLocaliser(moment);
 
@@ -304,16 +306,7 @@ const OrderTable = (props) => {
     {
       name: 'Balance Paid',
       sortable: true,
-      cell: (row) => (
-        <div>
-          $
-          {row.balance_history &&
-            row.balance_history.reduce(
-              (acc, item) => acc + item.balance_paid,
-              0
-            )}
-        </div>
-      ),
+      cell: row => <div>${(row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)?.toFixed(2))}</div>,
     },
     {
       name: 'Terms',
@@ -347,15 +340,20 @@ const OrderTable = (props) => {
   ];
 
   const toggle = (row) => {
-    const { setSelectedOrder } = props;
+    const { setSelectedOrder, setOrderType } = props;
+
+
+    console.log({row});
 
     setEdit(false);
     setModal(!modal);
 
     if (!modal) {
       setSelectedOrder(row);
+      setOrderType(row.orderType);
     } else {
       setSelectedOrder(null);
+      setOrderType(null);
     }
   };
 
@@ -507,6 +505,7 @@ const mapDispatchToProps = (dispatch) =>
       updateStatus,
       loadOrders,
       setSelectedOrder,
+      setOrderType
     },
     dispatch
   );

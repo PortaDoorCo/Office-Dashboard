@@ -1,6 +1,4 @@
 import moment from 'moment';
-import Size from '../Breakdowns/DrawerBoxes/Size';
-import pdfMiscItemsPricing from '../../../selectors/pdfs/pdfMiscItemsPricing';
 
 
 export default (data, pricing) => {

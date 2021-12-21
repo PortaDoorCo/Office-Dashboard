@@ -1,9 +1,8 @@
-import moment from 'moment';
-import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
-import Rails from '../Breakdowns/Doors/Rails/Rails';
 import Panels from '../Breakdowns/Doors/Panels/Panels';
+import Rails from '../Breakdowns/Doors/Rails/Rails';
 import Size from '../Breakdowns/Doors/Size';
 import SlabSize from '../Breakdowns/Doors/SlabSize';
+import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {

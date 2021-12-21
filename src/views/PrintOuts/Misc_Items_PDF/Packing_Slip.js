@@ -1,7 +1,3 @@
-import moment from 'moment';
-import Size from '../Breakdowns/Doors/Size';
-import { flattenDeep, uniq, flatten, groupBy } from 'lodash';
-import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, breakdowns) => {
 

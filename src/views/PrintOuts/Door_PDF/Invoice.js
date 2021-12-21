@@ -1,7 +1,6 @@
-import moment from 'moment';
+import pdfDoorPricing from '../../../selectors/pdfs/pdfDoorPricing';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
-import pdfDoorPricing from '../../../selectors/pdfs/pdfDoorPricing';
 
 export default (data, pricing) => {
   const parts = Glass_Selection(data, null);
@@ -238,7 +237,7 @@ export default (data, pricing) => {
                     width: 79,
                   },
                   {
-                    text: `${prices[i]
+                    text: `$${prices[i]
                       .reduce((acc, item) => acc + item, 0)
                       .toFixed(2)}`,
                     style: 'fonts',

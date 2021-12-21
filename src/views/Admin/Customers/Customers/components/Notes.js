@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Row, Col, FormGroup, Label, Button } from 'reactstrap';
-import { updateNotes } from '../../../../../redux/customers/actions';
-import { Field, reduxForm, change, getFormValues } from 'redux-form';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import NotesTable from './Notes_Table';
-import { renderField } from '../../../../../components/RenderInputs/renderInputs';
 import Cookies from 'js-cookie';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Button, Col, FormGroup, Row } from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import { change, Field, getFormValues, reduxForm } from 'redux-form';
+import { renderField } from '../../../../../components/RenderInputs/renderInputs';
+import { updateNotes } from '../../../../../redux/customers/actions';
+import NotesTable from './Notes_Table';
 
 const cookie = Cookies.get('jwt');
 

@@ -1,30 +1,18 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import { Table, Row, Col, Button, FormGroup, Label, Input } from 'reactstrap';
-import 'semantic-ui-css/semantic.min.css';
-import {
-  Field,
-  change,
-  touch,
-  startAsyncValidation,
-  getFormSyncErrors,
-} from 'redux-form';
 import Ratio from 'lb-ratio';
-import Maker from '../../MakerJS/Maker';
+import numQty from 'numeric-quantity';
+import React, { Fragment, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { Button, Col, FormGroup, Input, Label, Row, Table } from 'reactstrap';
+import {
+  change, Field, getFormSyncErrors, startAsyncValidation, touch
+} from 'redux-form';
+import 'semantic-ui-css/semantic.min.css';
+import currencyMask from '../../../../utils/currencyMask';
 // import 'react-widgets/dist/css/react-widgets.css';
 import {
-  renderField,
-  renderNumber,
-  renderFieldDisabled,
-  renderCheckboxToggle,
-  renderPrice,
-  renderInt,
-  renderTextField,
+  renderField, renderInt, renderNumber, renderTextField
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
-import { connect } from 'react-redux';
-import numQty from 'numeric-quantity';
-import currencyMask from '../../../../utils/currencyMask';
-import { NotificationManager } from 'react-notifications';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -55,6 +43,8 @@ const Frame_Only_Table = ({
   const [rightStileWidth, setRightStileWidth] = useState(null);
   const [topRailWidth, setTopRailWidth] = useState(null);
   const [bottomRailWidth, setBottomRailWidth] = useState(null);
+
+  console.log({finish});
 
   useEffect(() => {
     setWidth([]);
@@ -93,7 +83,7 @@ const Frame_Only_Table = ({
     if (value > 1) {
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
           fraction(2.375)
         )
@@ -101,7 +91,7 @@ const Frame_Only_Table = ({
     } else {
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
           0
         )
@@ -111,7 +101,7 @@ const Frame_Only_Table = ({
 
   const clearNotes = (index, e) => {
     dispatch(
-      change('DrawerOrder', `part_list[${i}].dimensions[${index}].notes`, '')
+      change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
     );
   };
 
@@ -129,7 +119,7 @@ const Frame_Only_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].leftStile`,
           fraction(numQty(changeValue))
         )
@@ -137,7 +127,7 @@ const Frame_Only_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].rightStile`,
           fraction(numQty(changeValue))
         )
@@ -145,7 +135,7 @@ const Frame_Only_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].topRail`,
           fraction(numQty(changeValue))
         )
@@ -153,7 +143,7 @@ const Frame_Only_Table = ({
 
       dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `part_list[${i}].dimensions[${index}].bottomRail`,
           fraction(numQty(changeValue))
         )
@@ -385,33 +375,33 @@ const Frame_Only_Table = ({
                   if (fields.length > 0) {
                     dispatch(
                       touch(
-                        'DoorOrder',
+                        'Order',
                         `part_list[${i}].dimensions[${index}].notes`
                       )
                     );
                     dispatch(
                       touch(
-                        'DoorOrder',
+                        'Order',
                         `part_list[${i}].dimensions[${index}].width`
                       )
                     );
                     dispatch(
                       touch(
-                        'DoorOrder',
+                        'Order',
                         `part_list[${i}].dimensions[${index}].height`
                       )
                     );
                   }
 
-                  dispatch(touch('DoorOrder', `part_list[${i}].woodtype`));
+                  dispatch(touch('Order', `part_list[${i}].woodtype`));
                   dispatch(
-                    touch('DoorOrder', `part_list[${i}].face_frame_design`)
+                    touch('Order', `part_list[${i}].face_frame_design`)
                   );
                   dispatch(
-                    touch('DoorOrder', `part_list[${i}].face_frame_finishing`)
+                    touch('Order', `part_list[${i}].face_frame_finishing`)
                   );
 
-                  dispatch(startAsyncValidation('DoorOrder'));
+                  dispatch(startAsyncValidation('Order'));
 
                   fields.push({
                     qty: 1,
@@ -465,7 +455,7 @@ const Frame_Only_Table = ({
 };
 
 const mapStateToProps = (state) => ({
-  formSyncErrors: getFormSyncErrors('DoorOrder')(state),
+  formSyncErrors: getFormSyncErrors('Order')(state),
 });
 
 export default connect(mapStateToProps, null)(Frame_Only_Table);

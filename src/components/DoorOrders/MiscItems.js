@@ -1,38 +1,23 @@
 import React, { Component } from 'react';
-import {
-  Field,
-  reduxForm,
-  FieldArray,
-  getFormValues,
-  change,
-} from 'redux-form';
-import {
-  renderField,
-  renderNumber,
-  renderDropdownListFilter,
-  renderDropdownListNoPhoto,
-  renderPrice,
-  renderInt,
-} from '../RenderInputs/renderInputs';
-import {
-  Button,
-  Table,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Row,
-  Col,
-  Label,
-} from 'reactstrap';
+import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import {
-  miscItemPriceSelector,
-  miscItemLinePriceSelector,
-  miscTotalSelector,
-} from '../../selectors/doorPricing';
-import NumberFormat from 'react-number-format';
+  Button, Col, Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText, Label, Row, Table
+} from 'reactstrap';
+import {
+  change, Field, FieldArray,
+  getFormValues, reduxForm
+} from 'redux-form';
+import {
+  miscItemLinePriceSelector, miscItemPriceSelector, miscTotalSelector
+} from '../../selectors/pricing';
 import currencyMask from '../../utils/currencyMask';
+import {
+  renderDropdownListNoPhoto, renderField, renderInt
+} from '../RenderInputs/renderInputs';
 
 let Inputs = (props) => {
   const { fields, misc_items, formState, linePrices, miscTotal } = props;
@@ -44,14 +29,9 @@ let Inputs = (props) => {
   );
 
   const changeMiscItem = (e, index) => {
-    let total_qty = 0;
+    let total_qty = 0;    
 
-
-    
-
-    
-
-    props.dispatch(change('DoorOrder', `misc_items[${index}].price`, e.Price));
+    props.dispatch(change('Order', `misc_items[${index}].price`, e.Price));
 
     if (e.count_items) {
       const categories = e.categories.map((i) => i.value);
@@ -104,7 +84,7 @@ let Inputs = (props) => {
       }
       props.dispatch(
         change(
-          'DoorOrder',
+          'Order',
           `misc_items[${index}].qty`,
           total_qty > 0 ? total_qty : 1
         )
@@ -295,7 +275,7 @@ class MiscItems extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('Order')(state),
   misc_items: state.misc_items.misc_items,
   prices: miscItemPriceSelector(state),
   linePrices: miscItemLinePriceSelector(state),
@@ -303,7 +283,7 @@ const mapStateToProps = (state) => ({
 });
 
 MiscItems = reduxForm({
-  form: 'DoorOrder',
+  form: 'Order',
   enableReinitialize: true,
   destroyOnUnmount: false,
 })(MiscItems);

@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import env from 'react-dotenv';
 
 

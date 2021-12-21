@@ -1,37 +1,23 @@
 import React, { Component } from 'react';
-import {
-  Field,
-  reduxForm,
-  FieldArray,
-  getFormValues,
-  change,
-} from 'redux-form';
-import {
-  renderField,
-  renderDropdownListFilter,
-  renderDropdownListNoPhoto,
-  renderPrice,
-  renderInt
-} from '../RenderInputs/renderInputs';
-import {
-  Button,
-  Table,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Row,
-  Col,
-  Label,
-} from 'reactstrap';
+import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import {
-  miscItemPriceSelector,
-  miscItemLinePriceSelector,
-  miscTotalSelector,
-} from '../../selectors/drawerPricing';
-import NumberFormat from 'react-number-format';
+  Button, Col, Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText, Label, Row, Table
+} from 'reactstrap';
+import {
+  change, Field, FieldArray,
+  getFormValues, reduxForm
+} from 'redux-form';
+import {
+  miscItemLinePriceSelector, miscItemPriceSelector, miscTotalSelector
+} from '../../selectors/pricing';
 import currencyMask from '../../utils/currencyMask';
+import {
+  renderDropdownListNoPhoto, renderField, renderInt
+} from '../RenderInputs/renderInputs';
 
 
 let Inputs = (props) => {
@@ -52,7 +38,7 @@ let Inputs = (props) => {
 
     let total_qty = 0;
 
-    props.dispatch(change('DrawerOrder', `misc_items[${index}].price`, e.Price));
+    props.dispatch(change('Order', `misc_items[${index}].price`, e.Price));
 
     if(e.count_items){
       const categories = e.categories.map(i => i.value);
@@ -67,7 +53,7 @@ let Inputs = (props) => {
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
         total_qty = total_qty+sub_quantity;
       }
-      props.dispatch(change('DrawerOrder', `misc_items[${index}].qty`, total_qty));
+      props.dispatch(change('Order', `misc_items[${index}].qty`, total_qty));
     }
   };
 
@@ -255,7 +241,7 @@ class MiscItems extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('DrawerOrder')(state),
+  formState: getFormValues('Order')(state),
   misc_items: state.misc_items.misc_items,
   prices: miscItemPriceSelector(state),
   linePrices: miscItemLinePriceSelector(state),

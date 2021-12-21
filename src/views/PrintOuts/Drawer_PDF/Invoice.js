@@ -1,6 +1,6 @@
 import moment from 'moment';
-import Size from '../Breakdowns/DrawerBoxes/Size';
 import pdfDrawerBoxPricing from '../../../selectors/pdfs/pdfDrawerBoxPricing';
+import Size from '../Breakdowns/DrawerBoxes/Size';
 
 export default (data, pricing) => {
   const qty = data.part_list.map((part, i) => {
@@ -217,7 +217,9 @@ export default (data, pricing) => {
                       width: 79,
                     },
                     {
-                      text: `$${data.subTotals[i].toFixed(2)}`,
+                      text: `$${prices[i]
+                        .reduce((acc, item) => acc + item, 0)
+                        .toFixed(2)}`,
                       style: 'fonts',
                       margin: [0, 0, 0, 0],
                       alignment: 'right',

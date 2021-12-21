@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import { Row, Col, CardSubtitle, FormGroup, Label } from 'reactstrap';
-import { Field, FieldArray, touch, startAsyncValidation } from 'redux-form';
 import { connect } from 'react-redux';
+import { CardSubtitle, Col, FormGroup, Label, Row } from 'reactstrap';
+import { Field, FieldArray } from 'redux-form';
+import {
+  finishingSelector,
+  finishItemSelector, finishTotalSelector, itemPriceSelector, linePriceSelector, miscTotalSelector, subTotalSelector,
+  taxSelector,
+  totalSelector
+} from '../../../../selectors/pricing';
 import {
   renderDropdownList,
   renderDropdownListFilter,
-  renderTextField,
+  renderTextField
 } from '../../../RenderInputs/renderInputs';
 import Frame_Only_Table from '../../Table/Face_Frame/Face_Frame_Table';
-import {
-  linePriceSelector,
-  itemPriceSelector,
-  subTotalSelector,
-  finishItemSelector,
-} from '../../../../selectors/faceFramePricing';
-import { finishingSelector } from '../../../../selectors/faceFramePricing';
 
 
 const required = (value) => (value ? undefined : 'Required');
@@ -151,6 +150,9 @@ const mapStateToProps = (state) => ({
   prices: linePriceSelector(state),
   itemPrice: itemPriceSelector(state),
   subTotal: subTotalSelector(state),
+  total: totalSelector(state),
+  tax: taxSelector(state),
+  miscTotalSelector: miscTotalSelector(state),
   finish: finishingSelector(state),
   finishSubtotal: finishItemSelector(state),
 });

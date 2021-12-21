@@ -1,4 +1,3 @@
-import GlassCheck from './GlassCheck';
 import numQty from 'numeric-quantity';
 
 const HeightSort = (part) => {

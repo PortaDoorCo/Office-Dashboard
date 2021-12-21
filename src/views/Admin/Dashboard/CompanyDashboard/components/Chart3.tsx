@@ -32,7 +32,7 @@ class Chart3 extends Component<PropTypes> {
       groups.push(item.orderType);
     });
 
-    const doorOrders = groups.filter(item => {
+    const Orders = groups.filter(item => {
       return item === 'Door Order';
     });
 
@@ -48,7 +48,7 @@ class Chart3 extends Component<PropTypes> {
       labels: ['Door Orders', 'Drawer Orders', 'Misc Items'],
       datasets: [
         {
-          data: [doorOrders.length, drawerOrders.length, miscOrders.length]
+          data: [Orders.length, drawerOrders.length, miscOrders.length]
         }
       ],
     };

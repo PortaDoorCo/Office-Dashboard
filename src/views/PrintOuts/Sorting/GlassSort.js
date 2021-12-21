@@ -1,5 +1,4 @@
 import GlassCheck from './GlassCheck';
-import numQty from 'numeric-quantity';
 
 const GlassSort = (part) => {
   const dimensions = part.dimensions.map((i, j) => {

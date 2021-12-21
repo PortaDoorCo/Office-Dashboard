@@ -1,20 +1,8 @@
-import {
-  LOAD_ORDERS,
-  SUBMIT_ORDER,
-  UPDATE_ORDER,
-  LOAD_DELIVERIES,
-  UPDATE_STATUS,
-  SOCKET_RECEIVE_UPDATE_STATUS,
-  SET_SELECTED_ORDER,
-  UPLOAD_FILE_TO_ORDER,
-  ORDER_ADDED,
-  ORDER_UPDATED,
-  ORDER_DELETED,
-  UPDATE_SELECTED_ORDER,
-  UPDATE_NOTES,
-  DELETE_FILE_FROM_ORDER
-} from './actions';
 import moment from 'moment';
+import {
+  DELETE_FILE_FROM_ORDER, LOAD_DELIVERIES, LOAD_ORDERS, ORDER_ADDED, ORDER_DELETED, ORDER_UPDATED, SET_ORDER_TYPE, SET_SELECTED_ORDER, SOCKET_RECEIVE_UPDATE_STATUS, SUBMIT_ORDER,
+  UPDATE_ORDER, UPDATE_STATUS, UPLOAD_FILE_TO_ORDER
+} from './actions';
 
 const initialState = {
   ordersDBLoaded: false,
@@ -22,6 +10,7 @@ const initialState = {
   deliveries: [],
   sortedDestinations: [],
   selectedOrder: null,
+  orderType: null
 };
 
 export default function (state = initialState, action) {
@@ -32,6 +21,11 @@ export default function (state = initialState, action) {
         ...state,
         orders: data,
         ordersDBLoaded: true,
+      };
+    case SET_ORDER_TYPE:
+      return {
+        ...state,
+        orderType: data
       };
     case SUBMIT_ORDER:
       return {

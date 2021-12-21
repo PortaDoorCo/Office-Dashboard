@@ -14,7 +14,7 @@ import {
   subTotalSelector,
   totalSelector,
   addPriceSelector,
-} from '../../../../selectors/doorPricing';
+} from '../../../../selectors/pricing';
 import fraction from '../../../../utils/fraction';
 
 import changeProfile from '../Functions/changeProfile';
@@ -104,22 +104,22 @@ class Door extends Component {
     
     if(e.target?.name.includes('leftStile')){
       dispatch(
-        change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${e.target.value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`)
+        change('Order', `part_list[${index}].notes`, `Left Stile: ${e.target.value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`)
       );
     }
     if(e.target?.name.includes('rightStile')){
       dispatch(
-        change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`)
+        change('Order', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`)
       );
     }
     if(e.target?.name.includes('topRail')){
       dispatch(
-        change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`)
+        change('Order', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`)
       );
     }
     if(e.target?.name.includes('bottomRail')){
       dispatch(
-        change('DoorOrder', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`)
+        change('Order', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`)
       );
     } 
 

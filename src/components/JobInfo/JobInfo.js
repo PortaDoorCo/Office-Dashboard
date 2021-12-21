@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
-import { Row, Col, FormGroup, Label } from 'reactstrap';
-import { Field, change, getFormValues } from 'redux-form';
-import DatePicker from 'react-widgets/DatePicker';
 import moment from 'moment-business-days';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import DatePicker from 'react-widgets/DatePicker';
+import { Col, FormGroup, Label, Row } from 'reactstrap';
+import { change, Field, getFormValues } from 'redux-form';
+import status from '../../utils/status';
 // import momentLocaliser from 'react-widgets-moment';
 import {
   renderCheckboxToggle,
-  renderDropdownList,
-  renderDropdownListFilter,
-  renderDropdownListNoPhoto,
+  renderDropdownList, renderDropdownListNoPhoto,
   renderField,
-  renderTextField,
+  renderTextField
 } from '../RenderInputs/renderInputs';
-import { connect } from 'react-redux';
-import status from '../../utils/status';
 import CustomerReminder from './CustomerReminder';
 
 
@@ -47,76 +45,76 @@ class JobInfo extends Component {
 
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
-    if (formState && formState.job_info && formState.job_info.customer) {
-      if(formState.job_info.Sample !== prevProps.formState.job_info.Sample){
+    if (formState?.job_info?.customer) {
+      if(formState.job_info?.Sample !== prevProps.formState?.job_info?.Sample){
         if(formState.job_info.Sample){
-          this.props.dispatch(change('DoorOrder', 'discount', 50));
+          this.props.dispatch(change('Order', 'discount', 50));
         } else {
-          this.props.dispatch(change('DoorOrder', 'discount', formState?.job_info?.customer?.Discount || 0));
+          this.props.dispatch(change('Order', 'discount', formState?.job_info?.customer?.Discount || 0));
         }
         
       }
       if (
-        formState.job_info.customer !== prevProps.formState.job_info.customer
+        formState?.job_info?.customer?.id !== prevProps.formState?.job_info?.customer?.id
       ) {
         const customer = formState?.job_info?.customer;
 
-        if (customer?.Notes) {
+        if (customer?.Notes !== '') {
           this.props.toggleReminderModal();
         }
 
         this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'job_info.Address1',
             customer.Shipping_Address1 || customer.Address1
           )
         );
         this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'job_info.Address2',
             customer.Shipping_Address2 || customer.Address2
           )
         );
         this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'job_info.City',
             customer.Shipping_City || customer.City
           )
         );
         this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'job_info.State',
             customer.Shipping_State || customer.State
           )
         );
         this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'job_info.Zip',
             customer.Shipping_Zip || customer.Zip
           )
         );
         this.props.dispatch(
           change(
-            'DoorOrder',
+            'Order',
             'job_info.Phone',
             customer.Shipping_Phone || customer.Phone1
           )
         );
-        this.props.dispatch(change('DoorOrder', 'Taxable', customer.Taxable));
+        this.props.dispatch(change('Order', 'Taxable', customer.Taxable));
 
         if(formState.job_info.Sample){
-          this.props.dispatch(change('DoorOrder', 'discount', 50));
+          this.props.dispatch(change('Order', 'discount', 50));
         }else{
-          this.props.dispatch(change('DoorOrder', 'discount', customer.Discount));
+          this.props.dispatch(change('Order', 'discount', customer.Discount));
         }
         
         this.props.dispatch(
-          change('DoorOrder', 'job_info.Notes', customer.Notes)
+          change('Order', 'job_info.Notes', customer.Notes)
         );
       }
     }
@@ -363,7 +361,7 @@ class JobInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('DoorOrder')(state),
+  formState: getFormValues('Order')(state),
   shippingMethods: state.misc_items.shippingMethods,
 });
 

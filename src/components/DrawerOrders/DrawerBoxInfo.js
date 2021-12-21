@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
-import { Row, Col, CardSubtitle, FormGroup, Label, Button } from 'reactstrap';
 import 'antd/dist/antd.css';
-import { Field, FieldArray, touch, startAsyncValidation } from 'redux-form';
-import OrderTable from './OrderTable';
-import {
-  renderDropdownList,
-  renderField,
-  renderDropdownListFilter,
-  renderTextField,
-} from '../RenderInputs/renderInputs';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button, CardSubtitle, Col, FormGroup, Label, Row } from 'reactstrap';
+import { Field, FieldArray } from 'redux-form';
+import {
+  addPriceSelector, itemPriceSelector, linePriceSelector, miscTotalSelector, subTotalSelector, taxSelector, totalSelector
+} from '../../selectors/pricing';
+import {
+  renderDropdownList, renderDropdownListFilter,
+  renderTextField
+} from '../RenderInputs/renderInputs';
+import OrderTable from './OrderTable';
 
 
 const required = (value) => (value ? undefined : 'Required');
@@ -238,4 +239,24 @@ class DrawerBoxInfo extends Component {
   }
 }
 
-export default connect()(DrawerBoxInfo);
+const mapStateToProps = (state, props) => ({
+  woodtypes: state.part_list.woodtypes,
+  boxBottomWoodtype: state.part_list.box_bottom_woodtypes,
+  boxThickness: state.part_list.box_thickness,
+  boxBottoms: state.part_list.box_bottom_thickness,
+  notchDrill: state.part_list.box_notch,
+  drawerFinishes: state.part_list.box_finish,
+  box_assembly: state.part_list.box_assembly,
+  scoop: state.part_list.box_scoop,
+  dividers: state.part_list.dividers,
+  prices: linePriceSelector(state),
+  itemPrice: itemPriceSelector(state),
+  subTotal: subTotalSelector(state),
+  total: totalSelector(state),
+  tax: taxSelector(state),
+  addPriceSelector: addPriceSelector(state),
+  miscTotalSelector: miscTotalSelector(state)
+});
+
+export default connect(mapStateToProps, null)(DrawerBoxInfo);
+
