@@ -509,17 +509,18 @@ class OrderEntry extends Component {
               // key={i}
               >
 
-                {this.props.orderType === 'Misc Items' ? null : 
-                  <CheckoutBox
-                    {...this.props}
-                    {...this.state}
-                    onSubNav={this.onSubNav}
-                    handleSubmit={handleSubmit}
-                    submit={this.submit}
-                    toggleCancelModal={this.toggleCancelModal}
-                    maxValue={maxValue}
-                    onUploaded={this.onUploaded}
-                  /> }
+                {/* {this.props.orderType === 'Misc Items' ? null :  */}
+                <CheckoutBox
+                  {...this.props}
+                  {...this.state}
+                  onSubNav={this.onSubNav}
+                  handleSubmit={handleSubmit}
+                  submit={this.submit}
+                  toggleCancelModal={this.toggleCancelModal}
+                  maxValue={maxValue}
+                  onUploaded={this.onUploaded}
+                /> 
+                {/* } */}
               </Sticky>
             )}
           </div>

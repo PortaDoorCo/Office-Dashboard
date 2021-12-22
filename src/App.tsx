@@ -48,6 +48,7 @@ import { login, getUsers } from './redux/users/actions';
 import io from 'socket.io-client';
 import db_url from './redux/db_url';
 import 'react-widgets/styles.css';
+import 'semantic-ui-css/semantic.min.css';
 
 const socket = io(db_url);
 const cookie = Cookies.get('jwt');

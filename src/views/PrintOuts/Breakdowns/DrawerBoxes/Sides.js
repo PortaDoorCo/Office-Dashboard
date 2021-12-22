@@ -9,9 +9,11 @@ export default (item, part, breakdowns) => {
 
   const b = breakdowns[0];
 
-  const width = numQty(item.width);
-  const height = numQty(item.height);
-  const depth = numQty(item.depth);
+  const width = Math.round(numQty(item.width) * 16) / 16;
+  const height = Math.round(numQty(item.height) * 16) / 16;
+  const depth = Math.round(numQty(item.depth) * 16) / 16;
+
+
   const sideDeduction = part.box_thickness.SIDE_DEDUCTION;
   const bottomWidthReduction = part.box_thickness.BOTTOM_WIDTH_DEDUCTION;
   const boxThickness = part.box_thickness.NAME;

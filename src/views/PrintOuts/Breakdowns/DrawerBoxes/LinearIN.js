@@ -6,8 +6,12 @@ export default (v, part) => {
 
 
   const calc = v.map(item => {
-    const sides = (numQty(item.depth) * 2) * parseInt(item.qty);
-    const fronts = (numQty(item.width) * 2) * parseInt(item.qty);
+
+    const depth = Math.round(numQty(item.depth) * 16) / 16;
+    const width = Math.round(numQty(item.width) * 16) / 16;
+
+    const sides = (depth * 2) * parseInt(item.qty);
+    const fronts = (width * 2) * parseInt(item.qty);
     const s = (sides + fronts);
     return s;
   });

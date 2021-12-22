@@ -22,24 +22,36 @@ export default (info, part, breakdowns) => {
   let lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
 
   const topRail = info.topRail
-    ? numQty(info.topRail) + lip_factor / 2 - top_rail_arch
+    ? Math.round(numQty(info.topRail) * 16) / 16 + lip_factor / 2 - top_rail_arch
     : 0;
   const bottomRail = info.bottomRail
-    ? numQty(info.bottomRail) + lip_factor / 2 - btm_rail_arch
+    ? Math.round(numQty(info.bottomRail) * 16) / 16 + lip_factor / 2 - btm_rail_arch
     : 0;
   const leftStile = info.leftStile
-    ? numQty(info.leftStile) + lip_factor / 2
+    ? Math.round(numQty(info.leftStile) * 16) / 16 + lip_factor / 2
     : 0;
   const rightStile = info.rightStile
-    ? numQty(info.rightStile) + lip_factor / 2
+    ? Math.round(numQty(info.rightStile) * 16) / 16 + lip_factor / 2
     : 0;
-  const vertMull = numQty(vMidRail);
-  const horizMull = numQty(hMidRail);
+  const vertMull = Math.round(numQty(vMidRail) * 16) / 16;
+  const horizMull = Math.round(numQty(hMidRail) * 16) / 16;
   const panelsH = parseInt(info.panelsH);
   const panelsW = parseInt(info.panelsW);
-  const height = numQty(info.height);
-  const width = numQty(info.width);
+  const height = Math.round(numQty(info.height) * 16) / 16
+  const width = Math.round(numQty(info.width) * 16) / 16
   const qty = parseInt(info.qty);
+
+  console.log({item: info?.item})
+  console.log({height: info.width})
+  console.log({width})
+  console.log({height})
+  console.log({height: info.height})
+  console.log({topRail})
+  console.log({bottomRail})
+  console.log({horizMull})
+  console.log({panel_factor})
+  console.log({edge_factor})
+  console.log({panelsH})
 
   const orderType = info?.orderType?.value
     ? info.orderType?.value
