@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Editor from 'react-simple-code-editor';
+import Prism from 'prismjs';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
@@ -72,7 +73,7 @@ const EditorComponent = (props) => {
             ref={editorRef}
             value={text}
             onValueChange={c => setText(c.replace(/\s+/, ' '))}
-            highlight={code => highlight(code, languages.js)}
+            highlight={code => Prism.highlight(code, Prism.languages.js)}
             padding={10}
             style={{
               fontFamily: '"Fira code", "Fira Mono", monospace',

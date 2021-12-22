@@ -112,8 +112,8 @@ const Designs = (props) => {
           {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
           <CardBody>
             <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>4/4 Price:</strong> ${card.opening_cost}</CardTitle>
-            <CardTitle><strong>5/4 Price:</strong> ${card.opening_5_4_cost}</CardTitle>
+            <CardTitle><strong>4/4 Openings Price:</strong> ${card.opening_cost}</CardTitle>
+            <CardTitle><strong>5/4 Openings Price:</strong> ${card.opening_5_4_cost}</CardTitle>
           </CardBody>
         </Card>
       </div>
@@ -161,11 +161,11 @@ const Designs = (props) => {
   
               <Row>
                 <Col>
-                  <Label for="4/4_Price">4/4 Price</Label>
+                  <Label for="4/4_Price">4/4 Openings Price</Label>
                   <Input type="number" value={product.opening_cost} name="opening_cost" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
-                  <Label for="5/4_Price">5/4 Price</Label>
+                  <Label for="5/4_Price">5/4 Openings Price</Label>
                   <Input type="number" value={product.opening_5_4_cost} name="opening_5_4_cost" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
@@ -243,11 +243,11 @@ const Designs = (props) => {
   
               <Row>
                 <Col>
-                  <Label for="4/4_Price">4/4 Price</Label>
+                  <Label for="4/4_Price">4/4 Openings Price</Label>
                   <Input type="number" value={product.opening_cost} name="opening_cost" onChange={(e) => change(e)}></Input>
                 </Col>
                 <Col>
-                  <Label for="5/4_Price">5/4 Price</Label>
+                  <Label for="5/4_Price">5/4 Openings Price</Label>
                   <Input type="number" value={product.opening_5_4_cost} name="opening_5_4_cost" onChange={(e) => change(e)}></Input>
                 </Col>
               </Row>
