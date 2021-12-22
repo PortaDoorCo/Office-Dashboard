@@ -274,29 +274,31 @@ export const itemPriceSelector = createSelector(
               let height = numQty(i.height);
 
               if (numQty(i.width) > numQty(i.height)) {
-                height =
-                  numQty(i.width) <= 24
-                    ? 18
-                    : numQty(i.width) >= 24 && numQty(i.width) <= 48
-                      ? 24
-                      : 36;
-                width = numQty(i.height);
+                height = numQty(i.width);
+                width = numQty(i.height) <= 24
+                  ? 18
+                  : numQty(i.height) >= 24 && numQty(i.height) <= 48
+                    ? 24
+                    : 36;
               }
 
               const width_input = numQty(i.width);
+              const height_input = numQty(i.height);
               const openings = parseInt(i.openings);
 
               let overcharge = 0;
 
-              if (width_input >= 48 || numQty(i.height) >= 96) {
+              if (width >= 48 || height >= 96) {
                 overcharge = 100;
               }
 
               console.log({width_input});
+              console.log({height_input});
               console.log({width});
               console.log({height});
-              console.log({ff_opening_cost});
-              console.log({ff_top_rail_design});
+              // console.log({ff_opening_cost});
+              // console.log({ff_top_rail_design});
+              // console.log({wood});
 
 
               const price = eval(pricer && pricer.face_frame_pricing) + extraCost;
