@@ -80,7 +80,7 @@ let DefaultLayout = (props, context) => {
   useEffect(() => {
     if(!props.currentVersion){
       NotificationManager.info(
-        'A new version of the app is now available!  Please refresh your page or open it in a new tab to see changes',
+        'A new version of the app is now available!  Click the icon above to refresh the app',
         'A New Version is Available',
         5000
       );
