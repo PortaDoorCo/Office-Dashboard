@@ -304,7 +304,7 @@ const mapStateToProps = (state) => ({
 MiscItems = reduxForm({
   form: 'Order',
   enableReinitialize: true,
-  asyncBlurFields: ['misc_items'] 
+  // asyncBlurFields: ['misc_items'] 
 })(MiscItems);
 
 export default connect(mapStateToProps, null)(MiscItems);
