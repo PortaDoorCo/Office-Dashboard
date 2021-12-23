@@ -232,10 +232,18 @@ class OrderEntry extends Component {
     }
 
     let canSubmit = false;
+    
+    console.log({orderType});
 
-    values.part_list.map((v) => {
-      return v.dimensions.length > 0 ? (canSubmit = true) : (canSubmit = false);
-    });
+    if(orderType === 'Mouldings' || orderType === 'Misc Items'){
+      canSubmit = true;
+    } else {
+      values.part_list.map((v) => {
+        return v.dimensions.length > 0 ? (canSubmit = true) : (canSubmit = false);
+      });
+    }
+
+
 
     console.log({canSubmit});
 
