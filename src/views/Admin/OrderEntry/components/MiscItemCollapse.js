@@ -10,7 +10,7 @@ const MiscCollapse = (props) => {
     case 'misc':
       // code block
       return(
-        <MiscItems {...props} /> 
+        <MiscItems orderType={props.orderType} /> 
       );
     case 'photos':
       // code block
