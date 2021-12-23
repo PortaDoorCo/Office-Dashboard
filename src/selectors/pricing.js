@@ -556,16 +556,18 @@ export const itemPriceSelector = createSelector(
         const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
         const assembly = part.box_assembly ? part.box_assembly.UPCHARGE : 0;
         const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
+
   
         if (part.dimensions) {
           const linePrice = part.dimensions.map((i) => {
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
             const width = numQty(i.width);
             const height = numQty(i.height);
             const depth = numQty(i.depth);
   
             const scoop = i.scoop.PRICE;
   
-            const price = eval(pricer.drawer_box_pricing);
+            const price = eval(pricer.drawer_box_pricing) + extraCost;
   
             if (height > -1) {
               return price;
