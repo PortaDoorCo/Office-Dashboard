@@ -23,17 +23,33 @@ import currencyMask from '../../../utils/currencyMask';
 let Inputs = (props) => {
   const { fields, misc_items, formState, linePrices, miscTotal, edit, orderType } = props;
 
+  console.log({orderType});
+
   let misc_items_category = ['Accessories', 'Door', 'DF', 'Drawer_Box'];
 
   if(orderType === 'Door Order'){
-    misc_items_category = ['Accessories', 'Door', 'DF', 'Drawer_Box'];
+    misc_items_category = ['Accessories', 'Door', 'DF'];
   }
 
   if(orderType === 'Drawer Order'){
+    console.log('here');
     misc_items_category = ['Accessories', 'Drawer_Box'];
   }
+  
 
-  let sorted_misc_items = misc_items.filter(e => e.categories.some(c => misc_items_category.includes(c.value)));
+  let sorted_misc_items = misc_items.filter(e => {
+    
+    console.log({e});
+    return e.categories.some(c => {
+      
+      console.log({c: misc_items_category.includes(c.value)});
+      return misc_items_category.includes(c.value);
+    
+    }
+    );
+  });
+
+  console.log({length: sorted_misc_items.length});
 
 
   const changeMiscItem = (e, index) => {
@@ -288,6 +304,7 @@ const mapStateToProps = (state) => ({
 MiscItems = reduxForm({
   form: 'Order',
   enableReinitialize: true,
+  asyncBlurFields: ['misc_items'] 
 })(MiscItems);
 
 export default connect(mapStateToProps, null)(MiscItems);

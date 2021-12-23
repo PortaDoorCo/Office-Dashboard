@@ -1,6 +1,6 @@
 import React from 'react';
 import { Collapse } from 'reactstrap';
-import MiscItems from '../../../../components/DoorOrders/MiscItems';
+import MiscItems from '../../Orders/MiscItems';
 import Photos from './Photos';
 
 const MiscCollapse = (props) => {
@@ -10,7 +10,7 @@ const MiscCollapse = (props) => {
     case 'misc':
       // code block
       return(
-        <MiscItems /> 
+        <MiscItems {...props} /> 
       );
     case 'photos':
       // code block
