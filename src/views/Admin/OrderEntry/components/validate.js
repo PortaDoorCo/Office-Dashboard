@@ -1,16 +1,8 @@
 const validate = values => {
   const errors = {};
 
-  console.log({values});
-
-  if (!values.part_list || !values.part_list?.length < 1) {
-
-    if(values?.misc_items?.length < 1){
-      return;
-    } else {
-      errors.part_list = { _error: 'At least one member must be entered' };
-    }
-    
+  if (!values.part_list || !values.part_list?.length) {
+    errors.part_list = { _error: 'At least one member must be entered' };
   } else {
     const partArrayErrors = [];
     values && values.part_list && values.part_list.forEach((part, memberIndex) => {
