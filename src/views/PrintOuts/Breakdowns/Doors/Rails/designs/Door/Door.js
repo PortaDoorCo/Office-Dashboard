@@ -14,15 +14,15 @@ export default (info, part, breakdowns) => {
   let edge_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
   let lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
 
-  const topRail = info.topRail ? Math.round(numQty(info.topRail) * 16) / 16 + lip_factor / 2 : 0;
+  const topRail = info.topRail ? Math.round(numQty(info.topRail) * 16) / 16 + (lip_factor / 2) : 0;
   const bottomRail = info.bottomRail
-    ? Math.round(numQty(info.bottomRail) * 16) / 16 + lip_factor / 2
+    ? Math.round(numQty(info.bottomRail) * 16) / 16 + (lip_factor / 2)
     : 0;
   const leftStile = info.leftStile
-    ? Math.round(numQty(info.leftStile) * 16) / 16 + lip_factor / 2
+    ? Math.round(numQty(info.leftStile) * 16) / 16 + (lip_factor / 2)
     : 0;
   const rightStile = info.rightStile
-    ? Math.round(numQty(info.rightStile) * 16) / 16 + lip_factor / 2
+    ? Math.round(numQty(info.rightStile) * 16) / 16 + (lip_factor / 2)
     : 0;
   const vertMull = Math.round(numQty(vMidRail) * 16) / 16;
   const horizMull = Math.round(numQty(hMidRail) * 16) / 16;
@@ -39,6 +39,11 @@ export default (info, part, breakdowns) => {
   } else {
     inset = part.design?.INSET;
   }
+
+
+  console.log({item: info.item});
+  console.log({inset});
+  
 
   if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {
     if ((panelsW > 1 && panelsH > 1) || (panelsH > 1 && panelsW === 1)) {
