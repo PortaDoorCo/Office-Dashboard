@@ -54,34 +54,53 @@ const pricing = (parts, pricer) => {
 
     if (part.dimensions) {
       const linePrice = part.dimensions.map((i) => {
-
         const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
-
-        const width_input = numQty(i.width);
-        const width =
-          numQty(i.width) <= 24
+  
+        let width =
+            numQty(i.width) <= 24
+              ? 18
+              : numQty(i.width) >= 24 && numQty(i.width) <= 48
+                ? 24
+                : 36;
+        let height = numQty(i.height);
+  
+        if (numQty(i.width) > numQty(i.height)) {
+          height = numQty(i.width);
+          width = numQty(i.height) <= 24
             ? 18
-            : numQty(i.width) >= 24 && numQty(i.width) <= 48
+            : numQty(i.height) >= 24 && numQty(i.height) <= 48
               ? 24
               : 36;
-        const height = numQty(i.height);
+        }
+  
+        const width_input = numQty(i.width);
+        const height_input = numQty(i.height);
         const openings = parseInt(i.openings);
-
+  
         let overcharge = 0;
-
-        if (width_input >= 48 || height >= 96) {
+  
+        if (width >= 48 || height >= 96) {
           overcharge = 100;
         }
-
+  
+        console.log({width_input});
+        console.log({height_input});
+        console.log({width});
+        console.log({height});
+        // console.log({ff_opening_cost});
+        // console.log({ff_top_rail_design});
+        // console.log({wood});
+  
+  
         const price = eval(pricer && pricer.face_frame_pricing) + extraCost;
-
+  
         if (height > -1) {
-          return price * parseInt(i.qty);
+          return price;
         } else {
           return 0;
         }
       });
-
+    
       return linePrice;
     } else {
       return 0;
