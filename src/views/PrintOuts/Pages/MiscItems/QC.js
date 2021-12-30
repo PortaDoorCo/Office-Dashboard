@@ -49,7 +49,9 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
               },
               { text: `Order #: ${data.orderNum}`, alignment: 'right' },
               {
-                text: `Est. Completion: ${moment(data.job_info.DueDate).format(
+                text: `Est. Completion: ${data.status !== 'Quote' ? moment(data.job_info.DueDate).format(
+                  'MM/DD/YYYY'
+                ) : moment('01-01-2000').format(
                   'MM/DD/YYYY'
                 )}`,
                 alignment: 'right',
