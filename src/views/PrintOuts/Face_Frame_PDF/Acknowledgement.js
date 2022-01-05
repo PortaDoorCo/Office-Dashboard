@@ -21,15 +21,26 @@ export default (data, pricing) => {
     .map((i) => i.reduce((acc, item) => acc + item, 0))
     .reduce((acc, item) => acc + item, 0);
 
-  const balancePaid = data.balance_history.reduce(function (
-    accumulator,
-    balance
-  ) {
-    return accumulator + balance.balance_paid;
-  },
-  0);
+  const finishingSubtotal = finishing.map((i, index) => {
+    if (i) {
+      let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
+      let sum = price;
+      return sum;
+    } else {
+      return 0;
+    }
+  });
+  
+  const finishingTotal = parseFloat(
+    finishingSubtotal.reduce((acc, item) => acc + item, 0)
+  );
 
-  const balanceDue = data.total - balancePaid;
+  const subTotal_Total = subTotal + finishingTotal;
+
+
+  
+
+
 
   const misc_prices = data.misc_items.map((i) => {
     if (i.category === 'preselect') {
@@ -41,25 +52,28 @@ export default (data, pricing) => {
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
-  const discountTotal = subTotal * (data.discount / 100);
+  const discountTotal = subTotal_Total * (data.discount / 100);
 
-  const discountSubTotal = subTotal - discountTotal;
+  const discountSubTotal = subTotal_Total - discountTotal;
 
   const order_sub_total = misc_total + discountSubTotal;
 
-  const finishingSubtotal = finishing.map((i, index) => {
-    if (i) {
-      let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
-      let sum = price;
-      return sum;
-    } else {
-      return 0;
-    }
-  });
+  const tax = data.Taxable
+    ? order_sub_total * (data.companyprofile.TaxRate / 100)
+    : 0;
 
-  const finishingTotal = parseFloat(
-    finishingSubtotal.reduce((acc, item) => acc + item, 0)
-  );
+  const total = order_sub_total + tax;
+
+  const balancePaid = data.balance_history.reduce(function (
+    accumulator,
+    balance
+  ) {
+    return accumulator + balance.balance_paid;
+  },
+  0);
+
+  const balanceDue = total - balancePaid;
+
 
   const table_content = Glass_Selection(data, null).map((part, i) => {
 
@@ -457,7 +471,7 @@ export default (data, pricing) => {
           alignment: 'right',
         },
         {
-          text: `${data.tax > 0 ? '$' + data.tax.toFixed(2) : ''}`,
+          text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
           style: 'fonts',
           alignment: 'right',
         },
@@ -501,7 +515,7 @@ export default (data, pricing) => {
           width: 120,
         },
         {
-          text: `$${data.total.toFixed(2)}`,
+          text: `$${total.toFixed(2)}`,
           style: 'fonts',
           margin: [0, 0, 0, 0],
           alignment: 'right',
