@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Door from './Door/Door';
-import Custom from './Door/Custom';
 import DF from './DF/DF';
 import FaceFrame from './Face_Frame/FaceFrame';
 import SlabDoor from './Slab_Door/Slab_Door';

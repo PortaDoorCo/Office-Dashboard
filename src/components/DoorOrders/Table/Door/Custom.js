@@ -63,30 +63,38 @@ const DoorTable = ({
   const [changeValue, setChangeValue] = useState(null);
   const [modal, setModal] = useState(false);
   const [warningType, setWarningType] = useState(null);
-  const [panels, setPanels] = useState([]);
+  const [panels, setPanels] = useState([[]]);
+  const [stiles, setStiles] = useState([[]]);
+  const [rails, setRails] = useState([[]]);
   const toggle = () => setModal(!modal);
 
   const index = fields.length - 1;
 
-  const leftStile =
-    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
-  const rightStile =
-    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.rightStile : null;
-  const topRail =
-    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
-  const bottomRail =
-    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.bottomRail : null;
-  const defaultLeftStile = formState?.part_list[i]?.leftStile;
-  const defaultRightStile = formState?.part_list[i]?.rightStile;
-  const defaultTopRail = formState?.part_list[i]?.topRail;
-  const defaultBottomRail = formState?.part_list[i]?.bottomRail;
-  const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-  const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
+  const styles = {
+    border: '2px solid #d1d4d7', 
+    borderRadius: '25px',
+    padding: '3%',
+  };
 
-  const topRailAdd = formState?.part_list[i]?.design?.TOP_RAIL_ADD;
-  const bottomRailAdd = formState?.part_list[i]?.design?.BTM_RAIL_ADD;
+  // const leftStile =
+  //   index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
+  // const rightStile =
+  //   index >= 0 ? formState?.part_list[i]?.dimensions[index]?.rightStile : null;
+  // const topRail =
+  //   index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
+  // const bottomRail =
+  //   index >= 0 ? formState?.part_list[i]?.dimensions[index]?.bottomRail : null;
+  // const defaultLeftStile = formState?.part_list[i]?.leftStile;
+  // const defaultRightStile = formState?.part_list[i]?.rightStile;
+  // const defaultTopRail = formState?.part_list[i]?.topRail;
+  // const defaultBottomRail = formState?.part_list[i]?.bottomRail;
+  // const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
+  // const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
-  const construction = formState?.part_list[i]?.construction?.value;
+  // const topRailAdd = formState?.part_list[i]?.design?.TOP_RAIL_ADD;
+  // const bottomRailAdd = formState?.part_list[i]?.design?.BTM_RAIL_ADD;
+
+  // const construction = formState?.part_list[i]?.construction?.value;
 
   useEffect(() => {
     setWidth([]);
@@ -94,522 +102,9 @@ const DoorTable = ({
     setChangeValue(null);
   }, [updateSubmit]);
 
-  const w = (e, v, index) => {
-    e.preventDefault();
-    const part = formState.part_list[i];
-    let newWidth = [...width];
-    if (width[index]) {
-      newWidth.splice(index, 1, v);
-    } else {
-      newWidth = [...newWidth, v];
-    }
-
-    if (numQty(v) >= 24) {
-      setWarningType({
-        value: v,
-        index: index,
-        i: i,
-        part: part,
-        tag: 'width',
-        sub_tag: 'width_greater_than',
-        title: 'Width Greater Than 24 Inches',
-        message:
-          'Your Width is Greater than 24 inches.  Do you want to add a panel? We cannot guarantee your products warranty if width is greater than 24 inches',
-        action: 'Add Panel',
-        deny: 'No Thanks',
-      });
-      toggle();
-    }
-
-    setWidth(newWidth);
-  };
-
-  const h = (e, v, index) => {
-    e.preventDefault();
-    const part = formState.part_list[i];
-    let newHeight = [...height];
-    if (height[index]) {
-      newHeight.splice(index, 1, v);
-    } else {
-      newHeight = [...newHeight, v];
-    }
-
-    if (numQty(v) >= 48) {
-      setWarningType({
-        value: v,
-        index: index,
-        i: i,
-        part: part,
-        tag: 'height',
-        sub_tag: 'height_greater_than',
-        title: 'Height Greater Than 48 Inches',
-        message:
-          'Your Height is Greater than 48 inches.  Do you want to add a panel? We cannot guarantee your products warranty if height is greater than 48 inches',
-        action: 'Add Panel',
-        deny: 'No Thanks',
-      });
-      toggle();
-    }
-    setHeight(newHeight);
-  };
 
   const clearNotes = (index, e) => {
     dispatch(change('Order', `part_list[${i}].dimensions[${index}].notes`, ''));
-  };
-
-  const twoHigh = (index, e, v) => {
-    let value;
-    const part = formState.part_list[i];
-
-    if (e) {
-      value = e.target.value;
-      if (part.dimensions[index].notes !== '' && parseInt(e.target.value) > 1) {
-        if (
-          leftStile === defaultLeftStile ||
-          rightStile === defaultRightStile ||
-          topRail === defaultTopRail ||
-          bottomRail === defaultBottomRail
-        ) {
-          if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${value}H ${panelsW}W \nSINGLE - NO GUARANTEE`
-              )
-            );
-          } else {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${value}H ${panelsW}W`
-              )
-            );
-          }
-        } else {
-          // dispatch(
-          //   change(
-          //     'Order',
-          //     `part_list[${i}].dimensions[${index}].notes`,
-          //     `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          //   )
-          // );
-        }
-      } else {
-        if (
-          leftStile === defaultLeftStile ||
-          rightStile === defaultRightStile ||
-          topRail === defaultTopRail ||
-          bottomRail === defaultBottomRail
-        ) {
-          if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                'SINGLE - NO GUARANTEE'
-              )
-            );
-          } else {
-            if (panelsW > 1) {
-              dispatch(
-                change(
-                  'Order',
-                  `part_list[${i}].dimensions[${index}].notes`,
-                  `${value}H ${panelsW}W`
-                )
-              );
-            } else {
-              dispatch(
-                change(
-                  'Order',
-                  `part_list[${i}].dimensions[${index}].notes`,
-                  ''
-                )
-              );
-            }
-          }
-        } else {
-          // if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
-          //   dispatch(
-          //     change(
-          //       'Order',
-          //       `part_list[${i}].dimensions[${index}].notes`,
-          //       `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          //     )
-          //   );
-          // } else {
-          //   dispatch(
-          //     change(
-          //       'Order',
-          //       `part_list[${i}].dimensions[${index}].notes`,
-          //       `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
-          //     )
-          //   );
-          // }
-        }
-      }
-    } else {
-      value = v;
-      if (parseInt(panelsW) > 1 && parseInt(v) > 1) {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${v}H ${panelsW}W`
-          )
-        );
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].panelsH`, v)
-        );
-      } else {
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].panelsH`, v)
-        );
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].notes`, `${v}H`)
-        );
-      }
-    }
-
-    if (value > 1) {
-      if (part.construction?.value === 'Cope') {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(
-              part.profile
-                ? part.profile?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
-                : 0
-            )
-          )
-        );
-      } else {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(
-              part.design
-                ? part.design?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
-                : 0
-            )
-          )
-        );
-      }
-
-      if (value > 2) {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].unevenCheck`,
-            false
-          )
-        );
-      }
-
-      if (part.panel?.NAME === 'Glass') {
-        for (let j = 0; j < value; j++) {
-          dispatch(
-            change(
-              'Order',
-              `part_list[${i}].dimensions[${index}].glass_check_${j}`,
-              true
-            )
-          );
-        }
-      }
-    } else {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-          0
-        )
-      );
-    }
-  };
-
-  const twoWide = (index, e, v) => {
-    const part = formState.part_list[i];
-
-    let value;
-    if (e) {
-      value = e.target.value;
-      if (
-        parseInt(part.dimensions[index].panelsH) > 1 &&
-        parseInt(e.target.value) > 1
-      ) {
-        if (
-          leftStile === defaultLeftStile ||
-          rightStile === defaultRightStile ||
-          topRail === defaultTopRail ||
-          bottomRail === defaultBottomRail
-        ) {
-          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${panelsH}H ${value}W \nSINGLE - NO GUARANTEE`
-              )
-            );
-          } else {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${panelsH}H ${value}W`
-              )
-            );
-          }
-        } else {
-          // dispatch(
-          //   change(
-          //     'Order',
-          //     `part_list[${i}].dimensions[${index}].notes`,
-          //     `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          //   )
-          // );
-        }
-      } else {
-        if (
-          leftStile === defaultLeftStile ||
-          rightStile === defaultRightStile ||
-          topRail === defaultTopRail ||
-          bottomRail === defaultBottomRail
-        ) {
-          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                'SINGLE - NO GUARANTEE'
-              )
-            );
-          } else {
-            if (value > 1) {
-              dispatch(
-                change(
-                  'Order',
-                  `part_list[${i}].dimensions[${index}].notes`,
-                  `${panelsH}H ${value}W`
-                )
-              );
-            } else {
-              dispatch(
-                change(
-                  'Order',
-                  `part_list[${i}].dimensions[${index}].notes`,
-                  ''
-                )
-              );
-            }
-          }
-        } else {
-          // if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
-          //   dispatch(
-          //     change(
-          //       'Order',
-          //       `part_list[${i}].dimensions[${index}].notes`,
-          //       `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          //     )
-          //   );
-          // } else {
-          //   dispatch(
-          //     change(
-          //       'Order',
-          //       `part_list[${i}].dimensions[${index}].notes`,
-          //       `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
-          //     )
-          //   );
-          // }
-        }
-      }
-    } else {
-      value = v;
-      if (
-        part.dimensions[index].notes !== '' &&
-        parseInt(part.dimensions[index].panelsH) > 1 &&
-        parseInt(v) > 1
-      ) {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${panelsH}H ${v}W`
-          )
-        );
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].panelsW`, v)
-        );
-      } else {
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].panelsW`, v)
-        );
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].notes`, `${v}W`)
-        );
-      }
-    }
-
-    //look here
-
-    if (value > 1) {
-      if (part.construction?.value === 'Cope') {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(
-              part.profile
-                ? part.profile?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
-                : 0
-            )
-          )
-        );
-      } else {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(
-              part.design
-                ? part.design?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
-                : 0
-            )
-          )
-        );
-      }
-    } else {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-          0
-        )
-      );
-    }
-  };
-
-  const onStileOrRailChange = (e, index) => {
-    //   const value = e.target.value;
-    //   if ((height >= 48 && panelsH > 1) || (width >= 24 && panelsW > 1)) {
-    //     if (e.target.name.includes('leftStile')) {
-    //       dispatch(
-    //         change(
-    //           'Order',
-    //           `part_list[${i}].dimensions[${index}].notes`,
-    //           `${panelsH}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-    //         )
-    //       );
-    //     }
-    //     if (e.target.name.includes('rightStile')) {
-    //       dispatch(
-    //         change(
-    //           'Order',
-    //           `part_list[${i}].dimensions[${index}].notes`,
-    //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-    //         )
-    //       );
-    //     }
-    //     if (e.target.name.includes('topRail')) {
-    //       dispatch(
-    //         change(
-    //           'Order',
-    //           `part_list[${i}].dimensions[${index}].notes`,
-    //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-    //         )
-    //       );
-    //     }
-    //     if (e.target.name.includes('bottomRail')) {
-    //       dispatch(
-    //         change(
-    //           'Order',
-    //           `part_list[${i}].dimensions[${index}].notes`,
-    //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-    //         )
-    //       );
-    //     }
-    //   } else {
-    //     if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
-    //       if (e.target.name.includes('leftStile')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('rightStile')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('topRail')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('bottomRail')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}\nSINGLE - NO GUARANTEE"`
-    //           )
-    //         );
-    //       }
-    //     } else {
-    //       if (e.target.name.includes('leftStile')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('rightStile')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('topRail')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('bottomRail')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-    //           )
-    //         );
-    //       }
-    //     }
-    //   }
   };
 
   const registerChange = (index, e) => {
@@ -617,140 +112,9 @@ const DoorTable = ({
     setChangeValue(value);
   };
 
-  const changeFraming = (e, index) => {
-    if (e.target.name === 'update_framing') {
-      if (changeValue) {
-        const newVal = fraction(numQty(changeValue));
 
-        // if (panelsH > 1 || panelsW > 1) {
-        //   dispatch(
-        //     change(
-        //       'Order',
-        //       `part_list[${i}].dimensions[${index}].notes`,
-        //       `${panelsH}H ${panelsW}W \nLeft Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
-        //     )
-        //   );
-        // } else {
-        //   if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
-        //     dispatch(
-        //       change(
-        //         'Order',
-        //         `part_list[${i}].dimensions[${index}].notes`,
-        //         `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}" \nSINGLE - NO GUARANTEE`
-        //       )
-        //     );
-        //   } else {
-        //     dispatch(
-        //       change(
-        //         'Order',
-        //         `part_list[${i}].dimensions[${index}].notes`,
-        //         `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
-        //       )
-        //     );
-        //   }
-        // }
 
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].leftStile`,
-            fraction(numQty(changeValue))
-          )
-        );
 
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].rightStile`,
-            fraction(numQty(changeValue))
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].topRail`,
-            fraction(numQty(changeValue))
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].bottomRail`,
-            fraction(numQty(changeValue))
-          )
-        );
-      }
-    }
-
-    if (e.target.name === 'default_framing') {
-      if (changeValue) {
-        if (panelsH > 1 || panelsW > 1) {
-          dispatch(
-            change(
-              'Order',
-              `part_list[${i}].dimensions[${index}].notes`,
-              `${panelsH}H ${panelsW}W`
-            )
-          );
-        } else {
-          if (height >= 48 || width >= 24) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                'SINGLE - NO GUARANTEE'
-              )
-            );
-          } else {
-            dispatch(
-              change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
-            );
-          }
-        }
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].leftStile`,
-            fraction(numQty(defaultLeftStile))
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].rightStile`,
-            fraction(numQty(defaultRightStile))
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].topRail`,
-            fraction(numQty(defaultTopRail))
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].bottomRail`,
-            fraction(numQty(defaultBottomRail))
-          )
-        );
-      }
-    }
-  };
-
-  const validateGlass = (i, index) => {
-    dispatch(touch('Order', `part_list[${i}].dimensions[${index}].notes`));
-    dispatch(touch('Order', `part_list[${i}].dimensions[${index}].width`));
-    dispatch(touch('Order', `part_list[${i}].dimensions[${index}].height`));
-    dispatch(startAsyncValidation('Order'));
-  };
 
   const addFields = (i) => {
     const construction = formState?.part_list[i]?.construction?.value;
@@ -788,10 +152,10 @@ const DoorTable = ({
       qty: 1,
       panelsH: 1,
       panelsW: 1,
-      leftStile: leftStile ? leftStile : defaultLeftStile,
-      rightStile: rightStile ? rightStile : defaultRightStile,
-      topRail: topRail ? topRail : defaultTopRail,
-      bottomRail: bottomRail ? bottomRail : defaultBottomRail,
+      // leftStile: leftStile ? leftStile : defaultLeftStile,
+      // rightStile: rightStile ? rightStile : defaultRightStile,
+      // topRail: topRail ? topRail : defaultTopRail,
+      // bottomRail: bottomRail ? bottomRail : defaultBottomRail,
       horizontalMidRailSize: 0,
       verticalMidRailSize: 0,
       unevenSplitInput: '0',
@@ -804,22 +168,7 @@ const DoorTable = ({
     });
   };
 
-  const glass_note_check = (index) => {
-    const obj_names = Object.entries(
-      formState?.part_list[i]?.dimensions[index]
-        ? formState?.part_list[i]?.dimensions[index]
-        : []
-    );
 
-    const filter_obj = obj_names.filter((n) => n[0].includes('glass_check'));
-
-    const check_if_glass = filter_obj
-      .filter((n) => n[1])
-      .map((k) => k.includes(true))
-      .includes(true);
-
-    return check_if_glass;
-  };
 
   let itemNum = 0;
 
@@ -843,18 +192,6 @@ const DoorTable = ({
 
   return (
     <div>
-      {modal ? (
-        <WarningModal
-          toggle={toggle}
-          modal={modal}
-          warningType={warningType}
-          twoHigh={twoHigh}
-          twoWide={twoWide}
-          dispatch={dispatch}
-          change={change}
-          prices={prices}
-        />
-      ) : null}
       {fields.map((table, index) => (
         <Fragment key={index}>
           <hr />
@@ -898,13 +235,6 @@ const DoorTable = ({
                     name={`${table}.width`}
                     type="text"
                     component={renderNumber}
-                    onBlur={(e) =>
-                      w(
-                        e,
-                        formState.part_list[i]?.dimensions[index]?.width,
-                        index
-                      )
-                    }
                     label="width"
                     validate={[required]}
                     edit={edit}
@@ -916,13 +246,6 @@ const DoorTable = ({
                     name={`${table}.height`}
                     type="text"
                     component={renderNumber}
-                    onBlur={(e) =>
-                      h(
-                        e,
-                        formState.part_list[i]?.dimensions[index]?.height,
-                        index
-                      )
-                    }
                     label="height"
                     validate={required}
                     edit={edit}
@@ -963,144 +286,6 @@ const DoorTable = ({
                   )}
                 </td>
               </tr>
-
-              <tr>
-                <td>
-                  <strong>
-                    <p>Top Rail {topRailAdd > 0 ? '+ Arch' : null}</p>
-                  </strong>
-                  <Field
-                    name={`${table}.topRail`}
-                    type="text"
-                    component={renderNumber}
-                    label="topRail"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-                <td>
-                  <strong>
-                    <p>Bottom Rail {bottomRailAdd > 0 ? '+ Arch' : null}</p>
-                  </strong>
-                  <Field
-                    name={`${table}.bottomRail`}
-                    type="text"
-                    component={renderNumber}
-                    label="bottomRail"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-
-                <td>
-                  <strong>
-                    <p>Left Stile</p>
-                  </strong>
-                  <Field
-                    name={`${table}.leftStile`}
-                    type="text"
-                    component={renderNumber}
-                    label="leftStile"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-                <td>
-                  <strong>
-                    <p>Right Stile</p>
-                  </strong>
-                  <Field
-                    name={`${table}.rightStile`}
-                    type="text"
-                    component={renderNumber}
-                    label="rightStile"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>
-                    <p>Top Rail Length</p>
-                  </strong>
-                  <Field
-                    name={`${table}.topRail_length`}
-                    type="text"
-                    component={renderNumber}
-                    label="topRail"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-                <td>
-                  <strong>
-                    <p>Bottom Rail Length</p>
-                  </strong>
-                  <Field
-                    name={`${table}.bottomRail_length`}
-                    type="text"
-                    component={renderNumber}
-                    label="bottomRail"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-
-                <td>
-                  <strong>
-                    <p>Left Stile Length</p>
-                  </strong>
-                  <Field
-                    name={`${table}.leftStile_length`}
-                    type="text"
-                    component={renderNumber}
-                    label="leftStile"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-                <td>
-                  <strong>
-                    <p>Right Stile Length</p>
-                  </strong>
-                  <Field
-                    name={`${table}.rightStile_length`}
-                    type="text"
-                    component={renderNumber}
-                    label="rightStile"
-                    edit={construction === 'Miter' ? true : edit}
-                    validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
-                  />
-                </td>
-              </tr>
-
-         
-
               <tr>
                 <td>
                   <strong>
@@ -1115,187 +300,177 @@ const DoorTable = ({
                   />
                 </td>
               </tr>
-
-              {!edit ? (
-                <tr>
-                  <td>
-                    <ButtonGroup vertical>
-                      <Button
-                        onClick={(e) => changeFraming(e, index)}
-                        color="primary"
-                        name="update_framing"
-                      >
-                        Update Framing
-                      </Button>
-                      <Button
-                        onClick={(e) => changeFraming(e, index)}
-                        color="primary"
-                        name="default_framing"
-                      >
-                        Default Framing
-                      </Button>
-                    </ButtonGroup>
-                  </td>
-                </tr>
-              ) : null}
-
-              <Row>
-                <p className="ml-3">*Finish Stile/Rail Sizes*</p>
-              </Row>
-              <tr />
             </tbody>
           </Table>
 
+          <div style={styles}>
+            {stiles.map((i, index) => {
+              return (
+                <div>
+                  <Row>
+                    <Col>
+                      <strong>Stile {index + 1}</strong>
+                      <Table>
+                        <tr>
+                          <td>
+                            <strong>
+                              <p>Stile Width</p>
+                            </strong>
+                            <Field
+                              name={`${table}.stile_width_${index}`}
+                              type="text"
+                              component={renderNumber}
+                              label="width"
+                              validate={[required]}
+                              edit={edit}
+                            />
+                          </td>
+                          <td>
+                            <strong>
+                              <p>Stile Length</p>
+                            </strong>
+                            <Field
+                              name={`${table}.stile_length_${index}`}
+                              type="text"
+                              component={renderNumber}
+                              label="height"
+                              validate={[required]}
+                              edit={edit}
+                            />
+                          </td>
+                        </tr>
+                      </Table>
+                    </Col>
+                  </Row>
 
-          {panels.map((i, index) => {
-            return (
-              <div>
-                <Row>
-                  <Col>
-                    <strong>Panels Section {index + 1}</strong>
-                    <Table>
-                      <tr>
-                        <td>
-                          <strong>
-                            <p>Area Height</p>
-                          </strong>
-                          <Field
-                            name={`${table}.topRail`}
-                            type="text"
-                            component={renderNumber}
-                            label="topRail"
-                            edit={construction === 'Miter' ? true : edit}
-                            validate={required}
-                            onChange={(e) => (
-                              registerChange(index, e), onStileOrRailChange(e, index)
-                            )}
-                          />
-                        </td>
-                        <td>
-                          <strong>
-                            <p>Area Width</p>
-                          </strong>
-                          <Field
-                            name={`${table}.bottomRail`}
-                            type="text"
-                            component={renderNumber}
-                            label="bottomRail"
-                            edit={construction === 'Miter' ? true : edit}
-                            validate={required}
-                            onChange={(e) => (
-                              registerChange(index, e), onStileOrRailChange(e, index)
-                            )}
-                          />
-                        </td>
-                      </tr>
-                    </Table>
-                  </Col>
-                </Row>
-                {panels[index].map((j, k) => {
-                  return (
-                    <Row>
-                      <Col>
-                        <strong>Panels High</strong>
-                        <Table>
-                          <tr>
-                            <td>
-                              <strong>
-                                <p>Panel Height</p>
-                              </strong>
-                              <Field
-                                name={`${table}.topRail`}
-                                type="text"
-                                component={renderNumber}
-                                label="topRail"
-                                edit={construction === 'Miter' ? true : edit}
-                                validate={required}
-                                onChange={(e) => (
-                                  registerChange(index, e), onStileOrRailChange(e, index)
-                                )}
-                              />
-                            </td>
-                            <td>
-                              <strong>
-                                <p>Panel Width</p>
-                              </strong>
-                              <Field
-                                name={`${table}.bottomRail`}
-                                type="text"
-                                component={renderNumber}
-                                label="bottomRail"
-                                edit={construction === 'Miter' ? true : edit}
-                                validate={required}
-                                onChange={(e) => (
-                                  registerChange(index, e), onStileOrRailChange(e, index)
-                                )}
-                              />
-                            </td>
-                            <td>
-                              <strong>
-                                <p>H. Mid Rail Width</p>
-                              </strong>
-                              <Field
-                                name={`${table}.bottomRail`}
-                                type="text"
-                                component={renderNumber}
-                                label="bottomRail"
-                                edit={construction === 'Miter' ? true : edit}
-                                validate={required}
-                                onChange={(e) => (
-                                  registerChange(index, e), onStileOrRailChange(e, index)
-                                )}
-                              />
-                            </td>
-                            <td>
-                              <strong>
-                                <p>H. Mid Rail Length</p>
-                              </strong>
-                              <Field
-                                name={`${table}.bottomRail`}
-                                type="text"
-                                component={renderNumber}
-                                label="bottomRail"
-                                edit={construction === 'Miter' ? true : edit}
-                                validate={required}
-                                onChange={(e) => (
-                                  registerChange(index, e), onStileOrRailChange(e, index)
-                                )}
-                              />
-                            </td>
-                          </tr>
-                        </Table>
-                      </Col>
-                    </Row>
-                  );
-                })}
-                <Row>
-                  <Col>
-                    <Button onClick={() => setPanels(panels => [[...panels[index], []]])}>
-                      Add Panels H
-                    </Button>
-                    <Button onClick={() => setPanels(panels => [[...panels[index], []]])}>
-                      Add Panels W
-                    </Button>
-                  </Col>
-                </Row>
-                <hr />
-              </div>
-            );
-          })}
+                </div>
+              );
+            })}
+            <Row>
+              <Col>
+                <Button onClick={() => setStiles(stiles => [...stiles, []])}>
+                    Add Stiles
+                </Button>
+              </Col>
+            </Row>
 
+          </div>
 
-          <Row>
-            <Col>
-              <Button onClick={() => setPanels(panels => [...panels, []])}>
-                    Add Panels H
-              </Button>
-              <Button onClick={() => setPanels(panels => [...panels, []])}>
-                    Add Panels W
-              </Button>
-            </Col>
-          </Row>
+          <hr />
 
-          <Row>
+          <div style={styles}>
+
+            {rails.map((i, index) => {
+              return (
+                <div>
+                  <Row>
+                    <Col>
+                      <strong>Rail {index + 1}</strong>
+                      <Table>
+                        <tr>
+                          <td>
+                            <strong>
+                              <p>Rail Width</p>
+                            </strong>
+                            <Field
+                              name={`${table}.rail_width_${index}`}
+                              type="text"
+                              component={renderNumber}
+                              label="width"
+                              validate={[required]}
+                              edit={edit}
+                            />
+                          </td>
+                          <td>
+                            <strong>
+                              <p>Rail Length</p>
+                            </strong>
+                            <Field
+                              name={`${table}.rail_length_${index}`}
+                              type="text"
+                              component={renderNumber}
+                              label="height"
+                              validate={[required]}
+                              edit={edit}
+                            />
+                          </td>
+                        </tr>
+                      </Table>
+                    </Col>
+                  </Row>
+
+                </div>
+              );
+            })}
+            <Row>
+              <Col>
+                <Button onClick={() => setRails(rails => [...rails, []])}>
+                    Add Rails
+                </Button>
+              </Col>
+            </Row>
+
+          </div>
+
+          <hr />
+
+          <div style={styles}>
+
+            {panels.map((i, index) => {
+              return (
+                <div>
+                  <Row>
+                    <Col>
+                      <strong>Panel {index + 1}</strong>
+                      <Table>
+                        <tr>
+                          <td>
+                            <strong>
+                              <p>Panel Width</p>
+                            </strong>
+                            <Field
+                              name={`${table}.panel_width_${index}`}
+                              type="text"
+                              component={renderNumber}
+                              label="width"
+                              validate={[required]}
+                              edit={edit}
+                            />
+                          </td>
+                          <td>
+                            <strong>
+                              <p>Panel Height</p>
+                            </strong>
+                            <Field
+                              name={`${table}.panel_height_${index}`}
+                              type="text"
+                              component={renderNumber}
+                              label="height"
+                              validate={[required]}
+                              edit={edit}
+                            />
+                          </td>
+                        </tr>
+                      </Table>
+                    </Col>
+                  </Row>
+
+                </div>
+              );
+            })}
+            <Row>
+              <Col>
+                <Button onClick={() => setPanels(panels => [...panels, []])}>
+                    Add Panels
+                </Button>
+              </Col>
+            </Row>
+
+          </div>
+
+          <hr />
+
+          {/* <Row>
             <Col lg="2">
               <FormGroup>
                 <strong>Show Builder</strong>
@@ -1322,9 +497,9 @@ const DoorTable = ({
                   </FormGroup>
                 ) : null}
             </Col>
-          </Row>
+          </Row> */}
 
-          <Row>
+          {/* <Row>
             <Col>
               {formState.part_list[i]?.dimensions[index]?.showBuilder ? (
                 <div
@@ -1343,111 +518,9 @@ const DoorTable = ({
                 <div />
               )}
             </Col>
-          </Row>
+          </Row> */}
 
-          {formState?.part_list[i]?.dimensions[index]?.unevenCheck ? (
-            <div className="mb-3">
-              <Row>
-                {Array.from(
-                  Array(
-                    parseInt(formState.part_list[i]?.dimensions[index]?.panelsH)
-                      ? parseInt(
-                          formState.part_list[i]?.dimensions[index]?.panelsH
-                      )
-                      : 0
-                  ).keys()
-                )
-                  .slice(1)
-                  .map((i, index) => {
-                    return (
-                      <div>
-                        <Col />
-                        <Col>
-                          <div
-                            style={{ textAlign: 'center', marginTop: '10px' }}
-                          >
-                            <strong>Panel Opening {index + 1}</strong>
-                            <p>From Top of Door to Top of Mullion</p>
-                          </div>
 
-                          <Field
-                            name={`${table}.unevenSplitInput${index}`}
-                            component={renderField}
-                            edit={edit}
-                            validate={required}
-                          />
-
-                          <div
-                            style={{ textAlign: 'center', marginTop: '0px' }}
-                          >
-                            <p>In Inches</p>
-                          </div>
-                        </Col>
-                        <Col />
-                      </div>
-                    );
-                  })}
-              </Row>
-            </div>
-          ) : null}
-
-          <div>
-            <Row>
-              {Array.from(
-                formState.part_list[i]?.dimensions[index]?.panelsH
-                  ? Array(
-                    parseInt(
-                        formState.part_list[i]?.dimensions[index]?.panelsH
-                    )
-                  ).keys()
-                  : 0
-              ).map((i, k) => {
-                return (
-                  <Col lg="2">
-                    <FormGroup>
-                      <strong>Glass Opening {k + 1}</strong>
-                      <Field
-                        name={`${table}.glass_check_${k}`}
-                        component={renderCheckboxToggle}
-                        edit={edit}
-                        onClick={() => validateGlass(i, index)}
-                      />
-                    </FormGroup>
-                  </Col>
-                );
-              })}
-            </Row>
-            <Row>
-              {Array.from(
-                formState.part_list[i]?.dimensions[index]?.panelsH
-                  ? Array(
-                    parseInt(
-                        formState.part_list[i]?.dimensions[index]?.panelsH
-                    )
-                  ).keys()
-                  : 0
-              ).map((l, k) => {
-                return eval(
-                  `formState.part_list[i]?.dimensions[index]?.glass_check_${k}`
-                ) ? (
-                    <Col lg="2">
-                      <FormGroup>
-                        <strong>Opening {k + 1} Options</strong>
-                        <Field
-                          name={`${table}.lite_${k}`}
-                          component={renderDropdownList}
-                          data={lites}
-                          dataKey="value"
-                          textField="NAME"
-                          validate={required}
-                          edit={edit}
-                        />
-                      </FormGroup>
-                    </Col>
-                  ) : null;
-              })}
-            </Row>
-          </div>
 
           <Row>
             <Col xs="5">
@@ -1460,20 +533,7 @@ const DoorTable = ({
                     component={renderTextField}
                     edit={edit}
                     label="notes"
-                    validate={
-                      glass_note_check(index) ? [required, trim_val] : null
-                    }
                   />
-                  {parseInt(
-                    formState.part_list[i]?.dimensions[index]?.panelsH
-                  ) > 1 &&
-                  parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) <
-                    3 &&
-                  parseInt(
-                    formState.part_list[i]?.dimensions[index]?.panelsW
-                  ) === 1 ? null : (
-                      <strong>Please Specify in Notes if Uneven</strong>
-                    )}
                 </Col>
 
                 <Col lg="2">

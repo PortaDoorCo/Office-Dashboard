@@ -285,80 +285,84 @@ class Door extends Component {
 
         <hr />
 
-        <Row>
-          <Col>
-            <h5>
-              <strong>Default Framing Size</strong>
-            </h5>
-          </Col>
-        </Row>
+        {orderType === 'Custom' ? null :
+          <div>
+            <Row>
+              <Col>
+                <h5>
+                  <strong>Default Framing Size</strong>
+                </h5>
+              </Col>
+            </Row>
 
-        <Row>
-          <Col>
-            <FormGroup>
-              <Label htmlFor="arches">
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="arches">
                 Top Rail{' '}
-                {topRailAdd > 0 ? `+ Arch ${fraction(topRailAdd)}"` : null}
-              </Label>
-              <Field
-                name={`${part}.topRail`}
-                type="text"
-                component={renderNumber}
-                label="topRail"
-                edit={construction === 'Miter' ? true : edit}
-                validate={required}
-                onChange={(e) => this.onChange(e)}
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label htmlFor="arches">
+                    {topRailAdd > 0 ? `+ Arch ${fraction(topRailAdd)}"` : null}
+                  </Label>
+                  <Field
+                    name={`${part}.topRail`}
+                    type="text"
+                    component={renderNumber}
+                    label="topRail"
+                    edit={construction === 'Miter' ? true : edit}
+                    validate={required}
+                    onChange={(e) => this.onChange(e)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="arches">
                 Bottom Rail{' '}
-                {bottomRailAdd > 0
-                  ? `+ Arch ${fraction(bottomRailAdd)}"`
-                  : null}
-              </Label>
-              <Field
-                name={`${part}.bottomRail`}
-                type="text"
-                component={renderNumber}
-                label="bottomRail"
-                edit={construction === 'Miter' ? true : edit}
-                validate={required}
-                onChange={(e) => this.onChange(e)}
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label htmlFor="arches">Left Stile</Label>
-              <Field
-                name={`${part}.leftStile`}
-                type="text"
-                component={renderNumber}
-                label="leftStile"
-                edit={construction === 'Miter' ? true : edit}
-                validate={required}
-                onChange={(e) => this.onChange(e)}
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label htmlFor="arches">Right Stile</Label>
-              <Field
-                name={`${part}.rightStile`}
-                type="text"
-                component={renderNumber}
-                label="rightStile"
-                edit={construction === 'Miter' ? true : edit}
-                validate={required}
-                onChange={(e) => this.onChange(e)}
-              />
-            </FormGroup>
-          </Col>
-        </Row>
+                    {bottomRailAdd > 0
+                      ? `+ Arch ${fraction(bottomRailAdd)}"`
+                      : null}
+                  </Label>
+                  <Field
+                    name={`${part}.bottomRail`}
+                    type="text"
+                    component={renderNumber}
+                    label="bottomRail"
+                    edit={construction === 'Miter' ? true : edit}
+                    validate={required}
+                    onChange={(e) => this.onChange(e)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="arches">Left Stile</Label>
+                  <Field
+                    name={`${part}.leftStile`}
+                    type="text"
+                    component={renderNumber}
+                    label="leftStile"
+                    edit={construction === 'Miter' ? true : edit}
+                    validate={required}
+                    onChange={(e) => this.onChange(e)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="arches">Right Stile</Label>
+                  <Field
+                    name={`${part}.rightStile`}
+                    type="text"
+                    component={renderNumber}
+                    label="rightStile"
+                    edit={construction === 'Miter' ? true : edit}
+                    validate={required}
+                    onChange={(e) => this.onChange(e)}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+
+          </div> }
 
         <hr />
 
