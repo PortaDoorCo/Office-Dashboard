@@ -150,21 +150,7 @@ const DoorTable = ({
 
     fields.push({
       qty: 1,
-      panelsH: 1,
-      panelsW: 1,
-      // leftStile: leftStile ? leftStile : defaultLeftStile,
-      // rightStile: rightStile ? rightStile : defaultRightStile,
-      // topRail: topRail ? topRail : defaultTopRail,
-      // bottomRail: bottomRail ? bottomRail : defaultBottomRail,
-      horizontalMidRailSize: 0,
-      verticalMidRailSize: 0,
-      unevenSplitInput: '0',
-      showBuilder: false,
-      unevenCheck: false,
-      unevenSplit: false,
       notes: '',
-      glass_check_0:
-        formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
     });
   };
 
@@ -309,7 +295,7 @@ const DoorTable = ({
                 <div>
                   <Row>
                     <Col>
-                      <strong>Stile {index + 1}</strong>
+                      <strong>Stile #{index + 1}</strong>
                       <Table>
                         <tr>
                           <td>
@@ -365,7 +351,7 @@ const DoorTable = ({
                 <div>
                   <Row>
                     <Col>
-                      <strong>Rail {index + 1}</strong>
+                      <strong>Rail #{index + 1}</strong>
                       <Table>
                         <tr>
                           <td>
@@ -421,7 +407,7 @@ const DoorTable = ({
                 <div>
                   <Row>
                     <Col>
-                      <strong>Panel {index + 1}</strong>
+                      <strong>Panel #{index + 1}</strong>
                       <Table>
                         <tr>
                           <td>
@@ -448,6 +434,15 @@ const DoorTable = ({
                               label="height"
                               validate={[required]}
                               edit={edit}
+                            />
+                          </td>
+                          <td>
+                            <strong>
+                              <p>Glass</p>
+                            </strong>
+                            <Field
+                              name={`${table}.panel_glass_${index}`}
+                              component={renderCheckboxToggle}
                             />
                           </td>
                         </tr>
