@@ -334,7 +334,7 @@ const DoorTable = ({
             })}
             <Row>
               <Col>
-                <Button onClick={() => setStiles(stiles => [...stiles, []])}>
+                <Button color="primary" onClick={() => setStiles(stiles => [...stiles, []])}>
                     Add Stiles
                 </Button>
               </Col>
@@ -390,7 +390,7 @@ const DoorTable = ({
             })}
             <Row>
               <Col>
-                <Button onClick={() => setRails(rails => [...rails, []])}>
+                <Button color="primary" onClick={() => setRails(rails => [...rails, []])}>
                     Add Rails
                 </Button>
               </Col>
@@ -436,15 +436,6 @@ const DoorTable = ({
                               edit={edit}
                             />
                           </td>
-                          <td>
-                            <strong>
-                              <p>Glass</p>
-                            </strong>
-                            <Field
-                              name={`${table}.panel_glass_${index}`}
-                              component={renderCheckboxToggle}
-                            />
-                          </td>
                         </tr>
                       </Table>
                     </Col>
@@ -455,7 +446,7 @@ const DoorTable = ({
             })}
             <Row>
               <Col>
-                <Button onClick={() => setPanels(panels => [...panels, []])}>
+                <Button color="primary" onClick={() => setPanels(panels => [...panels, []])}>
                     Add Panels
                 </Button>
               </Col>
