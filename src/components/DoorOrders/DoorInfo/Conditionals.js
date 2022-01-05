@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Door from './Door/Door';
+import Custom from './Door/Custom';
 import DF from './DF/DF';
 import FaceFrame from './Face_Frame/FaceFrame';
 import SlabDoor from './Slab_Door/Slab_Door';
@@ -31,6 +32,24 @@ class Conditionals extends Component {
                 />
               );
               break;
+            default:
+              component = (
+                <Door
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={false}
+                  updateSubmit={updateSubmit}
+                />
+              );
+              break;
+          }
+          break;
+        case 'Custom':
+          switch (formState.part_list[index].construction.value) {
             default:
               component = (
                 <Door

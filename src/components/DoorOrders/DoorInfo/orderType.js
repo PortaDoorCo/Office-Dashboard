@@ -23,6 +23,10 @@ const orderType = [
     name: 'Two Piece DF',
     value: 'Two_Piece_DF',
   },
+  {
+    name: 'Custom',
+    value: 'Custom',
+  },
 ];
 
 export default orderType;

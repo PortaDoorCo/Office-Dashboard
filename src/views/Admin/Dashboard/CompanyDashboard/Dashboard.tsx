@@ -144,7 +144,7 @@ class Dashboard extends Component<PropTypes, StateTypes> {
               <Row className="mb-5">
                 <Col style={{ height: 600 }}>
                   <Suspense fallback={loading()}>
-                    <Maps  />
+                    {/* <Maps  /> */}
                   </Suspense>
                 </Col>
               </Row>

@@ -8,7 +8,6 @@ import {
   renderNumber,
 } from '../../../RenderInputs/renderInputs';
 import Table from '../../Table/Door/Table';
-import CustomTable from '../../Table/Door/Custom';
 import {
   linePriceSelector,
   itemPriceSelector,
@@ -24,22 +23,27 @@ import ModalUtil from '../../../../utils/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
 
+
 class Door extends Component {
+
+
   state = {
     title: 'Reminder',
     message: 'The Edge You Selected Cannot Be Drilled For Concealed Hinges',
-    modal: false,
+    modal: false
   };
 
   toggle = () => {
-    this.setState({ modal: !this.state.modal });
-  };
+    this.setState({modal: !this.state.modal});
+  }
 
   lipWarning = () => {
     const { dispatch, index, part, formState } = this.props;
     const edge = formState?.part_list[index]?.edge;
 
-    switch (edge?.NAME) {
+    
+
+    switch(edge?.NAME) {
       case 'A Lip':
         // code block
         this.toggle();
@@ -81,7 +85,12 @@ class Door extends Component {
         // code block
         return null;
     }
-  };
+
+  }
+
+
+
+
 
   onChange = (e) => {
     const { dispatch, index, part, formState } = this.props;
@@ -92,44 +101,30 @@ class Door extends Component {
     const bottomRail = formState?.part_list[index]?.bottomRail;
 
     const value = e.target?.value;
+    
+    if(e.target?.name.includes('leftStile')){
+      dispatch(
+        change('Order', `part_list[${index}].notes`, `Left Stile: ${e.target.value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`)
+      );
+    }
+    if(e.target?.name.includes('rightStile')){
+      dispatch(
+        change('Order', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`)
+      );
+    }
+    if(e.target?.name.includes('topRail')){
+      dispatch(
+        change('Order', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`)
+      );
+    }
+    if(e.target?.name.includes('bottomRail')){
+      dispatch(
+        change('Order', `part_list[${index}].notes`, `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`)
+      );
+    } 
 
-    if (e.target?.name.includes('leftStile')) {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${index}].notes`,
-          `Left Stile: ${e.target.value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target?.name.includes('rightStile')) {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${index}].notes`,
-          `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target?.name.includes('topRail')) {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${index}].notes`,
-          `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target?.name.includes('bottomRail')) {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${index}].notes`,
-          `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-        )
-      );
-    }
-  };
+  }
+
 
   render() {
     const {
@@ -154,12 +149,8 @@ class Door extends Component {
     let construction = formState?.part_list[index]?.construction?.value;
     let orderType = formState?.part_list[index]?.orderType?.value;
     let thickness = formState?.part_list[index]?.thickness?.db_name;
-    let topRailAdd = formState?.part_list[index]?.design?.TOP_RAIL_ADD
-      ? formState?.part_list[index]?.design?.TOP_RAIL_ADD
-      : 0;
-    let bottomRailAdd = formState?.part_list[index]?.design?.BTM_RAIL_ADD
-      ? formState?.part_list[index]?.design?.BTM_RAIL_ADD
-      : 0;
+    let topRailAdd = formState?.part_list[index]?.design?.TOP_RAIL_ADD ? formState?.part_list[index]?.design?.TOP_RAIL_ADD : 0;
+    let bottomRailAdd = formState?.part_list[index]?.design?.BTM_RAIL_ADD ? formState?.part_list[index]?.design?.BTM_RAIL_ADD : 0;
 
     const filtered_woodtypes = woodtypes.filter((wood) => wood[thickness]);
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
@@ -296,10 +287,7 @@ class Door extends Component {
         <Row>
           <Col>
             <FormGroup>
-              <Label htmlFor="arches">
-                Top Rail{' '}
-                {topRailAdd > 0 ? `+ Arch ${fraction(topRailAdd)}"` : null}
-              </Label>
+              <Label htmlFor="arches">Top Rail {topRailAdd > 0 ? `+ Arch ${fraction(topRailAdd)}"` : null}</Label>
               <Field
                 name={`${part}.topRail`}
                 type="text"
@@ -313,12 +301,7 @@ class Door extends Component {
           </Col>
           <Col>
             <FormGroup>
-              <Label htmlFor="arches">
-                Bottom Rail{' '}
-                {bottomRailAdd > 0
-                  ? `+ Arch ${fraction(bottomRailAdd)}"`
-                  : null}
-              </Label>
+              <Label htmlFor="arches">Bottom Rail {bottomRailAdd > 0 ? `+ Arch ${fraction(bottomRailAdd)}"` : null}</Label>
               <Field
                 name={`${part}.bottomRail`}
                 type="text"
@@ -358,6 +341,7 @@ class Door extends Component {
               />
             </FormGroup>
           </Col>
+
         </Row>
 
         <hr />
@@ -384,38 +368,20 @@ class Door extends Component {
             <strong>Dimensions</strong>
           </CardSubtitle>
           <div className="mt-1" />
-
-          {orderType === 'Custom' ? (
-            <FieldArray
-              name={`${part}.dimensions`}
-              component={CustomTable}
-              i={index}
-              prices={prices}
-              subTotal={subTotal}
-              part_list={part_list}
-              formState={formState}
-              isValid={isValid}
-              part={part}
-              edit={edit}
-              addPrice={addPrice}å
-              updateSubmit={updateSubmit}
-            />
-          ) : (
-            <FieldArray
-              name={`${part}.dimensions`}
-              component={Table}
-              i={index}
-              prices={prices}
-              subTotal={subTotal}
-              part_list={part_list}
-              formState={formState}
-              isValid={isValid}
-              part={part}
-              edit={edit}
-              addPrice={addPrice}
-              updateSubmit={updateSubmit}
-            />
-          )}
+          <FieldArray
+            name={`${part}.dimensions`}
+            component={Table}
+            i={index}
+            prices={prices}
+            subTotal={subTotal}
+            part_list={part_list}
+            formState={formState}
+            isValid={isValid}
+            part={part}
+            edit={edit}
+            addPrice={addPrice}
+            updateSubmit={updateSubmit}
+          />
         </div>
       </div>
     );
