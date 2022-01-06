@@ -14,8 +14,9 @@ import moment from 'moment';
 const Tracking = (props) => {
   const { orders } = props;
   const [activeTab, setActiveTab] = useState('1');
+  const [sortedDates, setSortedDate] = useState(orders.sort((a, b) => a.dueDate - b.dueDate));
   const [startDate, setStartDate] = useState(moment(new Date()));
-  const [endDate, setEndDate] = useState(moment(new Date()));
+  const [endDate, setEndDate] = useState(moment(sortedDates[0].dueDate));
   const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
@@ -26,14 +27,17 @@ const Tracking = (props) => {
 
   useEffect(() => {
     const filteredOrders = orders.filter(item => {
-      let date = new Date(item.created_at);
+      let date = new Date(item.dueDate);
       return moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf();
     });
     setData(filteredOrders);
 
+
   }, [startDate, endDate, orders]);
 
-  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].created_at) : new Date();
+
+
+  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].dueDate) : new Date();
 
   return (
     <div>
