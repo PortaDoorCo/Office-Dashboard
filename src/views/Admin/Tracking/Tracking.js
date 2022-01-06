@@ -16,7 +16,7 @@ const Tracking = (props) => {
   const [activeTab, setActiveTab] = useState('1');
   const [sortedDates, setSortedDate] = useState(orders.sort((a, b) => a.dueDate - b.dueDate));
   const [startDate, setStartDate] = useState(moment(new Date()));
-  const [endDate, setEndDate] = useState(moment(sortedDates[0].dueDate));
+  const [endDate, setEndDate] = useState(moment(sortedDates[0]?.dueDate));
   const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
