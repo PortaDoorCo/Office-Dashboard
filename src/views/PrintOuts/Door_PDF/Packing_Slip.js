@@ -21,7 +21,11 @@ export default (data, breakdowns) => {
           : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
             ? ''
             : ''
-    } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
+    } ${
+      i.construction.value === 'MT' || i.construction.value === 'Miter'
+        ? i.construction.value
+        : ''
+    } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
 
   // let itemNum = 0;
@@ -43,8 +47,7 @@ export default (data, breakdowns) => {
   // };
 
   const a = Glass_Selection(data).map((v) => {
-
-    console.log({v});
+    console.log({ v });
 
     return {
       ...v,
@@ -74,7 +77,6 @@ export default (data, breakdowns) => {
     ];
 
     const b = i.dimensions.sort((a, b) => numQty(b.height) - numQty(a.height));
-
 
     b.forEach((item, index) => {
       tableBody.push([
@@ -114,110 +116,117 @@ export default (data, breakdowns) => {
     });
 
     return [
-      index === 0 && data.job_info?.Shop_Notes
-        ? {
-          columns: [
-            { text: '' },
-            {
-              text: `${
-            data.job_info?.Shop_Notes
-              ? data.job_info?.Shop_Notes?.toUpperCase()
-              : ''
-              }`,
-              alignment: 'center',
-              style: 'fontsBold',
-            },
-            { text: '' },
-          ],
-          margin: [0, -26, 0, 0],
-        } : null,
       {
-        margin: [0, 10, 0, 0],
-        columns: [
+        unbreakable: true,
+        stack: [
+          index === 0 && data.job_info?.Shop_Notes
+            ? {
+              columns: [
+                { text: '' },
+                {
+                  text: `${
+                      data.job_info?.Shop_Notes
+                        ? data.job_info?.Shop_Notes?.toUpperCase()
+                        : ''
+                  }`,
+                  alignment: 'center',
+                  style: 'fontsBold',
+                },
+                { text: '' },
+              ],
+              margin: [0, -26, 0, 0],
+            }
+            : null,
           {
-            stack: [
+            unbreakable: true,
+            margin: [0, 10, 0, 0],
+            columns: [
               {
-                text: `${i.orderType ? i.orderType.name : ''}`,
-                style: 'fonts',
+                stack: [
+                  {
+                    text: `${i.orderType ? i.orderType.name : ''}`,
+                    style: 'fonts',
+                  },
+                  {
+                    text: `${i.woodtype.NAME} - ${
+                      i.thickness.value === 1 || i.thickness.value === 2
+                        ? '4/4'
+                        : i.thickness.value === 3 || i.thickness.value === 4
+                          ? '5/4'
+                          : ''
+                    }`,
+                    style: 'woodtype',
+                    width: 370,
+                  },
+                ],
               },
               {
-                text: `${i.woodtype.NAME} - ${
-                  i.thickness.value === 1 || i.thickness.value === 2
-                    ? '4/4'
-                    : i.thickness.value === 3 || i.thickness.value === 4
-                      ? '5/4'
-                      : ''
-                }`,
-                style: 'woodtype',
-                width: 370,
+                stack: [
+                  {
+                    text: '',
+                    alignment: 'left',
+                    style: 'fontsBold',
+                    width: 80,
+                  },
+                  i.edge
+                    ? {
+                      text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
+                      alignment: 'right',
+                      style: 'fonts',
+                    }
+                    : null,
+                  {
+                    text: `Panel: ${
+                      i.panel
+                        ? i.panel.NAME
+                        : i.construction.value === 'Slab'
+                          ? 'Slab'
+                          : 'Glass'
+                    }`,
+                    alignment: 'right',
+                    style: 'woodtype',
+                  },
+                ],
               },
             ],
           },
+          // {
+          //   text:
+          //     '==============================================================================',
+          //   alignment: 'center',
+          // },
           {
-            stack: [
-              {
-                text: '',
-                alignment: 'left',
-                style: 'fontsBold',
-                width: 80,
+            table: {
+              headerRows: 1,
+              widths: [22, 50, 20, '*', '*', '*', '*'],
+              body: tableBody,
+            },
+            layout: {
+              hLineWidth: function (i, node) {
+                return i === 1 ? 1 : 0;
               },
-              i.edge
-                ? {
-                  text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
-                  alignment: 'right',
-                  style: 'fonts',
+              vLineWidth: function (i, node) {
+                return 0;
+              },
+              hLineStyle: function (i, node) {
+                if (i === 0 || i === node.table.body.length) {
+                  return null;
                 }
-                : null,
-              {
-                text: `Panel: ${
-                  i.panel
-                    ? i.panel.NAME
-                    : i.construction.value === 'Slab'
-                      ? 'Slab'
-                      : 'Glass'
-                }`,
-                alignment: 'right',
-                style: 'woodtype',
+                return { dash: { length: 1, space: 1 } };
               },
-            ],
+              paddingLeft: function (i) {
+                return i === 0 ? 0 : 8;
+              },
+              paddingRight: function (i, node) {
+                return i === node.table.widths.length - 1 ? 0 : 8;
+              },
+            },
+          },
+          {
+            text: '==============================================================================',
+            alignment: 'center',
           },
         ],
-      },
-      // {
-      //   text:
-      //     '==============================================================================',
-      //   alignment: 'center',
-      // },
-      {
-        table: {
-          headerRows: 1,
-          widths: [22, 50, 20, '*', '*', '*', '*'],
-          body: tableBody,
-        },
-        layout: {
-          hLineWidth: function (i, node) {
-            return i === 1 ? 1 : 0;
-          },
-          vLineWidth: function (i, node) {
-            return 0;
-          },
-          hLineStyle: function (i, node) {
-            if (i === 0 || i === node.table.body.length) {
-              return null;
-            }
-            return { dash: { length: 1, space: 1 } };
-          },
-          paddingLeft: function (i) {
-            return i === 0 ? 0 : 8;
-          },
-          paddingRight: function (i, node) {
-            return i === node.table.widths.length - 1 ? 0 : 8;
-          },
-        },
-      },
-      {
-        text: '==============================================================================',
-        alignment: 'center',
       },
 
       // { text: '', pageBreak: 'before' }
@@ -227,135 +236,143 @@ export default (data, breakdowns) => {
   // const table_body = [];
 
   return [
-
     table_body,
     {
-      columns: [
+      unbreakable: true,
+      stack: [
         {
-          text: 'OTHER ITEMS',
-          style: 'woodtype',
-          decoration: 'underline',
-          width: 160,
+          unbreakable: true,
+          columns: [
+            {
+              text: 'OTHER ITEMS',
+              style: 'woodtype',
+              decoration: 'underline',
+              width: 160,
+            },
+            {
+              text: 'QTY',
+              style: 'woodtype',
+              decoration: 'underline',
+            },
+          ],
+        },
+        data.misc_items.length > 0
+          ? {
+            unbreakable: true,
+            columns: [
+              {
+                text: data.misc_items.map((i) => {
+                  return `${
+                    i.item ? i.item.NAME : i.item2 ? i.item2 : ''
+                  } \n`;
+                }),
+                style: 'fonts',
+                width: 170,
+              },
+              {
+                style: 'fonts',
+                stack: data.misc_items.map((i) => {
+                  return { text: i.qty ? parseInt(i.qty) : '' };
+                }),
+                width: 30,
+              },
+            ],
+            margin: [0, 2, 0, 0],
+          }
+          : null,
+        {
+          margin: [0, 10, 0, 10],
+          columns: [
+            {
+              text: '',
+              width: 200,
+            },
+            {
+              text: 'Checked By: ______________',
+              style: 'totals',
+              width: 160,
+            },
+            {
+              text: `Payment Method: ${
+                data.companyprofile && data.companyprofile.PMT_TERMS
+              }`,
+              style: 'totals',
+              width: 200,
+            },
+          ],
         },
         {
-          text: 'QTY',
-          style: 'woodtype',
-          decoration: 'underline',
-        },
-      ],
-    },
-    data.misc_items.length > 0
-      ? {
-        columns: [
-          {
-            text: data.misc_items.map((i) => {
-              return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
-            }),
-            style: 'fonts',
-            width: 170,
-          },
-          {
-            style: 'fonts',
-            stack: data.misc_items.map((i) => {
-              return { text: i.qty ? parseInt(i.qty) : '' };
-            }),
-            width: 30,
-          },
-        ],
-        margin: [0, 2, 0, 0],
-      }
-      : null,
-    {
-      margin: [0, 10, 0, 10],
-      columns: [
-        {
-          text: '',
-          width: 200,
+          columns: [
+            {
+              text: `Qty Doors: ${qty.reduce((acc, item) => acc + item, 0)}`,
+              style: 'totals',
+              width: 200,
+            },
+            {
+              text: 'Packed By:  _______________',
+              style: 'totals',
+              width: 347,
+            },
+            {
+              text: '',
+            },
+          ],
+          margin: [0, 0, 0, 10],
         },
         {
-          text: 'Checked By: ______________',
-          style: 'totals',
-          width: 160,
-        },
-        {
-          text: `Payment Method: ${
-            data.companyprofile && data.companyprofile.PMT_TERMS
-          }`,
-          style: 'totals',
-          width: 200,
-        },
-      ],
-    },
-    {
-      columns: [
-        {
-          text: `Qty Doors: ${qty.reduce((acc, item) => acc + item, 0)}`,
-          style: 'totals',
-          width: 200,
-        },
-        {
-          text: 'Packed By:  _______________',
-          style: 'totals',
-          width: 347,
-        },
-        {
-          text: '',
-        },
-      ],
-      margin: [0, 0, 0, 10],
-    },
-    {
-      columns: [
-        {
-          text: 'Drawer Fronts: 0',
-          style: 'totals',
-          width: 200,
-        },
+          columns: [
+            {
+              text: 'Drawer Fronts: 0',
+              style: 'totals',
+              width: 200,
+            },
 
-        {
-          text: 'Total Weight: _____________',
-          style: 'totals',
-          width: 347,
+            {
+              text: 'Total Weight: _____________',
+              style: 'totals',
+              width: 347,
+            },
+            {
+              text: '',
+            },
+          ],
+          margin: [0, 0, 0, 10],
         },
         {
-          text: '',
+          columns: [
+            {
+              text: `Ship Via: ${
+                data.job_info &&
+                data.job_info.shipping_method &&
+                data.job_info.shipping_method.NAME
+              }`,
+              style: 'totals',
+              width: 200,
+            },
+            {
+              text: 'Total # Inv\'s: ______________',
+              style: 'totals',
+              width: 347,
+            },
+          ],
+          margin: [0, 0, 0, 10],
+        },
+        {
+          columns: [
+            {
+              text: '',
+              style: 'totals',
+              width: 200,
+            },
+            {
+              text: 'Received In Good Condition: ___________________________',
+              style: 'totals',
+              width: 347,
+            },
+          ],
+          margin: [0, 0, 0, 10],
         },
       ],
-      margin: [0, 0, 0, 10],
-    },
-    {
-      columns: [
-        {
-          text: `Ship Via: ${
-            data.job_info &&
-            data.job_info.shipping_method &&
-            data.job_info.shipping_method.NAME
-          }`,
-          style: 'totals',
-          width: 200,
-        },
-        {
-          text: 'Total # Inv\'s: ______________',
-          style: 'totals',
-          width: 347,
-        },
-      ],
-      margin: [0, 0, 0, 10],
-    },
-    {
-      columns: [
-        {
-          text: '',
-          style: 'totals',
-          width: 200,
-        },
-        {
-          text: 'Received In Good Condition: ___________________________',
-          style: 'totals',
-          width: 347,
-        },
-      ],
-      margin: [0, 0, 0, 10],
     },
   ];
 };

@@ -88,9 +88,9 @@ export default (data, breakdowns) => {
             { text: '' },
             {
               text: `${
-            data.job_info?.Shop_Notes
-              ? data.job_info?.Shop_Notes?.toUpperCase()
-              : ''
+                  data.job_info?.Shop_Notes
+                    ? data.job_info?.Shop_Notes?.toUpperCase()
+                    : ''
               }`,
               alignment: 'center',
               style: 'fontsBold',
@@ -98,8 +98,10 @@ export default (data, breakdowns) => {
             { text: '' },
           ],
           margin: [0, -26, 0, 0],
-        } : null,
+        }
+        : null,
       {
+        unbreakable: true,
         margin: [0, 10, 0, 0],
         columns: [
           {

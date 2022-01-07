@@ -13,11 +13,12 @@ export default (data, breakdowns) => {
           : i.construction.value === 'Slab'
             ? 'Slab'
             : ''
-    } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
+    } ${
+      i.construction.value === 'MT' || i.construction.value === 'Miter'
+        ? i.construction.value
+        : ''
+    } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
-
-
-
 
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
   const b = a
@@ -53,23 +54,19 @@ export default (data, breakdowns) => {
       ],
     ];
     HeightSort(GlassSort(i)).forEach((item, index) => {
-
       if (
         // item.glass_index === 1 ||
         item.construction.value === 'Slab' ||
-          i.orderType.value === 'One_Piece' ||
-          i.orderType.value === 'One_Piece_DF' 
+        i.orderType.value === 'One_Piece' ||
+        i.orderType.value === 'One_Piece_DF'
       ) {
         return null;
       } else {
-
-        
-
         const n = {
           ...i,
           construction: item.construction,
           profile: item.profile,
-          design: item.design
+          design: item.design,
         };
 
         tableBody.push([
@@ -104,7 +101,6 @@ export default (data, breakdowns) => {
       }
     });
 
-
     return [
       index === 0 && data.job_info?.Shop_Notes
         ? {
@@ -112,9 +108,9 @@ export default (data, breakdowns) => {
             { text: '' },
             {
               text: `${
-              data.job_info?.Shop_Notes
-                ? data.job_info?.Shop_Notes?.toUpperCase()
-                : ''
+                  data.job_info?.Shop_Notes
+                    ? data.job_info?.Shop_Notes?.toUpperCase()
+                    : ''
               }`,
               alignment: 'center',
               style: 'fontsBold',
@@ -122,8 +118,10 @@ export default (data, breakdowns) => {
             { text: '' },
           ],
           margin: [0, -29, 0, 0],
-        } : null,
+        }
+        : null,
       {
+        unbreakable: true,
         margin: [0, 10, 0, 0],
         columns: [
           {
@@ -134,7 +132,9 @@ export default (data, breakdowns) => {
             width: 200,
           },
           {
-            text: `IP: ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}`,
+            text: `IP: ${
+              i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+            }`,
             style: 'woodtype',
             alignment: 'center',
           },
@@ -183,13 +183,9 @@ export default (data, breakdowns) => {
 
       // { text: '', pageBreak: 'before' }
     ];
-    
   });
 
   // const table_body = [];
 
-  return [
-    
-    table_body,
-  ];
+  return [table_body];
 };

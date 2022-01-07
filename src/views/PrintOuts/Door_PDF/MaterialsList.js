@@ -87,9 +87,6 @@ export default (data, breakdowns) => {
 
   const d = flattenDeep(c).map((j, index) => {
     return j.parts.map((n) => {
-
-      
-
       return LinearFT(n.parts, breakdowns, n.width).map((b) => {
         if (numQty(b.width) > 0) {
           return {
@@ -164,8 +161,6 @@ export default (data, breakdowns) => {
   );
 
   const BoardFTDisplay = BoardFT_Total.map((i) => {
-    
-
     return [
       {
         columns: [
@@ -194,24 +189,19 @@ export default (data, breakdowns) => {
   });
 
   const PanelBoardFTCalc = data.part_list.map((i, index) => {
-    
-
     const calc = i.dimensions.map((item, index) => {
-      
-      const width = (Panels(item, i, breakdowns) || [
-        {width: 0}
-      ]).map((panel) => {
-        return numQty(panel.width);
-      });
-      const height = (Panels(item, i, breakdowns) || [
-        {height: 0}
-      ]).map((panel) => {
-        return numQty(panel.height);
-      });
+      const width = (Panels(item, i, breakdowns) || [{ width: 0 }]).map(
+        (panel) => {
+          return numQty(panel.width);
+        }
+      );
+      const height = (Panels(item, i, breakdowns) || [{ height: 0 }]).map(
+        (panel) => {
+          return numQty(panel.height);
+        }
+      );
 
-      const qty = (Panels(item, i, breakdowns) || [
-        {qty: 0}
-      ]).map((panel) => {
+      const qty = (Panels(item, i, breakdowns) || [{ qty: 0 }]).map((panel) => {
         if (panel.count) {
           return panel.count;
         } else {
@@ -219,33 +209,18 @@ export default (data, breakdowns) => {
         }
       });
 
-      
-      
-      
-
       const width_total = (width || [0]).reduce((acc, item) => acc + item);
       const height_total = (height || [0]).reduce((acc, item) => acc + item);
       const qty_total = (qty || [0]).reduce((acc, item) => acc + item);
-
-      
-      
-      
 
       const q =
         ((width_total * height_total) / 144) *
         parseInt(qty_total ? qty_total : 0);
 
-
-       
-      
-
       return q;
     });
 
     const equation = calc.reduce((acc, item) => acc + item);
-
-    
-    
 
     if (
       i.orderType.value === 'One_Piece' ||
@@ -277,14 +252,10 @@ export default (data, breakdowns) => {
   const PanelBoardFT_Total = Object.entries(
     groupBy(flatten(PanelBoardFTCalc), 'woodtype')
   ).map(([k, v]) => {
-    
-    
-
     let totalBoardFt = 0;
     let panel;
 
     v.map((j, k) => {
-      
       if (!j.panel || j.panel?.NAME === 'Glass') {
         return null;
       } else {
@@ -303,8 +274,6 @@ export default (data, breakdowns) => {
 
   const PanelBoardFTDisplay = PanelBoardFT_Total.map((i, index) => {
     if (i && i.panel) {
-      
-
       return [
         {
           columns: [
@@ -336,8 +305,6 @@ export default (data, breakdowns) => {
       return [];
     }
   });
-
-  
 
   return [
     {
@@ -373,11 +340,11 @@ export default (data, breakdowns) => {
             },
             { text: `Order #: ${data.orderNum}`, alignment: 'right' },
             {
-              text: `Estimated Ship: ${data.status !== 'Quote' ? moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              ) : moment('01-01-2000').format(
-                'MM/DD/YYYY'
-              )}`,
+              text: `Estimated Ship: ${
+                data.status !== 'Quote'
+                  ? moment(data.job_info.DueDate).format('MM/DD/YYYY')
+                  : moment('01-01-2000').format('MM/DD/YYYY')
+              }`,
               alignment: 'right',
             },
           ],
@@ -418,23 +385,32 @@ export default (data, breakdowns) => {
               : ''
           }`,
           alignment: 'right',
-          style: 'fontsBold'
+          style: 'fontsBold',
         },
       ],
       margin: [0, 10, 0, 20],
     },
     {
       columns: [
-        { text: `Total Number of Doors: ${TotalPieces(data) - TotalSolidDFs(data)}`, style: 'fonts' },
+        {
+          text: `Total Number of Doors: ${
+            TotalPieces(data) - TotalSolidDFs(data)
+          }`,
+          style: 'fonts',
+        },
       ],
     },
-    TotalSolidDFs(data) > 0 ?
-      {
+    TotalSolidDFs(data) > 0
+      ? {
         columns: [
-          { text: `Total Number of Solid DF: ${TotalSolidDFs(data)}`, style: 'fonts' },
+          {
+            text: `Total Number of Solid DF: ${TotalSolidDFs(data)}`,
+            style: 'fonts',
+          },
         ],
-        margin: [0, 0, 0, 10]
-      } : null,
+        margin: [0, 0, 0, 10],
+      }
+      : null,
     {
       columns: [
         { text: `Total SQ FT of Doors: ${SqFT(data)}`, style: 'fonts' },
