@@ -2,7 +2,28 @@ import React from 'react';
 import { Row, Col, Table, Button } from 'reactstrap';
 import { renderNumber } from '../../../../../components/RenderInputs/renderInputs';
 import { Field } from 'redux-form';
+import { renderDropdownList } from '../../../../../components/RenderInputs/renderInputs';
+
 const required = (value) => (value ? undefined : 'Required');
+
+const positions = [
+  {
+    NAME: 'Left',
+    value: 'L'
+  },
+  {
+    NAME: 'Right',
+    value: 'R'
+  },
+  {
+    NAME: 'L / R',
+    value: 'L / R'
+  },
+  {
+    NAME: 'Mid Rail',
+    value: 'VM'
+  },
+];
 
 const Stiles = ({ fields, edit }) => {
   return (
@@ -53,6 +74,25 @@ const Stiles = ({ fields, edit }) => {
                         validate={[required]}
                         edit={edit}
                       />
+                    </td>
+
+                    <td>
+                      <strong>
+                        <p>
+                          Position
+                        </p>
+                      </strong>
+
+                      <Field
+                        name={`${table}.position`}
+                        component={renderDropdownList}
+                        data={positions}
+                        dataKey="value"
+                        textField="NAME"
+                        validate={required}
+                        edit={edit}
+                      />
+
                     </td>
 
                     <td>

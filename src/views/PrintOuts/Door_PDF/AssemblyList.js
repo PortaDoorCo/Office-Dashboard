@@ -24,61 +24,113 @@ export default (data, breakdowns) => {
 
       console.log({ item });
 
-      tableBody.push([
-        { text: item.item ? item.item : itemNum, style: 'fonts' },
-        { text: item.qty, style: 'fonts' },
-        {
-          stack: [
-            { text: `${Size(item)}`, style: 'fonts' },
-            item.notes || item.full_frame || item.lite
-              ? {
-                text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-                  item.lite ? item.lite.NAME : ''
-                }`,
-                style: 'tableBold',
-                alignment: 'left',
-              }
-              : null,
-          ],
-        },
-        {
-          text: (Stiles(item, i, breakdowns) || []).map((stile) => {
-            return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`;
-          }),
-          style: 'fonts',
-        },
-        {
-          text: (Rails(item, i, breakdowns) || []).map((rail) => {
-            return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${
-              item.full_frame ? '** Full Frame DF **' : ''
-            }`;
-          }),
-          style: 'fonts',
-        },
-        {
-          stack: [
-            {
-              text: (Panels(item, i, breakdowns) || []).map((panel) => {
-                console.log({ qty: panel.qty });
-                console.log({ measurement: panel.measurement });
-                console.log({ pattern: panel.pattern });
+      if(i.orderType?.value === 'Custom') {
+        tableBody.push([
+          { text: item.item ? item.item : itemNum, style: 'fonts' },
+          { text: item.qty, style: 'fonts' },
+          {
+            stack: [
+              { text: `${Size(item)}`, style: 'fonts' },
+              item.notes || item.full_frame || item.lite
+                ? {
+                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+                    item.lite ? item.lite.NAME : ''
+                  }`,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
+                : null,
+            ],
+          },
+          {
+            text: item.Stiles?.map(stile => {
+              return `(${stile.qty}) ${stile.width} x ${stile.length} - ${stile.position?.value} \n`
+            }),
+            style: 'fonts',
+          },
+          {
+            text: item.Rails?.map(rail => {
+              return `(${rail.qty}) ${rail.width} x ${rail.length} - ${rail.position?.value} \n`
+            }),
+            style: 'fonts',
+          },
+          {
+            stack: [
+              {
+                text: item.Panels?.map(panel => {
+                  return `(${panel.qty}) ${panel.width} x ${panel.height} - ${i.panel.Flat ? 'PF' : 'PR'} \n`
+                }),
+                style: 'fonts',
+              },
+              item.cab_number
+                ? {
+                  text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
+                : null,
+            ],
+          },
+        ]);
+      } else {
+        tableBody.push([
+          { text: item.item ? item.item : itemNum, style: 'fonts' },
+          { text: item.qty, style: 'fonts' },
+          {
+            stack: [
+              { text: `${Size(item)}`, style: 'fonts' },
+              item.notes || item.full_frame || item.lite
+                ? {
+                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+                    item.lite ? item.lite.NAME : ''
+                  }`,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
+                : null,
+            ],
+          },
+          {
+            text: (Stiles(item, i, breakdowns) || []).map((stile) => {
+              return `${stile.qty} ${stile.measurement} - ${stile.pattern} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: (Rails(item, i, breakdowns) || []).map((rail) => {
+              return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${
+                item.full_frame ? '** Full Frame DF **' : ''
+              }`;
+            }),
+            style: 'fonts',
+          },
+          {
+            stack: [
+              {
+                text: (Panels(item, i, breakdowns) || []).map((panel) => {
+                  console.log({ qty: panel.qty });
+                  console.log({ measurement: panel.measurement });
+                  console.log({ pattern: panel.pattern });
 
-                return `${panel.qty} ${panel.measurement} ${
-                  '- ' + panel.pattern
-                } \n`;
-              }),
-              style: 'fonts',
-            },
-            item.cab_number
-              ? {
-                text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
-                style: 'tableBold',
-                alignment: 'left',
-              }
-              : null,
-          ],
-        },
-      ]);
+                  return `${panel.qty} ${panel.measurement} ${
+                    '- ' + panel.pattern
+                  } \n`;
+                }),
+                style: 'fonts',
+              },
+              item.cab_number
+                ? {
+                  text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
+                : null,
+            ],
+          },
+        ]);
+      }
+
+
     });
 
     return [

@@ -4,8 +4,28 @@ import { renderNumber } from '../../../../../components/RenderInputs/renderInput
 import {
   Field,
 } from 'redux-form';
+import { renderDropdownList } from '../../../../../components/RenderInputs/renderInputs';
+
 const required = (value) => (value ? undefined : 'Required');
 
+const positions = [
+  {
+    NAME: 'Top',
+    value: 'T'
+  },
+  {
+    NAME: 'Bottom',
+    value: 'B'
+  },
+  {
+    NAME: 'T / B',
+    value: 'T  / B'
+  },
+  {
+    NAME: 'Mid Rail',
+    value: 'HM'
+  },
+];
 
 const Rails = ({fields, edit }) => {
 
@@ -60,6 +80,25 @@ const Rails = ({fields, edit }) => {
                     </td>
 
                     <td>
+                      <strong>
+                        <p>
+                          Position
+                        </p>
+                      </strong>
+
+                      <Field
+                        name={`${table}.position`}
+                        component={renderDropdownList}
+                        data={positions}
+                        dataKey="value"
+                        textField="NAME"
+                        validate={required}
+                        edit={edit}
+                      />
+
+                    </td>
+
+                    <td>
                       {!edit ? (
                         <Button
                           color="danger"
@@ -84,7 +123,7 @@ const Rails = ({fields, edit }) => {
         <Row>
           <Col>
             <Button color="primary" onClick={() => fields.push({ qty: 1 })}>
-                  Add Stiles
+                  Add Rails
             </Button>
           </Col>
         </Row>

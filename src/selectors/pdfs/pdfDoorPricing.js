@@ -259,8 +259,16 @@ const pricing = (parts, pricer) => {
       return price;
     });
 
+    const customPrice = part.dimensions.map((i) => {
+      return i.price;
+    });
 
-    return linePrice;
+    if(part.orderType?.value === 'Custom'){
+      return customPrice;
+    } else {
+      return linePrice;
+    }
+
     
   });
 

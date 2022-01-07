@@ -18,7 +18,8 @@ import {
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import RenderRails from './Components/Rails';
-import { default as RenderPanels, default as RenderStiles } from './Components/Stiles';
+import RenderStiles from './Components/Stiles';
+import RenderPanels from './Components/Panels';
 
 const required = (value) => (value ? undefined : 'Required');
 const trim_val = (value) => (value.trim('') ? undefined : 'Required');

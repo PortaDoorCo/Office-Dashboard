@@ -50,7 +50,7 @@ const Panels = ({fields, edit }) => {
                         <p>Panel Height</p>
                       </strong>
                       <Field
-                        name={`${table}.length`}
+                        name={`${table}.height`}
                         type="text"
                         component={renderNumber}
                         label="height"
@@ -84,7 +84,7 @@ const Panels = ({fields, edit }) => {
         <Row>
           <Col>
             <Button color="primary" onClick={() => fields.push({ qty: 1 })}>
-                  Add Stiles
+                  Add Panel
             </Button>
           </Col>
         </Row>

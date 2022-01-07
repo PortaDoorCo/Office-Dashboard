@@ -70,47 +70,88 @@ export default (data, breakdowns, type) => {
       ) {
         return null;
       } else {
-        tableBody.push([
-          { text: item.item ? item.item : index + 1, style: 'fonts' },
-          { text: item.name, style: 'fonts' },
-          {
-            text: (Panels(item, i, breakdowns) || []).map((panel) => {
-              return `${panel.qty} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: (Panels(item, i, breakdowns) || []).map((panel) => {
-              return `${panel.measurement} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: (Panels(item, i, breakdowns) || []).map((panel) => {
-              return `${panel.pattern} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
-            style: 'fonts',
-          },
-          {
-            text: (Panels(item, i, breakdowns) || []).map((panel) => {
-              return `${panel.panel} \n`;
-            }),
-            style: 'fonts',
-          },
-          item.notes || item.lite
-            ? {
-              text: `${item.notes ? item.notes : ''} ${
-                item.lite ? item.lite.NAME : ''
-              }`,
-              style: 'tableBold',
-              alignment: 'left',
-            }
-            : null,
-        ]);
+
+        if(i.orderType?.value === 'Custom'){
+          return item.Panels?.map(n => {
+            tableBody.push([
+              { text: item.item ? item.item : index + 1, style: 'fonts' },
+              { text: item.name, style: 'fonts' },
+              {
+                text: n.qty,
+                style: 'fonts',
+              },
+              {
+                text: `${n.width} x ${n.height}`,
+                style: 'fonts',
+              },
+              {
+                text: item.panel.Flat ? 'PF' : 'PR',
+                style: 'fonts',
+              },
+              {
+                text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
+                style: 'fonts',
+              },
+              {
+                text: i.panel.NAME,
+                style: 'fonts',
+              },
+              item.notes || item.lite
+                ? {
+                  text: `${item.notes ? item.notes : ''} ${
+                    item.lite ? item.lite.NAME : ''
+                  }`,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
+                : null,
+            ]);
+          })
+        } else {
+          tableBody.push([
+            { text: item.item ? item.item : index + 1, style: 'fonts' },
+            { text: item.name, style: 'fonts' },
+            {
+              text: (Panels(item, i, breakdowns) || []).map((panel) => {
+                return `${panel.qty} \n`;
+              }),
+              style: 'fonts',
+            },
+            {
+              text: (Panels(item, i, breakdowns) || []).map((panel) => {
+                return `${panel.measurement} \n`;
+              }),
+              style: 'fonts',
+            },
+            {
+              text: (Panels(item, i, breakdowns) || []).map((panel) => {
+                return `${panel.pattern} \n`;
+              }),
+              style: 'fonts',
+            },
+            {
+              text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
+              style: 'fonts',
+            },
+            {
+              text: (Panels(item, i, breakdowns) || []).map((panel) => {
+                return `${panel.panel} \n`;
+              }),
+              style: 'fonts',
+            },
+            item.notes || item.lite
+              ? {
+                text: `${item.notes ? item.notes : ''} ${
+                  item.lite ? item.lite.NAME : ''
+                }`,
+                style: 'tableBold',
+                alignment: 'left',
+              }
+              : null,
+          ]);
+        }
+
+
       }
     });
 
