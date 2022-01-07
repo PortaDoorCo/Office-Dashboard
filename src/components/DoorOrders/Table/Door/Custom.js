@@ -210,25 +210,14 @@ const DoorTable = ({
                   />
                 </td>
                 <td>
-                  {prices[i] ? (
-                    <Input
-                      type="text"
-                      className="form-control"
-                      disabled={true}
-                      placeholder={
-                        '$' + prices[i][index]?.toFixed(2)
-                          ? prices[i][index]?.toFixed(2)
-                          : 0
-                      }
-                    />
-                  ) : (
-                    <Input
-                      type="text"
-                      className="form-control"
-                      disabled={true}
-                      placeholder={'$0.00'}
-                    />
-                  )}
+                  <Field
+                    name={`${table}.price`}
+                    type="text"
+                    component={renderPrice}
+                    edit={edit}
+                    label="extraCost"
+                    {...currencyMask}
+                  />
                 </td>
                 <td>
                   {!edit ? (
@@ -262,20 +251,20 @@ const DoorTable = ({
           </Table>
 
           <div style={styles}>
-            <FieldArray name={`${table}.Stiles`} component={RenderStiles} />
+            <FieldArray name={`${table}.Stiles`} component={RenderStiles} edit={edit} />
           </div>
 
           <hr />
 
           <div style={styles}>
-            <FieldArray name={`${table}.Rails`} component={RenderRails} />
+            <FieldArray name={`${table}.Rails`} component={RenderRails} edit={edit} />
           </div>
 
 
           <hr />
 
           <div style={styles}>
-            <FieldArray name={`${table}.Panels`} component={RenderPanels} />
+            <FieldArray name={`${table}.Panels`} component={RenderPanels} edit={edit} />
           </div>
 
           <hr />

@@ -1,14 +1,10 @@
 import React from 'react';
 import { Row, Col, Table, Button } from 'reactstrap';
 import { renderNumber } from '../../../../../components/RenderInputs/renderInputs';
-import {
-  Field,
-} from 'redux-form';
+import { Field } from 'redux-form';
 const required = (value) => (value ? undefined : 'Required');
 
-
-const Stiles = ({fields, edit }) => {
-
+const Stiles = ({ fields, edit }) => {
   return (
     <div>
       {fields.map((table, index) => {
@@ -47,14 +43,18 @@ const Stiles = ({fields, edit }) => {
                     </td>
 
                     <td>
-                      <Button
-                        color="danger"
-                        className="btn-circle"
-                        style={{ marginTop: '1.25rem' }}
-                        onClick={() => fields.remove(index)}
-                      >
+                      {!edit ? (
+                        <Button
+                          color="danger"
+                          className="btn-circle"
+                          style={{ marginTop: '1.25rem' }}
+                          onClick={() => fields.remove(index)}
+                        >
                           X
-                      </Button>
+                        </Button>
+                      ) : (
+                        <div />
+                      )}
                     </td>
                   </tr>
                 </Table>
@@ -63,19 +63,18 @@ const Stiles = ({fields, edit }) => {
           </div>
         );
       })}
-      <Row>
-        <Col>
-          <Button
-            color="primary"
-            onClick={() => fields.push()}
-          >
+
+      {!edit ? (
+        <Row>
+          <Col>
+            <Button color="primary" onClick={() => fields.push()}>
               Add Stiles
-          </Button>
-        </Col>
-      </Row>
+            </Button>
+          </Col>
+        </Row>
+      ) : null}
     </div>
   );
-      
 };
 
 export default Stiles;

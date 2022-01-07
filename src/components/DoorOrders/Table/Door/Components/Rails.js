@@ -47,14 +47,18 @@ const Rails = ({fields, edit }) => {
                     </td>
 
                     <td>
-                      <Button
-                        color="danger"
-                        className="btn-circle"
-                        style={{ marginTop: '1.25rem' }}
-                        onClick={() => fields.remove(index)}
-                      >
-                          X
-                      </Button>
+                      {!edit ? (
+                        <Button
+                          color="danger"
+                          className="btn-circle"
+                          style={{ marginTop: '1.25rem' }}
+                          onClick={() => fields.remove(index)}
+                        >
+                              X
+                        </Button>
+                      ) : (
+                        <div />
+                      )}
                     </td>
                   </tr>
                 </Table>
@@ -63,16 +67,15 @@ const Rails = ({fields, edit }) => {
           </div>
         );
       })}
-      <Row>
-        <Col>
-          <Button
-            color="primary"
-            onClick={() => fields.push()}
-          >
-              Add Rails
-          </Button>
-        </Col>
-      </Row>
+      {!edit ? (
+        <Row>
+          <Col>
+            <Button color="primary" onClick={() => fields.push()}>
+                  Add Stiles
+            </Button>
+          </Col>
+        </Row>
+      ) : null}
     </div>
   );
       

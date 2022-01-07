@@ -306,6 +306,16 @@ export const itemPriceSelector = createSelector(
           } else {
             return 0;
           }
+        } else if (part?.orderType?.value === 'Custom') {
+          if(part.dimensions){
+            const linePrice = part.dimensions.map((i, index) => {
+              return i.price;
+            });
+
+            return linePrice;
+          } else {
+            return 0;
+          }
         } else {
           if (part.dimensions) {
             const linePrice = part.dimensions.map((i) => {
