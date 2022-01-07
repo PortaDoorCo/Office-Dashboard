@@ -61,7 +61,7 @@ export default (data, breakdowns) => {
               },
             ],
             // margin: 5
-            margin: [0, 50, 0, 0]
+            margin: [0, 50, 0, 0],
           },
         ]);
       }
@@ -85,9 +85,10 @@ export default (data, breakdowns) => {
     let el = [];
 
     for (let i = 0; i < lastArr; i++) {
-      el.push({ 
-        text: '', alignment: 'center', 
-        // margin: 5 
+      el.push({
+        text: '',
+        alignment: 'center',
+        // margin: 5
       });
     }
 
@@ -114,7 +115,7 @@ export default (data, breakdowns) => {
         // }),
 
         heights: function (row) {
-          console.log({row});
+          console.log({ row });
 
           // if((row !== 0) && (row % 3 === 0)){
           //   return 100;
@@ -123,7 +124,6 @@ export default (data, breakdowns) => {
           // }
 
           return 240;
-
         },
 
         body: arr,
@@ -149,12 +149,12 @@ export default (data, breakdowns) => {
         // },
         // paddingLeft: function(i, node) { return 10; },
         // paddingRight: function(i, node) { return 5; },
-        // paddingTop: function(i, node) { 
+        // paddingTop: function(i, node) {
 
         //   console.log({i});
         //   console.log({node});
 
-        //   return 7; 
+        //   return 7;
         // },
         // paddingBottom: function(i, node) { return -0.5; }
       },

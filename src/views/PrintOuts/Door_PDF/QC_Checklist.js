@@ -49,18 +49,18 @@ export default (data, breakdowns) => {
       });
 
       return [
-        { 
+        {
           unbreakable: true,
-          stack : [
+          stack: [
             index === 0 && data.job_info?.Shop_Notes
               ? {
                 columns: [
                   { text: '' },
                   {
                     text: `${
-                data.job_info?.Shop_Notes
-                  ? data.job_info?.Shop_Notes?.toUpperCase()
-                  : ''
+                        data.job_info?.Shop_Notes
+                          ? data.job_info?.Shop_Notes?.toUpperCase()
+                          : ''
                     }`,
                     alignment: 'center',
                     style: 'fontsBold',
@@ -68,7 +68,8 @@ export default (data, breakdowns) => {
                   { text: '' },
                 ],
                 margin: [0, -29, 0, 0],
-              } : null,
+              }
+              : null,
             {
               unbreakable: true,
               stack: [
@@ -81,7 +82,9 @@ export default (data, breakdowns) => {
                       stack: [
                         {
                           text: `${
-                          i.thickness?.grade_name ? i.thickness?.grade_name : ''
+                            i.thickness?.grade_name
+                              ? i.thickness?.grade_name
+                              : ''
                           }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
                             i.thickness.thickness_2
                           }"`,
@@ -99,17 +102,19 @@ export default (data, breakdowns) => {
                                   : ''
                           } ${
                             i.construction.value === 'MT' ||
-                          i.construction.value === 'Miter'
+                            i.construction.value === 'Miter'
                               ? i.construction.value
                               : ''
-                          } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`,
+                          } ${
+                            i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''
+                          }`,
                           style: 'fonts',
                         },
 
-                      // {
-                      //   text: `${i.orderType ? i.orderType.name : ''}`,
-                      //   style: 'fonts',
-                      // },
+                        // {
+                        //   text: `${i.orderType ? i.orderType.name : ''}`,
+                        //   style: 'fonts',
+                        // },
                       ],
                     },
                     // { text: ' ', style: 'fontsBold', width: 140 },
@@ -121,7 +126,7 @@ export default (data, breakdowns) => {
                             i.panel
                               ? i.panel.NAME
                               : i.orderType.value === 'Slab_Door' ||
-                              i.orderType.value === 'Slab_DF'
+                                i.orderType.value === 'Slab_DF'
                                 ? ''
                                 : 'Glass'
                           } ${i.lite ? '- ' + i.lite.NAME : ''}`,
@@ -214,8 +219,8 @@ export default (data, breakdowns) => {
               text: '==============================================================================',
               alignment: 'center',
             },
-          ]}
-
+          ],
+        },
       ];
     }),
     // { text: '', pageBreak: 'before' }

@@ -66,7 +66,6 @@ export default (data, pricing) => {
     ];
 
     part.dimensions.forEach((item, index) => {
-
       itemNum += 1;
 
       tableBody.push([
@@ -74,7 +73,9 @@ export default (data, pricing) => {
         { text: `${Size(item)}`, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
         {
-          text: `${item.notes ? item.notes.toUpperCase() : ''} ${item.lite ? item.lite.NAME : ''}`,
+          text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+            item.lite ? item.lite.NAME : ''
+          }`,
           style: 'fontsBold',
         },
 
@@ -104,7 +105,11 @@ export default (data, pricing) => {
                 style: 'fonts',
               },
               {
-                text: `${part.thickness?.grade_name ? part.thickness?.grade_name : ''}${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${part.thickness?.thickness_2}"`,
+                text: `${
+                  part.thickness?.grade_name ? part.thickness?.grade_name : ''
+                }${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${
+                  part.thickness?.thickness_2
+                }"`,
                 style: 'fonts',
               },
 
@@ -117,7 +122,12 @@ export default (data, pricing) => {
                       : part.construction.value === 'Slab'
                         ? 'Slab'
                         : ''
-                } ${(part.construction.value === 'MT') || (part.construction.value === 'Miter') ? part.construction.value : ''} ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                } ${
+                  part.construction.value === 'MT' ||
+                  part.construction.value === 'Miter'
+                    ? part.construction.value
+                    : ''
+                } ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
                   part.panel
                     ? part.panel.NAME
                     : part.construction.value === 'Slab'
@@ -152,7 +162,11 @@ export default (data, pricing) => {
             stack: [
               {
                 text: `IP: ${
-                  part.profile ? part.profile.NAME : part.design ? part.design.NAME : 'None'
+                  part.profile
+                    ? part.profile.NAME
+                    : part.design
+                      ? part.design.NAME
+                      : 'None'
                 }  Edge: ${part.edge ? part.edge.NAME : 'None'}`,
                 style: 'fonts',
               },
@@ -262,8 +276,6 @@ export default (data, pricing) => {
   });
 
   return [
-    
-
     //table content here
     table_content,
 

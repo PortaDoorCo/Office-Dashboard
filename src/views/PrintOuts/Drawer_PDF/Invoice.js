@@ -29,8 +29,6 @@ export default (data, pricing) => {
 
   const prices = pdfDrawerBoxPricing(data.part_list, pricing[0]);
 
-  
-
   const subTotal = prices
     .map((i) => i.reduce((acc, item) => acc + item, 0))
     .reduce((acc, item) => acc + item, 0);
@@ -57,7 +55,6 @@ export default (data, pricing) => {
     'Our products are warranted for 1 year from date of shipment, warranty details can found at \n https://portadoor.com and in our 2020 Catalog \n \n Liability under this warrant shall be limited to the original invoice price of the product';
 
   return [
-
     data.part_list.map((part, i) => {
       const tableBody = [
         [
@@ -71,14 +68,16 @@ export default (data, pricing) => {
         ],
       ];
 
-
       part.dimensions.forEach((item, index) => {
         itemNum += 1;
         tableBody.push([
           { text: itemNum, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
-          { text: `${item.notes ? item.notes.toUpperCase() : ''}`, style: 'fonts' },
+          {
+            text: `${item.notes ? item.notes.toUpperCase() : ''}`,
+            style: 'fonts',
+          },
           {
             text: `${(prices[i][index] / parseInt(item.qty)).toFixed(2)}`,
             style: 'fonts',

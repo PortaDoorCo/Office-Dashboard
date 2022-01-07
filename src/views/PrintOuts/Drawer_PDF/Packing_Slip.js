@@ -2,9 +2,7 @@ import numQty from 'numeric-quantity';
 import pdfDrawerBoxPricing from '../../../selectors/pdfs/pdfDrawerBoxPricing';
 import Size from '../Breakdowns/DrawerBoxes/Size';
 
-
 export default (data, breakdowns, pricing) => {
-
   const qty = data.part_list.map((part, i) => {
     return part.dimensions
       .map((dim, index) => {
@@ -18,29 +16,32 @@ export default (data, breakdowns, pricing) => {
   const subTotal = prices
     .map((i) => i.reduce((acc, item) => acc + item, 0))
     .reduce((acc, item) => acc + item, 0);
-  
-  const balancePaid = data.balance_history.reduce(function (accumulator, balance) {
+
+  const balancePaid = data.balance_history.reduce(function (
+    accumulator,
+    balance
+  ) {
     return accumulator + balance.balance_paid;
-  }, 0);
+  },
+  0);
 
   const balanceDue = data.total - balancePaid;
 
-  const miscTotal = data.misc_items.map(i => {
-    if(i.category === 'preselect'){
+  const miscTotal = data.misc_items.map((i) => {
+    if (i.category === 'preselect') {
       return parseFloat(i.qty) * parseFloat(i.price);
     } else {
       return i.pricePer ? parseFloat(i.qty) * parseFloat(i.pricePer) : 0;
     }
   });
 
-  const discountTotal = (subTotal * (data.discount / 100));
+  const discountTotal = subTotal * (data.discount / 100);
 
-  const discountSubTotal = subTotal - (subTotal * (data.discount / 100));
+  const discountSubTotal = subTotal - subTotal * (data.discount / 100);
 
   let itemNum = 0;
 
   return [
-
     data.part_list.map((part, i) => {
       const tableBody = [
         [
@@ -50,24 +51,25 @@ export default (data, breakdowns, pricing) => {
           { text: 'Actual Size', style: 'fonts' },
           { text: 'Note', style: 'fonts' },
           { text: 'Cab#', style: 'fonts' },
-          
-        ]
+        ],
       ];
 
-      const itemize = part.dimensions.map(i => {
+      const itemize = part.dimensions.map((i) => {
         itemNum += 1;
         return {
           ...i,
-          item: itemNum
+          item: itemNum,
         };
       });
 
-      let sortedDimensions = itemize.sort(function (a, b) { return numQty(b.height) - numQty(a.height); });
-      
+      let sortedDimensions = itemize.sort(function (a, b) {
+        return numQty(b.height) - numQty(a.height);
+      });
+
       sortedDimensions.forEach((item, index) => {
         tableBody.push([
           { text: item.item ? item.item : index + 1, style: 'fonts' },
-          { text: `Drawer Box ${part.box_thickness.NAME}`, style: 'fonts'},
+          { text: `Drawer Box ${part.box_thickness.NAME}`, style: 'fonts' },
           { text: `${item.qty}`, style: 'fonts' },
           { text: `${Size(item)}`, style: 'fonts' },
           item.notes
@@ -77,100 +79,111 @@ export default (data, breakdowns, pricing) => {
               alignment: 'left',
             }
             : null,
-          item.cab_number ? {
-            text: `${item.cab_number}`, style: 'fonts', alignment: 'left'
-          } : null
+          item.cab_number
+            ? {
+              text: `${item.cab_number}`,
+              style: 'fonts',
+              alignment: 'left',
+            }
+            : null,
         ]);
-
       });
 
       return [
-        i === 0 && data.job_info?.Shop_Notes
-          ? {
-            columns: [
-              { text: '' },
-              {
-                text: `${
-              data.job_info?.Shop_Notes
-                ? data.job_info?.Shop_Notes?.toUpperCase()
-                : ''
-                }`,
-                alignment: 'center',
-                style: 'fontsBold',
-              },
-              { text: '' },
-            ],
-            margin: [0, -26, 0, 0],
-          } : null,
         {
           unbreakable: true,
-          margin: [0, 10, 0, 0],
-          columns: [
-            {
-              stack: [
-                {
-                  text: `Drawer Box ${part.box_thickness.NAME}`,
-                  style: 'fonts'
-                },
-                { text: `${part.woodtype.NAME}`, style: 'woodtype' }
-              ]
-            },
-            {
-              text: '',
-              style: 'fontsBold',
-              alignment: 'center'
-            },
-            {
-              stack: [
-                {
-                  text: `${part.box_bottom_thickness.NAME} ${part.box_bottom_woodtype.NAME} Bottom`,
-                  style: 'fonts'
-                },
-                {
-                  text: `${i.box_notch && i.box_notch.NAME === 'Yes - Add in Misc Items' ? 'Notch and Drilled' : ''}`,
-                  style: 'fonts'
-                }
-              ],
-              alignment: 'right'
-            }
-          ]
-        },
-        {
-          text:
-            '==============================================================================',
-          alignment: 'center',
-        },
-        {
-          table: {
-            headerRows: 1,
-            widths: [22, '*', 22, '*', '*', '*'],
-            body: tableBody,
-          },
-          layout: {
-            hLineWidth: function (i, node) {
-              return i === 1 ? 1 : 0;
-            },
-            vLineWidth: function (i, node) {
-              return 0;
-            },
-            hLineStyle: function (i, node) {
-              if (i === 0 || i === node.table.body.length) {
-                return null;
+          stack: [
+            i === 0 && data.job_info?.Shop_Notes
+              ? {
+                columns: [
+                  { text: '' },
+                  {
+                    text: `${
+                        data.job_info?.Shop_Notes
+                          ? data.job_info?.Shop_Notes?.toUpperCase()
+                          : ''
+                    }`,
+                    alignment: 'center',
+                    style: 'fontsBold',
+                  },
+                  { text: '' },
+                ],
+                margin: [0, -26, 0, 0],
               }
-              return { dash: { length: 1, space: 1 } };
+              : null,
+            {
+              margin: [0, 10, 0, 0],
+              columns: [
+                {
+                  stack: [
+                    {
+                      text: `Drawer Box ${part.box_thickness.NAME}`,
+                      style: 'fonts',
+                    },
+                    { text: `${part.woodtype.NAME}`, style: 'woodtype' },
+                  ],
+                },
+                {
+                  text: '',
+                  style: 'fontsBold',
+                  alignment: 'center',
+                },
+                {
+                  stack: [
+                    {
+                      text: `${part.box_bottom_thickness.NAME} ${part.box_bottom_woodtype.NAME} Bottom`,
+                      style: 'fonts',
+                    },
+                    {
+                      text: `${
+                        i.box_notch &&
+                        i.box_notch.NAME === 'Yes - Add in Misc Items'
+                          ? 'Notch and Drilled'
+                          : ''
+                      }`,
+                      style: 'fonts',
+                    },
+                  ],
+                  alignment: 'right',
+                },
+              ],
             },
-            paddingLeft: function (i) {
-              return i === 0 ? 0 : 8;
+            {
+              text: '==============================================================================',
+              alignment: 'center',
             },
-            paddingRight: function (i, node) {
-              return i === node.table.widths.length - 1 ? 0 : 8;
+            {
+              table: {
+                headerRows: 1,
+                widths: [22, '*', 22, '*', '*', '*'],
+                body: tableBody,
+              },
+              layout: {
+                hLineWidth: function (i, node) {
+                  return i === 1 ? 1 : 0;
+                },
+                vLineWidth: function (i, node) {
+                  return 0;
+                },
+                hLineStyle: function (i, node) {
+                  if (i === 0 || i === node.table.body.length) {
+                    return null;
+                  }
+                  return { dash: { length: 1, space: 1 } };
+                },
+                paddingLeft: function (i) {
+                  return i === 0 ? 0 : 8;
+                },
+                paddingRight: function (i, node) {
+                  return i === node.table.widths.length - 1 ? 0 : 8;
+                },
+              },
             },
-          },
-        },
-        {
-          text:
-            '==============================================================================',
-          alignment: 'center',
+            {
+              text: '==============================================================================',
+              alignment: 'center',
+            },
+          ],
         },
       ];
     }),
@@ -180,43 +193,42 @@ export default (data, breakdowns, pricing) => {
           text: 'OTHER ITEMS',
           style: 'woodtype',
           decoration: 'underline',
-          width: 160
+          width: 160,
         },
         {
           text: 'QTY',
           style: 'woodtype',
-          decoration: 'underline'
-        }
-      ]
+          decoration: 'underline',
+        },
+      ],
     },
-    data.misc_items.length>0 ?
-      {
+    data.misc_items.length > 0
+      ? {
         columns: [
           {
             text: data.misc_items.map((i) => {
-              return `${
-                i.item ? i.item.NAME : i.item2 ? i.item2 : ''
-              } \n`;
+              return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
             }),
             style: 'fonts',
-            width: 170
+            width: 170,
           },
           {
             style: 'fonts',
             stack: data.misc_items.map((i) => {
-              return { text:  i.qty ? parseInt(i.qty) : ''} ;
+              return { text: i.qty ? parseInt(i.qty) : '' };
             }),
-            width: 30
+            width: 30,
           },
         ],
         margin: [0, 2, 0, 0],
-      } : null,
+      }
+      : null,
     {
-      margin:[0,10,0,10],
+      margin: [0, 10, 0, 10],
       columns: [
         {
           text: '',
-          width: 200
+          width: 200,
         },
         {
           text: 'Checked By: ______________',
@@ -225,8 +237,7 @@ export default (data, breakdowns, pricing) => {
         },
         {
           text: `Payment Method: ${
-            data.companyprofile &&
-            data.companyprofile.PMT_TERMS
+            data.companyprofile && data.companyprofile.PMT_TERMS
           }`,
           style: 'totals',
           width: 200,
@@ -236,10 +247,7 @@ export default (data, breakdowns, pricing) => {
     {
       columns: [
         {
-          text: `Drawer Boxes: ${qty.reduce(
-            (acc, item) => acc + item,
-            0
-          )}`,
+          text: `Drawer Boxes: ${qty.reduce((acc, item) => acc + item, 0)}`,
           style: 'totals',
           width: 200,
         },
@@ -249,8 +257,8 @@ export default (data, breakdowns, pricing) => {
           width: 347,
         },
         {
-          text: ''
-        }
+          text: '',
+        },
       ],
       margin: [0, 0, 0, 10],
     },
@@ -268,8 +276,8 @@ export default (data, breakdowns, pricing) => {
           width: 347,
         },
         {
-          text: ''
-        }
+          text: '',
+        },
       ],
       margin: [0, 0, 0, 10],
     },

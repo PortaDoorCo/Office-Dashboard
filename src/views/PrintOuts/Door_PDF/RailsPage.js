@@ -13,11 +13,12 @@ export default (data, breakdowns) => {
           : i.construction.value === 'Slab'
             ? 'Slab'
             : ''
-    } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
+    } ${
+      i.construction.value === 'MT' || i.construction.value === 'Miter'
+        ? i.construction.value
+        : ''
+    } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
-
-
-
 
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
   const b = a
@@ -64,7 +65,7 @@ export default (data, breakdowns) => {
         return {
           ...item,
           rail_height: Rails(item, n, breakdowns).map((rail) => {
-            console.log({rail});
+            console.log({ rail });
             return rail.height;
           })[0],
         };
@@ -194,9 +195,9 @@ export default (data, breakdowns) => {
             { text: '' },
             {
               text: `${
-            data.job_info?.Shop_Notes
-              ? data.job_info?.Shop_Notes?.toUpperCase()
-              : ''
+                  data.job_info?.Shop_Notes
+                    ? data.job_info?.Shop_Notes?.toUpperCase()
+                    : ''
               }`,
               alignment: 'center',
               style: 'fontsBold',
@@ -204,7 +205,8 @@ export default (data, breakdowns) => {
             { text: '' },
           ],
           margin: [0, -29, 0, 0],
-        } : null,
+        }
+        : null,
       {
         unbreakable: true,
         margin: [0, 10, 0, 0],
@@ -273,8 +275,5 @@ export default (data, breakdowns) => {
 
   // const table_body = [];
 
-  return [
-   
-    table_body,
-  ];
+  return [table_body];
 };

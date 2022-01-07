@@ -12,10 +12,8 @@ export default (data, pricing) => {
       .reduce((acc, item) => acc + item, 0);
   });
 
-
   const prices = pdfDoorPricing(data?.part_list, pricing[0]);
   const finishing = pdfFinishing(data?.part_list, pricing[0]);
-
 
   const subTotal = prices
     .map((i) => i.reduce((acc, item) => acc + item, 0))
@@ -30,17 +28,12 @@ export default (data, pricing) => {
       return 0;
     }
   });
-  
+
   const finishingTotal = parseFloat(
     finishingSubtotal.reduce((acc, item) => acc + item, 0)
   );
 
   const subTotal_Total = subTotal + finishingTotal;
-
-
-  
-
-
 
   const misc_prices = data.misc_items.map((i) => {
     if (i.category === 'preselect') {
@@ -74,12 +67,7 @@ export default (data, pricing) => {
 
   const balanceDue = total - balancePaid;
 
-
   const table_content = Glass_Selection(data, null).map((part, i) => {
-
-    
-
-
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -95,7 +83,6 @@ export default (data, pricing) => {
     part.dimensions.forEach((item, index) => {
       const price = prices[i][index] / parseInt(item.qty);
 
-      
       tableBody.push([
         { text: index + 1, style: 'fonts' },
         { text: `${Size(item)}`, style: 'fonts' },
@@ -125,8 +112,8 @@ export default (data, pricing) => {
       ]);
     });
 
-    console.log({finishingSubtotal});
-    console.log({finishing});
+    console.log({ finishingSubtotal });
+    console.log({ finishing });
 
     return [
       {
@@ -140,7 +127,11 @@ export default (data, pricing) => {
                 style: 'fonts',
               },
               {
-                text: `${part.thickness?.grade_name ? part.thickness?.grade_name : ''}${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${part.thickness?.thickness_2}"`,
+                text: `${
+                  part.thickness?.grade_name ? part.thickness?.grade_name : ''
+                }${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${
+                  part.thickness?.thickness_2
+                }"`,
                 style: 'fonts',
               },
 
@@ -272,8 +263,6 @@ export default (data, pricing) => {
   });
 
   return [
-    
-
     //table content here
     table_content,
 

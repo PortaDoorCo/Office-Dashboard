@@ -8,11 +8,9 @@ import Size from '../Breakdowns/DrawerBoxes/Size';
 import SQFT from '../Breakdowns/DrawerBoxes/SQFT';
 
 export default (data, breakdowns) => {
-
   let itemNum = 0;
 
   return [
-    
     data.part_list.map((i, index) => {
       const info = [];
 
@@ -20,11 +18,11 @@ export default (data, breakdowns) => {
 
       const materialBody = [];
 
-      const itemize = i.dimensions.map(i => {
+      const itemize = i.dimensions.map((i) => {
         itemNum += 1;
         return {
           ...i,
-          item: itemNum
+          item: itemNum,
         };
       });
 
@@ -33,7 +31,6 @@ export default (data, breakdowns) => {
       Object.entries(groupedByHeight).map(([k, v], lineIn) => {
         const groupedInfoBody = [
           {
-            unbreakable: true,
             margin: [0, 0, 0, 0],
             columns: [
               {
@@ -45,7 +42,11 @@ export default (data, breakdowns) => {
                   { text: `${i.woodtype.NAME}`, style: 'woodtype' },
                 ],
               },
-              { text: `${i.notes ? i.notes.toUpperCase() : ''}`, style: 'fontsBold', alignment: 'center' },
+              {
+                text: `${i.notes ? i.notes.toUpperCase() : ''}`,
+                style: 'fontsBold',
+                alignment: 'center',
+              },
               {
                 stack: [
                   { text: ' ' },
@@ -58,7 +59,7 @@ export default (data, breakdowns) => {
               },
             ],
           },
-          
+
           {
             text: '==============================================================================',
             alignment: 'center',
@@ -146,57 +147,61 @@ export default (data, breakdowns) => {
       });
 
       let table = tableBody.map((i, k) => {
-
-
         return [
-          index === 0 && k === 0 && data.job_info?.Shop_Notes
-            ? {
-              columns: [
-                { text: '' },
-                {
-                  text: `${
-                data.job_info?.Shop_Notes
-                  ? data.job_info?.Shop_Notes?.toUpperCase()
-                  : ''
-                  }`,
-                  alignment: 'center',
-                  style: 'fontsBold',
-                },
-                { text: '' },
-              ],
-              margin: [0, -26, 0, 10],
-            } : null,
-          info[k],
           {
-            table: {
-              headerRows: 1,
-              widths: [22, 15, 105, 112, 112, 95],
-              body: i,
-            },
-            layout: {
-              hLineWidth: function (i, node) {
-                return i === 1 ? 1 : 0;
-              },
-              vLineWidth: function (i, node) {
-                return 0;
-              },
-              hLineStyle: function (i, node) {
-                if (i === 0 || i === node.table.body.length) {
-                  return null;
+            unbreakable: true,
+            stack: [
+              index === 0 && k === 0 && data.job_info?.Shop_Notes
+                ? {
+                  columns: [
+                    { text: '' },
+                    {
+                      text: `${
+                          data.job_info?.Shop_Notes
+                            ? data.job_info?.Shop_Notes?.toUpperCase()
+                            : ''
+                      }`,
+                      alignment: 'center',
+                      style: 'fontsBold',
+                    },
+                    { text: '' },
+                  ],
+                  margin: [0, -26, 0, 10],
                 }
-                return { dash: { length: 1, space: 1 } };
+                : null,
+              info[k],
+              {
+                table: {
+                  headerRows: 1,
+                  widths: [22, 15, 105, 112, 112, 95],
+                  body: i,
+                },
+                layout: {
+                  hLineWidth: function (i, node) {
+                    return i === 1 ? 1 : 0;
+                  },
+                  vLineWidth: function (i, node) {
+                    return 0;
+                  },
+                  hLineStyle: function (i, node) {
+                    if (i === 0 || i === node.table.body.length) {
+                      return null;
+                    }
+                    return { dash: { length: 1, space: 1 } };
+                  },
+                  paddingLeft: function (i) {
+                    return i === 0 ? 0 : 8;
+                  },
+                  paddingRight: function (i, node) {
+                    return i === node.table.widths.length - 1 ? 0 : 8;
+                  },
+                },
               },
-              paddingLeft: function (i) {
-                return i === 0 ? 0 : 8;
+              {
+                text: '==============================================================================',
+                alignment: 'center',
               },
-              paddingRight: function (i, node) {
-                return i === node.table.widths.length - 1 ? 0 : 8;
-              },
-            },
-          },
-          {
-            text: '==============================================================================',
-            alignment: 'center',
+            ],
           },
         ];
       });
