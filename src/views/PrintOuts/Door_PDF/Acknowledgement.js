@@ -95,6 +95,7 @@ export default (data, pricing) => {
 
     return [
       {
+        unbreakable: true,
         margin: [0, 0, 0, 0],
         columns: [
           {

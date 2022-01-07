@@ -33,6 +33,7 @@ export default (data, breakdowns) => {
       Object.entries(groupedByHeight).map(([k, v], lineIn) => {
         const groupedInfoBody = [
           {
+            unbreakable: true,
             margin: [0, 0, 0, 0],
             columns: [
               {

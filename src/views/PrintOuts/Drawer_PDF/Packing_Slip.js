@@ -103,6 +103,7 @@ export default (data, breakdowns, pricing) => {
             margin: [0, -26, 0, 0],
           } : null,
         {
+          unbreakable: true,
           margin: [0, 10, 0, 0],
           columns: [
             {

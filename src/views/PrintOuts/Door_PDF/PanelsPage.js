@@ -136,6 +136,7 @@ export default (data, breakdowns, type) => {
         }
         : null,
       {
+        unbreakable: true,
         margin: [0, 10, 0, 0],
         columns: [
           {
