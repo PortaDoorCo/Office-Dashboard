@@ -136,6 +136,7 @@ export default (data, breakdowns, type) => {
         }
         : null,
       {
+        unbreakable: true,
         margin: [0, 10, 0, 0],
         columns: [
           {
@@ -144,7 +145,7 @@ export default (data, breakdowns, type) => {
             } - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
             style: 'woodtype',
             alignment: 'left',
-            width: 150
+            width: 150,
           },
 
           {
@@ -154,12 +155,13 @@ export default (data, breakdowns, type) => {
             style: 'woodtype',
             alignment: 'center',
           },
-          i.construction.value === 'Slab' ? 
-            {
+          i.construction.value === 'Slab'
+            ? {
               text: `Edge: ${i.edge?.NAME}`,
               style: 'woodtype',
-              alignment: 'center'
-            } : null,
+              alignment: 'center',
+            }
+            : null,
           {
             text: `${
               i.construction.value === 'Slab'
