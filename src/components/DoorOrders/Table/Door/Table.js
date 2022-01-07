@@ -286,7 +286,7 @@ const DoorTable = ({
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
             fraction(
               part.profile
-                ? part.profile?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
+                ? part.profile?.PROFILE_WIDTH + (part.edge ? (part.edge?.LIP_FACTOR / 2) : 0)
                 : 0
             )
           )
@@ -298,7 +298,7 @@ const DoorTable = ({
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
             fraction(
               part.design
-                ? part.design?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
+                ? part.design?.PROFILE_WIDTH + (part.edge ? (part.edge?.LIP_FACTOR / 2) : 0)
                 : 0
             )
           )
@@ -1075,7 +1075,7 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="horizontalMidRail"
-                    edit={construction === 'Miter' ? true : edit}
+                    edit={edit}
                   />
                 </td>
                 <td>
@@ -1087,7 +1087,7 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="verticalMidRail"
-                    edit={construction === 'Miter' ? true : edit}
+                    edit={edit}
                   />
                 </td>
               </tr>
