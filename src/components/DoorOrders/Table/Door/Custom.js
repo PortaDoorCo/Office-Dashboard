@@ -16,6 +16,7 @@ import {
   startAsyncValidation,
   touch,
   getFormSyncErrors,
+  FieldArray
 } from 'redux-form';
 import Ratio from 'lb-ratio';
 import Maker from '../../MakerJS/Maker';
@@ -34,6 +35,9 @@ import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
+import RenderStiles from './Components/Stiles';
+import RenderRails from './Components/Rails';
+import RenderPanels from './Components/Stiles';
 
 const required = (value) => (value ? undefined : 'Required');
 const trim_val = (value) => (value.trim('') ? undefined : 'Required');
@@ -71,37 +75,16 @@ const DoorTable = ({
   const index = fields.length - 1;
 
   const styles = {
-    border: '2px solid #d1d4d7', 
+    border: '2px solid #d1d4d7',
     borderRadius: '25px',
     padding: '3%',
   };
-
-  // const leftStile =
-  //   index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
-  // const rightStile =
-  //   index >= 0 ? formState?.part_list[i]?.dimensions[index]?.rightStile : null;
-  // const topRail =
-  //   index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
-  // const bottomRail =
-  //   index >= 0 ? formState?.part_list[i]?.dimensions[index]?.bottomRail : null;
-  // const defaultLeftStile = formState?.part_list[i]?.leftStile;
-  // const defaultRightStile = formState?.part_list[i]?.rightStile;
-  // const defaultTopRail = formState?.part_list[i]?.topRail;
-  // const defaultBottomRail = formState?.part_list[i]?.bottomRail;
-  // const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-  // const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
-
-  // const topRailAdd = formState?.part_list[i]?.design?.TOP_RAIL_ADD;
-  // const bottomRailAdd = formState?.part_list[i]?.design?.BTM_RAIL_ADD;
-
-  // const construction = formState?.part_list[i]?.construction?.value;
 
   useEffect(() => {
     setWidth([]);
     setHeight([]);
     setChangeValue(null);
   }, [updateSubmit]);
-
 
   const clearNotes = (index, e) => {
     dispatch(change('Order', `part_list[${i}].dimensions[${index}].notes`, ''));
@@ -111,10 +94,6 @@ const DoorTable = ({
     const value = e.target.value;
     setChangeValue(value);
   };
-
-
-
-
 
   const addFields = (i) => {
     const construction = formState?.part_list[i]?.construction?.value;
@@ -141,11 +120,6 @@ const DoorTable = ({
     dispatch(touch('Order', `part_list[${i}].applied_profile`));
     dispatch(touch('Order', `part_list[${i}].panel`));
 
-    dispatch(touch('Order', `part_list[${i}].leftStile`));
-    dispatch(touch('Order', `part_list[${i}].rightStile`));
-    dispatch(touch('Order', `part_list[${i}].topRail`));
-    dispatch(touch('Order', `part_list[${i}].bottomRail`));
-
     dispatch(startAsyncValidation('Order'));
 
     fields.push({
@@ -153,8 +127,6 @@ const DoorTable = ({
       notes: '',
     });
   };
-
-
 
   let itemNum = 0;
 
@@ -174,7 +146,7 @@ const DoorTable = ({
     }),
   };
 
-  console.log({panels});
+  console.log({ panels });
 
   return (
     <div>
@@ -290,222 +262,23 @@ const DoorTable = ({
           </Table>
 
           <div style={styles}>
-            {stiles.map((i, index) => {
-              return (
-                <div>
-                  <Row>
-                    <Col>
-                      <strong>Stile #{index + 1}</strong>
-                      <Table>
-                        <tr>
-                          <td>
-                            <strong>
-                              <p>Stile Width</p>
-                            </strong>
-                            <Field
-                              name={`${table}.stile_width_${index}`}
-                              type="text"
-                              component={renderNumber}
-                              label="width"
-                              validate={[required]}
-                              edit={edit}
-                            />
-                          </td>
-                          <td>
-                            <strong>
-                              <p>Stile Length</p>
-                            </strong>
-                            <Field
-                              name={`${table}.stile_length_${index}`}
-                              type="text"
-                              component={renderNumber}
-                              label="height"
-                              validate={[required]}
-                              edit={edit}
-                            />
-                          </td>
-                        </tr>
-                      </Table>
-                    </Col>
-                  </Row>
-
-                </div>
-              );
-            })}
-            <Row>
-              <Col>
-                <Button color="primary" onClick={() => setStiles(stiles => [...stiles, []])}>
-                    Add Stiles
-                </Button>
-              </Col>
-            </Row>
-
+            <FieldArray name={`${table}.Stiles`} component={RenderStiles} />
           </div>
 
           <hr />
 
           <div style={styles}>
-
-            {rails.map((i, index) => {
-              return (
-                <div>
-                  <Row>
-                    <Col>
-                      <strong>Rail #{index + 1}</strong>
-                      <Table>
-                        <tr>
-                          <td>
-                            <strong>
-                              <p>Rail Width</p>
-                            </strong>
-                            <Field
-                              name={`${table}.rail_width_${index}`}
-                              type="text"
-                              component={renderNumber}
-                              label="width"
-                              validate={[required]}
-                              edit={edit}
-                            />
-                          </td>
-                          <td>
-                            <strong>
-                              <p>Rail Length</p>
-                            </strong>
-                            <Field
-                              name={`${table}.rail_length_${index}`}
-                              type="text"
-                              component={renderNumber}
-                              label="height"
-                              validate={[required]}
-                              edit={edit}
-                            />
-                          </td>
-                        </tr>
-                      </Table>
-                    </Col>
-                  </Row>
-
-                </div>
-              );
-            })}
-            <Row>
-              <Col>
-                <Button color="primary" onClick={() => setRails(rails => [...rails, []])}>
-                    Add Rails
-                </Button>
-              </Col>
-            </Row>
-
+            <FieldArray name={`${table}.Rails`} component={RenderRails} />
           </div>
+
 
           <hr />
 
           <div style={styles}>
-
-            {panels.map((i, index) => {
-              return (
-                <div>
-                  <Row>
-                    <Col>
-                      <strong>Panel #{index + 1}</strong>
-                      <Table>
-                        <tr>
-                          <td>
-                            <strong>
-                              <p>Panel Width</p>
-                            </strong>
-                            <Field
-                              name={`${table}.panel_width_${index}`}
-                              type="text"
-                              component={renderNumber}
-                              label="width"
-                              validate={[required]}
-                              edit={edit}
-                            />
-                          </td>
-                          <td>
-                            <strong>
-                              <p>Panel Height</p>
-                            </strong>
-                            <Field
-                              name={`${table}.panel_height_${index}`}
-                              type="text"
-                              component={renderNumber}
-                              label="height"
-                              validate={[required]}
-                              edit={edit}
-                            />
-                          </td>
-                        </tr>
-                      </Table>
-                    </Col>
-                  </Row>
-
-                </div>
-              );
-            })}
-            <Row>
-              <Col>
-                <Button color="primary" onClick={() => setPanels(panels => [...panels, []])}>
-                    Add Panels
-                </Button>
-              </Col>
-            </Row>
-
+            <FieldArray name={`${table}.Panels`} component={RenderPanels} />
           </div>
 
           <hr />
-
-          {/* <Row>
-            <Col lg="2">
-              <FormGroup>
-                <strong>Show Builder</strong>
-                <Field
-                  name={`${table}.showBuilder`}
-                  component={renderCheckboxToggle}
-                />
-              </FormGroup>
-            </Col>
-            <Col>
-              {parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
-                1 &&
-              parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) <
-                3 &&
-              parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) ===
-                1 ? (
-                  <FormGroup>
-                    <strong>Uneven Split</strong>
-                    <Field
-                      name={`${table}.unevenCheck`}
-                      component={renderCheckboxToggle}
-                      edit={edit}
-                    />
-                  </FormGroup>
-                ) : null}
-            </Col>
-          </Row> */}
-
-          {/* <Row>
-            <Col>
-              {formState.part_list[i]?.dimensions[index]?.showBuilder ? (
-                <div
-                  id={`makerJS${index}`}
-                  style={{ width: '100%', height: '300px' }}
-                >
-                  <Maker
-                    width={width[index]}
-                    height={height[index]}
-                    i={i}
-                    index={index}
-                    style={{ width: '100%', height: '300px' }}
-                  />
-                </div>
-              ) : (
-                <div />
-              )}
-            </Col>
-          </Row> */}
-
 
 
           <Row>
