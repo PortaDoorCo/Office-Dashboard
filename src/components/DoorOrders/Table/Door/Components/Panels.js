@@ -21,6 +21,19 @@ const Panels = ({fields, edit }) => {
                   <tr>
                     <td>
                       <strong>
+                        <p>Qty</p>
+                      </strong>
+                      <Field
+                        name={`${table}.qty`}
+                        type="text"
+                        component={renderNumber}
+                        label="width"
+                        validate={[required]}
+                        edit={edit}
+                      />
+                    </td>
+                    <td>
+                      <strong>
                         <p>Panel Width</p>
                       </strong>
                       <Field
@@ -70,7 +83,7 @@ const Panels = ({fields, edit }) => {
       {!edit ? (
         <Row>
           <Col>
-            <Button color="primary" onClick={() => fields.push()}>
+            <Button color="primary" onClick={() => fields.push({ qty: 1 })}>
                   Add Stiles
             </Button>
           </Col>

@@ -1,43 +1,24 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import {
-  Table,
-  Input,
-  Row,
-  Col,
-  Button,
-  FormGroup,
-  Label,
-  ButtonGroup,
-} from 'reactstrap';
-import 'semantic-ui-css/semantic.min.css';
-import {
-  Field,
-  change,
-  startAsyncValidation,
-  touch,
-  getFormSyncErrors,
-  FieldArray
-} from 'redux-form';
 import Ratio from 'lb-ratio';
-import Maker from '../../MakerJS/Maker';
+import React, { Fragment, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import {
+  Button, Col, FormGroup,
+  Label, Row, Table
+} from 'reactstrap';
+import {
+  change, Field, FieldArray, getFormSyncErrors, startAsyncValidation,
+  touch
+} from 'redux-form';
+import 'semantic-ui-css/semantic.min.css';
+import currencyMask from '../../../../utils/currencyMask';
 // import 'react-widgets/dist/css/react-widgets.css';
 import {
-  renderField,
-  renderNumber,
-  renderInt,
-  renderDropdownList,
-  renderCheckboxToggle,
-  renderPrice,
-  renderTextField,
+  renderField, renderInt, renderNumber, renderPrice,
+  renderTextField
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
-import { connect } from 'react-redux';
-import numQty from 'numeric-quantity';
-import WarningModal from '../Warnings/Modal';
-import currencyMask from '../../../../utils/currencyMask';
-import RenderStiles from './Components/Stiles';
 import RenderRails from './Components/Rails';
-import RenderPanels from './Components/Stiles';
+import { default as RenderPanels, default as RenderStiles } from './Components/Stiles';
 
 const required = (value) => (value ? undefined : 'Required');
 const trim_val = (value) => (value.trim('') ? undefined : 'Required');
