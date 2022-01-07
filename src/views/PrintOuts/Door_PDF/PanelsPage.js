@@ -13,12 +13,16 @@ export default (data, breakdowns, type) => {
           : i.construction.value === 'Slab'
             ? 'Slab'
             : ''
-    } ${(i.construction.value === 'MT') || (i.construction.value === 'Miter') ? i.construction.value : ''} ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
+    } ${
+      i.construction.value === 'MT' || i.construction.value === 'Miter'
+        ? i.construction.value
+        : ''
+    } ${i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''}`;
   };
 
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
 
-  console.log({a});
+  console.log({ a });
 
   const b = a
     .map((woodtype) =>
@@ -44,13 +48,7 @@ export default (data, breakdowns, type) => {
       };
     });
 
-
-
-  
-
   const table_body = b.map((i, index) => {
-    
-
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },
@@ -64,13 +62,11 @@ export default (data, breakdowns, type) => {
       ],
     ];
 
-
     HeightSort(GlassSort(i)).forEach((item, index) => {
-      
       if (
         item.glass_index === 1 ||
-          i.orderType.value === 'One_Piece' ||
-          i.orderType.value === 'One_Piece_DF'
+        i.orderType.value === 'One_Piece' ||
+        i.orderType.value === 'One_Piece_DF'
       ) {
         return null;
       } else {
@@ -117,8 +113,8 @@ export default (data, breakdowns, type) => {
         ]);
       }
     });
-    
 
+    console.log({ i });
 
     return [
       index === 0 && data.job_info?.Shop_Notes
@@ -127,9 +123,9 @@ export default (data, breakdowns, type) => {
             { text: '' },
             {
               text: `${
-            data.job_info?.Shop_Notes
-              ? data.job_info?.Shop_Notes?.toUpperCase()
-              : ''
+                  data.job_info?.Shop_Notes
+                    ? data.job_info?.Shop_Notes?.toUpperCase()
+                    : ''
               }`,
               alignment: 'center',
               style: 'fontsBold',
@@ -137,21 +133,43 @@ export default (data, breakdowns, type) => {
             { text: '' },
           ],
           margin: [0, -21, 0, 0],
-        } : null,
+        }
+        : null,
       {
         margin: [0, 10, 0, 0],
         columns: [
           {
-            text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
+            text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${
+              i.woodtype.NAME
+            } - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
             style: 'woodtype',
+            alignment: 'left',
+            width: 150
           },
+
           {
-            text: `IP: ${i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'}`,
+            text: `IP: ${
+              i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+            }`,
             style: 'woodtype',
             alignment: 'center',
           },
+          i.construction.value === 'Slab' ? 
+            {
+              text: `Edge: ${i.edge?.NAME}`,
+              style: 'woodtype',
+              alignment: 'center'
+            } : null,
           {
-            text: `${i.woodtype.NAME.includes('MDF') ? 'MDF ' : ''}${type}`,
+            text: `${
+              i.construction.value === 'Slab'
+                ? i.woodtype?.FRAMING_MATERIAL
+                  ? i.woodtype?.FRAMING_MATERIAL
+                  : i.woodtype?.NAME
+                : i.woodtype?.PANEL_MATERIAL
+                  ? i.woodtype?.PANEL_MATERIAL
+                  : i.woodtype?.NAME
+            } ${type}`,
             alignment: 'right',
             style: 'woodtype',
           },
@@ -196,15 +214,11 @@ export default (data, breakdowns, type) => {
 
       // { text: '', pageBreak: 'before' }
     ];
-    
   });
 
-  console.log({b});
+  console.log({ b });
 
   // const table_body = [];
 
-  return [
-
-    table_body,
-  ];
+  return [table_body];
 };

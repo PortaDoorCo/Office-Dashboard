@@ -203,9 +203,6 @@ const Designs = (props) => {
               <strong>Bottom Rail Arch:</strong> {card.BTM_RAIL_ADD}
             </CardTitle>
             <CardTitle>
-              <strong>Minimum Stile Width:</strong> {card.PROFILE_WIDTH}
-            </CardTitle>
-            <CardTitle>
               <strong>Profile Width:</strong> {card.PROFILE_WIDTH}
             </CardTitle>
             <CardTitle>
@@ -334,15 +331,6 @@ const Designs = (props) => {
                 </Col>
               </Row>
               <Row>
-                <Col>
-                  <Label for="5/4_Price">Minimum Stile Width</Label>
-                  <Input
-                    type="number"
-                    value={product.PROFILE_WIDTH}
-                    name="PROFILE_WIDTH"
-                    onChange={(e) => change(e)}
-                  ></Input>
-                </Col>
                 <Col>
                   <Label for="5/4_Price">Profile Width</Label>
                   <Input

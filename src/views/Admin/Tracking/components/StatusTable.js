@@ -50,7 +50,7 @@ const StatusTable = (props) => {
     {
       selector: 'DueDate',
       name: 'Due Date',
-      cell: row => <span>{moment(row.DueDate).format('dddd, MMMM Do YYYY')}</span>,
+      cell: row => <span>{moment(row.dueDate).format('dddd, MMMM Do YYYY')}</span>,
       sortable: true
 
     },

@@ -137,7 +137,6 @@ const Designs = (props) => {
       BTM_RAIL_ADD: product.BTM_RAIL_ADD,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
       INSET: product.INSET,
-      DF_REDUCTION: product.DF_REDUCTION,
       CONSTRUCTION: 'Miter',
       ORDERTYPE: 'Door',
       photo: product.photo ? product.photo.id : '',
@@ -202,16 +201,10 @@ const Designs = (props) => {
               <strong>Bottom Rail Arch:</strong> {card.BTM_RAIL_ADD}
             </CardTitle>
             <CardTitle>
-              <strong>Minimum Stile Width:</strong> {card.PROFILE_WIDTH}
-            </CardTitle>
-            <CardTitle>
               <strong>Profile Width:</strong> {card.PROFILE_WIDTH}
             </CardTitle>
             <CardTitle>
               <strong>Inset:</strong> {card.INSET}
-            </CardTitle>
-            <CardTitle>
-              <strong>DF Reduction:</strong> {card.DF_REDUCTION}
             </CardTitle>
           </CardBody>
         </Card>
@@ -335,15 +328,6 @@ const Designs = (props) => {
               
               <Row>
                 <Col>
-                  <Label for="5/4_Price">Minimum Stile Width</Label>
-                  <Input
-                    type="number"
-                    value={product.PROFILE_WIDTH}
-                    name="PROFILE_WIDTH"
-                    onChange={(e) => change(e)}
-                  ></Input>
-                </Col>
-                <Col>
                   <Label for="5/4_Price">Profile Width</Label>
                   <Input
                     type="number"
@@ -361,16 +345,6 @@ const Designs = (props) => {
                     type="number"
                     value={product.INSET}
                     name="INSET"
-                    onChange={(e) => change(e)}
-                  ></Input>
-                </Col>
-
-                <Col>
-                  <Label for="5/4_Price">DF Reduction</Label>
-                  <Input
-                    type="number"
-                    value={product.DF_REDUCTION}
-                    name="DF_REDUCTION"
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -528,49 +502,33 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-              <Col>
-                <Label for="5/4_Price">Minimum Stile Width</Label>
-                <Input
-                  type="number"
-                  value={product.PROFILE_WIDTH}
-                  name="PROFILE_WIDTH"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">Profile Width</Label>
-                <Input
-                  type="number"
-                  value={product.PROFILE_WIDTH}
-                  name="PROFILE_WIDTH"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
+
               <Row>
-
-                <Row>
-                  <Col>
-                    <Label for="5/4_Price">INSET</Label>
-                    <Input
-                      type="number"
-                      value={product.INSET}
-                      name="INSET"
-                      onChange={(e) => change(e)}
-                    ></Input>
-                  </Col>
-
-                  <Col>
-                    <Label for="5/4_Price">DF Reduction</Label>
-                    <Input
-                      type="number"
-                      value={product.DF_REDUCTION}
-                      name="DF_REDUCTION"
-                      onChange={(e) => change(e)}
-                    ></Input>
-                  </Col>
-                </Row>
-                
+                <Col>
+                  <Label for="5/4_Price">Profile Width</Label>
+                  <Input
+                    type="number"
+                    value={product.PROFILE_WIDTH}
+                    name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
               </Row>
+       
+
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">INSET</Label>
+                  <Input
+                    type="number"
+                    value={product.INSET}
+                    name="INSET"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+              </Row>
+                
+   
               
 
             </ModalBody>
