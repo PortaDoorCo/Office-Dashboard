@@ -25,6 +25,7 @@ export default (data, breakdowns) => {
     .map((woodtype) =>
       woodtype.map((v, i) => ({
         ...v,
+        orderType: v.orderType,
         dimensions: flatten(
           v.dimensions.map((d, k) => ({
             ...d,
@@ -41,6 +42,8 @@ export default (data, breakdowns) => {
       ...t[0],
       dimensions: flatten(t.map((c) => c.dimensions)),
     }));
+
+    console.log({b})
 
   const table_body = b.map((i, index) => {
     const tableBody = [
@@ -69,119 +72,150 @@ export default (data, breakdowns) => {
           design: item.design,
         };
 
-        tableBody.push([
-          { text: item.item ? item.item : index + 1, style: 'fonts' },
-          {
-            text: item.name,
-            style: 'fonts',
-          },
-          {
-            text: (Stiles(item, n, breakdowns) || []).map((stile) => {
-              return `${stile.qty} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: (Stiles(item, n, breakdowns) || []).map((stile) => {
-              return `${stile.measurement} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: (Stiles(item, n, breakdowns) || []).map((stile) => {
-              return `${stile.pattern} \n`;
-            }),
-            style: 'fonts',
-          },
-          {
-            text: item.notes ? item.notes.toUpperCase() : '',
-            style: 'fonts',
-          },
-        ]);
+        if(item.orderType?.value === 'Custom'){
+          return item.Stiles?.map(n => {
+            tableBody.push([
+              { text: item.item ? item.item : index + 1, style: 'fonts' },
+              { text: item.name, style: 'fonts' },
+              {
+                text: n.qty,
+                style: 'fonts',
+              },
+              {
+                text: `${n.width} x ${n.length}`,
+                style: 'fonts',
+              },
+              {
+                text: n.position?.value,
+                style: 'fonts',
+              },
+              {
+                text: n.note ? n.note.toUpperCase() : '',
+                style: 'fonts',
+              }
+            ]);
+          })
+        } else {
+          tableBody.push([
+            { text: item.item ? item.item : index + 1, style: 'fonts' },
+            {
+              text: item.name,
+              style: 'fonts',
+            },
+            {
+              text: (Stiles(item, n, breakdowns) || []).map((stile) => {
+                return `${stile.qty} \n`;
+              }),
+              style: 'fonts',
+            },
+            {
+              text: (Stiles(item, n, breakdowns) || []).map((stile) => {
+                return `${stile.measurement} \n`;
+              }),
+              style: 'fonts',
+            },
+            {
+              text: (Stiles(item, n, breakdowns) || []).map((stile) => {
+                return `${stile.pattern} \n`;
+              }),
+              style: 'fonts',
+            },
+            {
+              text: item.notes ? item.notes.toUpperCase() : '',
+              style: 'fonts',
+            },
+          ]);
+        }
+
+
       }
     });
 
     return [
-      index === 0 && data.job_info?.Shop_Notes
-        ? {
-          columns: [
-            { text: '' },
-            {
-              text: `${
-                  data.job_info?.Shop_Notes
-                    ? data.job_info?.Shop_Notes?.toUpperCase()
-                    : ''
-              }`,
-              alignment: 'center',
-              style: 'fontsBold',
-            },
-            { text: '' },
-          ],
-          margin: [0, -29, 0, 0],
-        }
-        : null,
-      {
+      { 
         unbreakable: true,
-        margin: [0, 10, 0, 0],
-        columns: [
+        stack: [
+          index === 0 && data.job_info?.Shop_Notes
+            ? {
+              columns: [
+                { text: '' },
+                {
+                  text: `${
+                    data.job_info?.Shop_Notes
+                      ? data.job_info?.Shop_Notes?.toUpperCase()
+                      : ''
+                  }`,
+                  alignment: 'center',
+                  style: 'fontsBold',
+                },
+                { text: '' },
+              ],
+              margin: [0, -29, 0, 0],
+            }
+            : null,
           {
-            text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${
-              i.woodtype.NAME
-            } - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
-            style: 'woodtype',
-            width: 200,
+            margin: [0, 10, 0, 0],
+            columns: [
+              {
+                text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${
+                  i.woodtype.NAME
+                } - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
+                style: 'woodtype',
+                width: 200,
+              },
+              {
+                text: `IP: ${
+                  i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+                }`,
+                style: 'woodtype',
+                alignment: 'center',
+              },
+              {
+                text: 'STILES',
+                alignment: 'right',
+                style: 'woodtype',
+              },
+            ],
           },
           {
-            text: `IP: ${
-              i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
-            }`,
-            style: 'woodtype',
+            text: '==============================================================================',
             alignment: 'center',
           },
           {
-            text: 'STILES',
-            alignment: 'right',
-            style: 'woodtype',
+            table: {
+              headerRows: 1,
+              widths: [22, 80, 30, 120, 50, '*'],
+              body: tableBody,
+            },
+            layout: {
+              hLineWidth: function (i, node) {
+                return i === 1 ? 1 : 0;
+              },
+              vLineWidth: function (i, node) {
+                return 0;
+              },
+              hLineStyle: function (i, node) {
+                if (i === 0 || i === node.table.body.length) {
+                  return null;
+                }
+                return { dash: { length: 1, space: 1 } };
+              },
+              paddingLeft: function (i) {
+                return i === 0 ? 0 : 8;
+              },
+              paddingRight: function (i, node) {
+                return i === node.table.widths.length - 1 ? 0 : 8;
+              },
+            },
           },
-        ],
-      },
-      {
-        text: '==============================================================================',
-        alignment: 'center',
-      },
-      {
-        table: {
-          headerRows: 1,
-          widths: [22, 80, 30, 120, 50, '*'],
-          body: tableBody,
-        },
-        layout: {
-          hLineWidth: function (i, node) {
-            return i === 1 ? 1 : 0;
+          {
+            text: '==============================================================================',
+            alignment: 'center',
           },
-          vLineWidth: function (i, node) {
-            return 0;
-          },
-          hLineStyle: function (i, node) {
-            if (i === 0 || i === node.table.body.length) {
-              return null;
-            }
-            return { dash: { length: 1, space: 1 } };
-          },
-          paddingLeft: function (i) {
-            return i === 0 ? 0 : 8;
-          },
-          paddingRight: function (i, node) {
-            return i === node.table.widths.length - 1 ? 0 : 8;
-          },
-        },
-      },
-      {
-        text: '==============================================================================',
-        alignment: 'center',
-      },
 
-      // { text: '', pageBreak: 'before' }
+        // { text: '', pageBreak: 'before' }
+        ]}
+
     ];
   });
 

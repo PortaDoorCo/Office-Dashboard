@@ -4,7 +4,7 @@ import { renderNumber } from '../../../../../components/RenderInputs/renderInput
 import {
   Field,
 } from 'redux-form';
-import { renderDropdownList } from '../../../../../components/RenderInputs/renderInputs';
+import { renderDropdownList, renderTextField } from '../../../../../components/RenderInputs/renderInputs';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -19,7 +19,7 @@ const positions = [
   },
   {
     NAME: 'T / B',
-    value: 'T  / B'
+    value: 'TB'
   },
   {
     NAME: 'Mid Rail',
@@ -111,6 +111,20 @@ const Rails = ({fields, edit }) => {
                       ) : (
                         <div />
                       )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>
+                        <p>Note</p>
+                      </strong>
+                      <Field
+                        name={`${table}.note`}
+                        type="textarea"
+                        component={renderTextField}
+                        label="height"
+                        edit={edit}
+                      />
                     </td>
                   </tr>
                 </Table>

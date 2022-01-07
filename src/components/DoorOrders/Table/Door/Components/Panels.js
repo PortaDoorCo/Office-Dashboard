@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Table, Button } from 'reactstrap';
-import { renderNumber } from '../../../../../components/RenderInputs/renderInputs';
+import { renderNumber, renderTextField } from '../../../../../components/RenderInputs/renderInputs';
 import {
   Field,
 } from 'redux-form';
@@ -72,6 +72,20 @@ const Panels = ({fields, edit }) => {
                       ) : (
                         <div />
                       )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>
+                        <p>Note</p>
+                      </strong>
+                      <Field
+                        name={`${table}.note`}
+                        type="textarea"
+                        component={renderTextField}
+                        label="height"
+                        edit={edit}
+                      />
                     </td>
                   </tr>
                 </Table>

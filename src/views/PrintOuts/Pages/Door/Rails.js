@@ -4,6 +4,7 @@ import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import RailsPage from '../../Door_PDF/RailsPage';
+import Custom_Selection from '../../Sorting/Custom_Selection';
 
 const DoorPDF =  async (
   data,
@@ -107,6 +108,8 @@ const DoorPDF =  async (
     const type = 'Page';
 
     let itemNum = 0;
+    let customPages = [];
+    let pages = [];
 
     const itemNumCounter = {
       ...data,
@@ -124,8 +127,21 @@ const DoorPDF =  async (
       }),
     };
 
+    const newParts = Custom_Selection(itemNumCounter, type).map((j) => {
+      const newData = { ...data, part_list: j };
+      return newData;
+    });
 
-    Content.push(RailsPage(itemNumCounter, breakdowns));
+    console.log({newParts});
+
+    newParts.map((k) => {
+      console.log({k});
+      return Content.push(RailsPage(k, breakdowns));
+    });
+
+    // Content.push(RailsPage(itemNumCounter, breakdowns));
+
+    
 
 
  
