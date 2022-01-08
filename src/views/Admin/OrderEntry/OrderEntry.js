@@ -314,7 +314,8 @@ class OrderEntry extends Component {
       route,
       orderType,
       edit,
-      isEdit
+      isEdit,
+      user
     } = this.props;
 
     console.log({ orderType });
@@ -434,104 +435,111 @@ class OrderEntry extends Component {
 
                   <hr />
                   <hr />
-                  <Row>
-                    <Col xs="9" />
-                    <Col xs="3">
-                      <Row className="mb-0">
-                        <Col xs="9" />
-                      </Row>
+                  {user.role?.type === 'quality_control' ? null : 
+                    <Row>
+                      <Col xs="9" />
+                      <Col xs="3">
+                        <Row className="mb-0">
+                          <Col xs="9" />
+                        </Row>
 
-                      {orderType === 'misc_items' ? null : (
-                        <div>
-                          <strong>Discount: </strong>
-                          <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>%</InputGroupText>
-                            </InputGroupAddon>
-                            <Field
-                              name={'discount'}
-                              type="text"
-                              edit={true}
-                              component={renderField}
-                              label="discount"
-                            />
-                          </InputGroup>
-                        </div>
-                      )}
+                        {orderType === 'misc_items' ? null : (
+                          <div>
+                            <strong>Discount: </strong>
+                            <InputGroup>
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>%</InputGroupText>
+                              </InputGroupAddon>
+                              <Field
+                                name={'discount'}
+                                type="text"
+                                edit={true}
+                                component={renderField}
+                                label="discount"
+                              />
+                            </InputGroup>
+                          </div>
+                        )}
 
-                      <strong>Tax: </strong>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>$</InputGroupText>
-                        </InputGroupAddon>
-                        <NumberFormat
-                          thousandSeparator={true}
-                          value={tax}
-                          disabled={true}
-                          customInput={Input}
-                          {...currencyMask}
-                          prefix={'$'}
-                        />
-                      </InputGroup>
+                        <strong>Tax: </strong>
+                        <InputGroup>
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>$</InputGroupText>
+                          </InputGroupAddon>
+                          <NumberFormat
+                            thousandSeparator={true}
+                            value={tax}
+                            disabled={true}
+                            customInput={Input}
+                            {...currencyMask}
+                            prefix={'$'}
+                          />
+                        </InputGroup>
 
-                      <strong>Total: </strong>
-                      <InputGroup className="mb-3">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>$</InputGroupText>
-                        </InputGroupAddon>
-                        <NumberFormat
-                          thousandSeparator={true}
-                          value={total}
-                          disabled={true}
-                          customInput={Input}
-                          {...currencyMask}
-                          prefix={'$'}
-                        />
-                      </InputGroup>
-                    </Col>
-                  </Row>
+                        <strong>Total: </strong>
+                        <InputGroup className="mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>$</InputGroupText>
+                          </InputGroupAddon>
+                          <NumberFormat
+                            thousandSeparator={true}
+                            value={total}
+                            disabled={true}
+                            customInput={Input}
+                            {...currencyMask}
+                            prefix={'$'}
+                          />
+                        </InputGroup>
+                      </Col>
+                    </Row>
+                  }
                 </form>
               </CardBody>
             </Card>
           </div>
-          
-          <div className={isEdit ? 'editFormCol2' : 'orderFormCol2'}>
-            {this.props.isEdit ? (
-              <StickyBox offsetTop={20} offsetBottom={20}>
-                <EditCheckoutBox
-                  {...this.props}
-                  {...this.state}
-                  onSubNav={this.onSubNav}
-                  handleSubmit={handleSubmit}
-                  submit={this.submit}
-                  toggleCancelModal={this.toggleCancelModal}
-                  maxValue={maxValue}
-                  onUploaded={this.onUploaded}
-                />
-              </StickyBox>
-            ) : (
-              <Sticky
-                top={100}
-                // bottomBoundary={`#item-${i}`}
-                enabled={true}
-              // key={i}
-              >
 
-                {/* {this.props.orderType === 'Misc Items' ? null :  */}
-                <CheckoutBox
-                  {...this.props}
-                  {...this.state}
-                  onSubNav={this.onSubNav}
-                  handleSubmit={handleSubmit}
-                  submit={this.submit}
-                  toggleCancelModal={this.toggleCancelModal}
-                  maxValue={maxValue}
-                  onUploaded={this.onUploaded}
-                /> 
-                {/* } */}
-              </Sticky>
-            )}
-          </div>
+
+          {user.role?.type === 'quality_control' ? null : 
+          
+            <div className={isEdit ? 'editFormCol2' : 'orderFormCol2'}>
+              {this.props.isEdit ? (
+                <StickyBox offsetTop={20} offsetBottom={20}>
+                  <EditCheckoutBox
+                    {...this.props}
+                    {...this.state}
+                    onSubNav={this.onSubNav}
+                    handleSubmit={handleSubmit}
+                    submit={this.submit}
+                    toggleCancelModal={this.toggleCancelModal}
+                    maxValue={maxValue}
+                    onUploaded={this.onUploaded}
+                  />
+                </StickyBox>
+              ) : (
+                <Sticky
+                  top={100}
+                  // bottomBoundary={`#item-${i}`}
+                  enabled={true}
+                  // key={i}
+                >
+
+                  {/* {this.props.orderType === 'Misc Items' ? null :  */}
+                  <CheckoutBox
+                    {...this.props}
+                    {...this.state}
+                    onSubNav={this.onSubNav}
+                    handleSubmit={handleSubmit}
+                    submit={this.submit}
+                    toggleCancelModal={this.toggleCancelModal}
+                    maxValue={maxValue}
+                    onUploaded={this.onUploaded}
+                  /> 
+                  {/* } */}
+                </Sticky>
+              )}
+            </div>
+
+          }
           
           
 
