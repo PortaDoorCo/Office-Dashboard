@@ -21,11 +21,6 @@ export default (data, breakdowns) => {
   };
 
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
-
-  console.log({data})
-  console.log({part: data.part_list})
-  console.log({a})
-
   const b = a
     .map((woodtype) =>
       woodtype.map((v, i) => ({
@@ -37,6 +32,7 @@ export default (data, breakdowns) => {
             construction: v.construction,
             profile: v.profile,
             design: v.design,
+            edge: v.edge,
             orderType: v.orderType,
           }))
         ),
@@ -112,79 +108,49 @@ export default (data, breakdowns) => {
           design: item.design,
         };
 
-        if(i.orderType?.value === 'Custom'){
-          return item.Rails?.map(n => {
-            tableBody.push([
-              { text: item.item ? item.item : index + 1, style: 'fonts' },
-              { text: item.name, style: 'fonts' },
-              {
-                text: n.qty,
-                style: 'fonts',
-              },
-              {
-                text: `${n.width} x ${n.length}`,
-                style: 'fonts',
-              },
-              {
-                text: n.position?.value,
-                style: 'fonts',
-              },
-              {
-                text:
-                    i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
-                      ? i.cope_design.NAME
-                      : '',
-                style: 'fonts',
-              },
-              {
-                text: n.note ? n.note.toUpperCase() : '',
-                style: 'fonts',
-              }
-            ]);
-          })
-        } else {
-          tableBody.push([
-            { text: item.item ? item.item : index + 1, style: 'fonts' },
-            {
-              text: item.name,
-              style: 'fonts',
-            },
-            {
-              text: (Rails(item, n, breakdowns) || []).map((rail) => {
-                return `${rail.qty} \n`;
-              }),
-              style: 'fonts',
-            },
-            {
-              text: (Rails(item, n, breakdowns) || []).map((rail) => {
-                return `${rail.measurement} \n`;
-              }),
-              style: 'fonts',
-            },
-            {
-              text: (Rails(item, n, breakdowns) || []).map((rail) => {
-                return `${rail.pattern} \n`;
-              }),
-              style: 'fonts',
-            },
-            {
-              text:
-                  i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
-                    ? i.cope_design.NAME
-                    : '',
-              style: 'fonts',
-            },
-            {
-              text: item.notes ? item.notes.toUpperCase() : '',
-              style: 'fonts',
-            },
-          ]);
-        }
 
-
+        tableBody.push([
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
+          {
+            text: item.name,
+            style: 'fonts',
+          },
+          {
+            text: (Rails(item, n, breakdowns) || []).map((rail) => {
+              return `${rail.qty} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: (Rails(item, n, breakdowns) || []).map((rail) => {
+              return `${rail.measurement} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: (Rails(item, n, breakdowns) || []).map((rail) => {
+              return `${rail.pattern} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text:
+                i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
+                  ? i.cope_design.NAME
+                  : '',
+            style: 'fonts',
+          },
+          {
+            text: item.notes ? item.notes.toUpperCase() : '',
+            style: 'fonts',
+          },
+        ]);
         
       }
     });
+
+
+    console.log({tableBody});
 
     return [
 
@@ -272,7 +238,6 @@ export default (data, breakdowns) => {
 
         // { text: '', pageBreak: 'before' }
         ]}
-
 
     ];
   });

@@ -134,12 +134,12 @@ const DoorPDF =  async (
 
     console.log({newParts});
 
-    newParts.map((k) => {
-      console.log({k});
-      return Content.push(RailsPage(k, breakdowns));
-    });
+    // newParts.map((k) => {
+    //   console.log({k});
+    //   return Content.push(RailsPage(k, breakdowns));
+    // });
 
-    // Content.push(RailsPage(itemNumCounter, breakdowns));
+    Content.push(RailsPage(itemNumCounter, breakdowns));
 
     
 

@@ -8,6 +8,8 @@ const fraction = (num) => {
 };
 
 export default (info, part, breakdowns) => {
+
+  
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 
