@@ -343,7 +343,7 @@ const OrderTable = (props) => {
     const { setSelectedOrder, setOrderType } = props;
 
 
-    console.log({row});
+
 
     setEdit(false);
     setModal(!modal);

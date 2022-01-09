@@ -287,7 +287,7 @@ class OrderPage extends Component {
         const mergedPdf = await merger.saveAsBlob();
         const url = URL.createObjectURL(mergedPdf);
 
-        console.log({ url });
+   
 
         await window.open(url, '_blank').focus();
         await files.pop();
@@ -428,7 +428,6 @@ class OrderPage extends Component {
         return newData;
       });
 
-      console.log({ newParts });
 
       let files = [];
 
@@ -518,7 +517,7 @@ class OrderPage extends Component {
                 p,
                 this.props.pricing
               ).then(async (v) => {
-                console.log({ v });
+          
                 files.push(v);
               });
             } else {
@@ -678,7 +677,7 @@ class OrderPage extends Component {
         });
       }
 
-      console.log({ files });
+
 
       await generatePDF(files);
     } else if (data.orderType === 'Drawer Order') {
@@ -1076,7 +1075,7 @@ class OrderPage extends Component {
             });
 
             const railPrint = rail.map((i) => {
-              console.log({ i });
+ 
               return razorGuage.push([
                 `${s.orderNum}`,
                 `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,

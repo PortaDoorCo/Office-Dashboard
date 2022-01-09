@@ -22,7 +22,7 @@ export default (data, breakdowns, type) => {
 
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
 
-  console.log({ a });
+
 
   const b = a
     .map((woodtype) =>
@@ -35,6 +35,9 @@ export default (data, breakdowns, type) => {
               name: getName(v),
               panel: v.panel,
               construction: v.construction,
+              profile: v.profile,
+              design: v.design,
+              edge: v.edge,
               orderType: v.orderType,
             }))
           ),
@@ -71,91 +74,55 @@ export default (data, breakdowns, type) => {
         return null;
       } else {
 
-        if(i.orderType?.value === 'Custom'){
-          return item.Panels?.map(n => {
-            tableBody.push([
-              { text: item.item ? item.item : index + 1, style: 'fonts' },
-              { text: item.name, style: 'fonts' },
-              {
-                text: n.qty,
-                style: 'fonts',
-              },
-              {
-                text: `${n.width} x ${n.height}`,
-                style: 'fonts',
-              },
-              {
-                text: item.panel.Flat ? 'PF' : 'PR',
-                style: 'fonts',
-              },
-              {
-                text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
-                style: 'fonts',
-              },
-              {
-                text: i.panel.NAME,
-                style: 'fonts',
-              },
-              item.notes || item.lite
-                ? {
-                  text: `${item.notes ? item.notes : ''} ${
-                    item.lite ? item.lite.NAME : ''
-                  }`,
-                  style: 'tableBold',
-                  alignment: 'left',
-                }
-                : null,
-            ]);
-          })
-        } else {
-          tableBody.push([
-            { text: item.item ? item.item : index + 1, style: 'fonts' },
-            { text: item.name, style: 'fonts' },
-            {
-              text: (Panels(item, i, breakdowns) || []).map((panel) => {
-                return `${panel.qty} \n`;
-              }),
-              style: 'fonts',
-            },
-            {
-              text: (Panels(item, i, breakdowns) || []).map((panel) => {
-                return `${panel.measurement} \n`;
-              }),
-              style: 'fonts',
-            },
-            {
-              text: (Panels(item, i, breakdowns) || []).map((panel) => {
-                return `${panel.pattern} \n`;
-              }),
-              style: 'fonts',
-            },
-            {
-              text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
-              style: 'fonts',
-            },
-            {
-              text: (Panels(item, i, breakdowns) || []).map((panel) => {
-                return `${panel.panel} \n`;
-              }),
-              style: 'fonts',
-            },
-            item.notes || item.lite
-              ? {
-                text: `${item.notes ? item.notes : ''} ${
-                  item.lite ? item.lite.NAME : ''
-                }`,
-                style: 'tableBold',
-                alignment: 'left',
-              }
-              : null,
-          ]);
-        }
+
+        tableBody.push([
+          { text: item.item ? item.item : index + 1, style: 'fonts' },
+          { text: item.name, style: 'fonts' },
+          {
+            text: (Panels(item, i, breakdowns) || []).map((panel) => {
+              return `${panel.qty} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: (Panels(item, i, breakdowns) || []).map((panel) => {
+              return `${panel.measurement} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: (Panels(item, i, breakdowns) || []).map((panel) => {
+              return `${panel.pattern} \n`;
+            }),
+            style: 'fonts',
+          },
+          {
+            text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
+            style: 'fonts',
+          },
+          {
+            text: (Panels(item, i, breakdowns) || []).map((panel) => {
+              return `${panel.panel} \n`;
+            }),
+            style: 'fonts',
+          },
+          item.notes || item.lite
+            ? {
+              text: `${item.notes ? item.notes : ''} ${
+                item.lite ? item.lite.NAME : ''
+              }`,
+              style: 'tableBold',
+              alignment: 'left',
+            }
+            : null,
+        ]);
+        
 
 
       }
     });
 
-    console.log({ i });
+
 
     return [
       index === 0 && data.job_info?.Shop_Notes
@@ -259,7 +226,7 @@ export default (data, breakdowns, type) => {
     ];
   });
 
-  console.log({ b });
+
 
   // const table_body = [];
 

@@ -112,8 +112,7 @@ export default (data, pricing) => {
       ]);
     });
 
-    console.log({ finishingSubtotal });
-    console.log({ finishing });
+
 
     return [
       {

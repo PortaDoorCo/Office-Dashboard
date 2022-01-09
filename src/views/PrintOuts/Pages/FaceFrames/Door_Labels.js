@@ -111,7 +111,6 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
   
 
     return pdfDocGenerator.getBlob((blob) => {
-      console.log({blob});
       // blobUrl()
       resolve(blob);
     });

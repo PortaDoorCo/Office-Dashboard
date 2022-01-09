@@ -29,6 +29,7 @@ export default (data, breakdowns) => {
           v.dimensions.map((d, k) => ({
             ...d,
             name: getName(v),
+            panel: v.panel,
             construction: v.construction,
             profile: v.profile,
             design: v.design,
@@ -66,7 +67,7 @@ export default (data, breakdowns) => {
         return {
           ...item,
           rail_height: Rails(item, n, breakdowns).map((rail) => {
-            console.log({ rail });
+    
             return rail.height;
           })[0],
         };
@@ -150,7 +151,7 @@ export default (data, breakdowns) => {
     });
 
 
-    console.log({tableBody});
+
 
     return [
 

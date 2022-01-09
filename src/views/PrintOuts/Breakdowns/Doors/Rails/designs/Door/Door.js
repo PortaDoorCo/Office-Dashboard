@@ -13,8 +13,8 @@ export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 
-  let edge_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
-  let lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
+  let edge_factor = info?.edge?.LIP_FACTOR ? info?.edge?.LIP_FACTOR : 0;
+  let lip_factor = info?.edge?.LIP_FACTOR ? info?.edge?.LIP_FACTOR : 0;
 
   const topRail = info.topRail ? Math.round(numQty(info.topRail) * 16) / 16 + (lip_factor / 2) : 0;
   const bottomRail = info.bottomRail
@@ -36,15 +36,12 @@ export default (info, part, breakdowns) => {
   const item = parseInt(info.item);
 
   let inset = 0;
-  if (part.profile) {
-    inset = part.profile?.INSET;
+  if (info.profile) {
+    inset = info.profile?.INSET;
   } else {
-    inset = part.design?.INSET;
+    inset = info.design?.INSET;
   }
 
-
-  console.log({item: info.item});
-  console.log({inset});
   
 
   if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {

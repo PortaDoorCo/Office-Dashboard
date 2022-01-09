@@ -115,7 +115,7 @@ export default (data, breakdowns) => {
         // }),
 
         heights: function (row) {
-          console.log({ row });
+  
 
           // if((row !== 0) && (row % 3 === 0)){
           //   return 100;

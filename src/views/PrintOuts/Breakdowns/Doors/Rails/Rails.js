@@ -5,15 +5,14 @@ import One_Piece_Door from './designs/One_Piece_Door/One_Piece_Door';
 import Slab_Door from './designs/Slab_Door/Slab_Door';
 
 export default (info, part, breakdowns) => {
-  console.log({ info });
-  console.log({ part });
+
 
   if (info.orderType?.value === 'Door') {
     if (info.construction.value === 'Slab') {
       return Slab_Door(info);
     } else {
       if (info.construction?.value === 'Cope') {
-        console.log('sdfkdjfkdsj');
+       
         return Door(info, part, breakdowns[0]);
       }
 
@@ -28,9 +27,6 @@ export default (info, part, breakdowns) => {
   }
 
   if (info.orderType?.value === 'Custom') {
-
-    console.log('hiiiiiiiiiii');
-
     return Custom(info, part);
   }
 

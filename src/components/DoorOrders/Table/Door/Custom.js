@@ -128,7 +128,7 @@ const DoorTable = ({
     }),
   };
 
-  console.log({ panels });
+
 
   return (
     <div>

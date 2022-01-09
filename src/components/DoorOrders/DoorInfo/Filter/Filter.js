@@ -63,7 +63,7 @@ class DoorFilter extends Component {
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
 
-        console.log({part});
+
 
         if(part.orderType.value === 'Door' && part.construction.value === 'Slab'){
           this.toggle();

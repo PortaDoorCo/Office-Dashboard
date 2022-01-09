@@ -132,7 +132,7 @@ const DoorPDF =  async (
       return newData;
     });
 
-    console.log({newParts});
+ 
 
     // newParts.map((k) => {
     //   console.log({k});
@@ -254,7 +254,6 @@ const DoorPDF =  async (
   
 
     return pdfDocGenerator.getBlob((blob) => {
-      console.log({blob});
       // blobUrl()
       resolve(blob);
     });

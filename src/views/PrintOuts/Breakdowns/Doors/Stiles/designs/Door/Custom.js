@@ -13,7 +13,6 @@ export default (info, part) => {
   const item = parseInt(info.item);
 
 
-
   return [
     {
       qty: `(${qty * 2})`,

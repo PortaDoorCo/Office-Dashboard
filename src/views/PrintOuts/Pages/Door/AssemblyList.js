@@ -259,7 +259,7 @@ const DoorPDF =  async (
   
 
     return pdfDocGenerator.getBlob((blob) => {
-      console.log({blob});
+
       // blobUrl()
       resolve(blob);
     });
