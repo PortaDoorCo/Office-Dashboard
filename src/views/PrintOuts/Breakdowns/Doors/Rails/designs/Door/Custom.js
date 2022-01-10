@@ -11,7 +11,7 @@ export default (info, part) => {
       razor_pattern: i.position?.razor_pattern,
       width: Math.round(numQty(i.width) * 16) / 16,
       height: Math.round(numQty(i.length) * 16) / 16,
-      multiplier: 1,
+      multiplier: parseInt(i.qty),
       item: item,
     };
   });
