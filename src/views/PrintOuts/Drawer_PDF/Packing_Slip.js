@@ -42,8 +42,7 @@ export default (data, breakdowns, pricing) => {
 
   let itemNum = 0;
 
-  const production_date = 
-  data.tracking.filter((x) =>
+  const production_date = data.tracking.filter((x) =>
     ['Quote', 'Ordered', 'Invoiced', 'Order Edited'].every(
       (y) => !x.status.toLowerCase().includes(y.toLowerCase())
     )

@@ -1,15 +1,13 @@
 import moment from 'moment';
 
 export default (data, breakdowns) => {
-
   let qty = 0;
 
   const count = data.mouldings.map((part, i) => {
-    qty += (i+ 1);
+    qty += i + 1;
   });
 
-  const production_date = 
-  data.tracking.filter((x) =>
+  const production_date = data.tracking.filter((x) =>
     ['Quote', 'Ordered', 'Invoiced', 'Order Edited'].every(
       (y) => !x.status.toLowerCase().includes(y.toLowerCase())
     )
@@ -26,8 +24,7 @@ export default (data, breakdowns) => {
     ],
   ];
 
-
-  const t = data.mouldings?.forEach(i => {
+  const t = data.mouldings?.forEach((i) => {
     table_body.push([
       { text: i.linearFT, style: 'fonts' },
       { text: i.style.name, style: 'fonts' },
@@ -38,7 +35,6 @@ export default (data, breakdowns) => {
     ]);
   });
 
-
   // const table_body = [];
 
   return [
@@ -48,9 +44,9 @@ export default (data, breakdowns) => {
           { text: '' },
           {
             text: `${
-          data.job_info?.Shop_Notes
-            ? data.job_info?.Shop_Notes?.toUpperCase()
-            : ''
+                data.job_info?.Shop_Notes
+                  ? data.job_info?.Shop_Notes?.toUpperCase()
+                  : ''
             }`,
             alignment: 'center',
             style: 'fontsBold',
@@ -58,7 +54,8 @@ export default (data, breakdowns) => {
           { text: '' },
         ],
         margin: [0, -26, 0, 10],
-      } : null,
+      }
+      : null,
     {
       table: {
         headerRows: 1,
