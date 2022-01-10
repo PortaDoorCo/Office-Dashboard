@@ -8,12 +8,12 @@ import status from '../../utils/status';
 // import momentLocaliser from 'react-widgets-moment';
 import {
   renderCheckboxToggle,
-  renderDropdownList, renderDropdownListNoPhoto,
+  renderDropdownList,
+  renderDropdownListNoPhoto,
   renderField,
-  renderTextField
+  renderTextField,
 } from '../RenderInputs/renderInputs';
 import CustomerReminder from './CustomerReminder';
-
 
 // momentLocaliser(moment);
 
@@ -43,30 +43,27 @@ class JobInfo extends Component {
   }
 
 
-  // componentDidMount(){
-  //   this.props.dispatch(
-  //     change(
-  //       'Order',
-  //       'job_info.DueDate',
-  //       '01-01-2000'
-  //     )
-  //   );
-  // }
-
-
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
     if (formState?.job_info?.customer) {
-      if(formState.job_info?.Sample !== prevProps.formState?.job_info?.Sample){
-        if(formState.job_info.Sample){
+      if (
+        formState.job_info?.Sample !== prevProps.formState?.job_info?.Sample
+      ) {
+        if (formState.job_info.Sample) {
           this.props.dispatch(change('Order', 'discount', 50));
         } else {
-          this.props.dispatch(change('Order', 'discount', formState?.job_info?.customer?.Discount || 0));
+          this.props.dispatch(
+            change(
+              'Order',
+              'discount',
+              formState?.job_info?.customer?.Discount || 0
+            )
+          );
         }
-        
       }
       if (
-        formState?.job_info?.customer?.id !== prevProps.formState?.job_info?.customer?.id
+        formState?.job_info?.customer?.id !==
+        prevProps.formState?.job_info?.customer?.id
       ) {
         const customer = formState?.job_info?.customer;
 
@@ -103,11 +100,7 @@ class JobInfo extends Component {
           )
         );
         this.props.dispatch(
-          change(
-            'Order',
-            'job_info.Zip',
-            customer.Shipping_Zip || customer.Zip
-          )
+          change('Order', 'job_info.Zip', customer.Shipping_Zip || customer.Zip)
         );
         this.props.dispatch(
           change(
@@ -118,15 +111,13 @@ class JobInfo extends Component {
         );
         this.props.dispatch(change('Order', 'Taxable', customer.Taxable));
 
-        if(formState.job_info.Sample){
+        if (formState.job_info.Sample) {
           this.props.dispatch(change('Order', 'discount', 50));
-        }else{
+        } else {
           this.props.dispatch(change('Order', 'discount', customer.Discount));
         }
-        
-        this.props.dispatch(
-          change('Order', 'job_info.Notes', customer.Notes)
-        );
+
+        this.props.dispatch(change('Order', 'job_info.Notes', customer.Notes));
       }
     }
   }
@@ -134,8 +125,6 @@ class JobInfo extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
-
 
   render() {
     const { customers, edit, shippingMethods, formState } = this.props;
@@ -239,6 +228,7 @@ class JobInfo extends Component {
                 dataKey="value"
                 edit={edit}
                 textField="value"
+                onBlur={(e) => console.log({testtttttttttt: e})}
               />
             </FormGroup>
           </Col>
@@ -348,7 +338,6 @@ class JobInfo extends Component {
 
         <hr />
 
-
         <Row>
           <Col xs="6">
             <FormGroup>
@@ -358,7 +347,9 @@ class JobInfo extends Component {
                 type="textarea"
                 component={renderTextField}
                 edit={edit}
-                onKeyPress={(e)=>{e.target.keyCode === 13 && e.preventDefault();}}
+                onKeyPress={(e) => {
+                  e.target.keyCode === 13 && e.preventDefault();
+                }}
                 label="Notes"
               />
             </FormGroup>

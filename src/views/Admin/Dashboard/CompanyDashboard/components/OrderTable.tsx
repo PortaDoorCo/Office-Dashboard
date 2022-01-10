@@ -115,10 +115,6 @@ const OrderTable = (props: TablePropTypes) => {
       status: e.target.value
     };
 
-    
-    
-
-
     await updateStatus(row.id, row, status, cookie);
   };
 

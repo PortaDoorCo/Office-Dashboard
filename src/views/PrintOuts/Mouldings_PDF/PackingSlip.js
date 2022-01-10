@@ -1,11 +1,17 @@
+import moment from 'moment';
 
 export default (data, breakdowns) => {
-
   let qty = 0;
 
   const count = data.mouldings.map((part, i) => {
-    qty += (i+ 1);
+    qty += i + 1;
   });
+
+  const production_date = data.tracking.filter((x) =>
+    ['Quote', 'Ordered', 'Invoiced', 'Order Edited'].every(
+      (y) => !x.status.toLowerCase().includes(y.toLowerCase())
+    )
+  );
 
   const table_body = [
     [
@@ -18,8 +24,7 @@ export default (data, breakdowns) => {
     ],
   ];
 
-
-  const t = data.mouldings?.forEach(i => {
+  const t = data.mouldings?.forEach((i) => {
     table_body.push([
       { text: i.linearFT, style: 'fonts' },
       { text: i.style.name, style: 'fonts' },
@@ -30,7 +35,6 @@ export default (data, breakdowns) => {
     ]);
   });
 
-
   // const table_body = [];
 
   return [
@@ -40,9 +44,9 @@ export default (data, breakdowns) => {
           { text: '' },
           {
             text: `${
-          data.job_info?.Shop_Notes
-            ? data.job_info?.Shop_Notes?.toUpperCase()
-            : ''
+                data.job_info?.Shop_Notes
+                  ? data.job_info?.Shop_Notes?.toUpperCase()
+                  : ''
             }`,
             alignment: 'center',
             style: 'fontsBold',
@@ -50,7 +54,8 @@ export default (data, breakdowns) => {
           { text: '' },
         ],
         margin: [0, -26, 0, 10],
-      } : null,
+      }
+      : null,
     {
       table: {
         headerRows: 1,
@@ -152,7 +157,15 @@ export default (data, breakdowns) => {
           width: 347,
         },
         {
-          text: '',
+          text: `${
+            production_date.length < 1
+              ? ''
+              : `Production Date: ${moment(production_date[0]?.date).format(
+                'MM/DD/YYYY'
+              )}`
+          }`,
+          style: 'totals',
+          width: 200,
         },
       ],
       margin: [0, 0, 0, 10],
@@ -171,7 +184,15 @@ export default (data, breakdowns) => {
           width: 347,
         },
         {
-          text: '',
+          text: `${
+            data.status === 'Quote'
+              ? ''
+              : `Estimated Ship: ${moment(data.job_info.DueDate).format(
+                'MM/DD/YYYY'
+              )}`
+          }`,
+          style: 'totals',
+          width: 200,
         },
       ],
       margin: [0, 0, 0, 10],
