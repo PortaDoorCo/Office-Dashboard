@@ -114,7 +114,7 @@ const Stiles = ({ fields, edit }) => {
                       )}
                     </td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td>
                       <strong>
                         <p>Note</p>
@@ -127,7 +127,7 @@ const Stiles = ({ fields, edit }) => {
                         edit={edit}
                       />
                     </td>
-                  </tr>
+                  </tr> */}
                 </Table>
               </Col>
             </Row>

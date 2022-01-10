@@ -74,7 +74,7 @@ const Panels = ({fields, edit }) => {
                       )}
                     </td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td>
                       <strong>
                         <p>Note</p>
@@ -87,7 +87,7 @@ const Panels = ({fields, edit }) => {
                         edit={edit}
                       />
                     </td>
-                  </tr>
+                  </tr> */}
                 </Table>
               </Col>
             </Row>

@@ -29,7 +29,6 @@ export default (data, breakdowns) => {
           v.dimensions.map((d, k) => ({
             ...d,
             name: getName(v),
-
           }))
         ),
       }))

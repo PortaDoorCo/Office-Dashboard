@@ -1371,8 +1371,7 @@ class OrderPage extends Component {
                     </Button>
                   </ModalFooter>
                 </Modal>
-
-                <Row></Row>
+          
                 <Row>
                   {user?.role?.type !== 'quality_control' &&
                   user?.role?.type !== 'sales' ? (
@@ -1515,7 +1514,7 @@ class OrderPage extends Component {
                           <tbody>
                             {selectedOrder
                               ? selectedOrder.files.map((i, index) => (
-                                <tr>
+                                <tr key={index}>
                                   <th scope="row">{index + 1}</th>
                                   <td style={{ width: '90%' }}>{i.name}</td>
                                   <td style={{ textAlign: 'right' }}>

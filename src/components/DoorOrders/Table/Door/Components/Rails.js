@@ -117,7 +117,7 @@ const Rails = ({fields, edit }) => {
                       )}
                     </td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td>
                       <strong>
                         <p>Note</p>
@@ -130,7 +130,7 @@ const Rails = ({fields, edit }) => {
                         edit={edit}
                       />
                     </td>
-                  </tr>
+                  </tr> */}
                 </Table>
               </Col>
             </Row>

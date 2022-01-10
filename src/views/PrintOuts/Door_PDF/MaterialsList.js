@@ -151,7 +151,7 @@ export default (data, breakdowns) => {
             //linear FT
             text: `Linear Feet of ${fraction(i.width)}" ${i.woodtype} - ${
               i.thickness
-            }" Thickness Needed: ${i.linearFT}`,
+            }" Thickness Needed: ${i.linearFT?.toFixed(2)}`,
             style: 'fonts',
             width: 400,
           },
