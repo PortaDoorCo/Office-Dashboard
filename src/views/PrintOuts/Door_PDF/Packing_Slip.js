@@ -19,8 +19,8 @@ export default (data, breakdowns) => {
         ? i.design.NAME
         : i.face_frame_design
           ? i.face_frame_design.NAME
-          : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
-            ? ''
+          : i.construction.value === 'Slab'
+            ? 'Slab'
             : ''
     } ${
       i.construction.value === 'MT' || i.construction.value === 'Miter'
@@ -236,7 +236,7 @@ export default (data, breakdowns) => {
 
   // const table_body = [];
 
-  const production_date = flatten(data.tracking.filter(x => x.status === 'In Production'));
+  const production_date = flatten(data.tracking.filter(x => (['Quote', 'Ordered','Invoiced', 'Order Edited'].every(y => !x.status.toLowerCase().includes(y.toLowerCase())))));
 
 
   return [
