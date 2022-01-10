@@ -1,30 +1,18 @@
-import Ratio from 'lb-ratio';
-import frac2dec from '../../../frac2dec';
 import numQty from 'numeric-quantity';
-
-const fraction = (num) => {
-  let fraction = Ratio.parse(num).toQuantityOf(2, 3, 4, 8, 16);
-  return fraction.toLocaleString();
-};
-
 export default (info, part) => {
-
-  const qty = parseInt(info.qty);
   const item = parseInt(info.item);
 
-
-  return [
-    {
-      qty: `(${qty * 2})`,
-      qty_2: qty * 2,
-      measurement: '44 x 44',
-      pattern: 'TB',
-      razor_pattern: 'T / B',
-      width: 44,
-      height: 44,
-      multiplier: 2,
+  return info.Stiles?.map((i) => {
+    return {
+      qty: `(${i.qty})`,
+      qty_2: parseInt(i.qty),
+      measurement: `${i.width} x ${i.length}`,
+      pattern: i.position?.NAME,
+      razor_pattern: i.position?.razor_pattern,
+      width: Math.round(numQty(i.width) * 16) / 16,
+      height: Math.round(numQty(i.length) * 16) / 16,
+      multiplier: 1,
       item: item,
-    },
-  ];
-
+    };
+  });
 };

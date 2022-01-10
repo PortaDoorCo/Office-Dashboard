@@ -11,19 +11,23 @@ const required = (value) => (value ? undefined : 'Required');
 const positions = [
   {
     NAME: 'Top',
-    value: 'T'
+    value: 'T',
+    razor_pattern: 'T'
   },
   {
     NAME: 'Bottom',
-    value: 'B'
+    value: 'B',
+    razor_pattern: 'B'
   },
   {
     NAME: 'T / B',
-    value: 'TB'
+    value: 'TB',
+    razor_pattern: 'T / B'
   },
   {
     NAME: 'Mid Rail',
-    value: 'HM'
+    value: 'HM',
+    razor_pattern: 'H Mull'
   },
 ];
 

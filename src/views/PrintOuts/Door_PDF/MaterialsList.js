@@ -15,35 +15,35 @@ const fraction = (num) => {
 
 export default (data, breakdowns) => {
 
-  const newData = data.part_list.map((i) => {
-    return {
-      ...i,
-      dimensions: i.dimensions.map((v) => {
-        return {
-          ...v,
-          construction: i.construction,
-          profile: i.profile,
-          design: i.design,
-          edge: i.edge,
-          panel: i.panel,
-          orderType: i.orderType,
-          VERTICAL_GRAIN: i.VERTICAL_GRAIN
-        };
-      }),
-    };
-  });
+  // const newData = data.part_list.map((i) => {
+  //   return {
+  //     ...i,
+  //     dimensions: i.dimensions.map((v) => {
+  //       return {
+  //         ...v,
+  //         construction: i.construction,
+  //         profile: i.profile,
+  //         design: i.design,
+  //         edge: i.edge,
+  //         panel: i.panel,
+  //         orderType: i.orderType,
+  //         VERTICAL_GRAIN: i.VERTICAL_GRAIN
+  //       };
+  //     }),
+  //   };
+  // });
 
   //flatten part list
-  const flattenedParts = flatten(newData);
+  const flattenedParts = flatten(data.part_list);
 
   //unique woodtype
   const uniques_items = uniq(
-    flattenDeep(newData.map((i) => i.woodtype.NAME))
+    flattenDeep(data.part_list.map((i) => i.woodtype.NAME))
   );
 
   //unique thickness
   const uniques_thickness = uniq(
-    flattenDeep(newData.map((i) => i.thickness.name))
+    flattenDeep(data.part_list.map((i) => i.thickness.name))
   );
 
   //map items -> map thickness -> return object
@@ -57,7 +57,7 @@ export default (data, breakdowns) => {
         thickness: h,
         widths: uniq(
           flattenDeep(
-            newData.map((i) =>
+            data.part_list.map((i) =>
               i.dimensions.map((j) => [
                 j.topRail,
                 j.bottomRail,
@@ -207,7 +207,7 @@ export default (data, breakdowns) => {
     ];
   });
 
-  const PanelBoardFTCalc = newData.map((i, index) => {
+  const PanelBoardFTCalc = data.part_list.map((i, index) => {
     const calc = i.dimensions.map((item, index) => {
       const width = (Panels(item, i, breakdowns) || [{ width: 0 }]).map(
         (panel) => {

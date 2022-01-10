@@ -7,25 +7,25 @@ import GlassSort from '../Sorting/GlassSort';
 export default (data, breakdowns) => {
   let itemNum = 0;
 
-  const newData = data.part_list.map((i) => {
-    return {
-      ...i,
-      dimensions: i.dimensions.map((v) => {
-        return {
-          ...v,
-          construction: i.construction,
-          profile: i.profile,
-          design: i.design,
-          edge: i.edge,
-          panel: i.panel,
-          orderType: i.orderType,
-          VERTICAL_GRAIN: i.VERTICAL_GRAIN
-        };
-      }),
-    };
-  });
+  // const newData = data.part_list.map((i) => {
+  //   return {
+  //     ...i,
+  //     dimensions: i.dimensions.map((v) => {
+  //       return {
+  //         ...v,
+  //         construction: i.construction,
+  //         profile: i.profile,
+  //         design: i.design,
+  //         edge: i.edge,
+  //         panel: i.panel,
+  //         orderType: i.orderType,
+  //         VERTICAL_GRAIN: i.VERTICAL_GRAIN
+  //       };
+  //     }),
+  //   };
+  // });
 
-  const table_content = newData.map((i, index) => {
+  const table_content = data.part_list.map((i, index) => {
     const tableBody = [
       [
         { text: 'Item', style: 'fonts' },

@@ -20,14 +20,29 @@ import { CSVLink } from 'react-csv';
 import CsvDownloader from 'react-csv-downloader';
 import { connect } from 'react-redux';
 import {
-  Button, Card, CardBody, Col, Collapse, Modal, ModalBody,
-  ModalFooter, ModalHeader, Row, Table
+  Button,
+  Card,
+  CardBody,
+  Col,
+  Collapse,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
+  Table,
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { getFormValues } from 'redux-form';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import {
-  deleteFilesFromOrder, deleteOrder, loadOrders, setSelectedOrder, submitOrder, updateOrder, uploadFilesToOrder
+  deleteFilesFromOrder,
+  deleteOrder,
+  loadOrders,
+  setSelectedOrder,
+  submitOrder,
+  updateOrder,
+  uploadFilesToOrder,
 } from '../../../redux/orders/actions';
 import LoadingModal from '../../../utils/LoadingModal';
 import CopyModal from '../../../utils/Modal';
@@ -76,8 +91,6 @@ import MiscItems from './MiscItems';
 import Navigation from './Navigation';
 import ConversationNotes from './Notes/Conversation_Notes';
 
-
-
 const cookie = Cookies.get('jwt');
 
 const toDataUrl = (url, callback) => {
@@ -113,6 +126,8 @@ class OrderPage extends Component {
       printModal: false,
       copyModal: false,
       loadingModal: false,
+      lipperExport: [],
+      razorExport: []
     };
     this.someRef = createRef();
   }
@@ -219,13 +234,8 @@ class OrderPage extends Component {
   };
 
   copyOrder = async () => {
-    const {
-      formState,
-      submitOrder,
-    } = this.props;
-    const data = formState
-      ? formState
-      : [];
+    const { formState, submitOrder } = this.props;
+    const data = formState ? formState : [];
 
     let newOrder = {
       ...data,
@@ -268,15 +278,8 @@ class OrderPage extends Component {
   downloadPDF = async (p) => {
     this.toggleLoadingModal();
 
-    const {
-      formState,
-      breakdowns,
-      box_breakdowns,
-      selectedOrder,
-    } = this.props;
-    const data = formState
-      ? formState
-      : [];
+    const { formState, breakdowns, box_breakdowns, selectedOrder } = this.props;
+    const data = formState ? formState : [];
 
     const merger = new PDFMerger();
 
@@ -286,8 +289,6 @@ class OrderPage extends Component {
 
         const mergedPdf = await merger.saveAsBlob();
         const url = URL.createObjectURL(mergedPdf);
-
-   
 
         await window.open(url, '_blank').focus();
         await files.pop();
@@ -403,7 +404,7 @@ class OrderPage extends Component {
 
       let itemNum = 0;
 
-      const itemNumCounter = {
+      const newDataOrder = {
         ...data,
         part_list: data.part_list.map((i) => {
           return {
@@ -412,6 +413,13 @@ class OrderPage extends Component {
               itemNum += 1;
               return {
                 ...j,
+                construction: i.construction,
+                profile: i.profile,
+                design: i.design,
+                edge: i.edge,
+                panel: i.panel,
+                orderType: i.orderType,
+                VERTICAL_GRAIN: i.VERTICAL_GRAIN,
                 item: itemNum,
               };
             }),
@@ -419,7 +427,7 @@ class OrderPage extends Component {
         }),
       };
 
-      const newParts = Slab_Selection(itemNumCounter, type).map((j) => {
+      const newParts = Slab_Selection(newDataOrder, type).map((j) => {
         const newData = {
           ...data,
           part_list: j,
@@ -428,12 +436,11 @@ class OrderPage extends Component {
         return newData;
       });
 
-
       let files = [];
 
       for (let i = 0; i < p.acknowledgement; i++) {
         await Acknowledgement(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -448,7 +455,7 @@ class OrderPage extends Component {
           files.push(v);
         });
         await Profiles(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -466,7 +473,7 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.invoice; i++) {
         await Invoice(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -484,7 +491,7 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.assembly_list; i++) {
         await AssemblyList(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -517,7 +524,6 @@ class OrderPage extends Component {
                 p,
                 this.props.pricing
               ).then(async (v) => {
-          
                 files.push(v);
               });
             } else {
@@ -553,7 +559,7 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.stiles; i++) {
         await StilesPage(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -571,7 +577,7 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.rails; i++) {
         await RailsPage(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -589,7 +595,7 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.profiles; i++) {
         await Profiles(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -607,7 +613,7 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.materials; i++) {
         await MaterialsList(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -625,7 +631,7 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.packing_slip; i++) {
         await PackingSlip(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -643,7 +649,7 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.qc; i++) {
         await QC_Checklist(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -661,7 +667,7 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.door_labels; i++) {
         await Door_Labels(
-          data,
+          newDataOrder,
           design1,
           edges1,
           moulds1,
@@ -676,8 +682,6 @@ class OrderPage extends Component {
           files.push(v);
         });
       }
-
-
 
       await generatePDF(files);
     } else if (data.orderType === 'Drawer Order') {
@@ -926,44 +930,37 @@ class OrderPage extends Component {
   };
 
   downloadBoxLabel = async (printerSettings) => {
-    const {
-      formState,
-      box_breakdowns,
-    } = this.props;
-    const data = formState
-      ? formState
-      : [];
+    const { formState, box_breakdowns } = this.props;
+    const data = formState ? formState : [];
     Drawer_Box_Labels(data, box_breakdowns);
   };
 
-  render() {
-    const props = this.props;
 
-    const { selectedOrder, printer_options, user, deleteFilesFromOrder } =
-      this.props;
 
-    let options;
-    let s = selectedOrder ? selectedOrder : 'Door Order';
-
-    let exportCsv = [];
-    let a = [];
-    let razorGuage = [];
-
-    let b = a.map((i, ind) => {
-      return i;
-    });
-
+  exportLipper = () => {
     let itemNum = 0;
 
-    const itemNumCounter = {
-      ...s,
-      part_list: s?.part_list?.map((i) => {
+    const { formState, breakdowns, box_breakdowns, selectedOrder } = this.props;
+    const data = formState ? formState : [];
+
+    let a = [];
+
+    const newData = {
+      ...data,
+      part_list: data?.part_list?.map((i) => {
         return {
           ...i,
           dimensions: i?.dimensions?.map((j) => {
             itemNum += 1;
             return {
               ...j,
+              construction: i.construction,
+              profile: i.profile,
+              design: i.design,
+              edge: i.edge,
+              panel: i.panel,
+              orderType: i.orderType,
+              VERTICAL_GRAIN: i.VERTICAL_GRAIN,
               item: itemNum,
             };
           }),
@@ -971,45 +968,230 @@ class OrderPage extends Component {
       }),
     };
 
-    if (s.orderType === 'Door Order') {
-      options = [
-        { value: 'Breakdowns', label: 'Breakdowns' },
-        { value: 'CustomerCopy', label: 'Customer Copy' },
-        { value: 'Assembly', label: 'Assembly List' },
-        { value: 'Acknowledgement', label: 'Acknowledgement' },
-        { value: 'Invoice', label: 'Invoice' },
-        { value: 'Stiles', label: 'Stiles' },
-        { value: 'Rails', label: 'Rails' },
-        { value: 'Panels', label: 'Panels' },
-        { value: 'Materials', label: 'Materials' },
-        { value: 'Profiles', label: 'Profiles' },
-        { value: 'QC', label: 'QC' },
-      ];
+    const exportCsv = newData
+      ? newData.part_list.map((f, index) => {
+        f.dimensions.forEach((j, ind) => {
+          if (
+            f.orderType.value === 'DF' ||
+            numQty(j.width) > numQty(j.height)
+          ) {
+            a.push([
+              newData.orderNum,
+              '15DF',
+              j.qty,
+              f.woodtype && f.woodtype.NAME,
+              numQty(j.width),
+              numQty(j.height),
+              f.edge && f.edge.NAME,
+              f.thickness?.thickness_values
+                ? f.thickness?.thickness_values
+                : f.thickness?.thickness_1 === '4/4'
+                  ? 0.75
+                  : f.thickness?.thickness_1 === '5/4'
+                    ? 1
+                    : f.thickness?.thickness_1 === '6/4'
+                      ? 1.25
+                      : 0.75,
+            ]);
+          } else {
+            a.push([
+              newData.orderNum,
+              'D',
+              j.qty,
+              f.woodtype && f.woodtype.NAME,
+              numQty(j.width),
+              numQty(j.height),
+              f.edge && f.edge.NAME,
+              f.thickness?.thickness_values
+                ? f.thickness?.thickness_values
+                : f.thickness?.thickness_1 === '4/4'
+                  ? 0.75
+                  : f.thickness?.thickness_1 === '5/4'
+                    ? 1
+                    : f.thickness?.thickness_1 === '6/4'
+                      ? 1.25
+                      : 0.75,
+            ]);
+          }
+        });
+        return a;
+      })
+      : [];
 
-      exportCsv = s
+    this.setState({ lipperExport: a });
+    
+  };
+
+  exportRazor = () => {
+    let itemNum = 0;
+
+    const { formState, breakdowns, box_breakdowns, selectedOrder } = this.props;
+    const data = formState ? formState : [];
+
+    let a = [];
+
+    const newData = {
+      ...data,
+      part_list: data?.part_list?.map((i) => {
+        return {
+          ...i,
+          dimensions: i?.dimensions?.map((j) => {
+            itemNum += 1;
+            return {
+              ...j,
+              construction: i.construction,
+              profile: i.profile,
+              design: i.design,
+              edge: i.edge,
+              panel: i.panel,
+              orderType: i.orderType,
+              VERTICAL_GRAIN: i.VERTICAL_GRAIN,
+              item: itemNum,
+            };
+          }),
+        };
+      }),
+    };
+
+
+    const razor = newData
+      ? newData.part_list.map((f, index) => {
+      // console.log({ f });
+
+        f.dimensions.forEach((j, ind) => {
+        // console.log({ j });
+
+          const { breakdowns } = this.props;
+
+          const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
+            return rail;
+          });
+
+          const rail = (Rails(j, f, breakdowns) || []).map((rail) => {
+            return rail;
+          });
+
+          // console.log({ rail });
+          // console.log({ stile });
+
+          const stilePrint = stile.map((i) => {
+            return a.push([
+              `${selectedOrder.orderNum}`,
+              `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+              i.width,
+              i.height,
+              i.qty_2,
+              i.razor_pattern,
+              `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+              i.item,
+              f.profile?.NAME
+                ? f.profile?.NAME
+                : f.design?.NAME
+                  ? f.design?.NAME
+                  : '',
+            ]);
+          });
+
+          const railPrint = rail.map((i) => {
+            console.log({ i });
+            return a.push([
+              `${selectedOrder.orderNum}`,
+              `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+              i.width,
+              i.height,
+              i.qty_2,
+              i.razor_pattern,
+              `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+              i.item,
+              f.profile?.NAME
+                ? f.profile?.NAME
+                : f.design?.NAME
+                  ? f.design?.NAME
+                  : '',
+            ]);
+          });
+        });
+        return a;
+      })
+      : [];
+
+    this.setState({ razorExport: a });
+
+    
+  };
+
+  
+
+
+  render() {
+    const props = this.props;
+
+    const { selectedOrder, printer_options, user, deleteFilesFromOrder, formState } =
+      this.props;
+
+    const data = formState ? formState : [];
+
+
+    let s = selectedOrder ? selectedOrder : 'Door Order';
+  
+    let exportCsv = [];
+    let a = [];
+    let razorGuage = [];
+  
+
+  
+    let itemNum = 0;
+  
+    const itemNumCounter = {
+      ...data,
+      part_list: data?.part_list?.map((i) => {
+        return {
+          ...i,
+          dimensions: i?.dimensions?.map((j) => {
+            itemNum += 1;
+            return {
+              ...j,
+              construction: i.construction,
+              profile: i.profile,
+              design: i.design,
+              edge: i.edge,
+              panel: i.panel,
+              orderType: i.orderType,
+              VERTICAL_GRAIN: i.VERTICAL_GRAIN,
+              item: itemNum,
+            };
+          }),
+        };
+      }),
+    };
+  
+    if (data.orderType === 'Door Order') {
+
+  
+      exportCsv = itemNumCounter
         ? itemNumCounter.part_list.map((f, index) => {
           f.dimensions.forEach((j, ind) => {
             if (
               f.orderType.value === 'DF' ||
-                numQty(j.width) > numQty(j.height)
+                  numQty(j.width) > numQty(j.height)
             ) {
               a.push([
                 s.orderNum,
                 '15DF',
                 j.qty,
                 f.woodtype && f.woodtype.NAME,
-                numQty(j.width),
-                numQty(j.height),
+                Math.round(numQty(j.width) * 16) / 16,
+                Math.round(numQty(j.height) * 16) / 16,
                 f.edge && f.edge.NAME,
-                  f.thickness?.thickness_values
-                    ? f.thickness?.thickness_values
-                    : f.thickness?.thickness_1 === '4/4'
-                      ? 0.75
-                      : f.thickness?.thickness_1 === '5/4'
-                        ? 1
-                        : f.thickness?.thickness_1 === '6/4'
-                          ? 1.25
-                          : 0.75,
+                    f.thickness?.thickness_values
+                      ? f.thickness?.thickness_values
+                      : f.thickness?.thickness_1 === '4/4'
+                        ? 0.75
+                        : f.thickness?.thickness_1 === '5/4'
+                          ? 1
+                          : f.thickness?.thickness_1 === '6/4'
+                            ? 1.25
+                            : 0.75,
               ]);
             } else {
               a.push([
@@ -1017,102 +1199,88 @@ class OrderPage extends Component {
                 'D',
                 j.qty,
                 f.woodtype && f.woodtype.NAME,
-                numQty(j.width),
-                numQty(j.height),
+                Math.round(numQty(j.width) * 16) / 16,
+                Math.round(numQty(j.height) * 16) / 16,
                 f.edge && f.edge.NAME,
-                  f.thickness?.thickness_values
-                    ? f.thickness?.thickness_values
-                    : f.thickness?.thickness_1 === '4/4'
-                      ? 0.75
-                      : f.thickness?.thickness_1 === '5/4'
-                        ? 1
-                        : f.thickness?.thickness_1 === '6/4'
-                          ? 1.25
-                          : 0.75,
+                    f.thickness?.thickness_values
+                      ? f.thickness?.thickness_values
+                      : f.thickness?.thickness_1 === '4/4'
+                        ? 0.75
+                        : f.thickness?.thickness_1 === '5/4'
+                          ? 1
+                          : f.thickness?.thickness_1 === '6/4'
+                            ? 1.25
+                            : 0.75,
               ]);
             }
           });
           return a;
         })
         : [];
-
+  
       const razor = itemNumCounter
         ? itemNumCounter.part_list.map((f, index) => {
           // console.log({ f });
-
+  
           f.dimensions.forEach((j, ind) => {
             // console.log({ j });
-
+  
             const { breakdowns } = this.props;
-
+  
             const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
               return rail;
             });
-
+  
             const rail = (Rails(j, f, breakdowns) || []).map((rail) => {
               return rail;
             });
-
+  
             // console.log({ rail });
             // console.log({ stile });
-
+  
             const stilePrint = stile.map((i) => {
               return razorGuage.push([
                 `${s.orderNum}`,
                 `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                i.width,
-                i.height,
+                Math.round(numQty(i.width) * 16) / 16,
+                Math.round(numQty(i.height) * 16) / 16,
                 i.qty_2,
                 i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
                 i.item,
-                  f.profile?.NAME
-                    ? f.profile?.NAME
-                    : f.design?.NAME
-                      ? f.design?.NAME
-                      : '',
+                    f.profile?.NAME
+                      ? f.profile?.NAME
+                      : f.design?.NAME
+                        ? f.design?.NAME
+                        : '',
               ]);
             });
-
+  
             const railPrint = rail.map((i) => {
- 
+              console.log({ i });
               return razorGuage.push([
                 `${s.orderNum}`,
                 `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                i.width,
-                i.height,
+                Math.round(numQty(i.width) * 16) / 16,
+                Math.round(numQty(i.height) * 16) / 16,
                 i.qty_2,
                 i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
                 i.item,
-                  f.profile?.NAME
-                    ? f.profile?.NAME
-                    : f.design?.NAME
-                      ? f.design?.NAME
-                      : '',
+                    f.profile?.NAME
+                      ? f.profile?.NAME
+                      : f.design?.NAME
+                        ? f.design?.NAME
+                        : '',
               ]);
             });
           });
           return razorGuage;
         })
         : [];
-    } else if (s.orderType === 'Drawer Order') {
-      options = [
-        { value: 'Breakdowns', label: 'Breakdowns' },
-        { value: 'CustomerCopy', label: 'Customer Copy' },
-        { value: 'Acknowledgement', label: 'Acknowledgement' },
-        { value: 'Invoice', label: 'Invoice' },
-        { value: 'Assembly', label: 'Assembly List' },
-        { value: 'Bottoms', label: 'Box Bottoms' },
-        { value: 'Sides', label: 'Box Sides' },
-      ];
-    } else if (s.orderType === 'Misc Items' || s.orderType === 'Mouldings') {
-      options = [
-        { value: 'All', label: 'All' },
-        { value: 'Acknowledgement', label: 'Acknowledgement' },
-        { value: 'Invoice', label: 'Invoice' },
-      ];
     }
+
+
 
     return (
       <div className="animated noPrint resize">
@@ -1137,50 +1305,50 @@ class OrderPage extends Component {
           <ModalBody>
             {this.props.edit ? (
               <div>
-                {((user?.role?.type !== 'quality_control') || (user?.role?.type !== 'sales')) ? 
-                  <Row>
-                    <Col>
-                      <IconButton onClick={this.props.editable}>
-                        <ArrowBack style={{ width: '40', height: '40' }} />
-                      </IconButton>
-
-                      <Tooltip title="Tracking History" placement="top">
-                        <IconButton onClick={this.toggleTracking}>
-                          <List style={{ width: '40', height: '40' }} />
+                {user?.role?.type !== 'quality_control' ||
+                user?.role?.type !== 'sales' ? (
+                    <Row>
+                      <Col>
+                        <IconButton onClick={this.props.editable}>
+                          <ArrowBack style={{ width: '40', height: '40' }} />
                         </IconButton>
-                      </Tooltip>
 
-                      <Tooltip title="Balance" placement="top">
-                        <IconButton onClick={this.toggleBalance}>
-                          <AttachMoneyIcon
-                            style={{ width: '40', height: '40' }}
-                          />
-                        </IconButton>
-                      </Tooltip>
+                        <Tooltip title="Tracking History" placement="top">
+                          <IconButton onClick={this.toggleTracking}>
+                            <List style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
 
-                      <Tooltip title="Misc Items" placement="top">
-                        <IconButton onClick={this.toggleMiscItems}>
-                          <Dns style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
+                        <Tooltip title="Balance" placement="top">
+                          <IconButton onClick={this.toggleBalance}>
+                            <AttachMoneyIcon
+                              style={{ width: '40', height: '40' }}
+                            />
+                          </IconButton>
+                        </Tooltip>
 
-                      <Tooltip title="View Notes" placement="top">
-                        <IconButton onClick={this.toggleNotes}>
-                          <Chat style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
+                        <Tooltip title="Misc Items" placement="top">
+                          <IconButton onClick={this.toggleMiscItems}>
+                            <Dns style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
 
-                      <Tooltip title="View Files" placement="top">
-                        <IconButton onClick={this.toggleFiles}>
-                          <Attachment style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
-                    </Col>
-                    <Col />
-                    <Col />
-                  </Row> : null
-                }
+                        <Tooltip title="View Notes" placement="top">
+                          <IconButton onClick={this.toggleNotes}>
+                            <Chat style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
 
+                        <Tooltip title="View Files" placement="top">
+                          <IconButton onClick={this.toggleFiles}>
+                            <Attachment style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
+                      </Col>
+                      <Col />
+                      <Col />
+                    </Row>
+                  ) : null}
               </div>
             ) : (
               <div>
@@ -1206,25 +1374,25 @@ class OrderPage extends Component {
 
                 <Row></Row>
                 <Row>
-                  {((user?.role?.type !== 'quality_control') && (user?.role?.type !== 'sales')) ? (
-                    <Navigation
-                      {...this.props}
-                      toggleTracking={this.toggleTracking}
-                      toggleBalance={this.toggleBalance}
-                      toggleMiscItems={this.toggleMiscItems}
-                      toggleNotes={this.toggleNotes}
-                      toggleFiles={this.toggleFiles}
-                    />
-                  ) : (
-                    <Col />
-                  )}
+                  {user?.role?.type !== 'quality_control' &&
+                  user?.role?.type !== 'sales' ? (
+                      <Navigation
+                        {...this.props}
+                        toggleTracking={this.toggleTracking}
+                        toggleBalance={this.toggleBalance}
+                        toggleMiscItems={this.toggleMiscItems}
+                        toggleNotes={this.toggleNotes}
+                        toggleFiles={this.toggleFiles}
+                      />
+                    ) : (
+                      <Col />
+                    )}
 
                   <Col className="ml-5">
                     <Row>
                       <Col lg="6"></Col>
 
-                      {(user?.role?.type !== 'sales') ?
-
+                      {user?.role?.type !== 'sales' ? (
                         <Col>
                           {/* {(s.orderType === 'Drawer Order') ? 
                           <Tooltip title="Box Labels" placement="top" className="mb-3">
@@ -1233,29 +1401,31 @@ class OrderPage extends Component {
                             </IconButton>
                           </Tooltip> : null
                         } */}
-                          {user.role?.type !== 'sales' ?
-                            <Tooltip title="Print" placement="top" className="mb-3">
+                          {user.role?.type !== 'sales' ? (
+                            <Tooltip
+                              title="Print"
+                              placement="top"
+                              className="mb-3"
+                            >
                               <IconButton onClick={this.togglePrinter}>
                                 <Print style={{ width: '40', height: '40' }} />
                               </IconButton>
-                            </Tooltip> : null  
-                          }
+                            </Tooltip>
+                          ) : null}
 
-                        
-                  
-
-
-                          {user.role?.type !== 'quality_control' ?
+                          {user.role?.type !== 'quality_control' ? (
                             <Tooltip
                               title="Copy Order"
                               placement="top"
                               className="mb-3"
                             >
                               <IconButton onClick={this.handleCopyModal}>
-                                <FileCopy style={{ width: '40', height: '40' }} />
+                                <FileCopy
+                                  style={{ width: '40', height: '40' }}
+                                />
                               </IconButton>
-                            </Tooltip>: null  
-                          }
+                            </Tooltip>
+                          ) : null}
 
                           {selectedOrder &&
                             selectedOrder.orderType === 'Door Order' && user.role?.type !== 'quality_control' ? (
@@ -1309,22 +1479,14 @@ class OrderPage extends Component {
                               </Tooltip>
                             ) : null}
 
-
-
-
-
-
-
-
-
                           {(this.props.user &&
-                          this.props.user.role &&
-                          this.props.user.role &&
-                          this.props.user.role.name === 'Administrator') ||
-                        (this.props.user &&
-                          this.props.user.role &&
-                          this.props.user.role &&
-                          this.props.user.role.name === 'Management') ? (
+                            this.props.user.role &&
+                            this.props.user.role &&
+                            this.props.user.role.name === 'Administrator') ||
+                          (this.props.user &&
+                            this.props.user.role &&
+                            this.props.user.role &&
+                            this.props.user.role.name === 'Management') ? (
                               <Tooltip
                                 title="Delete Order"
                                 placement="top"
@@ -1336,8 +1498,7 @@ class OrderPage extends Component {
                               </Tooltip>
                             ) : null}
                         </Col>
-                        : null }
-
+                      ) : null}
                     </Row>
                   </Col>
                 </Row>
@@ -1363,9 +1524,7 @@ class OrderPage extends Component {
                                       rel="noopener noreferrer"
                                       target="_blank"
                                     >
-                                      <Button>
-                                        View
-                                      </Button>
+                                      <Button>View</Button>
                                     </a>
                                   </td>
                                   <td style={{ textAlign: 'right' }}>
@@ -1378,7 +1537,7 @@ class OrderPage extends Component {
                                         )
                                       }
                                     >
-                                      Delete
+                                        Delete
                                     </Button>
                                   </td>
                                 </tr>
@@ -1490,7 +1649,6 @@ class OrderPage extends Component {
                           toggle={this.toggleMiscItems}
                           edit={!this.props.edit}
                         />
-                         
                       </CardBody>
                     </Card>
                   </Col>

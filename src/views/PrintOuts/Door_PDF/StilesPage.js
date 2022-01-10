@@ -30,12 +30,6 @@ export default (data, breakdowns) => {
           v.dimensions.map((d, k) => ({
             ...d,
             name: getName(v),
-            panel: v.panel,
-            construction: v.construction,
-            profile: v.profile,
-            design: v.design,
-            edge: v.edge,
-            orderType: v.orderType,
           }))
         ),
       }))
