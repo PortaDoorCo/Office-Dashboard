@@ -104,155 +104,155 @@ const changeProfile = (p, ind, props, change) => {
 
 
 
-  if(part.dimensions){
-    part.dimensions.forEach((info, index) => {
-      if(info){
+  // if(part.dimensions){
+  //   part.dimensions.forEach((info, index) => {
+  //     if(info){
 
-        if(part?.construction?.value === 'Cope'){
-          return null;
-        } else {
-          if(part?.orderType?.value === 'DF'){
-            props.dispatch(
-              change(
-                'Order',
-                `${p}.dimensions[${index}].leftStile`,
-                fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-              )
-            );
+  //       if(part?.construction?.value === 'Cope'){
+  //         return null;
+  //       } else {
+  //         if(part?.orderType?.value === 'DF'){
+  //           props.dispatch(
+  //             change(
+  //               'Order',
+  //               `${p}.dimensions[${index}].leftStile`,
+  //               fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //             )
+  //           );
   
-            props.dispatch(
-              change(
-                'Order',
-                `${p}.dimensions[${index}].rightStile`,
-                fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-              )
-            );
+  //           props.dispatch(
+  //             change(
+  //               'Order',
+  //               `${p}.dimensions[${index}].rightStile`,
+  //               fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //             )
+  //           );
             
-            if(part?.construction?.value === 'MT'){
-              props.dispatch(
-                change(
-                  'Order',
-                  `${p}.dimensions[${index}].topRail`,
-                  fraction(part.design ? (part.design.DF_REDUCTION) : 0)
-                )
-              );
+  //           if(part?.construction?.value === 'MT'){
+  //             props.dispatch(
+  //               change(
+  //                 'Order',
+  //                 `${p}.dimensions[${index}].topRail`,
+  //                 fraction(part.design ? (part.design.DF_REDUCTION) : 0)
+  //               )
+  //             );
     
     
-              props.dispatch(
-                change(
-                  'Order',
-                  `${p}.dimensions[${index}].bottomRail`,
-                  fraction(part.design ? (part.design.DF_REDUCTION) : 0)
-                )
-              );
-            } else {
-              props.dispatch(
-                change(
-                  'Order',
-                  `${p}.dimensions[${index}].topRail`,
-                  fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
-                )
-              );
+  //             props.dispatch(
+  //               change(
+  //                 'Order',
+  //                 `${p}.dimensions[${index}].bottomRail`,
+  //                 fraction(part.design ? (part.design.DF_REDUCTION) : 0)
+  //               )
+  //             );
+  //           } else {
+  //             props.dispatch(
+  //               change(
+  //                 'Order',
+  //                 `${p}.dimensions[${index}].topRail`,
+  //                 fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
+  //               )
+  //             );
     
     
-              props.dispatch(
-                change(
-                  'Order',
-                  `${p}.dimensions[${index}].bottomRail`,
-                  fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
-                )
-              );
-            }
+  //             props.dispatch(
+  //               change(
+  //                 'Order',
+  //                 `${p}.dimensions[${index}].bottomRail`,
+  //                 fraction(part.design ? (part.design.PROFILE_WIDTH) : 0)
+  //               )
+  //             );
+  //           }
   
 
   
   
-            if (parseInt(info.panelsH) > 1) {
-              props.dispatch(
-                change(
-                  'Order',
-                  `${p}.dimensions[${index}].horizontalMidRailSize`,
-                  fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                )
-              );
-            } 
+  //           if (parseInt(info.panelsH) > 1) {
+  //             props.dispatch(
+  //               change(
+  //                 'Order',
+  //                 `${p}.dimensions[${index}].horizontalMidRailSize`,
+  //                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //               )
+  //             );
+  //           } 
   
   
-            if (parseInt(info.panelsW) > 1) {
-              props.dispatch(
-                change(
-                  'Order',
-                  `${p}.dimensions[${index}].verticalMidRailSize`,
-                  fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                )
-              );
-            }
-          } else {
-            props.dispatch(
-              change(
-                'Order',
-                `${p}.dimensions[${index}].leftStile`,
-                fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-              )
-            );
+  //           if (parseInt(info.panelsW) > 1) {
+  //             props.dispatch(
+  //               change(
+  //                 'Order',
+  //                 `${p}.dimensions[${index}].verticalMidRailSize`,
+  //                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //               )
+  //             );
+  //           }
+  //         } else {
+  //           props.dispatch(
+  //             change(
+  //               'Order',
+  //               `${p}.dimensions[${index}].leftStile`,
+  //               fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //             )
+  //           );
   
-            props.dispatch(
-              change(
-                'Order',
-                `${p}.dimensions[${index}].rightStile`,
-                fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-              )
-            );
-  
-  
-            props.dispatch(
-              change(
-                'Order',
-                `${p}.dimensions[${index}].topRail`,
-                fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-              )
-            );
+  //           props.dispatch(
+  //             change(
+  //               'Order',
+  //               `${p}.dimensions[${index}].rightStile`,
+  //               fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //             )
+  //           );
   
   
-            props.dispatch(
-              change(
-                'Order',
-                `${p}.dimensions[${index}].bottomRail`,
-                fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-              )
-            );
+  //           props.dispatch(
+  //             change(
+  //               'Order',
+  //               `${p}.dimensions[${index}].topRail`,
+  //               fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //             )
+  //           );
   
   
-            if (parseInt(info.panelsH) > 1) {
-              props.dispatch(
-                change(
-                  'Order',
-                  `${p}.dimensions[${index}].horizontalMidRailSize`,
-                  fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                )
-              );
-            } 
+  //           props.dispatch(
+  //             change(
+  //               'Order',
+  //               `${p}.dimensions[${index}].bottomRail`,
+  //               fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //             )
+  //           );
   
   
-            if (parseInt(info.panelsW) > 1) {
-              props.dispatch(
-                change(
-                  'Order',
-                  `${p}.dimensions[${index}].verticalMidRailSize`,
-                  fraction(part.design ? part.design.PROFILE_WIDTH : 0)
-                )
-              );
-            }
-          }
-        }
+  //           if (parseInt(info.panelsH) > 1) {
+  //             props.dispatch(
+  //               change(
+  //                 'Order',
+  //                 `${p}.dimensions[${index}].horizontalMidRailSize`,
+  //                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //               )
+  //             );
+  //           } 
+  
+  
+  //           if (parseInt(info.panelsW) > 1) {
+  //             props.dispatch(
+  //               change(
+  //                 'Order',
+  //                 `${p}.dimensions[${index}].verticalMidRailSize`,
+  //                 fraction(part.design ? part.design.PROFILE_WIDTH : 0)
+  //               )
+  //             );
+  //           }
+  //         }
+  //       }
 
-      } else {
-        return null;
-      }
-    });
-  } else {
-    return null;
-  }
+  //     } else {
+  //       return null;
+  //     }
+  //   });
+  // } else {
+  //   return null;
+  // }
 };
 
 export default changeProfile;
