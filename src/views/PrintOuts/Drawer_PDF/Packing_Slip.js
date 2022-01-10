@@ -1,6 +1,7 @@
 import numQty from 'numeric-quantity';
 import pdfDrawerBoxPricing from '../../../selectors/pdfs/pdfDrawerBoxPricing';
 import Size from '../Breakdowns/DrawerBoxes/Size';
+import moment from 'moment';
 
 export default (data, breakdowns, pricing) => {
   const qty = data.part_list.map((part, i) => {
@@ -40,6 +41,13 @@ export default (data, breakdowns, pricing) => {
   const discountSubTotal = subTotal - subTotal * (data.discount / 100);
 
   let itemNum = 0;
+
+  const production_date = 
+  data.tracking.filter((x) =>
+    ['Quote', 'Ordered', 'Invoiced', 'Order Edited'].every(
+      (y) => !x.status.toLowerCase().includes(y.toLowerCase())
+    )
+  );
 
   return [
     data.part_list.map((part, i) => {
@@ -254,10 +262,18 @@ export default (data, breakdowns, pricing) => {
         {
           text: 'Packed By:  _______________',
           style: 'totals',
-          width: 347,
+          width: 160,
         },
         {
-          text: '',
+          text: `${
+            production_date.length < 1
+              ? ''
+              : `Production Date: ${moment(production_date[0]?.date).format(
+                'MM/DD/YYYY'
+              )}`
+          }`,
+          style: 'totals',
+          width: 200,
         },
       ],
       margin: [0, 0, 0, 10],
@@ -273,10 +289,18 @@ export default (data, breakdowns, pricing) => {
         {
           text: 'Total Weight: _____________',
           style: 'totals',
-          width: 347,
+          width: 160,
         },
         {
-          text: '',
+          text: `${
+            data.status === 'Quote'
+              ? ''
+              : `Estimated Ship: ${moment(data.job_info.DueDate).format(
+                'MM/DD/YYYY'
+              )}`
+          }`,
+          style: 'totals',
+          width: 200,
         },
       ],
       margin: [0, 0, 0, 10],

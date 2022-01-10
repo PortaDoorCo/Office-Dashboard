@@ -1,3 +1,4 @@
+import moment from 'moment';
 
 export default (data, breakdowns) => {
 
@@ -6,6 +7,13 @@ export default (data, breakdowns) => {
   const count = data.mouldings.map((part, i) => {
     qty += (i+ 1);
   });
+
+  const production_date = 
+  data.tracking.filter((x) =>
+    ['Quote', 'Ordered', 'Invoiced', 'Order Edited'].every(
+      (y) => !x.status.toLowerCase().includes(y.toLowerCase())
+    )
+  );
 
   const table_body = [
     [
@@ -152,7 +160,15 @@ export default (data, breakdowns) => {
           width: 347,
         },
         {
-          text: '',
+          text: `${
+            production_date.length < 1
+              ? ''
+              : `Production Date: ${moment(production_date[0]?.date).format(
+                'MM/DD/YYYY'
+              )}`
+          }`,
+          style: 'totals',
+          width: 200,
         },
       ],
       margin: [0, 0, 0, 10],
@@ -171,7 +187,15 @@ export default (data, breakdowns) => {
           width: 347,
         },
         {
-          text: '',
+          text: `${
+            data.status === 'Quote'
+              ? ''
+              : `Estimated Ship: ${moment(data.job_info.DueDate).format(
+                'MM/DD/YYYY'
+              )}`
+          }`,
+          style: 'totals',
+          width: 200,
         },
       ],
       margin: [0, 0, 0, 10],

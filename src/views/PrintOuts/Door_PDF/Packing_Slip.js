@@ -236,8 +236,13 @@ export default (data, breakdowns) => {
 
   // const table_body = [];
 
-  const production_date = flatten(data.tracking.filter(x => (['Quote', 'Ordered','Invoiced', 'Order Edited'].every(y => !x.status.toLowerCase().includes(y.toLowerCase())))));
-
+  const production_date = 
+    data.tracking.filter((x) =>
+      ['Quote', 'Ordered', 'Invoiced', 'Order Edited'].every(
+        (y) => !x.status.toLowerCase().includes(y.toLowerCase())
+      )
+    );
+  
 
   return [
     table_body,

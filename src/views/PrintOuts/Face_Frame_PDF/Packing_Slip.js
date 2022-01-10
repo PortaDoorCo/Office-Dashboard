@@ -2,6 +2,7 @@ import { flatten, groupBy } from 'lodash';
 import numQty from 'numeric-quantity';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
+import moment from 'moment';
 
 export default (data, breakdowns) => {
   const qty = data.part_list.map((part, i) => {
@@ -23,6 +24,13 @@ export default (data, breakdowns) => {
             : ''
     }`;
   };
+
+  const production_date = 
+  data.tracking.filter((x) =>
+    ['Quote', 'Ordered', 'Invoiced', 'Order Edited'].every(
+      (y) => !x.status.toLowerCase().includes(y.toLowerCase())
+    )
+  );
 
   let itemNum = 0;
 
@@ -275,10 +283,18 @@ export default (data, breakdowns) => {
         {
           text: 'Packed By:  _______________',
           style: 'totals',
-          width: 347,
+          width: 160,
         },
         {
-          text: '',
+          text: `${
+            production_date.length < 1
+              ? ''
+              : `Production Date: ${moment(production_date[0]?.date).format(
+                'MM/DD/YYYY'
+              )}`
+          }`,
+          style: 'totals',
+          width: 200,
         },
       ],
       margin: [0, 0, 0, 10],
@@ -294,10 +310,18 @@ export default (data, breakdowns) => {
         {
           text: 'Total Weight: _____________',
           style: 'totals',
-          width: 347,
+          width: 160,
         },
         {
-          text: '',
+          text: `${
+            data.status === 'Quote'
+              ? ''
+              : `Estimated Ship: ${moment(data.job_info.DueDate).format(
+                'MM/DD/YYYY'
+              )}`
+          }`,
+          style: 'totals',
+          width: 200,
         },
       ],
       margin: [0, 0, 0, 10],
