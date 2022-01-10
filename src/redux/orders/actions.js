@@ -111,7 +111,6 @@ export function uploadFilesToOrder(order, e, cookie) {
         data: data,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -124,17 +123,16 @@ export function uploadFilesToOrder(order, e, cookie) {
 export function deleteFilesFromOrder(order, e, cookie) {
   const orderId = order.id;
 
-  console.log({e});
-  console.log({order});
+  console.log({ e });
+  console.log({ order });
 
-  let fileIds = order?.files?.filter(item => item.id !== e.id);
+  let fileIds = order?.files?.filter((item) => item.id !== e.id);
 
   const files = {
     files: fileIds,
   };
 
-  console.log({files});
-
+  console.log({ files });
 
   return async function (dispatch) {
     try {
@@ -150,7 +148,6 @@ export function deleteFilesFromOrder(order, e, cookie) {
         data: data,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -161,29 +158,48 @@ export function deleteFilesFromOrder(order, e, cookie) {
 }
 
 export function loadOrders(cookie, user) {
-
-  
-
-  if(user?.role?.type === 'customer'){
+  if (user?.role?.type === 'customer') {
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=50`, {
-        headers: {
-          Authorization: `Bearer ${cookie}`,
-        },
-      });
+      const res = await fetch(
+        `${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=50`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookie}`,
+          },
+        }
+      );
       const data = await res.json();
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
       });
     };
-  } else if(user?.role?.type === 'quality_control'){
+  } else if (user?.role?.type === 'quality_control') {
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=50`, {
-        headers: {
-          Authorization: `Bearer ${cookie}`,
-        },
+      const res = await fetch(
+        `${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=50`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookie}`,
+          },
+        }
+      );
+      const data = await res.json();
+      return await dispatch({
+        type: LOAD_ORDERS,
+        data: data,
       });
+    };
+  } else {
+    return async function (dispatch) {
+      const res = await fetch(
+        `${db_url}/orders?_sort=orderNum:DESC&_limit=50`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookie}`,
+          },
+        }
+      );
       const data = await res.json();
       return await dispatch({
         type: LOAD_ORDERS,
@@ -191,55 +207,42 @@ export function loadOrders(cookie, user) {
       });
     };
   }
-  
-  else {
-    return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders?_sort=orderNum:DESC&_limit=50`, {
-        headers: {
-          Authorization: `Bearer ${cookie}`,
-        },
-      });
-      const data = await res.json();
-      return await dispatch({
-        type: LOAD_ORDERS,
-        data: data,
-      });
-    };
-  }
-
-
 }
 
 export function loadAllOrders(cookie, user) {
-
-  if(user.role?.type === 'customer'){
+  if (user.role?.type === 'customer') {
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=200`, {
-        headers: {
-          Authorization: `Bearer ${cookie}`,
-        },
-      });
+      const res = await fetch(
+        `${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=200`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookie}`,
+          },
+        }
+      );
       const data = await res.json();
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
       });
     };
-  } else if(user?.role?.type === 'quality_control'){
+  } else if (user?.role?.type === 'quality_control') {
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=2000`, {
-        headers: {
-          Authorization: `Bearer ${cookie}`,
-        },
-      });
+      const res = await fetch(
+        `${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=2000`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookie}`,
+          },
+        }
+      );
       const data = await res.json();
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
       });
     };
-  } 
-  else {
+  } else {
     return async function (dispatch) {
       const res = await fetch(`${db_url}/orders/all`, {
         headers: {
@@ -253,7 +256,6 @@ export function loadAllOrders(cookie, user) {
       });
     };
   }
-
 }
 
 export function submitOrder(order, cookie) {
@@ -270,7 +272,6 @@ export function submitOrder(order, cookie) {
         data: data,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -293,7 +294,6 @@ export function deleteOrder(orderId, cookie) {
         type: DELETE_ORDER,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -318,7 +318,6 @@ export function updateOrder(orderId, order, cookie) {
         data: data,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -331,12 +330,12 @@ export function updateOrder(orderId, order, cookie) {
 export function updateStatus(orderId, key, status, cookie) {
   const item = {
     status: status.status,
-    dueDate: moment('2001-01-01'),
+    dueDate: moment('2000-01-01'),
     tracking: [
       ...key.tracking,
       {
         status: status.status,
-        date: moment().format()
+        date: moment().format(),
       },
     ],
   };
@@ -353,7 +352,6 @@ export function updateStatus(orderId, key, status, cookie) {
         data: data,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -424,7 +422,6 @@ export function updateBalance(orderId, balance, cookie) {
         type: UPDATE_BALANCE,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -471,7 +468,6 @@ export function updateNotes(orderId, balance, cookie) {
         type: UPDATE_NOTES,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -483,12 +479,9 @@ export function updateNotes(orderId, balance, cookie) {
 
 export function setOrderType(orderType) {
   return async function (dispatch) {
-
     return dispatch({
       type: SET_ORDER_TYPE,
-      data: orderType
+      data: orderType,
     });
-  
   };
 }
-
