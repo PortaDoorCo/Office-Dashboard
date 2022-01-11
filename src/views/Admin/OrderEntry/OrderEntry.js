@@ -176,6 +176,8 @@ class OrderEntry extends Component {
       }
     }
 
+    console.log({values});
+
     if (!isEdit) {
       order = {
         ...values,
@@ -318,6 +320,8 @@ class OrderEntry extends Component {
       isEdit,
       user,
     } = this.props;
+
+    console.log({formState});
 
     return (
       <div className="animated fadeIn order-tour">
@@ -612,7 +616,7 @@ const mapStateToProps = (state, props) => ({
                       addPrice: 0,
                     },
                   ]
-                  : null,
+                  : [],
         mouldings:
             state.Orders.orderType === 'Mouldings'
               ? [
