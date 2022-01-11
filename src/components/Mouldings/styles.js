@@ -35,6 +35,10 @@ const styles = [
     name: 'Flat Stock',
     value: 'flat_stock'
   },
+  {
+    name: 'Custom Moulding',
+    value: 'custom'
+  },
 ];
 
 export default styles;

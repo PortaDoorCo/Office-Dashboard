@@ -9,26 +9,43 @@ import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import StickyBox from 'react-sticky-box';
 import {
-  Card, CardBody, CardHeader, Col, FormGroup, Input, InputGroup,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  FormGroup,
+  Input,
+  InputGroup,
   InputGroupAddon,
-  InputGroupText, Row
+  InputGroupText,
+  Row,
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import {
-  Field, FieldArray, FormSection,
-  getFormValues, reduxForm, startAsyncValidation, touch
+  Field,
+  FieldArray,
+  FormSection,
+  getFormValues,
+  reduxForm,
+  startAsyncValidation,
+  touch,
 } from 'redux-form';
 import thickness from '../../../components/DoorOrders/DoorInfo/thickness';
 import FileUploader from '../../../components/FileUploader/FileUploader';
 import { renderField } from '../../../components/RenderInputs/renderInputs';
 import {
   loadOrders,
-  setOrderType, submitOrder, updateOrder
+  setOrderType,
+  submitOrder,
+  updateOrder,
 } from '../../../redux/orders/actions';
 import {
-  addPriceSelector, balanceSelector,
-  balanceTotalSelector, miscTotalSelector, taxSelector,
-  totalSelector
+  addPriceSelector,
+  balanceSelector,
+  balanceTotalSelector,
+  miscTotalSelector,
+  taxSelector,
+  totalSelector,
 } from '../../../selectors/pricing';
 import currencyMask from '../../../utils/currencyMask';
 import CancelModal from '../../../utils/Modal';
@@ -36,7 +53,6 @@ import EditCheckoutBox from '../Orders/CheckoutBox';
 import CheckoutBox from './components/CheckoutBox';
 import validate from './components/validate';
 import Sticky from 'react-stickynode';
-
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
@@ -129,21 +145,18 @@ class OrderEntry extends Component {
       balance,
       status,
       tracking,
-      updateOrder
+      updateOrder,
     } = this.props;
 
     // const orderType = orderType;
-
 
     let order = {};
 
     let newStatus = tracking;
 
-
-    if(isEdit){
+    if (isEdit) {
       if (status !== values.job_info?.status?.value) {
         if (values.job_info?.status?.value) {
-      
           newStatus = [
             ...tracking,
             {
@@ -152,7 +165,6 @@ class OrderEntry extends Component {
             },
           ];
         } else {
-       
           newStatus = [
             ...tracking,
             {
@@ -164,11 +176,7 @@ class OrderEntry extends Component {
       }
     }
 
-
-
-
     if (!isEdit) {
-  
       order = {
         ...values,
         status: values.job_info.status.value,
@@ -177,7 +185,7 @@ class OrderEntry extends Component {
         job_info: {
           ...values.job_info,
           status: values.job_info.status.value,
-          Notes: values.job_info.Notes
+          Notes: values.job_info.Notes,
         },
         companyprofile: values.job_info.customer.id,
         linePrice: prices,
@@ -207,8 +215,6 @@ class OrderEntry extends Component {
         ],
         sale: values.job_info?.customer?.sale?.id,
       };
-
-
     } else {
       order = {
         ...values,
@@ -231,21 +237,20 @@ class OrderEntry extends Component {
     }
 
     let canSubmit = false;
-    
 
+    console.log('helooooooo');
 
-    if(orderType === 'Mouldings' || orderType === 'Misc Items'){
+    if (orderType === 'Mouldings' || orderType === 'Misc Items') {
       canSubmit = true;
     } else {
       values.part_list.map((v) => {
-        return v.dimensions.length > 0 ? (canSubmit = true) : (canSubmit = false);
+        return v.dimensions.length > 0
+          ? (canSubmit = true)
+          : (canSubmit = false);
       });
     }
 
-
-
     if (!isEdit) {
-
       if (canSubmit) {
         await submitOrder(order, cookie);
         this.setState({ updateSubmit: !this.state.updateSubmit });
@@ -311,10 +316,8 @@ class OrderEntry extends Component {
       orderType,
       edit,
       isEdit,
-      user
+      user,
     } = this.props;
-
-
 
     return (
       <div className="animated fadeIn order-tour">
@@ -430,7 +433,7 @@ class OrderEntry extends Component {
 
                   <hr />
                   <hr />
-                  {user.role?.type === 'quality_control' ? null : 
+                  {user.role?.type === 'quality_control' ? null : (
                     <Row>
                       <Col xs="9" />
                       <Col xs="3">
@@ -487,15 +490,13 @@ class OrderEntry extends Component {
                         </InputGroup>
                       </Col>
                     </Row>
-                  }
+                  )}
                 </form>
               </CardBody>
             </Card>
           </div>
 
-
-          {user.role?.type === 'quality_control' ? null : 
-          
+          {user.role?.type === 'quality_control' ? null : (
             <div className={isEdit ? 'editFormCol2' : 'orderFormCol2'}>
               {this.props.isEdit ? (
                 <StickyBox offsetTop={20} offsetBottom={20}>
@@ -517,7 +518,6 @@ class OrderEntry extends Component {
                   enabled={true}
                   // key={i}
                 >
-
                   {/* {this.props.orderType === 'Misc Items' ? null :  */}
                   <CheckoutBox
                     {...this.props}
@@ -528,16 +528,12 @@ class OrderEntry extends Component {
                     toggleCancelModal={this.toggleCancelModal}
                     maxValue={maxValue}
                     onUploaded={this.onUploaded}
-                  /> 
+                  />
                   {/* } */}
                 </Sticky>
               )}
             </div>
-
-          }
-          
-          
-
+          )}
         </div>
       </div>
     );

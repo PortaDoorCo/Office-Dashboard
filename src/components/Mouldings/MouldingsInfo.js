@@ -2,27 +2,35 @@ import React, { Fragment } from 'react';
 import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import {
-  Button, Col,
+  Button,
+  Col,
   Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupText, Row, Table
+  InputGroupText,
+  Row,
+  Table,
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { Field } from 'redux-form';
 import {
-  mouldingLineItemSelector, mouldingLinePriceSelector, mouldingPriceSelector, mouldingTotalSelector, subTotalSelector,
+  mouldingLineItemSelector,
+  mouldingLinePriceSelector,
+  mouldingPriceSelector,
+  mouldingTotalSelector,
+  subTotalSelector,
   taxSelector,
-  totalSelector
+  totalSelector,
 } from '../../selectors/pricing';
 import currencyMask from '../../utils/currencyMask';
 import {
-  renderDropdownList, renderDropdownListFilter,
-  renderMouldingInputs, renderNumber, renderTextField
+  renderDropdownList,
+  renderDropdownListFilter,
+  renderMouldingInputs,
+  renderNumber,
+  renderTextField,
 } from '../RenderInputs/renderInputs';
 import styles from './styles';
-
-
 
 const thickness = [
   {
@@ -43,10 +51,10 @@ let Inputs = (props) => {
     (wood) => wood.mouldings === true
   );
 
+  console.log({ formState });
 
   return (
     <div>
-      
       {fields.map((table, index) => {
         return (
           <Fragment key={index}>
@@ -57,7 +65,11 @@ let Inputs = (props) => {
                   <th>Style</th>
                   <th>Grade</th>
                   <th>Woodtype</th>
-                  <th>Item</th>
+                  {formState.mouldings[index]?.style?.value === 'custom' ? (
+                    <th>Width</th>
+                  ) : (
+                    <th>Item</th>
+                  )}
                   <th>Price</th>
                   <th></th>
                 </tr>
@@ -115,24 +127,37 @@ let Inputs = (props) => {
                       required
                     />
                   </td>
-                  <td style={{ width: '200px' }}>
-                    <Field
-                      name={`${table}.item`}
-                      component={renderMouldingInputs}
-                      data={part_list?.mouldings.filter(
-                        (item) =>
-                          item.Style === formState?.mouldings[index]?.style?.value
-                      )}
-                      // onChange={(e) => changeMiscItem(e, index)}
-                      valueField="value"
-                      textField="NAME"
-                      edit={edit}
-                      required
-                    />
-                  </td>
+                  {formState.mouldings[index]?.style?.value === 'custom' ? (
+                    <td style={{ width: '200px' }}>
+                      <Field
+                        name={`${table}.width`}
+                        type="text"
+                        component={renderNumber}
+                        label="price"
+                        edit={edit}
+                        required
+                      />
+                    </td>
+                  ) : (
+                    <td style={{ width: '200px' }}>
+                      <Field
+                        name={`${table}.item`}
+                        component={renderMouldingInputs}
+                        data={part_list?.mouldings.filter(
+                          (item) =>
+                            item.Style ===
+                            formState?.mouldings[index]?.style?.value
+                        )}
+                        // onChange={(e) => changeMiscItem(e, index)}
+                        valueField="value"
+                        textField="NAME"
+                        edit={edit}
+                        required
+                      />
+                    </td>
+                  )}
 
                   <>
-
                     <td style={{ width: '125px' }}>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
@@ -153,15 +178,18 @@ let Inputs = (props) => {
 
                   {!edit ? (
                     <td>
-                      <Button color="danger" onClick={() => fields.remove(index)}>
-                      X
+                      <Button
+                        color="danger"
+                        onClick={() => fields.remove(index)}
+                      >
+                        X
                       </Button>
                     </td>
                   ) : null}
                 </tr>
               </tbody>
             </Table>
-            <Row mb='4'>
+            <Row mb="4">
               <Col xs="5">
                 <strong>Notes</strong>
                 <Row>
@@ -175,15 +203,12 @@ let Inputs = (props) => {
                       label="notes"
                     />
                   </Col>
-                
-                 
                 </Row>
               </Col>
             </Row>
           </Fragment>
         );
       })}
-
 
       <Row>
         <Col>

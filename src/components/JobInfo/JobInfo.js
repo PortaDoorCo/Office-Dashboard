@@ -133,6 +133,9 @@ class JobInfo extends Component {
       moment(formState && formState.job_info && formState.job_info.DueDate)
     );
 
+
+    console.log('helllllllllllllloooooooo');
+
     return (
       <div className="job-info-tour">
         <CustomerReminder
