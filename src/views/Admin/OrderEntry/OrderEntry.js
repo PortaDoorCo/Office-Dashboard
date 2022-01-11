@@ -269,6 +269,7 @@ class OrderEntry extends Component {
     this.setState({ updateSubmit: false });
     this.toggleCancelModal();
     this.props.reset();
+    this.props.editable();
   };
 
   toggleCancelModal = () => {
@@ -320,10 +321,10 @@ class OrderEntry extends Component {
         <CancelModal
           toggle={this.toggleCancelModal}
           modal={this.state.cancelModal}
-          title={'Cancel Order?'}
-          message={'Are you sure you want to this cancel this order?'}
+          title={'Cancel Edit?'}
+          message={'Are you sure you want to this cancel this order edit?'}
           action={this.cancelOrder}
-          actionButton={'Cancel Order'}
+          actionButton={'Cancel Edit'}
           buttonColor={'danger'}
         />
         <div className="orderForm">
