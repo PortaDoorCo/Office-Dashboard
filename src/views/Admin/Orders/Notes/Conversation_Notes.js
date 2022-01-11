@@ -143,7 +143,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-
+Conversation_Notes = reduxForm({
+  form: 'Order',
+})(Conversation_Notes);
 
 
 export default connect(

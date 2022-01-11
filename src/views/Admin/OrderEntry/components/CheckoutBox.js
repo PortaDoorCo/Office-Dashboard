@@ -44,13 +44,13 @@ const CheckoutBox = (props) => {
 
             <hr />
 
-            {props.orderType === 'Misc Items' ? null : (
-              <NavModal
-                {...props}
-                onSubNav={props.onSubNav}
-                onUploaded={props.onUploaded}
-              />
-            )}
+          
+            <NavModal
+              {...props}
+              onSubNav={props.onSubNav}
+              onUploaded={props.onUploaded}
+            />
+            
 
             <form
               onKeyPress={props.onKeyPress}

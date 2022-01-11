@@ -268,7 +268,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-
+Balance = reduxForm({
+  form: 'Order',
+})(Balance);
 
 
 export default connect(
