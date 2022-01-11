@@ -63,9 +63,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-Notes_Table = reduxForm({
-  form: 'Order',
-})(Notes_Table);
+
 
 
 export default connect(

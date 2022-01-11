@@ -65,7 +65,7 @@ let Inputs = (props) => {
                   <th>Style</th>
                   <th>Grade</th>
                   <th>Woodtype</th>
-                  {formState.mouldings[index]?.style?.value === 'custom' ? (
+                  {formState?.mouldings && formState?.mouldings[index]?.style?.value === 'custom' ? (
                     <th>Width</th>
                   ) : (
                     <th>Item</th>
@@ -127,7 +127,7 @@ let Inputs = (props) => {
                       required
                     />
                   </td>
-                  {formState.mouldings[index]?.style?.value === 'custom' ? (
+                  {formState?.mouldings && formState?.mouldings[index]?.style?.value === 'custom' ? (
                     <td style={{ width: '200px' }}>
                       <Field
                         name={`${table}.width`}

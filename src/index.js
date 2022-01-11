@@ -21,8 +21,6 @@ import * as serviceWorker from './serviceWorker';
 import 'prismjs';
 const cookie = Cookies.get('jwt');
 
-
-
 const middleware = [thunk];
 
 if (!cookie) {
@@ -43,24 +41,29 @@ const sentryReduxEnhancer = Sentry.createReduxEnhancer({
   // Optionally pass options
 });
 
-
 const store = createStore(
   rootReducer,
   load({
-    ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
+    ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders'],
   }),
-  composeWithDevTools(applyMiddleware(...middleware, loadingBarMiddleware(), save({
-    ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders']
-  })), sentryReduxEnhancer)
+  composeWithDevTools(
+    applyMiddleware(
+      ...middleware,
+      loadingBarMiddleware(),
+      save({
+        ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders'],
+      })
+    ),
+    sentryReduxEnhancer
+  )
 );
-
-
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
-  </Provider>
-  , document.getElementById('root'));
+  </Provider>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
