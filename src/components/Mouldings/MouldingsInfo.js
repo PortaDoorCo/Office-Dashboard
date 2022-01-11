@@ -66,7 +66,7 @@ let Inputs = (props) => {
                   <th>Grade</th>
                   <th>Woodtype</th>
                   {formState?.mouldings && formState?.mouldings[index]?.style?.value === 'custom' ? (
-                    <th>Width</th>
+                    null
                   ) : (
                     <th>Item</th>
                   )}
@@ -128,16 +128,7 @@ let Inputs = (props) => {
                     />
                   </td>
                   {formState?.mouldings && formState?.mouldings[index]?.style?.value === 'custom' ? (
-                    <td style={{ width: '200px' }}>
-                      <Field
-                        name={`${table}.width`}
-                        type="text"
-                        component={renderNumber}
-                        label="price"
-                        edit={edit}
-                        required
-                      />
-                    </td>
+                    null
                   ) : (
                     <td style={{ width: '200px' }}>
                       <Field
@@ -156,6 +147,7 @@ let Inputs = (props) => {
                       />
                     </td>
                   )}
+
 
                   <>
                     <td style={{ width: '125px' }}>
@@ -187,6 +179,42 @@ let Inputs = (props) => {
                     </td>
                   ) : null}
                 </tr>
+                {formState?.mouldings && formState?.mouldings[index]?.style?.value === 'custom' ? 
+                  <tr>
+                    <td>
+                      <div>
+                        <strong>
+                          <p>Width</p>
+                        </strong>
+                        <Field
+                          name={`${table}.width`}
+                          type="text"
+                          component={renderNumber}
+                          label="price"
+                          edit={edit}
+                          required
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                      
+                        <strong>
+                          <p>Thickness</p>
+                        </strong>
+                        <Field
+                          name={`${table}.thickness`}
+                          type="text"
+                          component={renderNumber}
+                          label="price"
+                          edit={edit}
+                          required
+                        />
+                      </div>
+                    </td>
+                  </tr>
+
+                  : null }
               </tbody>
             </Table>
             <Row mb="4">
