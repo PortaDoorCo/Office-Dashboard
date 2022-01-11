@@ -83,7 +83,7 @@ class Dashboard extends Component<PropTypes, StateTypes> {
   render() {
     const { role, orders, user } = this.props;
 
-    console.log({user});
+
 
     return (
       <div className="animated fadeIn">

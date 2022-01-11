@@ -325,7 +325,6 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
     // const fileName = `Order_${data.orderNum}`
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     return pdfDocGenerator.getBlob((blob) => {
-      console.log({blob});
       // blobUrl()
       resolve(blob);
     });

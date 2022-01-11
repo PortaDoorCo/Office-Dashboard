@@ -28,7 +28,7 @@ export default (data, breakdowns) => {
           { text: item.qty, style: 'fonts' },
           {
             stack: [
-              { text: `${SlabSize(item, i.edge.LIP_FACTOR)}`, style: 'fonts' },
+              { text: `${SlabSize(item, i.edge?.LIP_FACTOR)}`, style: 'fonts' },
               item.notes || item.full_frame || item.lite
                 ? {
                   text: `${item.notes ? item.notes.toUpperCase() : ''} ${
@@ -54,7 +54,7 @@ export default (data, breakdowns) => {
             }),
             style: 'fonts',
           },
-          { text: SlabSize(item, i.edge.LIP_FACTOR), style: 'fonts' },
+          { text: SlabSize(item, i.edge?.LIP_FACTOR), style: 'fonts' },
         ]);
       });
     } else {

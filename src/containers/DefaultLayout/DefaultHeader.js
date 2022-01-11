@@ -66,7 +66,6 @@ class DefaultHeader extends Component {
       getBoxBreakdowns,
       getPricing,
       getUsers,
-      login,
       loadSales,
       loadAllOrders,
       getDeliveries,

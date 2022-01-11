@@ -47,6 +47,24 @@ class Conditionals extends Component {
               break;
           }
           break;
+        case 'Custom':
+          switch (formState.part_list[index].construction.value) {
+            default:
+              component = (
+                <Door
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={false}
+                  updateSubmit={updateSubmit}
+                />
+              );
+              break;
+          }
+          break;
 
 
 

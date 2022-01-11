@@ -25,7 +25,7 @@ const CheckoutBox = (props) => {
 
   const jobInfo = props.formState?.job_info;
 
-  console.log({props});
+
 
   return(
     <Row>

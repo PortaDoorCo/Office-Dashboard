@@ -23,7 +23,7 @@ import currencyMask from '../../../utils/currencyMask';
 let Inputs = (props) => {
   const { fields, misc_items, formState, linePrices, miscTotal, edit, orderType } = props;
 
-  console.log({orderType});
+
 
   let misc_items_category = ['Accessories', 'Door', 'DF', 'Drawer_Box'];
 
@@ -32,24 +32,22 @@ let Inputs = (props) => {
   }
 
   if(orderType === 'Drawer Order'){
-    console.log('here');
+
     misc_items_category = ['Accessories', 'Drawer_Box'];
   }
   
 
   let sorted_misc_items = misc_items.filter(e => {
     
-    console.log({e});
+
     return e.categories.some(c => {
       
-      console.log({c: misc_items_category.includes(c.value)});
       return misc_items_category.includes(c.value);
     
     }
     );
   });
 
-  console.log({length: sorted_misc_items.length});
 
 
   const changeMiscItem = (e, index) => {

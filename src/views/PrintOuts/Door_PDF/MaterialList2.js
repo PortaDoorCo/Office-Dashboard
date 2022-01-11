@@ -14,25 +14,6 @@ const fraction = (num) => {
 };
 
 export default (data, breakdowns) => {
-
-  // const newData = data.part_list.map((i) => {
-  //   return {
-  //     ...i,
-  //     dimensions: i.dimensions.map((v) => {
-  //       return {
-  //         ...v,
-  //         construction: i.construction,
-  //         profile: i.profile,
-  //         design: i.design,
-  //         edge: i.edge,
-  //         panel: i.panel,
-  //         orderType: i.orderType,
-  //         VERTICAL_GRAIN: i.VERTICAL_GRAIN
-  //       };
-  //     }),
-  //   };
-  // });
-
   //flatten part list
   const flattenedParts = flatten(data.part_list);
 
@@ -57,46 +38,95 @@ export default (data, breakdowns) => {
         thickness: h,
         widths: uniq(
           flattenDeep(
-            data.part_list.map((i) =>
-              i.dimensions.map((j) => [
-                j.topRail,
-                j.bottomRail,
-                j.leftStile,
-                j.rightStile,
-                j.horizontalMidRailSize,
-                j.verticalMidRailSize,
-              ])
-            )
+            data.part_list.map((i) => {
+              if (i.orderType?.value === 'Custom') {
+                return i.dimensions.map((j) => {
+                  const stiles = j.Stiles?.map((k) => {
+                    return k.width;
+                  });
+                  const rails = j.Rails?.map((k) => {
+                    return k.width;
+                  });
+
+                  console.log({ stiles });
+                  console.log({ rails });
+
+                  console.log({test1: stiles.concat(rails)});
+
+                  return stiles.concat(rails);
+                });
+              } else {
+                return i.dimensions.map((j) => [
+                  j.topRail,
+                  j.bottomRail,
+                  j.leftStile,
+                  j.rightStile,
+                  j.horizontalMidRailSize,
+                  j.verticalMidRailSize,
+                ]);
+              }
+            })
           )
         ),
       };
     });
   });
+
+  console.log({ b });
+
   const c = flattenDeep(b).map((j) => {
+    console.log({ j });
+
     return {
       parts: j.widths
         .filter((n) => n !== 0)
         .map((k) => {
+          console.log({ k });
+
           return {
             width: k,
             thickness: j.thickness,
             woodtype: j.woodtype,
             parts: j.parts.map((f) => {
+              console.log({ f });
+
+              if (f.orderType?.value === 'Custom') {
+                console.log('hellooooooo');
+              }
+
               return {
                 width: k,
                 thickness: j.thickness,
                 woodtype: j.woodtype,
                 part: f,
-                items: flatten(f.dimensions).filter((j) =>
-                  [
-                    j.topRail,
-                    j.bottomRail,
-                    j.leftStile,
-                    j.rightStile,
-                    j.horizontalMidRailSize,
-                    j.verticalMidRailSize,
-                  ].includes(k)
-                ),
+                items: flatten(f.dimensions).filter((j) => {
+                  if (f.orderType?.value === 'Custom') {
+                    const stiles = j.Stiles?.map((k) => {
+                      return k.width;
+                    });
+                    const rails = j.Rails?.map((k) => {
+                      return k.width;
+                    });
+
+                    console.log({ stiles });
+                    console.log({ rails });
+
+                    console.log({ test: [stiles.concat(rails)].includes(k) });
+
+                    return stiles.concat(rails).includes(k);
+                  } else {
+
+
+                    return [
+                      j.topRail,
+                      j.bottomRail,
+                      j.leftStile,
+                      j.rightStile,
+                      j.horizontalMidRailSize,
+                      j.verticalMidRailSize,
+                    ].includes(k);
+                  }
+                }),
               };
             }),
           };
@@ -104,9 +134,14 @@ export default (data, breakdowns) => {
     };
   });
 
+  console.log({ c });
+
   const d = flattenDeep(c).map((j, index) => {
+    console.log({ j });
     return j.parts.map((n) => {
+      console.log({ n });
       return LinearFT(n.parts, breakdowns, n.width).map((b) => {
+        console.log({ b });
         if (numQty(b.width) > 0) {
           return {
             width: numQty(b.width) === 2.376 ? 2.375 : numQty(b.width),
@@ -121,6 +156,8 @@ export default (data, breakdowns) => {
       });
     });
   });
+
+  console.log({ d });
 
   const flattenD = flattenDeep(d);
 
@@ -151,7 +188,7 @@ export default (data, breakdowns) => {
             //linear FT
             text: `Linear Feet of ${fraction(i.width)}" ${i.woodtype} - ${
               i.thickness
-            }" Thickness Needed: ${i.linearFT?.toFixed(2)}`,
+            }" Thickness Needed: ${i.linearFT}`,
             style: 'fonts',
             width: 400,
           },

@@ -123,8 +123,6 @@ export function uploadFilesToOrder(order, e, cookie) {
 export function deleteFilesFromOrder(order, e, cookie) {
   const orderId = order.id;
 
-  console.log({ e });
-  console.log({ order });
 
   let fileIds = order?.files?.filter((item) => item.id !== e.id);
 
@@ -132,7 +130,8 @@ export function deleteFilesFromOrder(order, e, cookie) {
     files: fileIds,
   };
 
-  console.log({ files });
+ 
+
 
   return async function (dispatch) {
     try {

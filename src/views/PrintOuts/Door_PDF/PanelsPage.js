@@ -22,8 +22,6 @@ export default (data, breakdowns, type) => {
 
   const a = Object.values(groupBy(data.part_list, (x) => x?.woodtype?.NAME));
 
-  console.log({ a });
-
   const b = a
     .map((woodtype) =>
       woodtype.map((v, i) => {
@@ -33,9 +31,6 @@ export default (data, breakdowns, type) => {
             v.dimensions.map((d, k) => ({
               ...d,
               name: getName(v),
-              panel: v.panel,
-              construction: v.construction,
-              orderType: v.orderType,
             }))
           ),
         };
@@ -113,8 +108,6 @@ export default (data, breakdowns, type) => {
         ]);
       }
     });
-
-    console.log({ i });
 
     return [
       index === 0 && data.job_info?.Shop_Notes
@@ -217,8 +210,6 @@ export default (data, breakdowns, type) => {
       // { text: '', pageBreak: 'before' }
     ];
   });
-
-  console.log({ b });
 
   // const table_body = [];
 

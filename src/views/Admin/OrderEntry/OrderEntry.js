@@ -134,7 +134,6 @@ class OrderEntry extends Component {
 
     // const orderType = orderType;
 
-    console.log({values});
 
     let order = {};
 
@@ -144,7 +143,7 @@ class OrderEntry extends Component {
     if(isEdit){
       if (status !== values.job_info?.status?.value) {
         if (values.job_info?.status?.value) {
-          console.log('Status Updated');
+      
           newStatus = [
             ...tracking,
             {
@@ -153,7 +152,7 @@ class OrderEntry extends Component {
             },
           ];
         } else {
-          console.log('Order Edited');
+       
           newStatus = [
             ...tracking,
             {
@@ -166,10 +165,10 @@ class OrderEntry extends Component {
     }
 
 
-    console.log('here');
+
 
     if (!isEdit) {
-      console.log('here 2');
+  
       order = {
         ...values,
         status: values.job_info.status.value,
@@ -233,7 +232,7 @@ class OrderEntry extends Component {
 
     let canSubmit = false;
     
-    console.log({orderType});
+
 
     if(orderType === 'Mouldings' || orderType === 'Misc Items'){
       canSubmit = true;
@@ -244,10 +243,6 @@ class OrderEntry extends Component {
     }
 
 
-
-    console.log({canSubmit});
-
-    console.log({order});
 
     if (!isEdit) {
 
@@ -318,8 +313,7 @@ class OrderEntry extends Component {
       user
     } = this.props;
 
-    console.log({ orderType });
-    console.log({ isEdit: this.props.isEdit });
+
 
     return (
       <div className="animated fadeIn order-tour">

@@ -111,8 +111,6 @@ const DoorPDF =  async (
         if (k.hasSlab) {
           return Content.push(PanelsPage(k, breakdowns, 'SOLIDS'));
         } else {
-          console.log({ k });
-
           if (k.part_list.length > 0) {
             return Content.push(PanelsPage(k, breakdowns, 'PANELS'));
           } else {
@@ -288,7 +286,6 @@ const DoorPDF =  async (
   
 
     return pdfDocGenerator.getBlob((blob) => {
-      console.log({blob});
       // blobUrl()
       resolve(blob);
     });

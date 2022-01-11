@@ -121,7 +121,6 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     return pdfDocGenerator.getBlob((blob) => {
-      console.log({blob});
       // blobUrl()
       resolve(blob);
     });

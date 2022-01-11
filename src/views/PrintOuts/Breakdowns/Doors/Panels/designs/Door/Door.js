@@ -11,21 +11,25 @@ export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 
-  const top_rail_arch = part?.design?.TOP_RAIL_ADD
-    ? part?.design?.TOP_RAIL_ADD
+  const top_rail_arch = info?.design?.TOP_RAIL_ADD
+    ? info?.design?.TOP_RAIL_ADD
     : 0;
-  const btm_rail_arch = part?.design?.BTM_RAIL_ADD
-    ? part?.design?.BTM_RAIL_ADD
+  const btm_rail_arch = info?.design?.BTM_RAIL_ADD
+    ? info?.design?.BTM_RAIL_ADD
     : 0;
 
-  let edge_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
-  let lip_factor = part?.edge?.LIP_FACTOR ? part?.edge?.LIP_FACTOR : 0;
+  let edge_factor = info?.edge?.LIP_FACTOR ? info?.edge?.LIP_FACTOR : 0;
+  let lip_factor = info?.edge?.LIP_FACTOR ? info?.edge?.LIP_FACTOR : 0;
 
   const topRail = info.topRail
-    ? Math.round(numQty(info.topRail) * 16) / 16 + lip_factor / 2 - top_rail_arch
+    ? Math.round(numQty(info.topRail) * 16) / 16 +
+      lip_factor / 2 -
+      top_rail_arch
     : 0;
   const bottomRail = info.bottomRail
-    ? Math.round(numQty(info.bottomRail) * 16) / 16 + lip_factor / 2 - btm_rail_arch
+    ? Math.round(numQty(info.bottomRail) * 16) / 16 +
+      lip_factor / 2 -
+      btm_rail_arch
     : 0;
   const leftStile = info.leftStile
     ? Math.round(numQty(info.leftStile) * 16) / 16 + lip_factor / 2
@@ -37,42 +41,30 @@ export default (info, part, breakdowns) => {
   const horizMull = Math.round(numQty(hMidRail) * 16) / 16;
   const panelsH = parseInt(info.panelsH) > 1 ? parseInt(info.panelsH) : 1;
   const panelsW = parseInt(info.panelsW) > 1 ? parseInt(info.panelsW) : 1;
-  const height = Math.round(numQty(info.height) * 16) / 16
-  const width = Math.round(numQty(info.width) * 16) / 16
+  const height = Math.round(numQty(info.height) * 16) / 16;
+  const width = Math.round(numQty(info.width) * 16) / 16;
   const qty = parseInt(info.qty);
-
-  console.log({item: info?.item})
-  console.log({height: info.width})
-  console.log({width})
-  console.log({height})
-  console.log({height: info.height})
-  console.log({topRail})
-  console.log({bottomRail})
-  console.log({horizMull})
-  console.log({panel_factor})
-  console.log({edge_factor})
-  console.log({panelsH})
 
   const orderType = info?.orderType?.value
     ? info.orderType?.value
     : part?.orderType?.value;
 
   let inset = 0;
-  if (part.profile) {
-    inset = part.profile?.INSET;
+  if (info.profile) {
+    inset = info.profile?.INSET;
   } else {
-    inset = part.design?.INSET;
+    inset = info.design?.INSET;
   }
 
   const lites = info.lite ? info.lite.NAME : "";
-  const panel_factor = part?.panel?.PANEL_FACTOR;
+  const panel_factor = info?.panel?.PANEL_FACTOR;
 
-  console.log({ inset });
+
 
   const panelName = info?.panel?.NAME ? info?.panel?.NAME : part?.panel?.NAME;
   const panelFlat = info?.panel?.Flat ? info?.panel?.Flat : part?.panel?.Flat;
 
-  const VERTICAL_GRAIN = part.VERTICAL_GRAIN;
+  const VERTICAL_GRAIN = info.VERTICAL_GRAIN;
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
@@ -128,12 +120,7 @@ export default (info, part, breakdowns) => {
       panel_factor +
       lip_factor / 2;
 
-    // console.log({height})
-    // console.log({unevenSplitTotal})
-    // console.log({horizMull})
-    // console.log({bottomRail})
-    // console.log({panel_factor})
-    // console.log({lip_factor})
+
 
     const unevenSplitInput = (v) =>
       numQty(info[`unevenSplitInput${v}`]) -

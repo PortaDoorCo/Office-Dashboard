@@ -63,12 +63,12 @@ const loading = () => (
 const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout/DefaultLayout'));
 
 
-const PrivateRoute = ({ component: Component, ...rest }, isLogged: boolean) => (
+const PrivateRoute = ({ component: Component, ...rest }, islogged: boolean) => (
   <Route
     {...rest}
     render={(props) => {
-      return rest.isLogged ? (
-        <Component {...props} isLogged={rest.isLogged} />
+      return rest.islogged ? (
+        <Component {...props} islogged={rest.isLogged} />
       ) : (
         <Redirect to={{ pathname: '/login' }} />
       );
@@ -399,13 +399,13 @@ class App extends Component<PropTypes, StateTypes> {
               path="/"
               name="Dashboard"
               component={DefaultLayout}
-              isLogged={this.state.isAuth}
+              islogged={this.state.isAuth}
             />
             <PrivateRoute
               path="/user"
               name="User-Dashboard"
               component={DefaultLayout}
-              isLogged={this.state.isAuth}
+              islogged={this.state.isAuth}
 
             />
           </Switch>

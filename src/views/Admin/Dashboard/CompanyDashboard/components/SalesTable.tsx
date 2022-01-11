@@ -87,8 +87,7 @@ const OrderTable = (props: TablePropTypes) => {
   useEffect(() => {
     const filteredOrders = orders?.length > 0 ? orders?.filter((item) => {
 
-      console.log({item});
-      console.log({user});
+
 
 
 

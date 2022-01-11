@@ -1,49 +1,49 @@
 import Door from './designs/Door/Door';
+import Custom from './designs/Door/Custom';
 import Face_Frame from './designs/Face_Frame/Face_Frame';
 import One_Piece_Door from './designs/One_Piece_Door/One_Piece_Door';
 import Slab_Door from './designs/Slab_Door/Slab_Door';
 
 export default (info, part, breakdowns) => {
-
-  
-
-  const orderType = info?.orderType?.value ? info.orderType?.value : part?.orderType?.value;
-
-  
-
+  const orderType = info?.orderType?.value
+    ? info.orderType?.value
+    : part?.orderType?.value;
 
   if (orderType === 'Door') {
-    if (part.construction?.value === 'Slab') {
+    if (info.construction?.value === 'Slab') {
       return Slab_Door(info, part);
     } else {
-      if (part.construction?.value === 'Cope') {
-        
+      if (info.construction?.value === 'Cope') {
         return Door(info, part, breakdowns[0]);
       }
 
-      if (part.construction?.value === 'MT') {
+      if (info.construction?.value === 'MT') {
         return Door(info, part, breakdowns[1]);
       }
 
-      if (part.construction?.value === 'Miter') {
+      if (info.construction?.value === 'Miter') {
         return Door(info, part, breakdowns[2]);
       }
     }
   }
 
+  if (info.orderType?.value === 'Custom') {
+    return Custom(info, part);
+  }
+
   if (orderType === 'DF') {
-    if (part?.construction?.value === 'Slab') {
+    if (info?.construction?.value === 'Slab') {
       return Slab_Door(info, part);
     } else {
-      if (part.construction?.value === 'Cope') {
+      if (info.construction?.value === 'Cope') {
         return Door(info, part, breakdowns[4]);
       }
 
-      if (part.construction?.value === 'MT') {
+      if (info.construction?.value === 'MT') {
         return Door(info, part, breakdowns[3]);
       }
 
-      if (part.construction?.value === 'Miter') {
+      if (info.construction?.value === 'Miter') {
         return Door(info, part, breakdowns[5]);
       }
     }
@@ -62,30 +62,29 @@ export default (info, part, breakdowns) => {
   }
 
   if (orderType === 'Two_Piece') {
-    if (part.construction?.value === 'Cope') {
-      
+    if (info.construction?.value === 'Cope') {
       return Door(info, part, breakdowns[0]);
     }
 
-    if (part.construction?.value === 'MT') {
+    if (info.construction?.value === 'MT') {
       return Door(info, part, breakdowns[1]);
     }
 
-    if (part.construction?.value === 'Miter') {
+    if (info.construction?.value === 'Miter') {
       return Door(info, part, breakdowns[2]);
     }
   }
 
   if (orderType === 'Two_Piece_DF') {
-    if (part.construction?.value === 'Cope') {
+    if (info.construction?.value === 'Cope') {
       return Door(info, part, breakdowns[4]);
     }
 
-    if (part.construction?.value === 'MT') {
+    if (info.construction?.value === 'MT') {
       return Door(info, part, breakdowns[3]);
     }
 
-    if (part.construction?.value === 'Miter') {
+    if (info.construction?.value === 'Miter') {
       return Door(info, part, breakdowns[5]);
     }
   } else {

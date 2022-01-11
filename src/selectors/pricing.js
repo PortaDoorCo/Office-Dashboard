@@ -197,11 +197,11 @@ const totalBalanceDue = (state) => {
 export const itemPriceSelector = createSelector(
   [partListSelector, pricingSelector, orderTypeSelector],
   (parts, pricer, orderType) => {
-    console.log({ orderType });
+
 
     if (orderType === 'Door Order' || orderType === 'Face Frame') {
       return parts.map((part, index) => {
-        console.log({ orderType });
+      
         const design =
           (part.design && part.thickness.value === 1) ||
           (part.design && part.thickness.value === 2)
@@ -300,6 +300,16 @@ export const itemPriceSelector = createSelector(
               } else {
                 return 0;
               }
+            });
+
+            return linePrice;
+          } else {
+            return 0;
+          }
+        } else if (part?.orderType?.value === 'Custom') {
+          if(part.dimensions){
+            const linePrice = part.dimensions.map((i, index) => {
+              return i.price;
             });
 
             return linePrice;
@@ -793,10 +803,7 @@ export const subTotalSelector = createSelector(
     mouldingTotalSelector,
   ],
   (prices, misc, orderType, moulding) => {
-    console.log({ misc });
-    console.log({ misc });
-    console.log({ orderType });
-    console.log({ moulding });
+
 
     if (orderType) {
       if (orderType === 'Mouldings') {
@@ -834,7 +841,7 @@ export const subTotal_Total = createSelector(
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector, orderTypeSelector],
   (subTotal, misc, discount, orderType) => {
-    console.log({ subTotal });
+ 
     if (orderType) {
       return subTotal.reduce((acc, item) => acc + item, 0) * discount;
     } else {

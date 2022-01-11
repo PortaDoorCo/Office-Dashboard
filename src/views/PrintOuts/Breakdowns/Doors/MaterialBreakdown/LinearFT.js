@@ -10,8 +10,15 @@ const fraction = (num) => {
 };
 
 export default (parts, breakdowns, thickness) => {
+
+
+
   const calc = parts.map((part, i) => {
+
+    console.log({part});
+
     return part.items.map((j) => {
+      console.log({j});
       // const filtered = Object.keys(j).reduce(function(r, e) {
       //   if (thickness.includes(j[e])) r[e] = j[e];
       //   return r;
@@ -21,10 +28,6 @@ export default (parts, breakdowns, thickness) => {
       let rail = {};
 
       const stile_map = Object.keys(j).map((a) => {
-
-        
-        
-
         if (a === 'leftStile') {
           return j[a] === thickness ? (stile[a] = j[a]) : (stile[a] = 0);
         }
@@ -34,9 +37,7 @@ export default (parts, breakdowns, thickness) => {
 
         if (a === 'verticalMidRailSize') {
           return j[a] === thickness ? (stile[a] = j[a]) : (stile[a] = 0);
-        } 
-        
-        else {
+        } else {
           return (stile[a] = j[a]);
         }
       }, {});
@@ -50,30 +51,19 @@ export default (parts, breakdowns, thickness) => {
         }
 
         if (a === 'horizontalMidRailSize') {
-          
           return j[a] === thickness ? (rail[a] = j[a]) : (rail[a] = 0);
-        }
-
-        else {
+        } else {
           return (rail[a] = j[a]);
         }
       }, {});
 
-      
-
       const stiles = Stiles(stile, part.part, breakdowns).map((stile) => {
-
-        
-
         if (numQty(stile.width) > 1 && numQty(stile.height) > 1) {
           const width =
             numQty(stile.width) === 2.376 ? 2.375 : numQty(stile.width);
           const height =
             numQty(stile.height) * stile.multiplier * parseInt(j.qty);
 
-          
-
-            
           const sum = height / 12;
           return {
             sum,
@@ -87,16 +77,12 @@ export default (parts, breakdowns, thickness) => {
         }
       });
 
-      
-
       const rails = Rails(rail, part.part, breakdowns).map((stile) => {
         if (stile.width > 1 && stile.height > 1) {
           const width =
             numQty(stile.width) === 2.376 ? 2.375 : numQty(stile.width);
           const height =
             numQty(stile.height) * stile.multiplier * parseInt(j.qty);
-
-            
 
           const sum = height / 12;
           return {
@@ -118,17 +104,14 @@ export default (parts, breakdowns, thickness) => {
     });
   });
 
+
+
   const first_obj = flatten(calc);
 
   const flatten_obj = flatten(first_obj);
   const groupedObj = groupBy(flatten_obj, 'width');
 
-  
-
   const newObj = Object.entries(groupedObj).map(([k, v]) => {
-
-    
-
     return { width: k, sum: v.reduce((a, b) => a + b.sum, 0) };
   });
 
@@ -138,6 +121,8 @@ export default (parts, breakdowns, thickness) => {
       width: i.width ? i.width : 0,
     };
   });
+
+
 
   return newObj3;
 };

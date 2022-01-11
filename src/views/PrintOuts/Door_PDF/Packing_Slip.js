@@ -48,7 +48,7 @@ export default (data, breakdowns) => {
   // };
 
   const a = Glass_Selection(data).map((v) => {
-    console.log({ v });
+
 
     return {
       ...v,
