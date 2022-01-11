@@ -231,7 +231,7 @@ class JobInfo extends Component {
                 dataKey="value"
                 edit={edit}
                 textField="value"
-                onBlur={(e) => console.log({testtttttttttt: e})}
+                // onBlur={(e) => console.log({testtttttttttt: e})}
               />
             </FormGroup>
           </Col>

@@ -299,10 +299,6 @@ const mapStateToProps = (state) => ({
   miscTotal: miscTotalSelector(state),
 });
 
-MiscItems = reduxForm({
-  form: 'Order',
-  enableReinitialize: true,
-  // asyncBlurFields: ['misc_items'] 
-})(MiscItems);
+
 
 export default connect(mapStateToProps, null)(MiscItems);

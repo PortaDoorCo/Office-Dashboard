@@ -106,7 +106,7 @@ class OrderEntry extends Component {
     this.setState({ customerReminder: !this.state.customerReminder });
   };
 
-  componentDidMount() {
+  componentWillMount() {
     window.scrollTo(0, 0);
 
     const { dispatch, setOrderType, route, isEdit, editOrderType } = this.props;
@@ -612,7 +612,7 @@ const mapStateToProps = (state, props) => ({
                       addPrice: 0,
                     },
                   ]
-                  : [],
+                  : null,
         mouldings:
             state.Orders.orderType === 'Mouldings'
               ? [
@@ -621,7 +621,7 @@ const mapStateToProps = (state, props) => ({
                   price: 0,
                 },
               ]
-              : null,
+              : [],
         job_info: {
           customer: state.customers.customerDB[0],
           jobName: '',
@@ -670,6 +670,8 @@ const mapDispatchToProps = (dispatch) =>
 OrderEntry = reduxForm({
   form: 'Order',
   enableReinitialize: true,
+  // destroyOnUnmount: false,
+  // forceUnregisterOnUnmount: true,
   validate,
   onSubmitFail: (errors, dispatch, submitError, props) => {
     const job_info_message = 'You are missing required info';
