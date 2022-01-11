@@ -237,7 +237,7 @@ class Door extends Component {
           ) : null}
         </Row>
         <Row>
-          {construction === 'Cope' || design.NAME.includes('PRP 15') || design.NAME.includes('PRP15') ? (
+          {construction === 'Cope' || design?.NAME?.includes('PRP 15') || design?.NAME?.includes('PRP15') ? (
             <Col>
               <FormGroup>
                 <Label htmlFor="edge">Profile</Label>

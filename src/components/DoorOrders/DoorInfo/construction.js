@@ -4,12 +4,12 @@ const construction = [
     value: 'Cope',
   },
   {
-    name: 'Mitered Construction',
-    value: 'Miter',
-  },
-  {
     name: 'MT Construction',
     value: 'MT',
+  },
+  {
+    name: 'Mitered Construction',
+    value: 'Miter',
   },
   {
     name: 'Slab',
