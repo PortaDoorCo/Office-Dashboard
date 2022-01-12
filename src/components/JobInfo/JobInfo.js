@@ -14,6 +14,7 @@ import {
   renderTextField,
 } from '../RenderInputs/renderInputs';
 import CustomerReminder from './CustomerReminder';
+import otherStatus from '../../utils/other_status';
 
 // momentLocaliser(moment);
 
@@ -127,14 +128,11 @@ class JobInfo extends Component {
   };
 
   render() {
-    const { customers, edit, shippingMethods, formState } = this.props;
+    const { customers, edit, shippingMethods, formState, role } = this.props;
 
     const dateDifference = moment(new Date()).businessDiff(
       moment(formState && formState.job_info && formState.job_info.DueDate)
     );
-
-
-    console.log('helllllllllllllloooooooo');
 
     return (
       <div className="job-info-tour">
@@ -227,7 +225,10 @@ class JobInfo extends Component {
               <Field
                 name="status"
                 component={renderDropdownList}
-                data={status}
+                data={role?.type === 'authenticated' ||
+                role?.type === 'owner' ||
+                role?.type === 'administrator' ||
+                role?.type === 'office' ? status : otherStatus}
                 dataKey="value"
                 edit={edit}
                 textField="value"
@@ -368,6 +369,7 @@ class JobInfo extends Component {
 const mapStateToProps = (state) => ({
   formState: getFormValues('Order')(state),
   shippingMethods: state.misc_items.shippingMethods,
+  role: state?.users?.user?.role,
 });
 
 export default connect(mapStateToProps, null)(JobInfo);
