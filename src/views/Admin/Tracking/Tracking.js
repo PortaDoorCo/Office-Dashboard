@@ -12,7 +12,7 @@ import 'react-dates/initialize';
 import moment from 'moment';
 
 const Tracking = (props) => {
-  const { orders } = props;
+  const { orders, user } = props;
   const [activeTab, setActiveTab] = useState('1');
   const [sortedDates, setSortedDate] = useState(orders.sort((a, b) => a.dueDate - b.dueDate));
   const [startDate, setStartDate] = useState(moment(new Date()));
@@ -276,6 +276,7 @@ const Tracking = (props) => {
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
+  user: state.users.user
 });
 
 const mapDispatchToProps = dispatch =>
