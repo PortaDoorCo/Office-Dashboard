@@ -106,10 +106,10 @@ class OrderEntry extends Component {
     this.setState({ customerReminder: !this.state.customerReminder });
   };
 
-  componentWillMount() {
+  componentDidMount() {
     window.scrollTo(0, 0);
 
-    const { dispatch, setOrderType, route, isEdit, editOrderType } = this.props;
+    const { dispatch, setOrderType, route, isEdit } = this.props;
 
     if (isEdit) {
       return null;
