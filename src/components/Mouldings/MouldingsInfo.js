@@ -52,6 +52,7 @@ let Inputs = (props) => {
   );
 
   console.log({ formState });
+  console.log({part_list});
 
   return (
     <div>

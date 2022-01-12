@@ -33,7 +33,7 @@ const styles = [
   },
   {
     name: 'Flat Stock',
-    value: 'flat_stock'
+    value: 'Flat_Stock'
   },
   {
     name: 'Custom Moulding',
