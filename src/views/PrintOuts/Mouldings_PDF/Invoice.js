@@ -53,45 +53,104 @@ export default (data, pricing) => {
   ];
 
   data.mouldings.map((i) => {
-    let feet = (i.item.MOULDING_WIDTH * 12) / 144;
-    let waste = feet * 1.25;
-    let multiplier = i.item.Multiplier;
-    let wood = i.woodtype ? i.woodtype[i.grade?.db_name] * 0.25 : 0;
-    let premium = 0;
+    let price = 0;
 
-    let newWood = wood;
+    const { item, woodtype, linearFT, grade } = i;
 
-    if (multiplier <= 1) {
-      newWood = wood;
+    if (i.style?.value === 'custom') {
+
+      price = 0;
+
+      const width = i.width ? parseFloat(i.width) : 0;
+      const thickness = i.thickness ? parseFloat(i.thickness) : 0;
+      const linFt = parseFloat(linearFT);
+
+      let wood = 0;
+
+      let feet = (width * 12) / 144;
+      let waste = feet * 1.25;
+
+      let premium = 0;
+
+      if (thickness <= 0.8125) {
+        premium = 1;
+      } else if (thickness <= 1.125) {
+        premium = 1.25;
+      } else if (thickness <= 1.31) {
+        premium = 1.5;
+      } else if (thickness <= 1.8125) {
+        premium = 2;
+      } else if (thickness <= 2.31) {
+        premium = 2.5;
+      } else {
+        premium = 3;
+      }
+
+      if (thickness <= 1) {
+        if (grade?.name === 'Standard Grade') {
+          wood = woodtype?.STANDARD_GRADE ? woodtype?.STANDARD_GRADE / 4 : 0;
+        } else if (grade?.name === 'Select Grade') {
+          wood = woodtype?.SELECT_GRADE ? woodtype?.SELECT_GRADE / 4 : 0;
+        }
+      } else {
+        if (grade?.name === 'Standard Grade') {
+          wood = woodtype?.STANDARD_GRADE_THICK
+            ? woodtype?.STANDARD_GRADE_THICK / 4
+            : 0;
+        } else if (grade?.name === 'Select Grade') {
+          wood = woodtype?.SELECT_GRADE_THICK
+            ? woodtype?.SELECT_GRADE_THICK / 4
+            : 0;
+        }
+      }
+
+      const bd_ft = waste * premium;
+
+      price = bd_ft * wood * linFt * 4;
+
     } else {
-      newWood = wood * 1.25;
+      if (i.item) {
+
+        let feet = (item.MOULDING_WIDTH * 12) / 144;
+        let waste = feet * 1.25;
+        let multiplier = item.Multiplier;
+        let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
+        let premium = 0;
+
+        let newWood = wood;
+
+        if (multiplier <= 1) {
+          newWood = wood;
+        } else {
+          newWood = wood * 1.25;
+        }
+
+        let a = waste * multiplier;
+
+        if (parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
+          premium = 3 + 1;
+        } else if (parseFloat(linearFT) >= 31 && parseFloat(linearFT) <= 50) {
+          premium = 2 + 1;
+        } else if (parseFloat(linearFT) >= 51 && parseFloat(linearFT) <= 100) {
+          premium = 1.75 + 1;
+        } else if (parseFloat(linearFT) > 101 && parseFloat(linearFT) <= 250) {
+          premium = 1.4 + 1;
+        } else if (parseFloat(linearFT) > 251 && parseFloat(linearFT) <= 500) {
+          premium = 1.1 + 1;
+        } else {
+          premium = 1 + 1;
+        }
+        price = a * newWood * parseFloat(linearFT) * premium;
+      }
     }
-
-    let a = waste * multiplier;
-
-    if (parseFloat(i.linearFT) > 0 && parseFloat(i.linearFT) <= 30) {
-      premium = 3 + 1;
-    } else if (parseFloat(i.linearFT) >= 31 && parseFloat(i.linearFT) <= 50) {
-      premium = 2 + 1;
-    } else if (parseFloat(i.linearFT) >= 51 && parseFloat(i.linearFT) <= 100) {
-      premium = 1.75 + 1;
-    } else if (parseFloat(i.linearFT) > 101 && parseFloat(i.linearFT) <= 250) {
-      premium = 1.4 + 1;
-    } else if (parseFloat(i.linearFT) > 251 && parseFloat(i.linearFT) <= 500) {
-      premium = 1.1 + 1;
-    } else {
-      premium = 1 + 1;
-    }
-
-    let price = a * newWood * parseFloat(i.linearFT) * premium;
 
     
 
     tableBody.push([
-      { text: i.style.name, style: 'fonts' },
-      { text: i.woodtype.NAME, style: 'fonts' },
+      { text: i.style?.name, style: 'fonts' },
+      { text: `${i.woodtype?.NAME} ${i.grade?.name === 'Select Grade' ? 'Select' : ''}`, style: 'fonts' },
       // { text: i.thickness.NAME, style: 'fonts' },
-      { text: i.item.NAME, style: 'fonts' },
+      { text: i.style?.value === 'custom' ? `Width: ${i.width}" \n Thickness: ${i.thickness}"` : i.item?.NAME, style: 'fonts' },
       { text: i.linearFT, style: 'fonts' },
       { text: i.notes ? i.notes : '', style: 'fontsBold' },
       { text: `$${price.toFixed(2)}`, style: 'fonts' },
