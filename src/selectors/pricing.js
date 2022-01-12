@@ -749,10 +749,6 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
       let waste = feet * 1.25;
 
       let premium = 0;
-      let price_diff = 0;
-
-      console.log({ feet });
-      console.log({ waste });
 
       if (thickness <= 0.8125) {
         premium = 1;
@@ -786,18 +782,11 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
         }
       }
 
-      console.log({ premium });
-
       const bd_ft = waste * premium;
-
-      console.log({ bd_ft });
 
       price = bd_ft * wood * linFt * 4;
 
-      console.log({ wood });
-      console.log({ grade });
-      console.log({ woodtype });
-      // console.log({newPrice});
+      
     } else {
       if (i.item) {
         let feet = (item.MOULDING_WIDTH * 12) / 144;

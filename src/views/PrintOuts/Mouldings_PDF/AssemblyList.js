@@ -16,10 +16,10 @@ export default (data, breakdowns) => {
   const t = data.mouldings?.forEach(i => {
     tableBody.push([
       { text: i.linearFT, style: 'fonts' },
-      { text: i.style.name, style: 'fonts' },
-      { text: i.grade.name, style: 'fonts' },
-      { text: i.woodtype.NAME, style: 'fonts' },
-      { text: i.item.NAME, style: 'fonts' },
+      { text: i.style?.name, style: 'fonts' },
+      { text: i.grade?.name, style: 'fonts' },
+      { text: i.woodtype?.NAME, style: 'fonts' },
+      { text: i.style?.value === 'custom' ? `Width: ${i.width}" \n Thickness: ${i.thickness}"` : i.item?.NAME, style: 'fonts' },
       { text: i.notes ? i.notes : '', style: 'fontsBold' },
     ]);
   });
