@@ -83,7 +83,7 @@ const cookie = Cookies.get('jwt');
 const maxValue = (max) => (value) =>
   value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
-const dueDate = moment(new Date()).businessAdd(28)._d;
+const dueDate = moment(new Date()).businessAdd(21)._d;
 
 class OrderEntry extends Component {
   constructor(props) {

@@ -73,7 +73,7 @@ const CompanyTable = (props) => {
   const filteredCompanies =
     props.customerDB.length > 0
       ? props.customerDB.filter((item) => {
-        if(user?.sale){
+        if (user?.sale) {
           return (
             item.Company &&
               item.Company.toLowerCase().includes(filterText.toLowerCase()) &&
@@ -85,7 +85,6 @@ const CompanyTable = (props) => {
               item.Company.toLowerCase().includes(filterText.toLowerCase())
           );
         }
-
       })
       : [];
 

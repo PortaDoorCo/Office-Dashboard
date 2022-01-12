@@ -43,7 +43,6 @@ class JobInfo extends Component {
     };
   }
 
-
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
     if (formState?.job_info?.customer) {
@@ -128,11 +127,15 @@ class JobInfo extends Component {
   };
 
   render() {
-    const { customers, edit, shippingMethods, formState, role } = this.props;
+    const { customers, edit, shippingMethods, formState, role, user, sales } = this.props;
 
     const dateDifference = moment(new Date()).businessDiff(
       moment(formState && formState.job_info && formState.job_info.DueDate)
     );
+
+    const salesCompanies = customers.filter(x => x?.sale?.id === user?.sale?.id);
+
+
 
     return (
       <div className="job-info-tour">
@@ -198,7 +201,7 @@ class JobInfo extends Component {
               <Field
                 name="customer"
                 component={renderDropdownListNoPhoto}
-                data={customers}
+                data={role?.type === 'sales' ? salesCompanies : customers}
                 dataKey="value"
                 textField="Company"
                 edit={edit}
@@ -225,10 +228,14 @@ class JobInfo extends Component {
               <Field
                 name="status"
                 component={renderDropdownList}
-                data={role?.type === 'authenticated' ||
-                role?.type === 'owner' ||
-                role?.type === 'administrator' ||
-                role?.type === 'office' ? status : otherStatus}
+                data={
+                  role?.type === 'authenticated' ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator' ||
+                  role?.type === 'office'
+                    ? status
+                    : otherStatus
+                }
                 dataKey="value"
                 edit={edit}
                 textField="value"
@@ -370,6 +377,8 @@ const mapStateToProps = (state) => ({
   formState: getFormValues('Order')(state),
   shippingMethods: state.misc_items.shippingMethods,
   role: state?.users?.user?.role,
+  user: state?.users?.user,
+  sales: state?.sales?.salesReps,
 });
 
 export default connect(mapStateToProps, null)(JobInfo);
