@@ -248,9 +248,6 @@ const mapStateToProps = (state) => ({
   miscTotal: miscTotalSelector(state),
 });
 
-MiscItems = reduxForm({
-  form: 'DrawerOrder',
-  enableReinitialize: true,
-})(MiscItems);
+
 
 export default connect(mapStateToProps, null)(MiscItems);

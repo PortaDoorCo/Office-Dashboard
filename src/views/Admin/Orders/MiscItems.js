@@ -282,12 +282,17 @@ let Inputs = (props) => {
 
 class MiscItems extends Component {
   render() {
-    return (
-      <div>
-        <h3>Misc Items</h3>
-        <FieldArray name="misc_items" component={Inputs} {...this.props} />
-      </div>
-    );
+    if(this.props.orderType === 'Misc Items'){
+      return <div />;
+    } else {
+      return (
+        <div>
+          <h3>Misc Items</h3>
+          <FieldArray name="misc_items" component={Inputs} {...this.props} />
+        </div>
+      );
+    }
+
   }
 }
 
@@ -297,12 +302,11 @@ const mapStateToProps = (state) => ({
   prices: miscItemPriceSelector(state),
   linePrices: miscItemLinePriceSelector(state),
   miscTotal: miscTotalSelector(state),
+  orderType: state.Orders.orderType,
 });
 
 MiscItems = reduxForm({
   form: 'Order',
-  enableReinitialize: true,
-  // asyncBlurFields: ['misc_items'] 
 })(MiscItems);
 
 export default connect(mapStateToProps, null)(MiscItems);

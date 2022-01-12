@@ -360,7 +360,7 @@ export const renderNumber = ({
         {...input}
         errorMessage="Only Numbers Allowed"
         validate={{
-          pattern: { value: '^[0-9/ ]+$' },
+          pattern: { value: '^\\d+(\\.\\d+)?$' },
         }}
         disabled={edit}
         autoComplete="off"

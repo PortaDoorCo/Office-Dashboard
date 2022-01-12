@@ -151,6 +151,7 @@ class Door extends Component {
       updateSubmit,
     } = this.props;
 
+    let design = formState?.part_list[index]?.design;
     let construction = formState?.part_list[index]?.construction?.value;
     let orderType = formState?.part_list[index]?.orderType?.value;
     let thickness = formState?.part_list[index]?.thickness?.db_name;
@@ -168,6 +169,8 @@ class Door extends Component {
       (design) =>
         design.CONSTRUCTION === construction && design.ORDERTYPE === 'Door'
     );
+
+    console.log({design});
 
     return (
       <div>
@@ -234,7 +237,7 @@ class Door extends Component {
           ) : null}
         </Row>
         <Row>
-          {construction === 'Cope' ? (
+          {construction === 'Cope' || design?.NAME?.includes('PRP 15') || design?.NAME?.includes('PRP15') ? (
             <Col>
               <FormGroup>
                 <Label htmlFor="edge">Profile</Label>

@@ -3,31 +3,31 @@ import {
   Row,
   Col,
   Card,
-
   CardBody,
   Input,
   Button,
   FormGroup,
-  InputGroup, InputGroupAddon, InputGroupText, Label
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Label,
 } from 'reactstrap';
 import 'react-notifications/lib/notifications.css';
-import {
-  Field
-} from 'redux-form';
+import { Field } from 'redux-form';
 import 'react-notifications/lib/notifications.css';
-import { renderField, renderCheckboxToggle } from '../../../../components/RenderInputs/renderInputs';
+import {
+  renderField,
+  renderCheckboxToggle,
+} from '../../../../components/RenderInputs/renderInputs';
 import NumberFormat from 'react-number-format';
 import currencyMask from '../../../../utils/currencyMask';
 import NavBar from './NavBar';
 import NavModal from './MiscItemCollapse';
 
 const CheckoutBox = (props) => {
-
   const jobInfo = props.formState?.job_info;
 
-
-
-  return(
+  return (
     <Row>
       <Col>
         <Card>
@@ -42,22 +42,25 @@ const CheckoutBox = (props) => {
               </Col>
             </Row>
 
-
             <hr />
 
-            {props.orderType === 'Misc Items' ? null : 
+          
+            <NavModal
+              {...props}
+              onSubNav={props.onSubNav}
+              onUploaded={props.onUploaded}
+            />
             
-              <NavModal {...props} onSubNav={props.onSubNav} onUploaded={props.onUploaded} />
-            }
 
-
-
-            <form onKeyPress={props.onKeyPress} onSubmit={props.handleSubmit(props.submit)}>
+            <form
+              onKeyPress={props.onKeyPress}
+              onSubmit={props.handleSubmit(props.submit)}
+            >
               <Row>
-                <Col xs='8' />
+                <Col xs="8" />
                 <Col xs="4">
-                  <Row className='mb-0'>
-                    <Col xs='9' />
+                  <Row className="mb-0">
+                    <Col xs="9" />
                     <Col>
                       <FormGroup>
                         <Label htmlFor="companyName">Taxable?</Label>
@@ -67,10 +70,7 @@ const CheckoutBox = (props) => {
                         />
                       </FormGroup>
                     </Col>
-
                   </Row>
-
-
 
                   <strong>Discount: </strong>
                   <InputGroup>
@@ -86,34 +86,56 @@ const CheckoutBox = (props) => {
                     />
                   </InputGroup>
 
-                      
                   <strong>Tax: </strong>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>$</InputGroupText>
                     </InputGroupAddon>
-                    <NumberFormat thousandSeparator={true} value={props.tax} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
+                    <NumberFormat
+                      thousandSeparator={true}
+                      value={props.tax}
+                      disabled={true}
+                      customInput={Input}
+                      {...currencyMask}
+                      prefix={'$'}
+                    />
                   </InputGroup>
 
-
                   <strong>Total: </strong>
-                  <InputGroup className='mb-3'>
+                  <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>$</InputGroupText>
                     </InputGroupAddon>
-                    <NumberFormat thousandSeparator={true} value={props.total} disabled={true} customInput={Input} {...currencyMask} prefix={'$'} />
+                    <NumberFormat
+                      thousandSeparator={true}
+                      value={props.total}
+                      disabled={true}
+                      customInput={Input}
+                      {...currencyMask}
+                      prefix={'$'}
+                    />
                   </InputGroup>
                 </Col>
               </Row>
               <Row>
-                <Col xs='8' />
+                <Col xs="8" />
                 <Col xs="4">
                   <Row>
                     <Col>
-                      <Button color="primary" className="submit" style={{ width: '100%' }}>Submit</Button>
+                      <Button
+                        color="primary"
+                        className="submit"
+                        style={{ width: '100%' }}
+                      >
+                        Submit
+                      </Button>
                     </Col>
                     <Col>
-                      <Button color="danger" onClick={props.toggleCancelModal} style={{ width: '100%' }}>
+                      <Button
+                        color="danger"
+                        onClick={props.toggleCancelModal}
+                        style={{ width: '100%' }}
+                      >
                         Cancel
                       </Button>
                     </Col>
@@ -126,7 +148,6 @@ const CheckoutBox = (props) => {
       </Col>
     </Row>
   );
-  
 };
 
 export default CheckoutBox;
