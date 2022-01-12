@@ -2,22 +2,36 @@ import numQty from 'numeric-quantity';
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, FormGroup, Input, Label, Row, Table } from 'reactstrap';
-import { change, Field, getFormSyncErrors, startAsyncValidation, touch } from 'redux-form';
+import {
+  change,
+  Field,
+  getFormSyncErrors,
+  startAsyncValidation,
+  touch,
+} from 'redux-form';
 import currencyMask from '../../utils/currencyMask';
 import {
-  renderDropdownList, renderField, renderInt, renderNumber, renderPrice, renderTextField
+  renderDropdownList,
+  renderField,
+  renderInt,
+  renderNumber,
+  renderPrice,
+  renderTextField,
 } from '../RenderInputs/renderInputs';
 import RenderPriceHolder from '../RenderInputs/RenderPriceHolder';
 
-
 const required = (value) => (value ? undefined : 'Required');
 
-const height_limit = value => numQty(value) < 2.125 ? 'Height is too small' : numQty(value) > 33 ? 'Height is too big' : value ? undefined : 'Required';
+const height_limit = (value) =>
+  numQty(value) < 2.125
+    ? 'Height is too small'
+    : numQty(value) > 33
+      ? 'Height is too big'
+      : value
+        ? undefined
+        : 'Required';
 
-
-
-
-const OrderTable = ({       
+const OrderTable = ({
   fields,
   scoop,
   dividers,
@@ -27,24 +41,17 @@ const OrderTable = ({
   formState,
   edit,
   dispatch,
-  formSyncErrors 
+  formSyncErrors,
+  role
 }) => {
-
   const [standardSize, setStandardSize] = useState(true);
 
   const clearNotes = (index, e) => {
-    dispatch(
-      change(
-        'Order',
-        `part_list[${i}].dimensions[${index}].notes`,
-        ''
-      )
-    );
+    dispatch(change('Order', `part_list[${i}].dimensions[${index}].notes`, ''));
   };
 
   const checkSize = (e, index) => {
-
-    switch(numQty(e.target.value)) {
+    switch (numQty(e.target.value)) {
       case 9:
         // code block
         break;
@@ -82,15 +89,12 @@ const OrderTable = ({
     }
   };
 
-
-
   const checkScoop = (index, e) => {
     // const value = e.target.value;
-    
+
     const str = 'WITH SCOOP';
 
-    
-    switch(numQty(formState.part_list[i]?.dimensions[index]?.depth)) {
+    switch (numQty(formState.part_list[i]?.dimensions[index]?.depth)) {
       case 9:
         // code block
         break;
@@ -118,8 +122,8 @@ const OrderTable = ({
       default:
         // code block
         setStandardSize(false);
-        if(e.NAME === 'Yes'){
-          if(!standardSize){
+        if (e.NAME === 'Yes') {
+          if (!standardSize) {
             dispatch(
               change(
                 'Order',
@@ -136,7 +140,6 @@ const OrderTable = ({
               )
             );
           }
-  
         } else {
           dispatch(
             change(
@@ -147,8 +150,6 @@ const OrderTable = ({
           );
         }
     }
-
-    
   };
 
   return formState ? (
@@ -262,7 +263,9 @@ const OrderTable = ({
                         className="form-control"
                         disabled={true}
                         placeholder={
-                          '$' + prices[i][index]?.toFixed(2) ? prices[i][index]?.toFixed(2) : 0
+                          '$' + prices[i][index]?.toFixed(2)
+                            ? prices[i][index]?.toFixed(2)
+                            : 0
                         }
                       />
                     ) : (
@@ -282,7 +285,7 @@ const OrderTable = ({
                         className="btn-circle"
                         onClick={() => fields.remove(index)}
                       >
-                          X
+                        X
                       </Button>
                     ) : (
                       <div />
@@ -306,7 +309,7 @@ const OrderTable = ({
                       label="notes"
                     />
                   </Col>
-                
+
                   <Col lg="2">
                     {!edit ? (
                       <Button
@@ -314,24 +317,29 @@ const OrderTable = ({
                         className="btn-circle"
                         onClick={(e) => clearNotes(index, e)}
                       >
-                          X
+                        X
                       </Button>
                     ) : null}
                   </Col>
                 </Row>
               </Col>
-              <Col lg='4' />
-              <Col xs="3">
-                <strong>Extra Design Cost</strong>
-                <Field
-                  name={`${table}.extraCost`}
-                  type="text"
-                  component={renderPrice}
-                  edit={edit}
-                  label="extraCost"
-                  {...currencyMask}
-                />
-              </Col>
+              <Col lg="4" />
+              {role?.type === 'authenticated' ||
+              role?.type === 'owner' ||
+              role?.type === 'administrator' ||
+              role?.type === 'office' ? (
+                  <Col xs="3">
+                    <strong>Extra Design Cost</strong>
+                    <Field
+                      name={`${table}.extraCost`}
+                      type="text"
+                      component={renderPrice}
+                      edit={edit}
+                      label="extraCost"
+                      {...currencyMask}
+                    />
+                  </Col>
+                ) : null}
             </Row>
             <br />
           </Fragment>
@@ -340,87 +348,37 @@ const OrderTable = ({
           <Button
             color="primary"
             className="btn-circle"
-            onClick={() =>
-            {
-
+            onClick={() => {
               const index = fields.length - 1;
 
-              if(fields.length > 0){
+              if (fields.length > 0) {
                 dispatch(
-                  touch(
-                    'Order',
-                    `part_list[${i}].dimensions[${index}].notes`
-                  )
+                  touch('Order', `part_list[${i}].dimensions[${index}].notes`)
                 );
                 dispatch(
-                  touch(
-                    'Order',
-                    `part_list[${i}].dimensions[${index}].width`
-                  )
+                  touch('Order', `part_list[${i}].dimensions[${index}].width`)
                 );
                 dispatch(
-                  touch(
-                    'Order',
-                    `part_list[${i}].dimensions[${index}].height`
-                  )
+                  touch('Order', `part_list[${i}].dimensions[${index}].height`)
                 );
                 dispatch(
-                  touch(
-                    'Order',
-                    `part_list[${i}].dimensions[${index}].depth`
-                  )
+                  touch('Order', `part_list[${i}].dimensions[${index}].depth`)
                 );
               }
 
-              dispatch(
-                touch(
-                  'Order',
-                  `part_list[${i}].woodtype`
-                )
-              );
+              dispatch(touch('Order', `part_list[${i}].woodtype`));
 
-              dispatch(
-                touch(
-                  'Order',
-                  `part_list[${i}].box_thickness`
-                )
-              );
+              dispatch(touch('Order', `part_list[${i}].box_thickness`));
 
-              dispatch(
-                touch(
-                  'Order',
-                  `part_list[${i}].box_bottom_woodtype`
-                )
-              );
+              dispatch(touch('Order', `part_list[${i}].box_bottom_woodtype`));
 
-              dispatch(
-                touch(
-                  'Order',
-                  `part_list[${i}].box_bottom_thickness`
-                )
-              );
+              dispatch(touch('Order', `part_list[${i}].box_bottom_thickness`));
 
-              dispatch(
-                touch(
-                  'Order',
-                  `part_list[${i}].box_notch`
-                )
-              );
+              dispatch(touch('Order', `part_list[${i}].box_notch`));
 
-              dispatch(
-                touch(
-                  'Order',
-                  `part_list[${i}].box_finish`
-                )
-              );
+              dispatch(touch('Order', `part_list[${i}].box_finish`));
 
-
-
-              dispatch(
-                startAsyncValidation('Order')
-              );
-
-           
+              dispatch(startAsyncValidation('Order'));
 
               fields.push({
                 qty: 1,
@@ -429,13 +387,9 @@ const OrderTable = ({
                 // depth: index >= 0 ? formState.part_list[i]?.dimensions[index]?.depth : null,
                 // height: index >= 0 ? formState.part_list[i]?.dimensions[index]?.height : null
               });
-
-                
-            }
-
-            }
+            }}
           >
-              +
+            +
           </Button>
         ) : (
           <div />
@@ -460,11 +414,9 @@ const OrderTable = ({
   );
 };
 
-
-
-
 const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
+  role: state?.users?.user?.role,
   formSyncErrors: getFormSyncErrors('Order')(state),
 });
 

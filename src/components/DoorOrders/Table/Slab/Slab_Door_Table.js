@@ -9,7 +9,7 @@ import 'semantic-ui-css/semantic.min.css';
 import currencyMask from '../../../../utils/currencyMask';
 // import 'react-widgets/dist/css/react-widgets.css';
 import {
-  renderCheckboxToggle, renderField, renderFieldDisabled, renderInt, renderNumber
+  renderCheckboxToggle, renderField, renderFieldDisabled, renderInt, renderNumber, renderPrice
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import Maker from '../../MakerJS/Maker';
@@ -33,6 +33,7 @@ const Slab_Door_Table = ({
   edit,
   dispatch,
   formSyncErrors,
+  role
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -311,17 +312,22 @@ const Slab_Door_Table = ({
                 />
               </Col>
               <Col xs="5" />
-              <Col xs="3">
-                <strong>Extra Design Cost</strong>
-                <Field
-                  name={`${table}.extraCost`}
-                  type="text"
-                  component={renderField}
-                  edit={edit}
-                  label="extraCost"
-                  {...currencyMask}
-                />
-              </Col>
+              {role?.type === 'authenticated' ||
+              role?.type === 'owner' ||
+              role?.type === 'administrator' ||
+              role?.type === 'office' ? (
+                  <Col xs="3">
+                    <strong>Extra Design Cost</strong>
+                    <Field
+                      name={`${table}.extraCost`}
+                      type="text"
+                      component={renderPrice}
+                      edit={edit}
+                      label="extraCost"
+                      {...currencyMask}
+                    />
+                  </Col>
+                ) : null}
             </Row>
             <br />
           </Fragment>
@@ -408,6 +414,7 @@ const Slab_Door_Table = ({
 };
 
 const mapStateToProps = (state) => ({
+  role: state?.users?.user?.role,
   formSyncErrors: getFormSyncErrors('Order')(state),
 });
 

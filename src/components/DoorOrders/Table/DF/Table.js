@@ -55,6 +55,7 @@ const Cope_Table = ({
   dispatch,
   lites,
   formSyncErrors,
+  role,
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -352,9 +353,7 @@ const Cope_Table = ({
   };
 
   const clearNotes = (index, e) => {
-    dispatch(
-      change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
-    );
+    dispatch(change('Order', `part_list[${i}].dimensions[${index}].notes`, ''));
   };
 
   const registerChange = (index, e) => {
@@ -436,7 +435,9 @@ const Cope_Table = ({
 
   const glass_note_check = (index) => {
     const obj_names = Object.entries(
-      formState?.part_list[i]?.dimensions[index] ? formState?.part_list[i]?.dimensions[index] : []
+      formState?.part_list[i]?.dimensions[index]
+        ? formState?.part_list[i]?.dimensions[index]
+        : []
     );
 
     const filter_obj = obj_names.filter((n) => n[0].includes('glass_check'));
@@ -454,15 +455,9 @@ const Cope_Table = ({
     const design = formState?.part_list[i]?.design?.PROFILE_WIDTH;
 
     if (fields.length > 0) {
-      dispatch(
-        touch('Order', `part_list[${i}].dimensions[${index}].notes`)
-      );
-      dispatch(
-        touch('Order', `part_list[${i}].dimensions[${index}].width`)
-      );
-      dispatch(
-        touch('Order', `part_list[${i}].dimensions[${index}].height`)
-      );
+      dispatch(touch('Order', `part_list[${i}].dimensions[${index}].notes`));
+      dispatch(touch('Order', `part_list[${i}].dimensions[${index}].width`));
+      dispatch(touch('Order', `part_list[${i}].dimensions[${index}].height`));
     }
 
     dispatch(touch('Order', `part_list[${i}].woodtype`));
@@ -519,11 +514,7 @@ const Cope_Table = ({
     updateFullFrame(e, index);
     toggleFullFrameNote();
     dispatch(
-      change(
-        'Order',
-        `part_list[${i}].dimensions[${index}].full_frame`,
-        true
-      )
+      change('Order', `part_list[${i}].dimensions[${index}].full_frame`, true)
     );
   };
 
@@ -569,7 +560,10 @@ const Cope_Table = ({
               <Col>
                 <FormGroup>
                   <Label htmlFor="panel">
-                    <strong>Line # {itemNumCounter?.part_list[i]?.dimensions[index]?.item}</strong>
+                    <strong>
+                      Line #{' '}
+                      {itemNumCounter?.part_list[i]?.dimensions[index]?.item}
+                    </strong>
                   </Label>
                 </FormGroup>
               </Col>
@@ -827,7 +821,9 @@ const Cope_Table = ({
                 <Row>
                   {Array.from(
                     Array(
-                      parseInt(formState.part_list[i]?.dimensions[index]?.panelsH)
+                      parseInt(
+                        formState.part_list[i]?.dimensions[index]?.panelsH
+                      )
                     ).keys()
                   )
                     .slice(1)
@@ -861,7 +857,7 @@ const Cope_Table = ({
                   formState.part_list[i]?.dimensions[index]?.panelsH
                     ? Array(
                       parseInt(
-                        formState.part_list[i]?.dimensions[index]?.panelsH
+                          formState.part_list[i]?.dimensions[index]?.panelsH
                       )
                     ).keys()
                     : 0
@@ -885,7 +881,7 @@ const Cope_Table = ({
                   formState.part_list[i]?.dimensions[index]?.panelsH
                     ? Array(
                       parseInt(
-                        formState.part_list[i]?.dimensions[index]?.panelsH
+                          formState.part_list[i]?.dimensions[index]?.panelsH
                       )
                     ).keys()
                     : 0
@@ -943,17 +939,23 @@ const Cope_Table = ({
                 </Row>
               </Col>
               <Col lg="4" />
-              <Col xs="3">
-                <strong>Extra Design Cost</strong>
-                <Field
-                  name={`${table}.extraCost`}
-                  type="text"
-                  component={renderPrice}
-                  edit={edit}
-                  label="extraCost"
-                  {...currencyMask}
-                />
-              </Col>
+
+              {role?.type === 'authenticated' ||
+              role?.type === 'owner' ||
+              role?.type === 'administrator' ||
+              role?.type === 'office' ? (
+                  <Col xs="3">
+                    <strong>Extra Design Cost</strong>
+                    <Field
+                      name={`${table}.extraCost`}
+                      type="text"
+                      component={renderPrice}
+                      edit={edit}
+                      label="extraCost"
+                      {...currencyMask}
+                    />
+                  </Col>
+                ) : null}
             </Row>
             <br />
           </Fragment>
@@ -994,6 +996,7 @@ const Cope_Table = ({
 
 const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
+  role: state?.users?.user?.role,
   formSyncErrors: getFormSyncErrors('Order')(state),
 });
 
