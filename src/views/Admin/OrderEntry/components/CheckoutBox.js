@@ -70,6 +70,10 @@ const CheckoutBox = (props) => {
                         <Field
                           name={'Taxable'}
                           component={renderCheckboxToggle}
+                          edit={role?.type === 'authenticated' ||
+                          role?.type === 'owner' ||
+                          role?.type === 'administrator' ||
+                          role?.type === 'office' ? false : true}
                         />
                       </FormGroup>
                     </Col>
