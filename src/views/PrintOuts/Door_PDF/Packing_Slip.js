@@ -245,7 +245,6 @@ export default (data, breakdowns) => {
   return [
     table_body,
     {
-      unbreakable: true,
       stack: [
         {
           unbreakable: true,

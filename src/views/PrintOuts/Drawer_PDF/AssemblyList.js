@@ -149,7 +149,6 @@ export default (data, breakdowns) => {
       let table = tableBody.map((i, k) => {
         return [
           {
-            unbreakable: true,
             stack: [
               index === 0 && k === 0 && data.job_info?.Shop_Notes
                 ? {
