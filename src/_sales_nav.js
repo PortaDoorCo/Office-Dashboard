@@ -13,13 +13,33 @@ export default {
       name: 'Dashboard',
       url: '/dashboard',
       icon: 'dashboard',
-  
+
     },
     {
       title: true,
       name: '',
       icon: 'icon-speedometer',
-  
+
+    },
+    {
+      name: 'Door Order',
+      url: '/door-order',
+    },
+    {
+      name: 'Drawer Order',
+      url: '/drawer-order',
+    },
+    {
+      name: 'Face Frames',
+      url: '/face-frames',
+    },
+    {
+      name: 'Mouldings',
+      url: '/mouldings',
+    },
+    {
+      name: 'Misc. Order',
+      url: '/misc-items',
     },
     {
       name: 'Reports',
@@ -29,7 +49,17 @@ export default {
           name: 'Salesmen Reports',
           url: '/sales-reports',
         },
+        {
+          name: 'Tracking',
+          url: '/tracking',
+        },
       ]
+    },
+
+    {
+      name: 'Customers',
+      url: '/customers',
+
     },
     {
       name: 'Settings',
@@ -39,13 +69,12 @@ export default {
       name: 'Catalog ',
       url: '/catalog',
     },
-  
-  
+
+
     // {
     //   name: 'Calendar',
     //   url: '/calendar',
     // },
-  
+
   ]
 };
-  

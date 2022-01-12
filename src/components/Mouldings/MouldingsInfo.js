@@ -26,6 +26,7 @@ import currencyMask from '../../utils/currencyMask';
 import {
   renderDropdownList,
   renderDropdownListFilter,
+  renderDropdownListNoPhoto,
   renderMouldingInputs,
   renderNumber,
   renderTextField,
@@ -134,7 +135,7 @@ let Inputs = (props) => {
                     <td style={{ width: '200px' }}>
                       <Field
                         name={`${table}.item`}
-                        component={renderMouldingInputs}
+                        component={formState?.mouldings[index]?.style?.value === 'Flat_Stock' ? renderDropdownListNoPhoto : renderMouldingInputs}
                         data={part_list?.mouldings.filter(
                           (item) =>
                             item.Style ===
