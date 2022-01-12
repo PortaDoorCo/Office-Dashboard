@@ -148,7 +148,7 @@ export default (data, pricing) => {
 
     tableBody.push([
       { text: i.style?.name, style: 'fonts' },
-      { text: i.woodtype?.NAME, style: 'fonts' },
+      { text: `${i.woodtype?.NAME} ${i.grade?.name === 'Select Grade' ? 'Select' : ''}`, style: 'fonts' },
       // { text: i.thickness.NAME, style: 'fonts' },
       { text: i.style?.value === 'custom' ? `Width: ${i.width}" \n Thickness: ${i.thickness}"` : i.item?.NAME, style: 'fonts' },
       { text: i.linearFT, style: 'fonts' },
