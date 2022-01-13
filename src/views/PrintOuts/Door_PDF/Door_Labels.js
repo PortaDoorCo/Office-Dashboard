@@ -12,68 +12,67 @@ export default (data, breakdowns, p) => {
   const total = amount.reduce((acc, item) => acc + item, 0);
 
   const arr = [];
-  const a = flatten(
-    flatten_d.map((i) => {
-      let obj = [];
 
-      for (let l = 0; l < parseInt(p.door_labels); l++) {
-        obj.push([
+  let obj = [];
+
+  for (let l = 0; l < parseInt(p.door_labels); l++) {
+    obj.push([
+      {
+        stack: [
           {
-            stack: [
-              {
-                text: `${
-                  data.job_info &&
+            text: `${
+              data.job_info &&
                   data.job_info.customer &&
                   data.job_info.customer.Company
-                }`,
-                alignment: 'center',
-                style: 'woodtype',
-              },
-              {
-                text: `Our Order#: ${data.orderNum}`,
-                alignment: 'center',
-                style: 'woodtype',
-              },
-              {
-                text: `P.O. # ${data.job_info && data.job_info.poNum}`,
-                alignment: 'center',
-                style: 'woodtype',
-              },
-              {
-                text: '# of PCS This Bundle',
-                alignment: 'center',
-                style: 'woodtype',
-              },
-              {
-                text: '_______________',
-                alignment: 'center',
-                style: 'woodtype',
-              },
-              {
-                text: 'Order Due Date',
-                alignment: 'center',
-                style: 'woodtype',
-              },
-              {
-                text: `${moment(data.dueDate).format('M/D/YYYY')}`,
-                alignment: 'center',
-                style: 'woodtype',
-              },
-            ],
-            // margin: 5
-            margin: [0, 50, 0, 0],
+            }`,
+            alignment: 'center',
+            style: 'woodtype',
           },
-        ]);
-      }
+          {
+            text: `Our Order#: ${data.orderNum}`,
+            alignment: 'center',
+            style: 'woodtype',
+          },
+          {
+            text: `P.O. # ${data.job_info && data.job_info.poNum}`,
+            alignment: 'center',
+            style: 'woodtype',
+          },
+          {
+            text: '# of PCS This Bundle',
+            alignment: 'center',
+            style: 'woodtype',
+          },
+          {
+            text: '_______________',
+            alignment: 'center',
+            style: 'woodtype',
+          },
+          {
+            text: 'Order Due Date',
+            alignment: 'center',
+            style: 'woodtype',
+          },
+          {
+            text: `${moment(data.dueDate).format('M/D/YYYY')}`,
+            alignment: 'center',
+            style: 'woodtype',
+          },
+        ],
+        // margin: 5
+        margin: [0, 50, 0, 0],
+      },
+    ]);
+  }
 
-      return obj;
-    })
-  );
+
+
+  
 
   let chunk;
 
-  while (a.length > 0) {
-    chunk = a.splice(0, 2);
+  while (obj.length > 0) {
+    chunk = obj.splice(0, 2);
     arr.push(chunk);
   }
 
