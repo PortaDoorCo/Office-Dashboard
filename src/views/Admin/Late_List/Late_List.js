@@ -20,7 +20,7 @@ import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
-import Report1 from '../../PrintOuts/Reports/Report1';
+import LateList from '../../PrintOuts/Reports/Late_List';
 import styled from 'styled-components';
 import status from '../../../utils/report_status';
 
@@ -193,7 +193,6 @@ const OrderTable = (props) => {
       name: 'Date Ordered',
       cell: (row) => {
         const dateOrdered = row?.tracking?.filter((x) => {
-          console.log({ x });
           return x.status === 'Ordered';
         });
 
@@ -342,7 +341,7 @@ const OrderTable = (props) => {
   };
 
   const exportReports = () => {
-    Report1(data, startDate, endDate, filterStatus);
+    LateList(data, startDate, endDate, filterStatus);
     setToggleCleared(!toggleCleared);
   };
 
@@ -452,7 +451,7 @@ const OrderTable = (props) => {
         columns={columns}
         data={data}
         pagination
-        progressPending={!props?.ordersDBLoaded}
+        progressPending={!props.ordersDBLoaded}
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
         subHeader
