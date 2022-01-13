@@ -1,7 +1,7 @@
 import { flatten } from 'lodash';
 import moment from 'moment';
 
-export default (data, breakdowns) => {
+export default (data, breakdowns, p) => {
   const dim = data.part_list.map((i) => {
     return i.dimensions;
   });
@@ -16,7 +16,7 @@ export default (data, breakdowns) => {
     flatten_d.map((i) => {
       let obj = [];
 
-      for (let p = 0; p < parseInt(i.qty); p++) {
+      for (let l = 0; l < parseInt(p.door_labels); l++) {
         obj.push([
           {
             stack: [
@@ -104,25 +104,7 @@ export default (data, breakdowns) => {
         alignment: 'center',
         widths: [275, 275],
         dontBreakRows: true,
-        // heights: [260, 260, 240],
-        // heights: arr.map((i, index) => {
-        //   // if(index % 2 === 0){
-        //   //   return 100;
-        //   // }else {
-        //   //   return 270;
-        //   // }
-        //   return 100;
-        // }),
-
         heights: function (row) {
-  
-
-          // if((row !== 0) && (row % 3 === 0)){
-          //   return 100;
-          // } else {
-          //   return 260;
-          // }
-
           return 240;
         },
 
@@ -141,22 +123,6 @@ export default (data, breakdowns) => {
           }
           return { dash: { length: 1, space: 1 } };
         },
-        // paddingLeft: function (i) {
-        //   return i === 0 ? 0 : 5;
-        // },
-        // paddingRight: function (i, node) {
-        //   return i === node.table.widths.length - 1 ? 0 : 5;
-        // },
-        // paddingLeft: function(i, node) { return 10; },
-        // paddingRight: function(i, node) { return 5; },
-        // paddingTop: function(i, node) {
-
-        //   console.log({i});
-        //   console.log({node});
-
-        //   return 7;
-        // },
-        // paddingBottom: function(i, node) { return -0.5; }
       },
     },
   ];
