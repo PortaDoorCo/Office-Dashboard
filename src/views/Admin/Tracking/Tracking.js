@@ -107,12 +107,12 @@ const OrderTable = (props) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
   const minDate =
-    orders.length > 0
-      ? new Date(orders[orders.length - 1].created_at)
+    orders?.length > 0
+      ? new Date(orders[orders?.length - 1].created_at)
       : new Date();
 
   useEffect(() => {
-    const filteredOrders = orders.filter((item) => {
+    const filteredOrders = orders?.filter((item) => {
       let date = new Date(item.dueDate);
 
       const dateOrdered = item?.tracking?.filter((x) => {
@@ -147,7 +147,7 @@ const OrderTable = (props) => {
         console.log({ dateOrdered });
         console.log({ item });
 
-        if (filterText.length > 0) {
+        if (filterText?.length > 0) {
           return (
             moment(dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
@@ -172,7 +172,7 @@ const OrderTable = (props) => {
           );
         }
       } else if (filterStatus === 'In Production') {
-        if (filterText.length > 0) {
+        if (filterText?.length > 0) {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
@@ -200,7 +200,7 @@ const OrderTable = (props) => {
           );
         }
       } else {
-        if (filterText.length > 0) {
+        if (filterText?.length > 0) {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
@@ -439,7 +439,7 @@ const OrderTable = (props) => {
                   defaultValue="In Production"
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
-                  {status.map((i, index) => (
+                  {status?.map((i, index) => (
                     <option key={index} value={i.value}>
                       {i.value}
                     </option>
