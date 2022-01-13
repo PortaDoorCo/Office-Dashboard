@@ -60,6 +60,12 @@ const Tracking = (props) => {
   return (
     <div>
       <Row>
+        <Col sm='9' />
+        <Col>
+          <h3>Filter Due Date</h3>
+        </Col>
+      </Row>
+      <Row>
         <Col sm="9" />
         <Col>
           <SingleDatePicker

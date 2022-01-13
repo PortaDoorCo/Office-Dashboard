@@ -211,9 +211,7 @@ const SalesReport = (props) => {
                   } // PropTypes.func.isRequired
                   id="startDate" // PropTypes.string.isRequired,
                   isOutsideRange={(date) => {
-                    if (date > moment(new Date())) {
-                      return true; // return true if you want the particular date to be disabled
-                    } else if (date < moment(minDate)) {
+                    if (date < moment(minDate)) {
                       return true;
                     } else {
                       return false;

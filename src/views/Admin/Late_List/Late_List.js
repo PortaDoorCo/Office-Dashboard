@@ -279,9 +279,7 @@ const StatusTable = (props) => {
             onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
             id="startDate" // PropTypes.string.isRequired,
             isOutsideRange={(date) => {
-              if (date > moment(new Date())) {
-                return true; // return true if you want the particular date to be disabled
-              } else if (date < moment(minDate)) {
+              if (date < moment(minDate)) {
                 return true;
               } else {
                 return false;
@@ -296,11 +294,9 @@ const StatusTable = (props) => {
             onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
             id="endDate" // PropTypes.string.isRequired,
             isOutsideRange={(date) => {
-              if (date > moment(new Date())) {
+              if (date < moment(startDate)) {
                 return true; // return true if you want the particular date to be disabled
-              } else if (date < moment(minDate)) {
-                return true;
-              } else {
+              }  else {
                 return false;
               }
             }}
