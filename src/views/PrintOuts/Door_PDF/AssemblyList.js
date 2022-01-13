@@ -165,7 +165,7 @@ export default (data, breakdowns) => {
               {
                 stack: [
                   {
-                    text: `${i.notes ? i.notes.toUpperCase() : ''}`,
+                    text: '',
                     style: 'fontsBold',
                     alignment: 'center',
                   },
