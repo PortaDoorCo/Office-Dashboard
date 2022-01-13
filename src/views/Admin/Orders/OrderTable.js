@@ -23,6 +23,7 @@ import Receipt from '@material-ui/icons/Receipt';
 import Report1 from '../../PrintOuts/Reports/Report1';
 import styled from 'styled-components';
 import status from '../../../utils/status';
+import { itemPriceSelector } from '../../../selectors/pricing';
 
 
 // momentLocaliser(moment);
@@ -109,11 +110,16 @@ const OrderTable = (props) => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.created_at);
 
+      const dateOrdered = item?.tracking?.filter((x) => {
+        console.log({x});
+        return x.status === 'Ordered';
+      });
+
       if (filterStatus === 'All') {
         if (filterText.length > 0) {
           return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) <= moment(endDate).endOf('day').valueOf() &&
             (item.orderNum.toString().includes(filterText) ||
               item.job_info.customer.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -124,8 +130,35 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf()
+            moment(dateOrdered[0]?.date || date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Ordered') {
+
+
+
+        console.log({dateOrdered});
+        console.log({item});
+
+        if (filterText.length > 0) {
+          return (
+            moment(dateOrdered[0]?.date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date) <= moment(endDate).endOf('day').valueOf() &&
+            (item.status === dateOrdered[0]?.status)  &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(dateOrdered[0]?.date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date) <= moment(endDate).endOf('day').valueOf() &&
+            (item.status === dateOrdered[0]?.status) 
           );
         }
       } else if (filterStatus === 'In Production') {
@@ -230,18 +263,32 @@ const OrderTable = (props) => {
       sortable: true,
     },
     {
-      name: 'Date Ordered',
-      cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
+      name: 'Date Entered',
+      cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
-      name: 'Due Date',
-      cell: (row) => (
-        <div>
-          {row.status === 'Quote'
-            ? 'TBD'
-            : moment(row.dueDate).format('MMM Do YYYY')}
-        </div>
-      ),
+      name: 'Date Ordered',
+      cell: row => {
+
+        const dateOrdered = row?.tracking?.filter((x) => {
+          console.log({x});
+          return x.status === 'Ordered';
+        });
+
+        if(dateOrdered.length > 0){
+          return (
+            <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>
+          );
+        } else {
+          return (
+            <div>TBD</div>
+          );
+        }
+      },
+    },
+    {
+      name: 'Est. Shipping',
+      cell: row => <div>{row.Shipping_Scheduled ? moment(row.dueDate).format('MMM Do YYYY') : 'TBD'}</div>,
     },
     {
       name: 'Status',

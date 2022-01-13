@@ -145,7 +145,16 @@ class JobInfo extends Component {
           modal={this.props.customerReminder}
         />
         <Row>
-          <Col lg="10" />
+          <Col lg="10">
+            <FormGroup>
+              <Label htmlFor="dueDate">Shipping Scheduled</Label>
+              <Field
+                name="Shipping_Scheduled"
+                component={renderCheckboxToggle}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
           <Col lg="1">
             <FormGroup>
               <Label htmlFor="dueDate">Sample</Label>
