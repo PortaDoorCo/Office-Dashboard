@@ -3,8 +3,7 @@ import moment from 'moment';
 export default (data, startDate, endDate, status) => {
   const tableBody = [
     [
-      { text: 'Date Created' },
-      { text: 'Date Ordered' },
+      { text: 'Due Date' },
       { text: 'Customer' },
       { text: 'Job ID' },
       { text: 'Status' },
@@ -63,10 +62,7 @@ export default (data, startDate, endDate, status) => {
     });
 
     return tableBody.push([
-      moment(i.created_at).format('MM/DD/YYYY'),
-      dateOrdered.length > 0
-        ? moment(dateOrdered[0].date).format('MM/DD/YYYY')
-        : 'TBD',
+      moment(i.dueDate).format('MM/DD/YYYY'),
       i.job_info.customer.Company,
       i.orderNum,
       i.status,
@@ -89,13 +85,13 @@ export default (data, startDate, endDate, status) => {
       columns: [
         {
           stack: [
-            `REPORT - ${moment(startDate).format('MM/DD/YYYY')} thru ${moment(
+            `LATE LIST - ${moment(startDate).format('MM/DD/YYYY')} thru ${moment(
               endDate
             ).format('MM/DD/YYYY')}`,
           ],
         },
         {
-          stack: [{ text: `Status: ${status}`, alignment: 'right' }],
+          stack: [{ text: '', alignment: 'right' }],
         },
       ],
     },

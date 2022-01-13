@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import Orders from './Components/Orders';
+import LateList from './Components/Late_List';
 
 export default (data, startDate, endDate, status) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -9,7 +9,7 @@ export default (data, startDate, endDate, status) => {
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
-    content: [Orders(data, startDate, endDate, status)],
+    content: [LateList(data, startDate, endDate, status)],
     styles: {
       woodtype: {
         fontSize: 18,
