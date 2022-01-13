@@ -22,8 +22,8 @@ export default (data, breakdowns, p) => {
           {
             text: `${
               data.job_info &&
-                  data.job_info.customer &&
-                  data.job_info.customer.Company
+              data.job_info.customer &&
+              data.job_info.customer.Company
             }`,
             alignment: 'center',
             style: 'woodtype',
@@ -64,10 +64,6 @@ export default (data, breakdowns, p) => {
       },
     ]);
   }
-
-
-
-  
 
   let chunk;
 

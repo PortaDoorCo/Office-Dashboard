@@ -47,28 +47,18 @@ const StatusTable = (props) => {
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
 
+  console.log({StatusOrders: orders});
+
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.created_at);
 
-      if(props.filterStatus === 'All'){
-        return (
-          moment(date) >= moment(props.startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(props.endDate).endOf('day').valueOf() &&
-          item.sale && item.sale.fullName && item.sale.fullName.includes(props.accountName)
-        );
-      } else {
-        return (
-          moment(date) >= moment(props.startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(props.endDate).endOf('day').valueOf() &&
-          item.sale && item.sale.fullName && item.sale.fullName.includes(props.accountName) &&
-          item.status.includes(props.filterStatus)
-        );
-      }
+      return item.sale && item.sale.fullName && item.sale.fullName.includes(props.accountName);
 
     });
     setData(filteredOrders);
   }, [orders, props.filterStatus, props.accountName, props.startDate, props.endDate]);
+
 
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
@@ -96,8 +86,22 @@ const StatusTable = (props) => {
       sortable: true,
     },
     {
-      name: 'Date Ordered',
+      name: 'Date Entered',
       cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
+    },
+    {
+      name: 'Date Ordered',
+      cell: (row) => {
+        const dateOrdered = row?.tracking?.filter((x) => {
+          return x.status === 'Ordered';
+        });
+
+        if (dateOrdered.length > 0) {
+          return <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+      },
     },
     {
       name: 'Due Date',
@@ -207,7 +211,6 @@ const StatusTable = (props) => {
 
 
 const mapStateToProps = (state, prop) => ({
-  orders: state.Orders.orders,
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   breakdowns: state.part_list.breakdowns,

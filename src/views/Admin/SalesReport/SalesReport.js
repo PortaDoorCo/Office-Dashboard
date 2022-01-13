@@ -42,8 +42,9 @@ const loading = () => (
 const SalesReport = (props) => {
   const { orders, role, user } = props;
   const [activeTab, setActiveTab] = useState('1');
+  const [sortedDates, setSortedDate] = useState([]);
   const [startDate, setStartDate] = useState(moment(new Date()));
-  const [endDate, setEndDate] = useState(moment(new Date()));
+  const [endDate, setEndDate] = useState(moment(sortedDates[0]?.dueDate));
   const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
@@ -55,24 +56,126 @@ const SalesReport = (props) => {
   };
 
   useEffect(() => {
+
+    setSortedDate(orders.sort((a, b) => b.dueDate - a.dueDate));
+    
+
+  }, [orders]);
+
+
+  useEffect(() => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.created_at);
 
+      const dateOrdered = item?.tracking?.filter((x) => {
+        return x.status === 'Ordered';
+      });
+
       if (filterStatus === 'All') {
-        return (
-          moment(date) >= moment(startDate).startOf('day').valueOf() &&
-          moment(date) <= moment(endDate).endOf('day').valueOf()
-        );
+        if (filterText?.length > 0) {
+          return (
+            moment(dateOrdered[0]?.date || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.job_info.customer.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(dateOrdered[0]?.date || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) <=
+              moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Ordered') {
+
+        if (filterText?.length > 0) {
+          return (
+            moment(dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateOrdered[0]?.status &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateOrdered[0]?.status
+          );
+        }
+      } else if (filterStatus === 'In Production') {
+
+        let date = new Date(item.dueDate);
+
+        if (filterText?.length > 0) {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Ordered') &&
+            !item.status.includes('Shipped') &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Ordered') &&
+            !item.status.includes('Shipped')
+          );
+        }
       } else {
-        return (
-          moment(date) >= moment(startDate).startOf('day').valueOf() &&
-          moment(date) <= moment(endDate).endOf('day').valueOf() &&
-          item.status.includes(filterStatus)
-        );
+        if (filterText?.length > 0) {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status.includes(filterStatus) &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status.includes(filterStatus)
+          );
+        }
       }
     });
     setData(filteredOrders);
-  }, [startDate, endDate, orders, filterStatus, filterText]);
+  }, [orders, filterStatus, filterText, startDate, endDate]);
 
   const minDate =
     orders.length > 0
@@ -86,7 +189,8 @@ const SalesReport = (props) => {
     : [];
 
 
-  console.log({user});
+  console.log({sortedDates});
+  console.log({endDate});
 
   return role &&
     (role.type === 'authenticated' ||
@@ -124,11 +228,9 @@ const SalesReport = (props) => {
                   onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
                   id="endDate" // PropTypes.string.isRequired,
                   isOutsideRange={(date) => {
-                    if (date > moment(new Date())) {
+                    if (date < moment(startDate)) {
                       return true; // return true if you want the particular date to be disabled
-                    } else if (date < moment(minDate)) {
-                      return true;
-                    } else {
+                    }  else {
                       return false;
                     }
                   }}
