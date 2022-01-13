@@ -118,7 +118,7 @@ const StatusTable = (props) => {
       },
     },
     {
-      name: 'Est. Shipping',
+      name: 'Due Date',
       cell: (row) => (
         <div>
           {row.Shipping_Scheduled ||

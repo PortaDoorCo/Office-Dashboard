@@ -34,7 +34,7 @@ const DoorPDF =  async (
           {
             stack: [
               { text: 'Assembly List', bold: true },
-              `Shipping Date: ${moment(data.job_info.DueDate).format(
+              `Due Date: ${moment(data.job_info.DueDate).format(
                 'MM/DD/YYYY'
               )}`,
               { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
@@ -145,8 +145,14 @@ const DoorPDF =  async (
     });
 
     newParts.map((k) => {
-      return Content.push(AssemblyList(k, breakdowns));
+      if(k.part_list.length > 0){
+        return Content.push(AssemblyList(k, breakdowns));
+      } else {
+        return null;
+      }
     });
+
+    console.log({newParts});
     
 
    

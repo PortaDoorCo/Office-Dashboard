@@ -173,7 +173,7 @@ const OrderTable = (props: TablePropTypes) => {
       },
     },
     {
-      name: 'Est. Shipping',
+      name: 'Due Date',
       cell: row => <div>{row.Shipping_Scheduled || (!row.status.includes('Quote') &&
       !row.status.includes('Invoiced') &&
       !row.status.includes('Ordered') &&

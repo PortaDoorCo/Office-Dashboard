@@ -101,18 +101,35 @@ export default (data, breakdowns) => {
       { 
         // unbreakable: true,
         stack : [
-          index === 0 && data.job_info?.Shop_Notes
+          index === 0
             ? {
               columns: [
                 { text: '' },
                 {
-                  text: `${
-                    data.job_info?.Shop_Notes
-                      ? data.job_info?.Shop_Notes?.toUpperCase()
-                      : ''
-                  }`,
                   alignment: 'center',
                   style: 'fontsBold',
+                  stack: [
+                    data.job_info?.Shop_Notes ?{
+                      text: `${
+                        data.job_info?.Shop_Notes
+                          ? data.job_info?.Shop_Notes?.toUpperCase()
+                          : ''
+                      }`,
+                    } : null,
+                    { text : data.misc_items.map(i => {
+                      if(i.category === 'preselect'){
+                        if(i.item.NAME.includes('Delivery')){
+                          return null;
+                        } else {
+                          return `${i.item?.NAME} \n`;
+                        }
+                        
+                      } else {
+                        return `${i.item2} \n`;
+                      }
+                    })
+                    }
+                  ]
                 },
                 { text: '' },
               ],
@@ -165,7 +182,7 @@ export default (data, breakdowns) => {
               {
                 stack: [
                   {
-                    text: `${i.notes ? i.notes.toUpperCase() : ''}`,
+                    text: '',
                     style: 'fontsBold',
                     alignment: 'center',
                   },

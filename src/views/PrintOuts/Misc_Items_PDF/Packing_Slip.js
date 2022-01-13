@@ -155,13 +155,13 @@ export default (data, breakdowns) => {
         {
           text: 'Total Weight: _____________',
           style: 'totals',
-          width: 347,
+          width: 160,
         },
         {
           text: `${
             data.status === 'Quote'
               ? ''
-              : `Estimated Ship: ${moment(data.job_info.DueDate).format(
+              : `Due Date: ${moment(data.job_info.DueDate).format(
                 'MM/DD/YYYY'
               )}`
           }`,
