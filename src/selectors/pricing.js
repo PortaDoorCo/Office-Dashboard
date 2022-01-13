@@ -293,11 +293,6 @@ export const itemPriceSelector = createSelector(
                 overcharge = 100;
               }
 
-              if(index === 2){
-                console.log({width});
-                console.log({height});
-              }
-
 
               const price =
                 eval(pricer && pricer.face_frame_pricing) + extraCost;
@@ -744,7 +739,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
 
     const { item, woodtype, linearFT, grade } = i;
 
-    console.log({ i });
+
 
     if (i.style?.value === 'custom') {
       price = 0;

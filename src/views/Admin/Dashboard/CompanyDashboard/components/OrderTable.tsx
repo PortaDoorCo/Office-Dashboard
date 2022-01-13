@@ -156,7 +156,7 @@ const OrderTable = (props: TablePropTypes) => {
       cell: row => {
 
         const dateOrdered = row?.tracking?.filter((x) => {
-          console.log({x});
+
           return x.status === 'Ordered';
         }
         );

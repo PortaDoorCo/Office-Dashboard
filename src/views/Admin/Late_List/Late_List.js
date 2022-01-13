@@ -22,7 +22,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import LateList from '../../PrintOuts/Reports/Late_List';
 import styled from 'styled-components';
-import status from '../../../utils/report_status';
+import status from '../../../utils/orderTypes';
 
 // momentLocaliser(moment);
 
@@ -100,7 +100,7 @@ const OrderTable = (props) => {
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus] = useState('Quote');
+  const [filterStatus, setFilterStatus] = useState('All');
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -114,20 +114,35 @@ const OrderTable = (props) => {
       let date = new Date(item.dueDate);
 
       const dateOrdered = item?.tracking?.filter((x) => {
-        console.log({ x });
+    
         return x.status === 'Ordered';
       });
 
-      console.log({ date });
 
-      return (
-        moment(date) >= moment(startDate).startOf('day').valueOf() &&
-        moment(date) <= moment(endDate).endOf('day').valueOf() &&
-        !item.status.includes('Quote') &&
-        !item.status.includes('Invoiced') &&
-        !item.status.includes('Ordered') &&
-        !item.status.includes('Shipped')
-      );
+
+
+      if(filterStatus === 'All'){
+        return (
+          moment(date) >= moment(startDate).startOf('day').valueOf() &&
+          moment(date) <= moment(endDate).endOf('day').valueOf() &&
+          !item.status.includes('Quote') &&
+          !item.status.includes('Invoiced') &&
+          !item.status.includes('Ordered') &&
+          !item.status.includes('Shipped')
+        );
+      } else {
+        return (
+          moment(date) >= moment(startDate).startOf('day').valueOf() &&
+          moment(date) <= moment(endDate).endOf('day').valueOf() &&
+          !item.status.includes('Quote') &&
+          !item.status.includes('Invoiced') &&
+          !item.status.includes('Ordered') &&
+          !item.status.includes('Shipped') &&
+          item.orderType.includes(filterStatus)
+        );
+      }
+
+
     });
     setData(filteredOrders);
   }, [startDate, endDate, orders, filterStatus, filterText]);
@@ -390,14 +405,14 @@ const OrderTable = (props) => {
               />
             </Col>
           </Row>
-          {/* <Row>
+          <Row>
             <Col>
               <FormGroup style={{ height: '100%', width: '60%' }}>
                 <Input
                   type="select"
                   name="select"
-                  id="status_dropdown"
-                  defaultValue="Quote"
+                  id="orderType"
+                  defaultValue="Door"
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
                   {status.map((i, index) => (
@@ -408,7 +423,7 @@ const OrderTable = (props) => {
                 </Input>
               </FormGroup>
             </Col>
-          </Row> */}
+          </Row> 
           <Row className="mt-3">
             <Col>
               {role &&

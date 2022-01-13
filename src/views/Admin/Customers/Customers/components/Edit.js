@@ -58,7 +58,7 @@ class Edit extends Component {
 
     const { formState, dispatch } = this.props;
 
-    console.log({formState});
+
 
     dispatch(
       change(

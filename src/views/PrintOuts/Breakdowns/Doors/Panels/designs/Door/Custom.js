@@ -15,7 +15,7 @@ export default (info, part) => {
   const panelName = info?.panel?.NAME ? info?.panel?.NAME : part?.panel?.NAME;
   const panelFlat = info?.panel?.Flat ? info?.panel?.Flat : part?.panel?.Flat;
 
-  console.log({info});
+
 
   return info.Panels?.map(i => {
     return     {

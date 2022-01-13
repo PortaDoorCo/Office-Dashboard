@@ -31,9 +31,7 @@ export default (data, startDate, endDate, status) => {
 
     let name = i.job_info?.poNum?.length > 0 ? i.job_info?.poNum : 'None';
 
-    if (index === 0) {
-      console.log({ i });
-    }
+
 
     if (i.orderType === 'Door Order') {
       i.part_list.map((part) => {

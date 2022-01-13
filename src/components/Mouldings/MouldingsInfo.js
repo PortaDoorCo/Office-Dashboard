@@ -52,9 +52,6 @@ let Inputs = (props) => {
     (wood) => wood.mouldings === true
   );
 
-  console.log({ formState });
-  console.log({part_list});
-
   return (
     <div>
       {fields.map((table, index) => {

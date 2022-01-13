@@ -144,9 +144,6 @@ class JobInfo extends Component {
     const salesCompanies = customers?.filter(x => x?.sale?.id === user?.sale?.id);
 
 
-    console.log({formState});
-
-
     return (
       <div className="job-info-tour">
         <CustomerReminder

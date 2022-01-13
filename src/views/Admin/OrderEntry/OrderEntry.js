@@ -176,7 +176,6 @@ class OrderEntry extends Component {
       }
     }
 
-    console.log({values});
 
     if (!isEdit) {
       order = {
@@ -242,7 +241,7 @@ class OrderEntry extends Component {
 
     let canSubmit = false;
 
-    console.log('helooooooo');
+ 
 
     if (orderType === 'Mouldings' || orderType === 'Misc Items') {
       canSubmit = true;
@@ -323,7 +322,7 @@ class OrderEntry extends Component {
       user,
     } = this.props;
 
-    console.log({formState});
+
 
     return (
       <div className="animated fadeIn order-tour">

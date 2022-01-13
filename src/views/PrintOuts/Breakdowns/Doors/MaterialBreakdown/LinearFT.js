@@ -15,10 +15,10 @@ export default (parts, breakdowns, thickness) => {
 
   const calc = parts.map((part, i) => {
 
-    console.log({part});
+
 
     return part.items.map((j) => {
-      console.log({j});
+
       // const filtered = Object.keys(j).reduce(function(r, e) {
       //   if (thickness.includes(j[e])) r[e] = j[e];
       //   return r;
