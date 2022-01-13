@@ -82,6 +82,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
       placeholder="Search Orders"
       value={filterText}
       onChange={onFilter}
+      autoComplete='off'
     />
     <ClearButton type="button" color="danger" onClick={onClear}>
       X

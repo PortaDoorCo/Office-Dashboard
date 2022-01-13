@@ -65,7 +65,7 @@ const conditionalRowStyles = [
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
-    <TextField id="search" type="text" placeholder="Search Orders" value={filterText} onChange={onFilter} />
+    <TextField id="search" type="text" placeholder="Search Orders" value={filterText} onChange={onFilter} autoComplete='off' />
     <ClearButton type="button" color="danger" onClick={onClear}>X</ClearButton>
   </>
 );
