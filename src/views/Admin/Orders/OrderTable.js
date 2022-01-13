@@ -118,13 +118,12 @@ const OrderTable = (props) => {
       let date = new Date(item.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
-        console.log({ x });
+       
         return x.status === 'Ordered';
       });
 
       if (filterStatus === 'Ordered') {
-        console.log({ dateOrdered });
-        console.log({ item });
+
 
         if (filterText?.length > 0) {
           return (
@@ -237,7 +236,7 @@ const OrderTable = (props) => {
       name: 'Date Ordered',
       cell: (row) => {
         const dateOrdered = row?.tracking?.filter((x) => {
-          console.log({ x });
+      
           return x.status === 'Ordered';
         });
 

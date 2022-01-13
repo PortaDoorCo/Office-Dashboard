@@ -68,13 +68,12 @@ const SalesReport = (props) => {
       let date = new Date(item.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
-        console.log({ x });
+  
         return x.status === 'Ordered';
       });
 
       if (filterStatus === 'Ordered') {
-        console.log({ dateOrdered });
-        console.log({ item });
+
 
         if (filterText.length > 0) {
           return (
@@ -138,8 +137,6 @@ const SalesReport = (props) => {
     : [];
 
 
-  console.log({sortedDates});
-  console.log({endDate});
 
   return role &&
     (role.type === 'authenticated' ||

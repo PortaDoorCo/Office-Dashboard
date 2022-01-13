@@ -44,7 +44,6 @@ export default (data, startDate, endDate, status) => {
     }
 
     const dateOrdered = i?.tracking?.filter((x) => {
-      console.log({ x });
       return x.status === 'Ordered';
     });
 

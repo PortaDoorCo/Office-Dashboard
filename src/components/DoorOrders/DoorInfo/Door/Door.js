@@ -170,7 +170,6 @@ class Door extends Component {
         design.CONSTRUCTION === construction && design.ORDERTYPE === 'Door'
     );
 
-    console.log({design});
 
     return (
       <div>

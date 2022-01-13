@@ -85,7 +85,7 @@ let DefaultLayout = (props, context) => {
         5000
       );
     }
-  },[props?.currentVersion]);
+  },[props.currentVersion]);
 
 
   let history = useHistory();

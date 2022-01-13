@@ -53,7 +53,7 @@ const StatusTable = (props) => {
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
 
-  console.log({ StatusOrders: orders });
+
 
   useEffect(() => {
     const filteredOrders = orders?.filter((item) => {

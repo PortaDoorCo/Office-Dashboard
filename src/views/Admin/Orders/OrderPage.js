@@ -1093,7 +1093,7 @@ class OrderPage extends Component {
           });
 
           const railPrint = rail.map((i) => {
-            console.log({ i });
+   
             return a.push([
               `${selectedOrder.orderNum}`,
               `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,

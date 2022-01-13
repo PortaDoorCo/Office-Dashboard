@@ -73,7 +73,6 @@ const CompanyTable = (props) => {
 
   const sortedCompanies = props.customerDB.sort((a, b) => a.Company.localeCompare(b.Company));
 
-  console.log({sortedCompanies});
 
   const filteredCompanies =
 
@@ -94,12 +93,7 @@ const CompanyTable = (props) => {
       })
       : [];
 
-  // useEffect(() => {
-  //   // const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
-  //   // setData(filteredItems);
-  // }, [filterText]);
 
-  console.log({ filteredCompanies });
 
   const handleRowSelected = useCallback((state) => {
     setSelectedRows(state.selectedRows);
