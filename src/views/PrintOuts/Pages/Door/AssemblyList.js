@@ -148,6 +148,8 @@ const DoorPDF =  async (
       console.log({k});
       if(k.part_list.length > 0){
         return Content.push(AssemblyList(k, breakdowns));
+      } else {
+        return null;
       }
 
     });
