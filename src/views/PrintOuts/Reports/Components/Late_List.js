@@ -81,7 +81,7 @@ export default (data, startDate, endDate, status) => {
       dfs,
       boxes,
       face_frames,
-      i.total,
+      `$${i.total.toFixed(2)}`,
       '',
     ]);
   });
@@ -122,7 +122,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
-        widths: ['*', '*', 40, '*', '*', 40, 40, 40, 40, '*', '*'],
+        widths: ['*', '*', 40, '*', '*', 40, 40, 40, 40, 50, '*'],
       },
       layout: 'lightHorizontalLines',
     },
