@@ -2,7 +2,7 @@ import moment from 'moment-business-days';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
-import { Col, FormGroup, Label, Row } from 'reactstrap';
+import { Col, FormGroup, Label, Row, Button, Collapse, Card, CardBody } from 'reactstrap';
 import { change, Field, getFormValues } from 'redux-form';
 import status from '../../utils/status';
 // import momentLocaliser from 'react-widgets-moment';
@@ -38,10 +38,13 @@ const renderDateTimePicker = ({
 class JobInfo extends Component {
   constructor(props) {
     super(props);
+    this.toggle = this.toggle.bind(this);
     this.state = {
       loaded: false,
+      collapse: false,
     };
   }
+
 
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
@@ -126,6 +129,11 @@ class JobInfo extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  toggle() {
+    this.setState({ collapse: !this.state?.collapse });
+  }
+
+
   render() {
     const { customers, edit, shippingMethods, formState, role, user, sales } = this.props;
 
@@ -135,6 +143,8 @@ class JobInfo extends Component {
 
     const salesCompanies = customers?.filter(x => x?.sale?.id === user?.sale?.id);
 
+
+    console.log({formState});
 
 
     return (
@@ -355,6 +365,19 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
         </Row>
+
+        <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Show Emails</Button>
+
+        <Collapse isOpen={this.state.collapse}>
+          <Card>
+            <CardBody>
+              <p>{formState?.job_info?.customer?.EMAIL}</p>
+              <p>{formState?.job_info?.customer?.Email2}</p>
+              <p>{formState?.job_info?.customer?.Email3}</p>
+              <p>{formState?.job_info?.customer?.Email4}</p>
+            </CardBody>
+          </Card>
+        </Collapse>
 
         <hr />
 
