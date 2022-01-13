@@ -73,7 +73,7 @@ export default (data, startDate, endDate, status) => {
       doors,
       dfs,
       boxes,
-      i.total,
+      `$${i.total.toFixed(2)}`,
       i.sale.fullName,
     ]);
   });
