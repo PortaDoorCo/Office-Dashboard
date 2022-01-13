@@ -109,7 +109,7 @@ const OrderTable = (props) => {
       : new Date();
 
   useEffect(() => {
-    const filteredOrders = orders.filter((item) => {
+    const filteredOrders = orders?.filter((item) => {
       let date = new Date(item.dueDate);
 
       const dateOrdered = item?.tracking?.filter((x) => {
@@ -186,7 +186,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Date Entered',
-      cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
+      cell: (row) => <div>{moment(row?.created_at).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Date Ordered',
@@ -197,7 +197,7 @@ const OrderTable = (props) => {
         });
 
         if (dateOrdered.length > 0) {
-          return <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+          return <div>{moment(dateOrdered[0]?.date).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }
@@ -207,12 +207,12 @@ const OrderTable = (props) => {
       name: 'Est. Shipping',
       cell: (row) => (
         <div>
-          {row.Shipping_Scheduled ||
-          (!row.status.includes('Quote') &&
-            !row.status.includes('Invoiced') &&
-            !row.status.includes('Ordered') &&
-            !row.status.includes('Shipped'))
-            ? moment(row.dueDate).format('MMM Do YYYY')
+          {row?.Shipping_Scheduled ||
+          (!row?.status?.includes('Quote') &&
+            !row?.status?.includes('Invoiced') &&
+            !row?.status?.includes('Ordered') &&
+            !row?.status?.includes('Shipped'))
+            ? moment(row?.dueDate).format('MMM Do YYYY')
             : 'TBD'}
         </div>
       ),
@@ -451,7 +451,7 @@ const OrderTable = (props) => {
         columns={columns}
         data={data}
         pagination
-        progressPending={!props.ordersDBLoaded}
+        progressPending={!props?.ordersDBLoaded}
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
         subHeader
