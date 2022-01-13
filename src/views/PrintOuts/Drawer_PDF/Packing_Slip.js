@@ -293,7 +293,7 @@ export default (data, breakdowns, pricing) => {
           text: `${
             data.status === 'Quote'
               ? ''
-              : `Estimated Ship: ${moment(data.job_info.DueDate).format(
+              : `Due Date: ${moment(data.job_info.DueDate).format(
                 'MM/DD/YYYY'
               )}`
           }`,

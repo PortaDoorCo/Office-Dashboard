@@ -60,7 +60,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
                 text: `${
                   data.status === 'Quote'
                     ? ''
-                    : `Estimated Ship: ${moment(data.job_info.DueDate).format(
+                    : `Due Date: ${moment(data.job_info.DueDate).format(
                       'MM/DD/YYYY'
                     )}`
                 }`,

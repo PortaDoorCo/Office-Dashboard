@@ -291,7 +291,7 @@ const OrderTable = (props) => {
       },
     },
     {
-      name: 'Est. Shipping',
+      name: 'Due Date',
       cell: (row) => (
         <div>
           {row.Shipping_Scheduled
