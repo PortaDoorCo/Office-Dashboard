@@ -82,7 +82,6 @@ export default (data, breakdowns) => {
 
       return [
         {
-          unbreakable: true,
           stack: [
             index === 0 && data.job_info?.Shop_Notes
               ? {

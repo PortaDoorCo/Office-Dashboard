@@ -118,7 +118,6 @@ export default (data, breakdowns) => {
 
     return [
       {
-        unbreakable: true,
         stack: [
           index === 0 && data.job_info?.Shop_Notes
             ? {
@@ -245,7 +244,6 @@ export default (data, breakdowns) => {
   return [
     table_body,
     {
-      unbreakable: true,
       stack: [
         {
           unbreakable: true,

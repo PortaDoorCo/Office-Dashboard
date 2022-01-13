@@ -50,7 +50,6 @@ export default (data, breakdowns) => {
 
       return [
         {
-          unbreakable: true,
           stack: [
             index === 0 && data.job_info?.Shop_Notes
               ? {
@@ -184,6 +183,7 @@ export default (data, breakdowns) => {
             },
             {
               margin: [0, 0, 0, 10],
+              unbreakable: true,
               table: {
                 headerRows: 1,
                 widths: [22, 15, 110, 40, 155, '*'],
