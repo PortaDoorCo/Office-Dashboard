@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DataTable from 'react-data-table-component';
@@ -11,41 +11,59 @@ import {
   updateStatus,
   loadOrders,
   setSelectedOrder,
-  setOrderType
+  setOrderType,
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import momentLocaliser from 'react-widgets-moment';
+import { Row, Col, Button, FormGroup, Input } from 'reactstrap';
 import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
-import Assignment  from '@material-ui/icons/Assignment';
-import DoorPDF from '../../PrintOuts/Pages/Door/DoorPDF';
-import DrawerPDF from '../../PrintOuts/Pages/Drawer/DrawerPDF';
 import { SingleDatePicker } from 'react-dates';
-import { Row, Col } from 'reactstrap';
-import status from '../../../utils/status';
+import 'react-dates/lib/css/_datepicker.css';
+import Receipt from '@material-ui/icons/Receipt';
+import Report1 from '../../PrintOuts/Reports/Report1';
+import styled from 'styled-components';
+import status from '../../../utils/report_status';
 
 // momentLocaliser(moment);
 
-const toDataUrl = (url, callback) => {
-  const xhr = new XMLHttpRequest();
-  xhr.onload = () => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      callback(reader.result);
-    };
-    reader.readAsDataURL(xhr.response);
-  };
-  xhr.open('GET', url);
-  xhr.responseType = 'blob';
-  xhr.send();
-};
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 34px;
+  width: 32px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const cookie = Cookies.get('jwt');
 const { Option } = Select;
 
 const conditionalRowStyles = [
   {
-    when: (row) => row.late === true,
+    when: (row) => (moment(row.dueDate).startOf('day').valueOf() < moment(new Date()).startOf('day').valueOf()) && (row.Shipping_Scheduled || (!row.status.includes('Quote') &&
+    !row.status.includes('Invoiced') &&
+    !row.status.includes('Ordered') &&
+    !row.status.includes('Shipped'))),
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -55,49 +73,111 @@ const conditionalRowStyles = [
   },
 ];
 
-const StatusTable = (props) => {
-  const { orders } = props;
-  const [selectedRows, setSelectedRows] = useState([]);
+
+const FilterComponent = ({ filterText, onFilter, onClear }) => (
+  <>
+    <TextField
+      id="search"
+      type="text"
+      placeholder="Search Orders"
+      value={filterText}
+      onChange={onFilter}
+    />
+    <ClearButton type="button" color="danger" onClick={onClear}>
+      X
+    </ClearButton>
+  </>
+);
+
+const OrderTable = (props) => {
+  const { orders, role } = props;
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [filterStatus] = useState(props.status);
-  const [activeTab, setActiveTab] = useState('1');
+  const [data, setData] = useState(orders);
   const [startDate, setStartDate] = useState(moment(new Date()));
   const [endDate, setEndDate] = useState(moment(new Date()));
-  const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
+  const [filterStatus, setFilterStatus] = useState('Quote');
+  const [filterText, setFilterText] = useState('');
+  const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
+  const minDate =
+    orders.length > 0
+      ? new Date(orders[orders.length - 1].created_at)
+      : new Date();
 
   useEffect(() => {
-    const filteredOrders = orders.filter(item => {
+    const filteredOrders = orders.filter((item) => {
       let date = new Date(item.dueDate);
-      return moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf() && item.late === true;
+
+      const dateOrdered = item?.tracking?.filter((x) => {
+        console.log({ x });
+        return x.status === 'Ordered';
+      });
+
+      console.log({ date });
+
+      return (
+        moment(date) >= moment(startDate).startOf('day').valueOf() &&
+        moment(date) <= moment(endDate).endOf('day').valueOf() &&
+        !item.status.includes('Quote') &&
+        !item.status.includes('Invoiced') &&
+        !item.status.includes('Ordered') &&
+        !item.status.includes('Shipped')
+      );
     });
     setData(filteredOrders);
+  }, [startDate, endDate, orders, filterStatus, filterText]);
 
-  }, [startDate, endDate, orders]);
+  const subHeaderComponentMemo = useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setResetPaginationToggle(!resetPaginationToggle);
+        setFilterText('');
+      }
+    };
+
+    return (
+      <FilterComponent
+        onFilter={(e) => setFilterText(e.target.value)}
+        onClear={handleClear}
+        filterText={filterText}
+      />
+    );
+  }, [filterText, resetPaginationToggle]);
 
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
     const status = {
-      status: e,
+      status: e.target.value,
     };
     await updateStatus(row.id, row, status, cookie);
   };
 
   const columns = [
     {
+      name: 'Company',
+      cell: (row) => (
+        <div>
+          {row.job_info &&
+            row.job_info.customer &&
+            row.job_info.customer.Company}
+        </div>
+      ),
+      sortable: true,
+      grow: 2,
+    },
+    {
       name: 'Order #',
       selector: 'orderNum',
       sortable: true,
     },
     {
-      name: 'Company',
-      cell: row => <span>{row.job_info?.customer?.Company}</span>,
+      name: 'PO #',
+      selector: 'job_info.poNum',
       sortable: true,
-      grow: 2,
     },
     {
       name: 'Order Type',
@@ -105,42 +185,121 @@ const StatusTable = (props) => {
       sortable: true,
     },
     {
-      name: 'Date Ordered',
+      name: 'Date Entered',
       cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
-      name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBA' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      name: 'Date Ordered',
+      cell: (row) => {
+        const dateOrdered = row?.tracking?.filter((x) => {
+          console.log({ x });
+          return x.status === 'Ordered';
+        });
+
+        if (dateOrdered.length > 0) {
+          return <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+      },
+    },
+    {
+      name: 'Est. Shipping',
+      cell: (row) => (
+        <div>
+          {row.Shipping_Scheduled ||
+          (!row.status.includes('Quote') &&
+            !row.status.includes('Invoiced') &&
+            !row.status.includes('Ordered') &&
+            !row.status.includes('Shipped'))
+            ? moment(row.dueDate).format('MMM Do YYYY')
+            : 'TBD'}
+        </div>
+      ),
     },
     {
       name: 'Status',
       grow: 1,
       cell: (row) => (
-        <Select
-          defaultValue={row.status}
-          style={{ width: '100%' }}
-          onChange={(e) => handleStatusChange(e, row)}
-          bordered={false}
-        >
-          {status.map((i, index) => (
-            <Option key={index} value={i.value}>
-              {i.value}
-            </Option>
-          ))}
-        </Select>
+        <div>
+          <Row>
+            <Col>
+              <FormGroup style={{ height: '100%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue={row.status}
+                  style={{
+                    height: '100%',
+                    boxShadow: 'none',
+                    border: '0px',
+                    outline: '0px',
+                    background: 'none',
+                  }}
+                  onChange={(e) => handleStatusChange(e, row)}
+                >
+                  <option value={row.status}>{row.status}</option>
+                  {status.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col style={{ textAlign: 'center', color: 'red' }}>
+              {row.job_info.Rush && row.job_info.Sample
+                ? 'Sample / Rush'
+                : row.job_info.Rush
+                  ? 'Rush'
+                  : row.job_info.Sample
+                    ? 'Sample'
+                    : ''}
+            </Col>
+          </Row>
+        </div>
       ),
     },
     {
       name: 'Submitted By',
-      selector: 'user.FirstName',
+      cell: (row) => (
+        <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>
+      ),
       sortable: true,
     },
-
     {
       name: 'Total',
       selector: 'total',
       sortable: true,
-      cell: (row) => <div>${row.total?.toFixed(2)}</div>,
+      cell: (row) => <div>${row.total && row.total.toFixed(2)}</div>,
+    },
+    {
+      name: 'Balance Paid',
+      sortable: true,
+      cell: (row) => (
+        <div>
+          $
+          {row.balance_history &&
+            row.balance_history
+              .reduce((acc, item) => acc + item.balance_paid, 0)
+              ?.toFixed(2)}
+        </div>
+      ),
+    },
+    {
+      name: 'Terms',
+      cell: (row) => (
+        <div>
+          {row.companyprofile && row.companyprofile.PMT_TERMS
+            ? row.companyprofile.PMT_TERMS
+            : ''}
+        </div>
+      ),
+      sortable: true,
     },
     {
       name: ' ',
@@ -162,83 +321,6 @@ const StatusTable = (props) => {
     },
   ];
 
-  const handleRowSelected = React.useCallback(state => {
-    setSelectedRows(state.selectedRows);
-  }, []);
-
-  const contextActions = React.useMemo(() => {
-    const exportBreakdowns = () => {
-      const { breakdowns, box_breakdowns } = props;
-
-      selectedRows.map(async (i) => {
-        if (i.orderType === 'Door Order') {
-
-          const edgesPromiseArr1 = i.part_list.filter(i => i.edge && i.edge.photo && i.edge.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.edge.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-          const mouldsPromiseArr1 = i.part_list.filter(i => i.profile && i.profile.photo && i.profile.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.profile.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-
-
-          const panelsPromiseArr1 = i.part_list.filter(i => i.panel && i.panel.photo && i.panel.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.panel.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-          const appliedProfilePromiseArr1 = i.part_list.filter(i => i.applied_profile && i.applied_profile.photo && i.applied_profile.photo.url).map(i => {
-            return new Promise((resolve, reject) => {
-              toDataUrl(i.applied_profile.photo.url, (result) => {
-                resolve(result);
-              });
-            });
-          });
-
-          let edges1;
-          let moulds1;
-          let panels1;
-          let appliedProfiles1;
-
-          try {
-            edges1 = await Promise.all(edgesPromiseArr1);
-            moulds1 = await Promise.all(mouldsPromiseArr1);
-            panels1 = await Promise.all(panelsPromiseArr1);
-            appliedProfiles1 = await Promise.all(appliedProfilePromiseArr1);
-          } catch (err) {
-            console.log('errrrrrr', err);
-          }
-          return DoorPDF(i, edges1, moulds1, panels1, appliedProfiles1, breakdowns);
-        } else {
-          return DrawerPDF(i, box_breakdowns);
-        }
-      }); 
-      setToggleCleared(!toggleCleared); 
-    };
-
-    return (
-      <div>
-        <Tooltip title="View Breakdowns" onClick={exportBreakdowns} placement="top" className="mb-3 mt-3">
-          <IconButton>
-            <Assignment style={{ width: '40', height: '40' }} />
-          </IconButton>
-        </Tooltip>
-      </div>
-    );
-  }, [selectedRows, props, toggleCleared]);
-
   const toggle = (row) => {
     const { setSelectedOrder, setOrderType } = props;
 
@@ -258,63 +340,122 @@ const StatusTable = (props) => {
     setEdit(!edit);
   };
 
-  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].created_at) : new Date();
-
+  const exportReports = () => {
+    Report1(data, startDate, endDate, filterStatus);
+    setToggleCleared(!toggleCleared);
+  };
 
   return (
     <div>
-      <Row>
-        <Col sm='9' />
+      <Row className="mb-3">
+        <Col lg="9" />
         <Col>
-          <h3>Filter Due Date</h3>
-        </Col>
-      </Row>
-      <Row>
-        <Col sm='9' />
-        <Col>
-          <SingleDatePicker
-            date={startDate} // momentPropTypes.momentObj or null
-            onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
-            focused={startDateFocusedInput} // PropTypes.bool
-            onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
-            id="startDate" // PropTypes.string.isRequired,
-            isOutsideRange={(date) => {
-              if (date < moment(minDate)) {
-                return true;
-              } else {
-                return false;
-              }
-            }}
-          />
+          <Row>
+            <Col>
+              <h3>Filter Due Date</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <SingleDatePicker
+                date={startDate} // momentPropTypes.momentObj or null
+                onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
+                focused={startDateFocusedInput} // PropTypes.bool
+                onFocusChange={({ focused }) =>
+                  setStartDateFocusedInput(focused)
+                } // PropTypes.func.isRequired
+                id="startDate" // PropTypes.string.isRequired,
+                isOutsideRange={(date) => {
+                  if (date < moment(minDate)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
+              />
 
-          <SingleDatePicker
-            date={endDate} // momentPropTypes.momentObj or null
-            onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
-            focused={endDateFocusedInput} // PropTypes.bool
-            onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
-            id="endDate" // PropTypes.string.isRequired,
-            isOutsideRange={(date) => {
-              if (date < moment(startDate)) {
-                return true; // return true if you want the particular date to be disabled
-              }  else {
-                return false;
-              }
-            }}
-          />
+              <SingleDatePicker
+                date={endDate} // momentPropTypes.momentObj or null
+                onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
+                focused={endDateFocusedInput} // PropTypes.bool
+                onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
+                id="endDate" // PropTypes.string.isRequired,
+                isOutsideRange={(date) => {
+                  if (date < moment(startDate)) {
+                    return true; // return true if you want the particular date to be disabled
+                  } else {
+                    return false;
+                  }
+                }}
+              />
+            </Col>
+          </Row>
+          {/* <Row>
+            <Col>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="Quote"
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                >
+                  {status.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row> */}
+          <Row className="mt-3">
+            <Col>
+              {role &&
+              (role.type === 'authenticated' ||
+                role.type === 'owner' ||
+                role.type === 'administrator') ? (
+                  <h3>
+                  Order Totals: $
+                    {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
+                  </h3>
+                ) : null}
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              <h3># Of Orders: {data.length}</h3>
+            </Col>
+          </Row>
         </Col>
       </Row>
+
+      <Row>
+        {/* <Col lg='11' /> */}
+        <Col>
+          <Tooltip
+            title="View Reports"
+            onClick={exportReports}
+            placement="top"
+            className="mb-3 mt-3"
+          >
+            <IconButton>
+              <Receipt style={{ width: '40', height: '40' }} />
+            </IconButton>
+          </Tooltip>
+        </Col>
+      </Row>
+
       <DataTable
         title="Orders"
         columns={columns}
         data={data}
-        // selectableRows
-        // onSelectedRowsChange={handleRowSelected}
-        clearSelectedRows={toggleCleared}
         pagination
         progressPending={!props.ordersDBLoaded}
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
-        // contextActions={contextActions}
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
       />
       {modal ? (
         <OrderPage
@@ -328,23 +469,24 @@ const StatusTable = (props) => {
   );
 };
 
-
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
+  orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   breakdowns: state.part_list.breakdowns,
-  box_breakdowns: state.part_list.box_breakdowns
+  box_breakdowns: state.part_list.box_breakdowns,
+  role: state.users.user.role,
 });
-    
+
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateStatus,
       loadOrders,
       setSelectedOrder,
-      setOrderType
+      setOrderType,
     },
     dispatch
   );
-    
-export default connect(mapStateToProps, mapDispatchToProps)(StatusTable);
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderTable);

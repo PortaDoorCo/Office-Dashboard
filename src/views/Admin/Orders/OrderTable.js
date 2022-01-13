@@ -22,7 +22,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import Report1 from '../../PrintOuts/Reports/Report1';
 import styled from 'styled-components';
-import status from '../../../utils/status';
+import status from '../../../utils/report_status';
 import { itemPriceSelector } from '../../../selectors/pricing';
 
 // momentLocaliser(moment);
@@ -61,7 +61,14 @@ const { Option } = Select;
 
 const conditionalRowStyles = [
   {
-    when: (row) => row.late === true,
+    when: (row) =>
+      moment(row.dueDate).startOf('day').valueOf() <
+        moment(new Date()).startOf('day').valueOf() &&
+      (row.Shipping_Scheduled ||
+        (!row.status?.includes('Quote') &&
+          !row.status?.includes('Invoiced') &&
+          !row.status?.includes('Ordered') &&
+          !row.status?.includes('Shipped'))),
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -96,7 +103,7 @@ const OrderTable = (props) => {
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus] = useState('All');
+  const [filterStatus, setFilterStatus] = useState('Quote');
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -106,7 +113,7 @@ const OrderTable = (props) => {
       : new Date();
 
   useEffect(() => {
-    const filteredOrders = orders.filter((item) => {
+    const filteredOrders = orders?.filter((item) => {
       let date = new Date(item.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
@@ -114,45 +121,22 @@ const OrderTable = (props) => {
         return x.status === 'Ordered';
       });
 
-      if (filterStatus === 'All') {
-        if (filterText.length > 0) {
-          return (
-            moment(dateOrdered[0]?.date || date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date || date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.job_info.customer.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(dateOrdered[0]?.date || date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date || date) <=
-              moment(endDate).endOf('day').valueOf()
-          );
-        }
-      } else if (filterStatus === 'Ordered') {
+      if (filterStatus === 'Ordered') {
         console.log({ dateOrdered });
         console.log({ item });
 
-        if (filterText.length > 0) {
+        if (filterText?.length > 0) {
           return (
             moment(dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
             moment(dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
-              item.job_info.poNum
+              item.job_info?.poNum
                 .toLowerCase()
                 .includes(filterText.toLowerCase()))
           );
@@ -165,53 +149,25 @@ const OrderTable = (props) => {
             item.status === dateOrdered[0]?.status
           );
         }
-      } else if (filterStatus === 'In Production') {
-        if (filterText.length > 0) {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            !item.status.includes('Quote') &&
-            !item.status.includes('Invoiced') &&
-            !item.status.includes('Ordered') &&
-            !item.status.includes('Shipped') &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            !item.status.includes('Quote') &&
-            !item.status.includes('Invoiced') &&
-            !item.status.includes('Ordered') &&
-            !item.status.includes('Shipped')
-          );
-        }
       } else {
-        if (filterText.length > 0) {
+        if (filterText?.length > 0) {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.status.includes(filterStatus) &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
+            item.status?.includes(filterStatus) &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText?.toLowerCase()
               ) ||
-              item.job_info.poNum
+              item?.job_info?.poNum
                 .toLowerCase()
-                .includes(filterText.toLowerCase()))
+                .includes(filterText?.toLowerCase()))
           );
         } else {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.status.includes(filterStatus)
+            item?.status?.includes(filterStatus)
           );
         }
       }
@@ -274,7 +230,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Date Entered',
-      cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
+      cell: (row) => <div>{moment(row?.created_at).format('MMM Do YYYY')}</div>,
     },
     {
       name: 'Date Ordered',
@@ -285,7 +241,7 @@ const OrderTable = (props) => {
         });
 
         if (dateOrdered.length > 0) {
-          return <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+          return <div>{moment(dateOrdered[0]?.date).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }
@@ -295,8 +251,12 @@ const OrderTable = (props) => {
       name: 'Est. Shipping',
       cell: (row) => (
         <div>
-          {row.Shipping_Scheduled
-            ? moment(row.dueDate).format('MMM Do YYYY')
+          {row.Shipping_Scheduled ||
+          (!row.status?.includes('Quote') &&
+            !row.status?.includes('Invoiced') &&
+            !row.status?.includes('Ordered') &&
+            !row.status?.includes('Shipped'))
+            ? moment(row?.dueDate).format('MMM Do YYYY')
             : 'TBD'}
         </div>
       ),
@@ -323,10 +283,10 @@ const OrderTable = (props) => {
                   }}
                   onChange={(e) => handleStatusChange(e, row)}
                 >
-                  <option value={row.status}>{row.status}</option>
-                  {status.map((i, index) => (
+                  <option value={row?.status}>{row?.status}</option>
+                  {status?.map((i, index) => (
                     <option key={index} value={i.value}>
-                      {i.value}
+                      {i?.value}
                     </option>
                   ))}
                 </Input>
@@ -336,11 +296,11 @@ const OrderTable = (props) => {
 
           <Row>
             <Col style={{ textAlign: 'center', color: 'red' }}>
-              {row.job_info.Rush && row.job_info.Sample
+              {row?.job_info?.Rush && row?.job_info?.Sample
                 ? 'Sample / Rush'
-                : row.job_info.Rush
+                : row?.job_info?.Rush
                   ? 'Rush'
-                  : row.job_info.Sample
+                  : row?.job_info?.Sample
                     ? 'Sample'
                     : ''}
             </Col>
@@ -359,7 +319,7 @@ const OrderTable = (props) => {
       name: 'Total',
       selector: 'total',
       sortable: true,
-      cell: (row) => <div>${row.total && row.total.toFixed(2)}</div>,
+      cell: (row) => <div>${row?.total && row.total?.toFixed(2)}</div>,
     },
     {
       name: 'Balance Paid',
@@ -378,8 +338,8 @@ const OrderTable = (props) => {
       name: 'Terms',
       cell: (row) => (
         <div>
-          {row.companyprofile && row.companyprofile.PMT_TERMS
-            ? row.companyprofile.PMT_TERMS
+          {row.companyprofile && row.companyprofile?.PMT_TERMS
+            ? row?.companyprofile?.PMT_TERMS
             : ''}
         </div>
       ),
@@ -436,6 +396,14 @@ const OrderTable = (props) => {
         <Col>
           <Row>
             <Col>
+              <h3>
+                Filter Date{' '}
+                {filterStatus === 'Quote' ? 'Entered' : filterStatus}
+              </h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
               <SingleDatePicker
                 date={startDate} // momentPropTypes.momentObj or null
                 onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
@@ -462,7 +430,7 @@ const OrderTable = (props) => {
                 isOutsideRange={(date) => {
                   if (date < moment(startDate)) {
                     return true; // return true if you want the particular date to be disabled
-                  }  else {
+                  } else {
                     return false;
                   }
                 }}
@@ -476,10 +444,9 @@ const OrderTable = (props) => {
                   type="select"
                   name="select"
                   id="status_dropdown"
-                  defaultValue="All"
+                  defaultValue="Quote"
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
-                  <option value="All">All</option>
                   {status.map((i, index) => (
                     <option key={index} value={i.value}>
                       {i.value}

@@ -21,7 +21,7 @@ import {
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { loadOrders } from '../../../redux/orders/actions';
-import status from '../../../utils/status';
+import status from '../../../utils/report_status';
 import Charts from './components/Chart';
 import Chart1 from './components/SalesCharts/Chart1';
 
@@ -48,7 +48,7 @@ const SalesReport = (props) => {
   const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus] = useState('All');
+  const [filterStatus, setFilterStatus] = useState('Quote');
   const [filterText, setFilterText] = useState('');
 
   const toggle = (tab) => {
@@ -68,35 +68,15 @@ const SalesReport = (props) => {
       let date = new Date(item.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
+        console.log({ x });
         return x.status === 'Ordered';
       });
 
-      if (filterStatus === 'All') {
-        if (filterText?.length > 0) {
-          return (
-            moment(dateOrdered[0]?.date || date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date || date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.job_info.customer.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(dateOrdered[0]?.date || date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date || date) <=
-              moment(endDate).endOf('day').valueOf()
-          );
-        }
-      } else if (filterStatus === 'Ordered') {
+      if (filterStatus === 'Ordered') {
+        console.log({ dateOrdered });
+        console.log({ item });
 
-        if (filterText?.length > 0) {
+        if (filterText.length > 0) {
           return (
             moment(dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
@@ -120,39 +100,8 @@ const SalesReport = (props) => {
             item.status === dateOrdered[0]?.status
           );
         }
-      } else if (filterStatus === 'In Production') {
-
-        let date = new Date(item.dueDate);
-
-        if (filterText?.length > 0) {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            !item.status.includes('Quote') &&
-            !item.status.includes('Invoiced') &&
-            !item.status.includes('Ordered') &&
-            !item.status.includes('Shipped') &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            !item.status.includes('Quote') &&
-            !item.status.includes('Invoiced') &&
-            !item.status.includes('Ordered') &&
-            !item.status.includes('Shipped')
-          );
-        }
       } else {
-        if (filterText?.length > 0) {
+        if (filterText.length > 0) {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
@@ -175,7 +124,7 @@ const SalesReport = (props) => {
       }
     });
     setData(filteredOrders);
-  }, [orders, filterStatus, filterText, startDate, endDate]);
+  }, [startDate, endDate, orders, filterStatus, filterText]);
 
   const minDate =
     orders.length > 0
@@ -200,6 +149,11 @@ const SalesReport = (props) => {
         <Row className="mb-3">
           <Col lg="9" />
           <Col>
+            <Row>
+              <Col>
+                <h3>Filter Date {filterStatus === 'Quote' ? 'Entered' : filterStatus}</h3>
+              </Col>
+            </Row>
             <Row>
               <Col>
                 <SingleDatePicker
@@ -242,10 +196,9 @@ const SalesReport = (props) => {
                     type="select"
                     name="select"
                     id="status_dropdown"
-                    defaultValue="All"
+                    defaultValue="Quote"
                     onChange={(e) => setFilterStatus(e.target.value)}
                   >
-                    <option value="All">All</option>
                     {status.map((i, index) => (
                       <option key={index} value={i.value}>
                         {i.value}
