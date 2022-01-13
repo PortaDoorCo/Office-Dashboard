@@ -133,7 +133,7 @@ class JobInfo extends Component {
       moment(formState && formState.job_info && formState.job_info.DueDate)
     );
 
-    const salesCompanies = customers.filter(x => x?.sale?.id === user?.sale?.id);
+    const salesCompanies = customers?.filter(x => x?.sale?.id === user?.sale?.id);
 
 
 
