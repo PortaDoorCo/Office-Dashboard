@@ -70,10 +70,15 @@ const CompanyTable = (props) => {
   const [defaultCenter, setDefaultCenter] = useState([]);
   const [newCustomerModal, setNewCustomerModal] = useState(false);
 
+  const sortedCompanies = props.customerDB.sort((a, b) => a.Company.localeCompare(b.Company));
+
+  console.log({sortedCompanies});
+
   const filteredCompanies =
-    props.customerDB.length > 0
-      ? props.customerDB.filter((item) => {
-        if (user?.sale) {
+
+    sortedCompanies.length > 0
+      ? sortedCompanies.filter((item) => {
+        if (user?.role?.type === 'sales') {
           return (
             item.Company &&
               item.Company.toLowerCase().includes(filterText.toLowerCase()) &&

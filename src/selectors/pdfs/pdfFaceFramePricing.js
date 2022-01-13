@@ -57,6 +57,8 @@ const pricing = (parts, pricer) => {
 
         const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
 
+        let width_input = numQty(i.width);
+
         let width =
           numQty(i.width) <= 24
             ? 18
@@ -74,14 +76,17 @@ const pricing = (parts, pricer) => {
               : numQty(i.height) >= 24 && numQty(i.height) <= 48
                 ? 24
                 : 36;
+
+
+          width_input = numQty(i.height);
         }
 
-        const width_input = numQty(i.width);
+
         const openings = parseInt(i.openings);
 
         let overcharge = 0;
 
-        if (width >= 48 || height >= 96) {
+        if (width_input >= 48 || height >= 96) {
           overcharge = 100;
         }
 
