@@ -11,33 +11,41 @@ export default (data, startDate, endDate, status) => {
       { text: 'Doors' },
       { text: 'DFs' },
       { text: 'Boxes' },
+      { text: 'Face Frames' },
       { text: 'Total' },
-      { text: 'Salesman' },
+      { text: 'Notes' },
     ],
   ];
   let total = 0;
   let doorTotal = 0;
   let dfTotal = 0;
   let boxTotal = 0;
+  let faceFrameTotal = 0;
 
   data.forEach((i, index) => {
     total = total += i.total;
     let doors = 0;
     let dfs = 0;
     let boxes = 0;
+    let face_frames = 0;
 
     let name = i.job_info?.poNum?.length > 0 ? i.job_info?.poNum : 'None';
+
+    if (index === 0) {
+      console.log({ i });
+    }
+
     if (i.orderType === 'Door Order') {
       i.part_list.map((part) => {
-        if (part.orderType.value === 'Door') {
-          return part.dimensions.map((j) => {
+        if (part.orderType?.value === 'Door') {
+          return part.dimensions?.map((j) => {
             return (
               (doors = doors += parseInt(j.qty)),
               (doorTotal = doorTotal += parseInt(j.qty))
             );
           });
         } else {
-          return part.dimensions.map((j) => {
+          return part.dimensions?.map((j) => {
             return (
               (dfs = dfs += parseInt(j.qty)),
               (dfTotal = dfTotal += parseInt(j.qty))
@@ -45,9 +53,18 @@ export default (data, startDate, endDate, status) => {
           });
         }
       });
+    } else if (i.orderType === 'Face Frame') {
+      i.part_list.map((part) => {
+        return part.dimensions?.map((j) => {
+          return (
+            (face_frames = face_frames += parseInt(j.qty)),
+            (faceFrameTotal = faceFrameTotal += parseInt(j.qty))
+          );
+        });
+      });
     } else {
       i.part_list.map((part) => {
-        return part.dimensions.map((j) => {
+        return part.dimensions?.map((j) => {
           return (
             (boxes = boxes += parseInt(j.qty)),
             (boxTotal = boxTotal += parseInt(j.qty))
@@ -55,11 +72,6 @@ export default (data, startDate, endDate, status) => {
         });
       });
     }
-
-    const dateOrdered = i?.tracking?.filter((x) => {
-      console.log({ x });
-      return x.status === 'Ordered';
-    });
 
     return tableBody.push([
       moment(i.dueDate).format('MM/DD/YYYY'),
@@ -70,14 +82,23 @@ export default (data, startDate, endDate, status) => {
       doors,
       dfs,
       boxes,
+      face_frames,
       i.total,
-      i.sale.fullName,
+      '',
     ]);
   });
 
   let totalBody = [
-    ['', 'Doors', 'DFs', 'Boxes', 'Total', ''],
-    ['', doorTotal, dfTotal, boxTotal, `$${total.toFixed(2)}`, ''],
+    ['', 'Doors', 'DFs', 'Boxes', 'Face Frames', 'Total', ''],
+    [
+      '',
+      doorTotal,
+      dfTotal,
+      boxTotal,
+      faceFrameTotal,
+      `$${total.toFixed(2)}`,
+      '',
+    ],
   ];
 
   return [
@@ -85,9 +106,9 @@ export default (data, startDate, endDate, status) => {
       columns: [
         {
           stack: [
-            `LATE LIST - ${moment(startDate).format('MM/DD/YYYY')} thru ${moment(
-              endDate
-            ).format('MM/DD/YYYY')}`,
+            `LATE LIST - ${moment(startDate).format(
+              'MM/DD/YYYY'
+            )} thru ${moment(endDate).format('MM/DD/YYYY')}`,
           ],
         },
         {
@@ -103,15 +124,16 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
+        widths: ['*', '*', 40, '*', '*', 40, 40, 40, 40, '*', '*'],
       },
-      layout: 'headerLineOnly',
+      layout: 'lightHorizontalLines',
     },
     {
       style: 'tableExample',
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: [283, '*', '*', '*', '*', '*'],
+        widths: ['*', '*', '*', '*', '*', '*', '*'],
       },
       layout: 'headerLineOnly',
     },
