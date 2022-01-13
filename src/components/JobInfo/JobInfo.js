@@ -14,6 +14,7 @@ import {
   renderTextField,
 } from '../RenderInputs/renderInputs';
 import CustomerReminder from './CustomerReminder';
+import otherStatus from '../../utils/other_status';
 
 // momentLocaliser(moment);
 
@@ -41,7 +42,6 @@ class JobInfo extends Component {
       loaded: false,
     };
   }
-
 
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
@@ -127,14 +127,15 @@ class JobInfo extends Component {
   };
 
   render() {
-    const { customers, edit, shippingMethods, formState } = this.props;
+    const { customers, edit, shippingMethods, formState, role, user, sales } = this.props;
 
     const dateDifference = moment(new Date()).businessDiff(
       moment(formState && formState.job_info && formState.job_info.DueDate)
     );
 
+    const salesCompanies = customers?.filter(x => x?.sale?.id === user?.sale?.id);
 
-    console.log('helllllllllllllloooooooo');
+
 
     return (
       <div className="job-info-tour">
@@ -144,7 +145,16 @@ class JobInfo extends Component {
           modal={this.props.customerReminder}
         />
         <Row>
-          <Col lg="10" />
+          <Col lg="10">
+            <FormGroup>
+              <Label htmlFor="dueDate">Shipping Scheduled</Label>
+              <Field
+                name="Shipping_Scheduled"
+                component={renderCheckboxToggle}
+                edit={edit}
+              />
+            </FormGroup>
+          </Col>
           <Col lg="1">
             <FormGroup>
               <Label htmlFor="dueDate">Sample</Label>
@@ -200,7 +210,7 @@ class JobInfo extends Component {
               <Field
                 name="customer"
                 component={renderDropdownListNoPhoto}
-                data={customers}
+                data={role?.type === 'sales' ? salesCompanies : customers}
                 dataKey="value"
                 textField="Company"
                 edit={edit}
@@ -227,7 +237,14 @@ class JobInfo extends Component {
               <Field
                 name="status"
                 component={renderDropdownList}
-                data={status}
+                data={
+                  role?.type === 'authenticated' ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator' ||
+                  role?.type === 'office'
+                    ? status
+                    : otherStatus
+                }
                 dataKey="value"
                 edit={edit}
                 textField="value"
@@ -368,6 +385,9 @@ class JobInfo extends Component {
 const mapStateToProps = (state) => ({
   formState: getFormValues('Order')(state),
   shippingMethods: state.misc_items.shippingMethods,
+  role: state?.users?.user?.role,
+  user: state?.users?.user,
+  sales: state?.sales?.salesReps,
 });
 
 export default connect(mapStateToProps, null)(JobInfo);

@@ -5,6 +5,7 @@ export default (data, startDate, endDate, status) => {
 
   const tableBody = [
     [
+      { text: 'Date Created' },
       { text: 'Date' },
       { text: 'Customer' },
       { text: 'Job ID' },
@@ -41,8 +42,17 @@ export default (data, startDate, endDate, status) => {
       boxes++;
       boxTotal++;
     }
+
+    const dateOrdered = i?.tracking?.filter((x) => {
+      console.log({ x });
+      return x.status === 'Ordered';
+    });
+
     return tableBody.push(
       [moment(i.created_at).format('MM/DD/YYYY'),
+        dateOrdered.length > 0
+          ? moment(dateOrdered[0].date).format('MM/DD/YYYY')
+          : 'TBD',
         i.job_info.customer.Company,
         i.orderNum,
         i.status,

@@ -57,6 +57,7 @@ const DoorTable = ({
   lites,
   formError,
   formSyncErrors,
+  role
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -1331,17 +1332,22 @@ const DoorTable = ({
               </Row>
             </Col>
             <Col lg="4" />
-            <Col xs="3">
-              <strong>Extra Design Cost</strong>
-              <Field
-                name={`${table}.extraCost`}
-                type="text"
-                component={renderPrice}
-                edit={edit}
-                label="extraCost"
-                {...currencyMask}
-              />
-            </Col>
+            {role?.type === 'authenticated' ||
+            role?.type === 'owner' ||
+            role?.type === 'administrator' ||
+            role?.type === 'office' ? (
+                <Col xs="3">
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    edit={edit}
+                    label="extraCost"
+                    {...currencyMask}
+                  />
+                </Col>
+              ) : null}
           </Row>
           <br />
         </Fragment>
@@ -1381,6 +1387,7 @@ const DoorTable = ({
 
 const mapStateToProps = (state) => ({
   lites: state.part_list.lites,
+  role: state?.users?.user?.role,
   formSyncErrors: getFormSyncErrors('Order')(state),
 });
 

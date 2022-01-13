@@ -44,12 +44,21 @@ const ClearButton = styled(Button)`
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
-    <TextField id="search" type="text" placeholder="Search Company" value={filterText} onChange={onFilter} />
-    <ClearButton type="button" color="danger" onClick={onClear}>X</ClearButton>
+    <TextField
+      id="search"
+      type="text"
+      placeholder="Search Company"
+      value={filterText}
+      onChange={onFilter}
+    />
+    <ClearButton type="button" color="danger" onClick={onClear}>
+      X
+    </ClearButton>
   </>
 );
 
 const CompanyTable = (props) => {
+  const { user } = props;
   const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
   const [data, setData] = useState(props.orders);
@@ -60,23 +69,35 @@ const CompanyTable = (props) => {
   const [locations, setLocations] = useState([]);
   const [defaultCenter, setDefaultCenter] = useState([]);
   const [newCustomerModal, setNewCustomerModal] = useState(false);
-  
-  const filteredCompanies = props.customerDB.length > 0 ? props.customerDB.filter(item => item.Company && item.Company.toLowerCase().includes(filterText.toLowerCase())) : [];
 
+  const filteredCompanies =
+    props.customerDB.length > 0
+      ? props.customerDB.filter((item) => {
+        if (user?.sale) {
+          return (
+            item.Company &&
+              item.Company.toLowerCase().includes(filterText.toLowerCase()) &&
+              item?.sale?.fullName?.includes(user?.sale?.fullName)
+          );
+        } else {
+          return (
+            item.Company &&
+              item.Company.toLowerCase().includes(filterText.toLowerCase())
+          );
+        }
+      })
+      : [];
 
+  // useEffect(() => {
+  //   // const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
+  //   // setData(filteredItems);
+  // }, [filterText]);
 
+  console.log({ filteredCompanies });
 
-  useEffect(() => {
-
-    // const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
-    // setData(filteredItems);
-  }, [filterText]);
-
-  const handleRowSelected = useCallback(state => {
+  const handleRowSelected = useCallback((state) => {
     setSelectedRows(state.selectedRows);
   }, []);
-
-
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -86,11 +107,16 @@ const CompanyTable = (props) => {
       }
     };
 
-    return <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />;
+    return (
+      <FilterComponent
+        onFilter={(e) => setFilterText(e.target.value)}
+        onClear={handleClear}
+        filterText={filterText}
+      />
+    );
   }, [filterText, resetPaginationToggle]);
 
   const toggle = async (row) => {
-
     const { setSelectedCompanies } = props;
 
     setModal(!modal);
@@ -100,7 +126,7 @@ const CompanyTable = (props) => {
       await setSelectedOrder(row.id);
       Geocode.setApiKey('AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE');
 
-      let address = `${(row.Address1).replace(/\s/g, '')}${row.City}${row.State}`;
+      let address = `${row.Address1.replace(/\s/g, '')}${row.City}${row.State}`;
 
       // set response language. Defaults to english.
       Geocode.setLanguage('en');
@@ -116,59 +142,56 @@ const CompanyTable = (props) => {
 
       // Get latidude & longitude from address.
       Geocode.fromAddress(address).then(
-        response => {
+        (response) => {
           const { lat, lng } = response.results[0].geometry.location;
-          setLocations([{ lat: lat, lng: lng, label: '', draggable: false, www: '#', title: row.Company }]);
+          setLocations([
+            {
+              lat: lat,
+              lng: lng,
+              label: '',
+              draggable: false,
+              www: '#',
+              title: row.Company,
+            },
+          ]);
           // this.setState({ location: [{ lat: lat, lng: lng, label: 'S', draggable: false, www: 'http://portadoor.com', title: "porta door" }] })
           setDefaultCenter([{ lat, lng }]);
-
         },
-        error => {
+        (error) => {
           console.error(error);
         }
       );
-
     } else {
       return;
     }
-
-
   };
 
   const addCustomer = () => {
     setNewCustomerModal(!newCustomerModal);
   };
 
-
-
   const columns = [
-
     {
       selector: 'Company',
       name: 'Company',
-      sortable: true
-
+      sortable: true,
     },
     // {
     //     selector: 'sale.fullName',
     //     name: 'Sales Person',
 
-
     // },
     {
       selector: 'Contact',
       name: 'Contact',
-
     },
     {
       selector: 'Address1',
       name: 'Address1',
-
     },
     {
       selector: 'State',
       name: 'State',
-
     },
     {
       selector: 'City',
@@ -177,38 +200,57 @@ const CompanyTable = (props) => {
     {
       selector: 'PMT_TERMS',
       name: 'Payment Terms',
-
     },
     {
       name: '',
       button: true,
-      cell: row => <Tooltip title="View Company" placement="top">
-        <IconButton onClick={function (event) {
-          event.preventDefault();
-          toggle(row);
-        }} id={row.id}>
-          <Inbox>Open</Inbox>
-        </IconButton>
-      </Tooltip>
+      cell: (row) => (
+        <Tooltip title="View Company" placement="top">
+          <IconButton
+            onClick={function (event) {
+              event.preventDefault();
+              toggle(row);
+            }}
+            id={row.id}
+          >
+            <Inbox>Open</Inbox>
+          </IconButton>
+        </Tooltip>
+      ),
     },
   ];
 
   const contextActions = useMemo(() => {
     const handleDelete = () => {
-
-      if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.orderNum)}?`)) {
+      if (
+        window.confirm(
+          `Are you sure you want to delete:\r ${selectedRows.map(
+            (r) => r.orderNum
+          )}?`
+        )
+      ) {
         setToggleCleared(!toggleCleared);
         setData(differenceBy(data, selectedRows, 'orderNum'));
       }
     };
 
-    return <Button key="delete" color="danger" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon="true">Delete</Button>;
+    return (
+      <Button
+        key="delete"
+        color="danger"
+        onClick={handleDelete}
+        style={{ backgroundColor: 'red' }}
+        icon="true"
+      >
+        Delete
+      </Button>
+    );
   }, [data, selectedRows, toggleCleared]);
 
   return (
     <div className="mt-5">
       <Row>
-        <Col lg='11' />
+        <Col lg="11" />
         <Col>
           <Tooltip title="Add Customer" placement="top">
             <IconButton onClick={addCustomer}>
@@ -217,7 +259,7 @@ const CompanyTable = (props) => {
           </Tooltip>
         </Col>
       </Row>
-      
+
       <Row>
         <Col>
           <DataTable
@@ -235,47 +277,37 @@ const CompanyTable = (props) => {
             subHeader
             subHeaderComponent={subHeaderComponentMemo}
           />
-          {modal ?
+          {modal ? (
             <CustomerPage
               toggle={toggle}
               modal={modal}
               orders={selectedOrder}
               locations={locations}
               defaultCenter={defaultCenter}
-            /> : null
-          }
-
-
+            />
+          ) : null}
         </Col>
       </Row>
 
-      {newCustomerModal ? 
-        <AddCustomer
-          toggle={addCustomer}
-          modal={newCustomerModal}
-        /> : null
-      }
+      {newCustomerModal ? (
+        <AddCustomer toggle={addCustomer} modal={newCustomerModal} />
+      ) : null}
     </div>
   );
 };
 
 const mapStateToProps = (state, prop) => ({
-  selectedCompanies: state.customers.selectedCompanies,
-  customerDB: state.customers.customerDB
+  selectedCompanies: state?.customers?.selectedCompanies,
+  customerDB: state?.customers?.customerDB,
+  user: state?.users?.user,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      setSelectedCompanies
+      setSelectedCompanies,
     },
     dispatch
   );
 
-
-
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CompanyTable);
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyTable);

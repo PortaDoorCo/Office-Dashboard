@@ -329,7 +329,6 @@ export function updateOrder(orderId, order, cookie) {
 export function updateStatus(orderId, key, status, cookie) {
   const item = {
     status: status.status,
-    dueDate: moment('2000-01-01'),
     tracking: [
       ...key.tracking,
       {

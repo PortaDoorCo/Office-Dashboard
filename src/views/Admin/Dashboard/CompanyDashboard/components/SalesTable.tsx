@@ -110,7 +110,7 @@ const OrderTable = (props: TablePropTypes) => {
       }
     }) : [];
     setData(filteredOrders);
-  }, [orders, filterText]);
+  }, [orders, filterText, user?.id]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {

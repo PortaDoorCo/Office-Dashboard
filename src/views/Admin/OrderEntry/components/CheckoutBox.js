@@ -23,8 +23,11 @@ import NumberFormat from 'react-number-format';
 import currencyMask from '../../../../utils/currencyMask';
 import NavBar from './NavBar';
 import NavModal from './MiscItemCollapse';
+import { connect } from 'react-redux';
 
 const CheckoutBox = (props) => {
+
+  const { role } = props;
   const jobInfo = props.formState?.job_info;
 
   return (
@@ -67,6 +70,10 @@ const CheckoutBox = (props) => {
                         <Field
                           name={'Taxable'}
                           component={renderCheckboxToggle}
+                          edit={role?.type === 'authenticated' ||
+                          role?.type === 'owner' ||
+                          role?.type === 'administrator' ||
+                          role?.type === 'office' ? false : true}
                         />
                       </FormGroup>
                     </Col>
@@ -81,6 +88,10 @@ const CheckoutBox = (props) => {
                       name={'discount'}
                       type="text"
                       component={renderField}
+                      edit={role?.type === 'authenticated' ||
+                      role?.type === 'owner' ||
+                      role?.type === 'administrator' ||
+                      role?.type === 'office' ? false : true}
                       label="discount"
                       validate={props.maxValue(100)}
                     />
@@ -150,4 +161,8 @@ const CheckoutBox = (props) => {
   );
 };
 
-export default CheckoutBox;
+const mapStateToProps = (state) => ({
+  role: state?.users?.user?.role,
+});
+
+export default connect(mapStateToProps, null)(CheckoutBox);

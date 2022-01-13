@@ -11,7 +11,7 @@ import {
   updateStatus,
   loadOrders,
   setSelectedOrder,
-  setOrderType
+  setOrderType,
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import momentLocaliser from 'react-widgets-moment';
@@ -23,7 +23,7 @@ import Receipt from '@material-ui/icons/Receipt';
 import Report1 from '../../PrintOuts/Reports/Report1';
 import styled from 'styled-components';
 import status from '../../../utils/status';
-
+import { itemPriceSelector } from '../../../selectors/pricing';
 
 // momentLocaliser(moment);
 
@@ -109,11 +109,18 @@ const OrderTable = (props) => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.created_at);
 
+      const dateOrdered = item?.tracking?.filter((x) => {
+        console.log({ x });
+        return x.status === 'Ordered';
+      });
+
       if (filterStatus === 'All') {
         if (filterText.length > 0) {
           return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) <=
+              moment(endDate).endOf('day').valueOf() &&
             (item.orderNum.toString().includes(filterText) ||
               item.job_info.customer.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -124,8 +131,38 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf()
+            moment(dateOrdered[0]?.date || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) <=
+              moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Ordered') {
+        console.log({ dateOrdered });
+        console.log({ item });
+
+        if (filterText.length > 0) {
+          return (
+            moment(dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateOrdered[0]?.status &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateOrdered[0]?.status
           );
         }
       } else if (filterStatus === 'In Production') {
@@ -134,7 +171,10 @@ const OrderTable = (props) => {
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            (!item.status.includes('Quote') &&  !item.status.includes('Invoiced') && !item.status.includes('Ordered') && !item.status.includes('Shipped'))  &&
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Ordered') &&
+            !item.status.includes('Shipped') &&
             (item.orderNum.toString().includes(filterText) ||
               item.companyprofile.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -147,7 +187,10 @@ const OrderTable = (props) => {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            (!item.status.includes('Quote') &&  !item.status.includes('Invoiced') && !item.status.includes('Ordered') && !item.status.includes('Shipped')) 
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Ordered') &&
+            !item.status.includes('Shipped')
           );
         }
       } else {
@@ -167,8 +210,8 @@ const OrderTable = (props) => {
         } else {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                item.status.includes(filterStatus)
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status.includes(filterStatus)
           );
         }
       }
@@ -230,16 +273,31 @@ const OrderTable = (props) => {
       sortable: true,
     },
     {
-      name: 'Date Ordered',
+      name: 'Date Entered',
       cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
-      name: 'Due Date',
+      name: 'Date Ordered',
+      cell: (row) => {
+        const dateOrdered = row?.tracking?.filter((x) => {
+          console.log({ x });
+          return x.status === 'Ordered';
+        });
+
+        if (dateOrdered.length > 0) {
+          return <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+      },
+    },
+    {
+      name: 'Est. Shipping',
       cell: (row) => (
         <div>
-          {row.status === 'Quote'
-            ? 'TBD'
-            : moment(row.dueDate).format('MMM Do YYYY')}
+          {row.Shipping_Scheduled
+            ? moment(row.dueDate).format('MMM Do YYYY')
+            : 'TBD'}
         </div>
       ),
     },
@@ -306,7 +364,15 @@ const OrderTable = (props) => {
     {
       name: 'Balance Paid',
       sortable: true,
-      cell: row => <div>${(row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)?.toFixed(2))}</div>,
+      cell: (row) => (
+        <div>
+          $
+          {row.balance_history &&
+            row.balance_history
+              .reduce((acc, item) => acc + item.balance_paid, 0)
+              ?.toFixed(2)}
+        </div>
+      ),
     },
     {
       name: 'Terms',
@@ -341,9 +407,6 @@ const OrderTable = (props) => {
 
   const toggle = (row) => {
     const { setSelectedOrder, setOrderType } = props;
-
-
-
 
     setEdit(false);
     setModal(!modal);
@@ -505,7 +568,7 @@ const mapDispatchToProps = (dispatch) =>
       updateStatus,
       loadOrders,
       setSelectedOrder,
-      setOrderType
+      setOrderType,
     },
     dispatch
   );

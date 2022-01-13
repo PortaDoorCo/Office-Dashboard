@@ -83,7 +83,7 @@ const cookie = Cookies.get('jwt');
 const maxValue = (max) => (value) =>
   value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
-const dueDate = moment(new Date()).businessAdd(7)._d;
+const dueDate = moment(new Date()).businessAdd(21)._d;
 
 class OrderEntry extends Component {
   constructor(props) {
@@ -197,7 +197,8 @@ class OrderEntry extends Component {
         total: total,
         balance_due: total,
         orderType: orderType,
-        dueDate: values.job_info.DueDate,
+        dueDate: values?.job_info?.DueDate,
+        Shipping_Scheduled: values?.job_info?.Shipping_Scheduled,
         Date: new Date(),
         user: user.id,
         userName: user.username,
@@ -233,6 +234,7 @@ class OrderEntry extends Component {
         balance_due: balance,
         status: values.job_info?.status?.value,
         dueDate: values.job_info?.DueDate,
+        Shipping_Scheduled: values?.job_info?.Shipping_Scheduled,
         sale: values.job_info?.customer?.sale?.id,
         tracking: newStatus,
       };

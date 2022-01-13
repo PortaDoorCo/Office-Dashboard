@@ -10,7 +10,7 @@ import 'semantic-ui-css/semantic.min.css';
 import currencyMask from '../../../../utils/currencyMask';
 // import 'react-widgets/dist/css/react-widgets.css';
 import {
-  renderField, renderInt, renderNumber, renderTextField
+  renderField, renderInt, renderNumber, renderPrice, renderTextField
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 
@@ -35,6 +35,7 @@ const Frame_Only_Table = ({
   finish,
   finishSubtotal,
   formSyncErrors,
+  role
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -342,17 +343,22 @@ const Frame_Only_Table = ({
                 </Row>
               </Col>
               <Col lg="4" />
-              <Col xs="3">
-                <strong>Extra Design Cost</strong>
-                <Field
-                  name={`${table}.extraCost`}
-                  type="text"
-                  component={renderField}
-                  edit={edit}
-                  label="extraCost"
-                  {...currencyMask}
-                />
-              </Col>
+              {role?.type === 'authenticated' ||
+              role?.type === 'owner' ||
+              role?.type === 'administrator' ||
+              role?.type === 'office' ? (
+                  <Col xs="3">
+                    <strong>Extra Design Cost</strong>
+                    <Field
+                      name={`${table}.extraCost`}
+                      type="text"
+                      component={renderPrice}
+                      edit={edit}
+                      label="extraCost"
+                      {...currencyMask}
+                    />
+                  </Col>
+                ) : null}
             </Row>
             <br />
           </Fragment>
@@ -455,6 +461,7 @@ const Frame_Only_Table = ({
 };
 
 const mapStateToProps = (state) => ({
+  role: state?.users?.user?.role,
   formSyncErrors: getFormSyncErrors('Order')(state),
 });
 

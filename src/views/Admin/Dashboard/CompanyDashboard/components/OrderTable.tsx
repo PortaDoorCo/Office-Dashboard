@@ -143,12 +143,33 @@ const OrderTable = (props: TablePropTypes) => {
 
     },
     {
-      name: 'Date Ordered',
+      name: 'Date Entered',
       cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
-      name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      name: 'Date Ordered',
+      cell: row => {
+
+        const dateOrdered = row?.tracking?.filter((x) => {
+          console.log({x});
+          return x.status === 'Ordered';
+        }
+        );
+
+        if(dateOrdered.length > 0){
+          return (
+            <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>
+          );
+        } else {
+          return (
+            <div>TBD</div>
+          );
+        }
+      },
+    },
+    {
+      name: 'Est. Shipping',
+      cell: row => <div>{row.Shipping_Scheduled ? moment(row.dueDate).format('MMM Do YYYY') : 'TBD'}</div>,
     },
     {
       name: 'Status',

@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
+import {
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  Col,
+} from 'reactstrap';
 import classnames from 'classnames';
 import StatusTable from './components/StatusTable';
 import { connect } from 'react-redux';
@@ -12,42 +20,51 @@ import 'react-dates/initialize';
 import moment from 'moment';
 
 const Tracking = (props) => {
-  const { orders } = props;
+  const { orders, user } = props;
   const [activeTab, setActiveTab] = useState('1');
-  const [sortedDates, setSortedDate] = useState(orders.sort((a, b) => a.dueDate - b.dueDate));
+  const [sortedDates, setSortedDate] = useState([]);
   const [startDate, setStartDate] = useState(moment(new Date()));
   const [endDate, setEndDate] = useState(moment(sortedDates[0]?.dueDate));
   const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
 
-  const toggle = tab => {
+  const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
   useEffect(() => {
-    const filteredOrders = orders.filter(item => {
+
+    setSortedDate(orders.sort((a, b) => b.dueDate - a.dueDate));
+
+  }, [orders]);
+
+  useEffect(() => {
+    const filteredOrders = orders.filter((item) => {
       let date = new Date(item.dueDate);
-      return moment(date) >= moment(startDate).startOf('day').valueOf() && moment(date) <= moment(endDate).endOf('day').valueOf();
+      return (
+        moment(date) >= moment(startDate).startOf('day').valueOf() &&
+        moment(date) <= moment(endDate).endOf('day').valueOf()
+      );
     });
     setData(filteredOrders);
-
-
   }, [startDate, endDate, orders]);
 
+  const minDate =
+    orders.length > 0
+      ? new Date(orders[orders.length - 1].dueDate)
+      : new Date();
 
-
-  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].dueDate) : new Date();
+  console.log({ sortedDates });
 
   return (
     <div>
-
       <Row>
-        <Col sm='9' />
+        <Col sm="9" />
         <Col>
           <SingleDatePicker
             date={startDate} // momentPropTypes.momentObj or null
-            onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
+            onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
             focused={startDateFocusedInput} // PropTypes.bool
             onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
             id="startDate" // PropTypes.string.isRequired,
@@ -64,7 +81,7 @@ const Tracking = (props) => {
 
           <SingleDatePicker
             date={endDate} // momentPropTypes.momentObj or null
-            onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
+            onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
             focused={endDateFocusedInput} // PropTypes.bool
             onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
             id="endDate" // PropTypes.string.isRequired,
@@ -81,16 +98,15 @@ const Tracking = (props) => {
         </Col>
       </Row>
 
-      <Charts
-        data={data}
-      />
-
+      <Charts data={data} />
 
       <Nav tabs>
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '1' })}
-            onClick={() => { toggle('1'); }}
+            onClick={() => {
+              toggle('1');
+            }}
           >
             <strong>In Production</strong>
           </NavLink>
@@ -98,7 +114,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '2' })}
-            onClick={() => { toggle('2'); }}
+            onClick={() => {
+              toggle('2');
+            }}
           >
             <strong>Cutting</strong>
           </NavLink>
@@ -106,7 +124,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '3' })}
-            onClick={() => { toggle('3'); }}
+            onClick={() => {
+              toggle('3');
+            }}
           >
             <strong>Framing</strong>
           </NavLink>
@@ -114,7 +134,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '4' })}
-            onClick={() => { toggle('4'); }}
+            onClick={() => {
+              toggle('4');
+            }}
           >
             <strong>Assembly</strong>
           </NavLink>
@@ -122,7 +144,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '5' })}
-            onClick={() => { toggle('5'); }}
+            onClick={() => {
+              toggle('5');
+            }}
           >
             <strong>Tenon</strong>
           </NavLink>
@@ -130,7 +154,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '6' })}
-            onClick={() => { toggle('6'); }}
+            onClick={() => {
+              toggle('6');
+            }}
           >
             <strong>Panels</strong>
           </NavLink>
@@ -138,7 +164,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '7' })}
-            onClick={() => { toggle('7'); }}
+            onClick={() => {
+              toggle('7');
+            }}
           >
             <strong>Sanding</strong>
           </NavLink>
@@ -146,7 +174,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '8' })}
-            onClick={() => { toggle('8'); }}
+            onClick={() => {
+              toggle('8');
+            }}
           >
             <strong>Lipping</strong>
           </NavLink>
@@ -154,7 +184,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '9' })}
-            onClick={() => { toggle('9'); }}
+            onClick={() => {
+              toggle('9');
+            }}
           >
             <strong>Inspecting</strong>
           </NavLink>
@@ -162,7 +194,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '10' })}
-            onClick={() => { toggle('10'); }}
+            onClick={() => {
+              toggle('10');
+            }}
           >
             <strong>Paint Shop</strong>
           </NavLink>
@@ -170,7 +204,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '11' })}
-            onClick={() => { toggle('11'); }}
+            onClick={() => {
+              toggle('11');
+            }}
           >
             <strong>Complete</strong>
           </NavLink>
@@ -178,7 +214,9 @@ const Tracking = (props) => {
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '12' })}
-            onClick={() => { toggle('12'); }}
+            onClick={() => {
+              toggle('12');
+            }}
           >
             <strong>Shipped</strong>
           </NavLink>
@@ -276,17 +314,15 @@ const Tracking = (props) => {
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
+  user: state.users.user,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      loadOrders
+      loadOrders,
     },
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Tracking);
+export default connect(mapStateToProps, mapDispatchToProps)(Tracking);

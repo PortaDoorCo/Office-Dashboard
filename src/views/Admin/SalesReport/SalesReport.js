@@ -8,7 +8,17 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 // import StatusTable from './components/StatusTable'
 import { connect } from 'react-redux';
-import { Col, FormGroup, Input, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
+import {
+  Col,
+  FormGroup,
+  Input,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  TabContent,
+  TabPane,
+} from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { loadOrders } from '../../../redux/orders/actions';
 import status from '../../../utils/status';
@@ -23,20 +33,24 @@ const { Option } = Select;
 
 // moment(this.state.startDate).startOf('day').valueOf()
 
-const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+const loading = () => (
+  <div className="animated fadeIn pt-1 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+);
 
 const SalesReport = (props) => {
-  const { orders, role } = props;
+  const { orders, role, user } = props;
   const [activeTab, setActiveTab] = useState('1');
   const [startDate, setStartDate] = useState(moment(new Date()));
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus ] = useState('All');
+  const [filterStatus, setFilterStatus] = useState('All');
   const [filterText, setFilterText] = useState('');
 
-  const toggle = tab => {
+  const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
@@ -44,55 +58,53 @@ const SalesReport = (props) => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.created_at);
 
-   
-
-      if(filterStatus === 'All'){
-
+      if (filterStatus === 'All') {
         return (
           moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf()
+          moment(date) <= moment(endDate).endOf('day').valueOf()
         );
-        
       } else {
-
-
         return (
           moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                item.status.includes(filterStatus)
+          moment(date) <= moment(endDate).endOf('day').valueOf() &&
+          item.status.includes(filterStatus)
         );
-        
       }
     });
     setData(filteredOrders);
   }, [startDate, endDate, orders, filterStatus, filterText]);
 
-  
+  const minDate =
+    orders.length > 0
+      ? new Date(orders[orders.length - 1].created_at)
+      : new Date();
+
+  const salesPerson = props.sale
+    ? props.salesReps.filter((item) => {
+      return item.id === props.sale;
+    })
+    : [];
 
 
-  const minDate = orders.length > 0 ?  new Date(orders[orders.length - 1].created_at) : new Date();
+  console.log({user});
 
-  const salesPerson = props.sale ? props.salesReps.filter(item => {
-
-    return item.id === props.sale;
-  }) : [];
-
-
-  
-  return (
-    role && (role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ? 
+  return role &&
+    (role.type === 'authenticated' ||
+      role.type === 'owner' ||
+      role.type === 'administrator') ? (
       <div>
         <Row className="mb-3">
-          <Col lg='9' />
+          <Col lg="9" />
           <Col>
             <Row>
               <Col>
-
                 <SingleDatePicker
                   date={startDate} // momentPropTypes.momentObj or null
-                  onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
+                  onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
                   focused={startDateFocusedInput} // PropTypes.bool
-                  onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
+                  onFocusChange={({ focused }) =>
+                    setStartDateFocusedInput(focused)
+                  } // PropTypes.func.isRequired
                   id="startDate" // PropTypes.string.isRequired,
                   isOutsideRange={(date) => {
                     if (date > moment(new Date())) {
@@ -104,10 +116,10 @@ const SalesReport = (props) => {
                     }
                   }}
                 />
-      
+
                 <SingleDatePicker
                   date={endDate} // momentPropTypes.momentObj or null
-                  onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
+                  onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
                   focused={endDateFocusedInput} // PropTypes.bool
                   onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
                   id="endDate" // PropTypes.string.isRequired,
@@ -125,29 +137,36 @@ const SalesReport = (props) => {
             </Row>
             <Row>
               <Col>
-                <FormGroup style={{ height: '100%', width :'60%'}}>
-                  <Input type="select" name="select" id="status_dropdown" defaultValue='All' onChange={e => setFilterStatus(e.target.value)} >
-                    <option value='All'>All</option>
+                <FormGroup style={{ height: '100%', width: '60%' }}>
+                  <Input
+                    type="select"
+                    name="select"
+                    id="status_dropdown"
+                    defaultValue="All"
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                  >
+                    <option value="All">All</option>
                     {status.map((i, index) => (
-                      <option key={index} value={i.value}>{i.value}</option>
+                      <option key={index} value={i.value}>
+                        {i.value}
+                      </option>
                     ))}
                   </Input>
-                </FormGroup> 
+                </FormGroup>
               </Col>
             </Row>
           </Col>
         </Row>
 
-        <Charts
-          data={data}
-        />
-
+        <Charts data={data} />
 
         <Nav tabs>
           <NavItem>
             <NavLink
               className={classnames({ active: activeTab === '1' })}
-              onClick={() => { toggle('1'); }}
+              onClick={() => {
+                toggle('1');
+              }}
             >
               <strong>House</strong>
             </NavLink>
@@ -155,7 +174,9 @@ const SalesReport = (props) => {
           <NavItem>
             <NavLink
               className={classnames({ active: activeTab === '2' })}
-              onClick={() => { toggle('2'); }}
+              onClick={() => {
+                toggle('2');
+              }}
             >
               <strong>Harold</strong>
             </NavLink>
@@ -163,7 +184,9 @@ const SalesReport = (props) => {
           <NavItem>
             <NavLink
               className={classnames({ active: activeTab === '3' })}
-              onClick={() => { toggle('3'); }}
+              onClick={() => {
+                toggle('3');
+              }}
             >
               <strong>Ned</strong>
             </NavLink>
@@ -171,7 +194,9 @@ const SalesReport = (props) => {
           <NavItem>
             <NavLink
               className={classnames({ active: activeTab === '4' })}
-              onClick={() => { toggle('4'); }}
+              onClick={() => {
+                toggle('4');
+              }}
             >
               <strong>Peter</strong>
             </NavLink>
@@ -179,7 +204,9 @@ const SalesReport = (props) => {
           <NavItem>
             <NavLink
               className={classnames({ active: activeTab === '5' })}
-              onClick={() => { toggle('5'); }}
+              onClick={() => {
+                toggle('5');
+              }}
             >
               <strong>Meg</strong>
             </NavLink>
@@ -242,98 +269,99 @@ const SalesReport = (props) => {
             </Suspense>
           </TabPane>
         </TabContent>
-      </div> : 
-      role && (role.type === 'sales') ? 
-        <div>
-          <Row className="mb-3">
-            <Col lg='9' />
-            <Col>
-              <Row>
-                <Col>
-                  <SingleDatePicker
-                    date={startDate} // momentPropTypes.momentObj or null
-                    onDateChange={date => setStartDate(date)} // PropTypes.func.isRequired
-                    focused={startDateFocusedInput} // PropTypes.bool
-                    onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
-                    id="startDate" // PropTypes.string.isRequired,
-                    isOutsideRange={(date) => {
-                      if (date > moment(new Date())) {
-                        return true; // return true if you want the particular date to be disabled
-                      } else if (date < moment(minDate)) {
-                        return true;
-                      } else {
-                        return false;
-                      }
-                    }}
-                  />
+      </div>
+    ) : role && role.type === 'sales' ? (
+      <div>
+        <Row className="mb-3">
+          <Col lg="9" />
+          <Col>
+            <Row>
+              <Col>
+                <SingleDatePicker
+                  date={startDate} // momentPropTypes.momentObj or null
+                  onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
+                  focused={startDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) =>
+                    setStartDateFocusedInput(focused)
+                  } // PropTypes.func.isRequired
+                  id="startDate" // PropTypes.string.isRequired,
+                  isOutsideRange={(date) => {
+                    if (date > moment(new Date())) {
+                      return true; // return true if you want the particular date to be disabled
+                    } else if (date < moment(minDate)) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
 
-                  <SingleDatePicker
-                    date={endDate} // momentPropTypes.momentObj or null
-                    onDateChange={date => setEndDate(date)} // PropTypes.func.isRequired
-                    focused={endDateFocusedInput} // PropTypes.bool
-                    onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
-                    id="endDate" // PropTypes.string.isRequired,
-                    isOutsideRange={(date) => {
-                      if (date > moment(new Date())) {
-                        return true; // return true if you want the particular date to be disabled
-                      } else if (date < moment(minDate)) {
-                        return true;
-                      } else {
-                        return false;
-                      }
-                    }}
-                  />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+                <SingleDatePicker
+                  date={endDate} // momentPropTypes.momentObj or null
+                  onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
+                  focused={endDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
+                  id="endDate" // PropTypes.string.isRequired,
+                  isOutsideRange={(date) => {
+                    if (date > moment(new Date())) {
+                      return true; // return true if you want the particular date to be disabled
+                    } else if (date < moment(minDate)) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
 
-          <Chart1
-            orders={data}
-            startDate={startDate}
-            endDate={endDate}
-            status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
-          />
+        <Chart1
+          orders={data}
+          startDate={startDate}
+          endDate={endDate}
+          status={user?.sale?.fullName}
+        />
 
-          {/* <Maps 
+        {/* <Maps 
             orders={data}
             startDate={startDate}
             endDate={endDate}
             status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
           /> */}
 
-          <Suspense fallback={loading()}>
-            <StatusTable
-              orders={data}
-              status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
-              startDate={startDate}
-              endDate={endDate}
-            />
-          </Suspense>
-           
-        </div> :
-        <div>
-      Restricted Access
-        </div>
-  ); 
+
+
+        <Suspense fallback={loading()}>
+          <StatusTable
+            orders={data}
+            accountName={user?.sale?.fullName}
+            startDate={startDate}
+            endDate={endDate}
+            filterStatus={filterStatus}
+          />
+        </Suspense>
+      </div>
+    ) : (
+      <div>Restricted Access</div>
+    );
 };
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
   role: state.users.user.role,
   sale: state.users.user.sale,
-  salesReps: state.sales.salesReps
+  salesReps: state.sales.salesReps,
+  user: state.users.user
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      loadOrders
+      loadOrders,
     },
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SalesReport);
+export default connect(mapStateToProps, mapDispatchToProps)(SalesReport);
