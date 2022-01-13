@@ -7,7 +7,7 @@ import {
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import {
-  Field, reduxForm
+  Field, reduxForm, change, getFormValues
 } from 'redux-form';
 import { renderCheckboxToggle, renderDropdownList, renderField } from '../../../../../components/RenderInputs/renderInputs';
 import { updateCustomer } from '../../../../../redux/customers/actions';
@@ -52,6 +52,72 @@ class Edit extends Component {
     this.setState({
       contactInfo: !this.state.contactInfo
     });
+  }
+
+  sameShipping = () => {
+
+    const { formState, dispatch } = this.props;
+
+    console.log({formState});
+
+    dispatch(
+      change(
+        'CustomerEdit',
+        'Shipping_Address1',
+        formState && formState.Address1
+      )
+    );
+
+    dispatch(
+      change(
+        'CustomerEdit',
+        'Shipping_Address2',
+        formState && formState.Address2
+      )
+    );
+
+    dispatch(
+      change(
+        'CustomerEdit',
+        'Shipping_Address2',
+        formState && formState.Address2
+      )
+    );
+
+    dispatch(
+      change(
+        'CustomerEdit',
+        'Shipping_City',
+        formState && formState.City
+      )
+    );
+
+    dispatch(
+      change(
+        'CustomerEdit',
+        'Shipping_State',
+        formState && formState.State
+      )
+    );
+
+    dispatch(
+      change(
+        'CustomerEdit',
+        'Shipping_Zip',
+        formState && formState.Zip
+      )
+    );
+
+    dispatch(
+      change(
+        'CustomerEdit',
+        'Shipping_Phone',
+        formState && formState.Phone1
+      )
+    );
+
+  
+
   }
 
   render() {
@@ -635,6 +701,16 @@ class Edit extends Component {
                 </Col>
               </Row>
 
+              {!edit ? 
+                <Row>
+                  <Col>
+                    <Button color="primary" onClick={() => this.sameShipping()}>Same As Billing</Button>
+                  </Col>
+                </Row> : null
+              }
+
+
+
               <hr />
 
               <Row>
@@ -686,7 +762,8 @@ const mapStateToProps = (state, ownProps) => ({
   shippingMethods: state.misc_items.shippingMethods,
   test: ownProps,
   paymentTypes: state.misc_items.paymentTypes,
-  paymentTerms: state.misc_items.paymentTerms
+  paymentTerms: state.misc_items.paymentTerms,
+  formState: getFormValues('CustomerEdit')(state),
 });
 
 const mapDispatchToProps = dispatch =>
