@@ -3,17 +3,30 @@ import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { DropdownList } from 'react-widgets';
-import { Button, Col, Form, FormGroup, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
+import {
+  Button,
+  Col,
+  Form,
+  FormGroup,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
+  Input,
+} from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import db_url from '../../../redux/db_url';
-import { addPrinterOption, savePrinterOption } from '../../../redux/misc_items/actions';
-
+import {
+  addPrinterOption,
+  savePrinterOption,
+} from '../../../redux/misc_items/actions';
 
 const cookie = Cookies.get('jwt');
 
 const PrintModal = (props) => {
   const {
-
     className,
     modal,
     toggle,
@@ -21,10 +34,10 @@ const PrintModal = (props) => {
     downloadPDF,
     addPrinterOption,
     savePrinterOption,
-    user
+    user,
   } = props;
 
-  const number_select = [0,1,2,3,4,5];
+  const number_select = [0, 1, 2, 3, 4, 5];
 
   const [printer_option, set_printer_option] = useState({
     id: '',
@@ -39,19 +52,21 @@ const PrintModal = (props) => {
     materials: printer_options[0].materials,
     packing_slip: printer_options[0].packing_slip,
     qc: printer_options[0].qc,
-    door_labels: printer_options[0].door_labels || 0
+    door_labels: printer_options[0].door_labels || 0,
   });
 
   const change = (e, name) => {
     const value = e;
     set_printer_option((prevState) => {
-      return ({
+      return {
         ...prevState,
-        [name]: value
-      });
+        [name]: value,
+      };
     });
   };
- 
+
+  console.log({printer: printer_option.door_labels});
+
   const handleCreate = async (name) => {
     let newOption = {
       NAME: name,
@@ -65,17 +80,14 @@ const PrintModal = (props) => {
       materials: 0,
       packing_slip: 0,
       qc: 0,
-      door_labels: 0
+      door_labels: 0,
     };
 
-
-    const res = await axios.post(`${db_url}/printer-options`, newOption,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
-      }
-    );
+    const res = await axios.post(`${db_url}/printer-options`, newOption, {
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
     const data = await res;
     await addPrinterOption(data.data);
     await set_printer_option(data.data);
@@ -85,7 +97,6 @@ const PrintModal = (props) => {
     const id = printer_option.id;
     await savePrinterOption(id, printer_option, cookie);
   };
-
 
   return (
     <div>
@@ -99,12 +110,13 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="printer_settings">Settings</Label>
-                  <DropdownList filter
+                  <DropdownList
+                    filter
                     data={printer_options}
                     value={printer_option}
                     // allowCreate={true}
                     // onCreate={name => handleCreate(name)}
-                    onChange={value => set_printer_option(value)}
+                    onChange={(value) => set_printer_option(value)}
                     textField="NAME"
                   />
                 </FormGroup>
@@ -112,138 +124,149 @@ const PrintModal = (props) => {
             </Col>
           </Row>
 
-          {user?.role?.type !== 'quality_control' ? 
-            <Row>
-              <Col>
-                <Form>
-                  <FormGroup>
-                    <Label for="acknowledgement">Acknowledgement</Label>
-                    <DropdownList filter
-                      data={number_select}
-                      value={printer_option.acknowledgement}
-                      onChange={(e) => change(e, 'acknowledgement')}
-                      textField="acknowledgement"
-                      name="acknowledgement"
-                    />
-                  </FormGroup>
-                </Form>
-              </Col>
-              <Col>
-                <Form>
-                  <FormGroup>
-                    <Label for="invoice">Invoice</Label>
-                    <DropdownList filter
-                      data={number_select}
-                      value={printer_option.invoice}
-                      onChange={(e) => change(e, 'invoice')}
-                      textField="invoice"
-                      name="invoice"
-                    />
-                  </FormGroup>
-                </Form>
-              </Col>
-            </Row> : null}
+          {user?.role?.type !== 'quality_control' ? (
+            <div>
+              <Row>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="acknowledgement">Acknowledgement</Label>
+                      <DropdownList
+                        filter
+                        data={number_select}
+                        value={printer_option.acknowledgement}
+                        onChange={(e) => change(e, 'acknowledgement')}
+                        textField="acknowledgement"
+                        name="acknowledgement"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="invoice">Invoice</Label>
+                      <DropdownList
+                        filter
+                        data={number_select}
+                        value={printer_option.invoice}
+                        onChange={(e) => change(e, 'invoice')}
+                        textField="invoice"
+                        name="invoice"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+              </Row>
 
-          <Row>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="assembly_list">Assembly List</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.assembly_list}
-                    onChange={(e) => change(e, 'assembly_list')}
-                    textField="assembly_list"
-                    name="assembly_list"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="panels">Panels</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.panels}
-                    onChange={(e) => change(e, 'panels')}
-                    textField="panels"
-                    name="panels"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
+              <Row>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="assembly_list">Assembly List</Label>
+                      <DropdownList
+                        filter
+                        data={number_select}
+                        value={printer_option.assembly_list}
+                        onChange={(e) => change(e, 'assembly_list')}
+                        textField="assembly_list"
+                        name="assembly_list"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="panels">Panels</Label>
+                      <DropdownList
+                        filter
+                        data={number_select}
+                        value={printer_option.panels}
+                        onChange={(e) => change(e, 'panels')}
+                        textField="panels"
+                        name="panels"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+              </Row>
 
-          <Row>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="stiles">Stiles</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.stiles}
-                    onChange={(e) => change(e, 'stiles')}
-                    textField="stiles"
-                    name="stiles"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="rails">Rails</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.rails}
-                    onChange={(e) => change(e, 'rails')}
-                    textField="rails"
-                    name="rails"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
+              <Row>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="stiles">Stiles</Label>
+                      <DropdownList
+                        filter
+                        data={number_select}
+                        value={printer_option.stiles}
+                        onChange={(e) => change(e, 'stiles')}
+                        textField="stiles"
+                        name="stiles"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="rails">Rails</Label>
+                      <DropdownList
+                        filter
+                        data={number_select}
+                        value={printer_option.rails}
+                        onChange={(e) => change(e, 'rails')}
+                        textField="rails"
+                        name="rails"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+              </Row>
 
-          <Row>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="profiles">Profiles</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.profiles}
-                    onChange={(e) => change(e, 'profiles')}
-                    textField="profiles"
-                    name="profiles"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="material_list">Material List</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.materials}
-                    onChange={(e) => change(e, 'materials')}
-                    textField="materials"
-                    name="materials"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-           
-          </Row>
+              <Row>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="profiles">Profiles</Label>
+                      <DropdownList
+                        filter
+                        data={number_select}
+                        value={printer_option.profiles}
+                        onChange={(e) => change(e, 'profiles')}
+                        textField="profiles"
+                        name="profiles"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="material_list">Material List</Label>
+                      <DropdownList
+                        filter
+                        data={number_select}
+                        value={printer_option.materials}
+                        onChange={(e) => change(e, 'materials')}
+                        textField="materials"
+                        name="materials"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+              </Row>
+            </div>
+          ) : null}
 
           <Row>
             <Col>
               <Form>
                 <FormGroup>
                   <Label for="packing_slip">Packing Slip</Label>
-                  <DropdownList filter
+                  <DropdownList
+                    filter
                     data={number_select}
                     value={printer_option.packing_slip}
                     onChange={(e) => change(e, 'packing_slip')}
@@ -257,7 +280,8 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="qc">QC</Label>
-                  <DropdownList filter
+                  <DropdownList
+                    filter
                     data={number_select}
                     value={printer_option && printer_option.qc}
                     onChange={(e) => change(e, 'qc')}
@@ -274,13 +298,20 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="labels">Door Labels</Label>
-                  <DropdownList filter
+
+                  <Input
+                    value={printer_option.door_labels}
+                    name="door_labels"
+                    onChange={(e) => change(e.target.value, 'door_labels')}
+                  ></Input>
+
+                  {/* <DropdownList filter
                     data={number_select}
                     value={printer_option.door_labels}
                     onChange={(e) => change(e, 'door_labels')}
                     textField="door_labels"
                     name="door_labels"
-                  />
+                  /> */}
                 </FormGroup>
               </Form>
             </Col>
@@ -288,16 +319,20 @@ const PrintModal = (props) => {
 
           <Row className="mt-3">
             <Col>
-              <Button color="primary" onClick={saveOption}>Save</Button>
+              <Button color="primary" onClick={saveOption}>
+                Save
+              </Button>
             </Col>
             <Col />
           </Row>
-
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={(e) => {
-            downloadPDF(printer_option);
-          }}>
+          <Button
+            color="primary"
+            onClick={(e) => {
+              downloadPDF(printer_option);
+            }}
+          >
             Print
           </Button>{' '}
           <Button color="secondary" onClick={toggle}>
@@ -309,16 +344,15 @@ const PrintModal = (props) => {
   );
 };
 
-
 const mapStateToProps = (state, prop) => ({
-  user: state.users.user
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       addPrinterOption,
-      savePrinterOption
+      savePrinterOption,
     },
     dispatch
   );

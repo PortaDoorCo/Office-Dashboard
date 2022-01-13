@@ -105,83 +105,90 @@ const PrintModal = (props) => {
           </Row>
 
           {user?.role?.type !== 'quality_control' ? 
-            <Row>
-              <Col>
-                <Form>
-                  <FormGroup>
-                    <Label for="acknowledgement">Acknowledgement</Label>
-                    <DropdownList filter
-                      data={number_select}
-                      value={printer_option.acknowledgement}
-                      onChange={(e) => change(e, 'acknowledgement')}
-                      textField="acknowledgement"
-                      name="acknowledgement"
-                    />
-                  </FormGroup>
-                </Form>
-              </Col>
-              <Col>
-                <Form>
-                  <FormGroup>
-                    <Label for="invoice">Invoice</Label>
-                    <DropdownList filter
-                      data={number_select}
-                      value={printer_option.invoice}
-                      onChange={(e) => change(e, 'invoice')}
-                      textField="invoice"
-                      name="invoice"
-                    />
-                  </FormGroup>
-                </Form>
-              </Col>
-            </Row>
+
+            <div>
+              <Row>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="acknowledgement">Acknowledgement</Label>
+                      <DropdownList filter
+                        data={number_select}
+                        value={printer_option.acknowledgement}
+                        onChange={(e) => change(e, 'acknowledgement')}
+                        textField="acknowledgement"
+                        name="acknowledgement"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="invoice">Invoice</Label>
+                      <DropdownList filter
+                        data={number_select}
+                        value={printer_option.invoice}
+                        onChange={(e) => change(e, 'invoice')}
+                        textField="invoice"
+                        name="invoice"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="assembly_list">Assembly List</Label>
+                      <DropdownList filter
+                        data={number_select}
+                        value={printer_option.assembly_list}
+                        onChange={(e) => change(e, 'assembly_list')}
+                        textField="assembly_list"
+                        name="assembly_list"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="box_sides">Box Sides</Label>
+                      <DropdownList filter
+                        data={number_select}
+                        value={printer_option.box_sides}
+                        onChange={(e) => change(e, 'box_sides')}
+                        textField="box_sides"
+                        name="box_sides"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+
+                <Col>
+                  <Form>
+                    <FormGroup>
+                      <Label for="box_bottoms">Box Bottoms</Label>
+                      <DropdownList filter
+                        data={number_select}
+                        value={printer_option.box_bottoms}
+                        onChange={(e) => change(e, 'box_bottoms')}
+                        textField="box_bottoms"
+                        name="box_bottoms"
+                      />
+                    </FormGroup>
+                  </Form>
+                </Col>
+              </Row>
+
+
+            </div>
             : null}
 
-          <Row>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="assembly_list">Assembly List</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.assembly_list}
-                    onChange={(e) => change(e, 'assembly_list')}
-                    textField="assembly_list"
-                    name="assembly_list"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="box_sides">Box Sides</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.box_sides}
-                    onChange={(e) => change(e, 'box_sides')}
-                    textField="box_sides"
-                    name="box_sides"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="box_bottoms">Box Bottoms</Label>
-                  <DropdownList filter
-                    data={number_select}
-                    value={printer_option.box_bottoms}
-                    onChange={(e) => change(e, 'box_bottoms')}
-                    textField="box_bottoms"
-                    name="box_bottoms"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
+         
 
 
           <Row>

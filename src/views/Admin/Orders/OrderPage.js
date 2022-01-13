@@ -665,7 +665,7 @@ class OrderPage extends Component {
         });
       }
 
-      for (let i = 0; i < p.door_labels; i++) {
+      if (p.door_labels > 0) {
         await Door_Labels(
           newDataOrder,
           design1,
