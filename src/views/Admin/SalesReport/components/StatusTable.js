@@ -7,12 +7,12 @@ import OrderPage from '../../Orders/OrderPage';
 import { Row, Col, FormGroup, Input } from 'reactstrap';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
-import { Select, } from 'antd';
+import { Select } from 'antd';
 import {
   updateStatus,
   loadOrders,
   setSelectedOrder,
-  setOrderType
+  setOrderType,
 } from '../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import momentLocaliser from 'react-widgets-moment';
@@ -24,13 +24,19 @@ import status from '../../../../utils/status';
 
 // momentLocaliser(moment);
 
-
 const cookie = Cookies.get('jwt');
 const { Option } = Select;
 
 const conditionalRowStyles = [
   {
-    when: (row) => row.late === true,
+    when: (row) =>
+      moment(row.dueDate).startOf('day').valueOf() <
+        moment(new Date()).startOf('day').valueOf() &&
+      (row.Shipping_Scheduled ||
+        (!row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Ordered') &&
+          !row.status.includes('Shipped'))),
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -47,28 +53,26 @@ const StatusTable = (props) => {
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
 
+  console.log({ StatusOrders: orders });
+
   useEffect(() => {
-    const filteredOrders = orders.filter((item) => {
+    const filteredOrders = orders?.filter((item) => {
       let date = new Date(item.created_at);
 
-      if(props.filterStatus === 'All'){
-        return (
-          moment(date) >= moment(props.startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(props.endDate).endOf('day').valueOf() &&
-          item.sale && item.sale.fullName && item.sale.fullName.includes(props.accountName)
-        );
-      } else {
-        return (
-          moment(date) >= moment(props.startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(props.endDate).endOf('day').valueOf() &&
-          item.sale && item.sale.fullName && item.sale.fullName.includes(props.accountName) &&
-          item.status.includes(props.filterStatus)
-        );
-      }
-
+      return (
+        item.sale &&
+        item.sale.fullName &&
+        item.sale.fullName.includes(props.accountName)
+      );
     });
     setData(filteredOrders);
-  }, [orders, props.filterStatus, props.accountName, props.startDate, props.endDate]);
+  }, [
+    orders,
+    props.filterStatus,
+    props.accountName,
+    props.startDate,
+    props.endDate,
+  ]);
 
   const handleStatusChange = async (e, row) => {
     const { updateStatus } = props;
@@ -96,25 +100,64 @@ const StatusTable = (props) => {
       sortable: true,
     },
     {
-      name: 'Date Ordered',
-      cell: (row) => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
+      name: 'Date Entered',
+      cell: (row) => <div>{moment(row?.created_at).format('MMM Do YYYY')}</div>,
     },
     {
-      name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      name: 'Date Ordered',
+      cell: (row) => {
+        const dateOrdered = row?.tracking?.filter((x) => {
+          return x.status === 'Ordered';
+        });
+
+        if (dateOrdered.length > 0) {
+          return <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+      },
+    },
+    {
+      name: 'Est. Shipping',
+      cell: (row) => (
+        <div>
+          {row.Shipping_Scheduled ||
+          (!row.status.includes('Quote') &&
+            !row.status.includes('Invoiced') &&
+            !row.status.includes('Ordered') &&
+            !row.status.includes('Shipped'))
+            ? moment(row.dueDate).format('MMM Do YYYY')
+            : 'TBD'}
+        </div>
+      ),
     },
     {
       name: 'Status',
       grow: 1,
       cell: (row) => (
-        <FormGroup style={{ height: '100%'}}>
-          <Input type="select" name="select" id="status_dropdown" defaultValue={row.status} style={{ height: '100%', boxShadow: 'none', border: '0px', outline: '0px', background: 'none'}} onChange={(e) => handleStatusChange(e,row)}>
+        <FormGroup style={{ height: '100%' }}>
+          <Input
+            type="select"
+            name="select"
+            id="status_dropdown"
+            defaultValue={row.status}
+            style={{
+              height: '100%',
+              boxShadow: 'none',
+              border: '0px',
+              outline: '0px',
+              background: 'none',
+            }}
+            onChange={(e) => handleStatusChange(e, row)}
+          >
             <option value={row.status}>{row.status}</option>
             {status.map((i, index) => (
-              <option key={index} value={i.value}>{i.value}</option>
+              <option key={index} value={i.value}>
+                {i.value}
+              </option>
             ))}
           </Input>
-        </FormGroup> 
+        </FormGroup>
       ),
     },
     {
@@ -143,7 +186,6 @@ const StatusTable = (props) => {
     },
   ];
 
-
   const toggle = (row) => {
     const { setSelectedOrder, setOrderType } = props;
 
@@ -165,9 +207,8 @@ const StatusTable = (props) => {
 
   const exportReports = () => {
     SalesmenReport(data, props.startDate, props.endDate, props.accountName);
-    setToggleCleared(!toggleCleared); 
+    setToggleCleared(!toggleCleared);
   };
-
 
   return (
     <div>
@@ -175,14 +216,18 @@ const StatusTable = (props) => {
         <Row>
           {/* <Col lg='11' /> */}
           <Col>
-            <Tooltip title="View Reports" onClick={exportReports} placement="top" className="mb-3 mt-3">
+            <Tooltip
+              title="View Reports"
+              onClick={exportReports}
+              placement="top"
+              className="mb-3 mt-3"
+            >
               <IconButton>
                 <Receipt style={{ width: '40', height: '40' }} />
               </IconButton>
             </Tooltip>
           </Col>
         </Row>
-
       </div>
       <DataTable
         title="Orders"
@@ -205,24 +250,22 @@ const StatusTable = (props) => {
   );
 };
 
-
 const mapStateToProps = (state, prop) => ({
-  orders: state.Orders.orders,
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   breakdowns: state.part_list.breakdowns,
-  box_breakdowns: state.part_list.box_breakdowns
+  box_breakdowns: state.part_list.box_breakdowns,
 });
-    
+
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateStatus,
       loadOrders,
       setSelectedOrder,
-      setOrderType
+      setOrderType,
     },
     dispatch
   );
-    
+
 export default connect(mapStateToProps, mapDispatchToProps)(StatusTable);

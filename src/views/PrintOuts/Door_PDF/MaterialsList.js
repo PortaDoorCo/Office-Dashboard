@@ -403,9 +403,12 @@ export default (data, breakdowns) => {
               ? data.job_info?.Shop_Notes?.toUpperCase()
               : ''
           }`,
-          alignment: 'right',
+          alignment: 'center',
           style: 'fontsBold',
         },
+        {
+          text: ''
+        }
       ],
       margin: [0, 10, 0, 20],
     },

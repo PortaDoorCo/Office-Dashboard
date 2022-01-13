@@ -48,7 +48,12 @@ const cookie = Cookies.get('jwt');
 
 const conditionalRowStyles = [
   {
-    when: (row: { late: any }) => row.late === true,
+    when: (row: { late: any, Shipping_Scheduled: any, status: String, dueDate: any }) => {
+      return (moment(row.dueDate).startOf('day').valueOf() < moment(new Date()).startOf('day').valueOf()) && (row.Shipping_Scheduled || (!row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped')));
+    },
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -60,7 +65,7 @@ const conditionalRowStyles = [
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
-    <TextField id="search" type="text" placeholder="Search Orders" value={filterText} onChange={onFilter} />
+    <TextField id="search" type="text" placeholder="Search Orders" value={filterText} onChange={onFilter} autoComplete='off' />
     <ClearButton type="button" color="danger" onClick={onClear}>X</ClearButton>
   </>
 );
@@ -169,7 +174,12 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'Est. Shipping',
-      cell: row => <div>{row.Shipping_Scheduled ? moment(row.dueDate).format('MMM Do YYYY') : 'TBD'}</div>,
+      cell: row => <div>{row.Shipping_Scheduled || (!row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped'))
+        ? moment(row.dueDate).format('MMM Do YYYY')
+        : 'TBD'}</div>,
     },
     {
       name: 'Status',

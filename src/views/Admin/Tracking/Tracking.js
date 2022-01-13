@@ -1,328 +1,532 @@
-import React, { useState, useEffect } from 'react';
-import {
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  Col,
-} from 'reactstrap';
-import classnames from 'classnames';
-import StatusTable from './components/StatusTable';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Charts from './components/Chart';
-import { loadOrders } from '../../../redux/orders/actions';
+import DataTable from 'react-data-table-component';
+import moment from 'moment';
+import OrderPage from '../Orders/OrderPage';
+import { Tooltip, IconButton } from '@material-ui/core';
+import Inbox from '@material-ui/icons/Inbox';
+import { Select } from 'antd';
+import {
+  updateStatus,
+  loadOrders,
+  setSelectedOrder,
+  setOrderType,
+} from '../../../redux/orders/actions';
+import Cookies from 'js-cookie';
+// import momentLocaliser from 'react-widgets-moment';
+import { Row, Col, Button, FormGroup, Input } from 'reactstrap';
+import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import 'react-dates/initialize';
-import moment from 'moment';
+import Receipt from '@material-ui/icons/Receipt';
+import Report1 from '../../PrintOuts/Reports/Report1';
+import styled from 'styled-components';
+import status from '../../../utils/tracking_status';
 
-const Tracking = (props) => {
-  const { orders, user } = props;
-  const [activeTab, setActiveTab] = useState('1');
-  const [sortedDates, setSortedDate] = useState([]);
-  const [startDate, setStartDate] = useState(moment(new Date()));
-  const [endDate, setEndDate] = useState(moment(sortedDates[0]?.dueDate));
+// momentLocaliser(moment);
+
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 34px;
+  width: 32px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const cookie = Cookies.get('jwt');
+const { Option } = Select;
+
+const conditionalRowStyles = [
+  {
+    when: (row) =>
+      moment(row.dueDate).startOf('day').valueOf() <
+        moment(new Date()).startOf('day').valueOf() &&
+      (row.Shipping_Scheduled ||
+        (!row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Ordered') &&
+          !row.status.includes('Shipped'))),
+    style: {
+      backgroundColor: '#FEEBEB',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+];
+
+const FilterComponent = ({ filterText, onFilter, onClear }) => (
+  <>
+    <TextField
+      id="search"
+      type="text"
+      placeholder="Search Orders"
+      value={filterText}
+      onChange={onFilter}
+      autoComplete='off'
+    />
+    <ClearButton type="button" color="danger" onClick={onClear}>
+      X
+    </ClearButton>
+  </>
+);
+
+const OrderTable = (props) => {
+  const { orders, role } = props;
+  const [toggleCleared, setToggleCleared] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
+  const [startDate, setStartDate] = useState(moment(new Date()));
+  const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-
-  const toggle = (tab) => {
-    if (activeTab !== tab) setActiveTab(tab);
-  };
-
-  useEffect(() => {
-
-    setSortedDate(orders.sort((a, b) => b.dueDate - a.dueDate));
-
-  }, [orders]);
-
-  useEffect(() => {
-    const filteredOrders = orders.filter((item) => {
-      let date = new Date(item.dueDate);
-      return (
-        moment(date) >= moment(startDate).startOf('day').valueOf() &&
-        moment(date) <= moment(endDate).endOf('day').valueOf()
-      );
-    });
-    setData(filteredOrders);
-  }, [startDate, endDate, orders]);
+  const [filterStatus, setFilterStatus] = useState('In Production');
+  const [filterText, setFilterText] = useState('');
+  const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
   const minDate =
-    orders.length > 0
-      ? new Date(orders[orders.length - 1].dueDate)
+    orders?.length > 0
+      ? new Date(orders[orders?.length - 1].created_at)
       : new Date();
 
-  console.log({ sortedDates });
+  useEffect(() => {
+    const filteredOrders = orders?.filter((item) => {
+      let date = new Date(item.dueDate);
+
+      const dateOrdered = item?.tracking?.filter((x) => {
+        console.log({ x });
+        return x.status === 'Ordered';
+      });
+
+      if (filterStatus === 'All') {
+        if (filterText.length > 0) {
+          return (
+            moment(dateOrdered[0]?.date || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.job_info.customer.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(dateOrdered[0]?.date || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date || date) <=
+              moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Ordered') {
+        console.log({ dateOrdered });
+        console.log({ item });
+
+        if (filterText?.length > 0) {
+          return (
+            moment(dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateOrdered[0]?.status &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateOrdered[0]?.status
+          );
+        }
+      } else if (filterStatus === 'In Production') {
+        if (filterText?.length > 0) {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Ordered') &&
+            !item.status.includes('Shipped') &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Ordered') &&
+            !item.status.includes('Shipped')
+          );
+        }
+      } else {
+        if (filterText?.length > 0) {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status.includes(filterStatus) &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status.includes(filterStatus)
+          );
+        }
+      }
+    });
+    setData(filteredOrders);
+  }, [startDate, endDate, orders, filterStatus, filterText]);
+
+  const subHeaderComponentMemo = useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setResetPaginationToggle(!resetPaginationToggle);
+        setFilterText('');
+      }
+    };
+
+    return (
+      <FilterComponent
+        onFilter={(e) => setFilterText(e.target.value)}
+        onClear={handleClear}
+        filterText={filterText}
+      />
+    );
+  }, [filterText, resetPaginationToggle]);
+
+  const handleStatusChange = async (e, row) => {
+    const { updateStatus } = props;
+    const status = {
+      status: e.target.value,
+    };
+    await updateStatus(row.id, row, status, cookie);
+  };
+
+  const columns = [
+    {
+      name: 'Order #',
+      selector: 'orderNum',
+      sortable: true,
+    },
+    {
+      name: 'Company',
+      cell: (row) => (
+        <div>
+          {row.job_info &&
+            row.job_info.customer &&
+            row.job_info.customer.Company}
+        </div>
+      ),
+      sortable: true,
+      grow: 2,
+    },
+
+    {
+      name: 'PO #',
+      selector: 'job_info.poNum',
+      sortable: true,
+    },
+    {
+      name: 'Order Type',
+      selector: 'orderType',
+      sortable: true,
+    },
+    {
+      name: 'Est. Shipping',
+      cell: (row) => (
+        <div>
+          {row.Shipping_Scheduled ||
+          (!row.status.includes('Quote') &&
+            !row.status.includes('Invoiced') &&
+            !row.status.includes('Ordered') &&
+            !row.status.includes('Shipped'))
+            ? moment(row.dueDate).format('MMM Do YYYY')
+            : 'TBD'}
+        </div>
+      ),
+    },
+    {
+      name: 'Status',
+      grow: 1,
+      cell: (row) => (
+        <div>
+          <Row>
+            <Col>
+              <FormGroup style={{ height: '100%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue={row.status}
+                  style={{
+                    height: '100%',
+                    boxShadow: 'none',
+                    border: '0px',
+                    outline: '0px',
+                    background: 'none',
+                  }}
+                  onChange={(e) => handleStatusChange(e, row)}
+                >
+                  <option value={row.status}>{row.status}</option>
+                  {status.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col style={{ textAlign: 'center', color: 'red' }}>
+              {row.job_info.Rush && row.job_info.Sample
+                ? 'Sample / Rush'
+                : row.job_info.Rush
+                  ? 'Rush'
+                  : row.job_info.Sample
+                    ? 'Sample'
+                    : ''}
+            </Col>
+          </Row>
+        </div>
+      ),
+    },
+    {
+      name: ' ',
+      button: true,
+      grow: 2,
+      cell: (row) => (
+        <Tooltip title="View Order" placement="top">
+          <IconButton
+            onClick={function (event) {
+              event.preventDefault();
+              toggle(row);
+            }}
+            id={row.id}
+          >
+            <Inbox>Open</Inbox>
+          </IconButton>
+        </Tooltip>
+      ),
+    },
+  ];
+
+  const toggle = (row) => {
+    const { setSelectedOrder, setOrderType } = props;
+
+    setEdit(false);
+    setModal(!modal);
+
+    if (!modal) {
+      setSelectedOrder(row);
+      setOrderType(row.orderType);
+    } else {
+      setSelectedOrder(null);
+      setOrderType(null);
+    }
+  };
+
+  const editable = () => {
+    setEdit(!edit);
+  };
+
+  const exportReports = () => {
+    Report1(data, startDate, endDate, filterStatus);
+    setToggleCleared(!toggleCleared);
+  };
 
   return (
     <div>
-      <Row>
-        <Col sm="9" />
+      <Row className="mb-3">
+        <Col lg="9" />
         <Col>
-          <SingleDatePicker
-            date={startDate} // momentPropTypes.momentObj or null
-            onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
-            focused={startDateFocusedInput} // PropTypes.bool
-            onFocusChange={({ focused }) => setStartDateFocusedInput(focused)} // PropTypes.func.isRequired
-            id="startDate" // PropTypes.string.isRequired,
-            isOutsideRange={(date) => {
-              if (date > moment(new Date())) {
-                return true; // return true if you want the particular date to be disabled
-              } else if (date < moment(minDate)) {
-                return true;
-              } else {
-                return false;
-              }
-            }}
-          />
+          <Row>
+            <Col>
+              <h3>Filter Due Date</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <SingleDatePicker
+                date={startDate} // momentPropTypes.momentObj or null
+                onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
+                focused={startDateFocusedInput} // PropTypes.bool
+                onFocusChange={({ focused }) =>
+                  setStartDateFocusedInput(focused)
+                } // PropTypes.func.isRequired
+                id="startDate" // PropTypes.string.isRequired,
+                isOutsideRange={(date) => {
+                  if (date < moment(minDate)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
+              />
 
-          <SingleDatePicker
-            date={endDate} // momentPropTypes.momentObj or null
-            onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
-            focused={endDateFocusedInput} // PropTypes.bool
-            onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
-            id="endDate" // PropTypes.string.isRequired,
-            isOutsideRange={(date) => {
-              if (date > moment(new Date())) {
-                return true; // return true if you want the particular date to be disabled
-              } else if (date < moment(minDate)) {
-                return true;
-              } else {
-                return false;
-              }
-            }}
-          />
+              <SingleDatePicker
+                date={endDate} // momentPropTypes.momentObj or null
+                onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
+                focused={endDateFocusedInput} // PropTypes.bool
+                onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
+                id="endDate" // PropTypes.string.isRequired,
+                isOutsideRange={(date) => {
+                  if (date < moment(startDate)) {
+                    return true; // return true if you want the particular date to be disabled
+                  } else {
+                    return false;
+                  }
+                }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="In Production"
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                >
+                  {status?.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              {role &&
+              (role.type === 'authenticated' ||
+                role.type === 'owner' ||
+                role.type === 'administrator') ? (
+                  <h3>
+                  Order Totals: $
+                    {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
+                  </h3>
+                ) : null}
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              <h3># Of Orders: {data.length}</h3>
+            </Col>
+          </Row>
         </Col>
       </Row>
 
-      <Charts data={data} />
+      <Row>
+        {/* <Col lg='11' /> */}
+        <Col>
+          <Tooltip
+            title="View Reports"
+            onClick={exportReports}
+            placement="top"
+            className="mb-3 mt-3"
+          >
+            <IconButton>
+              <Receipt style={{ width: '40', height: '40' }} />
+            </IconButton>
+          </Tooltip>
+        </Col>
+      </Row>
 
-      <Nav tabs>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '1' })}
-            onClick={() => {
-              toggle('1');
-            }}
-          >
-            <strong>In Production</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '2' })}
-            onClick={() => {
-              toggle('2');
-            }}
-          >
-            <strong>Cutting</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '3' })}
-            onClick={() => {
-              toggle('3');
-            }}
-          >
-            <strong>Framing</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '4' })}
-            onClick={() => {
-              toggle('4');
-            }}
-          >
-            <strong>Assembly</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '5' })}
-            onClick={() => {
-              toggle('5');
-            }}
-          >
-            <strong>Tenon</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '6' })}
-            onClick={() => {
-              toggle('6');
-            }}
-          >
-            <strong>Panels</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '7' })}
-            onClick={() => {
-              toggle('7');
-            }}
-          >
-            <strong>Sanding</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '8' })}
-            onClick={() => {
-              toggle('8');
-            }}
-          >
-            <strong>Lipping</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '9' })}
-            onClick={() => {
-              toggle('9');
-            }}
-          >
-            <strong>Inspecting</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '10' })}
-            onClick={() => {
-              toggle('10');
-            }}
-          >
-            <strong>Paint Shop</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '11' })}
-            onClick={() => {
-              toggle('11');
-            }}
-          >
-            <strong>Complete</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '12' })}
-            onClick={() => {
-              toggle('12');
-            }}
-          >
-            <strong>Shipped</strong>
-          </NavLink>
-        </NavItem>
-      </Nav>
-      <TabContent activeTab={activeTab}>
-        <TabPane tabId="1">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="In Production"
-          />
-        </TabPane>
-        <TabPane tabId="2">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Cut"
-          />
-        </TabPane>
-        <TabPane tabId="3">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Framing"
-          />
-        </TabPane>
-        <TabPane tabId="4">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Assembly"
-          />
-        </TabPane>
-        <TabPane tabId="5">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Tenon"
-          />
-        </TabPane>
-        <TabPane tabId="6">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Panels"
-          />
-        </TabPane>
-        <TabPane tabId="7">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Sanding"
-          />
-        </TabPane>
-        <TabPane tabId="8">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Lipping"
-          />
-        </TabPane>
-        <TabPane tabId="9">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Inspecting"
-          />
-        </TabPane>
-        <TabPane tabId="10">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Paint Shop"
-          />
-        </TabPane>
-        <TabPane tabId="11">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Complete"
-          />
-        </TabPane>
-        <TabPane tabId="12">
-          <StatusTable
-            orders={data}
-            loadOrders={props.loadOrders}
-            status="Shipped"
-          />
-        </TabPane>
-      </TabContent>
+      <DataTable
+        title="Orders"
+        columns={columns}
+        data={data}
+        pagination
+        progressPending={!props.ordersDBLoaded}
+        highlightOnHover
+        conditionalRowStyles={conditionalRowStyles}
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
+      />
+      {modal ? (
+        <OrderPage
+          toggle={toggle}
+          modal={modal}
+          editable={editable}
+          edit={edit}
+        />
+      ) : null}
     </div>
   );
 };
 
 const mapStateToProps = (state, prop) => ({
   orders: state.Orders.orders,
-  user: state.users.user,
+  orderNum: state.Orders.orderNum,
+  ordersDBLoaded: state.Orders.ordersDBLoaded,
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns,
+  role: state.users.user.role,
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      updateStatus,
       loadOrders,
+      setSelectedOrder,
+      setOrderType,
     },
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tracking);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderTable);

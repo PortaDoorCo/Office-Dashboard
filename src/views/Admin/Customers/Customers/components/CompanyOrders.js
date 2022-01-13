@@ -24,7 +24,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     <div>
       <Row>
         <Col>
-          <Input id="search" type="text" placeholder="Order Number" value={filterText} onChange={onFilter} />
+          <Input id="search" type="text" placeholder="Order Number" autoComplete='off' value={filterText} onChange={onFilter} />
         </Col>
       </Row>
     </div>
