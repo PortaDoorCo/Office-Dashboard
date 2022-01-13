@@ -943,6 +943,7 @@ const Cope_Table = ({
               {role?.type === 'authenticated' ||
               role?.type === 'owner' ||
               role?.type === 'administrator' ||
+              role?.type === 'management' ||
               role?.type === 'office' ? (
                   <Col xs="3">
                     <strong>Extra Design Cost</strong>
