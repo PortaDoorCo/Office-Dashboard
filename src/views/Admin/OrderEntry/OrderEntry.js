@@ -162,7 +162,7 @@ class OrderEntry extends Component {
             {
               date: moment().format(),
               status: values.job_info?.status?.value,
-              user: user?.FirstName
+              user: user?.FirstName,
             },
           ];
         } else {
@@ -171,13 +171,12 @@ class OrderEntry extends Component {
             {
               date: moment().format(),
               status: 'Order Edited',
-              user: user?.FirstName
+              user: user?.FirstName,
             },
           ];
         }
       }
     }
-
 
     if (!isEdit) {
       order = {
@@ -209,7 +208,7 @@ class OrderEntry extends Component {
           {
             status: values.job_info?.status?.value,
             date: new Date(),
-            user: user?.FirstName
+            user: user?.FirstName,
           },
         ],
         balance_history: [
@@ -243,8 +242,6 @@ class OrderEntry extends Component {
     }
 
     let canSubmit = false;
-
- 
 
     if (orderType === 'Mouldings' || orderType === 'Misc Items') {
       canSubmit = true;
@@ -324,8 +321,6 @@ class OrderEntry extends Component {
       isEdit,
       user,
     } = this.props;
-
-
 
     return (
       <div className="animated fadeIn order-tour">
@@ -566,6 +561,9 @@ const mapStateToProps = (state, props) => ({
               state.Orders &&
               state.Orders.selectedOrder &&
               state.Orders.selectedOrder.status,
+          DueDate: state.Orders?.selectedOrder?.job_info?.Shipping_Scheduled
+            ? state.Orders?.selectedOrder?.job_info?.DueDate
+            : dueDate
           // salesRep: state.Orders?.selectedOrder?.sale?.fullName
         },
       }
