@@ -126,7 +126,7 @@ class Edit extends Component {
     this.setState({ toggleTax: !this.state.toggleTax });
 
     if (!this.state.toggleTax) {
-      dispatch(change('NewCustomer', 'TaxRate', 6.325));
+      dispatch(change('NewCustomer', 'TaxRate', 6.35));
     } else {
       dispatch(change('NewCustomer', 'TaxRate', 0));
     }

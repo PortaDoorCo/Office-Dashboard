@@ -398,13 +398,30 @@ export default (data, breakdowns) => {
           text: 'MATERIAL BREAKDOWN',
         },
         {
-          text: `Build Notes: ${
-            data.job_info?.Shop_Notes
-              ? data.job_info?.Shop_Notes?.toUpperCase()
-              : ''
-          }`,
           alignment: 'center',
           style: 'fontsBold',
+          stack: [
+            data.job_info?.Shop_Notes ?{
+              text: `${
+                data.job_info?.Shop_Notes
+                  ? data.job_info?.Shop_Notes?.toUpperCase()
+                  : ''
+              }`,
+            } : null,
+            { text : data.misc_items.map(i => {
+              if(i.category === 'preselect'){
+                if(i.item.NAME.includes('Delivery')){
+                  return null;
+                } else {
+                  return `${i.item?.NAME} \n`;
+                }
+                        
+              } else {
+                return `${i.item2} \n`;
+              }
+            })
+            }
+          ]
         },
         {
           text: ''

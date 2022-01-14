@@ -77,11 +77,11 @@ const CustomerOrders = (props) => {
   };
 
   const handleStatusChange = async (e, row) => {
-    const { updateStatus } = props;
+    const { updateStatus, user } = props;
     const status = {
       status: e
     };
-    await updateStatus(row.id, row, status, cookie);
+    await updateStatus(row.id, row, status, user, cookie);
   };
 
 
@@ -210,7 +210,7 @@ const CustomerOrders = (props) => {
 };
 
 const mapStateToProps = (state, prop) => ({
-
+  user: state.users.user
 });
 
 const mapDispatchToProps = dispatch =>

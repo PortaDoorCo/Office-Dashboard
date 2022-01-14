@@ -326,7 +326,10 @@ export function updateOrder(orderId, order, cookie) {
   };
 }
 
-export function updateStatus(orderId, key, status, cookie) {
+export function updateStatus(orderId, key, status, user, cookie) {
+
+  console.log({user});
+
   const item = {
     status: status.status,
     tracking: [
@@ -334,6 +337,7 @@ export function updateStatus(orderId, key, status, cookie) {
       {
         status: status.status,
         date: moment().format(),
+        user: user ? user?.FirstName : ''
       },
     ],
   };

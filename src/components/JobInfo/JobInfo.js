@@ -2,7 +2,7 @@ import moment from 'moment-business-days';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
-import { Col, FormGroup, Label, Row, Button, Collapse, Card, CardBody } from 'reactstrap';
+import { Col, FormGroup, Label, Row, Button, Collapse, Card, CardBody, Input } from 'reactstrap';
 import { change, Field, getFormValues } from 'redux-form';
 import status from '../../utils/status';
 // import momentLocaliser from 'react-widgets-moment';
@@ -135,7 +135,7 @@ class JobInfo extends Component {
 
 
   render() {
-    const { customers, edit, shippingMethods, formState, role, user, sales } = this.props;
+    const { customers, edit, shippingMethods, formState, role, user, sales, paymentTerms } = this.props;
 
     const dateDifference = moment(new Date()).businessDiff(
       moment(formState && formState.job_info && formState.job_info.DueDate)
@@ -193,7 +193,9 @@ class JobInfo extends Component {
               <p>{dateDifference} Business Day Lead Time</p>
             </FormGroup>
           </Col>
-          <Col xs="5" />
+
+          <Col xs='5' />
+
           <Col xs="3">
             <FormGroup>
               <Label htmlFor="shipping_method">Shipping Method</Label>
@@ -272,6 +274,18 @@ class JobInfo extends Component {
                 edit={true}
                 label="Notes"
               />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label htmlFor="dueDate">Sales Rep</Label>
+              <Input placeholder={formState?.sale?.fullName ? formState?.sale?.fullName : formState?.job_info?.customer?.sale?.fullName} disabled={true} />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label htmlFor="dueDate">Payment Terms</Label>
+              <Input placeholder={formState?.job_info?.customer?.PMT_TERMS} disabled={true} />
             </FormGroup>
           </Col>
         </Row>
@@ -408,6 +422,7 @@ const mapStateToProps = (state) => ({
   role: state?.users?.user?.role,
   user: state?.users?.user,
   sales: state?.sales?.salesReps,
+  paymentTerms: state.misc_items.paymentTerms,
 });
 
 export default connect(mapStateToProps, null)(JobInfo);
