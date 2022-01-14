@@ -207,12 +207,6 @@ const OrderTable = (props: TablePropTypes) => {
       </div>
     },
     {
-      name: 'Submitted By',
-      cell: row => <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>,
-      sortable: true,
-    },
-
-    {
       name: 'Total',
       selector: 'total',
       sortable: true,
@@ -222,6 +216,11 @@ const OrderTable = (props: TablePropTypes) => {
       name: 'Balance Paid',
       sortable: true,
       cell: row => <div>${(row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)?.toFixed(2))}</div>,
+    },
+    {
+      name: 'Salesman',
+      cell: row => <div>{row.sale?.fullName}</div>,
+      sortable: true,
     },
     {
       name: 'Terms',

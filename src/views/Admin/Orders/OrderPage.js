@@ -234,16 +234,25 @@ class OrderPage extends Component {
   };
 
   copyOrder = async () => {
-    const { formState, submitOrder } = this.props;
+    const { formState, submitOrder, user } = this.props;
     const data = formState ? formState : [];
 
     let newOrder = {
       ...data,
       job_info: {
         ...data.job_info,
-        poNum: `${data.job_info.poNum} - COPY`,
+        poNum: `${data.job_info?.poNum} - COPY`,
         status: 'Quote',
       },
+      status: 'Quote',
+      tracking: [
+        {
+          status: `Order Copied from #${data.orderNum}`,
+          date: moment().format(),
+          user: user ? user?.FirstName : ''
+        },
+      ]
+      
     };
 
     newOrder.part_list.map((i) => {
@@ -1571,7 +1580,7 @@ class OrderPage extends Component {
                                 .map((i, index) => (
                                   <tr key={index}>
                                     <th>
-                                      {i.status ? i.status : 'Order Edited'}
+                                      {i.status ? i.status : 'Order Edited'}   {i.user ? 'by: ' + i.user : ''}
                                     </th>
                                     <td>
                                       {moment(i.date).format(

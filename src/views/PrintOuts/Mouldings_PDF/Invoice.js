@@ -288,6 +288,207 @@ export default (data, pricing) => {
       }
       : null,
     {
+      columns: [
+        {
+          text: '',
+          style: 'fonts',
+          width: 317,
+        },
+        {
+          text: 'Order Subtotal',
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 120,
+          alignment: 'right',
+        },
+        {
+          text: `$${subTotal.toFixed(2)}`,
+          style: 'fonts',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+        },
+      ],
+      margin: [0, 0, 0, 10],
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 317 },
+        {
+          text: `${data.discount > 0 ? data.discount + '% Discount' : ''}`,
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+          width: 120,
+        },
+        {
+          text: `${data.discount > 0 ? '- $' + discountTotal.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
+        },
+      ],
+      margin: [0, 0, 0, 0],
+    },
+    {
+      text: '------------',
+      margin: [0, 0, 0, 0],
+      alignment: 'right',
+    },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 317 },
+        {
+          text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
+          style: 'totals',
+          margin: [0, 0, 0, 0],
+          width: 120,
+          alignment: 'right',
+        },
+        {
+          text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
+        },
+      ],
+      margin: [0, 0, 0, 0],
+    },
+    data.misc_items.length > 0
+      ? {
+        columns: [
+          {
+            text: `${
+              data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''
+            }`,
+            style: 'fonts',
+            decoration: 'underline',
+            width: 168,
+          },
+          {
+            text: 'Qty',
+            style: 'fonts',
+            decoration: 'underline',
+            width: 33,
+          },
+          {
+            text: 'Cost Per',
+            style: 'fonts',
+            margin: [0, 0, 0, 0],
+            decoration: 'underline',
+          },
+          {
+            text: '',
+            style: 'totals',
+            margin: [0, 0, 0, 0],
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 10, 0, 0],
+      }
+      : null,
+    data.misc_items.length > 0
+      ? {
+        columns: [
+          {
+            text: data.misc_items.map((i) => {
+              return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
+            }),
+            style: 'fonts',
+            width: 170,
+          },
+          {
+            style: 'fonts',
+            stack: data.misc_items.map((i) => {
+              return { text: i.qty ? parseInt(i.qty) : '' };
+            }),
+            width: 30,
+          },
+          {
+            text: data.misc_items.map((i) => {
+              return `$${
+                i.price
+                  ? parseFloat(i.price).toFixed(2)
+                  : i.pricePer
+                    ? parseFloat(i.pricePer).toFixed(2)
+                    : 0
+              } \n`;
+            }),
+            style: 'fonts',
+            margin: [0, 0, 0, 0],
+          },
+          {
+            text: data.misc_items.map((i) => {
+              return `$${
+                i.price
+                  ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2)
+                  : i.pricePer
+                    ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2)
+                    : 0
+              } \n`;
+            }),
+            style: 'fonts',
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 2, 0, 0],
+      }
+      : null,
+    data.misc_items.length > 0
+      ? {
+        text: '------------',
+        margin: [0, 0, 0, 0],
+        alignment: 'right',
+      }
+      : null,
+    data.misc_items.length > 0
+      ? {
+        columns: [
+          { text: '', style: 'totals', decoration: 'underline', width: 317 },
+          {
+            text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
+            style: 'totals',
+            width: 120,
+            alignment: 'right',
+          },
+          {
+            text:
+                  data.misc_items.length > 0
+                    ? '$' + order_sub_total.toFixed(2)
+                    : '',
+            style: 'fonts',
+            margin: [0, 0, 0, 0],
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 10, 0, 0],
+      }
+      : null,
+    data.Taxable
+      ? {
+        columns: [
+          { text: '', style: 'totals', width: 317 },
+          {
+            text: data.Taxable
+              ? '$' +
+                    order_sub_total.toFixed(2) +
+                    ' x ' +
+                    data.companyprofile.TaxRate +
+                    '%' +
+                    ' Tax:'
+              : '',
+            style: 'totals',
+            margin: [0, 0, 0, 4],
+            width: 120,
+            alignment: 'right',
+          },
+          {
+            text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
+            style: 'fonts',
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 0, 0, 0],
+      }
+      : null,
+    {
       text: '======',
       margin: [0, 0, 0, 0],
       alignment: 'right',
@@ -352,37 +553,29 @@ export default (data, pricing) => {
           alignment: 'right',
         },
       ],
-      margin: [0, 15, 0, 0],
+      margin: [0, 10, 0, 5],
     },
+  
     {
+      unbreakable: true,
       stack: [
         {
-          text: 'LIMITED WARRANTY',
-          decoration: 'underline',
-          style: 'fontsBold',
-          margin: [0, 0, 0, 10],
+          columns: [
+            {
+              text: 'LIMITED WARRANTY',
+              decoration: 'underline',
+              style: 'fontsBold',
+              margin: [0, 0, 0, 10],
+            },
+          ],
         },
+  
         {
-          text: limitedLiability.toUpperCase(),
+          text: 'OUR PRODUCTS ARE WARRANTED FOR 1 YEAR FROM DATE OF SHIPMENT, WARRANTY DETAILS CAN FOUND AT \n HTTPS://PORTADOOR.COM AND IN OUR 2020 CATALOG \n \n LIABILITY UNDER THIS WARRANTY SHALL BE LIMITED TO THE ORIGINAL INVOICE PRICE OF THE PRODUCT',
           style: 'warrantyFont',
           alignment: 'left',
           margin: [0, 0, 0, 5],
-        },
-      ],
-    },
-    {
-      columns: [
-        {
-          text: moment().format('MM-D-YYYY'),
-          style: 'fonts',
-          alignment: 'left',
-          margin: [0, 0, 0, 0],
-        },
-        {
-          text: ' ',
-          style: 'fonts',
-          alignment: 'right',
-          margin: [0, 0, 0, 0],
+          id: 'liability-acknowledgement',
         },
       ],
     },

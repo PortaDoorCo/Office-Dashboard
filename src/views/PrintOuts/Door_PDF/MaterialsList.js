@@ -420,7 +420,7 @@ export default (data, breakdowns) => {
                 return `${i.item2} \n`;
               }
             })
-            }
+            },
           ]
         },
         {

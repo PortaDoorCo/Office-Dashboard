@@ -148,44 +148,56 @@ export default (data, breakdowns, type) => {
       {
         unbreakable: true,
         margin: [0, 10, 0, 0],
-        columns: [
-          {
-            text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${
-              i.woodtype.NAME
-            } - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
-            style: 'woodtype',
-            alignment: 'left',
-            width: 150,
-          },
+        stack: [
+          {columns: [
+            {
+              text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${
+                i.woodtype.NAME
+              } - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
+              style: 'woodtype',
+              alignment: 'left',
+              width: 150,
+            },
 
-          {
-            text: `IP: ${
-              i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
-            }`,
-            style: 'woodtype',
-            alignment: 'center',
-          },
-          i.construction.value === 'Slab'
-            ? {
-              text: `Edge: ${i.edge?.NAME}`,
+            {
+              text: `IP: ${
+                i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+              }`,
               style: 'woodtype',
               alignment: 'center',
-            }
-            : null,
-          {
-            text: `${
-              i.construction.value === 'Slab'
-                ? i.woodtype?.FRAMING_MATERIAL
+            },
+            i.construction.value === 'Slab'
+              ? {
+                text: `Edge: ${i.edge?.NAME}`,
+                style: 'woodtype',
+                alignment: 'center',
+              }
+              : null,
+            {
+              text: `${
+                i.construction.value === 'Slab'
                   ? i.woodtype?.FRAMING_MATERIAL
-                  : i.woodtype?.NAME
-                : i.woodtype?.PANEL_MATERIAL
-                  ? i.woodtype?.PANEL_MATERIAL
-                  : i.woodtype?.NAME
-            } ${type}`,
-            alignment: 'right',
-            style: 'woodtype',
-          },
-        ],
+                    ? i.woodtype?.FRAMING_MATERIAL
+                    : i.woodtype?.NAME
+                  : i.woodtype?.PANEL_MATERIAL
+                    ? i.woodtype?.PANEL_MATERIAL
+                    : i.woodtype?.NAME
+              } ${type}`,
+              alignment: 'right',
+              style: 'woodtype',
+            },
+          ]},
+          i.applied_profile && i.applied_profile.NAME !== 'None' ? {
+            text: `${
+              i.applied_profile && i.applied_profile.NAME !== 'None'
+                ? i.applied_profile.NAME.toUpperCase()
+                : ''
+            }`,
+            style: 'headerFont',
+            alignment: 'center',
+            margin: [0,10,0,0]
+          } : null,
+        ]
       },
       {
         text: '==============================================================================',

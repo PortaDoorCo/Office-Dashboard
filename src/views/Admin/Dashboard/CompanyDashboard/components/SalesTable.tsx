@@ -7,7 +7,7 @@ import OrderPage from '../../../Orders/OrderPage';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
 // import { Select } from 'antd';
-import { updateStatus, loadOrders, setSelectedOrder } from '../../../../../redux/orders/actions';
+import { updateStatus, loadOrders, setSelectedOrder, setOrderType } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 import { Button, Row, Col, FormGroup, Input } from 'reactstrap';
 import styled from 'styled-components';
@@ -48,7 +48,12 @@ const cookie = Cookies.get('jwt');
 
 const conditionalRowStyles = [
   {
-    when: (row: { late: any }) => row.late === true,
+    when: (row: { late: any, Shipping_Scheduled: any, status: String, dueDate: any }) => {
+      return (moment(row.dueDate).startOf('day').valueOf() < moment(new Date()).startOf('day').valueOf()) && (row.Shipping_Scheduled || (!row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped')));
+    },
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -60,7 +65,7 @@ const conditionalRowStyles = [
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
-    <TextField id="search" type="text" placeholder="Search Orders" value={filterText} onChange={onFilter} />
+    <TextField id="search" type="text" placeholder="Search Orders" value={filterText} onChange={onFilter} autoComplete='off' />
     <ClearButton type="button" color="danger" onClick={onClear}>X</ClearButton>
   </>
 );
@@ -68,16 +73,16 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 
 type TablePropTypes = {
   setSelectedOrder: (date: any) => null,
+  setOrderType: (date: any) => null,
   orders: Array<any>,
   updateStatus: any,
   ordersDBLoaded: boolean,
-  role: any
   user: any
 }
 
 
 const OrderTable = (props: TablePropTypes) => {
-  const { orders, role, user } = props;
+  const { orders } = props;
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
@@ -86,31 +91,16 @@ const OrderTable = (props: TablePropTypes) => {
 
   useEffect(() => {
     const filteredOrders = orders?.length > 0 ? orders?.filter((item) => {
-
-
-
-
-
       if (filterText.length > 0) {
-        if(item.sale?.id === user.id){
-          return (
-            (item.orderNum?.toString().includes(filterText) || item.job_info?.customer?.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info?.poNum?.toLowerCase().includes(filterText.toLowerCase()))
-          );
-        } else {
-          return null;
-        }
-
+        return (
+          (item.orderNum?.toString().includes(filterText) || item.job_info?.customer?.Company.toLowerCase().includes(filterText.toLowerCase()) || item.job_info?.poNum?.toLowerCase().includes(filterText.toLowerCase()))
+        );
       } else {
-        if(item.sale?.id === user.id){
-          return item;
-        } else {
-          return null;
-        }
-   
+        return item;
       }
     }) : [];
     setData(filteredOrders);
-  }, [orders, filterText, user?.id]);
+  }, [orders, filterText]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -130,10 +120,6 @@ const OrderTable = (props: TablePropTypes) => {
     const status = {
       status: e.target.value
     };
-
-    
-    
-
 
     await updateStatus(row.id, row, status, user, cookie);
   };
@@ -163,12 +149,38 @@ const OrderTable = (props: TablePropTypes) => {
 
     },
     {
-      name: 'Date Ordered',
+      name: 'Date Entered',
       cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
     },
     {
+      name: 'Date Ordered',
+      cell: row => {
+
+        const dateOrdered = row?.tracking?.filter((x) => {
+
+          return x.status === 'Ordered';
+        }
+        );
+
+        if(dateOrdered.length > 0){
+          return (
+            <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>
+          );
+        } else {
+          return (
+            <div>TBD</div>
+          );
+        }
+      },
+    },
+    {
       name: 'Due Date',
-      cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
+      cell: row => <div>{row.Shipping_Scheduled || (!row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped'))
+        ? moment(row.dueDate).format('MMM Do YYYY')
+        : 'TBD'}</div>,
     },
     {
       name: 'Status',
@@ -234,17 +246,19 @@ const OrderTable = (props: TablePropTypes) => {
 
   ];
 
-  const toggle = (row: {}) => {
+  const toggle = (row: { orderType: any }) => {
 
-    const { setSelectedOrder } = props;
+    const { setSelectedOrder, setOrderType } = props;
 
     setEdit(false);
     setModal(!modal);
 
     if (!modal) {
       setSelectedOrder(row);
+      setOrderType(row.orderType);
     } else {
       setSelectedOrder(null);
+      setOrderType(null);
     }
   };
 
@@ -294,7 +308,8 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       updateStatus,
       loadOrders,
-      setSelectedOrder
+      setSelectedOrder,
+      setOrderType
     },
     dispatch
   );

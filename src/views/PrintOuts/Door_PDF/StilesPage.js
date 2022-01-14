@@ -140,29 +140,44 @@ export default (data, breakdowns) => {
             : null,
           {
             margin: [0, 10, 0, 0],
-            columns: [
+            stack: [
               {
+                columns: [
+                  {
+                    text: `${
+                      i.thickness?.grade_name ? i.thickness?.grade_name : ''
+                    }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
+                      i.thickness.thickness_2
+                    }"`,
+                    style: 'woodtype',
+                    width: 200,
+                  },
+                  {
+                    text: `IP: ${
+                      i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+                    }`,
+                    style: 'woodtype',
+                    alignment: 'center',
+                  },
+                  {
+                    text: 'STILES',
+                    alignment: 'right',
+                    style: 'woodtype',
+                  },
+                ],
+              },
+              i.applied_profile && i.applied_profile.NAME !== 'None' ? {
                 text: `${
-                  i.thickness?.grade_name ? i.thickness?.grade_name : ''
-                }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
-                  i.thickness.thickness_2
-                }"`,
-                style: 'woodtype',
-                width: 200,
-              },
-              {
-                text: `IP: ${
-                  i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+                  i.applied_profile && i.applied_profile.NAME !== 'None'
+                    ? i.applied_profile.NAME.toUpperCase()
+                    : ''
                 }`,
-                style: 'woodtype',
+                style: 'headerFont',
                 alignment: 'center',
-              },
-              {
-                text: 'STILES',
-                alignment: 'right',
-                style: 'woodtype',
-              },
-            ],
+                margin: [0,10,0,0]
+              } : null,
+            ]
+
           },
           {
             text: '==============================================================================',
