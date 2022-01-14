@@ -86,7 +86,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
       placeholder="Search Orders"
       value={filterText}
       onChange={onFilter}
-      autoComplete='off'
+      autoComplete="off"
     />
     <ClearButton type="button" color="danger" onClick={onClear}>
       X
@@ -118,13 +118,10 @@ const OrderTable = (props) => {
       let date = new Date(item.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
-       
         return x.status === 'Ordered';
       });
 
       if (filterStatus === 'Ordered') {
-
-
         if (filterText?.length > 0) {
           return (
             moment(dateOrdered[0]?.date) >=
@@ -193,11 +190,11 @@ const OrderTable = (props) => {
   }, [filterText, resetPaginationToggle]);
 
   const handleStatusChange = async (e, row) => {
-    const { updateStatus } = props;
+    const { updateStatus, user } = props;
     const status = {
       status: e.target.value,
     };
-    await updateStatus(row.id, row, status, cookie);
+    await updateStatus(row.id, row, status, user, cookie);
   };
 
   const columns = [
@@ -236,12 +233,13 @@ const OrderTable = (props) => {
       name: 'Date Ordered',
       cell: (row) => {
         const dateOrdered = row?.tracking?.filter((x) => {
-      
           return x.status === 'Ordered';
         });
 
         if (dateOrdered.length > 0) {
-          return <div>{moment(dateOrdered[0]?.date).format('MMM Do YYYY')}</div>;
+          return (
+            <div>{moment(dateOrdered[0]?.date).format('MMM Do YYYY')}</div>
+          );
         } else {
           return <div>TBD</div>;
         }
@@ -385,7 +383,37 @@ const OrderTable = (props) => {
   };
 
   const exportReports = () => {
-    Report1(data, startDate, endDate, filterStatus);
+    let order = data;
+
+    if (filterStatus === 'Ordered') {
+      const newData = data.map((i) => {
+        const dateOrdered = i?.tracking?.filter((x) => {
+          return x.status === 'Ordered';
+        });
+
+        return {
+          ...i,
+          dateOrdered: new Date(dateOrdered[0]?.date),
+        };
+      });
+
+      console.log({ newData });
+
+      const sortedData = newData.sort((a, b) => a.dateOrdered - b.dateOrdered);
+
+      order = sortedData;
+
+      console.log({ sortedData });
+    } else {
+      
+      const newData = data.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+      order = newData;
+      // console.log({newData});
+
+    }
+
+    Report1(order, startDate, endDate, filterStatus);
     setToggleCleared(!toggleCleared);
   };
 
@@ -523,6 +551,7 @@ const mapStateToProps = (state, prop) => ({
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   role: state.users.user.role,
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) =>

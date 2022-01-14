@@ -75,11 +75,11 @@ const StatusTable = (props) => {
   ]);
 
   const handleStatusChange = async (e, row) => {
-    const { updateStatus } = props;
+    const { updateStatus, user } = props;
     const status = {
       status: e,
     };
-    await updateStatus(row.id, row, status, cookie);
+    await updateStatus(row.id, row, status, user, cookie);
   };
 
   const columns = [
@@ -255,6 +255,7 @@ const mapStateToProps = (state, prop) => ({
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) =>

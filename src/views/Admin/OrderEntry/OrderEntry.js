@@ -162,6 +162,7 @@ class OrderEntry extends Component {
             {
               date: moment().format(),
               status: values.job_info?.status?.value,
+              user: user?.FirstName
             },
           ];
         } else {
@@ -170,6 +171,7 @@ class OrderEntry extends Component {
             {
               date: moment().format(),
               status: 'Order Edited',
+              user: user?.FirstName
             },
           ];
         }
@@ -207,6 +209,7 @@ class OrderEntry extends Component {
           {
             status: values.job_info?.status?.value,
             date: new Date(),
+            user: user?.FirstName
           },
         ],
         balance_history: [
@@ -563,6 +566,7 @@ const mapStateToProps = (state, props) => ({
               state.Orders &&
               state.Orders.selectedOrder &&
               state.Orders.selectedOrder.status,
+          // salesRep: state.Orders?.selectedOrder?.sale?.fullName
         },
       }
       : {
@@ -628,22 +632,24 @@ const mapStateToProps = (state, props) => ({
               ]
               : [],
         job_info: {
-          customer: state.customers.customerDB[0],
+          customer: state.customers?.customerDB[0],
           jobName: '',
           status: { label: 'Quote', value: 'Quote' },
           poNum: '',
-          Address1: state.customers.customerDB[0].Address1,
-          Address2: state.customers.customerDB[0].Address2,
-          City: state.customers.customerDB[0].City,
-          State: state.customers.customerDB[0].State,
-          Zip: state.customers.customerDB[0].Zip,
-          Phone: state.customers.customerDB[0].Shipping_Phone
-            ? state.customers.customerDB[0].Shipping_Phone
-            : state.customers.customerDB[0].Phone1
-              ? state.customers.customerDB[0].Phone1
-              : state.customers.customerDB[0].Phone,
+          Address1: state.customers.customerDB[0]?.Address1,
+          Address2: state.customers.customerDB[0]?.Address2,
+          City: state.customers.customerDB[0]?.City,
+          State: state.customers.customerDB[0]?.State,
+          Zip: state.customers.customerDB[0]?.Zip,
+          Phone: state.customers.customerDB[0]?.Shipping_Phone
+            ? state.customers.customerDB[0]?.Shipping_Phone
+            : state.customers.customerDB[0]?.Phone1
+              ? state.customers.customerDB[0]?.Phone1
+              : state.customers.customerDB[0]?.Phone,
           DueDate: dueDate,
-          Notes: state.customers.customerDB[0].Notes,
+          Notes: state.customers.customerDB[0]?.Notes,
+          salesRep: state.customers.customerDB[0]?.sale?.fullName,
+          pmtTerms: state.customers.customerDB[0]?.PMT_TERMS,
           // PaymentMethod: {
           //   NAME: state.customers.customerDB[0].PaymentMethod
           // }

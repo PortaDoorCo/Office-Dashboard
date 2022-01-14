@@ -71,7 +71,8 @@ type TablePropTypes = {
   setOrderType: (date: any) => null,
   orders: Array<any>,
   updateStatus: any,
-  ordersDBLoaded: boolean
+  ordersDBLoaded: boolean,
+  user: any
 }
 
 
@@ -110,7 +111,7 @@ const OrderTable = (props: TablePropTypes) => {
 
 
   const handleStatusChange = async (e: any, row: { id: string }) => {
-    const { updateStatus } = props;
+    const { updateStatus, user } = props;
     const status = {
       status: e.target.value
     };
@@ -119,7 +120,7 @@ const OrderTable = (props: TablePropTypes) => {
     
 
 
-    await updateStatus(row.id, row, status, cookie);
+    await updateStatus(row.id, row, status, user, cookie);
   };
 
   const columns = [
@@ -249,7 +250,8 @@ const OrderTable = (props: TablePropTypes) => {
 
 const mapStateToProps = (state: any) => ({
   orderNum: state.Orders.orderNum,
-  ordersDBLoaded: state.Orders.ordersDBLoaded
+  ordersDBLoaded: state.Orders.ordersDBLoaded,
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

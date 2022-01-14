@@ -165,11 +165,11 @@ const OrderTable = (props) => {
   }, [filterText, resetPaginationToggle]);
 
   const handleStatusChange = async (e, row) => {
-    const { updateStatus } = props;
+    const { updateStatus, user } = props;
     const status = {
       status: e.target.value,
     };
-    await updateStatus(row.id, row, status, cookie);
+    await updateStatus(row.id, row, status, user, cookie);
   };
 
   const columns = [
@@ -491,6 +491,7 @@ const mapStateToProps = (state, prop) => ({
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   role: state.users.user.role,
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) =>

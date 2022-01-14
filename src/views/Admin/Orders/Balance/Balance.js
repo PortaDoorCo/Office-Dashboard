@@ -248,7 +248,8 @@ const mapStateToProps = (state, props) => ({
   balance: balanceSelector(state),
   balanceTotal: balanceTotalSelector(state),
   role: state.users.user.role,
-  paymentTypes: state.misc_items.paymentTypes
+  paymentTypes: state.misc_items.paymentTypes,
+  user: state.users.user,
 
 });
 
