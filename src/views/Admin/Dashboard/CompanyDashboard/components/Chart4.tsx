@@ -32,35 +32,35 @@ class Chart4 extends Component<PropTypes> {
       groups.push(item.status);
     });
 
-    const quote = groups.filter(item => {
+    const quote = groups?.filter(item => {
       return item === 'Quote';
     });
 
-    const production = groups.filter(item => {
+    const production = groups?.filter(item => {
       return item === 'In Production';
     });
 
-    const invoiced = groups.filter(item => {
+    const invoiced = groups?.filter(item => {
       return item.includes('Invoiced');
     });
 
-    const ordered = groups.filter(item => {
+    const ordered = groups?.filter(item => {
       return item.includes('Ordered');
     });
 
-    const station1 = groups.filter(item => {
+    const station1 = groups?.filter(item => {
       return item.includes('Station 1');
     });
 
-    const station2 = groups.filter(item => {
+    const station2 = groups?.filter(item => {
       return item.includes('Station 2');
     });
 
-    const station3 = groups.filter(item => {
+    const station3 = groups?.filter(item => {
       return item.includes('Station 3');
     });
 
-    const station4 = groups.filter(item => {
+    const station4 = groups?.filter(item => {
       return item.includes('Station 4');
     });
 

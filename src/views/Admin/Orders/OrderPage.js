@@ -244,6 +244,9 @@ class OrderPage extends Component {
         poNum: `${data.job_info.poNum} - COPY`,
         status: 'Quote',
       },
+      status: 'Quote',
+      tracking: []
+      
     };
 
     newOrder.part_list.map((i) => {
@@ -1571,7 +1574,7 @@ class OrderPage extends Component {
                                 .map((i, index) => (
                                   <tr key={index}>
                                     <th>
-                                      {i.status ? i.status : 'Order Edited'}
+                                      {i.status ? i.status : 'Order Edited'}   {i.user ? 'by: ' + i.user : ''}
                                     </th>
                                     <td>
                                       {moment(i.date).format(
