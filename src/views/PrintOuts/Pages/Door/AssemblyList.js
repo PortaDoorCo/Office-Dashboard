@@ -29,7 +29,7 @@ const DoorPDF =  async (
 
     const headerInfo = [
       {
-        margin: [40,40,40,10],
+        margin: [40,40,40,0],
         columns: [
           {
             stack: [

@@ -157,55 +157,68 @@ export default (data, breakdowns) => {
           {
             unbreakable: true,
             margin: [0, 10, 0, 0],
-            columns: [
-              {
-                stack: [
-                  {
-                    text: `${i.orderType ? i.orderType.name : ''}`,
-                    style: 'fonts',
-                  },
-                  {
-                    text: `${i.woodtype.NAME} - ${
-                      i.thickness.value === 1 || i.thickness.value === 2
-                        ? '4/4'
-                        : i.thickness.value === 3 || i.thickness.value === 4
-                          ? '5/4'
-                          : ''
-                    }`,
-                    style: 'woodtype',
-                    width: 370,
-                  },
-                ],
-              },
-              {
-                stack: [
-                  {
-                    text: '',
-                    alignment: 'left',
-                    style: 'fontsBold',
-                    width: 80,
-                  },
-                  i.edge
-                    ? {
-                      text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
-                      alignment: 'right',
+            stack: [
+              {            columns: [
+                {
+                  stack: [
+                    {
+                      text: `${i.orderType ? i.orderType.name : ''}`,
                       style: 'fonts',
-                    }
-                    : null,
-                  {
-                    text: `Panel: ${
-                      i.panel
-                        ? i.panel.NAME
-                        : i.construction.value === 'Slab'
-                          ? 'Slab'
-                          : 'Glass'
-                    }`,
-                    alignment: 'right',
-                    style: 'woodtype',
-                  },
-                ],
-              },
-            ],
+                    },
+                    {
+                      text: `${i.woodtype.NAME} - ${
+                        i.thickness.value === 1 || i.thickness.value === 2
+                          ? '4/4'
+                          : i.thickness.value === 3 || i.thickness.value === 4
+                            ? '5/4'
+                            : ''
+                      }`,
+                      style: 'woodtype',
+                      width: 370,
+                    },
+                  ],
+                },
+                {
+                  stack: [
+                    {
+                      text: '',
+                      alignment: 'left',
+                      style: 'fontsBold',
+                      width: 80,
+                    },
+                    i.edge
+                      ? {
+                        text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
+                        alignment: 'right',
+                        style: 'fonts',
+                      }
+                      : null,
+                    {
+                      text: `Panel: ${
+                        i.panel
+                          ? i.panel.NAME
+                          : i.construction.value === 'Slab'
+                            ? 'Slab'
+                            : 'Glass'
+                      }`,
+                      alignment: 'right',
+                      style: 'woodtype',
+                    },
+                  ],
+                },
+              ]},
+              i.applied_profile && i.applied_profile.NAME !== 'None' ? {
+                text: `${
+                  i.applied_profile && i.applied_profile.NAME !== 'None'
+                    ? i.applied_profile.NAME.toUpperCase()
+                    : ''
+                }`,
+                style: 'headerFont',
+                alignment: 'center',
+                margin: [0,10,0,10]
+              } : null,
+            ]
+
           },
           // {
           //   text:

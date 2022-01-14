@@ -234,18 +234,24 @@ class OrderPage extends Component {
   };
 
   copyOrder = async () => {
-    const { formState, submitOrder } = this.props;
+    const { formState, submitOrder, user } = this.props;
     const data = formState ? formState : [];
 
     let newOrder = {
       ...data,
       job_info: {
         ...data.job_info,
-        poNum: `${data.job_info.poNum} - COPY`,
+        poNum: `${data.job_info?.poNum} - COPY`,
         status: 'Quote',
       },
       status: 'Quote',
-      tracking: []
+      tracking: [
+        {
+          status: `Order Copied from #${data.orderNum}`,
+          date: moment().format(),
+          user: user ? user?.FirstName : ''
+        },
+      ]
       
     };
 

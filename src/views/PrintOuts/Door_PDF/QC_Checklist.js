@@ -91,106 +91,118 @@ export default (data, breakdowns) => {
               stack: [
                 {
                   margin: [0, 10, 0, 0],
-
-                  columns: [
-                    {
-                      width: 200,
-                      stack: [
-                        {
-                          text: `${
-                            i.thickness?.grade_name
-                              ? i.thickness?.grade_name
-                              : ''
-                          }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
-                            i.thickness.thickness_2
-                          }"`,
-                          style: 'woodtype',
-                          width: 300,
-                        },
-                        {
-                          text: `${
-                            i.design
-                              ? i.design.NAME
-                              : i.face_frame_design
-                                ? i.face_frame_design.NAME
-                                : i.construction.value === 'Slab'
-                                  ? 'Slab'
-                                  : ''
-                          } ${
-                            i.construction.value === 'MT' ||
-                            i.construction.value === 'Miter'
-                              ? i.construction.value
-                              : ''
-                          } ${
-                            i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''
-                          }`,
-                          style: 'fonts',
-                        },
-
-                        // {
-                        //   text: `${i.orderType ? i.orderType.name : ''}`,
-                        //   style: 'fonts',
-                        // },
-                      ],
-                    },
-                    // { text: ' ', style: 'fontsBold', width: 140 },
-                    {
-                      stack: [
-                        { text: ' ', style: 'woodtype' },
-                        {
-                          text: `Panel: ${
-                            i.panel
-                              ? i.panel.NAME
-                              : i.orderType.value === 'Slab_Door' ||
-                                i.orderType.value === 'Slab_DF'
-                                ? ''
-                                : 'Glass'
-                          } ${i.lite ? '- ' + i.lite.NAME : ''}`,
-                          style: 'fonts',
-                          alignment: 'right',
-                        },
-                      ],
-                    },
-
-                    {
-                      stack: [
-                        { text: ' ', style: 'woodtype' },
-                        {
-                          text: `IP: ${
-                            i.profile
-                              ? i.profile.NAME
-                              : i.design
+                  stack: [
+                    {                  columns: [
+                      {
+                        width: 200,
+                        stack: [
+                          {
+                            text: `${
+                              i.thickness?.grade_name
+                                ? i.thickness?.grade_name
+                                : ''
+                            }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
+                              i.thickness.thickness_2
+                            }"`,
+                            style: 'woodtype',
+                            width: 300,
+                          },
+                          {
+                            text: `${
+                              i.design
                                 ? i.design.NAME
-                                : 'None'
-                          }`,
-                          style: 'fonts',
-                          alignment: 'right',
-                        },
-                      ],
-                    },
-                    {
-                      stack: [
-                        { text: ' ', style: 'woodtype' },
-                        {
-                          text: `Thickness:  ${
-                            i.thickness ? i.thickness.thickness_2 : ''
-                          }"`,
-                          style: 'fonts',
-                          alignment: 'right',
-                        },
-                      ],
-                    },
-                    {
-                      stack: [
-                        { text: ' ', style: 'woodtype' },
-                        {
-                          text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`,
-                          style: 'fonts',
-                          alignment: 'right',
-                        },
-                      ],
-                    },
-                  ],
+                                : i.face_frame_design
+                                  ? i.face_frame_design.NAME
+                                  : i.construction.value === 'Slab'
+                                    ? 'Slab'
+                                    : ''
+                            } ${
+                              i.construction.value === 'MT' ||
+                              i.construction.value === 'Miter'
+                                ? i.construction.value
+                                : ''
+                            } ${
+                              i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''
+                            }`,
+                            style: 'fonts',
+                          },
+
+                          // {
+                          //   text: `${i.orderType ? i.orderType.name : ''}`,
+                          //   style: 'fonts',
+                          // },
+                        ],
+                      },
+                      // { text: ' ', style: 'fontsBold', width: 140 },
+                      {
+                        stack: [
+                          { text: ' ', style: 'woodtype' },
+                          {
+                            text: `Panel: ${
+                              i.panel
+                                ? i.panel.NAME
+                                : i.orderType.value === 'Slab_Door' ||
+                                  i.orderType.value === 'Slab_DF'
+                                  ? ''
+                                  : 'Glass'
+                            } ${i.lite ? '- ' + i.lite.NAME : ''}`,
+                            style: 'fonts',
+                            alignment: 'right',
+                          },
+                        ],
+                      },
+
+                      {
+                        stack: [
+                          { text: ' ', style: 'woodtype' },
+                          {
+                            text: `IP: ${
+                              i.profile
+                                ? i.profile.NAME
+                                : i.design
+                                  ? i.design.NAME
+                                  : 'None'
+                            }`,
+                            style: 'fonts',
+                            alignment: 'right',
+                          },
+                        ],
+                      },
+                      {
+                        stack: [
+                          { text: ' ', style: 'woodtype' },
+                          {
+                            text: `Thickness:  ${
+                              i.thickness ? i.thickness.thickness_2 : ''
+                            }"`,
+                            style: 'fonts',
+                            alignment: 'right',
+                          },
+                        ],
+                      },
+                      {
+                        stack: [
+                          { text: ' ', style: 'woodtype' },
+                          {
+                            text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`,
+                            style: 'fonts',
+                            alignment: 'right',
+                          },
+                        ],
+                      },
+                    ]},
+                    i.applied_profile && i.applied_profile.NAME !== 'None' ? {
+                      text: `${
+                        i.applied_profile && i.applied_profile.NAME !== 'None'
+                          ? i.applied_profile.NAME.toUpperCase()
+                          : ''
+                      }`,
+                      style: 'headerFont',
+                      alignment: 'center',
+                      margin: [0,10,0,0]
+                    } : null,
+                  ]
+
                 },
                 {
                   text: '==============================================================================',

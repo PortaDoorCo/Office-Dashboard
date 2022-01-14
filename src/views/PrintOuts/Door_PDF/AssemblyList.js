@@ -192,7 +192,7 @@ export default (data, breakdowns) => {
                         ? i.applied_profile.NAME.toUpperCase()
                         : ''
                     }`,
-                    style: 'fontsBold',
+                    style: 'headerFont',
                     alignment: 'center',
                   },
                 ],
