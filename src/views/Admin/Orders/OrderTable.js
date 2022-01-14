@@ -307,13 +307,6 @@ const OrderTable = (props) => {
       ),
     },
     {
-      name: 'Submitted By',
-      cell: (row) => (
-        <div>{row.user && row.user.FirstName ? row.user.FirstName : ''}</div>
-      ),
-      sortable: true,
-    },
-    {
       name: 'Total',
       selector: 'total',
       sortable: true,
@@ -331,6 +324,11 @@ const OrderTable = (props) => {
               ?.toFixed(2)}
         </div>
       ),
+    },
+    {
+      name: 'Salesman',
+      cell: row => <div>{row.sale?.fullName}</div>,
+      sortable: true,
     },
     {
       name: 'Terms',
