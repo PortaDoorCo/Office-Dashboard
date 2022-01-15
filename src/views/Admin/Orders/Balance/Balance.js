@@ -79,22 +79,22 @@ class Balance extends Component {
     if(values.pay_balance){
       await updateBalance(id, order, cookie);
 
-      // if(values.status === 'Quote'){
-      //   await this.props.dispatch(
-      //     change(
-      //       'Order',
-      //       'job_info.status',
-      //       'Ordered'
-      //     )
-      //   );
-      //   await this.props.dispatch(
-      //     change(
-      //       'Order',
-      //       'status',
-      //       'Ordered'
-      //     )
-      //   );
-      // }
+      if(values.status === 'Quote'){
+        await this.props.dispatch(
+          change(
+            'Order',
+            'job_info.status',
+            'Ordered'
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'Order',
+            'status',
+            'Ordered'
+          )
+        );
+      }
 
 
       await this.props.dispatch(

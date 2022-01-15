@@ -388,13 +388,17 @@ export function updateBalance(orderId, balance, cookie) {
           date: balance.payment_date,
         },
       ],
-      // status: 'Ordered',
+      status: 'Ordered',
+      job_info: {
+        ...balance.job_info,
+        status: 'Ordered'
+      },
       tracking: [
         ...balance.tracking,
-        // {
-        //   status: 'Ordered',
-        //   date: new Date(),
-        // },
+        {
+          status: 'Ordered',
+          date: new Date(),
+        },
       ],
     };
   } else {

@@ -2,9 +2,19 @@ import moment from 'moment-business-days';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
-import { Col, FormGroup, Label, Row, Button, Collapse, Card, CardBody, Input } from 'reactstrap';
+import {
+  Col,
+  FormGroup,
+  Label,
+  Row,
+  Button,
+  Collapse,
+  Card,
+  CardBody,
+  Input,
+} from 'reactstrap';
 import { change, Field, getFormValues } from 'redux-form';
-import status from '../../utils/status';
+import status from '../../utils/productionStatus';
 // import momentLocaliser from 'react-widgets-moment';
 import {
   renderCheckboxToggle,
@@ -15,6 +25,8 @@ import {
 } from '../RenderInputs/renderInputs';
 import CustomerReminder from './CustomerReminder';
 import otherStatus from '../../utils/other_status';
+import orderEntryStatus from '../../utils/orderEntryStatus';
+
 
 // momentLocaliser(moment);
 
@@ -42,9 +54,37 @@ class JobInfo extends Component {
     this.state = {
       loaded: false,
       collapse: false,
+      dynamicStatus: orderEntryStatus
     };
   }
 
+  componentDidMount() {
+    const { isEdit, formState } = this.props;
+
+    const dateOrdered = formState?.tracking?.filter((x) => {
+      return x.status === 'Ordered';
+    });
+
+    if (isEdit) {
+      if (formState?.job_info?.Shipping_Scheduled ) {
+        return;
+      } else {
+
+
+        let dueDate = moment(new Date()).businessAdd(21)._d;
+
+        if (dateOrdered.length > 0) {
+          dueDate = moment(new Date(dateOrdered[0]?.date)).businessAdd(21)._d;
+        }
+
+        this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));
+      }
+    }
+
+    if(dateOrdered?.length > 0){
+      this.setState({ dynamicStatus: status });
+    }
+  }
 
   componentDidUpdate(prevProps) {
     const { formState } = this.props;
@@ -133,16 +173,25 @@ class JobInfo extends Component {
     this.setState({ collapse: !this.state?.collapse });
   }
 
-
   render() {
-    const { customers, edit, shippingMethods, formState, role, user, sales, paymentTerms } = this.props;
+    const {
+      customers,
+      edit,
+      shippingMethods,
+      formState,
+      role,
+      user,
+      sales,
+      paymentTerms,
+    } = this.props;
 
     const dateDifference = moment(new Date()).businessDiff(
       moment(formState && formState.job_info && formState.job_info.DueDate)
     );
 
-    const salesCompanies = customers?.filter(x => x?.sale?.id === user?.sale?.id);
-
+    const salesCompanies = customers?.filter(
+      (x) => x?.sale?.id === user?.sale?.id
+    );
 
     return (
       <div className="job-info-tour">
@@ -194,7 +243,7 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs='5' />
+          <Col xs="5" />
 
           <Col xs="3">
             <FormGroup>
@@ -251,7 +300,7 @@ class JobInfo extends Component {
                   role?.type === 'owner' ||
                   role?.type === 'administrator' ||
                   role?.type === 'office'
-                    ? status
+                    ? this.state.dynamicStatus
                     : otherStatus
                 }
                 dataKey="value"
@@ -279,13 +328,23 @@ class JobInfo extends Component {
           <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Sales Rep</Label>
-              <Input placeholder={formState?.sale?.fullName ? formState?.sale?.fullName : formState?.job_info?.customer?.sale?.fullName} disabled={true} />
+              <Input
+                placeholder={
+                  formState?.sale?.fullName
+                    ? formState?.sale?.fullName
+                    : formState?.job_info?.customer?.sale?.fullName
+                }
+                disabled={true}
+              />
             </FormGroup>
           </Col>
           <Col>
             <FormGroup>
               <Label htmlFor="dueDate">Payment Terms</Label>
-              <Input placeholder={formState?.job_info?.customer?.PMT_TERMS} disabled={true} />
+              <Input
+                placeholder={formState?.job_info?.customer?.PMT_TERMS}
+                disabled={true}
+              />
             </FormGroup>
           </Col>
         </Row>
@@ -377,7 +436,13 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-        <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Show Emails</Button>
+        <Button
+          color="primary"
+          onClick={this.toggle}
+          style={{ marginBottom: '1rem' }}
+        >
+          Show Emails
+        </Button>
 
         <Collapse isOpen={this.state.collapse}>
           <Card>
