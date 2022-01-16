@@ -73,15 +73,15 @@ class JobInfo extends Component {
 
         let dueDate = moment(new Date()).businessAdd(21)._d;
 
-        if (dateOrdered.length > 0) {
-          dueDate = moment(new Date(dateOrdered[0]?.date)).businessAdd(21)._d;
+        if (formState?.DateOrdered || dateOrdered.length > 0) {
+          dueDate = moment(new Date(formState?.DateOrdered || dateOrdered[0]?.date)).businessAdd(21)._d;
         }
 
         this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));
       }
     }
 
-    if(dateOrdered?.length > 0){
+    if(formState?.DateOrdered || dateOrdered?.length > 0){
       this.setState({ dynamicStatus: status });
     }
   }

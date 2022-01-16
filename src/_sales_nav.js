@@ -49,10 +49,10 @@ export default {
           name: 'Salesmen Reports',
           url: '/sales-reports',
         },
-        {
-          name: 'Tracking',
-          url: '/tracking',
-        },
+        // {
+        //   name: 'Tracking',
+        //   url: '/tracking',
+        // },
       ]
     },
 

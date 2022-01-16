@@ -61,11 +61,11 @@ const conditionalRowStyles = [
       return (
         moment(row.dueDate).startOf('day').valueOf() <
           moment(new Date()).startOf('day').valueOf() &&
-        (row.Shipping_Scheduled &&
-          (!row.status.includes('Quote') &&
-            !row.status.includes('Invoiced') &&
-            !row.status.includes('Complete') &&
-            !row.status.includes('Shipped')))
+        row.Shipping_Scheduled &&
+        !row.status.includes('Quote') &&
+        !row.status.includes('Invoiced') &&
+        !row.status.includes('Complete') &&
+        !row.status.includes('Shipped')
       );
     },
     style: {
@@ -77,12 +77,12 @@ const conditionalRowStyles = [
   },
   {
     when: (row) =>
-      (!row.Shipping_Scheduled &&
-        (!row.status.includes('Quote') &&
-          !row.status.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status.includes('Ordered') &&
-          !row.status.includes('Shipped'))),
+      !row.Shipping_Scheduled &&
+      !row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped'),
     style: {
       backgroundColor: '#FFEACA',
       '&:hover': {
@@ -118,7 +118,7 @@ type TablePropTypes = {
 };
 
 const OrderTable = (props: TablePropTypes) => {
-  const { orders } = props;
+  const { orders, user } = props;
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
@@ -130,22 +130,30 @@ const OrderTable = (props: TablePropTypes) => {
       orders?.length > 0
         ? orders?.filter((item) => {
           if (filterText.length > 0) {
-            return (
-                item.orderNum?.toString().includes(filterText) ||
-                item.job_info?.customer?.Company.toLowerCase().includes(
-                  filterText.toLowerCase()
-                ) ||
-                item.job_info?.poNum
-                  ?.toLowerCase()
-                  .includes(filterText.toLowerCase())
-            );
+            if (item.sale?.id === user?.id) {
+              return (
+                  item.orderNum?.toString().includes(filterText) ||
+                  item.job_info?.customer?.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info?.poNum
+                    ?.toLowerCase()
+                    .includes(filterText.toLowerCase())
+              );
+            } else {
+              return null;
+            }
           } else {
-            return item;
+            if (item.sale?.id === user?.id) {
+              return item;
+            } else {
+              return null;
+            }
           }
         })
         : [];
     setData(filteredOrders);
-  }, [orders, filterText]);
+  }, [orders, filterText, user]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -212,8 +220,14 @@ const OrderTable = (props: TablePropTypes) => {
           return x.status === 'Ordered';
         });
 
-        if (dateOrdered.length > 0) {
-          return <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+        if (row.DateOrdered || dateOrdered.length > 0) {
+          return (
+            <div>
+              {moment(row.DateOrdered || dateOrdered[0].date).format(
+                'MMM Do YYYY'
+              )}
+            </div>
+          );
         } else {
           return <div>TBD</div>;
         }

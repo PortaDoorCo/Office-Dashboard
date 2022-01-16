@@ -117,9 +117,9 @@ const OrderTable = (props) => {
       if (filterStatus === 'All') {
         if (filterText.length > 0) {
           return (
-            moment(dateOrdered[0]?.date || date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date || date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) <=
               moment(endDate).endOf('day').valueOf() &&
             (item.orderNum.toString().includes(filterText) ||
               item.job_info.customer.Company.toLowerCase().includes(
@@ -131,9 +131,9 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(dateOrdered[0]?.date || date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date || date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) <=
               moment(endDate).endOf('day').valueOf()
           );
         }
@@ -142,9 +142,9 @@ const OrderTable = (props) => {
 
         if (filterText.length > 0) {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status &&
             (item.orderNum.toString().includes(filterText) ||
@@ -157,9 +157,9 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status
           );
@@ -284,7 +284,7 @@ const OrderTable = (props) => {
         });
 
         if (dateOrdered.length > 0) {
-          return <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+          return <div>{moment(row.DateOrdered || dateOrdered[0].date).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }

@@ -77,9 +77,9 @@ const SalesReport = (props) => {
 
         if (filterText.length > 0) {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status &&
             (item.orderNum.toString().includes(filterText) ||
@@ -92,9 +92,9 @@ const SalesReport = (props) => {
           );
         } else {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status
           );
@@ -362,6 +362,25 @@ const SalesReport = (props) => {
                     }
                   }}
                 />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <FormGroup style={{ height: '100%', width: '60%' }}>
+                  <Input
+                    type="select"
+                    name="select"
+                    id="status_dropdown"
+                    defaultValue="Quote"
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                  >
+                    {status.map((i, index) => (
+                      <option key={index} value={i.value}>
+                        {i.value}
+                      </option>
+                    ))}
+                  </Input>
+                </FormGroup>
               </Col>
             </Row>
           </Col>

@@ -125,8 +125,8 @@ const StatusTable = (props) => {
           return x.status === 'Ordered';
         });
 
-        if (dateOrdered.length > 0) {
-          return <div>{moment(dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+        if (row.DateOrdered || dateOrdered.length > 0) {
+          return <div>{moment(row.DateOrdered || dateOrdered[0].date).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }
