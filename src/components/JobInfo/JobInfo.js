@@ -27,7 +27,6 @@ import CustomerReminder from './CustomerReminder';
 import otherStatus from '../../utils/other_status';
 import orderEntryStatus from '../../utils/orderEntryStatus';
 
-
 // momentLocaliser(moment);
 
 const required = (value) => (value ? undefined : 'Required');
@@ -54,7 +53,7 @@ class JobInfo extends Component {
     this.state = {
       loaded: false,
       collapse: false,
-      dynamicStatus: orderEntryStatus
+      dynamicStatus: orderEntryStatus,
     };
   }
 
@@ -66,22 +65,22 @@ class JobInfo extends Component {
     });
 
     if (isEdit) {
-      if (formState?.job_info?.Shipping_Scheduled ) {
+      if (formState?.job_info?.Shipping_Scheduled) {
         return;
       } else {
-
-
         let dueDate = moment(new Date()).businessAdd(21)._d;
 
         if (formState?.DateOrdered || dateOrdered.length > 0) {
-          dueDate = moment(new Date(formState?.DateOrdered || dateOrdered[0]?.date)).businessAdd(21)._d;
+          dueDate = moment(
+            new Date(formState?.DateOrdered || dateOrdered[0]?.date)
+          ).businessAdd(21)._d;
         }
 
         this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));
       }
     }
 
-    if(formState?.DateOrdered || dateOrdered?.length > 0){
+    if (formState?.DateOrdered || dateOrdered?.length > 0) {
       this.setState({ dynamicStatus: status });
     }
   }
@@ -203,7 +202,7 @@ class JobInfo extends Component {
         <Row>
           <Col lg="10">
             <FormGroup>
-              <Label htmlFor="dueDate">Shipping Scheduled</Label>
+              <Label htmlFor="dueDate">Due Date Scheduled</Label>
               <Field
                 name="Shipping_Scheduled"
                 component={renderCheckboxToggle}
