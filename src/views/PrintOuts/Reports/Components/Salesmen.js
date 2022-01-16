@@ -27,7 +27,7 @@ export default (data, startDate, endDate, status) => {
     let doors = 0;
     let dfs = 0;
     let boxes = 0;
-    let name = i.job_info?.jobName ? i.job_info?.jobName : 'None';
+    let name = i.job_info?.poNum ? i.job_info?.poNum : 'None';
     if (i.orderType === 'Door Order') {
       i.part_list.map(part => {
         if (part.orderType.value === 'Door') {
@@ -49,17 +49,17 @@ export default (data, startDate, endDate, status) => {
 
     return tableBody.push(
       [moment(i.created_at).format('MM/DD/YYYY'),
-        dateOrdered.length > 0
-          ? moment(dateOrdered[0].date).format('MM/DD/YYYY')
+        i.DateOrdered || dateOrdered.length > 0
+          ? moment(i.DateOrdered || dateOrdered[0].date).format('MM/DD/YYYY')
           : 'TBD',
-        i.job_info.customer.Company,
+        i.job_info?.customer?.Company,
         i.orderNum,
         i.status,
         name,
         doors,
         dfs,
         boxes,
-        i.total,
+        i.total?.toFixed(2),
         moment(i.DueDate).format('MM/DD/YYYY')
       ]
     );

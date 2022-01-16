@@ -330,17 +330,49 @@ export function updateStatus(orderId, key, status, user, cookie) {
 
   console.log({user});
 
-  const item = {
-    status: status.status,
-    tracking: [
-      ...key.tracking,
-      {
-        status: status.status,
-        date: moment().format(),
-        user: user ? user?.FirstName : ''
-      },
-    ],
-  };
+  let item = {};
+
+  if(status.status === 'Ordered'){
+    item = {
+      status: status.status,
+      DateOrdered: new Date(),
+      tracking: [
+        ...key.tracking,
+        {
+          status: status.status,
+          date: moment().format(),
+          user: user ? user?.FirstName : ''
+        },
+      ],
+    };
+  } else if(status.status === 'Invoiced') {
+    item = {
+      status: status.status,
+      DateInvoiced: new Date(),
+      tracking: [
+        ...key.tracking,
+        {
+          status: status.status,
+          date: moment().format(),
+          user: user ? user?.FirstName : ''
+        },
+      ],
+    };
+  } else {
+    item = {
+      status: status.status,
+      tracking: [
+        ...key.tracking,
+        {
+          status: status.status,
+          date: moment().format(),
+          user: user ? user?.FirstName : ''
+        },
+      ],
+    };
+  }
+
+
   return async function (dispatch) {
     try {
       const res = await axios.put(`${db_url}/orders/status/${orderId}`, item, {
@@ -377,6 +409,7 @@ export function updateBalance(orderId, balance, cookie) {
 
   if (balance.status === 'Quote') {
     item = {
+      DateOrdered: new Date(),
       balance_due: balance.balance_due,
       balance_paid: balance.balance_paid,
       balance_history: [
@@ -388,13 +421,17 @@ export function updateBalance(orderId, balance, cookie) {
           date: balance.payment_date,
         },
       ],
-      // status: 'Ordered',
+      status: 'Ordered',
+      job_info: {
+        ...balance.job_info,
+        status: 'Ordered'
+      },
       tracking: [
         ...balance.tracking,
-        // {
-        //   status: 'Ordered',
-        //   date: new Date(),
-        // },
+        {
+          status: 'Ordered',
+          date: new Date(),
+        },
       ],
     };
   } else {

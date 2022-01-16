@@ -60,10 +60,14 @@ const { Option } = Select;
 
 const conditionalRowStyles = [
   {
-    when: (row) => (moment(row.dueDate).startOf('day').valueOf() < moment(new Date()).startOf('day').valueOf()) && (row.Shipping_Scheduled || (!row.status.includes('Quote') &&
-    !row.status.includes('Invoiced') &&
-    !row.status.includes('Ordered') &&
-    !row.status.includes('Shipped'))),
+    when: (row) =>
+      moment(row.dueDate).startOf('day').valueOf() <
+        moment(new Date()).startOf('day').valueOf() &&
+      (row.Shipping_Scheduled &&
+        (!row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Complete') &&
+          !row.status.includes('Shipped'))),
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -71,8 +75,22 @@ const conditionalRowStyles = [
       },
     },
   },
+  {
+    when: (row) =>
+      (!row.Shipping_Scheduled &&
+        (!row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Complete') &&
+          !row.status.includes('Ordered') &&
+          !row.status.includes('Shipped'))),
+    style: {
+      backgroundColor: '#FFEACA',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
 ];
-
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
@@ -82,7 +100,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
       placeholder="Search Orders"
       value={filterText}
       onChange={onFilter}
-      autoComplete='off'
+      autoComplete="off"
     />
     <ClearButton type="button" color="danger" onClick={onClear}>
       X
@@ -114,14 +132,10 @@ const OrderTable = (props) => {
       let date = new Date(item.dueDate);
 
       const dateOrdered = item?.tracking?.filter((x) => {
-    
         return x.status === 'Ordered';
       });
 
-
-
-
-      if(filterStatus === 'All'){
+      if (filterStatus === 'All') {
         return (
           moment(date) >= moment(startDate).startOf('day').valueOf() &&
           moment(date) <= moment(endDate).endOf('day').valueOf() &&
@@ -141,8 +155,6 @@ const OrderTable = (props) => {
           item.orderType.includes(filterStatus)
         );
       }
-
-
     });
     setData(filteredOrders);
   }, [startDate, endDate, orders, filterStatus, filterText]);
@@ -211,8 +223,8 @@ const OrderTable = (props) => {
           return x.status === 'Ordered';
         });
 
-        if (dateOrdered.length > 0) {
-          return <div>{moment(dateOrdered[0]?.date).format('MMM Do YYYY')}</div>;
+        if (row.DateOrdered || dateOrdered.length > 0) {
+          return <div>{moment(row.DateOrdered || dateOrdered[0].date).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }
@@ -220,17 +232,21 @@ const OrderTable = (props) => {
     },
     {
       name: 'Due Date',
-      cell: (row) => (
-        <div>
-          {row?.Shipping_Scheduled ||
-          (!row?.status?.includes('Quote') &&
-            !row?.status?.includes('Invoiced') &&
-            !row?.status?.includes('Ordered') &&
-            !row?.status?.includes('Shipped'))
-            ? moment(row?.dueDate).format('MMM Do YYYY')
-            : 'TBD'}
-        </div>
-      ),
+      cell: (row) => {
+        if (row.Shipping_Scheduled) {
+          return <div> {moment(row.dueDate).format('MMM Do YYYY')}</div>;
+        } else if (
+          !row.Shipping_Scheduled &&
+          !row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Ordered') &&
+          !row.status.includes('Shipped')
+        ) {
+          return <div>Not Scheduled</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+      },
     },
     {
       name: 'Status',
@@ -300,7 +316,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Salesman',
-      cell: row => <div>{row.sale?.fullName}</div>,
+      cell: (row) => <div>{row.sale?.fullName}</div>,
       sortable: true,
     },
     {
@@ -421,7 +437,7 @@ const OrderTable = (props) => {
                 </Input>
               </FormGroup>
             </Col>
-          </Row> 
+          </Row>
           <Row className="mt-3">
             <Col>
               {role &&

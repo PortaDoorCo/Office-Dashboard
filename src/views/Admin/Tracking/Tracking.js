@@ -63,13 +63,28 @@ const conditionalRowStyles = [
     when: (row) =>
       moment(row.dueDate).startOf('day').valueOf() <
         moment(new Date()).startOf('day').valueOf() &&
-      (row.Shipping_Scheduled ||
+      (row.Shipping_Scheduled &&
         (!row.status.includes('Quote') &&
           !row.status.includes('Invoiced') &&
-          !row.status.includes('Ordered') &&
+          !row.status.includes('Complete') &&
           !row.status.includes('Shipped'))),
     style: {
       backgroundColor: '#FEEBEB',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+  {
+    when: (row) =>
+      (!row.Shipping_Scheduled &&
+        (!row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Complete') &&
+          !row.status.includes('Ordered') &&
+          !row.status.includes('Shipped'))),
+    style: {
+      backgroundColor: '#FFEACA',
       '&:hover': {
         cursor: 'pointer',
       },
@@ -124,9 +139,9 @@ const OrderTable = (props) => {
       if (filterStatus === 'All') {
         if (filterText.length > 0) {
           return (
-            moment(dateOrdered[0]?.date || date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date || date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) <=
               moment(endDate).endOf('day').valueOf() &&
             (item.orderNum.toString().includes(filterText) ||
               item.job_info.customer.Company.toLowerCase().includes(
@@ -138,9 +153,9 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(dateOrdered[0]?.date || date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date || date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) <=
               moment(endDate).endOf('day').valueOf()
           );
         }
@@ -149,9 +164,9 @@ const OrderTable = (props) => {
 
         if (filterText?.length > 0) {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status &&
             (item.orderNum.toString().includes(filterText) ||
@@ -164,9 +179,9 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status
           );
@@ -281,17 +296,21 @@ const OrderTable = (props) => {
     },
     {
       name: 'Due Date',
-      cell: (row) => (
-        <div>
-          {row.Shipping_Scheduled ||
-          (!row.status.includes('Quote') &&
-            !row.status.includes('Invoiced') &&
-            !row.status.includes('Ordered') &&
-            !row.status.includes('Shipped'))
-            ? moment(row.dueDate).format('MMM Do YYYY')
-            : 'TBD'}
-        </div>
-      ),
+      cell: (row) => {
+        if (row.Shipping_Scheduled) {
+          return <div> {moment(row.dueDate).format('MMM Do YYYY')}</div>;
+        } else if (
+          !row.Shipping_Scheduled &&
+          !row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Ordered') &&
+          !row.status.includes('Shipped')
+        ) {
+          return <div>Not Scheduled</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+      },
     },
     {
       name: 'Status',

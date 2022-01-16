@@ -356,6 +356,7 @@ class OrderEntry extends Component {
                           toggleReminderModal={this.toggleReminderModal}
                           customerReminder={this.state.customerReminder}
                           edit={edit}
+                          isEdit={isEdit}
                         />
                       </Suspense>
                     </FormSection>
@@ -561,9 +562,6 @@ const mapStateToProps = (state, props) => ({
               state.Orders &&
               state.Orders.selectedOrder &&
               state.Orders.selectedOrder.status,
-          DueDate: state.Orders?.selectedOrder?.job_info?.Shipping_Scheduled
-            ? state.Orders?.selectedOrder?.job_info?.DueDate
-            : dueDate
           // salesRep: state.Orders?.selectedOrder?.sale?.fullName
         },
       }

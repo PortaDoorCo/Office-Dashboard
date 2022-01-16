@@ -127,7 +127,7 @@ class OrderPage extends Component {
       copyModal: false,
       loadingModal: false,
       lipperExport: [],
-      razorExport: []
+      razorExport: [],
     };
     this.someRef = createRef();
   }
@@ -249,10 +249,9 @@ class OrderPage extends Component {
         {
           status: `Order Copied from #${data.orderNum}`,
           date: moment().format(),
-          user: user ? user?.FirstName : ''
+          user: user ? user?.FirstName : '',
         },
-      ]
-      
+      ],
     };
 
     newOrder.part_list.map((i) => {
@@ -944,8 +943,6 @@ class OrderPage extends Component {
     Drawer_Box_Labels(data, box_breakdowns);
   };
 
-
-
   exportLipper = () => {
     let itemNum = 0;
 
@@ -982,7 +979,7 @@ class OrderPage extends Component {
         f.dimensions.forEach((j, ind) => {
           if (
             f.orderType.value === 'DF' ||
-            numQty(j.width) > numQty(j.height)
+              numQty(j.width) > numQty(j.height)
           ) {
             a.push([
               newData.orderNum,
@@ -992,15 +989,15 @@ class OrderPage extends Component {
               numQty(j.width),
               numQty(j.height),
               f.edge && f.edge.NAME,
-              f.thickness?.thickness_values
-                ? f.thickness?.thickness_values
-                : f.thickness?.thickness_1 === '4/4'
-                  ? 0.75
-                  : f.thickness?.thickness_1 === '5/4'
-                    ? 1
-                    : f.thickness?.thickness_1 === '6/4'
-                      ? 1.25
-                      : 0.75,
+                f.thickness?.thickness_values
+                  ? f.thickness?.thickness_values
+                  : f.thickness?.thickness_1 === '4/4'
+                    ? 0.75
+                    : f.thickness?.thickness_1 === '5/4'
+                      ? 1
+                      : f.thickness?.thickness_1 === '6/4'
+                        ? 1.25
+                        : 0.75,
             ]);
           } else {
             a.push([
@@ -1011,15 +1008,15 @@ class OrderPage extends Component {
               numQty(j.width),
               numQty(j.height),
               f.edge && f.edge.NAME,
-              f.thickness?.thickness_values
-                ? f.thickness?.thickness_values
-                : f.thickness?.thickness_1 === '4/4'
-                  ? 0.75
-                  : f.thickness?.thickness_1 === '5/4'
-                    ? 1
-                    : f.thickness?.thickness_1 === '6/4'
-                      ? 1.25
-                      : 0.75,
+                f.thickness?.thickness_values
+                  ? f.thickness?.thickness_values
+                  : f.thickness?.thickness_1 === '4/4'
+                    ? 0.75
+                    : f.thickness?.thickness_1 === '5/4'
+                      ? 1
+                      : f.thickness?.thickness_1 === '6/4'
+                        ? 1.25
+                        : 0.75,
             ]);
           }
         });
@@ -1028,7 +1025,6 @@ class OrderPage extends Component {
       : [];
 
     this.setState({ lipperExport: a });
-    
   };
 
   exportRazor = () => {
@@ -1062,13 +1058,12 @@ class OrderPage extends Component {
       }),
     };
 
-
     const razor = newData
       ? newData.part_list.map((f, index) => {
-      // console.log({ f });
+        // console.log({ f });
 
         f.dimensions.forEach((j, ind) => {
-        // console.log({ j });
+          // console.log({ j });
 
           const { breakdowns } = this.props;
 
@@ -1093,16 +1088,15 @@ class OrderPage extends Component {
               i.razor_pattern,
               `${f.design?.NAME} ${f.thickness?.thickness_1}`,
               i.item,
-              f.profile?.NAME
-                ? f.profile?.NAME
-                : f.design?.NAME
-                  ? f.design?.NAME
-                  : '',
+                f.profile?.NAME
+                  ? f.profile?.NAME
+                  : f.design?.NAME
+                    ? f.design?.NAME
+                    : '',
             ]);
           });
 
           const railPrint = rail.map((i) => {
-   
             return a.push([
               `${selectedOrder.orderNum}`,
               `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
@@ -1112,11 +1106,11 @@ class OrderPage extends Component {
               i.razor_pattern,
               `${f.design?.NAME} ${f.thickness?.thickness_1}`,
               i.item,
-              f.profile?.NAME
-                ? f.profile?.NAME
-                : f.design?.NAME
-                  ? f.design?.NAME
-                  : '',
+                f.profile?.NAME
+                  ? f.profile?.NAME
+                  : f.design?.NAME
+                    ? f.design?.NAME
+                    : '',
             ]);
           });
         });
@@ -1125,32 +1119,29 @@ class OrderPage extends Component {
       : [];
 
     this.setState({ razorExport: a });
-
-    
   };
-
-  
-
 
   render() {
     const props = this.props;
 
-    const { selectedOrder, printer_options, user, deleteFilesFromOrder, formState } =
-      this.props;
+    const {
+      selectedOrder,
+      printer_options,
+      user,
+      deleteFilesFromOrder,
+      formState,
+    } = this.props;
 
     const data = formState ? formState : [];
 
-
     let s = selectedOrder ? selectedOrder : 'Door Order';
-  
+
     let exportCsv = [];
     let a = [];
     let razorGuage = [];
-  
 
-  
     let itemNum = 0;
-  
+
     const itemNumCounter = {
       ...data,
       part_list: data?.part_list?.map((i) => {
@@ -1173,16 +1164,14 @@ class OrderPage extends Component {
         };
       }),
     };
-  
-    if (data.orderType === 'Door Order') {
 
-  
+    if (data.orderType === 'Door Order') {
       exportCsv = itemNumCounter
         ? itemNumCounter.part_list.map((f, index) => {
           f.dimensions.forEach((j, ind) => {
             if (
               f.orderType.value === 'DF' ||
-                  numQty(j.width) > numQty(j.height)
+                numQty(j.width) > numQty(j.height)
             ) {
               a.push([
                 s.orderNum,
@@ -1192,15 +1181,15 @@ class OrderPage extends Component {
                 Math.round(numQty(j.width) * 16) / 16,
                 Math.round(numQty(j.height) * 16) / 16,
                 f.edge && f.edge.NAME,
-                    f.thickness?.thickness_values
-                      ? f.thickness?.thickness_values
-                      : f.thickness?.thickness_1 === '4/4'
-                        ? 0.75
-                        : f.thickness?.thickness_1 === '5/4'
-                          ? 1
-                          : f.thickness?.thickness_1 === '6/4'
-                            ? 1.25
-                            : 0.75,
+                  f.thickness?.thickness_values
+                    ? f.thickness?.thickness_values
+                    : f.thickness?.thickness_1 === '4/4'
+                      ? 0.75
+                      : f.thickness?.thickness_1 === '5/4'
+                        ? 1
+                        : f.thickness?.thickness_1 === '6/4'
+                          ? 1.25
+                          : 0.75,
               ]);
             } else {
               a.push([
@@ -1211,42 +1200,42 @@ class OrderPage extends Component {
                 Math.round(numQty(j.width) * 16) / 16,
                 Math.round(numQty(j.height) * 16) / 16,
                 f.edge && f.edge.NAME,
-                    f.thickness?.thickness_values
-                      ? f.thickness?.thickness_values
-                      : f.thickness?.thickness_1 === '4/4'
-                        ? 0.75
-                        : f.thickness?.thickness_1 === '5/4'
-                          ? 1
-                          : f.thickness?.thickness_1 === '6/4'
-                            ? 1.25
-                            : 0.75,
+                  f.thickness?.thickness_values
+                    ? f.thickness?.thickness_values
+                    : f.thickness?.thickness_1 === '4/4'
+                      ? 0.75
+                      : f.thickness?.thickness_1 === '5/4'
+                        ? 1
+                        : f.thickness?.thickness_1 === '6/4'
+                          ? 1.25
+                          : 0.75,
               ]);
             }
           });
           return a;
         })
         : [];
-  
+
       const razor = itemNumCounter
         ? itemNumCounter.part_list.map((f, index) => {
           // console.log({ f });
-  
+
           f.dimensions.forEach((j, ind) => {
             // console.log({ j });
-  
+
             const { breakdowns } = this.props;
-  
+
             const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
               return rail;
             });
-  
+
             const rail = (Rails(j, f, breakdowns) || []).map((rail) => {
               return rail;
             });
-  
+
             // console.log({ rail });
             // console.log({ stile });
-  
+
             const stilePrint = stile.map((i) => {
               return razorGuage.push([
                 `${s.orderNum}`,
@@ -1257,14 +1246,14 @@ class OrderPage extends Component {
                 i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
                 i.item,
-                    f.profile?.NAME
-                      ? f.profile?.NAME
-                      : f.design?.NAME
-                        ? f.design?.NAME
-                        : '',
+                  f.profile?.NAME
+                    ? f.profile?.NAME
+                    : f.design?.NAME
+                      ? f.design?.NAME
+                      : '',
               ]);
             });
-  
+
             const railPrint = rail.map((i) => {
               console.log({ i });
               return razorGuage.push([
@@ -1276,11 +1265,11 @@ class OrderPage extends Component {
                 i.razor_pattern,
                 `${f.design?.NAME} ${f.thickness?.thickness_1}`,
                 i.item,
-                    f.profile?.NAME
-                      ? f.profile?.NAME
-                      : f.design?.NAME
-                        ? f.design?.NAME
-                        : '',
+                  f.profile?.NAME
+                    ? f.profile?.NAME
+                    : f.design?.NAME
+                      ? f.design?.NAME
+                      : '',
               ]);
             });
           });
@@ -1288,8 +1277,6 @@ class OrderPage extends Component {
         })
         : [];
     }
-
-
 
     return (
       <div className="animated noPrint resize">
@@ -1380,7 +1367,7 @@ class OrderPage extends Component {
                     </Button>
                   </ModalFooter>
                 </Modal>
-          
+
                 <Row>
                   {user?.role?.type !== 'quality_control' &&
                   user?.role?.type !== 'sales' ? (
@@ -1436,7 +1423,8 @@ class OrderPage extends Component {
                           ) : null}
 
                           {selectedOrder &&
-                            selectedOrder.orderType === 'Door Order' && user.role?.type !== 'quality_control' ? (
+                          selectedOrder.orderType === 'Door Order' &&
+                          user.role?.type !== 'quality_control' ? (
                               <CSVLink
                                 data={a.map((i, ind) => {
                                   return [
@@ -1465,7 +1453,8 @@ class OrderPage extends Component {
                             ) : null}
 
                           {selectedOrder &&
-                            selectedOrder.orderType === 'Door Order' && user.role?.type !== 'quality_control' ? (
+                          selectedOrder.orderType === 'Door Order' &&
+                          user.role?.type !== 'quality_control' ? (
                               <Tooltip
                                 title="Razorguage Export"
                                 placement="top"
@@ -1580,7 +1569,8 @@ class OrderPage extends Component {
                                 .map((i, index) => (
                                   <tr key={index}>
                                     <th>
-                                      {i.status ? i.status : 'Order Edited'}   {i.user ? 'by: ' + i.user : ''}
+                                      {i.status ? i.status : 'Order Edited'}{' '}
+                                      {i.user ? 'by: ' + i.user : ''}
                                     </th>
                                     <td>
                                       {moment(i.date).format(

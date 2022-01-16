@@ -56,30 +56,23 @@ const SalesReport = (props) => {
   };
 
   useEffect(() => {
-
     setSortedDate(orders.sort((a, b) => b.dueDate - a.dueDate));
-    
-
   }, [orders]);
-
 
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
-  
         return x.status === 'Ordered';
       });
 
       if (filterStatus === 'Ordered') {
-
-
         if (filterText.length > 0) {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status &&
             (item.orderNum.toString().includes(filterText) ||
@@ -92,9 +85,9 @@ const SalesReport = (props) => {
           );
         } else {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status
           );
@@ -136,8 +129,6 @@ const SalesReport = (props) => {
     })
     : [];
 
-
-
   return role &&
     (role.type === 'authenticated' ||
       role.type === 'owner' ||
@@ -148,7 +139,10 @@ const SalesReport = (props) => {
           <Col>
             <Row>
               <Col>
-                <h3>Filter Date {filterStatus === 'Quote' ? 'Entered' : filterStatus}</h3>
+                <h3>
+                Filter Date{' '}
+                  {filterStatus === 'Quote' ? 'Entered' : filterStatus}
+                </h3>
               </Col>
             </Row>
             <Row>
@@ -179,7 +173,7 @@ const SalesReport = (props) => {
                   isOutsideRange={(date) => {
                     if (date < moment(startDate)) {
                       return true; // return true if you want the particular date to be disabled
-                    }  else {
+                    } else {
                       return false;
                     }
                   }}
@@ -364,6 +358,25 @@ const SalesReport = (props) => {
                 />
               </Col>
             </Row>
+            <Row>
+              <Col>
+                <FormGroup style={{ height: '100%', width: '60%' }}>
+                  <Input
+                    type="select"
+                    name="select"
+                    id="status_dropdown"
+                    defaultValue="Quote"
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                  >
+                    {status.map((i, index) => (
+                      <option key={index} value={i.value}>
+                        {i.value}
+                      </option>
+                    ))}
+                  </Input>
+                </FormGroup>
+              </Col>
+            </Row>
           </Col>
         </Row>
 
@@ -380,8 +393,6 @@ const SalesReport = (props) => {
             endDate={endDate}
             status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
           /> */}
-
-
 
         <Suspense fallback={loading()}>
           <StatusTable
@@ -403,7 +414,7 @@ const mapStateToProps = (state, prop) => ({
   role: state.users.user.role,
   sale: state.users.user.sale,
   salesReps: state.sales.salesReps,
-  user: state.users.user
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) =>

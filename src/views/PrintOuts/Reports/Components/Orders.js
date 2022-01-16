@@ -75,10 +75,10 @@ export default (data, startDate, endDate, status) => {
 
     return tableBody.push([
       moment(i.created_at).format('MM/DD/YYYY'),
-      dateOrdered.length > 0
-        ? moment(dateOrdered[0].date).format('MM/DD/YYYY')
+      i.DateOrdered || dateOrdered.length > 0
+        ? moment(i.DateOrdered || dateOrdered[0].date).format('MM/DD/YYYY')
         : 'TBD',
-      i.job_info.customer.Company,
+      i.job_info?.customer?.Company,
       i.orderNum,
       i.status,
       name,
@@ -86,8 +86,8 @@ export default (data, startDate, endDate, status) => {
       dfs,
       boxes,
       face_frames,
-      `$${i.total.toFixed(2)}`,
-      i.sale.fullName,
+      `$${i.total?.toFixed(2)}`,
+      i.sale?.fullName,
     ]);
   });
 
