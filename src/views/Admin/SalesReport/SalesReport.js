@@ -56,25 +56,18 @@ const SalesReport = (props) => {
   };
 
   useEffect(() => {
-
     setSortedDate(orders.sort((a, b) => b.dueDate - a.dueDate));
-    
-
   }, [orders]);
-
 
   useEffect(() => {
     const filteredOrders = orders.filter((item) => {
       let date = new Date(item.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
-  
         return x.status === 'Ordered';
       });
 
       if (filterStatus === 'Ordered') {
-
-
         if (filterText.length > 0) {
           return (
             moment(item.DateOrdered || dateOrdered[0]?.date) >=
@@ -136,8 +129,6 @@ const SalesReport = (props) => {
     })
     : [];
 
-
-
   return role &&
     (role.type === 'authenticated' ||
       role.type === 'owner' ||
@@ -148,7 +139,10 @@ const SalesReport = (props) => {
           <Col>
             <Row>
               <Col>
-                <h3>Filter Date {filterStatus === 'Quote' ? 'Entered' : filterStatus}</h3>
+                <h3>
+                Filter Date{' '}
+                  {filterStatus === 'Quote' ? 'Entered' : filterStatus}
+                </h3>
               </Col>
             </Row>
             <Row>
@@ -179,7 +173,7 @@ const SalesReport = (props) => {
                   isOutsideRange={(date) => {
                     if (date < moment(startDate)) {
                       return true; // return true if you want the particular date to be disabled
-                    }  else {
+                    } else {
                       return false;
                     }
                   }}
@@ -400,8 +394,6 @@ const SalesReport = (props) => {
             status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
           /> */}
 
-
-
         <Suspense fallback={loading()}>
           <StatusTable
             orders={data}
@@ -422,7 +414,7 @@ const mapStateToProps = (state, prop) => ({
   role: state.users.user.role,
   sale: state.users.user.sale,
   salesReps: state.sales.salesReps,
-  user: state.users.user
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) =>
