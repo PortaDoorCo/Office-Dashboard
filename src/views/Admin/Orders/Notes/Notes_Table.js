@@ -10,9 +10,9 @@ class Notes_Table extends Component {
   render() {
     const { formState, total } = this.props;
 
-    const note_table = formState?.Conversation_Notes?.sort((a,b) => new Date(b.date) - new Date(a.date));
-
-
+    const note_table = formState?.Conversation_Notes?.sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
 
     if (formState) {
       return (
@@ -31,10 +31,11 @@ class Notes_Table extends Component {
                     {moment(i.date).format('MMMM Do YYYY, h:mm:ss a')}
                   </td>
                   <td>{i.note}</td>
-                  <td style={{ textAlign: 'right' }}>{i.user ? `Entered By: ${i.user}` : null}</td>
+                  <td style={{ textAlign: 'right' }}>
+                    {i.user ? `Entered By: ${i.user}` : null}
+                  </td>
                 </tr>
-              ))
-              }
+              ))}
             </tbody>
           </Table>
         </div>

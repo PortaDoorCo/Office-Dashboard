@@ -489,7 +489,7 @@ export function updateNotes(orderId, balance, user, cookie) {
       {
         note: balance.note,
         date: new Date(),
-        user: user.FirstName
+        user: user.FirstName,
       },
     ],
   };

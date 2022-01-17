@@ -22,7 +22,7 @@ class Conversation_Notes extends Component {
       order = {
         Conversation_Notes: values.Conversation_Notes,
         note: values.note,
-        user: user.FirstName
+        user: user.FirstName,
       };
     } else {
       order = {
@@ -41,7 +41,7 @@ class Conversation_Notes extends Component {
             {
               note: values.note,
               date: new Date(),
-              user: user.FirstName
+              user: user.FirstName,
             },
           ])
         );
@@ -52,7 +52,7 @@ class Conversation_Notes extends Component {
             {
               note: values.note,
               date: new Date(),
-              user: user.FirstName
+              user: user.FirstName,
             },
           ])
         );
