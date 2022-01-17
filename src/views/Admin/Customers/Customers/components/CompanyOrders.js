@@ -22,7 +22,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import CustomerFile from '../../../../PrintOuts/Reports/CustomerFile';
 import styled from 'styled-components';
-import status from '../../../../../utils/report_status';
+import status from '../../../../../utils/status';
 import Invoice from '../../../../PrintOuts/Reports/Invoice';
 
 // momentLocaliser(moment);
@@ -64,11 +64,11 @@ const conditionalRowStyles = [
     when: (row) =>
       moment(row.dueDate).startOf('day').valueOf() <
         moment(new Date()).startOf('day').valueOf() &&
-      (row.Shipping_Scheduled &&
-        (!row.status?.includes('Quote') &&
-          !row.status?.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status?.includes('Shipped'))),
+      row.Shipping_Scheduled &&
+      !row.status?.includes('Quote') &&
+      !row.status?.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status?.includes('Shipped'),
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -78,12 +78,12 @@ const conditionalRowStyles = [
   },
   {
     when: (row) =>
-      (!row.Shipping_Scheduled &&
-        (!row.status.includes('Quote') &&
-          !row.status.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status.includes('Ordered') &&
-          !row.status.includes('Shipped'))),
+      !row.Shipping_Scheduled &&
+      !row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped'),
     style: {
       backgroundColor: '#FFEACA',
       '&:hover': {
@@ -119,7 +119,7 @@ const OrderTable = (props) => {
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus] = useState('Quote');
+  const [filterStatus, setFilterStatus] = useState('All');
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -129,10 +129,150 @@ const OrderTable = (props) => {
       : new Date();
 
   useEffect(() => {
+    const filteredOrders = orders?.filter((item) => {
+      let date = new Date(item.created_at);
 
-    const filteredItems = props.orders.filter(item => item.orderNum && item.orderNum.toString().includes(filterText));
-    setData(filteredItems);
-  }, [filterText, props.orders]);
+      const dateOrdered = item?.tracking?.filter((x) => {
+        return x.status === 'Ordered';
+      });
+
+      const dateInvoiced = item?.tracking?.filter((x) => {
+        return x.status === 'Invoiced';
+      });
+
+      if (filterStatus === 'Quote') {
+        if (filterText?.length > 0) {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status?.includes(filterStatus) &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText?.toLowerCase()
+              ) ||
+              item?.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText?.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Ordered') {
+        if (filterText?.length > 0) {
+          return (
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateOrdered[0]?.status &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateOrdered[0]?.status
+          );
+        }
+      } else if (filterStatus === 'Invoiced') {
+        if (filterText?.length > 0) {
+          return (
+            moment(item.DateInvoiced || dateInvoiced[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateInvoiced || dateInvoiced[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateInvoiced[0]?.status &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(item.DateInvoiced || dateInvoiced[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateInvoiced || dateInvoiced[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateInvoiced[0]?.status
+          );
+        }
+      } else if (filterStatus === 'In Production') {
+        if (filterText.length > 0) {
+          return (
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Ordered') &&
+            !item.status.includes('Shipped') &&
+            !item.status.includes('Complete') &&
+            (item.orderNum.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Ordered') &&
+            !item.status.includes('Complete') &&
+            !item.status.includes('Shipped')
+          );
+        }
+      } else {
+        if (filterText?.length > 0) {
+          return (
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status?.includes(filterStatus) &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText?.toLowerCase()
+              ) ||
+              item?.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText?.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateOrdered || dateOrdered[0]?.date || date) <=
+              moment(endDate).endOf('day').valueOf()
+          );
+        }
+      }
+    });
+    setData(filteredOrders);
+  }, [startDate, endDate, orders, filterStatus, filterText]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -197,7 +337,7 @@ const OrderTable = (props) => {
                   }}
                   onChange={(e) => handleStatusChange(e, row)}
                 >
-                  <option value={row?.status}>{row?.status}</option>
+                  <option value={row.status}>{row.status}</option>
                   {status?.map((i, index) => (
                     <option key={index} value={i.value}>
                       {i?.value}
@@ -285,10 +425,10 @@ const OrderTable = (props) => {
   };
 
   const exportReports = () => {
-    let order = data;
+    let newOrder = [...data];
 
     if (filterStatus === 'Ordered') {
-      const newData = data.map((i) => {
+      const newData = newOrder.map((i) => {
         const dateOrdered = i?.tracking?.filter((x) => {
           return x.status === 'Ordered';
         });
@@ -303,32 +443,119 @@ const OrderTable = (props) => {
 
       const sortedData = newData.sort((a, b) => a.dateOrdered - b.dateOrdered);
 
-      order = sortedData;
+      newOrder = sortedData;
 
       console.log({ sortedData });
     } else {
-      
-      const newData = data.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      const newData = newOrder.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      );
 
-      order = newData;
+      newOrder = newData;
       // console.log({newData});
-
     }
 
-    if(filterStatus === 'Invoiced'){
-      Invoice(order, startDate, endDate, filterStatus);
+    if (filterStatus === 'Invoiced') {
+      Invoice(newOrder, startDate, endDate, filterStatus);
     } else {
-      CustomerFile(order, startDate, endDate, company);
+      CustomerFile(newOrder, startDate, endDate, company);
     }
-
 
     setToggleCleared(!toggleCleared);
   };
 
   return (
     <div>
+      <Row className="mb-3">
+        <Col lg="7" />
+        <Col>
+          <Row>
+            <Col>
+              <h3>
+                Filter Date{' '}
+                {filterStatus === 'Quote'
+                  ? 'Entered'
+                  : filterStatus === 'Invoiced'
+                    ? 'Invoiced'
+                    : 'Ordered'}
+              </h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <SingleDatePicker
+                date={startDate} // momentPropTypes.momentObj or null
+                onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
+                focused={startDateFocusedInput} // PropTypes.bool
+                onFocusChange={({ focused }) =>
+                  setStartDateFocusedInput(focused)
+                } // PropTypes.func.isRequired
+                id="startDate" // PropTypes.string.isRequired,
+                isOutsideRange={(date) => {
+                  if (date < moment(minDate)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
+              />
 
-
+              <SingleDatePicker
+                date={endDate} // momentPropTypes.momentObj or null
+                onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
+                focused={endDateFocusedInput} // PropTypes.bool
+                onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
+                id="endDate" // PropTypes.string.isRequired,
+                isOutsideRange={(date) => {
+                  if (date < moment(startDate)) {
+                    return true; // return true if you want the particular date to be disabled
+                  } else {
+                    return false;
+                  }
+                }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="All"
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                >
+                  <option value={'All'}>All</option>
+                  {status.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              {role &&
+              (role.type === 'authenticated' ||
+                role.type === 'owner' ||
+                role.type === 'administrator') ? (
+                  <h3>
+                  Order Totals: $
+                    {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
+                  </h3>
+                ) : null}
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              <h3># Of Orders: {data.length}</h3>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
       <Row>
         {/* <Col lg='11' /> */}
         <Col>

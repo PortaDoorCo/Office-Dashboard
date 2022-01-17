@@ -25,7 +25,7 @@ class Notes_Table extends Component {
               </tr>
             </thead>
             <tbody>
-              {note_table.map((i, index) => (
+              {note_table?.map((i, index) => (
                 <tr key={index}>
                   <td width={300}>
                     {moment(i.date).format('MMMM Do YYYY, h:mm:ss a')}

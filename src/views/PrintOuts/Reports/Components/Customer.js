@@ -110,11 +110,13 @@ export default (data, startDate, endDate, status) => {
       columns: [
         {
           stack: [
-            `CUSTOMER FILE - ${status}`,
+            `REPORT - ${moment(startDate).format('MM/DD/YYYY')} thru ${moment(
+              endDate
+            ).format('MM/DD/YYYY')}`,
           ],
         },
         {
-          stack: [{ text: '', alignment: 'right' }],
+          stack: [{ text: `Customer: ${status}`, alignment: 'right' }],
         },
       ],
     },
