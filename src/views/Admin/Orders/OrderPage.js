@@ -1530,15 +1530,6 @@ class OrderPage extends Component {
                                       rel="noopener noreferrer"
                                       target="_blank"
                                     >
-                                      <Button>Edit</Button>
-                                    </a>
-                                  </td>
-                                  <td style={{ textAlign: 'right' }}>
-                                    <a
-                                      href={i.url}
-                                      rel="noopener noreferrer"
-                                      target="_blank"
-                                    >
                                       <Button>View</Button>
                                     </a>
                                   </td>
