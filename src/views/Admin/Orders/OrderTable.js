@@ -24,6 +24,7 @@ import Report1 from '../../PrintOuts/Reports/Report1';
 import styled from 'styled-components';
 import status from '../../../utils/report_status';
 import { itemPriceSelector } from '../../../selectors/pricing';
+import Invoice from '../../PrintOuts/Reports/Invoice';
 
 // momentLocaliser(moment);
 
@@ -428,7 +429,13 @@ const OrderTable = (props) => {
 
     }
 
-    Report1(order, startDate, endDate, filterStatus);
+    if(filterStatus === 'Invoiced'){
+      Invoice(order, startDate, endDate, filterStatus);
+    } else {
+      Report1(order, startDate, endDate, filterStatus);
+    }
+
+
     setToggleCleared(!toggleCleared);
   };
 

@@ -1,6 +1,6 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
-import LateList from './Components/Late_List';
+import LateList from './Components/Tracking';
 
 export default (data, startDate, endDate, status) => {
   const { vfs } = vfsFonts.pdfMake;

@@ -58,10 +58,10 @@ export default {
           url: '/tracking',
         },
 
-        {
-          name: 'Late List',
-          url: '/late-list',
-        },
+        // {
+        //   name: 'Late List',
+        //   url: '/late-list',
+        // },
 
         // {
         //   name: 'Purchase Orders',
