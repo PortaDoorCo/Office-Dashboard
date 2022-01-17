@@ -85,7 +85,7 @@ export function updateSelectedOrder(data) {
   };
 }
 
-export function uploadFilesToOrder(order, e, cookie) {
+export function uploadFilesToOrder(order, e, user, cookie) {
   const orderId = order.id;
 
   const id = e.map((i) => i.id);
@@ -93,7 +93,10 @@ export function uploadFilesToOrder(order, e, cookie) {
 
   const fileIds = orderIds.concat(id);
 
+  const filesInfo = order.filesInfo ? order.filesInfo : [];
+
   const files = {
+    filesInfo: [...filesInfo, { user: user.FirstName }],
     files: fileIds,
   };
 
@@ -123,15 +126,11 @@ export function uploadFilesToOrder(order, e, cookie) {
 export function deleteFilesFromOrder(order, e, cookie) {
   const orderId = order.id;
 
-
   let fileIds = order?.files?.filter((item) => item.id !== e.id);
 
   const files = {
     files: fileIds,
   };
-
- 
-
 
   return async function (dispatch) {
     try {
@@ -327,12 +326,11 @@ export function updateOrder(orderId, order, cookie) {
 }
 
 export function updateStatus(orderId, key, status, user, cookie) {
-
-  console.log({user});
+  console.log({ user });
 
   let item = {};
 
-  if(status.status === 'Ordered'){
+  if (status.status === 'Ordered') {
     item = {
       status: status.status,
       DateOrdered: new Date(),
@@ -341,11 +339,11 @@ export function updateStatus(orderId, key, status, user, cookie) {
         {
           status: status.status,
           date: moment().format(),
-          user: user ? user?.FirstName : ''
+          user: user ? user?.FirstName : '',
         },
       ],
     };
-  } else if(status.status === 'Invoiced') {
+  } else if (status.status === 'Invoiced') {
     item = {
       status: status.status,
       DateInvoiced: new Date(),
@@ -354,7 +352,7 @@ export function updateStatus(orderId, key, status, user, cookie) {
         {
           status: status.status,
           date: moment().format(),
-          user: user ? user?.FirstName : ''
+          user: user ? user?.FirstName : '',
         },
       ],
     };
@@ -366,12 +364,11 @@ export function updateStatus(orderId, key, status, user, cookie) {
         {
           status: status.status,
           date: moment().format(),
-          user: user ? user?.FirstName : ''
+          user: user ? user?.FirstName : '',
         },
       ],
     };
   }
-
 
   return async function (dispatch) {
     try {
@@ -424,7 +421,7 @@ export function updateBalance(orderId, balance, cookie) {
       status: 'Ordered',
       job_info: {
         ...balance.job_info,
-        status: 'Ordered'
+        status: 'Ordered',
       },
       tracking: [
         ...balance.tracking,
@@ -485,13 +482,14 @@ export function getDeliveries(cookie) {
   };
 }
 
-export function updateNotes(orderId, balance, cookie) {
+export function updateNotes(orderId, balance, user, cookie) {
   const item = {
     Conversation_Notes: [
       ...balance.Conversation_Notes,
       {
         note: balance.note,
         date: new Date(),
+        user: user.FirstName,
       },
     ],
   };

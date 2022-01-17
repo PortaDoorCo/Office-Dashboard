@@ -10,23 +10,19 @@ import Cookies from 'js-cookie';
 
 const cookie = Cookies.get('jwt');
 
-
-
 class Conversation_Notes extends Component {
-
-
   submit = async (values) => {
-
-    const { updateNotes } = this.props;
+    const { updateNotes, user } = this.props;
 
     const id = values.id;
 
     let order;
 
-    if(values.Conversation_Notes){
+    if (values.Conversation_Notes) {
       order = {
         Conversation_Notes: values.Conversation_Notes,
         note: values.note,
+        user: user.FirstName,
       };
     } else {
       order = {
@@ -35,64 +31,40 @@ class Conversation_Notes extends Component {
       };
     }
 
+    if (values.note) {
+      await updateNotes(id, order, user, cookie);
 
-    if(values.note){
-      await updateNotes(id, order, cookie);
-
-      if(values.Conversation_Notes){
+      if (values.Conversation_Notes) {
         await this.props.dispatch(
-          change(
-            'Order',
-            'Conversation_Notes',
-            [
-              ...values.Conversation_Notes,
-              {
-                'note': values.note,
-                'date': new Date()
-              }
-            ]
-  
-          )
+          change('Order', 'Conversation_Notes', [
+            ...values.Conversation_Notes,
+            {
+              note: values.note,
+              date: new Date(),
+              user: user.FirstName,
+            },
+          ])
         );
-        await this.props.dispatch(
-          change(
-            'Order',
-            'note',
-            ''
-          )
-        );
+        await this.props.dispatch(change('Order', 'note', ''));
       } else {
         await this.props.dispatch(
-          change(
-            'Order',
-            'Conversation_Notes',
-            [
-              {
-                'note': values.note,
-                'date': new Date()
-              }
-            ]
-          )
+          change('Order', 'Conversation_Notes', [
+            {
+              note: values.note,
+              date: new Date(),
+              user: user.FirstName,
+            },
+          ])
         );
-        await this.props.dispatch(
-          change(
-            'Order',
-            'note',
-            ''
-          )
-        );
+        await this.props.dispatch(change('Order', 'note', ''));
       }
-
     } else {
       alert('Please enter a value');
       return null;
     }
-  }
-
-
+  };
 
   render() {
-
     const { handleSubmit } = this.props;
 
     return (
@@ -104,20 +76,20 @@ class Conversation_Notes extends Component {
             </Col>
           </Row>
           <Row>
-            <Col xs='6'>
+            <Col xs="6">
               <FormGroup>
                 <Label for="exampleText">Conversation Notes</Label>
                 <Field
-                  name='note'
+                  name="note"
                   type="textarea"
                   component={renderField}
-                  label="Notes" />
+                  label="Notes"
+                />
               </FormGroup>
 
               <div className="mt-3">
-                <Button color='primary'>Submit</Button>
+                <Button color="primary">Submit</Button>
               </div>
-
             </Col>
           </Row>
         </form>
@@ -126,19 +98,16 @@ class Conversation_Notes extends Component {
   }
 }
 
-
 const mapStateToProps = (state, props) => ({
-
   formState: getFormValues('Order')(state),
-
-
+  user: state.users.user,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       change,
-      updateNotes
+      updateNotes,
     },
     dispatch
   );
@@ -147,8 +116,4 @@ Conversation_Notes = reduxForm({
   form: 'Order',
 })(Conversation_Notes);
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Conversation_Notes);
+export default connect(mapStateToProps, mapDispatchToProps)(Conversation_Notes);

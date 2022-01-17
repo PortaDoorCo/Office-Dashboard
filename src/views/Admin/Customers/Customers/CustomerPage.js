@@ -86,7 +86,7 @@ class CustomerPage extends Component {
     if (this.props.orders.length > 0) {
       updateOrders = orders.filter(
         (x) => x.job_info?.customer?.id === this.props.selectedCompanies.id
-      );
+      ).sort((a,b) => b.orderNum - a.orderNum);
     }
 
     return (
@@ -151,7 +151,7 @@ class CustomerPage extends Component {
                       locations={locations}
                       defaultCenter={defaultCenter}
                     />
-                    <CompanyOrders orders={updateOrders} />
+                    <CompanyOrders orders={updateOrders} company={selectedCompanies?.Company} />
                   </div>
                 </Card>
                 <Card>

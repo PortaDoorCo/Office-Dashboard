@@ -65,11 +65,11 @@ const conditionalRowStyles = [
     when: (row) =>
       moment(row.dueDate).startOf('day').valueOf() <
         moment(new Date()).startOf('day').valueOf() &&
-      (row.Shipping_Scheduled &&
-        (!row.status?.includes('Quote') &&
-          !row.status?.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status?.includes('Shipped'))),
+      row.Shipping_Scheduled &&
+      !row.status?.includes('Quote') &&
+      !row.status?.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status?.includes('Shipped'),
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -79,12 +79,12 @@ const conditionalRowStyles = [
   },
   {
     when: (row) =>
-      (!row.Shipping_Scheduled &&
-        (!row.status.includes('Quote') &&
-          !row.status.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status.includes('Ordered') &&
-          !row.status.includes('Shipped'))),
+      !row.Shipping_Scheduled &&
+      !row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped'),
     style: {
       backgroundColor: '#FFEACA',
       '&:hover': {
@@ -136,13 +136,16 @@ const OrderTable = (props) => {
       const dateOrdered = item?.tracking?.filter((x) => {
         return x.status === 'Ordered';
       });
+      const dateInvoiced = item?.tracking?.filter((x) => {
+        return x.status === 'Invoiced';
+      });
 
       if (filterStatus === 'Ordered') {
         if (filterText?.length > 0) {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status &&
             (item.orderNum?.toString().includes(filterText) ||
@@ -155,11 +158,36 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(dateOrdered[0]?.date) >=
+            moment(item.DateOrdered || dateOrdered[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(dateOrdered[0]?.date) <=
+            moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status
+          );
+        }
+      } else if (filterStatus === 'Invoiced') {
+        if (filterText?.length > 0) {
+          return (
+            moment(item.DateInvoiced || dateInvoiced[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateInvoiced || dateInvoiced[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateInvoiced[0]?.status &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(item.DateInvoiced || dateInvoiced[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateInvoiced || dateInvoiced[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateInvoiced[0]?.status
           );
         }
       } else {
@@ -246,16 +274,34 @@ const OrderTable = (props) => {
       cell: (row) => <div>{moment(row?.created_at).format('MMM Do YYYY')}</div>,
     },
     {
-      name: 'Date Ordered',
+      name: `Date ${filterStatus === 'Invoiced' ? 'Invoiced' : 'Ordered'}`,
       cell: (row) => {
         const dateOrdered = row?.tracking?.filter((x) => {
           return x.status === 'Ordered';
         });
 
-        if (row.DateOrdered || dateOrdered.length > 0) {
-          return <div>{moment(row.DateOrdered || dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+        const dateInvoiced = row?.tracking?.filter((x) => {
+          return x.status === 'Invoiced';
+        });
+
+        if (filterStatus === 'Invoiced') {
+          if (row.DateInvoiced || dateInvoiced.length > 0) {
+            return (
+              <div>
+                {moment(row.DateInvoiced || dateInvoiced[0].date).format(
+                  'MMM Do YYYY'
+                )}
+              </div>
+            );
+          } else {
+            return <div>TBD</div>;
+          }
         } else {
-          return <div>TBD</div>;
+          if (row.DateOrdered) {
+            return <div>{moment(row.DateOrdered).format('MMM Do YYYY')}</div>;
+          } else {
+            return <div>TBD</div>;
+          }
         }
       },
     },
@@ -331,21 +377,25 @@ const OrderTable = (props) => {
       cell: (row) => <div>${row?.total && row.total?.toFixed(2)}</div>,
     },
     {
-      name: 'Balance Paid',
+      name: 'Balance Due',
       sortable: true,
-      cell: (row) => (
-        <div>
-          $
-          {row.balance_history &&
-            row.balance_history
-              .reduce((acc, item) => acc + item.balance_paid, 0)
-              ?.toFixed(2)}
-        </div>
-      ),
+      cell: (row) => {
+        let updated_total = row.total;
+
+        const balance_history_paid = row.balance_history
+          .slice(0)
+          .map((i, index) => {
+            updated_total = updated_total - parseFloat(i.balance_paid);
+            return updated_total;
+          });
+
+        console.log({ updated_total });
+        return <div>${updated_total.toFixed(2)}</div>;
+      },
     },
     {
       name: 'Salesman',
-      cell: row => <div>{row.sale?.fullName}</div>,
+      cell: (row) => <div>{row.sale?.fullName}</div>,
       sortable: true,
     },
     {
@@ -399,10 +449,10 @@ const OrderTable = (props) => {
   };
 
   const exportReports = () => {
-    let order = data;
+    let newOrder = [...data];
 
     if (filterStatus === 'Ordered') {
-      const newData = data.map((i) => {
+      const newData = newOrder.map((i) => {
         const dateOrdered = i?.tracking?.filter((x) => {
           return x.status === 'Ordered';
         });
@@ -417,24 +467,23 @@ const OrderTable = (props) => {
 
       const sortedData = newData.sort((a, b) => a.dateOrdered - b.dateOrdered);
 
-      order = sortedData;
+      newOrder = sortedData;
 
       console.log({ sortedData });
     } else {
-      
-      const newData = data.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      const newData = newOrder.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      );
 
-      order = newData;
+      newOrder = newData;
       // console.log({newData});
-
     }
 
-    if(filterStatus === 'Invoiced'){
-      Invoice(order, startDate, endDate, filterStatus);
+    if (filterStatus === 'Invoiced') {
+      Invoice(newOrder, startDate, endDate, filterStatus);
     } else {
-      Report1(order, startDate, endDate, filterStatus);
+      Report1(newOrder, startDate, endDate, filterStatus);
     }
-
 
     setToggleCleared(!toggleCleared);
   };

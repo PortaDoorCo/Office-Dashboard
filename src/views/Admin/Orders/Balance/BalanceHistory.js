@@ -29,7 +29,6 @@ import Cookies from 'js-cookie';
 // import 'react-widgets/dist/css/react-widgets.css';
 import currencyMask from '../../../../utils/currencyMask';
 
-
 const cookie = Cookies.get('jwt');
 
 const renderDateTimePicker = ({
@@ -52,12 +51,12 @@ const RenderBalances = ({
   balance_history_paid,
   paymentTypes,
   edit,
-  submit
+  submit,
 }) => {
   const [modal, setModal] = useState(false);
   const [index, setIndex] = useState(null);
   const toggle = async (i) => {
-    if(!index){
+    if (!index) {
       await setIndex(i);
       await setModal(!modal);
     } else {
@@ -71,8 +70,6 @@ const RenderBalances = ({
     await submit();
     await setModal(!modal);
   };
-
-
 
   return (
     <div>
@@ -147,7 +144,7 @@ const RenderBalances = ({
                   ) : null}
                 </td>
               </tr>
-            ))
+            )).slice(1)
             .reverse()}
         </tbody>
       </Table>
@@ -175,7 +172,7 @@ class BalanceHistory extends Component {
       paymentTypes,
       handleSubmit,
       editable,
-      reset
+      reset,
     } = this.props;
 
     let updated_total = total;
@@ -205,15 +202,11 @@ class BalanceHistory extends Component {
     };
 
     const submit = async (values, dispatch) => {
-      const {
-        updateOrder,
-      } = this.props;
-
+      const { updateOrder } = this.props;
 
       const order = {
         balance_history: values.balance_history,
       };
-
 
       const orderId = values.id;
       await updateOrder(orderId, order, cookie);

@@ -61,11 +61,11 @@ const conditionalRowStyles = [
       return (
         moment(row.dueDate).startOf('day').valueOf() <
           moment(new Date()).startOf('day').valueOf() &&
-        (row.Shipping_Scheduled &&
-          (!row.status.includes('Quote') &&
-            !row.status.includes('Invoiced') &&
-            !row.status.includes('Complete') &&
-            !row.status.includes('Shipped')))
+        row.Shipping_Scheduled &&
+        !row.status.includes('Quote') &&
+        !row.status.includes('Invoiced') &&
+        !row.status.includes('Complete') &&
+        !row.status.includes('Shipped')
       );
     },
     style: {
@@ -77,12 +77,12 @@ const conditionalRowStyles = [
   },
   {
     when: (row) =>
-      (!row.Shipping_Scheduled &&
-        (!row.status.includes('Quote') &&
-          !row.status.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status.includes('Ordered') &&
-          !row.status.includes('Shipped'))),
+      !row.Shipping_Scheduled &&
+      !row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped'),
     style: {
       backgroundColor: '#FFEACA',
       '&:hover': {
@@ -213,7 +213,13 @@ const OrderTable = (props: TablePropTypes) => {
         });
 
         if (row.DateOrdered || dateOrdered.length > 0) {
-          return <div>{moment(row.DateOrdered || dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+          return (
+            <div>
+              {moment(row.DateOrdered || dateOrdered[0].date).format(
+                'MMM Do YYYY'
+              )}
+            </div>
+          );
         } else {
           return <div>TBD</div>;
         }
@@ -291,17 +297,21 @@ const OrderTable = (props: TablePropTypes) => {
       cell: (row) => <div>${row.total && row.total.toFixed(2)}</div>,
     },
     {
-      name: 'Balance Paid',
+      name: 'Balance Due',
       sortable: true,
-      cell: (row) => (
-        <div>
-          $
-          {row.balance_history &&
-            row.balance_history
-              .reduce((acc, item) => acc + item.balance_paid, 0)
-              ?.toFixed(2)}
-        </div>
-      ),
+      cell: (row) => {
+        let updated_total = row.total;
+
+        const balance_history_paid = row.balance_history
+          .slice(0)
+          .map((i, index) => {
+            updated_total = updated_total - parseFloat(i.balance_paid);
+            return updated_total;
+          });
+
+        console.log({ updated_total });
+        return <div>${updated_total.toFixed(2)}</div>;
+      },
     },
     {
       name: 'Salesman',
