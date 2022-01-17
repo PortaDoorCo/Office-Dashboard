@@ -78,10 +78,7 @@ class JobInfo extends Component {
 
         this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));
       }
-
     }
-
-
   }
 
   componentDidUpdate(prevProps) {
@@ -227,9 +224,8 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-
         <Row className="mb-3">
-          <Col lg='3'>
+          <Col lg="3">
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
               <Field
@@ -242,26 +238,40 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
 
-          {formState?.DateOrdered && (role?.type === 'authenticated' ||
+          {formState?.DateOrdered ? (
+            role?.type === 'authenticated' ||
             role?.type === 'owner' ||
             role?.type === 'administrator' ||
-            role?.type === 'management') ? 
-            <Col lg="3">
-              <FormGroup>
-                <Label htmlFor="dueDate">Date Ordered</Label>
-                <Field
-                  name="DateOrdered"
-                  showTime={true}
-                  component={renderDateTimePicker}
-                  edit={edit}
-                />
-              </FormGroup>
-            </Col> : <Col lg='3' />
-          }
+            role?.type === 'management' ? (
+                <Col lg="3">
+                  <FormGroup>
+                    <Label htmlFor="dueDate">Date Ordered</Label>
+                    <Field
+                      name="DateOrdered"
+                      showTime={true}
+                      component={renderDateTimePicker}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              ) : (
+                <Col lg="3">
+                  <FormGroup>
+                    <Label htmlFor="dueDate">Date Ordered</Label>
+                    <Field
+                      name="DateOrdered"
+                      showTime={true}
+                      component={renderDateTimePicker}
+                      edit={true}
+                    />
+                  </FormGroup>
+                </Col>
+              )
+          ) : (
+            <Col lg="3" />
+          )}
 
-
-
-          <Col lg='3' />
+          <Col lg="3" />
 
           <Col xs="3">
             <FormGroup>
@@ -279,9 +289,7 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-        <Row>
-
-        </Row>
+        <Row></Row>
 
         <Row>
           <Col xs="7">
