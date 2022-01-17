@@ -79,10 +79,6 @@ class JobInfo extends Component {
         this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));
       }
     }
-
-    if (formState?.DateOrdered || dateOrdered?.length > 0) {
-      this.setState({ dynamicStatus: status });
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -229,7 +225,7 @@ class JobInfo extends Component {
         </Row>
 
         <Row className="mb-3">
-          <Col>
+          <Col lg="3">
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
               <Field
@@ -242,7 +238,41 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="5" />
+          {formState?.DateOrdered ? (
+            role?.type === 'authenticated' ||
+            role?.type === 'owner' ||
+            role?.type === 'administrator' ||
+            role?.type === 'management' ||
+            role?.type === 'office' ? (
+                <Col lg="3">
+                  <FormGroup>
+                    <Label htmlFor="dueDate">Date Ordered</Label>
+                    <Field
+                      name="DateOrdered"
+                      showTime={true}
+                      component={renderDateTimePicker}
+                      edit={edit}
+                    />
+                  </FormGroup>
+                </Col>
+              ) : (
+                <Col lg="3">
+                  <FormGroup>
+                    <Label htmlFor="dueDate">Date Ordered</Label>
+                    <Field
+                      name="DateOrdered"
+                      showTime={true}
+                      component={renderDateTimePicker}
+                      edit={true}
+                    />
+                  </FormGroup>
+                </Col>
+              )
+          ) : (
+            <Col lg="3" />
+          )}
+
+          <Col lg="3" />
 
           <Col xs="3">
             <FormGroup>
@@ -259,6 +289,8 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
         </Row>
+
+        <Row></Row>
 
         <Row>
           <Col xs="7">
@@ -298,12 +330,21 @@ class JobInfo extends Component {
                   role?.type === 'authenticated' ||
                   role?.type === 'owner' ||
                   role?.type === 'administrator' ||
+                  role?.type === 'management' ||
                   role?.type === 'office'
-                    ? this.state.dynamicStatus
+                    ? status
                     : otherStatus
                 }
                 dataKey="value"
-                edit={edit}
+                edit={
+                  role?.type === 'authenticated' ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator' ||
+                  role?.type === 'management' ||
+                  role?.type === 'office'
+                    ? edit
+                    : true
+                }
                 textField="value"
                 // onBlur={(e) => console.log({testtttttttttt: e})}
               />
