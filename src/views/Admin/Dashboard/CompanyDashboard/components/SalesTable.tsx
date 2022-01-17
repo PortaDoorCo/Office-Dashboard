@@ -252,6 +252,21 @@ const OrderTable = (props: TablePropTypes) => {
       },
     },
     {
+      name: 'Date Shipped',
+      cell: (row) => {
+        const dateShipped = row?.tracking?.filter((x) => {
+          return x.status === 'Shipped';
+        });
+
+        if (row.DateShipped) {
+          return <div>{moment(row.DateOrdered || dateShipped[0].date).format('MMM Do YYYY')}</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+        
+      },
+    },
+    {
       name: 'Status',
       cell: (row) => (
         <div>

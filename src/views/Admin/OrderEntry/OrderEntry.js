@@ -224,6 +224,7 @@ class OrderEntry extends Component {
         ...values,
         job_info: values.job_info,
         DateOrdered: values?.job_info?.DateOrdered,
+        DateShipped: values?.job_info?.DateShipped,
         part_list: values.part_list,
         Rush: values.job_info?.Rush,
         Sample: values.job_info?.Sample,
@@ -563,8 +564,8 @@ const mapStateToProps = (state, props) => ({
               state.Orders &&
               state.Orders.selectedOrder &&
               state.Orders.selectedOrder.status,
-          DateOrdered: state.Orders?.selectedOrder?.DateOrdered
-          // salesRep: state.Orders?.selectedOrder?.sale?.fullName
+          DateOrdered: state.Orders?.selectedOrder?.DateOrdered,
+          DateShipped: state.Orders?.selectedOrder?.DateShipped
         },
       }
       : {
