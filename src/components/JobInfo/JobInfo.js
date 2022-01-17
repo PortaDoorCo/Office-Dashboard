@@ -242,7 +242,8 @@ class JobInfo extends Component {
             role?.type === 'authenticated' ||
             role?.type === 'owner' ||
             role?.type === 'administrator' ||
-            role?.type === 'management' ? (
+            role?.type === 'management' ||
+            role?.type === 'office' ? (
                 <Col lg="3">
                   <FormGroup>
                     <Label htmlFor="dueDate">Date Ordered</Label>
@@ -329,12 +330,21 @@ class JobInfo extends Component {
                   role?.type === 'authenticated' ||
                   role?.type === 'owner' ||
                   role?.type === 'administrator' ||
-                  role?.type === 'management'
+                  role?.type === 'management' ||
+                  role?.type === 'office'
                     ? status
                     : otherStatus
                 }
                 dataKey="value"
-                edit={edit}
+                edit={
+                  role?.type === 'authenticated' ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator' ||
+                  role?.type === 'management' ||
+                  role?.type === 'office'
+                    ? edit
+                    : true
+                }
                 textField="value"
                 // onBlur={(e) => console.log({testtttttttttt: e})}
               />
