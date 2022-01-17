@@ -73,6 +73,7 @@ const CheckoutBox = (props) => {
                           edit={role?.type === 'authenticated' ||
                           role?.type === 'owner' ||
                           role?.type === 'administrator' ||
+                          role?.type === 'management' ||
                           role?.type === 'office' ? false : true}
                         />
                       </FormGroup>
@@ -91,6 +92,7 @@ const CheckoutBox = (props) => {
                       edit={role?.type === 'authenticated' ||
                       role?.type === 'owner' ||
                       role?.type === 'administrator' ||
+                      role?.type === 'management' ||
                       role?.type === 'office' ? false : true}
                       label="discount"
                       validate={props.maxValue(100)}

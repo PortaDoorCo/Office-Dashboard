@@ -78,11 +78,10 @@ class JobInfo extends Component {
 
         this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));
       }
+
     }
 
-    if (formState?.DateOrdered || dateOrdered?.length > 0) {
-      this.setState({ dynamicStatus: status });
-    }
+
   }
 
   componentDidUpdate(prevProps) {
@@ -228,8 +227,9 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
+
         <Row className="mb-3">
-          <Col>
+          <Col lg='3'>
             <FormGroup>
               <Label htmlFor="dueDate">Due Date</Label>
               <Field
@@ -242,7 +242,26 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
 
-          <Col xs="5" />
+          {formState?.DateOrdered && (role?.type === 'authenticated' ||
+            role?.type === 'owner' ||
+            role?.type === 'administrator' ||
+            role?.type === 'management') ? 
+            <Col lg="3">
+              <FormGroup>
+                <Label htmlFor="dueDate">Date Ordered</Label>
+                <Field
+                  name="DateOrdered"
+                  showTime={true}
+                  component={renderDateTimePicker}
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col> : <Col lg='3' />
+          }
+
+
+
+          <Col lg='3' />
 
           <Col xs="3">
             <FormGroup>
@@ -258,6 +277,10 @@ class JobInfo extends Component {
               />
             </FormGroup>
           </Col>
+        </Row>
+
+        <Row>
+
         </Row>
 
         <Row>
@@ -298,8 +321,8 @@ class JobInfo extends Component {
                   role?.type === 'authenticated' ||
                   role?.type === 'owner' ||
                   role?.type === 'administrator' ||
-                  role?.type === 'office'
-                    ? this.state.dynamicStatus
+                  role?.type === 'management'
+                    ? status
                     : otherStatus
                 }
                 dataKey="value"
