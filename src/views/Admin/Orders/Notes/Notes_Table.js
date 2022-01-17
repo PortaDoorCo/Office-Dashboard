@@ -6,16 +6,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 
-
-
-
 class Notes_Table extends Component {
   render() {
-
     const { formState, total } = this.props;
 
-    if (formState) {
+    const note_table = formState?.Conversation_Notes?.sort((a,b) => new Date(b.date) - new Date(a.date));
 
+
+
+    if (formState) {
       return (
         <div>
           <Table striped>
@@ -23,42 +22,38 @@ class Notes_Table extends Component {
               <tr>
                 <th>Date</th>
                 <th>Notes</th>
-
               </tr>
             </thead>
             <tbody>
-              {(formState && formState.Conversation_Notes) ? formState.Conversation_Notes.reverse().map((i, index) => (
+              {note_table.map((i, index) => (
                 <tr key={index}>
-                  <td width={300}>{moment(i.date).format('MMMM Do YYYY, h:mm:ss a')}</td>
+                  <td width={300}>
+                    {moment(i.date).format('MMMM Do YYYY, h:mm:ss a')}
+                  </td>
                   <td>{i.note}</td>
+                  <td style={{ textAlign: 'right' }}>{i.user ? `Entered By: ${i.user}` : null}</td>
                 </tr>
-              )) : null}
+              ))
+              }
             </tbody>
           </Table>
-
         </div>
       );
     } else {
-      return (
-        <div />
-      );
+      return <div />;
     }
   }
 }
 
-
 const mapStateToProps = (state, props) => ({
-
   formState: getFormValues('Order')(state),
-
-
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       change,
-      updateNotes
+      updateNotes,
     },
     dispatch
   );
@@ -67,8 +62,4 @@ Notes_Table = reduxForm({
   form: 'Order',
 })(Notes_Table);
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Notes_Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Notes_Table);

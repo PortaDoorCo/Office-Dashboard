@@ -210,8 +210,8 @@ class OrderPage extends Component {
     });
 
   onUploaded = (e) => {
-    const { uploadFilesToOrder, selectedOrder } = this.props;
-    uploadFilesToOrder(selectedOrder, e, cookie);
+    const { uploadFilesToOrder, selectedOrder, user } = this.props;
+    uploadFilesToOrder(selectedOrder, e, user, cookie);
   };
 
   deleteOrder = async () => {
@@ -1433,6 +1433,9 @@ class OrderPage extends Component {
                                     `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`,
                                   ];
                                 })}
+                                onClick={(event) => {
+                                  console.log({ event });
+                                }}
                                 filename={`${s && s.orderNum}.csv`}
                                 separator={','}
                                 className="mb-3"
@@ -1514,7 +1517,22 @@ class OrderPage extends Component {
                               ? selectedOrder.files.map((i, index) => (
                                 <tr key={index}>
                                   <th scope="row">{index + 1}</th>
-                                  <td style={{ width: '90%' }}>{i.name}</td>
+                                  <td style={{ width: '75%' }}>{i.name}</td>
+                                  <td>
+                                      Uploaded by:{' '}
+                                    {selectedOrder?.filesInfo?.length > 0
+                                      ? selectedOrder?.filesInfo[index]?.user
+                                      : 'N/A'}
+                                  </td>
+                                  <td style={{ textAlign: 'right' }}>
+                                    <a
+                                      href={i.url}
+                                      rel="noopener noreferrer"
+                                      target="_blank"
+                                    >
+                                      <Button>Edit</Button>
+                                    </a>
+                                  </td>
                                   <td style={{ textAlign: 'right' }}>
                                     <a
                                       href={i.url}
