@@ -151,7 +151,7 @@ class CustomerPage extends Component {
                       locations={locations}
                       defaultCenter={defaultCenter}
                     />
-                    <CompanyOrders orders={updateOrders} />
+                    <CompanyOrders orders={updateOrders} company={selectedCompanies?.Company} />
                   </div>
                 </Card>
                 <Card>

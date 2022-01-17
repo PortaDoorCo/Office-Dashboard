@@ -20,7 +20,7 @@ import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
-import Report1 from '../../../../PrintOuts/Reports/Report1';
+import CustomerFile from '../../../../PrintOuts/Reports/CustomerFile';
 import styled from 'styled-components';
 import status from '../../../../../utils/report_status';
 import Invoice from '../../../../PrintOuts/Reports/Invoice';
@@ -110,7 +110,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 const OrderTable = (props) => {
-  const { orders, role } = props;
+  const { orders, role, company } = props;
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -161,18 +161,6 @@ const OrderTable = (props) => {
 
   const columns = [
     {
-      name: 'Company',
-      cell: (row) => (
-        <div>
-          {row.job_info &&
-            row.job_info.customer &&
-            row.job_info.customer.Company}
-        </div>
-      ),
-      sortable: true,
-      grow: 2,
-    },
-    {
       name: 'Order #',
       selector: 'orderNum',
       sortable: true,
@@ -186,42 +174,6 @@ const OrderTable = (props) => {
       name: 'Order Type',
       selector: 'orderType',
       sortable: true,
-    },
-    {
-      name: 'Date Entered',
-      cell: (row) => <div>{moment(row?.created_at).format('MMM Do YYYY')}</div>,
-    },
-    {
-      name: 'Date Ordered',
-      cell: (row) => {
-        const dateOrdered = row?.tracking?.filter((x) => {
-          return x.status === 'Ordered';
-        });
-
-        if (row.DateOrdered || dateOrdered.length > 0) {
-          return <div>{moment(row.DateOrdered || dateOrdered[0].date).format('MMM Do YYYY')}</div>;
-        } else {
-          return <div>TBD</div>;
-        }
-      },
-    },
-    {
-      name: 'Due Date',
-      cell: (row) => {
-        if (row.Shipping_Scheduled) {
-          return <div> {moment(row.dueDate).format('MMM Do YYYY')}</div>;
-        } else if (
-          !row.Shipping_Scheduled &&
-          !row.status.includes('Quote') &&
-          !row.status.includes('Invoiced') &&
-          !row.status.includes('Ordered') &&
-          !row.status.includes('Shipped')
-        ) {
-          return <div>Not Scheduled</div>;
-        } else {
-          return <div>TBD</div>;
-        }
-      },
     },
     {
       name: 'Status',
@@ -292,22 +244,6 @@ const OrderTable = (props) => {
         console.log({ updated_total });
         return <div>${updated_total.toFixed(2)}</div>;
       },
-    },
-    {
-      name: 'Salesman',
-      cell: row => <div>{row.sale?.fullName}</div>,
-      sortable: true,
-    },
-    {
-      name: 'Terms',
-      cell: (row) => (
-        <div>
-          {row.companyprofile && row.companyprofile?.PMT_TERMS
-            ? row?.companyprofile?.PMT_TERMS
-            : ''}
-        </div>
-      ),
-      sortable: true,
     },
     {
       name: ' ',
@@ -382,7 +318,7 @@ const OrderTable = (props) => {
     if(filterStatus === 'Invoiced'){
       Invoice(order, startDate, endDate, filterStatus);
     } else {
-      Report1(order, startDate, endDate, filterStatus);
+      CustomerFile(order, startDate, endDate, company);
     }
 
 
