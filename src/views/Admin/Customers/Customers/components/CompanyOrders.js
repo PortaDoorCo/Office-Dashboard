@@ -1,47 +1,132 @@
-import { IconButton, Tooltip } from '@material-ui/core';
+import React, { useState, useEffect, useMemo } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import DataTable from 'react-data-table-component';
+import moment from 'moment';
+import OrderPage from '../../../Orders/OrderPage';
+import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
 import { Select } from 'antd';
-import Cookies from 'js-cookie';
-import differenceBy from 'lodash/differenceBy';
-import React, { useEffect, useMemo, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import { connect } from 'react-redux';
 import {
-  Button, Col, Input, Row
-} from 'reactstrap';
-import { bindActionCreators } from 'redux';
-import { setOrderType, setSelectedOrder } from '../../../../../redux/orders/actions';
-import status from '../../../../../utils/status';
-import OrderPage from '../../../Orders/OrderPage';
+  updateStatus,
+  loadOrders,
+  setSelectedOrder,
+  setOrderType,
+} from '../../../../../redux/orders/actions';
+import Cookies from 'js-cookie';
+// import momentLocaliser from 'react-widgets-moment';
+import { Row, Col, Button, FormGroup, Input } from 'reactstrap';
+import 'react-dates/initialize';
+import { SingleDatePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import Receipt from '@material-ui/icons/Receipt';
+import Report1 from '../../../../PrintOuts/Reports/Report1';
+import styled from 'styled-components';
+import status from '../../../../../utils/report_status';
+import Invoice from '../../../../PrintOuts/Reports/Invoice';
 
+// momentLocaliser(moment);
+
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 34px;
+  width: 32px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const cookie = Cookies.get('jwt');
-
 const { Option } = Select;
+
+const conditionalRowStyles = [
+  {
+    when: (row) =>
+      moment(row.dueDate).startOf('day').valueOf() <
+        moment(new Date()).startOf('day').valueOf() &&
+      (row.Shipping_Scheduled &&
+        (!row.status?.includes('Quote') &&
+          !row.status?.includes('Invoiced') &&
+          !row.status.includes('Complete') &&
+          !row.status?.includes('Shipped'))),
+    style: {
+      backgroundColor: '#FEEBEB',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+  {
+    when: (row) =>
+      (!row.Shipping_Scheduled &&
+        (!row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Complete') &&
+          !row.status.includes('Ordered') &&
+          !row.status.includes('Shipped'))),
+    style: {
+      backgroundColor: '#FFEACA',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+];
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
   <>
-    <div>
-      <Row>
-        <Col>
-          <Input id="search" type="text" placeholder="Order Number" autoComplete='off' value={filterText} onChange={onFilter} />
-        </Col>
-      </Row>
-    </div>
+    <TextField
+      id="search"
+      type="text"
+      placeholder="Search Orders"
+      value={filterText}
+      onChange={onFilter}
+      autoComplete="off"
+    />
+    <ClearButton type="button" color="danger" onClick={onClear}>
+      X
+    </ClearButton>
   </>
 );
 
-const CustomerOrders = (props) => {
-  const [selectedRows] = useState([]);
+const OrderTable = (props) => {
+  const { orders, role } = props;
   const [toggleCleared, setToggleCleared] = useState(false);
-  const [data, setData] = useState(props.orders);
   const [modal, setModal] = useState(false);
-  const [orderEdit, setOrderEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [data, setData] = useState(orders);
+  const [startDate, setStartDate] = useState(moment(new Date()));
+  const [endDate, setEndDate] = useState(moment(new Date()));
+  const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
+  const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
+  const [filterStatus, setFilterStatus] = useState('Quote');
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
-
-
+  const minDate =
+    orders.length > 0
+      ? new Date(orders[orders.length - 1].created_at)
+      : new Date();
 
   useEffect(() => {
 
@@ -49,7 +134,7 @@ const CustomerOrders = (props) => {
     setData(filteredItems);
   }, [filterText, props.orders]);
 
-  const subHeaderComponentMemo = useMemo(clickHandler => {
+  const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
       if (filterText) {
         setResetPaginationToggle(!resetPaginationToggle);
@@ -57,35 +142,36 @@ const CustomerOrders = (props) => {
       }
     };
 
-    return <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />;
+    return (
+      <FilterComponent
+        onFilter={(e) => setFilterText(e.target.value)}
+        onClear={handleClear}
+        filterText={filterText}
+      />
+    );
   }, [filterText, resetPaginationToggle]);
-
-  const toggle = (row) => {
-    const { setSelectedOrder, setOrderType } = props;
-    setModal(!modal);
-    if (!modal) {
-      setSelectedOrder(row);
-      setOrderType(row.orderType);
-    } else {
-      setSelectedOrder(null);
-      setOrderType(null);
-    }
-  };
-
-  const editable = () => {
-    setOrderEdit(!orderEdit);
-  };
 
   const handleStatusChange = async (e, row) => {
     const { updateStatus, user } = props;
     const status = {
-      status: e
+      status: e.target.value,
     };
     await updateStatus(row.id, row, status, user, cookie);
   };
 
-
   const columns = [
+    {
+      name: 'Company',
+      cell: (row) => (
+        <div>
+          {row.job_info &&
+            row.job_info.customer &&
+            row.job_info.customer.Company}
+        </div>
+      ),
+      sortable: true,
+      grow: 2,
+    },
     {
       name: 'Order #',
       selector: 'orderNum',
@@ -101,132 +187,269 @@ const CustomerOrders = (props) => {
       selector: 'orderType',
       sortable: true,
     },
-    // {
-    //   name: 'Date Ordered',
-    //   cell: row => <div>{moment(row.created_at).format('MMM Do YYYY')}</div>,
-    // },
-    // {
-    //   name: 'Due Date',
-    //   cell: row => <div>{row.status === 'Quote' ? 'TBD' : moment(row.dueDate).format('MMM Do YYYY')}</div>,
-    // },
+    {
+      name: 'Date Entered',
+      cell: (row) => <div>{moment(row?.created_at).format('MMM Do YYYY')}</div>,
+    },
+    {
+      name: 'Date Ordered',
+      cell: (row) => {
+        const dateOrdered = row?.tracking?.filter((x) => {
+          return x.status === 'Ordered';
+        });
+
+        if (row.DateOrdered || dateOrdered.length > 0) {
+          return <div>{moment(row.DateOrdered || dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+      },
+    },
+    {
+      name: 'Due Date',
+      cell: (row) => {
+        if (row.Shipping_Scheduled) {
+          return <div> {moment(row.dueDate).format('MMM Do YYYY')}</div>;
+        } else if (
+          !row.Shipping_Scheduled &&
+          !row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Ordered') &&
+          !row.status.includes('Shipped')
+        ) {
+          return <div>Not Scheduled</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+      },
+    },
     {
       name: 'Status',
       grow: 1,
-      cell: row => <div>
+      cell: (row) => (
+        <div>
+          <Row>
+            <Col>
+              <FormGroup style={{ height: '100%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue={row.status}
+                  style={{
+                    height: '100%',
+                    boxShadow: 'none',
+                    border: '0px',
+                    outline: '0px',
+                    background: 'none',
+                  }}
+                  onChange={(e) => handleStatusChange(e, row)}
+                >
+                  <option value={row?.status}>{row?.status}</option>
+                  {status?.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i?.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
 
-
-        <Row>
-          <Col>
-            <Select defaultValue={row.status} style={{ width: '100%' }} onChange={(e) => handleStatusChange(e, row)} bordered={false}>
-              {status.map((i, index) => (
-                <Option key={index} value={i.value}>{i.value}</Option>
-              ))}
-            </Select>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col style={{ textAlign: 'center', color: 'red' }}>
-            {row.job_info.Rush && row.job_info.Sample ? 'Sample / Rush' : row.job_info.Rush ? 'Rush' : row.job_info.Sample ? 'Sample' : ''}
-          </Col>
-        </Row>
-
-      </div>
+          <Row>
+            <Col style={{ textAlign: 'center', color: 'red' }}>
+              {row?.job_info?.Rush && row?.job_info?.Sample
+                ? 'Sample / Rush'
+                : row?.job_info?.Rush
+                  ? 'Rush'
+                  : row?.job_info?.Sample
+                    ? 'Sample'
+                    : ''}
+            </Col>
+          </Row>
+        </div>
+      ),
     },
     {
       name: 'Total',
       selector: 'total',
       sortable: true,
-      cell: row => <div>${row.total && row.total.toFixed(2)}</div>,
+      cell: (row) => <div>${row?.total && row.total?.toFixed(2)}</div>,
     },
-    // {
-    //   name: 'Balance Paid',
-    //   sortable: true,
-    //   cell: row => <div>${row.balance_history && row.balance_history.reduce((acc, item) => acc + item.balance_paid, 0)}</div>,
-    // },
-    // {
-    //   name: 'Terms',
-    //   selector: 'companyprofile.PMT_TERMS',
-    //   sortable: true,
-    // },
+    {
+      name: 'Balance Due',
+      sortable: true,
+      cell: (row) => {
+        let updated_total = row.total;
+
+        const balance_history_paid = row.balance_history
+          .slice(0)
+          .map((i, index) => {
+            updated_total = updated_total - parseFloat(i.balance_paid);
+            return updated_total;
+          });
+
+        console.log({ updated_total });
+        return <div>${updated_total.toFixed(2)}</div>;
+      },
+    },
+    {
+      name: 'Salesman',
+      cell: row => <div>{row.sale?.fullName}</div>,
+      sortable: true,
+    },
+    {
+      name: 'Terms',
+      cell: (row) => (
+        <div>
+          {row.companyprofile && row.companyprofile?.PMT_TERMS
+            ? row?.companyprofile?.PMT_TERMS
+            : ''}
+        </div>
+      ),
+      sortable: true,
+    },
     {
       name: ' ',
       button: true,
       grow: 2,
-      cell: (row) => <Tooltip title="View Order" placement="top">
-        <IconButton onClick={function (event) {
-          event.preventDefault();
-          toggle(row);
-        }} id={row.id}>
-          <Inbox>Open</Inbox>
-        </IconButton>
-      </Tooltip>,
+      cell: (row) => (
+        <Tooltip title="View Order" placement="top">
+          <IconButton
+            onClick={function (event) {
+              event.preventDefault();
+              toggle(row);
+            }}
+            id={row.id}
+          >
+            <Inbox>Open</Inbox>
+          </IconButton>
+        </Tooltip>
+      ),
     },
-
-
   ];
 
-  const contextActions = useMemo(() => {
-    const handleDelete = () => {
+  const toggle = (row) => {
+    const { setSelectedOrder, setOrderType } = props;
 
-      if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.orderNum)}?`)) {
-        setToggleCleared(!toggleCleared);
-        setData(differenceBy(data, selectedRows, 'orderNum'));
-      }
-    };
+    setEdit(false);
+    setModal(!modal);
 
-    return <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>Delete</Button>;
-  }, [data, selectedRows, toggleCleared]);
+    if (!modal) {
+      setSelectedOrder(row);
+      setOrderType(row.orderType);
+    } else {
+      setSelectedOrder(null);
+      setOrderType(null);
+    }
+  };
+
+  const editable = () => {
+    setEdit(!edit);
+  };
+
+  const exportReports = () => {
+    let order = data;
+
+    if (filterStatus === 'Ordered') {
+      const newData = data.map((i) => {
+        const dateOrdered = i?.tracking?.filter((x) => {
+          return x.status === 'Ordered';
+        });
+
+        return {
+          ...i,
+          dateOrdered: new Date(dateOrdered[0]?.date),
+        };
+      });
+
+      console.log({ newData });
+
+      const sortedData = newData.sort((a, b) => a.dateOrdered - b.dateOrdered);
+
+      order = sortedData;
+
+      console.log({ sortedData });
+    } else {
+      
+      const newData = data.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+      order = newData;
+      // console.log({newData});
+
+    }
+
+    if(filterStatus === 'Invoiced'){
+      Invoice(order, startDate, endDate, filterStatus);
+    } else {
+      Report1(order, startDate, endDate, filterStatus);
+    }
+
+
+    setToggleCleared(!toggleCleared);
+  };
 
   return (
-    <div className='resize'>
+    <div>
+
+
+      <Row>
+        {/* <Col lg='11' /> */}
+        <Col>
+          <Tooltip
+            title="View Reports"
+            onClick={exportReports}
+            placement="top"
+            className="mb-3 mt-3"
+          >
+            <IconButton>
+              <Receipt style={{ width: '40', height: '40' }} />
+            </IconButton>
+          </Tooltip>
+        </Col>
+      </Row>
+
       <DataTable
+        title="Orders"
         columns={columns}
         data={data}
-        // selectableRows
-        highlightOnHover
         pagination
-        contextActions={contextActions}
-        // selectableRowsComponent={Checkbox}
-        // onRowSelected={handleRowSelected}
-        // clearSelectedRows={toggleCleared}
-        paginationResetDefaultPage={resetPaginationToggle}
+        progressPending={!props.ordersDBLoaded}
+        highlightOnHover
+        conditionalRowStyles={conditionalRowStyles}
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
       />
-      {
-        modal ?
-          <OrderPage
-            toggle={toggle}
-            modal={modal}
-            selectedOrder={props.selectedOrder}
-            editable={editable}
-            edit={orderEdit}
-          /> : null
-      }
-
+      {modal ? (
+        <OrderPage
+          toggle={toggle}
+          modal={modal}
+          editable={editable}
+          edit={edit}
+        />
+      ) : null}
     </div>
   );
 };
 
 const mapStateToProps = (state, prop) => ({
-  user: state.users.user
+  orderNum: state.Orders.orderNum,
+  ordersDBLoaded: state.Orders.ordersDBLoaded,
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns,
+  role: state.users.user.role,
+  user: state.users.user,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      updateStatus,
+      loadOrders,
       setSelectedOrder,
-      setOrderType
+      setOrderType,
     },
     dispatch
   );
 
-
-
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CustomerOrders);
-
+export default connect(mapStateToProps, mapDispatchToProps)(OrderTable);
