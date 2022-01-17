@@ -140,7 +140,30 @@ const OrderTable = (props) => {
         return x.status === 'Invoiced';
       });
 
-      if (filterStatus === 'Quote') {
+      if (filterStatus === 'All') {
+        if (filterText?.length > 0) {
+          return (
+            moment(item.DateOrdered || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateOrdered || date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText?.toLowerCase()
+              ) ||
+              item?.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText?.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(item.DateOrdered || date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateOrdered || date) <=
+              moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Quote') {
         if (filterText?.length > 0) {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
