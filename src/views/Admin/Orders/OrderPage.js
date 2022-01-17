@@ -1522,6 +1522,9 @@ class OrderPage extends Component {
                                       Uploaded by:{' '}
                                     {selectedOrder?.filesInfo?.length > 0
                                       ? selectedOrder?.filesInfo[index]?.user
+                                        ? selectedOrder?.filesInfo[index]
+                                          ?.user
+                                        : 'N/A'
                                       : 'N/A'}
                                   </td>
                                   <td style={{ textAlign: 'right' }}>
