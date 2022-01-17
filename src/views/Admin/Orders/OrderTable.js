@@ -139,6 +139,9 @@ const OrderTable = (props) => {
       const dateInvoiced = item?.tracking?.filter((x) => {
         return x.status === 'Invoiced';
       });
+      const dateShipped = item?.tracking?.filter((x) => {
+        return x.status === 'Shipped';
+      });
 
       if (filterStatus === 'Ordered') {
         if (filterText?.length > 0) {
@@ -188,6 +191,31 @@ const OrderTable = (props) => {
             moment(item.DateInvoiced || dateInvoiced[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateInvoiced[0]?.status
+          );
+        }
+      } else if (filterStatus === 'Shipped') {
+        if (filterText?.length > 0) {
+          return (
+            moment(item.DateShipped || dateShipped[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateShipped || dateShipped[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateShipped[0]?.status &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(item.DateShipped || dateShipped[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateShipped || dateShipped[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateShipped[0]?.status
           );
         }
       } else {
@@ -321,6 +349,21 @@ const OrderTable = (props) => {
         } else {
           return <div>TBD</div>;
         }
+      },
+    },
+    {
+      name: 'Date Shipped',
+      cell: (row) => {
+        const dateShipped = row?.tracking?.filter((x) => {
+          return x.status === 'Shipped';
+        });
+
+        if (row.DateShipped) {
+          return <div>{moment(row.DateOrdered || dateShipped[0].date).format('MMM Do YYYY')}</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+        
       },
     },
     {

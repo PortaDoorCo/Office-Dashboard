@@ -14,6 +14,11 @@ const status = [
     value: 'Invoiced',
   },
 
+  {
+    label: 'Shipped',
+    value: 'Shipped',
+  },
+
 ];
   
 export default status;

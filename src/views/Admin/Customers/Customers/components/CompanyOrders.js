@@ -140,6 +140,10 @@ const OrderTable = (props) => {
         return x.status === 'Invoiced';
       });
 
+      const dateShipped = item?.tracking?.filter((x) => {
+        return x.status === 'Shipped';
+      });
+
       if (filterStatus === 'All') {
         if (filterText?.length > 0) {
           return (
@@ -233,7 +237,34 @@ const OrderTable = (props) => {
             item.status === dateInvoiced[0]?.status
           );
         }
-      } else if (filterStatus === 'In Production') {
+      } else if (filterStatus === 'Shipped') {
+        if (filterText?.length > 0) {
+          return (
+            moment(item.DateShipped || dateShipped[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateShipped || dateShipped[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateShipped[0]?.status &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(item.DateShipped || dateShipped[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateShipped || dateShipped[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === dateShipped[0]?.status
+          );
+        }
+      }
+      
+      else if (filterStatus === 'In Production') {
         if (filterText.length > 0) {
           return (
             moment(item.DateOrdered || dateOrdered[0]?.date) >=

@@ -151,6 +151,21 @@ const StatusTable = (props) => {
       },
     },
     {
+      name: 'Date Shipped',
+      cell: (row) => {
+        const dateShipped = row?.tracking?.filter((x) => {
+          return x.status === 'Shipped';
+        });
+
+        if (row.DateShipped) {
+          return <div>{moment(row.DateOrdered || dateShipped[0].date).format('MMM Do YYYY')}</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+        
+      },
+    },
+    {
       name: 'Status',
       grow: 1,
       cell: (row) => (

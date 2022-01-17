@@ -224,6 +224,28 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
+        {formState?.Shipping_Scheduled &&
+        (role?.type === 'authenticated' ||
+          role?.type === 'owner' ||
+          role?.type === 'administrator' ||
+          role?.type === 'management' ||
+          role?.type === 'office') ? (
+            <Row>
+              <Col lg="9" />
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="dueDate">Date Shipped</Label>
+                  <Field
+                    name="DateShipped"
+                    showTime={true}
+                    component={renderDateTimePicker}
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+          ) : null}
+
         <Row className="mb-3">
           <Col lg="3">
             <FormGroup>
@@ -289,8 +311,6 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
         </Row>
-
-        <Row></Row>
 
         <Row>
           <Col xs="7">
