@@ -1,10 +1,11 @@
 import moment from 'moment';
 
 export default (data, startDate, endDate, status) => {
-  const tableBody = [
+  console.log({ status });
+  let tableBody = [
     [
       { text: 'Date Created' },
-      { text: 'Date Ordered' },
+      // { text: 'Date Ordered' },
       { text: 'Customer' },
       { text: 'Job ID' },
       { text: 'Status' },
@@ -17,6 +18,43 @@ export default (data, startDate, endDate, status) => {
       { text: 'Salesman' },
     ],
   ];
+
+  if (status === 'Quote') {
+    tableBody = [
+      [
+        { text: 'Date Created' },
+        // { text: 'Date Ordered' },
+        { text: 'Customer' },
+        { text: 'Job ID' },
+        { text: 'Status' },
+        { text: 'Description' },
+        { text: 'Doors' },
+        { text: 'DFs' },
+        { text: 'Boxes' },
+        { text: 'Face Frames' },
+        { text: 'Total' },
+        { text: 'Salesman' },
+      ],
+    ];
+  } else {
+    tableBody = [
+      [
+        // { text: 'Date Created' },
+        { text: 'Date Ordered' },
+        { text: 'Customer' },
+        { text: 'Job ID' },
+        { text: 'Status' },
+        { text: 'Description' },
+        { text: 'Doors' },
+        { text: 'DFs' },
+        { text: 'Boxes' },
+        { text: 'Face Frames' },
+        { text: 'Total' },
+        { text: 'Salesman' },
+      ],
+    ];
+  }
+
   let total = 0;
   let doorTotal = 0;
   let dfTotal = 0;
@@ -73,27 +111,50 @@ export default (data, startDate, endDate, status) => {
       return x.status === 'Ordered';
     });
 
-    return tableBody.push([
-      moment(i.created_at).format('MM/DD/YYYY'),
-      i.DateOrdered || dateOrdered.length > 0
-        ? moment(i.DateOrdered || dateOrdered[0].date).format('MM/DD/YYYY')
-        : 'TBD',
-      i.job_info?.customer?.Company,
-      i.orderNum,
-      i.status,
-      name,
-      doors,
-      dfs,
-      boxes,
-      face_frames,
-      `$${i.total?.toFixed(2)}`,
-      i.sale?.fullName,
-    ]);
+    if (status === 'Quote') {
+      return tableBody.push([
+        moment(i.created_at).format('MM/DD/YYYY'),
+        i.job_info?.customer?.Company,
+        i.orderNum,
+        i.status,
+        name,
+        doors,
+        dfs,
+        boxes,
+        face_frames,
+        `$${i.total?.toFixed(2)}`,
+        i.sale?.fullName,
+      ]);
+    } else {
+      return tableBody.push([
+        i.DateOrdered || dateOrdered.length > 0
+          ? moment(i.DateOrdered || dateOrdered[0].date).format('MM/DD/YYYY')
+          : 'TBD',
+        i.job_info?.customer?.Company,
+        i.orderNum,
+        i.status,
+        name,
+        doors,
+        dfs,
+        boxes,
+        face_frames,
+        `$${i.total?.toFixed(2)}`,
+        i.sale?.fullName,
+      ]);
+    }
   });
 
   let totalBody = [
     ['', 'Doors', 'DFs', 'Boxes', 'Face Frames', 'Total', ''],
-    ['', doorTotal, dfTotal, boxTotal, faceFrameTotal, `$${total.toFixed(2)}`, ''],
+    [
+      '',
+      doorTotal,
+      dfTotal,
+      boxTotal,
+      faceFrameTotal,
+      `$${total.toFixed(2)}`,
+      '',
+    ],
   ];
 
   return [

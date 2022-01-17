@@ -23,6 +23,8 @@ import Receipt from '@material-ui/icons/Receipt';
 import Report1 from '../../PrintOuts/Reports/Report1';
 import styled from 'styled-components';
 import status from '../../../utils/tracking_status';
+import orderTypes from '../../../utils/orderTypes';
+import Tracking from '../../PrintOuts/Reports/Tracking';
 
 // momentLocaliser(moment);
 
@@ -63,11 +65,11 @@ const conditionalRowStyles = [
     when: (row) =>
       moment(row.dueDate).startOf('day').valueOf() <
         moment(new Date()).startOf('day').valueOf() &&
-      (row.Shipping_Scheduled &&
-        (!row.status.includes('Quote') &&
-          !row.status.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status.includes('Shipped'))),
+      row.Shipping_Scheduled &&
+      !row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status.includes('Shipped'),
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -77,12 +79,12 @@ const conditionalRowStyles = [
   },
   {
     when: (row) =>
-      (!row.Shipping_Scheduled &&
-        (!row.status.includes('Quote') &&
-          !row.status.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status.includes('Ordered') &&
-          !row.status.includes('Shipped'))),
+      !row.Shipping_Scheduled &&
+      !row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped'),
     style: {
       backgroundColor: '#FFEACA',
       '&:hover': {
@@ -100,7 +102,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
       placeholder="Search Orders"
       value={filterText}
       onChange={onFilter}
-      autoComplete='off'
+      autoComplete="off"
     />
     <ClearButton type="button" color="danger" onClick={onClear}>
       X
@@ -119,6 +121,7 @@ const OrderTable = (props) => {
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
   const [filterStatus, setFilterStatus] = useState('In Production');
+  const [orderType, setOrderType] = useState('All');
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -132,113 +135,121 @@ const OrderTable = (props) => {
       let date = new Date(item.dueDate);
 
       const dateOrdered = item?.tracking?.filter((x) => {
-
         return x.status === 'Ordered';
       });
 
-      if (filterStatus === 'All') {
-        if (filterText.length > 0) {
-          return (
-            moment(item.DateOrdered || dateOrdered[0]?.date || date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date || date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.job_info.customer.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
+      if(orderType === 'All'){
+        if (filterStatus === 'In Production') {
+          if (filterText?.length > 0) {
+            return (
+              moment(date) >= moment(startDate).startOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              !item.status.includes('Quote') &&
+              !item.status.includes('Invoiced') &&
+              !item.status.includes('Ordered') &&
+              !item.status.includes('Shipped') &&
+              (item.orderNum.toString().includes(filterText) ||
+                item.companyprofile.Company.toLowerCase().includes(
+                  filterText.toLowerCase()
+                ) ||
+                item.job_info.poNum
+                  .toLowerCase()
+                  .includes(filterText.toLowerCase()))
+            );
+          } else {
+            return (
+              moment(date) >= moment(startDate).startOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              !item.status.includes('Quote') &&
+              !item.status.includes('Invoiced') &&
+              !item.status.includes('Ordered') &&
+              !item.status.includes('Shipped')
+            );
+          }
         } else {
-          return (
-            moment(item.DateOrdered || dateOrdered[0]?.date || date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date || date) <=
-              moment(endDate).endOf('day').valueOf()
-          );
-        }
-      } else if (filterStatus === 'Ordered') {
-
-
-        if (filterText?.length > 0) {
-          return (
-            moment(item.DateOrdered || dateOrdered[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(item.DateOrdered || dateOrdered[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status
-          );
-        }
-      } else if (filterStatus === 'In Production') {
-        if (filterText?.length > 0) {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            !item.status.includes('Quote') &&
-            !item.status.includes('Invoiced') &&
-            !item.status.includes('Ordered') &&
-            !item.status.includes('Shipped') &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            !item.status.includes('Quote') &&
-            !item.status.includes('Invoiced') &&
-            !item.status.includes('Ordered') &&
-            !item.status.includes('Shipped')
-          );
+          if (filterText?.length > 0) {
+            return (
+              moment(date) >= moment(startDate).startOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              item.status.includes(filterStatus) &&
+              (item.orderNum.toString().includes(filterText) ||
+                item.companyprofile.Company.toLowerCase().includes(
+                  filterText.toLowerCase()
+                ) ||
+                item.job_info.poNum
+                  .toLowerCase()
+                  .includes(filterText.toLowerCase()))
+            );
+          } else {
+            return (
+              moment(date) >= moment(startDate).startOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              item.status.includes(filterStatus)
+            );
+          }
         }
       } else {
-        if (filterText?.length > 0) {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.status.includes(filterStatus) &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
+        if (filterStatus === 'In Production') {
+          if (filterText?.length > 0) {
+            return (
+              item.orderType.includes(orderType) &&
+              moment(date) >= moment(startDate).startOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              !item.status.includes('Quote') &&
+              !item.status.includes('Invoiced') &&
+              !item.status.includes('Ordered') &&
+              !item.status.includes('Shipped') &&
+              (item.orderNum.toString().includes(filterText) ||
+                item.companyprofile.Company.toLowerCase().includes(
+                  filterText.toLowerCase()
+                ) ||
+                item.job_info.poNum
+                  .toLowerCase()
+                  .includes(filterText.toLowerCase()))
+            );
+          } else {
+            return (
+              item.orderType.includes(orderType) &&
+              moment(date) >= moment(startDate).startOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              !item.status.includes('Quote') &&
+              !item.status.includes('Invoiced') &&
+              !item.status.includes('Ordered') &&
+              !item.status.includes('Shipped')
+            );
+          }
         } else {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.status.includes(filterStatus)
-          );
+          if (filterText?.length > 0) {
+            return (
+              item.orderType.includes(orderType) &&
+              moment(date) >= moment(startDate).startOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              item.status.includes(filterStatus) &&
+              (item.orderNum.toString().includes(filterText) ||
+                item.companyprofile.Company.toLowerCase().includes(
+                  filterText.toLowerCase()
+                ) ||
+                item.job_info.poNum
+                  .toLowerCase()
+                  .includes(filterText.toLowerCase()))
+            );
+          } else {
+            return (
+              item.orderType.includes(orderType) &&
+              moment(date) >= moment(startDate).startOf('day').valueOf() &&
+              moment(date) <= moment(endDate).endOf('day').valueOf() &&
+              item.status.includes(filterStatus)
+            );
+          }
         }
       }
+
+
     });
     setData(filteredOrders);
-  }, [startDate, endDate, orders, filterStatus, filterText]);
+  }, [startDate, endDate, orders, filterStatus, filterText, orderType]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -399,7 +410,7 @@ const OrderTable = (props) => {
   };
 
   const exportReports = () => {
-    Report1(data, startDate, endDate, filterStatus);
+    Tracking(data, startDate, endDate, filterStatus);
     setToggleCleared(!toggleCleared);
   };
 
@@ -450,15 +461,36 @@ const OrderTable = (props) => {
           </Row>
           <Row>
             <Col>
+              <h3>Status</h3>
               <FormGroup style={{ height: '100%', width: '60%' }}>
                 <Input
                   type="select"
                   name="select"
                   id="status_dropdown"
-                  defaultValue="In Production"
+                  defaultValue="Quote"
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
-                  {status?.map((i, index) => (
+                  {status.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h3>Order Type</h3>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="Door"
+                  onChange={(e) => setOrderType(e.target.value)}
+                >
+                  {orderTypes?.map((i, index) => (
                     <option key={index} value={i.value}>
                       {i.value}
                     </option>
