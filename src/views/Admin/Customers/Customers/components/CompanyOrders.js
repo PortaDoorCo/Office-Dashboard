@@ -115,7 +115,9 @@ const OrderTable = (props) => {
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
-  const [startDate, setStartDate] = useState(moment(new Date()));
+  const [startDate, setStartDate] = useState(
+    moment(new Date(orders[orders.length - 1].created_at))
+  );
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
@@ -184,7 +186,8 @@ const OrderTable = (props) => {
         } else {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf()
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status?.includes(filterStatus)
           );
         }
       } else if (filterStatus === 'Ordered') {
@@ -262,9 +265,7 @@ const OrderTable = (props) => {
             item.status === dateShipped[0]?.status
           );
         }
-      }
-      
-      else if (filterStatus === 'In Production') {
+      } else if (filterStatus === 'In Production') {
         if (filterText.length > 0) {
           return (
             moment(item.DateOrdered || dateOrdered[0]?.date) >=
@@ -531,7 +532,9 @@ const OrderTable = (props) => {
                   ? 'Entered'
                   : filterStatus === 'Invoiced'
                     ? 'Invoiced'
-                    : 'Ordered'}
+                    : filterStatus === 'All'
+                      ? 'Ordered / Entered'
+                      : 'Ordered'}
               </h3>
             </Col>
           </Row>
@@ -545,13 +548,13 @@ const OrderTable = (props) => {
                   setStartDateFocusedInput(focused)
                 } // PropTypes.func.isRequired
                 id="startDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment(minDate)) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                }}
+                // isOutsideRange={(date) => {
+                //   if (date < moment(minDate)) {
+                //     return true;
+                //   } else {
+                //     return false;
+                //   }
+                // }}
               />
 
               <SingleDatePicker
@@ -560,13 +563,13 @@ const OrderTable = (props) => {
                 focused={endDateFocusedInput} // PropTypes.bool
                 onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
                 id="endDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment(startDate)) {
-                    return true; // return true if you want the particular date to be disabled
-                  } else {
-                    return false;
-                  }
-                }}
+                // isOutsideRange={(date) => {
+                //   if (date < moment(startDate)) {
+                //     return true; // return true if you want the particular date to be disabled
+                //   } else {
+                //     return false;
+                //   }
+                // }}
               />
             </Col>
           </Row>

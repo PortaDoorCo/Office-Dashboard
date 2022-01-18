@@ -281,7 +281,7 @@ class Edit extends Component {
                         component={renderField}
                         label="company"
                         edit={edit}
-                        normalize={normalizePhone}
+                        // normalize={normalizePhone}
                       />
                     </FormGroup>
                   </Col>
@@ -332,7 +332,7 @@ class Edit extends Component {
                         component={renderField}
                         label="company"
                         edit={edit}
-                        normalize={normalizePhone}
+                        // normalize={normalizePhone}
                       />
                     </FormGroup>
                   </Col>
@@ -384,7 +384,7 @@ class Edit extends Component {
                         component={renderField}
                         label="company"
                         edit={edit}
-                        normalize={normalizePhone}
+                        // normalize={normalizePhone}
                       />
                     </FormGroup>
                   </Col>
@@ -436,7 +436,7 @@ class Edit extends Component {
                         component={renderField}
                         label="company"
                         edit={edit}
-                        normalize={normalizePhone}
+                        // normalize={normalizePhone}
                       />
                     </FormGroup>
                   </Col>
@@ -469,6 +469,110 @@ class Edit extends Component {
                 <Row>
                   <Col sm="3">
                     <FormGroup>
+                      <Label htmlFor="phone">Name</Label>
+                      <Field
+                        name={'Contact5'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="3">
+                    <FormGroup>
+                      <Label htmlFor="phone">Phone</Label>
+                      <Field
+                        name={'Phone5'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                        // normalize={normalizePhone}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="3">
+                    <FormGroup>
+                      <Label htmlFor="phone">Email</Label>
+                      <Field
+                        name={'Email5'}
+                        type="text"
+                        component={renderField}
+                        label="fax"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="3">
+                    <FormGroup>
+                      <Label htmlFor="phone">Note</Label>
+                      <Field
+                        name={'Note5'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col sm="3">
+                    <FormGroup>
+                      <Label htmlFor="phone">Name</Label>
+                      <Field
+                        name={'Contact6'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="3">
+                    <FormGroup>
+                      <Label htmlFor="phone">Phone</Label>
+                      <Field
+                        name={'Phone6'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                        // normalize={normalizePhone}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="3">
+                    <FormGroup>
+                      <Label htmlFor="phone">Email</Label>
+                      <Field
+                        name={'Email6'}
+                        type="text"
+                        component={renderField}
+                        label="fax"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="3">
+                    <FormGroup>
+                      <Label htmlFor="phone">Note</Label>
+                      <Field
+                        name={'Note6'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col sm="3">
+                    <FormGroup>
                       <Label htmlFor="phone">Fax Number</Label>
                       <Field
                         name={'Fax'}
@@ -476,7 +580,7 @@ class Edit extends Component {
                         component={renderField}
                         label="fax"
                         edit={edit}
-                        normalize={normalizePhone}
+                        // normalize={normalizePhone}
                       />
                     </FormGroup>
                   </Col>
