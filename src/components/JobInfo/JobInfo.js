@@ -148,47 +148,21 @@ class JobInfo extends Component {
             customer.Shipping_Phone || customer.Phone1
           )
         );
+        this.props.dispatch(change('Order', 'job_info.EMAIL', customer.EMAIL));
         this.props.dispatch(
-          change(
-            'Order',
-            'job_info.EMAIL',
-            customer.EMAIL
-          )
+          change('Order', 'job_info.Email2', customer.Email2)
         );
         this.props.dispatch(
-          change(
-            'Order',
-            'job_info.Email2',
-            customer.Email2
-          )
+          change('Order', 'job_info.Email3', customer.Email3)
         );
         this.props.dispatch(
-          change(
-            'Order',
-            'job_info.Email3',
-            customer.Email3
-          )
+          change('Order', 'job_info.Email4', customer.Email4)
         );
         this.props.dispatch(
-          change(
-            'Order',
-            'job_info.Email4',
-            customer.Email4
-          )
+          change('Order', 'job_info.Email5', customer.Email5)
         );
         this.props.dispatch(
-          change(
-            'Order',
-            'job_info.Email5',
-            customer.Email5
-          )
-        );
-        this.props.dispatch(
-          change(
-            'Order',
-            'job_info.Email6',
-            customer.Email6
-          )
+          change('Order', 'job_info.Email6', customer.Email6)
         );
         this.props.dispatch(change('Order', 'Taxable', customer.Taxable));
 
@@ -227,9 +201,6 @@ class JobInfo extends Component {
     };
 
     saveEmail(customer?.id, emails, cookie);
-    
-
-
   }
 
   render() {
@@ -651,7 +622,9 @@ class JobInfo extends Component {
 
               <Row>
                 <Col>
-                  <Button color="primary" onClick={this.saveEmails}>Save Email</Button>
+                  <Button color="primary" onClick={this.saveEmails}>
+                    Save Email
+                  </Button>
                 </Col>
               </Row>
             </CardBody>
