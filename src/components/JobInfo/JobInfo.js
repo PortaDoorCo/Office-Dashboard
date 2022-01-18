@@ -620,13 +620,18 @@ class JobInfo extends Component {
                 </Col>
               </Row>
 
-              <Row>
-                <Col>
-                  <Button color="primary" onClick={this.saveEmails}>
+              {role?.type === 'authenticated' ||
+              role?.type === 'owner' ||
+              role?.type === 'administrator' ? 
+                <Row>
+                  <Col>
+                    <Button color="primary" onClick={this.saveEmails}>
                     Save Email
-                  </Button>
-                </Col>
-              </Row>
+                    </Button>
+                  </Col>
+                </Row> : null
+              }
+
             </CardBody>
           </Card>
         </Collapse>
