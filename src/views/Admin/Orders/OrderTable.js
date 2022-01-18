@@ -632,6 +632,26 @@ const OrderTable = (props) => {
               <Receipt style={{ width: '40', height: '40' }} />
             </IconButton>
           </Tooltip>
+          <Tooltip
+            title="Export Edges"
+            onClick={exportReports}
+            placement="top"
+            className="mb-3 mt-3"
+          >
+            <IconButton>
+              <Receipt style={{ width: '40', height: '40' }} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            title="Export Razorgauge"
+            onClick={exportReports}
+            placement="top"
+            className="mb-3 mt-3"
+          >
+            <IconButton>
+              <Receipt style={{ width: '40', height: '40' }} />
+            </IconButton>
+          </Tooltip>
         </Col>
       </Row>
 
