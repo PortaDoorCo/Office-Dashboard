@@ -550,7 +550,13 @@ class JobInfo extends Component {
                       name="EMAIL"
                       type="text"
                       component={renderField}
-                      edit={edit}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator'
+                          ? edit
+                          : true
+                      }
                       label="Phone"
                     />
                   </FormGroup>
@@ -562,7 +568,13 @@ class JobInfo extends Component {
                       name="Email2"
                       type="text"
                       component={renderField}
-                      edit={edit}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator'
+                          ? edit
+                          : true
+                      }
                       label="Phone"
                     />
                   </FormGroup>
@@ -574,7 +586,13 @@ class JobInfo extends Component {
                       name="Email3"
                       type="text"
                       component={renderField}
-                      edit={edit}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator'
+                          ? edit
+                          : true
+                      }
                       label="Phone"
                     />
                   </FormGroup>
@@ -589,7 +607,13 @@ class JobInfo extends Component {
                       name="Email4"
                       type="text"
                       component={renderField}
-                      edit={edit}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator'
+                          ? edit
+                          : true
+                      }
                       label="Phone"
                     />
                   </FormGroup>
@@ -601,7 +625,13 @@ class JobInfo extends Component {
                       name="Email5"
                       type="text"
                       component={renderField}
-                      edit={edit}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator'
+                          ? edit
+                          : true
+                      }
                       label="Phone"
                     />
                   </FormGroup>
@@ -613,20 +643,30 @@ class JobInfo extends Component {
                       name="Email6"
                       type="text"
                       component={renderField}
-                      edit={edit}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator'
+                          ? edit
+                          : true
+                      }
                       label="Phone"
                     />
                   </FormGroup>
                 </Col>
               </Row>
 
-              <Row>
-                <Col>
-                  <Button color="primary" onClick={this.saveEmails}>
-                    Save Email
-                  </Button>
-                </Col>
-              </Row>
+              {role?.type === 'authenticated' ||
+              role?.type === 'owner' ||
+              role?.type === 'administrator' ? (
+                  <Row>
+                    <Col>
+                      <Button color="primary" onClick={this.saveEmails}>
+                      Save Email
+                      </Button>
+                    </Col>
+                  </Row>
+                ) : null}
             </CardBody>
           </Card>
         </Collapse>
