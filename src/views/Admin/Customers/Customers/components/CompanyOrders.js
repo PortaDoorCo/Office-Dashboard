@@ -116,7 +116,7 @@ const OrderTable = (props) => {
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
   const [startDate, setStartDate] = useState(
-    moment(new Date(orders[orders.length - 1].created_at))
+    moment(new Date(orders[orders.length - 1]?.created_at))
   );
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
@@ -127,12 +127,12 @@ const OrderTable = (props) => {
 
   const minDate =
     orders.length > 0
-      ? new Date(orders[orders.length - 1].created_at)
+      ? new Date(orders[orders.length - 1]?.created_at)
       : new Date();
 
   useEffect(() => {
     const filteredOrders = orders?.filter((item) => {
-      let date = new Date(item.created_at);
+      let date = new Date(item?.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
         return x.status === 'Ordered';
