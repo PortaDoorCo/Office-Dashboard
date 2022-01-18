@@ -50,6 +50,7 @@ class JobInfo extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.saveEmails = this.saveEmails.bind(this);
     this.state = {
       loaded: false,
       collapse: false,
@@ -147,6 +148,48 @@ class JobInfo extends Component {
             customer.Shipping_Phone || customer.Phone1
           )
         );
+        this.props.dispatch(
+          change(
+            'Order',
+            'job_info.EMAIL',
+            customer.EMAIL
+          )
+        );
+        this.props.dispatch(
+          change(
+            'Order',
+            'job_info.Email2',
+            customer.Email2
+          )
+        );
+        this.props.dispatch(
+          change(
+            'Order',
+            'job_info.Email3',
+            customer.Email3
+          )
+        );
+        this.props.dispatch(
+          change(
+            'Order',
+            'job_info.Email4',
+            customer.Email4
+          )
+        );
+        this.props.dispatch(
+          change(
+            'Order',
+            'job_info.Email5',
+            customer.Email5
+          )
+        );
+        this.props.dispatch(
+          change(
+            'Order',
+            'job_info.Email6',
+            customer.Email6
+          )
+        );
         this.props.dispatch(change('Order', 'Taxable', customer.Taxable));
 
         if (formState.job_info.Sample) {
@@ -169,10 +212,21 @@ class JobInfo extends Component {
   }
 
   saveEmails() {
-    const { formState } = this.props;
+    const { formState, saveEmail, cookie } = this.props;
 
+    const jobInfo = formState?.job_info;
     const customer = formState?.job_info?.customer;
 
+    const emails = {
+      EMAIL: jobInfo.EMAIL,
+      Email2: jobInfo.Email2,
+      Email3: jobInfo.Email3,
+      Email4: jobInfo.Email4,
+      Email5: jobInfo.Email5,
+      Email6: jobInfo.Email6,
+    };
+
+    saveEmail(customer?.id, emails, cookie);
     
 
 
@@ -597,7 +651,7 @@ class JobInfo extends Component {
 
               <Row>
                 <Col>
-                  <Button onClick={() => alert('hi')}>Save Email</Button>
+                  <Button color="primary" onClick={this.saveEmails}>Save Email</Button>
                 </Col>
               </Row>
             </CardBody>

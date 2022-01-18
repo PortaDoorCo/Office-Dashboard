@@ -155,37 +155,40 @@ export function updateCustomer(custId, customer, cookie) {
 export function saveEmail(custId, customer, cookie) {
   return async function (dispatch) {
 
-    
+    console.log({custId});
+    console.log({customer});
 
-    // try {
-    //   const res = await axios.put(
-    //     `${db_url}/companyprofiles/${custId}`,
-    //     customer,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${cookie}`,
-    //       },
-    //     }
-    //   );
-    //   const data = await res;
+    console.log({cookie});
 
-    //   NotificationManager.success(
-    //     'Customer has been update!',
-    //     'Customer Updated!',
-    //     2000
-    //   );
-    //   return dispatch({
-    //     type: SAVE_EMAIL,
-    //     data: data.data,
-    //   });
-    // } catch (error) {
+    try {
+      const res = await axios.put(
+        `${db_url}/companyprofiles/${custId}`,
+        customer,
+        {
+          headers: {
+            Authorization: `Bearer ${cookie}`,
+          },
+        }
+      );
+      const data = await res;
+
+      NotificationManager.success(
+        'Customer has been update!',
+        'Customer Updated!',
+        2000
+      );
+      return dispatch({
+        type: SAVE_EMAIL,
+        data: data.data,
+      });
+    } catch (error) {
       
-    //   NotificationManager.error(
-    //     'There was an problem with your submission',
-    //     'Error',
-    //     2000
-    //   );
-    // }
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
+    }
   };
 }
 
