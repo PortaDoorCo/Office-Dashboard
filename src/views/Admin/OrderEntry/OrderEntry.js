@@ -40,6 +40,9 @@ import {
   updateOrder,
 } from '../../../redux/orders/actions';
 import {
+  saveEmail,
+} from '../../../redux/customers/actions';
+import {
   addPriceSelector,
   balanceSelector,
   balanceTotalSelector,
@@ -322,6 +325,7 @@ class OrderEntry extends Component {
       edit,
       isEdit,
       user,
+      saveEmail
     } = this.props;
 
     return (
@@ -359,6 +363,8 @@ class OrderEntry extends Component {
                           customerReminder={this.state.customerReminder}
                           edit={edit}
                           isEdit={isEdit}
+                          saveEmail={saveEmail}
+                          cookie={cookie}
                         />
                       </Suspense>
                     </FormSection>
@@ -565,7 +571,13 @@ const mapStateToProps = (state, props) => ({
               state.Orders.selectedOrder &&
               state.Orders.selectedOrder.status,
           DateOrdered: state.Orders?.selectedOrder?.DateOrdered,
-          DateShipped: state.Orders?.selectedOrder?.DateShipped
+          DateShipped: state.Orders?.selectedOrder?.DateShipped,
+          EMAIL: state.Orders?.selectedOrder?.job_info?.customer?.EMAIL,
+          Email2: state.Orders?.selectedOrder?.job_info?.customer?.Email2,
+          Email3: state.Orders?.selectedOrder?.job_info?.customer?.Email3,
+          Email4: state.Orders?.selectedOrder?.job_info?.customer?.Email4,
+          Email5: state.Orders?.selectedOrder?.job_info?.customer?.Email5,
+          Email6: state.Orders?.selectedOrder?.job_info?.customer?.Email6,
         },
       }
       : {
@@ -649,6 +661,12 @@ const mapStateToProps = (state, props) => ({
           Notes: state.customers.customerDB[0]?.Notes,
           salesRep: state.customers.customerDB[0]?.sale?.fullName,
           pmtTerms: state.customers.customerDB[0]?.PMT_TERMS,
+          EMAIL: state.customers.customerDB[0]?.EMAIL,
+          Email2: state.customers.customerDB[0]?.Email2,
+          Email3: state.customers.customerDB[0]?.Email3,
+          Email4: state.customers.customerDB[0]?.Email4,
+          Email5: state.customers.customerDB[0]?.Email5,
+          Email6: state.customers.customerDB[0]?.Email6,
           // PaymentMethod: {
           //   NAME: state.customers.customerDB[0].PaymentMethod
           // }
@@ -672,6 +690,7 @@ const mapDispatchToProps = (dispatch) =>
       loadOrders,
       setOrderType,
       updateOrder,
+      saveEmail
     },
     dispatch
   );

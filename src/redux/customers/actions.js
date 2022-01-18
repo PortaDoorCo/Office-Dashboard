@@ -14,6 +14,8 @@ export const CUSTOMER_ADDED = 'CUSTOMER_ADDED';
 export const CUSTOMER_UPDATED = 'CUSTOMER_UPDATED';
 export const CUSTOMER_DELETED = 'CUSTOMER_DELETED';
 export const UPLOAD_FILE_TO_CUSTOMER = 'UPLOAD_FILE_TO_CUSTOMER';
+export const SAVE_EMAIL = 'SAVE_EMAIL';
+
 
 export function setSelectedCompanies(data) {
   return async function (dispatch) {
@@ -136,6 +138,47 @@ export function updateCustomer(custId, customer, cookie) {
       );
       return dispatch({
         type: UPDATE_CUSTOMER,
+        data: data.data,
+      });
+    } catch (error) {
+      
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
+    }
+  };
+}
+
+
+export function saveEmail(custId, customer, cookie) {
+  return async function (dispatch) {
+
+    console.log({custId});
+    console.log({customer});
+
+    console.log({cookie});
+
+    try {
+      const res = await axios.put(
+        `${db_url}/companyprofiles/${custId}`,
+        customer,
+        {
+          headers: {
+            Authorization: `Bearer ${cookie}`,
+          },
+        }
+      );
+      const data = await res;
+
+      NotificationManager.success(
+        'Customer has been update!',
+        'Customer Updated!',
+        2000
+      );
+      return dispatch({
+        type: SAVE_EMAIL,
         data: data.data,
       });
     } catch (error) {
