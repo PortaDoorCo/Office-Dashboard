@@ -168,6 +168,16 @@ class JobInfo extends Component {
     this.setState({ collapse: !this.state?.collapse });
   }
 
+  saveEmails() {
+    const { formState } = this.props;
+
+    const customer = formState?.job_info?.customer;
+
+    
+
+
+  }
+
   render() {
     const {
       customers,
@@ -507,10 +517,89 @@ class JobInfo extends Component {
         <Collapse isOpen={this.state.collapse}>
           <Card>
             <CardBody>
-              <p>{formState?.job_info?.customer?.EMAIL}</p>
-              <p>{formState?.job_info?.customer?.Email2}</p>
-              <p>{formState?.job_info?.customer?.Email3}</p>
-              <p>{formState?.job_info?.customer?.Email4}</p>
+              <Row>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label htmlFor="phone">Email 1</Label>
+                    <Field
+                      name="EMAIL"
+                      type="text"
+                      component={renderField}
+                      edit={edit}
+                      label="Phone"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label htmlFor="phone">Email 2</Label>
+                    <Field
+                      name="Email2"
+                      type="text"
+                      component={renderField}
+                      edit={edit}
+                      label="Phone"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label htmlFor="phone">Email 3</Label>
+                    <Field
+                      name="Email3"
+                      type="text"
+                      component={renderField}
+                      edit={edit}
+                      label="Phone"
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label htmlFor="phone">Email 4</Label>
+                    <Field
+                      name="Email4"
+                      type="text"
+                      component={renderField}
+                      edit={edit}
+                      label="Phone"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label htmlFor="phone">Email 5</Label>
+                    <Field
+                      name="Email5"
+                      type="text"
+                      component={renderField}
+                      edit={edit}
+                      label="Phone"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label htmlFor="phone">Email 6</Label>
+                    <Field
+                      name="Email6"
+                      type="text"
+                      component={renderField}
+                      edit={edit}
+                      label="Phone"
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Button onClick={() => alert('hi')}>Save Email</Button>
+                </Col>
+              </Row>
             </CardBody>
           </Card>
         </Collapse>

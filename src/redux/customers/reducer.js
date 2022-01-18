@@ -7,7 +7,8 @@ import {
   CUSTOMER_ADDED,
   CUSTOMER_UPDATED,
   CUSTOMER_DELETED,
-  UPLOAD_FILE_TO_CUSTOMER
+  UPLOAD_FILE_TO_CUSTOMER,
+  SAVE_EMAIL
 } from './actions';
 
 const initialState = {
@@ -82,6 +83,21 @@ export default function (state = initialState, action) {
             return item;
           }
 
+          // Otherwise, this is the one we want - return an updated value
+          return {
+            ...data
+          };
+        })
+      };
+    case SAVE_EMAIL:
+      return {
+        ...state,
+        customerDB: state.customerDB.map((item, index) => {
+          if (item.id !== data.id) {
+            // This isn't the item we care about - keep it as-is
+            return item;
+          }
+    
           // Otherwise, this is the one we want - return an updated value
           return {
             ...data
