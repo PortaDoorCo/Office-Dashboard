@@ -632,7 +632,7 @@ const OrderTable = (props) => {
               <Receipt style={{ width: '40', height: '40' }} />
             </IconButton>
           </Tooltip>
-          <Tooltip
+          {/* <Tooltip
             title="Export Edges"
             onClick={exportReports}
             placement="top"
@@ -651,7 +651,7 @@ const OrderTable = (props) => {
             <IconButton>
               <Receipt style={{ width: '40', height: '40' }} />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
         </Col>
       </Row>
 
