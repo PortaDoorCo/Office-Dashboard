@@ -90,6 +90,8 @@ import BalanceHistory from './Balance/BalanceHistory';
 import MiscItems from './MiscItems';
 import Navigation from './Navigation';
 import ConversationNotes from './Notes/Conversation_Notes';
+import exportEdges from '../../../utils/exportEdges';
+import exportRazorGauge from '../../../utils/exportRazorGauge';
 
 const cookie = Cookies.get('jwt');
 
@@ -943,182 +945,18 @@ class OrderPage extends Component {
     Drawer_Box_Labels(data, box_breakdowns);
   };
 
-  exportLipper = () => {
-    let itemNum = 0;
+  exportEdgesHelper = () => {
+    const { formState } = this.props;
+    const data = formState;
 
-    const { formState, breakdowns, box_breakdowns, selectedOrder } = this.props;
-    const data = formState ? formState : [];
-
-    let a = [];
-
-    const newData = {
-      ...data,
-      part_list: data?.part_list?.map((i) => {
-        return {
-          ...i,
-          dimensions: i?.dimensions?.map((j) => {
-            itemNum += 1;
-            return {
-              ...j,
-              construction: i.construction,
-              profile: i.profile,
-              design: i.design,
-              edge: i.edge,
-              panel: i.panel,
-              orderType: i.orderType,
-              VERTICAL_GRAIN: i.VERTICAL_GRAIN,
-              item: itemNum,
-            };
-          }),
-        };
-      }),
-    };
-
-    const exportCsv = newData
-      ? newData.part_list.map((f, index) => {
-        f.dimensions.forEach((j, ind) => {
-          if (
-            f.orderType.value === 'DF' ||
-              numQty(j.width) > numQty(j.height)
-          ) {
-            a.push([
-              newData.orderNum,
-              '15DF',
-              j.qty,
-              f.woodtype && f.woodtype.NAME,
-              numQty(j.width),
-              numQty(j.height),
-              f.edge && f.edge.NAME,
-                f.thickness?.thickness_values
-                  ? f.thickness?.thickness_values
-                  : f.thickness?.thickness_1 === '4/4'
-                    ? 0.75
-                    : f.thickness?.thickness_1 === '5/4'
-                      ? 1
-                      : f.thickness?.thickness_1 === '6/4'
-                        ? 1.25
-                        : 0.75,
-            ]);
-          } else {
-            a.push([
-              newData.orderNum,
-              'D',
-              j.qty,
-              f.woodtype && f.woodtype.NAME,
-              numQty(j.width),
-              numQty(j.height),
-              f.edge && f.edge.NAME,
-                f.thickness?.thickness_values
-                  ? f.thickness?.thickness_values
-                  : f.thickness?.thickness_1 === '4/4'
-                    ? 0.75
-                    : f.thickness?.thickness_1 === '5/4'
-                      ? 1
-                      : f.thickness?.thickness_1 === '6/4'
-                        ? 1.25
-                        : 0.75,
-            ]);
-          }
-        });
-        return a;
-      })
-      : [];
-
-    this.setState({ lipperExport: a });
+    exportEdges([data]);
   };
 
-  exportRazor = () => {
-    let itemNum = 0;
+  exportRazorHelper = () => {
+    const { formState, breakdowns } = this.props;
+    const data = formState;
 
-    const { formState, breakdowns, box_breakdowns, selectedOrder } = this.props;
-    const data = formState ? formState : [];
-
-    let a = [];
-
-    const newData = {
-      ...data,
-      part_list: data?.part_list?.map((i) => {
-        return {
-          ...i,
-          dimensions: i?.dimensions?.map((j) => {
-            itemNum += 1;
-            return {
-              ...j,
-              construction: i.construction,
-              profile: i.profile,
-              design: i.design,
-              edge: i.edge,
-              panel: i.panel,
-              orderType: i.orderType,
-              VERTICAL_GRAIN: i.VERTICAL_GRAIN,
-              item: itemNum,
-            };
-          }),
-        };
-      }),
-    };
-
-    const razor = newData
-      ? newData.part_list.map((f, index) => {
-        // console.log({ f });
-
-        f.dimensions.forEach((j, ind) => {
-          // console.log({ j });
-
-          const { breakdowns } = this.props;
-
-          const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
-            return rail;
-          });
-
-          const rail = (Rails(j, f, breakdowns) || []).map((rail) => {
-            return rail;
-          });
-
-          // console.log({ rail });
-          // console.log({ stile });
-
-          const stilePrint = stile.map((i) => {
-            return a.push([
-              `${selectedOrder.orderNum}`,
-              `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-              i.width,
-              i.height,
-              i.qty_2,
-              i.razor_pattern,
-              `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-              i.item,
-                f.profile?.NAME
-                  ? f.profile?.NAME
-                  : f.design?.NAME
-                    ? f.design?.NAME
-                    : '',
-            ]);
-          });
-
-          const railPrint = rail.map((i) => {
-            return a.push([
-              `${selectedOrder.orderNum}`,
-              `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-              i.width,
-              i.height,
-              i.qty_2,
-              i.razor_pattern,
-              `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-              i.item,
-                f.profile?.NAME
-                  ? f.profile?.NAME
-                  : f.design?.NAME
-                    ? f.design?.NAME
-                    : '',
-            ]);
-          });
-        });
-        return a;
-      })
-      : [];
-
-    this.setState({ razorExport: a });
+    exportRazorGauge([data], breakdowns);
   };
 
   render() {
@@ -1129,154 +967,7 @@ class OrderPage extends Component {
       printer_options,
       user,
       deleteFilesFromOrder,
-      formState,
     } = this.props;
-
-    const data = formState ? formState : [];
-
-    let s = selectedOrder ? selectedOrder : 'Door Order';
-
-    let exportCsv = [];
-    let a = [];
-    let razorGuage = [];
-
-    let itemNum = 0;
-
-    const itemNumCounter = {
-      ...data,
-      part_list: data?.part_list?.map((i) => {
-        return {
-          ...i,
-          dimensions: i?.dimensions?.map((j) => {
-            itemNum += 1;
-            return {
-              ...j,
-              construction: i.construction,
-              profile: i.profile,
-              design: i.design,
-              edge: i.edge,
-              panel: i.panel,
-              orderType: i.orderType,
-              VERTICAL_GRAIN: i.VERTICAL_GRAIN,
-              item: itemNum,
-            };
-          }),
-        };
-      }),
-    };
-
-    if (data.orderType === 'Door Order') {
-      exportCsv = itemNumCounter
-        ? itemNumCounter.part_list.map((f, index) => {
-          f.dimensions.forEach((j, ind) => {
-            if (
-              f.orderType.value === 'DF' ||
-                numQty(j.width) > numQty(j.height)
-            ) {
-              a.push([
-                s.orderNum,
-                '15DF',
-                j.qty,
-                f.woodtype && f.woodtype.NAME,
-                Math.round(numQty(j.width) * 16) / 16,
-                Math.round(numQty(j.height) * 16) / 16,
-                f.edge && f.edge.NAME,
-                  f.thickness?.thickness_values
-                    ? f.thickness?.thickness_values
-                    : f.thickness?.thickness_1 === '4/4'
-                      ? 0.75
-                      : f.thickness?.thickness_1 === '5/4'
-                        ? 1
-                        : f.thickness?.thickness_1 === '6/4'
-                          ? 1.25
-                          : 0.75,
-              ]);
-            } else {
-              a.push([
-                s.orderNum,
-                'D',
-                j.qty,
-                f.woodtype && f.woodtype.NAME,
-                Math.round(numQty(j.width) * 16) / 16,
-                Math.round(numQty(j.height) * 16) / 16,
-                f.edge && f.edge.NAME,
-                  f.thickness?.thickness_values
-                    ? f.thickness?.thickness_values
-                    : f.thickness?.thickness_1 === '4/4'
-                      ? 0.75
-                      : f.thickness?.thickness_1 === '5/4'
-                        ? 1
-                        : f.thickness?.thickness_1 === '6/4'
-                          ? 1.25
-                          : 0.75,
-              ]);
-            }
-          });
-          return a;
-        })
-        : [];
-
-      const razor = itemNumCounter
-        ? itemNumCounter.part_list.map((f, index) => {
-          // console.log({ f });
-
-          f.dimensions.forEach((j, ind) => {
-            // console.log({ j });
-
-            const { breakdowns } = this.props;
-
-            const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
-              return rail;
-            });
-
-            const rail = (Rails(j, f, breakdowns) || []).map((rail) => {
-              return rail;
-            });
-
-            // console.log({ rail });
-            // console.log({ stile });
-
-            const stilePrint = stile.map((i) => {
-              return razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                Math.round(numQty(i.width) * 16) / 16,
-                Math.round(numQty(i.height) * 16) / 16,
-                i.qty_2,
-                i.razor_pattern,
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                i.item,
-                  f.profile?.NAME
-                    ? f.profile?.NAME
-                    : f.design?.NAME
-                      ? f.design?.NAME
-                      : '',
-              ]);
-            });
-
-            const railPrint = rail.map((i) => {
-              console.log({ i });
-              return razorGuage.push([
-                `${s.orderNum}`,
-                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-                Math.round(numQty(i.width) * 16) / 16,
-                Math.round(numQty(i.height) * 16) / 16,
-                i.qty_2,
-                i.razor_pattern,
-                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-                i.item,
-                  f.profile?.NAME
-                    ? f.profile?.NAME
-                    : f.design?.NAME
-                      ? f.design?.NAME
-                      : '',
-              ]);
-            });
-          });
-          return razorGuage;
-        })
-        : [];
-    }
 
     return (
       <div className="animated noPrint resize">
@@ -1389,24 +1080,15 @@ class OrderPage extends Component {
 
                       {user?.role?.type !== 'sales' ? (
                         <Col>
-                          {/* {(s.orderType === 'Drawer Order') ? 
-                          <Tooltip title="Box Labels" placement="top" className="mb-3">
-                            <IconButton onClick={this.downloadBoxLabel}>
-                              <LabelIcon style={{ width: '40', height: '40' }} />
+                          <Tooltip
+                            title="Print"
+                            placement="top"
+                            className="mb-3"
+                          >
+                            <IconButton onClick={this.togglePrinter}>
+                              <Print style={{ width: '40', height: '40' }} />
                             </IconButton>
-                          </Tooltip> : null
-                        } */}
-                          {user.role?.type !== 'sales' ? (
-                            <Tooltip
-                              title="Print"
-                              placement="top"
-                              className="mb-3"
-                            >
-                              <IconButton onClick={this.togglePrinter}>
-                                <Print style={{ width: '40', height: '40' }} />
-                              </IconButton>
-                            </Tooltip>
-                          ) : null}
+                          </Tooltip>
 
                           {user.role?.type !== 'quality_control' ? (
                             <Tooltip
@@ -1425,34 +1107,18 @@ class OrderPage extends Component {
                           {selectedOrder &&
                           selectedOrder.orderType === 'Door Order' &&
                           user.role?.type !== 'quality_control' ? (
-                              <CSVLink
-                                data={a.map((i, ind) => {
-                                  return [
-                                    ...i,
-                                    ind + 1,
-                                    `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`,
-                                  ];
-                                })}
-                                onClick={(event) => {
-                                  console.log({ event });
-                                }}
-                                filename={`${s && s.orderNum}.csv`}
-                                separator={','}
+                              <Tooltip
+                                title="Export Edges"
+                                placement="top"
                                 className="mb-3"
+                                onClick={this.exportEdgesHelper}
                               >
-                                {' '}
-                                <Tooltip
-                                  title="Export Edges"
-                                  placement="top"
-                                  className="mb-3"
-                                >
-                                  <IconButton>
-                                    <GetAppIcon
-                                      style={{ width: '40', height: '40' }}
-                                    />
-                                  </IconButton>
-                                </Tooltip>
-                              </CSVLink>
+                                <IconButton>
+                                  <GetAppIcon
+                                    style={{ width: '40', height: '40' }}
+                                  />
+                                </IconButton>
+                              </Tooltip>
                             ) : null}
 
                           {selectedOrder &&
@@ -1462,19 +1128,12 @@ class OrderPage extends Component {
                                 title="Razorguage Export"
                                 placement="top"
                                 className="mb-3"
+                                onClick={this.exportRazorHelper}
                               >
                                 <IconButton>
-                                  <CsvDownloader
-                                    datas={razorGuage}
-                                    filename={`${s && s.orderNum}`}
-                                    extension=".csv"
-                                    // uFEFF={false}
-                                    separator=","
-                                  >
-                                    <GetAppIcon
-                                      style={{ width: '40', height: '40' }}
-                                    />
-                                  </CsvDownloader>
+                                  <GetAppIcon
+                                    style={{ width: '40', height: '40' }}
+                                  />
                                 </IconButton>
                               </Tooltip>
                             ) : null}
