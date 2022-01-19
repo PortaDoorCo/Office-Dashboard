@@ -41,57 +41,63 @@ const exportThis = (data, breakdowns) => {
       ? itemNumCounter.part_list.map((f, index) => {
       // console.log({ f });
 
-        f.dimensions.forEach((j, ind) => {
-        // console.log({ j });
+        console.log({f});
 
-          const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
-            return rail;
+        if(f.construction?.value !== 'Slab'){
+          f.dimensions.forEach((j, ind) => {
+            // console.log({ j });
+  
+            const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
+              return rail;
+            });
+  
+            const rail = (Rails(j, f, breakdowns) || []).map((rail) => {
+              return rail;
+            });
+  
+            // console.log({ rail });
+            // console.log({ stile });
+  
+            const stilePrint = stile.map((i) => {
+              return razorGauge.push([
+                `${d.orderNum}`,
+                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+                Math.round(numQty(i.width) * 16) / 16,
+                Math.round(numQty(i.height) * 16) / 16,
+                i.qty_2,
+                i.razor_pattern,
+                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+                i.item,
+                  f.profile?.NAME
+                    ? f.profile?.NAME
+                    : f.design?.NAME
+                      ? f.design?.NAME
+                      : '',
+              ]);
+            });
+  
+            const railPrint = rail.map((i) => {
+              console.log({ i });
+              return razorGauge.push([
+                `${d.orderNum}`,
+                `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
+                Math.round(numQty(i.width) * 16) / 16,
+                Math.round(numQty(i.height) * 16) / 16,
+                i.qty_2,
+                i.razor_pattern,
+                `${f.design?.NAME} ${f.thickness?.thickness_1}`,
+                i.item,
+                  f.profile?.NAME
+                    ? f.profile?.NAME
+                    : f.design?.NAME
+                      ? f.design?.NAME
+                      : '',
+              ]);
+            });
           });
+        }
 
-          const rail = (Rails(j, f, breakdowns) || []).map((rail) => {
-            return rail;
-          });
 
-          // console.log({ rail });
-          // console.log({ stile });
-
-          const stilePrint = stile.map((i) => {
-            return razorGauge.push([
-              `${d.orderNum}`,
-              `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-              Math.round(numQty(i.width) * 16) / 16,
-              Math.round(numQty(i.height) * 16) / 16,
-              i.qty_2,
-              i.razor_pattern,
-              `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-              i.item,
-              f.profile?.NAME
-                ? f.profile?.NAME
-                : f.design?.NAME
-                  ? f.design?.NAME
-                  : '',
-            ]);
-          });
-
-          const railPrint = rail.map((i) => {
-            console.log({ i });
-            return razorGauge.push([
-              `${d.orderNum}`,
-              `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
-              Math.round(numQty(i.width) * 16) / 16,
-              Math.round(numQty(i.height) * 16) / 16,
-              i.qty_2,
-              i.razor_pattern,
-              `${f.design?.NAME} ${f.thickness?.thickness_1}`,
-              i.item,
-              f.profile?.NAME
-                ? f.profile?.NAME
-                : f.design?.NAME
-                  ? f.design?.NAME
-                  : '',
-            ]);
-          });
-        });
         return razorGauge;
       })
       : [];
