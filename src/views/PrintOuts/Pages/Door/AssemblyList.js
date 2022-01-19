@@ -6,7 +6,7 @@ import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDF
 import AssemblyList from '../../Door_PDF/AssemblyList';
 import Glass_Selection from '../../Sorting/Glass_Selection';
 
-const DoorPDF =  async (
+const DoorPDF = async (
   data,
   designs,
   edges,
@@ -29,14 +29,18 @@ const DoorPDF =  async (
 
     const headerInfo = [
       {
-        margin: [40,40,40,0],
+        margin: [40, 40, 40, 0],
         columns: [
           {
             stack: [
               { text: 'Assembly List', bold: true },
-              `Due Date: ${moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              )}`,
+              {
+                text: `Due Date: ${
+                  data.Shipping_Scheduled
+                    ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
+                    : 'TBD'
+                }`,
+              },
               { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
             ],
           },
@@ -65,11 +69,13 @@ const DoorPDF =  async (
               },
               { text: `Order #: ${data.orderNum}`, alignment: 'right' },
               {
-                text: `Est. Completion: ${data.status !== 'Quote' ? moment(data.job_info.DueDate).format(
-                  'MM/DD/YYYY'
-                ) : moment('01-01-2000').format(
-                  'MM/DD/YYYY'
-                )}`,
+                text: `Est. Completion: ${
+                  data.Shipping_Scheduled
+                    ? `${moment(data.job_info.DueDate).format(
+                      'MM/DD/YYYY'
+                    )}`
+                    : 'TBD'
+                }`,
                 alignment: 'right',
               },
               {
@@ -85,7 +91,6 @@ const DoorPDF =  async (
         ],
       },
       {
-        
         stack: [
           {
             text: `${data.orderNum}`,
@@ -107,7 +112,7 @@ const DoorPDF =  async (
             ],
           },
         ],
-        margin:[40, 0, 40, 0],
+        margin: [40, 0, 40, 0],
       },
       // {
       //   text: '==============================================================================',
@@ -117,7 +122,6 @@ const DoorPDF =  async (
     ];
 
     let Content = [];
-
 
     const type = 'Page';
 
@@ -145,17 +149,14 @@ const DoorPDF =  async (
     });
 
     newParts.map((k) => {
-      if(k.part_list.length > 0){
+      if (k.part_list.length > 0) {
         return Content.push(AssemblyList(k, breakdowns));
       } else {
         return null;
       }
     });
 
-    console.log({newParts});
-    
-
-   
+    console.log({ newParts });
 
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
@@ -256,16 +257,11 @@ const DoorPDF =  async (
       },
     };
 
-
     // pdfMake.createPdf(documentDefinition).open();
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
 
-
-  
-
     return pdfDocGenerator.getBlob((blob) => {
-
       // blobUrl()
       resolve(blob);
     });

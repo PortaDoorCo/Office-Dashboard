@@ -51,6 +51,7 @@ class JobInfo extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.saveEmails = this.saveEmails.bind(this);
+    this.scheduleDueDate = this.scheduleDueDate.bind(this);
     this.state = {
       loaded: false,
       collapse: false,
@@ -185,6 +186,38 @@ class JobInfo extends Component {
     this.setState({ collapse: !this.state?.collapse });
   }
 
+  scheduleDueDate() {
+    
+    const { formState } = this.props;
+
+    if(!formState?.job_info?.Shipping_Scheduled){
+      this.props.dispatch(
+        change(
+          'Order',
+          'job_info.status',
+          {
+            label: 'Ordered',
+            value: 'Ordered',
+          },
+        )
+      );
+    } else {
+      this.props.dispatch(
+        change(
+          'Order',
+          'job_info.status',
+          {
+            label: 'Quote',
+            value: 'Quote',
+          },
+        )
+      );
+    }
+
+    
+  }
+
+
   saveEmails() {
     const { formState, saveEmail, cookie } = this.props;
 
@@ -238,6 +271,7 @@ class JobInfo extends Component {
                 name="Shipping_Scheduled"
                 component={renderCheckboxToggle}
                 edit={edit}
+                onClick={this.scheduleDueDate}
               />
             </FormGroup>
           </Col>
@@ -259,7 +293,7 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-        {formState?.Shipping_Scheduled &&
+        {/* {formState?.Shipping_Scheduled &&
         (role?.type === 'authenticated' ||
           role?.type === 'owner' ||
           role?.type === 'administrator' ||
@@ -279,7 +313,7 @@ class JobInfo extends Component {
                 </FormGroup>
               </Col>
             </Row>
-          ) : null}
+          ) : null} */}
 
         <Row className="mb-3">
           <Col lg="3">
@@ -295,41 +329,29 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
 
-          {formState?.DateOrdered ? (
-            role?.type === 'authenticated' ||
-            role?.type === 'owner' ||
-            role?.type === 'administrator' ||
-            role?.type === 'management' ||
-            role?.type === 'office' ? (
-                <Col lg="3">
-                  <FormGroup>
-                    <Label htmlFor="dueDate">Date Ordered</Label>
-                    <Field
-                      name="DateOrdered"
-                      showTime={true}
-                      component={renderDateTimePicker}
-                      edit={edit}
-                    />
-                  </FormGroup>
-                </Col>
-              ) : (
-                <Col lg="3">
-                  <FormGroup>
-                    <Label htmlFor="dueDate">Date Ordered</Label>
-                    <Field
-                      name="DateOrdered"
-                      showTime={true}
-                      component={renderDateTimePicker}
-                      edit={true}
-                    />
-                  </FormGroup>
-                </Col>
-              )
-          ) : (
-            <Col lg="3" />
-          )}
 
-          <Col lg="3" />
+          {/* {role?.type === 'authenticated' ||
+          role?.type === 'owner' ||
+          role?.type === 'administrator' ||
+          role?.type === 'management' ||
+          role?.type === 'office' ? 
+            <Col lg="3">
+              <FormGroup>
+                <Label htmlFor="dueDate">Date Ordered</Label>
+                <Field
+                  name="DateOrdered"
+                  showTime={true}
+                  component={renderDateTimePicker}
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col> : null
+          }  */}
+
+              
+
+
+          <Col lg="6" />
 
           <Col xs="3">
             <FormGroup>

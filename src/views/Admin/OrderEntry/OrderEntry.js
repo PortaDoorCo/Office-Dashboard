@@ -39,9 +39,7 @@ import {
   submitOrder,
   updateOrder,
 } from '../../../redux/orders/actions';
-import {
-  saveEmail,
-} from '../../../redux/customers/actions';
+import { saveEmail } from '../../../redux/customers/actions';
 import {
   addPriceSelector,
   balanceSelector,
@@ -149,6 +147,7 @@ class OrderEntry extends Component {
       status,
       tracking,
       updateOrder,
+      formState,
     } = this.props;
 
     // const orderType = orderType;
@@ -156,6 +155,12 @@ class OrderEntry extends Component {
     let order = {};
 
     let newStatus = tracking;
+
+    let DateOrdered = formState?.DateOrdered;
+    let DateInProduction = formState?.DateInProduction;
+    let DateInvoiced = formState?.DateInvoiced;
+    let DateShipped = formState?.DateShipped;
+    let DateCompleted = formState?.DateCompleted;
 
     if (isEdit) {
       if (status !== values.job_info?.status?.value) {
@@ -168,6 +173,38 @@ class OrderEntry extends Component {
               user: user?.FirstName,
             },
           ];
+
+          if (values.job_info?.status?.value === 'Ordered') {
+            if (values.DateOrdered) {
+              DateOrdered = values.DateOrdered;
+            } else {
+              DateOrdered = new Date();
+            }
+          } else if (values.job_info?.status?.value === 'In Production') {
+            if (values.DateInProduction) {
+              DateInProduction = values.DateInProduction;
+            } else {
+              DateInProduction = new Date();
+            }
+          } else if (values.job_info?.status?.value === 'Invoiced') {
+            if (values.DateInvoiced) {
+              DateInvoiced = values.DateInvoiced;
+            } else {
+              DateInvoiced = new Date();
+            }
+          } else if (values.job_info?.status?.value === 'Shipped') {
+            if (values.job_info?.DateShipped) {
+              DateShipped = values.DateShipped;
+            } else {
+              DateShipped = new Date();
+            }
+          } else if (values.job_info?.status?.value === 'Complete') {
+            if (values.DateCompleted) {
+              DateCompleted = values.DateCompleted;
+            } else {
+              DateCompleted = new Date();
+            }
+          }
         } else {
           newStatus = [
             ...tracking,
@@ -226,8 +263,11 @@ class OrderEntry extends Component {
       order = {
         ...values,
         job_info: values.job_info,
-        DateOrdered: values?.job_info?.DateOrdered,
-        DateShipped: values?.job_info?.DateShipped,
+        DateOrdered: DateOrdered,
+        DateInProduction: DateInProduction,
+        DateShipped: DateShipped,
+        DateInvoiced: DateInvoiced,
+        DateCompleted: DateCompleted,
         part_list: values.part_list,
         Rush: values.job_info?.Rush,
         Sample: values.job_info?.Sample,
@@ -325,7 +365,8 @@ class OrderEntry extends Component {
       edit,
       isEdit,
       user,
-      saveEmail
+      saveEmail,
+      role,
     } = this.props;
 
     return (
@@ -562,6 +603,19 @@ const mapStateToProps = (state, props) => ({
     props.isEdit === true
       ? {
         ...(state.Orders && state.Orders.selectedOrder),
+        DateInProduction: state.Orders?.selectedOrder?.DateInProduction || state.Orders?.selectedOrder?.tracking?.filter(
+          (x) =>
+            x.status === 'In Production' ||
+              x.status === 'Cut' ||
+              x.status === 'Framing' ||
+              x.status === 'Assembly' ||
+              x.status === 'Tenon' ||
+              x.status === 'Panels' ||
+              x.status === 'Sanding' ||
+              x.status === 'Lipping' ||
+              x.status === 'Inspecting' ||
+              x.status === 'Paint Shop'
+        )[0]?.date,
         job_info: {
           ...(state.Orders &&
               state.Orders.selectedOrder &&
@@ -570,8 +624,6 @@ const mapStateToProps = (state, props) => ({
               state.Orders &&
               state.Orders.selectedOrder &&
               state.Orders.selectedOrder.status,
-          DateOrdered: state.Orders?.selectedOrder?.DateOrdered,
-          DateShipped: state.Orders?.selectedOrder?.DateShipped,
           EMAIL: state.Orders?.selectedOrder?.job_info?.customer?.EMAIL,
           Email2: state.Orders?.selectedOrder?.job_info?.customer?.Email2,
           Email3: state.Orders?.selectedOrder?.job_info?.customer?.Email3,
@@ -674,6 +726,7 @@ const mapStateToProps = (state, props) => ({
       },
   status: state.Orders?.selectedOrder?.status,
   tracking: state.Orders?.selectedOrder?.tracking,
+  role: state?.users?.user?.role,
   formState: getFormValues('Order')(state),
   total: totalSelector(state),
   tax: taxSelector(state),
@@ -690,7 +743,7 @@ const mapDispatchToProps = (dispatch) =>
       loadOrders,
       setOrderType,
       updateOrder,
-      saveEmail
+      saveEmail,
     },
     dispatch
   );

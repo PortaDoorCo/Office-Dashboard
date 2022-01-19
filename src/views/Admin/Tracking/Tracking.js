@@ -148,6 +148,7 @@ const OrderTable = (props) => {
               !item.status.includes('Quote') &&
               !item.status.includes('Invoiced') &&
               !item.status.includes('Ordered') &&
+              !item.status.includes('Complete') &&
               !item.status.includes('Shipped') &&
               (item.orderNum.toString().includes(filterText) ||
                 item.companyprofile.Company.toLowerCase().includes(
@@ -164,6 +165,7 @@ const OrderTable = (props) => {
               !item.status.includes('Quote') &&
               !item.status.includes('Invoiced') &&
               !item.status.includes('Ordered') &&
+              !item.status.includes('Complete') &&
               !item.status.includes('Shipped')
             );
           }
@@ -200,6 +202,7 @@ const OrderTable = (props) => {
               !item.status.includes('Quote') &&
               !item.status.includes('Invoiced') &&
               !item.status.includes('Ordered') &&
+              !item.status.includes('Complete') &&
               !item.status.includes('Shipped') &&
               (item.orderNum.toString().includes(filterText) ||
                 item.companyprofile.Company.toLowerCase().includes(
@@ -217,6 +220,7 @@ const OrderTable = (props) => {
               !item.status.includes('Quote') &&
               !item.status.includes('Invoiced') &&
               !item.status.includes('Ordered') &&
+              !item.status.includes('Complete') &&
               !item.status.includes('Shipped')
             );
           }

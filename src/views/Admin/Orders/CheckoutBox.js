@@ -22,16 +22,35 @@ import {
 import NumberFormat from 'react-number-format';
 import currencyMask from '../../../utils/currencyMask';
 import Navigation from './Navigation';
+import DatePicker from 'react-widgets/DatePicker';
 // import NavBar from './NavBar';
 // import NavModal from './MiscItemCollapse';
 
+const renderDateTimePicker = ({
+  input: { onChange, value },
+  showTime,
+  edit,
+}) => (
+  <div>
+    <DatePicker
+      onChange={onChange}
+      time={showTime}
+      value={!value ? null : new Date(value)}
+      disabled={edit}
+    />
+  </div>
+);
+
 const CheckoutBox = (props) => {
+  const { role, edit } = props;
+
   return (
     <Row>
       <Col>
         <Card>
           <CardBody>
             {/* <NavBar onSubNav={props.onSubNav} /> */}
+
             <hr />
 
             {/* <NavModal {...props} onSubNav={props.onSubNav} onUploaded={props.onUploaded} /> */}
@@ -40,6 +59,117 @@ const CheckoutBox = (props) => {
               onKeyPress={props.onKeyPress}
               onSubmit={props.handleSubmit(props.submit)}
             >
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label htmlFor="dueDate">Date Ordered</Label>
+                    <Field
+                      name="DateOrdered"
+                      showTime={true}
+                      component={renderDateTimePicker}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator' ||
+                        role?.type === 'management' ||
+                        role?.type === 'office'
+                          ? edit
+                          : true
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label htmlFor="dueDate">Date In Production</Label>
+                    <Field
+                      name="DateInProduction"
+                      showTime={true}
+                      component={renderDateTimePicker}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator' ||
+                        role?.type === 'management' ||
+                        role?.type === 'office'
+                          ? edit
+                          : true
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label htmlFor="dueDate">Date Completed</Label>
+                    <Field
+                      name="DateCompleted"
+                      showTime={true}
+                      component={renderDateTimePicker}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator' ||
+                        role?.type === 'management' ||
+                        role?.type === 'office'
+                          ? edit
+                          : true
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label htmlFor="dueDate">Date Invoiced</Label>
+                    <Field
+                      name="DateInvoiced"
+                      showTime={true}
+                      component={renderDateTimePicker}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator' ||
+                        role?.type === 'management' ||
+                        role?.type === 'office'
+                          ? edit
+                          : true
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label htmlFor="dueDate">Date Shipped</Label>
+                    <Field
+                      name="DateShipped"
+                      showTime={true}
+                      component={renderDateTimePicker}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator' ||
+                        role?.type === 'management' ||
+                        role?.type === 'office'
+                          ? edit
+                          : true
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
               <Row>
                 <Col>
                   <Row className="mb-0">

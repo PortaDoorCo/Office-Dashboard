@@ -230,14 +230,7 @@ class BalanceHistory extends Component {
               reset={reset}
               submit={handleSubmit(submit)}
             />
-            {!edit ? (
-              <div>
-                <Button color="primary">Save</Button>
-                <Button color="danger" onClick={() => editable()}>
-                  Cancel
-                </Button>
-              </div>
-            ) : null}
+
             <Row className="mt-3">
               <Col>
                 <h3>Order Total:</h3>${total.toFixed(2)}

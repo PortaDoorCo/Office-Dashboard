@@ -302,6 +302,12 @@ export function deleteOrder(orderId, cookie) {
 }
 
 export function updateOrder(orderId, order, cookie) {
+
+
+  console.log({order});
+  
+
+
   return async function (dispatch) {
     try {
       const res = await axios.put(`${db_url}/orders/${orderId}`, order, {
@@ -343,10 +349,49 @@ export function updateStatus(orderId, key, status, user, cookie) {
         },
       ],
     };
+  } else if (status.status === 'In Production') {
+    item = {
+      status: status.status,
+      DateInProduction: new Date(),
+      tracking: [
+        ...key.tracking,
+        {
+          status: status.status,
+          date: moment().format(),
+          user: user ? user?.FirstName : '',
+        },
+      ],
+    };
   } else if (status.status === 'Invoiced') {
     item = {
       status: status.status,
       DateInvoiced: new Date(),
+      tracking: [
+        ...key.tracking,
+        {
+          status: status.status,
+          date: moment().format(),
+          user: user ? user?.FirstName : '',
+        },
+      ],
+    };
+  } else if (status.status === 'Complete') {
+    item = {
+      status: status.status,
+      DateCompleted: new Date(),
+      tracking: [
+        ...key.tracking,
+        {
+          status: status.status,
+          date: moment().format(),
+          user: user ? user?.FirstName : '',
+        },
+      ],
+    };
+  } else if (status.status === 'Shipped') {
+    item = {
+      status: status.status,
+      DateShipped: new Date(),
       tracking: [
         ...key.tracking,
         {

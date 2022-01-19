@@ -18,9 +18,13 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
           {
             stack: [
               { text: 'Assembly List', bold: true },
-              `Due Date: ${moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              )}`,
+              {
+                text: `Due Date: ${
+                  data.Shipping_Scheduled
+                    ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
+                    : 'TBD'
+                }`,
+              },
               { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
             ],
           },
