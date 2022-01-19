@@ -25,6 +25,8 @@ import styled from 'styled-components';
 import status from '../../../utils/report_status';
 import { itemPriceSelector } from '../../../selectors/pricing';
 import Invoice from '../../PrintOuts/Reports/Invoice';
+import exportEdges from '../../../utils/exportEdges';
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 // momentLocaliser(moment);
 
@@ -139,6 +141,11 @@ const OrderTable = (props) => {
       const dateInvoiced = item?.tracking?.filter((x) => {
         return x.status === 'Invoiced';
       });
+
+      const dateCompleted = item?.tracking?.filter((x) => {
+        return x.status === 'Complete';
+      });
+
       const dateShipped = item?.tracking?.filter((x) => {
         return x.status === 'Shipped';
       });
@@ -150,7 +157,7 @@ const OrderTable = (props) => {
               moment(startDate).startOf('day').valueOf() &&
             moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status &&
+            item.status === 'Ordered' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -165,7 +172,7 @@ const OrderTable = (props) => {
               moment(startDate).startOf('day').valueOf() &&
             moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status
+            item.status === 'Ordered'
           );
         }
       } else if (filterStatus === 'Invoiced') {
@@ -175,7 +182,7 @@ const OrderTable = (props) => {
               moment(startDate).startOf('day').valueOf() &&
             moment(item.DateInvoiced || dateInvoiced[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
-            item.status === dateInvoiced[0]?.status &&
+            item.status === 'Invoiced' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -190,17 +197,42 @@ const OrderTable = (props) => {
               moment(startDate).startOf('day').valueOf() &&
             moment(item.DateInvoiced || dateInvoiced[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
-            item.status === dateInvoiced[0]?.status
+            item.status === 'Invoiced'
           );
         }
-      } else if (filterStatus === 'Shipped') {
+      } else if (filterStatus === 'Complete') {
+        if (filterText?.length > 0) {
+          return (
+            moment(item.DateCompleted || dateCompleted[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateCompleted || dateCompleted[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Complete' &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(item.DateCompleted || dateCompleted[0]?.date) >=
+              moment(startDate).startOf('day').valueOf() &&
+            moment(item.DateCompleted || dateCompleted[0]?.date) <=
+              moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Complete'
+          );
+        }
+      }  else if (filterStatus === 'Shipped') {
         if (filterText?.length > 0) {
           return (
             moment(item.DateShipped || dateShipped[0]?.date) >=
               moment(startDate).startOf('day').valueOf() &&
             moment(item.DateShipped || dateShipped[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
-            item.status === dateShipped[0]?.status &&
+            item.status === 'Shipped' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -215,7 +247,7 @@ const OrderTable = (props) => {
               moment(startDate).startOf('day').valueOf() &&
             moment(item.DateShipped || dateShipped[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
-            item.status === dateShipped[0]?.status
+            item.status === 'Shipped'
           );
         }
       } else {
@@ -531,6 +563,13 @@ const OrderTable = (props) => {
     setToggleCleared(!toggleCleared);
   };
 
+  const exportEdgesHelper = () => {
+    
+    exportEdges(data);
+
+    setToggleCleared(!toggleCleared);
+  };
+
   return (
     <div>
       <Row className="mb-3">
@@ -540,7 +579,7 @@ const OrderTable = (props) => {
             <Col>
               <h3>
                 Filter Date{' '}
-                {filterStatus === 'Quote' ? 'Entered' : filterStatus}
+                {filterStatus === 'Quote' ? 'Entered' :  filterStatus === 'Complete' ? 'Ordered' : filterStatus}
               </h3>
             </Col>
           </Row>
@@ -632,14 +671,14 @@ const OrderTable = (props) => {
               <Receipt style={{ width: '40', height: '40' }} />
             </IconButton>
           </Tooltip>
-          {/* <Tooltip
+          <Tooltip
             title="Export Edges"
-            onClick={exportReports}
+            onClick={exportEdgesHelper}
             placement="top"
             className="mb-3 mt-3"
           >
             <IconButton>
-              <Receipt style={{ width: '40', height: '40' }} />
+              <GetAppIcon style={{ width: '40', height: '40' }} />
             </IconButton>
           </Tooltip>
           <Tooltip
@@ -649,9 +688,9 @@ const OrderTable = (props) => {
             className="mb-3 mt-3"
           >
             <IconButton>
-              <Receipt style={{ width: '40', height: '40' }} />
+              <GetAppIcon style={{ width: '40', height: '40' }} />
             </IconButton>
-          </Tooltip> */}
+          </Tooltip>
         </Col>
       </Row>
 

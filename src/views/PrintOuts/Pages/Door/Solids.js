@@ -61,11 +61,13 @@ const DoorPDF =  async (
               },
               { text: `Order #: ${data.orderNum}`, alignment: 'right' },
               {
-                text: `Due Date: ${data.status !== 'Quote' ? moment(data.job_info.DueDate).format(
-                  'MM/DD/YYYY'
-                ) : moment('01-01-2000').format(
-                  'MM/DD/YYYY'
-                )}`,
+                text: `Due Date: ${
+                  data.Shipping_Scheduled
+                    ? `${moment(data.job_info.DueDate).format(
+                      'MM/DD/YYYY'
+                    )}`
+                    : 'TBD'
+                }`,
                 alignment: 'right',
               },
             ],

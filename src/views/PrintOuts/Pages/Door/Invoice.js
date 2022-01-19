@@ -71,12 +71,12 @@ const DoorPDF =  async (
                 style: 'headerFont',
               },
               {
-                text: `${
-                  data.status === 'Quote'
-                    ? ''
-                    : `Due Date: ${moment(data.job_info.DueDate).format(
+                text: `Due Date: ${
+                  data.Shipping_Scheduled
+                    ? `${moment(data.job_info.DueDate).format(
                       'MM/DD/YYYY'
                     )}`
+                    : 'TBD'
                 }`,
                 alignment: 'right',
                 style: 'headerFont',
@@ -282,7 +282,7 @@ const DoorPDF =  async (
       pageSize: 'A4',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [40, 220, 40, 60],
+      pageMargins: [40, 220, 40, 50],
       header: function (currentPage) {
         return headerInfo;
       },
@@ -317,7 +317,7 @@ const DoorPDF =  async (
               ],
             },
           ],
-          margin: [40, 10, 40, 0],
+          margin: [40, 5, 40, 0],
         };
       },
       pageBreakBefore: function (

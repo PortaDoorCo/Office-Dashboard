@@ -71,6 +71,7 @@ class Balance extends Component {
       ...values,
       balance_paid: values.pay_balance,
       DueDate: values.DueDate,
+      DateOrdered: new Date(),
       balance_history:  values.balance_history,
       payment_method: values.payment_method,
       payment_date: values.payment_date ? values.payment_date : new Date()
@@ -92,6 +93,13 @@ class Balance extends Component {
             'Order',
             'status',
             'Ordered'
+          )
+        );
+        await this.props.dispatch(
+          change(
+            'Order',
+            'DateOrdered',
+            new Date()
           )
         );
       }

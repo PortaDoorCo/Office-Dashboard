@@ -19,9 +19,13 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
           {
             stack: [
               { text: 'BOTTOMS LIST', bold: true },
-              `Due Date: ${moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              )}`,
+              {text: `Due Date: ${
+                data.Shipping_Scheduled
+                  ? `${moment(data.job_info.DueDate).format(
+                    'MM/DD/YYYY'
+                  )}`
+                  : 'TBD'
+              }`},
               { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
             ],
           },
@@ -50,11 +54,13 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
               },
               { text: `Order #: ${data.orderNum}`, alignment: 'right' },
               {
-                text: `Est. Completion: ${data.status !== 'Quote' ? moment(data.job_info.DueDate).format(
-                  'MM/DD/YYYY'
-                ) : moment('01-01-2000').format(
-                  'MM/DD/YYYY'
-                )}`,
+                text: `Est. Completion: ${
+                  data.Shipping_Scheduled
+                    ? `${moment(data.job_info.DueDate).format(
+                      'MM/DD/YYYY'
+                    )}`
+                    : 'TBD'
+                }`,
                 alignment: 'right',
               },
             ],

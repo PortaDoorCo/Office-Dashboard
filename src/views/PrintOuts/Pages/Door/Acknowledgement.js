@@ -5,7 +5,7 @@ import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import Acknowledgement from '../../Door_PDF/Acknowledgement';
 
-const DoorPDF =  async (
+const DoorPDF = async (
   data,
   designs,
   edges,
@@ -28,14 +28,17 @@ const DoorPDF =  async (
 
     let Content = [];
 
-
-
     const headerInfo = [
       {
-        margin: [40,40,40,10],
+        margin: [40, 40, 40, 10],
         columns: [
           {
-            stack: [{ text: `${ data.status === 'Quote' ? 'QUOTE' : 'ORDER'}`, margin: [0, 0, 0, -10] }],
+            stack: [
+              {
+                text: `${data.status === 'Quote' ? 'QUOTE' : 'ORDER'}`,
+                margin: [0, 0, 0, -10],
+              },
+            ],
             style: 'headerFont',
             id: 'header1',
           },
@@ -75,12 +78,10 @@ const DoorPDF =  async (
                 style: 'headerFont',
               },
               {
-                text: `${
-                  data.status === 'Quote'
-                    ? ''
-                    : `Due Date: ${moment(data.job_info.DueDate).format(
-                      'MM/DD/YYYY'
-                    )}`
+                text: `Due Date: ${
+                  data.Shipping_Scheduled
+                    ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
+                    : 'TBD'
                 }`,
                 alignment: 'right',
                 style: 'headerFont',
@@ -104,7 +105,7 @@ const DoorPDF =  async (
         ],
       },
       {
-        margin:[40, 0, 0, 0],
+        margin: [40, 0, 0, 0],
         columns: [
           {
             width: 200,
@@ -242,7 +243,6 @@ const DoorPDF =  async (
       //   alignment: 'center',
       //   margin: [0, 10, 0, 0],
       // },
-
     ];
 
     const type = 'Page';
@@ -265,7 +265,6 @@ const DoorPDF =  async (
       }),
     };
 
-
     Content.push(Acknowledgement(itemNumCounter, pricing));
 
     // Content.push(
@@ -281,8 +280,6 @@ const DoorPDF =  async (
     //     breakdowns
     //   )
     // );
-    
-
 
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
@@ -301,7 +298,7 @@ const DoorPDF =  async (
       pageSize: 'A4',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [40, 220, 40, 60],
+      pageMargins: [40, 220, 40, 50],
       header: function (currentPage) {
         return headerInfo;
       },
@@ -336,7 +333,7 @@ const DoorPDF =  async (
               ],
             },
           ],
-          margin: [40, 10, 40, 0],
+          margin: [40, 5, 40, 0],
         };
       },
       pageBreakBefore: function (
@@ -383,13 +380,9 @@ const DoorPDF =  async (
       },
     };
 
-
     // pdfMake.createPdf(documentDefinition).open();
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-
-
-  
 
     return pdfDocGenerator.getBlob((blob) => {
       // blobUrl()

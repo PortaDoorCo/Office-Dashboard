@@ -307,12 +307,12 @@ export default (data, breakdowns, pricing) => {
           width: 160,
         },
         {
-          text: `${
-            data.status === 'Quote'
-              ? ''
-              : `Due Date: ${moment(data.job_info.DueDate).format(
+          text: `Due Date: ${
+            data.Shipping_Scheduled
+              ? `${moment(data.job_info.DueDate).format(
                 'MM/DD/YYYY'
               )}`
+              : 'TBD'
           }`,
           style: 'totals',
           width: 200,

@@ -10,10 +10,13 @@ const status = [
   },
 
   {
+    label: 'Complete',
+    value: 'Complete',
+  },
+  {
     label: 'Invoiced',
     value: 'Invoiced',
   },
-
   {
     label: 'Shipped',
     value: 'Shipped',
