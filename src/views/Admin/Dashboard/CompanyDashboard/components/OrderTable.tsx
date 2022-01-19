@@ -244,14 +244,14 @@ const OrderTable = (props: TablePropTypes) => {
       },
     },
     {
-      name: 'Date Shipped',
+      name: 'Date Invoiced',
       cell: (row) => {
-        const dateShipped = row?.tracking?.filter((x) => {
-          return x.status === 'Shipped';
+        const dateInvoiced = row?.tracking?.filter((x) => {
+          return x.status === 'Invoiced';
         });
 
-        if (row.DateShipped) {
-          return <div>{moment(row.DateOrdered || dateShipped[0].date).format('MMM Do YYYY')}</div>;
+        if (row.DateInvoiced) {
+          return <div>{moment(row.DateInvoiced || dateInvoiced[0].date).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }

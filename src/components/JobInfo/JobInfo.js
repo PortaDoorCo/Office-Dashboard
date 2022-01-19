@@ -187,36 +187,37 @@ class JobInfo extends Component {
   }
 
   scheduleDueDate() {
-    
     const { formState } = this.props;
 
-    if(!formState?.job_info?.Shipping_Scheduled){
+    if (
+      !formState?.job_info?.Shipping_Scheduled &&
+      (formState?.job_info?.status === 'Quote' ||
+        formState?.job_info?.status?.value === 'Quote')
+    ) {
       this.props.dispatch(
-        change(
-          'Order',
-          'job_info.status',
-          {
-            label: 'Ordered',
-            value: 'Ordered',
-          },
-        )
+        change('Order', 'job_info.status', {
+          label: 'Ordered',
+          value: 'Ordered',
+        })
       );
     } else {
-      this.props.dispatch(
-        change(
-          'Order',
-          'job_info.status',
-          {
+      if (
+        formState?.job_info?.status !== 'Quote' ||
+        formState?.job_info?.status !== 'Ordered' ||
+        formState?.job_info?.status?.value !== 'Quote' ||
+        formState?.job_info?.status?.value !== 'Ordered'
+      ) {
+        return null;
+      } else {
+        this.props.dispatch(
+          change('Order', 'job_info.status', {
             label: 'Quote',
             value: 'Quote',
-          },
-        )
-      );
+          })
+        );
+      }
     }
-
-    
   }
-
 
   saveEmails() {
     const { formState, saveEmail, cookie } = this.props;
@@ -329,7 +330,6 @@ class JobInfo extends Component {
             </FormGroup>
           </Col>
 
-
           {/* {role?.type === 'authenticated' ||
           role?.type === 'owner' ||
           role?.type === 'administrator' ||
@@ -347,9 +347,6 @@ class JobInfo extends Component {
               </FormGroup>
             </Col> : null
           }  */}
-
-              
-
 
           <Col lg="6" />
 
