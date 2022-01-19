@@ -10,7 +10,6 @@ const sleep = (milliseconds) => {
 
 const exportThis = async (data, breakdowns) => {
   for (const d of data) {
-
     await sleep(100);
 
     let exportCsv = [];
@@ -99,12 +98,10 @@ const exportThis = async (data, breakdowns) => {
         const token =
           "D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9";
 
-          // var BOM = "\uFEFF"; 
-
-        let csvContent = razorGauge.map((e) => e.join(",")).join("\n");
+        let csvContent = razorGauge.map((e) => e.join(",")).join("\r\n");
 
         let myParams = {
-          path: `/Razorgauge/${d.orderNum}.rdb`,
+          path: `/Razorgauge/${d.orderNum}.csv`,
           mode: "add",
           autorename: true,
           mute: false,
