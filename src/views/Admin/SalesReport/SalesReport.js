@@ -207,13 +207,13 @@ const SalesReport = (props) => {
           return (
             moment(
               item.DateShipped || dateShipped.length > 0
-                ? dateOrdered[0]?.date
+                ? dateShipped[0]?.date
                 : '1/1/1900'
             ) >=
               moment(startDate).startOf('day').valueOf() &&
               moment(
                 item.DateShipped || dateShipped.length > 0
-                  ? dateOrdered[0]?.date
+                  ? dateShipped[0]?.date
                   : '1/1/1900'
               ) <=
               moment(endDate).endOf('day').valueOf() &&
