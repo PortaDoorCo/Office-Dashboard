@@ -201,9 +201,7 @@ class JobInfo extends Component {
         })
       );
     } else {
-      if (
-        formState?.job_info?.status?.value !== 'Ordered'
-      ) {
+      if (formState?.job_info?.status?.value !== 'Ordered') {
         return null;
       } else {
         this.props.dispatch(
