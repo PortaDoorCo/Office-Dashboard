@@ -92,6 +92,7 @@ import Navigation from './Navigation';
 import ConversationNotes from './Notes/Conversation_Notes';
 import exportEdges from '../../../utils/exportEdges';
 import exportRazorGauge from '../../../utils/exportRazorGauge';
+import { NotificationManager } from 'react-notifications';
 
 const cookie = Cookies.get('jwt');
 
@@ -949,25 +950,37 @@ class OrderPage extends Component {
     const { formState } = this.props;
     const data = formState;
 
-    exportEdges([data]);
+    if (data.Shipping_Scheduled) {
+      exportEdges([data]);
+    } else {
+      NotificationManager.error(
+        'This Order Does Not Have a Scheduled Due Date',
+        'Error',
+        2000
+      );
+    }
   };
 
   exportRazorHelper = () => {
     const { formState, breakdowns } = this.props;
     const data = formState;
 
-    exportRazorGauge([data], breakdowns);
+    if (data.Shipping_Scheduled) {
+      exportRazorGauge([data], breakdowns);
+    } else {
+      NotificationManager.error(
+        'This Order Does Not Have a Scheduled Due Date',
+        'Error',
+        2000
+      );
+    }
   };
 
   render() {
     const props = this.props;
 
-    const {
-      selectedOrder,
-      printer_options,
-      user,
-      deleteFilesFromOrder,
-    } = this.props;
+    const { selectedOrder, printer_options, user, deleteFilesFromOrder } =
+      this.props;
 
     return (
       <div className="animated noPrint resize">
@@ -1078,35 +1091,30 @@ class OrderPage extends Component {
                     <Row>
                       <Col lg="6"></Col>
 
-         
                       <Col>
-                        <Tooltip
-                          title="Print"
-                          placement="top"
-                          className="mb-3"
-                        >
+                        <Tooltip title="Print" placement="top" className="mb-3">
                           <IconButton onClick={this.togglePrinter}>
                             <Print style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
 
-                        {user.role?.type !== 'quality_control' && user.role?.type !== 'sales' ? (
-                          <Tooltip
-                            title="Copy Order"
-                            placement="top"
-                            className="mb-3"
-                          >
-                            <IconButton onClick={this.handleCopyModal}>
-                              <FileCopy
-                                style={{ width: '40', height: '40' }}
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        ) : null}
+                        {user.role?.type !== 'quality_control' &&
+                        user.role?.type !== 'sales' ? (
+                            <Tooltip
+                              title="Copy Order"
+                              placement="top"
+                              className="mb-3"
+                            >
+                              <IconButton onClick={this.handleCopyModal}>
+                                <FileCopy style={{ width: '40', height: '40' }} />
+                              </IconButton>
+                            </Tooltip>
+                          ) : null}
 
                         {selectedOrder &&
-                          selectedOrder.orderType === 'Door Order' &&
-                          user.role?.type !== 'quality_control' && user.role?.type !== 'sales' ? (
+                        selectedOrder.orderType === 'Door Order' &&
+                        user.role?.type !== 'quality_control' &&
+                        user.role?.type !== 'sales' ? (
                             <Tooltip
                               title="Export Edges"
                               placement="top"
@@ -1122,8 +1130,9 @@ class OrderPage extends Component {
                           ) : null}
 
                         {selectedOrder &&
-                          selectedOrder.orderType === 'Door Order' &&
-                          user.role?.type !== 'quality_control' && user.role?.type !== 'sales' ? (
+                        selectedOrder.orderType === 'Door Order' &&
+                        user.role?.type !== 'quality_control' &&
+                        user.role?.type !== 'sales' ? (
                             <Tooltip
                               title="Razorguage Export"
                               placement="top"
@@ -1139,13 +1148,13 @@ class OrderPage extends Component {
                           ) : null}
 
                         {(this.props.user &&
-                            this.props.user.role &&
-                            this.props.user.role &&
-                            this.props.user.role.name === 'Administrator') ||
-                          (this.props.user &&
-                            this.props.user.role &&
-                            this.props.user.role &&
-                            this.props.user.role.name === 'Management') ? (
+                          this.props.user.role &&
+                          this.props.user.role &&
+                          this.props.user.role.name === 'Administrator') ||
+                        (this.props.user &&
+                          this.props.user.role &&
+                          this.props.user.role &&
+                          this.props.user.role.name === 'Management') ? (
                             <Tooltip
                               title="Delete Order"
                               placement="top"
@@ -1157,7 +1166,6 @@ class OrderPage extends Component {
                             </Tooltip>
                           ) : null}
                       </Col>
-         
                     </Row>
                   </Col>
                 </Row>
@@ -1173,43 +1181,47 @@ class OrderPage extends Component {
                         <Table striped>
                           <tbody>
                             {selectedOrder
-                              ? selectedOrder.files?.slice(0).reverse().map((i, index) => (
-                                <tr key={index}>
-                                  {/* <th scope="row">{index + 1}</th> */}
-                                  <td style={{ width: '75%' }}>{i.name}</td>
-                                  <td>
-                                      Uploaded by:{' '}
-                                    {selectedOrder?.filesInfo?.length > 0
-                                      ? selectedOrder?.filesInfo[index]?.user
+                              ? selectedOrder.files
+                                ?.slice(0)
+                                .reverse()
+                                .map((i, index) => (
+                                  <tr key={index}>
+                                    {/* <th scope="row">{index + 1}</th> */}
+                                    <td style={{ width: '75%' }}>{i.name}</td>
+                                    <td>
+                                        Uploaded by:{' '}
+                                      {selectedOrder?.filesInfo?.length > 0
                                         ? selectedOrder?.filesInfo[index]
                                           ?.user
-                                        : 'N/A'
-                                      : 'N/A'}
-                                  </td>
-                                  <td style={{ textAlign: 'right' }}>
-                                    <a
-                                      href={i.url}
-                                      rel="noopener noreferrer"
-                                      target="_blank"
-                                    >
-                                      <Button>View</Button>
-                                    </a>
-                                  </td>
-                                  <td style={{ textAlign: 'right' }}>
-                                    <Button
-                                      onClick={() =>
-                                        deleteFilesFromOrder(
-                                          selectedOrder,
-                                          i,
-                                          cookie
-                                        )
-                                      }
-                                    >
-                                        Delete
-                                    </Button>
-                                  </td>
-                                </tr>
-                              ))
+                                          ? selectedOrder?.filesInfo[index]
+                                            ?.user
+                                          : 'N/A'
+                                        : 'N/A'}
+                                    </td>
+                                    <td style={{ textAlign: 'right' }}>
+                                      <a
+                                        href={i.url}
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                      >
+                                        <Button>View</Button>
+                                      </a>
+                                    </td>
+                                    <td style={{ textAlign: 'right' }}>
+                                      <Button
+                                        onClick={() =>
+                                          deleteFilesFromOrder(
+                                            selectedOrder,
+                                            i,
+                                            cookie
+                                          )
+                                        }
+                                      >
+                                          Delete
+                                      </Button>
+                                    </td>
+                                  </tr>
+                                ))
                               : null}
                           </tbody>
                         </Table>

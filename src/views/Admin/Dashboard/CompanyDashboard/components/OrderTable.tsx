@@ -329,7 +329,7 @@ const OrderTable = (props: TablePropTypes) => {
             return updated_total;
           });
 
-        console.log({ updated_total });
+ 
         return <div>${updated_total.toFixed(2)}</div>;
       },
     },

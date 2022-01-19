@@ -302,12 +302,6 @@ export function deleteOrder(orderId, cookie) {
 }
 
 export function updateOrder(orderId, order, cookie) {
-
-
-  console.log({order});
-  
-
-
   return async function (dispatch) {
     try {
       const res = await axios.put(`${db_url}/orders/${orderId}`, order, {
@@ -332,8 +326,6 @@ export function updateOrder(orderId, order, cookie) {
 }
 
 export function updateStatus(orderId, key, status, user, cookie) {
-  console.log({ user });
-
   let item = {};
 
   if (status.status === 'Ordered') {
