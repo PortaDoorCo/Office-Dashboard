@@ -1078,67 +1078,67 @@ class OrderPage extends Component {
                     <Row>
                       <Col lg="6"></Col>
 
-                      {user?.role?.type !== 'sales' ? (
-                        <Col>
+         
+                      <Col>
+                        <Tooltip
+                          title="Print"
+                          placement="top"
+                          className="mb-3"
+                        >
+                          <IconButton onClick={this.togglePrinter}>
+                            <Print style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
+
+                        {user.role?.type !== 'quality_control' && user.role?.type !== 'sales' ? (
                           <Tooltip
-                            title="Print"
+                            title="Copy Order"
                             placement="top"
                             className="mb-3"
                           >
-                            <IconButton onClick={this.togglePrinter}>
-                              <Print style={{ width: '40', height: '40' }} />
+                            <IconButton onClick={this.handleCopyModal}>
+                              <FileCopy
+                                style={{ width: '40', height: '40' }}
+                              />
                             </IconButton>
                           </Tooltip>
+                        ) : null}
 
-                          {user.role?.type !== 'quality_control' ? (
+                        {selectedOrder &&
+                          selectedOrder.orderType === 'Door Order' &&
+                          user.role?.type !== 'quality_control' && user.role?.type !== 'sales' ? (
                             <Tooltip
-                              title="Copy Order"
+                              title="Export Edges"
                               placement="top"
                               className="mb-3"
+                              onClick={this.exportEdgesHelper}
                             >
-                              <IconButton onClick={this.handleCopyModal}>
-                                <FileCopy
+                              <IconButton>
+                                <GetAppIcon
                                   style={{ width: '40', height: '40' }}
                                 />
                               </IconButton>
                             </Tooltip>
                           ) : null}
 
-                          {selectedOrder &&
+                        {selectedOrder &&
                           selectedOrder.orderType === 'Door Order' &&
-                          user.role?.type !== 'quality_control' ? (
-                              <Tooltip
-                                title="Export Edges"
-                                placement="top"
-                                className="mb-3"
-                                onClick={this.exportEdgesHelper}
-                              >
-                                <IconButton>
-                                  <GetAppIcon
-                                    style={{ width: '40', height: '40' }}
-                                  />
-                                </IconButton>
-                              </Tooltip>
-                            ) : null}
+                          user.role?.type !== 'quality_control' && user.role?.type !== 'sales' ? (
+                            <Tooltip
+                              title="Razorguage Export"
+                              placement="top"
+                              className="mb-3"
+                              onClick={this.exportRazorHelper}
+                            >
+                              <IconButton>
+                                <GetAppIcon
+                                  style={{ width: '40', height: '40' }}
+                                />
+                              </IconButton>
+                            </Tooltip>
+                          ) : null}
 
-                          {selectedOrder &&
-                          selectedOrder.orderType === 'Door Order' &&
-                          user.role?.type !== 'quality_control' ? (
-                              <Tooltip
-                                title="Razorguage Export"
-                                placement="top"
-                                className="mb-3"
-                                onClick={this.exportRazorHelper}
-                              >
-                                <IconButton>
-                                  <GetAppIcon
-                                    style={{ width: '40', height: '40' }}
-                                  />
-                                </IconButton>
-                              </Tooltip>
-                            ) : null}
-
-                          {(this.props.user &&
+                        {(this.props.user &&
                             this.props.user.role &&
                             this.props.user.role &&
                             this.props.user.role.name === 'Administrator') ||
@@ -1146,18 +1146,18 @@ class OrderPage extends Component {
                             this.props.user.role &&
                             this.props.user.role &&
                             this.props.user.role.name === 'Management') ? (
-                              <Tooltip
-                                title="Delete Order"
-                                placement="top"
-                                className="mb-3"
-                              >
-                                <IconButton onClick={this.toggleDeleteModal}>
-                                  <Delete style={{ width: '40', height: '40' }} />
-                                </IconButton>
-                              </Tooltip>
-                            ) : null}
-                        </Col>
-                      ) : null}
+                            <Tooltip
+                              title="Delete Order"
+                              placement="top"
+                              className="mb-3"
+                            >
+                              <IconButton onClick={this.toggleDeleteModal}>
+                                <Delete style={{ width: '40', height: '40' }} />
+                              </IconButton>
+                            </Tooltip>
+                          ) : null}
+                      </Col>
+         
                     </Row>
                   </Col>
                 </Row>
