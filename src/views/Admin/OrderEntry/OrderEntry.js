@@ -603,6 +603,22 @@ const mapStateToProps = (state, props) => ({
     props.isEdit === true
       ? {
         ...(state.Orders && state.Orders.selectedOrder),
+        DateOrdered: state.Orders?.selectedOrder?.DateOrdered || state.Orders?.selectedOrder?.tracking?.filter(
+          (x) =>
+            x.status === 'Ordered'
+        )[0]?.date,
+        DateInvoiced: state.Orders?.selectedOrder?.DateInvoiced || state.Orders?.selectedOrder?.tracking?.filter(
+          (x) =>
+            x.status === 'Invoiced'
+        )[0]?.date,
+        DateShipped: state.Orders?.selectedOrder?.DateShipped || state.Orders?.selectedOrder?.tracking?.filter(
+          (x) =>
+            x.status === 'Shipped'
+        )[0]?.date,
+        DateCompleted: state.Orders?.selectedOrder?.DateCompleted || state.Orders?.selectedOrder?.tracking?.filter(
+          (x) =>
+            x.status === 'Complete'
+        )[0]?.date,
         DateInProduction: state.Orders?.selectedOrder?.DateInProduction || state.Orders?.selectedOrder?.tracking?.filter(
           (x) =>
             x.status === 'In Production' ||
