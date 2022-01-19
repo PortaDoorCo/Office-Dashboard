@@ -2,8 +2,20 @@ import numQty from 'numeric-quantity';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 
-const edges = (data) => {
-  const newData = data.map(async (d, index) => {
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+};
+
+
+const edges = async (data) => {
+
+  console.log({data_length: data.length});
+  for (const d of data) {
+
+    await sleep(100);
+
+    console.log({d});
+
     let exportCsv = [];
     let a = [];
     let razorGuage = [];
@@ -36,7 +48,7 @@ const edges = (data) => {
 
       if (d.orderType === 'Door Order') {
         exportCsv = itemNumCounter
-          ? itemNumCounter.part_list.map((f, index) => {
+          ? itemNumCounter.part_list.map(async(f, index) => {
             f.dimensions.forEach((j, ind) => {
               if (
                 f.orderType.value === 'DF' ||
@@ -86,57 +98,59 @@ const edges = (data) => {
           : [];
       }
 
-      const newItem = a.map((i, ind) => {
-        return [...i, ind + 1, `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`];
-      });
+      if (d.orderType === 'Door Order') {
 
-      const token =
+        const newItem = a.map((i, ind) => {
+          return [...i, ind + 1, `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`];
+        });
+
+        const token =
         'D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9';
 
-      let csvContent = newItem.map((e) => e.join(',')).join('\n');
+        let csvContent = newItem.map((e) => e.join(',')).join('\n');
 
-      let myParams = {
-        path: `/lips/${d.orderNum}.csv`,
-        mode: 'add',
-        autorename: true,
-        mute: false,
-        strict_conflict: false,
-      };
+        let myParams = {
+          path: `/lips/${d.orderNum}.csv`,
+          mode: 'add',
+          autorename: true,
+          mute: false,
+          strict_conflict: false,
+        };
 
-      try {
-        const f = await axios.post(
-          'https://content.dropboxapi.com/2/files/upload',
-          csvContent,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/octet-stream',
-              'Dropbox-API-Arg': JSON.stringify(myParams),
-            },
-          }
-        );
+        
+        // await sleep(500);
 
-        NotificationManager.success(
-          `#${d.orderNum} Edges Successfully Exported!`,
-          'Success',
-          2000
-        );
-      } catch (err) {
-        console.log({ err });
-        NotificationManager.error(
-          'There was an problem with your upload',
-          'Error',
-          2000
-        );
+        try {
+          await axios.post(
+            'https://content.dropboxapi.com/2/files/upload',
+            csvContent,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/octet-stream',
+                'Dropbox-API-Arg': JSON.stringify(myParams),
+              },
+            }
+          );
+
+          NotificationManager.success(
+            `#${d.orderNum} Edges Successfully Exported!`,
+            'Success',
+            2000
+          );
+        } catch (err) {
+          console.log({ err });
+          console.log({orderNum: d.orderNum});
+          console.log({length: csvContent.length});
+          NotificationManager.error(
+            'There was an problem with your upload',
+            'Error',
+            2000
+          );
+        }
       }
-
-      return newItem;
-    } else {
-      return null;
     }
-  });
-
-  return newData;
+  }
 };
 
 export default edges;
