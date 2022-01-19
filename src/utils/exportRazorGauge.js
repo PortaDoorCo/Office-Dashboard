@@ -99,10 +99,12 @@ const exportThis = async (data, breakdowns) => {
         const token =
           "D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9";
 
+          // var BOM = "\uFEFF"; 
+
         let csvContent = razorGauge.map((e) => e.join(",")).join("\n");
 
         let myParams = {
-          path: `/Razorgauge/${d.orderNum}.csv`,
+          path: `/Razorgauge/${d.orderNum}.rdb`,
           mode: "add",
           autorename: true,
           mute: false,
