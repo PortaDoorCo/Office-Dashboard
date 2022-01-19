@@ -415,7 +415,6 @@ class JobInfo extends Component {
                     : true
                 }
                 textField="value"
-                // onBlur={(e) => console.log({testtttttttttt: e})}
               />
             </FormGroup>
           </Col>

@@ -154,12 +154,6 @@ export function updateCustomer(custId, customer, cookie) {
 
 export function saveEmail(custId, customer, cookie) {
   return async function (dispatch) {
-
-    console.log({custId});
-    console.log({customer});
-
-    console.log({cookie});
-
     try {
       const res = await axios.put(
         `${db_url}/companyprofiles/${custId}`,
