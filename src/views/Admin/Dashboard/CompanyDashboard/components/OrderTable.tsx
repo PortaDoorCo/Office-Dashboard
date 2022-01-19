@@ -215,7 +215,7 @@ const OrderTable = (props: TablePropTypes) => {
         if (row.DateOrdered || dateOrdered.length > 0) {
           return (
             <div>
-              {moment(row.DateOrdered || dateOrdered[0].date).format(
+              {moment(row.DateOrdered || dateOrdered[0]?.date).format(
                 'MMM Do YYYY'
               )}
             </div>
@@ -251,7 +251,7 @@ const OrderTable = (props: TablePropTypes) => {
         });
 
         if (row.DateInvoiced) {
-          return <div>{moment(row.DateInvoiced || dateInvoiced[0].date).format('MMM Do YYYY')}</div>;
+          return <div>{moment(row.DateInvoiced || dateInvoiced[0]?.date).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }
