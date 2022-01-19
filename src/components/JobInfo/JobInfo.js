@@ -202,9 +202,6 @@ class JobInfo extends Component {
       );
     } else {
       if (
-        formState?.job_info?.status !== 'Quote' ||
-        formState?.job_info?.status !== 'Ordered' ||
-        formState?.job_info?.status?.value !== 'Quote' ||
         formState?.job_info?.status?.value !== 'Ordered'
       ) {
         return null;
