@@ -16,7 +16,10 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
         margin: [40,40,40,10],
         columns: [
           {
-            stack: ['QC Check Off Sheet']
+            stack: [
+              { text: 'QC Checkoff Sheet', bold: true },
+              { qr: `${data.id}`, fit: '75', margin: [0, 5, 0, 0] },
+            ],
           },
           {
             stack: [
