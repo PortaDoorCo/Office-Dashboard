@@ -26,6 +26,7 @@ import status from '../../../utils/report_status';
 import { itemPriceSelector } from '../../../selectors/pricing';
 import Invoice from '../../PrintOuts/Reports/Invoice';
 import exportEdges from '../../../utils/exportEdges';
+import exportRazorGauge from '../../../utils/exportRazorGauge';
 import GetAppIcon from '@material-ui/icons/GetApp';
 
 // momentLocaliser(moment);
@@ -570,6 +571,15 @@ const OrderTable = (props) => {
     setToggleCleared(!toggleCleared);
   };
 
+  const exportRazorHelper = () => {
+
+    const { breakdowns } = props;
+    
+    exportRazorGauge(data, breakdowns);
+
+    setToggleCleared(!toggleCleared);
+  };
+
   return (
     <div>
       <Row className="mb-3">
@@ -683,7 +693,7 @@ const OrderTable = (props) => {
           </Tooltip>
           <Tooltip
             title="Export Razorgauge"
-            onClick={exportReports}
+            onClick={exportRazorHelper}
             placement="top"
             className="mb-3 mt-3"
           >
