@@ -38,7 +38,7 @@ const exportThis = (data, breakdowns) => {
     };
 
     const razor = itemNumCounter
-      ? itemNumCounter.part_list.map((f, index) => {
+      ? itemNumCounter.part_list?.map((f, index) => {
       // console.log({ f });
 
         console.log({f});
