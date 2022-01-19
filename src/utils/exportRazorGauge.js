@@ -4,15 +4,22 @@ import { NotificationManager } from "react-notifications";
 import Stiles from "../views/PrintOuts/Breakdowns/Doors/Stiles/Stiles";
 import Rails from "../views/PrintOuts/Breakdowns/Doors/Rails/Rails";
 
-const exportThis = (data, breakdowns) => {
-  const newData = data.map(async (d, index) => {
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
+const exportThis = async (data, breakdowns) => {
+  for (const d of data) {
+
+    await sleep(100);
+
     let exportCsv = [];
     let a = [];
     let razorGauge = [];
 
     let itemNum = 0;
 
-    if(d.Shipping_Scheduled){
+    if (d.Shipping_Scheduled) {
       const itemNumCounter = {
         ...d,
         part_list: d?.part_list?.map((i) => {
@@ -37,7 +44,7 @@ const exportThis = (data, breakdowns) => {
       };
 
       const razor = itemNumCounter
-        ? itemNumCounter.part_list?.map((f, index) => {
+        ? itemNumCounter.part_list?.map(async (f, index) => {
             if (f.construction?.value !== "Slab") {
               f.dimensions.forEach((j, ind) => {
                 const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
@@ -85,60 +92,53 @@ const exportThis = (data, breakdowns) => {
                 });
               });
             }
-
-            return razorGauge;
           })
         : [];
 
-      const token =
-        "D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9";
+      if (d.orderType === "Door Order") {
+        const token =
+          "D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9";
 
-      let csvContent = razorGauge.map((e) => e.join(",")).join("\n");
+        let csvContent = razorGauge.map((e) => e.join(",")).join("\n");
 
-      let myParams = {
-        path: `/Razorgauge/${d.orderNum}.csv`,
-        mode: "add",
-        autorename: true,
-        mute: false,
-        strict_conflict: false,
-      };
+        let myParams = {
+          path: `/Razorgauge/${d.orderNum}.csv`,
+          mode: "add",
+          autorename: true,
+          mute: false,
+          strict_conflict: false,
+        };
 
-      try {
-        const f = await axios.post(
-          "https://content.dropboxapi.com/2/files/upload",
-          csvContent,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/octet-stream",
-              "Dropbox-API-Arg": JSON.stringify(myParams),
-            },
-          }
-        );
+        try {
+          await axios.post(
+            "https://content.dropboxapi.com/2/files/upload",
+            csvContent,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/octet-stream",
+                "Dropbox-API-Arg": JSON.stringify(myParams),
+              },
+            }
+          );
 
-        NotificationManager.success(
-          `#${d.orderNum} Razor Gauge Successfully Exported!`,
-          "Success",
-          2000
-        );
-      } catch (err) {
-        console.log("errrrrr==>>", err);
-        NotificationManager.error(
-          "There was an problem with your upload",
-          "Error",
-          2000
-        );
+          NotificationManager.success(
+            `#${d.orderNum} Razor Gauge Successfully Exported!`,
+            "Success",
+            2000
+          );
+        } catch (err) {
+          console.log("errrrrr==>>", err);
+          console.log({ orderNum: d.orderNum });
+          NotificationManager.error(
+            "There was an problem with your upload",
+            "Error",
+            2000
+          );
+        }
       }
-
-      return razorGauge;
-    } else {
-      return null;
     }
-
-
-  });
-
-  return newData;
+  }
 };
 
 export default exportThis;
