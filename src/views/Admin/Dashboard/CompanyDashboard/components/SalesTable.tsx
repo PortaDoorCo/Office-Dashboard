@@ -258,12 +258,17 @@ const OrderTable = (props: TablePropTypes) => {
           return x.status === 'Invoiced';
         });
 
-        if (row.DateInvoiced) {
-          return <div>{moment(row.DateInvoiced || dateInvoiced[0]?.date).format('MMM Do YYYY')}</div>;
+        if (row.DateInvoiced || dateInvoiced.length > 0) {
+          return (
+            <div>
+              {moment(row.DateInvoiced || dateInvoiced[0]?.date).format(
+                'MMM Do YYYY'
+              )}
+            </div>
+          );
         } else {
           return <div>TBD</div>;
         }
-        
       },
     },
     {

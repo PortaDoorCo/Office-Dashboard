@@ -32,11 +32,11 @@ const conditionalRowStyles = [
     when: (row) =>
       moment(row.dueDate).startOf('day').valueOf() <
         moment(new Date()).startOf('day').valueOf() &&
-      (row.Shipping_Scheduled &&
-        (!row.status.includes('Quote') &&
-          !row.status.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status.includes('Shipped'))),
+      row.Shipping_Scheduled &&
+      !row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status.includes('Shipped'),
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -46,12 +46,12 @@ const conditionalRowStyles = [
   },
   {
     when: (row) =>
-      (!row.Shipping_Scheduled &&
-        (!row.status.includes('Quote') &&
-          !row.status.includes('Invoiced') &&
-          !row.status.includes('Complete') &&
-          !row.status.includes('Ordered') &&
-          !row.status.includes('Shipped'))),
+      !row.Shipping_Scheduled &&
+      !row.status.includes('Quote') &&
+      !row.status.includes('Invoiced') &&
+      !row.status.includes('Complete') &&
+      !row.status.includes('Ordered') &&
+      !row.status.includes('Shipped'),
     style: {
       backgroundColor: '#FFEACA',
       '&:hover': {
@@ -67,8 +67,6 @@ const StatusTable = (props) => {
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
-
-
 
   useEffect(() => {
     const filteredOrders = orders?.filter((item) => {
@@ -126,7 +124,13 @@ const StatusTable = (props) => {
         });
 
         if (row.DateOrdered || dateOrdered.length > 0) {
-          return <div>{moment(row.DateOrdered || dateOrdered[0]?.date).format('MMM Do YYYY')}</div>;
+          return (
+            <div>
+              {moment(row.DateOrdered || dateOrdered[0]?.date).format(
+                'MMM Do YYYY'
+              )}
+            </div>
+          );
         } else {
           return <div>TBD</div>;
         }
@@ -157,7 +161,7 @@ const StatusTable = (props) => {
           return x.status === 'Invoiced';
         });
 
-        if (row.DateInvoiced) {
+        if (row.DateInvoiced || dateInvoiced.length > 0) {
           return (
             <div>
               {moment(row.DateInvoiced || dateInvoiced[0]?.date).format(
