@@ -151,8 +151,6 @@ const OrderTable = (props) => {
         return x.status === 'Shipped';
       });
 
-      console.log({ dateOrdered: dateOrdered[0] });
-
       if (filterStatus === 'Ordered') {
         if (filterText?.length > 0) {
           return (
@@ -508,7 +506,6 @@ const OrderTable = (props) => {
             return updated_total;
           });
 
-        console.log({ updated_total });
         return <div>${updated_total.toFixed(2)}</div>;
       },
     },
@@ -582,20 +579,15 @@ const OrderTable = (props) => {
         };
       });
 
-      console.log({ newData });
-
       const sortedData = newData.sort((a, b) => a.dateOrdered - b.dateOrdered);
 
       newOrder = sortedData;
-
-      console.log({ sortedData });
     } else {
       const newData = newOrder.sort(
         (a, b) => new Date(a.created_at) - new Date(b.created_at)
       );
 
       newOrder = newData;
-      // console.log({newData});
     }
 
     if (filterStatus === 'Invoiced') {

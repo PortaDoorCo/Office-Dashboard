@@ -5,7 +5,7 @@ import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import Profiles from '../../Door_PDF/Profiles';
 
-const DoorPDF =  async (
+const DoorPDF = async (
   data,
   designs,
   edges,
@@ -28,36 +28,26 @@ const DoorPDF =  async (
 
     const headerInfo = [
       {
-        margin: [40,40,40,10],
+        margin: [40, 40, 40, 10],
         columns: [
           {
-            stack: [
-              { text: 'Profiles', bold: true },
-            
-            ]
+            stack: [{ text: 'Profiles', bold: true }],
           },
           {
-            stack: [
-
-              { text: 'Porta Door Co. Inc.', alignment: 'center' },
-            ]
+            stack: [{ text: 'Porta Door Co. Inc.', alignment: 'center' }],
           },
           {
-            stack: [
-              { text: `Order #: ${data.orderNum}`, alignment: 'right' },
-            ]
-          }
-        ]
+            stack: [{ text: `Order #: ${data.orderNum}`, alignment: 'right' }],
+          },
+        ],
       },
       {
         canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
-        margin: [40, 0]
+        margin: [40, 0],
       },
     ];
 
     let Content = [];
-
-
 
     Content.push(
       Profiles(
@@ -72,9 +62,6 @@ const DoorPDF =  async (
         breakdowns
       )
     );
-    
-
-  
 
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
@@ -84,8 +71,6 @@ const DoorPDF =  async (
         return [i, { text: '', pageBreak: 'before' }];
       }
     });
-
-    // console.log({ Content });
 
     const fileName = `Order #${data.orderNum}`;
 
@@ -175,16 +160,11 @@ const DoorPDF =  async (
       },
     };
 
-
     // pdfMake.createPdf(documentDefinition).open();
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
 
-
-  
-
     return pdfDocGenerator.getBlob((blob) => {
-  
       // blobUrl()
       resolve(blob);
     });

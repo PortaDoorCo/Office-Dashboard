@@ -65,8 +65,6 @@ const PrintModal = (props) => {
     });
   };
 
-  console.log({printer: printer_option.door_labels});
-
   const handleCreate = async (name) => {
     let newOption = {
       NAME: name,

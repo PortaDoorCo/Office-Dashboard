@@ -5,8 +5,6 @@ import Stiles from "../views/PrintOuts/Breakdowns/Doors/Stiles/Stiles";
 import Rails from "../views/PrintOuts/Breakdowns/Doors/Rails/Rails";
 
 const exportThis = (data, breakdowns) => {
-  console.log(data);
-
   const newData = data.map(async (d, index) => {
     let exportCsv = [];
     let a = [];
@@ -39,14 +37,8 @@ const exportThis = (data, breakdowns) => {
 
     const razor = itemNumCounter
       ? itemNumCounter.part_list?.map((f, index) => {
-          // console.log({ f });
-
-          console.log({ f });
-
           if (f.construction?.value !== "Slab") {
             f.dimensions.forEach((j, ind) => {
-              // console.log({ j });
-
               const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
                 return rail;
               });
@@ -54,9 +46,6 @@ const exportThis = (data, breakdowns) => {
               const rail = (Rails(j, f, breakdowns) || []).map((rail) => {
                 return rail;
               });
-
-              // console.log({ rail });
-              // console.log({ stile });
 
               const stilePrint = stile.map((i) => {
                 return razorGauge.push([
@@ -77,7 +66,6 @@ const exportThis = (data, breakdowns) => {
               });
 
               const railPrint = rail.map((i) => {
-                console.log({ i });
                 return razorGauge.push([
                   `${d.orderNum}`,
                   `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
@@ -104,8 +92,6 @@ const exportThis = (data, breakdowns) => {
     const token =
       "D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9";
 
-    console.log({ razorGauge });
-
     let csvContent = razorGauge.map((e) => e.join(",")).join("\n");
 
     let myParams = {
@@ -128,7 +114,6 @@ const exportThis = (data, breakdowns) => {
           },
         }
       );
-      console.log("dddddddd==>>", f);
 
       NotificationManager.success(
         `#${d.orderNum} Razor Gauge Successfully Exported!`,
@@ -144,12 +129,8 @@ const exportThis = (data, breakdowns) => {
       );
     }
 
-    // console.log({newItem});
-
     return razorGauge;
   });
-
-  console.log({ newData });
 
   return newData;
 };

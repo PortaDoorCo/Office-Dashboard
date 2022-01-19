@@ -17,7 +17,7 @@ import StilesPage from '../../Door_PDF/StilesPage';
 import Glass_Selection from '../../Sorting/Glass_Selection';
 import Slab_Selection from '../../Sorting/Slab_Selection';
 
-const DoorPDF =  async (
+const DoorPDF = async (
   data,
   designs,
   edges,
@@ -39,8 +39,6 @@ const DoorPDF =  async (
     const totalUnits = units;
 
     let Content = [];
-
-
 
     for (let i = 0; i < p.acknowledgement; i++) {
       Content.push(Acknowledgement(data, pricing));
@@ -171,8 +169,6 @@ const DoorPDF =  async (
       }
     });
 
-    // console.log({ Content });
-
     const fileName = `Order #${data.orderNum}`;
 
     const documentDefinition = {
@@ -180,25 +176,6 @@ const DoorPDF =  async (
       pageOrientation: 'portrait',
       content: ContentSorted,
       pageMargins: [40, 40, 40, 60],
-      // header: function (currentPage) {
-      //   var headers = ['SUMMARY', 'LEAK 1', 'LEAK 2', 'LEAK 3'];
-      //   return [
-      //     {
-      //       // margin: [30, 30, 0, 30],
-      //       table: {
-      //         // widths: ['50%', '50%'],
-      //         // heights: [30],
-      //         body: [
-      //           [
-      //             { text: headers[currentPage - 1]},
-      //             { text: 'afasdf' },
-      //           ],
-      //         ],
-      //       },
-      //       // layout: 'noBorders',
-      //     },
-      //   ];
-      // },
       footer: function (currentPage, pageCount) {
         return {
           columns: [
@@ -277,13 +254,9 @@ const DoorPDF =  async (
       },
     };
 
-
     // pdfMake.createPdf(documentDefinition).open();
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-
-
-  
 
     return pdfDocGenerator.getBlob((blob) => {
       // blobUrl()

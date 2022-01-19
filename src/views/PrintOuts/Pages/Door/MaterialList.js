@@ -5,7 +5,7 @@ import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import MaterialsList from '../../Door_PDF/MaterialsList';
 
-const DoorPDF =  async (
+const DoorPDF = async (
   data,
   designs,
   edges,
@@ -28,9 +28,7 @@ const DoorPDF =  async (
 
     let Content = [];
 
-
     Content.push(MaterialsList(data, breakdowns));
-    
 
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
@@ -41,8 +39,6 @@ const DoorPDF =  async (
       }
     });
 
-    // console.log({ Content });
-
     const fileName = `Order #${data.orderNum}`;
 
     const documentDefinition = {
@@ -50,25 +46,6 @@ const DoorPDF =  async (
       pageOrientation: 'portrait',
       content: ContentSorted,
       pageMargins: [40, 40, 40, 60],
-      // header: function (currentPage) {
-      //   var headers = ['SUMMARY', 'LEAK 1', 'LEAK 2', 'LEAK 3'];
-      //   return [
-      //     {
-      //       // margin: [30, 30, 0, 30],
-      //       table: {
-      //         // widths: ['50%', '50%'],
-      //         // heights: [30],
-      //         body: [
-      //           [
-      //             { text: headers[currentPage - 1]},
-      //             { text: 'afasdf' },
-      //           ],
-      //         ],
-      //       },
-      //       // layout: 'noBorders',
-      //     },
-      //   ];
-      // },
       footer: function (currentPage, pageCount) {
         return {
           columns: [
@@ -147,13 +124,9 @@ const DoorPDF =  async (
       },
     };
 
-
     // pdfMake.createPdf(documentDefinition).open();
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-
-
-  
 
     return pdfDocGenerator.getBlob((blob) => {
       // blobUrl()

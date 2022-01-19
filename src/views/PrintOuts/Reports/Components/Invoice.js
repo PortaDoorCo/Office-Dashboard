@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 export default (data, startDate, endDate, status) => {
-  console.log({ status });
   let tableBody = [
     [
       { text: 'Invoiced Date' },
@@ -15,29 +14,24 @@ export default (data, startDate, endDate, status) => {
 
   let total = 0;
 
-
   data.forEach((i, index) => {
     total = total += i.total;
 
-
     let name = i.job_info?.poNum?.length > 0 ? i.job_info?.poNum : 'None';
-
 
     const dateInvoiced = i?.tracking?.filter((x) => {
       return x.status === 'Invoiced';
     });
-
 
     return tableBody.push([
       i.DateInvoiced || dateInvoiced.length > 0
         ? moment(i.DateOrdered || dateInvoiced[0].date).format('MM/DD/YYYY')
         : 'TBD',
       `$${i.total?.toFixed(2)}`,
-        i.job_info?.customer?.Company,
-        i.orderNum,
-        name,
+      i.job_info?.customer?.Company,
+      i.orderNum,
+      name,
     ]);
-    
   });
 
   let totalBody = [
@@ -71,7 +65,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
-        widths: ['*', '*', '*', '*', '*']
+        widths: ['*', '*', '*', '*', '*'],
       },
       layout: 'lightHorizontalLines',
     },

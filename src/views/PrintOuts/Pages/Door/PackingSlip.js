@@ -5,7 +5,7 @@ import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import Packing_Slip from '../../Door_PDF/Packing_Slip';
 
-const DoorPDF =  async (
+const DoorPDF = async (
   data,
   designs,
   edges,
@@ -28,7 +28,7 @@ const DoorPDF =  async (
 
     const headerInfo = [
       {
-        margin: [40,40,40,0],
+        margin: [40, 40, 40, 0],
         columns: [
           {
             stack: [
@@ -140,7 +140,7 @@ const DoorPDF =  async (
           },
 
           {
-            text: ''
+            text: '',
           },
           {
             stack: [
@@ -235,7 +235,6 @@ const DoorPDF =  async (
     };
 
     Content.push(Packing_Slip(itemNumCounter, breakdowns));
-    
 
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
@@ -245,8 +244,6 @@ const DoorPDF =  async (
         return [i, { text: '', pageBreak: 'before' }];
       }
     });
-
-    // console.log({ Content });
 
     const fileName = `Order #${data.orderNum}`;
 
@@ -336,13 +333,9 @@ const DoorPDF =  async (
       },
     };
 
-
     // pdfMake.createPdf(documentDefinition).open();
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-
-
-  
 
     return pdfDocGenerator.getBlob((blob) => {
       // blobUrl()

@@ -78,8 +78,6 @@ const SalesReport = (props) => {
         return x.status === 'Shipped';
       });
 
-      console.log({ dateOrdered: dateOrdered[0] });
-
       if (filterStatus === 'Ordered') {
         if (filterText?.length > 0) {
           return (
@@ -87,14 +85,12 @@ const SalesReport = (props) => {
               item.DateOrdered || dateOrdered.length > 0
                 ? dateOrdered[0]?.date
                 : '1/1/1900'
-            ) >=
-              moment(startDate).startOf('day').valueOf() &&
-              moment(
-                item.DateOrdered || dateOrdered.length > 0
-                  ? dateOrdered[0]?.date
-                  : '1/1/1900'
-              ) <=
-              moment(endDate).endOf('day').valueOf() &&
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered || dateOrdered.length > 0
+                ? dateOrdered[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
             item.status === 'Ordered' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
@@ -115,8 +111,7 @@ const SalesReport = (props) => {
               item.DateOrdered || dateOrdered.length > 0
                 ? dateOrdered[0]?.date
                 : '1/1/1900'
-            ) <=
-              moment(endDate).endOf('day').valueOf() &&
+            ) <= moment(endDate).endOf('day').valueOf() &&
             item.status === 'Ordered'
           );
         }
@@ -127,14 +122,12 @@ const SalesReport = (props) => {
               item.DateInvoiced || dateInvoiced.length > 0
                 ? dateInvoiced[0]?.date
                 : '1/1/1900'
-            ) >=
-              moment(startDate).startOf('day').valueOf() &&
-              moment(
-                item.DateInvoiced || dateInvoiced.length > 0
-                  ? dateInvoiced[0]?.date
-                  : '1/1/1900'
-              ) <=
-              moment(endDate).endOf('day').valueOf() &&
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced || dateInvoiced.length > 0
+                ? dateInvoiced[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
             item.status === 'Invoiced' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
@@ -150,14 +143,12 @@ const SalesReport = (props) => {
               item.DateInvoiced || dateInvoiced.length > 0
                 ? dateInvoiced[0]?.date
                 : '1/1/1900'
-            ) >=
-              moment(startDate).startOf('day').valueOf() &&
-              moment(
-                item.DateInvoiced || dateInvoiced.length > 0
-                  ? dateInvoiced[0]?.date
-                  : '1/1/1900'
-              ) <=
-              moment(endDate).endOf('day').valueOf() &&
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced || dateInvoiced.length > 0
+                ? dateInvoiced[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
             item.status === 'Invoiced'
           );
         }
@@ -168,14 +159,12 @@ const SalesReport = (props) => {
               item.DateCompleted || dateCompleted.length > 0
                 ? dateCompleted[0]?.date
                 : '1/1/1900'
-            ) >=
-              moment(startDate).startOf('day').valueOf() &&
-              moment(
-                item.DateCompleted || dateCompleted.length > 0
-                  ? dateCompleted[0]?.date
-                  : '1/1/1900'
-              ) <=
-              moment(endDate).endOf('day').valueOf() &&
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted || dateCompleted.length > 0
+                ? dateCompleted[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
             item.status === 'Complete' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
@@ -191,14 +180,12 @@ const SalesReport = (props) => {
               item.DateCompleted || dateCompleted.length > 0
                 ? dateCompleted[0]?.date
                 : '1/1/1900'
-            ) >=
-              moment(startDate).startOf('day').valueOf() &&
-              moment(
-                item.DateCompleted || dateCompleted.length > 0
-                  ? dateCompleted[0]?.date
-                  : '1/1/1900'
-              ) <=
-              moment(endDate).endOf('day').valueOf() &&
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted || dateCompleted.length > 0
+                ? dateCompleted[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
             item.status === 'Complete'
           );
         }
@@ -209,14 +196,12 @@ const SalesReport = (props) => {
               item.DateShipped || dateShipped.length > 0
                 ? dateShipped[0]?.date
                 : '1/1/1900'
-            ) >=
-              moment(startDate).startOf('day').valueOf() &&
-              moment(
-                item.DateShipped || dateShipped.length > 0
-                  ? dateShipped[0]?.date
-                  : '1/1/1900'
-              ) <=
-              moment(endDate).endOf('day').valueOf() &&
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped || dateShipped.length > 0
+                ? dateShipped[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
             item.status === 'Shipped' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
@@ -232,14 +217,12 @@ const SalesReport = (props) => {
               item.DateShipped || dateShipped.length > 0
                 ? dateShipped[0]?.date
                 : '1/1/1900'
-            ) >=
-              moment(startDate).startOf('day').valueOf() &&
-              moment(
-                item.DateShipped || dateShipped.length > 0
-                  ? dateShipped[0]?.date
-                  : '1/1/1900'
-              ) <=
-              moment(endDate).endOf('day').valueOf() &&
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped || dateShipped.length > 0
+                ? dateShipped[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
             item.status === 'Shipped'
           );
         }

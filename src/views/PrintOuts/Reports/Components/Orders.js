@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 export default (data, startDate, endDate, status) => {
-  console.log({ status });
   let tableBody = [
     [
       { text: 'Date Created' },

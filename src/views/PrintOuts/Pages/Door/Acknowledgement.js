@@ -267,20 +267,6 @@ const DoorPDF = async (
 
     Content.push(Acknowledgement(itemNumCounter, pricing));
 
-    // Content.push(
-    //   Profiles(
-    //     data,
-    //     designs,
-    //     edges,
-    //     moulds,
-    //     miter,
-    //     mt,
-    //     panels,
-    //     appliedProfiles,
-    //     breakdowns
-    //   )
-    // );
-
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
       if (rowLen === index + 1) {
@@ -289,8 +275,6 @@ const DoorPDF = async (
         return [i, { text: '', pageBreak: 'before' }];
       }
     });
-
-    // console.log({ Content });
 
     const fileName = `Order #${data.orderNum}`;
 
