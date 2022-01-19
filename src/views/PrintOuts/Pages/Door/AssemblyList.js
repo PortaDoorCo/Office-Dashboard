@@ -71,9 +71,7 @@ const DoorPDF = async (
               {
                 text: `Est. Completion: ${
                   data.Shipping_Scheduled
-                    ? `${moment(data.job_info.DueDate).format(
-                      'MM/DD/YYYY'
-                    )}`
+                    ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
                     : 'TBD'
                 }`,
                 alignment: 'right',
@@ -156,8 +154,6 @@ const DoorPDF = async (
       }
     });
 
-    console.log({ newParts });
-
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
       if (rowLen === index + 1) {
@@ -166,8 +162,6 @@ const DoorPDF = async (
         return [i, { text: '', pageBreak: 'before' }];
       }
     });
-
-    // console.log({ Content });
 
     const fileName = `Order #${data.orderNum}`;
 

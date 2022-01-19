@@ -5,7 +5,7 @@ import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import QC_Checklist from '../../Door_PDF/QC_Checklist';
 
-const DoorPDF =  async (
+const DoorPDF = async (
   data,
   designs,
   edges,
@@ -28,7 +28,7 @@ const DoorPDF =  async (
 
     const headerInfo = [
       {
-        margin: [40,40,40,0],
+        margin: [40, 40, 40, 0],
         columns: [
           {
             stack: [
@@ -42,26 +42,35 @@ const DoorPDF =  async (
               { text: '65 Cogwheel Lane', alignment: 'center' },
               { text: 'Seymour, CT', alignment: 'center' },
               { text: '203-888-6191', alignment: 'center' },
-              { text: moment().format('DD-MMM-YYYY'), alignment: 'center' }
-            ]
+              { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+            ],
           },
           {
             stack: [
-              { text: data.job_info.Rush && data.job_info.Sample ? 'Sample / Rush' : data.job_info.Rush ? 'Rush' : data.job_info.Sample ? 'Sample' : '', alignment: 'right', bold: true },
+              {
+                text:
+                  data.job_info.Rush && data.job_info.Sample
+                    ? 'Sample / Rush'
+                    : data.job_info.Rush
+                      ? 'Rush'
+                      : data.job_info.Sample
+                        ? 'Sample'
+                        : '',
+                alignment: 'right',
+                bold: true,
+              },
               { text: `Order #: ${data.orderNum}`, alignment: 'right' },
               {
                 text: `Due Date: ${
                   data.Shipping_Scheduled
-                    ? `${moment(data.job_info.DueDate).format(
-                      'MM/DD/YYYY'
-                    )}`
+                    ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
                     : 'TBD'
                 }`,
                 alignment: 'right',
               },
-            ]
-          }
-        ]
+            ],
+          },
+        ],
       },
       {
         columns: [
@@ -70,14 +79,14 @@ const DoorPDF =  async (
           },
           {
             text: '',
-            alignment: 'center'
+            alignment: 'center',
           },
           {
             text: `PO: ${data.job_info.poNum.toUpperCase()}`,
             alignment: 'right',
           },
         ],
-        margin: [40,0],
+        margin: [40, 0],
       },
       // {
       //   text:
@@ -110,16 +119,6 @@ const DoorPDF =  async (
 
     Content.push(QC_Checklist(itemNumCounter, breakdowns));
 
-    // const newParts = Glass_Selection(itemNumCounter, type).map((j) => {
-    //   const newData = { ...data, part_list: j };
-    //   return newData;
-    // });
-
-    // newParts.map((k) => {
-    //   return 
-    // });
-    
-
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
       if (rowLen === index + 1) {
@@ -128,8 +127,6 @@ const DoorPDF =  async (
         return [i, { text: '', pageBreak: 'before' }];
       }
     });
-
-    // console.log({ Content });
 
     const fileName = `Order #${data.orderNum}`;
 
@@ -219,13 +216,9 @@ const DoorPDF =  async (
       },
     };
 
-
     // pdfMake.createPdf(documentDefinition).open();
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-
-
-  
 
     return pdfDocGenerator.getBlob((blob) => {
       // blobUrl()

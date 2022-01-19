@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 export default (data, startDate, endDate, status) => {
-  console.log({ status });
   let tableBody = [
     [
       { text: 'Date Created' },
@@ -87,9 +86,8 @@ export default (data, startDate, endDate, status) => {
       boxes,
       face_frames,
       `$${i.total?.toFixed(2)}`,
-        i.sale?.fullName,
+      i.sale?.fullName,
     ]);
-
   });
 
   let totalBody = [

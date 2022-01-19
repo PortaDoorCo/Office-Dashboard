@@ -3,8 +3,6 @@ import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 
 const edges = (data) => {
-  console.log(data);
-
   const newData = data.map(async (d, index) => {
     let exportCsv = [];
     let a = [];
@@ -88,55 +86,51 @@ const edges = (data) => {
     }
 
     const newItem = a.map((i, ind) => {
-      return [
-        ...i,
-        ind + 1,
-        `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`,
-      ];
+      return [...i, ind + 1, `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`];
     });
 
-    const token = 'D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9';
+    const token =
+      'D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9';
 
-
-    let csvContent = newItem.map(e => e.join(',')).join('\n');
+    let csvContent = newItem.map((e) => e.join(',')).join('\n');
 
     let myParams = {
-      'path': `/lips/${d.orderNum}.csv`,
-      'mode': 'add',
-      'autorename': true,
-      'mute': false,
-      'strict_conflict': false
+      path: `/lips/${d.orderNum}.csv`,
+      mode: 'add',
+      autorename: true,
+      mute: false,
+      strict_conflict: false,
     };
 
     try {
-      const f = await axios.post('https://content.dropboxapi.com/2/files/upload', csvContent,
+      const f = await axios.post(
+        'https://content.dropboxapi.com/2/files/upload',
+        csvContent,
         {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/octet-stream',
-            'Dropbox-API-Arg': JSON.stringify(myParams)
+            'Dropbox-API-Arg': JSON.stringify(myParams),
           },
         }
       );
-      console.log('dddddddd==>>', f);
 
-      NotificationManager.success(`#${d.orderNum} Edges Successfully Exported!`, 'Success', 2000);
-
-
-    } catch(err) {
-      console.log('errrrrr==>>', err);
-      NotificationManager.error('There was an problem with your upload', 'Error', 2000);
+      NotificationManager.success(
+        `#${d.orderNum} Edges Successfully Exported!`,
+        'Success',
+        2000
+      );
+    } catch (err) {
+      console.log({ err });
+      NotificationManager.error(
+        'There was an problem with your upload',
+        'Error',
+        2000
+      );
     }
 
-    console.log({newItem});
-
     return newItem;
-
   });
-
-  console.log({newData});
-
-
 
   return newData;
 };

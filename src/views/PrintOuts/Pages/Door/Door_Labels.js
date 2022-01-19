@@ -39,8 +39,6 @@ const DoorPDF = async (
       }
     });
 
-    // console.log({ Content });
-
     const fileName = `Order #${data.orderNum}`;
 
     const documentDefinition = {

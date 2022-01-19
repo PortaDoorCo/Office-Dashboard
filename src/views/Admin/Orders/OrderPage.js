@@ -1173,9 +1173,9 @@ class OrderPage extends Component {
                         <Table striped>
                           <tbody>
                             {selectedOrder
-                              ? selectedOrder.files.map((i, index) => (
+                              ? selectedOrder.files?.slice(0).reverse().map((i, index) => (
                                 <tr key={index}>
-                                  <th scope="row">{index + 1}</th>
+                                  {/* <th scope="row">{index + 1}</th> */}
                                   <td style={{ width: '75%' }}>{i.name}</td>
                                   <td>
                                       Uploaded by:{' '}

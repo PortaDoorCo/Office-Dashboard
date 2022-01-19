@@ -223,7 +223,7 @@ const OrderTable = (props: TablePropTypes) => {
         if (row.DateOrdered || dateOrdered.length > 0) {
           return (
             <div>
-              {moment(row.DateOrdered || dateOrdered[0].date).format(
+              {moment(row.DateOrdered || dateOrdered[0]?.date).format(
                 'MMM Do YYYY'
               )}
             </div>
@@ -252,18 +252,23 @@ const OrderTable = (props: TablePropTypes) => {
       },
     },
     {
-      name: 'Date Shipped',
+      name: 'Date Invoiced',
       cell: (row) => {
-        const dateShipped = row?.tracking?.filter((x) => {
-          return x.status === 'Shipped';
+        const dateInvoiced = row?.tracking?.filter((x) => {
+          return x.status === 'Invoiced';
         });
 
-        if (row.DateShipped) {
-          return <div>{moment(row.DateOrdered || dateShipped[0].date).format('MMM Do YYYY')}</div>;
+        if (row.DateInvoiced || dateInvoiced.length > 0) {
+          return (
+            <div>
+              {moment(row.DateInvoiced || dateInvoiced[0]?.date).format(
+                'MMM Do YYYY'
+              )}
+            </div>
+          );
         } else {
           return <div>TBD</div>;
         }
-        
       },
     },
     {
@@ -340,7 +345,6 @@ const OrderTable = (props: TablePropTypes) => {
             return updated_total;
           });
 
-        console.log({ updated_total });
         return <div>${updated_total.toFixed(2)}</div>;
       },
     },

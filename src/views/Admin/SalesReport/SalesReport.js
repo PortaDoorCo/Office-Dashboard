@@ -60,57 +60,191 @@ const SalesReport = (props) => {
   }, [orders]);
 
   useEffect(() => {
-    const filteredOrders = orders.filter((item) => {
+    const filteredOrders = orders?.filter((item) => {
       let date = new Date(item.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
         return x.status === 'Ordered';
       });
+      const dateInvoiced = item?.tracking?.filter((x) => {
+        return x.status === 'Invoiced';
+      });
+
+      const dateCompleted = item?.tracking?.filter((x) => {
+        return x.status === 'Complete';
+      });
+
+      const dateShipped = item?.tracking?.filter((x) => {
+        return x.status === 'Shipped';
+      });
 
       if (filterStatus === 'Ordered') {
-        if (filterText.length > 0) {
+        if (filterText?.length > 0) {
           return (
-            moment(item.DateOrdered || dateOrdered[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
+            moment(
+              item.DateOrdered || dateOrdered.length > 0
+                ? dateOrdered[0]?.date
+                : '1/1/1900'
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered || dateOrdered.length > 0
+                ? dateOrdered[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Ordered' &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
-              item.job_info.poNum
+              item.job_info?.poNum
                 .toLowerCase()
                 .includes(filterText.toLowerCase()))
           );
         } else {
           return (
-            moment(item.DateOrdered || dateOrdered[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status
+            moment(
+              item.DateOrdered || dateOrdered.length > 0
+                ? dateOrdered[0]?.date
+                : '1/1/1900'
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered || dateOrdered.length > 0
+                ? dateOrdered[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Ordered'
+          );
+        }
+      } else if (filterStatus === 'Invoiced') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateInvoiced || dateInvoiced.length > 0
+                ? dateInvoiced[0]?.date
+                : '1/1/1900'
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced || dateInvoiced.length > 0
+                ? dateInvoiced[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Invoiced' &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateInvoiced || dateInvoiced.length > 0
+                ? dateInvoiced[0]?.date
+                : '1/1/1900'
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced || dateInvoiced.length > 0
+                ? dateInvoiced[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Invoiced'
+          );
+        }
+      } else if (filterStatus === 'Complete') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateCompleted || dateCompleted.length > 0
+                ? dateCompleted[0]?.date
+                : '1/1/1900'
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted || dateCompleted.length > 0
+                ? dateCompleted[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Complete' &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateCompleted || dateCompleted.length > 0
+                ? dateCompleted[0]?.date
+                : '1/1/1900'
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted || dateCompleted.length > 0
+                ? dateCompleted[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Complete'
+          );
+        }
+      } else if (filterStatus === 'Shipped') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateShipped || dateShipped.length > 0
+                ? dateShipped[0]?.date
+                : '1/1/1900'
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped || dateShipped.length > 0
+                ? dateShipped[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Shipped' &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateShipped || dateShipped.length > 0
+                ? dateShipped[0]?.date
+                : '1/1/1900'
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped || dateShipped.length > 0
+                ? dateShipped[0]?.date
+                : '1/1/1900'
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Shipped'
           );
         }
       } else {
-        if (filterText.length > 0) {
+        if (filterText?.length > 0) {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.status.includes(filterStatus) &&
-            (item.orderNum.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
+            item.status?.includes(filterStatus) &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText?.toLowerCase()
               ) ||
-              item.job_info.poNum
+              item?.job_info?.poNum
                 .toLowerCase()
-                .includes(filterText.toLowerCase()))
+                .includes(filterText?.toLowerCase()))
           );
         } else {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.status.includes(filterStatus)
+            item?.status?.includes(filterStatus)
           );
         }
       }
