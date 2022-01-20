@@ -34,7 +34,6 @@ class Edit extends Component {
       Company: [],
       Contact: [],
       contactInfo: false,
-      toggleTax: props.formState?.Taxable,
     };
   }
 
@@ -113,8 +112,6 @@ class Edit extends Component {
     e.preventDefault();
 
     const { dispatch, formState } = this.props;
-
-    this.setState({ toggleTax: !this.state.toggleTax });
 
     if (!formState?.Taxable) {
       dispatch(change('CustomerEdit', 'TaxRate', 6.35));
