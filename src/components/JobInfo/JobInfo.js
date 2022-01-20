@@ -114,6 +114,14 @@ class JobInfo extends Component {
         this.props.dispatch(
           change(
             'Order',
+            'job_info.salesRep',
+            customer.sale?.fullName
+          )
+        );
+
+        this.props.dispatch(
+          change(
+            'Order',
             'job_info.Address1',
             customer.Shipping_Address1 || customer.Address1
           )
@@ -435,23 +443,24 @@ class JobInfo extends Component {
           </Col>
           <Col>
             <FormGroup>
-              <Label htmlFor="dueDate">Sales Rep</Label>
+              <Label htmlFor="dueDate">Payment Terms</Label>
               <Input
-                placeholder={
-                  formState?.sale?.fullName
-                    ? formState?.sale?.fullName
-                    : formState?.job_info?.customer?.sale?.fullName
-                }
+                placeholder={formState?.job_info?.customer?.PMT_TERMS}
                 disabled={true}
               />
             </FormGroup>
           </Col>
           <Col>
             <FormGroup>
-              <Label htmlFor="dueDate">Payment Terms</Label>
-              <Input
-                placeholder={formState?.job_info?.customer?.PMT_TERMS}
-                disabled={true}
+              <Label htmlFor="dueDate">Sales Rep</Label>
+              <Field
+                name="salesRep"
+                component={renderDropdownList}
+                data={sales}
+                dataKey="fullName"
+                edit={edit}
+                validate={required}
+                textField="fullName"
               />
             </FormGroup>
           </Col>
