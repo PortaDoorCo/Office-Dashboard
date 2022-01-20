@@ -223,7 +223,7 @@ class Edit extends Component {
                           type="text"
                           component={renderField}
                           label="tax_rate"
-                          validate={required}
+                          // validate={required}
                           edit={edit}
                         />
                       </FormGroup>
@@ -237,7 +237,7 @@ class Edit extends Component {
                           type="text"
                           component={renderField}
                           label="tax_rate"
-                          validate={required}
+                          // validate={[required]}
                           edit={edit}
                         />
                       </FormGroup>
