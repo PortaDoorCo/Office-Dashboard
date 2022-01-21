@@ -648,13 +648,12 @@ const mapStateToProps = (state, props) => ({
           },
           salesRep: state.Orders?.selectedOrder?.job_info?.salesRep
             ? state.Orders?.selectedOrder?.job_info?.salesRep
-            : {
-              fullName: state.sales?.salesReps?.filter(
-                (x) =>
-                  x.id ===
+            : state.sales?.salesReps?.filter(
+              (x) =>
+                x.id ===
                       state.Orders?.selectedOrder?.job_info?.customer?.sale
-              )[0],
-            },
+            )[0],
+            
           EMAIL: state.Orders?.selectedOrder?.job_info?.customer?.EMAIL,
           Email2: state.Orders?.selectedOrder?.job_info?.customer?.Email2,
           Email3: state.Orders?.selectedOrder?.job_info?.customer?.Email3,
