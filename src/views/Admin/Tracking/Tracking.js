@@ -111,7 +111,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 const OrderTable = (props) => {
-  const { orders, role } = props;
+  const { orders, role, customers } = props;
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -122,6 +122,7 @@ const OrderTable = (props) => {
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
   const [filterStatus, setFilterStatus] = useState('In Production');
   const [orderType, setOrderType] = useState('All');
+  const [customer, setCustomer] = useState('All');
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -487,7 +488,71 @@ const OrderTable = (props) => {
   return (
     <div>
       <Row className="mb-3">
-        <Col lg="9" />
+        {/* <Col lg="5" /> */}
+        <Col>
+          <Row>
+            <Col>
+              <h3>Customers</h3>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="All"
+                  onChange={(e) => setOrderType(e.target.value)}
+                >
+                  {customers?.map((i, index) => (
+                    <option key={index} value={i.Company}>
+                      {i.Company}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h3>Status</h3>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="Quote"
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                >
+                  {status.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h3>Order Type</h3>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="Door"
+                  onChange={(e) => setOrderType(e.target.value)}
+                >
+                  {orderTypes?.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+        </Col>
+
+
         <Col>
           <Row>
             <Col>
@@ -530,44 +595,10 @@ const OrderTable = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col>
-              <h3>Status</h3>
-              <FormGroup style={{ height: '100%', width: '60%' }}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="status_dropdown"
-                  defaultValue="Quote"
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                >
-                  {status.map((i, index) => (
-                    <option key={index} value={i.value}>
-                      {i.value}
-                    </option>
-                  ))}
-                </Input>
-              </FormGroup>
-            </Col>
+
           </Row>
           <Row>
-            <Col>
-              <h3>Order Type</h3>
-              <FormGroup style={{ height: '100%', width: '60%' }}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="status_dropdown"
-                  defaultValue="Door"
-                  onChange={(e) => setOrderType(e.target.value)}
-                >
-                  {orderTypes?.map((i, index) => (
-                    <option key={index} value={i.value}>
-                      {i.value}
-                    </option>
-                  ))}
-                </Input>
-              </FormGroup>
-            </Col>
+
           </Row>
           <Row className="mt-3">
             <Col>
@@ -637,6 +668,7 @@ const mapStateToProps = (state, prop) => ({
   box_breakdowns: state.part_list.box_breakdowns,
   role: state.users.user.role,
   user: state.users.user,
+  customers: state.customers.customerDB,
 });
 
 const mapDispatchToProps = (dispatch) =>
