@@ -115,7 +115,7 @@ class JobInfo extends Component {
           change(
             'Order',
             'job_info.salesRep',
-            customer.sale?.fullName
+            customer.sale
           )
         );
 
