@@ -457,7 +457,6 @@ class JobInfo extends Component {
                 name="salesRep"
                 component={renderDropdownList}
                 data={sales}
-                dataKey="fullName"
                 edit={formState?.job_info?.customer?.id === 1 ? edit : true}
                 validate={required}
                 textField="fullName"

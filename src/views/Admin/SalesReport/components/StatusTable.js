@@ -62,7 +62,7 @@ const conditionalRowStyles = [
 ];
 
 const StatusTable = (props) => {
-  const { orders } = props;
+  const { orders, salesRep } = props;
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -72,11 +72,9 @@ const StatusTable = (props) => {
     const filteredOrders = orders?.filter((item) => {
       let date = new Date(item.created_at);
 
-      return (
-        item.sale &&
-        item.sale.fullName &&
-        item.sale.fullName.includes(props.accountName)
-      );
+      return item?.job_info?.salesRep
+        ? item?.job_info?.salesRep?.fullName.includes(props.accountName)
+        : item?.sale?.fullName?.includes(props.accountName);
     });
     setData(filteredOrders);
   }, [
@@ -85,6 +83,7 @@ const StatusTable = (props) => {
     props.accountName,
     props.startDate,
     props.endDate,
+    salesRep,
   ]);
 
   const handleStatusChange = async (e, row) => {

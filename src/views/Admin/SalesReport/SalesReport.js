@@ -527,6 +527,7 @@ const SalesReport = (props) => {
           <StatusTable
             orders={data}
             accountName={user?.sale?.fullName}
+            salesRep={user?.sale}
             startDate={startDate}
             endDate={endDate}
             filterStatus={filterStatus}

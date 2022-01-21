@@ -3,29 +3,33 @@ import { Bar } from 'react-chartjs-2';
 import { Card, CardBody } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
-
-
-
-
 class Charts extends Component {
   render() {
-
-    let house = this.props.data.filter(item => {
-      return item.sale && item.sale.fullName && item.sale.fullName.includes('House');
+    let house = this.props.data.filter((item) => {
+      return item?.job_info?.salesRep
+        ? item?.job_info?.salesRep?.fullName.includes('House')
+        : item.sale?.fullName?.includes('House');
     });
-    let harold = this.props.data.filter(item => {
-      return item.sale && item.sale.fullName && item.sale.fullName.includes('Harold');
+    let harold = this.props.data.filter((item) => {
+      return item?.job_info?.salesRep
+        ? item?.job_info?.salesRep?.fullName.includes('Harold')
+        : item.sale?.fullName?.includes('Harold');
     });
-    let ned = this.props.data.filter(item => {
-      return item.sale && item.sale.fullName && item.sale.fullName.includes('Ned');
+    let ned = this.props.data.filter((item) => {
+      return item?.job_info?.salesRep
+        ? item?.job_info?.salesRep?.fullName.includes('Ned')
+        : item.sale?.fullName?.includes('Ned');
     });
-    let peter = this.props.data.filter(item => {
-      return item.sale && item.sale.fullName && item.sale.fullName.includes('Peter');
+    let peter = this.props.data.filter((item) => {
+      return item?.job_info?.salesRep
+        ? item?.job_info?.salesRep?.fullName.includes('Peter')
+        : item.sale?.fullName?.includes('Peter');
     });
-    let meg = this.props.data.filter(item => {
-      return item.sale && item.sale.fullName && item.sale.fullName.includes('Meg');
+    let meg = this.props.data.filter((item) => {
+      return item?.job_info?.salesRep
+        ? item?.job_info?.salesRep?.fullName.includes('Meg')
+        : item.sale?.fullName?.includes('Meg');
     });
-
 
     const bar = {
       labels: ['House', 'Harold', 'Ned', 'Peter', 'Meg'],
@@ -37,18 +41,23 @@ class Charts extends Component {
           borderWidth: 0.5,
           hoverBackgroundColor: 'rgba(194, 234, 234, 0.45)',
           hoverBorderColor: '#000000',
-          data: [house.length, harold.length, ned.length, peter.length, meg.length],
+          data: [
+            house.length,
+            harold.length,
+            ned.length,
+            peter.length,
+            meg.length,
+          ],
         },
       ],
     };
 
-
     const options = {
       tooltips: {
         enabled: false,
-        custom: CustomTooltips
+        custom: CustomTooltips,
       },
-      maintainAspectRatio: true
+      maintainAspectRatio: true,
     };
 
     return (
