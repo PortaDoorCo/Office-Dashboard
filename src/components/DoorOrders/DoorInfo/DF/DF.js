@@ -89,6 +89,54 @@ class CopeDF extends Component {
     }
   };
 
+  onChange = (e) => {
+    const { dispatch, index, part, formState } = this.props;
+
+    const leftStile = formState?.part_list[index]?.leftStile;
+    const rightStile = formState?.part_list[index]?.rightStile;
+    const topRail = formState?.part_list[index]?.topRail;
+    const bottomRail = formState?.part_list[index]?.bottomRail;
+
+    const value = e.target?.value;
+
+    if (e.target?.name.includes('leftStile')) {
+      dispatch(
+        change(
+          'Order',
+          `part_list[${index}].notes`,
+          `Left Stile: ${e.target.value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+        )
+      );
+    }
+    if (e.target?.name.includes('rightStile')) {
+      dispatch(
+        change(
+          'Order',
+          `part_list[${index}].notes`,
+          `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
+        )
+      );
+    }
+    if (e.target?.name.includes('topRail')) {
+      dispatch(
+        change(
+          'Order',
+          `part_list[${index}].notes`,
+          `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
+        )
+      );
+    }
+    if (e.target?.name.includes('bottomRail')) {
+      dispatch(
+        change(
+          'Order',
+          `part_list[${index}].notes`,
+          `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
+        )
+      );
+    }
+  };
+
   render() {
     const {
       part,
@@ -274,6 +322,7 @@ class CopeDF extends Component {
                 label="topRail"
                 edit={construction === 'Miter' ? true : edit}
                 validate={required}
+                onChange={(e) => this.onChange(e)}
               />
             </FormGroup>
           </Col>
@@ -287,6 +336,7 @@ class CopeDF extends Component {
                 label="bottomRail"
                 edit={construction === 'Miter' ? true : edit}
                 validate={required}
+                onChange={(e) => this.onChange(e)}
               />
             </FormGroup>
           </Col>
@@ -300,6 +350,7 @@ class CopeDF extends Component {
                 label="leftStile"
                 edit={construction === 'Miter' ? true : edit}
                 validate={required}
+                onChange={(e) => this.onChange(e)}
               />
             </FormGroup>
           </Col>
@@ -313,6 +364,7 @@ class CopeDF extends Component {
                 label="rightStile"
                 edit={construction === 'Miter' ? true : edit}
                 validate={required}
+                onChange={(e) => this.onChange(e)}
               />
             </FormGroup>
           </Col>

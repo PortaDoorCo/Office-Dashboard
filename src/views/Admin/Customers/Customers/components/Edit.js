@@ -2,20 +2,29 @@ import Cookies from 'js-cookie';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Button, Card, CardBody, CardHeader, Col, Collapse, FormGroup,
-  Label, Row
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Collapse,
+  FormGroup,
+  Label,
+  Row,
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
+import { Field, reduxForm, change, getFormValues } from 'redux-form';
 import {
-  Field, reduxForm, change, getFormValues
-} from 'redux-form';
-import { renderCheckboxToggle, renderDropdownList, renderField } from '../../../../../components/RenderInputs/renderInputs';
+  renderCheckboxToggle,
+  renderDropdownList,
+  renderField,
+} from '../../../../../components/RenderInputs/renderInputs';
 import { updateCustomer } from '../../../../../redux/customers/actions';
 import states from '../../AddCustomer/states';
 import normalizePhone from './normalizerPhone';
 
 const cookie = Cookies.get('jwt');
-const required = value => (value ? undefined : 'Required');
+const required = (value) => (value ? undefined : 'Required');
 
 class Edit extends Component {
   constructor(props) {
@@ -24,11 +33,11 @@ class Edit extends Component {
     this.state = {
       Company: [],
       Contact: [],
-      contactInfo: false
+      contactInfo: false,
     };
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -39,10 +48,10 @@ class Edit extends Component {
       ...values,
       Company: values.Company.toUpperCase(),
       State: values.State && values.State.abbreviation,
-      Shipping_State: values.Shipping_State && values.Shipping_State.abbreviation,
+      Shipping_State:
+        values.Shipping_State && values.Shipping_State.abbreviation,
       PMT_TERMS: values.PMT_TERMS.NAME,
     };
-
 
     await this.props.updateCustomer(id, data, cookie);
     await this.props.onEdit();
@@ -50,15 +59,12 @@ class Edit extends Component {
 
   toggleInfo = () => {
     this.setState({
-      contactInfo: !this.state.contactInfo
+      contactInfo: !this.state.contactInfo,
     });
-  }
+  };
 
   sameShipping = () => {
-
     const { formState, dispatch } = this.props;
-
-
 
     dispatch(
       change(
@@ -85,54 +91,42 @@ class Edit extends Component {
     );
 
     dispatch(
-      change(
-        'CustomerEdit',
-        'Shipping_City',
-        formState && formState.City
-      )
+      change('CustomerEdit', 'Shipping_City', formState && formState.City)
     );
 
     dispatch(
-      change(
-        'CustomerEdit',
-        'Shipping_State',
-        formState && formState.State
-      )
+      change('CustomerEdit', 'Shipping_State', formState && formState.State)
     );
 
     dispatch(
-      change(
-        'CustomerEdit',
-        'Shipping_Zip',
-        formState && formState.Zip
-      )
+      change('CustomerEdit', 'Shipping_Zip', formState && formState.Zip)
     );
 
     dispatch(
-      change(
-        'CustomerEdit',
-        'Shipping_Phone',
-        formState && formState.Phone1
-      )
+      change('CustomerEdit', 'Shipping_Phone', formState && formState.Phone1)
     );
+  };
 
-  
 
-  }
+  toggleTax = (e) => {
+    e.preventDefault();
+
+    const { dispatch, formState } = this.props;
+
+    if (!formState?.Taxable) {
+      dispatch(change('CustomerEdit', 'TaxRate', 6.35));
+    } else {
+      dispatch(change('CustomerEdit', 'TaxRate', 0));
+    }
+  };
+
 
   render() {
-
-    const {
-      handleSubmit,
-      salesReps,
-      shippingMethods,
-      edit,
-      paymentTerms
-    } = this.props;
+    const { handleSubmit, salesReps, shippingMethods, edit, paymentTerms } =
+      this.props;
 
     return (
       <div className="animated resize">
-  
         <Card>
           <CardHeader>
             <strong>Customer Profile</strong>
@@ -148,7 +142,9 @@ class Edit extends Component {
               <Row>
                 <Col sm="6">
                   <FormGroup>
-                    <Label htmlFor="companyName">Company Name (enter CAPS ONLY)</Label>
+                    <Label htmlFor="companyName">
+                      Company Name (enter CAPS ONLY)
+                    </Label>
                     <Field
                       name={'Company'}
                       type="text"
@@ -243,6 +239,7 @@ class Edit extends Component {
                       type="text"
                       component={renderCheckboxToggle}
                       edit={edit}
+                      onClick={(e) => this.toggleTax(e)}
                     />
                   </FormGroup>
                 </Col>
@@ -250,9 +247,14 @@ class Edit extends Component {
 
               <hr />
 
-              <Button color='primary' onClick={this.toggleInfo} className="mb-3">More Info</Button>
+              <Button
+                color="primary"
+                onClick={this.toggleInfo}
+                className="mb-3"
+              >
+                More Info
+              </Button>
               <Collapse isOpen={this.state.contactInfo}>
-
                 <Row>
                   <Col xs="12">
                     <h6>Contact Info</h6>
@@ -714,7 +716,6 @@ class Edit extends Component {
                 </Col>
               </Row>
 
-
               <hr />
 
               <Row>
@@ -805,15 +806,15 @@ class Edit extends Component {
                 </Col>
               </Row>
 
-              {!edit ? 
+              {!edit ? (
                 <Row>
                   <Col>
-                    <Button color="primary" onClick={() => this.sameShipping()}>Same As Billing</Button>
+                    <Button color="primary" onClick={() => this.sameShipping()}>
+                      Same As Billing
+                    </Button>
                   </Col>
-                </Row> : null
-              }
-
-
+                </Row>
+              ) : null}
 
               <hr />
 
@@ -832,29 +833,36 @@ class Edit extends Component {
                 </Col>
               </Row>
 
-              {edit ?
-                <div>
-
-                </div> :
+              {edit ? (
+                <div></div>
+              ) : (
                 <div>
                   <Button type="submit" color="primary" size="lg">
-                      Submit
+                    Submit
                   </Button>
-                  <Button type="cancel" color="danger" size="lg" onClick={this.props.onEdit}>
-                      Cancel
+                  <Button
+                    type="cancel"
+                    color="danger"
+                    size="lg"
+                    onClick={this.props.onEdit}
+                  >
+                    Cancel
                   </Button>
                 </div>
-              }
-
+              )}
             </form>
-            {edit ?
-              <Button type="button" onClick={this.props.onEdit} color="primary" size="lg">
-                  Edit
-              </Button> : null
-            }
+            {edit ? (
+              <Button
+                type="button"
+                onClick={this.props.onEdit}
+                color="primary"
+                size="lg"
+              >
+                Edit
+              </Button>
+            ) : null}
           </CardBody>
         </Card>
- 
       </div>
     );
   }
@@ -870,20 +878,17 @@ const mapStateToProps = (state, ownProps) => ({
   formState: getFormValues('CustomerEdit')(state),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      updateCustomer
+      updateCustomer,
     },
     dispatch
   );
 
 Edit = reduxForm({
   form: 'CustomerEdit',
-  enableReinitialize: true
+  enableReinitialize: true,
 })(Edit);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Edit);
+export default connect(mapStateToProps, mapDispatchToProps)(Edit);

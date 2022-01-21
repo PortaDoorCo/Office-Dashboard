@@ -982,6 +982,8 @@ class OrderPage extends Component {
     const { selectedOrder, printer_options, user, deleteFilesFromOrder } =
       this.props;
 
+    console.log({selectedOrder});
+
     return (
       <div className="animated noPrint resize">
         <CopyModal

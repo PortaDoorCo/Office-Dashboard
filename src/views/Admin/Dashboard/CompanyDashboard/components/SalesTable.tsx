@@ -130,8 +130,9 @@ const OrderTable = (props: TablePropTypes) => {
       orders?.length > 0
         ? orders?.filter((item) => {
           if (filterText.length > 0) {
-            if (item.sale?.id === user?.id) {
+            if (item.sale?.id === user?.sale?.id) {
               return (
+                (item.sale?.id === user?.id) &&
                   item.orderNum?.toString().includes(filterText) ||
                   item.job_info?.customer?.Company.toLowerCase().includes(
                     filterText.toLowerCase()
@@ -144,7 +145,7 @@ const OrderTable = (props: TablePropTypes) => {
               return null;
             }
           } else {
-            if (item.sale?.id === user?.id) {
+            if (item.sale?.id === user?.sale?.id) {
               return item;
             } else {
               return null;

@@ -116,7 +116,7 @@ const OrderTable = (props) => {
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
   const [startDate, setStartDate] = useState(
-    moment(new Date(orders[orders.length - 1]?.created_at))
+    moment(new Date(orders[orders.length - 1]?.created_at || null))
   );
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
@@ -144,6 +144,10 @@ const OrderTable = (props) => {
 
       const dateShipped = item?.tracking?.filter((x) => {
         return x.status === 'Shipped';
+      });
+
+      const dateCompleted = item?.tracking?.filter((x) => {
+        return x.status === 'Complete';
       });
 
       if (filterStatus === 'All') {
@@ -193,11 +197,15 @@ const OrderTable = (props) => {
       } else if (filterStatus === 'Ordered') {
         if (filterText?.length > 0) {
           return (
-            moment(item.DateOrdered || dateOrdered[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status &&
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Ordered' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -208,21 +216,29 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(item.DateOrdered || dateOrdered[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Ordered'
           );
         }
       } else if (filterStatus === 'Invoiced') {
         if (filterText?.length > 0) {
           return (
-            moment(item.DateInvoiced || dateInvoiced[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateInvoiced || dateInvoiced[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateInvoiced[0]?.status &&
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Invoiced' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -233,21 +249,62 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(item.DateInvoiced || dateInvoiced[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateInvoiced || dateInvoiced[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateInvoiced[0]?.status
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Invoiced'
+          );
+        }
+      } else if (filterStatus === 'Complete') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Complete' &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Complete'
           );
         }
       } else if (filterStatus === 'Shipped') {
         if (filterText?.length > 0) {
           return (
-            moment(item.DateShipped || dateShipped[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateShipped || dateShipped[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateShipped[0]?.status &&
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Shipped' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -258,11 +315,15 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(item.DateShipped || dateShipped[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateShipped || dateShipped[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateShipped[0]?.status
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Shipped'
           );
         }
       } else if (filterStatus === 'In Production') {
@@ -542,13 +603,13 @@ const OrderTable = (props) => {
                   setStartDateFocusedInput(focused)
                 } // PropTypes.func.isRequired
                 id="startDate" // PropTypes.string.isRequired,
-                // isOutsideRange={(date) => {
-                //   if (date < moment(minDate)) {
-                //     return true;
-                //   } else {
-                //     return false;
-                //   }
-                // }}
+                isOutsideRange={(date) => {
+                  if (date < moment(minDate)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
               />
 
               <SingleDatePicker
@@ -557,13 +618,13 @@ const OrderTable = (props) => {
                 focused={endDateFocusedInput} // PropTypes.bool
                 onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
                 id="endDate" // PropTypes.string.isRequired,
-                // isOutsideRange={(date) => {
-                //   if (date < moment(startDate)) {
-                //     return true; // return true if you want the particular date to be disabled
-                //   } else {
-                //     return false;
-                //   }
-                // }}
+                isOutsideRange={(date) => {
+                  if (date < moment(startDate)) {
+                    return true; // return true if you want the particular date to be disabled
+                  } else {
+                    return false;
+                  }
+                }}
               />
             </Col>
           </Row>

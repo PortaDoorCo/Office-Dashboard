@@ -646,6 +646,15 @@ const mapStateToProps = (state, props) => ({
             label: state.Orders?.selectedOrder?.status,
             value: state.Orders?.selectedOrder?.status,
           },
+          salesRep: state.Orders?.selectedOrder?.job_info?.salesRep
+            ? state.Orders?.selectedOrder?.job_info?.salesRep
+            : {
+              fullName: state.sales?.salesReps?.filter(
+                (x) =>
+                  x.id ===
+                      state.Orders?.selectedOrder?.job_info?.customer?.sale
+              )[0],
+            },
           EMAIL: state.Orders?.selectedOrder?.job_info?.customer?.EMAIL,
           Email2: state.Orders?.selectedOrder?.job_info?.customer?.Email2,
           Email3: state.Orders?.selectedOrder?.job_info?.customer?.Email3,
@@ -733,7 +742,7 @@ const mapStateToProps = (state, props) => ({
               : state.customers.customerDB[0]?.Phone,
           DueDate: dueDate,
           Notes: state.customers.customerDB[0]?.Notes,
-          salesRep: state.customers.customerDB[0]?.sale?.fullName,
+          salesRep: state.customers.customerDB[0]?.sale,
           pmtTerms: state.customers.customerDB[0]?.PMT_TERMS,
           EMAIL: state.customers.customerDB[0]?.EMAIL,
           Email2: state.customers.customerDB[0]?.Email2,
