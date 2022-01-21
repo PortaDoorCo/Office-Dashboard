@@ -501,6 +501,24 @@ const OrderTable = (props) => {
       },
     },
     {
+      name: 'Due Date',
+      cell: (row) => {
+        if (row.Shipping_Scheduled) {
+          return <div> {moment(row.dueDate).format('MMM Do YYYY')}</div>;
+        } else if (
+          !row.Shipping_Scheduled &&
+          !row.status.includes('Quote') &&
+          !row.status.includes('Invoiced') &&
+          !row.status.includes('Ordered') &&
+          !row.status.includes('Shipped')
+        ) {
+          return <div>Not Scheduled</div>;
+        } else {
+          return <div>TBD</div>;
+        }
+      },
+    },
+    {
       name: ' ',
       button: true,
       grow: 2,

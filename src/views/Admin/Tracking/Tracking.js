@@ -25,6 +25,7 @@ import styled from 'styled-components';
 import status from '../../../utils/tracking_status';
 import orderTypes from '../../../utils/orderTypes';
 import Tracking from '../../PrintOuts/Reports/Tracking';
+import DropdownList from 'react-widgets/DropdownList';
 
 // momentLocaliser(moment);
 
@@ -122,7 +123,7 @@ const OrderTable = (props) => {
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
   const [filterStatus, setFilterStatus] = useState('In Production');
   const [orderType, setOrderType] = useState('All');
-  const [customer, setCustomer] = useState('All');
+  const [customer, setCustomer] = useState({Company:'All'});
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -485,28 +486,27 @@ const OrderTable = (props) => {
     setToggleCleared(!toggleCleared);
   };
 
+  console.log({customer});
+
+
   return (
     <div>
-      <Row className="mb-3">
-        {/* <Col lg="5" /> */}
-        <Col>
+
+
+      <Row>
+        <Col lg='4'>
           <Row>
             <Col>
               <h3>Customers</h3>
               <FormGroup style={{ height: '100%', width: '60%' }}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="status_dropdown"
+                <DropdownList
                   defaultValue="All"
-                  onChange={(e) => setOrderType(e.target.value)}
-                >
-                  {customers?.map((i, index) => (
-                    <option key={index} value={i.Company}>
-                      {i.Company}
-                    </option>
-                  ))}
-                </Input>
+                  textField={item => item.Company}
+                  data={customers}
+                  onChange={value => setCustomer(value)}
+                  value={customer}
+                />
+                <Button onClick={() => setCustomer({Company:'All'})}>Clear</Button>
               </FormGroup>
             </Col>
           </Row>
@@ -551,16 +551,17 @@ const OrderTable = (props) => {
             </Col>
           </Row>
         </Col>
+        
+        <Col lg='5' />
 
-
-        <Col>
+        <Col lg='3'>
           <Row>
             <Col>
               <h3>Filter Due Date</h3>
             </Col>
           </Row>
           <Row>
-            <Col>
+            <Col lg='12'>
               <SingleDatePicker
                 date={startDate} // momentPropTypes.momentObj or null
                 onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
@@ -603,11 +604,11 @@ const OrderTable = (props) => {
           <Row className="mt-3">
             <Col>
               {role &&
-              (role.type === 'authenticated' ||
-                role.type === 'owner' ||
-                role.type === 'administrator') ? (
+                  (role.type === 'authenticated' ||
+                    role.type === 'owner' ||
+                    role.type === 'administrator') ? (
                   <h3>
-                  Order Totals: $
+                      Order Totals: $
                     {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
                   </h3>
                 ) : null}
@@ -618,8 +619,10 @@ const OrderTable = (props) => {
               <h3># Of Orders: {data.length}</h3>
             </Col>
           </Row>
+
         </Col>
       </Row>
+      
 
       <Row>
         {/* <Col lg='11' /> */}
