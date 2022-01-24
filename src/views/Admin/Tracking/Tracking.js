@@ -677,7 +677,12 @@ const OrderTable = (props) => {
   };
 
   const exportReports = () => {
-    Tracking(data, startDate, endDate, filterStatus);
+
+    let newOrder = [...data];
+
+    const sortedData = newOrder.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+
+    Tracking(sortedData, startDate, endDate, filterStatus);
     setToggleCleared(!toggleCleared);
   };
 

@@ -240,7 +240,32 @@ const StatusTable = (props) => {
   };
 
   const exportReports = () => {
-    SalesmenReport(data, props.startDate, props.endDate, props.accountName);
+
+    let newOrder = [...data];
+
+    if (props.filterStatus === 'Ordered') {
+      const newData = newOrder.map((i) => {
+        const dateOrdered = i?.tracking?.filter((x) => {
+          return x.status === 'Ordered';
+        });
+
+        return {
+          ...i,
+          dateOrdered: i.DateOrdered ? new Date(i.DateOrdered) : new Date(dateOrdered[0]?.date),
+        };
+      });
+
+      const sortedData = newData.sort((a, b) => a.dateOrdered - b.dateOrdered);
+      newOrder = sortedData;
+    } else {
+      const newData = newOrder.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      );
+
+      newOrder = newData;
+    }
+
+    SalesmenReport(newOrder, props.startDate, props.endDate, props.accountName);
     setToggleCleared(!toggleCleared);
   };
 

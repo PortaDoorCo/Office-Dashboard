@@ -5,7 +5,6 @@ export default (data, startDate, endDate, status) => {
 
   const tableBody = [
     [
-      { text: 'Date Created' },
       { text: 'Date Ordered' },
       { text: 'Customer' },
       { text: 'Job ID' },
@@ -29,7 +28,7 @@ export default (data, startDate, endDate, status) => {
     });
 
     return tableBody.push(
-      [moment(i.created_at).format('MM/DD/YYYY'),
+      [
         i.DateOrdered || dateOrdered.length > 0
           ? moment(i.DateOrdered || dateOrdered[0].date).format('MM/DD/YYYY')
           : 'TBD',
