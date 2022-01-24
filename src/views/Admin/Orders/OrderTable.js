@@ -683,18 +683,18 @@ const OrderTable = (props) => {
           <Row className="mt-3">
             <Col>
               {role &&
-              (role.type === 'authenticated' ||
-                role.type === 'owner' ||
-                role.type === 'administrator') ? (
+              (role?.type === 'authenticated' ||
+                role?.type === 'owner' ||
+                role?.type === 'administrator') ? (
                   <h3>
                   Order Total: $
                     {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
                   </h3>
                 ) : null}
               {role &&
-              (role.type === 'authenticated' ||
-                role.type === 'owner' ||
-                role.type === 'administrator') ? (
+              (role?.type === 'authenticated' ||
+                role?.type === 'owner' ||
+                role?.type === 'administrator') ? (
                   <h3>
                   Net Total: $
                     {data.reduce((acc, item) => acc + (item.total - item.tax), 0).toFixed(2)}
