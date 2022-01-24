@@ -722,9 +722,9 @@ const OrderTable = (props) => {
       <Row>
         {/* <Col lg='11' /> */}
         <Col>
-          {(role.type === 'authenticated' ||
-          role.type === 'owner' ||
-          role.type === 'administrator') ?
+          {(role?.type === 'authenticated' ||
+          role?.type === 'owner' ||
+          role?.type === 'administrator') ?
             <Tooltip
               title="View Reports"
               onClick={exportReports}
