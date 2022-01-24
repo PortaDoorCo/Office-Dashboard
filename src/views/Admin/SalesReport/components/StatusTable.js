@@ -179,9 +179,8 @@ const StatusTable = (props) => {
       cell: (row) => (
         <FormGroup style={{ height: '100%' }}>
           <Input
-            type="select"
-            name="select"
-            id="status_dropdown"
+            type="text"
+            disabled={true}
             defaultValue={row.status}
             style={{
               height: '100%',
@@ -190,15 +189,8 @@ const StatusTable = (props) => {
               outline: '0px',
               background: 'none',
             }}
-            onChange={(e) => handleStatusChange(e, row)}
+          /
           >
-            <option value={row.status}>{row.status}</option>
-            {status.map((i, index) => (
-              <option key={index} value={i.value}>
-                {i.value}
-              </option>
-            ))}
-          </Input>
         </FormGroup>
       ),
     },

@@ -14,6 +14,7 @@ export default (data, startDate, endDate, status) => {
       { text: 'Face Frames' },
       { text: 'Total' },
       { text: 'Salesman' },
+      { text: 'Due Date' },
     ],
   ];
 
@@ -87,6 +88,7 @@ export default (data, startDate, endDate, status) => {
       face_frames,
       `$${i.total?.toFixed(2)}`,
       i.sale?.fullName,
+      i.Shipping_Scheduled ? moment(i.job_info?.DueDate).format('MM/DD/YYYY') : 'TBD'
     ]);
   });
 
