@@ -112,11 +112,7 @@ class JobInfo extends Component {
         }
 
         this.props.dispatch(
-          change(
-            'Order',
-            'job_info.salesRep',
-            customer.sale
-          )
+          change('Order', 'job_info.salesRep', customer.sale)
         );
 
         this.props.dispatch(
@@ -457,7 +453,14 @@ class JobInfo extends Component {
                 name="salesRep"
                 component={renderDropdownList}
                 data={sales}
-                edit={formState?.job_info?.customer?.id === 1 ? edit : true}
+                edit={
+                  formState?.job_info?.customer?.id === 1 ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator' ||
+                  role?.type === 'management'
+                    ? edit
+                    : true
+                }
                 validate={required}
                 textField="fullName"
               />

@@ -20,10 +20,6 @@ const status = [
     value: 'Tenon',
   },
   {
-    label: 'Panels',
-    value: 'Panels',
-  },
-  {
     label: 'Sanding',
     value: 'Sanding',
   },

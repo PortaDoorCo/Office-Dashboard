@@ -575,12 +575,11 @@ const OrderTable = (props) => {
 
         return {
           ...i,
-          dateOrdered: new Date(dateOrdered[0]?.date),
+          dateOrdered: i.DateOrdered ? new Date(i.DateOrdered) : new Date(dateOrdered[0]?.date),
         };
       });
 
       const sortedData = newData.sort((a, b) => a.dateOrdered - b.dateOrdered);
-
       newOrder = sortedData;
     } else {
       const newData = newOrder.sort(
