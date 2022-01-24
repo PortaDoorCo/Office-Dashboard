@@ -687,8 +687,26 @@ const OrderTable = (props) => {
                 role.type === 'owner' ||
                 role.type === 'administrator') ? (
                   <h3>
-                  Order Totals: $
+                  Order Total: $
                     {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
+                  </h3>
+                ) : null}
+              {role &&
+              (role.type === 'authenticated' ||
+                role.type === 'owner' ||
+                role.type === 'administrator') ? (
+                  <h3>
+                  Net Total: $
+                    {data.reduce((acc, item) => acc + (item.total - item.tax), 0).toFixed(2)}
+                  </h3>
+                ) : null}
+              {role &&
+              (role.type === 'authenticated' ||
+                role.type === 'owner' ||
+                role.type === 'administrator') ? (
+                  <h3>
+                  Tax Total: $
+                    {data.reduce((acc, item) => acc + (item.tax), 0).toFixed(2)}
                   </h3>
                 ) : null}
             </Col>
@@ -704,16 +722,21 @@ const OrderTable = (props) => {
       <Row>
         {/* <Col lg='11' /> */}
         <Col>
-          <Tooltip
-            title="View Reports"
-            onClick={exportReports}
-            placement="top"
-            className="mb-3 mt-3"
-          >
-            <IconButton>
-              <Receipt style={{ width: '40', height: '40' }} />
-            </IconButton>
-          </Tooltip>
+          {(role.type === 'authenticated' ||
+          role.type === 'owner' ||
+          role.type === 'administrator') ?
+            <Tooltip
+              title="View Reports"
+              onClick={exportReports}
+              placement="top"
+              className="mb-3 mt-3"
+            >
+              <IconButton>
+                <Receipt style={{ width: '40', height: '40' }} />
+              </IconButton>
+            </Tooltip>
+            : null
+          }
           <Tooltip
             title="Export Edges"
             onClick={exportEdgesHelper}

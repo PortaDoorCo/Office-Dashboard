@@ -14,6 +14,8 @@ export default (data, startDate, endDate, status) => {
       { text: 'Boxes' },
       { text: 'Face Frames' },
       { text: 'Total' },
+      { text: 'Net Total' },
+      { text: 'Tax' },
       { text: 'Salesman' },
     ],
   ];
@@ -32,6 +34,8 @@ export default (data, startDate, endDate, status) => {
         { text: 'Boxes' },
         { text: 'Face Frames' },
         { text: 'Total' },
+        { text: 'Net Total' },
+        { text: 'Tax' },
         { text: 'Salesman' },
       ],
     ];
@@ -49,12 +53,16 @@ export default (data, startDate, endDate, status) => {
         { text: 'Boxes' },
         { text: 'Face Frames' },
         { text: 'Total' },
+        { text: 'Net Total' },
+        { text: 'Tax' },
         { text: 'Salesman' },
       ],
     ];
   }
 
   let total = 0;
+  let netTotal = 0;
+  let taxTotal = 0;
   let doorTotal = 0;
   let dfTotal = 0;
   let boxTotal = 0;
@@ -62,6 +70,8 @@ export default (data, startDate, endDate, status) => {
 
   data.forEach((i, index) => {
     total = total += i.total;
+    netTotal = netTotal += (i.total - i.tax);
+    taxTotal = taxTotal += i.tax;
     let doors = 0;
     let dfs = 0;
     let boxes = 0;
@@ -122,6 +132,8 @@ export default (data, startDate, endDate, status) => {
         boxes,
         face_frames,
         `$${i.total?.toFixed(2)}`,
+        `$${(i.total - i.tax)?.toFixed(2)}`,
+        `$${i.tax?.toFixed(2)}`,
         i.sale?.fullName,
       ]);
     } else {
@@ -138,13 +150,15 @@ export default (data, startDate, endDate, status) => {
         boxes,
         face_frames,
         `$${i.total?.toFixed(2)}`,
+        `$${(i.total - i.tax)?.toFixed(2)}`,
+        `$${i.tax?.toFixed(2)}`,
         i.sale?.fullName,
       ]);
     }
   });
 
   let totalBody = [
-    ['', 'Doors', 'DFs', 'Boxes', 'Face Frames', 'Total', ''],
+    ['', 'Doors', 'DFs', 'Boxes', 'Face Frames', 'Total', 'Net Total', 'Tax Total', ''],
     [
       '',
       doorTotal,
@@ -152,6 +166,8 @@ export default (data, startDate, endDate, status) => {
       boxTotal,
       faceFrameTotal,
       `$${total.toFixed(2)}`,
+      `$${netTotal.toFixed(2)}`,
+      `$${taxTotal.toFixed(2)}`,
       '',
     ],
   ];
@@ -187,7 +203,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: ['*', '*', '*', '*', '*', '*', '*'],
+        widths: ['*', '*', '*', '*', '*', '*', '*', '*', '*'],
       },
       layout: 'headerLineOnly',
     },

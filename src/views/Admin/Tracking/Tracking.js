@@ -140,188 +140,383 @@ const OrderTable = (props) => {
         return x.status === 'Ordered';
       });
 
-      if(orderType === 'All'){
-        if (filterStatus === 'In Production') {
-          if (filterText?.length > 0) {
-            return (
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              !item.status.includes('Quote') &&
-              !item.status.includes('Invoiced') &&
-              !item.status.includes('Ordered') &&
-              !item.status.includes('Complete') &&
-              !item.status.includes('Shipped') &&
-              (item.orderNum.toString().includes(filterText) ||
-                item.companyprofile.Company.toLowerCase().includes(
-                  filterText.toLowerCase()
-                ) ||
-                item.job_info.poNum
-                  .toLowerCase()
-                  .includes(filterText.toLowerCase()))
-            );
+      if(customer.Company  === 'All'){
+        if(orderType === 'All'){
+          if (filterStatus === 'In Production') {
+            if (filterText?.length > 0) {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped')
+              );
+            }
+          } else if (filterStatus === 'Late') {
+            if (filterText?.length > 0) {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.Shipping_Scheduled &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') && 
+                item.Shipping_Scheduled
+              );
+            }
           } else {
-            return (
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              !item.status.includes('Quote') &&
-              !item.status.includes('Invoiced') &&
-              !item.status.includes('Ordered') &&
-              !item.status.includes('Complete') &&
-              !item.status.includes('Shipped')
-            );
-          }
-        } else if (filterStatus === 'Late') {
-          if (filterText?.length > 0) {
-            return (
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              !item.status.includes('Quote') &&
-              !item.status.includes('Invoiced') &&
-              !item.status.includes('Ordered') &&
-              !item.status.includes('Complete') &&
-              !item.status.includes('Shipped') &&
-              item.Shipping_Scheduled &&
-              (item.orderNum.toString().includes(filterText) ||
-                item.companyprofile.Company.toLowerCase().includes(
-                  filterText.toLowerCase()
-                ) ||
-                item.job_info.poNum
-                  .toLowerCase()
-                  .includes(filterText.toLowerCase()))
-            );
-          } else {
-            return (
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              !item.status.includes('Quote') &&
-              !item.status.includes('Invoiced') &&
-              !item.status.includes('Ordered') &&
-              !item.status.includes('Complete') &&
-              !item.status.includes('Shipped') && 
-              item.Shipping_Scheduled
-            );
+            if (filterText?.length > 0) {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.status.includes(filterStatus) &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.status.includes(filterStatus)
+              );
+            }
           }
         } else {
-          if (filterText?.length > 0) {
-            return (
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              item.status.includes(filterStatus) &&
-              (item.orderNum.toString().includes(filterText) ||
-                item.companyprofile.Company.toLowerCase().includes(
-                  filterText.toLowerCase()
-                ) ||
-                item.job_info.poNum
-                  .toLowerCase()
-                  .includes(filterText.toLowerCase()))
-            );
+          if (filterStatus === 'In Production') {
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped')
+              );
+            }
+          } else if (filterStatus === 'Late') {
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.Shipping_Scheduled &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.Shipping_Scheduled
+              );
+            }
           } else {
-            return (
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              item.status.includes(filterStatus)
-            );
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.status.includes(filterStatus) &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.status.includes(filterStatus)
+              );
+            }
           }
         }
+
       } else {
-        if (filterStatus === 'In Production') {
-          if (filterText?.length > 0) {
-            return (
-              item.orderType.includes(orderType) &&
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              !item.status.includes('Quote') &&
-              !item.status.includes('Invoiced') &&
-              !item.status.includes('Ordered') &&
-              !item.status.includes('Complete') &&
-              !item.status.includes('Shipped') &&
-              (item.orderNum.toString().includes(filterText) ||
-                item.companyprofile.Company.toLowerCase().includes(
-                  filterText.toLowerCase()
-                ) ||
-                item.job_info.poNum
-                  .toLowerCase()
-                  .includes(filterText.toLowerCase()))
-            );
+        if(orderType === 'All'){
+          if (filterStatus === 'In Production') {
+            if (filterText?.length > 0) {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.job_info?.customer?.Company === customer?.Company
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') && 
+                item.job_info?.customer?.Company === customer?.Company
+              );
+            }
+          } else if (filterStatus === 'Late') {
+            if (filterText?.length > 0) {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                item.Shipping_Scheduled &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') && 
+                item.job_info?.customer?.Company === customer?.Company &&
+                item.Shipping_Scheduled
+              );
+            }
           } else {
-            return (
-              item.orderType.includes(orderType) &&
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              !item.status.includes('Quote') &&
-              !item.status.includes('Invoiced') &&
-              !item.status.includes('Ordered') &&
-              !item.status.includes('Complete') &&
-              !item.status.includes('Shipped')
-            );
-          }
-        } else if (filterStatus === 'Late') {
-          if (filterText?.length > 0) {
-            return (
-              item.orderType.includes(orderType) &&
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              !item.status.includes('Quote') &&
-              !item.status.includes('Invoiced') &&
-              !item.status.includes('Ordered') &&
-              !item.status.includes('Complete') &&
-              !item.status.includes('Shipped') &&
-              item.Shipping_Scheduled &&
-              (item.orderNum.toString().includes(filterText) ||
-                item.companyprofile.Company.toLowerCase().includes(
-                  filterText.toLowerCase()
-                ) ||
-                item.job_info.poNum
-                  .toLowerCase()
-                  .includes(filterText.toLowerCase()))
-            );
-          } else {
-            return (
-              item.orderType.includes(orderType) &&
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              !item.status.includes('Quote') &&
-              !item.status.includes('Invoiced') &&
-              !item.status.includes('Ordered') &&
-              !item.status.includes('Complete') &&
-              !item.status.includes('Shipped') &&
-              item.Shipping_Scheduled
-            );
+            if (filterText?.length > 0) {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                item.status.includes(filterStatus) &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                item.status.includes(filterStatus)
+              );
+            }
           }
         } else {
-          if (filterText?.length > 0) {
-            return (
-              item.orderType.includes(orderType) &&
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              item.status.includes(filterStatus) &&
-              (item.orderNum.toString().includes(filterText) ||
-                item.companyprofile.Company.toLowerCase().includes(
-                  filterText.toLowerCase()
-                ) ||
-                item.job_info.poNum
-                  .toLowerCase()
-                  .includes(filterText.toLowerCase()))
-            );
+          if (filterStatus === 'In Production') {
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                !item.status.includes('Shipped')
+              );
+            }
+          } else if (filterStatus === 'Late') {
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                item.Shipping_Scheduled &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                item.Shipping_Scheduled
+              );
+            }
           } else {
-            return (
-              item.orderType.includes(orderType) &&
-              moment(date) >= moment(startDate).startOf('day').valueOf() &&
-              moment(date) <= moment(endDate).endOf('day').valueOf() &&
-              item.status.includes(filterStatus)
-            );
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                item.status.includes(filterStatus) &&
+                (item.orderNum.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                item.status.includes(filterStatus)
+              );
+            }
           }
         }
+
       }
+
 
 
     });
     setData(filteredOrders);
-  }, [startDate, endDate, orders, filterStatus, filterText, orderType]);
+  }, [startDate, endDate, orders, filterStatus, filterText, orderType, customer]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {

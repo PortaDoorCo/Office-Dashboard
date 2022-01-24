@@ -8,7 +8,7 @@ export default (data, startDate, endDate, status) => {
 
   const documentDefinition = {
     pageSize: 'A4',
-    pageOrientation: 'portrait',
+    pageOrientation: 'landscape',
     content: [Orders(data, startDate, endDate, status)],
     styles: {
       woodtype: {
