@@ -438,63 +438,125 @@ export const itemPriceSelector = createSelector(
                 }
               }
 
-              if (part.profile) {
-                //leftStile
-                if (
-                  (part.profile && part.profile.PROFILE_WIDTH) !==
-                  numQty(i.leftStile)
-                ) {
-                  calc('leftStile', part.profile?.PROFILE_WIDTH, price);
-                }
-                //rightStile
-                if (
-                  (part.profile && part.profile.PROFILE_WIDTH) !==
-                  numQty(i.rightStile)
-                ) {
-                  calc('rightStile', part.profile?.PROFILE_WIDTH, price);
-                }
-                //topRail
-                if (
-                  (part.profile && part.profile.PROFILE_WIDTH) !==
-                  numQty(i.topRail)
-                ) {
-                  calc('topRail', part.profile?.PROFILE_WIDTH, price);
-                }
-                //bottomRail
-                if (
-                  (part.profile && part.profile.PROFILE_WIDTH) !==
-                  numQty(i.bottomRail)
-                ) {
-                  calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+              if(part.orderType?.value === 'DF') {
+                if (part.profile) {
+                  //leftStile
+                  if (
+                    (part.profile && part.profile.PROFILE_WIDTH) !==
+                    numQty(i.leftStile)
+                  ) {
+                    calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+                  }
+                  //rightStile
+                  if (
+                    (part.profile && part.profile.PROFILE_WIDTH) !==
+                    numQty(i.rightStile)
+                  ) {
+                    calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+                  }
+                  //topRail
+                  if (
+                    (part.profile && part.profile.DF_Reduction) !==
+                    numQty(i.topRail)
+                  ) {
+                    calc('topRail', part.profile?.DF_Reduction, price);
+                  }
+                  //bottomRail
+                  if (
+                    (part.profile && part.profile.DF_Reduction) !==
+                    numQty(i.bottomRail)
+                  ) {
+                    calc('bottomRail', part.profile?.DF_Reduction, price);
+                  }
+                } else {
+                  //leftStile
+                  if (
+                    (part.design && part.design.PROFILE_WIDTH) !==
+                    numQty(i.leftStile)
+                  ) {
+                    calc('leftStile', part.design?.PROFILE_WIDTH, price);
+                  }
+                  //rightStile
+                  if (
+                    (part.design && part.design.PROFILE_WIDTH) !==
+                    numQty(i.rightStile)
+                  ) {
+                    calc('rightStile', part.design?.PROFILE_WIDTH, price);
+                  }
+                  //topRail
+                  if (
+                    (part.design && part.design.DF_Reduction) !==
+                    numQty(i.topRail)
+                  ) {
+                    calc('topRail', part.design?.DF_Reduction, price);
+                  }
+                  //bottomRail
+                  if (
+                    (part.design && part.design.DF_Reduction) !==
+                    numQty(i.bottomRail)
+                  ) {
+                    calc('bottomRail', part.design?.DF_Reduction, price);
+                  }
                 }
               } else {
-                //leftStile
-                if (
-                  (part.design && part.design.PROFILE_WIDTH) !==
-                  numQty(i.leftStile)
-                ) {
-                  calc('leftStile', part.design?.PROFILE_WIDTH, price);
-                }
-                //rightStile
-                if (
-                  (part.design && part.design.PROFILE_WIDTH) !==
-                  numQty(i.rightStile)
-                ) {
-                  calc('rightStile', part.design?.PROFILE_WIDTH, price);
-                }
-                //topRail
-                if (
-                  (part.design && part.design.PROFILE_WIDTH) !==
-                  numQty(i.topRail)
-                ) {
-                  calc('topRail', part.design?.PROFILE_WIDTH, price);
-                }
-                //bottomRail
-                if (
-                  (part.design && part.design.PROFILE_WIDTH) !==
-                  numQty(i.bottomRail)
-                ) {
-                  calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+                if (part.profile) {
+                  //leftStile
+                  if (
+                    (part.profile && part.profile.PROFILE_WIDTH) !==
+                    numQty(i.leftStile)
+                  ) {
+                    calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+                  }
+                  //rightStile
+                  if (
+                    (part.profile && part.profile.PROFILE_WIDTH) !==
+                    numQty(i.rightStile)
+                  ) {
+                    calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+                  }
+                  //topRail
+                  if (
+                    (part.profile && part.profile.PROFILE_WIDTH) !==
+                    numQty(i.topRail)
+                  ) {
+                    calc('topRail', part.profile?.PROFILE_WIDTH, price);
+                  }
+                  //bottomRail
+                  if (
+                    (part.profile && part.profile.PROFILE_WIDTH) !==
+                    numQty(i.bottomRail)
+                  ) {
+                    calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+                  }
+                } else {
+                  //leftStile
+                  if (
+                    (part.design && part.design.PROFILE_WIDTH) !==
+                    numQty(i.leftStile)
+                  ) {
+                    calc('leftStile', part.design?.PROFILE_WIDTH, price);
+                  }
+                  //rightStile
+                  if (
+                    (part.design && part.design.PROFILE_WIDTH) !==
+                    numQty(i.rightStile)
+                  ) {
+                    calc('rightStile', part.design?.PROFILE_WIDTH, price);
+                  }
+                  //topRail
+                  if (
+                    (part.design && part.design.PROFILE_WIDTH) !==
+                    numQty(i.topRail)
+                  ) {
+                    calc('topRail', part.design?.PROFILE_WIDTH, price);
+                  }
+                  //bottomRail
+                  if (
+                    (part.design && part.design.PROFILE_WIDTH) !==
+                    numQty(i.bottomRail)
+                  ) {
+                    calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+                  }
                 }
               }
 
@@ -582,7 +644,7 @@ export const itemPriceSelector = createSelector(
             const price = eval(pricer.drawer_box_pricing);
 
             if (height > -1) {
-              return price;
+              return Math.floor(price * 100) / 100;
             } else {
               return 0;
             }
@@ -674,7 +736,7 @@ export const linePriceSelector = createSelector(
                 const price = base + add;
                 return price;
               } else {
-                return item[index][p] * parseInt(i.qty);
+                return Math.floor((item[index][p] * parseInt(i.qty)) * 100) / 100;
               }
             } else {
               return 0;
