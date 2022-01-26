@@ -17,6 +17,7 @@ export default (data, startDate, endDate, status) => {
       { text: 'Net Total' },
       { text: 'Tax' },
       { text: 'Salesman' },
+      { text: 'Due Date' },
       { text: 'Date Invoiced' },
       { text: 'Date Shipped' },
     ],
@@ -39,6 +40,7 @@ export default (data, startDate, endDate, status) => {
         { text: 'Net Total' },
         { text: 'Tax' },
         { text: 'Salesman' },
+        { text: 'Due Date' },
         { text: 'Date Invoiced' },
         { text: 'Date Shipped' },
       ],
@@ -60,6 +62,7 @@ export default (data, startDate, endDate, status) => {
         { text: 'Net Total' },
         { text: 'Tax' },
         { text: 'Salesman' },
+        { text: 'Due Date' },
         { text: 'Date Invoiced' },
         { text: 'Date Shipped' },
       ],
@@ -149,6 +152,7 @@ export default (data, startDate, endDate, status) => {
         `$${(i.total - i.tax)?.toFixed(2)}`,
         `$${i.tax?.toFixed(2)}`,
         i.sale?.fullName,
+        i.Shipping_Scheduled ? moment(i.dueDate).format('MM/DD/YYYY') : 'TBD',
         i.DateInvoiced ? moment(i.DateInvoiced).format('MM/DD/YYYY') : 'TBD',
         i.DateShipped ? moment(i.DateShipped).format('MM/DD/YYYY') : 'TBD'
       ]);
@@ -169,6 +173,7 @@ export default (data, startDate, endDate, status) => {
         `$${(i.total - i.tax)?.toFixed(2)}`,
         `$${i.tax?.toFixed(2)}`,
         i.sale?.fullName,
+        i.Shipping_Scheduled ? moment(i.dueDate).format('MM/DD/YYYY') : 'TBD',
         i.DateInvoiced || dateInvoiced.length > 0
           ? moment(i.DateInvoiced || dateInvoiced[0].date).format('MM/DD/YYYY')
           : 'TBD',
