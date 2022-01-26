@@ -692,7 +692,7 @@ export const linePriceSelector = createSelector(
 export const nonDiscountedItems = createSelector([partListSelector], (parts) =>
   parts
     .map((i) => {
-      return i.applied_profile?.UPCHARGE ? i.applied_profile?.UPCHARGE : 0;
+      return 0;
     })
     .reduce((acc, item) => acc + item, 0)
 );
