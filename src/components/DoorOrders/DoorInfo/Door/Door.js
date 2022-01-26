@@ -403,7 +403,7 @@ class Door extends Component {
               isValid={isValid}
               part={part}
               edit={edit}
-              addPrice={addPrice}å
+              addPrice={addPrice}
               updateSubmit={updateSubmit}
             />
           ) : (
