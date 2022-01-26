@@ -82,7 +82,7 @@ const pricing = (parts, pricer) => {
         }
 
 
-        const openings = parseInt(i.openings);
+        const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
 
         let overcharge = 0;
 
