@@ -6,7 +6,7 @@ const pricing = (parts, pricer) => {
     if (i.category === 'preselect') {
       if (i.item) {
         if (i.qty) {
-          price = pricer[index] * parseFloat(i.qty);
+          price = Math.floor((pricer[index] * parseFloat(i.qty)) * 100) / 100; 
         } else {
           price = 0;
         }
@@ -16,7 +16,7 @@ const pricing = (parts, pricer) => {
     } else {
       if (i.pricePer) {
         if (i.qty) {
-          price = pricer[index] * parseFloat(i.qty);
+          price = Math.floor((pricer[index] * parseFloat(i.qty)) * 100) / 100;
         } else {
           price = 0;
         }

@@ -19,7 +19,7 @@ const pricing = (parts, pricer) => {
         const price = (eval(pricer.drawer_box_pricing) + extraCost) * qty;
 
         if (height > -1) {
-          return price;
+          return Math.floor(price * 100) / 100;
         } else {
           return 0;
         }

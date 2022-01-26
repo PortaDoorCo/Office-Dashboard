@@ -94,7 +94,7 @@ const pricing = (parts, pricer) => {
 
 
         if (height > -1) {
-          return price * parseInt(i.qty);
+          return Math.floor((price * parseInt(i.qty)) * 100) / 100;
         } else {
           return 0;
         }

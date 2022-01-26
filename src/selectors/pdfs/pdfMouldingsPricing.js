@@ -100,7 +100,7 @@ const pricing = (parts, pricer) => {
 
   const withQty = items.map((i, index) => {
     const price = i ? i : 0;
-    return price;
+    return Math.floor(price * 100) / 100;
   });
 
   return withQty;

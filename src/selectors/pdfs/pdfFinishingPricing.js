@@ -19,7 +19,7 @@ const pricing = (parts, pricer) => {
         const finishing = finish + (width_finish + height_finish + opening_add);
 
         if (height > -1) {
-          return finishing;
+          return Math.floor(finishing * 100) / 100;;
         } else {
           return 0;
         }
