@@ -461,33 +461,6 @@ export default (data, pricing) => {
         margin: [0, 10, 0, 0],
       }
       : null,
-    data.Taxable
-      ? {
-        columns: [
-          { text: '', style: 'totals', width: 317 },
-          {
-            text: data.Taxable
-              ? '$' +
-                    order_sub_total.toFixed(2) +
-                    ' x ' +
-                    data.companyprofile.TaxRate +
-                    '%' +
-                    ' Tax:'
-              : '',
-            style: 'totals',
-            margin: [0, 0, 0, 4],
-            width: 120,
-            alignment: 'right',
-          },
-          {
-            text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
-            style: 'fonts',
-            alignment: 'right',
-          },
-        ],
-        margin: [0, 0, 0, 0],
-      }
-      : null,
     {
       text: '======',
       margin: [0, 0, 0, 0],

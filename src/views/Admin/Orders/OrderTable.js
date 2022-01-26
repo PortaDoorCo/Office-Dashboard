@@ -135,94 +135,88 @@ const OrderTable = (props) => {
   useEffect(() => {
     const filteredOrders = orders?.filter((item) => {
       let date = new Date(item.created_at);
-    
+
       const dateOrdered = item?.tracking?.filter((x) => {
         return x.status === 'Ordered';
       });
       const dateInvoiced = item?.tracking?.filter((x) => {
         return x.status === 'Invoiced';
       });
-    
+
       const dateCompleted = item?.tracking?.filter((x) => {
         return x.status === 'Complete';
       });
-    
+
       const dateShipped = item?.tracking?.filter((x) => {
         return x.status === 'Shipped';
       });
-    
+
       if (filterStatus === 'Ordered') {
         if (filterText?.length > 0) {
           return (
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : '1/1/1900')
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
-                moment(
-                  item.DateOrdered || (dateOrdered.length > 0
-                    ? dateOrdered[0]?.date
-                    : '1/1/1900')
-                ) <= moment(endDate).endOf('day').valueOf() &&
-                item.status === 'Ordered' &&
-                (item.orderNum?.toString().includes(filterText) ||
-                  item.companyprofile?.Company.toLowerCase().includes(
-                    filterText.toLowerCase()
-                  ) ||
-                  item.job_info?.poNum
-                    .toLowerCase()
-                    .includes(filterText.toLowerCase()))
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Ordered' &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
           );
         } else {
           return (
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : '1/1/1900')
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
-                moment(
-                  item.DateOrdered || (dateOrdered.length > 0
-                    ? dateOrdered[0]?.date
-                    : '1/1/1900')
-                ) <= moment(endDate).endOf('day').valueOf() &&
-                item.status === 'Ordered'
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Ordered'
           );
         }
+      } else if (filterStatus === 'Flagged') {
+        return item.flagged_for_adjustment;
       } else if (filterStatus === 'Invoiced') {
         if (filterText?.length > 0) {
           return (
             moment(
-              item.DateInvoiced || (dateInvoiced.length > 0
-                ? dateInvoiced[0]?.date
-                : '1/1/1900')
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
-                moment(
-                  item.DateInvoiced || (dateInvoiced.length > 0
-                    ? dateInvoiced[0]?.date
-                    : '1/1/1900')
-                ) <= moment(endDate).endOf('day').valueOf() &&
-                item.status === 'Invoiced' &&
-                (item.orderNum?.toString().includes(filterText) ||
-                  item.companyprofile?.Company.toLowerCase().includes(
-                    filterText.toLowerCase()
-                  ) ||
-                  item.job_info?.poNum
-                    .toLowerCase()
-                    .includes(filterText.toLowerCase()))
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Invoiced' &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
           );
         } else {
           return (
             moment(
-              item.DateInvoiced || (dateInvoiced.length > 0
-                ? dateInvoiced[0]?.date
-                : '1/1/1900')
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
-                moment(
-                  item.DateInvoiced || (dateInvoiced.length > 0
-                    ? dateInvoiced[0]?.date
-                    : '1/1/1900')
-                ) <= moment(endDate).endOf('day').valueOf() &&
-                item.status === 'Invoiced'
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Invoiced'
           );
         }
       } else if (filterStatus === 'Complete') {
@@ -237,8 +231,8 @@ const OrderTable = (props) => {
                 (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
             (item.status.includes('Complete') ||
-            item.status.includes('Invoiced') ||
-            item.status.includes('Shipped')) &&
+              item.status.includes('Invoiced') ||
+              item.status.includes('Shipped')) &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -258,66 +252,62 @@ const OrderTable = (props) => {
                 (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
             (item.status.includes('Complete') ||
-            item.status.includes('Invoiced') ||
-            item.status.includes('Shipped'))
+              item.status.includes('Invoiced') ||
+              item.status.includes('Shipped'))
           );
         }
-      }  else if (filterStatus === 'Shipped') {
+      } else if (filterStatus === 'Shipped') {
         if (filterText?.length > 0) {
           return (
             moment(
-              item.DateShipped || (dateShipped.length > 0
-                ? dateShipped[0]?.date
-                : '1/1/1900')
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
-                moment(
-                  item.DateShipped || (dateShipped.length > 0
-                    ? dateShipped[0]?.date
-                    : '1/1/1900')
-                ) <= moment(endDate).endOf('day').valueOf() &&
-                item.status === 'Shipped' &&
-                (item.orderNum?.toString().includes(filterText) ||
-                  item.companyprofile?.Company.toLowerCase().includes(
-                    filterText.toLowerCase()
-                  ) ||
-                  item.job_info?.poNum
-                    .toLowerCase()
-                    .includes(filterText.toLowerCase()))
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Shipped' &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
           );
         } else {
           return (
             moment(
-              item.DateShipped || (dateShipped.length > 0
-                ? dateShipped[0]?.date
-                : '1/1/1900')
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
-                moment(
-                  item.DateShipped || (dateShipped.length > 0
-                    ? dateShipped[0]?.date
-                    : '1/1/1900')
-                ) <= moment(endDate).endOf('day').valueOf() &&
-                item.status === 'Shipped'
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            item.status === 'Shipped'
           );
         }
       } else {
         if (filterText?.length > 0) {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                item.status?.includes(filterStatus) &&
-                (item.orderNum?.toString().includes(filterText) ||
-                  item.companyprofile?.Company.toLowerCase().includes(
-                    filterText?.toLowerCase()
-                  ) ||
-                  item?.job_info?.poNum
-                    .toLowerCase()
-                    .includes(filterText?.toLowerCase()))
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status?.includes(filterStatus) &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText?.toLowerCase()
+              ) ||
+              item?.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText?.toLowerCase()))
           );
         } else {
           return (
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                item?.status?.includes(filterStatus)
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item?.status?.includes(filterStatus)
           );
         }
       }
@@ -575,7 +565,11 @@ const OrderTable = (props) => {
 
         return {
           ...i,
-          dateOrdered: i.DateOrdered ? new Date(i.DateOrdered) : dateOrdered.length ? new Date(dateOrdered[0]?.date) : new Date(i.created_at),
+          dateOrdered: i.DateOrdered
+            ? new Date(i.DateOrdered)
+            : dateOrdered.length
+              ? new Date(dateOrdered[0]?.date)
+              : new Date(i.created_at),
         };
       });
 
@@ -696,7 +690,9 @@ const OrderTable = (props) => {
                 role?.type === 'administrator') ? (
                   <h3>
                   Net Total: $
-                    {data.reduce((acc, item) => acc + (item.total - item.tax), 0).toFixed(2)}
+                    {data
+                      .reduce((acc, item) => acc + (item.total - item.tax), 0)
+                      .toFixed(2)}
                   </h3>
                 ) : null}
               {role &&
@@ -705,7 +701,7 @@ const OrderTable = (props) => {
                 role.type === 'administrator') ? (
                   <h3>
                   Tax Total: $
-                    {data.reduce((acc, item) => acc + (item.tax), 0).toFixed(2)}
+                    {data.reduce((acc, item) => acc + item.tax, 0).toFixed(2)}
                   </h3>
                 ) : null}
             </Col>
@@ -721,21 +717,20 @@ const OrderTable = (props) => {
       <Row>
         {/* <Col lg='11' /> */}
         <Col>
-          {(role?.type === 'authenticated' ||
+          {role?.type === 'authenticated' ||
           role?.type === 'owner' ||
-          role?.type === 'administrator') ?
-            <Tooltip
-              title="View Reports"
-              onClick={exportReports}
-              placement="top"
-              className="mb-3 mt-3"
-            >
-              <IconButton>
-                <Receipt style={{ width: '40', height: '40' }} />
-              </IconButton>
-            </Tooltip>
-            : null
-          }
+          role?.type === 'administrator' ? (
+              <Tooltip
+                title="View Reports"
+                onClick={exportReports}
+                placement="top"
+                className="mb-3 mt-3"
+              >
+                <IconButton>
+                  <Receipt style={{ width: '40', height: '40' }} />
+                </IconButton>
+              </Tooltip>
+            ) : null}
           <Tooltip
             title="Export Edges"
             onClick={exportEdgesHelper}
