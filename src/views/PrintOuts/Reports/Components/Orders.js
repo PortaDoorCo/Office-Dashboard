@@ -17,6 +17,8 @@ export default (data, startDate, endDate, status) => {
       { text: 'Net Total' },
       { text: 'Tax' },
       { text: 'Salesman' },
+      { text: 'Date Invoiced' },
+      { text: 'Date Shipped' },
     ],
   ];
 
@@ -37,6 +39,8 @@ export default (data, startDate, endDate, status) => {
         { text: 'Net Total' },
         { text: 'Tax' },
         { text: 'Salesman' },
+        { text: 'Date Invoiced' },
+        { text: 'Date Shipped' },
       ],
     ];
   } else {
@@ -56,6 +60,8 @@ export default (data, startDate, endDate, status) => {
         { text: 'Net Total' },
         { text: 'Tax' },
         { text: 'Salesman' },
+        { text: 'Date Invoiced' },
+        { text: 'Date Shipped' },
       ],
     ];
   }
@@ -120,6 +126,14 @@ export default (data, startDate, endDate, status) => {
       return x.status === 'Ordered';
     });
 
+    const dateInvoiced = i?.tracking?.filter((x) => {
+      return x.status === 'Invoiced';
+    });
+
+    const dateShipped = i?.tracking?.filter((x) => {
+      return x.status === 'Shipped';
+    });
+
     if (status === 'Quote') {
       return tableBody.push([
         moment(i.created_at).format('MM/DD/YYYY'),
@@ -135,6 +149,8 @@ export default (data, startDate, endDate, status) => {
         `$${(i.total - i.tax)?.toFixed(2)}`,
         `$${i.tax?.toFixed(2)}`,
         i.sale?.fullName,
+        i.DateInvoiced ? moment(i.DateInvoiced).format('MM/DD/YYYY') : 'TBD',
+        i.DateShipped ? moment(i.DateShipped).format('MM/DD/YYYY') : 'TBD'
       ]);
     } else {
       return tableBody.push([
@@ -153,6 +169,12 @@ export default (data, startDate, endDate, status) => {
         `$${(i.total - i.tax)?.toFixed(2)}`,
         `$${i.tax?.toFixed(2)}`,
         i.sale?.fullName,
+        i.DateInvoiced || dateInvoiced.length > 0
+          ? moment(i.DateInvoiced || dateInvoiced[0].date).format('MM/DD/YYYY')
+          : 'TBD',
+        i.DateShipped || dateShipped.length > 0
+          ? moment(i.DateShipped || dateShipped[0].date).format('MM/DD/YYYY')
+          : 'TBD',
       ]);
     }
   });

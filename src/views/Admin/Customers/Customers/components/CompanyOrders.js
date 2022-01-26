@@ -24,6 +24,7 @@ import CustomerFile from '../../../../PrintOuts/Reports/CustomerFile';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
 import Invoice from '../../../../PrintOuts/Reports/Invoice';
+import Report1 from '../../../../PrintOuts/Reports/Report1';
 
 // momentLocaliser(moment);
 
@@ -271,7 +272,9 @@ const OrderTable = (props) => {
               item.DateCompleted ||
                 (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Complete' &&
+            (item.status.includes('Complete') ||
+            item.status.includes('Invoiced') ||
+            item.status.includes('Shipped')) &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -290,7 +293,9 @@ const OrderTable = (props) => {
               item.DateCompleted ||
                 (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Complete'
+            (item.status.includes('Complete') ||
+            item.status.includes('Invoiced') ||
+            item.status.includes('Shipped'))
           );
         }
       } else if (filterStatus === 'Shipped') {
@@ -560,7 +565,7 @@ const OrderTable = (props) => {
   const exportReports = () => {
     let newOrder = [...data];
 
-    if (filterStatus === 'Ordered') {
+    if (filterStatus !== 'Quote') {
       const newData = newOrder.map((i) => {
         const dateOrdered = i?.tracking?.filter((x) => {
           return x.status === 'Ordered';
@@ -568,12 +573,11 @@ const OrderTable = (props) => {
 
         return {
           ...i,
-          dateOrdered: new Date(dateOrdered[0]?.date),
+          dateOrdered: i.DateOrdered ? new Date(i.DateOrdered) : new Date(dateOrdered[0]?.date),
         };
       });
 
       const sortedData = newData.sort((a, b) => a.dateOrdered - b.dateOrdered);
-
       newOrder = sortedData;
     } else {
       const newData = newOrder.sort(
@@ -586,7 +590,7 @@ const OrderTable = (props) => {
     if (filterStatus === 'Invoiced') {
       Invoice(newOrder, startDate, endDate, filterStatus);
     } else {
-      CustomerFile(newOrder, startDate, endDate, company);
+      Report1(newOrder, startDate, endDate, filterStatus);
     }
 
     setToggleCleared(!toggleCleared);

@@ -229,40 +229,40 @@ const OrderTable = (props) => {
         if (filterText?.length > 0) {
           return (
             moment(
-              item.DateCompleted || (dateCompleted.length > 0
-                ? dateCompleted[0]?.date
-                : '1/1/1900')
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
-                moment(
-                  item.DateCompleted || (dateCompleted.length > 0
-                    ? dateCompleted[0]?.date
-                    : '1/1/1900')
-                ) <= moment(endDate).endOf('day').valueOf() &&
-                item.status === 'Complete' &&
-                (item.orderNum?.toString().includes(filterText) ||
-                  item.companyprofile?.Company.toLowerCase().includes(
-                    filterText.toLowerCase()
-                  ) ||
-                  item.job_info?.poNum
-                    .toLowerCase()
-                    .includes(filterText.toLowerCase()))
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            (item.status.includes('Complete') ||
+            item.status.includes('Invoiced') ||
+            item.status.includes('Shipped')) &&
+            (item.orderNum?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
           );
         } else {
           return (
             moment(
-              item.DateCompleted || (dateCompleted.length > 0
-                ? dateCompleted[0]?.date
-                : '1/1/1900')
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
-                moment(
-                  item.DateCompleted || (dateCompleted.length > 0
-                    ? dateCompleted[0]?.date
-                    : '1/1/1900')
-                ) <= moment(endDate).endOf('day').valueOf() &&
-                item.status === 'Complete'
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            (item.status.includes('Complete') ||
+            item.status.includes('Invoiced') ||
+            item.status.includes('Shipped'))
           );
         }
-      } else if (filterStatus === 'Shipped') {
+      }  else if (filterStatus === 'Shipped') {
         if (filterText?.length > 0) {
           return (
             moment(
@@ -567,7 +567,7 @@ const OrderTable = (props) => {
   const exportReports = () => {
     let newOrder = [...data];
 
-    if (filterStatus === 'Ordered') {
+    if (filterStatus !== 'Quote') {
       const newData = newOrder.map((i) => {
         const dateOrdered = i?.tracking?.filter((x) => {
           return x.status === 'Ordered';
@@ -575,7 +575,7 @@ const OrderTable = (props) => {
 
         return {
           ...i,
-          dateOrdered: i.DateOrdered ? new Date(i.DateOrdered) : new Date(dateOrdered[0]?.date),
+          dateOrdered: i.DateOrdered ? new Date(i.DateOrdered) : dateOrdered.length ? new Date(dateOrdered[0]?.date) : new Date(i.created_at),
         };
       });
 

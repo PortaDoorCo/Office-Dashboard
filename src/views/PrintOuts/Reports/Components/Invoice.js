@@ -6,6 +6,8 @@ export default (data, startDate, endDate, status) => {
       { text: 'Invoiced Date' },
       // { text: 'Date Ordered' },
       { text: 'Amount' },
+      { text: 'Net Amount' },
+      { text: 'Tax' },
       { text: 'Customer Name' },
       { text: 'Job ID' },
       { text: 'Job Description' },
@@ -13,9 +15,13 @@ export default (data, startDate, endDate, status) => {
   ];
 
   let total = 0;
+  let netTotal = 0;
+  let taxTotal = 0;
 
   data.forEach((i, index) => {
     total = total += i.total;
+    netTotal = netTotal += (i.total - i.tax);
+    taxTotal = taxTotal += i.tax;
 
     let name = i.job_info?.poNum?.length > 0 ? i.job_info?.poNum : 'None';
 
@@ -28,6 +34,8 @@ export default (data, startDate, endDate, status) => {
         ? moment(i.DateOrdered || dateInvoiced[0].date).format('MM/DD/YYYY')
         : 'TBD',
       `$${i.total?.toFixed(2)}`,
+      `$${(i.total - i.tax)?.toFixed(2)}`,
+      `$${i.tax?.toFixed(2)}`,
       i.job_info?.customer?.Company,
       i.orderNum,
       name,
@@ -38,6 +46,8 @@ export default (data, startDate, endDate, status) => {
     [
       'Totals',
       `$${total.toFixed(2)}`,
+      `$${netTotal.toFixed(2)}`,
+      `$${taxTotal.toFixed(2)}`,
       `Number of Invoices Printed:  ${data.length}`,
     ],
   ];
@@ -65,7 +75,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
-        widths: ['*', '*', '*', '*', '*'],
+        widths: ['*', '*', '*', '*', '*', '*', '*'],
       },
       layout: 'lightHorizontalLines',
     },
