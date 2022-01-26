@@ -142,7 +142,7 @@ export default (data, pricing) => {
             width: 200,
             stack: [
               {
-                text: `${part.notes ? part.notes.toUpperCase() : ''}`,
+                text: '',
                 style: 'headerFont',
                 alignment: 'center',
               },
@@ -575,7 +575,7 @@ export default (data, pricing) => {
           style: 'warrantyFont',
           alignment: 'left',
           margin: [0, 0, 0, 5],
-          id: 'liability-acknowledgement',
+          id: 'liability-invoice',
         },
       ],
     },
