@@ -185,7 +185,17 @@ const OrderTable = (props) => {
           );
         }
       } else if (filterStatus === 'Flagged') {
-        return item.flagged_for_adjustment;
+        return (
+          moment(
+            item.DateOrdered ||
+              (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+          ) >= moment(startDate).startOf('day').valueOf() &&
+          moment(
+            item.DateOrdered ||
+              (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+          ) <= moment(endDate).endOf('day').valueOf() &&
+          item.balance_due < 0
+        );
       } else if (filterStatus === 'Invoiced') {
         if (filterText?.length > 0) {
           return (
@@ -702,6 +712,15 @@ const OrderTable = (props) => {
                   <h3>
                   Tax Total: $
                     {data.reduce((acc, item) => acc + item.tax, 0).toFixed(2)}
+                  </h3>
+                ) : null}
+              {role &&
+              (role.type === 'authenticated' ||
+                role.type === 'owner' ||
+                role.type === 'administrator') && filterStatus === 'Flagged' ? (
+                  <h3>
+                  Balances: $
+                    {data.reduce((acc, item) => acc + item.balance_due, 0).toFixed(2)}
                   </h3>
                 ) : null}
             </Col>

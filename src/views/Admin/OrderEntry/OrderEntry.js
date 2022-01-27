@@ -218,6 +218,12 @@ class OrderEntry extends Component {
       }
     }
 
+    console.log({balance: total - values.balance_history
+      .slice(0)
+      .map((i, index) => {
+        return parseFloat(i.balance_paid);
+      }).reduce((acc, item) => acc + item, 0),});
+
     if (!isEdit) {
       order = {
         ...values,
