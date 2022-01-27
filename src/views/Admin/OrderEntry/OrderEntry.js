@@ -277,7 +277,11 @@ class OrderEntry extends Component {
         subTotals: subTotal,
         tax: tax,
         total: total,
-        balance_due: balance,
+        balance_due: total - values.balance_history
+          .slice(0)
+          .map((i, index) => {
+            return parseFloat(i.balance_paid);
+          }).reduce((acc, item) => acc + item, 0),
         status: values.job_info?.status?.value,
         dueDate: values.job_info?.DueDate,
         Shipping_Scheduled: values?.job_info?.Shipping_Scheduled,
