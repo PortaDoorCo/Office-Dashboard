@@ -16,7 +16,7 @@ const pricing = (parts, pricer) => {
 
       let wood = 0;
 
-      let feet = (width * 12) / 144;
+      let feet = Math.floor(((width * 12) / 144) * 100) / 100;
       let waste = feet * 1.25;
 
       let premium = 0;
@@ -60,7 +60,7 @@ const pricing = (parts, pricer) => {
     } else {
       if (i.item) {
 
-        let feet = (item.MOULDING_WIDTH * 12) / 144;
+        let feet = Math.floor(((item.MOULDING_WIDTH * 12) / 144) * 100) / 100; 
         let waste = feet * 1.25;
         let multiplier = item.Multiplier;
         let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
@@ -100,7 +100,7 @@ const pricing = (parts, pricer) => {
 
   const withQty = items.map((i, index) => {
     const price = i ? i : 0;
-    return price;
+    return Math.floor(price * 100) / 100;
   });
 
   return withQty;

@@ -21,6 +21,10 @@ const status = [
     label: 'Shipped',
     value: 'Shipped',
   },
+  {
+    label: 'Flagged',
+    value: 'Flagged',
+  },
 
 ];
   

@@ -10,6 +10,28 @@ const pricing = (parts, pricer) => {
           ? part.face_frame_finishing.PRICE
           : 0;
 
+
+        let width =
+              numQty(i.width) <= 24
+                ? 18
+                : numQty(i.width) >= 24 && numQty(i.width) <= 48
+                  ? 24
+                  : 36;
+
+    
+        if (numQty(i.width) > numQty(i.height)) {
+          height = numQty(i.width);
+    
+          width =
+                numQty(i.height) <= 24
+                  ? 18
+                  : numQty(i.height) >= 24 && numQty(i.height) <= 48
+                    ? 24
+                    : 36;
+                    
+          width_input = numQty(i.height);
+        }
+
         const width_finish = width_input >= 35 ? finish * 0.25 : 0;
         const height_finish = height >= 97 ? finish * 0.25 : 0;
 
@@ -19,7 +41,7 @@ const pricing = (parts, pricer) => {
         const finishing = finish + (width_finish + height_finish + opening_add);
 
         if (height > -1) {
-          return finishing;
+          return Math.floor(finishing * 100) / 100;;
         } else {
           return 0;
         }

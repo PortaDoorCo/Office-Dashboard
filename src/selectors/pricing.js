@@ -106,13 +106,13 @@ export const miscItemPriceSelector = createSelector(
 
       if (i.category === 'preselect') {
         if (i.price) {
-          price = parseFloat(i.price);
+          price = Math.floor(parseFloat(i.price) * 100) / 100; 
         } else {
           price = 0;
         }
       } else {
         if (i.pricePer) {
-          price = parseFloat(i.pricePer);
+          price = Math.floor(parseFloat(i.pricePer) * 100) / 100; 
         } else {
           price = 0;
         }
@@ -284,8 +284,10 @@ export const itemPriceSelector = createSelector(
                 width_input = numQty(i.height);
               }
 
+              console.log({sqft: ((width * height) / 144) * wood});
 
               const openings = parseInt(i.openings);
+              // const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
 
               let overcharge = 0;
 
@@ -297,8 +299,11 @@ export const itemPriceSelector = createSelector(
               const price =
                 eval(pricer && pricer.face_frame_pricing) + extraCost;
 
+
+              console.log({price});
+
               if (height > -1) {
-                return price;
+                return Math.floor(price * 100) / 100;;
               } else {
                 return 0;
               }
@@ -311,7 +316,7 @@ export const itemPriceSelector = createSelector(
         } else if (part?.orderType?.value === 'Custom') {
           if (part.dimensions) {
             const linePrice = part.dimensions.map((i, index) => {
-              return i.price;
+              return Math.floor(parseFloat(i.price) * 100) / 100;;
             });
 
             return linePrice;
@@ -354,16 +359,16 @@ export const itemPriceSelector = createSelector(
 
                 switch (add) {
                   case 'leftStileAdd':
-                    leftStileAdd = priceDifference / 4;
+                    leftStileAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
                     break;
                   case 'rightStileAdd':
-                    rightStileAdd = priceDifference / 4;
+                    rightStileAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
                     break;
                   case 'topRailAdd':
-                    topRailAdd = priceDifference / 4;
+                    topRailAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
                     break;
                   case 'bottomRailAdd':
-                    bottomRailAdd = priceDifference / 4;
+                    bottomRailAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
                     break;
                   default:
                     // code block
@@ -498,6 +503,129 @@ export const itemPriceSelector = createSelector(
                 }
               }
 
+              // if(part.orderType?.value === 'DF') {
+              //   if (part.profile) {
+              //     //leftStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.profile && part.profile.DF_Reduction) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.profile?.DF_Reduction, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.profile && part.profile.DF_Reduction) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.profile?.DF_Reduction, price);
+              //     }
+              //   } else {
+              //     //leftStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.design && part.design.DF_Reduction) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.design?.DF_Reduction, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.design && part.design.DF_Reduction) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.design?.DF_Reduction, price);
+              //     }
+              //   }
+              // } else {
+              //   if (part.profile) {
+              //     //leftStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //   } else {
+              //     //leftStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //   }
+              // }
+
+
               //test
               //Slab Doors here
 
@@ -549,8 +677,14 @@ export const itemPriceSelector = createSelector(
                     : 0;
               }
 
+
+              console.log({leftStileAdd});
+              console.log({rightStileAdd});
+              console.log({topRailAdd});
+              console.log({bottomRailAdd});
+
               if (height > -1) {
-                return price;
+                return Math.floor(price * 100) / 100;
               } else {
                 return 0;
               }
@@ -582,7 +716,7 @@ export const itemPriceSelector = createSelector(
             const price = eval(pricer.drawer_box_pricing);
 
             if (height > -1) {
-              return price;
+              return Math.floor(price * 100) / 100;
             } else {
               return 0;
             }
@@ -602,24 +736,46 @@ export const finishingSelector = createSelector(
     parts.map((part, index) => {
       if (part.dimensions) {
         const linePrice = part.dimensions.map((i) => {
-          const width_input = numQty(i.width);
-          const height = numQty(i.height);
+   
           const finish = part.face_frame_finishing
             ? part.face_frame_finishing.PRICE
             : 0;
 
+          let width_input = numQty(i.width);
+
+          let width =
+              numQty(i.width) <= 24
+                ? 18
+                : numQty(i.width) >= 24 && numQty(i.width) <= 48
+                  ? 24
+                  : 36;
+          let height = numQty(i.height);
+  
+          if (numQty(i.width) > numQty(i.height)) {
+            height = numQty(i.width);
+  
+            width =
+                numQty(i.height) <= 24
+                  ? 18
+                  : numQty(i.height) >= 24 && numQty(i.height) <= 48
+                    ? 24
+                    : 36;
+                  
+            width_input = numQty(i.height);
+          }
+  
           const width_finish = width_input >= 35 ? finish * 0.25 : 0;
           const height_finish = height >= 97 ? finish * 0.25 : 0;
-
+  
           const openings = parseInt(i.openings);
           const opening_add =
             openings > 1 && finish > 0 ? (openings - 1) * 5 : 0;
-
+  
           const finishing =
             finish + (width_finish + height_finish + opening_add);
-
+  
           if (height > -1) {
-            return finishing;
+            return Math.floor(finishing * 100) / 100; 
           } else {
             return 0;
           }
@@ -654,8 +810,8 @@ export const finishTotalSelector = createSelector(
 );
 
 export const linePriceSelector = createSelector(
-  [partListSelector, pricingSelector, itemPriceSelector],
-  (parts, pricer, item) =>
+  [partListSelector, finishingSelector, itemPriceSelector],
+  (parts, finish, item) =>
     parts.map((part, index) => {
       if (part.dimensions) {
         return part?.dimensions?.map((i, p) => {
@@ -671,10 +827,15 @@ export const linePriceSelector = createSelector(
               ) {
                 const base = item[index][p] * parseInt(i.qty);
                 const add = base * 0.2;
-                const price = base + add;
+                const price = base + add + (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
                 return price;
               } else {
-                return item[index][p] * parseInt(i.qty);
+                if(part?.orderType?.value === 'Face_Frame' ){
+                  return ((item[index][p] + finish[index][p]) * parseInt(i.qty)) + (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
+                } else {
+                  return (item[index][p] * parseInt(i.qty)) + (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
+                }
+                
               }
             } else {
               return 0;
@@ -750,7 +911,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
 
       let wood = 0;
 
-      let feet = (width * 12) / 144;
+      let feet = Math.floor(((width * 12) / 144) * 100) / 100;
       let waste = feet * 1.25;
 
       let premium = 0;
@@ -794,7 +955,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
       
     } else {
       if (i.item) {
-        let feet = (item.MOULDING_WIDTH * 12) / 144;
+        let feet = Math.floor(((item.MOULDING_WIDTH * 12) / 144) * 100) / 100; 
         let waste = feet * 1.25;
         let multiplier = item.Multiplier;
         let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
@@ -828,7 +989,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
       }
     }
 
-    return price;
+    return Math.floor(price * 100) / 100;;
   })
 );
 
@@ -838,7 +999,7 @@ export const mouldingLinePriceSelector = createSelector(
     pricer.map((i, index) => {
       const price = i ? i : 0;
 
-      return price;
+      return Math.floor(price * 100) / 100;;
     })
 );
 
@@ -947,18 +1108,18 @@ export const totalSelector = createSelector(
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
     if (orderType === 'Misc Items') {
       return (
-        subTotal.reduce((acc, item) => acc + item, 0) +
+        Math.floor((subTotal.reduce((acc, item) => acc + item, 0) +
         tax +
         nonDiscounted -
         discount
-      );
+        )) * 100) / 100;
     } else {
       return (
-        subTotal.reduce((acc, item) => acc + item, 0) +
+        Math.floor((subTotal.reduce((acc, item) => acc + item, 0) +
         tax +
         misc +
         nonDiscounted -
-        discount
+        discount) * 100) / 100
       );
     }
   }

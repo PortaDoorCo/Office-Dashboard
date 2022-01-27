@@ -1,6 +1,6 @@
 import moment from 'moment';
-import pdfDrawerBoxPricing from '../../../selectors/pdfs/pdfDrawerBoxPricing';
 import Size from '../Breakdowns/DrawerBoxes/Size';
+import pdfDrawerBoxPricing from '../../../selectors/pdfs/pdfDrawerBoxPricing';
 
 export default (data, pricing) => {
   const qty = data.part_list.map((part, i) => {
@@ -35,11 +35,11 @@ export default (data, pricing) => {
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
-  const discountTotal = subTotal * (data.discount / 100);
+  const discountTotal = Math.floor((subTotal * (data.discount / 100)) * 100) / 100;
 
-  const discountSubTotal = subTotal - discountTotal;
+  const discountSubTotal = Math.floor((subTotal - discountTotal) * 100) / 100; 
 
-  const order_sub_total = misc_total + discountSubTotal;
+  const order_sub_total = Math.floor((misc_total + discountSubTotal) * 100) / 100;  
 
   const tax = data.Taxable
     ? order_sub_total * (data.companyprofile.TaxRate / 100)
@@ -67,6 +67,8 @@ export default (data, pricing) => {
           { text: 'Total Cost', style: 'fonts' },
         ],
       ];
+
+
 
       part.dimensions.forEach((item, index) => {
         itemNum += 1;

@@ -369,6 +369,8 @@ class OrderEntry extends Component {
       role,
     } = this.props;
 
+    console.log({total});
+
     return (
       <div className="animated fadeIn order-tour">
         <CancelModal

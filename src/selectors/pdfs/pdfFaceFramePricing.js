@@ -81,8 +81,8 @@ const pricing = (parts, pricer) => {
           width_input = numQty(i.height);
         }
 
-
         const openings = parseInt(i.openings);
+        // const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
 
         let overcharge = 0;
 
@@ -94,7 +94,7 @@ const pricing = (parts, pricer) => {
 
 
         if (height > -1) {
-          return price * parseInt(i.qty);
+          return Math.floor((price * parseInt(i.qty)) * 100) / 100;
         } else {
           return 0;
         }

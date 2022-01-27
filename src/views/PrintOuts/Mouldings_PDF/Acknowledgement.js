@@ -26,11 +26,11 @@ export default (data, pricing) => {
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
-  const discountTotal = subTotal * (data.discount / 100);
+  const discountTotal = (subTotal * (data.discount / 100));
 
-  const discountSubTotal = subTotal - discountTotal;
+  const discountSubTotal = Math.floor((subTotal - discountTotal) * 100) / 100; 
 
-  const order_sub_total = misc_total + discountSubTotal;
+  const order_sub_total = Math.floor((misc_total + discountSubTotal) * 100) / 100;  
 
   const tax = data.Taxable
     ? order_sub_total * (data.companyprofile.TaxRate / 100)
@@ -67,7 +67,7 @@ export default (data, pricing) => {
 
       let wood = 0;
 
-      let feet = (width * 12) / 144;
+      let feet = Math.floor(((width * 12) / 144) * 100) / 100;
       let waste = feet * 1.25;
 
       let premium = 0;
@@ -106,12 +106,12 @@ export default (data, pricing) => {
 
       const bd_ft = waste * premium;
 
-      price = bd_ft * wood * linFt * 4;
+      price = Math.floor((bd_ft * wood * linFt * 4) * 100) / 100;
 
     } else {
       if (i.item) {
 
-        let feet = (item.MOULDING_WIDTH * 12) / 144;
+        let feet = Math.floor(((item.MOULDING_WIDTH * 12) / 144) * 100) / 100; 
         let waste = feet * 1.25;
         let multiplier = item.Multiplier;
         let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
@@ -140,7 +140,7 @@ export default (data, pricing) => {
         } else {
           premium = 1 + 1;
         }
-        price = a * newWood * parseFloat(linearFT) * premium;
+        price = Math.floor((a * newWood * parseFloat(linearFT) * premium) * 100) / 100;
       }
     }
 
@@ -287,70 +287,8 @@ export default (data, pricing) => {
         margin: [0, 0, 0, 0],
       }
       : null,
-    {
-      columns: [
-        {
-          text: '',
-          style: 'fonts',
-          width: 317,
-        },
-        {
-          text: 'Order Subtotal',
-          style: 'totals',
-          margin: [0, 0, 0, 0],
-          width: 120,
-          alignment: 'right',
-        },
-        {
-          text: `$${subTotal.toFixed(2)}`,
-          style: 'fonts',
-          margin: [0, 0, 0, 0],
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 10],
-    },
-    {
-      columns: [
-        { text: '', style: 'totals', width: 317 },
-        {
-          text: `${data.discount > 0 ? data.discount + '% Discount' : ''}`,
-          style: 'totals',
-          margin: [0, 0, 0, 0],
-          alignment: 'right',
-          width: 120,
-        },
-        {
-          text: `${data.discount > 0 ? '- $' + discountTotal.toFixed(2) : ''}`,
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 0],
-    },
-    {
-      text: '------------',
-      margin: [0, 0, 0, 0],
-      alignment: 'right',
-    },
-    {
-      columns: [
-        { text: '', style: 'totals', width: 317 },
-        {
-          text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
-          style: 'totals',
-          margin: [0, 0, 0, 0],
-          width: 120,
-          alignment: 'right',
-        },
-        {
-          text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 0],
-    },
+  
+
     data.misc_items.length > 0
       ? {
         columns: [
