@@ -783,6 +783,7 @@ const OrderTable = (props) => {
         conditionalRowStyles={conditionalRowStyles}
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
+        paginationRowsPerPageOptions={[10, 30, 50, 100, 200, 500, 1000]}
       />
       {modal ? (
         <OrderPage
