@@ -286,8 +286,8 @@ export const itemPriceSelector = createSelector(
 
               console.log({sqft: ((width * height) / 144) * wood});
 
-
-              const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
+              const openings = parseInt(i.openings);
+              // const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
 
               let overcharge = 0;
 
@@ -359,16 +359,16 @@ export const itemPriceSelector = createSelector(
 
                 switch (add) {
                   case 'leftStileAdd':
-                    leftStileAdd = (priceDifference / 4)  > 0 ? (priceDifference / 4)  : 0;
+                    leftStileAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
                     break;
                   case 'rightStileAdd':
-                    rightStileAdd = (priceDifference / 4) > 0 ? (priceDifference / 4) : 0;
+                    rightStileAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
                     break;
                   case 'topRailAdd':
-                    topRailAdd = (priceDifference / 4)  > 0 ? (priceDifference / 4)  : 0;
+                    topRailAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
                     break;
                   case 'bottomRailAdd':
-                    bottomRailAdd = (priceDifference / 4)  > 0 ? (priceDifference / 4)  : 0;
+                    bottomRailAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
                     break;
                   default:
                     // code block
@@ -443,127 +443,187 @@ export const itemPriceSelector = createSelector(
                 }
               }
 
-              if(part.orderType?.value === 'DF') {
-                if (part.profile) {
-                  //leftStile
-                  if (
-                    (part.profile && part.profile.PROFILE_WIDTH) !==
-                    numQty(i.leftStile)
-                  ) {
-                    calc('leftStile', part.profile?.PROFILE_WIDTH, price);
-                  }
-                  //rightStile
-                  if (
-                    (part.profile && part.profile.PROFILE_WIDTH) !==
-                    numQty(i.rightStile)
-                  ) {
-                    calc('rightStile', part.profile?.PROFILE_WIDTH, price);
-                  }
-                  //topRail
-                  if (
-                    (part.profile && part.profile.DF_Reduction) !==
-                    numQty(i.topRail)
-                  ) {
-                    calc('topRail', part.profile?.DF_Reduction, price);
-                  }
-                  //bottomRail
-                  if (
-                    (part.profile && part.profile.DF_Reduction) !==
-                    numQty(i.bottomRail)
-                  ) {
-                    calc('bottomRail', part.profile?.DF_Reduction, price);
-                  }
-                } else {
-                  //leftStile
-                  if (
-                    (part.design && part.design.PROFILE_WIDTH) !==
-                    numQty(i.leftStile)
-                  ) {
-                    calc('leftStile', part.design?.PROFILE_WIDTH, price);
-                  }
-                  //rightStile
-                  if (
-                    (part.design && part.design.PROFILE_WIDTH) !==
-                    numQty(i.rightStile)
-                  ) {
-                    calc('rightStile', part.design?.PROFILE_WIDTH, price);
-                  }
-                  //topRail
-                  if (
-                    (part.design && part.design.DF_Reduction) !==
-                    numQty(i.topRail)
-                  ) {
-                    calc('topRail', part.design?.DF_Reduction, price);
-                  }
-                  //bottomRail
-                  if (
-                    (part.design && part.design.DF_Reduction) !==
-                    numQty(i.bottomRail)
-                  ) {
-                    calc('bottomRail', part.design?.DF_Reduction, price);
-                  }
+              if (part.profile) {
+                //leftStile
+                if (
+                  (part.profile && part.profile.PROFILE_WIDTH) !==
+                  numQty(i.leftStile)
+                ) {
+                  calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+                }
+                //rightStile
+                if (
+                  (part.profile && part.profile.PROFILE_WIDTH) !==
+                  numQty(i.rightStile)
+                ) {
+                  calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+                }
+                //topRail
+                if (
+                  (part.profile && part.profile.PROFILE_WIDTH) !==
+                  numQty(i.topRail)
+                ) {
+                  calc('topRail', part.profile?.PROFILE_WIDTH, price);
+                }
+                //bottomRail
+                if (
+                  (part.profile && part.profile.PROFILE_WIDTH) !==
+                  numQty(i.bottomRail)
+                ) {
+                  calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
                 }
               } else {
-                if (part.profile) {
-                  //leftStile
-                  if (
-                    (part.profile && part.profile.PROFILE_WIDTH) !==
-                    numQty(i.leftStile)
-                  ) {
-                    calc('leftStile', part.profile?.PROFILE_WIDTH, price);
-                  }
-                  //rightStile
-                  if (
-                    (part.profile && part.profile.PROFILE_WIDTH) !==
-                    numQty(i.rightStile)
-                  ) {
-                    calc('rightStile', part.profile?.PROFILE_WIDTH, price);
-                  }
-                  //topRail
-                  if (
-                    (part.profile && part.profile.PROFILE_WIDTH) !==
-                    numQty(i.topRail)
-                  ) {
-                    calc('topRail', part.profile?.PROFILE_WIDTH, price);
-                  }
-                  //bottomRail
-                  if (
-                    (part.profile && part.profile.PROFILE_WIDTH) !==
-                    numQty(i.bottomRail)
-                  ) {
-                    calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
-                  }
-                } else {
-                  //leftStile
-                  if (
-                    (part.design && part.design.PROFILE_WIDTH) !==
-                    numQty(i.leftStile)
-                  ) {
-                    calc('leftStile', part.design?.PROFILE_WIDTH, price);
-                  }
-                  //rightStile
-                  if (
-                    (part.design && part.design.PROFILE_WIDTH) !==
-                    numQty(i.rightStile)
-                  ) {
-                    calc('rightStile', part.design?.PROFILE_WIDTH, price);
-                  }
-                  //topRail
-                  if (
-                    (part.design && part.design.PROFILE_WIDTH) !==
-                    numQty(i.topRail)
-                  ) {
-                    calc('topRail', part.design?.PROFILE_WIDTH, price);
-                  }
-                  //bottomRail
-                  if (
-                    (part.design && part.design.PROFILE_WIDTH) !==
-                    numQty(i.bottomRail)
-                  ) {
-                    calc('bottomRail', part.design?.PROFILE_WIDTH, price);
-                  }
+                //leftStile
+                if (
+                  (part.design && part.design.PROFILE_WIDTH) !==
+                  numQty(i.leftStile)
+                ) {
+                  calc('leftStile', part.design?.PROFILE_WIDTH, price);
+                }
+                //rightStile
+                if (
+                  (part.design && part.design.PROFILE_WIDTH) !==
+                  numQty(i.rightStile)
+                ) {
+                  calc('rightStile', part.design?.PROFILE_WIDTH, price);
+                }
+                //topRail
+                if (
+                  (part.design && part.design.PROFILE_WIDTH) !==
+                  numQty(i.topRail)
+                ) {
+                  calc('topRail', part.design?.PROFILE_WIDTH, price);
+                }
+                //bottomRail
+                if (
+                  (part.design && part.design.PROFILE_WIDTH) !==
+                  numQty(i.bottomRail)
+                ) {
+                  calc('bottomRail', part.design?.PROFILE_WIDTH, price);
                 }
               }
+
+              // if(part.orderType?.value === 'DF') {
+              //   if (part.profile) {
+              //     //leftStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.profile && part.profile.DF_Reduction) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.profile?.DF_Reduction, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.profile && part.profile.DF_Reduction) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.profile?.DF_Reduction, price);
+              //     }
+              //   } else {
+              //     //leftStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.design && part.design.DF_Reduction) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.design?.DF_Reduction, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.design && part.design.DF_Reduction) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.design?.DF_Reduction, price);
+              //     }
+              //   }
+              // } else {
+              //   if (part.profile) {
+              //     //leftStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //   } else {
+              //     //leftStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //   }
+              // }
 
 
               //test
@@ -851,7 +911,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
 
       let wood = 0;
 
-      let feet = (width * 12) / 144;
+      let feet = Math.floor(((width * 12) / 144) * 100) / 100;
       let waste = feet * 1.25;
 
       let premium = 0;
@@ -895,7 +955,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
       
     } else {
       if (i.item) {
-        let feet = (item.MOULDING_WIDTH * 12) / 144;
+        let feet = Math.floor(((item.MOULDING_WIDTH * 12) / 144) * 100) / 100; 
         let waste = feet * 1.25;
         let multiplier = item.Multiplier;
         let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
@@ -1048,18 +1108,18 @@ export const totalSelector = createSelector(
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
     if (orderType === 'Misc Items') {
       return (
-        subTotal.reduce((acc, item) => acc + item, 0) +
+        Math.floor((subTotal.reduce((acc, item) => acc + item, 0) +
         tax +
         nonDiscounted -
         discount
-      );
+        )) * 100) / 100;
     } else {
       return (
-        subTotal.reduce((acc, item) => acc + item, 0) +
+        Math.floor((subTotal.reduce((acc, item) => acc + item, 0) +
         tax +
         misc +
         nonDiscounted -
-        discount
+        discount) * 100) / 100
       );
     }
   }

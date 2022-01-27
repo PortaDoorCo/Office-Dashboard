@@ -91,16 +91,16 @@ const pricing = (parts, pricer) => {
 
         switch (add) {
           case 'leftStileAdd':
-            leftStileAdd = (priceDifference / 4)  > 0 ? (priceDifference / 4)  : 0;
+            leftStileAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
             break;
           case 'rightStileAdd':
-            rightStileAdd = (priceDifference / 4) > 0 ? (priceDifference / 4) : 0;
+            rightStileAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
             break;
           case 'topRailAdd':
-            topRailAdd = (priceDifference / 4)  > 0 ? (priceDifference / 4)  : 0;
+            topRailAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
             break;
           case 'bottomRailAdd':
-            bottomRailAdd = (priceDifference / 4)  > 0 ? (priceDifference / 4)  : 0;
+            bottomRailAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
             break;
           default:
             // code block
@@ -165,127 +165,189 @@ const pricing = (parts, pricer) => {
         }
       }
 
-      if(part.orderType?.value === 'DF') {
-        if (part.profile) {
-          //leftStile
-          if (
-            (part.profile && part.profile.PROFILE_WIDTH) !==
-            numQty(i.leftStile)
-          ) {
-            calc('leftStile', part.profile?.PROFILE_WIDTH, price);
-          }
-          //rightStile
-          if (
-            (part.profile && part.profile.PROFILE_WIDTH) !==
-            numQty(i.rightStile)
-          ) {
-            calc('rightStile', part.profile?.PROFILE_WIDTH, price);
-          }
-          //topRail
-          if (
-            (part.profile && part.profile.DF_Reduction) !==
-            numQty(i.topRail)
-          ) {
-            calc('topRail', part.profile?.DF_Reduction, price);
-          }
-          //bottomRail
-          if (
-            (part.profile && part.profile.DF_Reduction) !==
-            numQty(i.bottomRail)
-          ) {
-            calc('bottomRail', part.profile?.DF_Reduction, price);
-          }
-        } else {
-          //leftStile
-          if (
-            (part.design && part.design.PROFILE_WIDTH) !==
-            numQty(i.leftStile)
-          ) {
-            calc('leftStile', part.design?.PROFILE_WIDTH, price);
-          }
-          //rightStile
-          if (
-            (part.design && part.design.PROFILE_WIDTH) !==
-            numQty(i.rightStile)
-          ) {
-            calc('rightStile', part.design?.PROFILE_WIDTH, price);
-          }
-          //topRail
-          if (
-            (part.design && part.design.DF_Reduction) !==
-            numQty(i.topRail)
-          ) {
-            calc('topRail', part.design?.DF_Reduction, price);
-          }
-          //bottomRail
-          if (
-            (part.design && part.design.DF_Reduction) !==
-            numQty(i.bottomRail)
-          ) {
-            calc('bottomRail', part.design?.DF_Reduction, price);
-          }
+      if (part.profile) {
+        //leftStile
+        if (
+          (part.profile && part.profile.PROFILE_WIDTH) !==
+          numQty(i.leftStile)
+        ) {
+          calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+        }
+        //rightStile
+        if (
+          (part.profile && part.profile.PROFILE_WIDTH) !==
+          numQty(i.rightStile)
+        ) {
+          calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+        }
+        //topRail
+        if (
+          (part.profile && part.profile.PROFILE_WIDTH) !==
+          numQty(i.topRail)
+        ) {
+          calc('topRail', part.profile?.PROFILE_WIDTH, price);
+        }
+        //bottomRail
+        if (
+          (part.profile && part.profile.PROFILE_WIDTH) !==
+          numQty(i.bottomRail)
+        ) {
+          calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
         }
       } else {
-        if (part.profile) {
-          //leftStile
-          if (
-            (part.profile && part.profile.PROFILE_WIDTH) !==
-            numQty(i.leftStile)
-          ) {
-            calc('leftStile', part.profile?.PROFILE_WIDTH, price);
-          }
-          //rightStile
-          if (
-            (part.profile && part.profile.PROFILE_WIDTH) !==
-            numQty(i.rightStile)
-          ) {
-            calc('rightStile', part.profile?.PROFILE_WIDTH, price);
-          }
-          //topRail
-          if (
-            (part.profile && part.profile.PROFILE_WIDTH) !==
-            numQty(i.topRail)
-          ) {
-            calc('topRail', part.profile?.PROFILE_WIDTH, price);
-          }
-          //bottomRail
-          if (
-            (part.profile && part.profile.PROFILE_WIDTH) !==
-            numQty(i.bottomRail)
-          ) {
-            calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
-          }
-        } else {
-          //leftStile
-          if (
-            (part.design && part.design.PROFILE_WIDTH) !==
-            numQty(i.leftStile)
-          ) {
-            calc('leftStile', part.design?.PROFILE_WIDTH, price);
-          }
-          //rightStile
-          if (
-            (part.design && part.design.PROFILE_WIDTH) !==
-            numQty(i.rightStile)
-          ) {
-            calc('rightStile', part.design?.PROFILE_WIDTH, price);
-          }
-          //topRail
-          if (
-            (part.design && part.design.PROFILE_WIDTH) !==
-            numQty(i.topRail)
-          ) {
-            calc('topRail', part.design?.PROFILE_WIDTH, price);
-          }
-          //bottomRail
-          if (
-            (part.design && part.design.PROFILE_WIDTH) !==
-            numQty(i.bottomRail)
-          ) {
-            calc('bottomRail', part.design?.PROFILE_WIDTH, price);
-          }
+        //leftStile
+        if (
+          (part.design && part.design.PROFILE_WIDTH) !==
+          numQty(i.leftStile)
+        ) {
+          calc('leftStile', part.design?.PROFILE_WIDTH, price);
+        }
+        //rightStile
+        if (
+          (part.design && part.design.PROFILE_WIDTH) !==
+          numQty(i.rightStile)
+        ) {
+          calc('rightStile', part.design?.PROFILE_WIDTH, price);
+        }
+        //topRail
+        if (
+          (part.design && part.design.PROFILE_WIDTH) !==
+          numQty(i.topRail)
+        ) {
+          calc('topRail', part.design?.PROFILE_WIDTH, price);
+        }
+        //bottomRail
+        if (
+          (part.design && part.design.PROFILE_WIDTH) !==
+          numQty(i.bottomRail)
+        ) {
+          calc('bottomRail', part.design?.PROFILE_WIDTH, price);
         }
       }
+
+
+
+      // if(part.orderType?.value === 'DF') {
+      //   if (part.profile) {
+      //     //leftStile
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.leftStile)
+      //     ) {
+      //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //rightStile
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.rightStile)
+      //     ) {
+      //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //topRail
+      //     if (
+      //       (part.profile && part.profile.DF_Reduction) !==
+      //       numQty(i.topRail)
+      //     ) {
+      //       calc('topRail', part.profile?.DF_Reduction, price);
+      //     }
+      //     //bottomRail
+      //     if (
+      //       (part.profile && part.profile.DF_Reduction) !==
+      //       numQty(i.bottomRail)
+      //     ) {
+      //       calc('bottomRail', part.profile?.DF_Reduction, price);
+      //     }
+      //   } else {
+      //     //leftStile
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.leftStile)
+      //     ) {
+      //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //rightStile
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.rightStile)
+      //     ) {
+      //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //topRail
+      //     if (
+      //       (part.design && part.design.DF_Reduction) !==
+      //       numQty(i.topRail)
+      //     ) {
+      //       calc('topRail', part.design?.DF_Reduction, price);
+      //     }
+      //     //bottomRail
+      //     if (
+      //       (part.design && part.design.DF_Reduction) !==
+      //       numQty(i.bottomRail)
+      //     ) {
+      //       calc('bottomRail', part.design?.DF_Reduction, price);
+      //     }
+      //   }
+      // } else {
+      //   if (part.profile) {
+      //     //leftStile
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.leftStile)
+      //     ) {
+      //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //rightStile
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.rightStile)
+      //     ) {
+      //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //topRail
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.topRail)
+      //     ) {
+      //       calc('topRail', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //bottomRail
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.bottomRail)
+      //     ) {
+      //       calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //   } else {
+      //     //leftStile
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.leftStile)
+      //     ) {
+      //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //rightStile
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.rightStile)
+      //     ) {
+      //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //topRail
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.topRail)
+      //     ) {
+      //       calc('topRail', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //bottomRail
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.bottomRail)
+      //     ) {
+      //       calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //   }
+      // }
 
 
       //test

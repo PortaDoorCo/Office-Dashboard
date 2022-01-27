@@ -287,70 +287,8 @@ export default (data, pricing) => {
         margin: [0, 0, 0, 0],
       }
       : null,
-    {
-      columns: [
-        {
-          text: '',
-          style: 'fonts',
-          width: 317,
-        },
-        {
-          text: 'Order Subtotal',
-          style: 'totals',
-          margin: [0, 0, 0, 0],
-          width: 120,
-          alignment: 'right',
-        },
-        {
-          text: `$${subTotal.toFixed(2)}`,
-          style: 'fonts',
-          margin: [0, 0, 0, 0],
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 10],
-    },
-    {
-      columns: [
-        { text: '', style: 'totals', width: 317 },
-        {
-          text: `${data.discount > 0 ? data.discount + '% Discount' : ''}`,
-          style: 'totals',
-          margin: [0, 0, 0, 0],
-          alignment: 'right',
-          width: 120,
-        },
-        {
-          text: `${data.discount > 0 ? '- $' + discountTotal.toFixed(2) : ''}`,
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 0],
-    },
-    {
-      text: '------------',
-      margin: [0, 0, 0, 0],
-      alignment: 'right',
-    },
-    {
-      columns: [
-        { text: '', style: 'totals', width: 317 },
-        {
-          text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
-          style: 'totals',
-          margin: [0, 0, 0, 0],
-          width: 120,
-          alignment: 'right',
-        },
-        {
-          text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 0],
-    },
+
+
     data.misc_items.length > 0
       ? {
         columns: [

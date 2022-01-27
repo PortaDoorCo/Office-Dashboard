@@ -81,8 +81,8 @@ const pricing = (parts, pricer) => {
           width_input = numQty(i.height);
         }
 
-
-        const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
+        const openings = parseInt(i.openings);
+        // const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
 
         let overcharge = 0;
 
