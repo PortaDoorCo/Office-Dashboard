@@ -710,10 +710,13 @@ export const itemPriceSelector = createSelector(
             const width = numQty(i.width);
             const height = numQty(i.height);
             const depth = numQty(i.depth);
-
+            const qty = parseInt(i.qty);
+            const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
             const scoop = i.scoop.PRICE;
 
-            const price = eval(pricer.drawer_box_pricing);
+            const price = (eval(pricer.drawer_box_pricing) + extraCost);
+
+            console.log({price: Math.floor(price * 100) / 100});
 
             if (height > -1) {
               return Math.floor(price * 100) / 100;
@@ -1051,14 +1054,14 @@ export const mouldingLineItemSelector = createSelector(
 
 export const subTotal_Total = createSelector(
   [subTotalSelector, miscTotalSelector],
-  (subTotal, misc) => subTotal.reduce((acc, item) => acc + item, 0)
+  (subTotal, misc) => Math.floor(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100
 );
 
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector, orderTypeSelector],
   (subTotal, misc, discount, orderType) => {
     if (orderType) {
-      return subTotal.reduce((acc, item) => acc + item, 0) * discount;
+      return Math.floor((subTotal.reduce((acc, item) => acc + item, 0) * discount) * 100) / 100;
     } else {
       return 0;
     }
@@ -1108,18 +1111,18 @@ export const totalSelector = createSelector(
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
     if (orderType === 'Misc Items') {
       return (
-        Math.floor((subTotal.reduce((acc, item) => acc + item, 0) +
+        (subTotal.reduce((acc, item) => acc + item, 0) +
         tax +
         nonDiscounted -
         discount
-        )) * 100) / 100;
+        ));
     } else {
       return (
-        Math.floor((subTotal.reduce((acc, item) => acc + item, 0) +
+        (subTotal.reduce((acc, item) => acc + item, 0) +
         tax +
         misc +
         nonDiscounted -
-        discount) * 100) / 100
+        discount)
       );
     }
   }

@@ -47,9 +47,9 @@ export default (data, pricing) => {
 
   const discountTotal = Math.floor((subTotal * (data.discount / 100)) * 100) / 100;
 
-  const discountSubTotal = Math.floor((subTotal - discountTotal) * 100) / 100; 
+  const discountSubTotal = (subTotal - discountTotal);
 
-  const order_sub_total = Math.floor((misc_total + discountSubTotal) * 100) / 100;  
+  const order_sub_total = (misc_total + discountSubTotal);
 
   const tax = data.Taxable
     ? order_sub_total * (data.companyprofile.TaxRate / 100)
