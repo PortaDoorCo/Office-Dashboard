@@ -29,6 +29,8 @@ export default (data, pricing) => {
 
   const prices = pdfDrawerBoxPricing(data.part_list, pricing[0]);
 
+  console.log({prices});
+
   const subTotal = prices
     .map((i) => i.reduce((acc, item) => acc + item, 0))
     .reduce((acc, item) => acc + item, 0);
@@ -37,9 +39,9 @@ export default (data, pricing) => {
 
   const discountTotal = Math.floor((subTotal * (data.discount / 100)) * 100) / 100;
 
-  const discountSubTotal = Math.floor((subTotal - discountTotal) * 100) / 100; 
+  const discountSubTotal = (subTotal - discountTotal);
 
-  const order_sub_total = Math.floor((misc_total + discountSubTotal) * 100) / 100;  
+  const order_sub_total = (misc_total + discountSubTotal);
 
   const tax = data.Taxable
     ? order_sub_total * (data.companyprofile.TaxRate / 100)
