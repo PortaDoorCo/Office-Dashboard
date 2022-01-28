@@ -12,7 +12,7 @@ const discountSelector = (state) => {
   if (orders) {
     if (state.form.Order.values && state.form.Order.values.discount) {
       if (state.form.Order.values.discount > 0) {
-        return numQty(state.form.Order.values.discount) / 100;
+        return Math.floor((numQty(state.form.Order.values.discount) / 100) * 100) / 100;
       } else {
         return 0;
       }
@@ -1061,7 +1061,7 @@ export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector, orderTypeSelector],
   (subTotal, misc, discount, orderType) => {
     if (orderType) {
-      return Math.floor((subTotal.reduce((acc, item) => acc + item, 0) * discount) * 100) / 100;
+      return (subTotal.reduce((acc, item) => acc + item, 0) * discount);
     } else {
       return 0;
     }

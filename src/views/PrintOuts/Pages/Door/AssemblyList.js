@@ -146,8 +146,11 @@ const DoorPDF = async (
       return newData;
     });
 
+
+
     newParts.map((k) => {
       if (k.part_list.length > 0) {
+        console.log({Assembly: AssemblyList(k, breakdowns)});
         return Content.push(AssemblyList(k, breakdowns));
       } else {
         return null;
