@@ -170,6 +170,10 @@ const DoorPDF = async (
       pageOrientation: 'portrait',
       content: ContentSorted,
       pageMargins: [40, 200, 40, 60],
+      // pageBreakBefore: function (currentNode, followingNodesOnPage,
+      //   nodesOnNextPage, previousNodesOnPage) {
+      //   return currentNode.pageNumbers.length > 1;
+      // },
       header: function (currentPage) {
         return headerInfo;
       },
