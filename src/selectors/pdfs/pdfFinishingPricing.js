@@ -4,9 +4,9 @@ const pricing = (parts, pricer) => {
   const item = parts.map((part, index) => {
     if (part.dimensions) {
       const linePrice = part.dimensions.map((i) => {
-        const width_input = numQty(i.width);
-        const height = numQty(i.height);
-        const finish = part.face_frame_finishing
+        let width_input = numQty(i.width);
+        let height = numQty(i.height);
+        let finish = part.face_frame_finishing
           ? part.face_frame_finishing.PRICE
           : 0;
 
