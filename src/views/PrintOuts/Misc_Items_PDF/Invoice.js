@@ -15,12 +15,9 @@ export default (data, pricing) => {
     if (i.category === 'preselect') {
       return parseFloat(i.qty) * Math.floor((parseFloat(i.price) * 100) / 100);
     } else {
-      return i.pricePer ? parseFloat(i.qty) * Math.floor((parseFloat(i.pricePer)) * 100) / 100 : 0;
+      return i.pricePer ? parseFloat(i.qty) * parseFloat(i.pricePer) : 0;
     }
   });
-
-
-  
 
   const subTotal = prices
     .reduce((acc, item) => acc + item, 0);
@@ -29,9 +26,12 @@ export default (data, pricing) => {
 
   const discountTotal = (subTotal * (Math.floor((data.discount / 100) * 100) / 100));
 
-  const discountSubTotal = misc_total - discountTotal;
+  console.log({discountTotal});
+
+  const discountSubTotal = misc_total - (Math.floor(discountTotal * 100) / 100);
 
   const order_sub_total =  discountSubTotal;
+
 
   const tax = data.Taxable
     ? order_sub_total * (data.companyprofile.TaxRate / 100)
