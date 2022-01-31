@@ -13,14 +13,11 @@ export default (data, pricing) => {
 
   const prices = data.misc_items.map((i) => {
     if (i.category === 'preselect') {
-      return parseFloat(i.qty) * parseFloat(i.price);
+      return parseFloat(i.qty) * Math.floor((parseFloat(i.price) * 100) / 100);
     } else {
       return i.pricePer ? parseFloat(i.qty) * parseFloat(i.pricePer) : 0;
     }
   });
-
-
-  
 
   const subTotal = prices
     .reduce((acc, item) => acc + item, 0);
@@ -29,9 +26,12 @@ export default (data, pricing) => {
 
   const discountTotal = (subTotal * (Math.floor((data.discount / 100) * 100) / 100));
 
-  const discountSubTotal = (subTotal - discountTotal);
+  console.log({discountTotal});
 
-  const order_sub_total = (misc_total + discountSubTotal);
+  const discountSubTotal = misc_total - (Math.floor(discountTotal * 100) / 100);
+
+  const order_sub_total =  discountSubTotal;
+
 
   const tax = data.Taxable
     ? order_sub_total * (data.companyprofile.TaxRate / 100)
