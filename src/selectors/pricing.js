@@ -112,7 +112,7 @@ export const miscItemPriceSelector = createSelector(
         }
       } else {
         if (i.pricePer) {
-          price = Math.floor(parseFloat(i.pricePer) * 100) / 100; 
+          price = parseFloat(i.pricePer);
         } else {
           price = 0;
         }
@@ -126,10 +126,12 @@ export const miscItemLinePriceSelector = createSelector(
   (parts, pricer, item) =>
     parts.map((i, index) => {
       let price = 0;
+
+      console.log({pricer});
       if (i.category === 'preselect') {
         if (i.item) {
           if (i.qty) {
-            price = pricer[index] * parseFloat(i.qty);
+            price = pricer[index] * parseInt(i.qty);
           } else {
             price = 0;
           }
@@ -139,7 +141,7 @@ export const miscItemLinePriceSelector = createSelector(
       } else {
         if (i.pricePer) {
           if (i.qty) {
-            price = pricer[index] * parseFloat(i.qty);
+            price = pricer[index] * parseInt(i.qty);
           } else {
             price = 0;
           }
