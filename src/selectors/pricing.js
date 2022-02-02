@@ -1084,10 +1084,10 @@ export const taxSelector = createSelector(
   (subTotal, tax, discount, dis, misc, state, nonDiscounted, orderType) => {
     if (orderType === 'Misc Items') {
       return (
-        (subTotal.reduce((acc, item) => acc + item, 0) -
+        Math.floor(((subTotal.reduce((acc, item) => acc + item, 0) -
           discount +
           nonDiscounted) *
-        tax
+        tax) * 100) / 100
       );
     } else {
       return (
