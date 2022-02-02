@@ -269,7 +269,22 @@ class OrderPage extends Component {
     delete newOrder['created_at'];
     delete newOrder['updatedAt'];
     delete newOrder['published_at'];
+    delete newOrder['DateOrdered'];
+    delete newOrder['DateInvoiced'];
+    delete newOrder['DateShipped'];
+    delete newOrder['DateCompleted'];
+    delete newOrder['DateInProduction'];
+    delete newOrder['scan_date'];
 
+    delete newOrder['job_info.DateOrdered'];
+    delete newOrder['job_info.DateInvoiced'];
+    delete newOrder['job_info.DateShipped'];
+    delete newOrder['job_info.DateCompleted'];
+    delete newOrder['job_info.DateInProduction'];
+    delete newOrder['job_info.scan_date'];
+
+    
+    
     newOrder['balance_history'] = [{ balance_paid: 0 }];
     newOrder['balance_paid'] = 0;
     newOrder['files'] = [];

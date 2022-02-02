@@ -61,7 +61,6 @@ export default (data, breakdowns) => {
         return {
           ...item,
           rail_height: Rails(item, n, breakdowns).map((rail) => {
-    
             return rail.height;
           })[0],
         };
@@ -103,7 +102,6 @@ export default (data, breakdowns) => {
           design: item.design,
         };
 
-
         tableBody.push([
           { text: item.item ? item.item : index + 1, style: 'fonts' },
           {
@@ -130,9 +128,9 @@ export default (data, breakdowns) => {
           },
           {
             text:
-                i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
-                  ? i.cope_design.NAME
-                  : '',
+              i.cope_design && i.cope_design.TOP_RAIL_ADD > 0
+                ? i.cope_design.NAME
+                : '',
             style: 'fonts',
           },
           {
@@ -140,16 +138,11 @@ export default (data, breakdowns) => {
             style: 'fonts',
           },
         ]);
-        
       }
     });
 
-
-
-
     return [
-
-      { 
+      {
         stack: [
           index === 0
             ? {
@@ -159,27 +152,29 @@ export default (data, breakdowns) => {
                   alignment: 'center',
                   style: 'fontsBold',
                   stack: [
-                    data.job_info?.Shop_Notes ?{
-                      text: `${
-                        data.job_info?.Shop_Notes
-                          ? data.job_info?.Shop_Notes?.toUpperCase()
-                          : ''
-                      }`,
-                    } : null,
-                    { text : data.misc_items.map(i => {
-                      if(i.category === 'preselect'){
-                        if(i.item.NAME.includes('Delivery')){
-                          return null;
-                        } else {
-                          return `${i.item?.NAME} \n`;
+                      data.job_info?.Shop_Notes
+                        ? {
+                          text: `${
+                              data.job_info?.Shop_Notes
+                                ? data.job_info?.Shop_Notes?.toUpperCase()
+                                : ''
+                          }`,
                         }
-                        
-                      } else {
-                        return `${i.item2} \n`;
-                      }
-                    })
-                    }
-                  ]
+                        : null,
+                      {
+                        text: data.misc_items.map((i) => {
+                          if (i.category === 'preselect') {
+                            if (i.item.NAME.includes('Delivery')) {
+                              return null;
+                            } else {
+                              return `${i.item?.NAME} \n`;
+                            }
+                          } else {
+                            return `${i.item2} \n`;
+                          }
+                        }),
+                      },
+                  ],
                 },
                 { text: '' },
               ],
@@ -189,39 +184,48 @@ export default (data, breakdowns) => {
           {
             margin: [0, 10, 0, 0],
             stack: [
-              {            columns: [
-                {
-                  text: `${i.thickness?.grade_name ? i.thickness?.grade_name : ''}${
-                    i.woodtype.NAME
-                  } - ${i.thickness.thickness_1} - ${i.thickness.thickness_2}"`,
-                  style: 'woodtype',
-                  width: 200,
-                },
-                {
-                  text: `IP: ${
-                    i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+              {
+                columns: [
+                  {
+                    text: `${
+                      i.thickness?.grade_name ? i.thickness?.grade_name : ''
+                    }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
+                      i.thickness.thickness_2
+                    }"`,
+                    style: 'woodtype',
+                    width: 200,
+                  },
+                  {
+                    text: `IP: ${
+                      i.profile
+                        ? i.profile.NAME
+                        : i.design
+                          ? i.design.NAME
+                          : 'None'
+                    }`,
+                    style: 'woodtype',
+                    alignment: 'center',
+                  },
+                  {
+                    text: 'RAILS',
+                    alignment: 'right',
+                    style: 'woodtype',
+                  },
+                ],
+              },
+              i.applied_profile && i.applied_profile.NAME !== 'None'
+                ? {
+                  text: `${
+                    i.applied_profile && i.applied_profile.NAME !== 'None'
+                      ? i.applied_profile.NAME.toUpperCase()
+                      : ''
                   }`,
-                  style: 'woodtype',
+                  style: 'headerFont',
                   alignment: 'center',
-                },
-                {
-                  text: 'RAILS',
-                  alignment: 'right',
-                  style: 'woodtype',
-                },
-              ]},
-              i.applied_profile && i.applied_profile.NAME !== 'None' ? {
-                text: `${
-                  i.applied_profile && i.applied_profile.NAME !== 'None'
-                    ? i.applied_profile.NAME.toUpperCase()
-                    : ''
-                }`,
-                style: 'headerFont',
-                alignment: 'center',
-                margin: [0,10,0,0]
-              } : null,
-            ]
-
+                  margin: [0, 10, 0, 0],
+                }
+                : null,
+            ],
           },
           {
             text: '==============================================================================',
@@ -260,9 +264,9 @@ export default (data, breakdowns) => {
             alignment: 'center',
           },
 
-        // { text: '', pageBreak: 'before' }
-        ]}
-
+          // { text: '', pageBreak: 'before' }
+        ],
+      },
     ];
   });
 

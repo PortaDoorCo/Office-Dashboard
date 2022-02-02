@@ -470,7 +470,7 @@ export default (data, pricing) => {
     },
   
     {
-      unbreakable: true,
+
       stack: [
         {
           columns: [

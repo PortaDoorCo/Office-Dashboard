@@ -87,7 +87,7 @@ export default (data, breakdowns) => {
               }
               : null,
             {
-              unbreakable: true,
+
               stack: [
                 {
                   margin: [0, 10, 0, 0],
@@ -212,7 +212,6 @@ export default (data, breakdowns) => {
             },
             {
               margin: [0, 0, 0, 10],
-              unbreakable: true,
               table: {
                 headerRows: 1,
                 widths: [22, 15, 110, 40, 155, '*'],

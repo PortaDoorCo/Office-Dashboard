@@ -155,7 +155,7 @@ export default (data, breakdowns) => {
             }
             : null,
           {
-            unbreakable: true,
+
             margin: [0, 10, 0, 0],
             stack: [
               {            columns: [
@@ -276,7 +276,7 @@ export default (data, breakdowns) => {
     {
       stack: [
         {
-          unbreakable: true,
+
           columns: [
             {
               text: 'OTHER ITEMS',
@@ -293,7 +293,7 @@ export default (data, breakdowns) => {
         },
         data.misc_items.length > 0
           ? {
-            unbreakable: true,
+
             columns: [
               {
                 text: data.misc_items.map((i) => {
