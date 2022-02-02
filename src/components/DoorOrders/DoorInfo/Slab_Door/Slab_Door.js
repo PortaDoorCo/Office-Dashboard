@@ -33,6 +33,8 @@ class SlabDoor extends Component {
       edit,
       updateSubmit
     } = this.props;
+    let thickness = formState?.part_list[index]?.thickness?.db_name;
+    const filtered_woodtypes = woodtypes.filter((wood) => wood[thickness]);
     return (
       <div>
         <Row>
@@ -42,7 +44,7 @@ class SlabDoor extends Component {
               <Field
                 name={`${part}.woodtype`}
                 component={renderDropdownListFilter}
-                data={woodtypes}
+                data={filtered_woodtypes}
                 dataKey="value"
                 textField="NAME"
                 validate={required}
