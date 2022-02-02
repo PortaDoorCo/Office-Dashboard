@@ -95,177 +95,187 @@ export default (data, pricing) => {
 
     return [
       {
-        margin: [0, 0, 0, 0],
-        columns: [
-          {
-            stack: [
-              {
-                text: `${part.orderType ? part.orderType.name : ''}`,
-                style: 'fonts',
-              },
-              {
-                text: `${
-                  part.thickness?.grade_name ? part.thickness?.grade_name : ''
-                }${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${
-                  part.thickness?.thickness_2
-                }"`,
-                style: 'fonts',
-              },
-
-              {
-                text: `${
-                  part.design
-                    ? part.design.NAME
-                    : part.face_frame_design
-                      ? part.face_frame_design.NAME
-                      : part.construction.value === 'Slab'
-                        ? 'Slab'
-                        : ''
-                } ${
-                  part.construction.value === 'MT' ||
-                  part.construction.value === 'Miter'
-                    ? part.construction.value
-                    : ''
-                } ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
-                  part.panel
-                    ? part.panel.NAME
-                    : part.construction.value === 'Slab'
-                      ? ''
-                      : 'Glass'
-                }`,
-                style: 'fonts',
-              },
-            ],
-          },
-
-          {
-            width: 200,
-            stack: [
-              {
-                text: '',
-                style: 'headerFont',
-                alignment: 'center',
-              },
-              part.applied_profile?.NAME !== 'None'
-                ? {
-                  text: `${
-                    part.applied_profile ? part.applied_profile.NAME : ''
-                  }`,
-                  style: 'headerFont',
-                  alignment: 'center',
-                }
-                : null,
-            ],
-          },
-          {
-            stack: [
-              {
-                text: `IP: ${
-                  part.profile
-                    ? part.profile.NAME
-                    : part.design
-                      ? part.design.NAME
-                      : 'None'
-                }  Edge: ${part.edge ? part.edge.NAME : 'None'}`,
-                style: 'fonts',
-              },
-            ],
-            alignment: 'right',
-          },
-        ],
-      },
-      {
-        text: '==============================================================================',
-        alignment: 'center',
-      },
-      {
-        table: {
-          headerRows: 1,
-          widths: [30, 100, 30, 155, '*', '*'],
-          body: tableBody,
-        },
-
-        layout: {
-          hLineWidth: function (i, node) {
-            return i === 1 ? 1 : 0;
-          },
-          vLineWidth: function (i, node) {
-            return 0;
-          },
-          hLineStyle: function (i, node) {
-            if (i === 0 || i === node.table.body.length) {
-              return null;
-            }
-            return { dash: { length: 1, space: 1 } };
-          },
-          paddingLeft: function (i) {
-            return i === 0 ? 0 : 8;
-          },
-          paddingRight: function (i, node) {
-            return i === node.table.widths.length - 1 ? 0 : 8;
-          },
-        },
-      },
-      {
         stack: [
           {
+            margin: [0, 0, 0, 0],
             columns: [
               {
-                text: '-------',
-                margin: [164, 0, 0, 0],
-              },
-            ],
-            margin: [0, 0, 0, -10],
-          },
-          {
-            columns: [
-              {
-                text: '------------',
-                margin: [0, 0, 0, 0],
-                alignment: 'right',
-              },
-            ],
-            margin: [0, 0, 0, -10],
-          },
-          {
-            columns: [
-              {
-                text: '',
-                width: 120,
-              },
-              {
-                text: ' Total: ',
-                width: 55,
-                style: 'fonts',
-                alignment: 'left',
-              },
-              { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
-              {
-                margin: [14, 0, 0, 0],
-                columns: [
+                stack: [
                   {
-                    text: 'Item Subtotal',
+                    text: `${part.orderType ? part.orderType.name : ''}`,
                     style: 'fonts',
-                    margin: [0, 0, 0, 0],
-                    alignment: 'right',
-                    width: 79,
                   },
                   {
-                    text: `$${prices[i]
-                      .reduce((acc, item) => acc + item, 0)
-                      .toFixed(2)}`,
+                    text: `${
+                      part.thickness?.grade_name ? part.thickness?.grade_name : ''
+                    }${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${
+                      part.thickness?.thickness_2
+                    }"`,
                     style: 'fonts',
-                    margin: [0, 0, 0, 0],
-                    alignment: 'right',
-                    width: 77,
+                  },
+
+                  {
+                    text: `${
+                      part.design
+                        ? part.design.NAME
+                        : part.face_frame_design
+                          ? part.face_frame_design.NAME
+                          : part.construction.value === 'Slab'
+                            ? 'Slab'
+                            : ''
+                    } ${
+                      part.construction.value === 'MT' ||
+                      part.construction.value === 'Miter'
+                        ? part.construction.value
+                        : ''
+                    } ${part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''} - ${
+                      part.panel
+                        ? part.panel.NAME
+                        : part.construction.value === 'Slab'
+                          ? ''
+                          : 'Glass'
+                    }`,
+                    style: 'fonts',
                   },
                 ],
               },
+
+              {
+                width: 200,
+                stack: [
+                  {
+                    text: '',
+                    style: 'headerFont',
+                    alignment: 'center',
+                  },
+                  part.applied_profile?.NAME !== 'None'
+                    ? {
+                      text: `${
+                        part.applied_profile ? part.applied_profile.NAME : ''
+                      }`,
+                      style: 'headerFont',
+                      alignment: 'center',
+                    }
+                    : null,
+                ],
+              },
+              {
+                stack: [
+                  {
+                    text: `IP: ${
+                      part.profile
+                        ? part.profile.NAME
+                        : part.design
+                          ? part.design.NAME
+                          : 'None'
+                    }  Edge: ${part.edge ? part.edge.NAME : 'None'}`,
+                    style: 'fonts',
+                  },
+                ],
+                alignment: 'right',
+              },
             ],
-            margin: [0, 10, 0, 5],
           },
-        ],
+          {
+            text: '==============================================================================',
+            alignment: 'center',
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: [30, 100, 30, 155, '*', '*'],
+              body: tableBody,
+            },
+
+            layout: {
+              hLineWidth: function (i, node) {
+                return i === 1 ? 1 : 0;
+              },
+              vLineWidth: function (i, node) {
+                return 0;
+              },
+              hLineStyle: function (i, node) {
+                if (i === 0 || i === node.table.body.length) {
+                  return null;
+                }
+                return { dash: { length: 1, space: 1 } };
+              },
+              paddingLeft: function (i) {
+                return i === 0 ? 0 : 8;
+              },
+              paddingRight: function (i, node) {
+                return i === node.table.widths.length - 1 ? 0 : 8;
+              },
+            },
+          },
+          {
+            stack: [
+              {
+                columns: [
+                  {
+                    text: '-------',
+                    margin: [164, 0, 0, 0],
+                  },
+                ],
+                margin: [0, 0, 0, -10],
+              },
+              {
+                columns: [
+                  {
+                    text: '------------',
+                    margin: [0, 0, 0, 0],
+                    alignment: 'right',
+                  },
+                ],
+                margin: [0, 0, 0, -10],
+              },
+              {
+                columns: [
+                  {
+                    text: '',
+                    width: 120,
+                  },
+                  {
+                    text: ' Total: ',
+                    width: 55,
+                    style: 'fonts',
+                    alignment: 'left',
+                  },
+                  { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
+                  {
+                    margin: [14, 0, 0, 0],
+                    columns: [
+                      {
+                        text: 'Item Subtotal',
+                        style: 'fonts',
+                        margin: [0, 0, 0, 0],
+                        alignment: 'right',
+                        width: 79,
+                      },
+                      {
+                        text: `$${prices[i]
+                          .reduce((acc, item) => acc + item, 0)
+                          .toFixed(2)}`,
+                        style: 'fonts',
+                        margin: [0, 0, 0, 0],
+                        alignment: 'right',
+                        width: 77,
+                      },
+                    ],
+                  },
+                ],
+                margin: [0, 10, 0, 5],
+              },
+            ],
+          },
+          tableBody.length > 12 ? {
+            text: '',
+            pageBreak: 'after' // or after
+          } : null
+        ]
       },
+
+
 
       {
         text: '==============================================================================',
@@ -551,7 +561,7 @@ export default (data, pricing) => {
     },
 
     {
-      unbreakable: true,
+
       stack: [
         {
           columns: [

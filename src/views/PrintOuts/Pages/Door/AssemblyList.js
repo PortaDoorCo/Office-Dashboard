@@ -146,11 +146,9 @@ const DoorPDF = async (
       return newData;
     });
 
-
-
     newParts.map((k) => {
       if (k.part_list.length > 0) {
-        console.log({Assembly: AssemblyList(k, breakdowns)});
+        console.log({ Assembly: AssemblyList(k, breakdowns) });
         return Content.push(AssemblyList(k, breakdowns));
       } else {
         return null;
@@ -213,16 +211,6 @@ const DoorPDF = async (
           ],
           margin: [40, 10, 40, 0],
         };
-      },
-      pageBreakBefore: function (
-        currentNode,
-        followingNodesOnPage,
-        nodesOnNextPage,
-        previousNodesOnPage
-      ) {
-        return (
-          currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0
-        );
       },
       styles: {
         woodtype: {

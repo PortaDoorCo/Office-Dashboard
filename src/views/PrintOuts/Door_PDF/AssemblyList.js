@@ -95,7 +95,6 @@ export default (data, breakdowns) => {
 
     return [
       {
-        // unbreakable: true,
         stack: [
           index === 0
             ? {
@@ -135,7 +134,6 @@ export default (data, breakdowns) => {
             }
             : null,
           {
-            headlineLevel: 1,
             margin: [0, 10, 0, 0],
             stack: [
               {
@@ -263,6 +261,12 @@ export default (data, breakdowns) => {
             text: '==============================================================================',
             alignment: 'center',
           },
+
+          tableBody.length > 12 && index !== data.part_list.length - 1 ? {
+            text: '',
+            pageBreak: 'after' // or after
+          } : null
+          
         ],
       },
     ];
