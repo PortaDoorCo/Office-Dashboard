@@ -7,7 +7,7 @@ export default (data, startDate, endDate, status) => {
       // { text: 'Date Ordered' },
       { text: 'Customer' },
       { text: 'Job ID' },
-      { text: 'Status' },
+
       { text: 'Description' },
       { text: 'Doors' },
       { text: 'DFs' },
@@ -17,6 +17,7 @@ export default (data, startDate, endDate, status) => {
       { text: 'Net Total' },
       { text: 'Tax' },
       { text: 'Salesman' },
+      { text: 'Status' },
       { text: 'Due Date' },
       { text: 'Date Invoiced' },
       { text: 'Date Shipped' },
@@ -30,7 +31,7 @@ export default (data, startDate, endDate, status) => {
         // { text: 'Date Ordered' },
         { text: 'Customer' },
         { text: 'Job ID' },
-        { text: 'Status' },
+
         { text: 'Description' },
         { text: 'Doors' },
         { text: 'DFs' },
@@ -40,6 +41,7 @@ export default (data, startDate, endDate, status) => {
         { text: 'Net Total' },
         { text: 'Tax' },
         { text: 'Salesman' },
+        { text: 'Status' },
         { text: 'Due Date' },
         { text: 'Date Invoiced' },
         { text: 'Date Shipped' },
@@ -52,7 +54,7 @@ export default (data, startDate, endDate, status) => {
         { text: 'Date Ordered' },
         { text: 'Customer' },
         { text: 'Job ID' },
-        { text: 'Status' },
+
         { text: 'Description' },
         { text: 'Doors' },
         { text: 'DFs' },
@@ -62,6 +64,7 @@ export default (data, startDate, endDate, status) => {
         { text: 'Net Total' },
         { text: 'Tax' },
         { text: 'Salesman' },
+        { text: 'Status' },
         { text: 'Due Date' },
         { text: 'Date Invoiced' },
         { text: 'Date Shipped' },
@@ -142,7 +145,7 @@ export default (data, startDate, endDate, status) => {
         moment(i.created_at).format('MM/DD/YYYY'),
         i.job_info?.customer?.Company,
         i.orderNum,
-        i.status,
+
         name,
         doors,
         dfs,
@@ -152,6 +155,7 @@ export default (data, startDate, endDate, status) => {
         `$${(i.total - i.tax)?.toFixed(2)}`,
         `$${i.tax?.toFixed(2)}`,
         i.sale?.fullName,
+        i.status,
         i.Shipping_Scheduled ? moment(i.dueDate).format('MM/DD/YYYY') : 'TBD',
         i.DateInvoiced ? moment(i.DateInvoiced).format('MM/DD/YYYY') : 'TBD',
         i.DateShipped ? moment(i.DateShipped).format('MM/DD/YYYY') : 'TBD'
@@ -163,7 +167,7 @@ export default (data, startDate, endDate, status) => {
           : 'TBD',
         i.job_info?.customer?.Company,
         i.orderNum,
-        i.status,
+
         name,
         doors,
         dfs,
@@ -173,6 +177,7 @@ export default (data, startDate, endDate, status) => {
         `$${(i.total - i.tax)?.toFixed(2)}`,
         `$${i.tax?.toFixed(2)}`,
         i.sale?.fullName,
+        i.status,
         i.Shipping_Scheduled ? moment(i.dueDate).format('MM/DD/YYYY') : 'TBD',
         i.DateInvoiced || dateInvoiced.length > 0
           ? moment(i.DateInvoiced || dateInvoiced[0].date).format('MM/DD/YYYY')
