@@ -262,10 +262,10 @@ export default (data, breakdowns) => {
             alignment: 'center',
           },
 
-          tableBody.length > 12 && index !== data.part_list.length - 1 ? {
-            text: '',
-            pageBreak: 'after' // or after
-          } : null
+          // tableBody.length > 12 && index !== data.part_list.length - 1 ? {
+          //   text: '',
+          //   pageBreak: 'after' // or after
+          // } : null
           
         ],
       },

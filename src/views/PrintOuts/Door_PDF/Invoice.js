@@ -268,10 +268,10 @@ export default (data, pricing) => {
               },
             ],
           },
-          tableBody.length > 12 ? {
-            text: '',
-            pageBreak: 'after' // or after
-          } : null
+          // tableBody.length > 12 ? {
+          //   text: '',
+          //   pageBreak: 'after' // or after
+          // } : null
         ]
       },
 
