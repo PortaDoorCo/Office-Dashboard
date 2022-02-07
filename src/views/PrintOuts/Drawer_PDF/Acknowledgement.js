@@ -352,7 +352,7 @@ export default (data, pricing) => {
               return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
             }),
             style: 'fonts',
-            width: 170,
+            width: 171,
           },
           {
             style: 'fonts',
