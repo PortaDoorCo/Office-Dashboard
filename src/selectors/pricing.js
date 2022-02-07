@@ -994,7 +994,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
       }
     }
 
-    return Math.floor(price * 100) / 100;;
+    return Math.floor(price * 100) / 100;
   })
 );
 

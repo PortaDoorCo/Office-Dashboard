@@ -52,7 +52,7 @@ export default (data, pricing) => {
     ],
   ];
 
-  data.mouldings.map((i) => {
+  data.mouldings.map((i, p) => {
     let price = 0;
 
     const { item, woodtype, linearFT, grade } = i;
@@ -153,7 +153,7 @@ export default (data, pricing) => {
       { text: i.style?.value === 'custom' ? `Width: ${i.width}" \n Thickness: ${i.thickness}"` : i.item?.NAME, style: 'fonts' },
       { text: i.linearFT, style: 'fonts' },
       { text: i.notes ? i.notes : '', style: 'fontsBold' },
-      { text: `$${price.toFixed(2)}`, style: 'fonts' },
+      { text: `$${prices[p].toFixed(2)}`, style: 'fonts' },
     ]);
   });
 
@@ -376,34 +376,34 @@ export default (data, pricing) => {
         alignment: 'right',
       }
       : null,
-    data.misc_items.length > 0
-      ? {
-        columns: [
-          { text: '', style: 'totals', decoration: 'underline', width: 317 },
-          {
-            text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
-            style: 'totals',
-            width: 120,
-            alignment: 'right',
-          },
-          {
-            text:
-                  data.misc_items.length > 0
-                    ? '$' + order_sub_total.toFixed(2)
-                    : '',
-            style: 'fonts',
-            margin: [0, 0, 0, 0],
-            alignment: 'right',
-          },
-        ],
-        margin: [0, 10, 0, 0],
-      }
-      : null,
-    {
-      text: '======',
-      margin: [0, 0, 0, 0],
-      alignment: 'right',
-    },
+    // data.misc_items.length > 0
+    //   ? {
+    //     columns: [
+    //       { text: '', style: 'totals', decoration: 'underline', width: 317 },
+    //       {
+    //         text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
+    //         style: 'totals',
+    //         width: 120,
+    //         alignment: 'right',
+    //       },
+    //       {
+    //         text:
+    //               data.misc_items.length > 0
+    //                 ? '$' + order_sub_total.toFixed(2)
+    //                 : '',
+    //         style: 'fonts',
+    //         margin: [0, 0, 0, 0],
+    //         alignment: 'right',
+    //       },
+    //     ],
+    //     margin: [0, 10, 0, 0],
+    //   }
+    //   : null,
+    // {
+    //   text: '======',
+    //   margin: [0, 0, 0, 0],
+    //   alignment: 'right',
+    // },
     {
       columns: [
         { text: '', style: 'totals', width: 317, decoration: 'underline' },

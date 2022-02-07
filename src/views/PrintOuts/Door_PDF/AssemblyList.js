@@ -5,6 +5,7 @@ import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
+
   let itemNum = 0;
 
   // const newData = data.part_list.map((i) => {
