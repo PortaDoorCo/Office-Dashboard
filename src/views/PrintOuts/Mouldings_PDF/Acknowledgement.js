@@ -180,34 +180,6 @@ export default (data, pricing) => {
       ],
       margin: [0, 0, 0, 0],
     },
-    data.Taxable
-      ? {
-        columns: [
-          { text: '', style: 'totals', width: 317 },
-          {
-            text: data.Taxable
-              ? '$' +
-                  order_sub_total.toFixed(2) +
-                  ' x ' +
-                  data.companyprofile.TaxRate +
-                  '%' +
-                  ' Tax:'
-              : '',
-            style: 'totals',
-            margin: [0, 0, 0, 4],
-            width: 120,
-            alignment: 'right',
-          },
-          {
-            text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
-            style: 'fonts',
-            alignment: 'right',
-          },
-        ],
-        margin: [0, 0, 0, 0],
-      }
-      : null,
-
     data.misc_items.length > 0
       ? {
         columns: [
@@ -295,6 +267,24 @@ export default (data, pricing) => {
         alignment: 'right',
       }
       : null,
+      {
+        columns: [
+          { text: '', style: 'totals', width: 317 },
+          {
+            text: 'Net Total',
+            style: 'totals',
+            margin: [0, 0, 0, 4],
+            width: 120,
+            alignment: 'right',
+          },
+          {
+            text: '$' +  order_sub_total.toFixed(2),
+            style: 'fonts',
+            alignment: 'right',
+          },
+        ],
+        margin: [0, 0, 0, 5],
+      },
     // data.misc_items.length > 0
     //   ? {
     //     columns: [
@@ -323,6 +313,33 @@ export default (data, pricing) => {
     //   margin: [0, 0, 0, 0],
     //   alignment: 'right',
     // },
+    data.Taxable
+    ? {
+      columns: [
+        { text: '', style: 'totals', width: 317 },
+        {
+          text: data.Taxable
+            ? '$' +
+                order_sub_total.toFixed(2) +
+                ' x ' +
+                data.companyprofile.TaxRate +
+                '%' +
+                ' Tax:'
+            : '',
+          style: 'totals',
+          margin: [0, 0, 0, 4],
+          width: 120,
+          alignment: 'right',
+        },
+        {
+          text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
+        },
+      ],
+      margin: [0, 0, 0, 0],
+    }
+    : null,
     {
       columns: [
         { text: '', style: 'totals', width: 317, decoration: 'underline' },
