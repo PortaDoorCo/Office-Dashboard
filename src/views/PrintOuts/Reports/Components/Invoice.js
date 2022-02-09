@@ -19,9 +19,9 @@ export default (data, startDate, endDate, status) => {
   let taxTotal = 0;
 
   data.forEach((i, index) => {
-    total = total += i.total;
-    netTotal = netTotal += (i.total - i.tax);
-    taxTotal = taxTotal += i.tax;
+    total = Math.round(100 * (total += i.total)) / 100;
+    netTotal = Math.round( 100 * (netTotal += (i.total - i.tax))) / 100;
+    taxTotal = Math.round(100 *(taxTotal += i.tax)) / 100
 
     let name = i.job_info?.poNum?.length > 0 ? i.job_info?.poNum : 'None';
 
