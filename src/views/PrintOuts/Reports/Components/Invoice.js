@@ -46,7 +46,7 @@ export default (data, startDate, endDate, status) => {
     [
       'Totals',
       `$${total.toFixed(2)}`,
-      `$${netTotal}`,
+      `$${netTotal.toFixed(2)}`,
       `$${taxTotal.toFixed(2)}`,
       `Number of Invoices Printed:  ${data.length}`,
     ],

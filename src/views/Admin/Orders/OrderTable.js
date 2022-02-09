@@ -691,7 +691,7 @@ const OrderTable = (props) => {
                 role?.type === 'administrator') ? (
                   <h3>
                   Order Total: $
-                    {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
+                    {data.reduce((acc, item) => acc + Math.round(100 * item.total) / 100, 0).toFixed(2)}
                   </h3>
                 ) : null}
               {role &&
@@ -701,7 +701,7 @@ const OrderTable = (props) => {
                   <h3>
                   Net Total: $
                     {data
-                      .reduce((acc, item) => acc + (item.total - item.tax), 0)
+                      .reduce((acc, item) => acc + (Math.round(100 * (item.total - item.tax))/ 100), 0)
                       .toFixed(2)}
                   </h3>
                 ) : null}
@@ -711,7 +711,7 @@ const OrderTable = (props) => {
                 role.type === 'administrator') ? (
                   <h3>
                   Tax Total: $
-                    {data.reduce((acc, item) => acc + item.tax, 0).toFixed(2)}
+                    {data.reduce((acc, item) => acc + Math.round(100 * item.tax) / 100, 0).toFixed(2)}
                   </h3>
                 ) : null}
               {role &&
@@ -720,7 +720,7 @@ const OrderTable = (props) => {
                 role.type === 'administrator') && filterStatus === 'Flagged' ? (
                   <h3>
                   Balances: $
-                    {data.reduce((acc, item) => acc + item.balance_due, 0).toFixed(2)}
+                    {data.reduce((acc, item) => acc + Math.round(100 * item.balance_due) / 100, 0).toFixed(2)}
                   </h3>
                 ) : null}
             </Col>
