@@ -16,10 +16,6 @@ const status = [
     value: 'Complete',
   },
   {
-    label: 'Shipped',
-    value: 'Shipped',
-  },
-  {
     label: 'Invoiced',
     value: 'Invoiced',
   },

@@ -81,9 +81,9 @@ export default (data, startDate, endDate, status) => {
   let faceFrameTotal = 0;
 
   data.forEach((i, index) => {
-    total = total += i.total;
-    netTotal = netTotal += (i.total - i.tax);
-    taxTotal = taxTotal += i.tax;
+    total = Math.round(100 * (total += i.total)) / 100;
+    netTotal = Math.round( 100 * (netTotal += (i.total - i.tax))) / 100;
+    taxTotal = Math.round(100 *(taxTotal += i.tax)) / 100
     let doors = 0;
     let dfs = 0;
     let boxes = 0;
@@ -235,7 +235,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: ['*', '*', '*', '*', '*', '*', '*', '*', '*'],
+        widths: [245, 22, 17, 22, 30, '*', '*', '*', 350],
       },
       layout: 'headerLineOnly',
     },
