@@ -1063,7 +1063,7 @@ export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector, orderTypeSelector],
   (subTotal, misc, discount, orderType) => {
     if (orderType) {
-      return (subTotal.reduce((acc, item) => acc + item, 0) * discount);
+      return Math.floor((subTotal.reduce((acc, item) => acc + item, 0) * discount) * 100) / 100;
     } else {
       return 0;
     }
