@@ -46,7 +46,7 @@ const DoorPDF = async (
                 alignment: 'center',
                 margin: [0, 0, 0, 10],
               },
-              { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+              { text: data.DateInvoiced ? moment(data.DateInvoiced).format('DD-MMM-YYYY') : "TBA", alignment: 'center' },
             ],
             // width: 200,
             alignment: 'center',
