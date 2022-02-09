@@ -18,10 +18,6 @@ const status = [
     value: 'Invoiced',
   },
   {
-    label: 'Shipped',
-    value: 'Shipped',
-  },
-  {
     label: 'Flagged',
     value: 'Flagged',
   },

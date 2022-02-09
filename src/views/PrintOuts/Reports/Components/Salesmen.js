@@ -17,8 +17,7 @@ export default (data, startDate, endDate, status) => {
   let total = 0;
 
   data.forEach((i, index) => {
-    total = total += i.total;
-
+    total = Math.round(100 * (total += i.total)) / 100;
 
     let name = i.job_info?.poNum ? i.job_info?.poNum : 'None';
 

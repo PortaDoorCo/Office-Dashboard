@@ -84,7 +84,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        // widths: ['*', '*', '*', '*', '*', '*', '*'],
+        widths: [60, 59, 58, '*', '*',],
       },
       layout: 'headerLineOnly',
     },
