@@ -330,6 +330,7 @@ export function updateStatus(orderId, key, status, user, cookie) {
 
   if (status.status === 'Ordered') {
     item = {
+      ...key,
       status: status.status,
       DateOrdered: new Date(),
       tracking: [
@@ -343,6 +344,7 @@ export function updateStatus(orderId, key, status, user, cookie) {
     };
   } else if (status.status === 'In Production') {
     item = {
+      ...key,
       status: status.status,
       DateInProduction: new Date(),
       tracking: [
@@ -356,6 +358,7 @@ export function updateStatus(orderId, key, status, user, cookie) {
     };
   } else if (status.status === 'Invoiced') {
     item = {
+      ...key,
       status: status.status,
       DateInvoiced: new Date(),
       tracking: [
@@ -369,6 +372,7 @@ export function updateStatus(orderId, key, status, user, cookie) {
     };
   } else if (status.status === 'Complete') {
     item = {
+      ...key,
       status: status.status,
       DateCompleted: new Date(),
       tracking: [
@@ -382,6 +386,7 @@ export function updateStatus(orderId, key, status, user, cookie) {
     };
   } else if (status.status === 'Shipped') {
     item = {
+      ...key,
       status: status.status,
       DateShipped: new Date(),
       tracking: [
@@ -395,6 +400,7 @@ export function updateStatus(orderId, key, status, user, cookie) {
     };
   } else {
     item = {
+      ...key,
       status: status.status,
       tracking: [
         ...key.tracking,
