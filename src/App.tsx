@@ -219,8 +219,20 @@ class App extends Component<PropTypes, StateTypes> {
     socket.on('delivery_added', () => this.props.getDeliveries(cookie));
     socket.on('customer_added', (res: {}) => customerAdded(res));
     socket.on('customer_updated', (res: {}) => customerUpdated(res));
-    socket.on('customer_deleted', (res: {}) => customerDeleted(res));
+    // socket.on('customer_deleted', (res: {}) => customerDeleted(res));
 
+
+    socket.on(
+      'customer_deleted',
+      (res: {}) => (
+        NotificationManager.success(
+          'Customer Deleted',
+          'Customer Deleted',
+          2000
+        ),
+        customerDeleted(res)
+      )
+    );
 
     socket.on(
       'product_updated',

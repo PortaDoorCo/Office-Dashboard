@@ -12,7 +12,7 @@ import {
   Table,
 } from 'reactstrap';
 import Edit from './components/Edit';
-import { uploadFilesToCustomer } from '../../../../redux/customers/actions';
+import { uploadFilesToCustomer, deleteCustomer } from '../../../../redux/customers/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OrderPage from '../../Orders/OrderPage';
@@ -21,6 +21,9 @@ import Maps from './components/Maps';
 import Notes from './components/Notes';
 import FileUploader from '../../../../components/FileUploader/FileUploader';
 import Cookies from 'js-cookie';
+import Delete from '@material-ui/icons/Delete';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 
 const cookie = Cookies.get('jwt');
 
@@ -34,6 +37,7 @@ class CustomerPage extends Component {
       modal: false,
       orderEdit: false,
       orders: [],
+      deleteModal: false
     };
 
     this.toggle = this.toggle.bind(this);
@@ -77,22 +81,45 @@ class CustomerPage extends Component {
     uploadFilesToCustomer(selectedCompanies, e, cookie);
   };
 
+  toggleDeleteModal = () =>
+    this.setState({
+      deleteModal: !this.state.deleteModal,
+    });
+
+  deleteCustomer = async () => {
+    const { selectedCompanies, deleteCustomer, toggle } = this.props;
+    await deleteCustomer(selectedCompanies.id, cookie);
+    await this.toggleDeleteModal();
+    await toggle();
+  };
+
   render() {
     const props = this.props;
-    const { locations, defaultCenter, selectedCompanies, orders } = this.props;
+    const { locations, defaultCenter, selectedCompanies, orders, user } = this.props;
 
     let updateOrders;
 
     if (this.props.orders.length > 0) {
       updateOrders = orders.filter(
         (x) => x.job_info?.customer?.id === this.props.selectedCompanies.id
-      ).sort((a,b) => b.orderNum - a.orderNum);
+      ).sort((a, b) => b.orderNum - a.orderNum);
     }
 
     return (
       <div className="animated resize">
         <Modal isOpen={props.modal} toggle={props.toggle} className="modal-lg">
-          <ModalHeader toggle={props.toggle}>Companies</ModalHeader>
+          <ModalHeader toggle={props.toggle}>
+            <div>
+              <p>Companies</p>
+              {user?.role?.type === 'administrator' || user?.role?.type === 'owner' ?
+                <Tooltip title="Delete Customer" placement="top">
+                  <IconButton onClick={this.toggleDeleteModal}>
+                    <Delete style={{ width: '40', height: '40' }} />
+                  </IconButton>
+                </Tooltip> : null
+              }
+            </div>
+          </ModalHeader>
           <ModalBody>
             <Row>
               <Col lg='6'>
@@ -159,13 +186,33 @@ class CustomerPage extends Component {
                     <Notes />
                   </CardBody>
                 </Card>
-                
+
               </Col>
             </Row>
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={props.toggle}>
               Close
+            </Button>
+          </ModalFooter>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.deleteModal}
+          toggle={this.toggleDeleteModal}
+        >
+          <ModalHeader toggle={this.toggleDeleteModal}>
+            Delete Customer
+          </ModalHeader>
+          <ModalBody>
+            Are You Sure You Want To Delete This Customer?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={this.deleteCustomer}>
+              Delete Customer
+            </Button>{' '}
+            <Button color="secondary" onClick={this.toggleDeleteModal}>
+              Cancel
             </Button>
           </ModalFooter>
         </Modal>
@@ -190,12 +237,14 @@ const mapStateToProps = (state, prop) => ({
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   customerOrder: state.Orders.customerOrder,
   selectedCompanies: state.customers.selectedCompanies,
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       uploadFilesToCustomer,
+      deleteCustomer
     },
     dispatch
   );
