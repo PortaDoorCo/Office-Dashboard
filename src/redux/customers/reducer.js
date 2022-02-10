@@ -38,7 +38,7 @@ export default function (state = initialState, action) {
     case CUSTOMER_DELETED:
       return {
         ...state,
-        orders: state.customerDB.filter(item => item.id !== data.id),
+        customerDB: state.customerDB.filter(item => item.id !== data.id),
       };
     case LOAD_CUSTOMERS:
       return {

@@ -15,6 +15,7 @@ export const CUSTOMER_UPDATED = 'CUSTOMER_UPDATED';
 export const CUSTOMER_DELETED = 'CUSTOMER_DELETED';
 export const UPLOAD_FILE_TO_CUSTOMER = 'UPLOAD_FILE_TO_CUSTOMER';
 export const SAVE_EMAIL = 'SAVE_EMAIL';
+export const DELETE_ORDER = 'DELETE_ORDER';
 
 
 export function setSelectedCompanies(data) {
@@ -255,6 +256,28 @@ export function submitCustomer(customer, cookie) {
   };
 }
 
+export function deleteCustomer(custId, cookie) {
+  return async function (dispatch) {
+    try {
+      const res = await axios.delete(`${db_url}/companyprofiles/${custId}`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res;
+      return dispatch({
+        type: DELETE_ORDER,
+      });
+    } catch (error) {
+      NotificationManager.error(
+        'There was an problem with your submission',
+        'Error',
+        2000
+      );
+    }
+  };
+}
+
 export function updateNotes(orderId, data, cookie) {
   const item = {
     Customer_Notes: [
@@ -338,6 +361,7 @@ export function customerUpdated(res) {
 }
 
 export function customerDeleted(res) {
+  console.log({res})
   return async function (dispatch) {
     return dispatch({
       type: CUSTOMER_DELETED,
