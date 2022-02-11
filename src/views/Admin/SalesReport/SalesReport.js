@@ -127,7 +127,6 @@ const SalesReport = (props) => {
                 ? dateOrdered[0]?.date
                 : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Ordered' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -147,8 +146,7 @@ const SalesReport = (props) => {
               item.DateOrdered || (dateOrdered.length > 0
                 ? dateOrdered[0]?.date
                 : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Ordered'
+            ) <= moment(endDate).endOf('day').valueOf()
           );
         }
       } else if (filterStatus === 'Invoiced') {
@@ -164,7 +162,6 @@ const SalesReport = (props) => {
                 ? dateInvoiced[0]?.date
                 : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Invoiced' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -184,8 +181,7 @@ const SalesReport = (props) => {
               item.DateInvoiced || (dateInvoiced.length > 0
                 ? dateInvoiced[0]?.date
                 : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Invoiced'
+            ) <= moment(endDate).endOf('day').valueOf()
           );
         }
       } else if (filterStatus === 'Complete') {
@@ -200,8 +196,7 @@ const SalesReport = (props) => {
               item.DateCompleted || (dateCompleted.length > 0
                 ? dateCompleted[0]?.date
                 : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Complete' &&
+            ) <= moment(endDate).endOf('day').valueOf()
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -221,8 +216,7 @@ const SalesReport = (props) => {
               item.DateCompleted || (dateCompleted.length > 0
                 ? dateCompleted[0]?.date
                 : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Complete'
+            ) <= moment(endDate).endOf('day').valueOf()
           );
         }
       } else if (filterStatus === 'Shipped') {
@@ -238,7 +232,6 @@ const SalesReport = (props) => {
                 ? dateShipped[0]?.date
                 : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Shipped' &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
@@ -258,8 +251,7 @@ const SalesReport = (props) => {
               item.DateShipped || (dateShipped.length > 0
                 ? dateShipped[0]?.date
                 : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf() &&
-            item.status === 'Shipped'
+            ) <= moment(endDate).endOf('day').valueOf()
           );
         }
       } else {
