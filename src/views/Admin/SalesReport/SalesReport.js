@@ -84,12 +84,12 @@ const SalesReport = (props) => {
             moment(
               item.DateOrdered || (dateOrdered.length > 0
                 ? dateOrdered[0]?.date
-                : '1/1/1900')
+                : item.created_at)
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
               item.DateOrdered || (dateOrdered.length > 0
                 ? dateOrdered[0]?.date
-                : '1/1/1900')
+                : item.created_at)
             ) <= moment(endDate).endOf('day').valueOf() &&
             (item.orderNum?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
@@ -104,12 +104,12 @@ const SalesReport = (props) => {
             moment(
               item.DateOrdered || (dateOrdered.length > 0
                 ? dateOrdered[0]?.date
-                : '1/1/1900')
+                : item.created_at)
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
               item.DateOrdered || (dateOrdered.length > 0
                 ? dateOrdered[0]?.date
-                : '1/1/1900')
+                : item.created_at)
             ) <= moment(endDate).endOf('day').valueOf()
           );
         }
