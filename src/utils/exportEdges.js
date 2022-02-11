@@ -120,34 +120,34 @@ const edges = async (data) => {
 
         // await sleep(500);
 
-        // try {
-        //   await axios.post(
-        //     'https://content.dropboxapi.com/2/files/upload',
-        //     csvContent,
-        //     {
-        //       headers: {
-        //         Authorization: `Bearer ${token}`,
-        //         'Content-Type': 'application/octet-stream',
-        //         'Dropbox-API-Arg': JSON.stringify(myParams),
-        //       },
-        //     }
-        //   );
+        try {
+          await axios.post(
+            'https://content.dropboxapi.com/2/files/upload',
+            csvContent,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/octet-stream',
+                'Dropbox-API-Arg': JSON.stringify(myParams),
+              },
+            }
+          );
 
-        //   NotificationManager.success(
-        //     `#${d.orderNum} Edges Successfully Exported!`,
-        //     'Success',
-        //     2000
-        //   );
-        // } catch (err) {
-        //   console.log({ err });
-        //   console.log({ orderNum: d.orderNum });
-        //   console.log({ length: csvContent.length });
-        //   NotificationManager.error(
-        //     'There was an problem with your upload',
-        //     'Error',
-        //     2000
-        //   );
-        // }
+          NotificationManager.success(
+            `#${d.orderNum} Edges Successfully Exported!`,
+            'Success',
+            2000
+          );
+        } catch (err) {
+          console.log({ err });
+          console.log({ orderNum: d.orderNum });
+          console.log({ length: csvContent.length });
+          NotificationManager.error(
+            'There was an problem with your upload',
+            'Error',
+            2000
+          );
+        }
       }
     }
   }
