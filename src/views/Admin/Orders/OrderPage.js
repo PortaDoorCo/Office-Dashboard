@@ -963,7 +963,10 @@ class OrderPage extends Component {
 
   exportEdgesHelper = () => {
     const { formState } = this.props;
-    const data = formState;
+    const data = {
+      ...formState,
+      Shipping_Scheduled: true
+    };
 
     if (data.Shipping_Scheduled) {
       exportEdges([data]);
@@ -978,7 +981,10 @@ class OrderPage extends Component {
 
   exportRazorHelper = () => {
     const { formState, breakdowns } = this.props;
-    const data = formState;
+    const data = {
+      ...formState,
+      Shipping_Scheduled: true
+    };
 
     if (data.Shipping_Scheduled) {
       exportRazorGauge([data], breakdowns);
