@@ -25,7 +25,7 @@ export default (data, startDate, endDate, status) => {
   let faceFrameTotal = 0;
 
   data.forEach((i, index) => {
-    total = total += i.total;
+    total = Math.round(100 * (total += i.total)) / 100;
     let doors = 0;
     let dfs = 0;
     let boxes = 0;
