@@ -205,16 +205,17 @@ class OrderEntry extends Component {
               DateCompleted = new Date();
             }
           }
-        } else {
-          newStatus = [
-            ...tracking,
-            {
-              date: moment().format(),
-              status: 'Order Edited',
-              user: user?.FirstName,
-            },
-          ];
-        }
+        } 
+      }
+      else {
+        newStatus = [
+          ...tracking,
+          {
+            date: moment().format(),
+            status: 'Order Edited',
+            user: user?.FirstName,
+          },
+        ];
       }
     }
 
