@@ -205,7 +205,7 @@ class JobInfo extends Component {
         })
       );
     } else {
-      if (formState?.job_info?.status?.value !== 'Ordered') {
+      if (formState?.DateOrdered || formState?.DateInvoiced || formState?.DateShipped || formState?.DateCompleted || formState?.DateInProduction) {
         return null;
       } else {
         this.props.dispatch(
@@ -401,20 +401,20 @@ class JobInfo extends Component {
                 component={renderDropdownList}
                 data={
                   role?.type === 'authenticated' ||
-                  role?.type === 'owner' ||
-                  role?.type === 'administrator' ||
-                  role?.type === 'management' ||
-                  role?.type === 'office'
+                    role?.type === 'owner' ||
+                    role?.type === 'administrator' ||
+                    role?.type === 'management' ||
+                    role?.type === 'office'
                     ? status
                     : otherStatus
                 }
                 dataKey="value"
                 edit={
                   role?.type === 'authenticated' ||
-                  role?.type === 'owner' ||
-                  role?.type === 'administrator' ||
-                  role?.type === 'management' ||
-                  role?.type === 'office'
+                    role?.type === 'owner' ||
+                    role?.type === 'administrator' ||
+                    role?.type === 'management' ||
+                    role?.type === 'office'
                     ? edit
                     : true
                 }
@@ -455,9 +455,9 @@ class JobInfo extends Component {
                 data={sales}
                 edit={
                   formState?.job_info?.customer?.id === 1 ||
-                  role?.type === 'owner' ||
-                  role?.type === 'administrator' ||
-                  role?.type === 'management'
+                    role?.type === 'owner' ||
+                    role?.type === 'administrator' ||
+                    role?.type === 'management'
                     ? edit
                     : true
                 }
@@ -576,8 +576,8 @@ class JobInfo extends Component {
                       component={renderField}
                       edit={
                         role?.type === 'authenticated' ||
-                        role?.type === 'owner' ||
-                        role?.type === 'administrator'
+                          role?.type === 'owner' ||
+                          role?.type === 'administrator'
                           ? edit
                           : true
                       }
@@ -594,8 +594,8 @@ class JobInfo extends Component {
                       component={renderField}
                       edit={
                         role?.type === 'authenticated' ||
-                        role?.type === 'owner' ||
-                        role?.type === 'administrator'
+                          role?.type === 'owner' ||
+                          role?.type === 'administrator'
                           ? edit
                           : true
                       }
@@ -612,8 +612,8 @@ class JobInfo extends Component {
                       component={renderField}
                       edit={
                         role?.type === 'authenticated' ||
-                        role?.type === 'owner' ||
-                        role?.type === 'administrator'
+                          role?.type === 'owner' ||
+                          role?.type === 'administrator'
                           ? edit
                           : true
                       }
@@ -633,8 +633,8 @@ class JobInfo extends Component {
                       component={renderField}
                       edit={
                         role?.type === 'authenticated' ||
-                        role?.type === 'owner' ||
-                        role?.type === 'administrator'
+                          role?.type === 'owner' ||
+                          role?.type === 'administrator'
                           ? edit
                           : true
                       }
@@ -651,8 +651,8 @@ class JobInfo extends Component {
                       component={renderField}
                       edit={
                         role?.type === 'authenticated' ||
-                        role?.type === 'owner' ||
-                        role?.type === 'administrator'
+                          role?.type === 'owner' ||
+                          role?.type === 'administrator'
                           ? edit
                           : true
                       }
@@ -669,8 +669,8 @@ class JobInfo extends Component {
                       component={renderField}
                       edit={
                         role?.type === 'authenticated' ||
-                        role?.type === 'owner' ||
-                        role?.type === 'administrator'
+                          role?.type === 'owner' ||
+                          role?.type === 'administrator'
                           ? edit
                           : true
                       }
@@ -681,16 +681,16 @@ class JobInfo extends Component {
               </Row>
 
               {role?.type === 'authenticated' ||
-              role?.type === 'owner' ||
-              role?.type === 'administrator' ? (
-                  <Row>
-                    <Col>
-                      <Button color="primary" onClick={this.saveEmails}>
+                role?.type === 'owner' ||
+                role?.type === 'administrator' ? (
+                <Row>
+                  <Col>
+                    <Button color="primary" onClick={this.saveEmails}>
                       Save Email
-                      </Button>
-                    </Col>
-                  </Row>
-                ) : null}
+                    </Button>
+                  </Col>
+                </Row>
+              ) : null}
             </CardBody>
           </Card>
         </Collapse>
