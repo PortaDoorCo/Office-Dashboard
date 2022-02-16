@@ -122,9 +122,10 @@ class Edit extends Component {
 
 
   render() {
-    const { handleSubmit, salesReps, shippingMethods, edit, paymentTerms } =
+    const { handleSubmit, salesReps, shippingMethods, edit, paymentTerms, role } =
       this.props;
 
+      console.log({role})
     return (
       <div className="animated resize">
         <Card>
@@ -851,7 +852,7 @@ class Edit extends Component {
                 </div>
               )}
             </form>
-            {edit ? (
+            {edit && role.type !== 'sales' ? (
               <Button
                 type="button"
                 onClick={this.props.onEdit}
@@ -875,6 +876,7 @@ const mapStateToProps = (state, ownProps) => ({
   test: ownProps,
   paymentTypes: state.misc_items.paymentTypes,
   paymentTerms: state.misc_items.paymentTerms,
+  role: state.users.user.role,
   formState: getFormValues('CustomerEdit')(state),
 });
 
