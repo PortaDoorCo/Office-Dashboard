@@ -823,7 +823,7 @@ export const linePriceSelector = createSelector(
           if (item[index][p]) {
             if (i.qty) {
               if (
-                (part?.orderType?.value === 'Door' ||
+                (part?.orderType?.value === 'Door' || part?.orderType?.value === 'DF' ||
                   part?.orderType?.value === 'Glass' ||
                   part?.orderType?.value === 'One_Piece' ||
                   part?.orderType?.value === 'Two_Piece') &&
