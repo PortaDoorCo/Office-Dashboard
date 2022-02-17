@@ -535,7 +535,7 @@ class OrderEntry extends Component {
                           </InputGroupAddon>
                           <NumberFormat
                             thousandSeparator={true}
-                            value={formState?.tax ? formState?.tax : tax}
+                            value={tax}
                             disabled={true}
                             customInput={Input}
                             {...currencyMask}
@@ -550,7 +550,7 @@ class OrderEntry extends Component {
                           </InputGroupAddon>
                           <NumberFormat
                             thousandSeparator={true}
-                            value={formState?.total ? formState?.total : total}
+                            value={total}
                             disabled={true}
                             customInput={Input}
                             {...currencyMask}
