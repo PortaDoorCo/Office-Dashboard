@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect';
-import numQty from 'numeric-quantity';
+import { createSelector } from "reselect";
+import numQty from "numeric-quantity";
 
 const pricingSelector = (state) => {
   const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
@@ -12,7 +12,10 @@ const discountSelector = (state) => {
   if (orders) {
     if (state.form.Order.values && state.form.Order.values.discount) {
       if (state.form.Order.values.discount > 0) {
-        return Math.floor((numQty(state.form.Order.values.discount) / 100) * 100) / 100;
+        return (
+          Math.floor((numQty(state.form.Order.values.discount) / 100) * 100) /
+          100
+        );
       } else {
         return 0;
       }
@@ -81,6 +84,36 @@ const partListSelector = (state) => {
   }
 };
 
+const linePrices = (state) => {
+  const orders = state.form.Order;
+  if (orders) {
+    if (orders && orders.values && orders.values.linePrice) {
+      return state.form.Order.values.linePrice;
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
+};
+
+const itemPrices = (state) => {
+  const orders = state.form.Order;
+  if (orders) {
+    if (orders && orders.values && orders.values.itemPrice) {
+      return state.form.Order.values.itemPrice;
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
+};
+
+const formStateSelector = (state) => {
+  return state.form?.Order;
+};
+
 const miscItemsSelector = (state) => {
   const orders = state.form.Order;
   if (orders) {
@@ -104,9 +137,9 @@ export const miscItemPriceSelector = createSelector(
     misc.map((i) => {
       let price = 0;
 
-      if (i.category === 'preselect') {
+      if (i.category === "preselect") {
         if (i.price) {
-          price = Math.floor(parseFloat(i.price) * 100) / 100; 
+          price = Math.floor(parseFloat(i.price) * 100) / 100;
         } else {
           price = 0;
         }
@@ -127,8 +160,8 @@ export const miscItemLinePriceSelector = createSelector(
     parts.map((i, index) => {
       let price = 0;
 
-      console.log({pricer});
-      if (i.category === 'preselect') {
+      console.log({ pricer });
+      if (i.category === "preselect") {
         if (i.item) {
           if (i.qty) {
             price = pricer[index] * parseInt(i.qty);
@@ -196,10 +229,24 @@ const totalBalanceDue = (state) => {
   }
 };
 
+export const qtySelector = createSelector([partListSelector], (parts) =>
+  parts.map((part) => {
+    return (part.dimensions || []).map((i) => {
+      return parseInt(i.qty);
+    });
+  })
+);
+
 export const itemPriceSelector = createSelector(
-  [partListSelector, pricingSelector, orderTypeSelector],
-  (parts, pricer, orderType) => {
-    if (orderType === 'Door Order' || orderType === 'Face Frame') {
+  [
+    partListSelector,
+    pricingSelector,
+    orderTypeSelector,
+    itemPrices,
+    formStateSelector,
+  ],
+  (parts, pricer, orderType, itemPrice, formState) => {
+    if (orderType === "Door Order" || orderType === "Face Frame") {
       return parts.map((part, index) => {
         const design =
           (part.design && part.thickness.value === 1) ||
@@ -209,8 +256,8 @@ export const itemPriceSelector = createSelector(
               (part.design && part.thickness.value === 4) ||
               (part.design && part.thickness.value === 5) ||
               (part.design && part.thickness.value === 6)
-              ? part.design.UPCHARGE_THICK
-              : 0;
+            ? part.design.UPCHARGE_THICK
+            : 0;
 
         let wood;
 
@@ -258,7 +305,7 @@ export const itemPriceSelector = createSelector(
           ? part.furniture_feet.UPCHARGE
           : 0;
 
-        if (part?.orderType?.value === 'Face_Frame') {
+        if (part?.orderType?.value === "Face_Frame") {
           if (part.dimensions) {
             const linePrice = part.dimensions.map((i, index) => {
               const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
@@ -269,8 +316,8 @@ export const itemPriceSelector = createSelector(
                 numQty(i.width) <= 24
                   ? 18
                   : numQty(i.width) >= 24 && numQty(i.width) <= 48
-                    ? 24
-                    : 36;
+                  ? 24
+                  : 36;
               let height = numQty(i.height);
 
               if (numQty(i.width) > numQty(i.height)) {
@@ -280,13 +327,13 @@ export const itemPriceSelector = createSelector(
                   numQty(i.height) <= 24
                     ? 18
                     : numQty(i.height) >= 24 && numQty(i.height) <= 48
-                      ? 24
-                      : 36;
-                
+                    ? 24
+                    : 36;
+
                 width_input = numQty(i.height);
               }
 
-              console.log({sqft: ((width * height) / 144) * wood});
+              console.log({ sqft: ((width * height) / 144) * wood });
 
               const openings = parseInt(i.openings);
               // const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
@@ -297,15 +344,13 @@ export const itemPriceSelector = createSelector(
                 overcharge = 100;
               }
 
-
               const price =
                 eval(pricer && pricer.face_frame_pricing) + extraCost;
 
-
-              console.log({price});
+              console.log({ price });
 
               if (height > -1) {
-                return Math.floor(price * 100) / 100;;
+                return Math.floor(price * 100) / 100;
               } else {
                 return 0;
               }
@@ -315,10 +360,10 @@ export const itemPriceSelector = createSelector(
           } else {
             return 0;
           }
-        } else if (part?.orderType?.value === 'Custom') {
+        } else if (part?.orderType?.value === "Custom") {
           if (part.dimensions) {
             const linePrice = part.dimensions.map((i, index) => {
-              return Math.floor(parseFloat(i.price) * 100) / 100;;
+              return Math.floor(parseFloat(i.price) * 100) / 100;
             });
 
             return linePrice;
@@ -327,7 +372,7 @@ export const itemPriceSelector = createSelector(
           }
         } else {
           if (part.dimensions) {
-            const linePrice = part.dimensions.map((i) => {
+            const linePrice = part.dimensions.map((i, j) => {
               const width = Math.ceil(numQty(i.width));
               const height = Math.ceil(numQty(i.height));
               const qty = parseInt(i.qty);
@@ -360,17 +405,25 @@ export const itemPriceSelector = createSelector(
                 const priceDifference = calc - price;
 
                 switch (add) {
-                  case 'leftStileAdd':
-                    leftStileAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
+                  case "leftStileAdd":
+                    leftStileAdd = !isNaN(priceDifference / 4)
+                      ? priceDifference / 4
+                      : 0;
                     break;
-                  case 'rightStileAdd':
-                    rightStileAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
+                  case "rightStileAdd":
+                    rightStileAdd = !isNaN(priceDifference / 4)
+                      ? priceDifference / 4
+                      : 0;
                     break;
-                  case 'topRailAdd':
-                    topRailAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
+                  case "topRailAdd":
+                    topRailAdd = !isNaN(priceDifference / 4)
+                      ? priceDifference / 4
+                      : 0;
                     break;
-                  case 'bottomRailAdd':
-                    bottomRailAdd = !isNaN(priceDifference / 4) ? (priceDifference / 4)  : 0;
+                  case "bottomRailAdd":
+                    bottomRailAdd = !isNaN(priceDifference / 4)
+                      ? priceDifference / 4
+                      : 0;
                     break;
                   default:
                     // code block
@@ -379,26 +432,26 @@ export const itemPriceSelector = createSelector(
               };
 
               const leftStileCalc = (p, price) => {
-                return calcPrice('leftStileAdd', eval('i.leftStile'), price, p);
+                return calcPrice("leftStileAdd", eval("i.leftStile"), price, p);
               };
 
               const rightStileCalc = (p, price) => {
                 return calcPrice(
-                  'rightStileAdd',
-                  eval('i.rightStile'),
+                  "rightStileAdd",
+                  eval("i.rightStile"),
                   price,
                   p
                 );
               };
 
               const topRailCalc = (p, price) => {
-                return calcPrice('topRailAdd', eval('i.topRail'), price, p);
+                return calcPrice("topRailAdd", eval("i.topRail"), price, p);
               };
 
               const bottomRailCalc = (p, price) => {
                 return calcPrice(
-                  'bottomRailAdd',
-                  eval('i.bottomRail'),
+                  "bottomRailAdd",
+                  eval("i.bottomRail"),
                   price,
                   p
                 );
@@ -406,16 +459,16 @@ export const itemPriceSelector = createSelector(
 
               const calc = (part, design, price) => {
                 switch (part) {
-                  case 'leftStile':
+                  case "leftStile":
                     leftStileCalc(design, price);
                     break;
-                  case 'rightStile':
+                  case "rightStile":
                     rightStileCalc(design, price);
                     break;
-                  case 'topRail':
+                  case "topRail":
                     topRailCalc(design, price);
                     break;
-                  case 'bottomRail':
+                  case "bottomRail":
                     bottomRailCalc(design, price);
                     break;
                   default:
@@ -451,28 +504,28 @@ export const itemPriceSelector = createSelector(
                   (part.profile && part.profile.PROFILE_WIDTH) !==
                   numQty(i.leftStile)
                 ) {
-                  calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+                  calc("leftStile", part.profile?.PROFILE_WIDTH, price);
                 }
                 //rightStile
                 if (
                   (part.profile && part.profile.PROFILE_WIDTH) !==
                   numQty(i.rightStile)
                 ) {
-                  calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+                  calc("rightStile", part.profile?.PROFILE_WIDTH, price);
                 }
                 //topRail
                 if (
                   (part.profile && part.profile.PROFILE_WIDTH) !==
                   numQty(i.topRail)
                 ) {
-                  calc('topRail', part.profile?.PROFILE_WIDTH, price);
+                  calc("topRail", part.profile?.PROFILE_WIDTH, price);
                 }
                 //bottomRail
                 if (
                   (part.profile && part.profile.PROFILE_WIDTH) !==
                   numQty(i.bottomRail)
                 ) {
-                  calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+                  calc("bottomRail", part.profile?.PROFILE_WIDTH, price);
                 }
               } else {
                 //leftStile
@@ -480,28 +533,28 @@ export const itemPriceSelector = createSelector(
                   (part.design && part.design.PROFILE_WIDTH) !==
                   numQty(i.leftStile)
                 ) {
-                  calc('leftStile', part.design?.PROFILE_WIDTH, price);
+                  calc("leftStile", part.design?.PROFILE_WIDTH, price);
                 }
                 //rightStile
                 if (
                   (part.design && part.design.PROFILE_WIDTH) !==
                   numQty(i.rightStile)
                 ) {
-                  calc('rightStile', part.design?.PROFILE_WIDTH, price);
+                  calc("rightStile", part.design?.PROFILE_WIDTH, price);
                 }
                 //topRail
                 if (
                   (part.design && part.design.PROFILE_WIDTH) !==
                   numQty(i.topRail)
                 ) {
-                  calc('topRail', part.design?.PROFILE_WIDTH, price);
+                  calc("topRail", part.design?.PROFILE_WIDTH, price);
                 }
                 //bottomRail
                 if (
                   (part.design && part.design.PROFILE_WIDTH) !==
                   numQty(i.bottomRail)
                 ) {
-                  calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+                  calc("bottomRail", part.design?.PROFILE_WIDTH, price);
                 }
               }
 
@@ -627,27 +680,26 @@ export const itemPriceSelector = createSelector(
               //   }
               // }
 
-
               //test
               //Slab Doors here
 
               if (
-                part.orderType.value === 'Door' &&
-                part.construction.value === 'Slab'
+                part.orderType.value === "Door" &&
+                part.construction.value === "Slab"
               ) {
                 price =
                   (width * height) / 144 > 2
                     ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                     : 2 * wood + (6.5 + edge) + extraCost;
               } else if (
-                part.orderType.value === 'DF' &&
-                part.construction.value === 'Slab'
+                part.orderType.value === "DF" &&
+                part.construction.value === "Slab"
               ) {
                 price =
                   (width * height) / 144 > 1
                     ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                     : 1 * wood + (6.5 + edge) + extraCost;
-              } else if (part.orderType.value === 'DF') {
+              } else if (part.orderType.value === "DF") {
                 price =
                   eval(pricer.df_pricing) +
                   leftStileAdd +
@@ -679,14 +731,17 @@ export const itemPriceSelector = createSelector(
                     : 0;
               }
 
-
-              console.log({leftStileAdd});
-              console.log({rightStileAdd});
-              console.log({topRailAdd});
-              console.log({bottomRailAdd});
+              console.log({ leftStileAdd });
+              console.log({ rightStileAdd });
+              console.log({ topRailAdd });
+              console.log({ bottomRailAdd });
 
               if (height > -1) {
-                return Math.floor(price * 100) / 100;
+                return itemPrice &&
+                  formState?.values?.part_list[index]?.dimensions[j] ===
+                    formState?.initial.part_list[index]?.dimensions[j]
+                  ? itemPrice[index][j]
+                  : Math.floor(price * 100) / 100;
               } else {
                 return 0;
               }
@@ -700,7 +755,7 @@ export const itemPriceSelector = createSelector(
       });
     }
 
-    if (orderType === 'Drawer Order') {
+    if (orderType === "Drawer Order") {
       return parts.map((part, index) => {
         const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
         const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
@@ -716,9 +771,9 @@ export const itemPriceSelector = createSelector(
             const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
             const scoop = i.scoop.PRICE;
 
-            const price = (eval(pricer.drawer_box_pricing) + extraCost);
+            const price = eval(pricer.drawer_box_pricing) + extraCost;
 
-            console.log({price: Math.floor(price * 100) / 100});
+            console.log({ price: Math.floor(price * 100) / 100 });
 
             if (height > -1) {
               return Math.floor(price * 100) / 100;
@@ -741,7 +796,6 @@ export const finishingSelector = createSelector(
     parts.map((part, index) => {
       if (part.dimensions) {
         const linePrice = part.dimensions.map((i) => {
-   
           const finish = part.face_frame_finishing
             ? part.face_frame_finishing.PRICE
             : 0;
@@ -749,38 +803,38 @@ export const finishingSelector = createSelector(
           let width_input = numQty(i.width);
 
           let width =
-              numQty(i.width) <= 24
-                ? 18
-                : numQty(i.width) >= 24 && numQty(i.width) <= 48
-                  ? 24
-                  : 36;
+            numQty(i.width) <= 24
+              ? 18
+              : numQty(i.width) >= 24 && numQty(i.width) <= 48
+              ? 24
+              : 36;
           let height = numQty(i.height);
-  
+
           if (numQty(i.width) > numQty(i.height)) {
             height = numQty(i.width);
-  
+
             width =
-                numQty(i.height) <= 24
-                  ? 18
-                  : numQty(i.height) >= 24 && numQty(i.height) <= 48
-                    ? 24
-                    : 36;
-                  
+              numQty(i.height) <= 24
+                ? 18
+                : numQty(i.height) >= 24 && numQty(i.height) <= 48
+                ? 24
+                : 36;
+
             width_input = numQty(i.height);
           }
-  
+
           const width_finish = width_input >= 35 ? finish * 0.25 : 0;
           const height_finish = height >= 97 ? finish * 0.25 : 0;
-  
+
           const openings = parseInt(i.openings);
           const opening_add =
             openings > 1 && finish > 0 ? (openings - 1) * 5 : 0;
-  
+
           const finishing =
             finish + (width_finish + height_finish + opening_add);
-  
+
           if (height > -1) {
-            return Math.floor(finishing * 100) / 100; 
+            return Math.floor(finishing * 100) / 100;
           } else {
             return 0;
           }
@@ -815,32 +869,65 @@ export const finishTotalSelector = createSelector(
 );
 
 export const linePriceSelector = createSelector(
-  [partListSelector, finishingSelector, itemPriceSelector],
-  (parts, finish, item) =>
+  [
+    partListSelector,
+    finishingSelector,
+    itemPriceSelector,
+    linePrices,
+    formStateSelector,
+  ],
+  (parts, finish, item, linePrice, formState) =>
     parts.map((part, index) => {
       if (part.dimensions) {
         return part?.dimensions?.map((i, p) => {
           if (item[index][p]) {
             if (i.qty) {
               if (
-                (part?.orderType?.value === 'Door' || part?.orderType?.value === 'DF' ||
-                  part?.orderType?.value === 'Glass' ||
-                  part?.orderType?.value === 'One_Piece' ||
-                  part?.orderType?.value === 'Two_Piece') &&
+                (part?.orderType?.value === "Door" ||
+                  // part?.orderType?.value === "DF" ||
+                  part?.orderType?.value === "Glass" ||
+                  part?.orderType?.value === "One_Piece" ||
+                  part?.orderType?.value === "Two_Piece") &&
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
                 const base = item[index][p] * parseInt(i.qty);
                 const add = base * 0.2;
-                const price = base + add + (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
-                return price;
+                const price =
+                  base +
+                  add +
+                  (i.price_adjustment
+                    ? Math.floor(i.price_adjustment * 100) / 100
+                    : 0);
+                return linePrice[index][p] &&
+                  formState?.values?.part_list[index]?.dimensions[p] ===
+                    formState?.initial.part_list[index]?.dimensions[p]
+                  ? linePrice[index][p]
+                  : price;
               } else {
-                if(part?.orderType?.value === 'Face_Frame' ){
-                  return ((item[index][p] + finish[index][p]) * parseInt(i.qty)) + (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
+                if (part?.orderType?.value === "Face_Frame") {
+                  return (
+                    ((linePrice[index][p] &&
+                      formState?.values?.part_list[index]?.dimensions[p] ===
+                        formState?.initial.part_list[index]?.dimensions[p]
+                      ? linePrice[index][p]
+                      : (item[index][p]) + 5000) + finish[index][p]) * parseInt(i.qty) +
+                    (i.price_adjustment
+                      ? Math.floor(i.price_adjustment * 100) / 100
+                      : 0)
+                  );
                 } else {
-                  return (item[index][p] * parseInt(i.qty)) + (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
+                  return (
+                    (linePrice[index][p] &&
+                      formState?.values?.part_list[index]?.dimensions[p] ===
+                        formState?.initial.part_list[index]?.dimensions[p]
+                      ? linePrice[index][p]
+                      : item[index][p]) * parseInt(i.qty) +
+                    (i.price_adjustment
+                      ? Math.floor(i.price_adjustment * 100) / 100
+                      : 0)
+                  );
                 }
-                
               }
             } else {
               return 0;
@@ -866,7 +953,7 @@ export const nonDiscountedItems = createSelector([partListSelector], (parts) =>
 export const addPriceSelector = createSelector(
   [partListSelector, pricingSelector, itemPriceSelector, orderTypeSelector],
   (parts, pricer, item, orderType) => {
-    if (orderType === 'Door Order') {
+    if (orderType === "Door Order") {
       return parts.map((part, index) => {
         if (part.dimensions) {
           return part.dimensions.map((i, p) => {
@@ -905,9 +992,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
 
     const { item, woodtype, linearFT, grade } = i;
 
-
-
-    if (i.style?.value === 'custom') {
+    if (i.style?.value === "custom") {
       price = 0;
 
       const width = i.width ? parseFloat(i.width) : 0;
@@ -936,17 +1021,17 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
       }
 
       if (thickness <= 1) {
-        if (grade?.name === 'Standard Grade') {
+        if (grade?.name === "Standard Grade") {
           wood = woodtype?.STANDARD_GRADE ? woodtype?.STANDARD_GRADE / 4 : 0;
-        } else if (grade?.name === 'Select Grade') {
+        } else if (grade?.name === "Select Grade") {
           wood = woodtype?.SELECT_GRADE ? woodtype?.SELECT_GRADE / 4 : 0;
         }
       } else {
-        if (grade?.name === 'Standard Grade') {
+        if (grade?.name === "Standard Grade") {
           wood = woodtype?.STANDARD_GRADE_THICK
             ? woodtype?.STANDARD_GRADE_THICK / 4
             : 0;
-        } else if (grade?.name === 'Select Grade') {
+        } else if (grade?.name === "Select Grade") {
           wood = woodtype?.SELECT_GRADE_THICK
             ? woodtype?.SELECT_GRADE_THICK / 4
             : 0;
@@ -956,11 +1041,9 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
       const bd_ft = waste * premium;
 
       price = bd_ft * wood * linFt * 4;
-
-      
     } else {
       if (i.item) {
-        let feet = Math.floor(((item.MOULDING_WIDTH * 12) / 144) * 100) / 100; 
+        let feet = Math.floor(((item.MOULDING_WIDTH * 12) / 144) * 100) / 100;
         let waste = feet * 1.25;
         let multiplier = item.Multiplier;
         let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
@@ -1004,7 +1087,7 @@ export const mouldingLinePriceSelector = createSelector(
     pricer.map((i, index) => {
       const price = i ? i : 0;
 
-      return Math.floor(price * 100) / 100;;
+      return Math.floor(price * 100) / 100;
     })
 );
 
@@ -1027,10 +1110,10 @@ export const subTotalSelector = createSelector(
   ],
   (prices, misc, orderType, moulding) => {
     if (orderType) {
-      if (orderType === 'Mouldings') {
+      if (orderType === "Mouldings") {
         return [moulding];
       }
-      if (orderType === 'Misc Items') {
+      if (orderType === "Misc Items") {
         return [misc];
       } else {
         return prices.map((i, index) => {
@@ -1056,14 +1139,19 @@ export const mouldingLineItemSelector = createSelector(
 
 export const subTotal_Total = createSelector(
   [subTotalSelector, miscTotalSelector],
-  (subTotal, misc) => Math.floor(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100
+  (subTotal, misc) =>
+    Math.floor(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100
 );
 
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector, orderTypeSelector],
   (subTotal, misc, discount, orderType) => {
     if (orderType) {
-      return Math.round((subTotal.reduce((acc, item) => acc + item, 0) * discount) * 100) / 100;
+      return (
+        Math.round(
+          subTotal.reduce((acc, item) => acc + item, 0) * discount * 100
+        ) / 100
+      );
     } else {
       return 0;
     }
@@ -1082,12 +1170,15 @@ export const taxSelector = createSelector(
     orderTypeSelector,
   ],
   (subTotal, tax, discount, dis, misc, state, nonDiscounted, orderType) => {
-    if (orderType === 'Misc Items') {
+    if (orderType === "Misc Items") {
       return (
-        Math.floor(((subTotal.reduce((acc, item) => acc + item, 0) -
-          discount +
-          nonDiscounted) *
-        tax) * 100) / 100
+        Math.floor(
+          (subTotal.reduce((acc, item) => acc + item, 0) -
+            discount +
+            nonDiscounted) *
+            tax *
+            100
+        ) / 100
       );
     } else {
       return (
@@ -1111,20 +1202,20 @@ export const totalSelector = createSelector(
     orderTypeSelector,
   ],
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
-    if (orderType === 'Misc Items') {
+    if (orderType === "Misc Items") {
       return (
-        (subTotal.reduce((acc, item) => acc + item, 0) +
+        subTotal.reduce((acc, item) => acc + item, 0) +
         tax +
         nonDiscounted -
         discount
-        ));
+      );
     } else {
       return (
-        (subTotal.reduce((acc, item) => acc + item, 0) +
+        subTotal.reduce((acc, item) => acc + item, 0) +
         tax +
         misc +
         nonDiscounted -
-        discount)
+        discount
       );
     }
   }
