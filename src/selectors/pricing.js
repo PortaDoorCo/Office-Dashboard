@@ -737,7 +737,8 @@ export const itemPriceSelector = createSelector(
               console.log({ bottomRailAdd });
 
               if (height > -1) {
-                return itemPrice &&
+                return itemPrice.length > 0 &&
+                  formState?.values?.part_list[index]?.dimensions.length > 0 &&
                   formState?.values?.part_list[index]?.dimensions[j] ===
                     formState?.initial.part_list[index]?.dimensions[j]
                   ? itemPrice[index][j]
@@ -763,7 +764,7 @@ export const itemPriceSelector = createSelector(
         const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
 
         if (part.dimensions) {
-          const linePrice = part.dimensions.map((i) => {
+          const linePrice = part.dimensions.map((i, j) => {
             const width = numQty(i.width);
             const height = numQty(i.height);
             const depth = numQty(i.depth);
@@ -776,7 +777,12 @@ export const itemPriceSelector = createSelector(
             console.log({ price: Math.floor(price * 100) / 100 });
 
             if (height > -1) {
-              return Math.floor(price * 100) / 100;
+              return itemPrice.length > 0 &&
+                formState?.values?.part_list[index]?.dimensions.length > 0 &&
+                formState?.values?.part_list[index]?.dimensions[j] ===
+                  formState?.initial.part_list[index]?.dimensions[j]
+                ? itemPrice[index][j]
+                : Math.floor(price * 100) / 100;
             } else {
               return 0;
             }
@@ -869,14 +875,8 @@ export const finishTotalSelector = createSelector(
 );
 
 export const linePriceSelector = createSelector(
-  [
-    partListSelector,
-    finishingSelector,
-    itemPriceSelector,
-    linePrices,
-    formStateSelector,
-  ],
-  (parts, finish, item, linePrice, formState) =>
+  [partListSelector, finishingSelector, itemPriceSelector],
+  (parts, finish, item) =>
     parts.map((part, index) => {
       if (part.dimensions) {
         return part?.dimensions?.map((i, p) => {
@@ -884,7 +884,7 @@ export const linePriceSelector = createSelector(
             if (i.qty) {
               if (
                 (part?.orderType?.value === "Door" ||
-                  // part?.orderType?.value === "DF" ||
+                  part?.orderType?.value === "DF" ||
                   part?.orderType?.value === "Glass" ||
                   part?.orderType?.value === "One_Piece" ||
                   part?.orderType?.value === "Two_Piece") &&
@@ -893,40 +893,13 @@ export const linePriceSelector = createSelector(
               ) {
                 const base = item[index][p] * parseInt(i.qty);
                 const add = base * 0.2;
-                const price =
-                  base +
-                  add +
-                  (i.price_adjustment
-                    ? Math.floor(i.price_adjustment * 100) / 100
-                    : 0);
-                return linePrice[index][p] &&
-                  formState?.values?.part_list[index]?.dimensions[p] ===
-                    formState?.initial.part_list[index]?.dimensions[p]
-                  ? linePrice[index][p]
-                  : price;
+                const price = base + add;
+                return price;
               } else {
                 if (part?.orderType?.value === "Face_Frame") {
-                  return (
-                    ((linePrice[index][p] &&
-                      formState?.values?.part_list[index]?.dimensions[p] ===
-                        formState?.initial.part_list[index]?.dimensions[p]
-                      ? linePrice[index][p]
-                      : (item[index][p]) + 5000) + finish[index][p]) * parseInt(i.qty) +
-                    (i.price_adjustment
-                      ? Math.floor(i.price_adjustment * 100) / 100
-                      : 0)
-                  );
+                  return (item[index][p] + finish[index][p]) * parseInt(i.qty);
                 } else {
-                  return (
-                    (linePrice[index][p] &&
-                      formState?.values?.part_list[index]?.dimensions[p] ===
-                        formState?.initial.part_list[index]?.dimensions[p]
-                      ? linePrice[index][p]
-                      : item[index][p]) * parseInt(i.qty) +
-                    (i.price_adjustment
-                      ? Math.floor(i.price_adjustment * 100) / 100
-                      : 0)
-                  );
+                  return item[index][p] * parseInt(i.qty);
                 }
               }
             } else {
