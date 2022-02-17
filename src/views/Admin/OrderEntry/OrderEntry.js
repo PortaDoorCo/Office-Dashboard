@@ -45,8 +45,12 @@ import {
   balanceSelector,
   balanceTotalSelector,
   miscTotalSelector,
+  subTotalSelector,
   taxSelector,
   totalSelector,
+  linePriceSelector,
+  itemPriceSelector,
+  qtySelector
 } from '../../../selectors/pricing';
 import currencyMask from '../../../utils/currencyMask';
 import CancelModal from '../../../utils/Modal';
@@ -136,7 +140,7 @@ class OrderEntry extends Component {
       reset,
       prices,
       itemPrice,
-      subTotal,
+      subTotals,
       tax,
       total,
       submitOrder,
@@ -148,6 +152,7 @@ class OrderEntry extends Component {
       tracking,
       updateOrder,
       formState,
+      qty
     } = this.props;
 
     // const orderType = orderType;
@@ -219,6 +224,8 @@ class OrderEntry extends Component {
       }
     }
 
+
+
     if (!isEdit) {
       order = {
         ...values,
@@ -233,10 +240,11 @@ class OrderEntry extends Component {
         companyprofile: values.job_info.customer.id,
         linePrice: prices,
         itemPrice: itemPrice,
-        subTotals: subTotal,
+        subTotals: subTotals,
         tax: tax,
         total: total,
         balance_due: total,
+        qty: qty,
         orderType: orderType,
         dueDate: values?.job_info?.DueDate,
         Shipping_Scheduled: values?.job_info?.Shipping_Scheduled,
@@ -275,7 +283,8 @@ class OrderEntry extends Component {
         companyprofile: values.job_info?.customer?.id,
         linePrice: prices,
         itemPrice: itemPrice,
-        subTotals: subTotal,
+        subTotals: subTotals,
+        qty: qty,
         tax: tax,
         total: total,
         balance_due: total - values.balance_history
@@ -767,6 +776,10 @@ const mapStateToProps = (state, props) => ({
   formState: getFormValues('Order')(state),
   total: totalSelector(state),
   tax: taxSelector(state),
+  prices: linePriceSelector(state),
+  subTotals: subTotalSelector(state),
+  itemPrice: itemPriceSelector(state),
+  qty: qtySelector(state),
   addPriceSelector: addPriceSelector(state),
   miscTotalSelector: miscTotalSelector(state),
   balance: balanceSelector(state),
