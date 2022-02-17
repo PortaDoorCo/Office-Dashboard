@@ -408,7 +408,7 @@ const pricing = (parts, pricer) => {
       const base = item[index][p] * parseInt(i.qty) + (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
 
       if (
-        (part.orderType.value === 'Door' ||
+        (part.orderType.value === 'Door' || part?.orderType?.value === 'DF' ||
         part.orderType.value === 'Glass' ||
         part.orderType.value === 'One_Piece' ||
         part.orderType.value === 'Two_Piece') &&
