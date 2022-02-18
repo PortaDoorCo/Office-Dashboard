@@ -49,13 +49,13 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
             ],
-            margin: [0, 4, 0, 0],
+            margin: [0, 0, 0, 0],
           },
         ]);
       }
 
       return obj;
-    })
+    }).filter(n => n)
   );
 
   function splitArrayIntoChunksOfLen(arr, len) {
@@ -68,16 +68,20 @@ export default (data, breakdowns) => {
     return chunks;
   }
 
-  const newChunk = splitArrayIntoChunksOfLen(a, 3);
+  let newChunk = splitArrayIntoChunksOfLen(a, 3);
 
   const lastArr = newChunk[newChunk.length - 1].length;
 
 
   if (lastArr !== 3) {
     for (let i = 0; i < 3 - lastArr; i++) {
-      newChunk[newChunk.length - 1].push({ text: '', alignment: 'center', margin: [0, 5, 0, 0] });
+      newChunk[newChunk.length - 1].push({ text: '', alignment: 'center', margin: [0, 0, 0, 0] });
     }
   }
+
+  console.log({newChunk});
+
+
 
   return [
     {
@@ -85,15 +89,29 @@ export default (data, breakdowns) => {
       table: {
         alignment: 'center',
         widths: [175, 182, 180],
-        heights: [65, 70, 70, 72, 71, 71, 70, 69, 69, 60],
+        heights: newChunk.map((i, index) => {
+          if(index === 10){
+            return 10;
+          } else {
+
+            if(index <  6) {
+              return 67 - index;
+            }
+
+            if (index > 10) {
+              return 67 - (index - 10);
+            }
+            return 67;
+          }
+        }),
         body: newChunk,
       },
       layout: {
         hLineWidth: function (i, node) {
-          return i === 1 ? 0 : 0;
+          return i === 1 ? 1 : 1;
         },
         vLineWidth: function (i, node) {
-          return 0;
+          return 1;
         },
         hLineStyle: function (i, node) {
           if (i === 0 || i === node.table.body.length) {
