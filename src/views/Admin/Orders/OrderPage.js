@@ -1003,6 +1003,8 @@ class OrderPage extends Component {
     const { selectedOrder, printer_options, user, deleteFilesFromOrder } =
       this.props;
 
+      const filesInfo = selectedOrder?.filesInfo?.length > 0 ? selectedOrder?.filesInfo?.slice(0).reverse() : []
+
     console.log({selectedOrder});
 
     return (
@@ -1212,14 +1214,8 @@ class OrderPage extends Component {
                                     {/* <th scope="row">{index + 1}</th> */}
                                     <td style={{ width: '75%' }}>{i.name}</td>
                                     <td>
-                                        Uploaded by:{' '}
-                                      {selectedOrder?.filesInfo?.length > 0
-                                        ? selectedOrder?.filesInfo[index]
-                                          ?.user
-                                          ? selectedOrder?.filesInfo[index]
-                                            ?.user
-                                          : 'N/A'
-                                        : 'N/A'}
+                                        Uploaded by: {filesInfo.length > 0 ? filesInfo[index]?.user : 'N/A'}
+
                                     </td>
                                     <td style={{ textAlign: 'right' }}>
                                       <a
