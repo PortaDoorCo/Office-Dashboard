@@ -108,10 +108,10 @@ export default (data, breakdowns) => {
       },
       layout: {
         hLineWidth: function (i, node) {
-          return i === 1 ? 1 : 1;
+          return i === 1 ? 0 : 0;
         },
         vLineWidth: function (i, node) {
-          return 1;
+          return 0;
         },
         hLineStyle: function (i, node) {
           if (i === 0 || i === node.table.body.length) {
