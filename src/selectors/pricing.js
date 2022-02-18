@@ -307,7 +307,7 @@ export const itemPriceSelector = createSelector(
 
         if (part?.orderType?.value === "Face_Frame") {
           if (part.dimensions) {
-            const linePrice = part.dimensions.map((i, index) => {
+            const linePrice = part.dimensions.map((i, j) => {
               const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
 
               let width_input = numQty(i.width);
@@ -350,7 +350,12 @@ export const itemPriceSelector = createSelector(
               console.log({ price });
 
               if (height > -1) {
-                return Math.floor(price * 100) / 100;
+                return itemPrice.length > 0 &&
+                formState?.values?.part_list[index]?.dimensions.length > 0 &&
+                formState?.values?.part_list[index]?.dimensions[j] ===
+                  formState?.initial.part_list[index]?.dimensions[j]
+                ? itemPrice[index][j]
+                : Math.floor(price * 100) / 100;
               } else {
                 return 0;
               }

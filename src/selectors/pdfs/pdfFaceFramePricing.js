@@ -1,6 +1,6 @@
 import numQty from 'numeric-quantity';
 
-const pricing = (parts, pricer) => {
+const pricing = (parts, pricer, itemPrice) => {
   const item = parts.map((part, index) => {
     const design =
       (part.design && part.thickness.value === 1) ||
@@ -90,11 +90,14 @@ const pricing = (parts, pricer) => {
           overcharge = 100;
         }
 
-        const price = eval(pricer && pricer.face_frame_pricing) + extraCost;
+        const price =itemPrice?.length > 0 && itemPrice[index]?.length > 0
+        ? itemPrice[index][j]
+        : (Math.floor(eval(pricer && pricer.face_frame_pricing) * 100) / 100) + extraCost;
+         
 
 
         if (height > -1) {
-          return Math.floor((price * parseInt(i.qty)) * 100) / 100;
+          return (price * parseInt(i.qty))
         } else {
           return 0;
         }
