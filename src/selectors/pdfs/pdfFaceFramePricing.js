@@ -92,7 +92,7 @@ const pricing = (parts, pricer, itemPrice) => {
 
         const price =itemPrice?.length > 0 && itemPrice[index]?.length > 0
         ? itemPrice[index][j]
-        : Math.floor((eval(pricer && pricer.face_frame_pricing) * 100) / 100) + extraCost;
+        : (Math.floor(eval(pricer && pricer.face_frame_pricing) * 100) / 100) + extraCost;
          
 
 

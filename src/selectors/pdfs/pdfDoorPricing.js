@@ -384,7 +384,7 @@ const pricing = (parts, pricer, itemPrice) => {
 
       return itemPrice?.length > 0 && itemPrice[index]?.length > 0
         ? itemPrice[index][p]
-        : Math.floor((price + 10000) * 100) / 100;
+        : Math.floor(price * 100) / 100;
     });
 
     const customPrice = part.dimensions.map((i) => {
