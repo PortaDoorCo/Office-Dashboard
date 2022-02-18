@@ -1,6 +1,6 @@
 import numQty from 'numeric-quantity';
 
-const pricing = (parts, pricer) => {
+const pricing = (parts, pricer, itemPrice) => {
   const item = parts.map((part, index) => {
     const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
     const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
@@ -8,7 +8,7 @@ const pricing = (parts, pricer) => {
     const notchDrill = part.box_notch ? part.box_notch.PRICE : 0;
 
     if (part.dimensions) {
-      const linePrice = part.dimensions.map((i) => {
+      const linePrice = part.dimensions.map((i, p) => {
         const width = numQty(i.width);
         const height = numQty(i.height);
         const depth = numQty(i.depth);
@@ -16,7 +16,13 @@ const pricing = (parts, pricer) => {
         const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
         const scoop = i.scoop.PRICE;
 
-        const price = Math.floor((eval(pricer.drawer_box_pricing) + extraCost) * 100) / 100;
+        
+        
+        const price = itemPrice?.length > 0 && itemPrice[index]?.length > 0
+        ? itemPrice[index][p]
+        : (Math.floor((eval(pricer.drawer_box_pricing)) * 100) / 100) + extraCost;
+        
+        
         const addQty = price * qty;
         
 

@@ -27,7 +27,7 @@ export default (data, pricing) => {
     }
   });
 
-  const prices = pdfDrawerBoxPricing(data.part_list, pricing[0]);
+  const prices = pdfDrawerBoxPricing(data.part_list, pricing[0], data.itemPrice);
 
   console.log({prices});
 

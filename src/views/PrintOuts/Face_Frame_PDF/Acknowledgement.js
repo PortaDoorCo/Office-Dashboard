@@ -12,7 +12,7 @@ export default (data, pricing) => {
       .reduce((acc, item) => acc + item, 0);
   });
 
-  const prices = pdfDoorPricing(data?.part_list, pricing[0]);
+  const prices = pdfDoorPricing(data.part_list, pricing[0], data.itemPrice);
   const finishing = pdfFinishing(data?.part_list, pricing[0]);
 
   const subTotal = prices
