@@ -611,7 +611,7 @@ export default (data, pricing) => {
           style: "warrantyFont",
           alignment: "left",
           margin: [0, 0, 0, 5],
-          id: "liability-acknowledgement",
+          id: "liability-invoice",
         },
       ],
     },
