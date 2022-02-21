@@ -61,11 +61,20 @@ export default (data, pricing) => {
     accumulator,
     balance
   ) {
-    return accumulator + balance.balance_paid;
+    return accumulator + (balance.balance_paid || 0);
   },
   0);
 
-  const balanceDue = total - balancePaid;
+  const depositPaid = data.balance_history.reduce(function (
+    accumulator,
+    balance
+  ) {
+    return accumulator + (balance.deposit_paid || 0);
+  },
+  0);
+
+  const balanceDue = total - depositPaid - balancePaid;
+
 
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
@@ -511,25 +520,46 @@ export default (data, pricing) => {
       ],
       margin: [0, 10, 0, 0],
     },
+    depositPaid > 0 ?
     {
       columns: [
-        { text: '', style: 'totals', width: 317, decoration: 'underline' },
+        { text: "", style: "totals", width: 317, decoration: "underline" },
         {
-          text: 'Minus Balance Paid:',
-          style: 'totals',
+          text: "Minus Deposit Received:",
+          style: "totals",
           margin: [0, 0, 0, 0],
           width: 120,
-          alignment: 'right',
+          alignment: "right",
         },
         {
-          text: `$${balancePaid.toFixed(2)}`,
-          style: 'fonts',
+          text: `$${depositPaid.toFixed(2)}`,
+          style: "fonts",
           margin: [0, 0, 0, 0],
-          alignment: 'right',
+          alignment: "right",
         },
       ],
       margin: [0, 2, 0, 0],
-    },
+    } : null,
+    balancePaid > 0 ?
+    {
+      columns: [
+        { text: "", style: "totals", width: 317, decoration: "underline" },
+        {
+          text: "Minus Balance Paid:",
+          style: "totals",
+          margin: [0, 0, 0, 0],
+          width: 120,
+          alignment: "right",
+        },
+        {
+          text: `$${balancePaid.toFixed(2)}`,
+          style: "fonts",
+          margin: [0, 0, 0, 0],
+          alignment: "right",
+        },
+      ],
+      margin: [0, 2, 0, 0],
+    } : null,
     {
       text: '======',
       margin: [0, 0, 0, 0],

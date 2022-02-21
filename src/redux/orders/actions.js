@@ -451,12 +451,14 @@ export function updateBalance(orderId, balance, cookie) {
     item = {
       DateOrdered: new Date(),
       balance_due: balance.balance_due,
-      balance_paid: balance.balance_paid,
+      balance_paid: balance.balance_paid || 0,
+      deposit_paid: balance.deposit_paid || 0,
       balance_history: [
         ...balance.balance_history,
         {
           balance_due: parseFloat(balance.balance_due),
-          balance_paid: parseFloat(balance.balance_paid),
+          balance_paid: parseFloat(balance.balance_paid || 0),
+          deposit_paid: parseFloat(balance.deposit_paid || 0),
           payment_method: balance.payment_method,
           date: balance.payment_date,
         },
@@ -477,12 +479,14 @@ export function updateBalance(orderId, balance, cookie) {
   } else {
     item = {
       balance_due: balance.balance_due,
-      balance_paid: balance.balance_paid,
+      balance_paid: balance.balance_paid || 0,
+      deposit_paid: balance.deposit_paid || 0,
       balance_history: [
         ...balance.balance_history,
         {
           balance_due: parseFloat(balance.balance_due),
-          balance_paid: parseFloat(balance.balance_paid),
+          balance_paid: parseFloat(balance.balance_paid || 0),
+          deposit_paid: parseFloat(balance.deposit_paid || 0),
           payment_method: balance.payment_method,
           date: balance.payment_date,
         },

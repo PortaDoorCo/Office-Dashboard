@@ -160,7 +160,7 @@ export const miscItemLinePriceSelector = createSelector(
     parts.map((i, index) => {
       let price = 0;
 
-      console.log({ pricer });
+
       if (i.category === "preselect") {
         if (i.item) {
           if (i.qty) {
@@ -333,7 +333,7 @@ export const itemPriceSelector = createSelector(
                 width_input = numQty(i.height);
               }
 
-              console.log({ sqft: ((width * height) / 144) * wood });
+              
 
               const openings = parseInt(i.openings);
               // const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
@@ -347,7 +347,7 @@ export const itemPriceSelector = createSelector(
               const price =
                 eval(pricer && pricer.face_frame_pricing) + extraCost;
 
-              console.log({ price });
+             
 
               if (height > -1) {
                 return itemPrice.length > 0 &&
@@ -736,10 +736,6 @@ export const itemPriceSelector = createSelector(
                     : 0;
               }
 
-              console.log({ leftStileAdd });
-              console.log({ rightStileAdd });
-              console.log({ topRailAdd });
-              console.log({ bottomRailAdd });
 
               if (height > -1) {
                 return itemPrice.length > 0 &&
@@ -779,7 +775,7 @@ export const itemPriceSelector = createSelector(
 
             const price = eval(pricer.drawer_box_pricing) + extraCost;
 
-            console.log({ price: Math.floor(price * 100) / 100 });
+          
 
             if (height > -1) {
               return itemPrice.length > 0 &&

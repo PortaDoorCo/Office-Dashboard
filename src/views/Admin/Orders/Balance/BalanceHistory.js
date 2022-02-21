@@ -92,6 +92,7 @@ const RenderBalances = ({
           <tr>
             <th>Payment Date</th>
             <th>Balance Due</th>
+            <th>Deposit Paid</th>
             <th>Balance Paid</th>
             <th>Payment Method</th>
             <th></th>
@@ -115,6 +116,16 @@ const RenderBalances = ({
                     disabled
                   />
                 </th>
+                <td>
+                  <Field
+                    name={`${i}.deposit_paid`}
+                    type="text"
+                    component={renderPrice}
+                    edit={true}
+                    {...currencyMask}
+                    label="deposit_paid"
+                  />
+                </td>
                 <td>
                   <Field
                     name={`${i}.balance_paid`}
@@ -180,7 +191,7 @@ class BalanceHistory extends Component {
     const balance_history_paid =
       formState &&
       formState.balance_history.slice(0).map((i, index) => {
-        updated_total = updated_total - parseFloat(i.balance_paid);
+        updated_total = updated_total - parseFloat(i.balance_paid || 0) - parseFloat(i.deposit_paid || 0);
         return updated_total;
       });
 
