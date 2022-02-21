@@ -6,7 +6,15 @@ export default (data, pricing) => {
     accumulator,
     balance
   ) {
-    return accumulator + balance.balance_paid;
+    return accumulator + (balance.balance_paid || 0);
+  },
+  0);
+
+  const depositPaid = data.balance_history.reduce(function (
+    accumulator,
+    balance
+  ) {
+    return accumulator + (balance.deposit_paid || 0);
   },
   0);
 
@@ -39,7 +47,7 @@ export default (data, pricing) => {
 
   const total = order_sub_total + tax;
 
-  const balanceDue = total - balancePaid;
+  const balanceDue = total - depositPaid - balancePaid;
 
   const tableBody = [
     [
@@ -359,25 +367,48 @@ export default (data, pricing) => {
       ],
       margin: [0, 10, 0, 0],
     },
-    {
-      columns: [
-        { text: '', style: 'totals', width: 317, decoration: 'underline' },
-        {
-          text: 'Minus Balance Paid:',
-          style: 'totals',
-          margin: [0, 0, 0, 0],
-          width: 120,
-          alignment: 'right',
-        },
-        {
-          text: `$${balancePaid.toFixed(2)}`,
-          style: 'fonts',
-          margin: [0, 0, 0, 0],
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 2, 0, 0],
-    },
+    depositPaid > 0
+      ? {
+          columns: [
+            { text: "", style: "totals", width: 317, decoration: "underline" },
+            {
+              text: "Minus Deposit Received:",
+              style: "totals",
+              margin: [0, 0, 0, 0],
+              width: 120,
+              alignment: "right",
+            },
+            {
+              text: `$${depositPaid.toFixed(2)}`,
+              style: "fonts",
+              margin: [0, 0, 0, 0],
+              alignment: "right",
+            },
+          ],
+          margin: [0, 2, 0, 0],
+        }
+      : null,
+    balancePaid > 0
+      ? {
+          columns: [
+            { text: "", style: "totals", width: 317, decoration: "underline" },
+            {
+              text: "Minus Balance Paid:",
+              style: "totals",
+              margin: [0, 0, 0, 0],
+              width: 120,
+              alignment: "right",
+            },
+            {
+              text: `$${balancePaid.toFixed(2)}`,
+              style: "fonts",
+              margin: [0, 0, 0, 0],
+              alignment: "right",
+            },
+          ],
+          margin: [0, 2, 0, 0],
+        }
+      : null,
     {
       text: '======',
       margin: [0, 0, 0, 0],

@@ -1,13 +1,13 @@
-import Cookies from 'js-cookie';
-import moment from 'moment-business-days';
-import React, { Component, Suspense } from 'react';
-import { NotificationManager } from 'react-notifications';
+import Cookies from "js-cookie";
+import moment from "moment-business-days";
+import React, { Component, Suspense } from "react";
+import { NotificationManager } from "react-notifications";
 // import DoorInfo from './components/DoorInfo/DoorInfo';
 // import JobInfo from './components/JobInfo/JobInfo';
-import 'react-notifications/lib/notifications.css';
-import NumberFormat from 'react-number-format';
-import { connect } from 'react-redux';
-import StickyBox from 'react-sticky-box';
+import "react-notifications/lib/notifications.css";
+import NumberFormat from "react-number-format";
+import { connect } from "react-redux";
+import StickyBox from "react-sticky-box";
 import {
   Card,
   CardBody,
@@ -19,8 +19,8 @@ import {
   InputGroupAddon,
   InputGroupText,
   Row,
-} from 'reactstrap';
-import { bindActionCreators } from 'redux';
+} from "reactstrap";
+import { bindActionCreators } from "redux";
 import {
   Field,
   FieldArray,
@@ -29,17 +29,17 @@ import {
   reduxForm,
   startAsyncValidation,
   touch,
-} from 'redux-form';
-import thickness from '../../../components/DoorOrders/DoorInfo/thickness';
-import FileUploader from '../../../components/FileUploader/FileUploader';
-import { renderField } from '../../../components/RenderInputs/renderInputs';
+} from "redux-form";
+import thickness from "../../../components/DoorOrders/DoorInfo/thickness";
+import FileUploader from "../../../components/FileUploader/FileUploader";
+import { renderField } from "../../../components/RenderInputs/renderInputs";
 import {
   loadOrders,
   setOrderType,
   submitOrder,
   updateOrder,
-} from '../../../redux/orders/actions';
-import { saveEmail } from '../../../redux/customers/actions';
+} from "../../../redux/orders/actions";
+import { saveEmail } from "../../../redux/customers/actions";
 import {
   addPriceSelector,
   balanceSelector,
@@ -50,32 +50,32 @@ import {
   totalSelector,
   linePriceSelector,
   itemPriceSelector,
-  qtySelector
-} from '../../../selectors/pricing';
-import currencyMask from '../../../utils/currencyMask';
-import CancelModal from '../../../utils/Modal';
-import EditCheckoutBox from '../Orders/CheckoutBox';
-import CheckoutBox from './components/CheckoutBox';
-import validate from './components/validate';
-import Sticky from 'react-stickynode';
+  qtySelector,
+} from "../../../selectors/pricing";
+import currencyMask from "../../../utils/currencyMask";
+import CancelModal from "../../../utils/Modal";
+import EditCheckoutBox from "../Orders/CheckoutBox";
+import CheckoutBox from "./components/CheckoutBox";
+import validate from "./components/validate";
+import Sticky from "react-stickynode";
 
 const DoorInfo = React.lazy(() =>
-  import('../../../components/DoorOrders/DoorInfo/DoorInfo')
+  import("../../../components/DoorOrders/DoorInfo/DoorInfo")
 );
 const DrawerInfo = React.lazy(() =>
-  import('../../../components/DrawerOrders/DrawerBoxInfo')
+  import("../../../components/DrawerOrders/DrawerBoxInfo")
 );
 const Mouldings = React.lazy(() =>
-  import('../../../components/Mouldings/MouldingsInfo')
+  import("../../../components/Mouldings/MouldingsInfo")
 );
 const MiscItems = React.lazy(() =>
-  import('../../../components/MiscItems/MiscItemsInfo')
+  import("../../../components/MiscItems/MiscItemsInfo")
 );
 const FF_Info = React.lazy(() =>
-  import('../../../components/DoorOrders/DoorInfo/FFInfo')
+  import("../../../components/DoorOrders/DoorInfo/FFInfo")
 );
 
-const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
+const JobInfo = React.lazy(() => import("../../../components/JobInfo/JobInfo"));
 
 const loading = () => (
   <div className="animated fadeIn pt-1 text-center">
@@ -83,7 +83,7 @@ const loading = () => (
   </div>
 );
 
-const cookie = Cookies.get('jwt');
+const cookie = Cookies.get("jwt");
 
 const maxValue = (max) => (value) =>
   value && value > max ? `Cannot be greater than ${max}%` : undefined;
@@ -101,7 +101,7 @@ class OrderEntry extends Component {
       updateSubmit: false,
       files: [],
       subNavModal: false,
-      subNavPage: 'misc',
+      subNavPage: "misc",
       customerReminder: false,
       cancelModal: false,
     };
@@ -122,11 +122,11 @@ class OrderEntry extends Component {
       setOrderType(route?.type);
     }
 
-    dispatch(touch('Order', 'job_info.poNum'));
+    dispatch(touch("Order", "job_info.poNum"));
 
-    dispatch(touch('Order', 'job_info.shipping_method'));
+    dispatch(touch("Order", "job_info.shipping_method"));
 
-    dispatch(startAsyncValidation('Order'));
+    dispatch(startAsyncValidation("Order"));
 
     // this.toggleReminderModal();
   }
@@ -152,7 +152,7 @@ class OrderEntry extends Component {
       tracking,
       updateOrder,
       formState,
-      qty
+      qty,
     } = this.props;
 
     // const orderType = orderType;
@@ -179,52 +179,49 @@ class OrderEntry extends Component {
             },
           ];
 
-          if (values.job_info?.status?.value === 'Ordered') {
+          if (values.job_info?.status?.value === "Ordered") {
             if (values.DateOrdered) {
               DateOrdered = values.DateOrdered;
             } else {
               DateOrdered = new Date();
             }
-          } else if (values.job_info?.status?.value === 'In Production') {
+          } else if (values.job_info?.status?.value === "In Production") {
             if (values.DateInProduction) {
               DateInProduction = values.DateInProduction;
             } else {
               DateInProduction = new Date();
             }
-          } else if (values.job_info?.status?.value === 'Invoiced') {
+          } else if (values.job_info?.status?.value === "Invoiced") {
             if (values.DateInvoiced) {
               DateInvoiced = values.DateInvoiced;
             } else {
               DateInvoiced = new Date();
             }
-          } else if (values.job_info?.status?.value === 'Shipped') {
+          } else if (values.job_info?.status?.value === "Shipped") {
             if (values.job_info?.DateShipped) {
               DateShipped = values.DateShipped;
             } else {
               DateShipped = new Date();
             }
-          } else if (values.job_info?.status?.value === 'Complete') {
+          } else if (values.job_info?.status?.value === "Complete") {
             if (values.DateCompleted) {
               DateCompleted = values.DateCompleted;
             } else {
               DateCompleted = new Date();
             }
           }
-        } 
-      }
-      else {
+        }
+      } else {
         newStatus = [
           ...tracking,
           {
             date: moment().format(),
-            status: 'Order Edited',
+            status: "Order Edited",
             user: user?.FirstName,
           },
         ];
       }
     }
-
-
 
     if (!isEdit) {
       order = {
@@ -287,11 +284,20 @@ class OrderEntry extends Component {
         qty: qty,
         tax: tax,
         total: total,
-        balance_due: total - values.balance_history
-          .slice(0)
-          .map((i, index) => {
-            return parseFloat(i.balance_paid);
-          }).reduce((acc, item) => acc + item, 0),
+        balance_due:
+          total -
+          values.balance_history
+            .slice(0)
+            .map((i, index) => {
+              return parseFloat(i.balance_paid);
+            })
+            .reduce((acc, item) => acc + item, 0) -
+          values.balance_history
+            .slice(0)
+            .map((i, index) => {
+              return parseFloat(i.deposit_paid);
+            })
+            .reduce((acc, item) => acc + item, 0),
         status: values.job_info?.status?.value,
         dueDate: values.job_info?.DueDate,
         Shipping_Scheduled: values?.job_info?.Shipping_Scheduled,
@@ -302,7 +308,7 @@ class OrderEntry extends Component {
 
     let canSubmit = false;
 
-    if (orderType === 'Mouldings' || orderType === 'Misc Items') {
+    if (orderType === "Mouldings" || orderType === "Misc Items") {
       canSubmit = true;
     } else {
       values.part_list.map((v) => {
@@ -320,7 +326,7 @@ class OrderEntry extends Component {
         window.scrollTo(0, 0);
         return;
       } else {
-        alert('Submission Error: Please double check your order');
+        alert("Submission Error: Please double check your order");
         return;
       }
     } else {
@@ -344,7 +350,7 @@ class OrderEntry extends Component {
   };
 
   onKeyPress(event) {
-    if (event.target.type !== 'textarea' && event.which === 13 /* Enter */) {
+    if (event.target.type !== "textarea" && event.which === 13 /* Enter */) {
       event.preventDefault();
     }
   }
@@ -383,21 +389,21 @@ class OrderEntry extends Component {
       role,
     } = this.props;
 
-    console.log({total});
+    console.log({ total });
 
     return (
       <div className="animated fadeIn order-tour">
         <CancelModal
           toggle={this.toggleCancelModal}
           modal={this.state.cancelModal}
-          title={'Cancel Edit?'}
-          message={'Are you sure you want to this cancel this order edit?'}
+          title={"Cancel Edit?"}
+          message={"Are you sure you want to this cancel this order edit?"}
           action={this.cancelOrder}
-          actionButton={'Cancel Edit'}
-          buttonColor={'danger'}
+          actionButton={"Cancel Edit"}
+          buttonColor={"danger"}
         />
         <div className="orderForm">
-          <div className={isEdit ? 'editFormCol1' : 'orderFormCol1'}>
+          <div className={isEdit ? "editFormCol1" : "orderFormCol1"}>
             <Card>
               <CardHeader>
                 <strong>{orderType}</strong>
@@ -445,7 +451,7 @@ class OrderEntry extends Component {
                   </Row>
 
                   <Suspense fallback={loading()}>
-                    {orderType === 'Door Order' ? (
+                    {orderType === "Door Order" ? (
                       <FieldArray
                         name="part_list"
                         component={DoorInfo}
@@ -458,7 +464,7 @@ class OrderEntry extends Component {
                         edit={edit}
                         updateSubmit={this.state.updateSubmit}
                       />
-                    ) : orderType === 'Drawer Order' ? (
+                    ) : orderType === "Drawer Order" ? (
                       <FieldArray
                         name="part_list"
                         component={DrawerInfo}
@@ -466,7 +472,7 @@ class OrderEntry extends Component {
                         formState={formState}
                         edit={edit}
                       />
-                    ) : orderType === 'Face Frame' ? (
+                    ) : orderType === "Face Frame" ? (
                       <FieldArray
                         name="part_list"
                         component={FF_Info}
@@ -479,7 +485,7 @@ class OrderEntry extends Component {
                         updateSubmit={this.state.updateSubmit}
                         edit={edit}
                       />
-                    ) : orderType === 'Mouldings' ? (
+                    ) : orderType === "Mouldings" ? (
                       <FieldArray
                         name="mouldings"
                         component={Mouldings}
@@ -487,7 +493,7 @@ class OrderEntry extends Component {
                         formState={formState}
                         edit={edit}
                       />
-                    ) : orderType === 'Misc Items' ? (
+                    ) : orderType === "Misc Items" ? (
                       <FieldArray
                         name="misc_items"
                         component={MiscItems}
@@ -502,7 +508,7 @@ class OrderEntry extends Component {
 
                   <hr />
                   <hr />
-                  {user.role?.type === 'quality_control' ? null : (
+                  {user.role?.type === "quality_control" ? null : (
                     <Row>
                       <Col xs="9" />
                       <Col xs="3">
@@ -510,7 +516,7 @@ class OrderEntry extends Component {
                           <Col xs="9" />
                         </Row>
 
-                        {orderType === 'misc_items' ? null : (
+                        {orderType === "misc_items" ? null : (
                           <div>
                             <strong>Discount: </strong>
                             <InputGroup>
@@ -518,7 +524,7 @@ class OrderEntry extends Component {
                                 <InputGroupText>%</InputGroupText>
                               </InputGroupAddon>
                               <Field
-                                name={'discount'}
+                                name={"discount"}
                                 type="text"
                                 edit={true}
                                 component={renderField}
@@ -539,7 +545,7 @@ class OrderEntry extends Component {
                             disabled={true}
                             customInput={Input}
                             {...currencyMask}
-                            prefix={'$'}
+                            prefix={"$"}
                           />
                         </InputGroup>
 
@@ -554,7 +560,7 @@ class OrderEntry extends Component {
                             disabled={true}
                             customInput={Input}
                             {...currencyMask}
-                            prefix={'$'}
+                            prefix={"$"}
                           />
                         </InputGroup>
                       </Col>
@@ -565,8 +571,8 @@ class OrderEntry extends Component {
             </Card>
           </div>
 
-          {user.role?.type === 'quality_control' ? null : (
-            <div className={isEdit ? 'editFormCol2' : 'orderFormCol2'}>
+          {user.role?.type === "quality_control" ? null : (
+            <div className={isEdit ? "editFormCol2" : "orderFormCol2"}>
               {this.props.isEdit ? (
                 <StickyBox offsetTop={20} offsetBottom={20}>
                   <EditCheckoutBox
@@ -618,162 +624,166 @@ const mapStateToProps = (state, props) => ({
   initialValues:
     props.isEdit === true
       ? {
-        ...(state.Orders && state.Orders.selectedOrder),
-        DateOrdered:
+          ...(state.Orders && state.Orders.selectedOrder),
+          DateOrdered:
             state.Orders?.selectedOrder?.DateOrdered ||
             state.Orders?.selectedOrder?.tracking?.filter(
-              (x) => x.status === 'Ordered'
+              (x) => x.status === "Ordered"
             )[0]?.date,
-        DateInvoiced:
+          DateInvoiced:
             state.Orders?.selectedOrder?.DateInvoiced ||
             state.Orders?.selectedOrder?.tracking?.filter(
-              (x) => x.status === 'Invoiced'
+              (x) => x.status === "Invoiced"
             )[0]?.date,
-        DateShipped:
+          DateShipped:
             state.Orders?.selectedOrder?.DateShipped ||
             state.Orders?.selectedOrder?.tracking?.filter(
-              (x) => x.status === 'Shipped'
+              (x) => x.status === "Shipped"
             )[0]?.date,
-        DateCompleted:
+          DateCompleted:
             state.Orders?.selectedOrder?.DateCompleted ||
             state.Orders?.selectedOrder?.tracking?.filter(
-              (x) => x.status === 'Complete'
+              (x) => x.status === "Complete"
             )[0]?.date,
-        DateInProduction:
+          DateInProduction:
             state.Orders?.selectedOrder?.DateInProduction ||
             state.Orders?.selectedOrder?.tracking?.filter(
               (x) =>
-                x.status === 'In Production' ||
-                x.status === 'Cut' ||
-                x.status === 'Framing' ||
-                x.status === 'Assembly' ||
-                x.status === 'Tenon' ||
-                x.status === 'Panels' ||
-                x.status === 'Sanding' ||
-                x.status === 'Lipping' ||
-                x.status === 'Inspecting' ||
-                x.status === 'Paint Shop'
+                x.status === "In Production" ||
+                x.status === "Cut" ||
+                x.status === "Framing" ||
+                x.status === "Assembly" ||
+                x.status === "Tenon" ||
+                x.status === "Panels" ||
+                x.status === "Sanding" ||
+                x.status === "Lipping" ||
+                x.status === "Inspecting" ||
+                x.status === "Paint Shop"
             )[0]?.date,
-        job_info: {
-          ...(state.Orders &&
+          payment_type:
+            state.Orders?.selectedOrder?.balance_history?.length < 2
+              ? { name: "Deposit", value: "deposit" }
+              : { name: "Balance", value: "balance" },
+          job_info: {
+            ...(state.Orders &&
               state.Orders.selectedOrder &&
               state.Orders.selectedOrder.job_info),
-          status: {
-            label: state.Orders?.selectedOrder?.status,
-            value: state.Orders?.selectedOrder?.status,
+            status: {
+              label: state.Orders?.selectedOrder?.status,
+              value: state.Orders?.selectedOrder?.status,
+            },
+            salesRep: state.Orders?.selectedOrder?.job_info?.salesRep
+              ? state.Orders?.selectedOrder?.job_info?.salesRep
+              : state.sales?.salesReps?.filter(
+                  (x) =>
+                    x.id ===
+                    state.Orders?.selectedOrder?.job_info?.customer?.sale
+                )[0],
+
+            EMAIL: state.Orders?.selectedOrder?.job_info?.customer?.EMAIL,
+            Email2: state.Orders?.selectedOrder?.job_info?.customer?.Email2,
+            Email3: state.Orders?.selectedOrder?.job_info?.customer?.Email3,
+            Email4: state.Orders?.selectedOrder?.job_info?.customer?.Email4,
+            Email5: state.Orders?.selectedOrder?.job_info?.customer?.Email5,
+            Email6: state.Orders?.selectedOrder?.job_info?.customer?.Email6,
           },
-          salesRep: state.Orders?.selectedOrder?.job_info?.salesRep
-            ? state.Orders?.selectedOrder?.job_info?.salesRep
-            : state.sales?.salesReps?.filter(
-              (x) =>
-                x.id ===
-                      state.Orders?.selectedOrder?.job_info?.customer?.sale
-            )[0],
-            
-          EMAIL: state.Orders?.selectedOrder?.job_info?.customer?.EMAIL,
-          Email2: state.Orders?.selectedOrder?.job_info?.customer?.Email2,
-          Email3: state.Orders?.selectedOrder?.job_info?.customer?.Email3,
-          Email4: state.Orders?.selectedOrder?.job_info?.customer?.Email4,
-          Email5: state.Orders?.selectedOrder?.job_info?.customer?.Email5,
-          Email6: state.Orders?.selectedOrder?.job_info?.customer?.Email6,
-        },
-      }
+        }
       : {
-        misc_items: [],
-        balance_paid: 0,
-        open: true,
-        discount: 0,
-        Taxable: state.customers.customerDB[0].Taxable
-          ? state.customers.customerDB[0].Taxable
-          : false,
-        part_list:
-            state.Orders.orderType === 'Door Order'
+          misc_items: [],
+          balance_paid: 0,
+          open: true,
+          discount: 0,
+          Taxable: state.customers.customerDB[0].Taxable
+            ? state.customers.customerDB[0].Taxable
+            : false,
+          part_list:
+            state.Orders.orderType === "Door Order"
               ? [
-                {
-                  construction: {
-                    name: 'Cope And Stick',
-                    value: 'Cope',
+                  {
+                    construction: {
+                      name: "Cope And Stick",
+                      value: "Cope",
+                    },
+                    orderType: {
+                      name: "Door Order",
+                      value: "Door",
+                    },
+                    thickness: {
+                      name: "4/4 Standard Grade",
+                      thickness_1: "4/4",
+                      thickness_2: "3/4",
+                      db_name: "STANDARD_GRADE",
+                      value: 1,
+                    },
+                    dimensions: [],
+                    addPrice: 0,
                   },
-                  orderType: {
-                    name: 'Door Order',
-                    value: 'Door',
-                  },
-                  thickness: {
-                    name: '4/4 Standard Grade',
-                    thickness_1: '4/4',
-                    thickness_2: '3/4',
-                    db_name: 'STANDARD_GRADE',
-                    value: 1,
-                  },
-                  dimensions: [],
-                  addPrice: 0,
-                },
-              ]
-              : state.Orders.orderType === 'Drawer Order'
-                ? [
+                ]
+              : state.Orders.orderType === "Drawer Order"
+              ? [
                   {
                     box_assembly: state.part_list.box_assembly[0],
                     dimensions: [],
                     addPrice: 0,
                   },
                 ]
-                : state.Orders.orderType === 'Face Frame'
-                  ? [
-                    {
-                      orderType: {
-                        name: 'Face Frame',
-                        value: 'Face_Frame',
-                      },
-                      thickness: thickness[0],
-                      door_piece_number: state.part_list.door_piece_number[0],
-                      dimensions: [],
-                      addPrice: 0,
-                    },
-                  ]
-                  : [],
-        mouldings:
-            state.Orders.orderType === 'Mouldings'
+              : state.Orders.orderType === "Face Frame"
               ? [
-                {
-                  linearFT: '0',
-                  price: 0,
-                },
-              ]
+                  {
+                    orderType: {
+                      name: "Face Frame",
+                      value: "Face_Frame",
+                    },
+                    thickness: thickness[0],
+                    door_piece_number: state.part_list.door_piece_number[0],
+                    dimensions: [],
+                    addPrice: 0,
+                  },
+                ]
               : [],
-        job_info: {
-          customer: state.customers?.customerDB[0],
-          jobName: '',
-          status: { label: 'Quote', value: 'Quote' },
-          poNum: '',
-          Address1: state.customers.customerDB[0]?.Address1,
-          Address2: state.customers.customerDB[0]?.Address2,
-          City: state.customers.customerDB[0]?.City,
-          State: state.customers.customerDB[0]?.State,
-          Zip: state.customers.customerDB[0]?.Zip,
-          Phone: state.customers.customerDB[0]?.Shipping_Phone
-            ? state.customers.customerDB[0]?.Shipping_Phone
-            : state.customers.customerDB[0]?.Phone1
+          mouldings:
+            state.Orders.orderType === "Mouldings"
+              ? [
+                  {
+                    linearFT: "0",
+                    price: 0,
+                  },
+                ]
+              : [],
+          job_info: {
+            customer: state.customers?.customerDB[0],
+            jobName: "",
+            status: { label: "Quote", value: "Quote" },
+            poNum: "",
+            Address1: state.customers.customerDB[0]?.Address1,
+            Address2: state.customers.customerDB[0]?.Address2,
+            City: state.customers.customerDB[0]?.City,
+            State: state.customers.customerDB[0]?.State,
+            Zip: state.customers.customerDB[0]?.Zip,
+            Phone: state.customers.customerDB[0]?.Shipping_Phone
+              ? state.customers.customerDB[0]?.Shipping_Phone
+              : state.customers.customerDB[0]?.Phone1
               ? state.customers.customerDB[0]?.Phone1
               : state.customers.customerDB[0]?.Phone,
-          DueDate: dueDate,
-          Notes: state.customers.customerDB[0]?.Notes,
-          salesRep: state.customers.customerDB[0]?.sale,
-          pmtTerms: state.customers.customerDB[0]?.PMT_TERMS,
-          EMAIL: state.customers.customerDB[0]?.EMAIL,
-          Email2: state.customers.customerDB[0]?.Email2,
-          Email3: state.customers.customerDB[0]?.Email3,
-          Email4: state.customers.customerDB[0]?.Email4,
-          Email5: state.customers.customerDB[0]?.Email5,
-          Email6: state.customers.customerDB[0]?.Email6,
-          // PaymentMethod: {
-          //   NAME: state.customers.customerDB[0].PaymentMethod
-          // }
+            DueDate: dueDate,
+            Notes: state.customers.customerDB[0]?.Notes,
+            salesRep: state.customers.customerDB[0]?.sale,
+            pmtTerms: state.customers.customerDB[0]?.PMT_TERMS,
+            EMAIL: state.customers.customerDB[0]?.EMAIL,
+            Email2: state.customers.customerDB[0]?.Email2,
+            Email3: state.customers.customerDB[0]?.Email3,
+            Email4: state.customers.customerDB[0]?.Email4,
+            Email5: state.customers.customerDB[0]?.Email5,
+            Email6: state.customers.customerDB[0]?.Email6,
+            // PaymentMethod: {
+            //   NAME: state.customers.customerDB[0].PaymentMethod
+            // }
+          },
         },
-      },
   status: state.Orders?.selectedOrder?.status,
   tracking: state.Orders?.selectedOrder?.tracking,
   role: state?.users?.user?.role,
-  formState: getFormValues('Order')(state),
+  formState: getFormValues("Order")(state),
   total: totalSelector(state),
   tax: taxSelector(state),
   prices: linePriceSelector(state),
@@ -800,13 +810,13 @@ const mapDispatchToProps = (dispatch) =>
 
 // eslint-disable-next-line no-class-assign
 OrderEntry = reduxForm({
-  form: 'Order',
+  form: "Order",
   enableReinitialize: true,
   validate,
   onSubmitFail: (errors, dispatch, submitError, props) => {
-    const job_info_message = 'You are missing required info';
+    const job_info_message = "You are missing required info";
     if (errors) {
-      NotificationManager.error(job_info_message, 'Error', 2000);
+      NotificationManager.error(job_info_message, "Error", 2000);
     }
   },
 })(OrderEntry);

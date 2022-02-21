@@ -342,12 +342,12 @@ const OrderTable = (props: TablePropTypes) => {
       cell: (row) => {
         let updated_total = row.total;
 
-        const balance_history_paid = row.balance_history
-          .slice(0)
-          .map((i, index) => {
-            updated_total = updated_total - parseFloat(i.balance_paid);
-            return updated_total;
-          });
+        const balance_history_paid =
+        row &&
+        row.balance_history.slice(0).map((i, index) => {
+          updated_total = updated_total - parseFloat(i.balance_paid || 0) - parseFloat(i.deposit_paid || 0);
+          return updated_total;
+        });
 
  
         return <div>${updated_total.toFixed(2)}</div>;
