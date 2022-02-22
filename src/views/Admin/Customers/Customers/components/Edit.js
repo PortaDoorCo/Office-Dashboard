@@ -852,7 +852,7 @@ class Edit extends Component {
                 </div>
               )}
             </form>
-            {edit && role.type !== 'sales' ? (
+            {edit && (role.type === 'administrator' || role.type === 'owner') ? (
               <Button
                 type="button"
                 onClick={this.props.onEdit}
