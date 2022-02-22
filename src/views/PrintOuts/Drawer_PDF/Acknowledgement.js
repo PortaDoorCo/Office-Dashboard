@@ -40,25 +40,20 @@ export default (data, pricing) => {
   console.log({prices});
 
   const subTotal = prices
-    .map((i) => i.dimensions.reduce((acc, item) => acc + item.price, 0))
-    .reduce((acc, item) => acc + Math.floor(item * 100) / 100, 0);
-
-  console.log({ subTotal });
+    .map((i) => i.reduce((acc, item) => acc + item, 0))
+    .reduce((acc, item) => acc + item, 0);
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
-  const discountTotal =
-    subTotal * (Math.floor((data.discount / 100) * 100) / 100);
+  const discountTotal = (subTotal * (Math.floor((data.discount / 100) * 100) / 100));
 
-  const discountSubTotal = subTotal - Math.floor(discountTotal * 100) / 100;
+  const discountSubTotal = (subTotal - (Math.round(discountTotal * 100) / 100));
 
-  const order_sub_total = misc_total + discountSubTotal;
+  const order_sub_total = (misc_total + discountSubTotal);
 
   const tax = data.Taxable
-    ? Math.floor((order_sub_total * (data.companyprofile.TaxRate / 100)) * 100) / 100
+    ? order_sub_total * (data.companyprofile.TaxRate / 100)
     : 0;
-
-
 
   const total = order_sub_total + tax;
 

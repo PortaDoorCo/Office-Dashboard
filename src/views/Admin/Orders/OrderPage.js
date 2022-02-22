@@ -1179,7 +1179,7 @@ class OrderPage extends Component {
                         (this.props.user &&
                           this.props.user.role &&
                           this.props.user.role &&
-                          this.props.user.role.name === 'Management') ? (
+                          this.props.user.role.name === 'Owner') ? (
                             <Tooltip
                               title="Delete Order"
                               placement="top"
