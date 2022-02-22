@@ -98,7 +98,7 @@ export default (info, part, breakdowns) => {
       ];
     }
   } else {
-    if ((panelsW > 1 && panelsH > 1) || (panelsH > 1 && panelsW === 1)) {
+    if (panelsH > 1) {
       return [
         {
           qty: `(${qty})`,

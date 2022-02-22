@@ -114,7 +114,7 @@ export default (info, part, breakdowns) => {
       ];
     }
   } else {
-    if ((panelsW > 1 && panelsH > 1) || (panelsW > 1 && panelsH === 1)) {
+    if (panelsW > 1) {
       return [
         {
           door_qty: qty,

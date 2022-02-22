@@ -102,6 +102,21 @@ class JobInfo extends Component {
         }
       }
       if (
+        formState.job_info?.Rush !== prevProps.formState?.job_info?.Rush
+      ) {
+        if (formState.job_info.Sample) {
+          this.props.dispatch(change('Order', 'discount', 0));
+        } else {
+          this.props.dispatch(
+            change(
+              'Order',
+              'discount',
+              formState?.job_info?.customer?.Discount || 0
+            )
+          );
+        }
+      }
+      if (
         formState?.job_info?.customer?.id !==
         prevProps.formState?.job_info?.customer?.id
       ) {
