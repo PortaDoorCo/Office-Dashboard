@@ -247,7 +247,7 @@ class Balance extends Component {
                           onBlur={this.changeBalance}
                           component={renderField}
                           label="pay_balance"
-                          validate={required}
+        
                         />
                       </FormGroup>
                     </Col>
@@ -264,7 +264,7 @@ class Balance extends Component {
                           onBlur={this.changeBalance}
                           component={renderField}
                           label="pay_deposit"
-                          validate={required}
+          
                         />
                       </FormGroup>
                     </Col>
