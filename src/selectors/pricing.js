@@ -160,7 +160,6 @@ export const miscItemLinePriceSelector = createSelector(
     parts.map((i, index) => {
       let price = 0;
 
-
       if (i.category === "preselect") {
         if (i.item) {
           if (i.qty) {
@@ -333,8 +332,6 @@ export const itemPriceSelector = createSelector(
                 width_input = numQty(i.height);
               }
 
-              
-
               const openings = parseInt(i.openings);
               // const openings = parseInt(i.openings) > 1 ? parseInt(i.openings) : 0;
 
@@ -347,15 +344,13 @@ export const itemPriceSelector = createSelector(
               const price =
                 eval(pricer && pricer.face_frame_pricing) + extraCost;
 
-             
-
               if (height > -1) {
                 return itemPrice.length > 0 &&
-                formState?.values?.part_list[index]?.dimensions.length > 0 &&
-                formState?.values?.part_list[index]?.dimensions[j] ===
-                  formState?.initial.part_list[index]?.dimensions[j]
-                ? itemPrice[index][j]
-                : Math.floor(price * 100) / 100;
+                  formState?.values?.part_list[index]?.dimensions.length > 0 &&
+                  formState?.values?.part_list[index]?.dimensions[j] ===
+                    formState?.initial.part_list[index]?.dimensions[j]
+                  ? itemPrice[index][j]
+                  : Math.floor(price * 100) / 100;
               } else {
                 return 0;
               }
@@ -736,7 +731,6 @@ export const itemPriceSelector = createSelector(
                     : 0;
               }
 
-
               if (height > -1) {
                 return itemPrice.length > 0 &&
                   formState?.values?.part_list[index]?.dimensions.length > 0 &&
@@ -774,8 +768,6 @@ export const itemPriceSelector = createSelector(
             const scoop = i.scoop.PRICE;
 
             const price = eval(pricer.drawer_box_pricing) + extraCost;
-
-          
 
             if (height > -1) {
               return itemPrice.length > 0 &&
@@ -1093,7 +1085,7 @@ export const subTotalSelector = createSelector(
         return prices.map((i, index) => {
           if (i) {
             let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
-            let sum = price;
+            let sum = Math.floor(price*100)/100;
             return sum;
           } else {
             return 0;
@@ -1122,8 +1114,8 @@ export const totalDiscountSelector = createSelector(
   (subTotal, misc, discount, orderType) => {
     if (orderType) {
       return (
-        Math.round(
-          subTotal.reduce((acc, item) => acc + item, 0) * discount * 100
+        Math.floor(
+          (subTotal.reduce((acc, item) => acc + item, 0) * discount) * 100
         ) / 100
       );
     } else {
@@ -1156,11 +1148,14 @@ export const taxSelector = createSelector(
       );
     } else {
       return (
-        (subTotal.reduce((acc, item) => acc + item, 0) -
-          discount +
-          misc +
-          nonDiscounted) *
-        tax
+        Math.floor(
+          (subTotal.reduce((acc, item) => acc + item, 0) -
+            discount +
+            misc +
+            nonDiscounted) *
+            tax *
+            100
+        ) / 100
       );
     }
   }
@@ -1177,15 +1172,17 @@ export const totalSelector = createSelector(
   ],
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
     if (orderType === "Misc Items") {
+      const sub = Math.floor((subTotal.reduce((acc, item) => acc + item, 0)) * 100) / 100
       return (
-        subTotal.reduce((acc, item) => acc + item, 0) +
+        sub +
         tax +
         nonDiscounted -
         discount
       );
     } else {
+      const sub = Math.floor((subTotal.reduce((acc, item) => acc + item, 0)) * 100) / 100
       return (
-        subTotal.reduce((acc, item) => acc + item, 0) +
+        sub +
         tax +
         misc +
         nonDiscounted -

@@ -45,7 +45,8 @@ export default (data, pricing) => {
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
-  const discountTotal = (subTotal * (Math.floor((data.discount / 100) * 100) / 100));
+  const discountTotal =
+    Math.floor((subTotal * (data.discount / 100)) * 100) / 100
 
   const discountSubTotal = (subTotal - (Math.round(discountTotal * 100) / 100));
 
