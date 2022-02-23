@@ -1113,9 +1113,6 @@ export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector, orderTypeSelector],
   (subTotal, misc, discount, orderType) => {
     if (orderType) {
-      console.log({totalDiscount:         Math.floor(
-        (subTotal.reduce((acc, item) => acc + item, 0) * discount) * 100
-      ) / 100})
       return (
         Math.floor(
           (subTotal.reduce((acc, item) => acc + item, 0) * discount) * 100
@@ -1183,10 +1180,6 @@ export const totalSelector = createSelector(
         discount
       );
     } else {
-      console.log({tax})
-      console.log({misc})
-      console.log({subTotal: subTotal})
-      console.log({discount})
       const sub = Math.floor((subTotal.reduce((acc, item) => acc + item, 0)) * 100) / 100
       return (
         sub +
