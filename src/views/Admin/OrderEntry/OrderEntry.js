@@ -326,14 +326,19 @@ class OrderEntry extends Component {
         window.scrollTo(0, 0);
         return;
       } else {
-        alert("Submission Error: Please double check your order");
+        alert("Submission Error: You are missing dimensions");
         return;
       }
     } else {
+      if (canSubmit) {
       const orderId = values.id;
       await updateOrder(orderId, order, cookie);
       this.setState({ updateSubmit: !this.state.updateSubmit });
       await this.props.editable();
+      } else {
+        alert("Submission Error: You are missing dimensions");
+        return;
+      }
     }
   };
 
