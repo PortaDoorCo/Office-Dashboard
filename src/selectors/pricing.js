@@ -1171,7 +1171,7 @@ export const totalSelector = createSelector(
   ],
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
 
-    console.log({discount})
+    // console.log({discount})
 
     if (orderType === "Misc Items") {
       const sub = Math.floor((subTotal.reduce((acc, item) => acc + item, 0)) * 100) / 100
