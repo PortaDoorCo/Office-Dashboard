@@ -36,6 +36,7 @@ import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
 
 const required = (value) => (value ? undefined : 'Required');
+const panelsCount = (value) => (parseInt(value) > 0 ? undefined : 'Must be greater than 0');
 const trim_val = (value) => (value.trim('') ? undefined : 'Required');
 
 const fraction = (num) => {
@@ -953,6 +954,7 @@ const DoorTable = ({
                     component={renderNumber}
                     label="horizontalMidRail"
                     edit={edit}
+                    validate={panelsCount}
                     onChange={(e) => twoHigh(index, e)}
                   />
                 </td>
@@ -963,6 +965,7 @@ const DoorTable = ({
                     component={renderNumber}
                     label="verticalMidRail"
                     edit={edit}
+                    validate={panelsCount}
                     onChange={(e) => twoWide(index, e)}
                   />
                 </td>
