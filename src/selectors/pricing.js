@@ -13,7 +13,7 @@ const discountSelector = (state) => {
     if (state.form.Order.values && state.form.Order.values.discount) {
       if (state.form.Order.values.discount > 0) {
         return (
-          Math.round((numQty(state.form.Order.values.discount) / 100) * 100) /
+          Math.floor((numQty(state.form.Order.values.discount) / 100) * 100) /
           100
         );
       } else {
