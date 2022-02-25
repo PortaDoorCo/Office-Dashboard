@@ -1090,8 +1090,8 @@ export const subTotalSelector = createSelector(
       } else {
         return prices.map((i, index) => {
           if (i) {
-            let price = parseFloat(i.reduce((acc, item) => acc + item, 0));
-            let sum = Math.floor(price*100)/100;
+            let price = Math.round(i.reduce((acc, item) => acc + item, 0) * 100) / 100;
+            let sum = price
             return sum;
           } else {
             return 0;
@@ -1177,7 +1177,7 @@ export const totalSelector = createSelector(
   ],
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
 
-    // console.log({discount})
+    console.log({subTotal})
 
     if (orderType === "Misc Items") {
       const sub = Math.floor((subTotal.reduce((acc, item) => acc + item, 0)) * 100) / 100
@@ -1188,7 +1188,7 @@ export const totalSelector = createSelector(
         discount
       );
     } else {
-      const sub = Math.floor((subTotal.reduce((acc, item) => acc + item, 0)) * 100) / 100
+      const sub = (subTotal.reduce((acc, item) => acc + (Math.round(item * 100) / 100), 0))
       return (
         sub +
         tax +

@@ -61,7 +61,7 @@ export default (data, pricing) => {
 
   const subTotal = parts
     .map((i) => i.dimensions.reduce((acc, item) => acc + item.price, 0))
-    .reduce((acc, item) => acc + Math.floor(item * 100) / 100, 0);
+    .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0);
 
   console.log({ subTotal });
 
