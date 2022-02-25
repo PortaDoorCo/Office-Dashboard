@@ -218,7 +218,13 @@ const totalBalanceDue = (state) => {
   if (orders) {
     if (orders && orders.values && orders.values.balance_history) {
       return state.form.Order.values.balance_history.map((i) => {
-        return i.balance_paid;
+        if(parseFloat(i.balance_paid) > 0) {
+          return i.balance_paid;
+        } else if (parseFloat(i.deposit_paid) > 0) {
+          return i.deposit_paid
+        } else {
+          return 0
+        }
       });
     } else {
       return [];
