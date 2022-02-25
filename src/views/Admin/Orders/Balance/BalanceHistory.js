@@ -198,7 +198,14 @@ class BalanceHistory extends Component {
     const balance_paid_history =
       formState && formState.balance_history
         ? formState.balance_history.map((i) => {
-          return i.balance_paid;
+          if(parseFloat(i.balance_paid) > 0) {
+            return i.balance_paid;
+          } else if (parseFloat(i.deposit_paid) > 0) {
+            return i.deposit_paid
+          } else {
+            return 0
+          }
+
         })
         : [0];
     const balance_paid_total = balance_paid_history.reduce(
