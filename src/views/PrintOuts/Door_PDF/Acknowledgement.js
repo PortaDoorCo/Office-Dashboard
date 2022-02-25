@@ -68,9 +68,9 @@ export default (data, pricing) => {
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
   const discountTotal =
-    Math.floor((subTotal * (data.discount / 100)) * 100) / 100
+    (subTotal * Math.floor((data.discount / 100) * 100) / 100)
 
-  const discountSubTotal = subTotal - Math.floor(discountTotal * 100) / 100;
+  const discountSubTotal = subTotal - discountTotal;
 
   const order_sub_total = misc_total + discountSubTotal;
 
@@ -81,6 +81,9 @@ export default (data, pricing) => {
 
 
   const total = order_sub_total + tax;
+
+  console.log({discountTotal})
+  console.log({discountSubTotal})
 
   console.log({subTotal})
   console.log({order_sub_total})
