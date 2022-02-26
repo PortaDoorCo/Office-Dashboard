@@ -78,7 +78,7 @@
     "pdf-merger-js": "^3.2.1",
     "pdfmake-lite": "^0.1.66",
     "prettier-eslint": "^11.0.0",
-    "prismjs": "^1.25.0",
+    "prismjs": "^1.27.0",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
     "react": "^16.11.0",
