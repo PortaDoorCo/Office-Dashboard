@@ -1,7 +1,7 @@
-import pdfDoorPricing from "../../../selectors/pdfs/pdfFaceFramePricing";
-import pdfFinishing from "../../../selectors/pdfs/pdfFinishingPricing";
-import Size from "../Breakdowns/Doors/Size";
-import Glass_Selection from "../Sorting/Glass_Selection";
+import pdfDoorPricing from '../../../selectors/pdfs/pdfFaceFramePricing';
+import pdfFinishing from '../../../selectors/pdfs/pdfFinishingPricing';
+import Size from '../Breakdowns/Doors/Size';
+import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, pricing) => {
   const qty = data.part_list.map((part, i) => {
@@ -17,7 +17,9 @@ export default (data, pricing) => {
 
   const subTotal = prices
     .map((i) => i.reduce((acc, item) => acc + item, 0))
-    .reduce((acc, item) => acc + Math.floor(item * 100) / 100, 0);
+    .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0);
+
+  console.log({ subTotal });
 
   const finishingSubtotal = finishing.map((i, index) => {
     if (i) {
@@ -36,7 +38,7 @@ export default (data, pricing) => {
   const subTotal_Total = subTotal + finishingTotal;
 
   const misc_prices = data.misc_items.map((i) => {
-    if (i.category === "preselect") {
+    if (i.category === 'preselect') {
       return parseFloat(i.qty) * parseFloat(i.price);
     } else {
       return i.pricePer ? parseFloat(i.qty) * parseFloat(i.pricePer) : 0;
@@ -46,10 +48,10 @@ export default (data, pricing) => {
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
   const discountTotal =
-    (subTotal * Math.floor((data.discount / 100) * 100) / 100)
+    (subTotal * Math.floor((data.discount / 100) * 100)) / 100;
 
-    const discountSubTotal = subTotal - discountTotal;
-    
+  const discountSubTotal = subTotal - discountTotal;
+
   const order_sub_total = misc_total + discountSubTotal;
 
   const tax = data.Taxable
@@ -80,13 +82,13 @@ export default (data, pricing) => {
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
       [
-        { text: "Item", style: "fonts" },
-        { text: "Actual Size WxH", style: "fonts" },
-        { text: "Qty", style: "fonts", alignment: "center" },
-        { text: "Notes", style: "fonts" },
-        { text: "Sketch #", style: "fonts" },
-        { text: "Total 1 Unit", style: "fonts", alignment: "right" },
-        { text: "Total Cost", style: "fonts", alignment: "right" },
+        { text: 'Item', style: 'fonts' },
+        { text: 'Actual Size WxH', style: 'fonts' },
+        { text: 'Qty', style: 'fonts', alignment: 'center' },
+        { text: 'Notes', style: 'fonts' },
+        { text: 'Sketch #', style: 'fonts' },
+        { text: 'Total 1 Unit', style: 'fonts', alignment: 'right' },
+        { text: 'Total Cost', style: 'fonts', alignment: 'right' },
       ],
     ];
 
@@ -94,29 +96,29 @@ export default (data, pricing) => {
       const price = prices[i][index] / parseInt(item.qty);
 
       tableBody.push([
-        { text: index + 1, style: "fonts" },
-        { text: `${Size(item)}`, style: "fonts" },
-        { text: `${item.qty}`, style: "fonts", alignment: "center" },
+        { text: index + 1, style: 'fonts' },
+        { text: `${Size(item)}`, style: 'fonts' },
+        { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
         {
-          text: `${item.notes ? item.notes.toUpperCase() : ""} ${
-            item.full_frame ? "Full Frame DF" : ""
-          } ${item.lite ? item.lite.NAME : ""}`,
-          style: "fontsBold",
+          text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+            item.full_frame ? 'Full Frame DF' : ''
+          } ${item.lite ? item.lite.NAME : ''}`,
+          style: 'fontsBold',
         },
         {
-          text: `${item.cab_number ? item.cab_number : ""}`,
-          style: "fonts",
+          text: `${item.cab_number ? item.cab_number : ''}`,
+          style: 'fonts',
         },
 
         {
           text: `${price.toFixed(2)}`,
-          style: "fonts",
-          alignment: "right",
+          style: 'fonts',
+          alignment: 'right',
         },
         {
           text: `${(price * parseFloat(item.qty)).toFixed(2)}`,
-          style: "fonts",
-          alignment: "right",
+          style: 'fonts',
+          alignment: 'right',
           width: 210,
         },
       ]);
@@ -129,23 +131,23 @@ export default (data, pricing) => {
           {
             stack: [
               {
-                text: `${part.orderType ? part.orderType.name : ""}`,
-                style: "fonts",
+                text: `${part.orderType ? part.orderType.name : ''}`,
+                style: 'fonts',
               },
               {
                 text: `${
-                  part.thickness?.grade_name ? part.thickness?.grade_name : ""
+                  part.thickness?.grade_name ? part.thickness?.grade_name : ''
                 }${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${
                   part.thickness?.thickness_2
                 }"`,
-                style: "fonts",
+                style: 'fonts',
               },
 
               {
                 text: `${
-                  part.face_frame_design ? part.face_frame_design.NAME : ""
+                  part.face_frame_design ? part.face_frame_design.NAME : ''
                 }`,
-                style: "fonts",
+                style: 'fonts',
               },
             ],
           },
@@ -154,9 +156,9 @@ export default (data, pricing) => {
             width: 200,
             stack: [
               {
-                text: `${part.notes ? part.notes.toUpperCase() : ""}`,
-                style: "headerFont",
-                alignment: "center",
+                text: `${part.notes ? part.notes.toUpperCase() : ''}`,
+                style: 'headerFont',
+                alignment: 'center',
               },
             ],
           },
@@ -164,18 +166,18 @@ export default (data, pricing) => {
             stack: [
               //something here
             ],
-            alignment: "right",
+            alignment: 'right',
           },
         ],
       },
       {
-        text: "==============================================================================",
-        alignment: "center",
+        text: '==============================================================================',
+        alignment: 'center',
       },
       {
         table: {
           headerRows: 1,
-          widths: [30, 100, 30, 155, "*", "*", "*"],
+          widths: [30, 100, 30, 155, '*', '*', '*'],
           body: tableBody,
         },
 
@@ -205,7 +207,7 @@ export default (data, pricing) => {
           {
             columns: [
               {
-                text: "-------",
+                text: '-------',
                 margin: [164, 0, 0, 0],
               },
             ],
@@ -214,9 +216,9 @@ export default (data, pricing) => {
           {
             columns: [
               {
-                text: "------------",
+                text: '------------',
                 margin: [0, 0, 0, 0],
-                alignment: "right",
+                alignment: 'right',
               },
             ],
             margin: [0, 0, 0, -10],
@@ -224,32 +226,36 @@ export default (data, pricing) => {
           {
             columns: [
               {
-                text: "",
+                text: '',
                 width: 120,
               },
               {
-                text: " Total: ",
+                text: ' Total: ',
                 width: 55,
-                style: "fonts",
-                alignment: "left",
+                style: 'fonts',
+                alignment: 'left',
               },
-              { text: `${qty[i]}`, style: "fonts", alignment: "left" },
+              { text: `${qty[i]}`, style: 'fonts', alignment: 'left' },
               {
                 margin: [14, 0, 0, 0],
                 columns: [
                   {
-                    text: "Item Subtotal",
-                    style: "fonts",
+                    text: 'Item Subtotal',
+                    style: 'fonts',
                     margin: [0, 0, 0, 0],
-                    alignment: "right",
+                    alignment: 'right',
                     width: 79,
                   },
                   {
-                    text: `${Math.floor((prices[i]
-                      .reduce((acc, item) => acc + item, 0)) * 100) / 100}`,
-                    style: "fonts",
+                    text: `${prices[i]
+                      .reduce(
+                        (acc, item) => acc + Math.round(item * 100) / 100,
+                        0
+                      )
+                      .toFixed(2)}`,
+                    style: 'fonts',
                     margin: [0, 0, 0, 0],
-                    alignment: "right",
+                    alignment: 'right',
                     width: 77,
                   },
                 ],
@@ -261,8 +267,8 @@ export default (data, pricing) => {
       },
 
       {
-        text: "==============================================================================",
-        alignment: "center",
+        text: '==============================================================================',
+        alignment: 'center',
       },
     ];
   });
@@ -278,62 +284,62 @@ export default (data, pricing) => {
             (acc, item) => acc + item,
             0
           )}`,
-          style: "fonts",
+          style: 'fonts',
           width: 317,
         },
         {
-          text: "Order Subtotal",
-          style: "totals",
+          text: 'Order Subtotal',
+          style: 'totals',
           margin: [0, 0, 0, 0],
           width: 120,
-          alignment: "right",
+          alignment: 'right',
         },
         {
           text: `$${subTotal.toFixed(2)}`,
-          style: "fonts",
+          style: 'fonts',
           margin: [0, 0, 0, 0],
-          alignment: "right",
+          alignment: 'right',
         },
       ],
       margin: [0, 0, 0, 10],
     },
     {
       columns: [
-        { text: "", style: "totals", width: 317 },
+        { text: '', style: 'totals', width: 317 },
         {
-          text: `${data.discount > 0 ? data.discount + "% Discount" : ""}`,
-          style: "totals",
+          text: `${data.discount > 0 ? data.discount + '% Discount' : ''}`,
+          style: 'totals',
           margin: [0, 0, 0, 0],
-          alignment: "right",
+          alignment: 'right',
           width: 120,
         },
         {
-          text: `${data.discount > 0 ? "- $" + discountTotal.toFixed(2) : ""}`,
-          style: "fonts",
-          alignment: "right",
+          text: `${data.discount > 0 ? '- $' + discountTotal.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
         },
       ],
       margin: [0, 0, 0, 0],
     },
     {
-      text: "------------",
+      text: '------------',
       margin: [0, 0, 0, 0],
-      alignment: "right",
+      alignment: 'right',
     },
     {
       columns: [
-        { text: "", style: "totals", width: 317 },
+        { text: '', style: 'totals', width: 317 },
         {
-          text: `${data.discount > 0 ? "Discount Subtotal" : ""}`,
-          style: "totals",
+          text: `${data.discount > 0 ? 'Discount Subtotal' : ''}`,
+          style: 'totals',
           margin: [0, 0, 0, 0],
           width: 120,
-          alignment: "right",
+          alignment: 'right',
         },
         {
-          text: `${data.discount > 0 ? "$" + discountSubTotal.toFixed(2) : ""}`,
-          style: "fonts",
-          alignment: "right",
+          text: `${data.discount > 0 ? '$' + discountSubTotal.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
         },
       ],
       margin: [0, 0, 0, 0],
@@ -343,29 +349,29 @@ export default (data, pricing) => {
           columns: [
             {
               text: `${
-                data.misc_items.length > 0 ? "Miscellaneous Extra" : ""
+                data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''
               }`,
-              style: "fonts",
-              decoration: "underline",
+              style: 'fonts',
+              decoration: 'underline',
               width: 168,
             },
             {
-              text: "Qty",
-              style: "fonts",
-              decoration: "underline",
+              text: 'Qty',
+              style: 'fonts',
+              decoration: 'underline',
               width: 33,
             },
             {
-              text: "Cost Per",
-              style: "fonts",
+              text: 'Cost Per',
+              style: 'fonts',
               margin: [0, 0, 0, 0],
-              decoration: "underline",
+              decoration: 'underline',
             },
             {
-              text: "",
-              style: "totals",
+              text: '',
+              style: 'totals',
               margin: [0, 0, 0, 0],
-              alignment: "right",
+              alignment: 'right',
             },
           ],
           margin: [0, 10, 0, 0],
@@ -376,15 +382,15 @@ export default (data, pricing) => {
           columns: [
             {
               text: data.misc_items.map((i) => {
-                return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ""} \n`;
+                return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
               }),
-              style: "fonts",
+              style: 'fonts',
               width: 171,
             },
             {
-              style: "fonts",
+              style: 'fonts',
               stack: data.misc_items.map((i) => {
-                return { text: i.qty ? parseInt(i.qty) : "" };
+                return { text: i.qty ? parseInt(i.qty) : '' };
               }),
               width: 30,
             },
@@ -398,7 +404,7 @@ export default (data, pricing) => {
                     : 0
                 } \n`;
               }),
-              style: "fonts",
+              style: 'fonts',
               margin: [0, 0, 0, 0],
             },
             {
@@ -411,8 +417,8 @@ export default (data, pricing) => {
                     : 0
                 } \n`;
               }),
-              style: "fonts",
-              alignment: "right",
+              style: 'fonts',
+              alignment: 'right',
             },
           ],
           margin: [0, 2, 0, 0],
@@ -420,29 +426,29 @@ export default (data, pricing) => {
       : null,
     data.misc_items.length > 0
       ? {
-          text: "------------",
+          text: '------------',
           margin: [0, 0, 0, 0],
-          alignment: "right",
+          alignment: 'right',
         }
       : null,
     data.misc_items.length > 0
       ? {
           columns: [
-            { text: "", style: "totals", decoration: "underline", width: 317 },
+            { text: '', style: 'totals', decoration: 'underline', width: 317 },
             {
-              text: data.misc_items.length > 0 ? "Order Sub Total" : "",
-              style: "totals",
+              text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
+              style: 'totals',
               width: 120,
-              alignment: "right",
+              alignment: 'right',
             },
             {
               text:
                 data.misc_items.length > 0
-                  ? "$" + order_sub_total.toFixed(2)
-                  : "",
-              style: "fonts",
+                  ? '$' + order_sub_total.toFixed(2)
+                  : '',
+              style: 'fonts',
               margin: [0, 0, 0, 0],
-              alignment: "right",
+              alignment: 'right',
             },
           ],
           margin: [0, 10, 0, 0],
@@ -450,50 +456,50 @@ export default (data, pricing) => {
       : null,
     {
       columns: [
-        { text: "", style: "totals", width: 317 },
+        { text: '', style: 'totals', width: 317 },
         {
           text: data.Taxable
-            ? "$" +
+            ? '$' +
               order_sub_total.toFixed(2) +
-              " x " +
+              ' x ' +
               data.companyprofile.TaxRate +
-              "%" +
-              " Tax:"
-            : "",
-          style: "totals",
+              '%' +
+              ' Tax:'
+            : '',
+          style: 'totals',
           margin: [0, 0, 0, 4],
           width: 120,
-          alignment: "right",
+          alignment: 'right',
         },
         {
-          text: `${data.Taxable && tax > 0 ? "$" + tax.toFixed(2) : ""}`,
-          style: "fonts",
-          alignment: "right",
+          text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
+          style: 'fonts',
+          alignment: 'right',
         },
       ],
       margin: [0, 0, 0, 0],
     },
     {
-      text: "======",
+      text: '======',
       margin: [0, 0, 0, 0],
-      alignment: "right",
+      alignment: 'right',
     },
     finishingTotal > 0
       ? {
           columns: [
-            { text: "", style: "totals", width: 317, decoration: "underline" },
+            { text: '', style: 'totals', width: 317, decoration: 'underline' },
             {
-              text: `${finishingTotal > 0 ? "Finish Total" : ""}`,
-              style: "totals",
+              text: `${finishingTotal > 0 ? 'Finish Total' : ''}`,
+              style: 'totals',
               margin: [0, 0, 0, 0],
-              alignment: "right",
+              alignment: 'right',
               width: 120,
             },
             {
               text: `$${finishingTotal.toFixed(2)}`,
-              style: "fonts",
+              style: 'fonts',
               margin: [0, 0, 0, 0],
-              alignment: "right",
+              alignment: 'right',
             },
           ],
           margin: [0, 10, 0, 0],
@@ -501,19 +507,19 @@ export default (data, pricing) => {
       : null,
     {
       columns: [
-        { text: "", style: "totals", width: 317, decoration: "underline" },
+        { text: '', style: 'totals', width: 317, decoration: 'underline' },
         {
-          text: `${data.status === "Quote" ? "QUOTE ONLY" : "TOTAL"}`,
-          style: "totals",
+          text: `${data.status === 'Quote' ? 'QUOTE ONLY' : 'TOTAL'}`,
+          style: 'totals',
           margin: [0, 0, 0, 0],
-          alignment: "right",
+          alignment: 'right',
           width: 120,
         },
         {
           text: `$${total.toFixed(2)}`,
-          style: "fonts",
+          style: 'fonts',
           margin: [0, 0, 0, 0],
-          alignment: "right",
+          alignment: 'right',
         },
       ],
       margin: [0, 10, 0, 0],
@@ -521,19 +527,19 @@ export default (data, pricing) => {
     depositPaid > 0
       ? {
           columns: [
-            { text: "", style: "totals", width: 317, decoration: "underline" },
+            { text: '', style: 'totals', width: 317, decoration: 'underline' },
             {
-              text: "Minus Deposit Received:",
-              style: "totals",
+              text: 'Minus Deposit Received:',
+              style: 'totals',
               margin: [0, 0, 0, 0],
               width: 120,
-              alignment: "right",
+              alignment: 'right',
             },
             {
               text: `$${depositPaid.toFixed(2)}`,
-              style: "fonts",
+              style: 'fonts',
               margin: [0, 0, 0, 0],
-              alignment: "right",
+              alignment: 'right',
             },
           ],
           margin: [0, 2, 0, 0],
@@ -542,44 +548,44 @@ export default (data, pricing) => {
     balancePaid > 0
       ? {
           columns: [
-            { text: "", style: "totals", width: 317, decoration: "underline" },
+            { text: '', style: 'totals', width: 317, decoration: 'underline' },
             {
-              text: "Minus Balance Paid:",
-              style: "totals",
+              text: 'Minus Balance Paid:',
+              style: 'totals',
               margin: [0, 0, 0, 0],
               width: 120,
-              alignment: "right",
+              alignment: 'right',
             },
             {
               text: `$${balancePaid.toFixed(2)}`,
-              style: "fonts",
+              style: 'fonts',
               margin: [0, 0, 0, 0],
-              alignment: "right",
+              alignment: 'right',
             },
           ],
           margin: [0, 2, 0, 0],
         }
       : null,
     {
-      text: "======",
+      text: '======',
       margin: [0, 0, 0, 0],
-      alignment: "right",
+      alignment: 'right',
     },
     {
       columns: [
-        { text: "", style: "totals", width: 330 },
+        { text: '', style: 'totals', width: 330 },
         {
-          text: "BALANCE DUE:",
-          style: "totals",
+          text: 'BALANCE DUE:',
+          style: 'totals',
           margin: [0, 0, 0, 0],
           width: 105,
-          alignment: "right",
+          alignment: 'right',
         },
         {
           text: `$${balanceDue.toFixed(2)}`,
-          style: "fonts",
+          style: 'fonts',
           margin: [0, 0, 0, 0],
-          alignment: "right",
+          alignment: 'right',
         },
       ],
       margin: [0, 10, 0, 5],
@@ -590,26 +596,26 @@ export default (data, pricing) => {
         {
           columns: [
             {
-              text: "LIMITED WARRANTY",
-              decoration: "underline",
-              style: "fontsBold",
+              text: 'LIMITED WARRANTY',
+              decoration: 'underline',
+              style: 'fontsBold',
               margin: [0, 0, 0, 10],
             },
             {
               text: `Units: ${qty.reduce((acc, item) => acc + item, 0)}`,
-              style: "fonts",
-              alignment: "right",
+              style: 'fonts',
+              alignment: 'right',
               margin: [0, 0, 0, 0],
             },
           ],
         },
 
         {
-          text: "OUR PRODUCTS ARE WARRANTED FOR 1 YEAR FROM DATE OF SHIPMENT, WARRANTY DETAILS CAN FOUND AT \n HTTPS://PORTADOOR.COM AND IN OUR 2020 CATALOG \n \n LIABILITY UNDER THIS WARRANTY SHALL BE LIMITED TO THE ORIGINAL INVOICE PRICE OF THE PRODUCT",
-          style: "warrantyFont",
-          alignment: "left",
+          text: 'OUR PRODUCTS ARE WARRANTED FOR 1 YEAR FROM DATE OF SHIPMENT, WARRANTY DETAILS CAN FOUND AT \n HTTPS://PORTADOOR.COM AND IN OUR 2020 CATALOG \n \n LIABILITY UNDER THIS WARRANTY SHALL BE LIMITED TO THE ORIGINAL INVOICE PRICE OF THE PRODUCT',
+          style: 'warrantyFont',
+          alignment: 'left',
           margin: [0, 0, 0, 5],
-          id: "liability-acknowledgement",
+          id: 'liability-acknowledgement',
         },
       ],
     },

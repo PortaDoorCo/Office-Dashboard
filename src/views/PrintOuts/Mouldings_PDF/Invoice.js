@@ -28,24 +28,26 @@ export default (data, pricing) => {
 
   const prices = pdfMouldingPricing(data.mouldings, pricing[0]);
 
-  const subTotal = prices.reduce((acc, item) => acc + item, 0);
+  const subTotal = prices.reduce(
+    (acc, item) => acc + Math.round(item * 100) / 100,
+    0
+  );
 
   console.log({ subTotal });
-  
+
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
   const discountTotal =
-    (subTotal * Math.floor((data.discount / 100) * 100) / 100)
+    (subTotal * Math.floor((data.discount / 100) * 100)) / 100;
 
-    const discountSubTotal = subTotal - discountTotal;
-    
+  const discountSubTotal = subTotal - discountTotal;
+
   const order_sub_total = misc_total + discountSubTotal;
 
   const tax = data.Taxable
-    ? Math.floor((order_sub_total * (data.companyprofile.TaxRate / 100)) * 100) / 100
+    ? Math.floor(order_sub_total * (data.companyprofile.TaxRate / 100) * 100) /
+      100
     : 0;
-
-
 
   const total = order_sub_total + tax;
 
@@ -192,109 +194,109 @@ export default (data, pricing) => {
     },
     data.misc_items.length > 0
       ? {
-        columns: [
-          {
-            text: `${
-              data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''
-            }`,
-            style: 'fonts',
-            decoration: 'underline',
-            width: 168,
-          },
-          {
-            text: 'Qty',
-            style: 'fonts',
-            decoration: 'underline',
-            width: 33,
-          },
-          {
-            text: 'Cost Per',
-            style: 'fonts',
-            margin: [0, 0, 0, 0],
-            decoration: 'underline',
-          },
-          {
-            text: '',
-            style: 'totals',
-            margin: [0, 0, 0, 0],
-            alignment: 'right',
-          },
-        ],
-        margin: [0, 10, 0, 0],
-      }
+          columns: [
+            {
+              text: `${
+                data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''
+              }`,
+              style: 'fonts',
+              decoration: 'underline',
+              width: 168,
+            },
+            {
+              text: 'Qty',
+              style: 'fonts',
+              decoration: 'underline',
+              width: 33,
+            },
+            {
+              text: 'Cost Per',
+              style: 'fonts',
+              margin: [0, 0, 0, 0],
+              decoration: 'underline',
+            },
+            {
+              text: '',
+              style: 'totals',
+              margin: [0, 0, 0, 0],
+              alignment: 'right',
+            },
+          ],
+          margin: [0, 10, 0, 0],
+        }
       : null,
     data.misc_items.length > 0
       ? {
-        columns: [
-          {
-            text: data.misc_items.map((i) => {
-              return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
-            }),
-            style: 'fonts',
-            width: 171,
-          },
-          {
-            style: 'fonts',
-            stack: data.misc_items.map((i) => {
-              return { text: i.qty ? parseInt(i.qty) : '' };
-            }),
-            width: 30,
-          },
-          {
-            text: data.misc_items.map((i) => {
-              return `$${
-                i.price
-                  ? parseFloat(i.price).toFixed(2)
-                  : i.pricePer
+          columns: [
+            {
+              text: data.misc_items.map((i) => {
+                return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
+              }),
+              style: 'fonts',
+              width: 171,
+            },
+            {
+              style: 'fonts',
+              stack: data.misc_items.map((i) => {
+                return { text: i.qty ? parseInt(i.qty) : '' };
+              }),
+              width: 30,
+            },
+            {
+              text: data.misc_items.map((i) => {
+                return `$${
+                  i.price
+                    ? parseFloat(i.price).toFixed(2)
+                    : i.pricePer
                     ? parseFloat(i.pricePer).toFixed(2)
                     : 0
-              } \n`;
-            }),
-            style: 'fonts',
-            margin: [0, 0, 0, 0],
-          },
-          {
-            text: data.misc_items.map((i) => {
-              return `$${
-                i.price
-                  ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2)
-                  : i.pricePer
+                } \n`;
+              }),
+              style: 'fonts',
+              margin: [0, 0, 0, 0],
+            },
+            {
+              text: data.misc_items.map((i) => {
+                return `$${
+                  i.price
+                    ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2)
+                    : i.pricePer
                     ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2)
                     : 0
-              } \n`;
-            }),
-            style: 'fonts',
-            alignment: 'right',
-          },
-        ],
-        margin: [0, 2, 0, 0],
-      }
+                } \n`;
+              }),
+              style: 'fonts',
+              alignment: 'right',
+            },
+          ],
+          margin: [0, 2, 0, 0],
+        }
       : null,
     data.misc_items.length > 0
       ? {
-        text: '------------',
-        margin: [0, 0, 0, 0],
-        alignment: 'right',
-      }
+          text: '------------',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+        }
       : null,
-      {
-        columns: [
-          { text: '', style: 'totals', width: 317 },
-          {
-            text: 'Net Total',
-            style: 'totals',
-            margin: [0, 0, 0, 4],
-            width: 120,
-            alignment: 'right',
-          },
-          {
-            text: '$' +  order_sub_total.toFixed(2),
-            style: 'fonts',
-            alignment: 'right',
-          },
-        ],
-        margin: [0, 0, 0, 5],
-      },
+    {
+      columns: [
+        { text: '', style: 'totals', width: 317 },
+        {
+          text: 'Net Total',
+          style: 'totals',
+          margin: [0, 0, 0, 4],
+          width: 120,
+          alignment: 'right',
+        },
+        {
+          text: '$' + order_sub_total.toFixed(2),
+          style: 'fonts',
+          alignment: 'right',
+        },
+      ],
+      margin: [0, 0, 0, 5],
+    },
     // data.misc_items.length > 0
     //   ? {
     //     columns: [
@@ -324,32 +326,32 @@ export default (data, pricing) => {
     //   alignment: 'right',
     // },
     data.Taxable
-    ? {
-      columns: [
-        { text: '', style: 'totals', width: 317 },
-        {
-          text: data.Taxable
-            ? '$' +
-                order_sub_total.toFixed(2) +
-                ' x ' +
-                data.companyprofile.TaxRate +
-                '%' +
-                ' Tax:'
-            : '',
-          style: 'totals',
-          margin: [0, 0, 0, 4],
-          width: 120,
-          alignment: 'right',
-        },
-        {
-          text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
-          style: 'fonts',
-          alignment: 'right',
-        },
-      ],
-      margin: [0, 0, 0, 0],
-    }
-    : null,
+      ? {
+          columns: [
+            { text: '', style: 'totals', width: 317 },
+            {
+              text: data.Taxable
+                ? '$' +
+                  order_sub_total.toFixed(2) +
+                  ' x ' +
+                  data.companyprofile.TaxRate +
+                  '%' +
+                  ' Tax:'
+                : '',
+              style: 'totals',
+              margin: [0, 0, 0, 4],
+              width: 120,
+              alignment: 'right',
+            },
+            {
+              text: `${data.Taxable && tax > 0 ? '$' + tax.toFixed(2) : ''}`,
+              style: 'fonts',
+              alignment: 'right',
+            },
+          ],
+          margin: [0, 0, 0, 0],
+        }
+      : null,
     {
       columns: [
         { text: '', style: 'totals', width: 317, decoration: 'underline' },
@@ -372,19 +374,19 @@ export default (data, pricing) => {
     depositPaid > 0
       ? {
           columns: [
-            { text: "", style: "totals", width: 317, decoration: "underline" },
+            { text: '', style: 'totals', width: 317, decoration: 'underline' },
             {
-              text: "Minus Deposit Received:",
-              style: "totals",
+              text: 'Minus Deposit Received:',
+              style: 'totals',
               margin: [0, 0, 0, 0],
               width: 120,
-              alignment: "right",
+              alignment: 'right',
             },
             {
               text: `$${depositPaid.toFixed(2)}`,
-              style: "fonts",
+              style: 'fonts',
               margin: [0, 0, 0, 0],
-              alignment: "right",
+              alignment: 'right',
             },
           ],
           margin: [0, 2, 0, 0],
@@ -393,19 +395,19 @@ export default (data, pricing) => {
     balancePaid > 0
       ? {
           columns: [
-            { text: "", style: "totals", width: 317, decoration: "underline" },
+            { text: '', style: 'totals', width: 317, decoration: 'underline' },
             {
-              text: "Minus Balance Paid:",
-              style: "totals",
+              text: 'Minus Balance Paid:',
+              style: 'totals',
               margin: [0, 0, 0, 0],
               width: 120,
-              alignment: "right",
+              alignment: 'right',
             },
             {
               text: `$${balancePaid.toFixed(2)}`,
-              style: "fonts",
+              style: 'fonts',
               margin: [0, 0, 0, 0],
-              alignment: "right",
+              alignment: 'right',
             },
           ],
           margin: [0, 2, 0, 0],
