@@ -1,7 +1,7 @@
-import moment from 'moment-business-days';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import DatePicker from 'react-widgets/DatePicker';
+import moment from "moment-business-days";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import DatePicker from "react-widgets/DatePicker";
 import {
   Col,
   FormGroup,
@@ -12,9 +12,9 @@ import {
   Card,
   CardBody,
   Input,
-} from 'reactstrap';
-import { change, Field, getFormValues } from 'redux-form';
-import status from '../../utils/productionStatus';
+} from "reactstrap";
+import { change, Field, getFormValues } from "redux-form";
+import status from "../../utils/productionStatus";
 // import momentLocaliser from 'react-widgets-moment';
 import {
   renderCheckboxToggle,
@@ -22,14 +22,14 @@ import {
   renderDropdownListNoPhoto,
   renderField,
   renderTextField,
-} from '../RenderInputs/renderInputs';
-import CustomerReminder from './CustomerReminder';
-import otherStatus from '../../utils/other_status';
-import orderEntryStatus from '../../utils/orderEntryStatus';
+} from "../RenderInputs/renderInputs";
+import CustomerReminder from "./CustomerReminder";
+import otherStatus from "../../utils/other_status";
+import orderEntryStatus from "../../utils/orderEntryStatus";
 
 // momentLocaliser(moment);
 
-const required = (value) => (value ? undefined : 'Required');
+const required = (value) => (value ? undefined : "Required");
 
 const renderDateTimePicker = ({
   input: { onChange, value },
@@ -63,7 +63,7 @@ class JobInfo extends Component {
     const { isEdit, formState } = this.props;
 
     const dateOrdered = formState?.tracking?.filter((x) => {
-      return x.status === 'Ordered';
+      return x.status === "Ordered";
     });
 
     if (isEdit) {
@@ -78,39 +78,37 @@ class JobInfo extends Component {
           ).businessAdd(21)._d;
         }
 
-        this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));
+        this.props.dispatch(change("Order", "job_info.DueDate", dueDate));
       }
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { formState } = this.props;
+    const { formState, orderType } = this.props;
     if (formState?.job_info?.customer) {
       if (
         formState.job_info?.Sample !== prevProps.formState?.job_info?.Sample
       ) {
         if (formState.job_info.Sample) {
-          this.props.dispatch(change('Order', 'discount', 50));
+          this.props.dispatch(change("Order", "discount", 50));
         } else {
           this.props.dispatch(
             change(
-              'Order',
-              'discount',
+              "Order",
+              "discount",
               formState?.job_info?.customer?.Discount || 0
             )
           );
         }
       }
-      if (
-        formState.job_info?.Rush !== prevProps.formState?.job_info?.Rush
-      ) {
+      if (formState.job_info?.Rush !== prevProps.formState?.job_info?.Rush) {
         if (formState.job_info.Sample) {
-          this.props.dispatch(change('Order', 'discount', 0));
+          this.props.dispatch(change("Order", "discount", 0));
         } else {
           this.props.dispatch(
             change(
-              'Order',
-              'discount',
+              "Order",
+              "discount",
               formState?.job_info?.customer?.Discount || 0
             )
           );
@@ -122,77 +120,78 @@ class JobInfo extends Component {
       ) {
         const customer = formState?.job_info?.customer;
 
-        if (customer?.Notes !== '') {
+        if (customer?.Notes !== "") {
           this.props.toggleReminderModal();
         }
 
         this.props.dispatch(
-          change('Order', 'job_info.salesRep', customer.sale)
+          change("Order", "job_info.salesRep", customer.sale)
         );
 
         this.props.dispatch(
           change(
-            'Order',
-            'job_info.Address1',
+            "Order",
+            "job_info.Address1",
             customer.Shipping_Address1 || customer.Address1
           )
         );
         this.props.dispatch(
           change(
-            'Order',
-            'job_info.Address2',
+            "Order",
+            "job_info.Address2",
             customer.Shipping_Address2 || customer.Address2
           )
         );
         this.props.dispatch(
           change(
-            'Order',
-            'job_info.City',
+            "Order",
+            "job_info.City",
             customer.Shipping_City || customer.City
           )
         );
         this.props.dispatch(
           change(
-            'Order',
-            'job_info.State',
+            "Order",
+            "job_info.State",
             customer.Shipping_State || customer.State
           )
         );
         this.props.dispatch(
-          change('Order', 'job_info.Zip', customer.Shipping_Zip || customer.Zip)
+          change("Order", "job_info.Zip", customer.Shipping_Zip || customer.Zip)
         );
         this.props.dispatch(
           change(
-            'Order',
-            'job_info.Phone',
+            "Order",
+            "job_info.Phone",
             customer.Shipping_Phone || customer.Phone1
           )
         );
-        this.props.dispatch(change('Order', 'job_info.EMAIL', customer.EMAIL));
+        this.props.dispatch(change("Order", "job_info.EMAIL", customer.EMAIL));
         this.props.dispatch(
-          change('Order', 'job_info.Email2', customer.Email2)
+          change("Order", "job_info.Email2", customer.Email2)
         );
         this.props.dispatch(
-          change('Order', 'job_info.Email3', customer.Email3)
+          change("Order", "job_info.Email3", customer.Email3)
         );
         this.props.dispatch(
-          change('Order', 'job_info.Email4', customer.Email4)
+          change("Order", "job_info.Email4", customer.Email4)
         );
         this.props.dispatch(
-          change('Order', 'job_info.Email5', customer.Email5)
+          change("Order", "job_info.Email5", customer.Email5)
         );
         this.props.dispatch(
-          change('Order', 'job_info.Email6', customer.Email6)
+          change("Order", "job_info.Email6", customer.Email6)
         );
-        this.props.dispatch(change('Order', 'Taxable', customer.Taxable));
+        this.props.dispatch(change("Order", "Taxable", customer.Taxable));
 
-        if (formState.job_info.Sample) {
-          this.props.dispatch(change('Order', 'discount', 50));
+        if(orderType === 'Misc Items'){
+          this.props.dispatch(change("Order", "discount", 0));
         } else {
-          this.props.dispatch(change('Order', 'discount', customer.Discount));
+          this.props.dispatch(change("Order", "discount", customer.Discount));
         }
 
-        this.props.dispatch(change('Order', 'job_info.Notes', customer.Notes));
+
+        this.props.dispatch(change("Order", "job_info.Notes", customer.Notes));
       }
     }
   }
@@ -210,23 +209,29 @@ class JobInfo extends Component {
 
     if (
       !formState?.job_info?.Shipping_Scheduled &&
-      (formState?.job_info?.status === 'Quote' ||
-        formState?.job_info?.status?.value === 'Quote')
+      (formState?.job_info?.status === "Quote" ||
+        formState?.job_info?.status?.value === "Quote")
     ) {
       this.props.dispatch(
-        change('Order', 'job_info.status', {
-          label: 'Ordered',
-          value: 'Ordered',
+        change("Order", "job_info.status", {
+          label: "Ordered",
+          value: "Ordered",
         })
       );
     } else {
-      if (formState?.DateOrdered || formState?.DateInvoiced || formState?.DateShipped || formState?.DateCompleted || formState?.DateInProduction) {
+      if (
+        formState?.DateOrdered ||
+        formState?.DateInvoiced ||
+        formState?.DateShipped ||
+        formState?.DateCompleted ||
+        formState?.DateInProduction
+      ) {
         return null;
       } else {
         this.props.dispatch(
-          change('Order', 'job_info.status', {
-            label: 'Quote',
-            value: 'Quote',
+          change("Order", "job_info.status", {
+            label: "Quote",
+            value: "Quote",
           })
         );
       }
@@ -387,7 +392,7 @@ class JobInfo extends Component {
               <Field
                 name="customer"
                 component={renderDropdownListNoPhoto}
-                data={role?.type === 'sales' ? salesCompanies : customers}
+                data={role?.type === "sales" ? salesCompanies : customers}
                 dataKey="value"
                 textField="Company"
                 edit={edit}
@@ -415,21 +420,21 @@ class JobInfo extends Component {
                 name="status"
                 component={renderDropdownList}
                 data={
-                  role?.type === 'authenticated' ||
-                    role?.type === 'owner' ||
-                    role?.type === 'administrator' ||
-                    role?.type === 'management' ||
-                    role?.type === 'office'
+                  role?.type === "authenticated" ||
+                  role?.type === "owner" ||
+                  role?.type === "administrator" ||
+                  role?.type === "management" ||
+                  role?.type === "office"
                     ? status
                     : otherStatus
                 }
                 dataKey="value"
                 edit={
-                  role?.type === 'authenticated' ||
-                    role?.type === 'owner' ||
-                    role?.type === 'administrator' ||
-                    role?.type === 'management' ||
-                    role?.type === 'office'
+                  role?.type === "authenticated" ||
+                  role?.type === "owner" ||
+                  role?.type === "administrator" ||
+                  role?.type === "management" ||
+                  role?.type === "office"
                     ? edit
                     : true
                 }
@@ -444,7 +449,7 @@ class JobInfo extends Component {
             <FormGroup>
               <Label htmlFor="phone">Customer Note</Label>
               <Field
-                name={'Notes'}
+                name={"Notes"}
                 type="text"
                 component={renderTextField}
                 edit={true}
@@ -470,9 +475,9 @@ class JobInfo extends Component {
                 data={sales}
                 edit={
                   formState?.job_info?.customer?.id === 1 ||
-                    role?.type === 'owner' ||
-                    role?.type === 'administrator' ||
-                    role?.type === 'management'
+                  role?.type === "owner" ||
+                  role?.type === "administrator" ||
+                  role?.type === "management"
                     ? edit
                     : true
                 }
@@ -573,7 +578,7 @@ class JobInfo extends Component {
         <Button
           color="primary"
           onClick={this.toggle}
-          style={{ marginBottom: '1rem' }}
+          style={{ marginBottom: "1rem" }}
         >
           Show Emails
         </Button>
@@ -590,9 +595,9 @@ class JobInfo extends Component {
                       type="text"
                       component={renderField}
                       edit={
-                        role?.type === 'authenticated' ||
-                          role?.type === 'owner' ||
-                          role?.type === 'administrator'
+                        role?.type === "authenticated" ||
+                        role?.type === "owner" ||
+                        role?.type === "administrator"
                           ? edit
                           : true
                       }
@@ -608,9 +613,9 @@ class JobInfo extends Component {
                       type="text"
                       component={renderField}
                       edit={
-                        role?.type === 'authenticated' ||
-                          role?.type === 'owner' ||
-                          role?.type === 'administrator'
+                        role?.type === "authenticated" ||
+                        role?.type === "owner" ||
+                        role?.type === "administrator"
                           ? edit
                           : true
                       }
@@ -626,9 +631,9 @@ class JobInfo extends Component {
                       type="text"
                       component={renderField}
                       edit={
-                        role?.type === 'authenticated' ||
-                          role?.type === 'owner' ||
-                          role?.type === 'administrator'
+                        role?.type === "authenticated" ||
+                        role?.type === "owner" ||
+                        role?.type === "administrator"
                           ? edit
                           : true
                       }
@@ -647,9 +652,9 @@ class JobInfo extends Component {
                       type="text"
                       component={renderField}
                       edit={
-                        role?.type === 'authenticated' ||
-                          role?.type === 'owner' ||
-                          role?.type === 'administrator'
+                        role?.type === "authenticated" ||
+                        role?.type === "owner" ||
+                        role?.type === "administrator"
                           ? edit
                           : true
                       }
@@ -665,9 +670,9 @@ class JobInfo extends Component {
                       type="text"
                       component={renderField}
                       edit={
-                        role?.type === 'authenticated' ||
-                          role?.type === 'owner' ||
-                          role?.type === 'administrator'
+                        role?.type === "authenticated" ||
+                        role?.type === "owner" ||
+                        role?.type === "administrator"
                           ? edit
                           : true
                       }
@@ -683,9 +688,9 @@ class JobInfo extends Component {
                       type="text"
                       component={renderField}
                       edit={
-                        role?.type === 'authenticated' ||
-                          role?.type === 'owner' ||
-                          role?.type === 'administrator'
+                        role?.type === "authenticated" ||
+                        role?.type === "owner" ||
+                        role?.type === "administrator"
                           ? edit
                           : true
                       }
@@ -695,9 +700,9 @@ class JobInfo extends Component {
                 </Col>
               </Row>
 
-              {role?.type === 'authenticated' ||
-                role?.type === 'owner' ||
-                role?.type === 'administrator' ? (
+              {role?.type === "authenticated" ||
+              role?.type === "owner" ||
+              role?.type === "administrator" ? (
                 <Row>
                   <Col>
                     <Button color="primary" onClick={this.saveEmails}>
@@ -717,7 +722,7 @@ class JobInfo extends Component {
             <FormGroup>
               <Label htmlFor="phone">Shop Notes</Label>
               <Field
-                name={'Shop_Notes'}
+                name={"Shop_Notes"}
                 type="textarea"
                 component={renderTextField}
                 edit={edit}
@@ -737,12 +742,13 @@ class JobInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues('Order')(state),
+  formState: getFormValues("Order")(state),
   shippingMethods: state.misc_items.shippingMethods,
   role: state?.users?.user?.role,
   user: state?.users?.user,
   sales: state?.sales?.salesReps,
   paymentTerms: state.misc_items.paymentTerms,
+  orderType: state.Orders.orderType
 });
 
 export default connect(mapStateToProps, null)(JobInfo);
