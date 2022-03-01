@@ -1099,9 +1099,12 @@ export const subTotalSelector = createSelector(
       } else {
         return prices.map((i, index) => {
           if (i) {
-            // console.log({i})
+            console.log({ i });
             let price =
-              Math.round(i.reduce((acc, item) => acc + item, 0) * 100) / 100;
+              Math.round(
+                i.reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) *
+                  100
+              ) / 100;
             let sum = price;
             return sum;
           } else {
@@ -1123,7 +1126,7 @@ export const mouldingLineItemSelector = createSelector(
 export const subTotal_Total = createSelector(
   [subTotalSelector, miscTotalSelector],
   (subTotal, misc) =>
-    Math.floor(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100
+    Math.round(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100
 );
 
 export const totalDiscountSelector = createSelector(
@@ -1132,9 +1135,12 @@ export const totalDiscountSelector = createSelector(
     if (orderType) {
       // console.log({orderType})
       return (
-        (subTotal.reduce((acc, item) => acc + item, 0) *
-          Math.floor(discount * 100)) /
-        100
+        Math.round(
+          ((subTotal.reduce((acc, item) => acc + item, 0) *
+            Math.floor(discount * 100)) /
+            100) *
+            100
+        ) / 100
       );
     } else {
       return 0;
