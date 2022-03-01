@@ -283,8 +283,6 @@ class OrderPage extends Component {
     delete newOrder['job_info.DateInProduction'];
     delete newOrder['job_info.scan_date'];
 
-    
-    
     newOrder['balance_history'] = [{ balance_paid: 0 }];
     newOrder['balance_paid'] = 0;
     newOrder['files'] = [];
@@ -943,7 +941,7 @@ class OrderPage extends Component {
         );
       }
 
-      for (let i = 0; i < p.door_labels; i++) {
+      if (p.door_labels > 0) {
         await Face_Frame_Labels(data, breakdowns, p, this.props.pricing).then(
           async (v) => {
             files.push(v);
@@ -965,7 +963,7 @@ class OrderPage extends Component {
     const { formState } = this.props;
     const data = {
       ...formState,
-      Shipping_Scheduled: true
+      Shipping_Scheduled: true,
     };
 
     if (data.Shipping_Scheduled) {
@@ -983,7 +981,7 @@ class OrderPage extends Component {
     const { formState, breakdowns } = this.props;
     const data = {
       ...formState,
-      Shipping_Scheduled: true
+      Shipping_Scheduled: true,
     };
 
     if (data.Shipping_Scheduled) {
@@ -1003,9 +1001,12 @@ class OrderPage extends Component {
     const { selectedOrder, printer_options, user, deleteFilesFromOrder } =
       this.props;
 
-      const filesInfo = selectedOrder?.filesInfo?.length > 0 ? selectedOrder?.filesInfo?.slice(0).reverse() : []
+    const filesInfo =
+      selectedOrder?.filesInfo?.length > 0
+        ? selectedOrder?.filesInfo?.slice(0).reverse()
+        : [];
 
-    console.log({selectedOrder});
+    console.log({ selectedOrder });
 
     return (
       <div className="animated noPrint resize">
@@ -1032,48 +1033,48 @@ class OrderPage extends Component {
               <div>
                 {user?.role?.type !== 'quality_control' ||
                 user?.role?.type !== 'sales' ? (
-                    <Row>
-                      <Col>
-                        <IconButton onClick={this.props.editable}>
-                          <ArrowBack style={{ width: '40', height: '40' }} />
+                  <Row>
+                    <Col>
+                      <IconButton onClick={this.props.editable}>
+                        <ArrowBack style={{ width: '40', height: '40' }} />
+                      </IconButton>
+
+                      <Tooltip title="Tracking History" placement="top">
+                        <IconButton onClick={this.toggleTracking}>
+                          <List style={{ width: '40', height: '40' }} />
                         </IconButton>
+                      </Tooltip>
 
-                        <Tooltip title="Tracking History" placement="top">
-                          <IconButton onClick={this.toggleTracking}>
-                            <List style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
+                      <Tooltip title="Balance" placement="top">
+                        <IconButton onClick={this.toggleBalance}>
+                          <AttachMoneyIcon
+                            style={{ width: '40', height: '40' }}
+                          />
+                        </IconButton>
+                      </Tooltip>
 
-                        <Tooltip title="Balance" placement="top">
-                          <IconButton onClick={this.toggleBalance}>
-                            <AttachMoneyIcon
-                              style={{ width: '40', height: '40' }}
-                            />
-                          </IconButton>
-                        </Tooltip>
+                      <Tooltip title="Misc Items" placement="top">
+                        <IconButton onClick={this.toggleMiscItems}>
+                          <Dns style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
-                        <Tooltip title="Misc Items" placement="top">
-                          <IconButton onClick={this.toggleMiscItems}>
-                            <Dns style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
+                      <Tooltip title="View Notes" placement="top">
+                        <IconButton onClick={this.toggleNotes}>
+                          <Chat style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
 
-                        <Tooltip title="View Notes" placement="top">
-                          <IconButton onClick={this.toggleNotes}>
-                            <Chat style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
-
-                        <Tooltip title="View Files" placement="top">
-                          <IconButton onClick={this.toggleFiles}>
-                            <Attachment style={{ width: '40', height: '40' }} />
-                          </IconButton>
-                        </Tooltip>
-                      </Col>
-                      <Col />
-                      <Col />
-                    </Row>
-                  ) : null}
+                      <Tooltip title="View Files" placement="top">
+                        <IconButton onClick={this.toggleFiles}>
+                          <Attachment style={{ width: '40', height: '40' }} />
+                        </IconButton>
+                      </Tooltip>
+                    </Col>
+                    <Col />
+                    <Col />
+                  </Row>
+                ) : null}
               </div>
             ) : (
               <div>
@@ -1100,17 +1101,17 @@ class OrderPage extends Component {
                 <Row>
                   {user?.role?.type !== 'quality_control' &&
                   user?.role?.type !== 'sales' ? (
-                      <Navigation
-                        {...this.props}
-                        toggleTracking={this.toggleTracking}
-                        toggleBalance={this.toggleBalance}
-                        toggleMiscItems={this.toggleMiscItems}
-                        toggleNotes={this.toggleNotes}
-                        toggleFiles={this.toggleFiles}
-                      />
-                    ) : (
-                      <Col />
-                    )}
+                    <Navigation
+                      {...this.props}
+                      toggleTracking={this.toggleTracking}
+                      toggleBalance={this.toggleBalance}
+                      toggleMiscItems={this.toggleMiscItems}
+                      toggleNotes={this.toggleNotes}
+                      toggleFiles={this.toggleFiles}
+                    />
+                  ) : (
+                    <Col />
+                  )}
 
                   <Col className="ml-5">
                     <Row>
@@ -1125,52 +1126,52 @@ class OrderPage extends Component {
 
                         {user.role?.type !== 'quality_control' &&
                         user.role?.type !== 'sales' ? (
-                            <Tooltip
-                              title="Copy Order"
-                              placement="top"
-                              className="mb-3"
-                            >
-                              <IconButton onClick={this.handleCopyModal}>
-                                <FileCopy style={{ width: '40', height: '40' }} />
-                              </IconButton>
-                            </Tooltip>
-                          ) : null}
+                          <Tooltip
+                            title="Copy Order"
+                            placement="top"
+                            className="mb-3"
+                          >
+                            <IconButton onClick={this.handleCopyModal}>
+                              <FileCopy style={{ width: '40', height: '40' }} />
+                            </IconButton>
+                          </Tooltip>
+                        ) : null}
 
                         {selectedOrder &&
                         selectedOrder.orderType === 'Door Order' &&
                         user.role?.type !== 'quality_control' &&
                         user.role?.type !== 'sales' ? (
-                            <Tooltip
-                              title="Export Edges"
-                              placement="top"
-                              className="mb-3"
-                              onClick={this.exportEdgesHelper}
-                            >
-                              <IconButton>
-                                <GetAppIcon
-                                  style={{ width: '40', height: '40' }}
-                                />
-                              </IconButton>
-                            </Tooltip>
-                          ) : null}
+                          <Tooltip
+                            title="Export Edges"
+                            placement="top"
+                            className="mb-3"
+                            onClick={this.exportEdgesHelper}
+                          >
+                            <IconButton>
+                              <GetAppIcon
+                                style={{ width: '40', height: '40' }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        ) : null}
 
                         {selectedOrder &&
                         selectedOrder.orderType === 'Door Order' &&
                         user.role?.type !== 'quality_control' &&
                         user.role?.type !== 'sales' ? (
-                            <Tooltip
-                              title="Razorguage Export"
-                              placement="top"
-                              className="mb-3"
-                              onClick={this.exportRazorHelper}
-                            >
-                              <IconButton>
-                                <GetAppIcon
-                                  style={{ width: '40', height: '40' }}
-                                />
-                              </IconButton>
-                            </Tooltip>
-                          ) : null}
+                          <Tooltip
+                            title="Razorguage Export"
+                            placement="top"
+                            className="mb-3"
+                            onClick={this.exportRazorHelper}
+                          >
+                            <IconButton>
+                              <GetAppIcon
+                                style={{ width: '40', height: '40' }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        ) : null}
 
                         {(this.props.user &&
                           this.props.user.role &&
@@ -1180,16 +1181,16 @@ class OrderPage extends Component {
                           this.props.user.role &&
                           this.props.user.role &&
                           this.props.user.role.name === 'Owner') ? (
-                            <Tooltip
-                              title="Delete Order"
-                              placement="top"
-                              className="mb-3"
-                            >
-                              <IconButton onClick={this.toggleDeleteModal}>
-                                <Delete style={{ width: '40', height: '40' }} />
-                              </IconButton>
-                            </Tooltip>
-                          ) : null}
+                          <Tooltip
+                            title="Delete Order"
+                            placement="top"
+                            className="mb-3"
+                          >
+                            <IconButton onClick={this.toggleDeleteModal}>
+                              <Delete style={{ width: '40', height: '40' }} />
+                            </IconButton>
+                          </Tooltip>
+                        ) : null}
                       </Col>
                     </Row>
                   </Col>
@@ -1207,40 +1208,42 @@ class OrderPage extends Component {
                           <tbody>
                             {selectedOrder
                               ? selectedOrder.files
-                                ?.slice(0)
-                                .reverse()
-                                .map((i, index) => (
-                                  <tr key={index}>
-                                    {/* <th scope="row">{index + 1}</th> */}
-                                    <td style={{ width: '75%' }}>{i.name}</td>
-                                    <td>
-                                        Uploaded by: {filesInfo.length > 0 ? filesInfo[index]?.user : 'N/A'}
-
-                                    </td>
-                                    <td style={{ textAlign: 'right' }}>
-                                      <a
-                                        href={i.url}
-                                        rel="noopener noreferrer"
-                                        target="_blank"
-                                      >
-                                        <Button>View</Button>
-                                      </a>
-                                    </td>
-                                    <td style={{ textAlign: 'right' }}>
-                                      <Button
-                                        onClick={() =>
-                                          deleteFilesFromOrder(
-                                            selectedOrder,
-                                            i,
-                                            cookie
-                                          )
-                                        }
-                                      >
+                                  ?.slice(0)
+                                  .reverse()
+                                  .map((i, index) => (
+                                    <tr key={index}>
+                                      {/* <th scope="row">{index + 1}</th> */}
+                                      <td style={{ width: '75%' }}>{i.name}</td>
+                                      <td>
+                                        Uploaded by:{' '}
+                                        {filesInfo.length > 0
+                                          ? filesInfo[index]?.user
+                                          : 'N/A'}
+                                      </td>
+                                      <td style={{ textAlign: 'right' }}>
+                                        <a
+                                          href={i.url}
+                                          rel="noopener noreferrer"
+                                          target="_blank"
+                                        >
+                                          <Button>View</Button>
+                                        </a>
+                                      </td>
+                                      <td style={{ textAlign: 'right' }}>
+                                        <Button
+                                          onClick={() =>
+                                            deleteFilesFromOrder(
+                                              selectedOrder,
+                                              i,
+                                              cookie
+                                            )
+                                          }
+                                        >
                                           Delete
-                                      </Button>
-                                    </td>
-                                  </tr>
-                                ))
+                                        </Button>
+                                      </td>
+                                    </tr>
+                                  ))
                               : null}
                           </tbody>
                         </Table>
@@ -1266,21 +1269,21 @@ class OrderPage extends Component {
                           <tbody>
                             {selectedOrder && selectedOrder.tracking
                               ? selectedOrder.tracking
-                                .slice(0)
-                                .reverse()
-                                .map((i, index) => (
-                                  <tr key={index}>
-                                    <th>
-                                      {i.status ? i.status : 'Order Edited'}{' '}
-                                      {i.user ? 'by: ' + i.user : ''}
-                                    </th>
-                                    <td>
-                                      {moment(i.date).format(
-                                        'dddd, MMMM Do YYYY, h:mm:ss a'
-                                      )}
-                                    </td>
-                                  </tr>
-                                ))
+                                  .slice(0)
+                                  .reverse()
+                                  .map((i, index) => (
+                                    <tr key={index}>
+                                      <th>
+                                        {i.status ? i.status : 'Order Edited'}{' '}
+                                        {i.user ? 'by: ' + i.user : ''}
+                                      </th>
+                                      <td>
+                                        {moment(i.date).format(
+                                          'dddd, MMMM Do YYYY, h:mm:ss a'
+                                        )}
+                                      </td>
+                                    </tr>
+                                  ))
                               : null}
                           </tbody>
                         </Table>

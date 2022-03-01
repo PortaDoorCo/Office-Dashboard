@@ -60,10 +60,10 @@ const DoorPDF = async (
                   data.job_info.Rush && data.job_info.Sample
                     ? 'Sample / Rush'
                     : data.job_info.Rush
-                      ? 'Rush'
-                      : data.job_info.Sample
-                        ? 'Sample'
-                        : '',
+                    ? 'Rush'
+                    : data.job_info.Sample
+                    ? 'Sample'
+                    : '',
                 alignment: 'right',
                 bold: true,
               },
@@ -155,6 +155,8 @@ const DoorPDF = async (
       }
     });
 
+    console.log({ Content });
+
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
       if (rowLen === index + 1) {
@@ -171,10 +173,17 @@ const DoorPDF = async (
       pageOrientation: 'portrait',
       content: ContentSorted,
       pageMargins: [40, 200, 40, 60],
-      // pageBreakBefore: function (currentNode, followingNodesOnPage,
-      //   nodesOnNextPage, previousNodesOnPage) {
-      //   return currentNode.pageNumbers.length > 1;
-      // },
+      pageBreakBefore: function (
+        currentNode,
+        followingNodesOnPage,
+        nodesOnNextPage,
+        previousNodesOnPage
+      ) {
+        if (currentNode.id === 'parts' && currentNode.pageNumbers.length != 1) {
+          return true;
+        }
+        return false;
+      },
       header: function (currentPage) {
         return headerInfo;
       },
