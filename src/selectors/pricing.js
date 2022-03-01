@@ -780,7 +780,7 @@ export const itemPriceSelector = createSelector(
                 formState?.values?.part_list[index]?.dimensions.length > 0 &&
                 formState?.values?.part_list[index]?.dimensions[j] ===
                   formState?.initial.part_list[index]?.dimensions[j]
-                ? itemPrice[index][j]
+                ? Math.round(itemPrice[index][j] * 100) / 100
                 : Math.floor(price * 100) / 100;
             } else {
               return 0;
@@ -890,15 +890,24 @@ export const linePriceSelector = createSelector(
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
-                const base = item[index][p] * parseInt(i.qty);
+                const base =
+                  Math.round(item[index][p] * parseInt(i.qty) * 100) / 100;
                 const add = base * 0.2;
                 const price = base + add;
                 return price;
               } else {
                 if (part?.orderType?.value === 'Face_Frame') {
-                  return (item[index][p] + finish[index][p]) * parseInt(i.qty);
+                  return (
+                    Math.round(
+                      (item[index][p] + finish[index][p]) *
+                        parseInt(i.qty) *
+                        100
+                    ) / 100
+                  );
                 } else {
-                  return item[index][p] * parseInt(i.qty);
+                  return (
+                    Math.round(item[index][p] * parseInt(i.qty) * 100) / 100
+                  );
                 }
               }
             } else {

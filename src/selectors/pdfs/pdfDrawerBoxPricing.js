@@ -23,7 +23,7 @@ const pricing = (parts, pricer, itemPrice) => {
             ? itemPrice[index][p]
             : Math.floor(price1 * 100) / 100;
 
-        const addQty = price * qty;
+        const addQty = Math.round(price * qty * 100) / 100;
 
         if (height > -1) {
           return addQty;

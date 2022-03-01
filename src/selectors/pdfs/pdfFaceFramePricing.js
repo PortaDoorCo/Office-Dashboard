@@ -10,8 +10,8 @@ const pricing = (parts, pricer, itemPrice) => {
           (part.design && part.thickness.value === 4) ||
           (part.design && part.thickness.value === 5) ||
           (part.design && part.thickness.value === 6)
-          ? part.design.UPCHARGE_THICK
-          : 0;
+        ? part.design.UPCHARGE_THICK
+        : 0;
 
     let wood;
 
@@ -54,7 +54,6 @@ const pricing = (parts, pricer, itemPrice) => {
 
     if (part.dimensions) {
       const linePrice = part.dimensions.map((i, j) => {
-
         const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
 
         let width_input = numQty(i.width);
@@ -63,8 +62,8 @@ const pricing = (parts, pricer, itemPrice) => {
           numQty(i.width) <= 24
             ? 18
             : numQty(i.width) >= 24 && numQty(i.width) <= 48
-              ? 24
-              : 36;
+            ? 24
+            : 36;
         let height = numQty(i.height);
 
         if (numQty(i.width) > numQty(i.height)) {
@@ -74,9 +73,8 @@ const pricing = (parts, pricer, itemPrice) => {
             numQty(i.height) <= 24
               ? 18
               : numQty(i.height) >= 24 && numQty(i.height) <= 48
-                ? 24
-                : 36;
-
+              ? 24
+              : 36;
 
           width_input = numQty(i.height);
         }
@@ -90,14 +88,15 @@ const pricing = (parts, pricer, itemPrice) => {
           overcharge = 100;
         }
 
-        const price =itemPrice?.length > 0 && itemPrice[index]?.length > 0
-        ? itemPrice[index][j]
-        : (Math.floor(eval(pricer && pricer.face_frame_pricing) * 100) / 100) + extraCost;
-         
-
+        const price =
+          itemPrice?.length > 0 && itemPrice[index]?.length > 0
+            ? itemPrice[index][j]
+            : Math.floor(
+                eval(pricer && pricer.face_frame_pricing + extraCost) * 100
+              ) / 100;
 
         if (height > -1) {
-          return (price * parseInt(i.qty))
+          return Math.round(price * parseInt(i.qty) * 100) / 100;
         } else {
           return 0;
         }
