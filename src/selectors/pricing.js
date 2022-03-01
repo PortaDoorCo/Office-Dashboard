@@ -894,7 +894,7 @@ export const linePriceSelector = createSelector(
                   Math.round(item[index][p] * parseInt(i.qty) * 100) / 100;
                 const add = base * 0.2;
                 const price = base + add;
-                return price;
+                return Math.round(price * 100) / 100;
               } else {
                 if (part?.orderType?.value === 'Face_Frame') {
                   return (
