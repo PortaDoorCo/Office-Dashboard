@@ -43,15 +43,15 @@ const status = [
     label: 'Paint Shop',
     value: 'Paint Shop',
   },
-  
+
   {
     label: 'Complete',
     value: 'Complete',
   },
-  {
-    label: 'Invoiced',
-    value: 'Invoiced',
-  },
+  // {
+  //   label: 'Invoiced',
+  //   value: 'Invoiced',
+  // },
 ];
 
 export default status;

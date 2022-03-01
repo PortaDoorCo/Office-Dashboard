@@ -10,15 +10,15 @@ const status = [
   {
     label: 'In Production',
     value: 'In Production',
-  },    
+  },
   {
     label: 'Complete',
     value: 'Complete',
   },
-  {
-    label: 'Invoiced',
-    value: 'Invoiced',
-  },
+  // {
+  //   label: 'Invoiced',
+  //   value: 'Invoiced',
+  // },
 ];
-  
+
 export default status;
