@@ -474,7 +474,7 @@ const OrderTable = (props) => {
                   <option value={row?.status}>{row?.status}</option>
                   {status?.map((i, index) => (
                     <option key={index} value={i.value}>
-                      {i?.value}
+                      {i.value === 'Invoiced' ? 'Complete' : i.value}
                     </option>
                   ))}
                 </Input>
@@ -487,10 +487,10 @@ const OrderTable = (props) => {
               {row?.job_info?.Rush && row?.job_info?.Sample
                 ? 'Sample / Rush'
                 : row?.job_info?.Rush
-                  ? 'Rush'
-                  : row?.job_info?.Sample
-                    ? 'Sample'
-                    : ''}
+                ? 'Rush'
+                : row?.job_info?.Sample
+                ? 'Sample'
+                : ''}
             </Col>
           </Row>
         </div>
@@ -509,11 +509,14 @@ const OrderTable = (props) => {
         let updated_total = row.total;
 
         const balance_history_paid =
-        row &&
-        row.balance_history.slice(0).map((i, index) => {
-          updated_total = updated_total - parseFloat(i.balance_paid || 0) - parseFloat(i.deposit_paid || 0);
-          return updated_total;
-        });
+          row &&
+          row.balance_history.slice(0).map((i, index) => {
+            updated_total =
+              updated_total -
+              parseFloat(i.balance_paid || 0) -
+              parseFloat(i.deposit_paid || 0);
+            return updated_total;
+          });
 
         return <div>${updated_total.toFixed(2)}</div>;
       },
@@ -587,8 +590,8 @@ const OrderTable = (props) => {
           dateOrdered: i.DateOrdered
             ? new Date(i.DateOrdered)
             : dateOrdered.length
-              ? new Date(dateOrdered[0]?.date)
-              : new Date(i.created_at),
+            ? new Date(dateOrdered[0]?.date)
+            : new Date(i.created_at),
         };
       });
 
@@ -698,40 +701,61 @@ const OrderTable = (props) => {
               (role?.type === 'authenticated' ||
                 role?.type === 'owner' ||
                 role?.type === 'administrator') ? (
-                  <h3>
+                <h3>
                   Order Total: $
-                    {data.reduce((acc, item) => acc + Math.round(100 * item.total) / 100, 0).toFixed(2)}
-                  </h3>
-                ) : null}
+                  {data
+                    .reduce(
+                      (acc, item) => acc + Math.round(100 * item.total) / 100,
+                      0
+                    )
+                    .toFixed(2)}
+                </h3>
+              ) : null}
               {role &&
               (role?.type === 'authenticated' ||
                 role?.type === 'owner' ||
                 role?.type === 'administrator') ? (
-                  <h3>
+                <h3>
                   Net Total: $
-                    {data
-                      .reduce((acc, item) => acc + (Math.round(100 * (item.total - item.tax))/ 100), 0)
-                      .toFixed(2)}
-                  </h3>
-                ) : null}
+                  {data
+                    .reduce(
+                      (acc, item) =>
+                        acc + Math.round(100 * (item.total - item.tax)) / 100,
+                      0
+                    )
+                    .toFixed(2)}
+                </h3>
+              ) : null}
               {role &&
               (role.type === 'authenticated' ||
                 role.type === 'owner' ||
                 role.type === 'administrator') ? (
-                  <h3>
+                <h3>
                   Tax Total: $
-                    {data.reduce((acc, item) => acc + Math.round(100 * item.tax) / 100, 0).toFixed(2)}
-                  </h3>
-                ) : null}
+                  {data
+                    .reduce(
+                      (acc, item) => acc + Math.round(100 * item.tax) / 100,
+                      0
+                    )
+                    .toFixed(2)}
+                </h3>
+              ) : null}
               {role &&
               (role.type === 'authenticated' ||
                 role.type === 'owner' ||
-                role.type === 'administrator') && filterStatus === 'Flagged' ? (
-                  <h3>
+                role.type === 'administrator') &&
+              filterStatus === 'Flagged' ? (
+                <h3>
                   Balances: $
-                    {data.reduce((acc, item) => acc + Math.round(100 * item.balance_due) / 100, 0).toFixed(2)}
-                  </h3>
-                ) : null}
+                  {data
+                    .reduce(
+                      (acc, item) =>
+                        acc + Math.round(100 * item.balance_due) / 100,
+                      0
+                    )
+                    .toFixed(2)}
+                </h3>
+              ) : null}
             </Col>
           </Row>
           <Row className="mt-3">
@@ -748,17 +772,17 @@ const OrderTable = (props) => {
           {role?.type === 'authenticated' ||
           role?.type === 'owner' ||
           role?.type === 'administrator' ? (
-              <Tooltip
-                title="View Reports"
-                onClick={exportReports}
-                placement="top"
-                className="mb-3 mt-3"
-              >
-                <IconButton>
-                  <Receipt style={{ width: '40', height: '40' }} />
-                </IconButton>
-              </Tooltip>
-            ) : null}
+            <Tooltip
+              title="View Reports"
+              onClick={exportReports}
+              placement="top"
+              className="mb-3 mt-3"
+            >
+              <IconButton>
+                <Receipt style={{ width: '40', height: '40' }} />
+              </IconButton>
+            </Tooltip>
+          ) : null}
           <Tooltip
             title="Export Edges"
             onClick={exportEdgesHelper}

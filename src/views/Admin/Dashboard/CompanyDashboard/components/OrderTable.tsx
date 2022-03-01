@@ -307,7 +307,7 @@ const OrderTable = (props: TablePropTypes) => {
                 >
                   {status.map((i, index) => (
                     <option key={index} value={i.value}>
-                      {i.value}
+                      {i.value === 'Invoiced' ? 'Complete' : i.value}
                     </option>
                   ))}
                 </Input>
