@@ -16,15 +16,14 @@ const pricing = (parts, pricer, itemPrice) => {
         const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
         const scoop = i.scoop.PRICE;
 
-        
-        
-        const price = itemPrice?.length > 0 && itemPrice[index]?.length > 0
-        ? itemPrice[index][p]
-        : (Math.floor((eval(pricer.drawer_box_pricing)) * 100) / 100) + extraCost;
-        
-        
-        const addQty = price * qty;
-        
+        const price1 = eval(pricer.drawer_box_pricing) + extraCost;
+
+        const price =
+          itemPrice?.length > 0 && itemPrice[index]?.length > 0
+            ? itemPrice[index][p]
+            : Math.floor(price1 * 100) / 100;
+
+        const addQty = Math.round(price * qty * 100) / 100;
 
         if (height > -1) {
           return addQty;

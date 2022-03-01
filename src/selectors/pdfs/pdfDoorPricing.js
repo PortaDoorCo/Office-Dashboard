@@ -1,4 +1,4 @@
-import numQty from "numeric-quantity";
+import numQty from 'numeric-quantity';
 
 const pricing = (parts, pricer, itemPrice) => {
   console.log({ itemPrice });
@@ -92,20 +92,20 @@ const pricing = (parts, pricer, itemPrice) => {
         const priceDifference = calc - price;
 
         switch (add) {
-          case "leftStileAdd":
+          case 'leftStileAdd':
             leftStileAdd = !isNaN(priceDifference / 4)
               ? priceDifference / 4
               : 0;
             break;
-          case "rightStileAdd":
+          case 'rightStileAdd':
             rightStileAdd = !isNaN(priceDifference / 4)
               ? priceDifference / 4
               : 0;
             break;
-          case "topRailAdd":
+          case 'topRailAdd':
             topRailAdd = !isNaN(priceDifference / 4) ? priceDifference / 4 : 0;
             break;
-          case "bottomRailAdd":
+          case 'bottomRailAdd':
             bottomRailAdd = !isNaN(priceDifference / 4)
               ? priceDifference / 4
               : 0;
@@ -117,33 +117,33 @@ const pricing = (parts, pricer, itemPrice) => {
       };
 
       const leftStileCalc = (p, price) => {
-        return calcPrice("leftStileAdd", eval("i.leftStile"), price, p);
+        return calcPrice('leftStileAdd', eval('i.leftStile'), price, p);
       };
 
       const rightStileCalc = (p, price) => {
-        return calcPrice("rightStileAdd", eval("i.rightStile"), price, p);
+        return calcPrice('rightStileAdd', eval('i.rightStile'), price, p);
       };
 
       const topRailCalc = (p, price) => {
-        return calcPrice("topRailAdd", eval("i.topRail"), price, p);
+        return calcPrice('topRailAdd', eval('i.topRail'), price, p);
       };
 
       const bottomRailCalc = (p, price) => {
-        return calcPrice("bottomRailAdd", eval("i.bottomRail"), price, p);
+        return calcPrice('bottomRailAdd', eval('i.bottomRail'), price, p);
       };
 
       const calc = (part, design, price) => {
         switch (part) {
-          case "leftStile":
+          case 'leftStile':
             leftStileCalc(design, price);
             break;
-          case "rightStile":
+          case 'rightStile':
             rightStileCalc(design, price);
             break;
-          case "topRail":
+          case 'topRail':
             topRailCalc(design, price);
             break;
-          case "bottomRail":
+          case 'bottomRail':
             bottomRailCalc(design, price);
             break;
           default:
@@ -178,48 +178,48 @@ const pricing = (parts, pricer, itemPrice) => {
         if (
           (part.profile && part.profile.PROFILE_WIDTH) !== numQty(i.leftStile)
         ) {
-          calc("leftStile", part.profile?.PROFILE_WIDTH, price);
+          calc('leftStile', part.profile?.PROFILE_WIDTH, price);
         }
         //rightStile
         if (
           (part.profile && part.profile.PROFILE_WIDTH) !== numQty(i.rightStile)
         ) {
-          calc("rightStile", part.profile?.PROFILE_WIDTH, price);
+          calc('rightStile', part.profile?.PROFILE_WIDTH, price);
         }
         //topRail
         if (
           (part.profile && part.profile.PROFILE_WIDTH) !== numQty(i.topRail)
         ) {
-          calc("topRail", part.profile?.PROFILE_WIDTH, price);
+          calc('topRail', part.profile?.PROFILE_WIDTH, price);
         }
         //bottomRail
         if (
           (part.profile && part.profile.PROFILE_WIDTH) !== numQty(i.bottomRail)
         ) {
-          calc("bottomRail", part.profile?.PROFILE_WIDTH, price);
+          calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
         }
       } else {
         //leftStile
         if (
           (part.design && part.design.PROFILE_WIDTH) !== numQty(i.leftStile)
         ) {
-          calc("leftStile", part.design?.PROFILE_WIDTH, price);
+          calc('leftStile', part.design?.PROFILE_WIDTH, price);
         }
         //rightStile
         if (
           (part.design && part.design.PROFILE_WIDTH) !== numQty(i.rightStile)
         ) {
-          calc("rightStile", part.design?.PROFILE_WIDTH, price);
+          calc('rightStile', part.design?.PROFILE_WIDTH, price);
         }
         //topRail
         if ((part.design && part.design.PROFILE_WIDTH) !== numQty(i.topRail)) {
-          calc("topRail", part.design?.PROFILE_WIDTH, price);
+          calc('topRail', part.design?.PROFILE_WIDTH, price);
         }
         //bottomRail
         if (
           (part.design && part.design.PROFILE_WIDTH) !== numQty(i.bottomRail)
         ) {
-          calc("bottomRail", part.design?.PROFILE_WIDTH, price);
+          calc('bottomRail', part.design?.PROFILE_WIDTH, price);
         }
       }
 
@@ -349,22 +349,22 @@ const pricing = (parts, pricer, itemPrice) => {
       //Slab Doors here
 
       if (
-        part.orderType.value === "Door" &&
-        part.construction.value === "Slab"
+        part.orderType.value === 'Door' &&
+        part.construction.value === 'Slab'
       ) {
         price =
           (width * height) / 144 > 2
             ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
             : 2 * wood + (6.5 + edge) + extraCost;
       } else if (
-        part.orderType.value === "DF" &&
-        part.construction.value === "Slab"
+        part.orderType.value === 'DF' &&
+        part.construction.value === 'Slab'
       ) {
         price =
           (width * height) / 144 > 1
             ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
             : 1 * wood + (6.5 + edge) + extraCost;
-      } else if (part.orderType.value === "DF") {
+      } else if (part.orderType.value === 'DF') {
         price =
           eval(pricer.df_pricing) +
           leftStileAdd +
@@ -391,7 +391,7 @@ const pricing = (parts, pricer, itemPrice) => {
       return Math.floor(parseFloat(i.price) * 100) / 100;
     });
 
-    if (part.orderType?.value === "Custom") {
+    if (part.orderType?.value === 'Custom') {
       return customPrice;
     } else {
       return linePrice;
@@ -401,15 +401,15 @@ const pricing = (parts, pricer, itemPrice) => {
   const addCharge = parts.map((part, index) => {
     return part.dimensions.map((i, p) => {
       const base =
-        item[index][p] * parseInt(i.qty) +
+        Math.round(item[index][p] * parseInt(i.qty) * 100) / 100 +
         (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
 
       if (
-        (part.orderType.value === "Door" ||
-          part?.orderType?.value === "DF" ||
-          part.orderType.value === "Glass" ||
-          part.orderType.value === "One_Piece" ||
-          part.orderType.value === "Two_Piece") &&
+        (part.orderType.value === 'Door' ||
+          part?.orderType?.value === 'DF' ||
+          part.orderType.value === 'Glass' ||
+          part.orderType.value === 'One_Piece' ||
+          part.orderType.value === 'Two_Piece') &&
         ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
           (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
       ) {

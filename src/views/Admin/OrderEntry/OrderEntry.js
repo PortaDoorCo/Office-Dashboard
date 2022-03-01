@@ -399,9 +399,10 @@ class OrderEntry extends Component {
       user,
       saveEmail,
       role,
+      prices,
     } = this.props;
 
-    console.log({ total });
+    console.log({ prices });
 
     return (
       <div className="animated fadeIn order-tour">

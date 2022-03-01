@@ -50,17 +50,28 @@ export default (data, pricing) => {
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
   const discountTotal =
-    (subTotal * Math.floor((data.discount / 100) * 100)) / 100;
+    Math.round(
+      ((subTotal * Math.floor((data.discount / 100) * 100)) / 100) * 100
+    ) / 100;
 
   const discountSubTotal = subTotal - discountTotal;
 
   const order_sub_total = misc_total + discountSubTotal;
 
   const tax = data.Taxable
-    ? order_sub_total * (data.companyprofile.TaxRate / 100)
+    ? Math.floor(order_sub_total * (data.companyprofile.TaxRate / 100) * 100) /
+      100
     : 0;
 
   const total = order_sub_total + tax;
+
+  console.log({ discountTotal });
+  console.log({ discountSubTotal });
+
+  console.log({ subTotal });
+  console.log({ order_sub_total });
+  console.log({ tax });
+  console.log({ total });
 
   const balanceDue = total - depositPaid - balancePaid;
 
