@@ -1,5 +1,5 @@
-import { createSelector } from "reselect";
-import numQty from "numeric-quantity";
+import { createSelector } from 'reselect';
+import numQty from 'numeric-quantity';
 
 const pricingSelector = (state) => {
   const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
@@ -137,7 +137,7 @@ export const miscItemPriceSelector = createSelector(
     misc.map((i) => {
       let price = 0;
 
-      if (i.category === "preselect") {
+      if (i.category === 'preselect') {
         if (i.price) {
           price = Math.floor(parseFloat(i.price) * 100) / 100;
         } else {
@@ -160,7 +160,7 @@ export const miscItemLinePriceSelector = createSelector(
     parts.map((i, index) => {
       let price = 0;
 
-      if (i.category === "preselect") {
+      if (i.category === 'preselect') {
         if (i.item) {
           if (i.qty) {
             price = pricer[index] * parseInt(i.qty);
@@ -218,12 +218,12 @@ const totalBalanceDue = (state) => {
   if (orders) {
     if (orders && orders.values && orders.values.balance_history) {
       return state.form.Order.values.balance_history.map((i) => {
-        if(parseFloat(i.balance_paid) > 0) {
+        if (parseFloat(i.balance_paid) > 0) {
           return i.balance_paid;
         } else if (parseFloat(i.deposit_paid) > 0) {
-          return i.deposit_paid
+          return i.deposit_paid;
         } else {
-          return 0
+          return 0;
         }
       });
     } else {
@@ -251,7 +251,7 @@ export const itemPriceSelector = createSelector(
     formStateSelector,
   ],
   (parts, pricer, orderType, itemPrice, formState) => {
-    if (orderType === "Door Order" || orderType === "Face Frame") {
+    if (orderType === 'Door Order' || orderType === 'Face Frame') {
       return parts.map((part, index) => {
         const design =
           (part.design && part.thickness.value === 1) ||
@@ -310,7 +310,7 @@ export const itemPriceSelector = createSelector(
           ? part.furniture_feet.UPCHARGE
           : 0;
 
-        if (part?.orderType?.value === "Face_Frame") {
+        if (part?.orderType?.value === 'Face_Frame') {
           if (part.dimensions) {
             const linePrice = part.dimensions.map((i, j) => {
               const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
@@ -366,7 +366,7 @@ export const itemPriceSelector = createSelector(
           } else {
             return 0;
           }
-        } else if (part?.orderType?.value === "Custom") {
+        } else if (part?.orderType?.value === 'Custom') {
           if (part.dimensions) {
             const linePrice = part.dimensions.map((i, index) => {
               return Math.floor(parseFloat(i.price) * 100) / 100;
@@ -411,22 +411,22 @@ export const itemPriceSelector = createSelector(
                 const priceDifference = calc - price;
 
                 switch (add) {
-                  case "leftStileAdd":
+                  case 'leftStileAdd':
                     leftStileAdd = !isNaN(priceDifference / 4)
                       ? priceDifference / 4
                       : 0;
                     break;
-                  case "rightStileAdd":
+                  case 'rightStileAdd':
                     rightStileAdd = !isNaN(priceDifference / 4)
                       ? priceDifference / 4
                       : 0;
                     break;
-                  case "topRailAdd":
+                  case 'topRailAdd':
                     topRailAdd = !isNaN(priceDifference / 4)
                       ? priceDifference / 4
                       : 0;
                     break;
-                  case "bottomRailAdd":
+                  case 'bottomRailAdd':
                     bottomRailAdd = !isNaN(priceDifference / 4)
                       ? priceDifference / 4
                       : 0;
@@ -438,26 +438,26 @@ export const itemPriceSelector = createSelector(
               };
 
               const leftStileCalc = (p, price) => {
-                return calcPrice("leftStileAdd", eval("i.leftStile"), price, p);
+                return calcPrice('leftStileAdd', eval('i.leftStile'), price, p);
               };
 
               const rightStileCalc = (p, price) => {
                 return calcPrice(
-                  "rightStileAdd",
-                  eval("i.rightStile"),
+                  'rightStileAdd',
+                  eval('i.rightStile'),
                   price,
                   p
                 );
               };
 
               const topRailCalc = (p, price) => {
-                return calcPrice("topRailAdd", eval("i.topRail"), price, p);
+                return calcPrice('topRailAdd', eval('i.topRail'), price, p);
               };
 
               const bottomRailCalc = (p, price) => {
                 return calcPrice(
-                  "bottomRailAdd",
-                  eval("i.bottomRail"),
+                  'bottomRailAdd',
+                  eval('i.bottomRail'),
                   price,
                   p
                 );
@@ -465,16 +465,16 @@ export const itemPriceSelector = createSelector(
 
               const calc = (part, design, price) => {
                 switch (part) {
-                  case "leftStile":
+                  case 'leftStile':
                     leftStileCalc(design, price);
                     break;
-                  case "rightStile":
+                  case 'rightStile':
                     rightStileCalc(design, price);
                     break;
-                  case "topRail":
+                  case 'topRail':
                     topRailCalc(design, price);
                     break;
-                  case "bottomRail":
+                  case 'bottomRail':
                     bottomRailCalc(design, price);
                     break;
                   default:
@@ -510,28 +510,28 @@ export const itemPriceSelector = createSelector(
                   (part.profile && part.profile.PROFILE_WIDTH) !==
                   numQty(i.leftStile)
                 ) {
-                  calc("leftStile", part.profile?.PROFILE_WIDTH, price);
+                  calc('leftStile', part.profile?.PROFILE_WIDTH, price);
                 }
                 //rightStile
                 if (
                   (part.profile && part.profile.PROFILE_WIDTH) !==
                   numQty(i.rightStile)
                 ) {
-                  calc("rightStile", part.profile?.PROFILE_WIDTH, price);
+                  calc('rightStile', part.profile?.PROFILE_WIDTH, price);
                 }
                 //topRail
                 if (
                   (part.profile && part.profile.PROFILE_WIDTH) !==
                   numQty(i.topRail)
                 ) {
-                  calc("topRail", part.profile?.PROFILE_WIDTH, price);
+                  calc('topRail', part.profile?.PROFILE_WIDTH, price);
                 }
                 //bottomRail
                 if (
                   (part.profile && part.profile.PROFILE_WIDTH) !==
                   numQty(i.bottomRail)
                 ) {
-                  calc("bottomRail", part.profile?.PROFILE_WIDTH, price);
+                  calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
                 }
               } else {
                 //leftStile
@@ -539,28 +539,28 @@ export const itemPriceSelector = createSelector(
                   (part.design && part.design.PROFILE_WIDTH) !==
                   numQty(i.leftStile)
                 ) {
-                  calc("leftStile", part.design?.PROFILE_WIDTH, price);
+                  calc('leftStile', part.design?.PROFILE_WIDTH, price);
                 }
                 //rightStile
                 if (
                   (part.design && part.design.PROFILE_WIDTH) !==
                   numQty(i.rightStile)
                 ) {
-                  calc("rightStile", part.design?.PROFILE_WIDTH, price);
+                  calc('rightStile', part.design?.PROFILE_WIDTH, price);
                 }
                 //topRail
                 if (
                   (part.design && part.design.PROFILE_WIDTH) !==
                   numQty(i.topRail)
                 ) {
-                  calc("topRail", part.design?.PROFILE_WIDTH, price);
+                  calc('topRail', part.design?.PROFILE_WIDTH, price);
                 }
                 //bottomRail
                 if (
                   (part.design && part.design.PROFILE_WIDTH) !==
                   numQty(i.bottomRail)
                 ) {
-                  calc("bottomRail", part.design?.PROFILE_WIDTH, price);
+                  calc('bottomRail', part.design?.PROFILE_WIDTH, price);
                 }
               }
 
@@ -690,22 +690,22 @@ export const itemPriceSelector = createSelector(
               //Slab Doors here
 
               if (
-                part.orderType.value === "Door" &&
-                part.construction.value === "Slab"
+                part.orderType.value === 'Door' &&
+                part.construction.value === 'Slab'
               ) {
                 price =
                   (width * height) / 144 > 2
                     ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                     : 2 * wood + (6.5 + edge) + extraCost;
               } else if (
-                part.orderType.value === "DF" &&
-                part.construction.value === "Slab"
+                part.orderType.value === 'DF' &&
+                part.construction.value === 'Slab'
               ) {
                 price =
                   (width * height) / 144 > 1
                     ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                     : 1 * wood + (6.5 + edge) + extraCost;
-              } else if (part.orderType.value === "DF") {
+              } else if (part.orderType.value === 'DF') {
                 price =
                   eval(pricer.df_pricing) +
                   leftStileAdd +
@@ -757,7 +757,7 @@ export const itemPriceSelector = createSelector(
       });
     }
 
-    if (orderType === "Drawer Order") {
+    if (orderType === 'Drawer Order') {
       return parts.map((part, index) => {
         const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
         const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
@@ -882,11 +882,11 @@ export const linePriceSelector = createSelector(
           if (item[index][p]) {
             if (i.qty) {
               if (
-                (part?.orderType?.value === "Door" ||
-                  part?.orderType?.value === "DF" ||
-                  part?.orderType?.value === "Glass" ||
-                  part?.orderType?.value === "One_Piece" ||
-                  part?.orderType?.value === "Two_Piece") &&
+                (part?.orderType?.value === 'Door' ||
+                  part?.orderType?.value === 'DF' ||
+                  part?.orderType?.value === 'Glass' ||
+                  part?.orderType?.value === 'One_Piece' ||
+                  part?.orderType?.value === 'Two_Piece') &&
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
@@ -895,7 +895,7 @@ export const linePriceSelector = createSelector(
                 const price = base + add;
                 return price;
               } else {
-                if (part?.orderType?.value === "Face_Frame") {
+                if (part?.orderType?.value === 'Face_Frame') {
                   return (item[index][p] + finish[index][p]) * parseInt(i.qty);
                 } else {
                   return item[index][p] * parseInt(i.qty);
@@ -925,7 +925,7 @@ export const nonDiscountedItems = createSelector([partListSelector], (parts) =>
 export const addPriceSelector = createSelector(
   [partListSelector, pricingSelector, itemPriceSelector, orderTypeSelector],
   (parts, pricer, item, orderType) => {
-    if (orderType === "Door Order") {
+    if (orderType === 'Door Order') {
       return parts.map((part, index) => {
         if (part.dimensions) {
           return part.dimensions.map((i, p) => {
@@ -964,7 +964,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
 
     const { item, woodtype, linearFT, grade } = i;
 
-    if (i.style?.value === "custom") {
+    if (i.style?.value === 'custom') {
       price = 0;
 
       const width = i.width ? parseFloat(i.width) : 0;
@@ -993,17 +993,17 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
       }
 
       if (thickness <= 1) {
-        if (grade?.name === "Standard Grade") {
+        if (grade?.name === 'Standard Grade') {
           wood = woodtype?.STANDARD_GRADE ? woodtype?.STANDARD_GRADE / 4 : 0;
-        } else if (grade?.name === "Select Grade") {
+        } else if (grade?.name === 'Select Grade') {
           wood = woodtype?.SELECT_GRADE ? woodtype?.SELECT_GRADE / 4 : 0;
         }
       } else {
-        if (grade?.name === "Standard Grade") {
+        if (grade?.name === 'Standard Grade') {
           wood = woodtype?.STANDARD_GRADE_THICK
             ? woodtype?.STANDARD_GRADE_THICK / 4
             : 0;
-        } else if (grade?.name === "Select Grade") {
+        } else if (grade?.name === 'Select Grade') {
           wood = woodtype?.SELECT_GRADE_THICK
             ? woodtype?.SELECT_GRADE_THICK / 4
             : 0;
@@ -1082,17 +1082,18 @@ export const subTotalSelector = createSelector(
   ],
   (prices, misc, orderType, moulding) => {
     if (orderType) {
-      if (orderType === "Mouldings") {
+      if (orderType === 'Mouldings') {
         return [moulding];
       }
-      if (orderType === "Misc Items") {
+      if (orderType === 'Misc Items') {
         return [misc];
       } else {
         return prices.map((i, index) => {
           if (i) {
             // console.log({i})
-            let price = Math.round(i.reduce((acc, item) => acc + item, 0) * 100) / 100;
-            let sum = price
+            let price =
+              Math.round(i.reduce((acc, item) => acc + item, 0) * 100) / 100;
+            let sum = price;
             return sum;
           } else {
             return 0;
@@ -1122,8 +1123,9 @@ export const totalDiscountSelector = createSelector(
     if (orderType) {
       // console.log({orderType})
       return (
-
-          (subTotal.reduce((acc, item) => acc + item, 0) * Math.floor(discount * 100) / 100)
+        (subTotal.reduce((acc, item) => acc + item, 0) *
+          Math.floor(discount * 100)) /
+        100
       );
     } else {
       return 0;
@@ -1143,7 +1145,7 @@ export const taxSelector = createSelector(
     orderTypeSelector,
   ],
   (subTotal, tax, discount, dis, misc, state, nonDiscounted, orderType) => {
-    if (orderType === "Misc Items") {
+    if (orderType === 'Misc Items') {
       return (
         Math.floor(
           (subTotal.reduce((acc, item) => acc + item, 0) -
@@ -1178,26 +1180,18 @@ export const totalSelector = createSelector(
     orderTypeSelector,
   ],
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
-
     // console.log({subTotal})
 
-    if (orderType === "Misc Items") {
-      const sub = Math.floor((subTotal.reduce((acc, item) => acc + item, 0)) * 100) / 100
-      return (
-        sub +
-        tax +
-        nonDiscounted -
-        discount
-      );
+    if (orderType === 'Misc Items') {
+      const sub =
+        Math.floor(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100;
+      return sub + tax + nonDiscounted - discount;
     } else {
-      const sub = (subTotal.reduce((acc, item) => acc + (Math.round(item * 100) / 100), 0))
-      return (
-        sub +
-        tax +
-        misc +
-        nonDiscounted -
-        discount
+      const sub = subTotal.reduce(
+        (acc, item) => acc + Math.round(item * 100) / 100,
+        0
       );
+      return sub + tax + misc + nonDiscounted - discount;
     }
   }
 );
