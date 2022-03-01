@@ -5,7 +5,6 @@ import Stiles from '../Breakdowns/Doors/Stiles/Stiles';
 import GlassSort from '../Sorting/GlassSort';
 
 export default (data, breakdowns) => {
-
   let itemNum = 0;
 
   // const newData = data.part_list.map((i) => {
@@ -49,12 +48,12 @@ export default (data, breakdowns) => {
             { text: `${Size(item)}`, style: 'fonts' },
             item.notes || item.full_frame || item.lite
               ? {
-                text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-                  item.lite ? item.lite.NAME : ''
-                }`,
-                style: 'tableBold',
-                alignment: 'left',
-              }
+                  text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+                    item.lite ? item.lite.NAME : ''
+                  }`,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
               : null,
           ],
         },
@@ -84,35 +83,37 @@ export default (data, breakdowns) => {
             },
             item.cab_number
               ? {
-                text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
-                style: 'tableBold',
-                alignment: 'left',
-              }
+                  text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
+                  style: 'tableBold',
+                  alignment: 'left',
+                }
               : null,
           ],
         },
       ]);
     });
 
+    console.log({ tableBody });
+
     return [
       {
         stack: [
           index === 0
             ? {
-              columns: [
-                { text: '' },
-                {
-                  alignment: 'center',
-                  style: 'fontsBold',
-                  stack: [
+                columns: [
+                  { text: '' },
+                  {
+                    alignment: 'center',
+                    style: 'fontsBold',
+                    stack: [
                       data.job_info?.Shop_Notes
                         ? {
-                          text: `${
+                            text: `${
                               data.job_info?.Shop_Notes
                                 ? data.job_info?.Shop_Notes?.toUpperCase()
                                 : ''
-                          }`,
-                        }
+                            }`,
+                          }
                         : null,
                       {
                         text: data.misc_items.map((i) => {
@@ -127,14 +128,15 @@ export default (data, breakdowns) => {
                           }
                         }),
                       },
-                  ],
-                },
-                { text: '' },
-              ],
-              margin: [0, -26, 0, 0],
-            }
+                    ],
+                  },
+                  { text: '' },
+                ],
+                margin: [0, -26, 0, 0],
+              }
             : null,
           {
+            id: 'parts',
             margin: [0, 10, 0, 0],
             stack: [
               {
@@ -150,10 +152,10 @@ export default (data, breakdowns) => {
                           i.design
                             ? i.design.NAME
                             : i.face_frame_design
-                              ? i.face_frame_design.NAME
-                              : i.construction.value === 'Slab'
-                                ? 'Slab'
-                                : ''
+                            ? i.face_frame_design.NAME
+                            : i.construction.value === 'Slab'
+                            ? 'Slab'
+                            : ''
                         } ${
                           i.construction.value === 'MT' ||
                           i.construction.value === 'Miter'
@@ -165,8 +167,8 @@ export default (data, breakdowns) => {
                           i.panel
                             ? i.panel.NAME
                             : i.construction.value === 'Slab'
-                              ? ''
-                              : 'Glass'
+                            ? ''
+                            : 'Glass'
                         }`,
                         style: 'fonts',
                       },
@@ -211,8 +213,8 @@ export default (data, breakdowns) => {
                           i.profile
                             ? i.profile.NAME
                             : i.design
-                              ? i.design.NAME
-                              : 'None'
+                            ? i.design.NAME
+                            : 'None'
                         }   Edge:  ${i.edge ? i.edge.NAME : 'None'}`,
                         style: 'fonts',
                       },
@@ -267,10 +269,19 @@ export default (data, breakdowns) => {
           //   text: '',
           //   pageBreak: 'after' // or after
           // } : null
-          
         ],
       },
     ];
+  });
+
+  console.log({ table_content });
+
+  const newTable = {
+    ...table_content,
+  };
+
+  table_content.map((i) => {
+    console.log(i);
   });
 
   return [

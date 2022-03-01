@@ -65,10 +65,10 @@ const DoorPDF = async (
                   data.job_info.Rush && data.job_info.Sample
                     ? 'Sample / Rush'
                     : data.job_info.Rush
-                      ? 'Rush'
-                      : data.job_info.Sample
-                        ? 'Sample'
-                        : '',
+                    ? 'Rush'
+                    : data.job_info.Sample
+                    ? 'Sample'
+                    : '',
                 alignment: 'right',
                 style: 'rushFonts',
               },
@@ -137,14 +137,14 @@ const DoorPDF = async (
                       },
                       data.companyprofile.Fax
                         ? {
-                          text: `Fax: ${
-                            data.companyprofile.Fax
-                              ? data.companyprofile.Fax
-                              : ''
-                          }`,
-                          style: 'fonts',
-                          margin: [0, 0, 0, 10],
-                        }
+                            text: `Fax: ${
+                              data.companyprofile.Fax
+                                ? data.companyprofile.Fax
+                                : ''
+                            }`,
+                            style: 'fonts',
+                            margin: [0, 0, 0, 10],
+                          }
                         : null,
                       {
                         text: `Terms: ${
@@ -326,9 +326,13 @@ const DoorPDF = async (
         nodesOnNextPage,
         previousNodesOnPage
       ) {
-        return (
-          currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0
-        );
+        if (currentNode.id === 'parts' && currentNode.pageNumbers.length != 1) {
+          return true;
+        }
+        if (currentNode.id === 'misc' && currentNode.pageNumbers.length != 1) {
+          return true;
+        }
+        return false;
       },
       styles: {
         woodtype: {
