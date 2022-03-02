@@ -119,7 +119,7 @@ export default function (state = initialState, action) {
       const updatedDeliveries = data;
       console.log({ data });
       const dateDeliveries = updatedDeliveries.filter(function (d, i) {
-        return moment(d.created_at).isSame(new Date(), 'day');
+        return moment(d.updated_at).isSame(new Date(), 'day');
       });
       // const sortedLocations = sortByDistance(state.current_location.coords, updatedDeliveries.map(i=>i.location), opts);
 

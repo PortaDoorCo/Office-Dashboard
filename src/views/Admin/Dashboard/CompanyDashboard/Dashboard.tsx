@@ -105,8 +105,12 @@ class Dashboard extends Component<PropTypes, StateTypes> {
             {/* <Row className="mb-3">
               <Col>
                 <ButtonGroup>
-                  <Button color="success" onClick={this.toggleCharts}>Charts</Button>
-                  <Button color="success" onClick={this.toggleMap}>Delivery Map</Button>
+                  <Button color="success" onClick={this.toggleCharts}>
+                    Charts
+                  </Button>
+                  <Button color="success" onClick={this.toggleMap}>
+                    Delivery Map
+                  </Button>
                 </ButtonGroup>
               </Col>
             </Row>
@@ -137,12 +141,12 @@ class Dashboard extends Component<PropTypes, StateTypes> {
                 </Col>
               </Row>
             </Collapse>
-            
+
             <Collapse isOpen={this.state.maps}>
               <Row className="mb-5">
                 <Col style={{ height: 600 }}>
                   <Suspense fallback={loading()}>
-                    <Maps  />
+                    <Maps />
                   </Suspense>
                 </Col>
               </Row>
