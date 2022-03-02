@@ -16,7 +16,7 @@ export default (data, pricing) => {
   const finishing = pdfFinishing(data?.part_list, pricing[0]);
 
   const subTotal = prices
-    .map((i) => i.reduce((acc, item) => acc + item, 0))
+    .map((i) => i.reduce((acc, item) => acc + Math.round(item * 100) / 100, 0))
     .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0);
 
   console.log({ subTotal });

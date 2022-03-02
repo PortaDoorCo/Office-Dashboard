@@ -320,20 +320,20 @@ const DoorPDF = async (
           margin: [40, 5, 40, 0],
         };
       },
-      pageBreakBefore: function (
-        currentNode,
-        followingNodesOnPage,
-        nodesOnNextPage,
-        previousNodesOnPage
-      ) {
-        if (currentNode.id === 'parts' && currentNode.pageNumbers.length != 1) {
-          return true;
-        }
-        if (currentNode.id === 'misc' && currentNode.pageNumbers.length != 1) {
-          return true;
-        }
-        return false;
-      },
+      // pageBreakBefore: function (
+      //   currentNode,
+      //   followingNodesOnPage,
+      //   nodesOnNextPage,
+      //   previousNodesOnPage
+      // ) {
+      //   if (currentNode.id === 'parts' && currentNode.pageNumbers.length != 1) {
+      //     return true;
+      //   }
+      //   if (currentNode.id === 'misc' && currentNode.pageNumbers.length != 1) {
+      //     return true;
+      //   }
+      //   return false;
+      // },
       styles: {
         woodtype: {
           fontSize: 15,

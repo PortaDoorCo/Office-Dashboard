@@ -44,7 +44,7 @@ export default (data, pricing) => {
   console.log({ prices });
 
   const subTotal = prices
-    .map((i) => i.reduce((acc, item) => acc + item, 0))
+    .map((i) => i.reduce((acc, item) => acc + Math.round(item * 100) / 100, 0))
     .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0);
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
