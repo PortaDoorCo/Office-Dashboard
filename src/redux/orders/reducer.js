@@ -1,7 +1,18 @@
 import moment from 'moment';
 import {
-  DELETE_FILE_FROM_ORDER, LOAD_DELIVERIES, LOAD_ORDERS, ORDER_ADDED, ORDER_DELETED, ORDER_UPDATED, SET_ORDER_TYPE, SET_SELECTED_ORDER, SOCKET_RECEIVE_UPDATE_STATUS, SUBMIT_ORDER,
-  UPDATE_ORDER, UPDATE_STATUS, UPLOAD_FILE_TO_ORDER
+  DELETE_FILE_FROM_ORDER,
+  LOAD_DELIVERIES,
+  LOAD_ORDERS,
+  ORDER_ADDED,
+  ORDER_DELETED,
+  ORDER_UPDATED,
+  SET_ORDER_TYPE,
+  SET_SELECTED_ORDER,
+  SOCKET_RECEIVE_UPDATE_STATUS,
+  SUBMIT_ORDER,
+  UPDATE_ORDER,
+  UPDATE_STATUS,
+  UPLOAD_FILE_TO_ORDER,
 } from './actions';
 
 const initialState = {
@@ -10,7 +21,7 @@ const initialState = {
   deliveries: [],
   sortedDestinations: [],
   selectedOrder: null,
-  orderType: null
+  orderType: null,
 };
 
 export default function (state = initialState, action) {
@@ -25,7 +36,7 @@ export default function (state = initialState, action) {
     case SET_ORDER_TYPE:
       return {
         ...state,
-        orderType: data
+        orderType: data,
       };
     case SUBMIT_ORDER:
       return {
@@ -39,14 +50,12 @@ export default function (state = initialState, action) {
     case ORDER_UPDATED:
       return {
         ...state,
-        orders: state.orders.map((i) =>
-          i.id === data.id ? data : i
-        ),
+        orders: state.orders.map((i) => (i.id === data.id ? data : i)),
       };
     case ORDER_DELETED:
       return {
         ...state,
-        orders: state.orders.filter(item => item.id !== data.id),
+        orders: state.orders.filter((item) => item.id !== data.id),
       };
     case SET_SELECTED_ORDER:
       return {
@@ -62,7 +71,7 @@ export default function (state = initialState, action) {
           }
           return data.data;
         }),
-        selectedOrder: data.data
+        selectedOrder: data.data,
       };
     case UPLOAD_FILE_TO_ORDER:
       return {
@@ -108,8 +117,9 @@ export default function (state = initialState, action) {
       };
     case LOAD_DELIVERIES:
       const updatedDeliveries = data;
+      console.log({ data });
       const dateDeliveries = updatedDeliveries.filter(function (d, i) {
-        return moment(d.updatedAt).isSame(new Date(), 'day');
+        return moment(d.created_at).isSame(new Date(), 'day');
       });
       // const sortedLocations = sortByDistance(state.current_location.coords, updatedDeliveries.map(i=>i.location), opts);
 

@@ -18,7 +18,7 @@ const Chart2 = React.lazy(() => import('./components/Chart2'));
 const Chart3 = React.lazy(() => import('./components/Chart3'));
 const Chart4 = React.lazy(() => import('./components/Chart4'));
 const OrderTable = React.lazy(() => import('./components/OrderTable'));
-const Maps = React.lazy(() => import('./components/Maps'));
+const Maps = React.lazy(() => import('./components/Maps/Maps'));
 
 const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -144,7 +144,7 @@ class Dashboard extends Component<PropTypes, StateTypes> {
               <Row className="mb-5">
                 <Col style={{ height: 600 }}>
                   <Suspense fallback={loading()}>
-                    {/* <Maps  /> */}
+                    <Maps  />
                   </Suspense>
                 </Col>
               </Row>
