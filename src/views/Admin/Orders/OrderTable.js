@@ -457,27 +457,30 @@ const OrderTable = (props) => {
           <Row>
             <Col>
               <FormGroup style={{ height: '100%' }}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="status_dropdown"
-                  defaultValue={row.status}
-                  style={{
-                    height: '100%',
-                    boxShadow: 'none',
-                    border: '0px',
-                    outline: '0px',
-                    background: 'none',
-                  }}
-                  onChange={(e) => handleStatusChange(e, row)}
-                >
-                  <option value={row?.status}>{row?.status}</option>
-                  {status?.map((i, index) => (
-                    <option key={index} value={i.value}>
-                      {i.value === 'Invoiced' ? 'Complete' : i.value}
-                    </option>
-                  ))}
-                </Input>
+                {row.status === 'Invoiced' || row.status === 'Complete' ? (
+                  <div>Complete</div>
+                ) : (
+                  <Input
+                    type="select"
+                    name="select"
+                    id="status_dropdown"
+                    defaultValue={row.status}
+                    style={{
+                      height: '100%',
+                      boxShadow: 'none',
+                      border: '0px',
+                      outline: '0px',
+                      background: 'none',
+                    }}
+                    onChange={(e) => handleStatusChange(e, row)}
+                  >
+                    {status.map((i, index) => (
+                      <option key={index} value={i.value}>
+                        {i.value}
+                      </option>
+                    ))}
+                  </Input>
+                )}
               </FormGroup>
             </Col>
           </Row>

@@ -11,16 +11,25 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
 
     const totalUnits = TotalPieces(data);
 
+    const tracking = data.tracking.filter(
+      (x) => x.status === 'Quote' || x.status === 'Order Edited'
+    );
+
     const headerInfo = [
       {
-        margin: [40,40,40,10],
+        margin: [40, 40, 40, 10],
         columns: [
           {
-            stack: [{ text: `${ data.status === 'Quote' ? 'QUOTE' : 'ORDER'}`, margin: [0, 0, 0, -10] }],
+            stack: [
+              {
+                text: `${data.status === 'Quote' ? 'QUOTE' : 'ORDER'}`,
+                margin: [0, 0, 0, -10],
+              },
+            ],
             style: 'headerFont',
             id: 'header1',
           },
-  
+
           {
             stack: [
               { text: 'Porta Door Co. Inc.', alignment: 'center' },
@@ -31,7 +40,16 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
                 alignment: 'center',
                 margin: [0, 0, 0, 10],
               },
-              { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+              {
+                text: data.DateInvoiced
+                  ? moment(data.DateInvoiced).format('DD-MMM-YYYY')
+                  : tracking.length
+                  ? moment(tracking[tracking.length - 1].date).format(
+                      'DD-MMM-YYYY'
+                    )
+                  : 'TBA',
+                alignment: 'center',
+              },
             ],
             // width: 200,
             alignment: 'center',
@@ -40,13 +58,13 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
             stack: [
               {
                 text:
-                      data.job_info.Rush && data.job_info.Sample
-                        ? 'Sample / Rush'
-                        : data.job_info.Rush
-                          ? 'Rush'
-                          : data.job_info.Sample
-                            ? 'Sample'
-                            : '',
+                  data.job_info.Rush && data.job_info.Sample
+                    ? 'Sample / Rush'
+                    : data.job_info.Rush
+                    ? 'Rush'
+                    : data.job_info.Sample
+                    ? 'Sample'
+                    : '',
                 alignment: 'right',
                 style: 'rushFonts',
               },
@@ -58,9 +76,7 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
               {
                 text: `Due Date: ${
                   data.Shipping_Scheduled
-                    ? `${moment(data.job_info.DueDate).format(
-                      'MM/DD/YYYY'
-                    )}`
+                    ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
                     : 'TBD'
                 }`,
                 alignment: 'right',
@@ -85,7 +101,7 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
         ],
       },
       {
-        margin:[40,0],
+        margin: [40, 0],
         columns: [
           {
             width: 200,
@@ -117,14 +133,14 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
                       },
                       data.companyprofile.Fax
                         ? {
-                          text: `Fax: ${
-                            data.companyprofile.Fax
-                              ? data.companyprofile.Fax
-                              : ''
-                          }`,
-                          style: 'fonts',
-                          margin: [0, 0, 0, 10],
-                        }
+                            text: `Fax: ${
+                              data.companyprofile.Fax
+                                ? data.companyprofile.Fax
+                                : ''
+                            }`,
+                            style: 'fonts',
+                            margin: [0, 0, 0, 10],
+                          }
                         : null,
                       {
                         text: `Terms: ${
@@ -133,19 +149,19 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
                             : ''
                         }`,
                         style: 'fonts',
-                        margin: [0,10,0,0]
+                        margin: [0, 10, 0, 0],
                       },
                     ],
                   },
                 ],
-  
+
                 style: 'fontsBold',
                 margin: [0, 0, 0, 0],
               },
             ],
             style: 'headerFont',
           },
-  
+
           {
             text: '',
             alignment: 'center',
@@ -228,28 +244,18 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
 
     let Content = [];
 
-
     Content.push(Acknowledgement(data, pricing));
-    
-
-   
-
-
 
     const rowLen = Content.length;
-    const ContentSorted = Content.map((i,index) => {
+    const ContentSorted = Content.map((i, index) => {
       if (rowLen === index + 1) {
         return [i];
       } else {
-        return [
-          i,
-          { text: '', pageBreak: 'before' }
-        ];
+        return [i, { text: '', pageBreak: 'before' }];
       }
     });
 
     const fileName = `Order #${data.orderNum}`;
-
 
     const documentDefinition = {
       pageSize: 'A4',
@@ -259,33 +265,37 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
       header: function (currentPage) {
         return headerInfo;
       },
-      footer: function(currentPage, pageCount) { 
+      footer: function (currentPage, pageCount) {
         return {
           columns: [
             {
               stack: [
                 {
                   text: moment().format('MM-D-YYYY'),
-                  style: 'warrantyFont'
+                  style: 'warrantyFont',
                 },
                 {
-                  text: currentPage.toString() + ' of ' + pageCount, style: 'warrantyFont'
-                }
+                  text: currentPage.toString() + ' of ' + pageCount,
+                  style: 'warrantyFont',
+                },
               ],
-              width: 250
+              width: 250,
             },
             {
               stack: [
                 {
-                  text: ' ', style: 'warrantyFont',
+                  text: ' ',
+                  style: 'warrantyFont',
                 },
                 {
-                  text: `UNITS: ${totalUnits}    ${fileName}`, style: 'warrantyFont', alignment: 'right'
-                }
-              ]  
-            }
+                  text: `UNITS: ${totalUnits}    ${fileName}`,
+                  style: 'warrantyFont',
+                  alignment: 'right',
+                },
+              ],
+            },
           ],
-          margin: [40,10,40,0]
+          margin: [40, 10, 40, 0],
         };
       },
       styles: {

@@ -129,29 +129,29 @@ const OrderTable = (props: TablePropTypes) => {
     const filteredOrders =
       orders?.length > 0
         ? orders?.filter((item) => {
-          if (filterText.length > 0) {
-            if (item.sale?.id === user?.sale?.id) {
-              return (
-                (item.sale?.id === user?.id) &&
-                  item.orderNum?.toString().includes(filterText) ||
+            if (filterText.length > 0) {
+              if (item.sale?.id === user?.sale?.id) {
+                return (
+                  (item.sale?.id === user?.id &&
+                    item.orderNum?.toString().includes(filterText)) ||
                   item.job_info?.customer?.Company.toLowerCase().includes(
                     filterText.toLowerCase()
                   ) ||
                   item.job_info?.poNum
                     ?.toLowerCase()
                     .includes(filterText.toLowerCase())
-              );
+                );
+              } else {
+                return null;
+              }
             } else {
-              return null;
+              if (item.sale?.id === user?.sale?.id) {
+                return item;
+              } else {
+                return null;
+              }
             }
-          } else {
-            if (item.sale?.id === user?.sale?.id) {
-              return item;
-            } else {
-              return null;
-            }
-          }
-        })
+          })
         : [];
     setData(filteredOrders);
   }, [orders, filterText, user]);
@@ -279,26 +279,29 @@ const OrderTable = (props: TablePropTypes) => {
           <Row>
             <Col>
               <FormGroup style={{ height: '100%' }}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="status_dropdown"
-                  defaultValue={row.status}
-                  style={{
-                    height: '100%',
-                    boxShadow: 'none',
-                    border: '0px',
-                    outline: '0px',
-                    background: 'none',
-                  }}
-                  onChange={(e) => handleStatusChange(e, row)}
-                >
-                  {status.map((i, index) => (
-                    <option key={index} value={i.value}>
-                      {i.value}
-                    </option>
-                  ))}
-                </Input>
+                {row.status === 'Invoiced' || row.status === 'Complete' ? (
+                  <div>Complete</div>
+                ) : (
+                  <Input
+                    type="select"
+                    name="select"
+                    id="status_dropdown"
+                    defaultValue={row.status}
+                    style={{
+                      height: '100%',
+                      boxShadow: 'none',
+                      border: '0px',
+                      outline: '0px',
+                      background: 'none',
+                    }}
+                  >
+                    {status.map((i, index) => (
+                      <option key={index} value={i.value}>
+                        {i.value}
+                      </option>
+                    ))}
+                  </Input>
+                )}
               </FormGroup>
             </Col>
           </Row>
@@ -309,10 +312,10 @@ const OrderTable = (props: TablePropTypes) => {
                 {row.job_info?.Rush && row.job_info?.Sample
                   ? 'Sample / Rush'
                   : row.job_info?.Rush
-                    ? 'Rush'
-                    : row.job_info?.Sample
-                      ? 'Sample'
-                      : ''}
+                  ? 'Rush'
+                  : row.job_info?.Sample
+                  ? 'Sample'
+                  : ''}
               </Col>
             </Row>
           ) : null}
@@ -340,12 +343,14 @@ const OrderTable = (props: TablePropTypes) => {
         let updated_total = row.total;
 
         const balance_history_paid =
-        row &&
-        row.balance_history.slice(0).map((i, index) => {
-          updated_total = updated_total - parseFloat(i.balance_paid || 0) - parseFloat(i.deposit_paid || 0);
-          return updated_total;
-        });
-
+          row &&
+          row.balance_history.slice(0).map((i, index) => {
+            updated_total =
+              updated_total -
+              parseFloat(i.balance_paid || 0) -
+              parseFloat(i.deposit_paid || 0);
+            return updated_total;
+          });
 
         return <div>${updated_total.toFixed(2)}</div>;
       },

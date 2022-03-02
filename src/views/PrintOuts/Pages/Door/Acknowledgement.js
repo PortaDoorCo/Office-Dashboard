@@ -28,6 +28,12 @@ const DoorPDF = async (
 
     let Content = [];
 
+    console.log({ data });
+
+    const tracking = data.tracking.filter(
+      (x) => x.status === 'Quote' || x.status === 'Order Edited'
+    );
+
     const headerInfo = [
       {
         margin: [40, 40, 40, 10],
@@ -53,7 +59,16 @@ const DoorPDF = async (
                 alignment: 'center',
                 margin: [0, 0, 0, 10],
               },
-              { text: moment().format('DD-MMM-YYYY'), alignment: 'center' },
+              {
+                text: data.DateInvoiced
+                  ? moment(data.DateInvoiced).format('DD-MMM-YYYY')
+                  : tracking.length
+                  ? moment(tracking[tracking.length - 1].date).format(
+                      'DD-MMM-YYYY'
+                    )
+                  : 'TBA',
+                alignment: 'center',
+              },
             ],
             // width: 200,
             alignment: 'center',

@@ -8,38 +8,60 @@ import { bindActionCreators } from 'redux';
 import 'chartjs-plugin-colorschemes';
 
 type PropTypes = {
-  orders: Array<any>,
-  selectedDateRange: string
-}
-
+  orders: Array<any>;
+  selectedDateRange: string;
+};
 
 class Chart2 extends Component<PropTypes> {
   render() {
     const { orders, selectedDateRange } = this.props;
-    const filteredOrders = orders.length > 0 ? orders.filter(order => {
-      switch (selectedDateRange) {
-        case 'month':
-          return moment(order.created_at).isSame(new Date(), 'month');
-        case 'year':
-          return moment(order.created_at).isSame(new Date(), 'year');
-        default:
-          return moment(order.created_at).isSame(new Date(), 'day');
-      }
-    }) : [];
+    const filteredOrders =
+      orders.length > 0
+        ? orders.filter((order) => {
+            switch (selectedDateRange) {
+              case 'month':
+                return moment(order.created_at).isSame(new Date(), 'month');
+              case 'year':
+                return moment(order.created_at).isSame(new Date(), 'year');
+              default:
+                return moment(order.created_at).isSame(new Date(), 'day');
+            }
+          })
+        : [];
 
     const groups: Array<any> = [];
-    filteredOrders.forEach(item => {
-      item.part_list.forEach(part => {
+    filteredOrders.forEach((item) => {
+      item.part_list.forEach((part) => {
         if (item && item.orderType === 'Door Order') {
+          let total = 0;
           switch (part && part.construction && part.construction.value) {
             case 'Cope':
-              groups.push(part.cope_design);
+              part.dimensions?.map((i) => {
+                return (total = total += parseInt(i.qty));
+              });
+
+              for (let i = 0; i < total; i++) {
+                groups.push({ NAME: 'Cope' });
+              }
+
               break;
             case 'MT':
-              groups.push(part.mt_design);
+              part.dimensions?.map((i) => {
+                return (total = total += parseInt(i.qty));
+              });
+
+              for (let i = 0; i < total; i++) {
+                groups.push({ NAME: 'MT' });
+              }
               break;
-            case 'M':
-              groups.push(part.miter_design);
+            case 'Miter':
+              part.dimensions?.map((i) => {
+                return (total = total += parseInt(i.qty));
+              });
+
+              for (let i = 0; i < total; i++) {
+                groups.push({ NAME: 'Miter' });
+              }
               break;
             default:
               return;
@@ -49,26 +71,30 @@ class Chart2 extends Component<PropTypes> {
     });
     let groupbyName = _.groupBy(groups, 'NAME');
 
-    groupbyName = Object.entries(groupbyName).map(([k, v]) => ({ key: k, value: v })).sort((a:any, b:any) => b.value.length - a.value.length);
+    groupbyName = Object.entries(groupbyName)
+      .map(([k, v]) => ({ key: k, value: v }))
+      .sort((a: any, b: any) => b.value.length - a.value.length);
+
+    console.log({ groupbyName });
 
     const pie = {
-      labels: groupbyName.map(i => i.key),
+      labels: groupbyName.map((i) => i.key),
       datasets: [
         {
-          data: groupbyName.map(v => v.value.length),
-        }
+          data: groupbyName.map((v) => v.value.length),
+        },
       ],
     };
 
     const options = {
       legend: {
-        display: false
+        display: false,
       },
       plugins: {
         colorschemes: {
-          scheme: 'brewer.Paired9'
-        }
-      }
+          scheme: 'brewer.Paired9',
+        },
+      },
     };
 
     return (
@@ -79,6 +105,15 @@ class Chart2 extends Component<PropTypes> {
             <div className="chart-wrapper">
               <Pie data={pie} options={options} />
             </div>
+            <ul>
+              {groupbyName.map((i) => {
+                return (
+                  <li>
+                    {i.key}: {i.value?.length}
+                  </li>
+                );
+              })}
+            </ul>
           </CardBody>
         </Card>
       </div>
@@ -88,18 +123,9 @@ class Chart2 extends Component<PropTypes> {
 
 const mapStateToProps = (state: any) => ({
   orders: state.Orders.orders,
-  selectedDateRange: state.misc_items.selectedDateRange
+  selectedDateRange: state.misc_items.selectedDateRange,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {},
-    dispatch
-  );
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({}, dispatch);
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Chart2);
-
+export default connect(mapStateToProps, mapDispatchToProps)(Chart2);

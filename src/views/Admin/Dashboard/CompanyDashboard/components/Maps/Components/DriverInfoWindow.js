@@ -20,7 +20,7 @@ export class DriverInfoWindow extends Component {
   render() {
     const { location } = this.props;
 
-    console.log({ location });
+    // console.log({ location });
 
     const loc = {
       lat: location.coords.latitude,
