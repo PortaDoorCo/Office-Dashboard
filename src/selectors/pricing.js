@@ -1195,7 +1195,10 @@ export const totalSelector = createSelector(
     orderTypeSelector,
   ],
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
-    // console.log({subTotal})
+    console.log({ subTotal });
+    console.log({ tax });
+    console.log({ discount });
+    console.log({ misc });
 
     if (orderType === 'Misc Items') {
       const sub =

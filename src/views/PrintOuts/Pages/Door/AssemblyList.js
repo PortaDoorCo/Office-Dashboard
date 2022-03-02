@@ -173,17 +173,17 @@ const DoorPDF = async (
       pageOrientation: 'portrait',
       content: ContentSorted,
       pageMargins: [40, 200, 40, 60],
-      pageBreakBefore: function (
-        currentNode,
-        followingNodesOnPage,
-        nodesOnNextPage,
-        previousNodesOnPage
-      ) {
-        if (currentNode.id === 'parts' && currentNode.pageNumbers.length != 1) {
-          return true;
-        }
-        return false;
-      },
+      // pageBreakBefore: function (
+      //   currentNode,
+      //   followingNodesOnPage,
+      //   nodesOnNextPage,
+      //   previousNodesOnPage
+      // ) {
+      //   if (currentNode.id === 'parts' && currentNode.pageNumbers.length != 1) {
+      //     return true;
+      //   }
+      //   return false;
+      // },
       header: function (currentPage) {
         return headerInfo;
       },

@@ -59,7 +59,12 @@ export default (data, pricing) => {
   });
 
   const subTotal = parts
-    .map((i) => i.dimensions.reduce((acc, item) => acc + item.price, 0))
+    .map((i) =>
+      i.dimensions.reduce(
+        (acc, item) => acc + Math.round(item.price * 100) / 100,
+        0
+      )
+    )
     .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0);
 
   console.log({ subTotal });
@@ -300,7 +305,11 @@ export default (data, pricing) => {
                       },
                       {
                         text: `$${part.dimensions
-                          .reduce((acc, item) => acc + item.price, 0)
+                          .reduce(
+                            (acc, item) =>
+                              acc + Math.round(item.price * 100) / 100,
+                            0
+                          )
                           .toFixed(2)}`,
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
