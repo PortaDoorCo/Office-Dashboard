@@ -1,7 +1,7 @@
-import moment from "moment-business-days";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import DatePicker from "react-widgets/DatePicker";
+import moment from 'moment-business-days';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import DatePicker from 'react-widgets/DatePicker';
 import {
   Col,
   FormGroup,
@@ -12,9 +12,9 @@ import {
   Card,
   CardBody,
   Input,
-} from "reactstrap";
-import { change, Field, getFormValues } from "redux-form";
-import status from "../../utils/productionStatus";
+} from 'reactstrap';
+import { change, Field, getFormValues } from 'redux-form';
+import status from '../../utils/productionStatus';
 // import momentLocaliser from 'react-widgets-moment';
 import {
   renderCheckboxToggle,
@@ -22,14 +22,14 @@ import {
   renderDropdownListNoPhoto,
   renderField,
   renderTextField,
-} from "../RenderInputs/renderInputs";
-import CustomerReminder from "./CustomerReminder";
-import otherStatus from "../../utils/other_status";
-import orderEntryStatus from "../../utils/orderEntryStatus";
+} from '../RenderInputs/renderInputs';
+import CustomerReminder from './CustomerReminder';
+import otherStatus from '../../utils/other_status';
+import orderEntryStatus from '../../utils/orderEntryStatus';
 
 // momentLocaliser(moment);
 
-const required = (value) => (value ? undefined : "Required");
+const required = (value) => (value ? undefined : 'Required');
 
 const renderDateTimePicker = ({
   input: { onChange, value },
@@ -63,7 +63,7 @@ class JobInfo extends Component {
     const { isEdit, formState } = this.props;
 
     const dateOrdered = formState?.tracking?.filter((x) => {
-      return x.status === "Ordered";
+      return x.status === 'Ordered';
     });
 
     if (isEdit) {
@@ -78,7 +78,7 @@ class JobInfo extends Component {
           ).businessAdd(21)._d;
         }
 
-        this.props.dispatch(change("Order", "job_info.DueDate", dueDate));
+        this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));
       }
     }
   }
@@ -90,12 +90,12 @@ class JobInfo extends Component {
         formState.job_info?.Sample !== prevProps.formState?.job_info?.Sample
       ) {
         if (formState.job_info.Sample) {
-          this.props.dispatch(change("Order", "discount", 50));
+          this.props.dispatch(change('Order', 'discount', 50));
         } else {
           this.props.dispatch(
             change(
-              "Order",
-              "discount",
+              'Order',
+              'discount',
               formState?.job_info?.customer?.Discount || 0
             )
           );
@@ -103,12 +103,12 @@ class JobInfo extends Component {
       }
       if (formState.job_info?.Rush !== prevProps.formState?.job_info?.Rush) {
         if (formState.job_info.Sample) {
-          this.props.dispatch(change("Order", "discount", 0));
+          this.props.dispatch(change('Order', 'discount', 0));
         } else {
           this.props.dispatch(
             change(
-              "Order",
-              "discount",
+              'Order',
+              'discount',
               formState?.job_info?.customer?.Discount || 0
             )
           );
@@ -120,78 +120,123 @@ class JobInfo extends Component {
       ) {
         const customer = formState?.job_info?.customer;
 
-        if (customer?.Notes !== "") {
+        if (customer?.Notes !== '') {
           this.props.toggleReminderModal();
         }
 
         this.props.dispatch(
-          change("Order", "job_info.salesRep", customer.sale)
+          change('Order', 'job_info.salesRep', customer.sale)
         );
 
         this.props.dispatch(
           change(
-            "Order",
-            "job_info.Address1",
+            'Order',
+            'job_info.Address1',
             customer.Shipping_Address1 || customer.Address1
           )
         );
         this.props.dispatch(
           change(
-            "Order",
-            "job_info.Address2",
+            'Order',
+            'job_info.Address2',
             customer.Shipping_Address2 || customer.Address2
           )
         );
         this.props.dispatch(
           change(
-            "Order",
-            "job_info.City",
+            'Order',
+            'job_info.City',
             customer.Shipping_City || customer.City
           )
         );
         this.props.dispatch(
           change(
-            "Order",
-            "job_info.State",
+            'Order',
+            'job_info.State',
             customer.Shipping_State || customer.State
           )
         );
         this.props.dispatch(
-          change("Order", "job_info.Zip", customer.Shipping_Zip || customer.Zip)
+          change('Order', 'job_info.Zip', customer.Shipping_Zip || customer.Zip)
         );
         this.props.dispatch(
           change(
-            "Order",
-            "job_info.Phone",
+            'Order',
+            'job_info.Phone',
             customer.Shipping_Phone || customer.Phone1
           )
         );
-        this.props.dispatch(change("Order", "job_info.EMAIL", customer.EMAIL));
+        this.props.dispatch(change('Order', 'job_info.EMAIL', customer.EMAIL));
         this.props.dispatch(
-          change("Order", "job_info.Email2", customer.Email2)
+          change('Order', 'job_info.Email2', customer.Email2)
         );
         this.props.dispatch(
-          change("Order", "job_info.Email3", customer.Email3)
+          change('Order', 'job_info.Email3', customer.Email3)
         );
         this.props.dispatch(
-          change("Order", "job_info.Email4", customer.Email4)
+          change('Order', 'job_info.Email4', customer.Email4)
         );
         this.props.dispatch(
-          change("Order", "job_info.Email5", customer.Email5)
+          change('Order', 'job_info.Email5', customer.Email5)
         );
         this.props.dispatch(
-          change("Order", "job_info.Email6", customer.Email6)
+          change('Order', 'job_info.Email6', customer.Email6)
         );
-        this.props.dispatch(change("Order", "Taxable", customer.Taxable));
 
-        if(orderType === 'Misc Items'){
-          this.props.dispatch(change("Order", "discount", 0));
+        this.props.dispatch(
+          change('Order', 'job_info.Contact1', customer.Contact1)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Contact2', customer.Contact1)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Contact3', customer.Contact1)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Contact4', customer.Contact1)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Contact5', customer.Contact1)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Contact6', customer.Contact6)
+        );
+
+        this.props.dispatch(
+          change('Order', 'job_info.Phone1', customer.Phone1)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Phone2', customer.Phone2)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Phone3', customer.Phone3)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Phone4', customer.Phone4)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Phone5', customer.Phone5)
+        );
+        this.props.dispatch(
+          change('Order', 'job_info.Phone6', customer.Phone6)
+        );
+
+        this.props.dispatch(change('Order', 'job_info.Note1', customer.Note1));
+        this.props.dispatch(change('Order', 'job_info.Note2', customer.Note2));
+        this.props.dispatch(change('Order', 'job_info.Note3', customer.Note3));
+        this.props.dispatch(change('Order', 'job_info.Note4', customer.Note4));
+        this.props.dispatch(change('Order', 'job_info.Note5', customer.Note5));
+        this.props.dispatch(change('Order', 'job_info.Note6', customer.Note6));
+
+        this.props.dispatch(change('Order', 'Taxable', customer.Taxable));
+
+        if (orderType === 'Misc Items') {
+          this.props.dispatch(change('Order', 'discount', 0));
         } else {
-          this.props.dispatch(change("Order", "discount", customer.Discount));
+          this.props.dispatch(change('Order', 'discount', customer.Discount));
         }
 
-
-        this.props.dispatch(change("Order", "job_info.Notes", customer.Notes));
+        this.props.dispatch(change('Order', 'job_info.Notes', customer.Notes));
       }
     }
   }
@@ -209,13 +254,13 @@ class JobInfo extends Component {
 
     if (
       !formState?.job_info?.Shipping_Scheduled &&
-      (formState?.job_info?.status === "Quote" ||
-        formState?.job_info?.status?.value === "Quote")
+      (formState?.job_info?.status === 'Quote' ||
+        formState?.job_info?.status?.value === 'Quote')
     ) {
       this.props.dispatch(
-        change("Order", "job_info.status", {
-          label: "Ordered",
-          value: "Ordered",
+        change('Order', 'job_info.status', {
+          label: 'Ordered',
+          value: 'Ordered',
         })
       );
     } else {
@@ -229,9 +274,9 @@ class JobInfo extends Component {
         return null;
       } else {
         this.props.dispatch(
-          change("Order", "job_info.status", {
-            label: "Quote",
-            value: "Quote",
+          change('Order', 'job_info.status', {
+            label: 'Quote',
+            value: 'Quote',
           })
         );
       }
@@ -392,7 +437,7 @@ class JobInfo extends Component {
               <Field
                 name="customer"
                 component={renderDropdownListNoPhoto}
-                data={role?.type === "sales" ? salesCompanies : customers}
+                data={role?.type === 'sales' ? salesCompanies : customers}
                 dataKey="value"
                 textField="Company"
                 edit={edit}
@@ -420,21 +465,21 @@ class JobInfo extends Component {
                 name="status"
                 component={renderDropdownList}
                 data={
-                  role?.type === "authenticated" ||
-                  role?.type === "owner" ||
-                  role?.type === "administrator" ||
-                  role?.type === "management" ||
-                  role?.type === "office"
+                  role?.type === 'authenticated' ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator' ||
+                  role?.type === 'management' ||
+                  role?.type === 'office'
                     ? status
                     : otherStatus
                 }
                 dataKey="value"
                 edit={
-                  role?.type === "authenticated" ||
-                  role?.type === "owner" ||
-                  role?.type === "administrator" ||
-                  role?.type === "management" ||
-                  role?.type === "office"
+                  role?.type === 'authenticated' ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator' ||
+                  role?.type === 'management' ||
+                  role?.type === 'office'
                     ? edit
                     : true
                 }
@@ -449,7 +494,7 @@ class JobInfo extends Component {
             <FormGroup>
               <Label htmlFor="phone">Customer Note</Label>
               <Field
-                name={"Notes"}
+                name={'Notes'}
                 type="text"
                 component={renderTextField}
                 edit={true}
@@ -475,9 +520,9 @@ class JobInfo extends Component {
                 data={sales}
                 edit={
                   formState?.job_info?.customer?.id === 1 ||
-                  role?.type === "owner" ||
-                  role?.type === "administrator" ||
-                  role?.type === "management"
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator' ||
+                  role?.type === 'management'
                     ? edit
                     : true
                 }
@@ -578,141 +623,389 @@ class JobInfo extends Component {
         <Button
           color="primary"
           onClick={this.toggle}
-          style={{ marginBottom: "1rem" }}
+          style={{ marginBottom: '1rem' }}
         >
-          Show Emails
+          More Info
         </Button>
 
         <Collapse isOpen={this.state.collapse}>
-          <Card>
-            <CardBody>
-              <Row>
-                <Col xs="4">
-                  <FormGroup>
-                    <Label htmlFor="phone">Email 1</Label>
-                    <Field
-                      name="EMAIL"
-                      type="text"
-                      component={renderField}
-                      edit={
-                        role?.type === "authenticated" ||
-                        role?.type === "owner" ||
-                        role?.type === "administrator"
-                          ? edit
-                          : true
-                      }
-                      label="Phone"
-                    />
-                  </FormGroup>
-                </Col>
-                <Col xs="4">
-                  <FormGroup>
-                    <Label htmlFor="phone">Email 2</Label>
-                    <Field
-                      name="Email2"
-                      type="text"
-                      component={renderField}
-                      edit={
-                        role?.type === "authenticated" ||
-                        role?.type === "owner" ||
-                        role?.type === "administrator"
-                          ? edit
-                          : true
-                      }
-                      label="Phone"
-                    />
-                  </FormGroup>
-                </Col>
-                <Col xs="4">
-                  <FormGroup>
-                    <Label htmlFor="phone">Email 3</Label>
-                    <Field
-                      name="Email3"
-                      type="text"
-                      component={renderField}
-                      edit={
-                        role?.type === "authenticated" ||
-                        role?.type === "owner" ||
-                        role?.type === "administrator"
-                          ? edit
-                          : true
-                      }
-                      label="Phone"
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+          <Row>
+            <Col xs="12">
+              <h6>Contact Info</h6>
+            </Col>
+          </Row>
 
-              <Row>
-                <Col xs="4">
-                  <FormGroup>
-                    <Label htmlFor="phone">Email 4</Label>
-                    <Field
-                      name="Email4"
-                      type="text"
-                      component={renderField}
-                      edit={
-                        role?.type === "authenticated" ||
-                        role?.type === "owner" ||
-                        role?.type === "administrator"
-                          ? edit
-                          : true
-                      }
-                      label="Phone"
-                    />
-                  </FormGroup>
-                </Col>
-                <Col xs="4">
-                  <FormGroup>
-                    <Label htmlFor="phone">Email 5</Label>
-                    <Field
-                      name="Email5"
-                      type="text"
-                      component={renderField}
-                      edit={
-                        role?.type === "authenticated" ||
-                        role?.type === "owner" ||
-                        role?.type === "administrator"
-                          ? edit
-                          : true
-                      }
-                      label="Phone"
-                    />
-                  </FormGroup>
-                </Col>
-                <Col xs="4">
-                  <FormGroup>
-                    <Label htmlFor="phone">Email 6</Label>
-                    <Field
-                      name="Email6"
-                      type="text"
-                      component={renderField}
-                      edit={
-                        role?.type === "authenticated" ||
-                        role?.type === "owner" ||
-                        role?.type === "administrator"
-                          ? edit
-                          : true
-                      }
-                      label="Phone"
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+          <Row>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Name</Label>
+                <Field
+                  name={'Contact1'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Phone</Label>
+                <Field
+                  name={'Phone1'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                  // normalize={normalizePhone}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Email</Label>
+                <Field
+                  name={'EMAIL'}
+                  type="text"
+                  component={renderField}
+                  label="fax"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Note</Label>
+                <Field
+                  name={'Note1'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Name</Label>
+                <Field
+                  name={'Contact2'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Phone</Label>
+                <Field
+                  name={'Phone2'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                  // normalize={normalizePhone}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Email</Label>
+                <Field
+                  name={'Email2'}
+                  type="text"
+                  component={renderField}
+                  label="fax"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Note</Label>
+                <Field
+                  name={'Note2'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
 
-              {role?.type === "authenticated" ||
-              role?.type === "owner" ||
-              role?.type === "administrator" ? (
-                <Row>
-                  <Col>
-                    <Button color="primary" onClick={this.saveEmails}>
-                      Save Email
-                    </Button>
+          <Row>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Name</Label>
+                <Field
+                  name={'Contact3'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Phone</Label>
+                <Field
+                  name={'Phone3'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                  // normalize={normalizePhone}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Email</Label>
+                <Field
+                  name={'Email3'}
+                  type="text"
+                  component={renderField}
+                  label="fax"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Note</Label>
+                <Field
+                  name={'Note3'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Name</Label>
+                <Field
+                  name={'Contact4'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Phone</Label>
+                <Field
+                  name={'Phone4'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                  // normalize={normalizePhone}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Email</Label>
+                <Field
+                  name={'Email4'}
+                  type="text"
+                  component={renderField}
+                  label="fax"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Note</Label>
+                <Field
+                  name={'Note4'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Name</Label>
+                <Field
+                  name={'Contact5'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Phone</Label>
+                <Field
+                  name={'Phone5'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                  // normalize={normalizePhone}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Email</Label>
+                <Field
+                  name={'Email5'}
+                  type="text"
+                  component={renderField}
+                  label="fax"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Note</Label>
+                <Field
+                  name={'Note5'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Name</Label>
+                <Field
+                  name={'Contact6'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Phone</Label>
+                <Field
+                  name={'Phone6'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                  // normalize={normalizePhone}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Email</Label>
+                <Field
+                  name={'Email6'}
+                  type="text"
+                  component={renderField}
+                  label="fax"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Note</Label>
+                <Field
+                  name={'Note6'}
+                  type="text"
+                  component={renderField}
+                  label="company"
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm="3">
+              <FormGroup>
+                <Label htmlFor="phone">Fax Number</Label>
+                <Field
+                  name={'Fax'}
+                  type="text"
+                  component={renderField}
+                  label="fax"
+                  edit={edit}
+                  // normalize={normalizePhone}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+
+          {/* <Row>
+                  <Col xs="12">
+                    <h6>Email</h6>
                   </Col>
                 </Row>
-              ) : null}
-            </CardBody>
-          </Card>
+
+                <Row>
+                  <Col sm="4">
+                    <FormGroup>
+                      <Label htmlFor="phone">Email 1</Label>
+                      <Field
+                        name={'EMAIL'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="4">
+                    <FormGroup>
+                      <Label htmlFor="phone">Email 2</Label>
+                      <Field
+                        name={'EMAIL2'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col sm="4">
+                    <FormGroup>
+                      <Label htmlFor="phone">Email 3</Label>
+                      <Field
+                        name={'EMAIL3'}
+                        type="text"
+                        component={renderField}
+                        label="company"
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row> */}
         </Collapse>
 
         <hr />
@@ -722,7 +1015,7 @@ class JobInfo extends Component {
             <FormGroup>
               <Label htmlFor="phone">Shop Notes</Label>
               <Field
-                name={"Shop_Notes"}
+                name={'Shop_Notes'}
                 type="textarea"
                 component={renderTextField}
                 edit={edit}
@@ -742,13 +1035,13 @@ class JobInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  formState: getFormValues("Order")(state),
+  formState: getFormValues('Order')(state),
   shippingMethods: state.misc_items.shippingMethods,
   role: state?.users?.user?.role,
   user: state?.users?.user,
   sales: state?.sales?.salesReps,
   paymentTerms: state.misc_items.paymentTerms,
-  orderType: state.Orders.orderType
+  orderType: state.Orders.orderType,
 });
 
 export default connect(mapStateToProps, null)(JobInfo);
