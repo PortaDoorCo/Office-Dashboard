@@ -1,11 +1,5 @@
 import React, { Component, Suspense } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Collapse,
-  ButtonGroup
-} from 'reactstrap';
+import { Row, Col, Button, Collapse, ButtonGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../../../../redux/users/actions';
@@ -18,29 +12,33 @@ const Chart2 = React.lazy(() => import('./components/Chart2'));
 const Chart3 = React.lazy(() => import('./components/Chart3'));
 const Chart4 = React.lazy(() => import('./components/Chart4'));
 const OrderTable = React.lazy(() => import('./components/OrderTable'));
-const Maps = React.lazy(() => import('./components/Maps'));
+const Maps = React.lazy(() => import('./components/Maps/Maps'));
 
-const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+const loading = () => (
+  <div className="animated fadeIn pt-1 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+);
 
 type PropTypes = {
   role: {
-    type: string
-  },
-  orders: any,
-  user: any
-}
+    type: string;
+  };
+  orders: any;
+  user: any;
+};
 
 type StateTypes = {
-  maps: any,
-  dropdownOpen: boolean,
-  radioSelected: number,
-  orders: Array<any>,
-  modal: boolean,
-  selectedOrder: {},
-  orderEdit: boolean,
-  charts: boolean,
-  viewPopup: boolean
-}
+  maps: any;
+  dropdownOpen: boolean;
+  radioSelected: number;
+  orders: Array<any>;
+  modal: boolean;
+  selectedOrder: {};
+  orderEdit: boolean;
+  charts: boolean;
+  viewPopup: boolean;
+};
 
 class Dashboard extends Component<PropTypes, StateTypes> {
   constructor(props) {
@@ -54,7 +52,7 @@ class Dashboard extends Component<PropTypes, StateTypes> {
       orderEdit: false,
       maps: false,
       charts: false,
-      viewPopup: false
+      viewPopup: false,
     };
   }
 
@@ -72,43 +70,47 @@ class Dashboard extends Component<PropTypes, StateTypes> {
 
   toggleMessageModal = () => {
     this.setState({
-      viewPopup: !this.state.viewPopup
+      viewPopup: !this.state.viewPopup,
     });
-  }
+  };
 
   toggleMap = () => {
     this.setState({
-      maps: !this.state.maps
+      maps: !this.state.maps,
     });
-  }
+  };
 
   toggleCharts = () => {
     this.setState({
-      charts: !this.state.charts
+      charts: !this.state.charts,
     });
-  }
+  };
 
   render() {
     const { role, orders, user } = this.props;
 
-    
-
     return (
       <div className="animated fadeIn">
-
         <MessageModal
           toggle={this.toggleMessageModal}
           modal={this.state.viewPopup}
         />
-        
-        {role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator') ?
-          <div>
 
-            <Row className="mb-3">
+        {role &&
+        (role.type === 'management' ||
+          role.type === 'authenticated' ||
+          role.type === 'owner' ||
+          role.type === 'administrator') ? (
+          <div>
+            {/* <Row className="mb-3">
               <Col>
                 <ButtonGroup>
-                  <Button color="success" onClick={this.toggleCharts}>Charts</Button>
-                  <Button color="success" onClick={this.toggleMap}>Delivery Map</Button>
+                  <Button color="success" onClick={this.toggleCharts}>
+                    Charts
+                  </Button>
+                  <Button color="success" onClick={this.toggleMap}>
+                    Delivery Map
+                  </Button>
                 </ButtonGroup>
               </Col>
             </Row>
@@ -139,16 +141,17 @@ class Dashboard extends Component<PropTypes, StateTypes> {
                 </Col>
               </Row>
             </Collapse>
-            
+
             <Collapse isOpen={this.state.maps}>
               <Row className="mb-5">
                 <Col style={{ height: 600 }}>
                   <Suspense fallback={loading()}>
-                    {/* <Maps  /> */}
+                    <Maps />
                   </Suspense>
                 </Col>
               </Row>
-            </Collapse>
+            </Collapse> */}
+
             <Row className="mt-5">
               <Col>
                 <Suspense fallback={loading()}>
@@ -157,46 +160,47 @@ class Dashboard extends Component<PropTypes, StateTypes> {
               </Col>
             </Row>
           </div>
-          : role && (role.type === 'office') ?
-            <div>
-              <Collapse isOpen={this.state.maps}>
-                <Row>
-                  <Col>
-                    <Suspense fallback={loading()}>
-                      <Maps />
-                    </Suspense>
-                  </Col>
-                </Row>
-              </Collapse>
-              <Row className="mt-3">
+        ) : role && role.type === 'office' ? (
+          <div>
+            <Collapse isOpen={this.state.maps}>
+              <Row>
                 <Col>
                   <Suspense fallback={loading()}>
-                    <OrderTable {...this.props} />
+                    <Maps />
                   </Suspense>
                 </Col>
               </Row>
-            </div>
-            : role &&  role.type === 'sales'?
-              <div>
-                <Collapse isOpen={this.state.maps}>
-                  <Row>
-                    <Col>
-                      <Suspense fallback={loading()}>
-                        <Maps />
-                      </Suspense>
-                    </Col>
-                  </Row>
-                </Collapse>
-                <Row className="mt-3">
-                  <Col>
-                    <Suspense fallback={loading()}>
-                      <SalesTable {...this.props} />
-                    </Suspense>
-                  </Col>
-                </Row>
-              </div>
-              : loading()
-        }
+            </Collapse>
+            <Row className="mt-3">
+              <Col>
+                <Suspense fallback={loading()}>
+                  <OrderTable {...this.props} />
+                </Suspense>
+              </Col>
+            </Row>
+          </div>
+        ) : role && role.type === 'sales' ? (
+          <div>
+            <Collapse isOpen={this.state.maps}>
+              <Row>
+                <Col>
+                  <Suspense fallback={loading()}>
+                    <Maps />
+                  </Suspense>
+                </Col>
+              </Row>
+            </Collapse>
+            <Row className="mt-3">
+              <Col>
+                <Suspense fallback={loading()}>
+                  <SalesTable {...this.props} />
+                </Suspense>
+              </Col>
+            </Row>
+          </div>
+        ) : (
+          loading()
+        )}
       </div>
     );
   }
@@ -208,19 +212,16 @@ const mapStateToProps = (state, prop) => ({
   customerDBLoaded: state.customers.customerDBLoaded,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   role: state.users.user.role,
-  user: state.users.user
+  user: state.users.user,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       login,
-      loadOrders
+      loadOrders,
     },
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
