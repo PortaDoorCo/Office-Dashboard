@@ -178,19 +178,36 @@ const StatusTable = (props) => {
       grow: 1,
       cell: (row) => (
         <FormGroup style={{ height: '100%' }}>
-          <Input
-            type="text"
-            disabled={true}
-            defaultValue={row.status}
-            style={{
-              height: '100%',
-              boxShadow: 'none',
-              border: '0px',
-              outline: '0px',
-              background: 'none',
-            }}
-          /
-          >
+          {row.status === 'Invoiced' || row.status === 'Complete' ? (
+            <div
+              style={{
+                paddingTop: '1rem',
+                paddingLeft: '1rem',
+              }}
+            >
+              Complete
+            </div>
+          ) : (
+            <Input
+              type="select"
+              name="select"
+              id="status_dropdown"
+              defaultValue={row.status}
+              style={{
+                height: '100%',
+                boxShadow: 'none',
+                border: '0px',
+                outline: '0px',
+                background: 'none',
+              }}
+            >
+              {status.map((i, index) => (
+                <option key={index} value={i.value}>
+                  {i.value}
+                </option>
+              ))}
+            </Input>
+          )}
         </FormGroup>
       ),
     },
@@ -240,7 +257,6 @@ const StatusTable = (props) => {
   };
 
   const exportReports = () => {
-
     let newOrder = [...data];
 
     if (props.filterStatus === 'Ordered') {
@@ -251,7 +267,9 @@ const StatusTable = (props) => {
 
         return {
           ...i,
-          dateOrdered: i.DateOrdered ? new Date(i.DateOrdered) : new Date(dateOrdered[0]?.date),
+          dateOrdered: i.DateOrdered
+            ? new Date(i.DateOrdered)
+            : new Date(dateOrdered[0]?.date),
         };
       });
 

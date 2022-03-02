@@ -292,7 +292,14 @@ const OrderTable = (props: TablePropTypes) => {
             <Col>
               <FormGroup style={{ height: '100%' }}>
                 {row.status === 'Invoiced' || row.status === 'Complete' ? (
-                  <div>Complete</div>
+                  <div
+                    style={{
+                      paddingTop: '1rem',
+                      paddingLeft: '1rem',
+                    }}
+                  >
+                    Complete
+                  </div>
                 ) : (
                   <Input
                     type="select"
