@@ -85,7 +85,6 @@ const OrderTable = (props) => {
   return (
     <div>
       <Row className="mb-3">
-        <Col lg="9" />
         <Col>
           <Row>
             <Col>
