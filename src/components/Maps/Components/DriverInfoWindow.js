@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'reactstrap';
 import { Marker, InfoWindow } from 'react-google-maps';
-import truck from '../../../../../../../assets/icon/truck.png';
+import truck from '../../../assets/icon/truck.png';
 
 export class DriverInfoWindow extends Component {
   constructor(props) {

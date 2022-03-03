@@ -7,12 +7,12 @@ import { loadOrders } from '../../../../redux/orders/actions';
 import MessageModal from '../MessageModal';
 import SalesTable from '../../SalesReport/SalesReport';
 
-const Chart1 = React.lazy(() => import('./components/Chart1'));
-const Chart2 = React.lazy(() => import('./components/Chart2'));
-const Chart3 = React.lazy(() => import('./components/Chart3'));
-const Chart4 = React.lazy(() => import('./components/Chart4'));
+const Chart1 = React.lazy(() => import('../../../../components/Charts/Chart1'));
+const Chart2 = React.lazy(() => import('../../../../components/Charts/Chart2'));
+const Chart3 = React.lazy(() => import('../../../../components/Charts/Chart3'));
+const Chart4 = React.lazy(() => import('../../../../components/Charts/Chart4'));
 const OrderTable = React.lazy(() => import('./components/OrderTable'));
-const Maps = React.lazy(() => import('./components/Maps/Maps'));
+const Maps = React.lazy(() => import('../../../../components/Maps/Maps'));
 
 const loading = () => (
   <div className="animated fadeIn pt-1 text-center">

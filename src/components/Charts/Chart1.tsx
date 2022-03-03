@@ -15,13 +15,13 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { selectDateRange } from '../../../../../redux/misc_items/actions';
+import { selectDateRange } from '../../redux/misc_items/actions';
 
-type PropTypes ={
-  selectedDateRange: {},
-  selectDateRange: (date: string) => void,
-  orders: Array<any>
-}
+type PropTypes = {
+  selectedDateRange: {};
+  selectDateRange: (date: string) => void;
+  orders: Array<any>;
+};
 
 const brandInfo = '#63c2de';
 
@@ -43,7 +43,7 @@ class Chart1 extends Component<PropTypes> {
 
     this.state = {
       radioSelected: 'day',
-      data: []
+      data: [],
     };
   }
 
@@ -56,7 +56,7 @@ class Chart1 extends Component<PropTypes> {
             ctx = chart.chart.ctx;
 
           ctx.restore();
-          ctx.font = '16px normal \'Helvetica Nueue\'';
+          ctx.font = "16px normal 'Helvetica Nueue'";
           ctx.textBaseline = 'middle';
 
           var text = 'There is no data to display',
@@ -65,60 +65,68 @@ class Chart1 extends Component<PropTypes> {
           ctx.fillText(text, textX, textY);
           ctx.save();
         }
-      }
+      },
     });
   }
 
   onRadioBtnClick(radioSelected: number) {
     this.setState({
-      radioSelected: radioSelected
+      radioSelected: radioSelected,
     });
   }
 
   render() {
     const { selectDateRange, selectedDateRange } = this.props;
-    let groups = this.props.orders.length > 0 ? [...this.props.orders]
-      .filter(record =>
-        selectedDateRange === 'day'
-          ? moment(record.created_at).isSame(new Date(), 'day')
-          : selectedDateRange === 'month'
-            ? moment(record.created_at).isSame(new Date(), 'month')
-            : selectedDateRange === 'year'
-              ? moment(record.created_at).isSame(new Date(), 'year')
-              : true
-      )
-      .sort((a, b) => moment(a.date || a.created_at).isBefore(b.date || b.created_at) ? -1 : 1) : [];
+    let groups =
+      this.props.orders.length > 0
+        ? [...this.props.orders]
+            .filter((record) =>
+              selectedDateRange === 'day'
+                ? moment(record.created_at).isSame(new Date(), 'day')
+                : selectedDateRange === 'month'
+                ? moment(record.created_at).isSame(new Date(), 'month')
+                : selectedDateRange === 'year'
+                ? moment(record.created_at).isSame(new Date(), 'year')
+                : true
+            )
+            .sort((a, b) =>
+              moment(a.date || a.created_at).isBefore(b.date || b.created_at)
+                ? -1
+                : 1
+            )
+        : [];
     switch (selectedDateRange) {
       case 'month':
-        groups = _.groupBy(groups, item => moment(item.created_at).format('MMMM DD'));
+        groups = _.groupBy(groups, (item) =>
+          moment(item.created_at).format('MMMM DD')
+        );
         break;
       case 'year':
-        groups = _.groupBy(groups, item => moment(item.created_at).format('MMM'));
+        groups = _.groupBy(groups, (item) =>
+          moment(item.created_at).format('MMM')
+        );
         break;
       default:
-        groups = _.groupBy(groups, item =>
+        groups = _.groupBy(groups, (item) =>
           moment(item.created_at).format('h:mm:ss a')
         );
         break;
-    } 
+    }
 
     Object.keys(groups).forEach(
-      key => (groups[key] = groups[key].map(item => item.total))
+      (key) => (groups[key] = groups[key].map((item) => item.total))
     );
 
     let prices: Array<any> = [];
     let dates: Array<any> = [];
 
-
-
     function avg(list: Array<any>) {
       return list.reduce((sum, value) => sum + value) / list.length;
     }
-    Object.keys(groups)
-      .forEach(key => {
-        prices.push(avg(groups[key]));
-        dates.push(key);
-      });
+    Object.keys(groups).forEach((key) => {
+      prices.push(avg(groups[key]));
+      dates.push(key);
+    });
 
     const mainChart = {
       labels: dates,
@@ -132,35 +140,35 @@ class Chart1 extends Component<PropTypes> {
           borderWidth: 2,
           data: prices,
           lineTension: 0,
-          fill: true
-        }
-      ]
+          fill: true,
+        },
+      ],
     };
 
     const mainChartOpts = {
       maintainAspectRatio: false,
       legend: {
-        display: false
+        display: false,
       },
       scales: {
         xAxes: [
           {
             gridLines: {
-              drawOnChartArea: false
+              drawOnChartArea: false,
             },
             time: {
-              unit: 'day'
-            }
-          }
-        ]
+              unit: 'day',
+            },
+          },
+        ],
       },
       elements: {
         point: {
           radius: 0,
           hitRadius: 10,
           hoverRadius: 4,
-          hoverBorderWidth: 3
-        }
+          hoverBorderWidth: 3,
+        },
       },
     };
 
@@ -171,7 +179,9 @@ class Chart1 extends Component<PropTypes> {
             <Row>
               <Col sm="5">
                 <CardTitle className="mb-0">Sales</CardTitle>
-                <div className="small text-muted">{moment().format('YYYY')}</div>
+                <div className="small text-muted">
+                  {moment().format('YYYY')}
+                </div>
               </Col>
               <Col sm="7" className="d-none d-sm-inline-block">
                 <ButtonToolbar
@@ -220,14 +230,15 @@ class Chart1 extends Component<PropTypes> {
 const mapStateToProps = (state: any) => ({
   orders: state.Orders.orders,
   customerDB: state.customers.customerDB,
-  selectedDateRange: state.misc_items.selectedDateRange
+  selectedDateRange: state.misc_items.selectedDateRange,
 });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({
-  selectDateRange
-}, dispatch);
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators(
+    {
+      selectDateRange,
+    },
+    dispatch
+  );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Chart1);
+export default connect(mapStateToProps, mapDispatchToProps)(Chart1);

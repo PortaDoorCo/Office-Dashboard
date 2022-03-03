@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Marker, InfoWindow } from 'react-google-maps';
-import delivery from '../../../../../../../assets/icon/delivery.png';
-import OrderPage from '../../../../../Orders/OrderPage';
+import delivery from '../../../assets/icon/delivery.png';
+import OrderPage from '../../../views/Admin/Orders/OrderPage';
 
 export class DeliveryInfoWindow extends Component {
   constructor(props) {
