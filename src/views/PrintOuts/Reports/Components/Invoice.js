@@ -20,8 +20,8 @@ export default (data, startDate, endDate, status) => {
 
   data.forEach((i, index) => {
     total = Math.round(100 * (total += i.total)) / 100;
-    netTotal = Math.round( 100 * (netTotal += (i.total - i.tax))) / 100;
-    taxTotal = Math.round(100 *(taxTotal += i.tax)) / 100
+    netTotal = Math.round(100 * (netTotal += i.total - i.tax)) / 100;
+    taxTotal = Math.round(100 * (taxTotal += i.tax)) / 100;
 
     let name = i.job_info?.poNum?.length > 0 ? i.job_info?.poNum : 'None';
 
@@ -31,7 +31,7 @@ export default (data, startDate, endDate, status) => {
 
     return tableBody.push([
       i.DateInvoiced || dateInvoiced.length > 0
-        ? moment(i.DateOrdered || dateInvoiced[0].date).format('MM/DD/YYYY')
+        ? moment(i.DateInvoiced || dateInvoiced[0]?.date).format('MM/DD/YYYY')
         : 'TBD',
       `$${i.total?.toFixed(2)}`,
       `$${(i.total - i.tax)?.toFixed(2)}`,
@@ -84,7 +84,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: [60, 59, 58, '*', '*',],
+        widths: [60, 59, 58, '*', '*'],
       },
       layout: 'headerLineOnly',
     },
