@@ -40,47 +40,25 @@ const ClearButton = styled(Button)`
 `;
 
 const OrderTable = (props) => {
-  const { orders, role } = props;
+  const {
+    orders,
+    startDate,
+    setStartDate,
+    startDateFocusedInput,
+    endDate,
+    setEndDate,
+    endDateFocusedInput,
+    setEndDateFocusedInput,
+    setStartDateFocusedInput,
+  } = props;
   const [data, setData] = useState([]);
-  const [startDate, setStartDate] = useState(moment(new Date()));
-  const [endDate, setEndDate] = useState(moment(new Date()));
-  const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
-  const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus] = useState('Quote');
-  const [filterText, setFilterText] = useState('');
+
+  console.log({ startDate });
 
   const minDate =
     orders?.length > 0
       ? new Date(orders[orders.length - 1].created_at)
       : new Date();
-
-  useEffect(() => {
-    const filteredOrders = orders?.filter((item) => {
-      let date = new Date(item.created_at);
-
-      const dateOrdered = item?.tracking?.filter((x) => {
-        return x.status === 'Ordered';
-      });
-      const dateInvoiced = item?.tracking?.filter((x) => {
-        return x.status === 'Invoiced';
-      });
-
-      const dateCompleted = item?.tracking?.filter((x) => {
-        return x.status === 'Complete';
-      });
-
-      const dateShipped = item?.tracking?.filter((x) => {
-        return x.status === 'Shipped';
-      });
-
-      return (
-        moment(date) >= moment(startDate).startOf('day').valueOf() &&
-        moment(date) <= moment(endDate).endOf('day').valueOf() &&
-        item?.status?.includes(filterStatus)
-      );
-    });
-    setData(filteredOrders);
-  }, [startDate, endDate, orders, filterStatus, filterText]);
 
   return (
     <div>
@@ -88,10 +66,7 @@ const OrderTable = (props) => {
         <Col>
           <Row>
             <Col>
-              <h3>
-                Filter Complete Date{' '}
-                {filterStatus === 'Quote' ? 'Entered' : filterStatus}
-              </h3>
+              <h3>Filter Complete Date </h3>
             </Col>
           </Row>
           <Row>

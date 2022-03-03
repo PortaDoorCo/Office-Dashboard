@@ -14,69 +14,16 @@ import { Card } from 'antd';
 import moment from 'moment';
 import states from './states';
 import Dates from './Dates';
-// Use your own styles to override the default styles
-// import "./styles.css";
 
-const board = {
-  columns: [
-    {
-      id: 1,
-      title: 'Ready to Ship',
-      cards: [
-        {
-          id: 1,
-          title: 'Card title 1',
-          description: 'Card content',
-        },
-        {
-          id: 2,
-          title: 'Card title 2',
-          description: 'Card content',
-        },
-        {
-          id: 3,
-          title: 'Card title 3',
-          description: 'Card content',
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: `${moment().format('M/D/YYYY')} - Deliveries`,
-      cards: [
-        {
-          id: 9,
-          title: 'Card title 9',
-          description: 'Card content',
-        },
-      ],
-    },
-  ],
-};
-
-function ControlledBoard() {
-  // You need to control the state yourself.
-  const [controlledBoard, setBoard] = useState(board);
-
-  let clickHoldTimer = null;
-
-  const handleMouseDown = () => {
-    console.log('press');
-    clickHoldTimer = setTimeout(() => {
-      //Action to be performed after holding down mouse
-    }, 1000); //Change 1000 to number of milliseconds required for mouse hold
-  };
-
-  const handleMouseUp = () => {
-    console.log('stop');
-    clearTimeout(clickHoldTimer);
-  };
-
-  function handleCardMove(_card, source, destination) {
-    const updatedBoard = moveCard(controlledBoard, source, destination);
-    setBoard(updatedBoard);
-  }
-
+const Scheduler = (props) => {
+  const {
+    handleCardMove,
+    handleMouseDown,
+    handleMouseUp,
+    controlledBoard,
+    setBoard,
+  } = props;
+  console.log({ props });
   return (
     <div>
       <Container
@@ -93,13 +40,13 @@ function ControlledBoard() {
             <h1>Shipping Schedule for {moment().format('M/D/YYYY')}</h1>
           </Col>
           <Col className="d-flex justify-content-end">
-            <Button color="primary">Submit</Button>
+            <Button color="primary">Submit Schedule</Button>
           </Col>
         </Row>
 
         <Row>
           <Col className="d-flex justify-content-end">
-            <Dates />
+            <Dates {...props} />
           </Col>
         </Row>
 
@@ -147,14 +94,6 @@ function ControlledBoard() {
       </Container>
     </div>
   );
-}
-
-function Scheduler() {
-  return (
-    <>
-      <ControlledBoard />
-    </>
-  );
-}
+};
 
 export default Scheduler;
