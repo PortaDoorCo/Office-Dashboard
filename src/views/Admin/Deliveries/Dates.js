@@ -53,7 +53,7 @@ const OrderTable = (props) => {
   } = props;
   const [data, setData] = useState([]);
 
-  console.log({ startDate });
+  console.log({ orders });
 
   const minDate =
     orders?.length > 0

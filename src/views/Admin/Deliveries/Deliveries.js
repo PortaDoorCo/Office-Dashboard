@@ -6,9 +6,9 @@ import Board, { moveCard } from '@asseinfo/react-kanban';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-const Deliveries = ({ orders }) => {
+const Deliveries = (props) => {
   // You need to control the state yourself.
-
+  const { orders } = props;
   const [startDate, setStartDate] = useState(moment(new Date()));
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
@@ -20,13 +20,7 @@ const Deliveries = ({ orders }) => {
       {
         id: 1,
         title: 'Ready to Ship',
-        cards: data.map((j) => {
-          return {
-            id: j.id,
-            title: j.orderNum,
-            description: j.poNum,
-          };
-        }),
+        cards: [],
       },
       {
         id: 2,
@@ -50,21 +44,31 @@ const Deliveries = ({ orders }) => {
         return x.status === 'Complete';
       });
 
-      return item;
+      return (
+        moment(
+          item.DateCompleted ||
+            (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+        ) >= moment(startDate).startOf('day').valueOf() &&
+        moment(
+          item.DateCompleted ||
+            (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+        ) <= moment(endDate).endOf('day').valueOf()
+      );
     });
 
     console.log({ filteredOrders });
     setData(filteredOrders);
     setBoard({
       ...controlledBoard,
-      columms: controlledBoard?.columns?.map((i, index) => {
+      columns: controlledBoard?.columns?.map((i, index) => {
         if (index === 0) {
           return {
             ...i,
             cards: filteredOrders.map((j) => {
               return {
+                id: j.id,
                 title: j.orderNum,
-                description: j.poNum,
+                description: 'description',
               };
             }),
           };
@@ -115,7 +119,7 @@ const Deliveries = ({ orders }) => {
         setFilterStatus={setFilterStatus}
         startDate={startDate}
         endDate={endDate}
-        orders={data}
+        orders={orders}
         setBoard={setBoard}
       />
       {/* <Table /> */}

@@ -24,6 +24,7 @@ const Scheduler = (props) => {
     setBoard,
   } = props;
   console.log({ props });
+  console.log({ controlledBoard });
   return (
     <div>
       <Container
