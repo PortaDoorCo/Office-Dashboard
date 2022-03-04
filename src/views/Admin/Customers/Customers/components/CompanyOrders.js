@@ -432,27 +432,37 @@ const OrderTable = (props) => {
           <Row>
             <Col>
               <FormGroup style={{ height: '100%' }}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="status_dropdown"
-                  defaultValue={row.status}
-                  style={{
-                    height: '100%',
-                    boxShadow: 'none',
-                    border: '0px',
-                    outline: '0px',
-                    background: 'none',
-                  }}
-                  onChange={(e) => handleStatusChange(e, row)}
-                >
-                  <option value={row.status}>{row.status}</option>
-                  {status?.map((i, index) => (
-                    <option key={index} value={i.value}>
-                      {i?.value}
-                    </option>
-                  ))}
-                </Input>
+                {row.status === 'Invoiced' || row.status === 'Complete' ? (
+                  <div
+                    style={{
+                      paddingTop: '1rem',
+                      paddingLeft: '1rem',
+                    }}
+                  >
+                    Complete
+                  </div>
+                ) : (
+                  <Input
+                    type="select"
+                    name="select"
+                    id="status_dropdown"
+                    defaultValue={row.status}
+                    style={{
+                      height: '100%',
+                      boxShadow: 'none',
+                      border: '0px',
+                      outline: '0px',
+                      background: 'none',
+                    }}
+                    onChange={(e) => handleStatusChange(e, row)}
+                  >
+                    {status.map((i, index) => (
+                      <option key={index} value={i.value}>
+                        {i.value}
+                      </option>
+                    ))}
+                  </Input>
+                )}
               </FormGroup>
             </Col>
           </Row>
@@ -462,10 +472,10 @@ const OrderTable = (props) => {
               {row?.job_info?.Rush && row?.job_info?.Sample
                 ? 'Sample / Rush'
                 : row?.job_info?.Rush
-                  ? 'Rush'
-                  : row?.job_info?.Sample
-                    ? 'Sample'
-                    : ''}
+                ? 'Rush'
+                : row?.job_info?.Sample
+                ? 'Sample'
+                : ''}
             </Col>
           </Row>
         </div>
@@ -483,10 +493,13 @@ const OrderTable = (props) => {
       cell: (row) => {
         let updated_total = row.total;
 
-        const balance_history_paid = row.balance_history
-          .slice(0)
-          .map((i, index) => {
-            updated_total = updated_total - parseFloat(i.balance_paid);
+        const balance_history_paid =
+          row &&
+          row.balance_history.slice(0).map((i, index) => {
+            updated_total =
+              updated_total -
+              parseFloat(i.balance_paid || 0) -
+              parseFloat(i.deposit_paid || 0);
             return updated_total;
           });
 
@@ -581,7 +594,9 @@ const OrderTable = (props) => {
 
         return {
           ...i,
-          dateOrdered: i.DateOrdered ? new Date(i.DateOrdered) : new Date(dateOrdered[0]?.date),
+          dateOrdered: i.DateOrdered
+            ? new Date(i.DateOrdered)
+            : new Date(dateOrdered[0]?.date),
         };
       });
 
@@ -616,10 +631,10 @@ const OrderTable = (props) => {
                 {filterStatus === 'Quote'
                   ? 'Entered'
                   : filterStatus === 'Invoiced'
-                    ? 'Invoiced'
-                    : filterStatus === 'All'
-                      ? 'Ordered / Entered'
-                      : 'Ordered'}
+                  ? 'Invoiced'
+                  : filterStatus === 'All'
+                  ? 'Ordered / Entered'
+                  : 'Ordered'}
               </h3>
             </Col>
           </Row>
@@ -684,11 +699,16 @@ const OrderTable = (props) => {
               (role.type === 'authenticated' ||
                 role.type === 'owner' ||
                 role.type === 'administrator') ? (
-                  <h3>
+                <h3>
                   Order Totals: $
-                    {data.reduce((acc, item) => acc + Math.round(item.total * 100) / 100, 0).toFixed(2)}
-                  </h3>
-                ) : null}
+                  {data
+                    .reduce(
+                      (acc, item) => acc + Math.round(item.total * 100) / 100,
+                      0
+                    )
+                    .toFixed(2)}
+                </h3>
+              ) : null}
             </Col>
           </Row>
           <Row className="mt-3">
