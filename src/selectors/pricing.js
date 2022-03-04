@@ -359,16 +359,11 @@ export const itemPriceSelector = createSelector(
                         formState?.initial.part_list[index]?.dimensions[j]) ||
                     formState?.values?.part_list[index]?.woodtype !==
                       formState?.initial.part_list[index]?.woodtype ||
-                    formState?.values?.part_list[index]?.design !==
-                      formState?.initial.part_list[index]?.design ||
-                    formState?.values?.part_list[index]?.edge !==
-                      formState?.initial.part_list[index]?.edge ||
-                    formState?.values?.part_list[index]?.profile !==
-                      formState?.initial.part_list[index]?.profile ||
-                    formState?.values?.part_list[index]?.panel !==
-                      formState?.initial.part_list[index]?.panel ||
-                    formState?.values?.part_list[index]?.applied_profile !==
-                      formState?.initial.part_list[index]?.applied_profile
+                    formState?.values?.part_list[index]?.face_frame_design !==
+                      formState?.initial.part_list[index]?.face_frame_design ||
+                    formState?.values?.part_list[index]
+                      ?.face_frame_finishing !==
+                      formState?.initial.part_list[index]?.face_frame_finishing
                   ) {
                     return Math.floor(price * 100) / 100;
                   } else {
