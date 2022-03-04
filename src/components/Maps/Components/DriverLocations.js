@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import { DriverInfoWindow } from './DriverInfoWindow';
 import io from 'socket.io-client';
-import db_url from '../../../../../../../redux/db_url';
+import db_url from '../../../redux/db_url';
 const socket = io(db_url);
 
 export const DriverLocations = (props) => {

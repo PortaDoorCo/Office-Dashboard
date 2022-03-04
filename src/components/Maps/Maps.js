@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setSelectedOrder } from '../../../../../../redux/orders/actions';
+import { setSelectedOrder } from '../../redux/orders/actions';
 import moment from 'moment';
 import { GoogleMapsComponent } from './Components/GoogleMapsComponent';
 
