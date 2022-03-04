@@ -369,6 +369,8 @@ export const itemPriceSelector = createSelector(
                   } else {
                     return Math.round(itemPrice[index][j] * 100) / 100;
                   }
+                } else {
+                  return Math.floor(price * 100) / 100;
                 }
               } else {
                 return 0;
@@ -774,6 +776,8 @@ export const itemPriceSelector = createSelector(
                   } else {
                     return Math.round(itemPrice[index][j] * 100) / 100;
                   }
+                } else {
+                  return Math.floor(price * 100) / 100;
                 }
               } else {
                 return 0;
@@ -831,6 +835,8 @@ export const itemPriceSelector = createSelector(
                 } else {
                   return Math.round(itemPrice[index][j] * 100) / 100;
                 }
+              } else {
+                return Math.floor(price * 100) / 100;
               }
             } else {
               return 0;
