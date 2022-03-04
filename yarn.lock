@@ -1750,13 +1750,6 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@lourenci/react-kanban@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@lourenci/react-kanban/-/react-kanban-2.1.0.tgz#1e9ffab30d37a19815adcb1a94cb35817ebee8a9"
-  integrity sha512-VZK+HbH2DtfQA7RhMWIZAtieN78n6XzJ8EDkKdaOxbefg1FYEJeyQ/GCav6CW7UvWEIAJxBjaYwF+csadIMYFA==
-  dependencies:
-    react-beautiful-dnd "^13.0.0"
-
 "@malept/cross-spawn-promise@^1.1.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@malept/cross-spawn-promise/-/cross-spawn-promise-1.1.1.tgz#504af200af6b98e198bce768bc1730c6936ae01d"
