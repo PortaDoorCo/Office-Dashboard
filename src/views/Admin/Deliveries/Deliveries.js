@@ -102,6 +102,8 @@ const Deliveries = (props) => {
     setBoard(updatedBoard);
   };
 
+  return <div>Coming Soon</div>;
+
   return (
     <div>
       <Maps />
@@ -122,7 +124,6 @@ const Deliveries = (props) => {
         orders={orders}
         setBoard={setBoard}
       />
-      {/* <Table /> */}
     </div>
   );
 };

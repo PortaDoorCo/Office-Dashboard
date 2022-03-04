@@ -351,12 +351,30 @@ export const itemPriceSelector = createSelector(
                 eval(pricer && pricer.face_frame_pricing) + extraCost;
 
               if (height > -1) {
-                return itemPrice.length > 0 &&
-                  formState?.values?.part_list[index]?.dimensions.length > 0 &&
-                  formState?.values?.part_list[index]?.dimensions[j] ===
-                    formState?.initial.part_list[index]?.dimensions[j]
-                  ? itemPrice[index][j]
-                  : Math.floor(price * 100) / 100;
+                if (itemPrice.length > 0) {
+                  if (
+                    (formState?.values?.part_list[index]?.dimensions.length >
+                      0 &&
+                      formState?.values?.part_list[index]?.dimensions[j] !==
+                        formState?.initial.part_list[index]?.dimensions[j]) ||
+                    formState?.values?.part_list[index]?.woodtype !==
+                      formState?.initial.part_list[index]?.woodtype ||
+                    formState?.values?.part_list[index]?.design !==
+                      formState?.initial.part_list[index]?.design ||
+                    formState?.values?.part_list[index]?.edge !==
+                      formState?.initial.part_list[index]?.edge ||
+                    formState?.values?.part_list[index]?.profile !==
+                      formState?.initial.part_list[index]?.profile ||
+                    formState?.values?.part_list[index]?.panel !==
+                      formState?.initial.part_list[index]?.panel ||
+                    formState?.values?.part_list[index]?.applied_profile !==
+                      formState?.initial.part_list[index]?.applied_profile
+                  ) {
+                    return Math.floor(price * 100) / 100;
+                  } else {
+                    return Math.round(itemPrice[index][j] * 100) / 100;
+                  }
+                }
               } else {
                 return 0;
               }
@@ -738,12 +756,30 @@ export const itemPriceSelector = createSelector(
               }
 
               if (height > -1) {
-                return itemPrice.length > 0 &&
-                  formState?.values?.part_list[index]?.dimensions.length > 0 &&
-                  formState?.values?.part_list[index]?.dimensions[j] ===
-                    formState?.initial.part_list[index]?.dimensions[j]
-                  ? itemPrice[index][j]
-                  : Math.floor(price * 100) / 100;
+                if (itemPrice.length > 0) {
+                  if (
+                    (formState?.values?.part_list[index]?.dimensions.length >
+                      0 &&
+                      formState?.values?.part_list[index]?.dimensions[j] !==
+                        formState?.initial.part_list[index]?.dimensions[j]) ||
+                    formState?.values?.part_list[index]?.woodtype !==
+                      formState?.initial.part_list[index]?.woodtype ||
+                    formState?.values?.part_list[index]?.design !==
+                      formState?.initial.part_list[index]?.design ||
+                    formState?.values?.part_list[index]?.edge !==
+                      formState?.initial.part_list[index]?.edge ||
+                    formState?.values?.part_list[index]?.profile !==
+                      formState?.initial.part_list[index]?.profile ||
+                    formState?.values?.part_list[index]?.panel !==
+                      formState?.initial.part_list[index]?.panel ||
+                    formState?.values?.part_list[index]?.applied_profile !==
+                      formState?.initial.part_list[index]?.applied_profile
+                  ) {
+                    return Math.floor(price * 100) / 100;
+                  } else {
+                    return Math.round(itemPrice[index][j] * 100) / 100;
+                  }
+                }
               } else {
                 return 0;
               }
@@ -776,12 +812,31 @@ export const itemPriceSelector = createSelector(
             const price = eval(pricer.drawer_box_pricing) + extraCost;
 
             if (height > -1) {
-              return itemPrice.length > 0 &&
-                formState?.values?.part_list[index]?.dimensions.length > 0 &&
-                formState?.values?.part_list[index]?.dimensions[j] ===
-                  formState?.initial.part_list[index]?.dimensions[j]
-                ? Math.round(itemPrice[index][j] * 100) / 100
-                : Math.floor(price * 100) / 100;
+              if (itemPrice.length > 0) {
+                if (
+                  (formState?.values?.part_list[index]?.dimensions.length > 0 &&
+                    formState?.values?.part_list[index]?.dimensions[j] !==
+                      formState?.initial.part_list[index]?.dimensions[j]) ||
+                  formState?.values?.part_list[index]?.woodtype !==
+                    formState?.initial.part_list[index]?.woodtype ||
+                  formState?.values?.part_list[index]?.box_bottom_thickness !==
+                    formState?.initial.part_list[index]?.box_bottom_thickness ||
+                  formState?.values?.part_list[index]?.box_finish !==
+                    formState?.initial.part_list[index]?.box_finish ||
+                  formState?.values?.part_list[index]?.box_notch !==
+                    formState?.initial.part_list[index]?.box_notch ||
+                  formState?.values?.part_list[index]?.box_bottom_woodtype !==
+                    formState?.initial.part_list[index]?.box_bottom_woodtype ||
+                  formState?.values?.part_list[index]?.box_assembly !==
+                    formState?.initial.part_list[index]?.box_assembly ||
+                  formState?.values?.part_list[index]?.box_thickness !==
+                    formState?.initial.part_list[index]?.box_thickness
+                ) {
+                  return Math.floor(price * 100) / 100;
+                } else {
+                  return Math.round(itemPrice[index][j] * 100) / 100;
+                }
+              }
             } else {
               return 0;
             }
