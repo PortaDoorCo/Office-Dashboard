@@ -351,7 +351,6 @@ export const itemPriceSelector = createSelector(
                 eval(pricer && pricer.face_frame_pricing) + extraCost;
 
               if (height > -1) {
-                return Math.floor(price * 100) / 100;
                 if (itemPrice.length > 0) {
                   if (
                     (formState?.values?.part_list[index]?.dimensions.length >
@@ -370,6 +369,8 @@ export const itemPriceSelector = createSelector(
                   } else {
                     return Math.round(itemPrice[index][j] * 100) / 100;
                   }
+                } else {
+                  return Math.floor(price * 100) / 100;
                 }
               } else {
                 return 0;
@@ -752,7 +753,6 @@ export const itemPriceSelector = createSelector(
               }
 
               if (height > -1) {
-                return Math.floor(price * 100) / 100;
                 if (itemPrice.length > 0) {
                   if (
                     (formState?.values?.part_list[index]?.dimensions.length >
@@ -776,6 +776,8 @@ export const itemPriceSelector = createSelector(
                   } else {
                     return Math.round(itemPrice[index][j] * 100) / 100;
                   }
+                } else {
+                  return Math.floor(price * 100) / 100;
                 }
               } else {
                 return 0;
@@ -809,7 +811,6 @@ export const itemPriceSelector = createSelector(
             const price = eval(pricer.drawer_box_pricing) + extraCost;
 
             if (height > -1) {
-              return Math.floor(price * 100) / 100;
               if (itemPrice.length > 0) {
                 if (
                   (formState?.values?.part_list[index]?.dimensions.length > 0 &&
@@ -834,6 +835,8 @@ export const itemPriceSelector = createSelector(
                 } else {
                   return Math.round(itemPrice[index][j] * 100) / 100;
                 }
+              } else {
+                return Math.floor(price * 100) / 100;
               }
             } else {
               return 0;
