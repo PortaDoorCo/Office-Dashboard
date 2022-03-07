@@ -37,7 +37,10 @@ const Loader = (props) => {
 
   return (
     <div
-      style={{ backgroundImage: `url(${bgImage})`, backgroundColor: '#F0F8FF' }}
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundColor: '#F0F8FF',
+      }}
     >
       {/* <video autoPlay muted loop id="myVideo">
         <source src={video_bg[getRandomInt(3)]} type="video/mp4" />

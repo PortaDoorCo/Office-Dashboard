@@ -26,10 +26,10 @@ const height_limit = (value) =>
   numQty(value) < 2.125
     ? 'Height is too small'
     : numQty(value) > 33
-      ? 'Height is too big'
-      : value
-        ? undefined
-        : 'Required';
+    ? 'Height is too big'
+    : value
+    ? undefined
+    : 'Required';
 
 const OrderTable = ({
   fields,
@@ -42,13 +42,15 @@ const OrderTable = ({
   edit,
   dispatch,
   formSyncErrors,
-  role
+  role,
 }) => {
   const [standardSize, setStandardSize] = useState(true);
 
   const clearNotes = (index, e) => {
     dispatch(change('Order', `part_list[${i}].dimensions[${index}].notes`, ''));
   };
+
+  console.log({ formState });
 
   const checkSize = (e, index) => {
     switch (numQty(e.target.value)) {
@@ -78,14 +80,16 @@ const OrderTable = ({
         break;
       default:
         // code block
-        setStandardSize(false);
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].notes`,
-            'CANNOT WORK WITH UNDER MOUNT'
-          )
-        );
+        if (formState?.part_list[i]?.box_notch?.id !== 1) {
+          setStandardSize(false);
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].notes`,
+              'CANNOT WORK WITH UNDER MOUNT'
+            )
+          );
+        }
     }
   };
 
@@ -329,18 +333,18 @@ const OrderTable = ({
               role?.type === 'administrator' ||
               role?.type === 'management' ||
               role?.type === 'office' ? (
-                  <Col xs="3">
-                    <strong>Extra Design Cost</strong>
-                    <Field
-                      name={`${table}.extraCost`}
-                      type="text"
-                      component={renderPrice}
-                      edit={edit}
-                      label="extraCost"
-                      {...currencyMask}
-                    />
-                  </Col>
-                ) : null}
+                <Col xs="3">
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    edit={edit}
+                    label="extraCost"
+                    {...currencyMask}
+                  />
+                </Col>
+              ) : null}
             </Row>
             <br />
           </Fragment>
