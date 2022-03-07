@@ -25,13 +25,7 @@ const Deliveries = (props) => {
       {
         id: 2,
         title: `${moment().format('M/D/YYYY')} - Deliveries`,
-        cards: [
-          {
-            id: 9,
-            title: 'Card title 9',
-            description: 'Card content',
-          },
-        ],
+        cards: [],
       },
     ],
   });

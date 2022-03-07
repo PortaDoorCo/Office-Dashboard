@@ -77,14 +77,18 @@ const Scheduler = (props) => {
             <Board
               onCardDragEnd={handleCardMove}
               disableColumnDrag
-              renderCard={({ title }, { removeCard, dragging }) => (
+              renderCard={(
+                { title, description },
+                { removeCard, dragging }
+              ) => (
                 <Card
                   style={{ width: '400px' }}
                   dragging={dragging}
                   onMouseDown={handleMouseDown}
                   onMouseUp={handleMouseUp}
                 >
-                  {title}
+                  <h4>{title}</h4>
+                  <p>{description}</p>
                 </Card>
               )}
             >

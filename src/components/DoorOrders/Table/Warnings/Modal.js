@@ -1,30 +1,31 @@
 import React from 'react';
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import numQty from 'numeric-quantity';
 
 const WarningModal = (props) => {
-
-  const { className, toggle, modal, warningType, twoWide, twoHigh, dispatch, change, prices } = props;
-
-  
+  const {
+    className,
+    toggle,
+    modal,
+    warningType,
+    twoWide,
+    twoHigh,
+    dispatch,
+    change,
+    prices,
+  } = props;
 
   const toggleAction = () => {
     const { value, tag, index } = warningType;
-    switch(tag) {
+    switch (tag) {
       case 'height':
-        if(numQty(value) >= 48) {
+        if (numQty(value) >= 48) {
           twoHigh(index, null, 2);
         }
         toggle();
         break;
       case 'width':
-        if(numQty(value) >= 24) {
+        if (numQty(value) >= 24) {
           twoWide(index, null, 2);
         }
         toggle();
@@ -37,10 +38,10 @@ const WarningModal = (props) => {
 
   const toggleCancel = () => {
     const { value, tag, i, index, part } = warningType;
-    switch(tag) {
+    switch (tag) {
       case 'height':
         // code block
-        if(numQty(value) >= 48) {
+        if (numQty(value) >= 48) {
           dispatch(
             change(
               'Order',
@@ -52,7 +53,7 @@ const WarningModal = (props) => {
         toggle();
         break;
       case 'width':
-        if(numQty(value) >= 24) {
+        if (numQty(value) >= 24) {
           dispatch(
             change(
               'Order',
@@ -73,20 +74,24 @@ const WarningModal = (props) => {
     <div>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>{warningType.title}</ModalHeader>
-        <ModalBody>
-          {warningType.message}
-        </ModalBody>
-        {warningType.sub_tag === 'width_less_than' ?
+        <ModalBody>{warningType.message}</ModalBody>
+        {warningType.sub_tag === 'width_less_than' ||
+        warningType.sub_tag === 'no_unequal_panels' ? (
           <ModalFooter>
-            <Button color="danger" onClick={toggle}>{warningType.deny}</Button>
+            <Button color="danger" onClick={toggle}>
+              {warningType.deny}
+            </Button>
           </ModalFooter>
-          : 
+        ) : (
           <ModalFooter>
-            <Button color="primary" onClick={toggleAction}>{warningType.action}</Button>{' '}
-            <Button color="danger" onClick={toggleCancel}>{warningType.deny}</Button>
+            <Button color="primary" onClick={toggleAction}>
+              {warningType.action}
+            </Button>{' '}
+            <Button color="danger" onClick={toggleCancel}>
+              {warningType.deny}
+            </Button>
           </ModalFooter>
-        }
-
+        )}
       </Modal>
     </div>
   );
