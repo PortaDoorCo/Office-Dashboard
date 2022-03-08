@@ -13,16 +13,14 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
 
     const headerInfo = [
       {
-        margin:[40,40,40,10],
+        margin: [40, 40, 40, 10],
         columns: [
-          { 
-            stack: [
-              {text: 'INVOICE', margin:[0,0,0,-10]},
-            ],
+          {
+            stack: [{ text: 'INVOICE', margin: [0, 0, 0, -10] }],
             style: 'headerFont',
-            id: 'header1'
+            id: 'header1',
           },
-  
+
           {
             stack: [
               { text: 'Porta Door Co. Inc.', alignment: 'center' },
@@ -33,36 +31,39 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
                 alignment: 'center',
                 margin: [0, 0, 0, 10],
               },
-              { text: data.DateInvoiced ? moment(data.DateInvoiced).format('DD-MMM-YYYY') : "TBA", alignment: 'center' },
+              {
+                text: data.DateInvoiced
+                  ? moment(data.DateInvoiced).format('DD-MMM-YYYY')
+                  : 'TBA',
+                alignment: 'center',
+              },
             ],
             // width: 200,
-            alignment: 'center'
+            alignment: 'center',
           },
           {
             stack: [
               {
                 text:
-                      data.job_info.Rush && data.job_info.Sample
-                        ? 'Sample / Rush'
-                        : data.job_info.Rush
-                          ? 'Rush'
-                          : data.job_info.Sample
-                            ? 'Sample'
-                            : '',
+                  data.job_info.Rush && data.job_info.Sample
+                    ? 'Sample / Rush'
+                    : data.job_info.Rush
+                    ? 'Rush'
+                    : data.job_info.Sample
+                    ? 'Sample'
+                    : '',
                 alignment: 'right',
                 style: 'rushFonts',
               },
               {
-                text: `Order #: ${data.orderNum}`,
+                text: `Order #: ${data.id + 100}`,
                 alignment: 'right',
                 style: 'headerFont',
               },
               {
                 text: `Due Date: ${
                   data.Shipping_Scheduled
-                    ? `${moment(data.job_info.DueDate).format(
-                      'MM/DD/YYYY'
-                    )}`
+                    ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
                     : 'TBD'
                 }`,
                 alignment: 'right',
@@ -87,79 +88,85 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
         ],
       },
       {
-        margin:[40,0],
+        margin: [40, 0],
         columns: [
-          { 
+          {
             width: 200,
             stack: [
-              { columns: [
-                {
-                  text: 'Customer - ',
-                  width: 60
-                },
-                { 
-                  
-                  stack: [
-                    { text: `${data.job_info.customer.Company}` },
-                    // {
-                    //   text: `${
-                    //     data.companyprofile.Contact
-                    //       ? data.companyprofile.Contact
-                    //       : ''
-                    //   }`,
-                    //   style: 'fonts',
-                    // },
-                    {
-                      text: `${
-                        data.companyprofile.Address1
-                          ? data.companyprofile.Address1
-                          : ''
-                      }`,
-                      style: 'fonts',
-                    },
-                    {
-                      text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
-                      style: 'fonts',
-                    },
-                    { text: `Ph: ${data.companyprofile.Phone1}`, style: 'fonts' },
-                    data.companyprofile.Fax ? 
+              {
+                columns: [
+                  {
+                    text: 'Customer - ',
+                    width: 60,
+                  },
+                  {
+                    stack: [
+                      { text: `${data.job_info.customer.Company}` },
+                      // {
+                      //   text: `${
+                      //     data.companyprofile.Contact
+                      //       ? data.companyprofile.Contact
+                      //       : ''
+                      //   }`,
+                      //   style: 'fonts',
+                      // },
                       {
-                        text: `Fax: ${
-                          data.companyprofile.Fax ? data.companyprofile.Fax : ''
+                        text: `${
+                          data.companyprofile.Address1
+                            ? data.companyprofile.Address1
+                            : ''
                         }`,
                         style: 'fonts',
-                        margin: [0, 0, 0, 10],
-                      } : null,
-                    {
-                      text: `Terms: ${
-                        data.companyprofile.PMT_TERMS
-                          ? data.companyprofile.PMT_TERMS
-                          : ''
-                      }`,
-                      style: 'fonts',
-                    },
-                  ],
-                }
-              ],
-  
-              style: 'fontsBold',
-              margin: [0, 0, 0, 0],
+                      },
+                      {
+                        text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                        style: 'fonts',
+                      },
+                      {
+                        text: `Ph: ${data.companyprofile.Phone1}`,
+                        style: 'fonts',
+                      },
+                      data.companyprofile.Fax
+                        ? {
+                            text: `Fax: ${
+                              data.companyprofile.Fax
+                                ? data.companyprofile.Fax
+                                : ''
+                            }`,
+                            style: 'fonts',
+                            margin: [0, 0, 0, 10],
+                          }
+                        : null,
+                      {
+                        text: `Terms: ${
+                          data.companyprofile.PMT_TERMS
+                            ? data.companyprofile.PMT_TERMS
+                            : ''
+                        }`,
+                        style: 'fonts',
+                      },
+                    ],
+                  },
+                ],
+
+                style: 'fontsBold',
+                margin: [0, 0, 0, 0],
               },
             ],
             style: 'headerFont',
           },
-  
+
           {
             text: '',
             // width: 200,
-            alignment: 'center'
+            alignment: 'center',
           },
           {
             stack: [
               {
-                margin:[10,0,0,0],
+                margin: [10, 0, 0, 0],
                 columns: [
-                  { 
+                  {
                     width: 40,
                     stack: [
                       {
@@ -227,9 +234,8 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
                         margin: [0, 0, 0, 0],
                       },
                     ],
-                  }
-                ]
-    
+                  },
+                ],
               },
             ],
           },
@@ -245,25 +251,18 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
 
     let Content = [];
 
-
     Content.push(Invoice(data, pricing));
-    
-
-    
 
     const rowLen = Content.length;
-    const ContentSorted = Content.map((i,index) => {
+    const ContentSorted = Content.map((i, index) => {
       if (rowLen === index + 1) {
         return [i];
       } else {
-        return [
-          i,
-          { text: '', pageBreak: 'before' }
-        ];
+        return [i, { text: '', pageBreak: 'before' }];
       }
     });
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',
@@ -273,33 +272,37 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
       header: function (currentPage) {
         return headerInfo;
       },
-      footer: function(currentPage, pageCount) { 
+      footer: function (currentPage, pageCount) {
         return {
           columns: [
             {
               stack: [
                 {
                   text: moment().format('MM-D-YYYY'),
-                  style: 'warrantyFont'
+                  style: 'warrantyFont',
                 },
                 {
-                  text: currentPage.toString() + ' of ' + pageCount, style: 'warrantyFont'
-                }
+                  text: currentPage.toString() + ' of ' + pageCount,
+                  style: 'warrantyFont',
+                },
               ],
-              width: 250
+              width: 250,
             },
             {
               stack: [
                 {
-                  text: ' ', style: 'warrantyFont',
+                  text: ' ',
+                  style: 'warrantyFont',
                 },
                 {
-                  text: `UNITS: ${totalUnits}    ${fileName}`, style: 'warrantyFont', alignment: 'right'
-                }
-              ]  
-            }
+                  text: `UNITS: ${totalUnits}    ${fileName}`,
+                  style: 'warrantyFont',
+                  alignment: 'right',
+                },
+              ],
+            },
           ],
-          margin: [40,10,40,0]
+          margin: [40, 10, 40, 0],
         };
       },
       styles: {

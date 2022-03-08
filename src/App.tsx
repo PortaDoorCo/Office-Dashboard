@@ -182,7 +182,7 @@ class App extends Component<PropTypes, StateTypes> {
       'order_submitted',
       (res: any) => (
         NotificationManager.success(
-          `Order #${res.orderNum} added`,
+          `Order #${res.id + 100} added`,
           'New Order',
           2000
         ),
@@ -191,9 +191,9 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'order_updated',
-      (res: { orderNum: number }) => (
+      (res: { id: number }) => (
         NotificationManager.success(
-          `Order #${res.orderNum} updated`,
+          `Order #${res.id + 100} updated`,
           'Order Updated',
           2000
         ),
@@ -202,9 +202,9 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'status_updated',
-      (res: { orderNum: number }) => (
+      (res: { id: number }) => (
         NotificationManager.success(
-          `Order #${res.orderNum} has been updated`,
+          `Order #${res.id + 100} has been updated`,
           'An order has been updated',
           2000
         ),

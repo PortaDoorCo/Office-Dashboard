@@ -158,7 +158,7 @@ const OrderTable = (props) => {
               moment(startDate).startOf('day').valueOf() &&
             moment(item.DateOrdered || date) <=
               moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText?.toLowerCase()
               ) ||
@@ -180,7 +180,7 @@ const OrderTable = (props) => {
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
             item.status?.includes(filterStatus) &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100).toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText?.toLowerCase()
               ) ||
@@ -206,7 +206,7 @@ const OrderTable = (props) => {
               item.DateOrdered ||
                 (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -237,7 +237,7 @@ const OrderTable = (props) => {
               item.DateInvoiced ||
                 (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100).toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -268,7 +268,7 @@ const OrderTable = (props) => {
               item.DateCompleted ||
                 (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100).toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -299,7 +299,7 @@ const OrderTable = (props) => {
               item.DateShipped ||
                 (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -333,7 +333,7 @@ const OrderTable = (props) => {
             !item.status.includes('Ordered') &&
             !item.status.includes('Shipped') &&
             !item.status.includes('Complete') &&
-            (item.orderNum.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -362,7 +362,7 @@ const OrderTable = (props) => {
             moment(item.DateOrdered || dateOrdered[0]?.date || date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status?.includes(filterStatus) &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText?.toLowerCase()
               ) ||
@@ -411,7 +411,7 @@ const OrderTable = (props) => {
   const columns = [
     {
       name: 'Order #',
-      selector: 'orderNum',
+      cell: (row) => row.id + 100,
       sortable: true,
     },
     {

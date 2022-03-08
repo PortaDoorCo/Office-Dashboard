@@ -250,7 +250,7 @@ class OrderPage extends Component {
       status: 'Quote',
       tracking: [
         {
-          status: `Order Copied from #${data.orderNum}`,
+          status: `Order Copied from #${data.id + 100}`,
           date: moment().format(),
           user: user ? user?.FirstName : '',
         },
@@ -1026,7 +1026,7 @@ class OrderPage extends Component {
           id="scrollModal"
         >
           <ModalHeader toggle={props.toggle}>
-            Order #{selectedOrder && selectedOrder.orderNum}
+            Order #{selectedOrder && selectedOrder.id + 100}
           </ModalHeader>
           <ModalBody>
             {this.props.edit ? (

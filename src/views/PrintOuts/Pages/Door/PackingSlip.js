@@ -32,7 +32,7 @@ const DoorPDF = async (
         columns: [
           {
             stack: [
-              { text: `Our Order: ${data.orderNum}`, bold: true },
+              { text: `Our Order: ${data.id + 100}`, bold: true },
               { qr: `${data.id}`, fit: '75', margin: [0, 0, 0, 5] },
               {
                 text: `Job: ${
@@ -119,14 +119,14 @@ const DoorPDF = async (
                       },
                       data.companyprofile.Fax
                         ? {
-                          text: `Fax: ${
-                            data.companyprofile.Fax
-                              ? data.companyprofile.Fax
-                              : ''
-                          }`,
-                          style: 'fonts',
-                          margin: [0, 0, 0, 10],
-                        }
+                            text: `Fax: ${
+                              data.companyprofile.Fax
+                                ? data.companyprofile.Fax
+                                : ''
+                            }`,
+                            style: 'fonts',
+                            margin: [0, 0, 0, 10],
+                          }
                         : null,
                     ],
                   },
@@ -245,7 +245,7 @@ const DoorPDF = async (
       }
     });
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',

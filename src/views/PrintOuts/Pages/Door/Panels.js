@@ -5,7 +5,7 @@ import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import PanelsPage from '../../Door_PDF/PanelsPage';
 
-const DoorPDF =  async (
+const DoorPDF = async (
   data,
   designs,
   edges,
@@ -28,7 +28,7 @@ const DoorPDF =  async (
 
     const headerInfo = [
       {
-        margin: [40,40,40,0],
+        margin: [40, 40, 40, 0],
         columns: [
           {
             stack: [
@@ -52,20 +52,18 @@ const DoorPDF =  async (
                   data.job_info.Rush && data.job_info.Sample
                     ? 'Sample / Rush'
                     : data.job_info.Rush
-                      ? 'Rush'
-                      : data.job_info.Sample
-                        ? 'Sample'
-                        : '',
+                    ? 'Rush'
+                    : data.job_info.Sample
+                    ? 'Sample'
+                    : '',
                 alignment: 'right',
                 bold: true,
               },
-              { text: `Order #: ${data.orderNum}`, alignment: 'right' },
+              { text: `Order #: ${data.id + 100}`, alignment: 'right' },
               {
                 text: `Due Date: ${
                   data.Shipping_Scheduled
-                    ? `${moment(data.job_info.DueDate).format(
-                      'MM/DD/YYYY'
-                    )}`
+                    ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
                     : 'TBD'
                 }`,
                 alignment: 'right',
@@ -77,7 +75,7 @@ const DoorPDF =  async (
       {
         stack: [
           {
-            text: `${data.orderNum}`,
+            text: `${data.id + 100}`,
             style: 'orderNum',
           },
           {
@@ -106,10 +104,7 @@ const DoorPDF =  async (
 
     let Content = [];
 
-
     Content.push(PanelsPage(data, breakdowns, 'PANELS'));
-    
-
 
     const rowLen = Content.length;
     const ContentSorted = Content.map((i, index) => {
@@ -120,9 +115,9 @@ const DoorPDF =  async (
       }
     });
 
-    // 
+    //
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',
@@ -210,16 +205,11 @@ const DoorPDF =  async (
       },
     };
 
-
     // pdfMake.createPdf(documentDefinition).open();
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
 
-
-  
-
     return pdfDocGenerator.getBlob((blob) => {
-      
       // blobUrl()
       resolve(blob);
     });

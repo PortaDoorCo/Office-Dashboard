@@ -68,7 +68,7 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
                 style: 'rushFonts',
               },
               {
-                text: `Order #: ${data.orderNum}`,
+                text: `Order #: ${data.id + 100}`,
                 alignment: 'right',
                 style: 'headerFont',
               },
@@ -273,7 +273,7 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
       }
     });
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',
@@ -350,7 +350,6 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
       },
     };
 
-    // const fileName = `Order_${data.orderNum}`
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     return pdfDocGenerator.getBlob((blob) => {
       // blobUrl()

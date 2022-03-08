@@ -3,15 +3,12 @@ import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 
 const sleep = (milliseconds) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
-
 const edges = async (data) => {
-
   console.log({ data_length: data.length });
   for (const d of data) {
-
     await sleep(100);
 
     console.log({ d });
@@ -49,57 +46,56 @@ const edges = async (data) => {
       if (d.orderType === 'Door Order') {
         exportCsv = itemNumCounter
           ? itemNumCounter.part_list.map(async (f, index) => {
-            f.dimensions.forEach((j, ind) => {
-              if (
-                f.orderType.value === 'DF' ||
-                numQty(j.width) > numQty(j.height)
-              ) {
-                a.push([
-                  d.orderNum,
-                  '15DF',
-                  j.qty,
-                  f.woodtype && f.woodtype.NAME,
-                  Math.round(numQty(j.width) * 16) / 16,
-                  Math.round(numQty(j.height) * 16) / 16,
-                  f.edge && f.edge.NAME,
-                  f.thickness?.thickness_values
-                    ? f.thickness?.thickness_values
-                    : f.thickness?.thickness_1 === '4/4'
+              f.dimensions.forEach((j, ind) => {
+                if (
+                  f.orderType.value === 'DF' ||
+                  numQty(j.width) > numQty(j.height)
+                ) {
+                  a.push([
+                    d.id + 100,
+                    '15DF',
+                    j.qty,
+                    f.woodtype && f.woodtype.NAME,
+                    Math.round(numQty(j.width) * 16) / 16,
+                    Math.round(numQty(j.height) * 16) / 16,
+                    f.edge && f.edge.NAME,
+                    f.thickness?.thickness_values
+                      ? f.thickness?.thickness_values
+                      : f.thickness?.thickness_1 === '4/4'
                       ? 0.75
                       : f.thickness?.thickness_1 === '5/4'
-                        ? 1
-                        : f.thickness?.thickness_1 === '6/4'
-                          ? 1.25
-                          : 0.75,
-                ]);
-              } else {
-                a.push([
-                  d.orderNum,
-                  'D',
-                  j.qty,
-                  f.woodtype && f.woodtype.NAME,
-                  Math.round(numQty(j.width) * 16) / 16,
-                  Math.round(numQty(j.height) * 16) / 16,
-                  f.edge && f.edge.NAME,
-                  f.thickness?.thickness_values
-                    ? f.thickness?.thickness_values
-                    : f.thickness?.thickness_1 === '4/4'
+                      ? 1
+                      : f.thickness?.thickness_1 === '6/4'
+                      ? 1.25
+                      : 0.75,
+                  ]);
+                } else {
+                  a.push([
+                    d.id + 100,
+                    'D',
+                    j.qty,
+                    f.woodtype && f.woodtype.NAME,
+                    Math.round(numQty(j.width) * 16) / 16,
+                    Math.round(numQty(j.height) * 16) / 16,
+                    f.edge && f.edge.NAME,
+                    f.thickness?.thickness_values
+                      ? f.thickness?.thickness_values
+                      : f.thickness?.thickness_1 === '4/4'
                       ? 0.75
                       : f.thickness?.thickness_1 === '5/4'
-                        ? 1
-                        : f.thickness?.thickness_1 === '6/4'
-                          ? 1.25
-                          : 0.75,
-                ]);
-              }
-            });
-            return a;
-          })
+                      ? 1
+                      : f.thickness?.thickness_1 === '6/4'
+                      ? 1.25
+                      : 0.75,
+                  ]);
+                }
+              });
+              return a;
+            })
           : [];
       }
 
       if (d.orderType === 'Door Order') {
-
         const newItem = a.map((i, ind) => {
           return [...i, ind + 1, `*${i[0]}X${('00' + (ind + 1)).slice(-3)}*`];
         });
@@ -110,13 +106,12 @@ const edges = async (data) => {
         let csvContent = newItem.map((e) => e.join(',')).join('\n');
 
         let myParams = {
-          path: `/lips/${d.orderNum}.csv`,
+          path: `/lips/${d.id + 100}.csv`,
           mode: 'add',
           autorename: true,
           mute: false,
           strict_conflict: false,
         };
-
 
         // await sleep(500);
 
@@ -134,7 +129,7 @@ const edges = async (data) => {
           );
 
           NotificationManager.success(
-            `#${d.orderNum} Edges Successfully Exported!`,
+            `#${d.id + 100} Edges Successfully Exported!`,
             'Success',
             2000
           );

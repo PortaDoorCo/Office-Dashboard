@@ -14,7 +14,6 @@ const fraction = (num) => {
 };
 
 export default (data, breakdowns) => {
-
   // const newData = data.part_list.map((i) => {
   //   return {
   //     ...i,
@@ -188,8 +187,8 @@ export default (data, breakdowns) => {
               i.thickness.includes('4/4')
                 ? '4/4'
                 : i.thickness.includes('5/4')
-                  ? '5/4'
-                  : '6/4'
+                ? '5/4'
+                : '6/4'
             }" Thickness - Stile/Rail/Mullion Material Needed: ${i.BoardFT.toFixed(
               2
             )}`,
@@ -303,8 +302,8 @@ export default (data, breakdowns) => {
                 i.thickness.includes('4/4')
                   ? '4/4'
                   : i.thickness.includes('5/4')
-                    ? '5/4'
-                    : '6/4'
+                  ? '5/4'
+                  : '6/4'
               }" Thickness ${i.panel.NAME} Material Needed: ${i.BoardFT.toFixed(
                 2
               )}`,
@@ -350,14 +349,14 @@ export default (data, breakdowns) => {
                 data.job_info.Rush && data.job_info.Sample
                   ? 'Sample / Rush'
                   : data.job_info.Rush
-                    ? 'Rush'
-                    : data.job_info.Sample
-                      ? 'Sample'
-                      : '',
+                  ? 'Rush'
+                  : data.job_info.Sample
+                  ? 'Sample'
+                  : '',
               alignment: 'right',
               bold: true,
             },
-            { text: `Order #: ${data.orderNum}`, alignment: 'right' },
+            { text: `Order #: ${data.id + 100}`, alignment: 'right' },
             {
               text: `Due Date: ${
                 data.status !== 'Quote'
@@ -401,31 +400,33 @@ export default (data, breakdowns) => {
           alignment: 'center',
           style: 'fontsBold',
           stack: [
-            data.job_info?.Shop_Notes ?{
-              text: `${
-                data.job_info?.Shop_Notes
-                  ? data.job_info?.Shop_Notes?.toUpperCase()
-                  : ''
-              }`,
-            } : null,
-            { text : data.misc_items.map(i => {
-              if(i.category === 'preselect'){
-                if(i.item.NAME.includes('Delivery')){
-                  return null;
-                } else {
-                  return `${i.item?.NAME} \n`;
+            data.job_info?.Shop_Notes
+              ? {
+                  text: `${
+                    data.job_info?.Shop_Notes
+                      ? data.job_info?.Shop_Notes?.toUpperCase()
+                      : ''
+                  }`,
                 }
-                        
-              } else {
-                return `${i.item2} \n`;
-              }
-            })
+              : null,
+            {
+              text: data.misc_items.map((i) => {
+                if (i.category === 'preselect') {
+                  if (i.item.NAME.includes('Delivery')) {
+                    return null;
+                  } else {
+                    return `${i.item?.NAME} \n`;
+                  }
+                } else {
+                  return `${i.item2} \n`;
+                }
+              }),
             },
-          ]
+          ],
         },
         {
-          text: ''
-        }
+          text: '',
+        },
       ],
       margin: [0, 10, 0, 20],
     },
@@ -441,14 +442,14 @@ export default (data, breakdowns) => {
     },
     TotalSolidDFs(data) > 0
       ? {
-        columns: [
-          {
-            text: `Total Number of Solid DF: ${TotalSolidDFs(data)}`,
-            style: 'fonts',
-          },
-        ],
-        margin: [0, 0, 0, 10],
-      }
+          columns: [
+            {
+              text: `Total Number of Solid DF: ${TotalSolidDFs(data)}`,
+              style: 'fonts',
+            },
+          ],
+          margin: [0, 0, 0, 10],
+        }
       : null,
     {
       columns: [

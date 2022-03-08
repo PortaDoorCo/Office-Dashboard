@@ -82,16 +82,18 @@ const SalesReport = (props) => {
         if (filterText?.length > 0) {
           return (
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : item.created_at)
+              item.DateOrdered ||
+                (dateOrdered.length > 0
+                  ? dateOrdered[0]?.date
+                  : item.created_at)
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : item.created_at)
+              item.DateOrdered ||
+                (dateOrdered.length > 0
+                  ? dateOrdered[0]?.date
+                  : item.created_at)
             ) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -102,14 +104,16 @@ const SalesReport = (props) => {
         } else {
           return (
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : item.created_at)
+              item.DateOrdered ||
+                (dateOrdered.length > 0
+                  ? dateOrdered[0]?.date
+                  : item.created_at)
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : item.created_at)
+              item.DateOrdered ||
+                (dateOrdered.length > 0
+                  ? dateOrdered[0]?.date
+                  : item.created_at)
             ) <= moment(endDate).endOf('day').valueOf()
           );
         }
@@ -118,16 +122,14 @@ const SalesReport = (props) => {
         if (filterText?.length > 0) {
           return (
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : '1/1/1900')
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : '1/1/1900')
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -138,14 +140,12 @@ const SalesReport = (props) => {
         } else {
           return (
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : '1/1/1900')
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateOrdered || (dateOrdered.length > 0
-                ? dateOrdered[0]?.date
-                : '1/1/1900')
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf()
           );
         }
@@ -153,16 +153,14 @@ const SalesReport = (props) => {
         if (filterText?.length > 0) {
           return (
             moment(
-              item.DateInvoiced || (dateInvoiced.length > 0
-                ? dateInvoiced[0]?.date
-                : '1/1/1900')
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateInvoiced || (dateInvoiced.length > 0
-                ? dateInvoiced[0]?.date
-                : '1/1/1900')
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -173,14 +171,12 @@ const SalesReport = (props) => {
         } else {
           return (
             moment(
-              item.DateInvoiced || (dateInvoiced.length > 0
-                ? dateInvoiced[0]?.date
-                : '1/1/1900')
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateInvoiced || (dateInvoiced.length > 0
-                ? dateInvoiced[0]?.date
-                : '1/1/1900')
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf()
           );
         }
@@ -188,34 +184,32 @@ const SalesReport = (props) => {
         if (filterText?.length > 0) {
           return (
             moment(
-              item.DateCompleted || (dateCompleted.length > 0
-                ? dateCompleted[0]?.date
-                : '1/1/1900')
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateCompleted || (dateCompleted.length > 0
-                ? dateCompleted[0]?.date
-                : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf()
-            (item.orderNum?.toString().includes(filterText) ||
-              item.companyprofile?.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info?.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <=
+              moment(endDate).endOf('day').valueOf()(
+                (item.id + 100)?.toString().includes(filterText) ||
+                  item.companyprofile?.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info?.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase())
+              )
           );
         } else {
           return (
             moment(
-              item.DateCompleted || (dateCompleted.length > 0
-                ? dateCompleted[0]?.date
-                : '1/1/1900')
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateCompleted || (dateCompleted.length > 0
-                ? dateCompleted[0]?.date
-                : '1/1/1900')
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf()
           );
         }
@@ -223,16 +217,14 @@ const SalesReport = (props) => {
         if (filterText?.length > 0) {
           return (
             moment(
-              item.DateShipped || (dateShipped.length > 0
-                ? dateShipped[0]?.date
-                : '1/1/1900')
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateShipped || (dateShipped.length > 0
-                ? dateShipped[0]?.date
-                : '1/1/1900')
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -243,14 +235,12 @@ const SalesReport = (props) => {
         } else {
           return (
             moment(
-              item.DateShipped || (dateShipped.length > 0
-                ? dateShipped[0]?.date
-                : '1/1/1900')
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
             ) >= moment(startDate).startOf('day').valueOf() &&
             moment(
-              item.DateShipped || (dateShipped.length > 0
-                ? dateShipped[0]?.date
-                : '1/1/1900')
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf()
           );
         }
@@ -260,7 +250,7 @@ const SalesReport = (props) => {
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
             item.status?.includes(filterStatus) &&
-            (item.orderNum?.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile?.Company.toLowerCase().includes(
                 filterText?.toLowerCase()
               ) ||
@@ -284,7 +274,6 @@ const SalesReport = (props) => {
     orders.length > 0
       ? new Date(orders[orders.length - 1].created_at)
       : new Date();
-
 
   return role &&
     (role.type === 'authenticated' ||
@@ -347,7 +336,7 @@ const SalesReport = (props) => {
                   defaultValue="All"
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
-                  <option value={"All"}>All</option>
+                  <option value={'All'}>All</option>
                   {status.map((i, index) => (
                     <option key={index} value={i.value}>
                       {i.value}
@@ -526,7 +515,7 @@ const SalesReport = (props) => {
                   defaultValue="All"
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
-                  <option value={"All"}>All</option>
+                  <option value={'All'}>All</option>
                   {status.map((i, index) => (
                     <option key={index} value={i.value}>
                       {i.value}

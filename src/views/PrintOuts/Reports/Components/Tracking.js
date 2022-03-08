@@ -31,8 +31,6 @@ export default (data, startDate, endDate, status) => {
 
     let name = i.job_info?.poNum?.length > 0 ? i.job_info?.poNum : 'None';
 
-
-
     if (i.orderType === 'Door Order') {
       i.part_list.map((part) => {
         if (part.orderType?.value === 'Door') {
@@ -74,7 +72,7 @@ export default (data, startDate, endDate, status) => {
     return tableBody.push([
       moment(i.dueDate).format('MM/DD/YYYY'),
       i.job_info.customer.Company,
-      i.orderNum,
+      i.id + 100,
       i.status,
       name,
       doors,

@@ -34,7 +34,7 @@ export default (data, breakdowns) => {
                 style: 'fonts',
               },
               {
-                text: `Order#: ${data.orderNum}`,
+                text: `Order#: ${data.id + 100}`,
                 alignment: 'center',
                 style: 'fonts',
               },

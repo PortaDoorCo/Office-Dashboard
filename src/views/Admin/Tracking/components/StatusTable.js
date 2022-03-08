@@ -108,26 +108,24 @@ const OrderTable = (props) => {
   useEffect(() => {
     const filteredOrders = orders?.filter((item) => {
       const dateOrdered = item?.tracking?.filter((x) => {
-      
         return x.status === 'Ordered';
       });
 
-      let date = new Date(item.DateOrdered || dateOrdered[0].date || item.created_at);
+      let date = new Date(
+        item.DateOrdered || dateOrdered[0].date || item.created_at
+      );
 
-      if(item.Shipping_Scheduled){
+      if (item.Shipping_Scheduled) {
         date = new Date(item.dueDate);
       }
-
-
 
       if (filterStatus === 'All') {
         if (filterText.length > 0) {
           return (
             moment(item.dueDate) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(item.dueDate) <=
-              moment(endDate).endOf('day').valueOf() &&
-            (item.orderNum.toString().includes(filterText) ||
+            moment(item.dueDate) <= moment(endDate).endOf('day').valueOf() &&
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.job_info.customer.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -139,8 +137,7 @@ const OrderTable = (props) => {
           return (
             moment(item.dueDate) >=
               moment(startDate).startOf('day').valueOf() &&
-            moment(item.dueDate) <=
-              moment(endDate).endOf('day').valueOf()
+            moment(item.dueDate) <= moment(endDate).endOf('day').valueOf()
           );
         }
       } else if (filterStatus === 'Ordered') {
@@ -151,7 +148,7 @@ const OrderTable = (props) => {
             moment(item.DateOrdered || dateOrdered[0]?.date) <=
               moment(endDate).endOf('day').valueOf() &&
             item.status === dateOrdered[0]?.status &&
-            (item.orderNum.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -171,7 +168,8 @@ const OrderTable = (props) => {
       } else if (filterStatus === 'In Production') {
         if (filterText.length > 0) {
           return (
-            moment(item.dueDate) >= moment(startDate).startOf('day').valueOf() &&
+            moment(item.dueDate) >=
+              moment(startDate).startOf('day').valueOf() &&
             moment(item.dueDate) <= moment(endDate).endOf('day').valueOf() &&
             moment(item.dueDate) <= moment(endDate).endOf('day').valueOf() &&
             !item.status.includes('Quote') &&
@@ -179,7 +177,7 @@ const OrderTable = (props) => {
             !item.status.includes('Ordered') &&
             !item.status.includes('Complete') &&
             !item.status.includes('Shipped') &&
-            (item.orderNum.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -189,7 +187,8 @@ const OrderTable = (props) => {
           );
         } else {
           return (
-            moment(item.dueDate) >= moment(startDate).startOf('day').valueOf() &&
+            moment(item.dueDate) >=
+              moment(startDate).startOf('day').valueOf() &&
             moment(item.dueDate) <= moment(endDate).endOf('day').valueOf() &&
             !item.status.includes('Quote') &&
             !item.status.includes('Invoiced') &&
@@ -203,7 +202,7 @@ const OrderTable = (props) => {
             moment(date) >= moment(startDate).startOf('day').valueOf() &&
             moment(date) <= moment(endDate).endOf('day').valueOf() &&
             item.status.includes(filterStatus) &&
-            (item.orderNum.toString().includes(filterText) ||
+            ((item.id + 100)?.toString().includes(filterText) ||
               item.companyprofile.Company.toLowerCase().includes(
                 filterText.toLowerCase()
               ) ||
@@ -263,7 +262,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Order #',
-      selector: 'orderNum',
+      cell: (row) => row.id + 100,
       sortable: true,
     },
     {
@@ -284,12 +283,17 @@ const OrderTable = (props) => {
       name: 'Date Ordered',
       cell: (row) => {
         const dateOrdered = row?.tracking?.filter((x) => {
-  
           return x.status === 'Ordered';
         });
 
         if (dateOrdered.length > 0) {
-          return <div>{moment(row.DateOrdered || dateOrdered[0].date).format('MMM Do YYYY')}</div>;
+          return (
+            <div>
+              {moment(row.DateOrdered || dateOrdered[0].date).format(
+                'MMM Do YYYY'
+              )}
+            </div>
+          );
         } else {
           return <div>TBD</div>;
         }
@@ -343,10 +347,10 @@ const OrderTable = (props) => {
               {row.job_info.Rush && row.job_info.Sample
                 ? 'Sample / Rush'
                 : row.job_info.Rush
-                  ? 'Rush'
-                  : row.job_info.Sample
-                    ? 'Sample'
-                    : ''}
+                ? 'Rush'
+                : row.job_info.Sample
+                ? 'Sample'
+                : ''}
             </Col>
           </Row>
         </div>
@@ -466,7 +470,7 @@ const OrderTable = (props) => {
                 isOutsideRange={(date) => {
                   if (date < moment(startDate)) {
                     return true; // return true if you want the particular date to be disabled
-                  }  else {
+                  } else {
                     return false;
                   }
                 }}
@@ -499,11 +503,11 @@ const OrderTable = (props) => {
               (role.type === 'authenticated' ||
                 role.type === 'owner' ||
                 role.type === 'administrator') ? (
-                  <h3>
+                <h3>
                   Order Totals: $
-                    {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
-                  </h3>
-                ) : null}
+                  {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
+                </h3>
+              ) : null}
             </Col>
           </Row>
           <Row className="mt-3">

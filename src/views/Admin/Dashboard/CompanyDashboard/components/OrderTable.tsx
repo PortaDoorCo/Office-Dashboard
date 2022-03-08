@@ -131,7 +131,7 @@ const OrderTable = (props: TablePropTypes) => {
         ? orders?.filter((item) => {
             if (filterText.length > 0) {
               return (
-                item.orderNum?.toString().includes(filterText) ||
+                (item.id + 100).toString().includes(filterText) ||
                 item.job_info?.customer?.Company.toLowerCase().includes(
                   filterText.toLowerCase()
                 ) ||
@@ -188,7 +188,7 @@ const OrderTable = (props: TablePropTypes) => {
     },
     {
       name: 'Order #',
-      selector: 'orderNum',
+      cell: (row) => row.id + 100,
       sortable: true,
     },
     {

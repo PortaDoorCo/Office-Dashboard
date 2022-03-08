@@ -37,7 +37,7 @@ const DoorPDF = async (
             stack: [{ text: 'Porta Door Co. Inc.', alignment: 'center' }],
           },
           {
-            stack: [{ text: `Order #: ${data.orderNum}`, alignment: 'right' }],
+            stack: [{ text: `Order #: ${data.id + 100}`, alignment: 'right' }],
           },
         ],
       },
@@ -72,7 +72,7 @@ const DoorPDF = async (
       }
     });
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',
