@@ -50,7 +50,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
       placeholder="Search Company"
       value={filterText}
       onChange={onFilter}
-      autoComplete='off'
+      autoComplete="off"
     />
     <ClearButton type="button" color="danger" onClick={onClear}>
       X
@@ -71,29 +71,27 @@ const CompanyTable = (props) => {
   const [defaultCenter, setDefaultCenter] = useState([]);
   const [newCustomerModal, setNewCustomerModal] = useState(false);
 
-  const sortedCompanies = props.customerDB.sort((a, b) => a.Company.localeCompare(b.Company));
-
+  const sortedCompanies = props.customerDB.sort((a, b) =>
+    a.Company.localeCompare(b.Company)
+  );
 
   const filteredCompanies =
-
     sortedCompanies.length > 0
       ? sortedCompanies.filter((item) => {
-        if (user?.role?.type === 'sales') {
-          return (
-            item.Company &&
+          if (user?.role?.type === 'sales') {
+            return (
+              item.Company &&
               item.Company.toLowerCase().includes(filterText.toLowerCase()) &&
               item?.sale?.fullName?.includes(user?.sale?.fullName)
-          );
-        } else {
-          return (
-            item.Company &&
+            );
+          } else {
+            return (
+              item.Company &&
               item.Company.toLowerCase().includes(filterText.toLowerCase())
-          );
-        }
-      })
+            );
+          }
+        })
       : [];
-
-
 
   const handleRowSelected = useCallback((state) => {
     setSelectedRows(state.selectedRows);
@@ -225,12 +223,12 @@ const CompanyTable = (props) => {
       if (
         window.confirm(
           `Are you sure you want to delete:\r ${selectedRows.map(
-            (r) => r.orderNum
+            (r) => r.id + 100
           )}?`
         )
       ) {
         setToggleCleared(!toggleCleared);
-        setData(differenceBy(data, selectedRows, 'orderNum'));
+        setData(differenceBy(data, selectedRows, 'id'));
       }
     };
 

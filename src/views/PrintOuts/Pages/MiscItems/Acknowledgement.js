@@ -69,7 +69,7 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
                 style: 'rushFonts',
               },
               {
-                text: `Order #: ${data.orderNum}`,
+                text: `Order #: ${data.id + 100}`,
                 alignment: 'right',
                 style: 'headerFont',
               },
@@ -275,7 +275,7 @@ const MiscItemPDF = (data, breakdowns, p, pricing) => {
       }
     });
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',

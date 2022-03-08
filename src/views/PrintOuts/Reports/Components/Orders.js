@@ -82,8 +82,8 @@ export default (data, startDate, endDate, status) => {
 
   data.forEach((i, index) => {
     total = Math.round(100 * (total += i.total)) / 100;
-    netTotal = Math.round( 100 * (netTotal += (i.total - i.tax))) / 100;
-    taxTotal = Math.round(100 *(taxTotal += i.tax)) / 100
+    netTotal = Math.round(100 * (netTotal += i.total - i.tax)) / 100;
+    taxTotal = Math.round(100 * (taxTotal += i.tax)) / 100;
     let doors = 0;
     let dfs = 0;
     let boxes = 0;
@@ -144,7 +144,7 @@ export default (data, startDate, endDate, status) => {
       return tableBody.push([
         moment(i.created_at).format('MM/DD/YYYY'),
         i.job_info?.customer?.Company,
-        i.orderNum,
+        i.id + 100,
 
         name,
         doors,
@@ -158,7 +158,7 @@ export default (data, startDate, endDate, status) => {
         i.status,
         i.Shipping_Scheduled ? moment(i.dueDate).format('MM/DD/YYYY') : 'TBD',
         i.DateInvoiced ? moment(i.DateInvoiced).format('MM/DD/YYYY') : 'TBD',
-        i.DateShipped ? moment(i.DateShipped).format('MM/DD/YYYY') : 'TBD'
+        i.DateShipped ? moment(i.DateShipped).format('MM/DD/YYYY') : 'TBD',
       ]);
     } else {
       return tableBody.push([
@@ -166,7 +166,7 @@ export default (data, startDate, endDate, status) => {
           ? moment(i.DateOrdered || dateOrdered[0].date).format('MM/DD/YYYY')
           : 'TBD',
         i.job_info?.customer?.Company,
-        i.orderNum,
+        i.id + 100,
 
         name,
         doors,
@@ -190,7 +190,17 @@ export default (data, startDate, endDate, status) => {
   });
 
   let totalBody = [
-    ['', 'Doors', 'DFs', 'Boxes', 'Face Frames', 'Total', 'Net Total', 'Tax Total', ''],
+    [
+      '',
+      'Doors',
+      'DFs',
+      'Boxes',
+      'Face Frames',
+      'Total',
+      'Net Total',
+      'Tax Total',
+      '',
+    ],
     [
       '',
       doorTotal,

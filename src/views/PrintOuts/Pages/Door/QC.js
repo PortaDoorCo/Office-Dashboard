@@ -52,14 +52,14 @@ const DoorPDF = async (
                   data.job_info.Rush && data.job_info.Sample
                     ? 'Sample / Rush'
                     : data.job_info.Rush
-                      ? 'Rush'
-                      : data.job_info.Sample
-                        ? 'Sample'
-                        : '',
+                    ? 'Rush'
+                    : data.job_info.Sample
+                    ? 'Sample'
+                    : '',
                 alignment: 'right',
                 bold: true,
               },
-              { text: `Order #: ${data.orderNum}`, alignment: 'right' },
+              { text: `Order #: ${data.id + 100}`, alignment: 'right' },
               {
                 text: `Due Date: ${
                   data.Shipping_Scheduled
@@ -128,7 +128,7 @@ const DoorPDF = async (
       }
     });
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',

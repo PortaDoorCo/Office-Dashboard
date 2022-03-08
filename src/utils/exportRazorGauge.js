@@ -1,8 +1,8 @@
-import numQty from "numeric-quantity";
-import axios from "axios";
-import { NotificationManager } from "react-notifications";
-import Stiles from "../views/PrintOuts/Breakdowns/Doors/Stiles/Stiles";
-import Rails from "../views/PrintOuts/Breakdowns/Doors/Rails/Rails";
+import numQty from 'numeric-quantity';
+import axios from 'axios';
+import { NotificationManager } from 'react-notifications';
+import Stiles from '../views/PrintOuts/Breakdowns/Doors/Stiles/Stiles';
+import Rails from '../views/PrintOuts/Breakdowns/Doors/Rails/Rails';
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -44,7 +44,7 @@ const exportThis = async (data, breakdowns) => {
 
       const razor = itemNumCounter
         ? itemNumCounter.part_list?.map(async (f, index) => {
-            if (f.construction?.value !== "Slab") {
+            if (f.construction?.value !== 'Slab') {
               f.dimensions.forEach((j, ind) => {
                 const stile = (Stiles(j, f, breakdowns) || []).map((rail) => {
                   return rail;
@@ -56,7 +56,7 @@ const exportThis = async (data, breakdowns) => {
 
                 const stilePrint = stile.map((i) => {
                   return razorGauge.push([
-                    `${d.orderNum}`,
+                    `${d.id + 100}`,
                     `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
                     Math.round(numQty(i.width) * 16) / 16,
                     Math.round(numQty(i.height) * 16) / 16,
@@ -68,13 +68,13 @@ const exportThis = async (data, breakdowns) => {
                       ? f.profile?.NAME
                       : f.design?.NAME
                       ? f.design?.NAME
-                      : "",
+                      : '',
                   ]);
                 });
 
                 const railPrint = rail.map((i) => {
                   return razorGauge.push([
-                    `${d.orderNum}`,
+                    `${d.id + 100}`,
                     `${f.woodtype?.NAME} ${f.thickness?.thickness_1}`,
                     Math.round(numQty(i.width) * 16) / 16,
                     Math.round(numQty(i.height) * 16) / 16,
@@ -86,7 +86,7 @@ const exportThis = async (data, breakdowns) => {
                       ? f.profile?.NAME
                       : f.design?.NAME
                       ? f.design?.NAME
-                      : "",
+                      : '',
                   ]);
                 });
               });
@@ -94,15 +94,15 @@ const exportThis = async (data, breakdowns) => {
           })
         : [];
 
-      if (d.orderType === "Door Order") {
+      if (d.orderType === 'Door Order') {
         const token =
-          "D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9";
+          'D-8j9sffu8sAAAAAAAAAAemdC1XQBd05yzxnMcrWQS035ekpJ2hxb2T-SRun9TD9';
 
-        let csvContent = razorGauge.map((e) => e.join(",")).join("\r\n");
+        let csvContent = razorGauge.map((e) => e.join(',')).join('\r\n');
 
         let myParams = {
-          path: `/Razorgauge/${d.orderNum}.csv`,
-          mode: "add",
+          path: `/Razorgauge/${d.id + 100}.csv`,
+          mode: 'add',
           autorename: true,
           mute: false,
           strict_conflict: false,
@@ -110,28 +110,28 @@ const exportThis = async (data, breakdowns) => {
 
         try {
           await axios.post(
-            "https://content.dropboxapi.com/2/files/upload",
+            'https://content.dropboxapi.com/2/files/upload',
             csvContent,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
-                "Content-Type": "application/octet-stream",
-                "Dropbox-API-Arg": JSON.stringify(myParams),
+                'Content-Type': 'application/octet-stream',
+                'Dropbox-API-Arg': JSON.stringify(myParams),
               },
             }
           );
 
           NotificationManager.success(
-            `#${d.orderNum} Razor Gauge Successfully Exported!`,
-            "Success",
+            `#${d.id + 100} Razor Gauge Successfully Exported!`,
+            'Success',
             2000
           );
         } catch (err) {
-          console.log("errrrrr==>>", err);
+          console.log('errrrrr==>>', err);
           console.log({ orderNum: d.orderNum });
           NotificationManager.error(
-            "There was an problem with your upload",
-            "Error",
+            'There was an problem with your upload',
+            'Error',
             2000
           );
         }

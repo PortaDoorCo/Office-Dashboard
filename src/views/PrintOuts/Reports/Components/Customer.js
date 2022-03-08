@@ -79,7 +79,7 @@ export default (data, startDate, endDate, status) => {
       i.DateOrdered || dateOrdered.length > 0
         ? moment(i.DateOrdered || dateOrdered[0].date).format('MM/DD/YYYY')
         : 'TBD',
-      i.orderNum,
+      i.id + 100,
       name,
       doors,
       dfs,
@@ -88,7 +88,9 @@ export default (data, startDate, endDate, status) => {
       `$${i.total?.toFixed(2)}`,
       i.sale?.fullName,
       i.status,
-      i.Shipping_Scheduled ? moment(i.job_info?.DueDate).format('MM/DD/YYYY') : 'TBD'
+      i.Shipping_Scheduled
+        ? moment(i.job_info?.DueDate).format('MM/DD/YYYY')
+        : 'TBD',
     ]);
   });
 

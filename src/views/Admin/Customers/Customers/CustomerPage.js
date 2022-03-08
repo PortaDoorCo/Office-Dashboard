@@ -12,7 +12,10 @@ import {
   Table,
 } from 'reactstrap';
 import Edit from './components/Edit';
-import { uploadFilesToCustomer, deleteCustomer } from '../../../../redux/customers/actions';
+import {
+  uploadFilesToCustomer,
+  deleteCustomer,
+} from '../../../../redux/customers/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OrderPage from '../../Orders/OrderPage';
@@ -37,7 +40,7 @@ class CustomerPage extends Component {
       modal: false,
       orderEdit: false,
       orders: [],
-      deleteModal: false
+      deleteModal: false,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -95,14 +98,17 @@ class CustomerPage extends Component {
 
   render() {
     const props = this.props;
-    const { locations, defaultCenter, selectedCompanies, orders, user } = this.props;
+    const { locations, defaultCenter, selectedCompanies, orders, user } =
+      this.props;
 
     let updateOrders;
 
     if (this.props.orders.length > 0) {
-      updateOrders = orders.filter(
-        (x) => x.job_info?.customer?.id === this.props.selectedCompanies.id
-      ).sort((a, b) => b.orderNum - a.orderNum);
+      updateOrders = orders
+        .filter(
+          (x) => x.job_info?.customer?.id === this.props.selectedCompanies.id
+        )
+        .sort((a, b) => b.id - a.id);
     }
 
     return (
@@ -111,18 +117,19 @@ class CustomerPage extends Component {
           <ModalHeader toggle={props.toggle}>
             <div>
               <p>Companies</p>
-              {user?.role?.type === 'administrator' || user?.role?.type === 'owner' ?
+              {user?.role?.type === 'administrator' ||
+              user?.role?.type === 'owner' ? (
                 <Tooltip title="Delete Customer" placement="top">
                   <IconButton onClick={this.toggleDeleteModal}>
                     <Delete style={{ width: '40', height: '40' }} />
                   </IconButton>
-                </Tooltip> : null
-              }
+                </Tooltip>
+              ) : null}
             </div>
           </ModalHeader>
           <ModalBody>
             <Row>
-              <Col lg='6'>
+              <Col lg="6">
                 <Edit
                   onEdit={this.onEdit}
                   selectedCompanies={props.selectedCompanies}
@@ -138,25 +145,25 @@ class CustomerPage extends Component {
                           <tbody>
                             {selectedCompanies
                               ? selectedCompanies?.files?.map((i, index) => (
-                                <tr>
-                                  <th scope="row">{index + 1}</th>
-                                  <td>{i.name}</td>
-                                  <td style={{ textAlign: 'right' }}>
-                                    <a
-                                      href={i.url}
-                                      rel="noopener noreferrer"
-                                      target="_blank"
-                                    >
-                                      <img
-                                        src={i.url}
-                                        alt={i.name}
-                                        width="50"
-                                        height="50"
-                                      />
-                                    </a>
-                                  </td>
-                                </tr>
-                              ))
+                                  <tr>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{i.name}</td>
+                                    <td style={{ textAlign: 'right' }}>
+                                      <a
+                                        href={i.url}
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                      >
+                                        <img
+                                          src={i.url}
+                                          alt={i.name}
+                                          width="50"
+                                          height="50"
+                                        />
+                                      </a>
+                                    </td>
+                                  </tr>
+                                ))
                               : null}
                           </tbody>
                         </Table>
@@ -170,7 +177,7 @@ class CustomerPage extends Component {
                 </Row>
               </Col>
 
-              <Col lg='6'>
+              <Col lg="6">
                 <Card>
                   <div className="animated resize">
                     <Maps
@@ -178,7 +185,10 @@ class CustomerPage extends Component {
                       locations={locations}
                       defaultCenter={defaultCenter}
                     />
-                    <CompanyOrders orders={updateOrders} company={selectedCompanies?.Company} />
+                    <CompanyOrders
+                      orders={updateOrders}
+                      company={selectedCompanies?.Company}
+                    />
                   </div>
                 </Card>
                 <Card>
@@ -186,7 +196,6 @@ class CustomerPage extends Component {
                     <Notes />
                   </CardBody>
                 </Card>
-
               </Col>
             </Row>
           </ModalBody>
@@ -197,16 +206,11 @@ class CustomerPage extends Component {
           </ModalFooter>
         </Modal>
 
-        <Modal
-          isOpen={this.state.deleteModal}
-          toggle={this.toggleDeleteModal}
-        >
+        <Modal isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal}>
           <ModalHeader toggle={this.toggleDeleteModal}>
             Delete Customer
           </ModalHeader>
-          <ModalBody>
-            Are You Sure You Want To Delete This Customer?
-          </ModalBody>
+          <ModalBody>Are You Sure You Want To Delete This Customer?</ModalBody>
           <ModalFooter>
             <Button color="danger" onClick={this.deleteCustomer}>
               Delete Customer
@@ -244,7 +248,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       uploadFilesToCustomer,
-      deleteCustomer
+      deleteCustomer,
     },
     dispatch
   );

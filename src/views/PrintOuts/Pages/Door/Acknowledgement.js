@@ -88,7 +88,7 @@ const DoorPDF = async (
                 style: 'rushFonts',
               },
               {
-                text: `Order #: ${data.orderNum}`,
+                text: `Order #: ${data.id + 100}`,
                 alignment: 'right',
                 style: 'headerFont',
               },
@@ -291,7 +291,7 @@ const DoorPDF = async (
       }
     });
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',

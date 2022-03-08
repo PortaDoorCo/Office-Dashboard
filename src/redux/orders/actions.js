@@ -159,7 +159,7 @@ export function loadOrders(cookie, user) {
   if (user?.role?.type === 'customer') {
     return async function (dispatch) {
       const res = await fetch(
-        `${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=50`,
+        `${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=id:DESC&_limit=50`,
         {
           headers: {
             Authorization: `Bearer ${cookie}`,
@@ -175,7 +175,7 @@ export function loadOrders(cookie, user) {
   } else if (user?.role?.type === 'quality_control') {
     return async function (dispatch) {
       const res = await fetch(
-        `${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=50`,
+        `${db_url}/orders?status_ne=Quote&_sort=id:DESC&_limit=50`,
         {
           headers: {
             Authorization: `Bearer ${cookie}`,
@@ -190,14 +190,11 @@ export function loadOrders(cookie, user) {
     };
   } else {
     return async function (dispatch) {
-      const res = await fetch(
-        `${db_url}/orders?_sort=orderNum:DESC&_limit=50`,
-        {
-          headers: {
-            Authorization: `Bearer ${cookie}`,
-          },
-        }
-      );
+      const res = await fetch(`${db_url}/orders?_sort=id:DESC&_limit=50`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
       const data = await res.json();
       return await dispatch({
         type: LOAD_ORDERS,
@@ -211,7 +208,7 @@ export function loadAllOrders(cookie, user) {
   if (user.role?.type === 'customer') {
     return async function (dispatch) {
       const res = await fetch(
-        `${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=orderNum:DESC&_limit=200`,
+        `${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=id:DESC&_limit=200`,
         {
           headers: {
             Authorization: `Bearer ${cookie}`,
@@ -227,7 +224,7 @@ export function loadAllOrders(cookie, user) {
   } else if (user?.role?.type === 'quality_control') {
     return async function (dispatch) {
       const res = await fetch(
-        `${db_url}/orders?status_ne=Quote&_sort=orderNum:DESC&_limit=2000`,
+        `${db_url}/orders?status_ne=Quote&_sort=id:DESC&_limit=2000`,
         {
           headers: {
             Authorization: `Bearer ${cookie}`,

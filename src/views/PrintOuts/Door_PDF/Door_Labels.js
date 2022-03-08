@@ -29,7 +29,7 @@ export default (data, breakdowns, p) => {
             style: 'woodtype',
           },
           {
-            text: `Our Order#: ${data.orderNum}`,
+            text: `Our Order#: ${data.id + 100}`,
             alignment: 'center',
             style: 'woodtype',
           },

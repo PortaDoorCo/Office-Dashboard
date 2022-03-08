@@ -5,69 +5,65 @@ import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import Box_Labels from '../../Drawer_PDF/Box_Labels';
 
 const DrawerPDF = async (data, breakdowns, p, pricing) => {
-
   return new Promise((resolve, reject) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
     const totalUnits = TotalPieces(data);
 
-
     let Content = [];
 
-    console.log({Box_Labels: Box_Labels(data, breakdowns)});
+    console.log({ Box_Labels: Box_Labels(data, breakdowns) });
 
     Content.push(Box_Labels(data, breakdowns));
-  
-    
-  
 
     const rowLen = Content.length;
-    const ContentSorted = Content.map((i,index) => {
+    const ContentSorted = Content.map((i, index) => {
       if (rowLen === index + 1) {
         return [i];
       } else {
-        return [
-          i,
-          { text: '', pageBreak: 'before' }
-        ];
+        return [i, { text: '', pageBreak: 'before' }];
       }
     });
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',
       pageOrientation: 'portrait',
       content: ContentSorted,
       pageMargins: [40, 40, 40, 60],
-      footer: function(currentPage, pageCount) { 
+      footer: function (currentPage, pageCount) {
         return {
           columns: [
             {
               stack: [
                 {
                   text: moment().format('MM-D-YYYY'),
-                  style: 'warrantyFont'
+                  style: 'warrantyFont',
                 },
                 {
-                  text: currentPage.toString() + ' of ' + pageCount, style: 'warrantyFont'
-                }
+                  text: currentPage.toString() + ' of ' + pageCount,
+                  style: 'warrantyFont',
+                },
               ],
-              width: 250
+              width: 250,
             },
             {
               stack: [
                 {
-                  text: ' ', style: 'warrantyFont',
+                  text: ' ',
+                  style: 'warrantyFont',
                 },
                 {
-                  text: `UNITS: ${totalUnits}    ${fileName}`, style: 'warrantyFont', alignment: 'right'
-                }
-              ]  
-            }
+                  text: `UNITS: ${totalUnits}    ${fileName}`,
+                  style: 'warrantyFont',
+                  alignment: 'right',
+                },
+              ],
+            },
           ],
-          margin: [40,10,40,0]
+          margin: [40, 10, 40, 0],
         };
       },
       pageBreakBefore: function (
@@ -115,9 +111,6 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
     };
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-
-
-  
 
     return pdfDocGenerator.getBlob((blob) => {
       // blobUrl()

@@ -12,50 +12,52 @@ export default (data, breakdowns) => {
 
   const arr = [];
   const a = flatten(
-    flatten_d.map((i) => {
-      let obj = [];
+    flatten_d
+      .map((i) => {
+        let obj = [];
 
-      for (let p = 0; p < parseInt(i.qty); p++) {
-        obj.push([
-          {
-            stack: [
-              {
-                text: `${
-                  data.job_info &&
-                  data.job_info.customer &&
-                  data.job_info.customer.Company
-                }`,
-                alignment: 'center',
-                style: 'fonts',
-              },
-              {
-                text: `${data.job_info && data.job_info.poNum}`,
-                alignment: 'center',
-                style: 'fonts',
-              },
-              {
-                text: `Order#: ${data.orderNum}`,
-                alignment: 'center',
-                style: 'fonts',
-              },
-              {
-                text: `${i.width} x ${i.depth} x ${i.height}`,
-                alignment: 'center',
-                style: 'fonts',
-              },
-              {
-                text: `Cab#: ${i.cab_number ? i.cab_number : ''}`,
-                alignment: 'center',
-                style: 'fonts',
-              },
-            ],
-            margin: [0, 0, 0, 0],
-          },
-        ]);
-      }
+        for (let p = 0; p < parseInt(i.qty); p++) {
+          obj.push([
+            {
+              stack: [
+                {
+                  text: `${
+                    data.job_info &&
+                    data.job_info.customer &&
+                    data.job_info.customer.Company
+                  }`,
+                  alignment: 'center',
+                  style: 'fonts',
+                },
+                {
+                  text: `${data.job_info && data.job_info.poNum}`,
+                  alignment: 'center',
+                  style: 'fonts',
+                },
+                {
+                  text: `Order#: ${data.id + 100}`,
+                  alignment: 'center',
+                  style: 'fonts',
+                },
+                {
+                  text: `${i.width} x ${i.depth} x ${i.height}`,
+                  alignment: 'center',
+                  style: 'fonts',
+                },
+                {
+                  text: `Cab#: ${i.cab_number ? i.cab_number : ''}`,
+                  alignment: 'center',
+                  style: 'fonts',
+                },
+              ],
+              margin: [0, 0, 0, 0],
+            },
+          ]);
+        }
 
-      return obj;
-    }).filter(n => n)
+        return obj;
+      })
+      .filter((n) => n)
   );
 
   function splitArrayIntoChunksOfLen(arr, len) {
@@ -72,16 +74,17 @@ export default (data, breakdowns) => {
 
   const lastArr = newChunk[newChunk.length - 1].length;
 
-
   if (lastArr !== 3) {
     for (let i = 0; i < 3 - lastArr; i++) {
-      newChunk[newChunk.length - 1].push({ text: '', alignment: 'center', margin: [0, 0, 0, 0] });
+      newChunk[newChunk.length - 1].push({
+        text: '',
+        alignment: 'center',
+        margin: [0, 0, 0, 0],
+      });
     }
   }
 
-  console.log({newChunk});
-
-
+  console.log({ newChunk });
 
   return [
     {
@@ -90,11 +93,10 @@ export default (data, breakdowns) => {
         alignment: 'center',
         widths: [175, 182, 180],
         heights: newChunk.map((i, index) => {
-          if(index === 10){
+          if (index === 10) {
             return 10;
           } else {
-
-            if(index <  6) {
+            if (index < 6) {
               return 67 - index;
             }
 

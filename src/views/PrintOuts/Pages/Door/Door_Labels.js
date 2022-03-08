@@ -39,7 +39,7 @@ const DoorPDF = async (
       }
     });
 
-    const fileName = `Order #${data.orderNum}`;
+    const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
       pageSize: 'A4',

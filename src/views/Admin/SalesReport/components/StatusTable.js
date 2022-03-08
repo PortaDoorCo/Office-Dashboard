@@ -97,7 +97,7 @@ const StatusTable = (props) => {
   const columns = [
     {
       name: 'Order #',
-      selector: 'orderNum',
+      cell: (row) => row.id + 100,
       sortable: true,
     },
     {

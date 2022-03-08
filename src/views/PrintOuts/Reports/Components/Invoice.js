@@ -37,7 +37,7 @@ export default (data, startDate, endDate, status) => {
       `$${(i.total - i.tax)?.toFixed(2)}`,
       `$${i.tax?.toFixed(2)}`,
       i.job_info?.customer?.Company,
-      i.orderNum,
+      i.id + 100,
       name,
     ]);
   });
