@@ -690,63 +690,61 @@ const DoorTable = ({
     }
 
     if (e.target.name === 'default_framing') {
-      if (changeValue) {
-        if (panelsH > 1 || panelsW > 1) {
+      if (panelsH > 1 || panelsW > 1) {
+        dispatch(
+          change(
+            'Order',
+            `part_list[${i}].dimensions[${index}].notes`,
+            `${panelsH}H ${panelsW}W`
+          )
+        );
+      } else {
+        if (height >= 48 || width >= 24) {
           dispatch(
             change(
               'Order',
               `part_list[${i}].dimensions[${index}].notes`,
-              `${panelsH}H ${panelsW}W`
+              'SINGLE - NO GUARANTEE'
             )
           );
         } else {
-          if (height >= 48 || width >= 24) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                'SINGLE - NO GUARANTEE'
-              )
-            );
-          } else {
-            dispatch(
-              change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
-            );
-          }
+          dispatch(
+            change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
+          );
         }
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].leftStile`,
-            fraction(numQty(defaultLeftStile))
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].rightStile`,
-            fraction(numQty(defaultRightStile))
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].topRail`,
-            fraction(numQty(defaultTopRail))
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].bottomRail`,
-            fraction(numQty(defaultBottomRail))
-          )
-        );
       }
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].leftStile`,
+          fraction(numQty(defaultLeftStile))
+        )
+      );
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].rightStile`,
+          fraction(numQty(defaultRightStile))
+        )
+      );
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].topRail`,
+          fraction(numQty(defaultTopRail))
+        )
+      );
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].bottomRail`,
+          fraction(numQty(defaultBottomRail))
+        )
+      );
     }
   };
 

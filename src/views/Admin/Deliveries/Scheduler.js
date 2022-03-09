@@ -78,17 +78,22 @@ const Scheduler = (props) => {
               onCardDragEnd={handleCardMove}
               disableColumnDrag
               renderCard={(
-                { title, description },
+                { title, description, job_info },
                 { removeCard, dragging }
               ) => (
                 <Card
-                  style={{ width: '400px' }}
+                  style={{ width: '600px' }}
                   dragging={dragging}
                   onMouseDown={handleMouseDown}
                   onMouseUp={handleMouseUp}
                 >
                   <h4>{title}</h4>
-                  <p>{description}</p>
+                  <p>{job_info?.customer?.Company}</p>
+                  <p>{job_info?.Address1}</p>
+                  <p>{job_info?.Address2}</p>
+                  <p>{job_info?.City}</p>
+                  <p>{job_info?.State}</p>
+                  <p>{job_info?.Zip}</p>
                 </Card>
               )}
             >

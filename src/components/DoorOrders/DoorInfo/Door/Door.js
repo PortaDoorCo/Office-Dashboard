@@ -170,7 +170,6 @@ class Door extends Component {
         design.CONSTRUCTION === construction && design.ORDERTYPE === 'Door'
     );
 
-
     return (
       <div>
         <ModalUtil
@@ -190,8 +189,8 @@ class Door extends Component {
                   orderType === 'One_Piece'
                     ? one_piece_wood
                     : orderType === 'Two_Piece'
-                      ? two_piece_wood
-                      : filtered_woodtypes
+                    ? two_piece_wood
+                    : filtered_woodtypes
                 }
                 dataKey="value"
                 textField="NAME"
@@ -236,7 +235,9 @@ class Door extends Component {
           ) : null}
         </Row>
         <Row>
-          {construction === 'Cope' || design?.NAME?.includes('PRP 15') || design?.NAME?.includes('PRP15') ? (
+          {construction === 'Cope' ||
+          design?.NAME?.includes('PRP 15') ||
+          design?.NAME?.includes('PRP15') ? (
             <Col>
               <FormGroup>
                 <Label htmlFor="edge">Profile</Label>
@@ -287,12 +288,18 @@ class Door extends Component {
 
         <hr />
 
-        {orderType === 'Custom' ? null :
+        {orderType === 'Custom' ? null : (
           <div>
             <Row>
               <Col>
                 <h5>
-                  <strong>Default Framing Size</strong>
+                  <strong>
+                    Default Framing Size{' '}
+                    {formState?.part_list[index]?.construction?.value ===
+                    'Miter'
+                      ? ' -- MITERS MUST BE EQUAL FRAMING ON ALL SIDES'
+                      : null}
+                  </strong>
                 </h5>
               </Col>
             </Row>
@@ -301,7 +308,7 @@ class Door extends Component {
               <Col>
                 <FormGroup>
                   <Label htmlFor="arches">
-                Top Rail{' '}
+                    Top Rail{' '}
                     {topRailAdd > 0 ? `+ Arch ${fraction(topRailAdd)}"` : null}
                   </Label>
                   <Field
@@ -309,7 +316,9 @@ class Door extends Component {
                     type="text"
                     component={renderNumber}
                     label="topRail"
-                    edit={construction === 'Miter' ? true : edit}
+                    edit={
+                      construction === 'Miter' && !design.square ? true : edit
+                    }
                     validate={required}
                     onChange={(e) => this.onChange(e)}
                   />
@@ -318,7 +327,7 @@ class Door extends Component {
               <Col>
                 <FormGroup>
                   <Label htmlFor="arches">
-                Bottom Rail{' '}
+                    Bottom Rail{' '}
                     {bottomRailAdd > 0
                       ? `+ Arch ${fraction(bottomRailAdd)}"`
                       : null}
@@ -328,7 +337,9 @@ class Door extends Component {
                     type="text"
                     component={renderNumber}
                     label="bottomRail"
-                    edit={construction === 'Miter' ? true : edit}
+                    edit={
+                      construction === 'Miter' && !design.square ? true : edit
+                    }
                     validate={required}
                     onChange={(e) => this.onChange(e)}
                   />
@@ -342,7 +353,9 @@ class Door extends Component {
                     type="text"
                     component={renderNumber}
                     label="leftStile"
-                    edit={construction === 'Miter' ? true : edit}
+                    edit={
+                      construction === 'Miter' && !design.square ? true : edit
+                    }
                     validate={required}
                     onChange={(e) => this.onChange(e)}
                   />
@@ -356,15 +369,17 @@ class Door extends Component {
                     type="text"
                     component={renderNumber}
                     label="rightStile"
-                    edit={construction === 'Miter' ? true : edit}
+                    edit={
+                      construction === 'Miter' && !design.square ? true : edit
+                    }
                     validate={required}
                     onChange={(e) => this.onChange(e)}
                   />
                 </FormGroup>
               </Col>
             </Row>
-
-          </div> }
+          </div>
+        )}
 
         <hr />
 
