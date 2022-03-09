@@ -5,6 +5,8 @@ import moment from 'moment';
 import Board, { moveCard } from '@asseinfo/react-kanban';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Table from './Table';
+import Dates from './Dates';
 
 const Deliveries = (props) => {
   // You need to control the state yourself.
@@ -59,7 +61,9 @@ const Deliveries = (props) => {
           return {
             ...i,
             cards: filteredOrders.map((j) => {
+              console.log({ j });
               return {
+                ...j,
                 id: j.id,
                 title: j.id + 100,
                 description: 'description',
@@ -100,8 +104,20 @@ const Deliveries = (props) => {
 
   return (
     <div>
+      <Dates
+        setStartDate={setStartDate}
+        setEndDate={setEndDate}
+        startDateFocusedInput={startDateFocusedInput}
+        endDateFocusedInput={endDateFocusedInput}
+        setStartDateFocusedInput={setStartDateFocusedInput}
+        setEndDateFocusedInput={setEndDateFocusedInput}
+        startDate={startDate}
+        endDate={endDate}
+        orders={orders}
+      />
       <Maps />
-      <Scheduler
+      <Table data={data} />
+      {/* <Scheduler
         handleCardMove={handleCardMove}
         handleMouseUp={handleMouseUp}
         handleMouseDown={handleMouseDown}
@@ -117,7 +133,7 @@ const Deliveries = (props) => {
         endDate={endDate}
         orders={orders}
         setBoard={setBoard}
-      />
+      /> */}
     </div>
   );
 };

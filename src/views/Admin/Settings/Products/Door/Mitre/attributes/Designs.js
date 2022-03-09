@@ -26,6 +26,7 @@ import {
   deleteProduct,
 } from '../../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../../components/FileUploader/FileUploader';
+import { AppSwitch } from '@coreui/react';
 
 const cookie = Cookies.get('jwt');
 
@@ -48,13 +49,14 @@ const Designs = (props) => {
     ORDERTYPE: 'Door',
     photo: null,
     product: 'designs',
+    square: false,
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.designs);
 
   useEffect(() => {
     const filteredProduct = props.designs.filter(
-      (x) => (x.CONSTRUCTION === 'Miter') && x.ORDERTYPE === 'Door'
+      (x) => x.CONSTRUCTION === 'Miter' && x.ORDERTYPE === 'Door'
     );
     setFilteredProducts(filteredProduct);
   }, [props.designs]);
@@ -86,6 +88,7 @@ const Designs = (props) => {
       CONSTRUCTION: 'Miter',
       ORDERTYPE: 'Door',
       photo: null,
+      square: false,
     };
     setNewProduct(true);
     setProduct(p);
@@ -141,6 +144,7 @@ const Designs = (props) => {
       ORDERTYPE: 'Door',
       photo: product.photo ? product.photo.id : '',
       Item: item,
+      square: product.square,
     };
     await props.addProduct(submittedProduct, 'designs', cookie);
     await setModal(!modal);
@@ -154,7 +158,8 @@ const Designs = (props) => {
             .join('')
             .toLowerCase()
             .includes(e.target.value.split(' ').join('')) &&
-          (i.CONSTRUCTION === 'Miter') && (i.ORDERTYPE === 'Door')
+          i.CONSTRUCTION === 'Miter' &&
+          i.ORDERTYPE === 'Door'
       )
     );
   };
@@ -205,6 +210,9 @@ const Designs = (props) => {
             </CardTitle>
             <CardTitle>
               <strong>Inset:</strong> {card.INSET}
+            </CardTitle>
+            <CardTitle>
+              <strong>Square:</strong> {card.square ? 'True' : 'False'}
             </CardTitle>
           </CardBody>
         </Card>
@@ -325,7 +333,7 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-              
+
               <Row>
                 <Col>
                   <Label for="5/4_Price">Profile Width</Label>
@@ -347,6 +355,33 @@ const Designs = (props) => {
                     name="INSET"
                     onChange={(e) => change(e)}
                   ></Input>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Square</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch
+                        className={'mx-1'}
+                        variant={'pill'}
+                        color={'primary'}
+                        onChange={() =>
+                          setProduct((prevState) => {
+                            return {
+                              ...prevState,
+                              square: !prevState.square,
+                            };
+                          })
+                        }
+                        checked={product.square}
+                      />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
 
@@ -514,7 +549,6 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-       
 
               <Row>
                 <Col>
@@ -527,10 +561,34 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-                
-   
-              
 
+              <Row className="mt-3">
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Square</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch
+                        className={'mx-1'}
+                        variant={'pill'}
+                        color={'primary'}
+                        onChange={() =>
+                          setProduct((prevState) => {
+                            return {
+                              ...prevState,
+                              square: !prevState.square,
+                            };
+                          })
+                        }
+                        checked={product.square}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={toggle}>
