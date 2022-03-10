@@ -17,42 +17,42 @@ import logo from '../../assets/img/brand/portadoor.png';
 import sygnet from '../../assets/img/brand/sygnet.svg';
 import { dbNotLoaded, loadAllCustomers } from '../../redux/customers/actions';
 import {
-  loadMiscItems, loadPaymentTerms, loadPaymentTypes, loadShippingMethod
+  loadMiscItems,
+  loadPaymentTerms,
+  loadPaymentTypes,
+  loadShippingMethod,
 } from '../../redux/misc_items/actions';
 import {
-  getDeliveries, loadAllOrders, socketReceiveUpdateStatus
+  getDeliveries,
+  loadAllOrders,
+  socketReceiveUpdateStatus,
 } from '../../redux/orders/actions';
 import {
-  getAllProducts, getBoxBreakdowns, getBreakdowns, getPricing
+  getAllProducts,
+  getBoxBreakdowns,
+  getBreakdowns,
+  getPricing,
 } from '../../redux/part_list/actions';
-import {
-  loadSales
-} from '../../redux/sales/actions';
+import { loadSales } from '../../redux/sales/actions';
 import { unsetToken } from '../../utils/auth';
 import DefaultHeaderDropdown from './DefaultHeaderDropdown';
-
-
-
-
-
 
 const propTypes = {
   children: PropTypes.node,
 };
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   customWidth: {
     maxWidth: 500,
   },
 });
 
-const updateMessage = 'There is a new version available!   Click here to refresh the page.';
-
+const updateMessage =
+  'There is a new version available!   Click here to refresh the page.';
 
 const defaultProps = {};
 
 class DefaultHeader extends Component {
-
   logOut = () => {
     unsetToken().then(() => window.location.reload());
   };
@@ -72,7 +72,8 @@ class DefaultHeader extends Component {
       loadAllCustomers,
       loadMiscItems,
       getAllProducts,
-      dbNotLoaded
+      dbNotLoaded,
+      user,
     } = this.props;
 
     const cookie = await Cookies.get('jwt');
@@ -80,8 +81,8 @@ class DefaultHeader extends Component {
     if (cookie) {
       await dbNotLoaded(cookie);
       await getAllProducts(cookie);
-      await loadAllOrders(cookie);
-      await loadAllCustomers(cookie);
+      await loadAllOrders(cookie, user);
+      await loadAllCustomers(cookie, user);
       await loadSales(cookie);
       await loadMiscItems(cookie);
       await getDeliveries(cookie);
@@ -94,39 +95,44 @@ class DefaultHeader extends Component {
     } else {
       alert('not logged in');
     }
-  }
-
-  
-  
+  };
 
   render() {
-
     // eslint-disable-next-line
-    const { dbLoadComplete, currentVersion, classes ,children, ...attributes  } = this.props;
-
-
+    const { dbLoadComplete, currentVersion, classes, children, ...attributes } =
+      this.props;
 
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
           full={{ src: logo, width: 50, height: 50, alt: 'Porta Door Logo' }}
-          minimized={{ src: sygnet, width: 30, height: 30, alt: 'Porta Door Logo' }}
+          minimized={{
+            src: sygnet,
+            width: 30,
+            height: 30,
+            alt: 'Porta Door Logo',
+          }}
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
         <Nav className="d-md-down-none" navbar>
           <NavItem className="px-3">
-            <NavLink to="/dashboard" className="nav-link" >Dashboard</NavLink>
+            <NavLink to="/dashboard" className="nav-link">
+              Dashboard
+            </NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink to="/users" className="nav-link">Users</NavLink>
+            <NavLink to="/users" className="nav-link">
+              Users
+            </NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink to="/settings" className="nav-link">Settings</NavLink>
+            <NavLink to="/settings" className="nav-link">
+              Settings
+            </NavLink>
           </NavItem>
         </Nav>
         <Nav className="ml-auto" navbar>
-          
           {/* <DefaultHeaderDropdown notif/>
           <DefaultHeaderDropdown tasks/>
           <DefaultHeaderDropdown mssgs/>
@@ -140,47 +146,50 @@ class DefaultHeader extends Component {
           </NavItem> */}
 
           <div className="mr-3">
-            {!currentVersion ?
-     
-              <Tooltip title={updateMessage} placement="bottom" classes={{ tooltip: classes.customWidth }} onClick={() => window.location.reload()}>
-                <NewReleasesIcon style={{ width: '40', height: '40', fill: '#ffa361' }} />
+            {!currentVersion ? (
+              <Tooltip
+                title={updateMessage}
+                placement="bottom"
+                classes={{ tooltip: classes.customWidth }}
+                onClick={() => window.location.reload()}
+              >
+                <NewReleasesIcon
+                  style={{ width: '40', height: '40', fill: '#ffa361' }}
+                />
               </Tooltip>
-              :
-              null
-            } 
-
-
-
+            ) : null}
           </div>
 
           <div className="mr-3">
-            {!dbLoadComplete ?
-     
+            {!dbLoadComplete ? (
               <Tooltip title="Downloading Database..." placement="bottom">
                 {/* <CloudDownloadIcon  style={{ width: '40', height: '40', fill: '#ff7961' }} /> */}
                 <div className="mt-1">
                   <CircularProgress size={25} />
                 </div>
-                
+
                 {/* <div class="loader"></div> */}
-              </Tooltip> 
-              :
-              <Tooltip title="Database up to date" placement="bottom">
-                <CloudDone style={{ width: '40', height: '40', fill: '#4dbd74' }} />
               </Tooltip>
-            }
-
-
-
+            ) : (
+              <Tooltip title="Database up to date" placement="bottom">
+                <CloudDone
+                  style={{ width: '40', height: '40', fill: '#4dbd74' }}
+                />
+              </Tooltip>
+            )}
           </div>
-
 
           <Tooltip title="Refresh" placement="bottom">
             <IconButton onClick={this.refresh}>
               <RefreshIcon style={{ width: '40', height: '40' }} />
             </IconButton>
           </Tooltip>
-          <DefaultHeaderDropdown className="mr-5" onLogout={this.logOut} {...this.props} accnt/>
+          <DefaultHeaderDropdown
+            className="mr-5"
+            onLogout={this.logOut}
+            {...this.props}
+            accnt
+          />
           <div className="mr-5" />
           {/* <Button color="primary" className="mr-5" onClick={this.logOut}>Log Out</Button> */}
         </Nav>
@@ -197,10 +206,10 @@ DefaultHeader.defaultProps = defaultProps;
 const mapStateToProps = (state, prop) => ({
   user: state.users.user,
   users: state.users.registeredUsers,
-  dbLoadComplete: state.customers.dbLoadComplete
+  dbLoadComplete: state.customers.dbLoadComplete,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       loadAllOrders,
@@ -222,9 +231,8 @@ const mapDispatchToProps = dispatch =>
 
       loadMiscItems,
 
-
       socketReceiveUpdateStatus,
-      dbNotLoaded
+      dbNotLoaded,
     },
     dispatch
   );
@@ -233,4 +241,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(useStyles)(DefaultHeader));
-
