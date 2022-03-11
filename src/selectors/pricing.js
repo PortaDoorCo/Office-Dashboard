@@ -1218,7 +1218,7 @@ export const taxSelector = createSelector(
   (subTotal, tax, discount, dis, misc, state, nonDiscounted, orderType) => {
     if (orderType === 'Misc Items') {
       return (
-        Math.floor(
+        Math.round(
           (subTotal.reduce((acc, item) => acc + item, 0) -
             discount +
             nonDiscounted) *
@@ -1228,7 +1228,7 @@ export const taxSelector = createSelector(
       );
     } else {
       return (
-        Math.floor(
+        Math.round(
           (subTotal.reduce((acc, item) => acc + item, 0) -
             discount +
             misc +

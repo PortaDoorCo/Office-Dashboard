@@ -21,7 +21,10 @@ const status = [
     label: 'Flagged',
     value: 'Flagged',
   },
-
+  {
+    label: 'Order Numbers',
+    value: 'Order Numbers',
+  },
 ];
-  
+
 export default status;

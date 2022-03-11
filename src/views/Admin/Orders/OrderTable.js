@@ -95,6 +95,15 @@ const conditionalRowStyles = [
       },
     },
   },
+  {
+    when: (row) => row.id + 100 !== row.orderNum,
+    style: {
+      backgroundColor: '#D1E3FA',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
 ];
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
@@ -194,6 +203,8 @@ const OrderTable = (props) => {
           ) <= moment(endDate).endOf('day').valueOf() &&
           item.balance_due < 0
         );
+      } else if (filterStatus === 'Order Numbers') {
+        return item.id + 100 !== item.orderNum;
       } else if (filterStatus === 'Invoiced') {
         if (filterText?.length > 0) {
           return (
@@ -338,7 +349,7 @@ const OrderTable = (props) => {
     await updateStatus(row.id, row, status, user, cookie);
   };
 
-  const columns = [
+  let columns = [
     {
       name: 'Company',
       cell: (row) => (
@@ -567,6 +578,16 @@ const OrderTable = (props) => {
     },
   ];
 
+  let orderColumns = columns;
+
+  if (filterStatus === 'Order Numbers') {
+    orderColumns = columns.splice(2, 0, {
+      name: 'Old Order #',
+      cell: (row) => row.orderNum,
+      sortable: true,
+    });
+  }
+
   const toggle = (row) => {
     const { setSelectedOrder, setOrderType } = props;
 
@@ -651,41 +672,46 @@ const OrderTable = (props) => {
               </h3>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <SingleDatePicker
-                date={startDate} // momentPropTypes.momentObj or null
-                onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
-                focused={startDateFocusedInput} // PropTypes.bool
-                onFocusChange={({ focused }) =>
-                  setStartDateFocusedInput(focused)
-                } // PropTypes.func.isRequired
-                id="startDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment(minDate)) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                }}
-              />
+          {filterStatus !== 'Order Numbers' ? (
+            <Row>
+              <Col>
+                <SingleDatePicker
+                  date={startDate} // momentPropTypes.momentObj or null
+                  onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
+                  focused={startDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) =>
+                    setStartDateFocusedInput(focused)
+                  } // PropTypes.func.isRequired
+                  id="startDate" // PropTypes.string.isRequired,
+                  isOutsideRange={(date) => {
+                    if (date < moment(minDate)) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
 
-              <SingleDatePicker
-                date={endDate} // momentPropTypes.momentObj or null
-                onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
-                focused={endDateFocusedInput} // PropTypes.bool
-                onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
-                id="endDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment(startDate)) {
-                    return true; // return true if you want the particular date to be disabled
-                  } else {
-                    return false;
-                  }
-                }}
-              />
-            </Col>
-          </Row>
+                <SingleDatePicker
+                  date={endDate} // momentPropTypes.momentObj or null
+                  onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
+                  focused={endDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) =>
+                    setEndDateFocusedInput(focused)
+                  } // PropTypes.func.isRequired
+                  id="endDate" // PropTypes.string.isRequired,
+                  isOutsideRange={(date) => {
+                    if (date < moment(startDate)) {
+                      return true; // return true if you want the particular date to be disabled
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
+              </Col>
+            </Row>
+          ) : null}
+
           <Row>
             <Col>
               <FormGroup style={{ height: '100%', width: '60%' }}>
