@@ -90,6 +90,15 @@ const conditionalRowStyles = [
       },
     },
   },
+  {
+    when: (row) => row.id + 100 !== row.orderNum,
+    style: {
+      backgroundColor: '#D1E3FA',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
 ];
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
@@ -132,6 +141,7 @@ const OrderTable = (props: TablePropTypes) => {
             if (filterText.length > 0) {
               return (
                 (item.id + 100).toString().includes(filterText) ||
+                item.orderNum.toString().includes(filterText) ||
                 item.job_info?.customer?.Company.toLowerCase().includes(
                   filterText.toLowerCase()
                 ) ||
