@@ -95,15 +95,15 @@ const conditionalRowStyles = [
       },
     },
   },
-  {
-    when: (row) => row.id + 100 !== row.orderNum,
-    style: {
-      backgroundColor: '#D1E3FA',
-      '&:hover': {
-        cursor: 'pointer',
-      },
-    },
-  },
+  // {
+  //   when: (row) => row.id + 100 !== row.orderNum,
+  //   style: {
+  //     backgroundColor: '#D1E3FA',
+  //     '&:hover': {
+  //       cursor: 'pointer',
+  //     },
+  //   },
+  // },
 ];
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
