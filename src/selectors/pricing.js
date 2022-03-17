@@ -770,7 +770,13 @@ export const itemPriceSelector = createSelector(
                     formState?.values?.part_list[index]?.panel !==
                       formState?.initial.part_list[index]?.panel ||
                     formState?.values?.part_list[index]?.applied_profile !==
-                      formState?.initial.part_list[index]?.applied_profile
+                      formState?.initial.part_list[index]?.applied_profile ||
+                    formState?.values?.part_list[index]?.thickness !==
+                      formState?.initial.part_list[index]?.thickness ||
+                    formState?.values?.part_list[index]?.orderType !==
+                      formState?.initial.part_list[index]?.orderType ||
+                    formState?.values?.part_list[index]?.construction !==
+                      formState?.initial.part_list[index]?.construction
                   ) {
                     return Math.floor(price * 100) / 100;
                   } else {
