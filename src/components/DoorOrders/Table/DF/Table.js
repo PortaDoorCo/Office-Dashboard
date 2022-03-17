@@ -140,6 +140,8 @@ const Cope_Table = ({
       df_reduction = part.design.PROFILE_WIDTH;
     }
 
+    console.log({ profile_width });
+
     if (e) {
       if (leftStile) {
         dispatch(
@@ -155,7 +157,7 @@ const Cope_Table = ({
             change(
               'Order',
               `part_list[${i}].dimensions[${index}].topRail`,
-              fraction(numQty(leftStile))
+              fraction(numQty(profile_width))
             )
           );
 
@@ -163,7 +165,22 @@ const Cope_Table = ({
             change(
               'Order',
               `part_list[${i}].dimensions[${index}].bottomRail`,
-              fraction(numQty(leftStile))
+              fraction(numQty(profile_width))
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].leftStile`,
+              fraction(numQty(profile_width))
+            )
+          );
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].rightStile`,
+              fraction(numQty(profile_width))
             )
           );
         } else {
@@ -856,10 +873,10 @@ const Cope_Table = ({
                 {Array.from(
                   formState.part_list[i]?.dimensions[index]?.panelsH
                     ? Array(
-                      parseInt(
+                        parseInt(
                           formState.part_list[i]?.dimensions[index]?.panelsH
-                      )
-                    ).keys()
+                        )
+                      ).keys()
                     : 0
                 ).map((i, index) => {
                   return (
@@ -880,30 +897,30 @@ const Cope_Table = ({
                 {Array.from(
                   formState.part_list[i]?.dimensions[index]?.panelsH
                     ? Array(
-                      parseInt(
+                        parseInt(
                           formState.part_list[i]?.dimensions[index]?.panelsH
-                      )
-                    ).keys()
+                        )
+                      ).keys()
                     : 0
                 ).map((l, k) => {
                   return eval(
                     `formState.part_list[i]?.dimensions[index]?.glass_check_${k}`
                   ) ? (
-                      <Col lg="2">
-                        <FormGroup>
-                          <strong>Opening {k + 1} Options</strong>
-                          <Field
-                            name={`${table}.lite_${k}`}
-                            component={renderDropdownList}
-                            data={lites}
-                            dataKey="value"
-                            textField="NAME"
-                            validate={required}
-                            edit={edit}
-                          />
-                        </FormGroup>
-                      </Col>
-                    ) : null;
+                    <Col lg="2">
+                      <FormGroup>
+                        <strong>Opening {k + 1} Options</strong>
+                        <Field
+                          name={`${table}.lite_${k}`}
+                          component={renderDropdownList}
+                          data={lites}
+                          dataKey="value"
+                          textField="NAME"
+                          validate={required}
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col>
+                  ) : null;
                 })}
               </Row>
             </div>
@@ -945,18 +962,18 @@ const Cope_Table = ({
               role?.type === 'administrator' ||
               role?.type === 'management' ||
               role?.type === 'office' ? (
-                  <Col xs="3">
-                    <strong>Extra Design Cost</strong>
-                    <Field
-                      name={`${table}.extraCost`}
-                      type="text"
-                      component={renderPrice}
-                      edit={edit}
-                      label="extraCost"
-                      {...currencyMask}
-                    />
-                  </Col>
-                ) : null}
+                <Col xs="3">
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    edit={edit}
+                    label="extraCost"
+                    {...currencyMask}
+                  />
+                </Col>
+              ) : null}
             </Row>
             <br />
           </Fragment>
