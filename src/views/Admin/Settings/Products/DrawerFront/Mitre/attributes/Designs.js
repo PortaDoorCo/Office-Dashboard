@@ -43,6 +43,7 @@ const Designs = (props) => {
     TOP_RAIL_ADD: '',
     BTM_RAIL_ADD: '',
     PROFILE_WIDTH: '',
+    DF_FULL_FRAME: '',
     INSET: '',
     DF_REDUCTION: '',
     CONSTRUCTION: 'Miter',
@@ -83,6 +84,7 @@ const Designs = (props) => {
       TOP_RAIL_ADD: '',
       BTM_RAIL_ADD: '',
       PROFILE_WIDTH: '',
+      DF_FULL_FRAME: '',
       INSET: '',
       DF_REDUCTION: '',
       CONSTRUCTION: 'Miter',
@@ -140,6 +142,7 @@ const Designs = (props) => {
       TOP_RAIL_ADD: product.TOP_RAIL_ADD,
       BTM_RAIL_ADD: product.BTM_RAIL_ADD,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
+      DF_FULL_FRAME: product.DF_FULL_FRAME,
       INSET: product.INSET,
       CONSTRUCTION: 'Miter',
       ORDERTYPE: 'DF',
@@ -208,6 +211,9 @@ const Designs = (props) => {
             </CardTitle>
             <CardTitle>
               <strong>Profile Width:</strong> {card.PROFILE_WIDTH}
+            </CardTitle>
+            <CardTitle>
+              <strong>DF Full Frame:</strong> {card.DF_FULL_FRAME}
             </CardTitle>
             <CardTitle>
               <strong>Inset:</strong> {card.INSET}
@@ -342,6 +348,17 @@ const Designs = (props) => {
                     type="number"
                     value={product.PROFILE_WIDTH}
                     name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">DF FULL FRAME</Label>
+                  <Input
+                    type="number"
+                    value={product.DF_FULL_FRAME}
+                    name="DF_FULL_FRAME"
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -554,6 +571,15 @@ const Designs = (props) => {
                   type="number"
                   value={product.PROFILE_WIDTH}
                   name="PROFILE_WIDTH"
+                  onChange={(e) => change(e)}
+                ></Input>
+              </Col>
+              <Col>
+                <Label for="5/4_Price">DF FULL FRAME</Label>
+                <Input
+                  type="number"
+                  value={product.DF_FULL_FRAME}
+                  name="DF_FULL_FRAME"
                   onChange={(e) => change(e)}
                 ></Input>
               </Col>
