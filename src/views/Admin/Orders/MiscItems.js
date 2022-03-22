@@ -2,100 +2,138 @@ import React, { Component } from 'react';
 import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import {
-  Button, Col, Input,
+  Button,
+  Col,
+  Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupText, Label, Row, Table
+  InputGroupText,
+  Label,
+  Row,
+  Table,
 } from 'reactstrap';
 import {
-  change, Field, FieldArray,
-  getFormValues, reduxForm
+  change,
+  Field,
+  FieldArray,
+  getFormValues,
+  reduxForm,
 } from 'redux-form';
 import {
-  renderDropdownListFilterNoPhoto, renderField, renderInt
+  renderDropdownListFilterNoPhoto,
+  renderField,
+  renderInt,
 } from '../../../components/RenderInputs/renderInputs';
 import {
-  miscItemLinePriceSelector, miscItemPriceSelector, miscTotalSelector
+  miscItemLinePriceSelector,
+  miscItemPriceSelector,
+  miscTotalSelector,
 } from '../../../selectors/pricing';
 import currencyMask from '../../../utils/currencyMask';
 
-
 let Inputs = (props) => {
-  const { fields, misc_items, formState, linePrices, miscTotal, edit, orderType } = props;
-
-
+  const {
+    fields,
+    misc_items,
+    formState,
+    linePrices,
+    miscTotal,
+    edit,
+    orderType,
+  } = props;
 
   let misc_items_category = ['Accessories', 'Door', 'DF', 'Drawer_Box'];
 
-  if(orderType === 'Door Order'){
+  if (orderType === 'Door Order') {
     misc_items_category = ['Accessories', 'Door', 'DF'];
   }
 
-  if(orderType === 'Drawer Order'){
-
+  if (orderType === 'Drawer Order') {
     misc_items_category = ['Accessories', 'Drawer_Box'];
   }
-  
 
-  let sorted_misc_items = misc_items.filter(e => {
-    
-
-    return e.categories.some(c => {
-      
+  let sorted_misc_items = misc_items.filter((e) => {
+    return e.categories.some((c) => {
       return misc_items_category.includes(c.value);
-    
-    }
-    );
+    });
   });
 
-
-
   const changeMiscItem = (e, index) => {
-
     let total_qty = 0;
 
     props.dispatch(change('Order', `misc_items[${index}].price`, e.Price));
 
-    if(e.count_items){
-      const categories = e.categories.map(i => i.value);
-      if(categories.includes('Door')){
-        const matched_orders = formState.part_list.filter(i => ['Door', 'Glass', 'One_Piece', 'Two_Piece', 'Slab_Door', 'Face_Frame'].includes(i.orderType.value));
+    if (e.count_items) {
+      const categories = e.categories.map((i) => i.value);
+      if (categories.includes('Door')) {
+        const matched_orders = formState.part_list.filter((i) =>
+          [
+            'Door',
+            'Glass',
+            'One_Piece',
+            'Two_Piece',
+            'Slab_Door',
+            'Face_Frame',
+          ].includes(i.orderType.value)
+        );
 
-        const quantities = matched_orders.map(i => {
-          const qty = i.dimensions.map(j => {
+        const quantities = matched_orders.map((i) => {
+          const qty = i.dimensions.map((j) => {
             return parseInt(j.qty);
           });
-          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          const sub_total_qty = parseFloat(
+            qty.reduce((acc, item) => acc + item, 0)
+          );
           return sub_total_qty;
         });
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
         total_qty = total_qty + sub_quantity;
       }
-      if(categories.includes('DF')){
-        const matched_orders = formState.part_list.filter(i => ['DF', 'Glass_DF', 'One_Piece_DF', 'Two_Piece_DF', 'Slab_DF'].includes(i.orderType.value));
-        
-        const quantities = matched_orders.map(i => {
-          const qty = i.dimensions.map(j => {
+      if (categories.includes('DF')) {
+        const matched_orders = formState.part_list.filter((i) =>
+          [
+            'DF',
+            'Glass_DF',
+            'One_Piece_DF',
+            'Two_Piece_DF',
+            'Slab_DF',
+          ].includes(i.orderType.value)
+        );
+
+        const quantities = matched_orders.map((i) => {
+          const qty = i.dimensions.map((j) => {
             return parseInt(j.qty);
           });
-          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
+          const sub_total_qty = parseFloat(
+            qty.reduce((acc, item) => acc + item, 0)
+          );
           return sub_total_qty;
         });
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
-        total_qty = total_qty+sub_quantity;
+        total_qty = total_qty + sub_quantity;
       }
-      if(categories.includes('Drawer_Box')){
-        const quantities = formState && formState.part_list.map(i => {
-          const qty = i.dimensions.map(j => {
-            return parseInt(j.qty);
+      if (categories.includes('Drawer_Box')) {
+        const quantities =
+          formState &&
+          formState.part_list.map((i) => {
+            const qty = i.dimensions.map((j) => {
+              return parseInt(j.qty);
+            });
+            const sub_total_qty = parseFloat(
+              qty.reduce((acc, item) => acc + item, 0)
+            );
+            return sub_total_qty;
           });
-          const sub_total_qty = parseFloat(qty.reduce((acc, item) => acc + item, 0));
-          return sub_total_qty;
-        });
         const sub_quantity = quantities.reduce((acc, item) => acc + item, 0);
-        total_qty = total_qty+sub_quantity;
+        total_qty = total_qty + sub_quantity;
       }
-      props.dispatch(change('Order', `misc_items[${index}].qty`, total_qty > 0 ? total_qty : 1));
+      props.dispatch(
+        change(
+          'Order',
+          `misc_items[${index}].qty`,
+          total_qty > 0 ? total_qty : 1
+        )
+      );
     }
   };
 
@@ -128,94 +166,93 @@ let Inputs = (props) => {
                   formState.misc_items &&
                   formState.misc_items[index] &&
                   formState.misc_items[index].category === 'preselect' ? (
-                      <Field
-                        name={`${table}.item`}
-                        component={renderDropdownListFilterNoPhoto}
-                        data={sorted_misc_items}
-                        onChange={(e) => changeMiscItem(e, index)}
-                        dataKey="value"
-                        textField="NAME"
-                        edit={edit}
-                      />
-                    ) : (
-                      <Field
-                        name={`${table}.item2`}
-                        component={renderField}
-                        dataKey="value"
-                        textField="NAME"
-                        edit={edit}
-                      />
-                    )}
+                    <Field
+                      name={`${table}.item`}
+                      component={renderDropdownListFilterNoPhoto}
+                      data={sorted_misc_items}
+                      onChange={(e) => changeMiscItem(e, index)}
+                      dataKey="value"
+                      textField="NAME"
+                      edit={edit}
+                    />
+                  ) : (
+                    <Field
+                      name={`${table}.item2`}
+                      component={renderField}
+                      dataKey="value"
+                      textField="NAME"
+                      edit={edit}
+                    />
+                  )}
                 </td>
                 {formState &&
                 formState.misc_items &&
                 formState.misc_items[index] &&
                 formState.misc_items[index].category === 'preselect' ? (
-                    <>
-                      <td style={{ width: '25%' }}>
-                        <InputGroup>
-                          <Field
-                            name={`${table}.price`}
-                            type="text"
-                            component={renderField}
-                            label="price"
-                            {...currencyMask}
-                            edit={edit}
-                          />
-                        </InputGroup>
-                      </td>
-                      <td style={{ width: '25%' }}>
-                        <InputGroup>
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>$</InputGroupText>
-                          </InputGroupAddon>
-                          <NumberFormat
-                            thousandSeparator={true}
-                            value={linePrices[index]}
-                            disabled={true}
-                            customInput={Input}
-                            {...currencyMask}
-                            prefix={'$'}
-                    
-                          />
-                        </InputGroup>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td style={{ width: '25%' }}>
+                  <>
+                    <td style={{ width: '25%' }}>
+                      <InputGroup>
                         <Field
-                          name={`${table}.pricePer`}
-                          component={renderField}
+                          name={`${table}.price`}
                           type="text"
-                          required
+                          component={renderField}
+                          label="price"
                           {...currencyMask}
                           edit={edit}
                         />
-                      </td>
-                      <td style={{ width: '25%' }}>
-                        <InputGroup>
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>$</InputGroupText>
-                          </InputGroupAddon>
-                          <NumberFormat
-                            thousandSeparator={true}
-                            value={linePrices[index]}
-                            disabled={true}
-                            customInput={Input}
-                            {...currencyMask}
-                            prefix={'$'}
-                          />
-                        </InputGroup>
-                      </td>
-                    </>
-                  )}
+                      </InputGroup>
+                    </td>
+                    <td style={{ width: '25%' }}>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <NumberFormat
+                          thousandSeparator={true}
+                          value={linePrices[index]}
+                          disabled={true}
+                          customInput={Input}
+                          {...currencyMask}
+                          prefix={'$'}
+                        />
+                      </InputGroup>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td style={{ width: '25%' }}>
+                      <Field
+                        name={`${table}.pricePer`}
+                        component={renderField}
+                        type="text"
+                        required
+                        {...currencyMask}
+                        edit={edit}
+                      />
+                    </td>
+                    <td style={{ width: '25%' }}>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <NumberFormat
+                          thousandSeparator={true}
+                          value={linePrices[index]}
+                          disabled={true}
+                          customInput={Input}
+                          {...currencyMask}
+                          prefix={'$'}
+                        />
+                      </InputGroup>
+                    </td>
+                  </>
+                )}
                 <td>
-                  {!edit ? 
+                  {!edit ? (
                     <Button color="danger" onClick={() => fields.remove(index)}>
-                    X
+                      X
                     </Button>
-                    : null }
+                  ) : null}
                 </td>
               </tr>
             );
@@ -225,7 +262,7 @@ let Inputs = (props) => {
 
       <Row>
         <Col>
-          {!edit ? 
+          {!edit ? (
             <>
               <Button
                 color="primary"
@@ -238,7 +275,7 @@ let Inputs = (props) => {
                   })
                 }
               >
-              Add Item{' '}
+                Add Item{' '}
               </Button>
 
               <Button
@@ -253,10 +290,10 @@ let Inputs = (props) => {
                   })
                 }
               >
-              Custom Item
+                Custom Item
               </Button>
             </>
-            : null }
+          ) : null}
         </Col>
         <Col />
         <Col>
@@ -282,7 +319,7 @@ let Inputs = (props) => {
 
 class MiscItems extends Component {
   render() {
-    if(this.props.orderType === 'Misc Items'){
+    if (this.props.orderType === 'Misc Items') {
       return <div />;
     } else {
       return (
@@ -292,7 +329,6 @@ class MiscItems extends Component {
         </div>
       );
     }
-
   }
 }
 
