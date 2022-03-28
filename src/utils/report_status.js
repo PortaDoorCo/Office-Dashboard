@@ -3,12 +3,10 @@ const status = [
     label: 'Quote',
     value: 'Quote',
   },
-
   {
     label: 'Ordered',
     value: 'Ordered',
   },
-
   {
     label: 'Complete',
     value: 'Complete',

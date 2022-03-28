@@ -1,5 +1,9 @@
 const status = [
   {
+    label: 'Open Orders',
+    value: 'Open Orders',
+  },
+  {
     label: 'In Production',
     value: 'In Production',
   },
@@ -35,7 +39,7 @@ const status = [
     label: 'Paint Shop',
     value: 'Paint Shop',
   },
-    
+
   {
     label: 'Complete',
     value: 'Complete',
@@ -54,5 +58,5 @@ const status = [
   //   value: 'LATE',
   // },
 ];
-  
+
 export default status;
