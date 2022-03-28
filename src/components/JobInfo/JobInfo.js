@@ -311,6 +311,7 @@ class JobInfo extends Component {
       user,
       sales,
       paymentTerms,
+      orders,
     } = this.props;
 
     const dateDifference = moment(new Date()).businessDiff(
@@ -327,6 +328,7 @@ class JobInfo extends Component {
           {...this.props}
           toggle={this.props.toggleReminderModal}
           modal={this.props.customerReminder}
+          orders={orders}
         />
         <Row>
           <Col lg="10">
@@ -1042,6 +1044,7 @@ const mapStateToProps = (state) => ({
   sales: state?.sales?.salesReps,
   paymentTerms: state.misc_items.paymentTerms,
   orderType: state.Orders.orderType,
+  orders: state.Orders.orders,
 });
 
 export default connect(mapStateToProps, null)(JobInfo);

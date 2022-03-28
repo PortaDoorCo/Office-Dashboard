@@ -22,13 +22,13 @@ export default (data, startDate, endDate, status) => {
       },
       tableExample: {
         margin: [0, 5, 0, 10],
-        fontSize: 10,
+        fontSize: 8,
       },
       fonts: {
-        fontSize: 10,
+        fontSize: 8,
       },
       fontsBold: {
-        fontSize: 12,
+        fontSize: 8,
         bold: true,
       },
       totals: {

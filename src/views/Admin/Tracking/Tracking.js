@@ -121,7 +121,7 @@ const OrderTable = (props) => {
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus] = useState('In Production');
+  const [filterStatus, setFilterStatus] = useState('Open Orders');
   const [orderType, setOrderType] = useState('All');
   const [customer, setCustomer] = useState({ Company: 'All' });
   const [filterText, setFilterText] = useState('');
@@ -168,6 +168,29 @@ const OrderTable = (props) => {
                 !item.status.includes('Quote') &&
                 !item.status.includes('Invoiced') &&
                 !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped')
+              );
+            }
+          } else if (filterStatus === 'Open Orders') {
+            if (filterText?.length > 0) {
+              return (
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                ((item.id + 100)?.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
                 !item.status.includes('Complete') &&
                 !item.status.includes('Shipped')
               );
@@ -255,6 +278,31 @@ const OrderTable = (props) => {
                 !item.status.includes('Quote') &&
                 !item.status.includes('Invoiced') &&
                 !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped')
+              );
+            }
+          } else if (filterStatus === 'Open Orders') {
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                ((item.id + 100)?.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
                 !item.status.includes('Complete') &&
                 !item.status.includes('Shipped')
               );
@@ -354,6 +402,33 @@ const OrderTable = (props) => {
                 item.job_info?.customer?.Company === customer?.Company
               );
             }
+          } else if (filterStatus === 'Open Orders') {
+            if (filterText?.length > 0) {
+              return (
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.job_info?.customer?.Company ===
+                  customer?.Company(
+                    (item.id + 100)?.toString().includes(filterText) ||
+                      item.companyprofile.Company.toLowerCase().includes(
+                        filterText.toLowerCase()
+                      ) ||
+                      item.job_info.poNum
+                        .toLowerCase()
+                        .includes(filterText.toLowerCase())
+                  )
+              );
+            } else {
+              return (
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.job_info?.customer?.Company === customer?.Company
+              );
+            }
           } else if (filterStatus === 'Late') {
             if (filterText?.length > 0) {
               return (
@@ -442,6 +517,33 @@ const OrderTable = (props) => {
                 !item.status.includes('Quote') &&
                 !item.status.includes('Invoiced') &&
                 !item.status.includes('Ordered') &&
+                !item.status.includes('Complete') &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                !item.status.includes('Shipped')
+              );
+            }
+          } else if (filterStatus === 'Open Orders') {
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
+                !item.status.includes('Complete') &&
+                !item.status.includes('Shipped') &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                ((item.id + 100)?.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                !item.status.includes('Quote') &&
+                !item.status.includes('Invoiced') &&
                 !item.status.includes('Complete') &&
                 item.job_info?.customer?.Company === customer?.Company &&
                 !item.status.includes('Shipped')
@@ -579,6 +681,7 @@ const OrderTable = (props) => {
     },
     {
       name: 'Due Date',
+      sortable: true,
       cell: (row) => {
         if (row.Shipping_Scheduled) {
           return <div> {moment(row.dueDate).format('MMM Do YYYY')}</div>;
@@ -760,48 +863,53 @@ const OrderTable = (props) => {
         <Col lg="5" />
 
         <Col lg="3">
-          <Row>
-            <Col>
-              <h3>Filter Due Date</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg="12">
-              <SingleDatePicker
-                date={startDate} // momentPropTypes.momentObj or null
-                onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
-                focused={startDateFocusedInput} // PropTypes.bool
-                onFocusChange={({ focused }) =>
-                  setStartDateFocusedInput(focused)
-                } // PropTypes.func.isRequired
-                id="startDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment(minDate)) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                }}
-              />
+          {filterStatus !== 'Open Orders' ? (
+            <Row>
+              <Col>
+                <h3>Filter Due Date</h3>
+              </Col>
+            </Row>
+          ) : null}
 
-              <SingleDatePicker
-                date={endDate} // momentPropTypes.momentObj or null
-                onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
-                focused={endDateFocusedInput} // PropTypes.bool
-                onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
-                id="endDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment(startDate)) {
-                    return true; // return true if you want the particular date to be disabled
-                  } else {
-                    return false;
-                  }
-                }}
-              />
-            </Col>
-          </Row>
-          <Row></Row>
-          <Row></Row>
+          {filterStatus !== 'Open Orders' ? (
+            <Row>
+              <Col lg="12">
+                <SingleDatePicker
+                  date={startDate} // momentPropTypes.momentObj or null
+                  onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
+                  focused={startDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) =>
+                    setStartDateFocusedInput(focused)
+                  } // PropTypes.func.isRequired
+                  id="startDate" // PropTypes.string.isRequired,
+                  isOutsideRange={(date) => {
+                    if (date < moment(minDate)) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
+
+                <SingleDatePicker
+                  date={endDate} // momentPropTypes.momentObj or null
+                  onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
+                  focused={endDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) =>
+                    setEndDateFocusedInput(focused)
+                  } // PropTypes.func.isRequired
+                  id="endDate" // PropTypes.string.isRequired,
+                  isOutsideRange={(date) => {
+                    if (date < moment(startDate)) {
+                      return true; // return true if you want the particular date to be disabled
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
+              </Col>
+            </Row>
+          ) : null}
           <Row className="mt-3">
             <Col>
               {role &&
