@@ -1,6 +1,7 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import LateList from './Components/Tracking';
+import OpenOrders from './Components/OpenOrders';
 
 export default (data, startDate, endDate, status) => {
   const { vfs } = vfsFonts.pdfMake;
@@ -9,7 +10,7 @@ export default (data, startDate, endDate, status) => {
   const documentDefinition = {
     pageSize: 'A4',
     pageOrientation: 'landscape',
-    content: [LateList(data, startDate, endDate, status)],
+    content: [OpenOrders(data, startDate, endDate, status)],
     styles: {
       woodtype: {
         fontSize: 18,
@@ -22,13 +23,13 @@ export default (data, startDate, endDate, status) => {
       },
       tableExample: {
         margin: [0, 5, 0, 10],
-        fontSize: 10,
+        fontSize: 8,
       },
       fonts: {
-        fontSize: 10,
+        fontSize: 8,
       },
       fontsBold: {
-        fontSize: 12,
+        fontSize: 8,
         bold: true,
       },
       totals: {
