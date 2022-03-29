@@ -70,7 +70,7 @@ export default (data, startDate, endDate, status) => {
     }
 
     return tableBody.push([
-      moment(i.dueDate).format('MM/DD/YYYY'),
+      i.Shipping_Scheduled ? moment(i.dueDate).format('MM/DD/YYYY') : 'TBD',
       i.job_info.customer.Company,
       i.id + 100,
       i.status,
@@ -101,11 +101,7 @@ export default (data, startDate, endDate, status) => {
     {
       columns: [
         {
-          stack: [
-            `LATE LIST - ${moment(startDate).format(
-              'MM/DD/YYYY'
-            )} thru ${moment(endDate).format('MM/DD/YYYY')}`,
-          ],
+          stack: [`${status} - ${moment().format('MM/DD/YYYY')}`],
         },
         {
           stack: [{ text: '', alignment: 'right' }],
@@ -120,7 +116,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
-        widths: ['*', '*', 40, '*', '*', 40, 40, 40, 40, 50, '*'],
+        widths: [60, 120, 40, 50, 60, 40, 40, 40, 40, 50, '*'],
       },
       layout: 'lightHorizontalLines',
     },

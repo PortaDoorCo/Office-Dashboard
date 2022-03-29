@@ -25,6 +25,7 @@ import styled from 'styled-components';
 import status from '../../../utils/tracking_status';
 import orderTypes from '../../../utils/orderTypes';
 import Tracking from '../../PrintOuts/Reports/Tracking';
+import OpenOrders from '../../PrintOuts/Reports/OpenOrders';
 import DropdownList from 'react-widgets/DropdownList';
 
 // momentLocaliser(moment);
@@ -791,7 +792,12 @@ const OrderTable = (props) => {
       (a, b) => new Date(a.dueDate) - new Date(b.dueDate)
     );
 
-    Tracking(sortedData, startDate, endDate, filterStatus);
+    if (filterStatus === 'Open Orders') {
+      OpenOrders(sortedData, startDate, endDate, filterStatus);
+    } else {
+      Tracking(sortedData, startDate, endDate, filterStatus);
+    }
+
     setToggleCleared(!toggleCleared);
   };
 
