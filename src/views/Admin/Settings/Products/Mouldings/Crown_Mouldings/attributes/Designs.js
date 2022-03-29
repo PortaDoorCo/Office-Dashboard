@@ -41,13 +41,15 @@ const Designs = (props) => {
     MOULDING_THICKNESS: '',
     Multiplier: '',
     photo: null,
-    Style: 'Baseboard',
+    Style: 'Crown_Moulding',
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.designs);
 
   useEffect(() => {
-    const filteredProduct = props.designs.filter((x) => x.Style === 'Crown_Moulding');
+    const filteredProduct = props.designs.filter(
+      (x) => x.Style === 'Crown_Moulding'
+    );
     setFilteredProducts(filteredProduct);
   }, [props.designs]);
 
@@ -122,7 +124,7 @@ const Designs = (props) => {
       MOULDING_WIDTH: product.MOULDING_WIDTH,
       MOULDING_THICKNESS: product.MOULDING_THICKNESS,
       Multiplier: product.Multiplier,
-      Style: 'Baseboard',
+      Style: 'Crown_Moulding',
       photo: product.photo ? product.photo.id : '',
       Item: item,
     };
@@ -189,7 +191,8 @@ const Designs = (props) => {
     role &&
     (role.type === 'management' ||
       role.type === 'authenticated' ||
-      role.type === 'owner' || role.type === 'administrator')
+      role.type === 'owner' ||
+      role.type === 'administrator')
   ) {
     return (
       <div>
