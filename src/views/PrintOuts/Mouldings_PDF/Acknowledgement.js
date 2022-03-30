@@ -28,10 +28,10 @@ export default (data, pricing) => {
 
   const prices = pdfMouldingPricing(data.mouldings, pricing[0]);
 
-  const subTotal = prices.reduce(
-    (acc, item) => acc + Math.round(item * 100) / 100,
-    0
-  );
+  const subTotal =
+    Math.round(
+      prices.reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) * 100
+    ) / 100;
 
   console.log({ subTotal });
 

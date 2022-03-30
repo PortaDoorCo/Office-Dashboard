@@ -15,9 +15,14 @@ export default (data, pricing) => {
   const prices = pdfDoorPricing(data.part_list, pricing[0], data.itemPrice);
   const finishing = pdfFinishing(data?.part_list, pricing[0]);
 
-  const subTotal = prices
-    .map((i) => i.reduce((acc, item) => acc + Math.round(item * 100) / 100, 0))
-    .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0);
+  const subTotal =
+    Math.round(
+      prices
+        .map((i) =>
+          i.reduce((acc, item) => acc + Math.round(item * 100) / 100, 0)
+        )
+        .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) * 100
+    ) / 100;
 
   console.log({ subTotal });
 

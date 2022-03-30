@@ -25,7 +25,8 @@ export default (data, pricing) => {
     }
   });
 
-  const subTotal = prices.reduce((acc, item) => acc + item, 0);
+  const subTotal =
+    Math.round(prices.reduce((acc, item) => acc + item, 0) * 100) / 100;
 
   const misc_total = prices.reduce((acc, item) => acc + item, 0);
 
