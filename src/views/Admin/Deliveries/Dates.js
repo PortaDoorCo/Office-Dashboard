@@ -53,8 +53,6 @@ const OrderTable = (props) => {
   } = props;
   const [data, setData] = useState([]);
 
-  console.log({ orders });
-
   const minDate =
     orders?.length > 0
       ? new Date(orders[orders.length - 1].created_at)

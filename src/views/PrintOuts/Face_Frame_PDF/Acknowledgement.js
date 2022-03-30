@@ -24,8 +24,6 @@ export default (data, pricing) => {
         .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) * 100
     ) / 100;
 
-  console.log({ subTotal });
-
   const finishingSubtotal = finishing.map((i, index) => {
     if (i) {
       let price = parseFloat(i.reduce((acc, item) => acc + item, 0));

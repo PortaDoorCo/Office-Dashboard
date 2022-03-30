@@ -3,11 +3,7 @@ import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
 
 export default (data, pricing) => {
-  console.log({ data });
-
   const prices = pdfDoorPricing(data.part_list, pricing[0], data.itemPrice);
-
-  console.log({ prices });
 
   const pricingData = {
     ...data,
@@ -70,18 +66,12 @@ export default (data, pricing) => {
         .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) * 100
     ) / 100;
 
-  console.log({ subTotal });
-
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
   const discountTotal =
     Math.round(
       ((subTotal * Math.floor((data.discount / 100) * 100)) / 100) * 100
     ) / 100;
-
-  console.log({
-    discountTotal: (subTotal * Math.floor((data.discount / 100) * 100)) / 100,
-  });
 
   const discountSubTotal = subTotal - discountTotal;
 
@@ -93,14 +83,6 @@ export default (data, pricing) => {
     : 0;
 
   const total = order_sub_total + tax;
-
-  console.log({ discountTotal });
-  console.log({ discountSubTotal });
-
-  console.log({ subTotal });
-  console.log({ order_sub_total });
-  console.log({ tax });
-  console.log({ total });
 
   const balanceDue = total - depositPaid - balancePaid;
 

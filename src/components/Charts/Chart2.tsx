@@ -75,8 +75,6 @@ class Chart2 extends Component<PropTypes> {
       .map(([k, v]) => ({ key: k, value: v }))
       .sort((a: any, b: any) => b.value.length - a.value.length);
 
-    console.log({ groupbyName });
-
     const pie = {
       labels: groupbyName.map((i) => i.key),
       datasets: [

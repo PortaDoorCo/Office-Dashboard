@@ -107,7 +107,6 @@ class Edit extends Component {
     );
   };
 
-
   toggleTax = (e) => {
     e.preventDefault();
 
@@ -120,12 +119,16 @@ class Edit extends Component {
     }
   };
 
-
   render() {
-    const { handleSubmit, salesReps, shippingMethods, edit, paymentTerms, role } =
-      this.props;
+    const {
+      handleSubmit,
+      salesReps,
+      shippingMethods,
+      edit,
+      paymentTerms,
+      role,
+    } = this.props;
 
-      console.log({role})
     return (
       <div className="animated resize">
         <Card>
@@ -852,7 +855,8 @@ class Edit extends Component {
                 </div>
               )}
             </form>
-            {edit && (role.type === 'administrator' || role.type === 'owner') ? (
+            {edit &&
+            (role.type === 'administrator' || role.type === 'owner') ? (
               <Button
                 type="button"
                 onClick={this.props.onEdit}

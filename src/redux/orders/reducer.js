@@ -117,7 +117,7 @@ export default function (state = initialState, action) {
       };
     case LOAD_DELIVERIES:
       const updatedDeliveries = data;
-      console.log({ data });
+
       const dateDeliveries = updatedDeliveries.filter(function (d, i) {
         return moment(d.updated_at).isSame(new Date(), 'day');
       });

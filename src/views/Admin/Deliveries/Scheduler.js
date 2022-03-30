@@ -23,8 +23,7 @@ const Scheduler = (props) => {
     controlledBoard,
     setBoard,
   } = props;
-  console.log({ props });
-  console.log({ controlledBoard });
+
   return (
     <div>
       <Container

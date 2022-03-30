@@ -50,8 +50,6 @@ const OrderTable = ({
     dispatch(change('Order', `part_list[${i}].dimensions[${index}].notes`, ''));
   };
 
-  console.log({ formState });
-
   const checkSize = (e, index) => {
     switch (numQty(e.target.value)) {
       case 9:

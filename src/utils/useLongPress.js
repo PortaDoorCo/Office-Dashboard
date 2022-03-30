@@ -20,7 +20,6 @@ export default function useLongPress(callback = () => {}, ms = 300) {
     setStartLongPress(true);
   }, []);
   const stop = useCallback(() => {
-    console.log('stop');
     setStartLongPress(false);
   }, []);
 

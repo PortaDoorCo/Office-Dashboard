@@ -1161,7 +1161,6 @@ export const subTotalSelector = createSelector(
       } else {
         return prices.map((i, index) => {
           if (i) {
-            console.log({ i });
             let price =
               Math.round(
                 i.reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) *
@@ -1221,8 +1220,6 @@ export const taxSelector = createSelector(
     orderTypeSelector,
   ],
   (subTotal, tax, discount, dis, misc, state, nonDiscounted, orderType) => {
-    console.log({ discount });
-
     if (orderType === 'Misc Items') {
       return (
         Math.round(
@@ -1258,11 +1255,6 @@ export const totalSelector = createSelector(
     orderTypeSelector,
   ],
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
-    console.log({ subTotal });
-    console.log({ tax });
-    console.log({ discount });
-    console.log({ misc });
-
     if (orderType === 'Misc Items') {
       const sub =
         Math.floor(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100;

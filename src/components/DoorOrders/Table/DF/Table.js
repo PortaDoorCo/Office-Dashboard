@@ -140,8 +140,6 @@ const Cope_Table = ({
       df_reduction = part.design.PROFILE_WIDTH;
     }
 
-    console.log({ profile_width });
-
     if (e) {
       if (leftStile) {
         dispatch(

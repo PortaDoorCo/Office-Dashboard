@@ -127,8 +127,6 @@ const exportThis = async (data, breakdowns) => {
             2000
           );
         } catch (err) {
-          console.log('errrrrr==>>', err);
-          console.log({ orderNum: d.orderNum });
           NotificationManager.error(
             'There was an problem with your upload',
             'Error',

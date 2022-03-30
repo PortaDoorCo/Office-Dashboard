@@ -84,8 +84,6 @@ export default (data, breakdowns) => {
     }
   }
 
-  console.log({ newChunk });
-
   return [
     {
       margin: [-21, -7, -5, 8],

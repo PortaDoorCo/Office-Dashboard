@@ -17,7 +17,6 @@ export const UPLOAD_FILE_TO_CUSTOMER = 'UPLOAD_FILE_TO_CUSTOMER';
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const DELETE_ORDER = 'DELETE_ORDER';
 
-
 export function setSelectedCompanies(data) {
   return async function (dispatch) {
     return await dispatch({
@@ -28,8 +27,6 @@ export function setSelectedCompanies(data) {
 }
 
 export function loadCustomers(cookie, user) {
-  
-
   if (user.role?.type === 'customer') {
     return async function (dispatch) {
       const res = await fetch(`${db_url}/companyprofiles/${user.company.id}`, {
@@ -142,7 +139,6 @@ export function updateCustomer(custId, customer, cookie) {
         data: data.data,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -151,7 +147,6 @@ export function updateCustomer(custId, customer, cookie) {
     }
   };
 }
-
 
 export function saveEmail(custId, customer, cookie) {
   return async function (dispatch) {
@@ -177,7 +172,6 @@ export function saveEmail(custId, customer, cookie) {
         data: data.data,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -217,7 +211,6 @@ export function uploadFilesToCustomer(customer, e, cookie) {
         data: data,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -246,7 +239,6 @@ export function submitCustomer(customer, cookie) {
         data: res,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -302,7 +294,6 @@ export function updateNotes(orderId, data, cookie) {
         type: UPDATE_NOTES,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -332,7 +323,6 @@ export function deleteNote(id, data, cookie) {
         type: UPDATE_NOTES,
       });
     } catch (error) {
-      
       NotificationManager.error(
         'There was an problem with your submission',
         'Error',
@@ -361,7 +351,6 @@ export function customerUpdated(res) {
 }
 
 export function customerDeleted(res) {
-  console.log({res})
   return async function (dispatch) {
     return dispatch({
       type: CUSTOMER_DELETED,

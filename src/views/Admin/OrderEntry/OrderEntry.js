@@ -312,7 +312,6 @@ class OrderEntry extends Component {
       canSubmit = true;
     } else {
       const check = values.part_list.filter((x) => {
-        console.log({ x });
         if (x.dimensions.length < 1) {
           return true;
         }
@@ -401,8 +400,6 @@ class OrderEntry extends Component {
       role,
       prices,
     } = this.props;
-
-    console.log({ prices });
 
     return (
       <div className="animated fadeIn order-tour">

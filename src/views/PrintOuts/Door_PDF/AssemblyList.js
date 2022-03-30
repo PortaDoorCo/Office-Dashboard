@@ -93,8 +93,6 @@ export default (data, breakdowns) => {
       ]);
     });
 
-    console.log({ tableBody });
-
     return [
       {
         stack: [
@@ -274,15 +272,11 @@ export default (data, breakdowns) => {
     ];
   });
 
-  console.log({ table_content });
-
   const newTable = {
     ...table_content,
   };
 
-  table_content.map((i) => {
-    console.log(i);
-  });
+  table_content.map((i) => {});
 
   return [
     table_content,

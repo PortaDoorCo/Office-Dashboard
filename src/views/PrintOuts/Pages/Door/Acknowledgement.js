@@ -28,8 +28,6 @@ const DoorPDF = async (
 
     let Content = [];
 
-    console.log({ data });
-
     const tracking = data.tracking.filter(
       (x) => x.status === 'Quote' || x.status === 'Order Edited'
     );
