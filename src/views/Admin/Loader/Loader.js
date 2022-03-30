@@ -33,8 +33,6 @@ const Loader = (props) => {
     callImage();
   }, []);
 
-  console.log({ bgImage });
-
   return (
     <div
       style={{

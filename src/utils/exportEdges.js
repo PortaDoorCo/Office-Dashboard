@@ -7,11 +7,8 @@ const sleep = (milliseconds) => {
 };
 
 const edges = async (data) => {
-  console.log({ data_length: data.length });
   for (const d of data) {
     await sleep(100);
-
-    console.log({ d });
 
     let exportCsv = [];
     let a = [];
@@ -134,9 +131,6 @@ const edges = async (data) => {
             2000
           );
         } catch (err) {
-          console.log({ err });
-          console.log({ orderNum: d.orderNum });
-          console.log({ length: csvContent.length });
           NotificationManager.error(
             'There was an problem with your upload',
             'Error',

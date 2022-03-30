@@ -1,8 +1,6 @@
 import numQty from 'numeric-quantity';
 
 const pricing = (parts, pricer, itemPrice) => {
-  console.log({ itemPrice });
-
   const item = parts.map((part, index) => {
     const design =
       (part.design && part.thickness.value === 1) ||

@@ -34,7 +34,6 @@ const Deliveries = (props) => {
 
   useEffect(() => {
     const filteredOrders = orders?.filter((item) => {
-      console.log({ item });
       let date = new Date(item.created_at);
       const dateCompleted = item?.tracking?.filter((x) => {
         return x.status === 'Complete';
@@ -52,7 +51,6 @@ const Deliveries = (props) => {
       );
     });
 
-    console.log({ filteredOrders });
     setData(filteredOrders);
     setBoard({
       ...controlledBoard,
@@ -61,7 +59,6 @@ const Deliveries = (props) => {
           return {
             ...i,
             cards: filteredOrders.map((j) => {
-              console.log({ j });
               return {
                 ...j,
                 id: j.id,
@@ -77,21 +74,15 @@ const Deliveries = (props) => {
     });
   }, [startDate, endDate, orders]);
 
-  console.log({ controlledBoard });
-  console.log({ data });
-  console.log({ orders });
-
   let clickHoldTimer = null;
 
   const handleMouseDown = () => {
-    console.log('press');
     clickHoldTimer = setTimeout(() => {
       //Action to be performed after holding down mouse
     }, 1000); //Change 1000 to number of milliseconds required for mouse hold
   };
 
   const handleMouseUp = () => {
-    console.log('stop');
     clearTimeout(clickHoldTimer);
   };
 

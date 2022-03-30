@@ -848,9 +848,6 @@ const DoorTable = ({
       parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) > 2 &&
       parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) === 1
     ) {
-      // alert('Create New Order');
-      console.log({ e });
-
       setWarningType({
         value: e.target.value,
         index: index,
@@ -890,9 +887,6 @@ const DoorTable = ({
       e.preventDefault();
     }
   };
-
-  console.log({ modal });
-  console.log({ warningType });
 
   return (
     <div>

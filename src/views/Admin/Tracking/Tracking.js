@@ -801,8 +801,6 @@ const OrderTable = (props) => {
     setToggleCleared(!toggleCleared);
   };
 
-  console.log({ customer });
-
   return (
     <div>
       <Row>

@@ -41,8 +41,6 @@ export default (data, pricing) => {
     data.itemPrice
   );
 
-  console.log({ prices });
-
   const subTotal =
     Math.round(
       prices
@@ -69,14 +67,6 @@ export default (data, pricing) => {
     : 0;
 
   const total = order_sub_total + tax;
-
-  console.log({ discountTotal });
-  console.log({ discountSubTotal });
-
-  console.log({ subTotal });
-  console.log({ order_sub_total });
-  console.log({ tax });
-  console.log({ total });
 
   const balanceDue = total - depositPaid - balancePaid;
 

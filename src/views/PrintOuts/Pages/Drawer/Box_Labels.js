@@ -13,8 +13,6 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
 
     let Content = [];
 
-    console.log({ Box_Labels: Box_Labels(data, breakdowns) });
-
     Content.push(Box_Labels(data, breakdowns));
 
     const rowLen = Content.length;

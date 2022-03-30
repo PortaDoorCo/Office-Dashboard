@@ -35,8 +35,6 @@ export default (data, pricing) => {
       ((subTotal * Math.floor((data.discount / 100) * 100)) / 100) * 100
     ) / 100;
 
-  console.log({ discountTotal });
-
   const discountSubTotal = subTotal - Math.round(discountTotal * 100) / 100;
 
   const order_sub_total = discountSubTotal;
