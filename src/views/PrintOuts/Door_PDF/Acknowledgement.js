@@ -58,14 +58,17 @@ export default (data, pricing) => {
     }
   });
 
-  const subTotal = parts
-    .map((i) =>
-      i.dimensions.reduce(
-        (acc, item) => acc + Math.round(item.price * 100) / 100,
-        0
-      )
-    )
-    .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0);
+  const subTotal =
+    Math.round(
+      parts
+        .map((i) =>
+          i.dimensions.reduce(
+            (acc, item) => acc + Math.round(item.price * 100) / 100,
+            0
+          )
+        )
+        .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) * 100
+    ) / 100;
 
   console.log({ subTotal });
 
@@ -75,6 +78,10 @@ export default (data, pricing) => {
     Math.round(
       ((subTotal * Math.floor((data.discount / 100) * 100)) / 100) * 100
     ) / 100;
+
+  console.log({
+    discountTotal: (subTotal * Math.floor((data.discount / 100) * 100)) / 100,
+  });
 
   const discountSubTotal = subTotal - discountTotal;
 
