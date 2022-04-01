@@ -203,6 +203,21 @@ const OrderTable = (props) => {
           ) <= moment(endDate).endOf('day').valueOf() &&
           item.balance_due < 0
         );
+      } else if (filterStatus === 'One Piece') {
+        console.log(
+          'ddd==>>',
+          item?.part_list?.filter((j) => {
+            return j.orderType?.value === 'One_Piece';
+          })
+        );
+        return item?.part_list?.filter((j) => {
+          return (
+            j.orderType?.name === 'One Piece' ||
+            j.orderType?.name === 'One Piece DF' ||
+            j.orderType?.name === 'Two Piece' ||
+            j.orderType?.name === 'Two Piece DF'
+          );
+        }).length;
       } else if (filterStatus === 'Order Numbers') {
         return item.id + 100 !== item.orderNum;
       } else if (filterStatus === 'Invoiced') {
