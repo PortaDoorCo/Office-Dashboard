@@ -50,7 +50,7 @@ class JobInfo extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.saveEmails = this.saveEmails.bind(this);
+    // this.saveEmails = this.saveEmails.bind(this);
     this.scheduleDueDate = this.scheduleDueDate.bind(this);
     this.state = {
       loaded: false,
@@ -283,23 +283,25 @@ class JobInfo extends Component {
     }
   }
 
-  saveEmails() {
-    const { formState, saveEmail, cookie } = this.props;
+  // saveEmails() {
+  //   const { formState, saveEmail, cookie } = this.props;
 
-    const jobInfo = formState?.job_info;
-    const customer = formState?.job_info?.customer;
+  //   const jobInfo = formState?.job_info;
+  //   const customer = formState?.job_info?.customer;
 
-    const emails = {
-      EMAIL: jobInfo.EMAIL,
-      Email2: jobInfo.Email2,
-      Email3: jobInfo.Email3,
-      Email4: jobInfo.Email4,
-      Email5: jobInfo.Email5,
-      Email6: jobInfo.Email6,
-    };
+  //   console.log('EMMMMAIIILL');
 
-    saveEmail(customer?.id, emails, cookie);
-  }
+  //   const emails = {
+  //     EMAIL: jobInfo.EMAIL,
+  //     Email2: jobInfo.Email2,
+  //     Email3: jobInfo.Email3,
+  //     Email4: jobInfo.Email4,
+  //     Email5: jobInfo.Email5,
+  //     Email6: jobInfo.Email6,
+  //   };
+
+  //   saveEmail(customer?.id, emails, cookie);
+  // }
 
   render() {
     const {
