@@ -12,6 +12,10 @@ const status = [
     value: 'Cut',
   },
   {
+    label: 'Moulding',
+    value: 'Moulding',
+  },
+  {
     label: 'Framing',
     value: 'Framing',
   },
