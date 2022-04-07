@@ -2,21 +2,33 @@ import React, { Component } from 'react';
 import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import {
-  Button, Col, Input,
+  Button,
+  Col,
+  Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupText, Label, Row, Table
+  InputGroupText,
+  Label,
+  Row,
+  Table,
 } from 'reactstrap';
 import {
-  change, Field, FieldArray,
-  getFormValues, reduxForm
+  change,
+  Field,
+  FieldArray,
+  getFormValues,
+  reduxForm,
 } from 'redux-form';
 import {
-  miscItemLinePriceSelector, miscItemPriceSelector, miscTotalSelector
+  miscItemLinePriceSelector,
+  miscItemPriceSelector,
+  miscTotalSelector,
 } from '../../selectors/pricing';
 import currencyMask from '../../utils/currencyMask';
 import {
-  renderDropdownListNoPhoto, renderField, renderInt
+  renderDropdownListNoPhoto,
+  renderField,
+  renderInt,
 } from '../RenderInputs/renderInputs';
 
 let Inputs = (props) => {
@@ -29,14 +41,14 @@ let Inputs = (props) => {
   );
 
   const changeMiscItem = (e, index) => {
-    let total_qty = 0;    
+    let total_qty = 0;
 
     props.dispatch(change('Order', `misc_items[${index}].price`, e.Price));
 
     if (e.count_items) {
       const categories = e.categories.map((i) => i.value);
       if (categories.includes('Door')) {
-        const matched_orders = formState.part_list.filter((i) =>
+        const matched_orders = formState.part_list?.filter((i) =>
           [
             'Door',
             'Glass',
@@ -44,7 +56,7 @@ let Inputs = (props) => {
             'Two_Piece',
             'Slab_Door',
             'Face_Frame',
-          ].includes(i.orderType.value)
+          ].includes(i?.orderType?.value)
         );
 
         const quantities = matched_orders.map((i) => {
@@ -60,14 +72,14 @@ let Inputs = (props) => {
         total_qty = total_qty + sub_quantity;
       }
       if (categories.includes('DF')) {
-        const matched_orders = formState.part_list.filter((i) =>
+        const matched_orders = formState.part_list?.filter((i) =>
           [
             'DF',
             'Glass_DF',
             'One_Piece_DF',
             'Two_Piece_DF',
             'Slab_DF',
-          ].includes(i.orderType.value)
+          ].includes(i?.orderType?.value)
         );
 
         const quantities = matched_orders.map((i) => {
@@ -120,83 +132,83 @@ let Inputs = (props) => {
                   formState.misc_items &&
                   formState.misc_items[index] &&
                   formState.misc_items[index].category === 'preselect' ? (
-                      <Field
-                        name={`${table}.item`}
-                        component={renderDropdownListNoPhoto}
-                        data={sorted_misc_items}
-                        onChange={(e) => changeMiscItem(e, index)}
-                        dataKey="value"
-                        textField="NAME"
-                      />
-                    ) : (
-                      <Field
-                        name={`${table}.item2`}
-                        component={renderField}
-                        dataKey="value"
-                        textField="NAME"
-                      />
-                    )}
+                    <Field
+                      name={`${table}.item`}
+                      component={renderDropdownListNoPhoto}
+                      data={sorted_misc_items}
+                      onChange={(e) => changeMiscItem(e, index)}
+                      dataKey="value"
+                      textField="NAME"
+                    />
+                  ) : (
+                    <Field
+                      name={`${table}.item2`}
+                      component={renderField}
+                      dataKey="value"
+                      textField="NAME"
+                    />
+                  )}
                 </td>
                 {formState &&
                 formState.misc_items &&
                 formState.misc_items[index] &&
                 formState.misc_items[index].category === 'preselect' ? (
-                    <>
-                      <td style={{ width: '25%' }}>
-                        <InputGroup>
-                          <Field
-                            name={`${table}.price`}
-                            type="text"
-                            component={renderField}
-                            label="price"
-                            {...currencyMask}
-                          />
-                        </InputGroup>
-                      </td>
-                      <td style={{ width: '25%' }}>
-                        <InputGroup>
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>$</InputGroupText>
-                          </InputGroupAddon>
-                          <NumberFormat
-                            thousandSeparator={true}
-                            value={linePrices[index]}
-                            disabled={true}
-                            customInput={Input}
-                            {...currencyMask}
-                            prefix={'$'}
-                          />
-                        </InputGroup>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td style={{ width: '25%' }}>
+                  <>
+                    <td style={{ width: '25%' }}>
+                      <InputGroup>
                         <Field
-                          name={`${table}.pricePer`}
-                          component={renderField}
+                          name={`${table}.price`}
                           type="text"
-                          required
+                          component={renderField}
+                          label="price"
                           {...currencyMask}
                         />
-                      </td>
-                      <td style={{ width: '25%' }}>
-                        <InputGroup>
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>$</InputGroupText>
-                          </InputGroupAddon>
-                          <NumberFormat
-                            thousandSeparator={true}
-                            value={linePrices[index]}
-                            disabled={true}
-                            customInput={Input}
-                            {...currencyMask}
-                            prefix={'$'}
-                          />
-                        </InputGroup>
-                      </td>
-                    </>
-                  )}
+                      </InputGroup>
+                    </td>
+                    <td style={{ width: '25%' }}>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <NumberFormat
+                          thousandSeparator={true}
+                          value={linePrices[index]}
+                          disabled={true}
+                          customInput={Input}
+                          {...currencyMask}
+                          prefix={'$'}
+                        />
+                      </InputGroup>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td style={{ width: '25%' }}>
+                      <Field
+                        name={`${table}.pricePer`}
+                        component={renderField}
+                        type="text"
+                        required
+                        {...currencyMask}
+                      />
+                    </td>
+                    <td style={{ width: '25%' }}>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>$</InputGroupText>
+                        </InputGroupAddon>
+                        <NumberFormat
+                          thousandSeparator={true}
+                          value={linePrices[index]}
+                          disabled={true}
+                          customInput={Input}
+                          {...currencyMask}
+                          prefix={'$'}
+                        />
+                      </InputGroup>
+                    </td>
+                  </>
+                )}
                 <td>
                   <Button color="danger" onClick={() => fields.remove(index)}>
                     X

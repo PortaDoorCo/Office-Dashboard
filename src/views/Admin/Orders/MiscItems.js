@@ -66,7 +66,7 @@ let Inputs = (props) => {
     if (e.count_items) {
       const categories = e.categories.map((i) => i.value);
       if (categories.includes('Door')) {
-        const matched_orders = formState.part_list.filter((i) =>
+        const matched_orders = formState.part_list?.filter((i) =>
           [
             'Door',
             'Glass',
@@ -74,7 +74,7 @@ let Inputs = (props) => {
             'Two_Piece',
             'Slab_Door',
             'Face_Frame',
-          ].includes(i.orderType.value)
+          ].includes(i?.orderType?.value)
         );
 
         const quantities = matched_orders.map((i) => {
@@ -90,14 +90,14 @@ let Inputs = (props) => {
         total_qty = total_qty + sub_quantity;
       }
       if (categories.includes('DF')) {
-        const matched_orders = formState.part_list.filter((i) =>
+        const matched_orders = formState.part_list?.filter((i) =>
           [
             'DF',
             'Glass_DF',
             'One_Piece_DF',
             'Two_Piece_DF',
             'Slab_DF',
-          ].includes(i.orderType.value)
+          ].includes(i?.orderType?.value)
         );
 
         const quantities = matched_orders.map((i) => {
