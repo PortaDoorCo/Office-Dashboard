@@ -58,6 +58,7 @@ import EditCheckoutBox from '../Orders/CheckoutBox';
 import CheckoutBox from './components/CheckoutBox';
 import validate from './components/validate';
 import Sticky from 'react-stickynode';
+import CustomerReminder from '../../../utils/Modal';
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
@@ -108,7 +109,7 @@ class OrderEntry extends Component {
   }
 
   toggleReminderModal = () => {
-    this.setState({ customerReminder: !this.state.customerReminder });
+    this.setState({ customerReminder: !this.state?.customerReminder });
   };
 
   componentDidMount() {
@@ -153,6 +154,7 @@ class OrderEntry extends Component {
       updateOrder,
       formState,
       qty,
+      orders,
     } = this.props;
 
     // const orderType = orderType;
@@ -326,10 +328,17 @@ class OrderEntry extends Component {
 
     if (!isEdit) {
       if (canSubmit) {
+        const customer = formState?.job_info?.customer;
+
         await submitOrder(order, cookie);
         this.setState({ updateSubmit: !this.state.updateSubmit });
         reset();
         window.scrollTo(0, 0);
+
+        if (customer?.Notes !== '') {
+          this.toggleReminderModal();
+        }
+
         return;
       } else {
         alert('Submission Error: You are missing dimensions');
@@ -399,7 +408,10 @@ class OrderEntry extends Component {
       saveEmail,
       role,
       prices,
+      orders,
     } = this.props;
+
+    const customer = formState?.job_info?.customer;
 
     return (
       <div className="animated fadeIn order-tour">
@@ -411,6 +423,16 @@ class OrderEntry extends Component {
           action={this.cancelOrder}
           actionButton={'Cancel Edit'}
           buttonColor={'danger'}
+        />
+        <CustomerReminder
+          {...this.props}
+          toggle={this.toggleReminderModal}
+          modal={this.state.customerReminder}
+          title={'Please double check your order'}
+          action={() => this.submit(formState ? formState : null)}
+          actionButton={'Submit'}
+          message={customer?.Notes}
+          orders={orders}
         />
         <div className="orderForm">
           <div className={isEdit ? 'editFormCol1' : 'orderFormCol1'}>
@@ -609,7 +631,11 @@ class OrderEntry extends Component {
                     {...this.state}
                     onSubNav={this.onSubNav}
                     handleSubmit={handleSubmit}
-                    submit={this.submit}
+                    submit={() =>
+                      customer?.Notes === ''
+                        ? this.submit()
+                        : this.toggleReminderModal()
+                    }
                     toggleCancelModal={this.toggleCancelModal}
                     maxValue={maxValue}
                     onUploaded={this.onUploaded}
@@ -626,6 +652,7 @@ class OrderEntry extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
+  orders: state.Orders.orders,
   customers: state.customers.customerDB,
   customerDBLoaded: state.customers.customerDBLoaded,
   user: state.users.user,

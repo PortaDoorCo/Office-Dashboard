@@ -326,12 +326,6 @@ class JobInfo extends Component {
 
     return (
       <div className="job-info-tour">
-        <CustomerReminder
-          {...this.props}
-          toggle={this.props.toggleReminderModal}
-          modal={this.props.customerReminder}
-          orders={orders}
-        />
         <Row>
           <Col lg="10">
             <FormGroup>
