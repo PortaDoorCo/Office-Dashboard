@@ -611,16 +611,8 @@ class OrderEntry extends Component {
                     {...this.props}
                     {...this.state}
                     onSubNav={this.onSubNav}
-                    handleSubmit={
-                      customer?.Notes !== ''
-                        ? handleSubmit
-                        : this.toggleReminderModal
-                    }
-                    submit={
-                      customer?.Notes === ''
-                        ? this.submit
-                        : this.toggleReminderModal
-                    }
+                    handleSubmit={handleSubmit}
+                    submit={this.submit}
                     toggleCancelModal={this.toggleCancelModal}
                     maxValue={maxValue}
                     onUploaded={this.onUploaded}

@@ -155,7 +155,8 @@ const RenderBalances = ({
                   ) : null}
                 </td>
               </tr>
-            )).slice(1)
+            ))
+            .slice(1)
             .reverse()}
         </tbody>
       </Table>
@@ -190,23 +191,25 @@ class BalanceHistory extends Component {
 
     const balance_history_paid =
       formState &&
-      formState.balance_history.slice(0).map((i, index) => {
-        updated_total = updated_total - parseFloat(i.balance_paid || 0) - parseFloat(i.deposit_paid || 0);
+      formState.balance_history?.slice(0).map((i, index) => {
+        updated_total =
+          updated_total -
+          parseFloat(i.balance_paid || 0) -
+          parseFloat(i.deposit_paid || 0);
         return updated_total;
       });
 
     const balance_paid_history =
       formState && formState.balance_history
-        ? formState.balance_history.map((i) => {
-          if(parseFloat(i.balance_paid) > 0) {
-            return i.balance_paid;
-          } else if (parseFloat(i.deposit_paid) > 0) {
-            return i.deposit_paid
-          } else {
-            return 0
-          }
-
-        })
+        ? formState.balance_history?.map((i) => {
+            if (i.balance_paid) {
+              return i.balance_paid;
+            } else if (i.deposit_paid) {
+              return i.deposit_paid;
+            } else {
+              return 0;
+            }
+          })
         : [0];
     const balance_paid_total = balance_paid_history.reduce(
       (acc, item) => acc + item,
@@ -230,6 +233,8 @@ class BalanceHistory extends Component {
       await updateOrder(orderId, order, cookie);
       await this.props.editable();
     };
+
+    console.log({ balanceHistory: formState?.balance_history });
 
     if (formState) {
       return (
