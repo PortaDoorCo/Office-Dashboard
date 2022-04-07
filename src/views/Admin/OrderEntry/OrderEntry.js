@@ -109,7 +109,7 @@ class OrderEntry extends Component {
   }
 
   toggleReminderModal = () => {
-    this.setState({ customerReminder: !this.state.customerReminder });
+    this.setState({ customerReminder: !this.state?.customerReminder });
   };
 
   componentDidMount() {
@@ -630,15 +630,11 @@ class OrderEntry extends Component {
                     {...this.props}
                     {...this.state}
                     onSubNav={this.onSubNav}
-                    handleSubmit={
-                      customer?.Notes !== ''
-                        ? handleSubmit
-                        : this.toggleReminderModal
-                    }
-                    submit={
+                    handleSubmit={handleSubmit}
+                    submit={() =>
                       customer?.Notes === ''
-                        ? this.submit
-                        : this.toggleReminderModal
+                        ? this.submit()
+                        : this.toggleReminderModal()
                     }
                     toggleCancelModal={this.toggleCancelModal}
                     maxValue={maxValue}
