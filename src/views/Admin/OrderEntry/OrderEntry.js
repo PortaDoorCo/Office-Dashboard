@@ -105,11 +105,21 @@ class OrderEntry extends Component {
       subNavPage: 'misc',
       customerReminder: false,
       cancelModal: false,
+      openedReminder: false,
     };
   }
 
   toggleReminderModal = () => {
-    this.setState({ customerReminder: !this.state?.customerReminder });
+    this.setState({
+      customerReminder: !this.state?.customerReminder,
+    });
+  };
+
+  toggleSubmitModal = () => {
+    this.setState({
+      customerReminder: !this.state?.customerReminder,
+      openedReminder: true,
+    });
   };
 
   componentDidMount() {
@@ -335,9 +345,10 @@ class OrderEntry extends Component {
         reset();
         window.scrollTo(0, 0);
 
-        if (customer?.Notes !== '') {
-          this.toggleReminderModal();
-        }
+        this.setState({
+          customerReminder: false,
+          openedReminder: false,
+        });
 
         return;
       } else {
@@ -424,19 +435,21 @@ class OrderEntry extends Component {
           actionButton={'Cancel Edit'}
           buttonColor={'danger'}
         />
-        {/* <CustomerReminder
+        <CustomerReminder
           {...this.props}
           toggle={this.toggleReminderModal}
           modal={this.state.customerReminder}
           title={'Please double check your order'}
-          action={() =>
-            isEdit ? this.submit(formState ? formState : null) : null
-          }
-          actionButton={'Submit'}
           message={customer?.Notes}
+          action={
+            this.state.openedReminder
+              ? () => this.submit(formState ? formState : null)
+              : false
+          }
+          actionButton={this.state.openedReminder ? 'Submit' : null}
           orders={orders}
           isEdit={isEdit}
-        /> */}
+        />
         <div className="orderForm">
           <div className={isEdit ? 'editFormCol1' : 'orderFormCol1'}>
             <Card>
@@ -634,7 +647,11 @@ class OrderEntry extends Component {
                     {...this.state}
                     onSubNav={this.onSubNav}
                     handleSubmit={handleSubmit}
-                    submit={this.submit}
+                    submit={
+                      this.state.openedReminder
+                        ? this.submit
+                        : this.toggleSubmitModal
+                    }
                     toggleCancelModal={this.toggleCancelModal}
                     maxValue={maxValue}
                     onUploaded={this.onUploaded}
