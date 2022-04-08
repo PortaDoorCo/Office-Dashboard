@@ -2,8 +2,16 @@ import React from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
 const ModalUtil = (props) => {
-  const { className, modal, toggle, message, title, action, actionButton } =
-    props;
+  const {
+    className,
+    modal,
+    toggle,
+    message,
+    title,
+    action,
+    actionButton,
+    isEdit,
+  } = props;
 
   return (
     <div>
@@ -11,7 +19,7 @@ const ModalUtil = (props) => {
         <ModalHeader toggle={toggle}>{title}</ModalHeader>
         <ModalBody>{message}</ModalBody>
         <ModalFooter>
-          {action ? (
+          {action && isEdit ? (
             <Button
               color={props.buttonColor ? props.buttonColor : 'primary'}
               onClick={action}

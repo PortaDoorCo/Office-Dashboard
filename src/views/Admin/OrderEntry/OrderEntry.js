@@ -424,16 +424,19 @@ class OrderEntry extends Component {
           actionButton={'Cancel Edit'}
           buttonColor={'danger'}
         />
-        <CustomerReminder
+        {/* <CustomerReminder
           {...this.props}
           toggle={this.toggleReminderModal}
           modal={this.state.customerReminder}
           title={'Please double check your order'}
-          action={() => this.submit(formState ? formState : null)}
+          action={() =>
+            isEdit ? this.submit(formState ? formState : null) : null
+          }
           actionButton={'Submit'}
           message={customer?.Notes}
           orders={orders}
-        />
+          isEdit={isEdit}
+        /> */}
         <div className="orderForm">
           <div className={isEdit ? 'editFormCol1' : 'orderFormCol1'}>
             <Card>
@@ -631,11 +634,7 @@ class OrderEntry extends Component {
                     {...this.state}
                     onSubNav={this.onSubNav}
                     handleSubmit={handleSubmit}
-                    submit={() =>
-                      customer?.Notes === ''
-                        ? this.submit()
-                        : this.toggleReminderModal()
-                    }
+                    submit={this.submit}
                     toggleCancelModal={this.toggleCancelModal}
                     maxValue={maxValue}
                     onUploaded={this.onUploaded}
