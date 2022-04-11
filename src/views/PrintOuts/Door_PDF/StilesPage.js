@@ -6,12 +6,12 @@ import HeightSort from '../Sorting/HeightSort';
 export default (data, breakdowns) => {
   const getName = (i) => {
     return `${
-      i.design
+      i.construction.value === 'Slab'
+        ? 'Slab'
+        : i.design
         ? i.design.NAME
         : i.face_frame_design
         ? i.face_frame_design.NAME
-        : i.construction.value === 'Slab'
-        ? 'Slab'
         : ''
     } ${
       i.construction.value === 'MT' || i.construction.value === 'Miter'
