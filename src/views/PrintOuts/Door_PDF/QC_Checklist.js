@@ -31,19 +31,19 @@ export default (data, breakdowns) => {
           // { text: 'N/A', style: 'fonts' },
           item.notes || item.lite
             ? {
-              text: `${item.notes ? item.notes : ''} ${
-                item.lite ? item.lite.NAME : ''
-              }`,
-              style: 'tableBold',
-              alignment: 'left',
-            }
+                text: `${item.notes ? item.notes : ''} ${
+                  item.lite ? item.lite.NAME : ''
+                }`,
+                style: 'tableBold',
+                alignment: 'left',
+              }
             : null,
           item.cab_number
             ? {
-              text: `${item.cab_number}`,
-              style: 'fonts',
-              alignment: 'left',
-            }
+                text: `${item.cab_number}`,
+                style: 'fonts',
+                alignment: 'left',
+              }
             : null,
         ]);
       });
@@ -53,156 +53,170 @@ export default (data, breakdowns) => {
           stack: [
             index === 0
               ? {
-                columns: [
-                  { text: '' },
-                  {
-                    alignment: 'center',
-                    style: 'fontsBold',
-                    stack: [
-                      data.job_info?.Shop_Notes ?{
-                        text: `${
-                          data.job_info?.Shop_Notes
-                            ? data.job_info?.Shop_Notes?.toUpperCase()
-                            : ''
-                        }`,
-                      } : null,
-                      { text : data.misc_items.map(i => {
-                        if(i.category === 'preselect'){
-                          if(i.item.NAME.includes('Delivery')){
-                            return null;
-                          } else {
-                            return `${i.item?.NAME} \n`;
-                          }
-                        
-                        } else {
-                          return `${i.item2} \n`;
-                        }
-                      })
-                      }
-                    ]
-                  },
-                  { text: '' },
-                ],
-                margin: [0, -29, 0, 0],
-              }
+                  columns: [
+                    { text: '' },
+                    {
+                      alignment: 'center',
+                      style: 'fontsBold',
+                      stack: [
+                        data.job_info?.Shop_Notes
+                          ? {
+                              text: `${
+                                data.job_info?.Shop_Notes
+                                  ? data.job_info?.Shop_Notes?.toUpperCase()
+                                  : ''
+                              }`,
+                            }
+                          : null,
+                        {
+                          text: data.misc_items.map((i) => {
+                            if (i.category === 'preselect') {
+                              if (i.item.NAME.includes('Delivery')) {
+                                return null;
+                              } else {
+                                return `${i.item?.NAME} \n`;
+                              }
+                            } else {
+                              return `${i.item2} \n`;
+                            }
+                          }),
+                        },
+                      ],
+                    },
+                    { text: '' },
+                  ],
+                  margin: [0, -29, 0, 0],
+                }
               : null,
             {
-
               stack: [
                 {
                   margin: [0, 10, 0, 0],
                   stack: [
-                    {                  columns: [
-                      {
-                        width: 200,
-                        stack: [
-                          {
-                            text: `${
-                              i.thickness?.grade_name
-                                ? i.thickness?.grade_name
-                                : ''
-                            }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
-                              i.thickness.thickness_2
-                            }"`,
-                            style: 'woodtype',
-                            width: 300,
-                          },
-                          {
-                            text: `${
-                              i.design
-                                ? i.design.NAME
-                                : i.face_frame_design
+                    {
+                      columns: [
+                        {
+                          width: 200,
+                          stack: [
+                            {
+                              text: `${
+                                i.thickness?.grade_name
+                                  ? i.thickness?.grade_name
+                                  : ''
+                              }${i.woodtype.NAME} - ${
+                                i.thickness.thickness_1
+                              } - ${i.thickness.thickness_2}"`,
+                              style: 'woodtype',
+                              width: 300,
+                            },
+                            {
+                              text: `${
+                                i.construction.value === 'Slab'
+                                  ? 'Slab'
+                                  : i.design
+                                  ? i.design.NAME
+                                  : i.face_frame_design
                                   ? i.face_frame_design.NAME
-                                  : i.construction.value === 'Slab'
-                                    ? 'Slab'
-                                    : ''
-                            } ${
-                              i.construction.value === 'MT' ||
-                              i.construction.value === 'Miter'
-                                ? i.construction.value
-                                : ''
-                            } ${
-                              i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''
-                            }`,
-                            style: 'fonts',
-                          },
+                                  : ''
+                              } ${
+                                i.construction.value === 'MT' ||
+                                i.construction.value === 'Miter'
+                                  ? i.construction.value
+                                  : ''
+                              } ${
+                                i.profile?.NAME.includes('Deluxe')
+                                  ? 'Deluxe'
+                                  : ''
+                              }`,
+                              style: 'fonts',
+                            },
 
-                          // {
-                          //   text: `${i.orderType ? i.orderType.name : ''}`,
-                          //   style: 'fonts',
-                          // },
-                        ],
-                      },
-                      // { text: ' ', style: 'fontsBold', width: 140 },
-                      {
-                        stack: [
-                          { text: ' ', style: 'woodtype' },
-                          {
-                            text: `Panel: ${
-                              i.panel
-                                ? i.panel.NAME
-                                : i.orderType.value === 'Slab_Door' ||
-                                  i.orderType.value === 'Slab_DF'
+                            // {
+                            //   text: `${i.orderType ? i.orderType.name : ''}`,
+                            //   style: 'fonts',
+                            // },
+                          ],
+                        },
+                        // { text: ' ', style: 'fontsBold', width: 140 },
+                        {
+                          stack: [
+                            { text: ' ', style: 'woodtype' },
+                            {
+                              text: `Panel: ${
+                                i.construction?.value === 'Slab'
+                                  ? 'Solids'
+                                  : i.panel
+                                  ? i.panel.NAME
+                                  : i.orderType.value === 'Slab_Door' ||
+                                    i.orderType.value === 'Slab_DF'
                                   ? ''
                                   : 'Glass'
-                            } ${i.lite ? '- ' + i.lite.NAME : ''}`,
-                            style: 'fonts',
-                            alignment: 'right',
-                          },
-                        ],
-                      },
+                              } ${i.lite ? '- ' + i.lite.NAME : ''}`,
+                              style: 'fonts',
+                              alignment: 'right',
+                            },
+                          ],
+                        },
 
-                      {
-                        stack: [
-                          { text: ' ', style: 'woodtype' },
-                          {
-                            text: `IP: ${
-                              i.profile
-                                ? i.profile.NAME
-                                : i.design
+                        {
+                          stack: [
+                            { text: ' ', style: 'woodtype' },
+                            {
+                              text: `IP: ${
+                                i.construction?.value === 'Slab'
+                                  ? 'None'
+                                  : (i.construction === 'Cope' ||
+                                      i.design?.NAME?.includes('PRP 15') ||
+                                      i.design?.NAME?.includes('PRP15')) &&
+                                    i.profile
+                                  ? i.profile.NAME
+                                  : i.design
                                   ? i.design.NAME
                                   : 'None'
-                            }`,
-                            style: 'fonts',
-                            alignment: 'right',
-                          },
-                        ],
-                      },
-                      {
-                        stack: [
-                          { text: ' ', style: 'woodtype' },
-                          {
-                            text: `Thickness:  ${
-                              i.thickness ? i.thickness.thickness_2 : ''
-                            }"`,
-                            style: 'fonts',
-                            alignment: 'right',
-                          },
-                        ],
-                      },
-                      {
-                        stack: [
-                          { text: ' ', style: 'woodtype' },
-                          {
-                            text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`,
-                            style: 'fonts',
-                            alignment: 'right',
-                          },
-                        ],
-                      },
-                    ]},
-                    i.applied_profile && i.applied_profile.NAME !== 'None' ? {
-                      text: `${
-                        i.applied_profile && i.applied_profile.NAME !== 'None'
-                          ? i.applied_profile.NAME.toUpperCase()
-                          : ''
-                      }`,
-                      style: 'headerFont',
-                      alignment: 'center',
-                      margin: [0,10,0,0]
-                    } : null,
-                  ]
-
+                              }`,
+                              style: 'fonts',
+                              alignment: 'right',
+                            },
+                          ],
+                        },
+                        {
+                          stack: [
+                            { text: ' ', style: 'woodtype' },
+                            {
+                              text: `Thickness:  ${
+                                i.thickness ? i.thickness.thickness_2 : ''
+                              }"`,
+                              style: 'fonts',
+                              alignment: 'right',
+                            },
+                          ],
+                        },
+                        {
+                          stack: [
+                            { text: ' ', style: 'woodtype' },
+                            {
+                              text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`,
+                              style: 'fonts',
+                              alignment: 'right',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    i.applied_profile && i.applied_profile.NAME !== 'None'
+                      ? {
+                          text: `${
+                            i.applied_profile &&
+                            i.applied_profile.NAME !== 'None'
+                              ? i.applied_profile.NAME.toUpperCase()
+                              : ''
+                          }`,
+                          style: 'headerFont',
+                          alignment: 'center',
+                          margin: [0, 10, 0, 0],
+                        }
+                      : null,
+                  ],
                 },
                 {
                   text: '==============================================================================',

@@ -15,13 +15,13 @@ export default (data, breakdowns) => {
 
   const getName = (i) => {
     return `${
-      i.design
+      i.construction.value === 'Slab'
+        ? 'Slab'
+        : i.design
         ? i.design.NAME
         : i.face_frame_design
-          ? i.face_frame_design.NAME
-          : i.construction.value === 'Slab'
-            ? 'Slab'
-            : ''
+        ? i.face_frame_design.NAME
+        : ''
     } ${
       i.construction.value === 'MT' || i.construction.value === 'Miter'
         ? i.construction.value
@@ -48,8 +48,6 @@ export default (data, breakdowns) => {
   // };
 
   const a = Glass_Selection(data).map((v) => {
-
-
     return {
       ...v,
       dimensions: flatten(
@@ -82,16 +80,25 @@ export default (data, breakdowns) => {
     b.forEach((item, index) => {
       tableBody.push([
         { text: item.item ? item.item : index + 1, style: 'fonts' },
-        { text: item.name, style: 'fonts' },
+        {
+          text: item?.construction?.value === 'Slab' ? 'Slab' : item.name,
+          style: 'fonts',
+        },
         { text: `${item.qty}`, style: 'fonts' },
         {
           text: `${Size(item)}`,
           style: 'fonts',
         },
         {
-          text: item.profile
-            ? item.profile.NAME
-            : item.design
+          text:
+            i.construction?.value === 'Slab'
+              ? 'None'
+              : (item.construction === 'Cope' ||
+                  item.design?.NAME?.includes('PRP 15') ||
+                  item.design?.NAME?.includes('PRP15')) &&
+                item.profile
+              ? item.profile.NAME
+              : item.design
               ? item.design.NAME
               : '',
           style: 'fonts',
@@ -99,19 +106,19 @@ export default (data, breakdowns) => {
         },
         item.notes || item.full_frame || item.lite
           ? {
-            text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-              item.lite ? item.lite.NAME : ''
-            }`,
-            style: 'tableBold',
-            alignment: 'left',
-          }
+              text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+                item.lite ? item.lite.NAME : ''
+              }`,
+              style: 'tableBold',
+              alignment: 'left',
+            }
           : null,
         item.cab_number
           ? {
-            text: `${item.cab_number}`,
-            style: 'fonts',
-            alignment: 'left',
-          }
+              text: `${item.cab_number}`,
+              style: 'fonts',
+              alignment: 'left',
+            }
           : null,
       ]);
     });
@@ -119,106 +126,110 @@ export default (data, breakdowns) => {
     return [
       {
         stack: [
-          index === 0 
+          index === 0
             ? {
-              columns: [
-                { text: '' },
-                {
-                  alignment: 'center',
-                  style: 'fontsBold',
-                  stack: [
-                    data.job_info?.Shop_Notes ?{
-                      text: `${
-                        data.job_info?.Shop_Notes
-                          ? data.job_info?.Shop_Notes?.toUpperCase()
-                          : ''
-                      }`,
-                    } : null,
-                    { text : data.misc_items.map(i => {
-                      if(i.category === 'preselect'){
-                        if(i.item.NAME.includes('Delivery')){
-                          return null;
-                        } else {
-                          return `${i.item?.NAME} \n`;
-                        }
-                        
-                      } else {
-                        return `${i.item2} \n`;
-                      }
-                    })
-                    }
-                  ]
-                },
-                { text: '' },
-              ],
-              margin: [0, -26, 0, 0],
-            }
+                columns: [
+                  { text: '' },
+                  {
+                    alignment: 'center',
+                    style: 'fontsBold',
+                    stack: [
+                      data.job_info?.Shop_Notes
+                        ? {
+                            text: `${
+                              data.job_info?.Shop_Notes
+                                ? data.job_info?.Shop_Notes?.toUpperCase()
+                                : ''
+                            }`,
+                          }
+                        : null,
+                      {
+                        text: data.misc_items.map((i) => {
+                          if (i.category === 'preselect') {
+                            if (i.item.NAME.includes('Delivery')) {
+                              return null;
+                            } else {
+                              return `${i.item?.NAME} \n`;
+                            }
+                          } else {
+                            return `${i.item2} \n`;
+                          }
+                        }),
+                      },
+                    ],
+                  },
+                  { text: '' },
+                ],
+                margin: [0, -26, 0, 0],
+              }
             : null,
           {
-
             margin: [0, 10, 0, 0],
             stack: [
-              {            columns: [
-                {
-                  stack: [
-                    {
-                      text: `${i.orderType ? i.orderType.name : ''}`,
-                      style: 'fonts',
-                    },
-                    {
-                      text: `${i.woodtype.NAME} - ${
-                        i.thickness.value === 1 || i.thickness.value === 2
-                          ? '4/4'
-                          : i.thickness.value === 3 || i.thickness.value === 4
+              {
+                columns: [
+                  {
+                    stack: [
+                      {
+                        text: `${i.orderType ? i.orderType.name : ''}`,
+                        style: 'fonts',
+                      },
+                      {
+                        text: `${i.woodtype.NAME} - ${
+                          i.thickness.value === 1 || i.thickness.value === 2
+                            ? '4/4'
+                            : i.thickness.value === 3 || i.thickness.value === 4
                             ? '5/4'
                             : ''
-                      }`,
-                      style: 'woodtype',
-                      width: 370,
-                    },
-                  ],
-                },
-                {
-                  stack: [
-                    {
-                      text: '',
-                      alignment: 'left',
-                      style: 'fontsBold',
-                      width: 80,
-                    },
-                    i.edge
-                      ? {
-                        text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
-                        alignment: 'right',
-                        style: 'fonts',
-                      }
-                      : null,
-                    {
-                      text: `Panel: ${
-                        i.panel
-                          ? i.panel.NAME
-                          : i.construction.value === 'Slab'
-                            ? 'Slab'
+                        }`,
+                        style: 'woodtype',
+                        width: 370,
+                      },
+                    ],
+                  },
+                  {
+                    stack: [
+                      {
+                        text: '',
+                        alignment: 'left',
+                        style: 'fontsBold',
+                        width: 80,
+                      },
+                      i.edge
+                        ? {
+                            text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
+                            alignment: 'right',
+                            style: 'fonts',
+                          }
+                        : null,
+                      {
+                        text: `Panel: ${
+                          i.construction?.value === 'Slab'
+                            ? 'Solids'
+                            : i.panel
+                            ? i.panel.NAME
                             : 'Glass'
-                      }`,
-                      alignment: 'right',
-                      style: 'woodtype',
-                    },
-                  ],
-                },
-              ]},
-              i.applied_profile && i.applied_profile.NAME !== 'None' ? {
-                text: `${
-                  i.applied_profile && i.applied_profile.NAME !== 'None'
-                    ? i.applied_profile.NAME.toUpperCase()
-                    : ''
-                }`,
-                style: 'headerFont',
-                alignment: 'center',
-                margin: [0,10,0,10]
-              } : null,
-            ]
-
+                        }`,
+                        alignment: 'right',
+                        style: 'woodtype',
+                      },
+                    ],
+                  },
+                ],
+              },
+              i.applied_profile && i.applied_profile.NAME !== 'None'
+                ? {
+                    text: `${
+                      i.applied_profile && i.applied_profile.NAME !== 'None'
+                        ? i.applied_profile.NAME.toUpperCase()
+                        : ''
+                    }`,
+                    style: 'headerFont',
+                    alignment: 'center',
+                    margin: [0, 10, 0, 10],
+                  }
+                : null,
+            ],
           },
           // {
           //   text:
@@ -276,7 +287,6 @@ export default (data, breakdowns) => {
     {
       stack: [
         {
-
           columns: [
             {
               text: 'OTHER ITEMS',
@@ -293,27 +303,26 @@ export default (data, breakdowns) => {
         },
         data.misc_items.length > 0
           ? {
-
-            columns: [
-              {
-                text: data.misc_items.map((i) => {
-                  return `${
-                    i.item ? i.item.NAME : i.item2 ? i.item2 : ''
-                  } \n`;
-                }),
-                style: 'fonts',
-                width: 170,
-              },
-              {
-                style: 'fonts',
-                stack: data.misc_items.map((i) => {
-                  return { text: i.qty ? parseInt(i.qty) : '' };
-                }),
-                width: 30,
-              },
-            ],
-            margin: [0, 2, 0, 0],
-          }
+              columns: [
+                {
+                  text: data.misc_items.map((i) => {
+                    return `${
+                      i.item ? i.item.NAME : i.item2 ? i.item2 : ''
+                    } \n`;
+                  }),
+                  style: 'fonts',
+                  width: 170,
+                },
+                {
+                  style: 'fonts',
+                  stack: data.misc_items.map((i) => {
+                    return { text: i.qty ? parseInt(i.qty) : '' };
+                  }),
+                  width: 30,
+                },
+              ],
+              margin: [0, 2, 0, 0],
+            }
           : null,
         {
           margin: [0, 10, 0, 10],
@@ -353,8 +362,8 @@ export default (data, breakdowns) => {
                 production_date.length < 1
                   ? ''
                   : `Production Date: ${moment(production_date[0]?.date).format(
-                    'MM/DD/YYYY'
-                  )}`
+                      'MM/DD/YYYY'
+                    )}`
               }`,
               style: 'totals',
               width: 200,
@@ -378,9 +387,7 @@ export default (data, breakdowns) => {
             {
               text: `Due Date: ${
                 data.Shipping_Scheduled
-                  ? `${moment(data.job_info.DueDate).format(
-                    'MM/DD/YYYY'
-                  )}`
+                  ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
                   : 'TBD'
               }`,
               style: 'totals',
@@ -401,7 +408,7 @@ export default (data, breakdowns) => {
               width: 200,
             },
             {
-              text: 'Total # Inv\'s: ______________',
+              text: "Total # Inv's: ______________",
               style: 'totals',
               width: 347,
             },

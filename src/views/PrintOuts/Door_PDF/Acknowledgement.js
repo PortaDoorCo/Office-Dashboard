@@ -154,12 +154,12 @@ export default (data, pricing) => {
 
                   {
                     text: `${
-                      part.design
+                      part?.construction?.value === 'Slab'
+                        ? 'Slab'
+                        : part.design
                         ? part.design.NAME
                         : part.face_frame_design
                         ? part.face_frame_design.NAME
-                        : part.construction.value === 'Slab'
-                        ? 'Slab'
                         : ''
                     } ${
                       part.construction.value === 'MT' ||
@@ -169,10 +169,10 @@ export default (data, pricing) => {
                     } ${
                       part.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''
                     } - ${
-                      part.panel
-                        ? part.panel.NAME
-                        : part.construction.value === 'Slab'
+                      part?.construction?.value === 'Slab'
                         ? ''
+                        : part.panel
+                        ? part.panel.NAME
                         : 'Glass'
                     }`,
                     style: 'fonts',
@@ -202,13 +202,18 @@ export default (data, pricing) => {
               {
                 stack: [
                   {
-                    text: `IP: ${
-                      part.profile
+                    text: `IP:  ${
+                      part.construction?.value === 'Slab'
+                        ? 'None'
+                        : (part.construction === 'Cope' ||
+                            part.design?.NAME?.includes('PRP 15') ||
+                            part.design?.NAME?.includes('PRP15')) &&
+                          part.profile
                         ? part.profile.NAME
                         : part.design
                         ? part.design.NAME
                         : 'None'
-                    }  Edge: ${part.edge ? part.edge.NAME : 'None'}`,
+                    }   Edge:  ${part.edge ? part.edge.NAME : 'None'}`,
                     style: 'fonts',
                   },
                 ],

@@ -147,12 +147,12 @@ export default (data, breakdowns) => {
                       },
                       {
                         text: `${
-                          i.design
+                          i?.construction?.value === 'Slab'
+                            ? 'Slab'
+                            : i.design
                             ? i.design.NAME
                             : i.face_frame_design
                             ? i.face_frame_design.NAME
-                            : i.construction.value === 'Slab'
-                            ? 'Slab'
                             : ''
                         } ${
                           i.construction.value === 'MT' ||
@@ -162,10 +162,10 @@ export default (data, breakdowns) => {
                         } ${
                           i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''
                         } - ${
-                          i.panel
-                            ? i.panel.NAME
-                            : i.construction.value === 'Slab'
+                          i.construction?.value === 'Slab'
                             ? ''
+                            : i.panel
+                            ? i.panel.NAME
                             : 'Glass'
                         }`,
                         style: 'fonts',
@@ -208,7 +208,12 @@ export default (data, breakdowns) => {
                       },
                       {
                         text: `IP:  ${
-                          i.profile
+                          i.construction?.value === 'Slab'
+                            ? 'None'
+                            : (i.construction === 'Cope' ||
+                                i.design?.NAME?.includes('PRP 15') ||
+                                i.design?.NAME?.includes('PRP15')) &&
+                              i.profile
                             ? i.profile.NAME
                             : i.design
                             ? i.design.NAME

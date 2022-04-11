@@ -6,13 +6,13 @@ import HeightSort from '../Sorting/HeightSort';
 export default (data, breakdowns, type) => {
   const getName = (i) => {
     return `${
-      i.design
+      i.construction.value === 'Slab'
+        ? 'Slab'
+        : i.design
         ? i.design.NAME
         : i.face_frame_design
-          ? i.face_frame_design.NAME
-          : i.construction.value === 'Slab'
-            ? 'Slab'
-            : ''
+        ? i.face_frame_design.NAME
+        : ''
     } ${
       i.construction.value === 'MT' || i.construction.value === 'Miter'
         ? i.construction.value
@@ -67,7 +67,10 @@ export default (data, breakdowns, type) => {
       } else {
         tableBody.push([
           { text: item.item ? item.item : index + 1, style: 'fonts' },
-          { text: item.name, style: 'fonts' },
+          {
+            text: item?.construction?.value === 'Slab' ? 'Slab' : item.name,
+            style: 'fonts',
+          },
           {
             text: (Panels(item, i, breakdowns) || []).map((panel) => {
               return `${panel.qty} \n`;
@@ -98,12 +101,12 @@ export default (data, breakdowns, type) => {
           },
           item.notes || item.lite
             ? {
-              text: `${item.notes ? item.notes : ''} ${
-                item.lite ? item.lite.NAME : ''
-              }`,
-              style: 'tableBold',
-              alignment: 'left',
-            }
+                text: `${item.notes ? item.notes : ''} ${
+                  item.lite ? item.lite.NAME : ''
+                }`,
+                style: 'tableBold',
+                alignment: 'left',
+              }
             : null,
         ]);
       }
@@ -112,20 +115,20 @@ export default (data, breakdowns, type) => {
     return [
       index === 0
         ? {
-          columns: [
-            { text: '' },
-            {
-              alignment: 'center',
-              style: 'fontsBold',
-              stack: [
+            columns: [
+              { text: '' },
+              {
+                alignment: 'center',
+                style: 'fontsBold',
+                stack: [
                   data.job_info?.Shop_Notes
                     ? {
-                      text: `${
+                        text: `${
                           data.job_info?.Shop_Notes
                             ? data.job_info?.Shop_Notes?.toUpperCase()
                             : ''
-                      }`,
-                    }
+                        }`,
+                      }
                     : null,
                   {
                     text: data.misc_items.map((i) => {
@@ -140,12 +143,12 @@ export default (data, breakdowns, type) => {
                       }
                     }),
                   },
-              ],
-            },
-            { text: '' },
-          ],
-          margin: [0, -21, 0, 0],
-        }
+                ],
+              },
+              { text: '' },
+            ],
+            margin: [0, -21, 0, 0],
+          }
         : null,
       {
         margin: [0, 10, 0, 0],
@@ -164,18 +167,27 @@ export default (data, breakdowns, type) => {
               },
 
               {
-                text: `IP: ${
-                  i.profile ? i.profile.NAME : i.design ? i.design.NAME : 'None'
+                text: `IP:  ${
+                  i.construction?.value === 'Slab'
+                    ? 'None'
+                    : (i.construction === 'Cope' ||
+                        i.design?.NAME?.includes('PRP 15') ||
+                        i.design?.NAME?.includes('PRP15')) &&
+                      i.profile
+                    ? i.profile.NAME
+                    : i.design
+                    ? i.design.NAME
+                    : 'None'
                 }`,
                 style: 'woodtype',
                 alignment: 'center',
               },
               i.construction.value === 'Slab'
                 ? {
-                  text: `Edge: ${i.edge?.NAME}`,
-                  style: 'woodtype',
-                  alignment: 'center',
-                }
+                    text: `Edge: ${i.edge?.NAME}`,
+                    style: 'woodtype',
+                    alignment: 'center',
+                  }
                 : null,
               {
                 text: `${
@@ -184,8 +196,8 @@ export default (data, breakdowns, type) => {
                       ? i.woodtype?.FRAMING_MATERIAL
                       : i.woodtype?.NAME
                     : i.woodtype?.PANEL_MATERIAL
-                      ? i.woodtype?.PANEL_MATERIAL
-                      : i.woodtype?.NAME
+                    ? i.woodtype?.PANEL_MATERIAL
+                    : i.woodtype?.NAME
                 } ${type}`,
                 alignment: 'right',
                 style: 'woodtype',
@@ -194,15 +206,15 @@ export default (data, breakdowns, type) => {
           },
           i.applied_profile && i.applied_profile.NAME !== 'None'
             ? {
-              text: `${
-                i.applied_profile && i.applied_profile.NAME !== 'None'
-                  ? i.applied_profile.NAME.toUpperCase()
-                  : ''
-              }`,
-              style: 'headerFont',
-              alignment: 'center',
-              margin: [0, 10, 0, 0],
-            }
+                text: `${
+                  i.applied_profile && i.applied_profile.NAME !== 'None'
+                    ? i.applied_profile.NAME.toUpperCase()
+                    : ''
+                }`,
+                style: 'headerFont',
+                alignment: 'center',
+                margin: [0, 10, 0, 0],
+              }
             : null,
         ],
       },
