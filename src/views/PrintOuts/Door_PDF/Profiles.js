@@ -45,19 +45,30 @@ export default (
             {
               stack: [
                 {
-                  text: `Profile: ${
-                    i.profile
+                  text: `IP:  ${
+                    i.construction?.value === 'Slab'
+                      ? ''
+                      : (i.construction === 'Cope' ||
+                          i.design?.NAME?.includes('PRP 15') ||
+                          i.design?.NAME?.includes('PRP15')) &&
+                        i.profile
                       ? i.profile.NAME
                       : i.design
-                        ? i.design.NAME
-                        : 'None'
+                      ? i.design.NAME
+                      : 'None'
                   }`,
                   style: 'fonts',
                 },
                 {
-                  image: i.profile
-                    ? m[index]
-                    : i.design && d[index]
+                  image:
+                    i.construction?.value === 'Slab'
+                      ? blob[index]
+                      : (i.construction === 'Cope' ||
+                          i.design?.NAME?.includes('PRP 15') ||
+                          i.design?.NAME?.includes('PRP15')) &&
+                        i.profile
+                      ? m[index]
+                      : i.design && d[index]
                       ? d[index]
                       : blob[index],
                   width: 100,
@@ -69,11 +80,22 @@ export default (
             {
               stack: [
                 {
-                  text: `Panel: ${i.panel ? i.panel.NAME : 'None'}`,
+                  text: `Panel: ${
+                    i.construction?.value === 'Slab'
+                      ? 'None'
+                      : i.panel
+                      ? i.panel.NAME
+                      : 'None'
+                  }`,
                   style: 'fonts',
                 },
                 {
-                  image: i.panel && p[index] ? p[index] : blob[index],
+                  image:
+                    i.construction?.value === 'Slab'
+                      ? blob[index]
+                      : i.panel && p[index]
+                      ? p[index]
+                      : blob[index],
                   width: 100,
                   height: 100,
                   fit: [100, 100],
