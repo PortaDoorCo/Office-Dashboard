@@ -215,7 +215,7 @@ const OrderTable = ({
                       label="depth"
                       validate={required}
                       edit={edit}
-                      onBlur={(e) => checkSize(e, index)}
+                      // onBlur={(e) => checkSize(e, index)}
                     />
                   </td>
                   <td style={{ width: '14%' }}>
@@ -237,7 +237,7 @@ const OrderTable = ({
                       textField="NAME"
                       validate={required}
                       edit={edit}
-                      onChange={(e) => checkScoop(index, e)}
+                      // onChange={(e) => checkScoop(index, e)}
                     />
                   </td>
                   <td style={{ width: '14%' }}>
