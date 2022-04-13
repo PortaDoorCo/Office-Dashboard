@@ -48,7 +48,7 @@ export default (
                   text: `IP:  ${
                     i.construction?.value === 'Slab'
                       ? ''
-                      : (i.construction === 'Cope' ||
+                      : (i.construction?.value === 'Cope' ||
                           i.design?.NAME?.includes('PRP 15') ||
                           i.design?.NAME?.includes('PRP15')) &&
                         i.profile
@@ -63,7 +63,7 @@ export default (
                   image:
                     i.construction?.value === 'Slab'
                       ? blob[index]
-                      : (i.construction === 'Cope' ||
+                      : (i.construction?.value === 'Cope' ||
                           i.design?.NAME?.includes('PRP 15') ||
                           i.design?.NAME?.includes('PRP15')) &&
                         i.profile

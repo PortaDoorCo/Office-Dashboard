@@ -165,7 +165,7 @@ export default (data, breakdowns) => {
                               text: `IP: ${
                                 i.construction?.value === 'Slab'
                                   ? 'None'
-                                  : (i.construction === 'Cope' ||
+                                  : (i.construction?.value === 'Cope' ||
                                       i.design?.NAME?.includes('PRP 15') ||
                                       i.design?.NAME?.includes('PRP15')) &&
                                     i.profile

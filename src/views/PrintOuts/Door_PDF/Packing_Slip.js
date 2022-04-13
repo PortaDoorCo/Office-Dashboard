@@ -93,7 +93,7 @@ export default (data, breakdowns) => {
           text:
             i.construction?.value === 'Slab'
               ? 'None'
-              : (item.construction === 'Cope' ||
+              : (item.construction?.value === 'Cope' ||
                   item.design?.NAME?.includes('PRP 15') ||
                   item.design?.NAME?.includes('PRP15')) &&
                 item.profile
