@@ -205,7 +205,7 @@ export default (data, pricing) => {
                     text: `IP:  ${
                       part.construction?.value === 'Slab'
                         ? 'None'
-                        : (part.construction === 'Cope' ||
+                        : (part.construction?.value === 'Cope' ||
                             part.design?.NAME?.includes('PRP 15') ||
                             part.design?.NAME?.includes('PRP15')) &&
                           part.profile
