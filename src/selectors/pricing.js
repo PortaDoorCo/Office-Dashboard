@@ -1038,16 +1038,16 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
     if (i.style?.value === 'custom') {
       price = 0;
 
-      const width = i.width ? parseFloat(i.width) : 0;
-      const thickness = i.thickness ? parseFloat(i.thickness) : 0;
-      const linFt = parseFloat(linearFT);
+      const width = i.width ? numQty(i.width) : 0;
+      const thickness = i.thickness ? numQty(i.thickness) : 0;
+      const linFt = numQty(linearFT);
 
       let wood = 0;
 
       let feet = Math.floor(((width * 12) / 144) * 100) / 100;
       let waste = feet * 1.25;
 
-      let premium = 0;
+      let premium = 1;
 
       if (thickness <= 0.8125) {
         premium = 1;
