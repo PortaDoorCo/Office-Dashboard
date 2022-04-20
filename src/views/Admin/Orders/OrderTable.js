@@ -35,6 +35,8 @@ import Profiles from './Charts/Profiles';
 import Panels from './Charts/Panels';
 import Edges from './Charts/Edges';
 import Woodtype from './Charts/Woodtype';
+import Customers from './Charts/Customers';
+import CustomerTotal from './Charts/CustomersTotal';
 
 // momentLocaliser(moment);
 
@@ -916,6 +918,24 @@ const OrderTable = (props) => {
             </Col>
             <Col lg={2}>
               <Edges orders={data} startDate={startDate} endDate={endDate} />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Customers
+                orders={data}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <CustomerTotal
+                orders={data}
+                startDate={startDate}
+                endDate={endDate}
+              />
             </Col>
           </Row>
         </div>
