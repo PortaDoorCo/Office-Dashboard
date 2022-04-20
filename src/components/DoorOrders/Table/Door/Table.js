@@ -859,8 +859,8 @@ const DoorTable = ({
         message: (
           <div>
             <p>
-              In order to have multiple uneven panels, please create a new
-              order, and select the <strong>Order Type "Custom"</strong>.
+              In order to have multiple uneven panels, please create a new item,
+              and select the <strong>Order Type "Custom"</strong>.
             </p>
             <p>
               A custom order requires you to manually break down the items and
@@ -876,12 +876,10 @@ const DoorTable = ({
 
       await setPreventItem(true);
 
+      console.log({ e });
+
       await dispatch(
-        change(
-          'Order',
-          `part_list[${i}].dimensions[${index}].unevenCheck`,
-          false
-        )
+        change('Order', `part_list[${i}].dimensions[${index}].extraCost`, 100)
       );
 
       e.preventDefault();
@@ -1217,7 +1215,8 @@ const DoorTable = ({
             </Col>
           </Row>
 
-          {formState?.part_list[i]?.dimensions[index]?.unevenCheck ? (
+          {formState?.part_list[i]?.dimensions[index]?.unevenCheck &&
+          parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) < 3 ? (
             <div className="mb-3">
               <Row>
                 {Array.from(

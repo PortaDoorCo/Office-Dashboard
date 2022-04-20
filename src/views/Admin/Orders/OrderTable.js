@@ -28,6 +28,13 @@ import Invoice from '../../PrintOuts/Reports/Invoice';
 import exportEdges from '../../../utils/exportEdges';
 import exportRazorGauge from '../../../utils/exportRazorGauge';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import Chart1 from './Charts/Chart1';
+import Chart2 from './Charts/Designs';
+import Chart3 from './Charts/Chart3';
+import Profiles from './Charts/Profiles';
+import Panels from './Charts/Panels';
+import Edges from './Charts/Edges';
+import Woodtype from './Charts/Woodtype';
 
 // momentLocaliser(moment);
 
@@ -876,6 +883,42 @@ const OrderTable = (props) => {
           editable={editable}
           edit={edit}
         />
+      ) : null}
+
+      {(role?.type === 'authenticated' ||
+        role?.type === 'owner' ||
+        role?.type === 'administrator') &&
+      data.length ? (
+        <div>
+          <Row>
+            <Col>
+              <h3># of items sold</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={2}>
+              <Chart3 orders={data} startDate={startDate} endDate={endDate} />
+            </Col>
+
+            <Col lg={2}>
+              <Woodtype orders={data} startDate={startDate} endDate={endDate} />
+            </Col>
+
+            <Col lg={2}>
+              <Chart2 orders={data} startDate={startDate} endDate={endDate} />
+            </Col>
+
+            <Col lg={2}>
+              <Profiles orders={data} startDate={startDate} endDate={endDate} />
+            </Col>
+            <Col lg={2}>
+              <Panels orders={data} startDate={startDate} endDate={endDate} />
+            </Col>
+            <Col lg={2}>
+              <Edges orders={data} startDate={startDate} endDate={endDate} />
+            </Col>
+          </Row>
+        </div>
       ) : null}
     </div>
   );
