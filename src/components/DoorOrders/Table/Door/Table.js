@@ -34,6 +34,7 @@ import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
+import ordinal from 'ordinal';
 
 const required = (value) => (value ? undefined : 'Required');
 const panelsCount = (value) =>
@@ -305,15 +306,15 @@ const DoorTable = ({
         );
       }
 
-      if (value > 2) {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].unevenCheck`,
-            false
-          )
-        );
-      }
+      // if (value > 2) {
+      //   dispatch(
+      //     change(
+      //       'Order',
+      //       `part_list[${i}].dimensions[${index}].unevenCheck`,
+      //       false
+      //     )
+      //   );
+      // }
 
       if (part.panel?.NAME === 'Glass') {
         for (let j = 0; j < value; j++) {
@@ -1105,13 +1106,57 @@ const DoorTable = ({
                   <strong>
                     <p>Hori. Mid Rail</p>
                   </strong>
-                  <Field
-                    name={`${table}.horizontalMidRailSize`}
-                    type="text"
-                    component={renderNumber}
-                    label="horizontalMidRail"
-                    edit={edit}
-                  />
+                  {formState.part_list[i]?.dimensions[index]
+                    ?.unequalMidRails ? (
+                    Array.from(
+                      Array(
+                        parseInt(
+                          formState.part_list[i]?.dimensions[index]?.panelsH
+                        )
+                          ? parseInt(
+                              formState.part_list[i]?.dimensions[index]?.panelsH
+                            )
+                          : 0
+                      ).keys()
+                    )
+                      .slice(1)
+                      .map((i, index) => {
+                        if (index === 0) {
+                          return (
+                            <Field
+                              name={`${table}.horizontalMidRailSize`}
+                              type="text"
+                              component={renderNumber}
+                              label="horizontalMidRail"
+                              edit={edit}
+                            />
+                          );
+                        } else {
+                          return (
+                            <div>
+                              <p>
+                                <strong>Hori. Mid Rail #{index + 1}</strong>
+                              </p>
+                              <Field
+                                name={`${table}.horizontalMidRailSize${index}`}
+                                type="text"
+                                component={renderNumber}
+                                label="horizontalMidRail"
+                                edit={edit}
+                              />
+                            </div>
+                          );
+                        }
+                      })
+                  ) : (
+                    <Field
+                      name={`${table}.horizontalMidRailSize`}
+                      type="text"
+                      component={renderNumber}
+                      label="horizontalMidRail"
+                      edit={edit}
+                    />
+                  )}
                 </td>
                 <td>
                   <strong>
@@ -1181,14 +1226,23 @@ const DoorTable = ({
                 />
               </FormGroup>
             </Col>
-            <Col>
+            <Col lg="2">
               <FormGroup>
                 <strong>Uneven Split</strong>
                 <Field
                   name={`${table}.unevenCheck`}
                   component={renderCheckboxToggle}
                   edit={edit}
-                  onClick={(e) => unEvenCheckReminder(e, index)}
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <strong>Unequal Mid Rails</strong>
+                <Field
+                  name={`${table}.unequalMidRails`}
+                  component={renderCheckboxToggle}
+                  edit={edit}
                 />
               </FormGroup>
             </Col>
@@ -1215,8 +1269,7 @@ const DoorTable = ({
             </Col>
           </Row>
 
-          {formState?.part_list[i]?.dimensions[index]?.unevenCheck &&
-          parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) < 3 ? (
+          {formState?.part_list[i]?.dimensions[index]?.unevenCheck ? (
             <div className="mb-3">
               <Row>
                 {Array.from(
@@ -1238,7 +1291,14 @@ const DoorTable = ({
                             style={{ textAlign: 'center', marginTop: '10px' }}
                           >
                             <strong>Panel Opening {index + 1}</strong>
-                            <p>From Top of Door to Top of Mullion</p>
+                            {index === 0 ? (
+                              <p>From Top of Door to Top of Mullion</p>
+                            ) : (
+                              <p>
+                                From Top of Door <br /> to Top of{' '}
+                                {ordinal(index + 1)} Mid Rail
+                              </p>
+                            )}
                           </div>
 
                           <Field
