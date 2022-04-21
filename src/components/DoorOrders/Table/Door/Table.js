@@ -895,7 +895,7 @@ const DoorTable = ({
       parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) === 1
     ) {
       await dispatch(
-        change('Order', `part_list[${i}].dimensions[${index}].extraCost`, 50)
+        change('Order', `part_list[${i}].dimensions[${index}].extraCost`, 100)
       );
 
       e.preventDefault();
