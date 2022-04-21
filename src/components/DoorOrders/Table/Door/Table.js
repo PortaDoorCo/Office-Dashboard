@@ -165,6 +165,10 @@ const DoorTable = ({
     let value;
     const part = formState.part_list[i];
 
+    console.log({ index });
+    console.log({ e });
+    console.log({ v });
+
     if (e) {
       value = e.target.value;
       if (part.dimensions[index].notes !== '' && parseInt(e.target.value) > 1) {
@@ -278,32 +282,57 @@ const DoorTable = ({
     }
 
     if (value > 1) {
-      if (part.construction?.value === 'Cope') {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(
-              part.profile
-                ? part.profile?.PROFILE_WIDTH +
-                    (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                : 0
+      if (
+        part.dimensions[index].horizontalMidRailSize !==
+        fraction(
+          part.profile
+            ? part.profile?.PROFILE_WIDTH +
+                (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+            : 0
+        )
+      ) {
+        if (parseFloat(part.dimensions[index]?.horizontalMidRailSize) < 1) {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+              fraction(
+                part.profile
+                  ? part.profile?.PROFILE_WIDTH +
+                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+                  : 0
+              )
             )
-          )
-        );
+          );
+        }
       } else {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(
-              part.design
-                ? part.design?.PROFILE_WIDTH +
-                    (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                : 0
+        if (part.construction?.value === 'Cope') {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+              fraction(
+                part.profile
+                  ? part.profile?.PROFILE_WIDTH +
+                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+                  : 0
+              )
             )
-          )
-        );
+          );
+        } else {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+              fraction(
+                part.design
+                  ? part.design?.PROFILE_WIDTH +
+                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+                  : 0
+              )
+            )
+          );
+        }
       }
 
       // if (value > 2) {
@@ -333,6 +362,22 @@ const DoorTable = ({
           'Order',
           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
           0
+        )
+      );
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].unevenCheck`,
+          false
+        )
+      );
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].unequalMidRails`,
+          false
         )
       );
     }
@@ -1226,6 +1271,7 @@ const DoorTable = ({
                 />
               </FormGroup>
             </Col>
+
             <Col lg="2">
               <FormGroup>
                 <strong>Uneven Split</strong>

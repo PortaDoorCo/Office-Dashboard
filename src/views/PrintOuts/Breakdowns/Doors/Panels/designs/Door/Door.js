@@ -145,24 +145,37 @@ export default (info, part, breakdowns) => {
     };
 
     let panelTotal = 0;
+    let mullions = [];
 
     const unevenSplitInput = (v) => {
       console.log({ v });
-
-      let mullions = [];
 
       let arr = new Array(v).fill('').map((_, i) => i + 1);
 
       console.log({ arr });
 
-      const a = arr.map((i) => {
-        if (v === 1) {
+      let mullions = [];
+
+      const a = arr.map((i, index) => {
+        if (!info[`unequalMidRails`]) {
+          console.log('hereeee');
           mullions.push(horizMull);
-        }
-        if (!isNaN(numQty(info[`horizontalMidRailSize${v + 1}`]))) {
-          return mullions.push(numQty(info[`horizontalMidRailSize${v + 1}`]));
         } else {
-          return 0;
+          if (index === 0) {
+            mullions.push(horizMull);
+          }
+
+          console.log({ index });
+          console.log({ HRail: numQty(info[`horizontalMidRailSize${v}`]) });
+
+          if (
+            index === v - 1 &&
+            !isNaN(numQty(info[`horizontalMidRailSize${v - 1}`]))
+          ) {
+            return mullions.push(numQty(info[`horizontalMidRailSize${v - 1}`]));
+          } else {
+            return 0;
+          }
         }
       });
 
@@ -185,62 +198,6 @@ export default (info, part, breakdowns) => {
       panelTotal += panel;
 
       return panel;
-
-      // if (v === 0) {
-      //   return topPanel;
-      // } else {
-      //   if (info[`unequalMidRails`]) {
-      //     const total =
-      //       numQty(info[`unevenSplitInput${v - 1}`]) -
-      //       topRail -
-      //       topPanel -
-      //       horizMull +
-      //       panel_factor * (v + 1) +
-      //       lip_factor / 2;
-
-      //     if (v < 2) {
-      //       return (
-      //         numQty(info[`unevenSplitInput${v}`]) -
-      //         topRail -
-      //         topPanel -
-      //         horizMull +
-      //         panel_factor * (v + 1) +
-      //         lip_factor / 2
-      //       );
-      //     } else {
-      //       return (
-      //         numQty(info[`unevenSplitInput${v}`]) -
-      //         topRail -
-      //         topPanel -
-      //         total -
-      //         horizMull -
-      //         mullionTotal +
-      //         panel_factor * (v + 1) +
-      //         lip_factor / 2
-      //       );
-      //     }
-      //   } else {
-      //     if (v < 3) {
-      //       return (
-      //         numQty(info[`unevenSplitInput${v}`]) -
-      //         topRail -
-      //         topPanel -
-      //         horizMull +
-      //         panel_factor * (v + 1) +
-      //         lip_factor / 2
-      //       );
-      //     } else {
-      //       return (
-      //         numQty(info[`unevenSplitInput${v}`]) -
-      //         topRail -
-      //         topPanel -
-      //         horizMull * (panelsH - 1) +
-      //         panel_factor * (v + 1) +
-      //         lip_factor / 2
-      //       );
-      //     }
-      //   }
-      // }
     };
 
     const glassCheck = (v) => info[`glass_check_${v}`];
