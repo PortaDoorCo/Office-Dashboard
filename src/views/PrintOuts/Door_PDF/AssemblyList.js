@@ -40,8 +40,6 @@ export default (data, breakdowns) => {
     GlassSort(i).forEach((item, ind) => {
       itemNum += 1;
 
-      console.log({ Rails: Rails(item, i, breakdowns) || [] });
-
       tableBody.push([
         { text: item.item ? item.item : itemNum, style: 'fonts' },
         { text: item.qty, style: 'fonts' },

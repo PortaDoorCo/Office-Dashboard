@@ -130,8 +130,6 @@ const Maker = (props) => {
       )
     : 0;
 
-  console.log({ unequalMidRails });
-
   useEffect(() => {
     setID(ref.current.id);
     let bp;

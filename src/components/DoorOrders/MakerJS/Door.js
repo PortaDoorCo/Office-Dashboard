@@ -678,8 +678,6 @@ function Door(
 ) {
   var mm = makerjs.models;
 
-  console.log({ unevenCheck });
-
   this.models = {
     outer: new mm.Rectangle(
       width + (leftStile + rightStile),

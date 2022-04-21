@@ -22,8 +22,6 @@ class Chart2 extends Component {
     //   }
     // });
 
-    console.log({ orders });
-
     const groups = [];
     orders.forEach((item) => {
       item.part_list.forEach((part) => {
@@ -63,8 +61,6 @@ class Chart2 extends Component {
         },
       },
     };
-
-    console.log({ groupbyName });
 
     return (
       <div>

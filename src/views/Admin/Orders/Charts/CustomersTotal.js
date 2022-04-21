@@ -24,8 +24,6 @@ class Charts extends Component {
           a.value.reduce((acc, item) => acc + item.total, 0)
       );
 
-    console.log({ groupbyName });
-
     const bar = {
       labels: groupbyName.map((i) => i.key),
       datasets: [

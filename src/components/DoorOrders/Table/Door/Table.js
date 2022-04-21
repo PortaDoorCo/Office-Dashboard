@@ -165,10 +165,6 @@ const DoorTable = ({
     let value;
     const part = formState.part_list[i];
 
-    console.log({ index });
-    console.log({ e });
-    console.log({ v });
-
     if (e) {
       value = e.target.value;
       if (part.dimensions[index].notes !== '' && parseInt(e.target.value) > 1) {
