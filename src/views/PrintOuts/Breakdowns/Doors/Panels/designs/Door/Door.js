@@ -145,7 +145,6 @@ export default (info, part, breakdowns) => {
     };
 
     let panelTotal = 0;
-    let mullions = [];
 
     const unevenSplitInput = (v) => {
       console.log({ v });

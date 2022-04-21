@@ -106,7 +106,7 @@ var unevenMidRails = (function () {
     if (unequalMidRails) {
       switch (panelsH) {
         case 2:
-          y1 = height - unevenInput1;
+          y1 = height + topRail - unevenInput1;
 
           mr = Array.from(Array(panelsH).keys())
             .slice(1)
@@ -122,7 +122,7 @@ var unevenMidRails = (function () {
           m = _.flatten(mr);
           break;
         case 3:
-          y1 = height - unevenInput1;
+          y1 = height + topRail - unevenInput1;
           y2 = height - unevenInput2;
 
           mr = Array.from(Array(panelsH).keys())
@@ -146,7 +146,7 @@ var unevenMidRails = (function () {
           m = _.flatten(mr);
           break;
         case 4:
-          y1 = height - unevenInput1;
+          y1 = height + topRail - unevenInput1;
           y2 = height - unevenInput2;
           y3 = height - unevenInput3;
 
@@ -177,7 +177,7 @@ var unevenMidRails = (function () {
           m = _.flatten(mr);
           break;
         case 5:
-          y1 = height - unevenInput1;
+          y1 = height + topRail - unevenInput1;
           y2 = height - unevenInput2;
           y3 = height - unevenInput3;
           y4 = height - unevenInput4;
@@ -215,7 +215,7 @@ var unevenMidRails = (function () {
           m = _.flatten(mr);
           break;
         case 6:
-          y1 = height - unevenInput1;
+          y1 = height + topRail - unevenInput1;
           y2 = height - unevenInput2;
           y3 = height - unevenInput3;
           y4 = height - unevenInput4;

@@ -1151,8 +1151,8 @@ const DoorTable = ({
                   <strong>
                     <p>Hori. Mid Rail</p>
                   </strong>
-                  {formState.part_list[i]?.dimensions[index]
-                    ?.unequalMidRails ? (
+                  {formState.part_list[i]?.dimensions[index]?.unequalMidRails &&
+                  formState.part_list[i]?.dimensions[index]?.unevenCheck ? (
                     Array.from(
                       Array(
                         parseInt(
@@ -1282,16 +1282,18 @@ const DoorTable = ({
                 />
               </FormGroup>
             </Col>
-            <Col>
-              <FormGroup>
-                <strong>Unequal Mid Rails</strong>
-                <Field
-                  name={`${table}.unequalMidRails`}
-                  component={renderCheckboxToggle}
-                  edit={edit}
-                />
-              </FormGroup>
-            </Col>
+            {formState.part_list[i]?.dimensions[index]?.unevenCheck ? (
+              <Col>
+                <FormGroup>
+                  <strong>Unequal Mid Rails</strong>
+                  <Field
+                    name={`${table}.unequalMidRails`}
+                    component={renderCheckboxToggle}
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+            ) : null}
           </Row>
 
           <Row>
