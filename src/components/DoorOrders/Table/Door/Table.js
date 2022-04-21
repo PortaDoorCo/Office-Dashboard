@@ -894,38 +894,8 @@ const DoorTable = ({
       parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) > 2 &&
       parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) === 1
     ) {
-      setWarningType({
-        value: e.target.value,
-        index: index,
-        i: i,
-        part: part,
-        tag: 'panels',
-        sub_tag: 'no_unequal_panels',
-        title: 'Please Create New Order',
-        message: (
-          <div>
-            <p>
-              In order to have multiple uneven panels, please create a new item,
-              and select the <strong>Order Type "Custom"</strong>.
-            </p>
-            <p>
-              A custom order requires you to manually break down the items and
-              pricing.
-            </p>
-          </div>
-        ),
-
-        action: 'Add Panel',
-        deny: 'Close',
-      });
-      toggle();
-
-      await setPreventItem(true);
-
-      console.log({ e });
-
       await dispatch(
-        change('Order', `part_list[${i}].dimensions[${index}].extraCost`, 100)
+        change('Order', `part_list[${i}].dimensions[${index}].extraCost`, 50)
       );
 
       e.preventDefault();
@@ -1279,6 +1249,7 @@ const DoorTable = ({
                   name={`${table}.unevenCheck`}
                   component={renderCheckboxToggle}
                   edit={edit}
+                  onClick={(e) => unEvenCheckReminder(e, index)}
                 />
               </FormGroup>
             </Col>
