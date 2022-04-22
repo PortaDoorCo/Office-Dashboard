@@ -95,6 +95,7 @@ export default (data, pricing) => {
         { text: 'Actual Size WxH', style: 'fonts' },
         { text: 'Qty', style: 'fonts', alignment: 'center' },
         { text: 'Notes', style: 'fonts' },
+        { text: 'Cab #', style: 'fonts' },
         { text: 'Total 1 Unit', style: 'fonts', alignment: 'right' },
         { text: 'Total Cost', style: 'fonts', alignment: 'right' },
       ],
@@ -112,6 +113,11 @@ export default (data, pricing) => {
             item.lite ? item.lite.NAME : ''
           }`,
           style: 'fontsBold',
+        },
+        {
+          text: `${item.cab_number ? item.cab_number : ''}`,
+          style: 'tableBold',
+          alignment: 'center',
         },
 
         {
@@ -228,7 +234,7 @@ export default (data, pricing) => {
           {
             table: {
               headerRows: 1,
-              widths: [30, 100, 30, 155, '*', '*'],
+              widths: [30, 100, 30, 155, '*', '*', '*'],
               body: tableBody,
             },
 
