@@ -34,6 +34,7 @@ import { connect } from 'react-redux';
 import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
+import ordinal from 'ordinal';
 
 const required = (value) => (value ? undefined : 'Required');
 const panelsCount = (value) =>
@@ -277,43 +278,68 @@ const DoorTable = ({
     }
 
     if (value > 1) {
-      if (part.construction?.value === 'Cope') {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(
-              part.profile
-                ? part.profile?.PROFILE_WIDTH +
-                    (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                : 0
+      if (
+        part.dimensions[index].horizontalMidRailSize !==
+        fraction(
+          part.profile
+            ? part.profile?.PROFILE_WIDTH +
+                (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+            : 0
+        )
+      ) {
+        if (parseFloat(part.dimensions[index]?.horizontalMidRailSize) < 1) {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+              fraction(
+                part.profile
+                  ? part.profile?.PROFILE_WIDTH +
+                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+                  : 0
+              )
             )
-          )
-        );
+          );
+        }
       } else {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            fraction(
-              part.design
-                ? part.design?.PROFILE_WIDTH +
-                    (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                : 0
+        if (part.construction?.value === 'Cope') {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+              fraction(
+                part.profile
+                  ? part.profile?.PROFILE_WIDTH +
+                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+                  : 0
+              )
             )
-          )
-        );
+          );
+        } else {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+              fraction(
+                part.design
+                  ? part.design?.PROFILE_WIDTH +
+                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+                  : 0
+              )
+            )
+          );
+        }
       }
 
-      if (value > 2) {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].unevenCheck`,
-            false
-          )
-        );
-      }
+      // if (value > 2) {
+      //   dispatch(
+      //     change(
+      //       'Order',
+      //       `part_list[${i}].dimensions[${index}].unevenCheck`,
+      //       false
+      //     )
+      //   );
+      // }
 
       if (part.panel?.NAME === 'Glass') {
         for (let j = 0; j < value; j++) {
@@ -332,6 +358,22 @@ const DoorTable = ({
           'Order',
           `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
           0
+        )
+      );
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].unevenCheck`,
+          false
+        )
+      );
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].unequalMidRails`,
+          false
         )
       );
     }
@@ -848,36 +890,6 @@ const DoorTable = ({
       parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) > 2 &&
       parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) === 1
     ) {
-      setWarningType({
-        value: e.target.value,
-        index: index,
-        i: i,
-        part: part,
-        tag: 'panels',
-        sub_tag: 'no_unequal_panels',
-        title: 'Please Create New Order',
-        message: (
-          <div>
-            <p>
-              In order to have multiple uneven panels, please create a new item,
-              and select the <strong>Order Type "Custom"</strong>.
-            </p>
-            <p>
-              A custom order requires you to manually break down the items and
-              pricing.
-            </p>
-          </div>
-        ),
-
-        action: 'Add Panel',
-        deny: 'Close',
-      });
-      toggle();
-
-      await setPreventItem(true);
-
-      console.log({ e });
-
       await dispatch(
         change('Order', `part_list[${i}].dimensions[${index}].extraCost`, 100)
       );
@@ -1105,13 +1117,57 @@ const DoorTable = ({
                   <strong>
                     <p>Hori. Mid Rail</p>
                   </strong>
-                  <Field
-                    name={`${table}.horizontalMidRailSize`}
-                    type="text"
-                    component={renderNumber}
-                    label="horizontalMidRail"
-                    edit={edit}
-                  />
+                  {formState.part_list[i]?.dimensions[index]?.unequalMidRails &&
+                  formState.part_list[i]?.dimensions[index]?.unevenCheck ? (
+                    Array.from(
+                      Array(
+                        parseInt(
+                          formState.part_list[i]?.dimensions[index]?.panelsH
+                        )
+                          ? parseInt(
+                              formState.part_list[i]?.dimensions[index]?.panelsH
+                            )
+                          : 0
+                      ).keys()
+                    )
+                      .slice(1)
+                      .map((i, index) => {
+                        if (index === 0) {
+                          return (
+                            <Field
+                              name={`${table}.horizontalMidRailSize`}
+                              type="text"
+                              component={renderNumber}
+                              label="horizontalMidRail"
+                              edit={edit}
+                            />
+                          );
+                        } else {
+                          return (
+                            <div>
+                              <p>
+                                <strong>Hori. Mid Rail #{index + 1}</strong>
+                              </p>
+                              <Field
+                                name={`${table}.horizontalMidRailSize${index}`}
+                                type="text"
+                                component={renderNumber}
+                                label="horizontalMidRail"
+                                edit={edit}
+                              />
+                            </div>
+                          );
+                        }
+                      })
+                  ) : (
+                    <Field
+                      name={`${table}.horizontalMidRailSize`}
+                      type="text"
+                      component={renderNumber}
+                      label="horizontalMidRail"
+                      edit={edit}
+                    />
+                  )}
                 </td>
                 <td>
                   <strong>
@@ -1181,7 +1237,8 @@ const DoorTable = ({
                 />
               </FormGroup>
             </Col>
-            <Col>
+
+            <Col lg="2">
               <FormGroup>
                 <strong>Uneven Split</strong>
                 <Field
@@ -1192,6 +1249,18 @@ const DoorTable = ({
                 />
               </FormGroup>
             </Col>
+            {formState.part_list[i]?.dimensions[index]?.unevenCheck ? (
+              <Col>
+                <FormGroup>
+                  <strong>Unequal Mid Rails</strong>
+                  <Field
+                    name={`${table}.unequalMidRails`}
+                    component={renderCheckboxToggle}
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+            ) : null}
           </Row>
 
           <Row>
@@ -1215,8 +1284,7 @@ const DoorTable = ({
             </Col>
           </Row>
 
-          {formState?.part_list[i]?.dimensions[index]?.unevenCheck &&
-          parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) < 3 ? (
+          {formState?.part_list[i]?.dimensions[index]?.unevenCheck ? (
             <div className="mb-3">
               <Row>
                 {Array.from(
@@ -1238,7 +1306,14 @@ const DoorTable = ({
                             style={{ textAlign: 'center', marginTop: '10px' }}
                           >
                             <strong>Panel Opening {index + 1}</strong>
-                            <p>From Top of Door to Top of Mullion</p>
+                            {index === 0 ? (
+                              <p>From Top of Door to Top of Mullion</p>
+                            ) : (
+                              <p>
+                                From Top of Door <br /> to Top of{' '}
+                                {ordinal(index + 1)} Mid Rail
+                              </p>
+                            )}
                           </div>
 
                           <Field

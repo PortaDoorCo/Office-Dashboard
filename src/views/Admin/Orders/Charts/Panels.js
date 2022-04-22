@@ -80,8 +80,6 @@ class Chart2 extends Component {
       },
     };
 
-    console.log({ groupbyName });
-
     return (
       <div>
         <Card>

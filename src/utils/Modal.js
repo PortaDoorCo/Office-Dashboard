@@ -5,8 +5,6 @@ const ModalUtil = (props) => {
   const { className, modal, toggle, message, title, action, actionButton } =
     props;
 
-  console.log({ action });
-
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} className={className}>

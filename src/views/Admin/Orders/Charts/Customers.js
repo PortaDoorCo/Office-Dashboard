@@ -19,8 +19,6 @@ class Charts extends Component {
       .map(([k, v]) => ({ key: k, value: v }))
       .sort((a, b) => b.value.length - a.value.length);
 
-    console.log({ groupbyName });
-
     const bar = {
       labels: groupbyName.map((i) => i.key),
       datasets: [

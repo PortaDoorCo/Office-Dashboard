@@ -1,5 +1,5 @@
-import numQty from "numeric-quantity";
-import Ratio from "lb-ratio";
+import numQty from 'numeric-quantity';
+import Ratio from 'lb-ratio';
 // import frac2dec from '../frac2dec'
 
 const fraction = (num) => {
@@ -56,10 +56,8 @@ export default (info, part, breakdowns) => {
     inset = info.design?.INSET;
   }
 
-  const lites = info.lite ? info.lite.NAME : "";
+  const lites = info.lite ? info.lite.NAME : '';
   const panel_factor = info?.panel?.PANEL_FACTOR;
-
-
 
   const panelName = info?.panel?.NAME ? info?.panel?.NAME : part?.panel?.NAME;
   const panelFlat = info?.panel?.Flat ? info?.panel?.Flat : part?.panel?.Flat;
@@ -89,44 +87,117 @@ export default (info, part, breakdowns) => {
 
     return {
       qty: qty,
-      measurement: `${lite !== "Glass" ? lite : ""}`,
-      pattern: "GL",
+      measurement: `${lite !== 'Glass' ? lite : ''}`,
+      pattern: 'GL',
       width: 0,
       height: 0,
-      panel: "Glass",
+      panel: 'Glass',
       count: 0,
       multiplier: qty,
     };
   };
 
   const glassOnlyDoor = {
-    qty: "",
-    measurement: "GLASS",
-    pattern: "",
+    qty: '',
+    measurement: 'GLASS',
+    pattern: '',
     width: 0,
     height: 0,
-    panel: "Glass",
+    panel: 'Glass',
     multiplier: qty,
   };
 
   const unevenSplit = () => {
     const panelWidth =
       (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
-    const panelHeight =
-      height -
-      bottomRail -
-      numQty(info[`unevenSplitInput${0}`]) -
-      horizMull * (panelsH - 1) +
-      panel_factor +
-      lip_factor / 2;
 
+    const panelHeight = (v) => {
+      if (v < 3) {
+        return (
+          height -
+          bottomRail -
+          numQty(info[`unevenSplitInput${0}`]) -
+          horizMull * (panelsH - 1) +
+          panel_factor +
+          lip_factor / 2
+        );
+      } else {
+        if (info[`unequalMidRails`]) {
+          return (
+            height -
+            bottomRail -
+            numQty(info[`unevenSplitInput${v - 2}`]) -
+            numQty(info[`horizontalMidRailSize${v - 2}`]) +
+            panel_factor +
+            lip_factor / 2
+          );
+        } else {
+          return (
+            height -
+            bottomRail -
+            numQty(info[`unevenSplitInput${v - 2}`]) -
+            horizMull * (panelsH - 1) +
+            panel_factor +
+            lip_factor / 2
+          );
+        }
+      }
+    };
 
+    let panelTotal = 0;
 
-    const unevenSplitInput = (v) =>
-      numQty(info[`unevenSplitInput${v}`]) -
-      topRail +
-      panel_factor +
-      lip_factor / 2;
+    const unevenSplitInput = (v) => {
+      console.log({ v });
+
+      let arr = new Array(v).fill('').map((_, i) => i + 1);
+
+      console.log({ arr });
+
+      let mullions = [];
+
+      const a = arr.map((i, index) => {
+        if (!info[`unequalMidRails`]) {
+          console.log('hereeee');
+          mullions.push(horizMull);
+        } else {
+          if (index === 0) {
+            mullions.push(horizMull);
+          }
+
+          console.log({ index });
+          console.log({ HRail: numQty(info[`horizontalMidRailSize${v}`]) });
+
+          if (
+            index === v - 1 &&
+            !isNaN(numQty(info[`horizontalMidRailSize${v - 1}`]))
+          ) {
+            return mullions.push(numQty(info[`horizontalMidRailSize${v - 1}`]));
+          } else {
+            return 0;
+          }
+        }
+      });
+
+      console.log({ mullions });
+
+      const mullionTotal = mullions?.reduce((acc, item) => acc + item, 0);
+
+      const panel =
+        numQty(info[`unevenSplitInput${v}`]) -
+        topRail -
+        panelTotal -
+        mullionTotal +
+        panel_factor * (v + 1) +
+        lip_factor / 2;
+
+      console.log({ panel });
+      console.log({ panelTotal });
+      console.log({ mullionTotal: mullionTotal });
+
+      panelTotal += panel;
+
+      return panel;
+    };
 
     const glassCheck = (v) => info[`glass_check_${v}`];
 
@@ -142,7 +213,7 @@ export default (info, part, breakdowns) => {
               measurement: `${fraction(
                 Math.round(eval(breakdowns.panel_width) * 16) / 16
               )} x ${fraction(unevenSplitInput(v))}`,
-              pattern: panelFlat ? "PF" : "PR",
+              pattern: panelFlat ? 'PF' : 'PR',
               width: Math.round(panelWidth),
               height: Math.round(unevenSplitInput(v)),
               panel: panelName,
@@ -157,8 +228,8 @@ export default (info, part, breakdowns) => {
       qty: `(${qty})`,
       measurement: `${fraction(
         Math.round(eval(breakdowns.panel_width) * 16) / 16
-      )} x ${fraction(panelHeight)}`,
-      pattern: panelFlat ? "PF" : "PR",
+      )} x ${fraction(panelHeight(parseInt(panelsH)))}`,
+      pattern: panelFlat ? 'PF' : 'PR',
       width: Math.round(panelWidth),
       height: Math.round(panelHeight),
       panel: panelName,
@@ -178,7 +249,7 @@ export default (info, part, breakdowns) => {
 
   let door;
 
-  if (orderType === "Door") {
+  if (orderType === 'Door') {
     if (info.unevenCheck) {
       door = unevenSplit();
     } else {
@@ -190,7 +261,7 @@ export default (info, part, breakdowns) => {
           )} x ${fraction(
             Math.round(eval(breakdowns.panel_height) * 16) / 16
           )}`,
-          pattern: panelFlat ? "PF" : "PR",
+          pattern: panelFlat ? 'PF' : 'PR',
           width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
           height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
           panel: panelName,
@@ -199,7 +270,7 @@ export default (info, part, breakdowns) => {
         },
       ];
     }
-  } else if (orderType === "DF") {
+  } else if (orderType === 'DF') {
     if (VERTICAL_GRAIN) {
       door = [
         {
@@ -209,7 +280,7 @@ export default (info, part, breakdowns) => {
           )} x ${fraction(
             Math.round(eval(breakdowns.panel_height) * 16) / 16
           )}`,
-          pattern: panelFlat ? "PF" : "PR",
+          pattern: panelFlat ? 'PF' : 'PR',
           width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
           height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
           count: panelsH * panelsW * qty,
@@ -223,7 +294,7 @@ export default (info, part, breakdowns) => {
           measurement: `${fraction(
             Math.round(eval(breakdowns.panel_height) * 16) / 16
           )} x ${fraction(Math.round(eval(breakdowns.panel_width) * 16) / 16)}`,
-          pattern: panelFlat ? "PF" : "PR",
+          pattern: panelFlat ? 'PF' : 'PR',
           width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
           height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
           count: panelsH * panelsW * qty,
@@ -238,7 +309,7 @@ export default (info, part, breakdowns) => {
     measurement: `${fraction(
       Math.round(eval(breakdowns.panel_width) * 16) / 16
     )} x ${fraction(Math.round(eval(breakdowns.panel_height) * 16) / 16)}`,
-    pattern: panelFlat ? "PF" : "PR",
+    pattern: panelFlat ? 'PF' : 'PR',
     width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
     height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
     panel: panelName,

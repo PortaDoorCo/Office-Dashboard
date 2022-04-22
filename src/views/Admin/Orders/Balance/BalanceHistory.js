@@ -234,8 +234,6 @@ class BalanceHistory extends Component {
       await this.props.editable();
     };
 
-    console.log({ balanceHistory: formState?.balance_history });
-
     if (formState) {
       return (
         <div>
