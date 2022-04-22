@@ -208,14 +208,16 @@ export default (info, part, breakdowns) => {
           if (glassCheck(v)) {
             return glassDoor(v);
           } else {
+            const panelHeight = unevenSplitInput(v);
             return {
               qty: `(${qty})`,
+              qty2: qty,
               measurement: `${fraction(
                 Math.round(eval(breakdowns.panel_width) * 16) / 16
-              )} x ${fraction(unevenSplitInput(v))}`,
+              )} x ${fraction(panelHeight)}`,
               pattern: panelFlat ? 'PF' : 'PR',
-              width: Math.round(panelWidth),
-              height: Math.round(unevenSplitInput(v)),
+              width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+              height: panelHeight,
               panel: panelName,
               multiplier: qty,
               count: qty,
@@ -226,16 +228,37 @@ export default (info, part, breakdowns) => {
 
     const bottom = {
       qty: `(${qty})`,
+      qty2: qty,
       measurement: `${fraction(
         Math.round(eval(breakdowns.panel_width) * 16) / 16
       )} x ${fraction(panelHeight(parseInt(panelsH)))}`,
       pattern: panelFlat ? 'PF' : 'PR',
-      width: Math.round(panelWidth),
-      height: Math.round(panelHeight),
+      width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+      height: panelHeight(parseInt(panelsH)),
       panel: panelName,
       multiplier: qty,
       count: qty,
     };
+
+    const unevenDoor = [...unEven, bottom];
+
+    console.log({ unevenDoor });
+
+    const convert = (arr) => {
+      const res = {};
+      arr.forEach((obj) => {
+        const key = `${obj.measurement}${obj.height}${obj.multiplier}${obj.panel}${obj.pattern}${obj.qty}${obj.qty2}${obj.width}`;
+        if (!res[key]) {
+          res[key] = { ...obj, count: 0 };
+        }
+        res[key].qty = `(${res[key].count + res[key].qty2})`;
+        res[key].qty2 = res[key].count + res[key].qty2;
+        res[key].count += 1;
+      });
+      return Object.values(res);
+    };
+
+    console.log({ convert: convert(unevenDoor) });
 
     if (glassCheck(panelsH - 1)) {
       return [
@@ -243,7 +266,7 @@ export default (info, part, breakdowns) => {
         glassDoor(panelsH - 1), // <-------Needs Testing
       ];
     } else {
-      return [...unEven, bottom];
+      return convert(unevenDoor);
     }
   };
 

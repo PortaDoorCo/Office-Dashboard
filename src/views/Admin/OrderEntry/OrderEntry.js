@@ -481,22 +481,26 @@ class OrderEntry extends Component {
                     </FormSection>
                   ) : null}
 
-                  <Row>
-                    <Col>
-                      <Card>
-                        <CardBody>
-                          <FormGroup>
-                            <h3>Upload Files</h3>
-                            <p>Please Upload Sketches with Design References</p>
-                            <FileUploader
-                              onUploaded={this.onUploaded}
-                              multi={true}
-                            />
-                          </FormGroup>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
+                  {!isEdit ? (
+                    <Row>
+                      <Col>
+                        <Card>
+                          <CardBody>
+                            <FormGroup>
+                              <h3>Upload Files</h3>
+                              <p>
+                                Please Upload Sketches with Design References
+                              </p>
+                              <FileUploader
+                                onUploaded={this.onUploaded}
+                                multi={true}
+                              />
+                            </FormGroup>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  ) : null}
 
                   <Suspense fallback={loading()}>
                     {orderType === 'Door Order' ? (
