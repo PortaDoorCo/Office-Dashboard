@@ -218,7 +218,11 @@ export default (data, breakdowns) => {
                             : i.design
                             ? i.design.NAME
                             : 'None'
-                        }   Edge:  ${i.edge ? i.edge.NAME : 'None'}`,
+                        }   Edge:  ${
+                          i.edge && i?.construction?.value !== 'Miter'
+                            ? i.edge.NAME
+                            : 'None'
+                        }`,
                         style: 'fonts',
                       },
                       // { text: `Applied Profile: ${i.applied_profile ? i.applied_profile.NAME : 'None'}`, style: 'fonts' },

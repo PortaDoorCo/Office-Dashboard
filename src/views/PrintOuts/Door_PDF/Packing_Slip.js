@@ -197,7 +197,11 @@ export default (data, breakdowns) => {
                       },
                       i.edge
                         ? {
-                            text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
+                            text: `Edge: ${
+                              i.edge && i?.construction?.value !== 'Miter'
+                                ? i.edge.NAME
+                                : 'None'
+                            }`,
                             alignment: 'right',
                             style: 'fonts',
                           }
