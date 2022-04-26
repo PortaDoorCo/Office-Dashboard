@@ -94,14 +94,31 @@ export default (data, breakdowns) => {
           if (index === 10) {
             return 10;
           } else {
-            if (index < 6) {
+            if (index < 5) {
               return 67 - index;
+            }
+            if (index === 4) {
+              return 70;
+            }
+            if (index === 5) {
+              return 69;
+            }
+            if (index === 9) {
+              return 76;
+            }
+
+            if (index === 10) {
+              return 70;
+            }
+
+            if (index === 8) {
+              return 65;
             }
 
             if (index > 10) {
               return 67 - (index - 10);
             }
-            return 67;
+            return 75;
           }
         }),
         body: newChunk,
