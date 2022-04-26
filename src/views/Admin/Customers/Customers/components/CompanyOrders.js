@@ -174,6 +174,29 @@ const OrderTable = (props) => {
               moment(endDate).endOf('day').valueOf()
           );
         }
+      } else if (filterStatus === 'Open Orders') {
+        if (filterText?.length > 0) {
+          return (
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Complete') &&
+            !item.status.includes('Shipped') &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            !item.status.includes('Quote') &&
+            !item.status.includes('Invoiced') &&
+            !item.status.includes('Complete') &&
+            !item.status.includes('Shipped')
+          );
+        }
       } else if (filterStatus === 'Quote') {
         if (filterText?.length > 0) {
           return (
@@ -684,6 +707,7 @@ const OrderTable = (props) => {
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
                   <option value={'All'}>All</option>
+                  <option value={'Open Orders'}>Open Orders</option>
                   {status.map((i, index) => (
                     <option key={index} value={i.value}>
                       {i.value}

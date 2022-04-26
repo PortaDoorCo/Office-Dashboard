@@ -195,7 +195,11 @@ export default (data, breakdowns) => {
                           stack: [
                             { text: ' ', style: 'woodtype' },
                             {
-                              text: `Edge: ${i.edge ? i.edge.NAME : 'None'}`,
+                              text: `Edge: ${
+                                i.edge && i?.construction?.value !== 'Miter'
+                                  ? i.edge.NAME
+                                  : 'None'
+                              }`,
                               style: 'fonts',
                               alignment: 'right',
                             },
