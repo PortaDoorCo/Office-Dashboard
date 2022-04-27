@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, CardImg, CardBody, CardTitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup } from 'reactstrap';
+import {
+  Row,
+  Col,
+  Card,
+  CardImg,
+  CardBody,
+  CardTitle,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Input,
+  Label,
+  FormGroup,
+} from 'reactstrap';
 import Cookies from 'js-cookie';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateProduct, addProduct, deleteProduct } from '../../../../../../redux/part_list/actions';
+import {
+  updateProduct,
+  addProduct,
+  deleteProduct,
+} from '../../../../../../redux/part_list/actions';
 import FileUploader from '../../../../../../components/FileUploader/FileUploader';
 
 const cookie = Cookies.get('jwt');
 
 const Profiles = (props) => {
-
-  const {
-    className,
-    role
-  } = props;
+  const { className, role } = props;
 
   const [modal, setModal] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
@@ -24,16 +39,15 @@ const Profiles = (props) => {
     NAME: '',
     INSET: '',
     PROFILE_WIDTH: '',
-    MINIMUM_STILE_WIDTH: '',
     DF_Reduction: '',
-    photo: null
+    photo: null,
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.profiles);
 
   useEffect(() => {
     setFilteredProducts(props.profiles);
-  },[props.profiles]);
+  }, [props.profiles]);
 
   const toggle = () => {
     setModal(!modal);
@@ -43,8 +57,7 @@ const Profiles = (props) => {
     setWarningModal(!warningModal);
   };
 
-
-  const setCard = card => {
+  const setCard = (card) => {
     setNewProduct(false);
     setProduct(card);
     toggle();
@@ -55,9 +68,9 @@ const Profiles = (props) => {
       NAME: '',
       INSET: '',
       PROFILE_WIDTH: '',
-      MINIMUM_STILE_WIDTH: '',
+
       DF_Reduction: '',
-      photo: null
+      photo: null,
     };
     setNewProduct(true);
     setProduct(p);
@@ -68,19 +81,19 @@ const Profiles = (props) => {
     const value = e.target.value;
     const name = e.target.name;
     setProduct((prevState) => {
-      return ({
+      return {
         ...prevState,
-        [name]: value
-      });
+        [name]: value,
+      };
     });
   };
 
   const onUploaded = (e) => {
     setProduct((prevState) => {
-      return ({
+      return {
         ...prevState,
-        photo: e[0]
-      });
+        photo: e[0],
+      };
     });
     return;
   };
@@ -105,41 +118,86 @@ const Profiles = (props) => {
       NAME: product.NAME,
       INSET: product.INSET,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
-      MINIMUM_STILE_WIDTH: product.MINIMUM_STILE_WIDTH,
+
       DF_Reduction: product.DF_Reduction,
       photo: product.photo ? product.photo.id : '',
-      Item: item
+      Item: item,
     };
     await props.addProduct(submittedProduct, 'profiles', cookie);
     await setModal(!modal);
   };
 
-
   const changeFilterValue = (e) => {
-    setFilteredProducts(props.profiles.filter(i => i.NAME.split(' ').join('').toLowerCase().includes(e.target.value.split(' ').join(''))));
+    setFilteredProducts(
+      props.profiles.filter((i) =>
+        i.NAME.split(' ')
+          .join('')
+          .toLowerCase()
+          .includes(e.target.value.split(' ').join(''))
+      )
+    );
   };
 
-  const card = filteredProducts.map(card => {
+  const card = filteredProducts.map((card) => {
     return (
-      <div key={card.id} className="mr-1 ml-1 flex-wrap" style={{ width: '200px' }}>
+      <div
+        key={card.id}
+        className="mr-1 ml-1 flex-wrap"
+        style={{ width: '200px' }}
+      >
         <Card style={{ height: '100%' }} onClick={() => setCard(card)}>
-          {card.photo ? <CardImg top width="100%" src={card.photo.url} alt="Card image cap" /> : <CardImg top width="100%" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
+          {card.photo ? (
+            <CardImg
+              top
+              width="100%"
+              src={card.photo.url}
+              alt="Card image cap"
+            />
+          ) : (
+            <CardImg
+              top
+              width="100%"
+              src={
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'
+              }
+              alt="Card image cap"
+            />
+          )}
           <CardBody>
-            <CardTitle><strong>{card.NAME}</strong></CardTitle>
-            <CardTitle><strong>Inset: </strong> {card.INSET}</CardTitle>
-            <CardTitle><strong>Stile/Rail Width: </strong> {card.PROFILE_WIDTH}</CardTitle>
-            <CardTitle><strong>Mid Rail Width: </strong> {card.MINIMUM_STILE_WIDTH}</CardTitle>
-            <CardTitle><strong>Standard Top/Bottom DF Rails: </strong> {card.DF_Reduction ? card.DF_Reduction : <strong style={{textDecoration: 'underline'}}>NO VALUE</strong>}</CardTitle>
+            <CardTitle>
+              <strong>{card.NAME}</strong>
+            </CardTitle>
+            <CardTitle>
+              <strong>Inset: </strong> {card.INSET}
+            </CardTitle>
+            <CardTitle>
+              <strong>Stile/Rail Width: </strong> {card.PROFILE_WIDTH}
+            </CardTitle>
+
+            <CardTitle>
+              <strong>Standard Top/Bottom DF Rails: </strong>{' '}
+              {card.DF_Reduction ? (
+                card.DF_Reduction
+              ) : (
+                <strong style={{ textDecoration: 'underline' }}>
+                  NO VALUE
+                </strong>
+              )}
+            </CardTitle>
           </CardBody>
         </Card>
       </div>
     );
   });
 
-
-  if(role && (role.type === 'management' || role.type === 'authenticated' || role.type === 'owner' || role.type === 'administrator')) {
+  if (
+    role &&
+    (role.type === 'management' ||
+      role.type === 'authenticated' ||
+      role.type === 'owner' ||
+      role.type === 'administrator')
+  ) {
     return (
-    
       <div>
         <Row className="mb-2">
           <Col>
@@ -148,112 +206,154 @@ const Profiles = (props) => {
               <Input onChange={(e) => changeFilterValue(e)} />
             </FormGroup>
           </Col>
-          <Col xs='9' />
+          <Col xs="9" />
         </Row>
 
         <Row className="mb-2">
           <Col>
-            <Button color="primary" onClick={addProd} >Add New</Button>
+            <Button color="primary" onClick={addProd}>
+              Add New
+            </Button>
           </Col>
         </Row>
-  
+
         <Row style={{ height: '600px' }}>
           <PerfectScrollbar>
-            <div className="col d-flex align-content-start flex-wrap">{card}</div>
+            <div className="col d-flex align-content-start flex-wrap">
+              {card}
+            </div>
           </PerfectScrollbar>
         </Row>
-  
+
         <div>
           <Modal isOpen={modal} toggle={toggle} className={className}>
             <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
             <ModalBody>
               <Row className="mb-2">
-  
                 <Col>
                   <div className="col d-flex align-content-start flex-wrap">
-                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
+                    {product.photo ? (
+                      <CardImg
+                        top
+                        src={product.photo.url}
+                        alt="Card image cap"
+                      />
+                    ) : (
+                      <CardImg
+                        top
+                        width="200px"
+                        src={
+                          'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'
+                        }
+                        alt="Card image cap"
+                      />
+                    )}
                   </div>
-  
+
                   <FileUploader onUploaded={onUploaded} multi={false} />
-  
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col>
                   <Label for="Name">Name</Label>
-                  <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
+                  <Input
+                    value={product.NAME}
+                    name="NAME"
+                    onChange={(e) => change(e)}
+                  ></Input>
                 </Col>
               </Row>
-  
+
               <Row>
                 <Col>
                   <Label for="4/4_Price">Inset</Label>
-                  <Input type="number" value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                  <Input
+                    type="number"
+                    value={product.INSET}
+                    name="INSET"
+                    onChange={(e) => change(e)}
+                  ></Input>
                 </Col>
-  
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Stile/Rail Width</Label>
-                  <Input type="number" value={product.PROFILE_WIDTH} name="PROFILE_WIDTH" onChange={(e) => change(e)}></Input>
+                  <Input
+                    type="number"
+                    value={product.PROFILE_WIDTH}
+                    name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
                 </Col>
-                <Col>
-                  <Label for="5/4_Price">Mid Rail Width</Label>
-                  <Input type="number" value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
-                </Col>
+
                 <Col>
                   <Label for="5/4_Price">Standard Top/Bottom DF Rails</Label>
-                  <Input type="number" value={product.DF_Reduction} name="DF_Reduction" onChange={(e) => change(e)}></Input>
+                  <Input
+                    type="number"
+                    value={product.DF_Reduction}
+                    name="DF_Reduction"
+                    onChange={(e) => change(e)}
+                  ></Input>
                 </Col>
               </Row>
-  
+
               <Row className="mt-5">
-  
                 <Col>
-                  {newProduct ?
+                  {newProduct ? (
                     <div />
-                    :
+                  ) : (
                     <div>
-                      <Button color="danger" onClick={toggleWarningModal}>Delete</Button>
+                      <Button color="danger" onClick={toggleWarningModal}>
+                        Delete
+                      </Button>
                     </div>
-                  }
+                  )}
                 </Col>
               </Row>
             </ModalBody>
             <ModalFooter>
-              {newProduct ?
+              {newProduct ? (
                 <div>
-                  <Button color="primary" onClick={submitProduct}>Submit</Button>
-  
+                  <Button color="primary" onClick={submitProduct}>
+                    Submit
+                  </Button>
                 </div>
-                :
+              ) : (
                 <div>
-                  <Button color="primary" onClick={updateProduct}>Update</Button>
+                  <Button color="primary" onClick={updateProduct}>
+                    Update
+                  </Button>
                 </div>
-              }
-  
-              <Button color="secondary" onClick={toggle}>Cancel</Button>
+              )}
+
+              <Button color="secondary" onClick={toggle}>
+                Cancel
+              </Button>
             </ModalFooter>
           </Modal>
         </div>
-  
-        <Modal isOpen={warningModal} toggle={toggleWarningModal} className={className}>
+
+        <Modal
+          isOpen={warningModal}
+          toggle={toggleWarningModal}
+          className={className}
+        >
           <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
-          <ModalBody>
-            Are you sure you want to delete this item?
-          </ModalBody>
+          <ModalBody>Are you sure you want to delete this item?</ModalBody>
           <ModalFooter>
-            <Button color="danger" onClick={deleteProduct}>Yes</Button>
-            <Button color="primary" onClick={warningModal}>No</Button>
+            <Button color="danger" onClick={deleteProduct}>
+              Yes
+            </Button>
+            <Button color="primary" onClick={warningModal}>
+              No
+            </Button>
           </ModalFooter>
         </Modal>
       </div>
     );
   } else {
     return (
-    
       <div>
-
         <Row className="mb-2">
           <Col>
             <FormGroup>
@@ -261,100 +361,129 @@ const Profiles = (props) => {
               <Input onChange={(e) => changeFilterValue(e)} />
             </FormGroup>
           </Col>
-          <Col xs='9' />
+          <Col xs="9" />
         </Row>
 
         <Row style={{ height: '600px' }}>
           <PerfectScrollbar>
-            <div className="col d-flex align-content-start flex-wrap">{card}</div>
+            <div className="col d-flex align-content-start flex-wrap">
+              {card}
+            </div>
           </PerfectScrollbar>
         </Row>
-  
+
         <div>
           <Modal isOpen={modal} toggle={toggle} className={className}>
             <ModalHeader toggle={toggle}>{product.NAME}</ModalHeader>
             <ModalBody>
               <Row className="mb-2">
-  
                 <Col>
                   <div className="col d-flex align-content-start flex-wrap">
-                    {product.photo ? <CardImg top src={product.photo.url} alt="Card image cap" /> : <CardImg top width="200px" src={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'} alt="Card image cap" />}
+                    {product.photo ? (
+                      <CardImg
+                        top
+                        src={product.photo.url}
+                        alt="Card image cap"
+                      />
+                    ) : (
+                      <CardImg
+                        top
+                        width="200px"
+                        src={
+                          'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'
+                        }
+                        alt="Card image cap"
+                      />
+                    )}
                   </div>
-  
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col>
                   <Label for="Name">Name</Label>
-                  <Input value={product.NAME} name="NAME" onChange={(e) => change(e)}></Input>
+                  <Input
+                    value={product.NAME}
+                    name="NAME"
+                    onChange={(e) => change(e)}
+                  ></Input>
                 </Col>
               </Row>
-  
+
               <Row>
                 <Col>
                   <Label for="4/4_Price">Inset</Label>
-                  <Input type="number" value={product.INSET} name="INSET" onChange={(e) => change(e)}></Input>
+                  <Input
+                    type="number"
+                    value={product.INSET}
+                    name="INSET"
+                    onChange={(e) => change(e)}
+                  ></Input>
                 </Col>
-  
               </Row>
               <Row>
                 <Col>
                   <Label for="5/4_Price">Stile/Rail Width</Label>
-                  <Input type="number" value={product.PROFILE_WIDTH} name="PROFILE_WIDTH" onChange={(e) => change(e)}></Input>
+                  <Input
+                    type="number"
+                    value={product.PROFILE_WIDTH}
+                    name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
                 </Col>
-                <Col>
-                  <Label for="5/4_Price">Mid Rail Width</Label>
-                  <Input type="number" value={product.MINIMUM_STILE_WIDTH} name="MINIMUM_STILE_WIDTH" onChange={(e) => change(e)}></Input>
-                </Col>
+
                 <Col>
                   <Label for="5/4_Price">DF Reduction</Label>
-                  <Input type="number" value={product.DF_Reduction} name="DF_Reduction" onChange={(e) => change(e)}></Input>
+                  <Input
+                    type="number"
+                    value={product.DF_Reduction}
+                    name="DF_Reduction"
+                    onChange={(e) => change(e)}
+                  ></Input>
                 </Col>
               </Row>
-  
             </ModalBody>
-            <ModalFooter> 
-              <Button color="secondary" onClick={toggle}>Cancel</Button>
+            <ModalFooter>
+              <Button color="secondary" onClick={toggle}>
+                Cancel
+              </Button>
             </ModalFooter>
           </Modal>
         </div>
-  
-        <Modal isOpen={warningModal} toggle={toggleWarningModal} className={className}>
+
+        <Modal
+          isOpen={warningModal}
+          toggle={toggleWarningModal}
+          className={className}
+        >
           <ModalHeader toggle={warningModal}>Are You Sure?</ModalHeader>
-          <ModalBody>
-            Are you sure you want to delete this item?
-          </ModalBody>
+          <ModalBody>Are you sure you want to delete this item?</ModalBody>
           <ModalFooter>
-            <Button color="danger" onClick={deleteProduct}>Yes</Button>
-            <Button color="primary" onClick={warningModal}>No</Button>
+            <Button color="danger" onClick={deleteProduct}>
+              Yes
+            </Button>
+            <Button color="primary" onClick={warningModal}>
+              No
+            </Button>
           </ModalFooter>
         </Modal>
       </div>
     );
   }
-  
-
-
 };
 
 const mapStateToProps = (state) => ({
   profiles: state.part_list.profiles,
-  role: state.users.user.role
+  role: state.users.user.role,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateProduct,
       addProduct,
-      deleteProduct
+      deleteProduct,
     },
     dispatch
   );
 
-
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Profiles);
+export default connect(mapStateToProps, mapDispatchToProps)(Profiles);

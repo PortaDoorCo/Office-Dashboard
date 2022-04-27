@@ -10,13 +10,11 @@ import {
   DropdownMenu,
   DropdownItem,
   Row,
-  Col
+  Col,
 } from 'reactstrap';
 import Selection from './Selection';
 
-
 const Settings = (props) => {
-
   const [isOpen, setIsOpen] = useState(false);
   const [selection, setSelection] = useState('index');
 
@@ -27,7 +25,9 @@ const Settings = (props) => {
       <Row>
         <Col>
           <Navbar color="light" light expand="md" className="settings-nav-tour">
-            <NavbarBrand onClick={() => setSelection('index')}>Settings</NavbarBrand>
+            <NavbarBrand onClick={() => setSelection('index')}>
+              Settings
+            </NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="mr-auto" navbar>
@@ -35,8 +35,8 @@ const Settings = (props) => {
                   <DropdownToggle nav caret>
                     Doors
                   </DropdownToggle>
-                  <DropdownMenu right >
-                    <DropdownItem onClick={() => setSelection('cope_door')} >
+                  <DropdownMenu right>
+                    <DropdownItem onClick={() => setSelection('cope_door')}>
                       Cope and Stick
                     </DropdownItem>
                     <DropdownItem onClick={() => setSelection('mt_door')}>
@@ -49,7 +49,6 @@ const Settings = (props) => {
                     {/* <DropdownItem onClick={() => setSelection('one_piece_door')}>
                       One Piece Door
                     </DropdownItem> */}
-                
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
@@ -66,11 +65,12 @@ const Settings = (props) => {
                     <DropdownItem onClick={() => setSelection('miter_df')}>
                       Miter Design
                     </DropdownItem>
-                    <DropdownItem onClick={() => setSelection('slab_type_door')}>
+                    <DropdownItem
+                      onClick={() => setSelection('slab_type_door')}
+                    >
                       Slab Type DF
                     </DropdownItem>
                   </DropdownMenu>
-
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
@@ -109,7 +109,9 @@ const Settings = (props) => {
                     <DropdownItem onClick={() => setSelection('chair_rails')}>
                       Chair Rails
                     </DropdownItem>
-                    <DropdownItem onClick={() => setSelection('crown_mouldings')}>
+                    <DropdownItem
+                      onClick={() => setSelection('crown_mouldings')}
+                    >
                       Crown Mouldings
                     </DropdownItem>
                     <DropdownItem onClick={() => setSelection('solid_crowns')}>
@@ -144,13 +146,14 @@ const Settings = (props) => {
                     <DropdownItem onClick={() => setSelection('door_pricing')}>
                       Doors
                     </DropdownItem>
-                    <DropdownItem onClick={() => setSelection('drawer_pricing')} >
+                    <DropdownItem
+                      onClick={() => setSelection('drawer_pricing')}
+                    >
                       Drawer Boxes
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
-            
             </Collapse>
           </Navbar>
         </Col>

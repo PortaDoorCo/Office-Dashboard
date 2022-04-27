@@ -43,7 +43,7 @@ const Designs = (props) => {
     BTM_RAIL_ADD: '',
     PROFILE_WIDTH: '',
     INSET: '',
-    DF_REDUCTION: '',
+    Mid_Rail_Width: '',
     CONSTRUCTION: 'MT',
     ORDERTYPE: 'Door',
     photo: null,
@@ -54,7 +54,7 @@ const Designs = (props) => {
 
   useEffect(() => {
     const filteredProduct = props.designs.filter(
-      (x) => (x.CONSTRUCTION === 'MT') && x.ORDERTYPE === 'Door'
+      (x) => x.CONSTRUCTION === 'MT' && x.ORDERTYPE === 'Door'
     );
     setFilteredProducts(filteredProduct);
   }, [props.designs]);
@@ -82,7 +82,7 @@ const Designs = (props) => {
       BTM_RAIL_ADD: '',
       PROFILE_WIDTH: '',
       INSET: '',
-      DF_REDUCTION: '',
+      Mid_Rail_Width: '',
       CONSTRUCTION: 'MT',
       ORDERTYPE: 'Door',
       photo: null,
@@ -137,15 +137,12 @@ const Designs = (props) => {
       BTM_RAIL_ADD: product.BTM_RAIL_ADD,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
       INSET: product.INSET,
-      DF_REDUCTION: product.DF_REDUCTION,
+      Mid_Rail_Width: product.Mid_Rail_Width,
       CONSTRUCTION: 'MT',
       ORDERTYPE: 'Door',
       photo: product.photo ? product.photo.id : '',
       Item: item,
     };
-
-
-
 
     await props.addProduct(submittedProduct, 'designs', cookie);
     await setModal(!modal);
@@ -159,7 +156,8 @@ const Designs = (props) => {
             .join('')
             .toLowerCase()
             .includes(e.target.value.split(' ').join('')) &&
-          (i.CONSTRUCTION === 'MT') && (i.ORDERTYPE === 'Door')
+          i.CONSTRUCTION === 'MT' &&
+          i.ORDERTYPE === 'Door'
       )
     );
   };
@@ -209,10 +207,17 @@ const Designs = (props) => {
               <strong>Profile Width:</strong> {card.PROFILE_WIDTH}
             </CardTitle>
             <CardTitle>
-              <strong>Inset:</strong> {card.INSET}
+              <strong>Mid Rail Width:</strong>{' '}
+              {card.Mid_Rail_Width ? (
+                card.Mid_Rail_Width
+              ) : (
+                <strong style={{ textDecoration: 'underline' }}>
+                  NO VALUE
+                </strong>
+              )}
             </CardTitle>
             <CardTitle>
-              <strong>DF Reduction:</strong> {card.DF_REDUCTION}
+              <strong>Inset:</strong> {card.INSET}
             </CardTitle>
           </CardBody>
         </Card>
@@ -225,8 +230,7 @@ const Designs = (props) => {
     (role.type === 'management' ||
       role.type === 'authenticated' ||
       role.type === 'owner' ||
-      role.type === 'administrator'
-    )
+      role.type === 'administrator')
   ) {
     return (
       <div>
@@ -334,7 +338,7 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-              
+
               <Row>
                 <Col>
                   <Label for="5/4_Price">Profile Width</Label>
@@ -359,11 +363,11 @@ const Designs = (props) => {
                 </Col>
 
                 <Col>
-                  <Label for="5/4_Price">DF Reduction</Label>
+                  <Label for="5/4_Price">Mid Rail Width</Label>
                   <Input
                     type="number"
-                    value={product.DF_REDUCTION}
-                    name="DF_REDUCTION"
+                    value={product.Mid_Rail_Width}
+                    name="Mid_Rail_Width"
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -522,7 +526,6 @@ const Designs = (props) => {
                 </Col>
               </Row>
               <Row>
-
                 <Col>
                   <Label for="5/4_Price">Profile Width</Label>
                   <Input
@@ -533,7 +536,6 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-        
 
               <Row>
                 <Col>
@@ -547,19 +549,15 @@ const Designs = (props) => {
                 </Col>
 
                 <Col>
-                  <Label for="5/4_Price">DF Reduction</Label>
+                  <Label for="5/4_Price">Mid Rail Width</Label>
                   <Input
                     type="number"
-                    value={product.DF_REDUCTION}
-                    name="DF_REDUCTION"
+                    value={product.Mid_Rail_Width}
+                    name="Mid_Rail_Width"
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
               </Row>
-                
-      
-              
-
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={toggle}>

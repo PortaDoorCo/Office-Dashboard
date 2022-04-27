@@ -43,6 +43,7 @@ const Designs = (props) => {
     TOP_RAIL_ADD: '',
     BTM_RAIL_ADD: '',
     PROFILE_WIDTH: '',
+    Mid_Rail_Width: '',
     INSET: '',
     DF_REDUCTION: '',
     CONSTRUCTION: 'Miter',
@@ -83,6 +84,7 @@ const Designs = (props) => {
       TOP_RAIL_ADD: '',
       BTM_RAIL_ADD: '',
       PROFILE_WIDTH: '',
+      Mid_Rail_Width: '',
       INSET: '',
       DF_REDUCTION: '',
       CONSTRUCTION: 'Miter',
@@ -139,6 +141,7 @@ const Designs = (props) => {
       TOP_RAIL_ADD: product.TOP_RAIL_ADD,
       BTM_RAIL_ADD: product.BTM_RAIL_ADD,
       PROFILE_WIDTH: product.PROFILE_WIDTH,
+      Mid_Rail_Width: product.Mid_Rail_Width,
       INSET: product.INSET,
       CONSTRUCTION: 'Miter',
       ORDERTYPE: 'Door',
@@ -207,6 +210,16 @@ const Designs = (props) => {
             </CardTitle>
             <CardTitle>
               <strong>Profile Width:</strong> {card.PROFILE_WIDTH}
+            </CardTitle>
+            <CardTitle>
+              <strong>Mid Rail Width:</strong>{' '}
+              {card.Mid_Rail_Width ? (
+                card.Mid_Rail_Width
+              ) : (
+                <strong style={{ textDecoration: 'underline' }}>
+                  NO VALUE
+                </strong>
+              )}
             </CardTitle>
             <CardTitle>
               <strong>Inset:</strong> {card.INSET}
@@ -341,6 +354,15 @@ const Designs = (props) => {
                     type="number"
                     value={product.PROFILE_WIDTH}
                     name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">Mid Rail Width</Label>
+                  <Input
+                    type="number"
+                    value={product.Mid_Rail_Width}
+                    name="Mid_Rail_Width"
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -545,6 +567,15 @@ const Designs = (props) => {
                     type="number"
                     value={product.PROFILE_WIDTH}
                     name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">Mid Rail Width</Label>
+                  <Input
+                    type="number"
+                    value={product.Mid_Rail_Width}
+                    name="Mid_Rail_Width"
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
