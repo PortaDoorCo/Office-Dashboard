@@ -455,6 +455,12 @@ export default (data, pricing) => {
           margin: [0, 0, 0, 5],
           id: 'liability-acknowledgement',
         },
+        {
+          text: 'QUOTES ARE VALID FOR 15 DAYS',
+          style: 'fontsBold',
+          alignment: 'left',
+          margin: [0, 5, 0, 5],
+        },
       ],
     },
   ];

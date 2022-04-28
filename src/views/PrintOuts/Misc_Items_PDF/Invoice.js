@@ -322,21 +322,5 @@ export default (data, pricing) => {
         },
       ],
     },
-    {
-      columns: [
-        {
-          text: moment().format('MM-D-YYYY'),
-          style: 'fonts',
-          alignment: 'left',
-          margin: [0, 0, 0, 0],
-        },
-        {
-          text: ' ',
-          style: 'fonts',
-          alignment: 'right',
-          margin: [0, 0, 0, 0],
-        },
-      ],
-    },
   ];
 };

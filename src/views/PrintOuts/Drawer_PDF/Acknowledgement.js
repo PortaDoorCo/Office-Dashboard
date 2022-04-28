@@ -578,24 +578,30 @@ export default (data, pricing) => {
           alignment: 'left',
           margin: [0, 0, 0, 5],
         },
-      ],
-    },
-    {
-      columns: [
         {
-          text: moment().format('MM-D-YYYY'),
-          style: 'fonts',
+          text: 'QUOTES ARE VALID FOR 15 DAYS',
+          style: 'fontsBold',
           alignment: 'left',
-          margin: [0, 0, 0, 0],
-        },
-        {
-          text: `Units: ${qty.reduce((acc, item) => acc + item, 0)}`,
-          style: 'fonts',
-          alignment: 'right',
-          margin: [0, 0, 0, 0],
+          margin: [0, 5, 0, 5],
         },
       ],
     },
+    // {
+    //   columns: [
+    //     {
+    //       text: moment().format('MM-D-YYYY'),
+    //       style: 'fonts',
+    //       alignment: 'left',
+    //       margin: [0, 0, 0, 0],
+    //     },
+    //     {
+    //       text: `Units: ${qty.reduce((acc, item) => acc + item, 0)}`,
+    //       style: 'fonts',
+    //       alignment: 'right',
+    //       margin: [0, 0, 0, 0],
+    //     },
+    //   ],
+    // },
 
     // { text: '', pageBreak: 'before' }
   ];
