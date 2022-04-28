@@ -320,21 +320,11 @@ export default (data, pricing) => {
           alignment: 'left',
           margin: [0, 0, 0, 5],
         },
-      ],
-    },
-    {
-      columns: [
         {
-          text: moment().format('MM-D-YYYY'),
-          style: 'fonts',
+          text: 'QUOTES ARE VALID FOR 15 DAYS',
+          style: 'fontsBold',
           alignment: 'left',
-          margin: [0, 0, 0, 0],
-        },
-        {
-          text: ' ',
-          style: 'fonts',
-          alignment: 'right',
-          margin: [0, 0, 0, 0],
+          margin: [0, 5, 0, 5],
         },
       ],
     },

@@ -574,22 +574,6 @@ export default (data, pricing) => {
         },
       ],
     },
-    {
-      columns: [
-        {
-          text: moment().format('MM-D-YYYY'),
-          style: 'fonts',
-          alignment: 'left',
-          margin: [0, 0, 0, 0],
-        },
-        {
-          text: `Units: ${qty.reduce((acc, item) => acc + item, 0)}`,
-          style: 'fonts',
-          alignment: 'right',
-          margin: [0, 0, 0, 0],
-        },
-      ],
-    },
 
     // { text: '', pageBreak: 'before' }
   ];

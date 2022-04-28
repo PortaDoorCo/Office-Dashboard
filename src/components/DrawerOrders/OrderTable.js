@@ -125,23 +125,23 @@ const OrderTable = ({
         // code block
         setStandardSize(false);
         if (e.NAME === 'Yes') {
-          if (!standardSize) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                'CANNOT WORK WITH UNDER MOUNT \nWITH SCOOP'
-              )
-            );
-          } else {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                'WITH SCOOP'
-              )
-            );
-          }
+          // if (!standardSize) {
+          //   dispatch(
+          //     change(
+          //       'Order',
+          //       `part_list[${i}].dimensions[${index}].notes`,
+          //       'CANNOT WORK WITH UNDER MOUNT \nWITH SCOOP'
+          //     )
+          //   );
+          // } else {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].notes`,
+              'WITH SCOOP'
+            )
+          );
+          // }
         } else {
           dispatch(
             change(
@@ -237,7 +237,7 @@ const OrderTable = ({
                       textField="NAME"
                       validate={required}
                       edit={edit}
-                      // onChange={(e) => checkScoop(index, e)}
+                      onChange={(e) => checkScoop(index, e)}
                     />
                   </td>
                   <td style={{ width: '14%' }}>
