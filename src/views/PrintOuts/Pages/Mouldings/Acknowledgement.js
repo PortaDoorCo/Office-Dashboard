@@ -196,6 +196,7 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
                     ],
                   },
                   {
+                    width: 120,
                     stack: [
                       {
                         text: `${
