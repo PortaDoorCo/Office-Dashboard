@@ -1008,8 +1008,6 @@ class OrderPage extends Component {
         ? selectedOrder?.filesInfo?.slice(0).reverse()
         : [];
 
-    console.log({ selectedOrder });
-
     return (
       <div className="animated noPrint resize">
         <CopyModal
@@ -1067,11 +1065,13 @@ class OrderPage extends Component {
                         </IconButton>
                       </Tooltip>
 
-                      <Tooltip title="View Files" placement="top">
-                        <IconButton onClick={this.toggleFiles}>
-                          <Attachment style={{ width: '40', height: '40' }} />
-                        </IconButton>
-                      </Tooltip>
+                      {!this.props.edit ? (
+                        <Tooltip title="View Files" placement="top">
+                          <IconButton onClick={this.toggleFiles}>
+                            <Attachment style={{ width: '40', height: '40' }} />
+                          </IconButton>
+                        </Tooltip>
+                      ) : null}
                     </Col>
                     <Col />
                     <Col />
