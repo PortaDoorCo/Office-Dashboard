@@ -121,7 +121,7 @@ const DoorPDF = async (
         margin: [40, 0, 0, 0],
         columns: [
           {
-            width: 150,
+            width: 200,
             stack: [
               {
                 columns: [
