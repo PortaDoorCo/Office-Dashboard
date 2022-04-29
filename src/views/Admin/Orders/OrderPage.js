@@ -1065,13 +1065,13 @@ class OrderPage extends Component {
                         </IconButton>
                       </Tooltip>
 
-                      {!this.props.edit ? (
+                      {/* {!this.props.edit ? (
                         <Tooltip title="View Files" placement="top">
                           <IconButton onClick={this.toggleFiles}>
                             <Attachment style={{ width: '40', height: '40' }} />
                           </IconButton>
                         </Tooltip>
-                      ) : null}
+                      ) : null} */}
                     </Col>
                     <Col />
                     <Col />

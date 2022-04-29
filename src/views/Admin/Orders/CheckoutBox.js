@@ -103,7 +103,6 @@ const CheckoutBox = (props) => {
                 </Col>
               </Row>
 
-
               <Row>
                 <Col>
                   <FormGroup>
@@ -235,7 +234,7 @@ const CheckoutBox = (props) => {
 
               <Row>
                 <Col>
-                  <Navigation {...props} />
+                  <Navigation {...props} edit={!props.edit} />
                 </Col>
               </Row>
 
