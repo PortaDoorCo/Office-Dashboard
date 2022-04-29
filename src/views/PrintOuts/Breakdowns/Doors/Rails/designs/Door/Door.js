@@ -12,8 +12,14 @@ export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 
-  let edge_factor = info?.edge?.LIP_FACTOR ? info?.edge?.LIP_FACTOR : 0;
-  let lip_factor = info?.edge?.LIP_FACTOR ? info?.edge?.LIP_FACTOR : 0;
+  let edge_factor =
+    info.construction?.value !== 'Miter' && info?.edge?.LIP_FACTOR
+      ? info?.edge?.LIP_FACTOR
+      : 0;
+  let lip_factor =
+    info.construction?.value !== 'Miter' && info?.edge?.LIP_FACTOR
+      ? info?.edge?.LIP_FACTOR
+      : 0;
 
   const topRail = info.topRail
     ? Math.round(numQty(info.topRail) * 16) / 16 + lip_factor / 2
