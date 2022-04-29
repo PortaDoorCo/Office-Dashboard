@@ -145,7 +145,7 @@ const DoorPDF = async (
           {
             stack: [
               {
-                margin: [10, 0, 0, 0],
+                margin: [0, 0, 0, 0],
                 columns: [
                   {
                     width: 40,
@@ -159,6 +159,7 @@ const DoorPDF = async (
                     ],
                   },
                   {
+                    width: 120,
                     stack: [
                       {
                         text: `${data.job_info.customer.Company}`,
