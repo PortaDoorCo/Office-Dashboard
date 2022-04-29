@@ -176,7 +176,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
           {
             stack: [
               {
-                margin: [10, 0, 0, 0],
+                margin: [0, 0, 0, 0],
                 columns: [
                   {
                     width: 40,
@@ -196,6 +196,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
                     ],
                   },
                   {
+                    width: 120,
                     stack: [
                       {
                         text: `${
