@@ -1033,7 +1033,7 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
   Order.map((i) => {
     let price = 0;
 
-    const { item, woodtype, linearFT, grade } = i;
+    const { item, woodtype, linearFT, grade, extraCost } = i;
 
     if (i.style?.value === 'custom') {
       price = 0;
@@ -1082,8 +1082,9 @@ export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
       }
 
       const bd_ft = waste * premium;
+      const adjust_price = extraCost ? Math.round(extraCost * 100) / 100 : 0;
 
-      price = bd_ft * wood * linFt * 4;
+      price = bd_ft * wood * linFt * 4 + adjust_price;
     } else {
       if (i.item) {
         let feet = Math.floor(((item.MOULDING_WIDTH * 12) / 144) * 100) / 100;
