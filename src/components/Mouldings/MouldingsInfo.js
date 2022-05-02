@@ -30,6 +30,7 @@ import {
   renderMouldingInputs,
   renderNumber,
   renderTextField,
+  renderPrice,
 } from '../RenderInputs/renderInputs';
 import styles from './styles';
 
@@ -64,9 +65,9 @@ let Inputs = (props) => {
                   <th>Style</th>
                   <th>Grade</th>
                   <th>Woodtype</th>
-                  {formState?.mouldings && formState?.mouldings[index]?.style?.value === 'custom' ? (
-                    null
-                  ) : (
+                  {formState?.mouldings &&
+                  formState?.mouldings[index]?.style?.value ===
+                    'custom' ? null : (
                     <th>Item</th>
                   )}
                   <th>Price</th>
@@ -126,13 +127,18 @@ let Inputs = (props) => {
                       required
                     />
                   </td>
-                  {formState?.mouldings && formState?.mouldings[index]?.style?.value === 'custom' ? (
-                    null
-                  ) : (
+                  {formState?.mouldings &&
+                  formState?.mouldings[index]?.style?.value ===
+                    'custom' ? null : (
                     <td style={{ width: '200px' }}>
                       <Field
                         name={`${table}.item`}
-                        component={formState?.mouldings[index]?.style?.value === 'Flat_Stock' ? renderDropdownListNoPhoto : renderMouldingInputs}
+                        component={
+                          formState?.mouldings[index]?.style?.value ===
+                          'Flat_Stock'
+                            ? renderDropdownListNoPhoto
+                            : renderMouldingInputs
+                        }
                         data={part_list?.mouldings.filter(
                           (item) =>
                             item.Style ===
@@ -146,7 +152,6 @@ let Inputs = (props) => {
                       />
                     </td>
                   )}
-
 
                   <>
                     <td style={{ width: '125px' }}>
@@ -178,7 +183,8 @@ let Inputs = (props) => {
                     </td>
                   ) : null}
                 </tr>
-                {formState?.mouldings && formState?.mouldings[index]?.style?.value === 'custom' ? 
+                {formState?.mouldings &&
+                formState?.mouldings[index]?.style?.value === 'custom' ? (
                   <tr>
                     <td>
                       <div>
@@ -197,7 +203,6 @@ let Inputs = (props) => {
                     </td>
                     <td>
                       <div>
-                      
                         <strong>
                           <p>Thickness</p>
                         </strong>
@@ -212,8 +217,7 @@ let Inputs = (props) => {
                       </div>
                     </td>
                   </tr>
-
-                  : null }
+                ) : null}
               </tbody>
             </Table>
             <Row mb="4">
@@ -228,6 +232,23 @@ let Inputs = (props) => {
                       edit={edit}
                       placeholder={'Please specify any required lengths'}
                       label="notes"
+                    />
+                  </Col>
+                </Row>
+              </Col>
+              <Col>
+                <Row>
+                  <Col lg="6" />
+                  <Col>
+                    {' '}
+                    <strong>Adjust Price</strong>
+                    <Field
+                      name={`${table}.extraCost`}
+                      type="text"
+                      component={renderPrice}
+                      edit={edit}
+                      label="extraCost"
+                      {...currencyMask}
                     />
                   </Col>
                 </Row>
