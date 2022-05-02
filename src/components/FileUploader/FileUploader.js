@@ -20,7 +20,7 @@ const FileUploader = (props) => {
     name: fileName,
     listType: 'picture',
     defaultFileList: [...fileList],
-    multiple: props.multi,
+    multiple: false,
     action: `${db_url}/upload`,
     customRequest: (options) => {
       const data = new FormData();
