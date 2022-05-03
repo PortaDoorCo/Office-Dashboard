@@ -264,8 +264,6 @@ class OrderPage extends Component {
       return null;
     });
 
-    console.log({ newOrder });
-
     delete newOrder['id'];
     delete newOrder['_id'];
     delete newOrder['orderNum'];
