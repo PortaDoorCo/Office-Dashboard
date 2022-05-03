@@ -71,7 +71,7 @@ export default (data, breakdowns) => {
                         {
                           text: data.misc_items.map((i) => {
                             if (i.category === 'preselect') {
-                              if (i.item.NAME.includes('Delivery')) {
+                              if (i.item?.NAME?.includes('Delivery')) {
                                 return null;
                               } else {
                                 return `${i.item?.NAME} \n`;
@@ -91,7 +91,7 @@ export default (data, breakdowns) => {
             {
               stack: [
                 {
-                  margin: [0, 10, 0, 0],
+                  margin: [0, 15, 0, 0],
                   stack: [
                     {
                       columns: [

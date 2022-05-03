@@ -133,7 +133,7 @@ export default (data, breakdowns, type) => {
                   {
                     text: data.misc_items.map((i) => {
                       if (i.category === 'preselect') {
-                        if (i.item.NAME.includes('Delivery')) {
+                        if (i.item?.NAME?.includes('Delivery')) {
                           return null;
                         } else {
                           return `${i.item?.NAME} \n`;
@@ -151,7 +151,7 @@ export default (data, breakdowns, type) => {
           }
         : null,
       {
-        margin: [0, 10, 0, 0],
+        margin: [0, 15, 0, 0],
         stack: [
           {
             columns: [
@@ -194,6 +194,8 @@ export default (data, breakdowns, type) => {
                   i.construction.value === 'Slab'
                     ? i.woodtype?.FRAMING_MATERIAL
                       ? i.woodtype?.FRAMING_MATERIAL
+                      : i.woodtype?.PANEL_MATERIAL
+                      ? i.woodtype?.PANEL_MATERIAL
                       : i.woodtype?.NAME
                     : i.woodtype?.PANEL_MATERIAL
                     ? i.woodtype?.PANEL_MATERIAL
