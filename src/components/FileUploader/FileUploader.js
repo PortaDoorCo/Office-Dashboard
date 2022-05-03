@@ -67,11 +67,6 @@ const FileUploader = (props) => {
       if (info.file.status !== 'uploading') {
       }
       if (info.file.status === 'done') {
-        NotificationManager.success(
-          'File Successfully Uploaded!',
-          'Success',
-          2000
-        );
         setFileName('');
 
         setFileList(
