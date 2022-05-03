@@ -246,6 +246,7 @@ class OrderPage extends Component {
         ...data.job_info,
         poNum: `${data.job_info?.poNum} - COPY`,
         status: 'Quote',
+        Shipping_Scheduled: false,
       },
       status: 'Quote',
       tracking: [
@@ -263,6 +264,8 @@ class OrderPage extends Component {
       return null;
     });
 
+    console.log({ newOrder });
+
     delete newOrder['id'];
     delete newOrder['_id'];
     delete newOrder['orderNum'];
@@ -276,6 +279,7 @@ class OrderPage extends Component {
     delete newOrder['DateCompleted'];
     delete newOrder['DateInProduction'];
     delete newOrder['scan_date'];
+    delete newOrder['Shipping_Scheduled'];
 
     delete newOrder['job_info.DateOrdered'];
     delete newOrder['job_info.DueDate'];
@@ -284,6 +288,7 @@ class OrderPage extends Component {
     delete newOrder['job_info.DateCompleted'];
     delete newOrder['job_info.DateInProduction'];
     delete newOrder['job_info.scan_date'];
+    delete newOrder['job_info.Shipping_Scheduled'];
 
     newOrder['balance_history'] = [{ balance_paid: 0 }];
     newOrder['balance_paid'] = 0;
