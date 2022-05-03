@@ -412,7 +412,7 @@ export default (data, breakdowns) => {
             {
               text: data.misc_items.map((i) => {
                 if (i.category === 'preselect') {
-                  if (i.item.NAME.includes('Delivery')) {
+                  if (i.item?.NAME?.includes('Delivery')) {
                     return null;
                   } else {
                     return `${i.item?.NAME} \n`;

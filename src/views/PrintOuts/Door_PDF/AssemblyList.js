@@ -135,7 +135,7 @@ export default (data, breakdowns) => {
             : null,
           {
             id: 'parts',
-            margin: [0, 10, 0, 0],
+            margin: [0, 15, 0, 0],
             stack: [
               {
                 columns: [
