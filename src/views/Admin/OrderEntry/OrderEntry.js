@@ -29,6 +29,7 @@ import {
   reduxForm,
   startAsyncValidation,
   touch,
+  initialize,
 } from 'redux-form';
 import thickness from '../../../components/DoorOrders/DoorInfo/thickness';
 import FileUploader from '../../../components/FileUploader/FileUploader';
@@ -38,6 +39,7 @@ import {
   setOrderType,
   submitOrder,
   updateOrder,
+  setSelectedOrder,
 } from '../../../redux/orders/actions';
 import { saveEmail } from '../../../redux/customers/actions';
 import {
@@ -59,6 +61,10 @@ import CheckoutBox from './components/CheckoutBox';
 import validate from './components/validate';
 import Sticky from 'react-stickynode';
 import CustomerReminder from '../../../utils/Modal';
+import io from 'socket.io-client';
+import db_url from '../../../redux/db_url';
+
+const socket = io(db_url);
 
 const DoorInfo = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/DoorInfo')
@@ -125,9 +131,24 @@ class OrderEntry extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    const { dispatch, setOrderType, route, isEdit } = this.props;
+    const {
+      dispatch,
+      setOrderType,
+      route,
+      isEdit,
+      selectedOrder,
+      setSelectedOrder,
+      reset,
+      load,
+    } = this.props;
 
     if (isEdit) {
+      socket.on('order_updated', async (res) => {
+        // console.log({ res });
+        // console.log({ selectedOrder });
+        await setSelectedOrder(res);
+        await initialize('Order', res);
+      });
       return null;
     } else {
       setOrderType(route?.type);
@@ -898,6 +919,7 @@ const mapDispatchToProps = (dispatch) =>
       setOrderType,
       updateOrder,
       saveEmail,
+      setSelectedOrder,
     },
     dispatch
   );
@@ -906,6 +928,7 @@ const mapDispatchToProps = (dispatch) =>
 OrderEntry = reduxForm({
   form: 'Order',
   enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
   validate,
   onSubmitFail: (errors, dispatch, submitError, props) => {
     const job_info_message = 'You are missing required info';
