@@ -930,7 +930,7 @@ const mapDispatchToProps = (dispatch) =>
 OrderEntry = reduxForm({
   form: 'Order',
   enableReinitialize: true,
-  keepDirtyOnReinitialize: true,
+  // keepDirtyOnReinitialize: true,
   validate,
   onSubmitFail: (errors, dispatch, submitError, props) => {
     const job_info_message = 'You are missing required info';

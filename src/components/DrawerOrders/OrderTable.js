@@ -96,61 +96,23 @@ const OrderTable = ({
 
     const str = 'WITH SCOOP';
 
-    switch (numQty(formState.part_list[i]?.dimensions[index]?.depth)) {
-      case 9:
-        // code block
-        break;
-      case 12:
-        // code block
-        break;
-      case 15:
-        // code block
-        break;
-      case 18:
-        // code block
-        break;
-      case 21:
-        // code block
-        break;
-      case 24:
-        // code block
-        break;
-      case 27:
-        // code block
-        break;
-      case 30:
-        // code block
-        break;
-      default:
-        // code block
-        setStandardSize(false);
-        if (e.NAME === 'Yes') {
-          // if (!standardSize) {
-          //   dispatch(
-          //     change(
-          //       'Order',
-          //       `part_list[${i}].dimensions[${index}].notes`,
-          //       'CANNOT WORK WITH UNDER MOUNT \nWITH SCOOP'
-          //     )
-          //   );
-          // } else {
-          dispatch(
-            change(
-              'Order',
-              `part_list[${i}].dimensions[${index}].notes`,
-              'WITH SCOOP'
-            )
-          );
-          // }
-        } else {
-          dispatch(
-            change(
-              'Order',
-              `part_list[${i}].dimensions[${index}].notes`,
-              str.replace(str, '')
-            )
-          );
-        }
+    if (e.NAME === 'Yes') {
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].notes`,
+          'WITH SCOOP'
+        )
+      );
+      // }
+    } else {
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].notes`,
+          str.replace(str, '')
+        )
+      );
     }
   };
 
