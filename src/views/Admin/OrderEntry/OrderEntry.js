@@ -146,8 +146,11 @@ class OrderEntry extends Component {
       socket.on('order_updated', async (res) => {
         // console.log({ res });
         // console.log({ selectedOrder });
-        await setSelectedOrder(res);
-        await initialize('Order', res);
+
+        if (res.id === selectedOrder.id) {
+          await setSelectedOrder(res);
+          await initialize('Order', res);
+        }
       });
       return null;
     } else {
