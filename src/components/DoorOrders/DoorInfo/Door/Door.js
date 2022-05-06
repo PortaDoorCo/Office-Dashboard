@@ -170,6 +170,13 @@ class Door extends Component {
         design.CONSTRUCTION === construction && design.ORDERTYPE === 'Door'
     );
 
+    const customer = formState?.job_info?.customer;
+
+    const CBD_Panels = panels?.filter((panel) => panel.CBD);
+
+    console.log({ CBD_Panels });
+    console.log({ customer });
+
     return (
       <div>
         <ModalUtil
@@ -261,7 +268,7 @@ class Door extends Component {
               <Field
                 name={`${part}.panel`}
                 component={renderDropdownListFilter}
-                data={panels}
+                data={customer?.id === 1282 ? CBD_Panels : panels}
                 dataKey="value"
                 textField="NAME"
                 validate={required}

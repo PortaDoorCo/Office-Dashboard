@@ -143,12 +143,17 @@ class OrderEntry extends Component {
     } = this.props;
 
     if (isEdit) {
-      // socket.on('order_updated', async (res) => {
-      //   // console.log({ res });
-      //   // console.log({ selectedOrder });
+      // console.log({ selectedOrder });
+
+      // const order = selectedOrder;
+
+      // socket.on('order_updated', (res) => {
+      //   console.log({ res });
+      //   console.log({ order });
       //   if (res.id === selectedOrder.id) {
-      //     await setSelectedOrder(res);
-      //     await initialize('Order', res);
+      //     console.log('fire');
+      //     // setSelectedOrder(res);
+      //     // initialize('Order', res);
       //   }
       // });
       return null;
