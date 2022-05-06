@@ -1393,7 +1393,7 @@ const DoorTable = ({
 
                           <Field
                             name={`${table}.unevenSplitInput${index}`}
-                            component={renderField}
+                            component={renderNumber}
                             edit={edit}
                             validate={required}
                           />
