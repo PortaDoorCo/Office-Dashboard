@@ -143,14 +143,14 @@ class OrderEntry extends Component {
     } = this.props;
 
     if (isEdit) {
-      socket.on('order_updated', async (res) => {
-        // console.log({ res });
-        // console.log({ selectedOrder });
-        if (res.id === selectedOrder.id) {
-          await setSelectedOrder(res);
-          await initialize('Order', res);
-        }
-      });
+      // socket.on('order_updated', async (res) => {
+      //   // console.log({ res });
+      //   // console.log({ selectedOrder });
+      //   if (res.id === selectedOrder.id) {
+      //     await setSelectedOrder(res);
+      //     await initialize('Order', res);
+      //   }
+      // });
       return null;
     } else {
       setOrderType(route?.type);
