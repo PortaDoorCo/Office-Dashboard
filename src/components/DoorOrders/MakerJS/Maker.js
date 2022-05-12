@@ -130,6 +130,10 @@ const Maker = (props) => {
       )
     : 0;
 
+  let fullMidStile = formState?.part_list[i]?.dimensions[index]?.fullMidStile
+    ? formState?.part_list[i]?.dimensions[index]?.fullMidStile
+    : false;
+
   useEffect(() => {
     setID(ref.current.id);
     let bp;
@@ -178,7 +182,8 @@ const Maker = (props) => {
       horizontalMidRailSize7,
       horizontalMidRailSize8,
       horizontalMidRailSize9,
-      horizontalMidRailSize10
+      horizontalMidRailSize10,
+      fullMidStile
     );
     const path = makerjs.exporter.toSVGPathData(door, { origin: [0, 0] });
     setPathItem(bp.append('path', { d: path }));
@@ -214,6 +219,7 @@ const Maker = (props) => {
     horizontalMidRailSize8,
     horizontalMidRailSize9,
     horizontalMidRailSize10,
+    fullMidStile,
   ]);
 
   const onMouseOver = () => {

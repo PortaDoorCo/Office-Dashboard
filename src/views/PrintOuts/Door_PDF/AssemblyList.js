@@ -31,7 +31,7 @@ export default (data, breakdowns) => {
         { text: 'Item', style: 'fonts' },
         { text: 'Qty', style: 'fonts' },
         { text: 'WxH', style: 'fonts' },
-        { text: 'Stile', style: 'fonts' },
+        { text: 'Stiles', style: 'fonts' },
         { text: 'Rails', style: 'fonts' },
         { text: 'Panels WxH', style: 'fonts' },
       ],
@@ -158,6 +158,8 @@ export default (data, breakdowns) => {
                           i.construction.value === 'MT' ||
                           i.construction.value === 'Miter'
                             ? i.construction.value
+                            : i.construction.value === 'Wrapped'
+                            ? 'Wrapped Panel'
                             : ''
                         } ${
                           i.profile?.NAME.includes('Deluxe') ? 'Deluxe' : ''
@@ -221,6 +223,8 @@ export default (data, breakdowns) => {
                         }   Edge:  ${
                           i.edge && i?.construction?.value !== 'Miter'
                             ? i.edge.NAME
+                            : i?.construction?.value === 'Wrapped'
+                            ? 'M Lip'
                             : 'None'
                         }`,
                         style: 'fonts',

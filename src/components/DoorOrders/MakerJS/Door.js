@@ -71,8 +71,10 @@ var unevenMidRails = (function () {
     rightStile,
     topRail,
     bottomRail,
+    panelsW,
     panelsH,
     horizontalMidRailSize,
+    verticalMidRailSize,
     unevenInput1,
     unevenInput2,
     unevenInput3,
@@ -88,7 +90,8 @@ var unevenMidRails = (function () {
     horizontalMidRailSize7,
     horizontalMidRailSize8,
     horizontalMidRailSize9,
-    horizontalMidRailSize10
+    horizontalMidRailSize10,
+    fullMidStile
   ) {
     var line = makerjs.paths.Line;
     var ls = Math.min(leftStile, 0);
@@ -104,350 +107,1443 @@ var unevenMidRails = (function () {
     let y5;
 
     if (unequalMidRails) {
-      switch (panelsH) {
-        case 2:
-          y1 = height + topRail - unevenInput1;
+      if (fullMidStile) {
+        switch (panelsH) {
+          case 2:
+            y1 = height + topRail - unevenInput1;
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
-              return [a, b];
-            });
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [(width / panelsW) * i - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    (width / panelsW) * i - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [(width / panelsW) * i + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    (width / panelsW) * i + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                return [a, b, c, d];
+              });
 
-          m = _.flatten(mr);
-          break;
-        case 3:
-          y1 = height + topRail - unevenInput1;
-          y2 = height - unevenInput2;
+            m = _.flatten(mr);
+            break;
+          case 3:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
 
-              let c = new line([ls, y2], [width - rs, y2]);
-              let d = new line(
-                [ls, y2 - horizontalMidRailSize1],
-                [width - rs, y2 - horizontalMidRailSize1]
-              );
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
+                return [a, b, c, d, e, f, g, h];
+              });
 
-              return [a, b, c, d];
-            });
+            m = _.flatten(mr);
+            break;
+          case 4:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
 
-          m = _.flatten(mr);
-          break;
-        case 4:
-          y1 = height + topRail - unevenInput1;
-          y2 = height - unevenInput2;
-          y3 = height - unevenInput3;
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
 
-              let c = new line([ls, y2], [width - rs, y2]);
-              let d = new line(
-                [ls, y2 - horizontalMidRailSize1],
-                [width - rs, y2 - horizontalMidRailSize1]
-              );
+                let j = new line(
+                  [ls, y3],
+                  [width / panelsW - verticalMidRailSize / 2, y3]
+                );
+                let k = new line(
+                  [ls, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
+                let l = new line(
+                  [width, y3],
+                  [width / panelsW + verticalMidRailSize / 2, y3]
+                );
+                let m = new line(
+                  [width, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
 
-              let e = new line([ls, y3], [width - rs, y3]);
-              let f = new line(
-                [ls, y3 - horizontalMidRailSize2],
-                [width - rs, y3 - horizontalMidRailSize2]
-              );
+                return [a, b, c, d, e, f, g, h, j, k, l, m];
+              });
 
-              return [a, b, c, d, e, f];
-            });
+            m = _.flatten(mr);
+            break;
+          case 5:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+            y4 = height - unevenInput4;
 
-          m = _.flatten(mr);
-          break;
-        case 5:
-          y1 = height + topRail - unevenInput1;
-          y2 = height - unevenInput2;
-          y3 = height - unevenInput3;
-          y4 = height - unevenInput4;
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
 
-              let c = new line([ls, y2], [width - rs, y2]);
-              let d = new line(
-                [ls, y2 - horizontalMidRailSize1],
-                [width - rs, y2 - horizontalMidRailSize1]
-              );
+                let j = new line(
+                  [ls, y3],
+                  [width / panelsW - verticalMidRailSize / 2, y3]
+                );
+                let k = new line(
+                  [ls, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
+                let l = new line(
+                  [width, y3],
+                  [width / panelsW + verticalMidRailSize / 2, y3]
+                );
+                let m = new line(
+                  [width, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
 
-              let e = new line([ls, y3], [width - rs, y3]);
-              let f = new line(
-                [ls, y3 - horizontalMidRailSize2],
-                [width - rs, y3 - horizontalMidRailSize2]
-              );
+                let n = new line(
+                  [ls, y4],
+                  [width / panelsW - verticalMidRailSize / 2, y4]
+                );
+                let o = new line(
+                  [ls, y4 - horizontalMidRailSize3],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize3,
+                  ]
+                );
+                let p = new line(
+                  [width, y4],
+                  [width / panelsW + verticalMidRailSize / 2, y4]
+                );
+                let q = new line(
+                  [width, y4 - horizontalMidRailSize3],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize3,
+                  ]
+                );
 
-              let g = new line([ls, y4], [width - rs, y4]);
-              let h = new line(
-                [ls, y4 - horizontalMidRailSize3],
-                [width - rs, y4 - horizontalMidRailSize3]
-              );
+                return [a, b, c, d, e, f, g, h, j, k, l, m, n, o, p, q];
+              });
 
-              return [a, b, c, d, e, f, g, h];
-            });
+            m = _.flatten(mr);
+            break;
+          case 6:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+            y4 = height - unevenInput4;
+            y5 = height - unevenInput5;
 
-          m = _.flatten(mr);
-          break;
-        case 6:
-          y1 = height + topRail - unevenInput1;
-          y2 = height - unevenInput2;
-          y3 = height - unevenInput3;
-          y4 = height - unevenInput4;
-          y5 = height - unevenInput5;
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
 
-              let c = new line([ls, y2], [width - rs, y2]);
-              let d = new line(
-                [ls, y2 - horizontalMidRailSize1],
-                [width - rs, y2 - horizontalMidRailSize1]
-              );
+                let j = new line(
+                  [ls, y3],
+                  [width / panelsW - verticalMidRailSize / 2, y3]
+                );
+                let k = new line(
+                  [ls, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
+                let l = new line(
+                  [width, y3],
+                  [width / panelsW + verticalMidRailSize / 2, y3]
+                );
+                let m = new line(
+                  [width, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
 
-              let e = new line([ls, y3], [width - rs, y3]);
-              let f = new line(
-                [ls, y3 - horizontalMidRailSize2],
-                [width - rs, y3 - horizontalMidRailSize2]
-              );
+                let n = new line(
+                  [ls, y4],
+                  [width / panelsW - verticalMidRailSize / 2, y4]
+                );
+                let o = new line(
+                  [ls, y4 - horizontalMidRailSize3],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize3,
+                  ]
+                );
+                let p = new line(
+                  [width, y4],
+                  [width / panelsW + verticalMidRailSize / 2, y4]
+                );
+                let q = new line(
+                  [width, y4 - horizontalMidRailSize3],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize3,
+                  ]
+                );
 
-              let g = new line([ls, y4], [width - rs, y4]);
-              let h = new line(
-                [ls, y4 - horizontalMidRailSize3],
-                [width - rs, y4 - horizontalMidRailSize3]
-              );
+                let r = new line(
+                  [ls, y5],
+                  [width / panelsW - verticalMidRailSize / 2, y5]
+                );
+                let s = new line(
+                  [ls, y5 - horizontalMidRailSize4],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y5 - horizontalMidRailSize4,
+                  ]
+                );
+                let t = new line(
+                  [width, y5],
+                  [width / panelsW + verticalMidRailSize / 2, y5]
+                );
+                let u = new line(
+                  [width, y5 - horizontalMidRailSize4],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y5 - horizontalMidRailSize4,
+                  ]
+                );
 
-              let j = new line([ls, y5], [width - rs, y5]);
-              let k = new line(
-                [ls, y5 - horizontalMidRailSize4],
-                [width - rs, y5 - horizontalMidRailSize4]
-              );
+                return [
+                  a,
+                  b,
+                  c,
+                  d,
+                  e,
+                  f,
+                  g,
+                  h,
+                  j,
+                  k,
+                  l,
+                  m,
+                  n,
+                  o,
+                  p,
+                  q,
+                  r,
+                  s,
+                  t,
+                  u,
+                ];
+              });
 
-              return [a, b, c, d, e, f, g, h, j, k];
-            });
+            m = _.flatten(mr);
+            break;
+          default:
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, height - unevenInput1],
+                  [width - rs, height - unevenInput1]
+                );
+                let b = new line(
+                  [ls, height - unevenInput1 - horizontalMidRailSize],
+                  [width - rs, height - unevenInput1 - horizontalMidRailSize]
+                );
+                return [a, b];
+              });
 
-          m = _.flatten(mr);
-          break;
-        default:
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line(
-                [ls, height - unevenInput1],
-                [width - rs, height - unevenInput1]
-              );
-              let b = new line(
-                [ls, height - unevenInput1 - horizontalMidRailSize],
-                [width - rs, height - unevenInput1 - horizontalMidRailSize]
-              );
-              return [a, b];
-            });
+            m = _.flatten(mr);
+        }
+      } else {
+        switch (panelsH) {
+          case 2:
+            y1 = height + topRail - unevenInput1;
 
-          m = _.flatten(mr);
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [(width / panelsW) * i - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    (width / panelsW) * i - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [(width / panelsW) * i + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    (width / panelsW) * i + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                return [a, b, c, d];
+              });
+
+            m = _.flatten(mr);
+            break;
+          case 3:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line([ls, y1], [width, y1]);
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [width, y1 - horizontalMidRailSize]
+                );
+
+                let c = new line([ls, y2], [width, y2]);
+                let d = new line(
+                  [ls, y2 - horizontalMidRailSize1],
+                  [width, y2 - horizontalMidRailSize1]
+                );
+                let e = new line([ls, y2], [width, y2]);
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize1],
+                  [width, y2 - horizontalMidRailSize1]
+                );
+                return [a, b, c, d, e, f];
+              });
+
+            m = _.flatten(mr);
+            break;
+          case 4:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line([ls, y1], [width, y1]);
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [width, y1 - horizontalMidRailSize]
+                );
+
+                let c = new line([ls, y2], [width, y2]);
+                let d = new line(
+                  [ls, y2 - horizontalMidRailSize1],
+                  [width, y2 - horizontalMidRailSize1]
+                );
+                let e = new line([ls, y3], [width, y3]);
+                let f = new line(
+                  [ls, y3 - horizontalMidRailSize2],
+                  [width, y3 - horizontalMidRailSize2]
+                );
+                return [a, b, c, d, e, f];
+              });
+
+            m = _.flatten(mr);
+            break;
+          case 5:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+            y4 = height - unevenInput4;
+
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
+
+                let j = new line(
+                  [ls, y3],
+                  [width / panelsW - verticalMidRailSize / 2, y3]
+                );
+                let k = new line(
+                  [ls, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
+                let l = new line(
+                  [width, y3],
+                  [width / panelsW + verticalMidRailSize / 2, y3]
+                );
+                let m = new line(
+                  [width, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
+
+                let n = new line(
+                  [ls, y4],
+                  [width / panelsW - verticalMidRailSize / 2, y4]
+                );
+                let o = new line(
+                  [ls, y4 - horizontalMidRailSize3],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize3,
+                  ]
+                );
+                let p = new line(
+                  [width, y4],
+                  [width / panelsW + verticalMidRailSize / 2, y4]
+                );
+                let q = new line(
+                  [width, y4 - horizontalMidRailSize3],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize3,
+                  ]
+                );
+
+                return [a, b, c, d, e, f, g, h, j, k, l, m, n, o, p, q];
+              });
+
+            m = _.flatten(mr);
+            break;
+          case 6:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+            y4 = height - unevenInput4;
+            y5 = height - unevenInput5;
+
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize1],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize1,
+                  ]
+                );
+
+                let j = new line(
+                  [ls, y3],
+                  [width / panelsW - verticalMidRailSize / 2, y3]
+                );
+                let k = new line(
+                  [ls, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
+                let l = new line(
+                  [width, y3],
+                  [width / panelsW + verticalMidRailSize / 2, y3]
+                );
+                let m = new line(
+                  [width, y3 - horizontalMidRailSize2],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize2,
+                  ]
+                );
+
+                let n = new line(
+                  [ls, y4],
+                  [width / panelsW - verticalMidRailSize / 2, y4]
+                );
+                let o = new line(
+                  [ls, y4 - horizontalMidRailSize3],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize3,
+                  ]
+                );
+                let p = new line(
+                  [width, y4],
+                  [width / panelsW + verticalMidRailSize / 2, y4]
+                );
+                let q = new line(
+                  [width, y4 - horizontalMidRailSize3],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize3,
+                  ]
+                );
+
+                let r = new line(
+                  [ls, y5],
+                  [width / panelsW - verticalMidRailSize / 2, y5]
+                );
+                let s = new line(
+                  [ls, y5 - horizontalMidRailSize4],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y5 - horizontalMidRailSize4,
+                  ]
+                );
+                let t = new line(
+                  [width, y5],
+                  [width / panelsW + verticalMidRailSize / 2, y5]
+                );
+                let u = new line(
+                  [width, y5 - horizontalMidRailSize4],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y5 - horizontalMidRailSize4,
+                  ]
+                );
+
+                return [
+                  a,
+                  b,
+                  c,
+                  d,
+                  e,
+                  f,
+                  g,
+                  h,
+                  j,
+                  k,
+                  l,
+                  m,
+                  n,
+                  o,
+                  p,
+                  q,
+                  r,
+                  s,
+                  t,
+                  u,
+                ];
+              });
+
+            m = _.flatten(mr);
+            break;
+          default:
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, height - unevenInput1],
+                  [width - rs, height - unevenInput1]
+                );
+                let b = new line(
+                  [ls, height - unevenInput1 - horizontalMidRailSize],
+                  [width - rs, height - unevenInput1 - horizontalMidRailSize]
+                );
+                return [a, b];
+              });
+
+            m = _.flatten(mr);
+        }
       }
     } else {
-      switch (panelsH) {
-        case 2:
-          y1 = height + topRail - unevenInput1;
+      if (fullMidStile) {
+        switch (panelsH) {
+          case 2:
+            y1 = height + topRail - unevenInput1;
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
-              return [a, b];
-            });
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [(width / panelsW) * i - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    (width / panelsW) * i - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [(width / panelsW) * i + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    (width / panelsW) * i + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                return [a, b, c, d];
+              });
 
-          m = _.flatten(mr);
-          break;
-        case 3:
-          y1 = height + topRail - unevenInput1;
-          y2 = height - unevenInput2;
+            m = _.flatten(mr);
+            break;
+          case 3:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
 
-              let c = new line([ls, y2], [width - rs, y2]);
-              let d = new line(
-                [ls, y2 - horizontalMidRailSize],
-                [width - rs, y2 - horizontalMidRailSize]
-              );
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize,
+                  ]
+                );
+                return [a, b, c, d, e, f, g, h];
+              });
 
-              return [a, b, c, d];
-            });
+            m = _.flatten(mr);
+            break;
+          case 4:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
 
-          m = _.flatten(mr);
-          break;
-        case 4:
-          y1 = height + topRail - unevenInput1;
-          y2 = height - unevenInput2;
-          y3 = height - unevenInput3;
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize,
+                  ]
+                );
 
-              let c = new line([ls, y2], [width - rs, y2]);
-              let d = new line(
-                [ls, y2 - horizontalMidRailSize],
-                [width - rs, y2 - horizontalMidRailSize]
-              );
+                let j = new line(
+                  [ls, y3],
+                  [width / panelsW - verticalMidRailSize / 2, y3]
+                );
+                let k = new line(
+                  [ls, y3 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize,
+                  ]
+                );
+                let l = new line(
+                  [width, y3],
+                  [width / panelsW + verticalMidRailSize / 2, y3]
+                );
+                let m = new line(
+                  [width, y3 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize,
+                  ]
+                );
 
-              let e = new line([ls, y3], [width - rs, y3]);
-              let f = new line(
-                [ls, y3 - horizontalMidRailSize],
-                [width - rs, y3 - horizontalMidRailSize]
-              );
+                return [a, b, c, d, e, f, g, h, j, k, l, m];
+              });
 
-              return [a, b, c, d, e, f];
-            });
+            m = _.flatten(mr);
+            break;
+          case 5:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+            y4 = height - unevenInput4;
 
-          m = _.flatten(mr);
-          break;
-        case 5:
-          y1 = height + topRail - unevenInput1;
-          y2 = height - unevenInput2;
-          y3 = height - unevenInput3;
-          y4 = height - unevenInput4;
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize,
+                  ]
+                );
 
-              let c = new line([ls, y2], [width - rs, y2]);
-              let d = new line(
-                [ls, y2 - horizontalMidRailSize],
-                [width - rs, y2 - horizontalMidRailSize]
-              );
+                let j = new line(
+                  [ls, y3],
+                  [width / panelsW - verticalMidRailSize / 2, y3]
+                );
+                let k = new line(
+                  [ls, y3 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize,
+                  ]
+                );
+                let l = new line(
+                  [width, y3],
+                  [width / panelsW + verticalMidRailSize / 2, y3]
+                );
+                let m = new line(
+                  [width, y3 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize,
+                  ]
+                );
 
-              let e = new line([ls, y3], [width - rs, y3]);
-              let f = new line(
-                [ls, y3 - horizontalMidRailSize],
-                [width - rs, y3 - horizontalMidRailSize]
-              );
+                let n = new line(
+                  [ls, y4],
+                  [width / panelsW - verticalMidRailSize / 2, y4]
+                );
+                let o = new line(
+                  [ls, y4 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize,
+                  ]
+                );
+                let p = new line(
+                  [width, y4],
+                  [width / panelsW + verticalMidRailSize / 2, y4]
+                );
+                let q = new line(
+                  [width, y4 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize,
+                  ]
+                );
 
-              let g = new line([ls, y4], [width - rs, y4]);
-              let h = new line(
-                [ls, y4 - horizontalMidRailSize],
-                [width - rs, y4 - horizontalMidRailSize]
-              );
+                return [a, b, c, d, e, f, g, h, j, k, l, m, n, o, p, q];
+              });
 
-              return [a, b, c, d, e, f, g, h];
-            });
+            m = _.flatten(mr);
+            break;
+          case 6:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+            y4 = height - unevenInput4;
+            y5 = height - unevenInput5;
 
-          m = _.flatten(mr);
-          break;
-        case 6:
-          y1 = height + topRail - unevenInput1;
-          y2 = height - unevenInput2;
-          y3 = height - unevenInput3;
-          y4 = height - unevenInput4;
-          y5 = height - unevenInput5;
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, y1],
+                  [width / panelsW - verticalMidRailSize / 2, y1]
+                );
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
+                let c = new line(
+                  [width, y1],
+                  [width / panelsW + verticalMidRailSize / 2, y1]
+                );
+                let d = new line(
+                  [width, y1 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y1 - horizontalMidRailSize,
+                  ]
+                );
 
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line([ls, y1], [width - rs, y1]);
-              let b = new line(
-                [ls, y1 - horizontalMidRailSize],
-                [width - rs, y1 - horizontalMidRailSize]
-              );
+                let e = new line(
+                  [ls, y2],
+                  [width / panelsW - verticalMidRailSize / 2, y2]
+                );
+                let f = new line(
+                  [ls, y2 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize,
+                  ]
+                );
+                let g = new line(
+                  [width, y2],
+                  [width / panelsW + verticalMidRailSize / 2, y2]
+                );
+                let h = new line(
+                  [width, y2 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y2 - horizontalMidRailSize,
+                  ]
+                );
 
-              let c = new line([ls, y2], [width - rs, y2]);
-              let d = new line(
-                [ls, y2 - horizontalMidRailSize],
-                [width - rs, y2 - horizontalMidRailSize]
-              );
+                let j = new line(
+                  [ls, y3],
+                  [width / panelsW - verticalMidRailSize / 2, y3]
+                );
+                let k = new line(
+                  [ls, y3 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize,
+                  ]
+                );
+                let l = new line(
+                  [width, y3],
+                  [width / panelsW + verticalMidRailSize / 2, y3]
+                );
+                let m = new line(
+                  [width, y3 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y3 - horizontalMidRailSize,
+                  ]
+                );
 
-              let e = new line([ls, y3], [width - rs, y3]);
-              let f = new line(
-                [ls, y3 - horizontalMidRailSize],
-                [width - rs, y3 - horizontalMidRailSize]
-              );
+                let n = new line(
+                  [ls, y4],
+                  [width / panelsW - verticalMidRailSize / 2, y4]
+                );
+                let o = new line(
+                  [ls, y4 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize,
+                  ]
+                );
+                let p = new line(
+                  [width, y4],
+                  [width / panelsW + verticalMidRailSize / 2, y4]
+                );
+                let q = new line(
+                  [width, y4 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y4 - horizontalMidRailSize,
+                  ]
+                );
 
-              let g = new line([ls, y4], [width - rs, y4]);
-              let h = new line(
-                [ls, y4 - horizontalMidRailSize],
-                [width - rs, y4 - horizontalMidRailSize]
-              );
+                let r = new line(
+                  [ls, y5],
+                  [width / panelsW - verticalMidRailSize / 2, y5]
+                );
+                let s = new line(
+                  [ls, y5 - horizontalMidRailSize],
+                  [
+                    width / panelsW - verticalMidRailSize / 2,
+                    y5 - horizontalMidRailSize,
+                  ]
+                );
+                let t = new line(
+                  [width, y5],
+                  [width / panelsW + verticalMidRailSize / 2, y5]
+                );
+                let u = new line(
+                  [width, y5 - horizontalMidRailSize],
+                  [
+                    width / panelsW + verticalMidRailSize / 2,
+                    y5 - horizontalMidRailSize,
+                  ]
+                );
 
-              let j = new line([ls, y5], [width - rs, y5]);
-              let k = new line(
-                [ls, y5 - horizontalMidRailSize],
-                [width - rs, y5 - horizontalMidRailSize]
-              );
+                return [
+                  a,
+                  b,
+                  c,
+                  d,
+                  e,
+                  f,
+                  g,
+                  h,
+                  j,
+                  k,
+                  l,
+                  m,
+                  n,
+                  o,
+                  p,
+                  q,
+                  r,
+                  s,
+                  t,
+                  u,
+                ];
+              });
 
-              return [a, b, c, d, e, f, g, h, j, k];
-            });
+            m = _.flatten(mr);
+            break;
+          default:
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, height - unevenInput1],
+                  [width - rs, height - unevenInput1]
+                );
+                let b = new line(
+                  [ls, height - unevenInput1 - horizontalMidRailSize],
+                  [width - rs, height - unevenInput1 - horizontalMidRailSize]
+                );
+                return [a, b];
+              });
 
-          m = _.flatten(mr);
-          break;
-        default:
-          mr = Array.from(Array(panelsH).keys())
-            .slice(1)
-            .map((i) => {
-              let a = new line(
-                [ls, height - unevenInput1],
-                [width - rs, height - unevenInput1]
-              );
-              let b = new line(
-                [ls, height - unevenInput1 - horizontalMidRailSize],
-                [width - rs, height - unevenInput1 - horizontalMidRailSize]
-              );
-              return [a, b];
-            });
+            m = _.flatten(mr);
+        }
+      } else {
+        switch (panelsH) {
+          case 2:
+            y1 = height + topRail - unevenInput1;
 
-          m = _.flatten(mr);
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line([ls, y1], [width - rs, y1]);
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [width - rs, y1 - horizontalMidRailSize]
+                );
+                return [a, b];
+              });
+
+            m = _.flatten(mr);
+            break;
+          case 3:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line([ls, y1], [width - rs, y1]);
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [width - rs, y1 - horizontalMidRailSize]
+                );
+
+                let c = new line([ls, y2], [width - rs, y2]);
+                let d = new line(
+                  [ls, y2 - horizontalMidRailSize],
+                  [width - rs, y2 - horizontalMidRailSize]
+                );
+
+                return [a, b, c, d];
+              });
+
+            m = _.flatten(mr);
+            break;
+          case 4:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line([ls, y1], [width - rs, y1]);
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [width - rs, y1 - horizontalMidRailSize]
+                );
+
+                let c = new line([ls, y2], [width - rs, y2]);
+                let d = new line(
+                  [ls, y2 - horizontalMidRailSize],
+                  [width - rs, y2 - horizontalMidRailSize]
+                );
+
+                let e = new line([ls, y3], [width - rs, y3]);
+                let f = new line(
+                  [ls, y3 - horizontalMidRailSize],
+                  [width - rs, y3 - horizontalMidRailSize]
+                );
+
+                return [a, b, c, d, e, f];
+              });
+
+            m = _.flatten(mr);
+            break;
+          case 5:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+            y4 = height - unevenInput4;
+
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line([ls, y1], [width - rs, y1]);
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [width - rs, y1 - horizontalMidRailSize]
+                );
+
+                let c = new line([ls, y2], [width - rs, y2]);
+                let d = new line(
+                  [ls, y2 - horizontalMidRailSize],
+                  [width - rs, y2 - horizontalMidRailSize]
+                );
+
+                let e = new line([ls, y3], [width - rs, y3]);
+                let f = new line(
+                  [ls, y3 - horizontalMidRailSize],
+                  [width - rs, y3 - horizontalMidRailSize]
+                );
+
+                let g = new line([ls, y4], [width - rs, y4]);
+                let h = new line(
+                  [ls, y4 - horizontalMidRailSize],
+                  [width - rs, y4 - horizontalMidRailSize]
+                );
+
+                return [a, b, c, d, e, f, g, h];
+              });
+
+            m = _.flatten(mr);
+            break;
+          case 6:
+            y1 = height + topRail - unevenInput1;
+            y2 = height - unevenInput2;
+            y3 = height - unevenInput3;
+            y4 = height - unevenInput4;
+            y5 = height - unevenInput5;
+
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line([ls, y1], [width - rs, y1]);
+                let b = new line(
+                  [ls, y1 - horizontalMidRailSize],
+                  [width - rs, y1 - horizontalMidRailSize]
+                );
+
+                let c = new line([ls, y2], [width - rs, y2]);
+                let d = new line(
+                  [ls, y2 - horizontalMidRailSize],
+                  [width - rs, y2 - horizontalMidRailSize]
+                );
+
+                let e = new line([ls, y3], [width - rs, y3]);
+                let f = new line(
+                  [ls, y3 - horizontalMidRailSize],
+                  [width - rs, y3 - horizontalMidRailSize]
+                );
+
+                let g = new line([ls, y4], [width - rs, y4]);
+                let h = new line(
+                  [ls, y4 - horizontalMidRailSize],
+                  [width - rs, y4 - horizontalMidRailSize]
+                );
+
+                let j = new line([ls, y5], [width - rs, y5]);
+                let k = new line(
+                  [ls, y5 - horizontalMidRailSize],
+                  [width - rs, y5 - horizontalMidRailSize]
+                );
+
+                return [a, b, c, d, e, f, g, h, j, k];
+              });
+
+            m = _.flatten(mr);
+            break;
+          default:
+            mr = Array.from(Array(panelsH).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [ls, height - unevenInput1],
+                  [width - rs, height - unevenInput1]
+                );
+                let b = new line(
+                  [ls, height - unevenInput1 - horizontalMidRailSize],
+                  [width - rs, height - unevenInput1 - horizontalMidRailSize]
+                );
+                return [a, b];
+              });
+
+            m = _.flatten(mr);
+        }
       }
     }
 
@@ -467,7 +1563,25 @@ var vRails = (function () {
     panelsH,
     panelsW,
     horizontalMidRailSize,
-    verticalMidRailSize
+    verticalMidRailSize,
+    unevenCheck,
+    unevenInput1,
+    unevenInput2,
+    unevenInput3,
+    unevenInput4,
+    unevenInput5,
+    fullMidStile,
+    unequalMidRails,
+    horizontalMidRailSize1,
+    horizontalMidRailSize2,
+    horizontalMidRailSize3,
+    horizontalMidRailSize4,
+    horizontalMidRailSize5,
+    horizontalMidRailSize6,
+    horizontalMidRailSize7,
+    horizontalMidRailSize8,
+    horizontalMidRailSize9,
+    horizontalMidRailSize10
   ) {
     var line = makerjs.paths.Line;
     var br = Math.min(bottomRail, 0);
@@ -475,8 +1589,10 @@ var vRails = (function () {
     let vr;
     let v;
 
-    switch (panelsH) {
-      case 1:
+    console.log({ unevenCheck });
+
+    if (unequalMidRails) {
+      if (fullMidStile) {
         vr = Array.from(Array(panelsW).keys())
           .slice(1)
           .map((i) => {
@@ -491,140 +1607,246 @@ var vRails = (function () {
             return [a, b];
           });
         v = _.flatten(vr);
-        break;
-      case 2:
-        vr = Array.from(Array(panelsW).keys())
-          .slice(1)
-          .map((i) => {
-            let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
-            let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
+      } else {
+        switch (panelsH) {
+          case 1:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [(width / panelsW) * i, br],
+                  [(width / panelsW) * i, height - br]
+                );
+                let b = new line(
+                  [(width / panelsW) * i, br],
+                  [(width / panelsW) * i, height - br]
+                );
+                return [a, b];
+              });
+            v = _.flatten(vr);
+            break;
+          case 2:
+            console.log({ unevenInput1 });
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
+                let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
 
-            let y1 =
-              height - height / parseInt(panelsH) - horizontalMidRailSize / 2;
-            let y2 =
-              height - height / parseInt(panelsH) + horizontalMidRailSize / 2;
+                let y1 =
+                  height -
+                  height / parseInt(panelsH) -
+                  horizontalMidRailSize / 2;
 
-            let a = new line([x1, br], [x1, y1]);
-            let b = new line([x2, br], [x2, y1]);
-            let c = new line([x1, y2], [x1, height]);
-            let d = new line([x2, y2], [x2, height]);
-            return [a, b, c, d];
-          });
+                let y2 =
+                  height -
+                  height / parseInt(panelsH) +
+                  horizontalMidRailSize / 2;
 
-        v = _.flatten(vr);
-        break;
-      case 3:
-        vr = Array.from(Array(panelsW).keys())
-          .slice(1)
-          .map((i) => {
-            let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
-            let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
+                if (unevenCheck) {
+                  y1 = height + topRail - unevenInput1 - horizontalMidRailSize;
+                  y2 = y1 + horizontalMidRailSize;
+                }
 
-            let y1 =
-              height - height / parseInt(panelsH) - horizontalMidRailSize / 2;
-            let y2 =
-              height - height / parseInt(panelsH) + horizontalMidRailSize / 2;
+                let a = new line([x1, br], [x1, y1]);
+                let b = new line([x2, br], [x2, y1]);
+                let c = new line([x1, y2], [x1, height]);
+                let d = new line([x2, y2], [x2, height]);
+                return [a, b, c, d];
+              });
 
-            let y3 = height / parseInt(panelsH) - horizontalMidRailSize / 2;
-            let y4 = height / parseInt(panelsH) + horizontalMidRailSize / 2;
+            v = _.flatten(vr);
+            break;
+          case 3:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
+                let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
 
-            let a = new line([x1, y2], [x1, height]);
-            let b = new line([x2, y2], [x2, height]);
-            let c = new line([x1, y4], [x1, y1]);
-            let d = new line([x2, y4], [x2, y1]);
-            let e = new line([x1, y3], [x1, br]);
-            let f = new line([x2, y3], [x2, br]);
-            return [a, b, c, d, e, f];
-          });
+                let y1 =
+                  height -
+                  height / parseInt(panelsH) -
+                  horizontalMidRailSize / 2;
 
-        v = _.flatten(vr);
-        break;
-      case 4:
-        vr = Array.from(Array(panelsW).keys())
-          .slice(1)
-          .map((i) => {
-            let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
-            let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
+                let y2 =
+                  height -
+                  height / parseInt(panelsH) +
+                  horizontalMidRailSize / 2;
 
-            let y1 =
-              height - height / parseInt(panelsH) - horizontalMidRailSize / 2;
-            let y2 =
-              height - height / parseInt(panelsH) + horizontalMidRailSize / 2;
+                let y3 =
+                  height / parseInt(panelsH) + horizontalMidRailSize1 / 2;
 
-            let y3 = height / parseInt(panelsH) - horizontalMidRailSize / 2;
-            let y4 =
-              (height / parseInt(panelsH)) * 2 + horizontalMidRailSize / 2;
+                let y4 =
+                  height / parseInt(panelsH) - horizontalMidRailSize1 / 2;
 
-            let y5 =
-              (height / parseInt(panelsH)) * 2 - horizontalMidRailSize / 2;
-            let y6 = height / parseInt(panelsH) + horizontalMidRailSize / 2;
+                if (unevenCheck) {
+                  y1 = height + topRail - unevenInput1 - horizontalMidRailSize;
+                  y2 = y1 + horizontalMidRailSize;
 
-            let a = new line([x1, y2], [x1, height]);
-            let b = new line([x2, y2], [x2, height]);
+                  y3 = height - unevenInput2;
+                  y4 = y3 - horizontalMidRailSize1;
+                }
 
-            let c = new line([x1, y3], [x1, br]);
-            let d = new line([x2, y3], [x2, br]);
+                let a = new line([x1, y2], [x1, height]);
+                let b = new line([x2, y2], [x2, height]);
+                let c = new line([x1, y3], [x1, y1]);
+                let d = new line([x2, y3], [x2, y1]);
+                let e = new line([x1, y4], [x1, br]);
+                let f = new line([x2, y4], [x2, br]);
+                return [a, b, c, d, e, f];
+              });
 
-            let e = new line([x1, y4], [x1, y1]);
-            let f = new line([x2, y4], [x2, y1]);
+            v = _.flatten(vr);
+            break;
+          case 4:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
+                let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
 
-            let g = new line([x1, y5], [x1, y6]);
-            let h = new line([x2, y5], [x2, y6]);
+                let y1 =
+                  height -
+                  height / parseInt(panelsH) -
+                  horizontalMidRailSize / 2;
 
-            return [a, b, c, d, e, f, g, h];
-          });
+                let y2 =
+                  height -
+                  height / parseInt(panelsH) +
+                  horizontalMidRailSize / 2;
 
-        v = _.flatten(vr);
-        break;
-      case 5:
-        vr = Array.from(Array(panelsW).keys())
-          .slice(1)
-          .map((i) => {
-            let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
-            let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
+                let y3 =
+                  height / parseInt(panelsH) - horizontalMidRailSize1 / 2;
 
-            let y1 =
-              height - height / parseInt(panelsH) - horizontalMidRailSize / 2;
-            let y2 =
-              height - height / parseInt(panelsH) + horizontalMidRailSize / 2;
+                let y4 =
+                  (height / parseInt(panelsH)) * 2 + horizontalMidRailSize1 / 2;
 
-            let y3 = height / parseInt(panelsH) - horizontalMidRailSize / 2;
-            let y4 =
-              (height / parseInt(panelsH)) * 2 + horizontalMidRailSize / 2;
+                let y5 =
+                  (height / parseInt(panelsH)) * 2 - horizontalMidRailSize2 / 2;
+                let y6 =
+                  height / parseInt(panelsH) + horizontalMidRailSize2 / 2;
 
-            let y5 =
-              (height / parseInt(panelsH)) * 2 - horizontalMidRailSize / 2;
-            let y6 = height / parseInt(panelsH) + horizontalMidRailSize / 2;
+                if (unevenCheck) {
+                  y1 = height + topRail - unevenInput1 - horizontalMidRailSize;
+                  y2 = y1 + horizontalMidRailSize;
 
-            let y7 =
-              (height / parseInt(panelsH)) * 3 - horizontalMidRailSize / 2;
-            let y8 =
-              (height / parseInt(panelsH)) * 3 + horizontalMidRailSize / 2;
+                  y3 = height - unevenInput3 - horizontalMidRailSize2;
 
-            let a = new line([x1, y2], [x1, height]);
-            let b = new line([x2, y2], [x2, height]);
+                  y4 = height - unevenInput2;
 
-            let c = new line([x1, y3], [x1, br]);
-            let d = new line([x2, y3], [x2, br]);
+                  y5 = y4 - horizontalMidRailSize1;
+                  y6 =
+                    height +
+                    topRail -
+                    unevenInput3 -
+                    horizontalMidRailSize1 / 2;
+                }
 
-            let e = new line([x1, y4], [x1, y7]);
-            let f = new line([x2, y4], [x2, y7]);
+                let a = new line([x1, y2], [x1, height]);
+                let b = new line([x2, y2], [x2, height]);
 
-            let g = new line([x1, y5], [x1, y6]);
-            let h = new line([x2, y5], [x2, y6]);
+                let c = new line([x1, y3], [x1, br]);
+                let d = new line([x2, y3], [x2, br]);
 
-            let k = new line([x1, y8], [x1, y1]);
-            let l = new line([x2, y8], [x2, y1]);
+                let e = new line([x1, y4], [x1, y1]);
+                let f = new line([x2, y4], [x2, y1]);
 
-            return [a, b, c, d, e, f, g, h, k, l];
-          });
+                let g = new line([x1, y5], [x1, y6]);
+                let h = new line([x2, y5], [x2, y6]);
 
-        v = _.flatten(vr);
-        break;
-      case 6:
-        v = [];
-        break;
-      default:
+                return [a, b, c, d, e, f, g, h];
+              });
+
+            v = _.flatten(vr);
+            break;
+          case 5:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
+                let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
+
+                let y1 =
+                  height -
+                  height / parseInt(panelsH) -
+                  horizontalMidRailSize / 2;
+                let y2 =
+                  height -
+                  height / parseInt(panelsH) +
+                  horizontalMidRailSize / 2;
+
+                let y3 = height / parseInt(panelsH) - horizontalMidRailSize / 2;
+                let y4 =
+                  (height / parseInt(panelsH)) * 2 + horizontalMidRailSize / 2;
+
+                let y5 =
+                  (height / parseInt(panelsH)) * 2 - horizontalMidRailSize / 2;
+                let y6 = height / parseInt(panelsH) + horizontalMidRailSize / 2;
+
+                let y7 =
+                  (height / parseInt(panelsH)) * 3 - horizontalMidRailSize / 2;
+                let y8 =
+                  (height / parseInt(panelsH)) * 3 + horizontalMidRailSize / 2;
+
+                if (unevenCheck) {
+                  y1 = height + topRail - unevenInput1 - horizontalMidRailSize;
+                  y2 = y1 + horizontalMidRailSize;
+
+                  y3 = height - unevenInput4 - horizontalMidRailSize;
+
+                  y4 = height - unevenInput2 - horizontalMidRailSize;
+                  y7 = height + topRail - unevenInput3 - horizontalMidRailSize;
+
+                  y5 = height - unevenInput3 - horizontalMidRailSize;
+
+                  y6 = y3 + horizontalMidRailSize;
+
+                  y8 = height + topRail - unevenInput2 - horizontalMidRailSize;
+                }
+
+                let a = new line([x1, y2], [x1, height]);
+                let b = new line([x2, y2], [x2, height]);
+
+                let c = new line([x1, y3], [x1, br]);
+                let d = new line([x2, y3], [x2, br]);
+
+                let e = new line([x1, y4], [x1, y7]);
+                let f = new line([x2, y4], [x2, y7]);
+
+                let g = new line([x1, y5], [x1, y6]);
+                let h = new line([x2, y5], [x2, y6]);
+
+                let k = new line([x1, y8], [x1, y1]);
+                let l = new line([x2, y8], [x2, y1]);
+
+                return [a, b, c, d, e, f, g, h, k, l];
+              });
+
+            v = _.flatten(vr);
+            break;
+          case 6:
+            v = [];
+            break;
+          default:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [(width / panelsW) * i + verticalMidRailSize / 2, br],
+                  [(width / panelsW) * i + verticalMidRailSize / 2, height - br]
+                );
+                let b = new line(
+                  [(width / panelsW) * i - verticalMidRailSize / 2, br],
+                  [(width / panelsW) * i - verticalMidRailSize / 2, height - br]
+                );
+                return [a, b];
+              });
+            v = _.flatten(vr);
+        }
+      }
+    } else {
+      if (fullMidStile) {
         vr = Array.from(Array(panelsW).keys())
           .slice(1)
           .map((i) => {
@@ -639,6 +1861,236 @@ var vRails = (function () {
             return [a, b];
           });
         v = _.flatten(vr);
+      } else {
+        switch (panelsH) {
+          case 1:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [(width / panelsW) * i, br],
+                  [(width / panelsW) * i, height - br]
+                );
+                let b = new line(
+                  [(width / panelsW) * i, br],
+                  [(width / panelsW) * i, height - br]
+                );
+                return [a, b];
+              });
+            v = _.flatten(vr);
+            break;
+          case 2:
+            console.log({ unevenInput1 });
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
+                let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
+
+                let y1 =
+                  height -
+                  height / parseInt(panelsH) -
+                  horizontalMidRailSize / 2;
+
+                let y2 =
+                  height -
+                  height / parseInt(panelsH) +
+                  horizontalMidRailSize / 2;
+
+                if (unevenCheck) {
+                  y1 = height + topRail - unevenInput1 - horizontalMidRailSize;
+                  y2 = y1 + horizontalMidRailSize;
+                }
+
+                let a = new line([x1, br], [x1, y1]);
+                let b = new line([x2, br], [x2, y1]);
+                let c = new line([x1, y2], [x1, height]);
+                let d = new line([x2, y2], [x2, height]);
+                return [a, b, c, d];
+              });
+
+            v = _.flatten(vr);
+            break;
+          case 3:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
+                let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
+
+                let y1 =
+                  height -
+                  height / parseInt(panelsH) -
+                  horizontalMidRailSize / 2;
+
+                let y2 =
+                  height -
+                  height / parseInt(panelsH) +
+                  horizontalMidRailSize / 2;
+
+                let y3 = height / parseInt(panelsH) + horizontalMidRailSize / 2;
+
+                let y4 = height / parseInt(panelsH) - horizontalMidRailSize / 2;
+
+                if (unevenCheck) {
+                  y1 = height + topRail - unevenInput1 - horizontalMidRailSize;
+                  y2 = y1 + horizontalMidRailSize;
+
+                  y3 = height + topRail - unevenInput2 - horizontalMidRailSize;
+                  y4 = y3 - horizontalMidRailSize;
+                }
+
+                let a = new line([x1, y2], [x1, height]);
+                let b = new line([x2, y2], [x2, height]);
+                let c = new line([x1, y3], [x1, y1]);
+                let d = new line([x2, y3], [x2, y1]);
+                let e = new line([x1, y4], [x1, br]);
+                let f = new line([x2, y4], [x2, br]);
+                return [a, b, c, d, e, f];
+              });
+
+            v = _.flatten(vr);
+            break;
+          case 4:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
+                let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
+
+                let y1 =
+                  height -
+                  height / parseInt(panelsH) -
+                  horizontalMidRailSize / 2;
+
+                let y2 =
+                  height -
+                  height / parseInt(panelsH) +
+                  horizontalMidRailSize / 2;
+
+                let y3 = height / parseInt(panelsH) - horizontalMidRailSize / 2;
+
+                let y4 =
+                  (height / parseInt(panelsH)) * 2 + horizontalMidRailSize / 2;
+
+                let y5 =
+                  (height / parseInt(panelsH)) * 2 - horizontalMidRailSize / 2;
+                let y6 = height / parseInt(panelsH) + horizontalMidRailSize / 2;
+
+                if (unevenCheck) {
+                  y1 = height + topRail - unevenInput1 - horizontalMidRailSize;
+                  y2 = y1 + horizontalMidRailSize;
+
+                  y3 = height - unevenInput3 - horizontalMidRailSize;
+
+                  y4 = height + topRail - unevenInput2 - horizontalMidRailSize;
+
+                  y5 = y4 - horizontalMidRailSize;
+                  y6 = height + topRail - unevenInput3 - horizontalMidRailSize;
+                }
+
+                let a = new line([x1, y2], [x1, height]);
+                let b = new line([x2, y2], [x2, height]);
+
+                let c = new line([x1, y3], [x1, br]);
+                let d = new line([x2, y3], [x2, br]);
+
+                let e = new line([x1, y4], [x1, y1]);
+                let f = new line([x2, y4], [x2, y1]);
+
+                let g = new line([x1, y5], [x1, y6]);
+                let h = new line([x2, y5], [x2, y6]);
+
+                return [a, b, c, d, e, f, g, h];
+              });
+
+            v = _.flatten(vr);
+            break;
+          case 5:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let x1 = (width / panelsW) * i + verticalMidRailSize / 2;
+                let x2 = (width / panelsW) * i - verticalMidRailSize / 2;
+
+                let y1 =
+                  height -
+                  height / parseInt(panelsH) -
+                  horizontalMidRailSize / 2;
+                let y2 =
+                  height -
+                  height / parseInt(panelsH) +
+                  horizontalMidRailSize / 2;
+
+                let y3 = height / parseInt(panelsH) - horizontalMidRailSize / 2;
+                let y4 =
+                  (height / parseInt(panelsH)) * 2 + horizontalMidRailSize / 2;
+
+                let y5 =
+                  (height / parseInt(panelsH)) * 2 - horizontalMidRailSize / 2;
+                let y6 = height / parseInt(panelsH) + horizontalMidRailSize / 2;
+
+                let y7 =
+                  (height / parseInt(panelsH)) * 3 - horizontalMidRailSize / 2;
+                let y8 =
+                  (height / parseInt(panelsH)) * 3 + horizontalMidRailSize / 2;
+
+                if (unevenCheck) {
+                  y1 = height + topRail - unevenInput1 - horizontalMidRailSize;
+                  y2 = y1 + horizontalMidRailSize;
+
+                  y3 = height - unevenInput4 - horizontalMidRailSize;
+
+                  y4 = height - unevenInput2 - horizontalMidRailSize;
+                  y7 = height + topRail - unevenInput3 - horizontalMidRailSize;
+
+                  y5 = height - unevenInput3 - horizontalMidRailSize;
+
+                  y6 = y3 + horizontalMidRailSize;
+
+                  y8 = height + topRail - unevenInput2 - horizontalMidRailSize;
+                }
+
+                let a = new line([x1, y2], [x1, height]);
+                let b = new line([x2, y2], [x2, height]);
+
+                let c = new line([x1, y3], [x1, br]);
+                let d = new line([x2, y3], [x2, br]);
+
+                let e = new line([x1, y4], [x1, y7]);
+                let f = new line([x2, y4], [x2, y7]);
+
+                let g = new line([x1, y5], [x1, y6]);
+                let h = new line([x2, y5], [x2, y6]);
+
+                let k = new line([x1, y8], [x1, y1]);
+                let l = new line([x2, y8], [x2, y1]);
+
+                return [a, b, c, d, e, f, g, h, k, l];
+              });
+
+            v = _.flatten(vr);
+            break;
+          case 6:
+            v = [];
+            break;
+          default:
+            vr = Array.from(Array(panelsW).keys())
+              .slice(1)
+              .map((i) => {
+                let a = new line(
+                  [(width / panelsW) * i + verticalMidRailSize / 2, br],
+                  [(width / panelsW) * i + verticalMidRailSize / 2, height - br]
+                );
+                let b = new line(
+                  [(width / panelsW) * i - verticalMidRailSize / 2, br],
+                  [(width / panelsW) * i - verticalMidRailSize / 2, height - br]
+                );
+                return [a, b];
+              });
+            v = _.flatten(vr);
+        }
+      }
     }
 
     this.paths = v;
@@ -674,7 +2126,8 @@ function Door(
   horizontalMidRailSize7,
   horizontalMidRailSize8,
   horizontalMidRailSize9,
-  horizontalMidRailSize10
+  horizontalMidRailSize10,
+  fullMidStile
 ) {
   var mm = makerjs.models;
 
@@ -702,8 +2155,10 @@ function Door(
           rightStile,
           topRail,
           bottomRail,
+          panelsW,
           panelsH,
           horizontalMidRailSize,
+          verticalMidRailSize,
           unevenInput1,
           unevenInput2,
           unevenInput3,
@@ -719,7 +2174,8 @@ function Door(
           horizontalMidRailSize7,
           horizontalMidRailSize8,
           horizontalMidRailSize9,
-          horizontalMidRailSize10
+          horizontalMidRailSize10,
+          fullMidStile
         );
       } else {
         this.models['midRails'] = new midRails(
@@ -730,7 +2186,8 @@ function Door(
           topRail,
           bottomRail,
           panelsH,
-          horizontalMidRailSize
+          horizontalMidRailSize,
+          fullMidStile
         );
       }
     }
@@ -745,7 +2202,25 @@ function Door(
         panelsH,
         panelsW,
         horizontalMidRailSize,
-        verticalMidRailSize
+        verticalMidRailSize,
+        unevenCheck,
+        unevenInput1,
+        unevenInput2,
+        unevenInput3,
+        unevenInput4,
+        unevenInput5,
+        fullMidStile,
+        unequalMidRails,
+        horizontalMidRailSize1,
+        horizontalMidRailSize2,
+        horizontalMidRailSize3,
+        horizontalMidRailSize4,
+        horizontalMidRailSize5,
+        horizontalMidRailSize6,
+        horizontalMidRailSize7,
+        horizontalMidRailSize8,
+        horizontalMidRailSize9,
+        horizontalMidRailSize10
       );
     }
   }

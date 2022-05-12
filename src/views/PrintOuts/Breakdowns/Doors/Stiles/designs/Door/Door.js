@@ -51,56 +51,255 @@ export default (info, part, breakdowns) => {
     inset = info.design?.INSET;
   }
 
+  const midStileHeight =
+    (height -
+      topRail -
+      bottomRail -
+      numQty(info[`unevenSplitInput${0}`]) -
+      horizMull * (panelsH - 1)) /
+      panelsH +
+    inset +
+    edge_factor / panelsH;
+
+  const fullMidStileHeight =
+    height - topRail - bottomRail + inset + edge_factor;
+
+  const fullMidRailHeight = (i) =>
+    numQty(info[`unevenSplitInput${i}`]) - topRail + inset + edge_factor;
+
+  const fullMidRailBottom = () => {
+    if (panelsH > 2 && info.unequalMidRails) {
+      return (
+        height -
+        bottomRail -
+        numQty(info[`horizontalMidRailSize${panelsH - 2}`]) -
+        numQty(info[`unevenSplitInput${panelsH - 2}`]) +
+        inset +
+        edge_factor
+      );
+    } else {
+      return (
+        height -
+        bottomRail -
+        horizMull -
+        numQty(info[`unevenSplitInput${panelsH - 2}`]) +
+        inset +
+        edge_factor
+      );
+    }
+  };
+
+  const middleMidRail = (i) => {
+    if (panelsH > 2 && info.unequalMidRails) {
+      return (
+        numQty(info[`unevenSplitInput${i}`]) -
+        numQty(info[`horizontalMidRailSize${i}`]) -
+        fullMidRailHeight(i - 1) -
+        topRail +
+        inset +
+        edge_factor
+      );
+    } else {
+      return (
+        numQty(info[`unevenSplitInput${i}`]) -
+        horizMull -
+        fullMidRailHeight(i - 1) -
+        topRail +
+        inset +
+        edge_factor
+      );
+    }
+  };
+
+  console.log({ midStileHeight });
+  console.log({ fullMidStileHeight });
+  console.log({ fullMidRailHeight });
+  console.log({ fullMidRailBottom });
+
+  const fullMidRailTop = (i) =>
+    numQty(info[`unevenSplitInput${i}`]) - topRail + inset + edge_factor;
+
+  const unEven = [
+    ...Array.from(Array(panelsH).keys())
+      .slice(1)
+      .map((i, v) => {
+        console.log({ i });
+        console.log({ v });
+        if (v === 0) {
+          return {
+            door_qty: qty,
+            qty: `(${qty})`,
+            qty_2: qty,
+            measurement: `${fraction(
+              eval(breakdowns.vertical_mid_rail_width)
+            )} x ${fraction(Math.round(fullMidRailTop(v) * 16) / 16)}`,
+            width: eval(breakdowns.vertical_mid_rail_width),
+            height: fullMidRailTop(v),
+            pattern: 'VM',
+            razor_pattern: 'V Mull',
+            multiplier: qty,
+            item: item,
+            count: qty,
+          };
+        } else {
+          console.log({ middleMidRail: middleMidRail(v) });
+          return {
+            door_qty: qty,
+            qty: `(${qty})`,
+            qty_2: qty,
+            measurement: `${fraction(
+              eval(breakdowns.vertical_mid_rail_width)
+            )} x ${fraction(Math.round(middleMidRail(v) * 16) / 16)}`,
+            width: eval(breakdowns.vertical_mid_rail_width),
+            height: middleMidRail(v),
+            pattern: 'VM',
+            razor_pattern: 'V Mull',
+            multiplier: qty,
+            item: item,
+            count: qty,
+          };
+        }
+      }),
+  ];
+
+  const convert = (arr) => {
+    const res = {};
+    arr.forEach((obj) => {
+      const key = `${obj.measurement}${obj.height}${obj.multiplier}${obj.panel}${obj.pattern}${obj.qty}${obj.qty2}${obj.width}`;
+      if (!res[key]) {
+        res[key] = { ...obj, count: 0 };
+      }
+      console.log({ key: res[key] });
+      res[key].qty = `(${res[key].count + res[key].qty_2})`;
+      res[key].qty_2 = res[key].count + res[key].qty_2;
+      res[key].count += 1;
+    });
+    return Object.values(res);
+  };
+
+  console.log({ unEven });
+
+  console.log({ info });
+
   if (eval(breakdowns.leftStile_width) === eval(breakdowns.rightStile_width)) {
     if ((panelsW > 1 && panelsH > 1) || (panelsW > 1 && panelsH === 1)) {
-      return [
-        {
-          door_qty: qty,
-          qty: `(${qty * 2})`,
-          qty_2: qty * 2,
-          measurement: `${fraction(
-            eval(breakdowns.leftStile_width)
-          )} x ${fraction(eval(breakdowns.leftStile_height))}`,
-          pattern: 'LR',
-          razor_pattern: 'L / R',
-          width: eval(breakdowns.leftStile_width),
-          height: eval(breakdowns.leftStile_height),
-          multiplier: 2,
-          item: item,
-        },
-        {
-          door_qty: qty,
-          qty: `(${
-            panelsW > 1
-              ? panelsH > 1
-                ? panelsH * qty
+      if (info.unevenCheck) {
+        if (info.fullMidStile) {
+          return [
+            {
+              door_qty: qty,
+              qty: `(${qty * 2})`,
+              qty_2: qty * 2,
+              measurement: `${fraction(
+                eval(breakdowns.leftStile_width)
+              )} x ${fraction(eval(breakdowns.leftStile_height))}`,
+              pattern: 'LR',
+              razor_pattern: 'L / R',
+              width: eval(breakdowns.leftStile_width),
+              height: eval(breakdowns.leftStile_height),
+              multiplier: 2,
+              item: item,
+            },
+            {
+              door_qty: qty,
+              qty: `(${qty * (panelsW - 1)})`,
+              qty_2: qty * (panelsW - 1),
+              measurement: `${fraction(
+                eval(breakdowns.vertical_mid_rail_width)
+              )} x ${fraction(Math.round(fullMidStileHeight * 16) / 16)}`,
+              width: eval(breakdowns.vertical_mid_rail_width),
+              height: fullMidStileHeight,
+              pattern: 'VM',
+              razor_pattern: 'V Mull',
+              multiplier: panelsW - 1,
+              item: item,
+            },
+          ];
+        } else {
+          const arr = [
+            {
+              door_qty: qty,
+              qty: `(${qty * 2})`,
+              qty_2: qty * 2,
+              measurement: `${fraction(
+                eval(breakdowns.leftStile_width)
+              )} x ${fraction(eval(breakdowns.leftStile_height))}`,
+              pattern: 'LR',
+              razor_pattern: 'L / R',
+              width: eval(breakdowns.leftStile_width),
+              height: eval(breakdowns.leftStile_height),
+              multiplier: 2,
+              item: item,
+            },
+            ...unEven,
+            {
+              door_qty: qty,
+              qty: `(${qty * (panelsW - 1)})`,
+              qty_2: qty * (panelsW - 1),
+              measurement: `${fraction(
+                eval(breakdowns.vertical_mid_rail_width)
+              )} x ${fraction(Math.round(fullMidRailBottom() * 16) / 16)}`,
+              width: eval(breakdowns.vertical_mid_rail_width),
+              height: fullMidRailBottom(),
+              pattern: 'VM',
+              razor_pattern: 'V Mull',
+              multiplier: panelsW - 1,
+              item: item,
+            },
+          ];
+
+          return convert(arr);
+        }
+      } else {
+        return [
+          {
+            door_qty: qty,
+            qty: `(${qty * 2})`,
+            qty_2: qty * 2,
+            measurement: `${fraction(
+              eval(breakdowns.leftStile_width)
+            )} x ${fraction(eval(breakdowns.leftStile_height))}`,
+            pattern: 'LR',
+            razor_pattern: 'L / R',
+            width: eval(breakdowns.leftStile_width),
+            height: eval(breakdowns.leftStile_height),
+            multiplier: 2,
+            item: item,
+          },
+          {
+            door_qty: qty,
+            qty: `(${
+              panelsW > 1
+                ? panelsH > 1
+                  ? panelsH * qty
+                  : (panelsW - 1) * qty
                 : (panelsW - 1) * qty
-              : (panelsW - 1) * qty
-          })`,
-          qty_2:
-            panelsW > 1
-              ? panelsH > 1
-                ? panelsH * qty
-                : (panelsW - 1) * qty
-              : (panelsW - 1) * qty,
-          measurement: `${fraction(
-            eval(breakdowns.vertical_mid_rail_width)
-          )} x ${fraction(
-            Math.round(eval(breakdowns.vertical_mid_rail_height) * 16) / 16
-          )}`,
-          width: eval(breakdowns.vertical_mid_rail_width),
-          height: eval(breakdowns.vertical_mid_rail_height),
-          pattern: 'VM',
-          razor_pattern: 'V Mull',
-          multiplier:
-            panelsW > 1
-              ? panelsH > 1
-                ? panelsH * qty
-                : (panelsW - 1) * qty
-              : (panelsW - 1) * qty,
-          item: item,
-        },
-      ];
+            })`,
+            qty_2:
+              panelsW > 1
+                ? panelsH > 1
+                  ? panelsH * qty
+                  : (panelsW - 1) * qty
+                : (panelsW - 1) * qty,
+            measurement: `${fraction(
+              eval(breakdowns.vertical_mid_rail_width)
+            )} x ${fraction(
+              Math.round(eval(breakdowns.vertical_mid_rail_height) * 16) / 16
+            )}`,
+            width: eval(breakdowns.vertical_mid_rail_width),
+            height: eval(breakdowns.vertical_mid_rail_height),
+            pattern: 'VM',
+            razor_pattern: 'V Mull',
+            multiplier:
+              panelsW > 1
+                ? panelsH > 1
+                  ? panelsH * qty
+                  : (panelsW - 1) * qty
+                : (panelsW - 1) * qty,
+            item: item,
+          },
+        ];
+      }
     } else {
       return [
         {
