@@ -123,7 +123,7 @@ export default (info, part, breakdowns) => {
           height -
           bottomRail -
           numQty(info[`unevenSplitInput${0}`]) -
-          horizMull * (panelsH - 1) +
+          horizMull +
           panel_factor +
           lip_factor / 2
         );
@@ -142,7 +142,7 @@ export default (info, part, breakdowns) => {
             height -
             bottomRail -
             numQty(info[`unevenSplitInput${v - 2}`]) -
-            horizMull * (panelsH - 1) +
+            horizMull +
             panel_factor +
             lip_factor / 2
           );
