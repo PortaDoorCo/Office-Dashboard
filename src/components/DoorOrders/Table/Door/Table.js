@@ -1303,7 +1303,7 @@ const DoorTable = ({
           </Table>
 
           <Row>
-            <Col lg="2">
+            <Col xl="1" lg="3" md="3" sm="3">
               <FormGroup>
                 <strong>Show Builder</strong>
                 <Field
@@ -1313,18 +1313,38 @@ const DoorTable = ({
               </FormGroup>
             </Col>
 
-            <Col lg="2">
-              <FormGroup>
-                <strong>Uneven Split</strong>
-                <Field
-                  name={`${table}.unevenCheck`}
-                  component={renderCheckboxToggle}
-                  edit={edit}
-                  onClick={(e) => unEvenCheckReminder(e, index)}
-                />
-              </FormGroup>
-            </Col>
-            {formState.part_list[i]?.dimensions[index]?.unevenCheck ? (
+            {parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
+            1 ? (
+              <Col xl="1" lg="3" md="3" sm="3">
+                <FormGroup>
+                  <strong>Uneven Split</strong>
+                  <Field
+                    name={`${table}.unevenCheck`}
+                    component={renderCheckboxToggle}
+                    edit={edit}
+                    onClick={(e) => unEvenCheckReminder(e, index)}
+                  />
+                </FormGroup>
+              </Col>
+            ) : null}
+
+            {parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
+            1 ? (
+              <Col xl="1" lg="3" md="3" sm="3">
+                <FormGroup>
+                  <strong>Full Mid Stile</strong>
+                  <Field
+                    name={`${table}.fullMidStile`}
+                    component={renderCheckboxToggle}
+                    edit={edit}
+                    onClick={(e) => unEvenCheckReminder(e, index)}
+                  />
+                </FormGroup>
+              </Col>
+            ) : null}
+
+            {parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
+            2 ? (
               <Col>
                 <FormGroup>
                   <strong>Unequal Mid Rails</strong>

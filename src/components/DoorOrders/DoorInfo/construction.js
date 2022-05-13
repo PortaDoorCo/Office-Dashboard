@@ -15,6 +15,10 @@ const construction = [
     name: 'Slab',
     value: 'Slab',
   },
+  {
+    name: 'Wrapped Panel',
+    value: 'Wrapped',
+  },
 ];
 
 export default construction;

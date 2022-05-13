@@ -12,14 +12,8 @@ export default (info, part, breakdowns) => {
   const vMidRail = info.verticalMidRailSize ? info.verticalMidRailSize : 0;
   const hMidRail = info.horizontalMidRailSize ? info.horizontalMidRailSize : 0;
 
-  let edge_factor =
-    info.construction?.value !== 'Miter' && info?.edge?.LIP_FACTOR
-      ? info?.edge?.LIP_FACTOR
-      : 0;
-  let lip_factor =
-    info.construction?.value !== 'Miter' && info?.edge?.LIP_FACTOR
-      ? info?.edge?.LIP_FACTOR
-      : 0;
+  let edge_factor = 0.125;
+  let lip_factor = 0.125;
 
   const topRail = info.topRail
     ? Math.round(numQty(info.topRail) * 16) / 16 + lip_factor / 2
@@ -43,22 +37,10 @@ export default (info, part, breakdowns) => {
   const item = parseInt(info.item);
 
   let inset = 0;
-  if (info.profile) {
-    inset = info.profile?.INSET;
-  } else {
-    inset = info.design?.INSET;
-  }
 
   const unequalMidRails = info[`unequalMidRails`];
 
-  const midStileWidth =
-    (width - leftStile - rightStile - vertMull) / panelsW +
-    (inset + edge_factor / 2);
-
-  console.log({ midStileWidth });
-  console.log({ vertMull });
-
-  console.log({ '1midrail': eval(breakdowns.horizontal_mid_rail_height) });
+  console.log({ info });
 
   const unEven = [
     ...Array.from(Array(panelsH).keys())
@@ -66,71 +48,37 @@ export default (info, part, breakdowns) => {
       .map((i, v) => {
         console.log({ i });
         if (v === 0) {
-          if (info.fullMidStile) {
-            return {
-              qty: `(${qty * (panelsH - 1)})`,
-              qty_2: qty * (panelsH - 1),
-              measurement: `${fraction(
-                eval(breakdowns.horizontal_mid_rail_width)
-              )} x ${fraction(Math.round(midStileWidth * 16) / 16)}`,
-              pattern: 'HM',
-              razor_pattern: 'H Mull',
-              width: eval(breakdowns.horizontal_mid_rail_width),
-              height: midStileWidth,
-              multiplier: panelsH - 1,
-              item: item,
-            };
-          } else {
-            return {
-              qty: `(${qty})`,
-              qty_2: qty,
-              measurement: `${fraction(
-                eval(breakdowns.horizontal_mid_rail_width)
-              )} x ${fraction(
-                Math.round(eval(breakdowns.horizontal_mid_rail_height) * 16) /
-                  16
-              )}`,
-              pattern: 'HM',
-              razor_pattern: 'H Mull',
-              width: eval(breakdowns.horizontal_mid_rail_width),
-              height: eval(breakdowns.horizontal_mid_rail_height),
-              multiplier: 1,
-              item: item,
-            };
-          }
+          return {
+            qty: `(${qty})`,
+            qty_2: qty,
+            measurement: `${fraction(
+              eval(breakdowns.horizontal_mid_rail_width)
+            )} x ${fraction(
+              Math.round(eval(breakdowns.horizontal_mid_rail_height) * 16) / 16
+            )}`,
+            pattern: 'HM',
+            razor_pattern: 'H Mull',
+            width: eval(breakdowns.horizontal_mid_rail_width),
+            height: eval(breakdowns.horizontal_mid_rail_height),
+            multiplier: 1,
+            item: item,
+          };
         } else {
-          if (info.fullMidStile) {
-            return {
-              qty: `(${qty * (panelsH - 1)})`,
-              qty_2: qty * (panelsH - 1),
-              measurement: `${fraction(
-                eval(numQty(info[`horizontalMidRailSize${v}`]))
-              )} x ${fraction(Math.round(midStileWidth * 16) / 16)}`,
-              pattern: 'HM',
-              razor_pattern: 'H Mull',
-              width: eval(numQty(info[`horizontalMidRailSize${v}`])),
-              height: midStileWidth,
-              multiplier: panelsH - 1,
-              item: item,
-            };
-          } else {
-            return {
-              qty: `(${qty})`,
-              qty_2: qty,
-              measurement: `${fraction(
-                eval(numQty(info[`horizontalMidRailSize${v}`]))
-              )} x ${fraction(
-                Math.round(eval(breakdowns.horizontal_mid_rail_height) * 16) /
-                  16
-              )}`,
-              pattern: 'HM',
-              razor_pattern: 'H Mull',
-              width: eval(numQty(info[`horizontalMidRailSize${v}`])),
-              height: eval(breakdowns.horizontal_mid_rail_height),
-              multiplier: 1,
-              item: item,
-            };
-          }
+          return {
+            qty: `(${qty})`,
+            qty_2: qty,
+            measurement: `${fraction(
+              eval(numQty(info[`horizontalMidRailSize${v}`]))
+            )} x ${fraction(
+              Math.round(eval(breakdowns.horizontal_mid_rail_height) * 16) / 16
+            )}`,
+            pattern: 'HM',
+            razor_pattern: 'H Mull',
+            width: eval(numQty(info[`horizontalMidRailSize${v}`])),
+            height: eval(breakdowns.horizontal_mid_rail_height),
+            multiplier: 1,
+            item: item,
+          };
         }
       }),
   ];
@@ -143,14 +91,12 @@ export default (info, part, breakdowns) => {
         {
           qty: `(${qty * 2})`,
           qty_2: qty * 2,
-          measurement: `${fraction(
-            eval(breakdowns.topRail_width)
-          )} x ${fraction(
+          measurement: `${fraction(topRail)} x ${fraction(
             Math.round(eval(breakdowns.topRail_height) * 16) / 16
           )}`,
           pattern: 'TB',
           razor_pattern: 'T / B',
-          width: eval(breakdowns.topRail_width),
+          width: topRail,
           height: eval(breakdowns.topRail_height),
           multiplier: 2,
           item: item,
@@ -160,20 +106,6 @@ export default (info, part, breakdowns) => {
               console.log({ i });
               return i;
             })
-          : info.fullMidStile
-          ? {
-              qty: `(${(panelsH - 1) * 2 * qty})`,
-              qty_2: (panelsH - 1) * 2 * qty,
-              measurement: `${fraction(
-                eval(breakdowns.horizontal_mid_rail_width)
-              )} x ${fraction(Math.round(midStileWidth * 16) / 16)}`,
-              pattern: 'HM',
-              razor_pattern: 'H Mull',
-              width: eval(breakdowns.horizontal_mid_rail_width),
-              height: midStileWidth,
-              multiplier: (panelsH - 1) * 2,
-              item: item,
-            }
           : {
               qty: `(${(panelsH - 1) * qty})`,
               qty_2: (panelsH - 1) * qty,
@@ -196,14 +128,12 @@ export default (info, part, breakdowns) => {
         {
           qty: `(${qty * 2})`,
           qty_2: qty * 2,
-          measurement: `${fraction(
-            eval(breakdowns.topRail_width)
-          )} x ${fraction(
+          measurement: `${fraction(topRail)} x ${fraction(
             Math.round(eval(breakdowns.topRail_height) * 16) / 16
           )}`,
           pattern: 'TB',
           razor_pattern: 'T / B',
-          width: eval(breakdowns.topRail_width),
+          width: topRail,
           height: eval(breakdowns.topRail_height),
           multiplier: 2,
           item: item,
@@ -216,14 +146,12 @@ export default (info, part, breakdowns) => {
         {
           qty: `(${qty})`,
           qty_2: qty,
-          measurement: `${fraction(
-            eval(breakdowns.topRail_width)
-          )} x ${fraction(
+          measurement: `${fraction(topRail)} x ${fraction(
             Math.round(eval(breakdowns.topRail_height) * 16) / 16
           )}`,
           pattern: 'T',
           razor_pattern: 'T',
-          width: eval(breakdowns.topRail_width),
+          width: topRail,
           height: eval(breakdowns.topRail_height),
           multiplier: 1,
           item: item,
@@ -231,14 +159,12 @@ export default (info, part, breakdowns) => {
         {
           qty: `(${qty})`,
           qty_2: qty,
-          measurement: `${fraction(
-            eval(breakdowns.bottomRail_width)
-          )} x ${fraction(
+          measurement: `${fraction(bottomRail)} x ${fraction(
             Math.round(eval(breakdowns.bottomRail_height) * 16) / 16
           )}`,
           pattern: 'B',
           razor_pattern: 'B',
-          width: eval(breakdowns.bottomRail_width),
+          width: bottomRail,
           height: eval(breakdowns.bottomRail_height),
           multiplier: 1,
           item: item,
@@ -270,14 +196,12 @@ export default (info, part, breakdowns) => {
         {
           qty: `(${qty})`,
           qty_2: qty,
-          measurement: `${fraction(
-            eval(breakdowns.topRail_width)
-          )} x ${fraction(
+          measurement: `${fraction(topRail)} x ${fraction(
             Math.round(eval(breakdowns.topRail_height) * 16) / 16
           )}`,
           pattern: 'T',
           razor_pattern: 'T',
-          width: eval(breakdowns.topRail_width),
+          width: topRail,
           height: eval(breakdowns.topRail_height),
           multiplier: 1,
           item: item,
@@ -285,14 +209,12 @@ export default (info, part, breakdowns) => {
         {
           qty: `(${qty})`,
           qty_2: qty,
-          measurement: `${fraction(
-            eval(breakdowns.bottomRail_width)
-          )} x ${fraction(
+          measurement: `${fraction(bottomRail)} x ${fraction(
             Math.round(eval(breakdowns.bottomRail_height) * 16) / 16
           )}`,
           pattern: 'B',
           razor_pattern: 'B',
-          width: eval(breakdowns.bottomRail_width),
+          width: bottomRail,
           height: eval(breakdowns.bottomRail_height),
           multiplier: 1,
           item: item,

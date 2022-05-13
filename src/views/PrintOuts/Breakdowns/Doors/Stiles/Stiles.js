@@ -3,6 +3,7 @@ import Custom from './designs/Door/Custom';
 import Face_Frame from './designs/Face_Frame/Face_Frame';
 import One_Piece_Door from './designs/One_Piece_Door/One_Piece_Door';
 import Slab_Door from './designs/Slab_Door/Slab_Door';
+import WrappedDoor from './designs/Door/Wrapped';
 
 export default (info, part, breakdowns) => {
   if (info.orderType?.value === 'Door') {
@@ -19,6 +20,10 @@ export default (info, part, breakdowns) => {
 
       if (info.construction?.value === 'Miter') {
         return Door(info, part, breakdowns[2]);
+      }
+
+      if (info.construction?.value === 'Wrapped') {
+        return WrappedDoor(info, part, breakdowns[0]);
       }
     }
   }

@@ -18,14 +18,8 @@ export default (info, part, breakdowns) => {
     ? info?.design?.BTM_RAIL_ADD
     : 0;
 
-  let edge_factor =
-    info.construction?.value !== 'Miter' && info?.edge?.LIP_FACTOR
-      ? info?.edge?.LIP_FACTOR
-      : 0;
-  let lip_factor =
-    info.construction?.value !== 'Miter' && info?.edge?.LIP_FACTOR
-      ? info?.edge?.LIP_FACTOR
-      : 0;
+  let edge_factor = 0.125;
+  let lip_factor = 0.125;
 
   const topRail = info.topRail
     ? Math.round(numQty(info.topRail) * 16) / 16 +
@@ -56,11 +50,6 @@ export default (info, part, breakdowns) => {
     : part?.orderType?.value;
 
   let inset = 0;
-  if (info.profile) {
-    inset = info.profile?.INSET;
-  } else {
-    inset = info.design?.INSET;
-  }
 
   const lites = info.lite ? info.lite.NAME : '';
   const panel_factor = info?.panel?.PANEL_FACTOR;
@@ -123,7 +112,7 @@ export default (info, part, breakdowns) => {
           height -
           bottomRail -
           numQty(info[`unevenSplitInput${0}`]) -
-          horizMull +
+          horizMull * (panelsH - 1) +
           panel_factor +
           lip_factor / 2
         );
@@ -142,7 +131,7 @@ export default (info, part, breakdowns) => {
             height -
             bottomRail -
             numQty(info[`unevenSplitInput${v - 2}`]) -
-            horizMull +
+            horizMull * (panelsH - 1) +
             panel_factor +
             lip_factor / 2
           );
@@ -216,8 +205,8 @@ export default (info, part, breakdowns) => {
           } else {
             const panelHeight = unevenSplitInput(v);
             return {
-              qty: `(${qty * panelsW})`,
-              qty2: qty * panelsW,
+              qty: `(${qty})`,
+              qty2: qty,
               measurement: `${fraction(
                 Math.round(eval(breakdowns.panel_width) * 16) / 16
               )} x ${fraction(panelHeight)}`,
@@ -225,16 +214,16 @@ export default (info, part, breakdowns) => {
               width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
               height: panelHeight,
               panel: panelName,
-              multiplier: panelsW,
-              count: qty * panelsW,
+              multiplier: qty,
+              count: qty,
             };
           }
         }),
     ];
 
     const bottom = {
-      qty: `(${qty * panelsW})`,
-      qty2: qty * panelsW,
+      qty: `(${qty})`,
+      qty2: qty,
       measurement: `${fraction(
         Math.round(eval(breakdowns.panel_width) * 16) / 16
       )} x ${fraction(panelHeight(parseInt(panelsH)))}`,
@@ -242,8 +231,8 @@ export default (info, part, breakdowns) => {
       width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
       height: panelHeight(parseInt(panelsH)),
       panel: panelName,
-      multiplier: qty * panelsW,
-      count: qty * panelsW,
+      multiplier: qty,
+      count: qty,
     };
 
     const unevenDoor = [...unEven, bottom];

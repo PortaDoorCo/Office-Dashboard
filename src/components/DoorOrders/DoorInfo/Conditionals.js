@@ -5,6 +5,7 @@ import DF from './DF/DF';
 import FaceFrame from './Face_Frame/FaceFrame';
 import SlabDoor from './Slab_Door/Slab_Door';
 import SlabDF from './Slab_Door/Slab_DF';
+import WrappedDoor from './Door/Wrapped_Panel';
 
 class Conditionals extends Component {
   render() {
@@ -20,6 +21,20 @@ class Conditionals extends Component {
             case 'Slab':
               component = (
                 <SlabDoor
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={true}
+                  updateSubmit={updateSubmit}
+                />
+              );
+              break;
+            case 'Wrapped':
+              component = (
+                <WrappedDoor
                   part={part}
                   index={index}
                   isValid={isValid}
@@ -65,8 +80,6 @@ class Conditionals extends Component {
               break;
           }
           break;
-
-
 
         case 'DF':
           switch (formState.part_list[index].construction.value) {
@@ -133,7 +146,7 @@ class Conditionals extends Component {
               break;
           }
           break;
-  
+
         case 'Two_Piece':
           switch (formState.part_list[index].construction.value) {
             case 'Slab':
