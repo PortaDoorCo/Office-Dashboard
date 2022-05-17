@@ -182,7 +182,7 @@ export default (data, pricing) => {
       {
         table: {
           headerRows: 1,
-          widths: [30, 100, 30, 155, '*', '*', '*'],
+          widths: [30, 100, 30, 120, '*', '*', '*'],
           body: tableBody,
         },
 
