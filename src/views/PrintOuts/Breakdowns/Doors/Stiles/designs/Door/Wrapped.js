@@ -17,17 +17,17 @@ export default (info, part, breakdowns) => {
   let edge_factor = 0.125;
   let lip_factor = 0.125;
 
-  const topRail = info.topRail
-    ? Math.round(numQty(info.topRail) * 16) / 16 + lip_factor / 2
+  const topRail = info.wrapWidth
+    ? Math.round(numQty(info.wrapWidth) * 16) / 16 + lip_factor / 2
     : 0;
-  const bottomRail = info.bottomRail
-    ? Math.round(numQty(info.bottomRail) * 16) / 16 + lip_factor / 2
+  const bottomRail = info.wrapWidth
+    ? Math.round(numQty(info.wrapWidth) * 16) / 16 + lip_factor / 2
     : 0;
-  const leftStile = info.leftStile
-    ? Math.round(numQty(info.leftStile) * 16) / 16 + lip_factor / 2
+  const leftStile = info.wrapWidth
+    ? Math.round(numQty(info.wrapWidth) * 16) / 16 + lip_factor / 2
     : 0;
-  const rightStile = info.rightStile
-    ? Math.round(numQty(info.rightStile) * 16) / 16 + lip_factor / 2
+  const rightStile = info.wrapWidth
+    ? Math.round(numQty(info.wrapWidth) * 16) / 16 + lip_factor / 2
     : 0;
   const vertMull = Math.round(numQty(vMidRail) * 16) / 16;
   const horizMull = Math.round(numQty(hMidRail) * 16) / 16;

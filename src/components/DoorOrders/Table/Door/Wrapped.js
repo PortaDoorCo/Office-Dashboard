@@ -399,10 +399,10 @@ const Cope_Table = ({
                 <tr>
                   <td>
                     <strong>
-                      <p>Top Rail</p>
+                      <p>Wrap Width</p>
                     </strong>
                     <Field
-                      name={`${table}.topRail`}
+                      name={`${table}.wrapWidth`}
                       type="text"
                       component={renderNumber}
                       label="topRail"
@@ -413,41 +413,13 @@ const Cope_Table = ({
                   </td>
                   <td>
                     <strong>
-                      <p>Bottom Rail</p>
+                      <p>Wrap Thickness</p>
                     </strong>
                     <Field
-                      name={`${table}.bottomRail`}
+                      name={`${table}.wrapThickness`}
                       type="text"
                       component={renderNumber}
-                      label="bottomRail"
-                      edit={construction === 'Miter' ? true : edit}
-                      validate={required}
-                      onChange={(e) => registerChange(index, e)}
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Left Stile</p>
-                    </strong>
-                    <Field
-                      name={`${table}.leftStile`}
-                      type="text"
-                      component={renderNumber}
-                      label="leftStile"
-                      edit={construction === 'Miter' ? true : edit}
-                      validate={required}
-                      onChange={(e) => registerChange(index, e)}
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Right Stile</p>
-                    </strong>
-                    <Field
-                      name={`${table}.rightStile`}
-                      type="text"
-                      component={renderNumber}
-                      label="rightStile"
+                      label="topRail"
                       edit={construction === 'Miter' ? true : edit}
                       validate={required}
                       onChange={(e) => registerChange(index, e)}

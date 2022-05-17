@@ -21,21 +21,21 @@ export default (info, part, breakdowns) => {
   let edge_factor = 0.125;
   let lip_factor = 0.125;
 
-  const topRail = info.topRail
-    ? Math.round(numQty(info.topRail) * 16) / 16 +
+  const topRail = info.wrapThickness
+    ? Math.round(numQty(info.wrapThickness) * 16) / 16 +
       lip_factor / 2 -
       top_rail_arch
     : 0;
-  const bottomRail = info.bottomRail
-    ? Math.round(numQty(info.bottomRail) * 16) / 16 +
+  const bottomRail = info.wrapThickness
+    ? Math.round(numQty(info.wrapThickness) * 16) / 16 +
       lip_factor / 2 -
       btm_rail_arch
     : 0;
-  const leftStile = info.leftStile
-    ? Math.round(numQty(info.leftStile) * 16) / 16 + lip_factor / 2
+  const leftStile = info.wrapThickness
+    ? Math.round(numQty(info.wrapThickness) * 16) / 16 + lip_factor / 2
     : 0;
-  const rightStile = info.rightStile
-    ? Math.round(numQty(info.rightStile) * 16) / 16 + lip_factor / 2
+  const rightStile = info.wrapThickness
+    ? Math.round(numQty(info.wrapThickness) * 16) / 16 + lip_factor / 2
     : 0;
   const vertMull = Math.round(numQty(vMidRail) * 16) / 16;
   const horizMull = Math.round(numQty(hMidRail) * 16) / 16;
@@ -52,7 +52,7 @@ export default (info, part, breakdowns) => {
   let inset = 0;
 
   const lites = info.lite ? info.lite.NAME : '';
-  const panel_factor = info?.panel?.PANEL_FACTOR;
+  const panel_factor = 0;
 
   const panelName = info?.panel?.NAME ? info?.panel?.NAME : part?.panel?.NAME;
   const panelFlat = info?.panel?.Flat ? info?.panel?.Flat : part?.panel?.Flat;
@@ -62,6 +62,8 @@ export default (info, part, breakdowns) => {
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
   const unevenInset = 0.75;
+
+  console.log({ topRail });
 
   const unevenSplitArray = Array.from(Array(panelsH).keys())
     .slice(1)
