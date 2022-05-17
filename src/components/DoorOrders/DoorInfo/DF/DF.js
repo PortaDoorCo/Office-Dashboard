@@ -3,38 +3,40 @@ import { connect } from 'react-redux';
 import { CardSubtitle, Col, FormGroup, Label, Row } from 'reactstrap';
 import { change, Field, FieldArray } from 'redux-form';
 import {
-  itemPriceSelector, linePriceSelector, subTotalSelector
+  itemPriceSelector,
+  linePriceSelector,
+  subTotalSelector,
 } from '../../../../selectors/pricing';
 import ModalUtil from '../../../../utils/Modal';
 import {
-  renderCheckboxToggle, renderDropdownList, renderDropdownListFilter, renderNumber, renderTextField
+  renderCheckboxToggle,
+  renderDropdownList,
+  renderDropdownListFilter,
+  renderNumber,
+  renderTextField,
 } from '../../../RenderInputs/renderInputs';
 import Table from '../../Table/DF/Table';
 import changeDesign from '../Functions/changeDesign';
 import changeProfile from '../Functions/changeProfile';
 
-
 const required = (value) => (value ? undefined : 'Required');
 
 class CopeDF extends Component {
-
   state = {
     title: 'Reminder',
     message: 'The Edge You Selected Cannot Be Drilled For Concealed Hinges',
-    modal: false
+    modal: false,
   };
 
   toggle = () => {
-    this.setState({modal: !this.state.modal});
-  }
+    this.setState({ modal: !this.state.modal });
+  };
 
   lipWarning = () => {
     const { dispatch, index, part, formState } = this.props;
     const edge = formState?.part_list[index]?.edge;
 
-    
-
-    switch(edge?.NAME) {
+    switch (edge?.NAME) {
       case 'A Lip':
         // code block
         this.toggle();
@@ -76,8 +78,7 @@ class CopeDF extends Component {
         // code block
         return null;
     }
-
-  }
+  };
 
   onChangeWoodtype = (p, ind) => {
     const { formState } = this.props;
@@ -165,9 +166,14 @@ class CopeDF extends Component {
     const filtered_woodtypes = woodtypes.filter((wood) => wood[thickness]);
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
     const two_piece_wood = woodtypes.filter((wood) => wood.two_piece === true);
-    const filtered_designs = designs.filter((design) =>
-      (design.CONSTRUCTION === construction) && (design.ORDERTYPE === 'DF')
+    const filtered_designs = designs.filter(
+      (design) =>
+        design.CONSTRUCTION === construction && design.ORDERTYPE === 'DF'
     );
+
+    const customer = formState?.job_info?.customer;
+
+    const CBD_Panels = panels?.filter((panel) => panel.CBD);
 
     return (
       <div>
@@ -188,8 +194,8 @@ class CopeDF extends Component {
                   orderType === 'One_Piece' || orderType === 'One_Piece_DF'
                     ? one_piece_wood
                     : orderType === 'Two_Piece' || orderType === 'Two_Piece_DF'
-                      ? two_piece_wood
-                      : filtered_woodtypes
+                    ? two_piece_wood
+                    : filtered_woodtypes
                 }
                 dataKey="value"
                 textField="NAME"
@@ -204,7 +210,11 @@ class CopeDF extends Component {
               <Label htmlFor="design">Design</Label>
               <Field
                 name={`${part}.design`}
-                component={construction === 'Cope' ? renderDropdownList : renderDropdownListFilter}
+                component={
+                  construction === 'Cope'
+                    ? renderDropdownList
+                    : renderDropdownListFilter
+                }
                 data={filtered_designs}
                 dataKey="value"
                 textField="NAME"
@@ -234,7 +244,9 @@ class CopeDF extends Component {
           ) : null}
         </Row>
         <Row>
-        {construction === 'Cope' || design?.NAME?.includes('PRP 15') || design?.NAME?.includes('PRP15') ? (
+          {construction === 'Cope' ||
+          design?.NAME?.includes('PRP 15') ||
+          design?.NAME?.includes('PRP15') ? (
             <Col>
               <FormGroup>
                 <Label htmlFor="edge">Profile</Label>
@@ -258,7 +270,7 @@ class CopeDF extends Component {
               <Field
                 name={`${part}.panel`}
                 component={renderDropdownListFilter}
-                data={panels}
+                data={customer?.id === 1282 ? CBD_Panels : panels}
                 dataKey="value"
                 textField="NAME"
                 validate={required}
@@ -308,10 +320,12 @@ class CopeDF extends Component {
 
         <Row>
           <Col>
-            <h5><strong>Default Framing Size</strong></h5>
+            <h5>
+              <strong>Default Framing Size</strong>
+            </h5>
           </Col>
         </Row>
-        
+
         <Row>
           <Col>
             <FormGroup>
@@ -369,14 +383,12 @@ class CopeDF extends Component {
               />
             </FormGroup>
           </Col>
-
         </Row>
 
         <hr />
 
         <Row className="mt-2">
           <Col xs="4">
-       
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>
@@ -389,10 +401,8 @@ class CopeDF extends Component {
                 <p>Enter Item Build Note Here - Framing/Wood, etc.</p>
               </strong>
             </FormGroup>
- 
           </Col>
         </Row>
-        
 
         <div>
           <CardSubtitle className="mt-4 mb-1">
