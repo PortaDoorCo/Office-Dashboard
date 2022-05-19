@@ -47,6 +47,9 @@ export default (info, part, breakdowns) => {
       if (info.construction?.value === 'Miter') {
         return Door(info, part, breakdowns[5]);
       }
+      if (info.construction?.value === 'Wrapped') {
+        return WrappedDoor(info, part, breakdowns[0]);
+      }
     }
   }
 

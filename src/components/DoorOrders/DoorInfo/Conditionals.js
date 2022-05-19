@@ -97,6 +97,20 @@ class Conditionals extends Component {
                 />
               );
               break;
+            case 'Wrapped':
+              component = (
+                <WrappedDoor
+                  part={part}
+                  index={index}
+                  isValid={isValid}
+                  part_list={part_list}
+                  formState={formState}
+                  edit={edit}
+                  one_piece={true}
+                  updateSubmit={updateSubmit}
+                />
+              );
+              break;
             default:
               component = (
                 <DF
