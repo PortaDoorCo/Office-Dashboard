@@ -856,7 +856,7 @@ class Edit extends Component {
               )}
             </form>
             {!edit &&
-            (role.type === 'administrator' || role.type === 'owner') ? (
+            (role?.type === 'administrator' || role?.type === 'owner') ? (
               <Button
                 type="button"
                 onClick={this.props.onEdit}
