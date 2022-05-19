@@ -10,13 +10,8 @@ import NotesTable from './Notes_Table';
 
 const cookie = Cookies.get('jwt');
 
-
-
 class Customer_Notes extends Component {
-
-
   submit = async (values) => {
-
     const { updateNotes, user } = this.props;
 
     const id = values.id;
@@ -25,84 +20,58 @@ class Customer_Notes extends Component {
 
     let noteId = Math.floor(Math.random() * 10000000);
 
-    if(values.Customer_Notes){
+    if (values.Customer_Notes) {
       order = {
         id: noteId,
         Customer_Notes: values.Customer_Notes,
         note: values.note,
-        Name: user && user.FirstName
+        Name: user && user.FirstName,
       };
     } else {
       order = {
         id: noteId,
         Customer_Notes: [],
         note: values.note,
-        Name: user && user.FirstName
+        Name: user && user.FirstName,
       };
     }
 
-    if(values.note){
+    if (values.note) {
       await updateNotes(id, order, cookie);
 
-      if(values.Customer_Notes){
+      if (values.Customer_Notes) {
         await this.props.dispatch(
-          change(
-            'CustomerEdit',
-            'Customer_Notes',
-            [
-              ...values.Customer_Notes,
-              {
-                'id': noteId,
-                'note': values.note,
-                'date': new Date(),
-                'Name': user && user.FirstName
-              }
-            ]
-  
-          )
+          change('CustomerEdit', 'Customer_Notes', [
+            ...values.Customer_Notes,
+            {
+              id: noteId,
+              note: values.note,
+              date: new Date(),
+              Name: user && user.FirstName,
+            },
+          ])
         );
-        await this.props.dispatch(
-          change(
-            'CustomerEdit',
-            'note',
-            ''
-          )
-        );
+        await this.props.dispatch(change('CustomerEdit', 'note', ''));
       } else {
         await this.props.dispatch(
-          change(
-            'CustomerEdit',
-            'Customer_Notes',
-            [
-              {
-                'id': noteId,
-                'note': values.note,
-                'date': new Date(),
-                'Name': user && user.FirstName
-              }
-            ]
-  
-          )
+          change('CustomerEdit', 'Customer_Notes', [
+            {
+              id: noteId,
+              note: values.note,
+              date: new Date(),
+              Name: user && user.FirstName,
+            },
+          ])
         );
-        await this.props.dispatch(
-          change(
-            'CustomerEdit',
-            'note',
-            ''
-          )
-        );
+        await this.props.dispatch(change('CustomerEdit', 'note', ''));
       }
-
     } else {
       alert('Please enter a value');
       return null;
     }
-  }
-
-
+  };
 
   render() {
-
     const { handleSubmit, user } = this.props;
 
     return (
@@ -112,7 +81,6 @@ class Customer_Notes extends Component {
             <Col>
               <h3>Customer Notes</h3>
             </Col>
-            
           </Row>
           <Row>
             <Col>
@@ -120,19 +88,20 @@ class Customer_Notes extends Component {
             </Col>
           </Row>
           <Row>
-            <Col xs='6'>
+            <Col xs="6">
               <FormGroup>
                 <Field
-                  name='note'
+                  name="note"
                   type="textarea"
                   component={renderField}
-                  label="Notes" />
+                  label="Notes"
+                  edit={true}
+                />
               </FormGroup>
 
               <div className="mt-3">
-                <Button color='primary'>Submit</Button>
+                <Button color="primary">Submit</Button>
               </div>
-
             </Col>
           </Row>
         </form>
@@ -141,20 +110,16 @@ class Customer_Notes extends Component {
   }
 }
 
-
 const mapStateToProps = (state, props) => ({
-
   formState: getFormValues('CustomerEdit')(state),
-  user: state.users.user
-
-
+  user: state.users.user,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       change,
-      updateNotes
+      updateNotes,
     },
     dispatch
   );
@@ -163,8 +128,4 @@ Customer_Notes = reduxForm({
   form: 'CustomerEdit',
 })(Customer_Notes);
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Customer_Notes);
+export default connect(mapStateToProps, mapDispatchToProps)(Customer_Notes);

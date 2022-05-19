@@ -18,10 +18,10 @@ export default (data, breakdowns) => {
       i.design
         ? i.design.NAME
         : i.face_frame_design
-          ? i.face_frame_design.NAME
-          : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
-            ? ''
-            : ''
+        ? i.face_frame_design.NAME
+        : i.orderType.value === 'Slab_Door' || i.orderType.value === 'Slab_DF'
+        ? ''
+        : ''
     }`;
   };
 
@@ -98,12 +98,12 @@ export default (data, breakdowns) => {
         },
         item.notes || item.full_frame || item.lite
           ? {
-            text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-              item.full_frame ? 'Full Frame DF' : ''
-            } ${item.lite ? item.lite.NAME : ''}`,
-            style: 'tableBold',
-            alignment: 'left',
-          }
+              text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+                item.full_frame ? 'Full Frame DF' : ''
+              } ${item.lite ? item.lite.NAME : ''}`,
+              style: 'tableBold',
+              alignment: 'left',
+            }
           : null,
       ]);
     });
@@ -113,38 +113,53 @@ export default (data, breakdowns) => {
         stack: [
           index === 0
             ? {
-              columns: [
-                { text: '' },
-                {
-                  alignment: 'center',
-                  style: 'fontsBold',
-                  stack: [
-                    data.job_info?.Shop_Notes ?{
-                      text: `${
-                        data.job_info?.Shop_Notes
-                          ? data.job_info?.Shop_Notes?.toUpperCase()
-                          : ''
-                      }`,
-                    } : null,
-                    { text : data.misc_items.map(i => {
-                      if(i.category === 'preselect'){
-                        if(i.item.NAME.includes('Delivery')){
-                          return null;
-                        } else {
-                          return `${i.item?.NAME} \n`;
-                        }
-                        
-                      } else {
-                        return `${i.item2} \n`;
-                      }
-                    })
-                    }
-                  ]
-                },
-                { text: '' },
-              ],
-              margin: [0, -26, 0, 10],
-            }
+                columns: [
+                  { text: '' },
+                  {
+                    alignment: 'center',
+                    style: 'fontsBold',
+                    stack: [
+                      data.job_info?.Shop_Notes
+                        ? {
+                            text: `${
+                              data.job_info?.Shop_Notes
+                                ? data.job_info?.Shop_Notes?.toUpperCase()
+                                : ''
+                            }`,
+                          }
+                        : null,
+                      {
+                        text: data.misc_items.map((i) => {
+                          if (i.category === 'preselect') {
+                            if (
+                              i?.item?.NAME?.toLowerCase()?.includes(
+                                'delivery'
+                              ) ||
+                              i?.item?.NAME?.toLowerCase()?.includes('price') ||
+                              i?.item?.NAME?.toLowerCase()?.includes('discount')
+                            ) {
+                              return null;
+                            } else {
+                              return `${i.item?.NAME} \n`;
+                            }
+                          } else {
+                            if (
+                              i?.item2?.toLowerCase()?.includes('delivery') ||
+                              i?.item2?.toLowerCase()?.includes('price') ||
+                              i?.item2?.toLowerCase()?.includes('discount')
+                            ) {
+                            } else {
+                              return `${i.item2} \n`;
+                            }
+                          }
+                        }),
+                      },
+                    ],
+                  },
+                  { text: '' },
+                ],
+                margin: [0, -26, 0, 10],
+              }
             : null,
           {
             margin: [0, 10, 0, 0],
@@ -175,10 +190,10 @@ export default (data, breakdowns) => {
                   },
                   i.edge
                     ? {
-                      text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
-                      alignment: 'right',
-                      style: 'fonts',
-                    }
+                        text: `Edge: ${i.edge ? i.edge.NAME : ''}`,
+                        alignment: 'right',
+                        style: 'fonts',
+                      }
                     : null,
                 ],
               },
@@ -248,24 +263,24 @@ export default (data, breakdowns) => {
     },
     data.misc_items.length > 0
       ? {
-        columns: [
-          {
-            text: data.misc_items.map((i) => {
-              return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
-            }),
-            style: 'fonts',
-            width: 170,
-          },
-          {
-            style: 'fonts',
-            stack: data.misc_items.map((i) => {
-              return { text: i.qty ? parseInt(i.qty) : '' };
-            }),
-            width: 30,
-          },
-        ],
-        margin: [0, 2, 0, 0],
-      }
+          columns: [
+            {
+              text: data.misc_items.map((i) => {
+                return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
+              }),
+              style: 'fonts',
+              width: 170,
+            },
+            {
+              style: 'fonts',
+              stack: data.misc_items.map((i) => {
+                return { text: i.qty ? parseInt(i.qty) : '' };
+              }),
+              width: 30,
+            },
+          ],
+          margin: [0, 2, 0, 0],
+        }
       : null,
     {
       margin: [0, 10, 0, 10],
@@ -305,8 +320,8 @@ export default (data, breakdowns) => {
             production_date.length < 1
               ? ''
               : `Production Date: ${moment(production_date[0]?.date).format(
-                'MM/DD/YYYY'
-              )}`
+                  'MM/DD/YYYY'
+                )}`
           }`,
           style: 'totals',
           width: 200,
@@ -330,9 +345,7 @@ export default (data, breakdowns) => {
         {
           text: `Due Date: ${
             data.Shipping_Scheduled
-              ? `${moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              )}`
+              ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
               : 'TBD'
           }`,
           style: 'totals',
@@ -353,7 +366,7 @@ export default (data, breakdowns) => {
           width: 200,
         },
         {
-          text: 'Total # Inv\'s: ______________',
+          text: "Total # Inv's: ______________",
           style: 'totals',
           width: 347,
         },

@@ -810,7 +810,7 @@ class Edit extends Component {
                 </Col>
               </Row>
 
-              {!edit ? (
+              {edit ? (
                 <Row>
                   <Col>
                     <Button color="primary" onClick={() => this.sameShipping()}>
@@ -837,7 +837,7 @@ class Edit extends Component {
                 </Col>
               </Row>
 
-              {edit ? (
+              {!edit ? (
                 <div></div>
               ) : (
                 <div>
@@ -855,8 +855,8 @@ class Edit extends Component {
                 </div>
               )}
             </form>
-            {edit &&
-            (role.type === 'administrator' || role.type === 'owner') ? (
+            {!edit &&
+            (role?.type === 'administrator' || role?.type === 'owner') ? (
               <Button
                 type="button"
                 onClick={this.props.onEdit}

@@ -81,17 +81,17 @@ export default (data, breakdowns, pricing) => {
           { text: `${Size(item)}`, style: 'fonts' },
           item.notes
             ? {
-              text: `${item.notes ? item.notes.toUpperCase() : ''}`,
-              style: 'tableBold',
-              alignment: 'left',
-            }
+                text: `${item.notes ? item.notes.toUpperCase() : ''}`,
+                style: 'tableBold',
+                alignment: 'left',
+              }
             : null,
           item.cab_number
             ? {
-              text: `${item.cab_number}`,
-              style: 'fonts',
-              alignment: 'left',
-            }
+                text: `${item.cab_number}`,
+                style: 'fonts',
+                alignment: 'left',
+              }
             : null,
         ]);
       });
@@ -101,38 +101,57 @@ export default (data, breakdowns, pricing) => {
           stack: [
             i === 0
               ? {
-                columns: [
-                  { text: '' },
-                  {
-                    alignment: 'center',
-                    style: 'fontsBold',
-                    stack: [
-                      data.job_info?.Shop_Notes ?{
-                        text: `${
-                          data.job_info?.Shop_Notes
-                            ? data.job_info?.Shop_Notes?.toUpperCase()
-                            : ''
-                        }`,
-                      } : null,
-                      { text : data.misc_items.map(i => {
-                        if(i.category === 'preselect'){
-                          if(i.item.NAME.includes('Delivery')){
-                            return null;
-                          } else {
-                            return `${i.item?.NAME} \n`;
-                          }
-                        
-                        } else {
-                          return `${i.item2} \n`;
-                        }
-                      })
-                      }
-                    ]
-                  },
-                  { text: '' },
-                ],
-                margin: [0, -26, 0, 0],
-              }
+                  columns: [
+                    { text: '' },
+                    {
+                      alignment: 'center',
+                      style: 'fontsBold',
+                      stack: [
+                        data.job_info?.Shop_Notes
+                          ? {
+                              text: `${
+                                data.job_info?.Shop_Notes
+                                  ? data.job_info?.Shop_Notes?.toUpperCase()
+                                  : ''
+                              }`,
+                            }
+                          : null,
+                        {
+                          text: data.misc_items.map((i) => {
+                            if (i.category === 'preselect') {
+                              if (
+                                i?.item?.NAME?.toLowerCase()?.includes(
+                                  'delivery'
+                                ) ||
+                                i?.item?.NAME?.toLowerCase()?.includes(
+                                  'price'
+                                ) ||
+                                i?.item?.NAME?.toLowerCase()?.includes(
+                                  'discount'
+                                )
+                              ) {
+                                return null;
+                              } else {
+                                return `${i.item?.NAME} \n`;
+                              }
+                            } else {
+                              if (
+                                i?.item2?.toLowerCase()?.includes('delivery') ||
+                                i?.item2?.toLowerCase()?.includes('price') ||
+                                i?.item2?.toLowerCase()?.includes('discount')
+                              ) {
+                              } else {
+                                return `${i.item2} \n`;
+                              }
+                            }
+                          }),
+                        },
+                      ],
+                    },
+                    { text: '' },
+                  ],
+                  margin: [0, -26, 0, 0],
+                }
               : null,
             {
               margin: [0, 10, 0, 0],
@@ -227,24 +246,24 @@ export default (data, breakdowns, pricing) => {
     },
     data.misc_items.length > 0
       ? {
-        columns: [
-          {
-            text: data.misc_items.map((i) => {
-              return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
-            }),
-            style: 'fonts',
-            width: 170,
-          },
-          {
-            style: 'fonts',
-            stack: data.misc_items.map((i) => {
-              return { text: i.qty ? parseInt(i.qty) : '' };
-            }),
-            width: 30,
-          },
-        ],
-        margin: [0, 2, 0, 0],
-      }
+          columns: [
+            {
+              text: data.misc_items.map((i) => {
+                return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
+              }),
+              style: 'fonts',
+              width: 170,
+            },
+            {
+              style: 'fonts',
+              stack: data.misc_items.map((i) => {
+                return { text: i.qty ? parseInt(i.qty) : '' };
+              }),
+              width: 30,
+            },
+          ],
+          margin: [0, 2, 0, 0],
+        }
       : null,
     {
       margin: [0, 10, 0, 10],
@@ -284,8 +303,8 @@ export default (data, breakdowns, pricing) => {
             production_date.length < 1
               ? ''
               : `Production Date: ${moment(production_date[0]?.date).format(
-                'MM/DD/YYYY'
-              )}`
+                  'MM/DD/YYYY'
+                )}`
           }`,
           style: 'totals',
           width: 200,
@@ -309,9 +328,7 @@ export default (data, breakdowns, pricing) => {
         {
           text: `Due Date: ${
             data.Shipping_Scheduled
-              ? `${moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              )}`
+              ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
               : 'TBD'
           }`,
           style: 'totals',
@@ -332,7 +349,7 @@ export default (data, breakdowns, pricing) => {
           width: 200,
         },
         {
-          text: 'Total # Inv\'s: ______________',
+          text: "Total # Inv's: ______________",
           style: 'totals',
           width: 347,
         },

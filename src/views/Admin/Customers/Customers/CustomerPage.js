@@ -133,7 +133,7 @@ class CustomerPage extends Component {
                 <Edit
                   onEdit={this.onEdit}
                   selectedCompanies={props.selectedCompanies}
-                  edit={!this.state.edit}
+                  edit={this.state.edit}
                 />
 
                 <Row>
