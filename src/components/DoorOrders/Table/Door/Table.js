@@ -1107,7 +1107,7 @@ const DoorTable = ({
                   )}
                 </td>
                 <td>
-                  {!edit ? (
+                  {edit ? (
                     <Button
                       color="danger"
                       className="btn-circle"
@@ -1272,7 +1272,7 @@ const DoorTable = ({
                 </td>
               </tr>
 
-              {!edit ? (
+              {edit ? (
                 <tr>
                   <td>
                     <ButtonGroup vertical>
@@ -1518,7 +1518,7 @@ const DoorTable = ({
                 </Col>
 
                 <Col lg="2">
-                  {!edit ? (
+                  {edit ? (
                     <Button
                       color="danger"
                       className="btn-circle"
@@ -1554,7 +1554,7 @@ const DoorTable = ({
       ))}
       <Row>
         <Col>
-          {!edit ? (
+          {edit ? (
             <div>
               <Button
                 color="primary"

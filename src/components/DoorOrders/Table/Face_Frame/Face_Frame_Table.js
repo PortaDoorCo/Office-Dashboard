@@ -4,13 +4,21 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, FormGroup, Input, Label, Row, Table } from 'reactstrap';
 import {
-  change, Field, getFormSyncErrors, startAsyncValidation, touch
+  change,
+  Field,
+  getFormSyncErrors,
+  startAsyncValidation,
+  touch,
 } from 'redux-form';
 import 'semantic-ui-css/semantic.min.css';
 import currencyMask from '../../../../utils/currencyMask';
 // import 'react-widgets/dist/css/react-widgets.css';
 import {
-  renderField, renderInt, renderNumber, renderPrice, renderTextField
+  renderField,
+  renderInt,
+  renderNumber,
+  renderPrice,
+  renderTextField,
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 
@@ -35,7 +43,7 @@ const Frame_Only_Table = ({
   finish,
   finishSubtotal,
   formSyncErrors,
-  role
+  role,
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -44,8 +52,6 @@ const Frame_Only_Table = ({
   const [rightStileWidth, setRightStileWidth] = useState(null);
   const [topRailWidth, setTopRailWidth] = useState(null);
   const [bottomRailWidth, setBottomRailWidth] = useState(null);
-
-
 
   useEffect(() => {
     setWidth([]);
@@ -101,9 +107,7 @@ const Frame_Only_Table = ({
   };
 
   const clearNotes = (index, e) => {
-    dispatch(
-      change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
-    );
+    dispatch(change('Order', `part_list[${i}].dimensions[${index}].notes`, ''));
   };
 
   const registerChange = (index, e) => {
@@ -283,7 +287,7 @@ const Frame_Only_Table = ({
                   </td>
 
                   <td>
-                    {!edit ? (
+                    {edit ? (
                       <Button
                         color="danger"
                         className="btn-circle"
@@ -331,7 +335,7 @@ const Frame_Only_Table = ({
                   </Col>
 
                   <Col lg="2">
-                    {!edit ? (
+                    {edit ? (
                       <Button
                         color="danger"
                         className="btn-circle"
@@ -349,25 +353,25 @@ const Frame_Only_Table = ({
               role?.type === 'administrator' ||
               role?.type === 'management' ||
               role?.type === 'office' ? (
-                  <Col xs="3">
-                    <strong>Extra Design Cost</strong>
-                    <Field
-                      name={`${table}.extraCost`}
-                      type="text"
-                      component={renderPrice}
-                      edit={edit}
-                      label="extraCost"
-                      {...currencyMask}
-                    />
-                  </Col>
-                ) : null}
+                <Col xs="3">
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    edit={edit}
+                    label="extraCost"
+                    {...currencyMask}
+                  />
+                </Col>
+              ) : null}
             </Row>
             <br />
           </Fragment>
         ))}
         <Row>
           <Col>
-            {!edit ? (
+            {edit ? (
               <Button
                 color="primary"
                 className="btn-circle"
@@ -402,9 +406,7 @@ const Frame_Only_Table = ({
                   }
 
                   dispatch(touch('Order', `part_list[${i}].woodtype`));
-                  dispatch(
-                    touch('Order', `part_list[${i}].face_frame_design`)
-                  );
+                  dispatch(touch('Order', `part_list[${i}].face_frame_design`));
                   dispatch(
                     touch('Order', `part_list[${i}].face_frame_finishing`)
                   );

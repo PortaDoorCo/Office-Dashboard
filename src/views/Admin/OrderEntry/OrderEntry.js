@@ -451,6 +451,10 @@ class OrderEntry extends Component {
     } = this.props;
 
     const customer = formState?.job_info?.customer;
+    const status = formState?.job_info?.status?.value;
+
+    console.log({ chek: edit });
+    console.log({ formState });
 
     return (
       <div className="animated fadeIn order-tour">
@@ -500,7 +504,7 @@ class OrderEntry extends Component {
                           handleAddress={this.handleAddress}
                           toggleReminderModal={this.toggleReminderModal}
                           customerReminder={this.state.customerReminder}
-                          edit={edit}
+                          edit={!edit}
                           isEdit={isEdit}
                           saveEmail={saveEmail}
                           cookie={cookie}
@@ -541,7 +545,7 @@ class OrderEntry extends Component {
                         addPriceSelector={addPriceSelector}
                         dispatch={dispatch}
                         isValid={isValid}
-                        edit={edit}
+                        edit={!edit && status === 'Quote'}
                         updateSubmit={this.state.updateSubmit}
                       />
                     ) : orderType === 'Drawer Order' ? (
@@ -550,7 +554,7 @@ class OrderEntry extends Component {
                         component={DrawerInfo}
                         dispatch={dispatch}
                         formState={formState}
-                        edit={edit}
+                        edit={!edit && status === 'Quote'}
                       />
                     ) : orderType === 'Face Frame' ? (
                       <FieldArray
@@ -563,7 +567,7 @@ class OrderEntry extends Component {
                         dispatch={dispatch}
                         isValid={isValid}
                         updateSubmit={this.state.updateSubmit}
-                        edit={edit}
+                        edit={!edit && status === 'Quote'}
                       />
                     ) : orderType === 'Mouldings' ? (
                       <FieldArray
@@ -571,7 +575,7 @@ class OrderEntry extends Component {
                         component={Mouldings}
                         dispatch={dispatch}
                         formState={formState}
-                        edit={edit}
+                        edit={!edit && status === 'Quote'}
                       />
                     ) : orderType === 'Misc Items' ? (
                       <FieldArray
@@ -579,7 +583,7 @@ class OrderEntry extends Component {
                         component={MiscItems}
                         dispatch={dispatch}
                         formState={formState}
-                        edit={edit}
+                        edit={!edit && status === 'Quote'}
                       />
                     ) : null}
                   </Suspense>
@@ -606,7 +610,7 @@ class OrderEntry extends Component {
                               <Field
                                 name={'discount'}
                                 type="text"
-                                edit={true}
+                                edit={!edit}
                                 component={renderField}
                                 label="discount"
                               />

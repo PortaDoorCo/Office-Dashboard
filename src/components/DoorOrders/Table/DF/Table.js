@@ -665,7 +665,7 @@ const Cope_Table = ({
                     )}
                   </td>
                   <td>
-                    {!edit ? (
+                    {edit ? (
                       <Button
                         color="danger"
                         className="btn-circle"
@@ -761,7 +761,7 @@ const Cope_Table = ({
                   </td>
                 </tr>
 
-                {!edit ? (
+                {edit ? (
                   <tr>
                     <td>
                       <ButtonGroup vertical>
@@ -941,7 +941,7 @@ const Cope_Table = ({
                   </Col>
 
                   <Col lg="2">
-                    {!edit ? (
+                    {edit ? (
                       <Button
                         color="danger"
                         className="btn-circle"
@@ -978,7 +978,7 @@ const Cope_Table = ({
         ))}
         <Row>
           <Col>
-            {!edit ? (
+            {edit ? (
               <Button
                 color="primary"
                 className="btn-circle"

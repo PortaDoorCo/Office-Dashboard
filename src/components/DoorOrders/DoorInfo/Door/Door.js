@@ -177,6 +177,12 @@ class Door extends Component {
     console.log({ CBD_Panels });
     console.log({ customer });
 
+    const status = formState?.values?.job_info?.status?.value;
+    console.log({ check: status === 'Quote' });
+    console.log({ edit });
+
+    console.log({ CHECKK: edit && status === 'Quote' });
+
     return (
       <div>
         <ModalUtil

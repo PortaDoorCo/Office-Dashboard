@@ -3,13 +3,21 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, FormGroup, Input, Label, Row, Table } from 'reactstrap';
 import {
-  Field, getFormSyncErrors, startAsyncValidation, touch
+  Field,
+  getFormSyncErrors,
+  startAsyncValidation,
+  touch,
 } from 'redux-form';
 import 'semantic-ui-css/semantic.min.css';
 import currencyMask from '../../../../utils/currencyMask';
 // import 'react-widgets/dist/css/react-widgets.css';
 import {
-  renderCheckboxToggle, renderField, renderFieldDisabled, renderInt, renderNumber, renderPrice
+  renderCheckboxToggle,
+  renderField,
+  renderFieldDisabled,
+  renderInt,
+  renderNumber,
+  renderPrice,
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import Maker from '../../MakerJS/Maker';
@@ -33,7 +41,7 @@ const Slab_Door_Table = ({
   edit,
   dispatch,
   formSyncErrors,
-  role
+  role,
 }) => {
   const [width, setWidth] = useState([]);
   const [height, setHeight] = useState([]);
@@ -95,7 +103,10 @@ const Slab_Door_Table = ({
               <Col>
                 <FormGroup>
                   <Label htmlFor="panel">
-                    <strong>Line # {itemNumCounter?.part_list[i]?.dimensions[index]?.item}</strong>
+                    <strong>
+                      Line #{' '}
+                      {itemNumCounter?.part_list[i]?.dimensions[index]?.item}
+                    </strong>
                   </Label>
                   <Field
                     name={`${table}.item`}
@@ -189,7 +200,7 @@ const Slab_Door_Table = ({
                     )}
                   </td>
                   <td>
-                    {!edit ? (
+                    {edit ? (
                       <Button
                         color="danger"
                         className="btn-circle"
@@ -231,17 +242,18 @@ const Slab_Door_Table = ({
                 />
               </Col>
               <Col>
-                {!edit ? (
+                {edit ? (
                   parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
                     1 &&
-                  parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) ===
-                    1 ? (
-                      <Field
-                        name={`${table}.unevenCheck`}
-                        component={renderCheckboxToggle}
-                        label="Uneven Split"
-                      />
-                    ) : null
+                  parseInt(
+                    formState.part_list[i]?.dimensions[index]?.panelsW
+                  ) === 1 ? (
+                    <Field
+                      name={`${table}.unevenCheck`}
+                      component={renderCheckboxToggle}
+                      label="Uneven Split"
+                    />
+                  ) : null
                 ) : null}
               </Col>
             </Row>
@@ -272,7 +284,9 @@ const Slab_Door_Table = ({
                 <Row>
                   {Array.from(
                     Array(
-                      parseInt(formState.part_list[i]?.dimensions[index]?.panelsH)
+                      parseInt(
+                        formState.part_list[i]?.dimensions[index]?.panelsH
+                      )
                     ).keys()
                   )
                     .slice(1)
@@ -317,25 +331,25 @@ const Slab_Door_Table = ({
               role?.type === 'administrator' ||
               role?.type === 'management' ||
               role?.type === 'office' ? (
-                  <Col xs="3">
-                    <strong>Extra Design Cost</strong>
-                    <Field
-                      name={`${table}.extraCost`}
-                      type="text"
-                      component={renderPrice}
-                      edit={edit}
-                      label="extraCost"
-                      {...currencyMask}
-                    />
-                  </Col>
-                ) : null}
+                <Col xs="3">
+                  <strong>Extra Design Cost</strong>
+                  <Field
+                    name={`${table}.extraCost`}
+                    type="text"
+                    component={renderPrice}
+                    edit={edit}
+                    label="extraCost"
+                    {...currencyMask}
+                  />
+                </Col>
+              ) : null}
             </Row>
             <br />
           </Fragment>
         ))}
         <Row>
           <Col>
-            {!edit ? (
+            {edit ? (
               <Button
                 color="primary"
                 className="btn-circle"
@@ -375,9 +389,7 @@ const Slab_Door_Table = ({
                     dispatch(touch('Order', `part_list[${i}].edge`));
                   }
 
-                  dispatch(
-                    touch('Order', `part_list[${i}].applied_profile`)
-                  );
+                  dispatch(touch('Order', `part_list[${i}].applied_profile`));
 
                   dispatch(startAsyncValidation('Order'));
 

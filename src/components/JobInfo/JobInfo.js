@@ -41,7 +41,7 @@ const renderDateTimePicker = ({
       onChange={onChange}
       time={showTime}
       value={!value ? null : new Date(value)}
-      disabled={edit}
+      disabled={!edit}
     />
   </div>
 );
@@ -495,7 +495,7 @@ class JobInfo extends Component {
                 name={'Notes'}
                 type="text"
                 component={renderTextField}
-                edit={true}
+                edit={false}
                 label="Notes"
               />
             </FormGroup>

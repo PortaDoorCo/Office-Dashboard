@@ -26,7 +26,6 @@ import NavModal from './MiscItemCollapse';
 import { connect } from 'react-redux';
 
 const CheckoutBox = (props) => {
-
   const { role } = props;
   const jobInfo = props.formState?.job_info;
 
@@ -47,13 +46,11 @@ const CheckoutBox = (props) => {
 
             <hr />
 
-          
             <NavModal
               {...props}
               onSubNav={props.onSubNav}
               onUploaded={props.onUploaded}
             />
-            
 
             <form
               onKeyPress={props.onKeyPress}
@@ -70,11 +67,15 @@ const CheckoutBox = (props) => {
                         <Field
                           name={'Taxable'}
                           component={renderCheckboxToggle}
-                          edit={role?.type === 'authenticated' ||
-                          role?.type === 'owner' ||
-                          role?.type === 'administrator' ||
-                          role?.type === 'management' ||
-                          role?.type === 'office' ? false : true}
+                          edit={
+                            role?.type === 'authenticated' ||
+                            role?.type === 'owner' ||
+                            role?.type === 'administrator' ||
+                            role?.type === 'management' ||
+                            role?.type === 'office'
+                              ? true
+                              : false
+                          }
                         />
                       </FormGroup>
                     </Col>
@@ -89,11 +90,15 @@ const CheckoutBox = (props) => {
                       name={'discount'}
                       type="text"
                       component={renderField}
-                      edit={role?.type === 'authenticated' ||
-                      role?.type === 'owner' ||
-                      role?.type === 'administrator' ||
-                      role?.type === 'management' ||
-                      role?.type === 'office' ? false : true}
+                      edit={
+                        role?.type === 'authenticated' ||
+                        role?.type === 'owner' ||
+                        role?.type === 'administrator' ||
+                        role?.type === 'management' ||
+                        role?.type === 'office'
+                          ? true
+                          : false
+                      }
                       label="discount"
                       validate={props.maxValue(100)}
                     />
