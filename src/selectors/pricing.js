@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import numQty from 'numeric-quantity';
+import moment from 'moment';
 
 const pricingSelector = (state) => {
   const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
@@ -752,34 +753,43 @@ export const itemPriceSelector = createSelector(
                     : 0;
               }
 
+              let A = moment(formState?.values?.created_at);
+              let B = moment();
+              let C = B.diff(A, 'days');
+
+              console.log({ formState });
+
+              console.log({ C });
+
               if (height > -1) {
                 if (itemPrice.length > 0) {
                   if (
-                    (formState?.values?.part_list[index]?.dimensions.length >
-                      0 &&
-                      formState?.values?.part_list[index]?.dimensions[j] !==
-                        formState?.initial.part_list[index]?.dimensions[j]) ||
-                    formState?.values?.part_list[index]?.woodtype !==
-                      formState?.initial.part_list[index]?.woodtype ||
-                    formState?.values?.part_list[index]?.design !==
-                      formState?.initial.part_list[index]?.design ||
-                    formState?.values?.part_list[index]?.edge !==
-                      formState?.initial.part_list[index]?.edge ||
-                    formState?.values?.part_list[index]?.profile !==
-                      formState?.initial.part_list[index]?.profile ||
-                    formState?.values?.part_list[index]?.panel !==
-                      formState?.initial.part_list[index]?.panel ||
-                    formState?.values?.part_list[index]?.applied_profile !==
-                      formState?.initial.part_list[index]?.applied_profile ||
-                    formState?.values?.part_list[index]?.thickness !==
-                      formState?.initial.part_list[index]?.thickness ||
-                    formState?.values?.part_list[index]?.orderType !==
-                      formState?.initial.part_list[index]?.orderType ||
-                    formState?.values?.part_list[index]?.construction !==
-                      formState?.initial.part_list[index]?.construction
+                    formState?.values?.job_info?.status?.value === 'Quote' &&
+                    (formState?.values?.part_list[index]?.dimensions[j] !==
+                      formState?.initial.part_list[index]?.dimensions[j] ||
+                      formState?.values?.part_list[index]?.woodtype !==
+                        formState?.initial.part_list[index]?.woodtype ||
+                      formState?.values?.part_list[index]?.design !==
+                        formState?.initial.part_list[index]?.design ||
+                      formState?.values?.part_list[index]?.edge !==
+                        formState?.initial.part_list[index]?.edge ||
+                      formState?.values?.part_list[index]?.profile !==
+                        formState?.initial.part_list[index]?.profile ||
+                      formState?.values?.part_list[index]?.panel !==
+                        formState?.initial.part_list[index]?.panel ||
+                      formState?.values?.part_list[index]?.applied_profile !==
+                        formState?.initial.part_list[index]?.applied_profile ||
+                      formState?.values?.part_list[index]?.thickness !==
+                        formState?.initial.part_list[index]?.thickness ||
+                      formState?.values?.part_list[index]?.orderType !==
+                        formState?.initial.part_list[index]?.orderType ||
+                      formState?.values?.part_list[index]?.construction !==
+                        formState?.initial.part_list[index]?.construction)
                   ) {
+                    console.log('here');
                     return Math.floor(price * 100) / 100;
                   } else {
+                    console.log('hereeeeeee');
                     return Math.round(itemPrice[index][j] * 100) / 100;
                   }
                 } else {
@@ -819,23 +829,26 @@ export const itemPriceSelector = createSelector(
             if (height > -1) {
               if (itemPrice.length > 0) {
                 if (
-                  (formState?.values?.part_list[index]?.dimensions.length > 0 &&
-                    formState?.values?.part_list[index]?.dimensions[j] !==
-                      formState?.initial.part_list[index]?.dimensions[j]) ||
-                  formState?.values?.part_list[index]?.woodtype !==
-                    formState?.initial.part_list[index]?.woodtype ||
-                  formState?.values?.part_list[index]?.box_bottom_thickness !==
-                    formState?.initial.part_list[index]?.box_bottom_thickness ||
-                  formState?.values?.part_list[index]?.box_finish !==
-                    formState?.initial.part_list[index]?.box_finish ||
-                  formState?.values?.part_list[index]?.box_notch !==
-                    formState?.initial.part_list[index]?.box_notch ||
-                  formState?.values?.part_list[index]?.box_bottom_woodtype !==
-                    formState?.initial.part_list[index]?.box_bottom_woodtype ||
-                  formState?.values?.part_list[index]?.box_assembly !==
-                    formState?.initial.part_list[index]?.box_assembly ||
-                  formState?.values?.part_list[index]?.box_thickness !==
-                    formState?.initial.part_list[index]?.box_thickness
+                  formState?.values?.job_info?.status?.value === 'Quote' &&
+                  (formState?.values?.part_list[index]?.dimensions[j] !==
+                    formState?.initial.part_list[index]?.dimensions[j] ||
+                    formState?.values?.part_list[index]?.woodtype !==
+                      formState?.initial.part_list[index]?.woodtype ||
+                    formState?.values?.part_list[index]
+                      ?.box_bottom_thickness !==
+                      formState?.initial.part_list[index]
+                        ?.box_bottom_thickness ||
+                    formState?.values?.part_list[index]?.box_finish !==
+                      formState?.initial.part_list[index]?.box_finish ||
+                    formState?.values?.part_list[index]?.box_notch !==
+                      formState?.initial.part_list[index]?.box_notch ||
+                    formState?.values?.part_list[index]?.box_bottom_woodtype !==
+                      formState?.initial.part_list[index]
+                        ?.box_bottom_woodtype ||
+                    formState?.values?.part_list[index]?.box_assembly !==
+                      formState?.initial.part_list[index]?.box_assembly ||
+                    formState?.values?.part_list[index]?.box_thickness !==
+                      formState?.initial.part_list[index]?.box_thickness)
                 ) {
                   return Math.floor(price * 100) / 100;
                 } else {

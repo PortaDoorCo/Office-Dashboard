@@ -10,7 +10,6 @@ import { CustomInput, Input } from 'reactstrap';
 import { Checkbox as CheckboxUI } from 'semantic-ui-react';
 
 const renderPhoto = ({ item }) => {
-  
   return (
     <>
       <span
@@ -40,7 +39,6 @@ const renderPhoto = ({ item }) => {
 };
 
 const renderMouldings = ({ item }) => {
-  
   return (
     <>
       <span
@@ -70,7 +68,6 @@ const renderMouldings = ({ item }) => {
 };
 
 const renderMouldingEditPhoto = ({ item }) => {
-  
   return (
     <>
       <span
@@ -99,7 +96,6 @@ const renderMouldingEditPhoto = ({ item }) => {
   );
 };
 
-
 export const renderMultiSelect = ({
   input,
   data,
@@ -118,7 +114,7 @@ export const renderMultiSelect = ({
       dataKey={dataKey}
       textField={textField}
       placeholder="Add Misc Items"
-      disabled={edit}
+      disabled={!edit}
     />
     {touched &&
       ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -146,7 +142,7 @@ export const renderDropdownListFilter = ({
       onBlur={() => input.onBlur()}
       allowCreate={false}
       filter
-      disabled={edit}
+      disabled={!edit}
     />
     {touched &&
       ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -173,7 +169,7 @@ export const renderDropdownListFilterNoPhoto = ({
       onBlur={() => input.onBlur()}
       allowCreate={false}
       filter
-      disabled={edit}
+      disabled={!edit}
     />
     {touched &&
       ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -201,7 +197,7 @@ export const renderMouldingInputs = ({
       onBlur={() => input.onBlur()}
       allowCreate={false}
       filter
-      disabled={edit}
+      disabled={!edit}
     />
     {touched &&
       ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -229,7 +225,7 @@ export const renderMouldingsEdit = ({
       onBlur={() => input.onBlur()}
       allowCreate={false}
       filter
-      disabled={edit}
+      disabled={!edit}
     />
     {touched &&
       ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -256,7 +252,7 @@ export const renderDropdownListNoPhoto = ({
       onBlur={() => input.onBlur()}
       allowCreate={false}
       filter
-      disabled={edit}
+      disabled={!edit}
     />
     {touched &&
       ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -281,7 +277,7 @@ export const renderDropdownList = ({
       placeholder="Select"
       // onChange={() => input.onChange()}
       onBlur={() => input.onBlur()}
-      disabled={edit}
+      disabled={!edit}
     />
     {touched &&
       ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -305,7 +301,7 @@ export const renderDatePicker = ({
       textField={textField}
       // onChange={() => input.onChange()}
       onBlur={() => input.onBlur()}
-      disabled={edit}
+      disabled={!edit}
     />
     {touched &&
       ((error && <span style={{ color: 'red' }}>{error}</span>) ||
@@ -320,7 +316,7 @@ export const renderField = ({
   ...custom
 }) => (
   <Fragment>
-    <Input {...input} disabled={edit} autoComplete="off" />
+    <Input {...input} disabled={!edit} autoComplete="off" />
     {touched &&
       ((error && <span style={{ color: 'red' }}>{error}</span>) ||
         (warning && <span style={{ color: 'red' }}>{warning}</span>))}
@@ -337,7 +333,7 @@ export const renderTextField = ({
   <Fragment>
     <Input
       {...input}
-      disabled={edit}
+      disabled={!edit}
       placeholder={placeholder}
       type="textarea"
       autoComplete="off"
@@ -362,7 +358,7 @@ export const renderNumber = ({
         validate={{
           pattern: { value: '^[0-9/ ]+$' },
         }}
-        disabled={edit}
+        disabled={!edit}
         autoComplete="off"
       />
     </AvForm>
@@ -386,7 +382,7 @@ export const renderInt = ({
         validate={{
           pattern: { value: '^[0-9]+$' },
         }}
-        disabled={edit}
+        disabled={!edit}
         autoComplete="off"
       />
     </AvForm>
@@ -406,7 +402,7 @@ export const renderSwitch = ({
     <CustomInput
       type="switch"
       {...input}
-      disabled={edit}
+      disabled={!edit}
       autoComplete="new-password"
     />
     {touched &&
@@ -427,7 +423,7 @@ export const renderPrice = ({
       thousandSeparator={true}
       {...input}
       allowNegative={true}
-      disabled={edit}
+      disabled={!edit}
       customInput={Input}
       prefix={'$'}
     />
@@ -452,7 +448,7 @@ export const renderCheckboxToggle = ({
       checked={value ? true : false}
       onChange={(e, data) => onChange(data.checked)}
       type="checkbox"
-      disabled={edit}
+      disabled={!edit}
     />
     {touched && error && <span>{error}</span>}
   </div>

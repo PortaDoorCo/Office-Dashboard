@@ -4,20 +4,24 @@ import { connect } from 'react-redux';
 import { Button, CardSubtitle, Col, FormGroup, Label, Row } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import {
-  addPriceSelector, itemPriceSelector, linePriceSelector, miscTotalSelector, subTotalSelector, taxSelector, totalSelector
+  addPriceSelector,
+  itemPriceSelector,
+  linePriceSelector,
+  miscTotalSelector,
+  subTotalSelector,
+  taxSelector,
+  totalSelector,
 } from '../../selectors/pricing';
 import {
-  renderDropdownList, renderDropdownListFilter,
-  renderTextField
+  renderDropdownList,
+  renderDropdownListFilter,
+  renderTextField,
 } from '../RenderInputs/renderInputs';
 import OrderTable from './OrderTable';
 
-
 const required = (value) => (value ? undefined : 'Required');
 
-
 class DrawerBoxInfo extends Component {
-
   render() {
     const {
       woodtypes,
@@ -36,8 +40,9 @@ class DrawerBoxInfo extends Component {
       box_assembly,
     } = this.props;
 
-
-    const drawer_box_woodtypes = woodtypes.filter((wood) => wood.drawer_box === true);
+    const drawer_box_woodtypes = woodtypes.filter(
+      (wood) => wood.drawer_box === true
+    );
 
     return (
       <div>
@@ -179,7 +184,6 @@ class DrawerBoxInfo extends Component {
 
             <Row className="mt-2">
               <Col xs="4">
-           
                 <FormGroup>
                   <strong>
                     <Label for="jobNotes">Job Notes</Label>
@@ -192,7 +196,6 @@ class DrawerBoxInfo extends Component {
                     <p>Enter Item Build Note Here - Framing/Wood, etc.</p>
                   </strong>
                 </FormGroup>
-         
               </Col>
             </Row>
 
@@ -219,7 +222,9 @@ class DrawerBoxInfo extends Component {
           </div>
         ))}
 
-        {!edit && formState?.part_list && formState?.part_list[0]?.dimensions.length > 0 ? (
+        {edit &&
+        formState?.part_list &&
+        formState?.part_list[0]?.dimensions.length > 0 ? (
           <Button
             color="primary"
             onClick={() =>
@@ -255,8 +260,7 @@ const mapStateToProps = (state, props) => ({
   total: totalSelector(state),
   tax: taxSelector(state),
   addPriceSelector: addPriceSelector(state),
-  miscTotalSelector: miscTotalSelector(state)
+  miscTotalSelector: miscTotalSelector(state),
 });
 
 export default connect(mapStateToProps, null)(DrawerBoxInfo);
-

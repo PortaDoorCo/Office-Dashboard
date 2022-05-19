@@ -35,9 +35,10 @@ class DoorInfo extends Component {
     switch (type) {
       case 'Door':
         fields.push({
-          orderType: lastItem.orderType.value === 'One_Piece'
-            ? orderType[3]
-            : lastItem.orderType.value === 'Two_Piece'
+          orderType:
+            lastItem.orderType.value === 'One_Piece'
+              ? orderType[3]
+              : lastItem.orderType.value === 'Two_Piece'
               ? orderType[5]
               : orderType[0],
           construction: lastItem.construction,
@@ -46,10 +47,16 @@ class DoorInfo extends Component {
           panel: lastItem.panel,
           edge: lastItem.edge,
           profile: lastItem.profile,
-          leftStile: lastItem.leftStile ? fraction(lastItem.leftStile) : '2 5/16',
-          rightStile: lastItem.rightStile ? fraction(lastItem.rightStile)  : '2 5/16',
-          topRail: lastItem.topRail ? fraction(lastItem.topRail)  : '2 5/16',
-          bottomRail: lastItem.bottomRail ? fraction(lastItem.bottomRail) : '2 5/16',
+          leftStile: lastItem.leftStile
+            ? fraction(lastItem.leftStile)
+            : '2 5/16',
+          rightStile: lastItem.rightStile
+            ? fraction(lastItem.rightStile)
+            : '2 5/16',
+          topRail: lastItem.topRail ? fraction(lastItem.topRail) : '2 5/16',
+          bottomRail: lastItem.bottomRail
+            ? fraction(lastItem.bottomRail)
+            : '2 5/16',
           applied_profile: lastItem.applied_profile,
           dimensions: [],
           addPrice: 0,
@@ -63,19 +70,27 @@ class DoorInfo extends Component {
             lastItem.orderType.value === 'One_Piece'
               ? orderType[3]
               : lastItem.orderType.value === 'Two_Piece'
-                ? orderType[5]
-                : orderType[1],
+              ? orderType[5]
+              : orderType[1],
           construction: lastItem.construction,
           thickness: lastItem.thickness,
           woodtype: lastItem.woodtype,
           panel: lastItem.panel,
           edge: lastItem.edge,
           profile: lastItem.profile,
-          leftStile: lastItem.profile ? fraction(lastItem.profile.PROFILE_WIDTH) : '2 5/16',
-          rightStile: lastItem.profile ? fraction(lastItem.profile.PROFILE_WIDTH)  : '2 5/16',
-          topRail: lastItem.profile ? fraction(lastItem.profile.DF_Reduction)  : '1 1/2',
-          bottomRail: lastItem.profile ? fraction(lastItem.profile.DF_Reduction) : '1 1/2',
-          notes:'',
+          leftStile: lastItem.profile
+            ? fraction(lastItem.profile.PROFILE_WIDTH)
+            : '2 5/16',
+          rightStile: lastItem.profile
+            ? fraction(lastItem.profile.PROFILE_WIDTH)
+            : '2 5/16',
+          topRail: lastItem.profile
+            ? fraction(lastItem.profile.DF_Reduction)
+            : '1 1/2',
+          bottomRail: lastItem.profile
+            ? fraction(lastItem.profile.DF_Reduction)
+            : '1 1/2',
+          notes: '',
           applied_profile: lastItem.applied_profile,
           dimensions: [],
           addPrice: 0,
@@ -131,14 +146,12 @@ class DoorInfo extends Component {
             type={this.state.type}
           />
         </div>
-        
+
         {fields.map((part, index) => {
           return (
-            <div id={`item-${index}`} key={index} >
-              
+            <div id={`item-${index}`} key={index}>
               <hr />
               <CardSubtitle className="mt-4">
-                
                 <Row>
                   <Col lg="11">
                     <div>
@@ -189,9 +202,10 @@ class DoorInfo extends Component {
             </div>
           );
         })}
-    
-        {!edit && formState?.part_list && formState?.part_list[0]?.dimensions.length > 0  ? (
-          
+
+        {edit &&
+        formState?.part_list &&
+        formState?.part_list[0]?.dimensions.length > 0 ? (
           <div>
             <ButtonGroup>
               <Button

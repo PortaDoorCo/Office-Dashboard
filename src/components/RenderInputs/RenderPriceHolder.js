@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText
-} from 'reactstrap';
+import { Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 
 class RenderPriceHolder extends Component {
   render() {
@@ -15,7 +10,11 @@ class RenderPriceHolder extends Component {
           <InputGroupAddon addonType="prepend">
             <InputGroupText>$</InputGroupText>
           </InputGroupAddon>
-          <Input placeholder={this.props.input} disabled={edit} autoComplete="new-password" />
+          <Input
+            placeholder={this.props.input}
+            disabled={edit}
+            autoComplete="new-password"
+          />
         </InputGroup>
       </div>
     );

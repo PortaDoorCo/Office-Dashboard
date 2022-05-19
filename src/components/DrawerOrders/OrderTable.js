@@ -243,7 +243,7 @@ const OrderTable = ({
                   </td>
 
                   <td>
-                    {!edit ? (
+                    {edit ? (
                       <Button
                         color="danger"
                         className="btn-circle"
@@ -275,7 +275,7 @@ const OrderTable = ({
                   </Col>
 
                   <Col lg="2">
-                    {!edit ? (
+                    {edit ? (
                       <Button
                         color="danger"
                         className="btn-circle"
@@ -309,7 +309,7 @@ const OrderTable = ({
             <br />
           </Fragment>
         ))}
-        {!edit ? (
+        {edit ? (
           <Button
             color="primary"
             className="btn-circle"

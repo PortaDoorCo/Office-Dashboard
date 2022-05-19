@@ -178,7 +178,7 @@ const CheckoutBox = (props) => {
                         <Label htmlFor="companyName">Taxable?</Label>
                         <Field
                           name={'Taxable'}
-                          edit={props.edit}
+                          edit={!props.edit}
                           component={renderCheckboxToggle}
                         />
                       </FormGroup>
@@ -195,7 +195,7 @@ const CheckoutBox = (props) => {
                       type="text"
                       component={renderField}
                       label="discount"
-                      edit={props.edit}
+                      edit={!props.edit}
                       validate={props.maxValue(100)}
                     />
                   </InputGroup>

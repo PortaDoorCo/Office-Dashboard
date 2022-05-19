@@ -172,7 +172,7 @@ let Inputs = (props) => {
                     </td>
                   </>
 
-                  {!edit ? (
+                  {edit ? (
                     <td>
                       <Button
                         color="danger"
@@ -260,7 +260,7 @@ let Inputs = (props) => {
 
       <Row>
         <Col>
-          {!edit ? (
+          {edit ? (
             <>
               <Button
                 color="primary"
