@@ -71,13 +71,30 @@ export default (data, breakdowns) => {
                         {
                           text: data.misc_items.map((i) => {
                             if (i.category === 'preselect') {
-                              if (i.item?.NAME?.includes('Delivery')) {
+                              if (
+                                i?.item?.NAME?.toLowerCase()?.includes(
+                                  'delivery'
+                                ) ||
+                                i?.item?.NAME?.toLowerCase()?.includes(
+                                  'price'
+                                ) ||
+                                i?.item?.NAME?.toLowerCase()?.includes(
+                                  'discount'
+                                )
+                              ) {
                                 return null;
                               } else {
                                 return `${i.item?.NAME} \n`;
                               }
                             } else {
-                              return `${i.item2} \n`;
+                              if (
+                                i?.item2?.toLowerCase()?.includes('delivery') ||
+                                i?.item2?.toLowerCase()?.includes('price') ||
+                                i?.item2?.toLowerCase()?.includes('discount')
+                              ) {
+                              } else {
+                                return `${i.item2} \n`;
+                              }
                             }
                           }),
                         },

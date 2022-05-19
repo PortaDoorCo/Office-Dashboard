@@ -115,10 +115,10 @@ export default (data, breakdowns) => {
                 },
                 item.cab_number
                   ? {
-                    text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
-                    style: 'tableBold',
-                    alignment: 'left',
-                  }
+                      text: `Cab#: ${item.cab_number ? item.cab_number : ''}`,
+                      style: 'tableBold',
+                      alignment: 'left',
+                    }
                   : null,
               ],
             },
@@ -152,38 +152,59 @@ export default (data, breakdowns) => {
             stack: [
               index === 0 && k === 0
                 ? {
-                  columns: [
-                    { text: '' },
-                    {
-                      alignment: 'center',
-                      style: 'fontsBold',
-                      stack: [
-                        data.job_info?.Shop_Notes ?{
-                          text: `${
-                            data.job_info?.Shop_Notes
-                              ? data.job_info?.Shop_Notes?.toUpperCase()
-                              : ''
-                          }`,
-                        } : null,
-                        { text : data.misc_items.map(i => {
-                          if(i.category === 'preselect'){
-                            if(i.item.NAME.includes('Delivery')){
-                              return null;
-                            } else {
-                              return `${i.item?.NAME} \n`;
-                            }
-                        
-                          } else {
-                            return `${i.item2} \n`;
-                          }
-                        })
-                        }
-                      ]
-                    },
-                    { text: '' },
-                  ],
-                  margin: [0, -26, 0, 10],
-                }
+                    columns: [
+                      { text: '' },
+                      {
+                        alignment: 'center',
+                        style: 'fontsBold',
+                        stack: [
+                          data.job_info?.Shop_Notes
+                            ? {
+                                text: `${
+                                  data.job_info?.Shop_Notes
+                                    ? data.job_info?.Shop_Notes?.toUpperCase()
+                                    : ''
+                                }`,
+                              }
+                            : null,
+                          {
+                            text: data.misc_items.map((i) => {
+                              if (i.category === 'preselect') {
+                                if (
+                                  i?.item?.NAME?.toLowerCase()?.includes(
+                                    'delivery'
+                                  ) ||
+                                  i?.item?.NAME?.toLowerCase()?.includes(
+                                    'price'
+                                  ) ||
+                                  i?.item?.NAME?.toLowerCase()?.includes(
+                                    'discount'
+                                  )
+                                ) {
+                                  return null;
+                                } else {
+                                  return `${i.item?.NAME} \n`;
+                                }
+                              } else {
+                                if (
+                                  i?.item2
+                                    ?.toLowerCase()
+                                    ?.includes('delivery') ||
+                                  i?.item2?.toLowerCase()?.includes('price') ||
+                                  i?.item2?.toLowerCase()?.includes('discount')
+                                ) {
+                                } else {
+                                  return `${i.item2} \n`;
+                                }
+                              }
+                            }),
+                          },
+                        ],
+                      },
+                      { text: '' },
+                    ],
+                    margin: [0, -26, 0, 10],
+                  }
                 : null,
               info[k],
               {

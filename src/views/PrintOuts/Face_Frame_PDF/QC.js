@@ -26,19 +26,19 @@ export default (data, breakdowns) => {
           { text: 'N/A', style: 'fonts' },
           item.notes || item.full_frame || item.lite
             ? {
-              text: `${item.notes ? item.notes.toUpperCase() : ''} ${
-                item.full_frame ? 'Full Frame DF' : ''
-              } ${item.lite ? item.lite.NAME : ''}`,
-              style: 'tableBold',
-              alignment: 'left',
-            }
+                text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+                  item.full_frame ? 'Full Frame DF' : ''
+                } ${item.lite ? item.lite.NAME : ''}`,
+                style: 'tableBold',
+                alignment: 'left',
+              }
             : null,
           item.cab_number
             ? {
-              text: `${item.cab_number}`,
-              style: 'fonts',
-              alignment: 'left',
-            }
+                text: `${item.cab_number}`,
+                style: 'fonts',
+                alignment: 'left',
+              }
             : null,
         ]);
       });
@@ -48,38 +48,57 @@ export default (data, breakdowns) => {
           stack: [
             index === 0
               ? {
-                columns: [
-                  { text: '' },
-                  {
-                    alignment: 'center',
-                    style: 'fontsBold',
-                    stack: [
-                      data.job_info?.Shop_Notes ?{
-                        text: `${
-                          data.job_info?.Shop_Notes
-                            ? data.job_info?.Shop_Notes?.toUpperCase()
-                            : ''
-                        }`,
-                      } : null,
-                      { text : data.misc_items.map(i => {
-                        if(i.category === 'preselect'){
-                          if(i.item.NAME.includes('Delivery')){
-                            return null;
-                          } else {
-                            return `${i.item?.NAME} \n`;
-                          }
-                        
-                        } else {
-                          return `${i.item2} \n`;
-                        }
-                      })
-                      }
-                    ]
-                  },
-                  { text: '' },
-                ],
-                margin: [0, -26, 0, 0],
-              }
+                  columns: [
+                    { text: '' },
+                    {
+                      alignment: 'center',
+                      style: 'fontsBold',
+                      stack: [
+                        data.job_info?.Shop_Notes
+                          ? {
+                              text: `${
+                                data.job_info?.Shop_Notes
+                                  ? data.job_info?.Shop_Notes?.toUpperCase()
+                                  : ''
+                              }`,
+                            }
+                          : null,
+                        {
+                          text: data.misc_items.map((i) => {
+                            if (i.category === 'preselect') {
+                              if (
+                                i?.item?.NAME?.toLowerCase()?.includes(
+                                  'delivery'
+                                ) ||
+                                i?.item?.NAME?.toLowerCase()?.includes(
+                                  'price'
+                                ) ||
+                                i?.item?.NAME?.toLowerCase()?.includes(
+                                  'discount'
+                                )
+                              ) {
+                                return null;
+                              } else {
+                                return `${i.item?.NAME} \n`;
+                              }
+                            } else {
+                              if (
+                                i?.item2?.toLowerCase()?.includes('delivery') ||
+                                i?.item2?.toLowerCase()?.includes('price') ||
+                                i?.item2?.toLowerCase()?.includes('discount')
+                              ) {
+                              } else {
+                                return `${i.item2} \n`;
+                              }
+                            }
+                          }),
+                        },
+                      ],
+                    },
+                    { text: '' },
+                  ],
+                  margin: [0, -26, 0, 0],
+                }
               : null,
             {
               margin: [0, 10, 0, 0],
@@ -117,8 +136,8 @@ export default (data, breakdowns) => {
                           ? i.panel.NAME
                           : i.orderType.value === 'Slab_Door' ||
                             i.orderType.value === 'Slab_DF'
-                            ? ''
-                            : 'Glass'
+                          ? ''
+                          : 'Glass'
                       } ${i.lite ? '- ' + i.lite.NAME : ''}`,
                       style: 'fonts',
                       alignment: 'right',
