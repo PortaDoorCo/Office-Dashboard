@@ -158,7 +158,7 @@ let Inputs = (props) => {
                     name={`${table}.qty`}
                     component={renderInt}
                     type="text"
-                    edit={edit}
+                    edit={!edit}
                   />
                 </td>
                 <td style={{ width: '40%' }}>
@@ -173,7 +173,7 @@ let Inputs = (props) => {
                       onChange={(e) => changeMiscItem(e, index)}
                       dataKey="value"
                       textField="NAME"
-                      edit={edit}
+                      edit={!edit}
                     />
                   ) : (
                     <Field
@@ -181,7 +181,7 @@ let Inputs = (props) => {
                       component={renderField}
                       dataKey="value"
                       textField="NAME"
-                      edit={edit}
+                      edit={!edit}
                     />
                   )}
                 </td>
@@ -198,7 +198,7 @@ let Inputs = (props) => {
                           component={renderField}
                           label="price"
                           {...currencyMask}
-                          edit={edit}
+                          edit={!edit}
                         />
                       </InputGroup>
                     </td>
@@ -227,7 +227,7 @@ let Inputs = (props) => {
                         type="text"
                         required
                         {...currencyMask}
-                        edit={edit}
+                        edit={!edit}
                       />
                     </td>
                     <td style={{ width: '25%' }}>

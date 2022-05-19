@@ -84,6 +84,7 @@ class Conversation_Notes extends Component {
                   type="textarea"
                   component={renderField}
                   label="Notes"
+                  edit={true}
                 />
               </FormGroup>
 

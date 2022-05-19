@@ -106,7 +106,7 @@ const RenderBalances = ({
                   <Field
                     name={`${i}.date`}
                     showTime={false}
-                    edit={edit}
+                    edit={!edit}
                     component={renderDateTimePicker}
                   />
                 </td>
@@ -142,7 +142,7 @@ const RenderBalances = ({
                     component={renderDropdownList}
                     data={paymentTypes}
                     dataKey="value"
-                    edit={edit}
+                    edit={!edit}
                     // validate={required}
                     textField="NAME"
                   />
