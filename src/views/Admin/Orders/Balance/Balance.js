@@ -214,6 +214,7 @@ class Balance extends Component {
                         data={paymentTypes}
                         dataKey="value"
                         textField="NAME"
+                        edit={true}
                         // validate={required}
                       />
                     </FormGroup>
@@ -229,6 +230,7 @@ class Balance extends Component {
                         data={paymentType}
                         dataKey="value"
                         textField="name"
+                        edit={true}
                         // validate={required}
                       />
                     </FormGroup>
@@ -247,6 +249,7 @@ class Balance extends Component {
                           onBlur={this.changeBalance}
                           component={renderField}
                           label="pay_balance"
+                          edit={true}
                         />
                       </FormGroup>
                     </Col>
@@ -263,6 +266,7 @@ class Balance extends Component {
                           onBlur={this.changeBalance}
                           component={renderField}
                           label="pay_deposit"
+                          edit={true}
                         />
                       </FormGroup>
                     </Col>
