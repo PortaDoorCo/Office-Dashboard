@@ -166,7 +166,7 @@ class DoorInfo extends Component {
                     </div>
                   </Col>
                   <Col>
-                    {!edit ? (
+                    {edit ? (
                       fields.length > 1 ? (
                         <Button
                           color="danger"

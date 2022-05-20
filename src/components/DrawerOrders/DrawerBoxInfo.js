@@ -57,7 +57,7 @@ class DrawerBoxInfo extends Component {
                   </div>
                 </Col>
                 <Col>
-                  {!edit ? (
+                  {edit ? (
                     <div>
                       {fields.length > 1 ? (
                         <Button
