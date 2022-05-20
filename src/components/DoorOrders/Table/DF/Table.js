@@ -689,7 +689,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="topRail"
-                      edit={construction === 'Miter' ? true : edit}
+                      edit={construction === 'Miter' ? false : edit}
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e), onStileOrRailChange(e, index)
@@ -705,7 +705,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="bottomRail"
-                      edit={construction === 'Miter' ? true : edit}
+                      edit={construction === 'Miter' ? false : edit}
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e), onStileOrRailChange(e, index)
@@ -721,7 +721,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="leftStile"
-                      edit={construction === 'Miter' ? true : edit}
+                      edit={construction === 'Miter' ? false : edit}
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e), onStileOrRailChange(e, index)
@@ -737,7 +737,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="rightStile"
-                      edit={construction === 'Miter' ? true : edit}
+                      edit={construction === 'Miter' ? false : edit}
                       validate={required}
                       onChange={(e) => (
                         registerChange(index, e), onStileOrRailChange(e, index)

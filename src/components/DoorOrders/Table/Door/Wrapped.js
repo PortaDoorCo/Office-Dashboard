@@ -406,7 +406,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="topRail"
-                      edit={construction === 'Miter' ? true : edit}
+                      edit={edit}
                       validate={required}
                       onChange={(e) => registerChange(index, e)}
                     />
@@ -420,7 +420,7 @@ const Cope_Table = ({
                       type="text"
                       component={renderNumber}
                       label="topRail"
-                      edit={construction === 'Miter' ? true : edit}
+                      edit={edit}
                       validate={required}
                       onChange={(e) => registerChange(index, e)}
                     />
