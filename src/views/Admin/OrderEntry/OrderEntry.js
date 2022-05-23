@@ -195,14 +195,10 @@ class OrderEntry extends Component {
       formState,
       qty,
       orders,
-      formDiff,
       fieldMeta,
     } = this.props;
 
     // const orderType = orderType;
-
-    console.log({ formDiff });
-    console.log({ fieldMeta });
 
     let order = {};
 
