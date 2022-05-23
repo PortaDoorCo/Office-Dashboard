@@ -30,6 +30,8 @@ import {
   startAsyncValidation,
   touch,
   initialize,
+  isDirty,
+  getFormMeta,
 } from 'redux-form';
 import thickness from '../../../components/DoorOrders/DoorInfo/thickness';
 import FileUploader from '../../../components/FileUploader/FileUploader';
@@ -193,6 +195,7 @@ class OrderEntry extends Component {
       formState,
       qty,
       orders,
+      fieldMeta,
     } = this.props;
 
     // const orderType = orderType;
@@ -216,6 +219,7 @@ class OrderEntry extends Component {
               date: moment().format(),
               status: values.job_info?.status?.value,
               user: user?.FirstName,
+              changes: fieldMeta,
             },
           ];
 
@@ -258,6 +262,7 @@ class OrderEntry extends Component {
             date: moment().format(),
             status: 'Order Edited',
             user: user?.FirstName,
+            changes: fieldMeta,
           },
         ];
       }
@@ -363,6 +368,8 @@ class OrderEntry extends Component {
         canSubmit = true;
       }
     }
+
+    console.log({ order });
 
     if (!isEdit) {
       if (canSubmit) {
@@ -910,6 +917,7 @@ const mapStateToProps = (state, props) => ({
   tracking: state.Orders?.selectedOrder?.tracking,
   role: state?.users?.user?.role,
   formState: getFormValues('Order')(state),
+  fieldMeta: getFormMeta('Order')(state),
   total: totalSelector(state),
   tax: taxSelector(state),
   prices: linePriceSelector(state),
