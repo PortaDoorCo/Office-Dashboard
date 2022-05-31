@@ -764,7 +764,7 @@ export const itemPriceSelector = createSelector(
               if (height > -1) {
                 if (itemPrice.length > 0) {
                   if (
-                    formState?.values?.job_info?.status?.value === 'Quote' &&
+                    formState?.values?.Order_Lock === false &&
                     (formState?.values?.part_list[index]?.dimensions[j] !==
                       formState?.initial.part_list[index]?.dimensions[j] ||
                       formState?.values?.part_list[index]?.woodtype !==
@@ -829,7 +829,7 @@ export const itemPriceSelector = createSelector(
             if (height > -1) {
               if (itemPrice.length > 0) {
                 if (
-                  formState?.values?.job_info?.status?.value === 'Quote' &&
+                  formState?.values?.Order_Lock === false &&
                   (formState?.values?.part_list[index]?.dimensions[j] !==
                     formState?.initial.part_list[index]?.dimensions[j] ||
                     formState?.values?.part_list[index]?.woodtype !==

@@ -459,9 +459,11 @@ class OrderEntry extends Component {
 
     const customer = formState?.job_info?.customer;
     const status = formState?.job_info?.status?.value;
+    const order_lock = formState?.Order_Lock;
 
     console.log({ chek: edit });
     console.log({ formState });
+    console.log({ order_lock });
 
     return (
       <div className="animated fadeIn order-tour">
@@ -552,7 +554,7 @@ class OrderEntry extends Component {
                         addPriceSelector={addPriceSelector}
                         dispatch={dispatch}
                         isValid={isValid}
-                        edit={!edit && status === 'Quote'}
+                        edit={!edit && order_lock === false}
                         updateSubmit={this.state.updateSubmit}
                       />
                     ) : orderType === 'Drawer Order' ? (
@@ -561,7 +563,7 @@ class OrderEntry extends Component {
                         component={DrawerInfo}
                         dispatch={dispatch}
                         formState={formState}
-                        edit={!edit && status === 'Quote'}
+                        edit={!edit && order_lock === false}
                       />
                     ) : orderType === 'Face Frame' ? (
                       <FieldArray
@@ -574,7 +576,7 @@ class OrderEntry extends Component {
                         dispatch={dispatch}
                         isValid={isValid}
                         updateSubmit={this.state.updateSubmit}
-                        edit={!edit && status === 'Quote'}
+                        edit={!edit && order_lock === false}
                       />
                     ) : orderType === 'Mouldings' ? (
                       <FieldArray
@@ -582,7 +584,7 @@ class OrderEntry extends Component {
                         component={Mouldings}
                         dispatch={dispatch}
                         formState={formState}
-                        edit={!edit && status === 'Quote'}
+                        edit={!edit && order_lock === false}
                       />
                     ) : orderType === 'Misc Items' ? (
                       <FieldArray
@@ -590,7 +592,7 @@ class OrderEntry extends Component {
                         component={MiscItems}
                         dispatch={dispatch}
                         formState={formState}
-                        edit={!edit && status === 'Quote'}
+                        edit={!edit && order_lock === false}
                       />
                     ) : null}
                   </Suspense>
@@ -802,6 +804,7 @@ const mapStateToProps = (state, props) => ({
             Note5: state.Orders?.selectedOrder?.job_info?.customer?.Note5,
             Note6: state.Orders?.selectedOrder?.job_info?.customer?.Note6,
           },
+          Order_Lock: true,
         }
       : {
           misc_items: [],
