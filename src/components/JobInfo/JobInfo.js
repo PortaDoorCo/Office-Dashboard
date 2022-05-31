@@ -26,7 +26,11 @@ import {
 import CustomerReminder from './CustomerReminder';
 import otherStatus from '../../utils/other_status';
 import orderEntryStatus from '../../utils/orderEntryStatus';
-import { totalDiscountSelector, totalSelector } from '../../selectors/pricing';
+import {
+  totalDiscountSelector,
+  totalSelector,
+  rushTotal,
+} from '../../selectors/pricing';
 
 // momentLocaliser(moment);
 
@@ -320,7 +324,6 @@ class JobInfo extends Component {
 
     const { formState, total, totalDiscount } = this.props;
     console.log({ total });
-    console.log({ totalDiscount });
     if (!formState?.job_info?.Rush) {
       await this.props.dispatch(change('Order', 'discount', 0));
       await this.props.dispatch(
@@ -329,15 +332,9 @@ class JobInfo extends Component {
           {
             qty: 1,
             item2: 'RUSH',
-            price:
-              (total + totalDiscount) / 2 > 150
-                ? (total + totalDiscount) / 2
-                : 150,
+            price: total / 2 > 150 ? total / 2 : 150,
             category: 'custom',
-            pricePer:
-              (total + totalDiscount) / 2 > 150
-                ? (total + totalDiscount) / 2
-                : 150,
+            pricePer: total / 2 > 150 ? total / 2 : 150,
           },
         ])
       );
@@ -1095,7 +1092,7 @@ const mapStateToProps = (state) => ({
   paymentTerms: state.misc_items.paymentTerms,
   orderType: state.Orders.orderType,
   orders: state.Orders.orders,
-  total: totalSelector(state),
+  total: rushTotal(state),
   totalDiscount: totalDiscountSelector(state),
 });
 

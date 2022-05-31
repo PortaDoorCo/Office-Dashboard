@@ -1381,6 +1381,30 @@ export const totalSelector = createSelector(
   }
 );
 
+export const rushTotal = createSelector(
+  [
+    subTotalSelector,
+    taxSelector,
+    miscTotalSelector,
+    totalDiscountSelector,
+    nonDiscountedItems,
+    orderTypeSelector,
+  ],
+  (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
+    if (orderType === 'Misc Items') {
+      const sub =
+        Math.floor(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100;
+      return sub + tax + nonDiscounted;
+    } else {
+      const sub = subTotal.reduce(
+        (acc, item) => acc + Math.round(item * 100) / 100,
+        0
+      );
+      return sub + tax + misc + nonDiscounted;
+    }
+  }
+);
+
 export const balanceTotalSelector = createSelector(
   [totalBalanceDue],
   (balance) => balance.reduce((acc, item) => acc + item, 0)
