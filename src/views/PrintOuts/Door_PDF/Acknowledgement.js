@@ -219,7 +219,13 @@ export default (data, pricing) => {
                         : part.design
                         ? part.design.NAME
                         : 'None'
-                    }   Edge:  ${part.edge ? part.edge.NAME : 'None'}`,
+                    }   Edge:  ${
+                      part?.construction?.value === 'Wrapped'
+                        ? 'M Lip'
+                        : part.edge
+                        ? part.edge.NAME
+                        : 'None'
+                    }`,
                     style: 'fonts',
                   },
                 ],
