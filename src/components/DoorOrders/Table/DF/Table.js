@@ -797,6 +797,7 @@ const Cope_Table = ({
                   name={`${table}.showBuilder`}
                   component={renderCheckboxToggle}
                   label="Show Builder"
+                  edit={true}
                 />
               </Col>
               <Col>
