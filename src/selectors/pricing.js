@@ -765,8 +765,93 @@ export const itemPriceSelector = createSelector(
                 if (itemPrice.length > 0) {
                   if (
                     formState?.values?.Order_Lock === false &&
-                    (formState?.values?.part_list[index]?.dimensions[j] !==
-                      formState?.initial.part_list[index]?.dimensions[j] ||
+                    (formState?.values?.part_list[index]?.dimensions[j]
+                      .width !==
+                      formState?.initial.part_list[index]?.dimensions[j]
+                        .width ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .height !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .height ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .panelsH !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .panelsH ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .panelsW !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .panelsW ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .topRail !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .topRail ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .bottomRail !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .bottomRail ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .leftStile !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .leftStile ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .rightStile !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .rightStile ||
+                      formState?.values?.part_list[index]?.dimensions[j].qty !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .qty ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .verticalMidRailSize !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .verticalMidRailSize ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .horizontalMidRailSize !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .horizontalMidRailSize ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .extraCost !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .extraCost ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_0 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_0 ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_1 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_1 ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_2 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_2 ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_3 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_3 ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_4 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_4 ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_5 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_5 ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_6 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_6 ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_7 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_7 ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_8 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_8 ||
+                      formState?.values?.part_list[index]?.dimensions[j]
+                        .lite_9 !==
+                        formState?.initial.part_list[index]?.dimensions[j]
+                          .lite_9 ||
                       formState?.values?.part_list[index]?.woodtype !==
                         formState?.initial.part_list[index]?.woodtype ||
                       formState?.values?.part_list[index]?.design !==
@@ -830,8 +915,21 @@ export const itemPriceSelector = createSelector(
               if (itemPrice.length > 0) {
                 if (
                   formState?.values?.Order_Lock === false &&
-                  (formState?.values?.part_list[index]?.dimensions[j] !==
-                    formState?.initial.part_list[index]?.dimensions[j] ||
+                  (formState?.values?.part_list[index]?.dimensions[j].qty !==
+                    formState?.initial.part_list[index]?.dimensions[j].qty ||
+                    formState?.values?.part_list[index]?.dimensions[j].width !==
+                      formState?.initial.part_list[index]?.dimensions[j]
+                        .width ||
+                    formState?.values?.part_list[index]?.dimensions[j].depth !==
+                      formState?.initial.part_list[index]?.dimensions[j]
+                        .depth ||
+                    formState?.values?.part_list[index]?.dimensions[j]
+                      .height !==
+                      formState?.initial.part_list[index]?.dimensions[j]
+                        .height ||
+                    formState?.values?.part_list[index]?.dimensions[j].scoop !==
+                      formState?.initial.part_list[index]?.dimensions[j]
+                        .scoop ||
                     formState?.values?.part_list[index]?.woodtype !==
                       formState?.initial.part_list[index]?.woodtype ||
                     formState?.values?.part_list[index]
