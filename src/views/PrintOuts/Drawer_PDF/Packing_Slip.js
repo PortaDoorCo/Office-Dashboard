@@ -128,7 +128,8 @@ export default (data, breakdowns, pricing) => {
                                 ) ||
                                 i?.item?.NAME?.toLowerCase()?.includes(
                                   'discount'
-                                )
+                                ) ||
+                                i?.item?.NAME?.toLowerCase()?.includes('rush')
                               ) {
                                 return null;
                               } else {
@@ -138,7 +139,8 @@ export default (data, breakdowns, pricing) => {
                               if (
                                 i?.item2?.toLowerCase()?.includes('delivery') ||
                                 i?.item2?.toLowerCase()?.includes('price') ||
-                                i?.item2?.toLowerCase()?.includes('discount')
+                                i?.item2?.toLowerCase()?.includes('discount') ||
+                                i?.item?.NAME?.toLowerCase()?.includes('rush')
                               ) {
                               } else {
                                 return `${i.item2} \n`;
