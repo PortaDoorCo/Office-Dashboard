@@ -811,6 +811,7 @@ const mapStateToProps = (state, props) => ({
           balance_paid: 0,
           open: true,
           discount: 0,
+          Order_Lock: false,
           Taxable: state.customers.customerDB[0].Taxable
             ? state.customers.customerDB[0].Taxable
             : false,
