@@ -1309,6 +1309,7 @@ const DoorTable = ({
                 <Field
                   name={`${table}.showBuilder`}
                   component={renderCheckboxToggle}
+                  edit={true}
                 />
               </FormGroup>
             </Col>
