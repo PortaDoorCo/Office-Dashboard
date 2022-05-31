@@ -24,23 +24,22 @@ export function loadPrinterOptions(cookie) {
   return async function (dispatch) {
     const res = await fetch(`${db_url}/printer-options?_sort=id:ASC`, {
       headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
+        Authorization: `Bearer ${cookie}`,
+      },
     });
     const data = await res.json();
     return dispatch({
       type: LOAD_PRINTER_OPTIONS,
-      data: data
+      data: data,
     });
   };
 }
 
 export function addPrinterOption(data) {
   return async function (dispatch) {
-
     return dispatch({
       type: ADD_PRINTER_OPTION,
-      data: data
+      data: data,
     });
   };
 }
@@ -48,13 +47,11 @@ export function addPrinterOption(data) {
 export function savePrinterOption(id, item, cookie) {
   return async function (dispatch) {
     try {
-      const res = await axios.put(`${db_url}/printer-options/${id}`, item,
-        {
-          headers: {
-            'Authorization': `Bearer ${cookie}`
-          }
-        }
-      );
+      const res = await axios.put(`${db_url}/printer-options/${id}`, item, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
       const data = await res;
 
       NotificationManager.success('Printing Option Saved!', 'Saved', 2000);
@@ -68,19 +65,17 @@ export function savePrinterOption(id, item, cookie) {
   };
 }
 
-
-
 export function loadShippingMethod(cookie) {
   return async function (dispatch) {
     const res = await fetch(`${db_url}/shipping-methods`, {
       headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
+        Authorization: `Bearer ${cookie}`,
+      },
     });
     const data = await res.json();
     return dispatch({
       type: LOAD_SHIPPING_METHODS,
-      data: data
+      data: data,
     });
   };
 }
@@ -89,28 +84,28 @@ export function loadCategories(cookie) {
   return async function (dispatch) {
     const res = await fetch(`${db_url}/category`, {
       headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
+        Authorization: `Bearer ${cookie}`,
+      },
     });
     const data = await res.json();
     return dispatch({
       type: LOAD_CATEGORIES,
-      data: data
+      data: data,
     });
   };
 }
 
 export function loadPaymentTypes(cookie) {
   return async function (dispatch) {
-    const res = await fetch(`${db_url}/payment-types`, {
+    const res = await fetch(`${db_url}/payment-types?_sort=NAME:ASC`, {
       headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
+        Authorization: `Bearer ${cookie}`,
+      },
     });
     const data = await res.json();
     return dispatch({
       type: LOAD_PAYMENT_TYPES,
-      data: data
+      data: data,
     });
   };
 }
@@ -119,13 +114,13 @@ export function loadPaymentTerms(cookie) {
   return async function (dispatch) {
     const res = await fetch(`${db_url}/payment-terms`, {
       headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
+        Authorization: `Bearer ${cookie}`,
+      },
     });
     const data = await res.json();
     return dispatch({
       type: LOAD_PAYMENT_TERMS,
-      data: data
+      data: data,
     });
   };
 }
@@ -134,13 +129,13 @@ export function loadMiscItems(cookie) {
   return async function (dispatch) {
     const res = await fetch(`${db_url}/misc-items`, {
       headers: {
-        'Authorization': `Bearer ${cookie}`
-      }
+        Authorization: `Bearer ${cookie}`,
+      },
     });
     const data = await res.json();
     return dispatch({
       type: LOAD_MISC_ITEMS,
-      data: data
+      data: data,
     });
   };
 }
@@ -148,19 +143,17 @@ export function loadMiscItems(cookie) {
 export function updateMiscItem(id, item, cookie) {
   return async function (dispatch) {
     try {
-      const res = await axios.put(`${db_url}/misc-items/${id}`, item,
-        {
-          headers: {
-            'Authorization': `Bearer ${cookie}`
-          }
-        }
-      );
+      const res = await axios.put(`${db_url}/misc-items/${id}`, item, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
       const data = await res;
 
       // NotificationManager.success('Customer has been update!', 'Customer Updated!', 2000);
       return dispatch({
         type: UPDATE_MISC_ITEMS,
-        data: data.data
+        data: data.data,
       });
     } catch (error) {
       console.error(error);
@@ -174,12 +167,12 @@ export function addMiscItem(product, cookie) {
     try {
       const { data } = await axios.post(`${db_url}/misc-items`, product, {
         headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
+          Authorization: `Bearer ${cookie}`,
+        },
       });
       return dispatch({
         type: ADD_MISC_ITEM,
-        data: data
+        data: data,
       });
     } catch (error) {
       console.error(error);
@@ -188,14 +181,13 @@ export function addMiscItem(product, cookie) {
   };
 }
 
-
 export function deleteMiscItem(id, cookie) {
   return async function (dispatch) {
     try {
       const res = await axios.delete(`${db_url}/misc-items/${id}`, {
         headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
+          Authorization: `Bearer ${cookie}`,
+        },
       });
       const data = await res;
       return dispatch({
@@ -210,8 +202,6 @@ export function deleteMiscItem(id, cookie) {
 
 export function miscItemUpdated(data) {
   return async function (dispatch) {
-
-
     return dispatch({
       type: MISC_ITEM_UPDATED,
       data: data,
@@ -229,17 +219,15 @@ export function miscItemAdded(data, entity) {
 }
 
 export function miscItemDeleted(res) {
-
   return async function (dispatch) {
     return dispatch({
       type: MISC_ITEM_DELETED,
-      data: res
+      data: res,
     });
   };
 }
 
 export function printerOptionAdded(data) {
-
   return async function (dispatch) {
     return dispatch({
       type: PRINTER_OPTION_ADDED,
@@ -257,16 +245,11 @@ export function printerOptionUpdated(data, entity) {
   };
 }
 
-
-
 export function selectDateRange(date) {
   return async function (dispatch) {
     return dispatch({
       type: SELECT_DATE_RANGE,
-      date: date
+      date: date,
     });
   };
 }
-
-
-

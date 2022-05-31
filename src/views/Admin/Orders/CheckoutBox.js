@@ -62,6 +62,18 @@ const CheckoutBox = (props) => {
               <Row>
                 <Col>
                   <FormGroup>
+                    <Label htmlFor="dueDate">Order Locked</Label>
+                    <Field
+                      name="Order_Lock"
+                      component={renderCheckboxToggle}
+                      edit={!props.edit}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FormGroup>
                     <Label htmlFor="dueDate">Date Ordered</Label>
                     <Field
                       name="DateOrdered"
