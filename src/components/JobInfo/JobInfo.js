@@ -320,10 +320,8 @@ class JobInfo extends Component {
   // }
 
   rushOrder = async (e) => {
-    console.log({ e });
-
     const { formState, total, totalDiscount } = this.props;
-    console.log({ total });
+
     if (!formState?.job_info?.Rush) {
       await this.props.dispatch(change('Order', 'discount', 0));
       await this.props.dispatch(
