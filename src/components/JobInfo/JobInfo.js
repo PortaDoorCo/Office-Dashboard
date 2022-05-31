@@ -26,8 +26,13 @@ import {
 import CustomerReminder from './CustomerReminder';
 import otherStatus from '../../utils/other_status';
 import orderEntryStatus from '../../utils/orderEntryStatus';
+import { totalDiscountSelector, totalSelector } from '../../selectors/pricing';
 
 // momentLocaliser(moment);
+
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -83,8 +88,8 @@ class JobInfo extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    const { formState, orderType } = this.props;
+  async componentDidUpdate(prevProps) {
+    const { formState, orderType, total } = this.props;
     if (formState?.job_info?.customer) {
       if (
         formState.job_info?.Sample !== prevProps.formState?.job_info?.Sample
@@ -101,19 +106,26 @@ class JobInfo extends Component {
           );
         }
       }
-      if (formState.job_info?.Rush !== prevProps.formState?.job_info?.Rush) {
-        if (formState.job_info.Sample) {
-          this.props.dispatch(change('Order', 'discount', 0));
-        } else {
-          this.props.dispatch(
-            change(
-              'Order',
-              'discount',
-              formState?.job_info?.customer?.Discount || 0
-            )
-          );
-        }
-      }
+      // if (formState.job_info?.Rush !== prevProps.formState?.job_info?.Rush) {
+      //   if (formState.job_info.Sample) {
+      //     this.props.dispatch(change('Order', 'discount', 0));
+      //   } else {
+      //     await this.props.dispatch(change('Order', 'discount', 0));
+      //     await sleep(500);
+      //     await this.props.dispatch(
+      //       change('Order', 'misc_items', [
+      //         ...formState?.misc_items,
+      //         {
+      //           qty: 1,
+      //           item2: 'RUSH',
+      //           price: total / 2 > 150 ? total / 2 : 150,
+      //           category: 'custom',
+      //           pricePer: total / 2 > 150 ? total / 2 : 150,
+      //         },
+      //       ])
+      //     );
+      //   }
+      // }
       if (
         formState?.job_info?.customer?.id !==
         prevProps.formState?.job_info?.customer?.id
@@ -303,6 +315,43 @@ class JobInfo extends Component {
   //   saveEmail(customer?.id, emails, cookie);
   // }
 
+  rushOrder = async (e) => {
+    console.log({ e });
+
+    const { formState, total, totalDiscount } = this.props;
+    console.log({ total });
+    console.log({ totalDiscount });
+    if (!formState?.job_info?.Rush) {
+      await this.props.dispatch(change('Order', 'discount', 0));
+      await this.props.dispatch(
+        change('Order', 'misc_items', [
+          ...formState?.misc_items,
+          {
+            qty: 1,
+            item2: 'RUSH',
+            price:
+              (total + totalDiscount) / 2 > 150
+                ? (total + totalDiscount) / 2
+                : 150,
+            category: 'custom',
+            pricePer:
+              (total + totalDiscount) / 2 > 150
+                ? (total + totalDiscount) / 2
+                : 150,
+          },
+        ])
+      );
+    } else {
+      await this.props.dispatch(
+        change(
+          'Order',
+          'discount',
+          formState?.job_info?.customer?.Discount || 0
+        )
+      );
+    }
+  };
+
   render() {
     const {
       customers,
@@ -351,7 +400,12 @@ class JobInfo extends Component {
           <Col lg="1">
             <FormGroup>
               <Label htmlFor="dueDate">Rush</Label>
-              <Field name="Rush" component={renderCheckboxToggle} edit={edit} />
+              <Field
+                name="Rush"
+                component={renderCheckboxToggle}
+                edit={edit}
+                onClick={(e) => this.rushOrder(e)}
+              />
             </FormGroup>
           </Col>
         </Row>
@@ -1041,6 +1095,8 @@ const mapStateToProps = (state) => ({
   paymentTerms: state.misc_items.paymentTerms,
   orderType: state.Orders.orderType,
   orders: state.Orders.orders,
+  total: totalSelector(state),
+  totalDiscount: totalDiscountSelector(state),
 });
 
 export default connect(mapStateToProps, null)(JobInfo);
