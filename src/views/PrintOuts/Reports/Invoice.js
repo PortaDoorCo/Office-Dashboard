@@ -7,7 +7,7 @@ export default (data, startDate, endDate, status) => {
   pdfMake.vfs = vfs;
 
   const documentDefinition = {
-    pageSize: 'A4',
+    pageSize: 'LETTER',
     pageOrientation: 'portrait',
     content: [Orders(data, startDate, endDate, status)],
     styles: {
