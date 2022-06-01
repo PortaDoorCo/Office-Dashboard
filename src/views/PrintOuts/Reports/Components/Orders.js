@@ -263,7 +263,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: [245, 22, 17, 22, 30, '*', '*', '*', 350],
+        widths: [225, 20, 15, 22, 25, '*', '*', '*', 350],
       },
       layout: 'headerLineOnly',
     },

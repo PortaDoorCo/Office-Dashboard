@@ -120,7 +120,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
-        widths: ['*', '*', 40, '*', '*', 30, 30, 30, 35, 40, '*'],
+        widths: [55, '*', 40, '*', '*', 30, 30, 30, 35, 50, '*'],
       },
       layout: 'lightHorizontalLines',
     },
@@ -129,7 +129,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: [383, 40, 40, 40, 45, '*', '*'],
+        widths: [383, 30, 30, 30, 36, '*', '*'],
       },
       layout: 'headerLineOnly',
     },
