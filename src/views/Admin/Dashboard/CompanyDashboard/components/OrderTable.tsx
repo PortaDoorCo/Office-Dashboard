@@ -425,7 +425,6 @@ const OrderTable = (props: TablePropTypes) => {
     } else {
       setSelectedOrder(null);
       setOrderType(null);
-      setFilterText('');
     }
   };
 
