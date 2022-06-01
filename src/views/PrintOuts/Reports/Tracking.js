@@ -7,16 +7,16 @@ export default (data, startDate, endDate, status) => {
   pdfMake.vfs = vfs;
 
   const documentDefinition = {
-    pageSize: 'A4',
+    pageSize: 'LETTER',
     pageOrientation: 'landscape',
     content: [LateList(data, startDate, endDate, status)],
     styles: {
       woodtype: {
-        fontSize: 18,
+        fontSize: 14,
         bold: true,
       },
       header: {
-        fontSize: 18,
+        fontSize: 14,
         bold: true,
         margin: [0, 0, 0, 10],
       },
