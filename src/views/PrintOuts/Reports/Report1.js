@@ -7,28 +7,28 @@ export default (data, startDate, endDate, status) => {
   pdfMake.vfs = vfs;
 
   const documentDefinition = {
-    pageSize: 'LETTER',
+    pageSize: 'A4',
     pageOrientation: 'landscape',
     content: [Orders(data, startDate, endDate, status)],
     styles: {
       woodtype: {
-        fontSize: 14,
+        fontSize: 18,
         bold: true,
       },
       header: {
-        fontSize: 12,
+        fontSize: 18,
         bold: true,
         margin: [0, 0, 0, 10],
       },
       tableExample: {
-        margin: [-25, 5, 5, 15],
+        margin: [-20, 5, 0, 15],
         fontSize: 8,
       },
       fonts: {
-        fontSize: 8,
+        fontSize: 9,
       },
       fontsBold: {
-        fontSize: 10,
+        fontSize: 12,
         bold: true,
       },
       totals: {
