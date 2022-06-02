@@ -116,7 +116,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
-        widths: [60, 120, 40, 50, 60, 30, 30, 30, 45, 40, '*'],
+        widths: [60, 120, 40, 50, 60, 30, 30, 30, 45, 50, 70],
       },
       layout: 'lightHorizontalLines',
     },
@@ -125,7 +125,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: [383, 40, 40, 40, 45, '*', '*'],
+        widths: [383, 40, 35, 35, 42, '*', '*'],
       },
       layout: 'headerLineOnly',
     },

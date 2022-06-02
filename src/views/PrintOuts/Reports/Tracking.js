@@ -12,16 +12,16 @@ export default (data, startDate, endDate, status) => {
     content: [LateList(data, startDate, endDate, status)],
     styles: {
       woodtype: {
-        fontSize: 14,
+        fontSize: 18,
         bold: true,
       },
       header: {
-        fontSize: 14,
+        fontSize: 18,
         bold: true,
         margin: [0, 0, 0, 10],
       },
       tableExample: {
-        margin: [0, 5, 0, 10],
+        margin: [-15, 5, 0, 10],
         fontSize: 10,
       },
       fonts: {

@@ -120,7 +120,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
-        widths: [55, '*', 40, '*', '*', 30, 30, 30, 35, 50, '*'],
+        widths: [55, '*', 40, '*', '*', 30, 30, 30, 35, 60, '*'],
       },
       layout: 'lightHorizontalLines',
     },

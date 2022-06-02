@@ -21,11 +21,11 @@ export default (data, startDate, endDate, status) => {
         margin: [0, 0, 0, 10],
       },
       tableExample: {
-        margin: [-20, 5, 5, 15],
-        fontSize: 7,
+        margin: [-25, 5, 5, 15],
+        fontSize: 8,
       },
       fonts: {
-        fontSize: 7,
+        fontSize: 8,
       },
       fontsBold: {
         fontSize: 10,
