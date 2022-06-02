@@ -24,7 +24,7 @@ import CustomerFile from '../../../../PrintOuts/Reports/CustomerFile';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
 import Invoice from '../../../../PrintOuts/Reports/Invoice';
-import Report1 from '../../../../PrintOuts/Reports/Report1';
+import Report1 from '../../../../PrintOuts/Reports/CustomerFile';
 
 // momentLocaliser(moment);
 
@@ -634,9 +634,9 @@ const OrderTable = (props) => {
     }
 
     if (filterStatus === 'Invoiced') {
-      Invoice(newOrder, startDate, endDate, filterStatus);
+      Invoice(newOrder, startDate, endDate, filterStatus, company);
     } else {
-      Report1(newOrder, startDate, endDate, filterStatus);
+      Report1(newOrder, startDate, endDate, filterStatus, company);
     }
 
     setToggleCleared(!toggleCleared);
