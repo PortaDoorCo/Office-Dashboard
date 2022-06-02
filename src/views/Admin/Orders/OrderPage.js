@@ -93,6 +93,7 @@ import ConversationNotes from './Notes/Conversation_Notes';
 import exportEdges from '../../../utils/exportEdges';
 import exportRazorGauge from '../../../utils/exportRazorGauge';
 import { NotificationManager } from 'react-notifications';
+import Tracking from './Tracking';
 
 const cookie = Cookies.get('jwt');
 
@@ -1267,33 +1268,7 @@ class OrderPage extends Component {
               <Collapse isOpen={this.state.trackingOpen}>
                 <Row>
                   <Col lg="12">
-                    <Card>
-                      <CardBody>
-                        <h5>Tracking History</h5>
-                        <Table striped>
-                          <tbody>
-                            {selectedOrder && selectedOrder.tracking
-                              ? selectedOrder.tracking
-                                  .slice(0)
-                                  .reverse()
-                                  .map((i, index) => (
-                                    <tr key={index}>
-                                      <th>
-                                        {i.status ? i.status : 'Order Edited'}{' '}
-                                        {i.user ? 'by: ' + i.user : ''}
-                                      </th>
-                                      <td>
-                                        {moment(i.date).format(
-                                          'dddd, MMMM Do YYYY, h:mm:ss a'
-                                        )}
-                                      </td>
-                                    </tr>
-                                  ))
-                              : null}
-                          </tbody>
-                        </Table>
-                      </CardBody>
-                    </Card>
+                    <Tracking selectedOrder={selectedOrder} />
                   </Col>
                 </Row>
               </Collapse>
