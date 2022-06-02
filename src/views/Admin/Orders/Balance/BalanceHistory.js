@@ -106,7 +106,7 @@ const RenderBalances = ({
                   <Field
                     name={`${i}.date`}
                     showTime={false}
-                    edit={!edit}
+                    edit={edit}
                     component={renderDateTimePicker}
                   />
                 </td>
@@ -121,7 +121,7 @@ const RenderBalances = ({
                     name={`${i}.deposit_paid`}
                     type="text"
                     component={renderPrice}
-                    edit={true}
+                    edit={false}
                     {...currencyMask}
                     label="deposit_paid"
                   />
@@ -131,7 +131,7 @@ const RenderBalances = ({
                     name={`${i}.balance_paid`}
                     type="text"
                     component={renderPrice}
-                    edit={true}
+                    edit={false}
                     {...currencyMask}
                     label="balance_paid"
                   />

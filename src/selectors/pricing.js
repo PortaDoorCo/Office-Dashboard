@@ -757,10 +757,6 @@ export const itemPriceSelector = createSelector(
               let B = moment();
               let C = B.diff(A, 'days');
 
-              console.log({ formState });
-
-              console.log({ C });
-
               if (height > -1) {
                 if (itemPrice.length > 0) {
                   if (
@@ -872,10 +868,8 @@ export const itemPriceSelector = createSelector(
                       formState?.values?.part_list[index]?.construction !==
                         formState?.initial.part_list[index]?.construction)
                   ) {
-                    console.log('here');
                     return Math.floor(price * 100) / 100;
                   } else {
-                    console.log('hereeeeeee');
                     return Math.round(itemPrice[index][j] * 100) / 100;
                   }
                 } else {

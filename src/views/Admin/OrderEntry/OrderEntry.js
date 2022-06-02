@@ -63,6 +63,7 @@ import CheckoutBox from './components/CheckoutBox';
 import validate from './components/validate';
 import Sticky from 'react-stickynode';
 import CustomerReminder from '../../../utils/Modal';
+import PriceChangeModal from '../../../utils/Modal';
 import io from 'socket.io-client';
 import db_url from '../../../redux/db_url';
 
@@ -114,12 +115,40 @@ class OrderEntry extends Component {
       customerReminder: false,
       cancelModal: false,
       openedReminder: false,
+      priceChange: false,
+      priceChangeModal: false,
     };
+  }
+
+  async componentDidUpdate(prevProps) {
+    const { formState, total } = this.props;
+
+    console.log({ prev: prevProps.total });
+    console.log({ total });
+
+    console.log({ formState });
+
+    if (formState?.job_info?.status?.value !== 'Quote') {
+      if (!this.state.priceChange) {
+        if (prevProps.total !== 0) {
+          if (prevProps?.total !== this.props?.total) {
+            this.setState({ priceChange: true });
+            this.togglePriceChangeModal();
+          }
+        }
+      }
+    }
   }
 
   toggleReminderModal = () => {
     this.setState({
       customerReminder: !this.state?.customerReminder,
+    });
+  };
+
+  togglePriceChangeModal = () => {
+    this.setState({
+      priceChangeModal: !this.state?.priceChangeModal,
     });
   };
 
@@ -461,10 +490,6 @@ class OrderEntry extends Component {
     const status = formState?.job_info?.status?.value;
     const order_lock = formState?.Order_Lock;
 
-    console.log({ chek: edit });
-    console.log({ formState });
-    console.log({ order_lock });
-
     return (
       <div className="animated fadeIn order-tour">
         <CancelModal
@@ -488,6 +513,30 @@ class OrderEntry extends Component {
               : false
           }
           actionButton={this.state.openedReminder ? 'Submit' : null}
+          orders={orders}
+          isEdit={isEdit}
+        />
+        <PriceChangeModal
+          {...this.props}
+          toggle={this.togglePriceChangeModal}
+          modal={this.state.priceChangeModal}
+          title={'Pricing has been Changed!'}
+          message={
+            <div>
+              <center>
+                <p>
+                  This Order is <strong>No Longer a Quote</strong>
+                </p>
+                <p>
+                  Prices <strong>Do Not Match</strong> the original quote.
+                </p>
+
+                <p>Please double check the Order and make adjustments</p>
+              </center>
+            </div>
+          }
+          action={null}
+          actionButton={null}
           orders={orders}
           isEdit={isEdit}
         />
