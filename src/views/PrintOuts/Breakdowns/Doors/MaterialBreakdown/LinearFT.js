@@ -10,19 +10,14 @@ const fraction = (num) => {
 };
 
 export default (parts, breakdowns, thickness) => {
-
-
-
   const calc = parts.map((part, i) => {
-
-
-
     return part.items.map((j) => {
-
       // const filtered = Object.keys(j).reduce(function(r, e) {
       //   if (thickness.includes(j[e])) r[e] = j[e];
       //   return r;
       // }, {});
+
+      console.log({ j });
 
       let stile = {};
       let rail = {};
@@ -57,8 +52,10 @@ export default (parts, breakdowns, thickness) => {
         }
       }, {});
 
+      console.log({ stile_map });
+
       const stiles = Stiles(stile, part.part, breakdowns).map((stile) => {
-        if (numQty(stile.width) > 1 && numQty(stile.height) > 1) {
+        if (numQty(stile.width) > 0 && numQty(stile.height) > 0) {
           const width =
             numQty(stile.width) === 2.376 ? 2.375 : numQty(stile.width);
           const height =
@@ -77,14 +74,18 @@ export default (parts, breakdowns, thickness) => {
         }
       });
 
+      console.log({ stiles });
+
       const rails = Rails(rail, part.part, breakdowns).map((stile) => {
-        if (stile.width > 1 && stile.height > 1) {
+        console.log({ stile });
+        if (stile.width > 0 && stile.height > 0) {
           const width =
             numQty(stile.width) === 2.376 ? 2.375 : numQty(stile.width);
           const height =
             numQty(stile.height) * stile.multiplier * parseInt(j.qty);
 
           const sum = height / 12;
+          console.log({ sum });
           return {
             sum,
             width,
@@ -104,8 +105,6 @@ export default (parts, breakdowns, thickness) => {
     });
   });
 
-
-
   const first_obj = flatten(calc);
 
   const flatten_obj = flatten(first_obj);
@@ -121,8 +120,6 @@ export default (parts, breakdowns, thickness) => {
       width: i.width ? i.width : 0,
     };
   });
-
-
 
   return newObj3;
 };
