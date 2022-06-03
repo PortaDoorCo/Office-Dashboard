@@ -14,8 +14,8 @@ export default (info, part, breakdowns) => {
   const top_rail_arch = info?.design?.TOP_RAIL_ADD;
   const btm_rail_arch = info?.design?.BTM_RAIL_ADD;
 
-  let edge_factor = 0.125;
-  let lip_factor = 0.125;
+  let edge_factor = 0;
+  let lip_factor = 0;
 
   const topRail = part.wrap_width
     ? Math.round(numQty(part.wrap_width) * 16) / 16 + lip_factor / 2
