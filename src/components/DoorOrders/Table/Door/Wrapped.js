@@ -396,7 +396,7 @@ const Cope_Table = ({
                   </td>
                 </tr>
 
-                <tr>
+                {/* <tr>
                   <td>
                     <strong>
                       <p>Top Rail</p>
@@ -454,7 +454,7 @@ const Cope_Table = ({
                       onChange={(e) => registerChange(index, e)}
                     />
                   </td>
-                </tr>
+                </tr> */}
 
                 <tr>
                   <td>
