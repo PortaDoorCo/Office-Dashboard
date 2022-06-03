@@ -21,21 +21,21 @@ export default (info, part, breakdowns) => {
   let edge_factor = 0.125;
   let lip_factor = 0.125;
 
-  const topRail = info.wrapThickness
-    ? Math.round(numQty(info.wrapThickness) * 16) / 16 +
+  const topRail = part.wrap_width
+    ? Math.round(numQty(part.wrap_width) * 16) / 16 +
       lip_factor / 2 -
       top_rail_arch
     : 0;
-  const bottomRail = info.wrapThickness
-    ? Math.round(numQty(info.wrapThickness) * 16) / 16 +
+  const bottomRail = part.wrap_width
+    ? Math.round(numQty(part.wrap_width) * 16) / 16 +
       lip_factor / 2 -
       btm_rail_arch
     : 0;
-  const leftStile = info.wrapThickness
-    ? Math.round(numQty(info.wrapThickness) * 16) / 16 + lip_factor / 2
+  const leftStile = part.wrap_width
+    ? Math.round(numQty(part.wrap_width) * 16) / 16 + lip_factor / 2
     : 0;
-  const rightStile = info.wrapThickness
-    ? Math.round(numQty(info.wrapThickness) * 16) / 16 + lip_factor / 2
+  const rightStile = part.wrap_width
+    ? Math.round(numQty(part.wrap_width) * 16) / 16 + lip_factor / 2
     : 0;
   const vertMull = Math.round(numQty(vMidRail) * 16) / 16;
   const horizMull = Math.round(numQty(hMidRail) * 16) / 16;

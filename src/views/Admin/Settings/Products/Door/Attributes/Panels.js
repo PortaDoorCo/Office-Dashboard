@@ -44,6 +44,7 @@ const Panels = (props) => {
     Flat: false,
     photo: null,
     CBD: false,
+    panel_wrap: false,
   });
   const [newProduct, setNewProduct] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(props.panels);
@@ -75,6 +76,7 @@ const Panels = (props) => {
       Flat: false,
       photo: null,
       CBD: false,
+      panel_wrap: false,
     };
     setNewProduct(true);
     setProduct(p);
@@ -127,6 +129,7 @@ const Panels = (props) => {
       photo: product.photo ? product.photo.id : '',
       Item: item,
       CBD: product.CBD,
+      panel_wrap: product.panel_wrap,
     };
     await props.addProduct(submittedProduct, 'panels', cookie);
     await setModal(!modal);
@@ -186,6 +189,9 @@ const Panels = (props) => {
             </CardTitle>
             <CardTitle>
               <strong>CBD: </strong> {card.CBD ? 'Yes' : 'No'}
+            </CardTitle>
+            <CardTitle>
+              <strong>Panel Wrap: </strong> {card.panel_wrap ? 'Yes' : 'No'}
             </CardTitle>
           </CardBody>
         </Card>
@@ -349,6 +355,34 @@ const Panels = (props) => {
                           })
                         }
                         checked={product.CBD}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Panel Wrap</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch
+                        className={'mx-1'}
+                        variant={'pill'}
+                        color={'primary'}
+                        onChange={() =>
+                          setProduct((prevState) => {
+                            return {
+                              ...prevState,
+                              panel_wrap: !prevState.panel_wrap,
+                            };
+                          })
+                        }
+                        checked={product.panel_wrap}
                       />
                     </Col>
                   </Row>
@@ -549,6 +583,34 @@ const Panels = (props) => {
                           })
                         }
                         checked={product.CBD}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Panel Wrap</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch
+                        className={'mx-1'}
+                        variant={'pill'}
+                        color={'primary'}
+                        onChange={() =>
+                          setProduct((prevState) => {
+                            return {
+                              ...prevState,
+                              panel_wrap: !prevState.panel_wrap,
+                            };
+                          })
+                        }
+                        checked={product.panel_wrap}
                       />
                     </Col>
                   </Row>

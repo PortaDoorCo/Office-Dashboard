@@ -399,37 +399,6 @@ const Cope_Table = ({
                 <tr>
                   <td>
                     <strong>
-                      <p>Wrap Width</p>
-                    </strong>
-                    <Field
-                      name={`${table}.wrapWidth`}
-                      type="text"
-                      component={renderNumber}
-                      label="topRail"
-                      edit={edit}
-                      validate={required}
-                      onChange={(e) => registerChange(index, e)}
-                    />
-                  </td>
-                  <td>
-                    <strong>
-                      <p>Wrap Thickness</p>
-                    </strong>
-                    <Field
-                      name={`${table}.wrapThickness`}
-                      type="text"
-                      component={renderNumber}
-                      label="topRail"
-                      edit={edit}
-                      validate={required}
-                      onChange={(e) => registerChange(index, e)}
-                    />
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <strong>
                       <p>Cab#</p>
                     </strong>
                     <Field
