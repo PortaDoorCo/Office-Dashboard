@@ -27,7 +27,6 @@ const construction_one_piece = [
   },
 ];
 
-
 const thickness_one_piece = [
   {
     name: '4/4 Standard Grade',
@@ -36,7 +35,7 @@ const thickness_one_piece = [
     db_name: 'STANDARD_GRADE',
     grade_name: '',
     value: 1,
-    thickness_values: 0.75
+    thickness_values: 0.75,
   },
   {
     name: '5/4 Standard Grade',
@@ -45,42 +44,49 @@ const thickness_one_piece = [
     db_name: 'STANDARD_GRADE_THICK',
     grade_name: '',
     value: 3,
-    thickness_values: 1
+    thickness_values: 1,
   },
 ];
 
 const required = (value) => (value ? undefined : 'Required');
 
 class DoorFilter extends Component {
-
   state = {
     title: 'Are You Sure?',
-    message: <div>
-      <center>
-        <p>Are You Sure That This For A <strong>Door</strong>?</p>
-        <p>If you meant to select a <strong>Slab Drawer Front</strong></p>
-        <p>Please Change the Order Type to Drawer Front</p>
-      </center>
-    </div>,
-    modal: false
+    message: (
+      <div>
+        <center>
+          <p>
+            Are You Sure That This For A <strong>Door</strong>?
+          </p>
+          <p>
+            If you meant to select a <strong>Slab Drawer Front</strong>
+          </p>
+          <p>Please Change the Order Type to Drawer Front</p>
+        </center>
+      </div>
+    ),
+    modal: false,
   };
 
   toggle = () => {
-    this.setState({modal: !this.state.modal});
-  }
-
+    this.setState({ modal: !this.state.modal });
+  };
 
   onChangeType = (index) => {
     if (this.props.formState) {
       this.props.formState.part_list.forEach((part, i) => {
-
-
-
-        if(part.orderType.value === 'Door' && part.construction.value === 'Slab'){
+        if (
+          part.orderType.value === 'Door' &&
+          part.construction.value === 'Slab'
+        ) {
           this.toggle();
         }
 
-        if(part.orderType.value === 'DF' && part.construction.value === 'Slab'){
+        if (
+          part.orderType.value === 'DF' &&
+          part.construction.value === 'Slab'
+        ) {
           // this.setState({
           //   message: <div>
           //     <center>
@@ -93,16 +99,12 @@ class DoorFilter extends Component {
           this.toggle();
         }
 
-
-
         if (index === i && part.design !== undefined) {
           this.props.dispatch(
             autofill('Order', `part_list[${i}].design`, undefined)
           );
 
-          this.props.dispatch(
-            untouch('Order', `part_list[${i}].cope_design`)
-          );
+          this.props.dispatch(untouch('Order', `part_list[${i}].cope_design`));
         }
 
         if (index === i && part.woodtype !== undefined) {
@@ -152,11 +154,7 @@ class DoorFilter extends Component {
 
         if (index === i && part.face_frame_top_rail !== undefined) {
           this.props.dispatch(
-            autofill(
-              'Order',
-              `part_list[${i}].face_frame_top_rail`,
-              undefined
-            )
+            autofill('Order', `part_list[${i}].face_frame_top_rail`, undefined)
           );
           this.props.dispatch(
             untouch('Order', `part_list[${i}].face_frame_top_rail`)
@@ -185,6 +183,7 @@ class DoorFilter extends Component {
       ff_thickness,
       orderType,
       edit,
+      wrapthickness,
     } = this.props;
 
     if (formState && formState.part_list) {
@@ -230,7 +229,7 @@ class DoorFilter extends Component {
           formState.part_list[index]?.orderType?.value === 'One_Piece' ||
           formState.part_list[index]?.orderType?.value === 'One_Piece_DF' ||
           formState.part_list[index]?.orderType?.value === 'Two_Piece' ||
-          formState.part_list[index]?.orderType?.value === 'Two_Piece_DF' 
+          formState.part_list[index]?.orderType?.value === 'Two_Piece_DF'
         ) {
           return (
             <Fragment>
@@ -338,7 +337,12 @@ class DoorFilter extends Component {
                     <Field
                       name={`${part}.thickness`}
                       component={renderDropdownList}
-                      data={thickness}
+                      data={
+                        formState.part_list[index]?.construction?.value ===
+                        'Wrapped'
+                          ? wrapthickness
+                          : thickness
+                      }
                       dataKey="value"
                       textField="name"
                       edit={edit}

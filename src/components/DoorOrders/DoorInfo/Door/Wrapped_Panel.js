@@ -21,6 +21,7 @@ import fraction from '../../../../utils/fraction';
 import changeProfile from '../Functions/changeProfile';
 import changeDesign from '../Functions/changeDesign';
 import ModalUtil from '../../../../utils/Modal';
+import Maker from '../../MakerJS/Wrap_Maker';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -83,54 +84,6 @@ class Door extends Component {
     }
   };
 
-  onChange = (e) => {
-    const { dispatch, index, part, formState } = this.props;
-
-    const leftStile = formState?.part_list[index]?.leftStile;
-    const rightStile = formState?.part_list[index]?.rightStile;
-    const topRail = formState?.part_list[index]?.topRail;
-    const bottomRail = formState?.part_list[index]?.bottomRail;
-
-    const value = e.target?.value;
-
-    if (e.target?.name.includes('leftStile')) {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${index}].notes`,
-          `Left Stile: ${e.target.value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target?.name.includes('rightStile')) {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${index}].notes`,
-          `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target?.name.includes('topRail')) {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${index}].notes`,
-          `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-        )
-      );
-    }
-    if (e.target?.name.includes('bottomRail')) {
-      dispatch(
-        change(
-          'Order',
-          `part_list[${index}].notes`,
-          `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-        )
-      );
-    }
-  };
-
   render() {
     const {
       part,
@@ -172,9 +125,8 @@ class Door extends Component {
 
     const customer = formState?.job_info?.customer;
 
-    const CBD_Panels = panels?.filter((panel) => panel.CBD);
+    const flat_panels = panels?.filter((panel) => panel.panel_wrap);
 
-    console.log({ CBD_Panels });
     console.log({ customer });
 
     return (
@@ -213,7 +165,7 @@ class Door extends Component {
               <Field
                 name={`${part}.panel`}
                 component={renderDropdownListFilter}
-                data={customer?.id === 1282 ? CBD_Panels : panels}
+                data={flat_panels}
                 dataKey="value"
                 textField="NAME"
                 validate={required}
@@ -238,6 +190,45 @@ class Door extends Component {
           </Col>
         </Row>
 
+        <div>
+          <Row>
+            <Col>
+              <h5>
+                <strong>Wrap Details</strong>
+              </h5>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <FormGroup>
+                <Label htmlFor="arches">Wrap Width</Label>
+                <Field
+                  name={`${part}.wrap_width`}
+                  type="text"
+                  component={renderNumber}
+                  label="wrap_width"
+                  edit={edit}
+                  validate={required}
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label htmlFor="arches">Face Width</Label>
+                <Field
+                  name={`${part}.face_width`}
+                  type="text"
+                  component={renderNumber}
+                  label="face_width"
+                  edit={edit}
+                  validate={required}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        </div>
+
         <hr />
 
         <Row className="mt-2">
@@ -254,6 +245,14 @@ class Door extends Component {
                 <p>Enter Item Build Note Here - Framing/Wood, etc.</p>
               </strong>
             </FormGroup>
+          </Col>
+          <Col>
+            <div
+              id={`makerJS${index}`}
+              style={{ width: '100%', height: '300px' }}
+            >
+              <Maker i={index} style={{ width: '100%', height: '300px' }} />
+            </div>
           </Col>
         </Row>
 

@@ -7,6 +7,7 @@ import thickness from './thickness';
 import orderType from './orderType';
 import construction from './construction';
 import fraction from '../../../utils/fraction';
+import wrapthickness from './WrapThickness';
 
 class DoorInfo extends Component {
   constructor(props) {
@@ -189,6 +190,7 @@ class DoorInfo extends Component {
                 construction={construction}
                 thickness={thickness}
                 updateSubmit={updateSubmit}
+                wrapthickness={wrapthickness}
               />
 
               <Conditionals
