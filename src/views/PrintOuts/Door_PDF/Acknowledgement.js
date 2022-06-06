@@ -162,6 +162,8 @@ export default (data, pricing) => {
                     text: `${
                       part?.construction?.value === 'Slab'
                         ? 'Slab'
+                        : part?.construction?.value === 'Wrapped'
+                        ? 'Wrapped Panel'
                         : part.design
                         ? part.design.NAME
                         : part.face_frame_design
@@ -219,13 +221,7 @@ export default (data, pricing) => {
                         : part.design
                         ? part.design.NAME
                         : 'None'
-                    }   Edge:  ${
-                      part?.construction?.value === 'Wrapped'
-                        ? 'M Lip'
-                        : part.edge
-                        ? part.edge.NAME
-                        : 'None'
-                    }`,
+                    }   Edge:  ${part.edge ? part.edge.NAME : 'None'}`,
                     style: 'fonts',
                   },
                 ],

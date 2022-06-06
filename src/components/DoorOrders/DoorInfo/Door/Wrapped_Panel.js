@@ -124,10 +124,14 @@ class Door extends Component {
     );
 
     const customer = formState?.job_info?.customer;
-
-    const flat_panels = panels?.filter((panel) => panel.panel_wrap);
+    let thickness_val =
+      formState?.part_list[index]?.thickness?.thickness_values;
+    const flat_panels = panels?.filter(
+      (panel) => panel.panel_wrap && panel.Thickness < thickness_val
+    );
 
     console.log({ customer });
+    console.log({ thickness_val });
 
     return (
       <div>

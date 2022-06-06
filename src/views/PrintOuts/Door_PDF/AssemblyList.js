@@ -241,7 +241,7 @@ export default (data, breakdowns) => {
                           i.edge && i?.construction?.value !== 'Miter'
                             ? i.edge.NAME
                             : i?.construction?.value === 'Wrapped'
-                            ? 'M Lip'
+                            ? 'None'
                             : 'None'
                         }`,
                         style: 'fonts',
