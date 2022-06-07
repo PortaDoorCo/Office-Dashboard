@@ -95,7 +95,10 @@ class Edit extends Component {
     );
 
     dispatch(
-      change('CustomerEdit', 'Shipping_State', formState && formState.State)
+      change('CustomerEdit', 'Shipping_State', {
+        name: formState?.State,
+        abbreviation: formState?.State,
+      })
     );
 
     dispatch(
