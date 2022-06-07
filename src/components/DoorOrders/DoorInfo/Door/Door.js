@@ -155,6 +155,7 @@ class Door extends Component {
     let construction = formState?.part_list[index]?.construction?.value;
     let orderType = formState?.part_list[index]?.orderType?.value;
     let thickness = formState?.part_list[index]?.thickness?.db_name;
+    let thickness_1 = formState?.part_list[index]?.thickness?.thickness_1;
     let topRailAdd = formState?.part_list[index]?.design?.TOP_RAIL_ADD
       ? formState?.part_list[index]?.design?.TOP_RAIL_ADD
       : 0;
@@ -167,21 +168,18 @@ class Door extends Component {
     const two_piece_wood = woodtypes.filter((wood) => wood.two_piece === true);
     const filtered_designs = designs.filter(
       (design) =>
-        design.CONSTRUCTION === construction && design.ORDERTYPE === 'Door'
+        design.CONSTRUCTION === construction &&
+        design.ORDERTYPE === 'Door' &&
+        (thickness_1 === '4/4'
+          ? design.UPCHARGE > 0
+          : thickness_1 === '5/4' || thickness_1 === '6/4'
+          ? design.UPCHARGE_THICK > 0
+          : null)
     );
 
     const customer = formState?.job_info?.customer;
 
     const CBD_Panels = panels?.filter((panel) => panel.CBD);
-
-    console.log({ CBD_Panels });
-    console.log({ customer });
-
-    const status = formState?.values?.job_info?.status?.value;
-    console.log({ check: status === 'Quote' });
-    console.log({ edit });
-
-    console.log({ CHECKK: edit && status === 'Quote' });
 
     return (
       <div>
