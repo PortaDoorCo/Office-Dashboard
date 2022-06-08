@@ -162,13 +162,20 @@ class CopeDF extends Component {
     let construction = formState?.part_list[index]?.construction?.value;
     let orderType = formState?.part_list[index]?.orderType?.value;
     let thickness = formState?.part_list[index]?.thickness?.db_name;
+    let thickness_1 = formState?.part_list[index]?.thickness?.thickness_1;
 
     const filtered_woodtypes = woodtypes.filter((wood) => wood[thickness]);
     const one_piece_wood = woodtypes.filter((wood) => wood.one_piece === true);
     const two_piece_wood = woodtypes.filter((wood) => wood.two_piece === true);
     const filtered_designs = designs.filter(
       (design) =>
-        design.CONSTRUCTION === construction && design.ORDERTYPE === 'DF'
+        design.CONSTRUCTION === construction &&
+        design.ORDERTYPE === 'DF' &&
+        (thickness_1 === '4/4'
+          ? design.UPCHARGE > 0
+          : thickness_1 === '5/4' || thickness_1 === '6/4'
+          ? design.UPCHARGE_THICK > 0
+          : null)
     );
 
     const customer = formState?.job_info?.customer;

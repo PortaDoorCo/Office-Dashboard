@@ -707,7 +707,8 @@ export const itemPriceSelector = createSelector(
 
               if (
                 part.orderType.value === 'Door' &&
-                part.construction.value === 'Slab'
+                (part.construction.value === 'Slab' ||
+                part.construction.value === 'Wrapped')
               ) {
                 price =
                   (width * height) / 144 > 2
@@ -715,7 +716,8 @@ export const itemPriceSelector = createSelector(
                     : 2 * wood + (6.5 + edge) + extraCost;
               } else if (
                 part.orderType.value === 'DF' &&
-                part.construction.value === 'Slab'
+                (part.construction.value === 'Slab' ||
+                part.construction.value === 'Wrapped')
               ) {
                 price =
                   (width * height) / 144 > 1
