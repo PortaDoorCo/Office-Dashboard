@@ -72,14 +72,6 @@ const DoorTable = ({
 
   const index = fields.length - 1;
 
-  const leftStile =
-    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
-  const rightStile =
-    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.rightStile : null;
-  const topRail =
-    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
-  const bottomRail =
-    index >= 0 ? formState?.part_list[i]?.dimensions[index]?.bottomRail : null;
   const defaultLeftStile = formState?.part_list[i]?.leftStile;
   const defaultRightStile = formState?.part_list[i]?.rightStile;
   const defaultTopRail = formState?.part_list[i]?.topRail;
@@ -87,8 +79,6 @@ const DoorTable = ({
 
   const topRailAdd = formState?.part_list[i]?.design?.TOP_RAIL_ADD;
   const bottomRailAdd = formState?.part_list[i]?.design?.BTM_RAIL_ADD;
-
-  console.log({ index });
 
   const construction = formState?.part_list[i]?.construction?.value;
 
@@ -164,6 +154,19 @@ const DoorTable = ({
   const twoHigh = (index, e, v) => {
     let value;
     const part = formState.part_list[i];
+
+    const leftStile =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
+    const rightStile =
+      index >= 0
+        ? formState?.part_list[i]?.dimensions[index]?.rightStile
+        : null;
+    const topRail =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
+    const bottomRail =
+      index >= 0
+        ? formState?.part_list[i]?.dimensions[index]?.bottomRail
+        : null;
 
     const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
     const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
@@ -460,6 +463,19 @@ const DoorTable = ({
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
 
+    const leftStile =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
+    const rightStile =
+      index >= 0
+        ? formState?.part_list[i]?.dimensions[index]?.rightStile
+        : null;
+    const topRail =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
+    const bottomRail =
+      index >= 0
+        ? formState?.part_list[i]?.dimensions[index]?.bottomRail
+        : null;
+
     const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
     const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
@@ -628,6 +644,18 @@ const DoorTable = ({
   };
 
   const changeFraming = (e, index) => {
+    const leftStile =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
+    const rightStile =
+      index >= 0
+        ? formState?.part_list[i]?.dimensions[index]?.rightStile
+        : null;
+    const topRail =
+      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
+    const bottomRail =
+      index >= 0
+        ? formState?.part_list[i]?.dimensions[index]?.bottomRail
+        : null;
     const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
     const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
