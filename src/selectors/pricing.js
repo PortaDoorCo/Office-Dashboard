@@ -220,9 +220,9 @@ const totalBalanceDue = (state) => {
     if (orders && orders.values && orders.values.balance_history) {
       console.log({ orders });
       return state.form.Order.values.balance_history.map((i) => {
-        if (!isNaN(i.balance_paid)) {
+        if (i.balance_paid) {
           return i.balance_paid;
-        } else if (!isNaN(i.deposit_paid)) {
+        } else if (i.deposit_paid) {
           return i.deposit_paid;
         } else {
           return 0;
