@@ -192,6 +192,8 @@ class BalanceHistory extends Component {
     const balance_history_paid =
       formState &&
       formState.balance_history?.slice(0).map((i, index) => {
+        console.log({ balance: parseFloat(i.balance_paid) });
+
         updated_total =
           updated_total -
           parseFloat(i.balance_paid || 0) -
@@ -233,6 +235,8 @@ class BalanceHistory extends Component {
       await updateOrder(orderId, order, cookie);
       await this.props.editable();
     };
+
+    console.log({ updated_total });
 
     if (formState) {
       return (

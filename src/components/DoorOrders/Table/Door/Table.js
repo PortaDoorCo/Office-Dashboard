@@ -84,11 +84,11 @@ const DoorTable = ({
   const defaultRightStile = formState?.part_list[i]?.rightStile;
   const defaultTopRail = formState?.part_list[i]?.topRail;
   const defaultBottomRail = formState?.part_list[i]?.bottomRail;
-  const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-  const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
   const topRailAdd = formState?.part_list[i]?.design?.TOP_RAIL_ADD;
   const bottomRailAdd = formState?.part_list[i]?.design?.BTM_RAIL_ADD;
+
+  console.log({ index });
 
   const construction = formState?.part_list[i]?.construction?.value;
 
@@ -164,6 +164,9 @@ const DoorTable = ({
   const twoHigh = (index, e, v) => {
     let value;
     const part = formState.part_list[i];
+
+    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
+    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
 
     if (e) {
       value = e.target.value;
@@ -457,6 +460,9 @@ const DoorTable = ({
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
 
+    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
+    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
+
     let value;
     if (e) {
       value = e.target.value;
@@ -616,161 +622,18 @@ const DoorTable = ({
     }
   };
 
-  const onStileOrRailChange = (e, index) => {
-    //   const value = e.target.value;
-    //   if ((height >= 48 && panelsH > 1) || (width >= 24 && panelsW > 1)) {
-    //     if (e.target.name.includes('leftStile')) {
-    //       dispatch(
-    //         change(
-    //           'Order',
-    //           `part_list[${i}].dimensions[${index}].notes`,
-    //           `${panelsH}H ${panelsW}W \nLeft Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-    //         )
-    //       );
-    //     }
-    //     if (e.target.name.includes('rightStile')) {
-    //       dispatch(
-    //         change(
-    //           'Order',
-    //           `part_list[${i}].dimensions[${index}].notes`,
-    //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-    //         )
-    //       );
-    //     }
-    //     if (e.target.name.includes('topRail')) {
-    //       dispatch(
-    //         change(
-    //           'Order',
-    //           `part_list[${i}].dimensions[${index}].notes`,
-    //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-    //         )
-    //       );
-    //     }
-    //     if (e.target.name.includes('bottomRail')) {
-    //       dispatch(
-    //         change(
-    //           'Order',
-    //           `part_list[${i}].dimensions[${index}].notes`,
-    //           `${panelsH}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-    //         )
-    //       );
-    //     }
-    //   } else {
-    //     if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
-    //       if (e.target.name.includes('leftStile')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('rightStile')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('topRail')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}\nSINGLE - NO GUARANTEE"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('bottomRail')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}\nSINGLE - NO GUARANTEE"`
-    //           )
-    //         );
-    //       }
-    //     } else {
-    //       if (e.target.name.includes('leftStile')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${value}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('rightStile')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${value}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('topRail')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${value}" Bottom Rail: ${bottomRail}"`
-    //           )
-    //         );
-    //       }
-    //       if (e.target.name.includes('bottomRail')) {
-    //         dispatch(
-    //           change(
-    //             'Order',
-    //             `part_list[${i}].dimensions[${index}].notes`,
-    //             `Left Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${value}"`
-    //           )
-    //         );
-    //       }
-    //     }
-    //   }
-  };
-
   const registerChange = (index, e) => {
     const value = e.target.value;
     setChangeValue(value);
   };
 
   const changeFraming = (e, index) => {
+    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
+    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
+
     if (e.target.name === 'update_framing') {
       if (changeValue) {
         const newVal = fraction(numQty(changeValue));
-
-        // if (panelsH > 1 || panelsW > 1) {
-        //   dispatch(
-        //     change(
-        //       'Order',
-        //       `part_list[${i}].dimensions[${index}].notes`,
-        //       `${panelsH}H ${panelsW}W \nLeft Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
-        //     )
-        //   );
-        // } else {
-        //   if ((height >= 48 && panelsH < 2) || (width >= 24 && panelsW < 2)) {
-        //     dispatch(
-        //       change(
-        //         'Order',
-        //         `part_list[${i}].dimensions[${index}].notes`,
-        //         `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}" \nSINGLE - NO GUARANTEE`
-        //       )
-        //     );
-        //   } else {
-        //     dispatch(
-        //       change(
-        //         'Order',
-        //         `part_list[${i}].dimensions[${index}].notes`,
-        //         `Left Stile: ${newVal}" Right Stile: ${newVal}" \nTop Rail: ${newVal}" Bottom Rail: ${newVal}"`
-        //       )
-        //     );
-        //   }
-        // }
 
         dispatch(
           change(
@@ -1133,9 +996,7 @@ const DoorTable = ({
                     label="topRail"
                     edit={construction === 'Miter' ? false : edit}
                     validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
+                    onChange={(e) => registerChange(index, e)}
                   />
                 </td>
                 <td>
@@ -1149,9 +1010,7 @@ const DoorTable = ({
                     label="bottomRail"
                     edit={construction === 'Miter' ? false : edit}
                     validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
+                    onChange={(e) => registerChange(index, e)}
                   />
                 </td>
 
@@ -1166,9 +1025,7 @@ const DoorTable = ({
                     label="leftStile"
                     edit={construction === 'Miter' ? false : edit}
                     validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
+                    onChange={(e) => registerChange(index, e)}
                   />
                 </td>
                 <td>
@@ -1182,9 +1039,7 @@ const DoorTable = ({
                     label="rightStile"
                     edit={construction === 'Miter' ? false : edit}
                     validate={required}
-                    onChange={(e) => (
-                      registerChange(index, e), onStileOrRailChange(e, index)
-                    )}
+                    onChange={(e) => registerChange(index, e)}
                   />
                 </td>
 

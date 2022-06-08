@@ -218,10 +218,11 @@ const totalBalanceDue = (state) => {
   const orders = state.form.Order;
   if (orders) {
     if (orders && orders.values && orders.values.balance_history) {
+      console.log({ orders });
       return state.form.Order.values.balance_history.map((i) => {
-        if (parseFloat(i.balance_paid) > 0) {
+        if (!isNaN(i.balance_paid)) {
           return i.balance_paid;
-        } else if (parseFloat(i.deposit_paid) > 0) {
+        } else if (!isNaN(i.deposit_paid)) {
           return i.deposit_paid;
         } else {
           return 0;
@@ -930,6 +931,10 @@ export const itemPriceSelector = createSelector(
                       ?.scoop !==
                       formState?.initial.part_list[index]?.dimensions[j]
                         ?.scoop ||
+                    formState?.values?.part_list[index]?.dimensions[j]
+                      ?.extraCost !==
+                      formState?.initial.part_list[index]?.dimensions[j]
+                        ?.extraCost ||
                     formState?.values?.part_list[index]?.woodtype !==
                       formState?.initial.part_list[index]?.woodtype ||
                     formState?.values?.part_list[index]
