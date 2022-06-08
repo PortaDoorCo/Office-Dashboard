@@ -136,7 +136,7 @@ class JobInfo extends Component {
       ) {
         const customer = formState?.job_info?.customer;
 
-        if (customer?.Notes !== '') {
+        if (customer?.Notes?.length) {
           this.props.toggleReminderModal();
         }
 
