@@ -368,7 +368,7 @@ export default (data, pricing) => {
       ],
       margin: [0, 10, 0, 0],
     },
-    depositPaid > 0
+    depositPaid !== 0
       ? {
           columns: [
             { text: '', style: 'totals', width: 317, decoration: 'underline' },
@@ -389,7 +389,7 @@ export default (data, pricing) => {
           margin: [0, 2, 0, 0],
         }
       : null,
-    balancePaid > 0
+    balancePaid !== 0
       ? {
           columns: [
             { text: '', style: 'totals', width: 317, decoration: 'underline' },

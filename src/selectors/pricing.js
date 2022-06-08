@@ -218,10 +218,11 @@ const totalBalanceDue = (state) => {
   const orders = state.form.Order;
   if (orders) {
     if (orders && orders.values && orders.values.balance_history) {
+      console.log({ orders });
       return state.form.Order.values.balance_history.map((i) => {
-        if (parseFloat(i.balance_paid) > 0) {
+        if (i.balance_paid) {
           return i.balance_paid;
-        } else if (parseFloat(i.deposit_paid) > 0) {
+        } else if (i.deposit_paid) {
           return i.deposit_paid;
         } else {
           return 0;
@@ -706,22 +707,24 @@ export const itemPriceSelector = createSelector(
               //Slab Doors here
 
               if (
-                part.orderType.value === 'Door' &&
-                part.construction.value === 'Slab'
+                part?.orderType?.value === 'Door' &&
+                (part?.construction?.value === 'Slab' ||
+                  part?.construction?.value === 'Wrapped')
               ) {
                 price =
                   (width * height) / 144 > 2
                     ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                     : 2 * wood + (6.5 + edge) + extraCost;
               } else if (
-                part.orderType.value === 'DF' &&
-                part.construction.value === 'Slab'
+                part?.orderType?.value === 'DF' &&
+                (part?.construction?.value === 'Slab' ||
+                  part?.construction?.value === 'Wrapped')
               ) {
                 price =
                   (width * height) / 144 > 1
                     ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
                     : 1 * wood + (6.5 + edge) + extraCost;
-              } else if (part.orderType.value === 'DF') {
+              } else if (part?.orderType?.value === 'DF') {
                 price =
                   eval(pricer.df_pricing) +
                   leftStileAdd +
@@ -928,6 +931,10 @@ export const itemPriceSelector = createSelector(
                       ?.scoop !==
                       formState?.initial.part_list[index]?.dimensions[j]
                         ?.scoop ||
+                    formState?.values?.part_list[index]?.dimensions[j]
+                      ?.extraCost !==
+                      formState?.initial.part_list[index]?.dimensions[j]
+                        ?.extraCost ||
                     formState?.values?.part_list[index]?.woodtype !==
                       formState?.initial.part_list[index]?.woodtype ||
                     formState?.values?.part_list[index]
