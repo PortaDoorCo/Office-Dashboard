@@ -47,7 +47,9 @@ const Designs = (props) => {
   const [filteredProducts, setFilteredProducts] = useState(props.designs);
 
   useEffect(() => {
-    const filteredProduct = props.designs.filter((x) => x.Style === 'Baseboard');
+    const filteredProduct = props.designs.filter(
+      (x) => x.Style === 'Baseboard'
+    );
     setFilteredProducts(filteredProduct);
   }, [props.designs]);
 
@@ -189,7 +191,8 @@ const Designs = (props) => {
     role &&
     (role.type === 'management' ||
       role.type === 'authenticated' ||
-      role.type === 'owner' || role.type === 'administrator')
+      role.type === 'owner' ||
+      role.type === 'administrator')
   ) {
     return (
       <div>
@@ -396,6 +399,7 @@ const Designs = (props) => {
                     value={product.NAME}
                     name="NAME"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -408,6 +412,7 @@ const Designs = (props) => {
                     value={product.MOULDING_WIDTH}
                     name="MOULDING_WIDTH"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -417,6 +422,7 @@ const Designs = (props) => {
                     value={product.MOULDING_THICKNESS}
                     name="MOULDING_THICKNESS"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -426,6 +432,7 @@ const Designs = (props) => {
                     value={product.Multiplier}
                     name="Multiplier"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>

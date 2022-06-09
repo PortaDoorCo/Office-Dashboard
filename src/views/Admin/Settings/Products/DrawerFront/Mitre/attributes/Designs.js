@@ -512,6 +512,7 @@ const Designs = (props) => {
                     value={product.NAME}
                     name="NAME"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -524,6 +525,7 @@ const Designs = (props) => {
                     value={product.UPCHARGE}
                     name="UPCHARGE"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -533,6 +535,7 @@ const Designs = (props) => {
                     value={product.UPCHARGE_THICK}
                     name="UPCHARGE_THICK"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -544,6 +547,7 @@ const Designs = (props) => {
                     value={product.TOP_RAIL_ADD}
                     name="TOP_RAIL_ADD"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -553,76 +557,80 @@ const Designs = (props) => {
                     value={product.BTM_RAIL_ADD}
                     name="BTM_RAIL_ADD"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
-              <Col>
-                <Label for="5/4_Price">Minimum Stile Width</Label>
-                <Input
-                  type="number"
-                  value={product.PROFILE_WIDTH}
-                  name="PROFILE_WIDTH"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">Profile Width</Label>
-                <Input
-                  type="number"
-                  value={product.PROFILE_WIDTH}
-                  name="PROFILE_WIDTH"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
-              <Col>
-                <Label for="5/4_Price">DF FULL FRAME</Label>
-                <Input
-                  type="number"
-                  value={product.DF_FULL_FRAME}
-                  name="DF_FULL_FRAME"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
               <Row>
-                <Row>
-                  <Col>
-                    <Label for="5/4_Price">INSET</Label>
-                    <Input
-                      type="number"
-                      value={product.INSET}
-                      name="INSET"
-                      onChange={(e) => change(e)}
-                    ></Input>
-                  </Col>
-                </Row>
+                <Col>
+                  <Label for="5/4_Price">Minimum Stile Width</Label>
+                  <Input
+                    type="number"
+                    value={product.PROFILE_WIDTH}
+                    name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                    disabled
+                  ></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">Profile Width</Label>
+                  <Input
+                    type="number"
+                    value={product.PROFILE_WIDTH}
+                    name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                    disabled
+                  ></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">DF FULL FRAME</Label>
+                  <Input
+                    type="number"
+                    value={product.DF_FULL_FRAME}
+                    name="DF_FULL_FRAME"
+                    onChange={(e) => change(e)}
+                    disabled
+                  ></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">INSET</Label>
+                  <Input
+                    type="number"
+                    value={product.INSET}
+                    name="INSET"
+                    onChange={(e) => change(e)}
+                    disabled
+                  ></Input>
+                </Col>
 
-                <Row className="mt-3">
-                  <Col>
-                    <Row>
-                      <Col>
-                        <Label for="5/4_Price">Square</Label>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <AppSwitch
-                          className={'mx-1'}
-                          variant={'pill'}
-                          color={'primary'}
-                          onChange={() =>
-                            setProduct((prevState) => {
-                              return {
-                                ...prevState,
-                                square: !prevState.square,
-                              };
-                            })
-                          }
-                          checked={product.square}
-                        />
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Square</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch
+                        className={'mx-1'}
+                        variant={'pill'}
+                        color={'primary'}
+                        disabled
+                        onChange={() =>
+                          setProduct((prevState) => {
+                            return {
+                              ...prevState,
+                              square: !prevState.square,
+                            };
+                          })
+                        }
+                        checked={product.square}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
               </Row>
             </ModalBody>
             <ModalFooter>

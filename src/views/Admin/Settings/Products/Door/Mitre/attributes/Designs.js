@@ -514,6 +514,7 @@ const Designs = (props) => {
                   <Input
                     value={product.NAME}
                     name="NAME"
+                    disabled
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -526,6 +527,7 @@ const Designs = (props) => {
                     type="number"
                     value={product.UPCHARGE}
                     name="UPCHARGE"
+                    disabled
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -535,6 +537,7 @@ const Designs = (props) => {
                     type="number"
                     value={product.UPCHARGE_THICK}
                     name="UPCHARGE_THICK"
+                    disabled
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -546,6 +549,7 @@ const Designs = (props) => {
                     type="number"
                     value={product.TOP_RAIL_ADD}
                     name="TOP_RAIL_ADD"
+                    disabled
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -555,6 +559,7 @@ const Designs = (props) => {
                     type="number"
                     value={product.BTM_RAIL_ADD}
                     name="BTM_RAIL_ADD"
+                    disabled
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -567,6 +572,7 @@ const Designs = (props) => {
                     type="number"
                     value={product.PROFILE_WIDTH}
                     name="PROFILE_WIDTH"
+                    disabled
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -576,6 +582,7 @@ const Designs = (props) => {
                     type="number"
                     value={product.Mid_Rail_Width}
                     name="Mid_Rail_Width"
+                    disabled
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -588,6 +595,7 @@ const Designs = (props) => {
                     type="number"
                     value={product.INSET}
                     name="INSET"
+                    disabled
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -606,6 +614,7 @@ const Designs = (props) => {
                         className={'mx-1'}
                         variant={'pill'}
                         color={'primary'}
+                        disabled
                         onChange={() =>
                           setProduct((prevState) => {
                             return {

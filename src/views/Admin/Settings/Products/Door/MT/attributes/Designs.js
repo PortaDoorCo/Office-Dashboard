@@ -481,6 +481,7 @@ const Designs = (props) => {
                     value={product.NAME}
                     name="NAME"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -493,6 +494,7 @@ const Designs = (props) => {
                     value={product.UPCHARGE}
                     name="UPCHARGE"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -502,6 +504,7 @@ const Designs = (props) => {
                     value={product.UPCHARGE_THICK}
                     name="UPCHARGE_THICK"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -513,6 +516,7 @@ const Designs = (props) => {
                     value={product.TOP_RAIL_ADD}
                     name="TOP_RAIL_ADD"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -522,6 +526,7 @@ const Designs = (props) => {
                     value={product.BTM_RAIL_ADD}
                     name="BTM_RAIL_ADD"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -533,6 +538,7 @@ const Designs = (props) => {
                     value={product.PROFILE_WIDTH}
                     name="PROFILE_WIDTH"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -545,6 +551,7 @@ const Designs = (props) => {
                     value={product.INSET}
                     name="INSET"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
 
@@ -555,6 +562,7 @@ const Designs = (props) => {
                     value={product.Mid_Rail_Width}
                     name="Mid_Rail_Width"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>

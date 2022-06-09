@@ -405,6 +405,7 @@ const Profiles = (props) => {
                     value={product.NAME}
                     name="NAME"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -417,6 +418,7 @@ const Profiles = (props) => {
                     value={product.INSET}
                     name="INSET"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -428,6 +430,7 @@ const Profiles = (props) => {
                     value={product.PROFILE_WIDTH}
                     name="PROFILE_WIDTH"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
 
@@ -438,6 +441,7 @@ const Profiles = (props) => {
                     value={product.DF_Reduction}
                     name="DF_Reduction"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
