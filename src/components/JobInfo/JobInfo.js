@@ -528,7 +528,7 @@ class JobInfo extends Component {
                   role?.type === 'management' ||
                   role?.type === 'office'
                     ? edit
-                    : true
+                    : false
                 }
                 textField="value"
               />
@@ -571,7 +571,7 @@ class JobInfo extends Component {
                   role?.type === 'administrator' ||
                   role?.type === 'management'
                     ? edit
-                    : true
+                    : false
                 }
                 validate={required}
                 textField="fullName"
