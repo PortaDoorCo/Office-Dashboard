@@ -55,7 +55,7 @@ const Designs = (props) => {
 
   useEffect(() => {
     const filteredProduct = props.designs.filter(
-      (x) => (x.CONSTRUCTION === 'Cope') && x.ORDERTYPE === 'Door'
+      (x) => x.CONSTRUCTION === 'Cope' && x.ORDERTYPE === 'Door'
     );
     setFilteredProducts(filteredProduct);
   }, [props.designs]);
@@ -159,7 +159,8 @@ const Designs = (props) => {
             .join('')
             .toLowerCase()
             .includes(e.target.value.split(' ').join('')) &&
-          (i.CONSTRUCTION === 'Cope') && (i.ORDERTYPE === 'Door')
+          i.CONSTRUCTION === 'Cope' &&
+          i.ORDERTYPE === 'Door'
       )
     );
   };
@@ -228,8 +229,7 @@ const Designs = (props) => {
     (role.type === 'management' ||
       role.type === 'authenticated' ||
       role.type === 'owner' ||
-      role.type === 'administrator'
-    )
+      role.type === 'administrator')
   ) {
     return (
       <div>
@@ -357,7 +357,6 @@ const Designs = (props) => {
                 ></Input>
               </Col>
               <Row>
-
                 <Row>
                   <Col>
                     <Label for="5/4_Price">INSET</Label>
@@ -379,7 +378,6 @@ const Designs = (props) => {
                     ></Input>
                   </Col>
                 </Row>
-                
               </Row>
 
               <Row className="mt-5">
@@ -490,6 +488,7 @@ const Designs = (props) => {
                     value={product.NAME}
                     name="NAME"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -502,6 +501,7 @@ const Designs = (props) => {
                     value={product.UPCHARGE}
                     name="UPCHARGE"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -511,6 +511,7 @@ const Designs = (props) => {
                     value={product.UPCHARGE_THICK}
                     name="UPCHARGE_THICK"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -522,6 +523,7 @@ const Designs = (props) => {
                     value={product.TOP_RAIL_ADD}
                     name="TOP_RAIL_ADD"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -531,6 +533,7 @@ const Designs = (props) => {
                     value={product.BTM_RAIL_ADD}
                     name="BTM_RAIL_ADD"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -541,6 +544,7 @@ const Designs = (props) => {
                   value={product.PROFILE_WIDTH}
                   name="PROFILE_WIDTH"
                   onChange={(e) => change(e)}
+                  disabled
                 ></Input>
               </Col>
               <Col>
@@ -550,10 +554,10 @@ const Designs = (props) => {
                   value={product.PROFILE_WIDTH}
                   name="PROFILE_WIDTH"
                   onChange={(e) => change(e)}
+                  disabled
                 ></Input>
               </Col>
               <Row>
-
                 <Row>
                   <Col>
                     <Label for="5/4_Price">INSET</Label>
@@ -562,6 +566,7 @@ const Designs = (props) => {
                       value={product.INSET}
                       name="INSET"
                       onChange={(e) => change(e)}
+                      disabled
                     ></Input>
                   </Col>
 
@@ -572,13 +577,11 @@ const Designs = (props) => {
                       value={product.DF_REDUCTION}
                       name="DF_REDUCTION"
                       onChange={(e) => change(e)}
+                      disabled
                     ></Input>
                   </Col>
                 </Row>
-                
               </Row>
-              
-
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={toggle}>

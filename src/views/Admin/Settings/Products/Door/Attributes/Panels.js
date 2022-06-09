@@ -497,6 +497,7 @@ const Panels = (props) => {
                     value={product.NAME}
                     name="NAME"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -509,6 +510,7 @@ const Panels = (props) => {
                     value={product.UPCHARGE}
                     name="UPCHARGE"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -520,6 +522,7 @@ const Panels = (props) => {
                     value={product.PANEL_FACTOR}
                     name="PANEL_FACTOR"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -531,6 +534,7 @@ const Panels = (props) => {
                     value={product.Thickness}
                     name="Thickness"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -547,6 +551,7 @@ const Panels = (props) => {
                         className={'mx-1'}
                         variant={'pill'}
                         color={'primary'}
+                        disabled
                         onChange={() =>
                           setProduct((prevState) => {
                             return {
@@ -574,6 +579,7 @@ const Panels = (props) => {
                         className={'mx-1'}
                         variant={'pill'}
                         color={'primary'}
+                        disabled
                         onChange={() =>
                           setProduct((prevState) => {
                             return {
@@ -602,6 +608,7 @@ const Panels = (props) => {
                         className={'mx-1'}
                         variant={'pill'}
                         color={'primary'}
+                        disabled
                         onChange={() =>
                           setProduct((prevState) => {
                             return {

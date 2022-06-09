@@ -4,15 +4,27 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { connect } from 'react-redux';
 import {
-  Button, Card, CardBody, CardImg, CardTitle, Col, FormGroup, Input,
-  Label, Modal, ModalBody,
-  ModalFooter, ModalHeader, Row
+  Button,
+  Card,
+  CardBody,
+  CardImg,
+  CardTitle,
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import FileUploader from '../../../../../../../components/FileUploader/FileUploader';
 import {
   addProduct,
-  deleteProduct, updateProduct
+  deleteProduct,
+  updateProduct,
 } from '../../../../../../../redux/part_list/actions';
 
 const cookie = Cookies.get('jwt');
@@ -132,7 +144,6 @@ const Designs = (props) => {
       Item: item,
     };
 
-
     await props.addProduct(submittedProduct, 'designs', cookie);
     await setModal(!modal);
   };
@@ -150,8 +161,6 @@ const Designs = (props) => {
       )
     );
   };
-
-
 
   const card = filteredProducts.map((card) => {
     return (
@@ -357,7 +366,6 @@ const Designs = (props) => {
                   ></Input>
                 </Col>
               </Row>
-       
 
               <Row className="mt-5">
                 <Col>
@@ -467,6 +475,7 @@ const Designs = (props) => {
                     value={product.NAME}
                     name="NAME"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -479,6 +488,7 @@ const Designs = (props) => {
                     value={product.UPCHARGE}
                     name="UPCHARGE"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -488,6 +498,7 @@ const Designs = (props) => {
                     value={product.UPCHARGE_THICK}
                     name="UPCHARGE_THICK"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
@@ -499,6 +510,7 @@ const Designs = (props) => {
                     value={product.TOP_RAIL_ADD}
                     name="TOP_RAIL_ADD"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
                 <Col>
@@ -508,40 +520,44 @@ const Designs = (props) => {
                     value={product.BTM_RAIL_ADD}
                     name="BTM_RAIL_ADD"
                     onChange={(e) => change(e)}
+                    disabled
                   ></Input>
                 </Col>
               </Row>
-              <Col>
-                <Label for="5/4_Price">Profile Width</Label>
-                <Input
-                  type="number"
-                  value={product.PROFILE_WIDTH}
-                  name="PROFILE_WIDTH"
-                  onChange={(e) => change(e)}
-                ></Input>
-              </Col>
               <Row>
-                <Row>
-                  <Col>
-                    <Label for="5/4_Price">INSET</Label>
-                    <Input
-                      type="number"
-                      value={product.INSET}
-                      name="INSET"
-                      onChange={(e) => change(e)}
-                    ></Input>
-                  </Col>
+                <Col>
+                  <Label for="5/4_Price">Profile Width</Label>
+                  <Input
+                    type="number"
+                    value={product.PROFILE_WIDTH}
+                    name="PROFILE_WIDTH"
+                    onChange={(e) => change(e)}
+                    disabled
+                  ></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="5/4_Price">INSET</Label>
+                  <Input
+                    type="number"
+                    value={product.INSET}
+                    disabled
+                    name="INSET"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
 
-                  <Col>
-                    <Label for="5/4_Price">DF Reduction</Label>
-                    <Input
-                      type="number"
-                      value={product.DF_REDUCTION}
-                      name="DF_REDUCTION"
-                      onChange={(e) => change(e)}
-                    ></Input>
-                  </Col>
-                </Row>
+                <Col>
+                  <Label for="5/4_Price">DF Reduction</Label>
+                  <Input
+                    type="number"
+                    disabled
+                    value={product.DF_REDUCTION}
+                    name="DF_REDUCTION"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
               </Row>
             </ModalBody>
             <ModalFooter>
