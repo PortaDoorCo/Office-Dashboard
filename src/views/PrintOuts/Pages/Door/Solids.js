@@ -16,13 +16,14 @@ const DoorPDF = async (
   appliedProfiles,
   breakdowns,
   p,
-  pricing
+  pricing,
+  newData
 ) => {
   return new Promise((resolve, reject) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
-    const units = TotalPieces(data);
+    const units = TotalPieces(newData);
     const solidDFs = TotalSolidDFs(data);
     const totalUnits = units;
 

@@ -552,7 +552,8 @@ class OrderPage extends Component {
                 appliedProfiles1,
                 breakdowns,
                 p,
-                this.props.pricing
+                this.props.pricing,
+                newDataOrder
               ).then(async (v) => {
                 files.push(v);
               });
@@ -569,7 +570,8 @@ class OrderPage extends Component {
                   appliedProfiles1,
                   breakdowns,
                   p,
-                  this.props.pricing
+                  this.props.pricing,
+                  newDataOrder
                 ).then(async (v) => {
                   files.push(v);
                 });
