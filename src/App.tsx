@@ -221,7 +221,10 @@ class App extends Component<PropTypes, StateTypes> {
     );
 
     socket.on('delivery_added', () => this.props.getDeliveries(cookie));
-    socket.on('customer_added', (res: {}) => customerAdded(res));
+    socket.on('customer_added', (res: {}) => {
+      console.log({ res });
+      return customerAdded(res);
+    });
     socket.on('customer_updated', (res: {}) => customerUpdated(res));
     // socket.on('customer_deleted', (res: {}) => customerDeleted(res));
 

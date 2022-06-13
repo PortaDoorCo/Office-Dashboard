@@ -96,8 +96,8 @@ class Edit extends Component {
 
     dispatch(
       change('CustomerEdit', 'Shipping_State', {
-        name: formState?.State,
-        abbreviation: formState?.State,
+        name: formState?.State ? formState?.State : null,
+        abbreviation: formState?.State ? formState?.State : null,
       })
     );
 
