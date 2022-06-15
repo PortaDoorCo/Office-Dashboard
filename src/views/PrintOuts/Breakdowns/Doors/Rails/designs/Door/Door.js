@@ -35,8 +35,8 @@ export default (info, part, breakdowns) => {
     : 0;
   const vertMull = Math.round(numQty(vMidRail) * 16) / 16;
   const horizMull = Math.round(numQty(hMidRail) * 16) / 16;
-  const panelsH = parseInt(info.panelsH);
-  const panelsW = parseInt(info.panelsW);
+  const panelsH = info.panelsH ? parseInt(info.panelsH) : 1;
+  const panelsW = info.panelsW ? parseInt(info.panelsW) : 1;
   const height = Math.round(numQty(info.height) * 16) / 16;
   const width = Math.round(numQty(info.width) * 16) / 16;
   const qty = parseInt(info.qty);
