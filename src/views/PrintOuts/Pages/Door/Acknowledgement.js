@@ -360,6 +360,10 @@ const DoorPDF = async (
         fonts: {
           fontSize: 9,
         },
+        misc_items: {
+          fontSize: 9,
+          decoration: 'underline',
+        },
         fontsBold: {
           fontSize: 8,
           bold: true,

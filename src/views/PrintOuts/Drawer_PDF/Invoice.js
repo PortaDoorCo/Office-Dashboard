@@ -369,7 +369,7 @@ export default (data, pricing) => {
           columns: [
             {
               text: data.misc_items.map((i) => {
-                return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
+                return `- ${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
               }),
               style: 'fonts',
               width: 171,

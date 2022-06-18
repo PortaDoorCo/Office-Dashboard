@@ -218,7 +218,6 @@ const totalBalanceDue = (state) => {
   const orders = state.form.Order;
   if (orders) {
     if (orders && orders.values && orders.values.balance_history) {
-      console.log({ orders });
       return state.form.Order.values.balance_history.map((i) => {
         if (i.balance_paid) {
           return i.balance_paid;
