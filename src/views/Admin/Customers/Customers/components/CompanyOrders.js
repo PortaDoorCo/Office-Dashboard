@@ -22,7 +22,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import CustomerFile from '../../../../PrintOuts/Reports/CustomerFile';
 import styled from 'styled-components';
-import status from '../../../../../utils/status';
+import status from '../../../../../utils/customer_status';
 import Invoice from '../../../../PrintOuts/Reports/Invoice';
 import Report1 from '../../../../PrintOuts/Reports/CustomerFile';
 
@@ -309,6 +309,39 @@ const OrderTable = (props) => {
               item.DateCompleted ||
                 (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
             ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Pending Shipment') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            !item.DateShipped &&
+            ((item.id + 100).toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            !item.DateShipped
           );
         }
       } else if (filterStatus === 'Shipped') {
@@ -653,6 +686,9 @@ const OrderTable = (props) => {
                 Filter Date{' '}
                 {filterStatus === 'Quote'
                   ? 'Entered'
+                  : filterStatus === 'Complete' ||
+                    filterStatus === 'Pending Shipment'
+                  ? 'Complete'
                   : filterStatus === 'Invoiced'
                   ? 'Invoiced'
                   : filterStatus === 'All'
