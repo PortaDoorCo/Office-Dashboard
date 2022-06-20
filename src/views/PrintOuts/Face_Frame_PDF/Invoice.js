@@ -84,6 +84,46 @@ export default (data, pricing) => {
 
   const balanceDue = total - depositPaid - balancePaid;
 
+  const misc_items = [
+    [
+      { text: 'Miscellaneous Extra', style: 'misc_items' },
+      { text: 'Qty', style: 'misc_items' },
+      { text: 'Cost Per', style: 'misc_items' },
+      { text: '', style: 'fonts' },
+    ],
+  ];
+
+  data.misc_items.forEach((i) => {
+    misc_items.push([
+      {
+        text: `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''}`,
+        style: 'fonts',
+      },
+      { text: i.qty ? parseInt(i.qty) : '', style: 'fonts' },
+      {
+        text: `$${
+          i.price
+            ? parseFloat(i.price).toFixed(2)
+            : i.pricePer
+            ? parseFloat(i.pricePer).toFixed(2)
+            : 0
+        }`,
+        style: 'fonts',
+      },
+      {
+        text: `$${
+          i.price
+            ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2)
+            : i.pricePer
+            ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2)
+            : 0
+        }`,
+        style: 'fonts',
+        alignment: 'right',
+      },
+    ]);
+  });
+
   const table_content = Glass_Selection(data, null).map((part, i) => {
     const tableBody = [
       [
@@ -351,112 +391,15 @@ export default (data, pricing) => {
     },
     data.misc_items.length > 0
       ? {
-          columns: [
-            {
-              text: `${
-                data.misc_items.length > 0 ? 'Miscellaneous Extra' : ''
-              }`,
-              style: 'fonts',
-              decoration: 'underline',
-              width: 168,
-            },
-            {
-              text: 'Qty',
-              style: 'fonts',
-              decoration: 'underline',
-              width: 33,
-            },
-            {
-              text: 'Cost Per',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-              decoration: 'underline',
-            },
-            {
-              text: '',
-              style: 'totals',
-              margin: [0, 0, 0, 0],
-              alignment: 'right',
-            },
-          ],
-          margin: [0, 10, 0, 0],
-        }
-      : null,
-    data.misc_items.length > 0
-      ? {
-          columns: [
-            {
-              text: data.misc_items.map((i) => {
-                return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
-              }),
-              style: 'fonts',
-              width: 171,
-            },
-            {
-              style: 'fonts',
-              stack: data.misc_items.map((i) => {
-                return { text: i.qty ? parseInt(i.qty) : '' };
-              }),
-              width: 30,
-            },
-            {
-              text: data.misc_items.map((i) => {
-                return `$${
-                  i.price
-                    ? parseFloat(i.price).toFixed(2)
-                    : i.pricePer
-                    ? parseFloat(i.pricePer).toFixed(2)
-                    : 0
-                } \n`;
-              }),
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: data.misc_items.map((i) => {
-                return `$${
-                  i.price
-                    ? (parseFloat(i.price) * parseFloat(i.qty)).toFixed(2)
-                    : i.pricePer
-                    ? (parseFloat(i.pricePer) * parseFloat(i.qty)).toFixed(2)
-                    : 0
-                } \n`;
-              }),
-              style: 'fonts',
-              alignment: 'right',
-            },
-          ],
-          margin: [0, 2, 0, 0],
-        }
-      : null,
-    data.misc_items.length > 0
-      ? {
-          text: '------------',
-          margin: [0, 0, 0, 0],
-          alignment: 'right',
-        }
-      : null,
-    data.misc_items.length > 0
-      ? {
-          columns: [
-            { text: '', style: 'totals', decoration: 'underline', width: 317 },
-            {
-              text: data.misc_items.length > 0 ? 'Order Sub Total' : '',
-              style: 'totals',
-              width: 120,
-              alignment: 'right',
-            },
-            {
-              text:
-                data.misc_items.length > 0
-                  ? '$' + order_sub_total.toFixed(2)
-                  : '',
-              style: 'fonts',
-              margin: [0, 0, 0, 0],
-              alignment: 'right',
-            },
-          ],
-          margin: [0, 10, 0, 0],
+          layout: 'noBorders',
+          table: {
+            headerRows: 1,
+            widths: [168, 33, 200, '*'],
+            heights: -5,
+
+            style: 'fonts',
+            body: misc_items,
+          },
         }
       : null,
     {
