@@ -41,6 +41,7 @@ const Edges = (props) => {
     UPCHARGE: '',
     LIP_FACTOR: '',
     one_piece: false,
+    special_slab_edge: false,
     photo: null,
   });
   const [newProduct, setNewProduct] = useState(false);
@@ -70,6 +71,7 @@ const Edges = (props) => {
       UPCHARGE: '',
       LIP_FACTOR: '',
       one_piece: false,
+      special_slab_edge: false,
       photo: null,
     };
     setNewProduct(true);
@@ -119,6 +121,7 @@ const Edges = (props) => {
       UPCHARGE: product.UPCHARGE,
       LIP_FACTOR: product.LIP_FACTOR,
       one_piece: false,
+      special_slab_edge: false,
       photo: product.photo ? product.photo.id : '',
       Item: item,
     };
@@ -171,6 +174,13 @@ const Edges = (props) => {
             </CardTitle>
             <CardTitle>
               <strong>Lip Factor:</strong> {card.LIP_FACTOR}
+            </CardTitle>
+            <CardTitle>
+              <strong>One Piece:</strong> {card.one_piece ? 'Yes' : 'No'}
+            </CardTitle>
+            <CardTitle>
+              <strong>Special Slab Edge:</strong>{' '}
+              {card.special_slab_edge ? 'Yes' : 'No'}
             </CardTitle>
           </CardBody>
         </Card>
@@ -296,6 +306,34 @@ const Edges = (props) => {
                           })
                         }
                         checked={product.one_piece}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>
+                      <Label for="5/4_Price">Special Slab Edge</Label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <AppSwitch
+                        className={'mx-1'}
+                        variant={'pill'}
+                        color={'primary'}
+                        onChange={() =>
+                          setProduct((prevState) => {
+                            return {
+                              ...prevState,
+                              special_slab_edge: !prevState.special_slab_edge,
+                            };
+                          })
+                        }
+                        checked={product.special_slab_edge}
                       />
                     </Col>
                   </Row>

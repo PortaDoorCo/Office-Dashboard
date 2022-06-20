@@ -83,22 +83,6 @@ class DoorFilter extends Component {
           this.toggle();
         }
 
-        if (
-          part.orderType.value === 'DF' &&
-          part.construction.value === 'Slab'
-        ) {
-          // this.setState({
-          //   message: <div>
-          //     <center>
-          //       <p>Are You Sure That This For A <strong>Drawer Front</strong>?</p>
-          //       <p>If you meant to select a <strong>Slab Door</strong></p>
-          //       <p>Please Change the Order Type to Door</p>
-          //     </center>
-          //   </div>
-          // });
-          this.toggle();
-        }
-
         if (index === i && part.design !== undefined) {
           this.props.dispatch(
             autofill('Order', `part_list[${i}].design`, undefined)
