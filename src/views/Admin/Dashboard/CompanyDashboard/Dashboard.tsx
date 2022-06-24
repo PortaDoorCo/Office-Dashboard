@@ -152,6 +152,8 @@ class Dashboard extends Component<PropTypes, StateTypes> {
               </Row>
             </Collapse> */}
 
+            {/* <Maps /> */}
+
             <Row className="mt-5">
               <Col>
                 <Suspense fallback={loading()}>
