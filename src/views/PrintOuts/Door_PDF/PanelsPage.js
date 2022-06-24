@@ -90,7 +90,10 @@ export default (data, breakdowns, type) => {
             style: 'fonts',
           },
           {
-            text: i.design && i.design.TOP_RAIL_ADD > 0 ? i.design.NAME : '',
+            text:
+              item.design && item.design.TOP_RAIL_ADD > 0
+                ? item.design.NAME
+                : '',
             style: 'fonts',
           },
           {
