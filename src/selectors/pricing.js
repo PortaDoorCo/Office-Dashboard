@@ -140,7 +140,7 @@ export const miscItemPriceSelector = createSelector(
 
       if (i.category === 'preselect') {
         if (i.price) {
-          price = Math.floor(parseFloat(i.price) * 100) / 100;
+          price = Math.round(parseFloat(i.price) * 100) / 100;
         } else {
           price = 0;
         }
@@ -188,7 +188,9 @@ export const miscItemLinePriceSelector = createSelector(
 
 export const miscTotalSelector = createSelector(
   [miscItemLinePriceSelector],
-  (misc) => misc.reduce((acc, item) => acc + item, 0)
+  (misc) => {
+    return misc.reduce((acc, item) => acc + item, 0);
+  }
 );
 
 const taxRate = (state) => {
