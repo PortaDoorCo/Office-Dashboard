@@ -189,7 +189,6 @@ export const miscItemLinePriceSelector = createSelector(
 export const miscTotalSelector = createSelector(
   [miscItemLinePriceSelector],
   (misc) => {
-    console.log({ misc });
     return misc.reduce((acc, item) => acc + item, 0);
   }
 );
@@ -1383,14 +1382,6 @@ export const totalSelector = createSelector(
         (acc, item) => acc + Math.round(item * 100) / 100,
         0
       );
-
-      console.log({ subTotal });
-      console.log({ sub });
-      console.log({ tax });
-      console.log({ misc });
-      console.log({ nonDiscounted });
-      console.log({ discount });
-      console.log({ math: sub + tax + misc + nonDiscounted - discount });
       return sub + tax + misc + nonDiscounted - discount;
     }
   }
