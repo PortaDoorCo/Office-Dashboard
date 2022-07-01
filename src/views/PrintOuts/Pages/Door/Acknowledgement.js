@@ -240,7 +240,7 @@ const DoorPDF = async (
                         margin: [0, 0, 0, 0],
                       },
                       {
-                        text: `${data.companyprofile.Phone1}`,
+                        text: `${data.job_info.Phone}`,
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
                       },
