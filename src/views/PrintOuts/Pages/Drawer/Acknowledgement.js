@@ -241,7 +241,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
                       //   margin: [0, 0, 0, 0],
                       // },
                       {
-                        text: `${data.companyprofile.Phone1}`,
+                        text: `${data.job_info.Phone}`,
                         // alignment: 'right',
                         style: 'fonts',
                         margin: [0, 0, 0, 0],
