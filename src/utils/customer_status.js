@@ -24,12 +24,12 @@ const status = [
     value: 'Framing',
   },
   {
-    label: 'Assembly',
-    value: 'Assembly',
-  },
-  {
     label: 'Tenon',
     value: 'Tenon',
+  },
+  {
+    label: 'Assembly',
+    value: 'Assembly',
   },
   {
     label: 'Sanding',
