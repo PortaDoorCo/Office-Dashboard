@@ -132,14 +132,13 @@ const OrderTable = (props: TablePropTypes) => {
             if (filterText.length > 0) {
               if (item.sale?.id === user?.sale?.id) {
                 return (
-                  (item.sale?.id === user?.id &&
-                    (item.id + 100)?.toString().includes(filterText)) ||
-                  item.job_info?.customer?.Company.toLowerCase().includes(
+                  (item?.id + 100).toString().includes(filterText) ||
+                  item.job_info?.customer?.Company?.toLowerCase().includes(
                     filterText.toLowerCase()
                   ) ||
                   item.job_info?.poNum
                     ?.toLowerCase()
-                    .includes(filterText.toLowerCase())
+                    .includes(filterText?.toLowerCase())
                 );
               } else {
                 return null;
