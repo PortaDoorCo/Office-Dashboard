@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { login } from '../../../../redux/users/actions';
 import { loadOrders } from '../../../../redux/orders/actions';
 import MessageModal from '../MessageModal';
-import SalesTable from '../../SalesReport/SalesReport';
+import SalesTable from './components/SalesTable';
 
 const Chart1 = React.lazy(() => import('../../../../components/Charts/Chart1'));
 const Chart2 = React.lazy(() => import('../../../../components/Charts/Chart2'));
