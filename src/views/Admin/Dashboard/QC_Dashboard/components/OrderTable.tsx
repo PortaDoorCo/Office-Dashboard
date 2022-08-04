@@ -10,6 +10,7 @@ import Inbox from '@material-ui/icons/Inbox';
 import {
   updateStatus,
   loadOrders,
+  searchOrders,
   setSelectedOrder,
   setOrderType,
 } from '../../../../../redux/orders/actions';
@@ -17,6 +18,7 @@ import Cookies from 'js-cookie';
 import { Button, Row, Col, FormGroup, Input } from 'reactstrap';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
+import { useDebounce } from 'use-debounce';
 
 const TextField = styled.input`
   height: 32px;
@@ -81,6 +83,8 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 type TablePropTypes = {
   setSelectedOrder: (date: any) => null;
   setOrderType: (date: any) => null;
+  loadOrders: (date: any, user: any) => null;
+  searchOrders: (date: any, user: any, search: any) => null;
   orders: Array<any>;
   updateStatus: any;
   ordersDBLoaded: boolean;
@@ -88,34 +92,23 @@ type TablePropTypes = {
 };
 
 const OrderTable = (props: TablePropTypes) => {
-  const { orders } = props;
+  const { orders, user } = props;
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+  const [debounceValue] = useDebounce(filterText, 500);
 
   useEffect(() => {
-    const filteredOrders =
-      orders?.length > 0
-        ? orders?.filter((item) => {
-            if (filterText.length > 0) {
-              return (
-                (item.id + 100)?.toString().includes(filterText) ||
-                item.job_info?.customer?.Company.toLowerCase().includes(
-                  filterText.toLowerCase()
-                ) ||
-                item.job_info?.poNum
-                  ?.toLowerCase()
-                  .includes(filterText.toLowerCase())
-              );
-            } else {
-              return item;
-            }
-          })
-        : [];
-    setData(filteredOrders);
-  }, [orders, filterText]);
+    if (debounceValue) {
+      props.searchOrders(cookie, user, debounceValue);
+    } else {
+      if (debounceValue === '') {
+        props.loadOrders(cookie, user);
+      }
+    }
+  }, [debounceValue]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -277,7 +270,7 @@ const OrderTable = (props: TablePropTypes) => {
         title="Orders"
         className="order-table3"
         columns={columns}
-        data={data}
+        data={orders}
         pagination
         progressPending={!props.ordersDBLoaded}
         highlightOnHover
@@ -308,6 +301,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       updateStatus,
       loadOrders,
+      searchOrders,
       setSelectedOrder,
       setOrderType,
     },
