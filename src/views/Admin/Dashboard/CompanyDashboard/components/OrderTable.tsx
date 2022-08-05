@@ -142,17 +142,6 @@ const OrderTable = (props: TablePropTypes) => {
 
   useEffect(() => {
     if (debounceValue) {
-      const query = qs.stringify({
-        _where: {
-          _or: [
-            { id: parseInt(debounceValue) - 100 },
-            { 'job_info.poNum_contains': debounceValue },
-          ],
-        },
-      });
-
-      console.log({ query });
-
       const search = `?id=${parseInt(debounceValue) - 100}`;
       props.searchOrders(cookie, user, search);
     } else {
