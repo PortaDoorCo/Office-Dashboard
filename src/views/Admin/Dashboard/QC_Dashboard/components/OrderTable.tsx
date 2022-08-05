@@ -102,6 +102,8 @@ const OrderTable = (props: TablePropTypes) => {
 
   useEffect(() => {
     if (debounceValue) {
+      const search = `?status_ne=Quote&_id=${parseInt(debounceValue) - 100}`;
+
       props.searchOrders(cookie, user, debounceValue);
     } else {
       if (debounceValue === '') {

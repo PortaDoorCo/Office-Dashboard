@@ -288,14 +288,11 @@ export function searchOrders(cookie, user, search) {
     };
   } else if (user?.role?.type === 'quality_control') {
     return async function (dispatch) {
-      const res = await fetch(
-        `${db_url}/orders?status_ne=Quote&_id=${search - 100}`,
-        {
-          headers: {
-            Authorization: `Bearer ${cookie}`,
-          },
-        }
-      );
+      const res = await fetch(`${db_url}/orders${search}`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
       const data = await res.json();
       return await dispatch({
         type: LOAD_ORDERS,
@@ -304,14 +301,11 @@ export function searchOrders(cookie, user, search) {
     };
   } else if (user?.role?.type === 'sales') {
     return async function (dispatch) {
-      const res = await fetch(
-        `${db_url}/orders?sale.id=${user.sale.id}&_id=${search - 100}`,
-        {
-          headers: {
-            Authorization: `Bearer ${cookie}`,
-          },
-        }
-      );
+      const res = await fetch(`${db_url}/orders${search}`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
       const data = await res.json();
       return await dispatch({
         type: LOAD_ORDERS,

@@ -132,7 +132,9 @@ const OrderTable = (props: TablePropTypes) => {
 
   useEffect(() => {
     if (debounceValue) {
-      const search = `?id=${parseInt(debounceValue) - 100}`;
+      const search = `?sale.id=${user.sale.id}&_id=${
+        parseInt(debounceValue) - 100
+      }`;
       props.searchOrders(cookie, user, search);
     } else {
       if (debounceValue === '') {
