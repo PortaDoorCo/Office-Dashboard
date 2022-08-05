@@ -175,7 +175,7 @@ export function loadOrders(cookie, user) {
   } else if (user?.role?.type === 'quality_control') {
     return async function (dispatch) {
       const res = await fetch(
-        `${db_url}/orders?status_ne=Quote&_sort=id:DESC&_limit=100`,
+        `${db_url}/orders?status_ne=Quote&_sort=id:DESC&_limit=50`,
         {
           headers: {
             Authorization: `Bearer ${cookie}`,
@@ -206,7 +206,7 @@ export function loadOrders(cookie, user) {
     };
   } else {
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders?_sort=id:DESC&_limit=100`, {
+      const res = await fetch(`${db_url}/orders?_sort=id:DESC&_limit=50`, {
         headers: {
           Authorization: `Bearer ${cookie}`,
         },
@@ -320,7 +320,7 @@ export function searchOrders(cookie, user, search) {
     };
   } else {
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders?id=${search - 100}`, {
+      const res = await fetch(`${db_url}/orders${search}`, {
         headers: {
           Authorization: `Bearer ${cookie}`,
         },

@@ -99,7 +99,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     <TextField
       id="search"
       type="text"
-      placeholder="Search Orders"
+      placeholder="Search Order ID"
       value={filterText}
       onChange={onFilter}
       autoComplete="off"
@@ -132,7 +132,8 @@ const OrderTable = (props: TablePropTypes) => {
 
   useEffect(() => {
     if (debounceValue) {
-      props.searchOrders(cookie, user, debounceValue);
+      const search = `?id=${parseInt(debounceValue) - 100}`;
+      props.searchOrders(cookie, user, search);
     } else {
       if (debounceValue === '') {
         props.loadOrders(cookie, user);

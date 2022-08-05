@@ -83,6 +83,7 @@
     "prismjs": "^1.25.0",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
+    "qs": "^6.11.0",
     "react": "^16.11.0",
     "react-app-polyfill": "^1.0.1",
     "react-avatar": "^3.9.3",

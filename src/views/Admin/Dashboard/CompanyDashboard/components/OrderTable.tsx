@@ -19,6 +19,7 @@ import { Button, Row, Col, FormGroup, Input } from 'reactstrap';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
 import { useDebounce } from 'use-debounce';
+import qs from 'qs';
 
 const TextField = styled.input`
   height: 32px;
@@ -108,7 +109,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     <TextField
       id="search"
       type="text"
-      placeholder="Search Orders"
+      placeholder="Search Order ID"
       value={filterText}
       onChange={onFilter}
       autoComplete="off"
@@ -141,7 +142,19 @@ const OrderTable = (props: TablePropTypes) => {
 
   useEffect(() => {
     if (debounceValue) {
-      props.searchOrders(cookie, user, debounceValue);
+      const query = qs.stringify({
+        _where: {
+          _or: [
+            { id: parseInt(debounceValue) - 100 },
+            { 'job_info.poNum_contains': debounceValue },
+          ],
+        },
+      });
+
+      console.log({ query });
+
+      const search = `?id=${parseInt(debounceValue) - 100}`;
+      props.searchOrders(cookie, user, search);
     } else {
       if (debounceValue === '') {
         props.loadOrders(cookie, user);
@@ -158,11 +171,13 @@ const OrderTable = (props: TablePropTypes) => {
     };
 
     return (
-      <FilterComponent
-        onFilter={(e) => setFilterText(e.target.value)}
-        onClear={handleClear}
-        filterText={filterText}
-      />
+      <>
+        <FilterComponent
+          onFilter={(e) => setFilterText(e.target.value)}
+          onClear={handleClear}
+          filterText={filterText}
+        />
+      </>
     );
   }, [filterText, resetPaginationToggle]);
 
