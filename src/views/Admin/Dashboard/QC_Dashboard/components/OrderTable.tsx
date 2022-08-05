@@ -92,7 +92,7 @@ type TablePropTypes = {
 };
 
 const OrderTable = (props: TablePropTypes) => {
-  const { orders, user } = props;
+  const { orders, user, searchOrders } = props;
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
@@ -104,7 +104,7 @@ const OrderTable = (props: TablePropTypes) => {
     if (debounceValue) {
       const search = `?status_ne=Quote&_id=${parseInt(debounceValue) - 100}`;
 
-      props.searchOrders(cookie, user, debounceValue);
+      props.searchOrders(cookie, user, search);
     } else {
       if (debounceValue === '') {
         props.loadOrders(cookie, user);
