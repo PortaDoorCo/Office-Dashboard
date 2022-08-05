@@ -12,6 +12,7 @@ import {
   loadOrders,
   setSelectedOrder,
   setOrderType,
+  searchOrders,
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import momentLocaliser from 'react-widgets-moment';
@@ -27,6 +28,7 @@ import orderTypes from '../../../utils/orderTypes';
 import Tracking from '../../PrintOuts/Reports/Tracking';
 import OpenOrders from '../../PrintOuts/Reports/OpenOrders';
 import DropdownList from 'react-widgets/DropdownList';
+import { useDebounce } from 'use-debounce';
 
 // momentLocaliser(moment);
 
@@ -113,7 +115,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 const OrderTable = (props) => {
-  const { orders, role, customers } = props;
+  const { orders, role, customers, searchOrders, loadOrders } = props;
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -127,6 +129,9 @@ const OrderTable = (props) => {
   const [customer, setCustomer] = useState({ Company: 'All' });
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+  const [customerDebounce] = useDebounce(customer, 500);
+  const [statusDebounce] = useDebounce(filterStatus, 500);
+  const [orderTypeDebounce] = useDebounce(orderType, 500);
 
   const minDate =
     orders?.length > 0
@@ -801,179 +806,177 @@ const OrderTable = (props) => {
     setToggleCleared(!toggleCleared);
   };
 
-  return (<div>Under Construction</div>)
+  return (
+    <div>
+      <Row>
+        <Col lg="4">
+          <Row>
+            <Col>
+              <h3>Customers</h3>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <DropdownList
+                  defaultValue="All"
+                  textField={(item) => item.Company}
+                  data={customers}
+                  onChange={(value) => setCustomer(value)}
+                  value={customer}
+                />
+                <Button onClick={() => setCustomer({ Company: 'All' })}>
+                  Clear
+                </Button>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h3>Status</h3>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="Quote"
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                >
+                  {status.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h3>Order Type</h3>
+              <FormGroup style={{ height: '100%', width: '60%' }}>
+                <Input
+                  type="select"
+                  name="select"
+                  id="status_dropdown"
+                  defaultValue="Door"
+                  onChange={(e) => setOrderType(e.target.value)}
+                >
+                  {orderTypes?.map((i, index) => (
+                    <option key={index} value={i.value}>
+                      {i.value}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+        </Col>
 
-  // return (
-  //   <div>
-  //     <Row>
-  //       <Col lg="4">
-  //         <Row>
-  //           <Col>
-  //             <h3>Customers</h3>
-  //             <FormGroup style={{ height: '100%', width: '60%' }}>
-  //               <DropdownList
-  //                 defaultValue="All"
-  //                 textField={(item) => item.Company}
-  //                 data={customers}
-  //                 onChange={(value) => setCustomer(value)}
-  //                 value={customer}
-  //               />
-  //               <Button onClick={() => setCustomer({ Company: 'All' })}>
-  //                 Clear
-  //               </Button>
-  //             </FormGroup>
-  //           </Col>
-  //         </Row>
-  //         <Row>
-  //           <Col>
-  //             <h3>Status</h3>
-  //             <FormGroup style={{ height: '100%', width: '60%' }}>
-  //               <Input
-  //                 type="select"
-  //                 name="select"
-  //                 id="status_dropdown"
-  //                 defaultValue="Quote"
-  //                 onChange={(e) => setFilterStatus(e.target.value)}
-  //               >
-  //                 {status.map((i, index) => (
-  //                   <option key={index} value={i.value}>
-  //                     {i.value}
-  //                   </option>
-  //                 ))}
-  //               </Input>
-  //             </FormGroup>
-  //           </Col>
-  //         </Row>
-  //         <Row>
-  //           <Col>
-  //             <h3>Order Type</h3>
-  //             <FormGroup style={{ height: '100%', width: '60%' }}>
-  //               <Input
-  //                 type="select"
-  //                 name="select"
-  //                 id="status_dropdown"
-  //                 defaultValue="Door"
-  //                 onChange={(e) => setOrderType(e.target.value)}
-  //               >
-  //                 {orderTypes?.map((i, index) => (
-  //                   <option key={index} value={i.value}>
-  //                     {i.value}
-  //                   </option>
-  //                 ))}
-  //               </Input>
-  //             </FormGroup>
-  //           </Col>
-  //         </Row>
-  //       </Col>
+        <Col lg="5" />
 
-  //       <Col lg="5" />
+        <Col lg="3">
+          {filterStatus !== 'Open Orders' ? (
+            <Row>
+              <Col>
+                <h3>Filter Due Date</h3>
+              </Col>
+            </Row>
+          ) : null}
 
-  //       <Col lg="3">
-  //         {filterStatus !== 'Open Orders' ? (
-  //           <Row>
-  //             <Col>
-  //               <h3>Filter Due Date</h3>
-  //             </Col>
-  //           </Row>
-  //         ) : null}
+          {filterStatus !== 'Open Orders' ? (
+            <Row>
+              <Col lg="12">
+                <SingleDatePicker
+                  date={startDate} // momentPropTypes.momentObj or null
+                  onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
+                  focused={startDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) =>
+                    setStartDateFocusedInput(focused)
+                  } // PropTypes.func.isRequired
+                  id="startDate" // PropTypes.string.isRequired,
+                  isOutsideRange={(date) => {
+                    if (date < moment('1/1/1990')) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
 
-  //         {filterStatus !== 'Open Orders' ? (
-  //           <Row>
-  //             <Col lg="12">
-  //               <SingleDatePicker
-  //                 date={startDate} // momentPropTypes.momentObj or null
-  //                 onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
-  //                 focused={startDateFocusedInput} // PropTypes.bool
-  //                 onFocusChange={({ focused }) =>
-  //                   setStartDateFocusedInput(focused)
-  //                 } // PropTypes.func.isRequired
-  //                 id="startDate" // PropTypes.string.isRequired,
-  //                 isOutsideRange={(date) => {
-  //                   if (date < moment(minDate)) {
-  //                     return true;
-  //                   } else {
-  //                     return false;
-  //                   }
-  //                 }}
-  //               />
+                <SingleDatePicker
+                  date={endDate} // momentPropTypes.momentObj or null
+                  onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
+                  focused={endDateFocusedInput} // PropTypes.bool
+                  onFocusChange={({ focused }) =>
+                    setEndDateFocusedInput(focused)
+                  } // PropTypes.func.isRequired
+                  id="endDate" // PropTypes.string.isRequired,
+                  isOutsideRange={(date) => {
+                    if (date < moment(startDate)) {
+                      return true; // return true if you want the particular date to be disabled
+                    } else {
+                      return false;
+                    }
+                  }}
+                />
+              </Col>
+            </Row>
+          ) : null}
+          <Row className="mt-3">
+            <Col>
+              {role &&
+              (role.type === 'authenticated' ||
+                role.type === 'owner' ||
+                role.type === 'administrator') ? (
+                <h3>
+                  Order Totals: $
+                  {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
+                </h3>
+              ) : null}
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              <h3># Of Orders: {data.length}</h3>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
 
-  //               <SingleDatePicker
-  //                 date={endDate} // momentPropTypes.momentObj or null
-  //                 onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
-  //                 focused={endDateFocusedInput} // PropTypes.bool
-  //                 onFocusChange={({ focused }) =>
-  //                   setEndDateFocusedInput(focused)
-  //                 } // PropTypes.func.isRequired
-  //                 id="endDate" // PropTypes.string.isRequired,
-  //                 isOutsideRange={(date) => {
-  //                   if (date < moment(startDate)) {
-  //                     return true; // return true if you want the particular date to be disabled
-  //                   } else {
-  //                     return false;
-  //                   }
-  //                 }}
-  //               />
-  //             </Col>
-  //           </Row>
-  //         ) : null}
-  //         <Row className="mt-3">
-  //           <Col>
-  //             {role &&
-  //             (role.type === 'authenticated' ||
-  //               role.type === 'owner' ||
-  //               role.type === 'administrator') ? (
-  //               <h3>
-  //                 Order Totals: $
-  //                 {data.reduce((acc, item) => acc + item.total, 0).toFixed(2)}
-  //               </h3>
-  //             ) : null}
-  //           </Col>
-  //         </Row>
-  //         <Row className="mt-3">
-  //           <Col>
-  //             <h3># Of Orders: {data.length}</h3>
-  //           </Col>
-  //         </Row>
-  //       </Col>
-  //     </Row>
+      <Row>
+        {/* <Col lg='11' /> */}
+        <Col>
+          <Tooltip
+            title="View Reports"
+            onClick={exportReports}
+            placement="top"
+            className="mb-3 mt-3"
+          >
+            <IconButton>
+              <Receipt style={{ width: '40', height: '40' }} />
+            </IconButton>
+          </Tooltip>
+        </Col>
+      </Row>
 
-  //     <Row>
-  //       {/* <Col lg='11' /> */}
-  //       <Col>
-  //         <Tooltip
-  //           title="View Reports"
-  //           onClick={exportReports}
-  //           placement="top"
-  //           className="mb-3 mt-3"
-  //         >
-  //           <IconButton>
-  //             <Receipt style={{ width: '40', height: '40' }} />
-  //           </IconButton>
-  //         </Tooltip>
-  //       </Col>
-  //     </Row>
-
-  //     <DataTable
-  //       title="Orders"
-  //       columns={columns}
-  //       data={data}
-  //       pagination
-  //       progressPending={!props.ordersDBLoaded}
-  //       highlightOnHover
-  //       conditionalRowStyles={conditionalRowStyles}
-  //       subHeader
-  //       subHeaderComponent={subHeaderComponentMemo}
-  //     />
-  //     {modal ? (
-  //       <OrderPage
-  //         toggle={toggle}
-  //         modal={modal}
-  //         editable={editable}
-  //         edit={edit}
-  //       />
-  //     ) : null}
-  //   </div>
-  // );
+      <DataTable
+        title="Orders"
+        columns={columns}
+        data={data}
+        pagination
+        progressPending={!props.ordersDBLoaded}
+        highlightOnHover
+        conditionalRowStyles={conditionalRowStyles}
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
+      />
+      {modal ? (
+        <OrderPage
+          toggle={toggle}
+          modal={modal}
+          editable={editable}
+          edit={edit}
+        />
+      ) : null}
+    </div>
+  );
 };
 
 const mapStateToProps = (state, prop) => ({
@@ -994,6 +997,7 @@ const mapDispatchToProps = (dispatch) =>
       loadOrders,
       setSelectedOrder,
       setOrderType,
+      searchOrders,
     },
     dispatch
   );

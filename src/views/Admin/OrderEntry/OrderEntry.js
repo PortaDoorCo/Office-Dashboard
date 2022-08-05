@@ -301,6 +301,7 @@ class OrderEntry extends Component {
       order = {
         ...values,
         status: values.job_info.status.value,
+        poNum: values.job_info.poNum,
         Rush: values.job_info.Rush,
         Sample: values.job_info.Sample,
         job_info: {
@@ -343,6 +344,7 @@ class OrderEntry extends Component {
       order = {
         ...values,
         job_info: values.job_info,
+        poNum: values.job_info.poNum,
         DateOrdered: DateOrdered,
         DateInProduction: DateInProduction,
         DateShipped: DateShipped,

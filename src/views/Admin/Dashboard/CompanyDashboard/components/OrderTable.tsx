@@ -15,7 +15,20 @@ import {
   searchOrders,
 } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import { Button, Row, Col, FormGroup, Input } from 'reactstrap';
+import {
+  Button,
+  Row,
+  Col,
+  FormGroup,
+  Input,
+  InputGroup,
+  Dropdown,
+  DropdownToggle,
+  DropdownItem,
+  DropdownMenu,
+  InputGroupButtonDropdown,
+  Label,
+} from 'reactstrap';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
 import { useDebounce } from 'use-debounce';
@@ -139,17 +152,27 @@ const OrderTable = (props: TablePropTypes) => {
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [debounceValue] = useDebounce(filterText, 500);
+  const [selectedSearch, setSelectedSearch] = useState('ID');
 
   useEffect(() => {
     if (debounceValue) {
-      const search = `?id=${parseInt(debounceValue) - 100}`;
+      let search = `?id=${parseInt(debounceValue) - 100}`;
+
+      if (selectedSearch === 'PO') {
+        search = `?poNum_contains=${debounceValue}&_sort=id:DESC`;
+      } else if (selectedSearch === 'Customer') {
+        search = `?companyprofile.Company_contains=${debounceValue}&_sort=id:DESC&_limit=500`;
+      } else {
+        search = `?id=${parseInt(debounceValue) - 100}`;
+      }
+
       props.searchOrders(cookie, user, search);
     } else {
       if (debounceValue === '') {
         props.loadOrders(cookie, user);
       }
     }
-  }, [debounceValue]);
+  }, [debounceValue, selectedSearch]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -430,6 +453,37 @@ const OrderTable = (props: TablePropTypes) => {
 
   return (
     <div>
+      <Row className="mb-3">
+        <Col lg="8" />
+        <Col>
+          <Row className="mb-3">
+            <Col style={{ float: 'right' }}>
+              <InputGroup>
+                <Input
+                  type="select"
+                  name="select"
+                  id="searchID"
+                  value={selectedSearch}
+                  onChange={(e) => setSelectedSearch(e.target.value)}
+                >
+                  <option value={'ID'}>Search ID</option>
+                  <option value={'PO'}>Search PO Num</option>
+                  <option value={'Customer'}>Search Customer</option>
+                </Input>
+                <Input
+                  style={{ width: '300px' }}
+                  onChange={(e) => setFilterText(e.target.value)}
+                  value={filterText}
+                />
+
+                <Button color="danger" onClick={() => setFilterText('')}>
+                  X
+                </Button>
+              </InputGroup>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
       <DataTable
         title="Orders"
         className="order-table3"
@@ -440,7 +494,7 @@ const OrderTable = (props: TablePropTypes) => {
         highlightOnHover
         conditionalRowStyles={conditionalRowStyles}
         subHeader
-        subHeaderComponent={subHeaderComponentMemo}
+        // subHeaderComponent={subHeaderComponentMemo}
       />
       {modal ? (
         <OrderPage
