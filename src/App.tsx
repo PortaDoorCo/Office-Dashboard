@@ -11,6 +11,7 @@ import { NotificationManager } from 'react-notifications';
 import {
   loadOrders,
   loadAllOrders,
+  searchOrders,
   getDeliveries,
   orderAdded,
   orderUpdated,
@@ -107,6 +108,7 @@ type PropTypes = {
   loadPaymentTerms: (data: {}) => null;
   loadAllCustomers: (data: {}, user: {}) => null;
   loadAllOrders: (data: {}, user: {}) => null;
+  searchOrders: (data: {}, user: {}, search: {}) => null;
   loadCategories: (data: {}) => null;
   loadPrinterOptions: (data: {}) => null;
   getAllProducts: (data: {}) => null;
@@ -331,6 +333,7 @@ class App extends Component<PropTypes, StateTypes> {
       loadAllOrders,
       loadCategories,
       loadPrinterOptions,
+      searchOrders,
       user,
     } = this.props;
 
@@ -354,7 +357,7 @@ class App extends Component<PropTypes, StateTypes> {
           await loadPaymentTerms(newCookie);
           await loadSales(newCookie);
           await getDeliveries(newCookie);
-          await loadAllOrders(newCookie, user);
+          // await searchOrders(newCookie, user, 4285);
           await loadAllCustomers(newCookie, user);
         }
       };
@@ -442,6 +445,7 @@ const mapDispatchToProps = (dispatch: any) =>
       printerOptionAdded,
       printerOptionUpdated,
       currentVersion,
+      searchOrders,
     },
     dispatch
   );

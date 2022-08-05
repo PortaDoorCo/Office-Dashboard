@@ -16,6 +16,7 @@ import {
   uploadFilesToCustomer,
   deleteCustomer,
 } from '../../../../redux/customers/actions';
+import { searchOrders } from '../../../../redux/orders/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OrderPage from '../../Orders/OrderPage';
@@ -96,20 +97,17 @@ class CustomerPage extends Component {
     await toggle();
   };
 
+  componentDidMount() {
+    const { selectedCompanies, user } = this.props;
+    const search = `?_companyprofile.id=${selectedCompanies.id}&_limit=5000&_sort=id:DESC`;
+
+    this.props.searchOrders(cookie, user, search);
+  }
+
   render() {
     const props = this.props;
     const { locations, defaultCenter, selectedCompanies, orders, user } =
       this.props;
-
-    let updateOrders;
-
-    if (this.props.orders.length > 0) {
-      updateOrders = orders
-        .filter(
-          (x) => x.job_info?.customer?.id === this.props.selectedCompanies.id
-        )
-        .sort((a, b) => b.id - a.id);
-    }
 
     return (
       <div className="animated resize">
@@ -186,7 +184,7 @@ class CustomerPage extends Component {
                       defaultCenter={defaultCenter}
                     />
                     <CompanyOrders
-                      orders={updateOrders}
+                      orders={orders}
                       company={selectedCompanies?.Company}
                     />
                   </div>
@@ -249,6 +247,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       uploadFilesToCustomer,
       deleteCustomer,
+      searchOrders,
     },
     dispatch
   );

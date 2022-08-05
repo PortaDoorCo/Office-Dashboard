@@ -20,10 +20,11 @@ import {
   TabPane,
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import { loadOrders } from '../../../redux/orders/actions';
+import { loadOrders, searchOrders } from '../../../redux/orders/actions';
 import status from '../../../utils/report_status';
 import Charts from './components/Chart';
 import Chart1 from './components/SalesCharts/Chart1';
+import Cookies from 'js-cookie';
 
 const StatusTable = React.lazy(() => import('./components/StatusTable'));
 
@@ -31,6 +32,7 @@ const { Option } = Select;
 
 // momentLocaliser(moment);
 
+const cookie = Cookies.get('jwt');
 // moment(this.state.startDate).startOf('day').valueOf()
 
 const loading = () => (
@@ -40,7 +42,7 @@ const loading = () => (
 );
 
 const SalesReport = (props) => {
-  const { orders, role, user } = props;
+  const { orders, role, user, searchOrders } = props;
   const [activeTab, setActiveTab] = useState('1');
   const [sortedDates, setSortedDate] = useState([]);
   const [startDate, setStartDate] = useState(moment(new Date()));
@@ -60,215 +62,50 @@ const SalesReport = (props) => {
   }, [orders]);
 
   useEffect(() => {
-    const filteredOrders = orders?.filter((item) => {
-      let date = new Date(item.created_at);
-
-      const dateOrdered = item?.tracking?.filter((x) => {
-        return x.status === 'Ordered';
-      });
-      const dateInvoiced = item?.tracking?.filter((x) => {
-        return x.status === 'Invoiced';
-      });
-
-      const dateCompleted = item?.tracking?.filter((x) => {
-        return x.status === 'Complete';
-      });
-
-      const dateShipped = item?.tracking?.filter((x) => {
-        return x.status === 'Shipped';
-      });
-
-      if (filterStatus === 'All') {
-        if (filterText?.length > 0) {
-          return (
-            moment(
-              item.DateOrdered ||
-                (dateOrdered.length > 0
-                  ? dateOrdered[0]?.date
-                  : item.created_at)
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateOrdered ||
-                (dateOrdered.length > 0
-                  ? dateOrdered[0]?.date
-                  : item.created_at)
-            ) <= moment(endDate).endOf('day').valueOf() &&
-            ((item.id + 100)?.toString().includes(filterText) ||
-              item.companyprofile?.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info?.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(
-              item.DateOrdered ||
-                (dateOrdered.length > 0
-                  ? dateOrdered[0]?.date
-                  : item.created_at)
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateOrdered ||
-                (dateOrdered.length > 0
-                  ? dateOrdered[0]?.date
-                  : item.created_at)
-            ) <= moment(endDate).endOf('day').valueOf()
-          );
-        }
-      }
-      if (filterStatus === 'Ordered') {
-        if (filterText?.length > 0) {
-          return (
-            moment(
-              item.DateOrdered ||
-                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateOrdered ||
-                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf() &&
-            ((item.id + 100)?.toString().includes(filterText) ||
-              item.companyprofile?.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info?.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(
-              item.DateOrdered ||
-                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateOrdered ||
-                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf()
-          );
-        }
-      } else if (filterStatus === 'Invoiced') {
-        if (filterText?.length > 0) {
-          return (
-            moment(
-              item.DateInvoiced ||
-                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateInvoiced ||
-                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf() &&
-            ((item.id + 100)?.toString().includes(filterText) ||
-              item.companyprofile?.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info?.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(
-              item.DateInvoiced ||
-                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateInvoiced ||
-                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf()
-          );
-        }
-      } else if (filterStatus === 'Complete') {
-        if (filterText?.length > 0) {
-          return (
-            moment(
-              item.DateCompleted ||
-                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateCompleted ||
-                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
-            ) <=
-              moment(endDate).endOf('day').valueOf()(
-                (item.id + 100)?.toString().includes(filterText) ||
-                  item.companyprofile?.Company.toLowerCase().includes(
-                    filterText.toLowerCase()
-                  ) ||
-                  item.job_info?.poNum
-                    .toLowerCase()
-                    .includes(filterText.toLowerCase())
-              )
-          );
-        } else {
-          return (
-            moment(
-              item.DateCompleted ||
-                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateCompleted ||
-                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf()
-          );
-        }
-      } else if (filterStatus === 'Shipped') {
-        if (filterText?.length > 0) {
-          return (
-            moment(
-              item.DateShipped ||
-                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateShipped ||
-                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf() &&
-            ((item.id + 100)?.toString().includes(filterText) ||
-              item.companyprofile?.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info?.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(
-              item.DateShipped ||
-                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
-            ) >= moment(startDate).startOf('day').valueOf() &&
-            moment(
-              item.DateShipped ||
-                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
-            ) <= moment(endDate).endOf('day').valueOf()
-          );
-        }
-      } else {
-        if (filterText?.length > 0) {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.status?.includes(filterStatus) &&
-            ((item.id + 100)?.toString().includes(filterText) ||
-              item.companyprofile?.Company.toLowerCase().includes(
-                filterText?.toLowerCase()
-              ) ||
-              item?.job_info?.poNum
-                .toLowerCase()
-                .includes(filterText?.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item?.status?.includes(filterStatus)
-          );
-        }
-      }
-    });
-    setData(filteredOrders);
-  }, [startDate, endDate, orders, filterStatus, filterText]);
+    if (filterStatus === 'Ordered') {
+      const search = `?DateOrdered_gte=${moment(startDate)
+        .startOf('day')
+        .valueOf()}&DateOrdered_lte=${moment(endDate)
+        .endOf('day')
+        .valueOf()}&_limit=50000&_sort=id:DESC`;
+      searchOrders(cookie, user, search);
+    } else if (filterStatus === 'Invoiced') {
+      const search = `?DateInvoiced_gte=${moment(startDate)
+        .startOf('day')
+        .valueOf()}&DateInvoiced_lte=${moment(endDate)
+        .endOf('day')
+        .valueOf()}&_limit=50000&_sort=id:DESC`;
+      searchOrders(cookie, user, search);
+    } else if (filterStatus === 'Complete') {
+      const search = `?DateCompleted_gte=${moment(startDate)
+        .startOf('day')
+        .valueOf()}&DateCompleted_lte=${moment(endDate)
+        .endOf('day')
+        .valueOf()}&_limit=50000&_sort=id:DESC`;
+      searchOrders(cookie, user, search);
+    } else if (filterStatus === 'Shipped') {
+      const search = `?DateShipped_gte=${moment(startDate)
+        .startOf('day')
+        .valueOf()}&DateShipped_lte=${moment(endDate)
+        .endOf('day')
+        .valueOf()}&_limit=50000&_sort=id:DESC`;
+      searchOrders(cookie, user, search);
+    } else if (filterStatus === 'Quote') {
+      const search = `?created_at_gte=${moment(startDate)
+        .startOf('day')
+        .valueOf()}&created_at_lte=${moment(endDate)
+        .endOf('day')
+        .valueOf()}&status=Quote&_limit=50000&_sort=id:DESC`;
+      searchOrders(cookie, user, search);
+    } else {
+      const search = `?created_at_gte=${moment(startDate)
+        .startOf('day')
+        .valueOf()}&created_at_lte=${moment(endDate)
+        .endOf('day')
+        .valueOf()}&_limit=50000&_sort=id:DESC`;
+      searchOrders(cookie, user, search);
+    }
+  }, [startDate, endDate, filterStatus]);
 
   const minDate =
     orders.length > 0
@@ -302,7 +139,7 @@ const SalesReport = (props) => {
                 } // PropTypes.func.isRequired
                 id="startDate" // PropTypes.string.isRequired,
                 isOutsideRange={(date) => {
-                  if (date < moment(minDate)) {
+                  if (date < moment('1/1/1990')) {
                     return true;
                   } else {
                     return false;
@@ -349,7 +186,7 @@ const SalesReport = (props) => {
         </Col>
       </Row>
 
-      <Charts data={data} />
+      <Charts data={orders} />
 
       <Nav tabs>
         <NavItem>
@@ -407,7 +244,7 @@ const SalesReport = (props) => {
         <TabPane tabId="1">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={data}
+              orders={orders}
               accountName="House Account"
               startDate={startDate}
               endDate={endDate}
@@ -418,7 +255,7 @@ const SalesReport = (props) => {
         <TabPane tabId="2">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={data}
+              orders={orders}
               accountName="Harold"
               startDate={startDate}
               endDate={endDate}
@@ -429,7 +266,7 @@ const SalesReport = (props) => {
         <TabPane tabId="3">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={data}
+              orders={orders}
               accountName="Ned"
               startDate={startDate}
               endDate={endDate}
@@ -440,7 +277,7 @@ const SalesReport = (props) => {
         <TabPane tabId="4">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={data}
+              orders={orders}
               accountName="Peter"
               startDate={startDate}
               endDate={endDate}
@@ -451,7 +288,7 @@ const SalesReport = (props) => {
         <TabPane tabId="5">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={data}
+              orders={orders}
               accountName="Meg"
               startDate={startDate}
               endDate={endDate}
@@ -529,14 +366,14 @@ const SalesReport = (props) => {
       </Row>
 
       <Chart1
-        orders={data}
+        orders={orders}
         startDate={startDate}
         endDate={endDate}
         status={user?.sale?.fullName}
       />
 
       {/* <Maps 
-            orders={data}
+            orders={orders}
             startDate={startDate}
             endDate={endDate}
             status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
@@ -544,7 +381,7 @@ const SalesReport = (props) => {
 
       <Suspense fallback={loading()}>
         <StatusTable
-          orders={data}
+          orders={orders}
           accountName={user?.sale?.fullName}
           salesRep={user?.sale}
           startDate={startDate}
@@ -570,6 +407,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       loadOrders,
+      searchOrders,
     },
     dispatch
   );

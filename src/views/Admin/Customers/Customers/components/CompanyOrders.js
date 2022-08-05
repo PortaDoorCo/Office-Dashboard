@@ -116,9 +116,7 @@ const OrderTable = (props) => {
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
-  const [startDate, setStartDate] = useState(
-    moment(new Date(orders[orders.length - 1]?.created_at || null))
-  );
+  const [startDate, setStartDate] = useState(moment('1/1/2021'));
   const [endDate, setEndDate] = useState(moment(new Date()));
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
