@@ -12,6 +12,7 @@ import {
   loadOrders,
   setSelectedOrder,
   setOrderType,
+  searchOrders,
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import momentLocaliser from 'react-widgets-moment';
@@ -27,6 +28,7 @@ import orderTypes from '../../../utils/orderTypes';
 import Tracking from '../../PrintOuts/Reports/Tracking';
 import OpenOrders from '../../PrintOuts/Reports/OpenOrders';
 import DropdownList from 'react-widgets/DropdownList';
+import { useDebounce } from 'use-debounce';
 
 // momentLocaliser(moment);
 
@@ -113,7 +115,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 const OrderTable = (props) => {
-  const { orders, role, customers } = props;
+  const { orders, role, customers, searchOrders, loadOrders } = props;
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -127,6 +129,9 @@ const OrderTable = (props) => {
   const [customer, setCustomer] = useState({ Company: 'All' });
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+  const [customerDebounce] = useDebounce(customer, 500);
+  const [statusDebounce] = useDebounce(filterStatus, 500);
+  const [orderTypeDebounce] = useDebounce(orderType, 500);
 
   const minDate =
     orders?.length > 0
@@ -801,7 +806,7 @@ const OrderTable = (props) => {
     setToggleCleared(!toggleCleared);
   };
 
-  return (<div>Under Construction</div>)
+  return <div>Under Construction</div>;
 
   // return (
   //   <div>
@@ -889,7 +894,7 @@ const OrderTable = (props) => {
   //                 } // PropTypes.func.isRequired
   //                 id="startDate" // PropTypes.string.isRequired,
   //                 isOutsideRange={(date) => {
-  //                   if (date < moment(minDate)) {
+  //                   if (date < moment('1/1/1990')) {
   //                     return true;
   //                   } else {
   //                     return false;
@@ -994,6 +999,7 @@ const mapDispatchToProps = (dispatch) =>
       loadOrders,
       setSelectedOrder,
       setOrderType,
+      searchOrders,
     },
     dispatch
   );
