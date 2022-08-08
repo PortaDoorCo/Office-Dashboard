@@ -130,7 +130,11 @@ const OrderTable = (props) => {
       : new Date();
 
   useEffect(() => {
-    const filteredOrders = orders?.filter((item) => {
+    const customerOrders = orders
+      ?.filter((x) => x.job_info?.customer?.id === props.selectedCompanies?.id)
+      .sort((a, b) => b.id - a.id);
+
+    const filteredOrders = customerOrders?.filter((item) => {
       let date = new Date(item?.created_at);
 
       const dateOrdered = item?.tracking?.filter((x) => {
@@ -820,6 +824,7 @@ const mapStateToProps = (state, prop) => ({
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
+  selectedCompanies: state.customers.selectedCompanies,
   role: state.users.user.role,
   user: state.users.user,
 });
