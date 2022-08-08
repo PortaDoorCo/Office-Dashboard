@@ -107,6 +107,217 @@ const SalesReport = (props) => {
     }
   }, [startDate, endDate, filterStatus]);
 
+  useEffect(() => {
+    const filteredOrders = orders?.filter((item) => {
+      let date = new Date(item.created_at);
+
+      const dateOrdered = item?.tracking?.filter((x) => {
+        return x.status === 'Ordered';
+      });
+      const dateInvoiced = item?.tracking?.filter((x) => {
+        return x.status === 'Invoiced';
+      });
+
+      const dateCompleted = item?.tracking?.filter((x) => {
+        return x.status === 'Complete';
+      });
+
+      const dateShipped = item?.tracking?.filter((x) => {
+        return x.status === 'Shipped';
+      });
+
+      if (filterStatus === 'All') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0
+                  ? dateOrdered[0]?.date
+                  : item.created_at)
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0
+                  ? dateOrdered[0]?.date
+                  : item.created_at)
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0
+                  ? dateOrdered[0]?.date
+                  : item.created_at)
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0
+                  ? dateOrdered[0]?.date
+                  : item.created_at)
+            ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      }
+      if (filterStatus === 'Ordered') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Invoiced') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Complete') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <=
+              moment(endDate).endOf('day').valueOf()(
+                (item.id + 100)?.toString().includes(filterText) ||
+                  item.companyprofile?.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info?.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase())
+              )
+          );
+        } else {
+          return (
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Shipped') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else {
+        if (filterText?.length > 0) {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status?.includes(filterStatus) &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText?.toLowerCase()
+              ) ||
+              item?.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText?.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item?.status?.includes(filterStatus)
+          );
+        }
+      }
+    });
+    setData(filteredOrders);
+  }, [startDate, endDate, orders, filterStatus, filterText]);
+
   const minDate =
     orders.length > 0
       ? new Date(orders[orders.length - 1].created_at)
@@ -186,7 +397,7 @@ const SalesReport = (props) => {
         </Col>
       </Row>
 
-      <Charts data={orders} />
+      <Charts data={data} />
 
       <Nav tabs>
         <NavItem>
@@ -244,7 +455,7 @@ const SalesReport = (props) => {
         <TabPane tabId="1">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={orders}
+              orders={data}
               accountName="House Account"
               startDate={startDate}
               endDate={endDate}
@@ -255,7 +466,7 @@ const SalesReport = (props) => {
         <TabPane tabId="2">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={orders}
+              orders={data}
               accountName="Harold"
               startDate={startDate}
               endDate={endDate}
@@ -266,7 +477,7 @@ const SalesReport = (props) => {
         <TabPane tabId="3">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={orders}
+              orders={data}
               accountName="Ned"
               startDate={startDate}
               endDate={endDate}
@@ -277,7 +488,7 @@ const SalesReport = (props) => {
         <TabPane tabId="4">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={orders}
+              orders={data}
               accountName="Peter"
               startDate={startDate}
               endDate={endDate}
@@ -288,7 +499,7 @@ const SalesReport = (props) => {
         <TabPane tabId="5">
           <Suspense fallback={loading()}>
             <StatusTable
-              orders={orders}
+              orders={data}
               accountName="Meg"
               startDate={startDate}
               endDate={endDate}
@@ -366,7 +577,7 @@ const SalesReport = (props) => {
       </Row>
 
       <Chart1
-        orders={orders}
+        orders={data}
         startDate={startDate}
         endDate={endDate}
         status={user?.sale?.fullName}
@@ -381,7 +592,7 @@ const SalesReport = (props) => {
 
       <Suspense fallback={loading()}>
         <StatusTable
-          orders={orders}
+          orders={data}
           accountName={user?.sale?.fullName}
           salesRep={user?.sale}
           startDate={startDate}

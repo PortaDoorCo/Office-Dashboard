@@ -147,7 +147,7 @@ const OrderTable = (props) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
   const minDate =
-    orders.length > 0
+    orders?.length > 0
       ? new Date(orders[orders.length - 1].created_at)
       : new Date();
 
@@ -189,6 +189,204 @@ const OrderTable = (props) => {
       searchOrders(cookie, user, search);
     }
   }, [startDate, endDate, filterStatus]);
+
+  useEffect(() => {
+    const filteredOrders = orders?.filter((item) => {
+      let date = new Date(item.created_at);
+
+      const dateOrdered = item?.tracking?.filter((x) => {
+        return x.status === 'Ordered';
+      });
+      const dateInvoiced = item?.tracking?.filter((x) => {
+        return x.status === 'Invoiced';
+      });
+
+      const dateCompleted = item?.tracking?.filter((x) => {
+        return x.status === 'Complete';
+      });
+
+      const dateShipped = item?.tracking?.filter((x) => {
+        return x.status === 'Shipped';
+      });
+
+      if (filterStatus === 'Ordered') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateOrdered ||
+                (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Flagged') {
+        return (
+          moment(
+            item.DateOrdered ||
+              (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+          ) >= moment(startDate).startOf('day').valueOf() &&
+          moment(
+            item.DateOrdered ||
+              (dateOrdered.length > 0 ? dateOrdered[0]?.date : '1/1/1900')
+          ) <= moment(endDate).endOf('day').valueOf() &&
+          item.balance_due < 0
+        );
+      } else if (filterStatus === 'One Piece') {
+        console.log(
+          'ddd==>>',
+          item?.part_list?.filter((j) => {
+            return j.orderType?.value === 'One_Piece';
+          })
+        );
+        return item?.part_list?.filter((j) => {
+          return (
+            j.orderType?.name === 'One Piece' ||
+            j.orderType?.name === 'One Piece DF' ||
+            j.orderType?.name === 'Two Piece' ||
+            j.orderType?.name === 'Two Piece DF'
+          );
+        }).length;
+      } else if (filterStatus === 'Order Numbers') {
+        return item.id + 100 !== item.orderNum;
+      } else if (filterStatus === 'Invoiced') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateInvoiced ||
+                (dateInvoiced.length > 0 ? dateInvoiced[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Complete') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateCompleted ||
+                (dateCompleted.length > 0 ? dateCompleted[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else if (filterStatus === 'Shipped') {
+        if (filterText?.length > 0) {
+          return (
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf() &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText.toLowerCase()
+              ) ||
+              item.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) >= moment(startDate).startOf('day').valueOf() &&
+            moment(
+              item.DateShipped ||
+                (dateShipped.length > 0 ? dateShipped[0]?.date : '1/1/1900')
+            ) <= moment(endDate).endOf('day').valueOf()
+          );
+        }
+      } else {
+        if (filterText?.length > 0) {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item.status?.includes(filterStatus) &&
+            ((item.id + 100)?.toString().includes(filterText) ||
+              item.companyprofile?.Company.toLowerCase().includes(
+                filterText?.toLowerCase()
+              ) ||
+              item?.job_info?.poNum
+                .toLowerCase()
+                .includes(filterText?.toLowerCase()))
+          );
+        } else {
+          return (
+            moment(date) >= moment(startDate).startOf('day').valueOf() &&
+            moment(date) <= moment(endDate).endOf('day').valueOf() &&
+            item?.status?.includes(filterStatus)
+          );
+        }
+      }
+    });
+    setData(filteredOrders);
+  }, [startDate, endDate, orders, filterStatus, filterText]);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -474,7 +672,7 @@ const OrderTable = (props) => {
   };
 
   const exportReports = () => {
-    let newOrder = [...orders];
+    let newOrder = [...data];
 
     if (filterStatus !== 'Quote') {
       const newData = newOrder.map((i) => {
@@ -512,7 +710,7 @@ const OrderTable = (props) => {
   };
 
   const exportEdgesHelper = () => {
-    exportEdges(orders);
+    exportEdges(data);
 
     setToggleCleared(!toggleCleared);
   };
@@ -520,7 +718,7 @@ const OrderTable = (props) => {
   const exportRazorHelper = () => {
     const { breakdowns } = props;
 
-    exportRazorGauge(orders, breakdowns);
+    exportRazorGauge(data, breakdowns);
 
     setToggleCleared(!toggleCleared);
   };
@@ -605,7 +803,7 @@ const OrderTable = (props) => {
                 role?.type === 'administrator') ? (
                 <h3>
                   Order Total: $
-                  {orders
+                  {data
                     .reduce(
                       (acc, item) => acc + Math.round(100 * item.total) / 100,
                       0
@@ -619,7 +817,7 @@ const OrderTable = (props) => {
                 role?.type === 'administrator') ? (
                 <h3>
                   Net Total: $
-                  {orders
+                  {data
                     .reduce(
                       (acc, item) =>
                         acc + Math.round(100 * (item.total - item.tax)) / 100,
@@ -634,7 +832,7 @@ const OrderTable = (props) => {
                 role.type === 'administrator') ? (
                 <h3>
                   Tax Total: $
-                  {orders
+                  {data
                     .reduce(
                       (acc, item) => acc + Math.round(100 * item.tax) / 100,
                       0
@@ -649,7 +847,7 @@ const OrderTable = (props) => {
               filterStatus === 'Flagged' ? (
                 <h3>
                   Balances: $
-                  {orders
+                  {data
                     .reduce(
                       (acc, item) =>
                         acc + Math.round(100 * item.balance_due) / 100,
@@ -662,7 +860,7 @@ const OrderTable = (props) => {
           </Row>
           <Row className="mt-3">
             <Col>
-              <h3># Of Orders: {orders.length}</h3>
+              <h3># Of Orders: {data?.length}</h3>
             </Col>
           </Row>
         </Col>
@@ -711,7 +909,7 @@ const OrderTable = (props) => {
       <DataTable
         title="Orders"
         columns={columns}
-        data={orders}
+        data={data}
         pagination
         progressPending={!props.ordersDBLoaded}
         highlightOnHover
@@ -732,7 +930,7 @@ const OrderTable = (props) => {
       {(role?.type === 'authenticated' ||
         role?.type === 'owner' ||
         role?.type === 'administrator') &&
-      orders.length ? (
+      data?.length ? (
         <div>
           <Row>
             <Col>
@@ -741,39 +939,31 @@ const OrderTable = (props) => {
           </Row>
           <Row>
             <Col lg={2}>
-              <Chart3 orders={orders} startDate={startDate} endDate={endDate} />
+              <Chart3 orders={data} startDate={startDate} endDate={endDate} />
             </Col>
 
             <Col lg={2}>
-              <Woodtype
-                orders={orders}
-                startDate={startDate}
-                endDate={endDate}
-              />
+              <Woodtype orders={data} startDate={startDate} endDate={endDate} />
             </Col>
 
             <Col lg={2}>
-              <Chart2 orders={orders} startDate={startDate} endDate={endDate} />
+              <Chart2 orders={data} startDate={startDate} endDate={endDate} />
             </Col>
 
             <Col lg={2}>
-              <Profiles
-                orders={orders}
-                startDate={startDate}
-                endDate={endDate}
-              />
+              <Profiles orders={data} startDate={startDate} endDate={endDate} />
             </Col>
             <Col lg={2}>
-              <Panels orders={orders} startDate={startDate} endDate={endDate} />
+              <Panels orders={data} startDate={startDate} endDate={endDate} />
             </Col>
             <Col lg={2}>
-              <Edges orders={orders} startDate={startDate} endDate={endDate} />
+              <Edges orders={data} startDate={startDate} endDate={endDate} />
             </Col>
           </Row>
           <Row>
             <Col>
               <Customers
-                orders={orders}
+                orders={data}
                 startDate={startDate}
                 endDate={endDate}
               />
@@ -782,7 +972,7 @@ const OrderTable = (props) => {
           <Row>
             <Col>
               <CustomerTotal
-                orders={orders}
+                orders={data}
                 startDate={startDate}
                 endDate={endDate}
               />
