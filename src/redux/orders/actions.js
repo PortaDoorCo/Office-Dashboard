@@ -314,6 +314,8 @@ export function searchOrders(cookie, user, search) {
     };
   } else {
     return async function (dispatch) {
+      console.log('firreeeeee');
+
       const res = await fetch(`${db_url}/orders${search}`, {
         headers: {
           Authorization: `Bearer ${cookie}`,
