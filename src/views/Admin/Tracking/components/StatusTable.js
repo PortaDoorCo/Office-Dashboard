@@ -12,6 +12,7 @@ import {
   loadOrders,
   setSelectedOrder,
   setOrderType,
+  searchOrders,
 } from '../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import momentLocaliser from 'react-widgets-moment';
@@ -87,7 +88,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 const OrderTable = (props) => {
-  const { orders, role } = props;
+  const { orders, role, searchOrders, user } = props;
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -106,121 +107,70 @@ const OrderTable = (props) => {
       : new Date();
 
   useEffect(() => {
-    const filteredOrders = orders?.filter((item) => {
-      const dateOrdered = item?.tracking?.filter((x) => {
-        return x.status === 'Ordered';
-      });
+    let search = '';
 
-      let date = new Date(
-        item.DateOrdered || dateOrdered[0].date || item.created_at
-      );
+    // `?companyprofile.Company_contains=${debounceValue}&_sort=id:DESC&_limit=500`;
 
-      if (item.Shipping_Scheduled) {
-        date = new Date(item.dueDate);
-      }
+    // search = `?_status_ne=Quote&_status_ne=Invoiced&_status_ne=Ordered&_status_ne=Complete&_status_ne=Shipped&_limit=50000&_sort=id:DESC`;
 
-      if (filterStatus === 'All') {
-        if (filterText.length > 0) {
-          return (
-            moment(item.dueDate) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.dueDate) <= moment(endDate).endOf('day').valueOf() &&
-            ((item.id + 100)?.toString().includes(filterText) ||
-              item.job_info.customer.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
+    if (customerDebounce.Company === 'All') {
+      if (orderTypeDebounce === 'All') {
+        if (statusDebounce === 'In Production') {
+          search = `?dueDate=${moment(startDate)
+            .startOf('day')
+            .valueOf()}&dueDate=${moment(endDate)
+            .endOf('day')
+            .valueOf()}&_status_ne=Quote&_status_ne=Invoiced&_status_ne=Ordered&_status_ne=Complete&_status_ne=Shipped&_limit=50000&_sort=id:DESC`;
+        } else if (statusDebounce === 'Open Orders') {
+          console.log('hereee');
+          search = '?status_eq=Invoiced';
+        } else if (statusDebounce === 'Late') {
         } else {
-          return (
-            moment(item.dueDate) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.dueDate) <= moment(endDate).endOf('day').valueOf()
-          );
-        }
-      } else if (filterStatus === 'Ordered') {
-        if (filterText.length > 0) {
-          return (
-            moment(item.DateOrdered || dateOrdered[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status &&
-            ((item.id + 100)?.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(item.DateOrdered || dateOrdered[0]?.date) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.DateOrdered || dateOrdered[0]?.date) <=
-              moment(endDate).endOf('day').valueOf() &&
-            item.status === dateOrdered[0]?.status
-          );
-        }
-      } else if (filterStatus === 'In Production') {
-        if (filterText.length > 0) {
-          return (
-            moment(item.dueDate) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.dueDate) <= moment(endDate).endOf('day').valueOf() &&
-            moment(item.dueDate) <= moment(endDate).endOf('day').valueOf() &&
-            !item.status.includes('Quote') &&
-            !item.status.includes('Invoiced') &&
-            !item.status.includes('Ordered') &&
-            !item.status.includes('Complete') &&
-            !item.status.includes('Shipped') &&
-            ((item.id + 100)?.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
-        } else {
-          return (
-            moment(item.dueDate) >=
-              moment(startDate).startOf('day').valueOf() &&
-            moment(item.dueDate) <= moment(endDate).endOf('day').valueOf() &&
-            !item.status.includes('Quote') &&
-            !item.status.includes('Invoiced') &&
-            !item.status.includes('Ordered') &&
-            !item.status.includes('Shipped')
-          );
         }
       } else {
-        if (filterText.length > 0) {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.status.includes(filterStatus) &&
-            ((item.id + 100)?.toString().includes(filterText) ||
-              item.companyprofile.Company.toLowerCase().includes(
-                filterText.toLowerCase()
-              ) ||
-              item.job_info.poNum
-                .toLowerCase()
-                .includes(filterText.toLowerCase()))
-          );
+        if (statusDebounce === 'In Production') {
+        } else if (statusDebounce === 'Open Orders') {
+        } else if (statusDebounce === 'Late') {
         } else {
-          return (
-            moment(date) >= moment(startDate).startOf('day').valueOf() &&
-            moment(date) <= moment(endDate).endOf('day').valueOf() &&
-            item.status.includes(filterStatus)
-          );
         }
       }
-    });
-    setData(filteredOrders);
-  }, [startDate, endDate, orders, filterStatus, filterText]);
+    } else {
+      if (orderTypeDebounce === 'All') {
+        if (statusDebounce === 'In Production') {
+        } else if (statusDebounce === 'Open Orders') {
+        } else if (statusDebounce === 'Late') {
+        } else {
+        }
+      } else {
+        if (statusDebounce === 'In Production') {
+        } else if (statusDebounce === 'Open Orders') {
+        } else if (statusDebounce === 'Late') {
+        } else {
+        }
+      }
+    }
+
+    // if (debounceValue) {
+    //   let search = `?id=${parseInt(debounceValue) - 100}`;
+
+    //   if (selectedSearch === 'PO') {
+    //     search = `?poNum_contains=${debounceValue}&_sort=id:DESC`;
+    //   } else if (selectedSearch === 'Customer') {
+    //     search = `?companyprofile.Company_contains=${debounceValue}&_sort=id:DESC&_limit=500`;
+    //   } else {
+    //     search = `?id=${parseInt(debounceValue) - 100}`;
+    //   }
+
+    //   props.searchOrders(cookie, user, search);
+    // } else {
+    //   if (debounceValue === '') {
+    //     props.loadOrders(cookie, user);
+    //   }
+    // }
+
+    // setData(filteredOrders);
+    searchOrders(cookie, user, search);
+  }, []);
 
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
@@ -573,6 +523,7 @@ const mapDispatchToProps = (dispatch) =>
       loadOrders,
       setSelectedOrder,
       setOrderType,
+      searchOrders,
     },
     dispatch
   );
