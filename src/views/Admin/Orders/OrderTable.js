@@ -23,7 +23,8 @@ import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import Report1 from '../../PrintOuts/Reports/Report1';
 import styled from 'styled-components';
-import status from '../../../utils/report_status';
+import reportStatus from '../../../utils/report_status';
+import status from '../../../utils/ordersStatus';
 import { itemPriceSelector } from '../../../selectors/pricing';
 import Invoice from '../../PrintOuts/Reports/Invoice';
 import exportEdges from '../../../utils/exportEdges';
@@ -786,7 +787,7 @@ const OrderTable = (props) => {
                   defaultValue="Quote"
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
-                  {status.map((i, index) => (
+                  {reportStatus.map((i, index) => (
                     <option key={index} value={i.value}>
                       {i.value}
                     </option>
