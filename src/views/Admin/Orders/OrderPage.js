@@ -1037,8 +1037,7 @@ class OrderPage extends Component {
           <ModalBody>
             {this.props.edit ? (
               <div>
-                {user?.role?.type !== 'quality_control' ||
-                user?.role?.type !== 'sales' ? (
+                {user?.role?.type !== 'quality_control' ? (
                   <Row>
                     <Col>
                       <IconButton onClick={this.props.editable}>
@@ -1107,8 +1106,7 @@ class OrderPage extends Component {
                 </Modal>
 
                 <Row>
-                  {user?.role?.type !== 'quality_control' &&
-                  user?.role?.type !== 'sales' ? (
+                  {user?.role?.type !== 'quality_control' ? (
                     <Navigation
                       {...this.props}
                       toggleTracking={this.toggleTracking}
