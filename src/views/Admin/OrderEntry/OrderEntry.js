@@ -774,41 +774,11 @@ const mapStateToProps = (state, props) => ({
     props.isEdit === true
       ? {
           ...(state.Orders && state.Orders.selectedOrder),
-          DateOrdered:
-            state.Orders?.selectedOrder?.DateOrdered ||
-            state.Orders?.selectedOrder?.tracking?.filter(
-              (x) => x.status === 'Ordered'
-            )[0]?.date,
-          DateInvoiced:
-            state.Orders?.selectedOrder?.DateInvoiced ||
-            state.Orders?.selectedOrder?.tracking?.filter(
-              (x) => x.status === 'Invoiced'
-            )[0]?.date,
-          DateShipped:
-            state.Orders?.selectedOrder?.DateShipped ||
-            state.Orders?.selectedOrder?.tracking?.filter(
-              (x) => x.status === 'Shipped'
-            )[0]?.date,
-          DateCompleted:
-            state.Orders?.selectedOrder?.DateCompleted ||
-            state.Orders?.selectedOrder?.tracking?.filter(
-              (x) => x.status === 'Complete'
-            )[0]?.date,
-          DateInProduction:
-            state.Orders?.selectedOrder?.DateInProduction ||
-            state.Orders?.selectedOrder?.tracking?.filter(
-              (x) =>
-                x.status === 'In Production' ||
-                x.status === 'Cut' ||
-                x.status === 'Framing' ||
-                x.status === 'Assembly' ||
-                x.status === 'Tenon' ||
-                x.status === 'Panels' ||
-                x.status === 'Sanding' ||
-                x.status === 'Lipping' ||
-                x.status === 'Inspecting' ||
-                x.status === 'Paint Shop'
-            )[0]?.date,
+          DateOrdered: state.Orders?.selectedOrder?.DateOrdered,
+          DateInvoiced: state.Orders?.selectedOrder?.DateInvoiced,
+          DateShipped: state.Orders?.selectedOrder?.DateShipped,
+          DateCompleted: state.Orders?.selectedOrder?.DateCompleted,
+          DateInProduction: state.Orders?.selectedOrder?.DateInProduction,
           payment_type:
             state.Orders?.selectedOrder?.balance_history?.length < 2
               ? { name: 'Deposit', value: 'deposit' }
