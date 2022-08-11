@@ -151,7 +151,7 @@ const OrderTable = (props: TablePropTypes) => {
   const [data, setData] = useState(orders);
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-  const [debounceValue] = useDebounce(filterText, 500);
+  const [debounceValue] = useDebounce(encodeURIComponent(filterText), 500);
   const [selectedSearch, setSelectedSearch] = useState('ID');
 
   useEffect(() => {
