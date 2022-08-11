@@ -566,7 +566,7 @@ export default (data, pricing) => {
           id: 'liability-acknowledgement',
         },
         {
-          text: 'Acknowledgements on all orders will be emailed or faxed showing the order as it will be produced. You will be informed of an anticipated ship date as soon as it has been scheduled. It is the customer’s responsibility to carefully check the acknowledgement against the order and notify Porta Door Co., Inc. of any differences prior to the order reaching production. Failure to notify Porta Door Co., Inc. as indicated will absolve Porta Door Co., Inc. of any responsibility for errors. Porta Door Co., Inc. will not accept any responsibility for order differences. \n \nUpon receipt of this document, the customer assumes full responsibility for any and all items orderd. All items will be produced exactly as stated herein.',
+          text: 'Acknowledgements on all orders will be emailed or faxed showing the order as it will be produced. You will be informed of an anticipated ship date as soon as it has been scheduled. It is the customer’s responsibility to carefully check the acknowledgement against the order and notify Porta Door Co., Inc. of any differences prior to the order reaching production. Failure to notify Porta Door Co., Inc. as indicated will absolve Porta Door Co., Inc. of any responsibility for errors. Porta Door Co., Inc. will not accept any responsibility for order differences. \n \nUpon receipt of this document, the customer assumes full responsibility for any and all items ordered. All items will be produced exactly as stated herein.',
           style: 'warrantyFont',
           alignment: 'left',
           margin: [0, 0, 0, 5],
