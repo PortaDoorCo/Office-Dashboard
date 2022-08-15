@@ -140,7 +140,8 @@ export default (data, breakdowns, type) => {
                           i?.item?.NAME?.toLowerCase()?.includes('delivery') ||
                           i?.item?.NAME?.toLowerCase()?.includes('price') ||
                           i?.item?.NAME?.toLowerCase()?.includes('discount') ||
-                          i?.item?.NAME?.toLowerCase()?.includes('rush')
+                          i?.item?.NAME?.toLowerCase()?.includes('rush') ||
+                          i?.item?.NAME?.toLowerCase()?.includes('credit')
                         ) {
                           return null;
                         } else {
@@ -151,7 +152,8 @@ export default (data, breakdowns, type) => {
                           i?.item2?.toLowerCase()?.includes('delivery') ||
                           i?.item2?.toLowerCase()?.includes('price') ||
                           i?.item2?.toLowerCase()?.includes('discount') ||
-                          i?.item?.NAME?.toLowerCase()?.includes('rush')
+                          i?.item2?.toLowerCase()?.includes('rush') ||
+                          i?.item2?.toLowerCase()?.includes('credit')
                         ) {
                         } else {
                           return `${i.item2} \n`;
@@ -244,7 +246,7 @@ export default (data, breakdowns, type) => {
         table: {
           headerRows: 1,
           // widths: [22, 95, 30, '*', 200],
-          widths: [22, 50, 20, 80, 25, 30, '*', '*'],
+          widths: [22, 50, 20, 80, 25, '*', '*', '*'],
           body: tableBody,
         },
         layout: {
