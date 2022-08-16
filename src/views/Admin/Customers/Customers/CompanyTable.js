@@ -124,14 +124,14 @@ const CompanyTable = (props) => {
       await setSelectedOrder(row.id);
       Geocode.setApiKey('AIzaSyB_JC10u6MVdITB1FhLhCJGNu_qQ8kJyFE');
 
-      let address = `${row.Address1.replace(/\s/g, '')}${row.City}${row.State}`;
+      let address = `${row.Address1}${row.City}${row.State}`;
 
       // set response language. Defaults to english.
       Geocode.setLanguage('en');
 
       // set response region. Its optional.
       // A Geocoding request with region=es (Spain) will return the Spanish city.
-      Geocode.setRegion('es');
+      Geocode.setRegion('us');
 
       // Enable or disable logs. Its optional.
       Geocode.enableDebug();
