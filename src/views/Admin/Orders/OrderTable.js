@@ -181,6 +181,9 @@ const OrderTable = (props) => {
         .endOf('day')
         .valueOf()}&_limit=50000&_sort=id:DESC`;
       searchOrders(cookie, user, search);
+    } else if (filterStatus === 'One Piece') {
+      const search = `?_limit=50000&_sort=id:DESC`;
+      searchOrders(cookie, user, search);
     } else {
       const search = `?created_at_gte=${moment(startDate)
         .startOf('day')
