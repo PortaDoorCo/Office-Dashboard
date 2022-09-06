@@ -237,6 +237,8 @@ class JobInfo extends Component {
           change('Order', 'job_info.Phone6', customer.Phone6)
         );
 
+        this.props.dispatch(change('Order', 'job_info.Fax', customer.Fax));
+
         this.props.dispatch(change('Order', 'job_info.Note1', customer.Note1));
         this.props.dispatch(change('Order', 'job_info.Note2', customer.Note2));
         this.props.dispatch(change('Order', 'job_info.Note3', customer.Note3));
