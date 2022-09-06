@@ -170,6 +170,7 @@ export function loadOrders(cookie, user) {
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
+        ordersDBLoaded: true,
       });
     };
   } else if (user?.role?.type === 'quality_control') {
@@ -186,6 +187,7 @@ export function loadOrders(cookie, user) {
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
+        ordersDBLoaded: true,
       });
     };
   } else if (user?.role?.type === 'sales') {
@@ -202,6 +204,7 @@ export function loadOrders(cookie, user) {
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
+        ordersDBLoaded: true,
       });
     };
   } else {
@@ -215,6 +218,7 @@ export function loadOrders(cookie, user) {
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
+        ordersDBLoaded: true,
       });
     };
   }
@@ -272,6 +276,12 @@ export function loadAllOrders(cookie, user) {
 export function searchOrders(cookie, user, search) {
   if (user?.role?.type === 'customer') {
     return async function (dispatch) {
+      await dispatch({
+        type: LOAD_ORDERS,
+        data: [],
+        ordersDBLoaded: false,
+      });
+
       const res = await fetch(
         `${db_url}/orders?companyprofile.id=${user?.company.id}&_sort=id:DESC&_limit=50`,
         {
@@ -284,37 +294,16 @@ export function searchOrders(cookie, user, search) {
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
+        ordersDBLoaded: true,
       });
     };
   } else if (user?.role?.type === 'quality_control') {
     return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders${search}`, {
-        headers: {
-          Authorization: `Bearer ${cookie}`,
-        },
-      });
-      const data = await res.json();
-      return await dispatch({
+      await dispatch({
         type: LOAD_ORDERS,
-        data: data,
+        data: [],
+        ordersDBLoaded: false,
       });
-    };
-  } else if (user?.role?.type === 'sales') {
-    return async function (dispatch) {
-      const res = await fetch(`${db_url}/orders${search}`, {
-        headers: {
-          Authorization: `Bearer ${cookie}`,
-        },
-      });
-      const data = await res.json();
-      return await dispatch({
-        type: LOAD_ORDERS,
-        data: data,
-      });
-    };
-  } else {
-    return async function (dispatch) {
-      console.log('firreeeeee');
 
       const res = await fetch(`${db_url}/orders${search}`, {
         headers: {
@@ -325,6 +314,49 @@ export function searchOrders(cookie, user, search) {
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
+        ordersDBLoaded: false,
+      });
+    };
+  } else if (user?.role?.type === 'sales') {
+    return async function (dispatch) {
+      await dispatch({
+        type: LOAD_ORDERS,
+        data: [],
+        ordersDBLoaded: false,
+      });
+
+      const res = await fetch(`${db_url}/orders${search}`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res.json();
+      return await dispatch({
+        type: LOAD_ORDERS,
+        data: data,
+        ordersDBLoaded: false,
+      });
+    };
+  } else {
+    return async function (dispatch) {
+      console.log('firreeeeee');
+
+      await dispatch({
+        type: LOAD_ORDERS,
+        data: [],
+        ordersDBLoaded: false,
+      });
+
+      const res = await fetch(`${db_url}/orders${search}`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      const data = await res.json();
+      return await dispatch({
+        type: LOAD_ORDERS,
+        data: data,
+        ordersDBLoaded: true,
       });
     };
   }
