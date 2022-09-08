@@ -314,7 +314,7 @@ export function searchOrders(cookie, user, search) {
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
-        ordersDBLoaded: false,
+        ordersDBLoaded: true,
       });
     };
   } else if (user?.role?.type === 'sales') {
@@ -334,7 +334,7 @@ export function searchOrders(cookie, user, search) {
       return await dispatch({
         type: LOAD_ORDERS,
         data: data,
-        ordersDBLoaded: false,
+        ordersDBLoaded: true,
       });
     };
   } else {
