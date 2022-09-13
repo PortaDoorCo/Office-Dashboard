@@ -111,7 +111,7 @@ class OrderEntry extends Component {
       updateSubmit: false,
       files: [],
       subNavModal: false,
-      subNavPage: 'misc',
+      subNavPage: this.props?.role?.type === 'customer' ? 'photos' : 'misc',
       customerReminder: false,
       cancelModal: false,
       openedReminder: false,

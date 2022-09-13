@@ -372,40 +372,42 @@ class JobInfo extends Component {
 
     return (
       <div className="job-info-tour">
-        <Row>
-          <Col lg="10">
-            <FormGroup>
-              <Label htmlFor="dueDate">Due Date Scheduled</Label>
-              <Field
-                name="Shipping_Scheduled"
-                component={renderCheckboxToggle}
-                edit={edit}
-                onClick={this.scheduleDueDate}
-              />
-            </FormGroup>
-          </Col>
-          <Col lg="1">
-            <FormGroup>
-              <Label htmlFor="dueDate">Sample</Label>
-              <Field
-                name="Sample"
-                component={renderCheckboxToggle}
-                edit={edit}
-              />
-            </FormGroup>
-          </Col>
-          <Col lg="1">
-            <FormGroup>
-              <Label htmlFor="dueDate">Rush</Label>
-              <Field
-                name="Rush"
-                component={renderCheckboxToggle}
-                edit={edit}
-                onClick={(e) => this.rushOrder(e)}
-              />
-            </FormGroup>
-          </Col>
-        </Row>
+        {role.type === 'customer' ? null : (
+          <Row>
+            <Col lg="10">
+              <FormGroup>
+                <Label htmlFor="dueDate">Due Date Scheduled</Label>
+                <Field
+                  name="Shipping_Scheduled"
+                  component={renderCheckboxToggle}
+                  edit={edit}
+                  onClick={this.scheduleDueDate}
+                />
+              </FormGroup>
+            </Col>
+            <Col lg="1">
+              <FormGroup>
+                <Label htmlFor="dueDate">Sample</Label>
+                <Field
+                  name="Sample"
+                  component={renderCheckboxToggle}
+                  edit={edit}
+                />
+              </FormGroup>
+            </Col>
+            <Col lg="1">
+              <FormGroup>
+                <Label htmlFor="dueDate">Rush</Label>
+                <Field
+                  name="Rush"
+                  component={renderCheckboxToggle}
+                  edit={edit}
+                  onClick={(e) => this.rushOrder(e)}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        )}
 
         {/* {formState?.Shipping_Scheduled &&
         (role?.type === 'authenticated' ||
@@ -429,55 +431,57 @@ class JobInfo extends Component {
             </Row>
           ) : null} */}
 
-        <Row className="mb-3">
-          <Col lg="3">
-            <FormGroup>
-              <Label htmlFor="dueDate">Due Date</Label>
-              <Field
-                name="DueDate"
-                showTime={false}
-                component={renderDateTimePicker}
-                edit={edit}
-              />
-              <p>{dateDifference} Business Day Lead Time</p>
-            </FormGroup>
-          </Col>
-
-          {/* {role?.type === 'authenticated' ||
-          role?.type === 'owner' ||
-          role?.type === 'administrator' ||
-          role?.type === 'management' ||
-          role?.type === 'office' ? 
+        {role.type === 'customer' ? null : (
+          <Row className="mb-3">
             <Col lg="3">
               <FormGroup>
-                <Label htmlFor="dueDate">Date Ordered</Label>
+                <Label htmlFor="dueDate">Due Date</Label>
                 <Field
-                  name="DateOrdered"
-                  showTime={true}
+                  name="DueDate"
+                  showTime={false}
                   component={renderDateTimePicker}
                   edit={edit}
                 />
+                <p>{dateDifference} Business Day Lead Time</p>
               </FormGroup>
-            </Col> : null
-          }  */}
+            </Col>
 
-          <Col lg="6" />
+            {/* {role?.type === 'authenticated' ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator' ||
+                  role?.type === 'management' ||
+                  role?.type === 'office' ? 
+                    <Col lg="3">
+                      <FormGroup>
+                        <Label htmlFor="dueDate">Date Ordered</Label>
+                        <Field
+                          name="DateOrdered"
+                          showTime={true}
+                          component={renderDateTimePicker}
+                          edit={edit}
+                        />
+                      </FormGroup>
+                    </Col> : null
+                  }  */}
 
-          <Col xs="3">
-            <FormGroup>
-              <Label htmlFor="shipping_method">Shipping Method</Label>
-              <Field
-                name="shipping_method"
-                component={renderDropdownList}
-                data={shippingMethods}
-                dataKey="value"
-                edit={edit}
-                validate={required}
-                textField="NAME"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
+            <Col lg="6" />
+
+            <Col xs="3">
+              <FormGroup>
+                <Label htmlFor="shipping_method">Shipping Method</Label>
+                <Field
+                  name="shipping_method"
+                  component={renderDropdownList}
+                  data={shippingMethods}
+                  dataKey="value"
+                  edit={edit}
+                  validate={required}
+                  textField="NAME"
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        )}
 
         <Row>
           <Col xs="7">
@@ -538,49 +542,52 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-        <Row>
-          <Col xs="6">
-            <FormGroup>
-              <Label htmlFor="phone">Customer Note</Label>
-              <Field
-                name={'Notes'}
-                type="text"
-                component={renderTextField}
-                edit={false}
-                label="Notes"
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label htmlFor="dueDate">Payment Terms</Label>
-              <Input
-                placeholder={formState?.job_info?.customer?.PMT_TERMS}
-                disabled={true}
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label htmlFor="dueDate">Sales Rep</Label>
-              <Field
-                name="salesRep"
-                component={renderDropdownList}
-                data={sales}
-                edit={
-                  formState?.job_info?.customer?.id === 1 ||
-                  role?.type === 'owner' ||
-                  role?.type === 'administrator' ||
-                  role?.type === 'management'
-                    ? edit
-                    : false
-                }
-                validate={required}
-                textField="fullName"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
+        {role?.type === 'customer' ? null : (
+          <Row>
+            <Col xs="6">
+              <FormGroup>
+                <Label htmlFor="phone">Customer Note</Label>
+                <Field
+                  name={'Notes'}
+                  type="text"
+                  component={renderTextField}
+                  edit={false}
+                  label="Notes"
+                />
+              </FormGroup>
+            </Col>
+
+            <Col>
+              <FormGroup>
+                <Label htmlFor="dueDate">Payment Terms</Label>
+                <Input
+                  placeholder={formState?.job_info?.customer?.PMT_TERMS}
+                  disabled={true}
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label htmlFor="dueDate">Sales Rep</Label>
+                <Field
+                  name="salesRep"
+                  component={renderDropdownList}
+                  data={sales}
+                  edit={
+                    formState?.job_info?.customer?.id === 1 ||
+                    role?.type === 'owner' ||
+                    role?.type === 'administrator' ||
+                    role?.type === 'management'
+                      ? edit
+                      : false
+                  }
+                  validate={required}
+                  textField="fullName"
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        )}
 
         <hr />
 

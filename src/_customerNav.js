@@ -3,23 +3,22 @@ export default {
     {
       title: true,
       name: 'Dashboard',
-      wrapper: {            // optional wrapper object
-        element: '',        // required valid HTML5 element tag
-        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      wrapper: {
+        // optional wrapper object
+        element: '', // required valid HTML5 element tag
+        attributes: {}, // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: ''             // optional class names space delimited list for title item ex: "text-center"
+      class: '', // optional class names space delimited list for title item ex: "text-center"
     },
     {
       name: 'Dashboard',
       url: '/dashboard',
       icon: 'dashboard',
-  
     },
     {
       title: true,
       name: '',
       icon: 'icon-speedometer',
-  
     },
     {
       name: 'Door Order',
@@ -37,10 +36,10 @@ export default {
       name: 'Mouldings',
       url: '/mouldings',
     },
-    {
-      name: 'Misc. Order',
-      url: '/misc-items',
-    },
+    // {
+    //   name: 'Misc. Order',
+    //   url: '/misc-items',
+    // },
     {
       name: 'Settings and Products',
       url: '/settings',
@@ -49,13 +48,10 @@ export default {
       name: 'Catalog ',
       url: '/catalog',
     },
-  
-  
+
     // {
     //   name: 'Calendar',
     //   url: '/calendar',
     // },
-  
-  ]
+  ],
 };
-  

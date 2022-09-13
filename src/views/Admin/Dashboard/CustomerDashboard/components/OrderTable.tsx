@@ -142,18 +142,18 @@ const OrderTable = (props: TablePropTypes) => {
   };
 
   const columns = [
-    {
-      name: 'Company',
-      cell: (row) => (
-        <div>
-          {row.job_info &&
-            row.job_info.customer &&
-            row.job_info.customer.Company}
-        </div>
-      ),
-      sortable: true,
-      grow: 2,
-    },
+    // {
+    //   name: 'Company',
+    //   cell: (row) => (
+    //     <div>
+    //       {row.job_info &&
+    //         row.job_info.customer &&
+    //         row.job_info.customer.Company}
+    //     </div>
+    //   ),
+    //   sortable: true,
+    //   grow: 2,
+    // },
     {
       name: 'Order #',
       cell: (row) => row.id + 100,
