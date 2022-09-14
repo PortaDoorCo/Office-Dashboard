@@ -1347,7 +1347,6 @@ export const taxSelector = createSelector(
         ) / 100
       );
     } else {
-      console.log({ discount });
       return (
         Math.round(
           (subTotal.reduce((acc, item) => acc + item, 0) -
