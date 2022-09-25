@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import numQty from 'numeric-quantity';
 import moment from 'moment';
+import currency from 'currency.js';
 
 const pricingSelector = (state) => {
   const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
@@ -1284,7 +1285,7 @@ export const subTotalSelector = createSelector(
                 i.reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) *
                   100
               ) / 100;
-            let sum = price;
+            let sum = currency(price).value;
             return sum;
           } else {
             return 0;
@@ -1304,20 +1305,20 @@ export const mouldingLineItemSelector = createSelector(
 
 export const subTotal_Total = createSelector(
   [subTotalSelector, miscTotalSelector],
-  (subTotal, misc) =>
-    Math.round(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100
+  (subTotal, misc) => {
+    const price = subTotal.reduce((acc, item) => acc + item, 0);
+    return currency(price).value;
+  }
 );
 
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector, orderTypeSelector],
   (subTotal, misc, discount, orderType) => {
-    const sub =
-      Math.round(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100;
-    const dis = Math.round(discount * 100) / 100;
-    const answer = Math.round(sub * dis * 100) / 100;
-
+    const sub = subTotal.reduce((acc, item) => acc + item, 0);
+    const dis = discount;
+    const answer = sub * dis;
     if (orderType) {
-      return answer;
+      return currency(answer).value;
     } else {
       return 0;
     }
@@ -1337,26 +1338,31 @@ export const taxSelector = createSelector(
   ],
   (subTotal, tax, discount, dis, misc, state, nonDiscounted, orderType) => {
     if (orderType === 'Misc Items') {
-      return (
-        Math.round(
-          (subTotal.reduce((acc, item) => acc + item, 0) -
-            discount +
-            nonDiscounted) *
-            tax *
-            100
-        ) / 100
-      );
+      const sub = subTotal.reduce((acc, item) => acc + item, 0);
+      const price = (sub - discount + nonDiscounted) * tax;
+
+      // const price = Math.round(
+      //     (subTotal.reduce((acc, item) => acc + item, 0) -
+      //       discount +
+      //       nonDiscounted) *
+      //       tax *
+      //       100
+      //   ) / 100
+      return currency(price).value;
     } else {
-      return (
-        Math.round(
-          (subTotal.reduce((acc, item) => acc + item, 0) -
-            discount +
-            misc +
-            nonDiscounted) *
-            tax *
-            100
-        ) / 100
-      );
+      const sub = subTotal.reduce((acc, item) => acc + item, 0);
+      const price = (sub - discount + misc + nonDiscounted) * tax;
+
+      // Math.round(
+      //   (subTotal.reduce((acc, item) => acc + item, 0) -
+      //     discount +
+      //     misc +
+      //     nonDiscounted) *
+      //     tax *
+      //     100
+      // ) / 100
+
+      return currency(price).value;
     }
   }
 );
@@ -1372,15 +1378,16 @@ export const totalSelector = createSelector(
   ],
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
     if (orderType === 'Misc Items') {
-      const sub =
-        Math.round(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100;
-      return sub + tax + nonDiscounted - discount;
+      const preSub = subTotal.reduce((acc, item) => acc + item, 0);
+      const sub = currency(preSub).value;
+      const final = sub + tax + nonDiscounted - discount;
+      return currency(final).value;
     } else {
-      const sub = subTotal.reduce(
-        (acc, item) => acc + Math.round(item * 100) / 100,
-        0
-      );
-      return sub + tax + misc + nonDiscounted - discount;
+      const preSub = subTotal.reduce((acc, item) => acc + item, 0);
+      const sub = currency(preSub).value;
+      const final = sub + tax + misc + nonDiscounted - discount;
+
+      return currency(final).value;
     }
   }
 );
@@ -1396,15 +1403,15 @@ export const rushTotal = createSelector(
   ],
   (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
     if (orderType === 'Misc Items') {
-      const sub =
-        Math.floor(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100;
-      return sub + tax + nonDiscounted;
+      const preSub = subTotal.reduce((acc, item) => acc + item, 0);
+      const sub = currency(preSub).value;
+      const final = sub + tax + nonDiscounted;
+      return currency(final).value;
     } else {
-      const sub = subTotal.reduce(
-        (acc, item) => acc + Math.round(item * 100) / 100,
-        0
-      );
-      return sub + tax + misc + nonDiscounted;
+      const preSub = subTotal.reduce((acc, item) => acc + item, 0);
+      const sub = currency(preSub).value;
+      const final = sub + tax + misc + nonDiscounted;
+      return currency(final).value;
     }
   }
 );
