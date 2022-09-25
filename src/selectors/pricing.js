@@ -1383,8 +1383,8 @@ export const totalSelector = createSelector(
       const final = sub + tax + nonDiscounted - discount;
       return currency(final).value;
     } else {
-      const sub = subTotal.reduce((acc, item) => acc + item, 0);
-
+      const preSub = subTotal.reduce((acc, item) => acc + item, 0);
+      const sub = currency(preSub).value;
       const final = sub + tax + misc + nonDiscounted - discount;
 
       return currency(final).value;
@@ -1408,7 +1408,8 @@ export const rushTotal = createSelector(
       const final = sub + tax + nonDiscounted;
       return currency(final).value;
     } else {
-      const sub = subTotal.reduce((acc, item) => acc + item, 0);
+      const preSub = subTotal.reduce((acc, item) => acc + item, 0);
+      const sub = currency(preSub).value;
       const final = sub + tax + misc + nonDiscounted;
       return currency(final).value;
     }
