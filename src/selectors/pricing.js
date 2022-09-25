@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import numQty from 'numeric-quantity';
 import moment from 'moment';
+import currency from 'currency.js';
 
 const pricingSelector = (state) => {
   const pricing = state.part_list.pricing ? state.part_list.pricing[0] : 0;
@@ -1311,13 +1312,11 @@ export const subTotal_Total = createSelector(
 export const totalDiscountSelector = createSelector(
   [subTotalSelector, miscTotalSelector, discountSelector, orderTypeSelector],
   (subTotal, misc, discount, orderType) => {
-    const sub =
-      Math.round(subTotal.reduce((acc, item) => acc + item, 0) * 100) / 100;
-    const dis = Math.round(discount * 100) / 100;
-    const answer = Math.round(sub * dis * 100) / 100;
-
+    const sub = subTotal.reduce((acc, item) => acc + item, 0);
+    const dis = discount;
+    const answer = sub * dis;
     if (orderType) {
-      return answer;
+      return currency(answer).value;
     } else {
       return 0;
     }
