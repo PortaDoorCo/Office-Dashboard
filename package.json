@@ -232,7 +232,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/socket.io-client": "^1.4.36",
     "@types/styled-components": "^5.1.9",
-    "electron": "^11.1.1",
+    "electron": "^15.5.5",
     "electron-builder": "^22.9.1",
     "electron-packager": "^15.2.0",
     "eslint-plugin-react": "^7.17.0",
