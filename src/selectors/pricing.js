@@ -1385,6 +1385,7 @@ export const totalSelector = createSelector(
     } else {
       const preSub = subTotal.reduce((acc, item) => acc + item, 0);
       const sub = currency(preSub).value;
+
       const final = sub + tax + misc + nonDiscounted - discount;
 
       return currency(final).value;
