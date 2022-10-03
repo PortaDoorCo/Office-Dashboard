@@ -1,6 +1,7 @@
+import currency from 'currency.js';
 import moment from 'moment';
 
-export default (data, startDate, endDate, status) => {
+export default (data, startDate, endDate, status, role) => {
   const tableBody = [
     [
       { text: 'Date Ordered' },
@@ -13,10 +14,14 @@ export default (data, startDate, endDate, status) => {
     ],
   ];
   let total = 0;
+  let commission = 0;
 
   data.forEach((i, index) => {
     total = Math.round(100 * (total += i.total)) / 100;
-
+    commission = currency(
+      (commission +=
+        (i.total - i.tax) * (i.companyprofile.SC ? i.companyprofile.SC : 0))
+    ).value;
     let name = i.job_info?.poNum ? i.job_info?.poNum : 'None';
 
     const dateOrdered = i?.tracking?.filter((x) => {
@@ -41,6 +46,17 @@ export default (data, startDate, endDate, status) => {
     ['', 'Total'],
     ['', `$${total.toFixed(2)}`],
   ];
+
+  let totalWidths = [430, '*'];
+
+  if (role.type === 'administrator' || role.type === 'owner') {
+    totalBody = [
+      ['', 'Total', 'Commission'],
+      ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],
+    ];
+
+    totalWidths = [430, '*', '*'];
+  }
 
   return [
     {
@@ -76,7 +92,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: [430, '*'],
+        widths: totalWidths,
       },
       layout: 'headerLineOnly',
     },

@@ -250,6 +250,22 @@ class Edit extends Component {
                     />
                   </FormGroup>
                 </Col>
+
+                {role?.type === 'administrator' || role?.type === 'owner' ? (
+                  <Col sm="2">
+                    <FormGroup>
+                      <Label htmlFor="companyName">SC</Label>
+                      <Field
+                        name={'SC'}
+                        type="text"
+                        component={renderField}
+                        label="SC"
+                        // validate={required}
+                        edit={edit}
+                      />
+                    </FormGroup>
+                  </Col>
+                ) : null}
               </Row>
 
               <hr />
