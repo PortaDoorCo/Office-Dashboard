@@ -21,6 +21,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import SalesmenReport from '../../../PrintOuts/Reports/SalesmenReport';
 import status from '../../../../utils/status';
+import currency from 'currency.js';
 
 // momentLocaliser(moment);
 
@@ -62,7 +63,7 @@ const conditionalRowStyles = [
 ];
 
 const StatusTable = (props) => {
-  const { orders, salesRep } = props;
+  const { orders, salesRep, role } = props;
   const [toggleCleared, setToggleCleared] = useState(false);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -283,13 +284,98 @@ const StatusTable = (props) => {
       newOrder = newData;
     }
 
-    SalesmenReport(newOrder, props.startDate, props.endDate, props.accountName);
+    SalesmenReport(
+      newOrder,
+      props.startDate,
+      props.endDate,
+      props.accountName,
+      props.role
+    );
     setToggleCleared(!toggleCleared);
   };
 
   return (
     <div>
       <div>
+        <Row className="mb-3">
+          <Col lg="9" />
+          <Col>
+            <Row className="mt-3">
+              <Col>
+                {role &&
+                (role?.type === 'authenticated' ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator') ? (
+                  <h3>
+                    Order Total: $
+                    {data
+                      .reduce(
+                        (acc, item) => acc + Math.round(100 * item.total) / 100,
+                        0
+                      )
+                      .toFixed(2)}
+                  </h3>
+                ) : null}
+                {role &&
+                (role?.type === 'authenticated' ||
+                  role?.type === 'owner' ||
+                  role?.type === 'administrator') ? (
+                  <h3>
+                    Net Total: $
+                    {data
+                      .reduce(
+                        (acc, item) =>
+                          acc + Math.round(100 * (item.total - item.tax)) / 100,
+                        0
+                      )
+                      .toFixed(2)}
+                  </h3>
+                ) : null}
+                {role &&
+                (role.type === 'authenticated' ||
+                  role.type === 'owner' ||
+                  role.type === 'administrator') ? (
+                  <h3>
+                    Tax Total: $
+                    {data
+                      .reduce(
+                        (acc, item) => acc + Math.round(100 * item.tax) / 100,
+                        0
+                      )
+                      .toFixed(2)}
+                  </h3>
+                ) : null}
+
+                {role &&
+                (role.type === 'authenticated' ||
+                  role.type === 'owner' ||
+                  role.type === 'administrator') ? (
+                  <h3>
+                    Commission: $
+                    {data
+                      .reduce(
+                        (acc, item) =>
+                          acc +
+                          currency(
+                            (item.total - item.tax) *
+                              (item.companyprofile.SC
+                                ? item.companyprofile.SC
+                                : 0)
+                          ).value,
+                        0
+                      )
+                      .toFixed(2)}
+                  </h3>
+                ) : null}
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <h3># Of Orders: {data?.length}</h3>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
         <Row>
           {/* <Col lg='11' /> */}
           <Col>
@@ -333,6 +419,7 @@ const mapStateToProps = (state, prop) => ({
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
   user: state.users.user,
+  role: state.users.user.role,
 });
 
 const mapDispatchToProps = (dispatch) =>
