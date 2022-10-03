@@ -1,7 +1,7 @@
 import currency from 'currency.js';
 import moment from 'moment';
 
-export default (data, startDate, endDate, status) => {
+export default (data, startDate, endDate, status, role) => {
   const tableBody = [
     [
       { text: 'Date Ordered' },
@@ -43,9 +43,20 @@ export default (data, startDate, endDate, status) => {
     ]);
   });
   let totalBody = [
-    ['', 'Total', 'Commission'],
-    ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],
+    ['', 'Total'],
+    ['', `$${total.toFixed(2)}`],
   ];
+
+  let totalWidths = [430, '*'];
+
+  if (role.type === 'administrator' || role.type === 'owner') {
+    totalBody = [
+      ['', 'Total', 'Commission'],
+      ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],
+    ];
+
+    totalWidths = [430, '*', '*'];
+  }
 
   return [
     {
@@ -81,7 +92,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: [430, '*', '*'],
+        widths: totalWidths,
       },
       layout: 'headerLineOnly',
     },
