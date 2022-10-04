@@ -451,7 +451,8 @@ const StatusTable = (props) => {
       props.startDate,
       props.endDate,
       props.accountName,
-      props.role
+      props.role,
+      props.filterStatus
     );
     setToggleCleared(!toggleCleared);
   };
