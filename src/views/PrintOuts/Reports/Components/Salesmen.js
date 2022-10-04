@@ -10,6 +10,9 @@ export default (data, startDate, endDate, status, role) => {
       { text: 'Status' },
       { text: 'Description' },
       { text: 'Total' },
+      role.type === 'administrator' || role.type === 'owner'
+        ? { text: 'Commission' }
+        : null,
       { text: 'Due On' },
     ],
   ];
@@ -37,6 +40,9 @@ export default (data, startDate, endDate, status, role) => {
       i.status,
       name,
       i.total?.toFixed(2),
+      role.type === 'administrator' || role.type === 'owner'
+        ? `${i.companyprofile?.SC * 100}%`
+        : null,
       i.Shipping_Scheduled
         ? moment(i.job_info?.DueDate).format('MM/DD/YYYY')
         : 'TBD',
@@ -47,7 +53,7 @@ export default (data, startDate, endDate, status, role) => {
     ['', `$${total.toFixed(2)}`],
   ];
 
-  let totalWidths = [430, '*'];
+  let totalWidths = [415, '*'];
 
   if (role.type === 'administrator' || role.type === 'owner') {
     totalBody = [
@@ -55,7 +61,7 @@ export default (data, startDate, endDate, status, role) => {
       ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],
     ];
 
-    totalWidths = [430, '*', '*'];
+    totalWidths = [370, '*', '*'];
   }
 
   return [

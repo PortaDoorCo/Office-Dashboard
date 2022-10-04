@@ -95,7 +95,7 @@ const StatusTable = (props) => {
     await updateStatus(row.id, row, status, user, cookie);
   };
 
-  const columns = [
+  let columns = [
     {
       name: 'Order #',
       cell: (row) => row.id + 100,
@@ -237,6 +237,157 @@ const StatusTable = (props) => {
       ),
     },
   ];
+
+  if (role?.type === 'administrator' || role?.owner === 'owner') {
+    columns = [
+      {
+        name: 'Order #',
+        cell: (row) => row.id + 100,
+        sortable: true,
+      },
+      {
+        name: 'Company',
+        cell: (row) => <div>{row.job_info?.customer?.Company}</div>,
+        sortable: true,
+        grow: 2,
+      },
+      {
+        name: 'Order Type',
+        selector: 'orderType',
+        sortable: true,
+      },
+      {
+        name: 'Date Entered',
+        cell: (row) => (
+          <div>{moment(row?.created_at).format('MMM Do YYYY')}</div>
+        ),
+      },
+      {
+        name: 'Date Ordered',
+        cell: (row) => {
+          const dateOrdered = row?.tracking?.filter((x) => {
+            return x.status === 'Ordered';
+          });
+
+          if (row.DateOrdered || dateOrdered.length > 0) {
+            return (
+              <div>
+                {moment(row.DateOrdered || dateOrdered[0]?.date).format(
+                  'MMM Do YYYY'
+                )}
+              </div>
+            );
+          } else {
+            return <div>TBD</div>;
+          }
+        },
+      },
+      {
+        name: 'Due Date',
+        cell: (row) => {
+          if (row.Shipping_Scheduled) {
+            return <div> {moment(row.dueDate).format('MMM Do YYYY')}</div>;
+          } else if (
+            !row.Shipping_Scheduled &&
+            !row.status.includes('Quote') &&
+            !row.status.includes('Invoiced') &&
+            !row.status.includes('Ordered') &&
+            !row.status.includes('Shipped')
+          ) {
+            return <div>Not Scheduled</div>;
+          } else {
+            return <div>TBD</div>;
+          }
+        },
+      },
+      {
+        name: 'Date Invoiced',
+        cell: (row) => {
+          const dateInvoiced = row?.tracking?.filter((x) => {
+            return x.status === 'Invoiced';
+          });
+
+          if (row.DateInvoiced || dateInvoiced.length > 0) {
+            return (
+              <div>
+                {moment(row.DateInvoiced || dateInvoiced[0]?.date).format(
+                  'MMM Do YYYY'
+                )}
+              </div>
+            );
+          } else {
+            return <div>TBD</div>;
+          }
+        },
+      },
+      {
+        name: 'Status',
+        grow: 1,
+        cell: (row) => (
+          <FormGroup style={{ height: '100%' }}>
+            {row.status === 'Invoiced' || row.status === 'Complete' ? (
+              <div
+                style={{
+                  paddingTop: '1rem',
+                  paddingLeft: '1rem',
+                }}
+              >
+                Complete
+              </div>
+            ) : (
+              <Input
+                type="select"
+                name="select"
+                id="status_dropdown"
+                defaultValue={row.status}
+                style={{
+                  height: '100%',
+                  boxShadow: 'none',
+                  border: '0px',
+                  outline: '0px',
+                  background: 'none',
+                }}
+              >
+                {status.map((i, index) => (
+                  <option key={index} value={i.value}>
+                    {i.value}
+                  </option>
+                ))}
+              </Input>
+            )}
+          </FormGroup>
+        ),
+      },
+      {
+        name: 'Total',
+        selector: 'total',
+        sortable: true,
+        cell: (row) => <div>${row.total?.toFixed(2)}</div>,
+      },
+      {
+        name: 'Commission',
+        cell: (row) => <div>{row.companyprofile?.SC * 100}%</div>,
+      },
+      {
+        name: ' ',
+        button: true,
+        grow: 2,
+        cell: (row) => (
+          <Tooltip title="View Order" placement="top">
+            <IconButton
+              onClick={function (event) {
+                event.preventDefault();
+                toggle(row);
+              }}
+              id={row.id}
+            >
+              <Inbox>Open</Inbox>
+            </IconButton>
+          </Tooltip>
+        ),
+      },
+    ];
+  }
 
   const toggle = (row) => {
     const { setSelectedOrder, setOrderType } = props;
