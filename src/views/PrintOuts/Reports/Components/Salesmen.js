@@ -11,7 +11,10 @@ export default (data, startDate, endDate, status, role) => {
       { text: 'Description' },
       { text: 'Total' },
       role?.type === 'administrator' || role?.type === 'owner'
-        ? { text: 'Commission' }
+        ? { text: 'Commission (%)' }
+        : null,
+      role?.type === 'administrator' || role?.type === 'owner'
+        ? { text: 'Commission ($)' }
         : null,
       { text: 'Due On' },
     ],
@@ -42,6 +45,11 @@ export default (data, startDate, endDate, status, role) => {
       i.total?.toFixed(2),
       role?.type === 'administrator' || role?.type === 'owner'
         ? `${i.companyprofile?.SC * 100}%`
+        : null,
+      role?.type === 'administrator' || role?.type === 'owner'
+        ? `$${currency((i.total - i.tax) * i.companyprofile?.SC).value.toFixed(
+            2
+          )}`
         : null,
       i.Shipping_Scheduled
         ? moment(i.job_info?.DueDate).format('MM/DD/YYYY')
