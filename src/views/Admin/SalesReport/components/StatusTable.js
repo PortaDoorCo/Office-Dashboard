@@ -365,8 +365,19 @@ const StatusTable = (props) => {
         cell: (row) => <div>${row.total?.toFixed(2)}</div>,
       },
       {
-        name: 'Commission',
+        name: 'Commission (%)',
         cell: (row) => <div>{row.companyprofile?.SC * 100}%</div>,
+      },
+      {
+        name: 'Commission ($)',
+        cell: (row) => (
+          <div>
+            $
+            {currency(
+              (row.total - row.tax) * row.companyprofile?.SC
+            ).value.toFixed(2)}
+          </div>
+        ),
       },
       {
         name: ' ',
