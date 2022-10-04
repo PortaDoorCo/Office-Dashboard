@@ -10,7 +10,7 @@ export default (data, startDate, endDate, status, role) => {
       { text: 'Status' },
       { text: 'Description' },
       { text: 'Total' },
-      role.type === 'administrator' || role.type === 'owner'
+      role?.type === 'administrator' || role?.type === 'owner'
         ? { text: 'Commission' }
         : null,
       { text: 'Due On' },
@@ -40,7 +40,7 @@ export default (data, startDate, endDate, status, role) => {
       i.status,
       name,
       i.total?.toFixed(2),
-      role.type === 'administrator' || role.type === 'owner'
+      role?.type === 'administrator' || role?.type === 'owner'
         ? `${i.companyprofile?.SC * 100}%`
         : null,
       i.Shipping_Scheduled
