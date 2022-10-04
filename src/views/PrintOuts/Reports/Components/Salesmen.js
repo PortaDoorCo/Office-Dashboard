@@ -69,7 +69,6 @@ export default (data, startDate, endDate, account, role, status) => {
       ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],
     ];
 
-    console.log({ status });
     if (status === 'Quote') {
       totalWidths = [310, '*', '*'];
     } else {
