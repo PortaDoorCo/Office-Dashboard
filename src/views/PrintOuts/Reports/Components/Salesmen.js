@@ -69,7 +69,7 @@ export default (data, startDate, endDate, status, role) => {
       ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],
     ];
 
-    totalWidths = [310, '*', '*'];
+    totalWidths = [300, '*', '*'];
   }
 
   return [
